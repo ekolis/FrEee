@@ -40,7 +40,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblAmount.Location = new System.Drawing.Point(3, 0);
 			this.lblAmount.Name = "lblAmount";
-			this.lblAmount.Size = new System.Drawing.Size(62, 20);
+			this.lblAmount.Size = new System.Drawing.Size(74, 20);
 			this.lblAmount.TabIndex = 0;
 			this.lblAmount.Text = "0 (+0)";
 			this.lblAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

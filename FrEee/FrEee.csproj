@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions.cs" />
+    <Compile Include="Gui\Controls\GameTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\GameTabControl.Designer.cs">
+      <DependentUpon>GameTabControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\GameButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -70,6 +76,12 @@
     <Compile Include="Gui\Controls\GameResourceDisplay.Designer.cs">
       <DependentUpon>GameResourceDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\GameShipReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\GameShipReport.Designer.cs">
+      <DependentUpon>GameShipReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -92,6 +104,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\GameResourceDisplay.resx">
       <DependentUpon>GameResourceDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\GameShipReport.resx">
+      <DependentUpon>GameShipReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

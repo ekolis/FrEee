@@ -29,9 +29,9 @@
 		private void InitializeComponent()
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.lblLeft = new System.Windows.Forms.Label();
-			this.lblCenter = new System.Windows.Forms.Label();
 			this.lblRight = new System.Windows.Forms.Label();
+			this.lblCenter = new System.Windows.Forms.Label();
+			this.lblLeft = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -42,9 +42,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
 			this.tableLayoutPanel1.ColumnCount = 3;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.Controls.Add(this.lblRight, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.lblCenter, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.lblLeft, 0, 0);
@@ -55,6 +55,28 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(362, 26);
 			this.tableLayoutPanel1.TabIndex = 3;
 			// 
+			// lblRight
+			// 
+			this.lblRight.BackColor = System.Drawing.Color.Transparent;
+			this.lblRight.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblRight.Location = new System.Drawing.Point(231, 0);
+			this.lblRight.Margin = new System.Windows.Forms.Padding(0);
+			this.lblRight.Name = "lblRight";
+			this.lblRight.Size = new System.Drawing.Size(131, 26);
+			this.lblRight.TabIndex = 4;
+			this.lblRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// lblCenter
+			// 
+			this.lblCenter.BackColor = System.Drawing.Color.Transparent;
+			this.lblCenter.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lblCenter.Location = new System.Drawing.Point(131, 0);
+			this.lblCenter.Margin = new System.Windows.Forms.Padding(0);
+			this.lblCenter.Name = "lblCenter";
+			this.lblCenter.Size = new System.Drawing.Size(100, 26);
+			this.lblCenter.TabIndex = 3;
+			this.lblCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
 			// lblLeft
 			// 
 			this.lblLeft.BackColor = System.Drawing.Color.Transparent;
@@ -62,31 +84,9 @@
 			this.lblLeft.Location = new System.Drawing.Point(0, 0);
 			this.lblLeft.Margin = new System.Windows.Forms.Padding(0);
 			this.lblLeft.Name = "lblLeft";
-			this.lblLeft.Size = new System.Drawing.Size(120, 26);
+			this.lblLeft.Size = new System.Drawing.Size(131, 26);
 			this.lblLeft.TabIndex = 1;
 			this.lblLeft.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblCenter
-			// 
-			this.lblCenter.BackColor = System.Drawing.Color.Transparent;
-			this.lblCenter.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblCenter.Location = new System.Drawing.Point(120, 0);
-			this.lblCenter.Margin = new System.Windows.Forms.Padding(0);
-			this.lblCenter.Name = "lblCenter";
-			this.lblCenter.Size = new System.Drawing.Size(120, 26);
-			this.lblCenter.TabIndex = 3;
-			this.lblCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			// 
-			// lblRight
-			// 
-			this.lblRight.BackColor = System.Drawing.Color.Transparent;
-			this.lblRight.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblRight.Location = new System.Drawing.Point(240, 0);
-			this.lblRight.Margin = new System.Windows.Forms.Padding(0);
-			this.lblRight.Name = "lblRight";
-			this.lblRight.Size = new System.Drawing.Size(122, 26);
-			this.lblRight.TabIndex = 4;
-			this.lblRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// GameProgressBar
 			// 

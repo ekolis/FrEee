@@ -36,13 +36,15 @@
 			this.pnlSubCommands = new FrEee.Gui.Controls.GamePanel();
 			this.pnlMainCommands = new FrEee.Gui.Controls.GamePanel();
 			this.pnlHeader = new FrEee.Gui.Controls.GamePanel();
+			this.gameProgressBar1 = new FrEee.Gui.Controls.GameProgressBar();
 			this.pagResources = new FrEee.Gui.Controls.GamePager();
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.txtEmperorName = new System.Windows.Forms.Label();
 			this.txtEmpireName = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
-			this.gameProgressBar1 = new FrEee.Gui.Controls.GameProgressBar();
+			this.gameShipReport1 = new FrEee.Gui.Controls.GameShipReport();
+			this.pnlDetailReport.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.SuspendLayout();
@@ -82,6 +84,7 @@
 			this.pnlDetailReport.BackColor = System.Drawing.Color.Black;
 			this.pnlDetailReport.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlDetailReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlDetailReport.Controls.Add(this.gameShipReport1);
 			this.pnlDetailReport.ForeColor = System.Drawing.Color.White;
 			this.pnlDetailReport.Location = new System.Drawing.Point(635, 54);
 			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
@@ -162,6 +165,25 @@
 			this.pnlHeader.Size = new System.Drawing.Size(980, 32);
 			this.pnlHeader.TabIndex = 0;
 			// 
+			// gameProgressBar1
+			// 
+			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
+			this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
+			this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
+			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
+			this.gameProgressBar1.Location = new System.Drawing.Point(935, 4);
+			this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
+			this.gameProgressBar1.Maximum = 500000;
+			this.gameProgressBar1.Name = "gameProgressBar1";
+			this.gameProgressBar1.RightText = "0.2 years";
+			this.gameProgressBar1.Size = new System.Drawing.Size(40, 22);
+			this.gameProgressBar1.TabIndex = 9;
+			this.gameProgressBar1.Value = 350000;
+			// 
 			// pagResources
 			// 
 			this.pagResources.BackColor = System.Drawing.Color.Black;
@@ -225,23 +247,17 @@
 			this.picEmpireFlag.TabIndex = 0;
 			this.picEmpireFlag.TabStop = false;
 			// 
-			// gameProgressBar1
+			// gameShipReport1
 			// 
-			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
-			this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
-			this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
-			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-			this.gameProgressBar1.Location = new System.Drawing.Point(935, 4);
-			this.gameProgressBar1.Maximum = 500000;
-			this.gameProgressBar1.Name = "gameProgressBar1";
-			this.gameProgressBar1.RightText = "0.2 years";
-			this.gameProgressBar1.Size = new System.Drawing.Size(40, 22);
-			this.gameProgressBar1.TabIndex = 9;
-			this.gameProgressBar1.Value = 350000;
+			this.gameShipReport1.BackColor = System.Drawing.Color.Black;
+			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
+			this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
+			this.gameShipReport1.Name = "gameShipReport1";
+			this.gameShipReport1.Size = new System.Drawing.Size(351, 411);
+			this.gameShipReport1.TabIndex = 0;
 			// 
 			// GameForm
 			// 
@@ -263,6 +279,7 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
+			this.pnlDetailReport.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.ResumeLayout(false);
@@ -286,6 +303,7 @@
 		private System.Windows.Forms.Label txtGameDate;
 		private Gui.Controls.GamePager pagResources;
 		private Gui.Controls.GameProgressBar gameProgressBar1;
+		private Gui.Controls.GameShipReport gameShipReport1;
 	}
 }
 
