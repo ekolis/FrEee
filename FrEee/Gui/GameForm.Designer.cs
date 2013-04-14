@@ -28,9 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
 			this.pnlSystemMap = new FrEee.Gui.Controls.GamePanel();
 			this.pnlGalaxyMap = new FrEee.Gui.Controls.GamePanel();
 			this.pnlDetailReport = new FrEee.Gui.Controls.GamePanel();
+			this.gameShipReport1 = new FrEee.Gui.Controls.GameShipReport();
 			this.pnlSystemTabs = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSearch = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSubCommands = new FrEee.Gui.Controls.GamePanel();
@@ -43,7 +45,6 @@
 			this.txtEmperorName = new System.Windows.Forms.Label();
 			this.txtEmpireName = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
-			this.gameShipReport1 = new FrEee.Gui.Controls.GameShipReport();
 			this.pnlDetailReport.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -91,6 +92,18 @@
 			this.pnlDetailReport.Name = "pnlDetailReport";
 			this.pnlDetailReport.Size = new System.Drawing.Size(360, 418);
 			this.pnlDetailReport.TabIndex = 3;
+			// 
+			// gameShipReport1
+			// 
+			this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gameShipReport1.BackColor = System.Drawing.Color.Black;
+			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
+			this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
+			this.gameShipReport1.Name = "gameShipReport1";
+			this.gameShipReport1.Size = new System.Drawing.Size(351, 411);
+			this.gameShipReport1.TabIndex = 0;
 			// 
 			// pnlSystemTabs
 			// 
@@ -247,18 +260,6 @@
 			this.picEmpireFlag.TabIndex = 0;
 			this.picEmpireFlag.TabStop = false;
 			// 
-			// gameShipReport1
-			// 
-			this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameShipReport1.BackColor = System.Drawing.Color.Black;
-			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
-			this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
-			this.gameShipReport1.Name = "gameShipReport1";
-			this.gameShipReport1.Size = new System.Drawing.Size(351, 411);
-			this.gameShipReport1.TabIndex = 0;
-			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -276,6 +277,7 @@
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.ForeColor = System.Drawing.Color.White;
+			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
