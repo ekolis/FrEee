@@ -78,11 +78,17 @@
     <Compile Include="Gui\Controls\GameButton.Designer.cs">
       <DependentUpon>GameButton.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\GamePager.cs">
+    <Compile Include="Gui\Controls\GameTableLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\GameTableLayoutPanel.Designer.cs">
+      <DependentUpon>GameTableLayoutPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\Pager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\GamePager.Designer.cs">
-      <DependentUpon>GamePager.cs</DependentUpon>
+    <Compile Include="Gui\Controls\Pager.Designer.cs">
+      <DependentUpon>Pager.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\GameProgressBar.cs">
       <SubType>UserControl</SubType>
@@ -90,17 +96,29 @@
     <Compile Include="Gui\Controls\GameProgressBar.Designer.cs">
       <DependentUpon>GameProgressBar.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\GameResourceDisplay.cs">
+    <Compile Include="Gui\Controls\ResourceDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\GameResourceDisplay.Designer.cs">
-      <DependentUpon>GameResourceDisplay.cs</DependentUpon>
+    <Compile Include="Gui\Controls\ResourceDisplay.Designer.cs">
+      <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\GameShipReport.cs">
+    <Compile Include="Gui\Controls\SectorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Controls\GameShipReport.Designer.cs">
-      <DependentUpon>GameShipReport.cs</DependentUpon>
+    <Compile Include="Gui\Controls\SectorView.Designer.cs">
+      <DependentUpon>SectorView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\ShipReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\ShipReport.Designer.cs">
+      <DependentUpon>ShipReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\StarSystemView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\StarSystemView.Designer.cs">
+      <DependentUpon>StarSystemView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\GameForm.cs">
       <SubType>Form</SubType>
@@ -116,17 +134,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Gui\Controls\GamePager.resx">
-      <DependentUpon>GamePager.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\Controls\Pager.resx">
+      <DependentUpon>Pager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\GameProgressBar.resx">
       <DependentUpon>GameProgressBar.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\GameResourceDisplay.resx">
-      <DependentUpon>GameResourceDisplay.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\Controls\ResourceDisplay.resx">
+      <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\GameShipReport.resx">
-      <DependentUpon>GameShipReport.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\Controls\SectorView.resx">
+      <DependentUpon>SectorView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\ShipReport.resx">
+      <DependentUpon>ShipReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\StarSystemView.resx">
+      <DependentUpon>StarSystemView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

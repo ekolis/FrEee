@@ -19,8 +19,7 @@ namespace FrEee.Game
 		public StarSystem(int radius)
 		{
 			Radius = radius;
-			int diameter = Math.Max(0, radius * 2 - 1);
-			sectors = new Sector[diameter, diameter];
+			sectors = new Sector[Diameter, Diameter];
 			for (int x = -radius; x <= radius; x++)
 			{
 				for (int y = -radius; y <= radius; y++)
@@ -32,6 +31,14 @@ namespace FrEee.Game
 		/// The number of sectors counting outward from the center to the edge.
 		/// </summary>
 		public int Radius { get; private set; }
+
+		/// <summary>
+		/// The number of sectors across the star system.
+		/// </summary>
+		public int Diameter
+		{
+			get { return Math.Max(0, Radius * 2 + 1); }
+		}
 
 		private Sector[,] sectors;
 

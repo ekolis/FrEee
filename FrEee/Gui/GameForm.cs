@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Gui.Controls;
+using FrEee.Game;
 
 namespace FrEee
 {
@@ -16,6 +17,8 @@ namespace FrEee
 		public GameForm()
 		{
 			InitializeComponent();
+
+			// set up resource display
 			var pnlResources = new FlowLayoutPanel();
 			pnlResources.FlowDirection = FlowDirection.LeftToRight;
 			pnlResources.WrapContents = false;
@@ -31,6 +34,21 @@ namespace FrEee
 			pagResources.Content.Add(pnlResources);
 			pagResources.Content.Add(pnlResIntel);
 			pagResources.CurrentPage = 0;
+
+			// set up system view
+			var starsys = new StarSystem(8);
+			starsys.GetSector(0, 0).SpaceObjects.Add(new Star());
+			starsys.GetSector(6, 3).SpaceObjects.Add(new Planet());
+			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet());
+			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet());
+			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint());
+			starSystemView.StarSystem = starsys;
+		}
+
+		private void GameForm_SizeChanged(object sender, EventArgs e)
+		{
+			var s = Math.Min(pnlSystemMap.Width, pnlSystemMap.Height);
+			starSystemView.Size = new System.Drawing.Size(s - 4, s - 4);
 		}
 	}
 }

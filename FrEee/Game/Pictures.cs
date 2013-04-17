@@ -12,6 +12,20 @@ namespace FrEee.Game
 	public static class Pictures
 	{
 		/// <summary>
+		/// Until we have images to load
+		/// </summary>
+		private static Image fakeImage;
+
+		static Pictures()
+		{
+			// Set up the fake image
+			fakeImage = new Bitmap(128, 128);
+			var g = Graphics.FromImage(fakeImage);
+			g.DrawEllipse(new Pen(Color.White, 1), 0, 0, 128, 128);
+			g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, 128, 128);
+		}
+
+		/// <summary>
 		/// Gets the icon image for a stellar object.
 		/// </summary>
 		/// <param name="number"></param>
@@ -19,7 +33,7 @@ namespace FrEee.Game
 		public static Image GetStellarObjectIcon(int number)
 		{
 			// TODO - implement GetStellarObjectIcon
-			throw new NotImplementedException();
+			return fakeImage;
 		}
 
 		/// <summary>
@@ -30,7 +44,7 @@ namespace FrEee.Game
 		public static Image GetStellarObjectPortrait(int number)
 		{
 			// TODO - implement GetStellarObjectPortrait
-			throw new NotImplementedException();
+			return fakeImage;
 		}
 	}
 }

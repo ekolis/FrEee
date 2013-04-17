@@ -30,6 +30,7 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
 			this.pnlSystemMap = new FrEee.Gui.Controls.GamePanel();
+			this.starSystemView = new FrEee.Gui.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.Gui.Controls.GamePanel();
 			this.pnlDetailReport = new FrEee.Gui.Controls.GamePanel();
 			this.gameShipReport1 = new FrEee.Gui.Controls.ShipReport();
@@ -45,6 +46,7 @@
 			this.txtEmperorName = new System.Windows.Forms.Label();
 			this.txtEmpireName = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
+			this.pnlSystemMap.SuspendLayout();
 			this.pnlDetailReport.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -58,12 +60,22 @@
 			this.pnlSystemMap.BackColor = System.Drawing.Color.Black;
 			this.pnlSystemMap.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSystemMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSystemMap.Controls.Add(this.starSystemView);
 			this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
 			this.pnlSystemMap.Location = new System.Drawing.Point(15, 159);
 			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemMap.Name = "pnlSystemMap";
 			this.pnlSystemMap.Size = new System.Drawing.Size(612, 557);
 			this.pnlSystemMap.TabIndex = 4;
+			// 
+			// starSystemView
+			// 
+			this.starSystemView.BackColor = System.Drawing.Color.Black;
+			this.starSystemView.Location = new System.Drawing.Point(4, 3);
+			this.starSystemView.Name = "starSystemView";
+			this.starSystemView.Size = new System.Drawing.Size(603, 549);
+			this.starSystemView.StarSystem = null;
+			this.starSystemView.TabIndex = 0;
 			// 
 			// pnlGalaxyMap
 			// 
@@ -281,6 +293,8 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
+			this.SizeChanged += new System.EventHandler(this.GameForm_SizeChanged);
+			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlDetailReport.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
@@ -306,6 +320,7 @@
 		private Gui.Controls.Pager pagResources;
 		private Gui.Controls.GameProgressBar gameProgressBar1;
 		private Gui.Controls.ShipReport gameShipReport1;
+		private Gui.Controls.StarSystemView starSystemView;
 	}
 }
 
