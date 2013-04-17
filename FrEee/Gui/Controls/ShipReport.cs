@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrEee.Gui.Controls
 {
-	public partial class GameShipReport : UserControl
+	public partial class ShipReport : UserControl
 	{
-		public GameShipReport()
+		public ShipReport()
 		{
 			InitializeComponent();
 		}

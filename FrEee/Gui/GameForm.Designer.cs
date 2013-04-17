@@ -32,14 +32,14 @@
 			this.pnlSystemMap = new FrEee.Gui.Controls.GamePanel();
 			this.pnlGalaxyMap = new FrEee.Gui.Controls.GamePanel();
 			this.pnlDetailReport = new FrEee.Gui.Controls.GamePanel();
-			this.gameShipReport1 = new FrEee.Gui.Controls.GameShipReport();
+			this.gameShipReport1 = new FrEee.Gui.Controls.ShipReport();
 			this.pnlSystemTabs = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSearch = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSubCommands = new FrEee.Gui.Controls.GamePanel();
 			this.pnlMainCommands = new FrEee.Gui.Controls.GamePanel();
 			this.pnlHeader = new FrEee.Gui.Controls.GamePanel();
 			this.gameProgressBar1 = new FrEee.Gui.Controls.GameProgressBar();
-			this.pagResources = new FrEee.Gui.Controls.GamePager();
+			this.pagResources = new FrEee.Gui.Controls.Pager();
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.txtEmperorName = new System.Windows.Forms.Label();
@@ -303,9 +303,9 @@
 		private System.Windows.Forms.Label txtEmperorName;
 		private System.Windows.Forms.Label lblGameDate;
 		private System.Windows.Forms.Label txtGameDate;
-		private Gui.Controls.GamePager pagResources;
+		private Gui.Controls.Pager pagResources;
 		private Gui.Controls.GameProgressBar gameProgressBar1;
-		private Gui.Controls.GameShipReport gameShipReport1;
+		private Gui.Controls.ShipReport gameShipReport1;
 	}
 }
 

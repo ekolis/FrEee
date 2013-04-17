@@ -10,9 +10,9 @@ using FrEee;
 
 namespace FrEee.Gui.Controls
 {
-	public partial class GameResourceDisplay : UserControl
+	public partial class ResourceDisplay : UserControl
 	{
-		public GameResourceDisplay()
+		public ResourceDisplay()
 		{
 			InitializeComponent();
 		}

@@ -1,6 +1,6 @@
 ﻿namespace FrEee.Gui.Controls
 {
-	partial class GamePager
+	partial class Pager
 	{
 		/// <summary> 
 		/// Required designer variable.

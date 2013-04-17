@@ -1,6 +1,6 @@
 ﻿namespace FrEee.Gui.Controls
 {
-	partial class GameResourceDisplay
+	partial class ResourceDisplay
 	{
 		/// <summary> 
 		/// Required designer variable.

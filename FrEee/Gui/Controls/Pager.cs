@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace FrEee.Gui.Controls
 {
-	public partial class GamePager : UserControl
+	public partial class Pager : UserControl
 	{
-		public GamePager()
+		public Pager()
 		{
 			InitializeComponent();
 			SizeChanged += GamePager_SizeChanged;

@@ -1,6 +1,6 @@
 ﻿namespace FrEee.Gui.Controls
 {
-	partial class GameShipReport
+	partial class ShipReport
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -52,9 +52,9 @@
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
-			this.gameResourceDisplay3 = new FrEee.Gui.Controls.GameResourceDisplay();
-			this.gameResourceDisplay2 = new FrEee.Gui.Controls.GameResourceDisplay();
-			this.gameResourceDisplay1 = new FrEee.Gui.Controls.GameResourceDisplay();
+			this.gameResourceDisplay3 = new FrEee.Gui.Controls.ResourceDisplay();
+			this.gameResourceDisplay2 = new FrEee.Gui.Controls.ResourceDisplay();
+			this.gameResourceDisplay1 = new FrEee.Gui.Controls.ResourceDisplay();
 			this.lblMaint = new System.Windows.Forms.Label();
 			this.txtFleet = new System.Windows.Forms.Label();
 			this.lblFleet = new System.Windows.Forms.Label();
@@ -1040,9 +1040,9 @@
 		private System.Windows.Forms.Label txtFleet;
 		private System.Windows.Forms.Label lblFleet;
 		private System.Windows.Forms.Label lblMaint;
-		private GameResourceDisplay gameResourceDisplay1;
-		private GameResourceDisplay gameResourceDisplay3;
-		private GameResourceDisplay gameResourceDisplay2;
+		private ResourceDisplay gameResourceDisplay1;
+		private ResourceDisplay gameResourceDisplay3;
+		private ResourceDisplay gameResourceDisplay2;
 		private GameButton btnOrdersClear;
 		private GameButton btnOrderDelete;
 		private GameButton btnOrderDown;
