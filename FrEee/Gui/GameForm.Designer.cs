@@ -70,6 +70,9 @@
 			// 
 			// starSystemView
 			// 
+			this.starSystemView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.starSystemView.BackColor = System.Drawing.Color.Black;
 			this.starSystemView.Location = new System.Drawing.Point(4, 3);
 			this.starSystemView.Name = "starSystemView";
@@ -293,7 +296,6 @@
 			this.Margin = new System.Windows.Forms.Padding(4);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
-			this.SizeChanged += new System.EventHandler(this.GameForm_SizeChanged);
 			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlDetailReport.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);

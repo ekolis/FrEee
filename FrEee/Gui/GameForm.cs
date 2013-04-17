@@ -44,11 +44,5 @@ namespace FrEee
 			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint());
 			starSystemView.StarSystem = starsys;
 		}
-
-		private void GameForm_SizeChanged(object sender, EventArgs e)
-		{
-			var s = Math.Min(pnlSystemMap.Width, pnlSystemMap.Height);
-			starSystemView.Size = new System.Drawing.Size(s - 4, s - 4);
-		}
 	}
 }

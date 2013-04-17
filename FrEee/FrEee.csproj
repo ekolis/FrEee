@@ -102,12 +102,6 @@
     <Compile Include="Gui\Controls\ResourceDisplay.Designer.cs">
       <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Controls\SectorView.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Gui\Controls\SectorView.Designer.cs">
-      <DependentUpon>SectorView.cs</DependentUpon>
-    </Compile>
     <Compile Include="Gui\Controls\ShipReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -115,7 +109,7 @@
       <DependentUpon>ShipReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\StarSystemView.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Gui\Controls\StarSystemView.Designer.cs">
       <DependentUpon>StarSystemView.cs</DependentUpon>
@@ -143,14 +137,8 @@
     <EmbeddedResource Include="Gui\Controls\ResourceDisplay.resx">
       <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\SectorView.resx">
-      <DependentUpon>SectorView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\ShipReport.resx">
       <DependentUpon>ShipReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Controls\StarSystemView.resx">
-      <DependentUpon>StarSystemView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

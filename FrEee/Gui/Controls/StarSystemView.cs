@@ -1,26 +1,31 @@
-﻿using System;
+﻿using FrEee.Game;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using FrEee.Game;
 
 namespace FrEee.Gui.Controls
 {
-	/// <summary>
-	/// Displays a star system map.
-	/// </summary>
-	public partial class StarSystemView : UserControl
+	public partial class StarSystemView : Control
 	{
 		public StarSystemView()
 		{
 			InitializeComponent();
+			BackColor = Color.Black;
+			this.SizeChanged += StarSystemView_SizeChanged;
 		}
 
-		StarSystem starSystem;
+		void StarSystemView_SizeChanged(object sender, EventArgs e)
+		{
+			Invalidate();
+		}
+
+		private StarSystem starSystem;
+
 		/// <summary>
 		/// The star system to display.
 		/// </summary>
@@ -29,58 +34,57 @@ namespace FrEee.Gui.Controls
 			get { return starSystem; }
 			set
 			{
-				bool sizeChanged = starSystem == null || value == null || starSystem.Radius != value.Radius;
 				starSystem = value;
-				Bind(sizeChanged);
+				Invalidate();
 			}
 		}
 
-		/// <summary>
-		/// Updates the control display to match any changes in the sector.
-		/// </summary>
-		/// <param name="sizeChanged">Did the system size change?</param>
-		public void Bind(bool sizeChanged = false)
+		protected override void OnPaint(PaintEventArgs pe)
 		{
-			SuspendLayout();
+			base.OnPaint(pe);
+
+			pe.Graphics.Clear(BackColor);
+
+			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
 			if (StarSystem != null)
 			{
-				if (sizeChanged)
+				// TODO - draw star system background
+
+				for (var x = -StarSystem.Radius; x <= StarSystem.Radius; x++)
 				{
-					// rebuild all controls
-					tblSectors.Controls.Clear(); // delete all controls
-					tblSectors.RowCount = StarSystem.Diameter;
-					tblSectors.ColumnCount = StarSystem.Diameter;
-					tblSectors.RowStyles.Clear();
-					for (var i = 0; i < StarSystem.Diameter; i++)
-						tblSectors.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / StarSystem.Diameter));
-					tblSectors.ColumnStyles.Clear();
-					for (var i = 0; i < StarSystem.Diameter; i++)
-						tblSectors.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100f / StarSystem.Diameter));
-					for (int x = -StarSystem.Radius; x <= StarSystem.Radius; x++)
+					for (var y = -StarSystem.Radius; y <= StarSystem.Radius; y++)
 					{
-						for (int y = -StarSystem.Radius; y <= StarSystem.Radius; y++)
+						// where and how big will we draw the sector?
+						var drawsize = (float)Math.Min(Width, Height) / (float)StarSystem.Diameter;
+						var drawx = x * drawsize + Width / 2f;
+						var drawy = y * drawsize + Height / 2f;
+
+						// find sector
+						var sector = StarSystem.GetSector(x, y);
+
+						// draw icon and owner flag of largest space object (if any)
+						var largest = sector.SpaceObjects.Largest();
+						if (largest != null)
 						{
-							var sectorView = new SectorView { Sector = StarSystem.GetSector(x, y) };
-							tblSectors.Controls.Add(sectorView, x + StarSystem.Radius, y + StarSystem.Radius);
+							pe.Graphics.DrawImage(largest.Icon, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+							
+							// TODO - draw owner flag
 						}
-					}
-				}
-				else
-				{
-					// reuse old controls
-					for (int x = -StarSystem.Radius; x <= StarSystem.Radius; x++)
-					{
-						for (int y = -StarSystem.Radius; y <= StarSystem.Radius; y++)
+						
+						// draw number to indicate how many space objects are present if >1
+						if (sector.SpaceObjects.Count > 1)
 						{
-							var sectorView = (SectorView)tblSectors.GetControlFromPosition(x + StarSystem.Radius, y + StarSystem.Radius);
-							sectorView.Sector = StarSystem.GetSector(x, y);
+							// TODO - cache font and brush assets
+							var font = new Font("Sans Serif", 8);
+							var sf = new StringFormat();
+							sf.Alignment = StringAlignment.Far; // right align our number
+							sf.LineAlignment = StringAlignment.Far; // bottom align our number
+							pe.Graphics.DrawString(sector.SpaceObjects.Count.ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f, sf);
 						}
 					}
 				}
 			}
-			else
-				tblSectors.Controls.Clear(); // delete all controls
-			ResumeLayout();
 		}
 	}
 }
