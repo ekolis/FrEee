@@ -80,7 +80,6 @@
 			this.starSystemView.Size = new System.Drawing.Size(603, 549);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
-			this.starSystemView.SectorClicked += new FrEee.Gui.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
 			// 
 			// pnlGalaxyMap
 			// 
@@ -90,10 +89,10 @@
 			this.pnlGalaxyMap.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
-			this.pnlGalaxyMap.Location = new System.Drawing.Point(635, 480);
+			this.pnlGalaxyMap.Location = new System.Drawing.Point(635, 522);
 			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
-			this.pnlGalaxyMap.Size = new System.Drawing.Size(360, 236);
+			this.pnlGalaxyMap.Size = new System.Drawing.Size(360, 194);
 			this.pnlGalaxyMap.TabIndex = 5;
 			// 
 			// pnlDetailReport
@@ -107,7 +106,7 @@
 			this.pnlDetailReport.Location = new System.Drawing.Point(635, 54);
 			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlDetailReport.Name = "pnlDetailReport";
-			this.pnlDetailReport.Size = new System.Drawing.Size(360, 418);
+			this.pnlDetailReport.Size = new System.Drawing.Size(360, 460);
 			this.pnlDetailReport.TabIndex = 3;
 			// 
 			// gameShipReport1
@@ -119,7 +118,7 @@
 			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
 			this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
 			this.gameShipReport1.Name = "gameShipReport1";
-			this.gameShipReport1.Size = new System.Drawing.Size(351, 411);
+			this.gameShipReport1.Size = new System.Drawing.Size(351, 451);
 			this.gameShipReport1.TabIndex = 0;
 			// 
 			// pnlSystemTabs
