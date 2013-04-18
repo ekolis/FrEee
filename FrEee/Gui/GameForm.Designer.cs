@@ -76,9 +76,11 @@
 			this.starSystemView.BackColor = System.Drawing.Color.Black;
 			this.starSystemView.Location = new System.Drawing.Point(4, 3);
 			this.starSystemView.Name = "starSystemView";
+			this.starSystemView.SelectedSector = null;
 			this.starSystemView.Size = new System.Drawing.Size(603, 549);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
+			this.starSystemView.SectorClicked += new FrEee.Gui.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
 			// 
 			// pnlGalaxyMap
 			// 

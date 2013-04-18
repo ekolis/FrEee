@@ -44,5 +44,11 @@ namespace FrEee
 			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint());
 			starSystemView.StarSystem = starsys;
 		}
+
+		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
+		{
+			// select the sector that was clicked
+			starSystemView.SelectedSector = sector;
+		}
 	}
 }

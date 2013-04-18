@@ -40,6 +40,16 @@ namespace FrEee.Game
 			get { return Math.Max(0, Radius * 2 + 1); }
 		}
 
+		public bool AreCoordsInBounds(int x, int y)
+		{
+			return x >= -Radius && x <= Radius && y >= -Radius && y <= Radius;
+		}
+
+		public bool AreCoordsInBounds(Point p)
+		{
+			return AreCoordsInBounds(p.X, p.Y);
+		}
+
 		private Sector[,] sectors;
 
 		public Sector GetSector(int x, int y)
