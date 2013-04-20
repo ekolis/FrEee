@@ -37,11 +37,11 @@ namespace FrEee
 
 			// set up system view
 			var starsys = new StarSystem(8);
-			starsys.GetSector(0, 0).SpaceObjects.Add(new Star());
-			starsys.GetSector(6, 3).SpaceObjects.Add(new Planet());
-			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet());
-			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet());
-			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint());
+			starsys.GetSector(0, 0).SpaceObjects.Add(new Star { Name = "Tudran Star" });
+			starsys.GetSector(6, 3).SpaceObjects.Add(new Planet { Name = "Tudran I" });
+			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran II" });
+			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran IIa" });
+			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint { Name = "Warp Point to Fizbon" });
 			starSystemView.StarSystem = starsys;
 		}
 
@@ -49,6 +49,81 @@ namespace FrEee
 		{
 			// select the sector that was clicked
 			starSystemView.SelectedSector = sector;
+		}
+
+		private void starSystemView_SectorSelected(StarSystemView sender, Sector sector)
+		{
+			// remove old report, if any
+			pnlDetailReport.Controls.Clear();
+
+			if (sector.SpaceObjects.Count > 0)
+			{
+				// add new report
+				Control newReport = null;
+				if (sector.SpaceObjects.Count == 1)
+				{
+					// add new report
+					newReport = CreateSpaceObjectReport(sector.SpaceObjects.Single());
+				}
+				else
+				{
+					// add list view
+					var lv = new ListView();
+					newReport = lv;
+					lv.View = View.Tile;
+					lv.BackColor = Color.Black;
+					lv.ForeColor = Color.White;
+					lv.BorderStyle = BorderStyle.None;
+					var il = new ImageList();
+					lv.LargeImageList = il;
+					lv.SmallImageList = il;
+					int i = 0;
+					foreach (var sobj in sector.SpaceObjects)
+					{
+						var item = new ListViewItem();
+						item.Text = sobj.Name;
+						item.Tag = sobj;
+						il.Images.Add(sobj.Icon);
+						item.ImageIndex = i;
+						i++;
+						lv.Items.Add(item);
+					}
+					lv.MouseDoubleClick += SpaceObjectListReport_MouseDoubleClick;
+				}
+
+				if (newReport != null)
+				{
+					// align control
+					pnlDetailReport.Controls.Add(newReport);
+					newReport.Left = newReport.Margin.Left;
+					newReport.Width = pnlDetailReport.Width - newReport.Margin.Right - newReport.Margin.Left;
+					newReport.Top = newReport.Margin.Top;
+					newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
+					newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+				}
+			}
+		}
+
+		void SpaceObjectListReport_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			var lv = (ListView)sender;
+			if (lv.SelectedItems.Count > 0)
+			{
+				// remove list view
+				pnlDetailReport.Controls.Clear();
+
+				// add new report
+				var item = lv.GetItemAt(e.X, e.Y);
+				pnlDetailReport.Controls.Add(CreateSpaceObjectReport((ISpaceObject)item.Tag));
+			}
+		}
+
+		private Control CreateSpaceObjectReport(ISpaceObject sobj)
+		{
+			if (sobj is Star)
+				return new StarReport(); // TODO - show star data
+			// TODO - other typeos of space objects
+			return null;
 		}
 	}
 }

@@ -108,6 +108,12 @@
     <Compile Include="Gui\Controls\ShipReport.Designer.cs">
       <DependentUpon>ShipReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\StarReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\StarReport.Designer.cs">
+      <DependentUpon>StarReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\StarSystemView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -139,6 +145,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\ShipReport.resx">
       <DependentUpon>ShipReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\StarReport.resx">
+      <DependentUpon>StarReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

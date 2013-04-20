@@ -80,6 +80,8 @@
 			this.starSystemView.Size = new System.Drawing.Size(603, 549);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
+			this.starSystemView.SectorClicked += new FrEee.Gui.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
+			this.starSystemView.SectorSelected += new FrEee.Gui.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
 			// 
 			// pnlGalaxyMap
 			// 
