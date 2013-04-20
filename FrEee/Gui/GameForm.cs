@@ -37,7 +37,7 @@ namespace FrEee
 
 			// set up system view
 			var starsys = new StarSystem(8);
-			starsys.GetSector(0, 0).SpaceObjects.Add(new Star { Name = "Tudran Star" });
+			starsys.GetSector(0, 0).SpaceObjects.Add(new Star { Name = "Tudran Star", Age = "Old", Brightness = "Dim", Color = "Red", Description = "A red giant star.", Size = Game.Size.Large });
 			starsys.GetSector(6, 3).SpaceObjects.Add(new Planet { Name = "Tudran I" });
 			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran II" });
 			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran IIa" });
@@ -121,7 +121,7 @@ namespace FrEee
 		private Control CreateSpaceObjectReport(ISpaceObject sobj)
 		{
 			if (sobj is Star)
-				return new StarReport(); // TODO - show star data
+				return new StarReport((Star)sobj);
 			// TODO - other typeos of space objects
 			return null;
 		}

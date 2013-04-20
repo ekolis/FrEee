@@ -36,7 +36,9 @@
 			this.txtSizeColor = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
 			this.picPortrait = new System.Windows.Forms.PictureBox();
-			this.listView1 = new System.Windows.Forms.ListView();
+			this.lstAbilities = new System.Windows.Forms.ListView();
+			this.lblDescription = new System.Windows.Forms.Label();
+			this.txtDescription = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -110,29 +112,52 @@
 			this.picPortrait.TabIndex = 20;
 			this.picPortrait.TabStop = false;
 			// 
-			// listView1
+			// lstAbilities
 			// 
-			this.listView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lstAbilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.listView1.BackColor = System.Drawing.Color.Black;
-			this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listView1.ForeColor = System.Drawing.Color.White;
-			this.listView1.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+			this.lstAbilities.BackColor = System.Drawing.Color.Black;
+			this.lstAbilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstAbilities.ForeColor = System.Drawing.Color.White;
+			this.lstAbilities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
             listViewItem1});
-			this.listView1.Location = new System.Drawing.Point(4, 169);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(315, 329);
-			this.listView1.TabIndex = 27;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.List;
+			this.lstAbilities.Location = new System.Drawing.Point(4, 169);
+			this.lstAbilities.Name = "lstAbilities";
+			this.lstAbilities.Size = new System.Drawing.Size(315, 329);
+			this.lstAbilities.TabIndex = 27;
+			this.lstAbilities.UseCompatibleStateImageBehavior = false;
+			this.lstAbilities.View = System.Windows.Forms.View.List;
+			// 
+			// lblDescription
+			// 
+			this.lblDescription.AutoSize = true;
+			this.lblDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblDescription.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblDescription.Location = new System.Drawing.Point(148, 120);
+			this.lblDescription.Name = "lblDescription";
+			this.lblDescription.Size = new System.Drawing.Size(69, 15);
+			this.lblDescription.TabIndex = 28;
+			this.lblDescription.Text = "Description";
+			// 
+			// txtDescription
+			// 
+			this.txtDescription.AutoSize = true;
+			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtDescription.Location = new System.Drawing.Point(163, 135);
+			this.txtDescription.Name = "txtDescription";
+			this.txtDescription.Size = new System.Drawing.Size(88, 15);
+			this.txtDescription.TabIndex = 29;
+			this.txtDescription.Text = "An old red star.";
 			// 
 			// StarReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.Controls.Add(this.listView1);
+			this.Controls.Add(this.txtDescription);
+			this.Controls.Add(this.lblDescription);
+			this.Controls.Add(this.lstAbilities);
 			this.Controls.Add(this.txtAge);
 			this.Controls.Add(this.lblAge);
 			this.Controls.Add(this.txtBrightness);
@@ -158,6 +183,8 @@
 		private System.Windows.Forms.Label txtSizeColor;
 		private System.Windows.Forms.Label txtName;
 		private System.Windows.Forms.PictureBox picPortrait;
-		private System.Windows.Forms.ListView listView1;
+		private System.Windows.Forms.ListView lstAbilities;
+		private System.Windows.Forms.Label lblDescription;
+		private System.Windows.Forms.Label txtDescription;
 	}
 }
