@@ -1,0 +1,656 @@
+=======================================================================================
+ABILITIES DATA FILE
+=======================================================================================
+
+This file gives a listing and general description for all of the abilities in the game.
+
+Warp Point - Turbulence
+  Value1 = Amount of damage done to objects moving through this warp point. (Normal Damage)
+  Value2 = 
+
+Star - Unstable
+  Value1 = Chance that sun will explode each year.
+  Value2 =
+
+Sector - Sight Obscuration
+  Value1 = Level of obscuration. (Obscures all types) (Units cannot use this ability)
+  Value2 =
+
+Sector - Sensor Interference
+  Value1 = Modifier subtracted from to-hit rolls
+  Value2 =
+
+Sector - Shield Disruption
+  Value1 = Amount of shields lost during combat.
+  Value2 =
+
+Sector - Damage
+  Value1 = Amount of damage per turn to all objects in sector.
+  Value2 =
+
+Resource Generation - Minerals
+  Value1 = Amount of minerals generated per turn.
+  Value2 =
+
+Resource Generation - Organics
+  Value1 = Amount of organics generated per turn.
+  Value2 =
+
+Resource Generation - Radioactives
+  Value1 = Amount of radioactives generated per turn.
+  Value2 =
+
+Point Generation - Research
+  Value1 = Amount of research points generated per turn.
+  Value2 =
+
+Point Generation - Intelligence
+  Value1 = Amount of intelligence points generated per turn.
+  Value2 =
+
+Spaceport
+  Value1 =
+  Value2 =
+
+Palace
+  Value1 =
+  Value2 =
+
+Supply Generation
+  Value1 = 
+  Value2 =
+
+Planet - Change Minerals Value
+  Value1 = Percentage the value of this planet is changed each turn.
+  Value2 =
+
+Planet - Change Organics Value
+  Value1 = Percentage the value of this planet is changed each turn.
+  Value2 =
+
+Planet - Change Radioactives Value
+  Value1 = Percentage the value of this planet is changed each turn.
+  Value2 =
+
+Planet - Change Conditions
+  Value1 = Percentage the conditions of this planet is changed each turn.
+  Value2 =
+
+Planet - Change Population Happiness
+  Value1 = Percentage the happiness of this planet's population is improved each turn. 
+  Value2 =
+
+Planet - Change Ground Defense
+  Value1 = Percentage modifier to ground combat on this planet.
+  Value2 =
+
+Planet - Shield Generation
+  Value1 = Amount of shields generated.
+  Value2 = 
+
+Shield Generation
+  Value1 = Amount of shields generated.
+  Value2 = 
+
+Phased Shield Generation
+  Value1 = Amount of phased shields generated.
+  Value2 = 
+
+Component Repair
+  Value1 = Number of components repaired per turn.
+  Value2 =
+
+Cargo Storage
+  Value1 = Number of cargo spaces generated.
+  Value2 =
+
+Drop Troops
+  Value1 = Number of troops which can be dropped to attack a planet.
+  Value2 =
+
+Launch/Recover Fighters
+  Value1 = Amount of fighters that can be launched per combat turn.
+  Value2 = Amount of fighters that can be launched per game turn.
+
+Lay Mines
+  Value1 = Amount of mines that can be launched per combat turn.
+  Value2 = Amount of mines that can be launched per game turn.
+
+Multiplex Tracking
+  Value1 = Number of ships that can be tracked and fired on. 
+  Value2 =
+
+Combat To Hit Offense Plus
+  Value1 = Percent modifier for combat offense.
+           (Increases the chance that this ship will hit another ship).
+  Value2 = 
+
+Combat To Hit Defense Plus
+  Value1 = Percent modifier for combat defense.
+           (Decreases the chance that this ship will be hit by another ship).
+  Value2 =
+
+Mine Sweeping
+  Value1 = Number of mines that can be swept.
+  Value2 =
+
+Medical Bay
+  Value1 = Plague level that can be cured.
+  Value2 =
+
+Movement Bonus
+  Value1 = Added movement for ship if using all of these types of engines.
+  Value2 =
+
+Emissive Armor
+  Value1 = Damage armor must take before being destroyed.
+  Value2 =
+
+Shield Regeneration
+  Value1 = Number of shields regenerated per combat turn.
+  Value2 =
+
+Master Computer
+  Value1 = 
+  Value2 =
+
+Cloak Level
+  Value1 = Type of sight obscuration.
+  Value2 = Level of obscuration.
+
+Sensor Level
+  Value1 = Type of sight ability.
+  Value2 = Level of sight ability.
+
+Emergency Resupply
+  Value1 = Amount of resupply given to ship on use.
+  Value2 =
+
+Emergency Energy
+  Value1 = Amount of movement given to ship on use.
+  Value2 =
+
+Long Range Scanner
+  Value1 = Distance away in sectors enemy ship can be scanned.
+  Value2 =
+
+Open Warp Point Distance
+  Value1 = Distance to system (in light years) WP can be opened to.
+  Value2 =
+
+Create Planet Size
+  Value1 = Size of planet that can be created.
+  Value2 =
+
+Destroy Planet Size
+  Value1 = Size of planet that can be destroyed.
+  Value2 =
+
+Boarding Attack
+  Value1 = Attack strength in ship capture.
+  Value2 =
+
+Boarding Defense
+  Value1 = Defense strength in ship capture.
+  Value2 =
+
+Standard Ship Movement
+  Value1 = Number of movement points generated.
+  Value2 =
+
+Ship Bridge
+  Value1 =
+  Value2 =
+
+Ship Auxiliary Control
+  Value1 =
+  Value2 =
+
+Ship Life Support
+  Value1 =
+  Value2 =
+
+Ship Crew Quarters
+  Value1 =
+  Value2 =
+
+Scanner Jammer
+  Value1 = 
+  Value2 =
+
+Quantum Reactor
+  Value1 =
+  Value2 =
+
+Supply Storage
+  Value1 = Amount of supplies that can be stored.
+  Value2 =
+
+Space Yard
+  Value1 = Resource Type used for construction
+  Value2 = Amount of resources which can be used each turn.
+
+Resource Storage - Mineral
+  Value1 = Added amount of resources an empire can store.
+  Value2 =
+
+Resource Storage - Organics
+  Value1 = Added amount of resources an empire can store.
+  Value2 =
+
+Resource Storage - Radioactives
+  Value1 = Added amount of resources an empire can store.
+  Value2 =
+
+Resource Gen Modifier Planet - Minerals
+  Value1 = Percentage change of resource generation for entire planet (+/- percentage).
+  Value2 =
+
+Resource Gen Modifier Planet - Organics
+  Value1 = Percentage change of resource generation for entire planet (+/- percentage).
+  Value2 =
+
+Resource Gen Modifier Planet - Radioactives
+  Value1 = Percentage change of resource generation for entire planet (+/- percentage).
+  Value2 =
+
+Resource Gen Modifier System - Minerals
+  Value1 = Percentage change of resource generation for entire system (+/- percentage).
+  Value2 =
+
+Resource Gen Modifier System - Organics
+  Value1 = Percentage change of resource generation for entire system (+/- percentage).
+  Value2 =
+
+Resource Gen Modifier System - Radioactives
+  Value1 = Percentage change of resource generation for entire system (+/- percentage).
+  Value2 =
+
+Planet Point Generation Modifier - Research
+  Value1 = Percentage change of point generation for entire planet (+/- percentage).
+  Value2 =
+
+Planet Point Generation Modifier - Intelligence
+  Value1 = Percentage change of point generation for entire planet (+/- percentage).
+  Value2 =
+
+System Point Generation Modifier - Research
+  Value1 = Percentage change of point generation for entire system (+/- percentage).
+  Value2 =
+
+System Point Generation Modifier - Intelligence
+  Value1 = Percentage change of point generation for entire system (+/- percentage).
+  Value2 =
+
+Combat Modifier - System
+  Value1 = Percentage combat modifier for entire system (+/- percentage).
+  Value2 =
+
+Damage Modifier - System
+  Value1 = Percentage damage modifier for entire system (+/- percentage).
+  Value2 =
+
+Planet Value Change - System
+  Value1 = Percentage change in planet value for entire system (+/- percentage) per year.
+  Value2 =
+
+Planet Conditions Change - System
+  Value1 = Percentage change in planet conditions for entire system (+/- percentage) per year.
+  Value2 =
+
+Change Bad Event Chance - System
+  Value1 = Percentage change in chance for bad event for entire system (+/- percentage).
+  Value2 =
+
+Change Bad Intelligence Chance - System
+  Value1 = Percentage change in chance for bad intel event for entire system (+/- percentage).
+  Value2 =
+
+Change Population Happiness - System
+  Value1 = Percentage change in population happiness for entire system (+/- percentage) each turn.
+  Value2 =
+
+Ship Training
+  Value1 = Per turn increase in ship experience in this sector.
+  Value2 = Maximum experience level that can be attained here.
+
+Fleet Training
+  Value1 = Per turn increase in fleet experience in this sector.
+  Value2 = Maximum experience level that can be attained here.
+
+Modify Reproduction - System
+  Value1 = Percentage change in reproduction for entire system.
+  Value2 =
+
+Change Population - System
+  Value1 = Population in M that will be added each turn for entire system.
+  Value2 =
+
+Plague Prevention - System
+  Value1 = Level of the plague that will be prevented in this system.
+  Value2 =
+
+Resource Conversion
+  Value1 = Percentage loss of resources converted from one type to another.
+  Value2 =
+
+Resource Reclamation
+  Value1 = Percentage of value of item scrapped in sector returned as resources.
+  Value2 =
+
+Close Warp Point
+  Value1 =
+  Value2 =
+
+Destroy Star
+  Value1 =
+  Value2 =
+
+Create Star
+  Value1 =
+  Value2 =
+
+Destroy Storm
+  Value1 =
+  Value2 =
+
+Create Storm
+  Value1 =
+  Value2 =
+
+Self-Destruct
+  Value1 =
+  Value2 =
+
+Colonize Planet - Rock
+  Value1 =
+  Value2 =
+
+Colonize Planet - Ice
+  Value1 =
+  Value2 =
+
+Colonize Planet - Gas
+  Value1 =
+  Value2 =
+
+Point-Defense
+  Value1 =  
+  Value2 =
+
+Armor
+  Value1 =  
+  Value2 =
+
+Launch/Recover Satellites
+  Value1 = Amount of satellites that can be launched per combat turn.
+  Value2 = Amount of satellites that can be launched per game turn.
+
+Remote Resource Generation - Minerals
+  Value1 = The number of minerals per turn which can be generated from a remote source.
+  Value2 =
+
+Remote Resource Generation - Organics
+  Value1 = The number of minerals per turn which can be generated from a remote source.
+  Value2 =
+
+Remote Resource Generation - Radioactives
+  Value1 = The number of minerals per turn which can be generated from a remote source.
+  Value2 =
+
+Armor Regeneration
+  Value1 = The amount of structure points regenerated per combat turn.
+  Value2 =
+
+Shield Generation From Damage
+  Value1 = Amount of damage pts converted to shield pts per hit.
+  Value2 =
+
+System - Movement Towards Center
+  Value1 = # of squares ships are moved towards the center of a system per turn.
+  Value2 =
+
+System - Movement Random
+  Value1 = # of squares ships are randomly in a system per turn.
+  Value2 =
+
+System - Destructive Center
+  Value1 = Amount of damage caused to ships in the center of the system. (Normal Damage)
+  Value2 =
+
+Destroy Nebulae
+  Value1 =
+  Value2 =
+
+Create Nebulae
+  Value1 =
+  Value2 =
+
+Destroy Black Hole
+  Value1 =
+  Value2 =
+
+Create Black Hole
+  Value1 =
+  Value2 =
+
+Stop Planet Destroyer
+  Value1 =
+  Value2 =
+
+Stop Star Destroyer
+  Value1 =
+  Value2 =
+
+Stop Nebulae Creator
+  Value1 =
+  Value2 =
+
+Stop Black Hole Creator
+  Value1 =
+  Value2 =
+
+Stop Open Warp Point
+  Value1 =
+  Value2 =
+
+Stop Close Warp Point
+  Value1 =
+  Value2 =
+
+Component Destroyed On Use
+  Value1 =
+  Value2 =
+
+Ancient Ruins
+  Value1 = Number of techs areas (random) received when this planet is colonized.
+  Value2 =
+
+Ancient Ruins Unique
+  Value1 = The unique tech area identifier that is found when the planet is colonized.
+  Value2 =
+
+Combat Best Experience
+  Value1 =
+  Value2 =
+
+Combat Movement
+  Value1 = Amount of movement added during combat.
+  Value2 =
+
+Solar Supply Generation
+  Value1 = Amount of supplies generated per star.
+  Value2 =
+
+Extra Movement Generation
+  Value1 = Amount of movement generated by a type of component.
+  Value2 = Unique identifier for this type
+
+Planet - Change Atmosphere
+  Value1 = Number of turns until atmosphere is changed.
+  Value2 = (It changes to the atmosphere breathable by the majority of the population.)
+
+Weapons Always Hit
+  Value1 =
+  Value2 =
+
+Create Constructed Planet
+  Value1 = The Special Ability ID in PlanetSize.txt to construct.
+  Value2 =
+
+Constructed Planet Requirements
+  Value1 = The custom group of the component needed to be present. 
+  Value2 = The kT of component required to be present. 
+
+Modified Maintenance Cost
+  Value1 = Percentage of normal maintenance (10% = 110% of normal, -10% = 90% or normal)
+  Value2 =
+
+Ship Training - System
+  Value1 = Per turn increase in ship experience in this system.
+  Value2 = Maximum experience level that can be attained here.
+
+Fleet Training - System
+  Value1 = Per turn increase in fleet experience in this system.
+  Value2 = Maximum experience level that can be attained here.
+
+Long Range Scanner - System
+  Value1 =
+  Value2 =
+
+Solar Resource Generation - Minerals
+  Value1 = Amount of minerals generated per turn per star in the system. 
+  Value2 =
+
+Solar Resource Generation - Organics
+  Value1 = Amount of organics generated per turn per star in the system. 
+  Value2 =
+
+Solar Resource Generation - Radioactives
+  Value1 = Amount of radioactives generated per turn per star in the system. 
+  Value2 =
+
+Reduced Maintenance Cost - System
+  Value1 = Percentage of normal maintenance for all ships in system (10 = 90% of normal, -10 = 110% or normal)
+  Value2 =
+
+Shield Modifier - System
+  Value1 = Amount added to maximum shields of players ships during combat. 
+  Value2 =
+
+Combat To Hit Offense Minus
+  Value1 = Percent negative modifier for combat offense.
+           (Decreases the chance that this ship will hit another ship).
+  Value2 = 
+
+Combat To Hit Defense Minus
+  Value1 = Percent negative modifier for combat defense.
+           (Increases the chance that this ship will be hit by another ship).
+  Value2 =
+
+AI Tag 01
+  Value1 = 
+  Value2 =
+
+AI Tag 02
+  Value1 = 
+  Value2 =
+
+AI Tag 03
+  Value1 = 
+  Value2 =
+
+AI Tag 04
+  Value1 = 
+  Value2 =
+
+AI Tag 05
+  Value1 = 
+  Value2 =
+
+AI Tag 06
+  Value1 = 
+  Value2 =
+
+AI Tag 07
+  Value1 = 
+  Value2 =
+
+AI Tag 08
+  Value1 = 
+  Value2 =
+
+AI Tag 09
+  Value1 = 
+  Value2 =
+
+AI Tag 10
+  Value1 = 
+  Value2 =
+
+AI Tag 11
+  Value1 = 
+  Value2 =
+
+AI Tag 12
+  Value1 = 
+  Value2 =
+
+AI Tag 13
+  Value1 = 
+  Value2 =
+
+AI Tag 14
+  Value1 = 
+  Value2 =
+
+AI Tag 15
+  Value1 = 
+  Value2 =
+
+AI Tag 16
+  Value1 = 
+  Value2 =
+
+AI Tag 17
+  Value1 = 
+  Value2 =
+
+AI Tag 18
+  Value1 = 
+  Value2 =
+
+AI Tag 19
+  Value1 = 
+  Value2 =
+
+AI Tag 20
+  Value1 = 
+  Value2 =
+
+Generate Points Minerals
+  Value1 = The number of minerals per turn which can be generated.
+  Value2 = (This ability can be used by a component or a facility. The points
+            are not deducted from any planet.)
+
+Generate Points Organics
+  Value1 = The number of organics per turn which can be generated.
+  Value2 = (This ability can be used by a component or a facility. The points
+            are not deducted from any planet.)
+
+Generate Points Radioactives
+  Value1 = The number of radioactives per turn which can be generated.
+  Value2 = (This ability can be used by a component or a facility. The points
+            are not deducted from any planet.)
+
+Generate Points Research
+  Value1 = The number of research points per turn which can be generated.
+  Value2 = (This ability can be used by a component or a facility. The points
+            are not deducted from any planet.)
+
+Generate Points Intelligence
+  Value1 = The number of intelligence points per turn which can be generated.
+  Value2 = (This ability can be used by a component or a facility. The points
+            are not deducted from any planet.)
+
+

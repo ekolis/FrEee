@@ -1,0 +1,157 @@
+=======================================================================================
+PLANET SIZE DATA FILE
+=======================================================================================
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                      := Tiny
+Physical Type             := Planet
+Stellar Size              := Tiny
+Max Facilities            := 5
+Max Population            := 500
+Max Cargo Spaces          := 1000
+Max Facilities Domed      := 1
+Max Population Domed      := 100
+Max Cargo Spaces Domed    := 200
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Small
+Physical Type             := Planet
+Stellar Size              := Small
+Max Facilities            := 10
+Max Population            := 1000
+Max Cargo Spaces          := 2000
+Max Facilities Domed      := 2
+Max Population Domed      := 200
+Max Cargo Spaces Domed    := 400
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Medium
+Physical Type             := Planet
+Stellar Size              := Medium
+Max Facilities            := 15
+Max Population            := 2000
+Max Cargo Spaces          := 4000
+Max Facilities Domed      := 3
+Max Population Domed      := 300
+Max Cargo Spaces Domed    := 600
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Large
+Physical Type             := Planet
+Stellar Size              := Large
+Max Facilities            := 20
+Max Population            := 4000
+Max Cargo Spaces          := 8000
+Max Facilities Domed      := 4
+Max Population Domed      := 400
+Max Cargo Spaces Domed    := 800
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Huge
+Physical Type             := Planet
+Stellar Size              := Huge
+Max Facilities            := 25
+Max Population            := 8000
+Max Cargo Spaces          := 16000
+Max Facilities Domed      := 5
+Max Population Domed      := 500
+Max Cargo Spaces Domed    := 1000
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Ringworld
+Physical Type             := Planet
+Stellar Size              := Huge
+Max Facilities            := 100
+Max Population            := 32000
+Max Cargo Spaces          := 64000
+Max Facilities Domed      := 50
+Max Population Domed      := 16000
+Max Cargo Spaces Domed    := 32000
+Constructed               := True
+Special Ability ID        := 1
+
+Name                      := Sphereworld
+Physical Type             := Planet
+Stellar Size              := Huge
+Max Facilities            := 200
+Max Population            := 64000
+Max Cargo Spaces          := 128000
+Max Facilities Domed      := 100
+Max Population Domed      := 32000
+Max Cargo Spaces Domed    := 64000
+Constructed               := True
+Special Ability ID        := 2
+
+Name                      := Tiny
+Physical Type             := Asteroids
+Stellar Size              := Tiny
+Max Facilities            := 4
+Max Population            := 100
+Max Cargo Spaces          := 500
+Max Facilities Domed      := 1
+Max Population Domed      := 50
+Max Cargo Spaces Domed    := 100
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Small
+Physical Type             := Asteroids
+Stellar Size              := Small
+Max Facilities            := 5
+Max Population            := 200
+Max Cargo Spaces          := 1000
+Max Facilities Domed      := 1
+Max Population Domed      := 100
+Max Cargo Spaces Domed    := 200
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Medium
+Physical Type             := Asteroids
+Stellar Size              := Medium
+Max Facilities            := 6
+Max Population            := 300
+Max Cargo Spaces          := 1500
+Max Facilities Domed      := 1
+Max Population Domed      := 150
+Max Cargo Spaces Domed    := 300
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Large
+Physical Type             := Asteroids
+Stellar Size              := Large
+Max Facilities            := 7
+Max Population            := 400
+Max Cargo Spaces          := 2000
+Max Facilities Domed      := 2
+Max Population Domed      := 200
+Max Cargo Spaces Domed    := 400
+Constructed               := False
+Special Ability ID        := 0
+
+Name                      := Huge
+Physical Type             := Asteroids
+Stellar Size              := Huge
+Max Facilities            := 8
+Max Population            := 500
+Max Cargo Spaces          := 2500
+Max Facilities Domed      := 2
+Max Population Domed      := 250
+Max Cargo Spaces Domed    := 500
+Constructed               := False
+Special Ability ID        := 0
+
+=======================================================================================
+*END*
+=======================================================================================
+
