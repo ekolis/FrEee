@@ -1,0 +1,22 @@
+{
+	"Standard #1":
+	{
+		"Radius": 8,
+		"Description": "A standard star system.",
+		"BackgroundImagePath": "Starfield.png",
+		"EmpiresCanStartIn": true,
+		"NonTiledCenterCombatImage": false,
+		"Abilities": [],
+		"WarpPointAbilities": [],
+		"StellarObjectLocations":
+		[
+			{
+				"StellarObjectTemplate":
+				{
+					"Size": Large,
+				}
+				"Ring": 1
+			}
+		]
+	}
+}

@@ -7,6 +7,8 @@ namespace FrEee
 {
 	public static class Extensions
 	{
+		private static Random rand = new Random();
+
 		/// <summary>
 		/// Adds SI prefixes to a value and rounds it off.
 		/// e.g. 25000 becomes 25.00k
@@ -29,6 +31,17 @@ namespace FrEee
 			if (Math.Abs(value) >= 1e4)
 				return Math.Round(value / 1e3, 2) + "k";
 			return value.ToString();
+		}
+
+		/// <summary>
+		/// Picks a random element from a sequence.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static T PickRandom<T>(this IEnumerable<T> src)
+		{
+			return src.ElementAt(rand.Next(src.Count()));
 		}
 	}
 }

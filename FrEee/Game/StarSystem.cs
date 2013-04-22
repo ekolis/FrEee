@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -25,12 +26,49 @@ namespace FrEee.Game
 				for (int y = -radius; y <= radius; y++)
 					SetSector(x, y, new Sector());
 			}
+			Abilities = new List<Ability>();
+			WarpPointAbilities = new List<Ability>();
 		}
+
+		/// <summary>
+		/// The name of this star system.
+		/// </summary>
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The number of sectors counting outward from the center to the edge.
 		/// </summary>
 		public int Radius { get; private set; }
+
+		/// <summary>
+		/// The description of this star system.
+		/// </summary>
+		public string Description { get; set; }
+
+		/// <summary>
+		/// The path to the background image.
+		/// </summary>
+		public string BackgroundImagePath { get; set; }
+
+		/// <summary>
+		/// If true, empire homeworlds can be located in this system.
+		/// </summary>
+		public bool EmpiresCanStartIn { get; set; }
+
+		/// <summary>
+		/// If true, the background image for this system will be centered, not tiled, in combat.
+		/// </summary>
+		public bool NonTiledCenterCombatImage { get; set; }
+
+		/// <summary>
+		/// Any special abilities possessed by this star system.
+		/// </summary>
+		public IList<Ability> Abilities { get; private set; }
+
+		/// <summary>
+		/// Abilities for random warp points that appear in this system.
+		/// </summary>
+		public IList<Ability> WarpPointAbilities { get; set; }
 
 		/// <summary>
 		/// The number of sectors across the star system.

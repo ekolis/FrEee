@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// A space storm.
 	/// </summary>
-	public class Storm : ISpaceObject
+	public class Storm : ISpaceObject, ITemplate<Storm>
 	{
 		/// <summary>
 		/// The name of this storm.
@@ -57,5 +58,14 @@ namespace FrEee.Game
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
 		public string CombatTile { get; set; }
+
+		/// <summary>
+		/// Just copy the storm's data.
+		/// </summary>
+		/// <returns>A copy of the storm.</returns>
+		public Storm Instantiate()
+		{
+			return this.Clone();
+		}
 	}
 }

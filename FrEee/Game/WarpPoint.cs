@@ -9,7 +9,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// A warp point connecting two sectors.
 	/// </summary>
-	public class WarpPoint : ISpaceObject
+	public class WarpPoint : ISpaceObject, ITemplate<WarpPoint>
 	{
 		/// <summary>
 		/// The name of this warp point.
@@ -62,5 +62,14 @@ namespace FrEee.Game
 		/// Does this warp point have special abilities?
 		/// </summary>
 		public bool IsUnusual { get; set; }
+
+		/// <summary>
+		/// Just copy the warp point's data.
+		/// </summary>
+		/// <returns>A copy of the warp point.</returns>
+		public WarpPoint Instantiate()
+		{
+			return this.Clone();
+		}
 	}
 }

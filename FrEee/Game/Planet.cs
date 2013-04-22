@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
-	public class Planet : ISpaceObject
+	public class Planet : ISpaceObject, ITemplate<Planet>
 	{
 		/// <summary>
 		/// The name of this planet.
@@ -66,6 +67,15 @@ namespace FrEee.Game
 			{
 				return Pictures.GetStellarObjectPortrait(PictureNumber);
 			}
+		}
+
+		/// <summary>
+		/// Just copy the planet's data.
+		/// </summary>
+		/// <returns>A copy of the planet.</returns>
+		public Planet Instantiate()
+		{
+			return this.Clone();
 		}
 	}
 }

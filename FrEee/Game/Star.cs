@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// A star. Normally found at the center of a star system.
 	/// </summary>
-	public class Star : ISpaceObject
+	public class Star : ISpaceObject, ITemplate<Star>
 	{
 		/// <summary>
 		/// The name of this star.
@@ -71,6 +72,15 @@ namespace FrEee.Game
 			{
 				return Pictures.GetStellarObjectPortrait(PictureNumber);
 			}
+		}
+
+		/// <summary>
+		/// Just copy the star's data.
+		/// </summary>
+		/// <returns>A copy of the star.</returns>
+		public Star Instantiate()
+		{
+			return this.Clone();
 		}
 	}
 }
