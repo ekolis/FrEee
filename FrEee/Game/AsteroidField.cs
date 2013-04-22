@@ -9,7 +9,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
-	public class AsteroidField : ISpaceObject
+	public class AsteroidField : ISpaceObject, ITemplate<AsteroidField>
 	{
 		/// <summary>
 		/// The name of this asteroid field.
@@ -72,5 +72,14 @@ namespace FrEee.Game
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
 		public string CombatTile { get; set; }
+
+		/// <summary>
+		/// Just copy the asteroid field's data.
+		/// </summary>
+		/// <returns>A copy of the asteroid field.</returns>
+		public AsteroidField Instantiate()
+		{
+			return this.Clone();
+		}
 	}
 }

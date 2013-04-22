@@ -60,7 +60,11 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
+    <Compile Include="Modding\DataFile.cs" />
+    <Compile Include="Modding\DataParsingException.cs" />
+    <Compile Include="Modding\Field.cs" />
     <Compile Include="Modding\IStellarObjectLocation.cs" />
+    <Compile Include="Modding\Record.cs" />
     <Compile Include="Modding\RingStellarObjectLocation.cs" />
     <Compile Include="Game\WarpPoint.cs" />
     <Compile Include="Game\Storm.cs" />

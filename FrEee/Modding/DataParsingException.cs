@@ -1,0 +1,33 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace FrEee.Modding
+{
+	/// <summary>
+	/// Exceptiion thrown when parsing mod data.
+	/// </summary>
+	public class DataParsingException : Exception
+	{
+		public string Filename { get; private set; }
+		public Record Record { get; private set; }
+		public Field Field { get; private set; }
+
+		public DataParsingException(string message, string filename, Record record = null, Field field = null)
+			: base(message + "\nIn data file: " + filename + "\nIn record: " + record + "\nIn field: " + field)
+		{
+			Filename = filename;
+			Record = record;
+			Field = field;
+		}
+
+		public DataParsingException(string message, Exception inner, string filename, Record record = null, Field field = null)
+			: base(message + "\nIn data file: " + filename + "\nIn record: " + record + "\nIn field: " + field, inner)
+		{
+			Filename = filename;
+			Record = record;
+			Field = field;
+		}
+	}
+}

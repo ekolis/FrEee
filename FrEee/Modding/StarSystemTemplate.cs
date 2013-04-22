@@ -8,15 +8,19 @@ namespace FrEee.Modding
 {
 	/// <summary>
 	/// A template for creating star systems.
-	/// Maps to an entry in StarSystems.json (SystemTypes.txt in SE4).
+	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
 	public class StarSystemTemplate : ITemplate<StarSystem>
 	{
+		/// <summary>
+		/// Creates an empty star system template.
+		/// </summary>
 		public StarSystemTemplate()
 		{
 			Abilities = new List<Ability>();
 			WarpPointAbilities = new List<Ability>();
 			StellarObjectLocations = new List<IStellarObjectLocation>();
+			Radius = 8;
 		}
 
 		/// <summary>
