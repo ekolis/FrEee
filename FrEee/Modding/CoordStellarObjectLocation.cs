@@ -22,6 +22,8 @@ namespace FrEee.Modding
 		/// </summary>
 		public bool UseCenteredCoordinates { get; set; }
 
+		public Point? LastResult { get; private set; }
+
 		public Point Resolve(StarSystem sys)
 		{
 			int realx = Coordinates.X - (UseCenteredCoordinates ? 0 : 6);
@@ -36,7 +38,8 @@ namespace FrEee.Modding
 				if (realx < -sys.Radius || realx > sys.Radius || realy < -sys.Radius || realy > sys.Radius)
 					throw new Exception("Invalid location \"Coord " + Coordinates.X + ", " + Coordinates.Y + "\" specified for system of radius " + sys.Radius + ".");
 			}
-			return new Point(realx, realy);
+			LastResult = new Point(realx, realy);
+			return LastResult.Value;
 		}
 	}
 }

@@ -159,7 +159,7 @@ namespace FrEee.Modding
 						int ring;
 						if (!int.TryParse(pos.Substring("Ring ".Length), out ring))
 						{
-							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected number after Ring.", CurrentFileName, rec));
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Ring.", CurrentFileName, rec));
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new RingStellarObjectLocation { Ring = ring, StellarObjectTemplate = sobjTemplate });
@@ -190,6 +190,21 @@ namespace FrEee.Modding
 							continue;
 						}
 						sst.StellarObjectLocations.Add(new CoordStellarObjectLocation { Coordinates = new Point(x, y), UseCenteredCoordinates = isCentered, StellarObjectTemplate = sobjTemplate });
+					}
+					else if (pos.StartsWith("Same As"))
+					{
+						int idx;
+						if (!int.TryParse(pos.Substring("Same As ".Length), out idx))
+						{
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Same As.", CurrentFileName, rec));
+							continue;
+						}
+						if (idx > sst.StellarObjectLocations.Count)
+						{
+							errors.Add(new DataParsingException("A \"Same As\" stellar object location can reference only previously defined locations.", CurrentFileName, rec));
+							continue;
+						}
+						sst.StellarObjectLocations.Add(new SameAsStellarObjectLocation { StarSystemTemplate = sst, TargetIndex = idx, StellarObjectTemplate = sobjTemplate });
 					}
 				}
 			}

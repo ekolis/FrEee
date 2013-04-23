@@ -18,6 +18,8 @@ namespace FrEee.Modding
 
 		public int Ring { get; set; }
 
+		public Point? LastResult { get; private set; }
+
 		public Point Resolve(StarSystem sys)
 		{
 			if (Ring < 1 || Ring > sys.Radius + 1)
@@ -35,7 +37,8 @@ namespace FrEee.Modding
 			}
 			if (!pts.Any())
 				throw new Exception("Cannot place stellar object - no empty sectors are available in ring " + Ring + ".");
-			return pts.PickRandom();
+			LastResult = pts.PickRandom();
+			return LastResult.Value;
 		}
 	}
 }

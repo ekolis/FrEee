@@ -145,6 +145,7 @@
     </Compile>
     <Compile Include="ITemplate.cs" />
     <Compile Include="Modding\Mod.cs" />
+    <Compile Include="Modding\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\StarSystemTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

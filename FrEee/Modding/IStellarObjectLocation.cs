@@ -20,5 +20,11 @@ namespace FrEee.Modding
 		/// <param name="radius">The star system.</param>
 		/// <returns></returns>
 		Point Resolve(StarSystem sys);
+
+		/// <summary>
+		/// The last coordinates chosen.
+		/// Used for "Same As" locations.
+		/// </summary>
+		Point? LastResult { get; }
 	}
 }
