@@ -11,6 +11,11 @@ namespace FrEee.Game
 	/// </summary>
 	public class WarpPoint : ISpaceObject, ITemplate<WarpPoint>
 	{
+		public WarpPoint()
+		{
+			IntrinsicAbilities = new List<Ability>();
+		}
+		
 		/// <summary>
 		/// The name of this warp point.
 		/// </summary>
@@ -62,6 +67,16 @@ namespace FrEee.Game
 		/// Does this warp point have special abilities?
 		/// </summary>
 		public bool IsUnusual { get; set; }
+
+		public IList<Ability> IntrinsicAbilities { get; private set; }
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				return IntrinsicAbilities;
+			}
+		}
 
 		/// <summary>
 		/// Just copy the warp point's data.

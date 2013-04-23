@@ -12,6 +12,11 @@ namespace FrEee.Game
 	/// </summary>
 	public class Planet : ISpaceObject, ITemplate<Planet>
 	{
+		public Planet()
+		{
+			IntrinsicAbilities = new List<Ability>();
+		}
+
 		/// <summary>
 		/// The name of this planet.
 		/// </summary>
@@ -66,6 +71,17 @@ namespace FrEee.Game
 			get
 			{
 				return Pictures.GetStellarObjectPortrait(PictureNumber);
+			}
+		}
+
+		public IList<Ability> IntrinsicAbilities { get; private set; }
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				// TODO - take into account colony abilities once we have colonies
+				return IntrinsicAbilities;
 			}
 		}
 

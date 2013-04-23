@@ -114,7 +114,7 @@ namespace FrEee.Modding
 						if (!rec.TryFindFieldValue("Obj Position", out temp, ref start, null, start))
 						{
 							errors.Add(new DataParsingException("Could not find \"Obj Position\" field.", CurrentFileName, rec));
-							break; // couldn't load next stellar object template
+							continue; // skip this stellar object
 						}
 						else
 							pos = temp;
@@ -126,8 +126,96 @@ namespace FrEee.Modding
 					ITemplate<ISpaceObject> sobjTemplate;
 					if (sobjtype == "Star")
 					{
-						var template = new Star();
-						// TODO - set star attributes
+						var template = new StarTemplate();
+
+						// TODO - load star abilities from StellarAbilityTypes.txt
+
+						if (!rec.TryFindFieldValue("Obj " + count + " Size", out temp, ref start, null, start))
+						{
+							if (!rec.TryFindFieldValue("Obj Size", out temp, ref start, null, start))
+							{
+								errors.Add(new DataParsingException("Could not find \"Obj Size\" field for star.", CurrentFileName, rec));
+								continue; // skip this stellar object
+							}
+							else
+							{
+								if (temp == "Any")
+									template.Size = null;
+								else
+								{
+									try
+									{
+										template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+									}
+									catch (ArgumentException ex)
+									{
+										errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, CurrentFileName, rec));
+										continue; // skip this stellar object
+									}
+								}
+							}
+						}
+						else
+						{
+							if (temp == "Any")
+								template.Size = null;
+							else
+							{
+								try
+								{
+									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+								}
+								catch (ArgumentException ex)
+								{
+									errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, CurrentFileName, rec));
+									continue; // skip this stellar object
+								}
+							}
+						}
+						start++;
+
+						if (!rec.TryFindFieldValue("Obj " + count + " Age", out temp, ref start, null, start))
+						{
+							if (!rec.TryFindFieldValue("Obj Age", out temp, ref start, null, start))
+							{
+								errors.Add(new DataParsingException("Could not find \"Obj Age\" field for star.", CurrentFileName, rec));
+								continue; // skip this stellar object
+							}
+							else
+								template.Age = temp == "Any" ? null : temp;
+						}
+						else
+							template.Age = temp == "Any" ? null : temp;
+						start++;
+
+						if (!rec.TryFindFieldValue("Obj " + count + " Color", out temp, ref start, null, start))
+						{
+							if (!rec.TryFindFieldValue("Obj Color", out temp, ref start, null, start))
+							{
+								errors.Add(new DataParsingException("Could not find \"Obj Color\" field for star.", CurrentFileName, rec));
+								continue; // skip this stellar object
+							}
+							else
+								template.Color = temp == "Any" ? null : temp;
+						}
+						else
+							template.Color = temp == "Any" ? null : temp;
+						start++;
+
+						if (!rec.TryFindFieldValue("Obj " + count + " Luminosity", out temp, ref start, null, start))
+						{
+							if (!rec.TryFindFieldValue("Obj Luminosity", out temp, ref start, null, start))
+							{
+								errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field.", CurrentFileName, rec));
+								continue; // skip this stellar object
+							}
+							else
+								template.Brightness = temp == "Any" ? null : temp;
+						}
+						else
+							template.Brightness = temp == "Any" ? null : temp;
+						start++;
+
 						sobjTemplate = template;
 					}
 					else if (sobjtype == "Planet")

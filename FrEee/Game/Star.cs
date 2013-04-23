@@ -12,6 +12,11 @@ namespace FrEee.Game
 	/// </summary>
 	public class Star : ISpaceObject, ITemplate<Star>
 	{
+		public Star()
+		{
+			IntrinsicAbilities = new List<Ability>();
+		}
+
 		/// <summary>
 		/// The name of this star.
 		/// </summary>
@@ -71,6 +76,16 @@ namespace FrEee.Game
 			get
 			{
 				return Pictures.GetStellarObjectPortrait(PictureNumber);
+			}
+		}
+
+		public IList<Ability> IntrinsicAbilities { get; private set; }
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				return IntrinsicAbilities;
 			}
 		}
 

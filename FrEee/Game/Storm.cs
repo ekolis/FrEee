@@ -12,6 +12,11 @@ namespace FrEee.Game
 	/// </summary>
 	public class Storm : ISpaceObject, ITemplate<Storm>
 	{
+		public Storm()
+		{
+			IntrinsicAbilities = new List<Ability>();
+		}
+
 		/// <summary>
 		/// The name of this storm.
 		/// </summary>
@@ -58,6 +63,16 @@ namespace FrEee.Game
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
 		public string CombatTile { get; set; }
+
+		public IList<Ability> IntrinsicAbilities { get; private set; }
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				return IntrinsicAbilities;
+			}
+		}
 
 		/// <summary>
 		/// Just copy the storm's data.

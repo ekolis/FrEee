@@ -148,6 +148,7 @@
     <Compile Include="Modding\Mod.cs" />
     <Compile Include="Modding\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\StarSystemTemplate.cs" />
+    <Compile Include="Modding\StarTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\Controls\Pager.resx">

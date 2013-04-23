@@ -30,5 +30,15 @@ namespace FrEee.Game
 		/// A picture used to represent this space object in reports.
 		/// </summary>
 		Image Portrait { get; }
+
+		/// <summary>
+		/// Abilities intrinsically possessed by this space object.
+		/// </summary>
+		IList<Ability> IntrinsicAbilities { get; }
+
+		/// <summary>
+		/// All abilities possessed by this space object, whether intrinsic or inherited.
+		/// </summary>
+		IEnumerable<Ability> Abilities { get; }
 	}
 }
