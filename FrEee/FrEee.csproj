@@ -60,6 +60,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
+    <Compile Include="Modding\CoordStellarObjectLocation.cs" />
     <Compile Include="Modding\DataFile.cs" />
     <Compile Include="Modding\DataParsingException.cs" />
     <Compile Include="Modding\Field.cs" />

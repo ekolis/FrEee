@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using FrEee.Game;
+using System.Drawing;
 
 namespace FrEee.Modding
 {
@@ -158,11 +159,37 @@ namespace FrEee.Modding
 						int ring;
 						if (!int.TryParse(pos.Substring("Ring ".Length), out ring))
 						{
-							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\".", CurrentFileName, rec));
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected number after Ring.", CurrentFileName, rec));
 							continue;
 						}
+						sst.StellarObjectLocations.Add(new RingStellarObjectLocation { Ring = ring, StellarObjectTemplate = sobjTemplate });
+					}
+					else if (pos.StartsWith("Coord ") || pos.StartsWith("Centered Coord "))
+					{
+						int x, y;
+						string coordsData;
+						bool isCentered = pos.StartsWith("Centered Coord ");
+						if (isCentered)
+							coordsData = pos.Substring("Centered Coord ".Length);
 						else
-							sst.StellarObjectLocations.Add(new RingStellarObjectLocation { Ring = ring, StellarObjectTemplate = sobjTemplate });
+							coordsData = pos.Substring("Coord ".Length);
+						var splitData = coordsData.Split(',');
+						if (splitData.Length < 2)
+						{
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", CurrentFileName, rec));
+							continue;
+						}
+						if (!int.TryParse(splitData[0].Trim(), out x))
+						{
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", CurrentFileName, rec));
+							continue;
+						}
+						if (!int.TryParse(splitData[1].Trim(), out y))
+						{
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected two comma separated integers after Coord.", CurrentFileName, rec));
+							continue;
+						}
+						sst.StellarObjectLocations.Add(new CoordStellarObjectLocation { Coordinates = new Point(x, y), UseCenteredCoordinates = isCentered, StellarObjectTemplate = sobjTemplate });
 					}
 				}
 			}
