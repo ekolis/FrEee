@@ -18,20 +18,23 @@ namespace FrEee.Modding
 
 		public int Ring { get; set; }
 
-		public Point Resolve(int radius)
+		public Point Resolve(StarSystem sys)
 		{
-			if (Ring < 1 || Ring > radius + 1)
-				throw new Exception("Invalid location \"Ring " + Ring + "\" specified for system of radius " + radius + ".");
+			if (Ring < 1 || Ring > sys.Radius + 1)
+				throw new Exception("Invalid location \"Ring " + Ring + "\" specified for system of radius " + sys.Radius + ".");
 			var pts = new List<Point>();
 			var dist = Ring - 1;
 			for (int x = -dist; x <= dist; x++)
 			{
 				for (int y = -dist; y <= dist; y++)
 				{
-					if (Math.Abs(x) == dist || Math.Abs(y) == dist)
+					// Don't let stellar objects overlap
+					if (Math.Abs(x) == dist || Math.Abs(y) == dist && sys.GetSector(x, y).SpaceObjects.Count == 0)
 						pts.Add(new Point(x, y));
 				}
 			}
+			if (!pts.Any())
+				throw new Exception("Cannot place stellar object - no empty sectors are available in ring " + Ring + ".");
 			return pts.PickRandom();
 		}
 	}

@@ -75,7 +75,7 @@ namespace FrEee.Modding
 				sys.Abilities.Add(abil);
 			sys.WarpPointAbilities = WarpPointAbilities; // warp points will be generated later in galaxy generation
 			foreach (var loc in StellarObjectLocations)
-				sys.GetSector(loc.Resolve(Radius)).SpaceObjects.Add(loc.StellarObjectTemplate.Instantiate());
+				sys.GetSector(loc.Resolve(sys)).SpaceObjects.Add(loc.StellarObjectTemplate.Instantiate());
 			return sys;
 		}
 	}

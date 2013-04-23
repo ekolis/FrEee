@@ -17,8 +17,8 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Chooses a sector.
 		/// </summary>
-		/// <param name="radius">The radius of the star system.</param>
+		/// <param name="radius">The star system.</param>
 		/// <returns></returns>
-		Point Resolve(int radius);
+		Point Resolve(StarSystem sys);
 	}
 }
