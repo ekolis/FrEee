@@ -206,6 +206,16 @@ namespace FrEee.Modding
 						}
 						sst.StellarObjectLocations.Add(new SameAsStellarObjectLocation { StarSystemTemplate = sst, TargetIndex = idx, StellarObjectTemplate = sobjTemplate });
 					}
+					else if (pos.StartsWith("Circle Radius "))
+					{
+						int radius;
+						if (!int.TryParse(pos.Substring("Circle Radius ".Length), out radius))
+						{
+							errors.Add(new DataParsingException("Could not parse stellar object location \"" + pos + "\". Expected integer after Circle Radius.", CurrentFileName, rec));
+							continue;
+						}
+						sst.StellarObjectLocations.Add(new CircleRadiusStellarObjectLocation { Radius = radius, StellarObjectTemplate = sobjTemplate });
+					}
 				}
 			}
 		}
