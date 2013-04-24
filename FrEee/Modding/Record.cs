@@ -42,7 +42,7 @@ namespace FrEee.Modding
 		}
 		
 		/// <summary>
-		/// Tries to find a field value, and returns true on success and false on failure.
+		/// Tries to find a field value.
 		/// </summary>
 		/// <param name="fieldName">The name to search for.</param>
 		/// <param name="log">If an exception needs to be logged, pass it here.</param>
@@ -52,9 +52,23 @@ namespace FrEee.Modding
 		/// <returns>true on success, false on failure</returns>
 		public bool TryFindFieldValue(string fieldName, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0)
 		{
+			return TryFindFieldValue(new string[] { fieldName }, out value, ref index, log, startIndex);
+		}
+
+		/// <summary>
+		/// Tries to find a field value from the first of any of a number of fields.
+		/// </summary>
+		/// <param name="fieldNames">The name to search for.</param>
+		/// <param name="log">If an exception needs to be logged, pass it here.</param>
+		/// <param name="value">The field value.</param>
+		/// <param name="index">The field index.</param>
+		/// <param name="startIndex"></param>
+		/// <returns>true on success, false on failure</returns>
+		public bool TryFindFieldValue(IEnumerable<string> fieldNames, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0)
+		{
 			for (var i = startIndex; i < Fields.Count; i++)
 			{
-				if (Fields[i].Name == fieldName)
+				if (fieldNames.Contains(Fields[i].Name))
 				{
 					value = Fields[i].Value;
 					index = i;
@@ -62,7 +76,7 @@ namespace FrEee.Modding
 				}
 			}
 			if (log != null)
-				log.Add(new DataParsingException("Could not find field \"" + fieldName + ".", Mod.CurrentFileName, this));
+				log.Add(new DataParsingException("Could not find fields: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
 			value = null;
 			return false;
 		}

@@ -65,7 +65,11 @@
     <Compile Include="Modding\DataFile.cs" />
     <Compile Include="Modding\DataParsingException.cs" />
     <Compile Include="Modding\Field.cs" />
+    <Compile Include="Modding\Loaders\AbilityLoader.cs" />
+    <Compile Include="Modding\Loaders\ILoader.cs" />
     <Compile Include="Modding\IStellarObjectLocation.cs" />
+    <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
+    <Compile Include="Modding\PlanetTemplate.cs" />
     <Compile Include="Modding\Record.cs" />
     <Compile Include="Modding\RingStellarObjectLocation.cs" />
     <Compile Include="Game\WarpPoint.cs" />
