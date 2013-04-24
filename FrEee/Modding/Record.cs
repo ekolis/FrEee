@@ -48,11 +48,12 @@ namespace FrEee.Modding
 		/// <param name="log">If an exception needs to be logged, pass it here.</param>
 		/// <param name="value">The field value.</param>
 		/// <param name="index">The field index.</param>
-		/// <param name="startIndex"></param>
+		/// <param name="startIndex">Where to start in the field list.</param>
+		/// <param name="allowSkip">Allow skipping fields to find the one we want?</param>
 		/// <returns>true on success, false on failure</returns>
-		public bool TryFindFieldValue(string fieldName, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0)
+		public bool TryFindFieldValue(string fieldName, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0, bool allowSkip = false)
 		{
-			return TryFindFieldValue(new string[] { fieldName }, out value, ref index, log, startIndex);
+			return TryFindFieldValue(new string[] { fieldName }, out value, ref index, log, startIndex, allowSkip);
 		}
 
 		/// <summary>
@@ -62,9 +63,10 @@ namespace FrEee.Modding
 		/// <param name="log">If an exception needs to be logged, pass it here.</param>
 		/// <param name="value">The field value.</param>
 		/// <param name="index">The field index.</param>
-		/// <param name="startIndex"></param>
+		/// <param name="startIndex">Where to start in the field list.</param>
+		/// <param name="allowSkip">Allow skipping fields to find the one we want?</param>
 		/// <returns>true on success, false on failure</returns>
-		public bool TryFindFieldValue(IEnumerable<string> fieldNames, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0)
+		public bool TryFindFieldValue(IEnumerable<string> fieldNames, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0, bool allowSkip = false)
 		{
 			for (var i = startIndex; i < Fields.Count; i++)
 			{
@@ -74,9 +76,11 @@ namespace FrEee.Modding
 					index = i;
 					return true;
 				}
+				if (!allowSkip)
+					break;
 			}
 			if (log != null)
-				log.Add(new DataParsingException("Could not find fields: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
+				log.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
 			value = null;
 			return false;
 		}

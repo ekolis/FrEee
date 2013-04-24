@@ -22,43 +22,26 @@ namespace FrEee.Modding.Loaders
 				var abil = new Ability();
 				string temp;
 
-				if (!rec.TryFindFieldValue("Ability " + count + " Type", out temp, ref start, null, start))
-				{
-					if (!rec.TryFindFieldValue("Ability Type", out temp, ref start, null, start))
-						yield break; // couldn't load next ability
-					else
-						abil.Name = temp;
-				}
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start))
+					yield break; // couldn't load next ability
 				else
 					abil.Name = temp;
 				start++;
-				if (!rec.TryFindFieldValue("Ability " + count + " Descr", out temp, ref start, null, start))
-				{
-					if (!rec.TryFindFieldValue("Ability Descr", out temp, ref start, null, start))
-						abil.Description = ""; // no description for this ability
-					else
-						abil.Description = temp;
-				}
+
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Descr", "Ability Descr" }, out temp, ref start, null, start))
+					abil.Description = ""; // no description for this ability
 				else
 					abil.Description = temp;
 				start++;
-				if (!rec.TryFindFieldValue("Ability " + count + " Val 1", out temp, ref start, null, start))
-				{
-					if (!rec.TryFindFieldValue("Ability Val", out temp, ref start, null, start))
-						continue; // leave default values
-					else
-						abil.Values.Add(temp);
-				}
+
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Val 1", "Ability " + count + " Val", "Ability Val 1", "Ability Val" }, out temp, ref start, null, start))
+					continue; // leave default values
 				else
 					abil.Values.Add(temp);
 				start++;
-				if (!rec.TryFindFieldValue("Ability " + count + " Val 2", out temp, ref start, null, start))
-				{
-					if (!rec.TryFindFieldValue("Ability Val", out temp, ref start, null, start))
-						continue; // leave default values
-					else
-						abil.Values.Add(temp);
-				}
+
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Val 2", "Ability " + count + " Val", "Ability Val 2", "Ability Val" }, out temp, ref start, null, start))
+					continue; // leave default value
 				else
 					abil.Values.Add(temp);
 				start++;

@@ -20,19 +20,19 @@ namespace FrEee.Modding.Loaders
 				string temp;
 				int index = -1;
 
-				rec.TryFindFieldValue("Name", out temp, ref index, mod.Errors);
+				rec.TryFindFieldValue("Name", out temp, ref index, mod.Errors, 0, true);
 				mod.StarSystemTemplates.Add(temp, sst);
 
-				rec.TryFindFieldValue("Description", out temp, ref index, mod.Errors);
+				rec.TryFindFieldValue("Description", out temp, ref index, mod.Errors, 0, true);
 				sst.Description = temp;
 
-				rec.TryFindFieldValue("Background Bitmap", out temp, ref index, mod.Errors);
+				rec.TryFindFieldValue("Background Bitmap", out temp, ref index, mod.Errors, 0, true);
 				sst.BackgroundImagePath = temp;
 
-				rec.TryFindFieldValue("Empires Can Start In", out temp, ref index, mod.Errors);
+				rec.TryFindFieldValue("Empires Can Start In", out temp, ref index, mod.Errors, 0, true);
 				sst.EmpiresCanStartIn = bool.Parse(temp);
 
-				rec.TryFindFieldValue("Non-Tiled Center Pic", out temp, ref index, mod.Errors);
+				rec.TryFindFieldValue("Non-Tiled Center Pic", out temp, ref index, mod.Errors, 0, true);
 				sst.NonTiledCenterCombatImage = bool.Parse(temp);
 
 				foreach (var abil in AbilityLoader.Load(rec))
@@ -48,25 +48,16 @@ namespace FrEee.Modding.Loaders
 					string sobjtype;
 					string pos;
 
-					if (!rec.TryFindFieldValue("Obj " + count + " Physical Type", out temp, ref start, null, start))
-					{
-						if (!rec.TryFindFieldValue("Obj Physical Type", out temp, ref start, null, start))
-							break; // couldn't load next stellar object template
-						else
-							sobjtype = temp;
-					}
+					if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Physical Type", "Obj Physical Type" }, out temp, ref start, null, start, true))
+						break; // couldn't load next stellar object template
 					else
 						sobjtype = temp;
 					start++;
-					if (!rec.TryFindFieldValue("Obj " + count + " Position", out temp, ref start, null, start))
+
+					if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Position", "Obj Position" }, out temp, ref start, null, start))
 					{
-						if (!rec.TryFindFieldValue("Obj Position", out temp, ref start, null, start))
-						{
-							mod.Errors.Add(new DataParsingException("Could not find \"Obj Position\" field.", Mod.CurrentFileName, rec));
-							continue; // skip this stellar object
-						}
-						else
-							pos = temp;
+						mod.Errors.Add(new DataParsingException("Could not find \"Obj Position\" field.", Mod.CurrentFileName, rec));
+						continue; // skip this stellar object
 					}
 					else
 						pos = temp;
@@ -79,30 +70,10 @@ namespace FrEee.Modding.Loaders
 
 						// TODO - load star abilities from StellarAbilityTypes.txt
 
-						if (!rec.TryFindFieldValue("Obj " + count + " Size", out temp, ref start, null, start))
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
 						{
-							if (!rec.TryFindFieldValue("Obj Size", out temp, ref start, null, start))
-							{
-								mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for star.", Mod.CurrentFileName, rec));
-								continue; // skip this stellar object
-							}
-							else
-							{
-								if (temp == "Any")
-									template.Size = null;
-								else
-								{
-									try
-									{
-										template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
-									}
-									catch (ArgumentException ex)
-									{
-										mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
-										continue; // skip this stellar object
-									}
-								}
-							}
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for star.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
 						}
 						else
 						{
@@ -123,43 +94,28 @@ namespace FrEee.Modding.Loaders
 						}
 						start++;
 
-						if (!rec.TryFindFieldValue("Obj " + count + " Age", out temp, ref start, null, start))
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Age", "Obj Age" }, out temp, ref start, null, start))
 						{
-							if (!rec.TryFindFieldValue("Obj Age", out temp, ref start, null, start))
-							{
-								mod.Errors.Add(new DataParsingException("Could not find \"Obj Age\" field for star.", Mod.CurrentFileName, rec));
-								continue; // skip this stellar object
-							}
-							else
-								template.Age = temp == "Any" ? null : temp;
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Age\" field for star.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
 						}
 						else
 							template.Age = temp == "Any" ? null : temp;
 						start++;
 
-						if (!rec.TryFindFieldValue("Obj " + count + " Color", out temp, ref start, null, start))
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Color", "Obj Color" }, out temp, ref start, null, start))
 						{
-							if (!rec.TryFindFieldValue("Obj Color", out temp, ref start, null, start))
-							{
-								mod.Errors.Add(new DataParsingException("Could not find \"Obj Color\" field for star.", Mod.CurrentFileName, rec));
-								continue; // skip this stellar object
-							}
-							else
-								template.Color = temp == "Any" ? null : temp;
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Color\" field for star.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
 						}
 						else
 							template.Color = temp == "Any" ? null : temp;
 						start++;
 
-						if (!rec.TryFindFieldValue("Obj " + count + " Luminosity", out temp, ref start, null, start))
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Luminosity", "Obj Luminosity" }, out temp, ref start, null, start))
 						{
-							if (!rec.TryFindFieldValue("Obj Luminosity", out temp, ref start, null, start))
-							{
-								mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field.", Mod.CurrentFileName, rec));
-								continue; // skip this stellar object
-							}
-							else
-								template.Brightness = temp == "Any" ? null : temp;
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
 						}
 						else
 							template.Brightness = temp == "Any" ? null : temp;
