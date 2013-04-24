@@ -11,6 +11,11 @@ namespace FrEee.Modding
 	/// </summary>
 	public class PlanetTemplate : ITemplate<Planet>
 	{
+		public PlanetTemplate()
+		{
+			Abilities = new List<Ability>();
+		}
+		
 		/// <summary>
 		/// Abilities to assign to the planet.
 		/// </summary>

@@ -114,7 +114,7 @@ namespace FrEee.Modding.Loaders
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Luminosity", "Obj Luminosity" }, out temp, ref start, null, start))
 						{
-							mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field.", Mod.CurrentFileName, rec));
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Luminosity\" field for star.", Mod.CurrentFileName, rec));
 							continue; // skip this stellar object
 						}
 						else
@@ -125,8 +125,52 @@ namespace FrEee.Modding.Loaders
 					}
 					else if (sobjtype == "Planet")
 					{
-						var template = new Planet();
-						// TODO - set planet attributes
+						var template = new PlanetTemplate();
+
+						// TODO - load planet abilities from StellarAbilityTypes.txt
+
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
+						{
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for planet.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
+						}
+						else
+						{
+							if (temp == "Any")
+								template.Size = null;
+							else
+							{
+								try
+								{
+									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+								}
+								catch (ArgumentException ex)
+								{
+									mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									continue; // skip this stellar object
+								}
+							}
+						}
+						start++;
+
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Atmosphere", "Obj Atmosphere" }, out temp, ref start, null, start))
+						{
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Atmosphere\" field for planet.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
+						}
+						else
+							template.Atmosphere = temp == "Any" ? null : temp;
+						start++;
+
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Composition", "Obj Composition" }, out temp, ref start, null, start))
+						{
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Composition\" field for planet.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
+						}
+						else
+							template.Surface = temp == "Any" ? null : temp;
+						start++;
+
 						sobjTemplate = template;
 					}
 					else if (sobjtype == "Asteroids")
