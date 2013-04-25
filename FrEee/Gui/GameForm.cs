@@ -130,6 +130,8 @@ namespace FrEee
 		{
 			if (sobj is Star)
 				return new StarReport((Star)sobj);
+			if (sobj is Planet)
+				return new PlanetReport((Planet)sobj);
 			// TODO - other typeos of space objects
 			return null;
 		}

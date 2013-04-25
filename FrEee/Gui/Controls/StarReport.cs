@@ -55,7 +55,8 @@ namespace FrEee.Gui.Controls
 				txtDescription.Text = Star.Description;
 				picPortrait.Image = Star.Portrait;
 				lstAbilities.Items.Clear();
-				// TODO - display star abilities
+				foreach (var abil in Star.Abilities)
+					lstAbilities.Items.Add(abil.Description);
 			}
 
 			base.OnPaint(e);

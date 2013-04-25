@@ -60,6 +60,12 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
+    <Compile Include="Gui\Controls\PlanetReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\PlanetReport.Designer.cs">
+      <DependentUpon>PlanetReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />
     <Compile Include="Modding\CoordStellarObjectLocation.cs" />
     <Compile Include="Modding\DataFile.cs" />
@@ -155,6 +161,9 @@
     <Compile Include="Modding\StarTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Gui\Controls\PlanetReport.resx">
+      <DependentUpon>PlanetReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\Pager.resx">
       <DependentUpon>Pager.cs</DependentUpon>
     </EmbeddedResource>

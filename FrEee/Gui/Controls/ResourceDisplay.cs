@@ -44,8 +44,10 @@ namespace FrEee.Gui.Controls
 			}
 		}
 
-		public int Amount { get; set; }
+		private int amount;
+		public int Amount { get { return amount; } set { amount = value; Invalidate(); } }
 
-		public int? Change { get; set; }
+		private int? change;
+		public int? Change { get { return change; } set { change = value; Invalidate(); } }
 	}
 }
