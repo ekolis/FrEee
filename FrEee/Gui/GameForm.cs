@@ -132,6 +132,8 @@ namespace FrEee
 				return new StarReport((Star)sobj);
 			if (sobj is Planet)
 				return new PlanetReport((Planet)sobj);
+			if (sobj is AsteroidField)
+				return new AsteroidFieldReport((AsteroidField)sobj);
 			// TODO - other typeos of space objects
 			return null;
 		}

@@ -40,6 +40,11 @@ namespace FrEee.Modding
 
 			if (setCurrent)
 				Current = mod;
+
+			// TODO - display errors to user
+			foreach (var err in mod.Errors)
+				Console.WriteLine(err.Message);
+
 			return mod;
 		}
 
