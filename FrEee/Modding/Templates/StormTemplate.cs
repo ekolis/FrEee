@@ -4,22 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// A template for generating storms.
 	/// </summary>
 	public class StormTemplate : ITemplate<Storm>
 	{
-		public StormTemplate()
-		{
-			Abilities = new List<Ability>();
-		}
-		
 		/// <summary>
 		/// Abilities to assign to the storm.
 		/// </summary>
-		public IList<Ability> Abilities { get; private set; }
+		public RandomAbilityTemplate Abilities { get; set; }
 
 		/// <summary>
 		/// The size of the storm, or null to choose a size randomly.
@@ -29,7 +24,9 @@ namespace FrEee.Modding
 		public Storm Instantiate()
 		{
 			var storm = new Storm();
-			foreach (var abil in Abilities)
+
+			var abil = Abilities.Instantiate();
+			if (abil != null)
 				storm.IntrinsicAbilities.Add(abil);
 
 			// TODO - use SectType.txt entries for instantiating storms

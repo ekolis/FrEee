@@ -6,6 +6,7 @@ using System.IO;
 using FrEee.Game;
 using System.Drawing;
 using FrEee.Modding.Loaders;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Modding
 {
@@ -33,6 +34,9 @@ namespace FrEee.Modding
 		{
 			var mod = new Mod();
 
+			CurrentFileName = Path.Combine("Mods", path, "Data", "StellarAbilityTypes.txt");
+			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+
 			CurrentFileName = Path.Combine("Mods", path, "Data", "SystemTypes.txt");
 			new StarSystemLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
@@ -42,7 +46,7 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - display errors to user
-			foreach (var err in mod.Errors)
+			foreach (var err in Mod.Errors)
 				Console.WriteLine(err.Message);
 
 			return mod;
@@ -52,6 +56,7 @@ namespace FrEee.Modding
 		{
 			Errors = new List<DataParsingException>();
 			StarSystemTemplates = new Dictionary<string, StarSystemTemplate>();
+			StellarAbilityTemplates = new Dictionary<string, RandomAbilityTemplate>();
 		}
 
 		/// <summary>
@@ -60,8 +65,13 @@ namespace FrEee.Modding
 		public IDictionary<string, StarSystemTemplate> StarSystemTemplates { get; private set; }
 
 		/// <summary>
+		/// Templates for stellar abilities.
+		/// </summary>
+		public IDictionary<string, RandomAbilityTemplate> StellarAbilityTemplates { get; private set; }
+
+		/// <summary>
 		/// Errors encountered when loading the mod.
 		/// </summary>
-		public IList<DataParsingException> Errors { get; private set; }
+		public static IList<DataParsingException> Errors { get; private set; }
 	}
 }

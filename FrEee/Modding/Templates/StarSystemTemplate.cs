@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// A template for creating star systems.

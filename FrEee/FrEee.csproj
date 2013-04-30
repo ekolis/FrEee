@@ -85,10 +85,12 @@
     <Compile Include="Gui\Controls\PlanetReport.Designer.cs">
       <DependentUpon>PlanetReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
+    <Compile Include="Modding\Templates\RandomAbilityTemplate.cs" />
     <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />
     <Compile Include="Modding\CoordStellarObjectLocation.cs" />
-    <Compile Include="Modding\AsteroidFieldTemplate.cs" />
-    <Compile Include="Modding\StormTemplate.cs" />
+    <Compile Include="Modding\Templates\AsteroidFieldTemplate.cs" />
+    <Compile Include="Modding\Templates\StormTemplate.cs" />
     <Compile Include="Modding\DataFile.cs" />
     <Compile Include="Modding\DataParsingException.cs" />
     <Compile Include="Modding\Field.cs" />
@@ -96,7 +98,7 @@
     <Compile Include="Modding\Loaders\ILoader.cs" />
     <Compile Include="Modding\IStellarObjectLocation.cs" />
     <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
-    <Compile Include="Modding\PlanetTemplate.cs" />
+    <Compile Include="Modding\Templates\PlanetTemplate.cs" />
     <Compile Include="Modding\Record.cs" />
     <Compile Include="Modding\RingStellarObjectLocation.cs" />
     <Compile Include="Game\WarpPoint.cs" />
@@ -178,8 +180,8 @@
     <Compile Include="ITemplate.cs" />
     <Compile Include="Modding\Mod.cs" />
     <Compile Include="Modding\SameAsStellarObjectLocation.cs" />
-    <Compile Include="Modding\StarSystemTemplate.cs" />
-    <Compile Include="Modding\StarTemplate.cs" />
+    <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
+    <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\Controls\AsteroidFieldReport.resx">
