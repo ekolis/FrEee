@@ -67,6 +67,12 @@
     <Compile Include="Gui\Controls\AsteroidFieldReport.Designer.cs">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Controls\StormReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\StormReport.Designer.cs">
+      <DependentUpon>StormReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Controls\GalaxyView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -82,6 +88,7 @@
     <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />
     <Compile Include="Modding\CoordStellarObjectLocation.cs" />
     <Compile Include="Modding\AsteroidFieldTemplate.cs" />
+    <Compile Include="Modding\StormTemplate.cs" />
     <Compile Include="Modding\DataFile.cs" />
     <Compile Include="Modding\DataParsingException.cs" />
     <Compile Include="Modding\Field.cs" />
@@ -177,6 +184,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Controls\StormReport.resx">
+      <DependentUpon>StormReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Controls\PlanetReport.resx">
       <DependentUpon>PlanetReport.cs</DependentUpon>

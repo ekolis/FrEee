@@ -135,7 +135,9 @@ namespace FrEee
 				return new PlanetReport((Planet)sobj);
 			if (sobj is AsteroidField)
 				return new AsteroidFieldReport((AsteroidField)sobj);
-			// TODO - other typeos of space objects
+			if (sobj is Storm)
+				return new StormReport((Storm)sobj);
+			// TODO - warp point, ship, fleet, unit group reports
 			return null;
 		}
 

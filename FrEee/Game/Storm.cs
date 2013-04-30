@@ -23,6 +23,11 @@ namespace FrEee.Game
 		public string Name { get; set; }
 
 		/// <summary>
+		/// A description of this storm.
+		/// </summary>
+		public string Description { get; set; }
+
+		/// <summary>
 		/// Storms cannot be obscured by fog of war.
 		/// </summary>
 		public bool CanBeFogged { get { return false; } }

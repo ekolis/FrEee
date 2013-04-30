@@ -225,8 +225,34 @@ namespace FrEee.Modding.Loaders
 					}
 					else if (sobjtype == "Storm")
 					{
-						var template = new Storm();
-						// TODO - set storm attributes
+						var template = new StormTemplate();
+
+						// TODO - load storm abilities from StellarAbilityTypes.txt
+
+						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
+						{
+							mod.Errors.Add(new DataParsingException("Could not find \"Obj Size\" field for storm.", Mod.CurrentFileName, rec));
+							continue; // skip this stellar object
+						}
+						else
+						{
+							if (temp == "Any")
+								template.Size = null;
+							else
+							{
+								try
+								{
+									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+								}
+								catch (ArgumentException ex)
+								{
+									mod.Errors.Add(new DataParsingException("Invalid stellar object size \"" + temp + "\". Must be Tiny, Small, Medium, Large, Huge, or Any.", ex, Mod.CurrentFileName, rec));
+									continue; // skip this stellar object
+								}
+							}
+						}
+						start++;
+
 						sobjTemplate = template;
 					}
 					else
