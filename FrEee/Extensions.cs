@@ -43,5 +43,29 @@ namespace FrEee
 		{
 			return src.ElementAt(rand.Next(src.Count()));
 		}
+
+		public static T MinOrDefault<T>(this IEnumerable<T> stuff)
+		{
+			if (!stuff.Any())
+				return default(T);
+			return stuff.Min();
+		}
+
+		public static TProp MinOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
+		{
+			return stuff.Select(selector).MinOrDefault();
+		}
+
+		public static T MaxOrDefault<T>(this IEnumerable<T> stuff)
+		{
+			if (!stuff.Any())
+				return default(T);
+			return stuff.Max();
+		}
+
+		public static TProp MaxOrDefault<TItem, TProp>(this IEnumerable<TItem> stuff, Func<TItem, TProp> selector)
+		{
+			return stuff.Select(selector).MaxOrDefault();
+		}
 	}
 }

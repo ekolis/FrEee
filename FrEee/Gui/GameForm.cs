@@ -35,22 +35,23 @@ namespace FrEee
 			pagResources.Content.Add(pnlResources);
 			pagResources.Content.Add(pnlResIntel);
 			pagResources.CurrentPage = 0;
-
-			// set up system view
-			// uncomment this to see a star system instead of test mod loading until mods can store space object templates
-			/*var starsys = new StarSystem(8);
-			starsys.GetSector(0, 0).SpaceObjects.Add(new Star { Name = "Tudran Star", Age = "Old", Brightness = "Dim", Color = "Red", Description = "A red giant star.", Size = Game.Size.Large });
-			starsys.GetSector(6, 3).SpaceObjects.Add(new Planet { Name = "Tudran I" });
-			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran II" });
-			starsys.GetSector(1, 5).SpaceObjects.Add(new Planet { Name = "Tudran IIa" });
-			starsys.GetSector(0, 8).SpaceObjects.Add(new WarpPoint { Name = "Warp Point to Fizbon" });
-			starSystemView.StarSystem = starsys;*/
-
+			
 			// set up system view
 			// comment this when showing a star system instead of testing mod loading until mods can store space object templates
 			Mod.Load("Stock");
-			var starsys = Mod.Current.StarSystemTemplates.First().Value.Instantiate();
-			starSystemView.StarSystem = starsys;
+			//var starsys = Mod.Current.StarSystemTemplates.First().Value.Instantiate();
+			//starSystemView.StarSystem = starsys;
+
+			// TODO - load QuadrantTypes.txt as galaxy templates
+			var galaxy = new Galaxy();
+			galaxyView.Galaxy = galaxy;
+			var r = new Random();
+			for (var i = 0; i < 50; i++)
+			{
+				var coords = new Point(r.Next(-20, 20), r.Next(-20, 20));
+				galaxy.StarSystemLocations[coords] = Mod.Current.StarSystemTemplates.PickRandom().Value.Instantiate();
+			}
+			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
@@ -136,6 +137,17 @@ namespace FrEee
 				return new AsteroidFieldReport((AsteroidField)sobj);
 			// TODO - other typeos of space objects
 			return null;
+		}
+
+		private void galaxyView_StarSystemClicked(GalaxyView sender, StarSystem starSystem)
+		{
+			if (starSystem != null)
+				sender.SelectedStarSystem = starSystem;
+		}
+
+		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
+		{
+			starSystemView.StarSystem = starSystem;
 		}
 	}
 }

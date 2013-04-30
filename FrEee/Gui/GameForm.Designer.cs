@@ -32,6 +32,7 @@
 			this.pnlSystemMap = new FrEee.Gui.Controls.GamePanel();
 			this.starSystemView = new FrEee.Gui.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.Gui.Controls.GamePanel();
+			this.galaxyView = new FrEee.Gui.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.Gui.Controls.GamePanel();
 			this.gameShipReport1 = new FrEee.Gui.Controls.ShipReport();
 			this.pnlSystemTabs = new FrEee.Gui.Controls.GamePanel();
@@ -47,6 +48,7 @@
 			this.txtEmpireName = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 			this.pnlSystemMap.SuspendLayout();
+			this.pnlGalaxyMap.SuspendLayout();
 			this.pnlDetailReport.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -90,12 +92,29 @@
 			this.pnlGalaxyMap.BackColor = System.Drawing.Color.Black;
 			this.pnlGalaxyMap.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlGalaxyMap.Controls.Add(this.galaxyView);
 			this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
 			this.pnlGalaxyMap.Location = new System.Drawing.Point(635, 522);
 			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
 			this.pnlGalaxyMap.Size = new System.Drawing.Size(360, 194);
 			this.pnlGalaxyMap.TabIndex = 5;
+			// 
+			// galaxyView
+			// 
+			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.Galaxy = null;
+			this.galaxyView.Location = new System.Drawing.Point(4, 3);
+			this.galaxyView.Name = "galaxyView";
+			this.galaxyView.SelectedStarSystem = null;
+			this.galaxyView.Size = new System.Drawing.Size(351, 186);
+			this.galaxyView.TabIndex = 0;
+			this.galaxyView.Text = "galaxyView1";
+			this.galaxyView.StarSystemClicked += new FrEee.Gui.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
+			this.galaxyView.StarSystemSelected += new FrEee.Gui.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
 			// 
 			// pnlDetailReport
 			// 
@@ -300,6 +319,7 @@
 			this.Name = "GameForm";
 			this.Text = "FrEee";
 			this.pnlSystemMap.ResumeLayout(false);
+			this.pnlGalaxyMap.ResumeLayout(false);
 			this.pnlDetailReport.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
@@ -326,6 +346,7 @@
 		private Gui.Controls.GameProgressBar gameProgressBar1;
 		private Gui.Controls.ShipReport gameShipReport1;
 		private Gui.Controls.StarSystemView starSystemView;
+		private Gui.Controls.GalaxyView galaxyView;
 	}
 }
 

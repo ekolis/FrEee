@@ -60,11 +60,18 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
+    <Compile Include="Game\Galaxy.cs" />
     <Compile Include="Gui\Controls\AsteroidFieldReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Gui\Controls\AsteroidFieldReport.Designer.cs">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Controls\GalaxyView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Gui\Controls\GalaxyView.Designer.cs">
+      <DependentUpon>GalaxyView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Controls\PlanetReport.cs">
       <SubType>UserControl</SubType>
