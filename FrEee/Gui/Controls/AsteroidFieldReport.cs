@@ -50,7 +50,7 @@ namespace FrEee.Gui.Controls
 				picPortrait.Image = AsteroidField.Portrait;
 
 				txtName.Text = AsteroidField.Name;
-				txtSizeSurface.Text = AsteroidField.Size + " " + AsteroidField.Surface + " Planet";
+				txtSizeSurface.Text = AsteroidField.Size + " " + AsteroidField.Surface + " Asteroid Field";
 				txtAtmosphere.Text = AsteroidField.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 

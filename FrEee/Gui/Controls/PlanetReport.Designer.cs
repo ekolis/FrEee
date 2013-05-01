@@ -158,6 +158,7 @@
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			this.gameTabControl1.TabPages.Add(this.pageDetail);
 			// 
 			// txtConstructionTime
 			// 
@@ -530,6 +531,7 @@
 			this.pageOrders.Size = new System.Drawing.Size(312, 426);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
+			this.gameTabControl1.TabPages.Add(this.pageOrders);
 			// 
 			// btnOrdersClear
 			// 
@@ -606,6 +608,7 @@
 			this.pageFacil.Size = new System.Drawing.Size(312, 426);
 			this.pageFacil.TabIndex = 2;
 			this.pageFacil.Text = "Facil";
+			this.gameTabControl1.TabPages.Add(this.pageFacil);
 			// 
 			// txtFacilitySlotsFree
 			// 
@@ -650,6 +653,7 @@
 			this.pageCargo.Size = new System.Drawing.Size(312, 426);
 			this.pageCargo.TabIndex = 3;
 			this.pageCargo.Text = "Cargo";
+			this.gameTabControl1.TabPages.Add(this.pageCargo);
 			// 
 			// txtCargoSpaceFree
 			// 
@@ -691,6 +695,7 @@
 			this.pageAbility.Size = new System.Drawing.Size(312, 426);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
+			this.gameTabControl1.TabPages.Add(this.pageAbility);
 			// 
 			// treeAbilities
 			// 

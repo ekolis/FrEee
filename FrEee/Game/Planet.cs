@@ -15,6 +15,7 @@ namespace FrEee.Game
 		public Planet()
 		{
 			IntrinsicAbilities = new List<Ability>();
+			ResourceValue = new Resources();
 		}
 
 		/// <summary>
@@ -84,6 +85,11 @@ namespace FrEee.Game
 				return IntrinsicAbilities;
 			}
 		}
+
+		/// <summary>
+		/// The resource value of this planet, in %.
+		/// </summary>
+		public Resources ResourceValue { get; set; }
 
 		/// <summary>
 		/// Just copy the planet's data.

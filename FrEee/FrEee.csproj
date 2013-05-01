@@ -61,6 +61,7 @@
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
     <Compile Include="Game\Galaxy.cs" />
+    <Compile Include="Game\Resources.cs" />
     <Compile Include="Gui\Controls\AsteroidFieldReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -184,6 +185,7 @@
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SafeDictionary.cs" />
     <EmbeddedResource Include="Gui\Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </EmbeddedResource>

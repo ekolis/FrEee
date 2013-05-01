@@ -14,6 +14,7 @@ namespace FrEee.Game
 		public AsteroidField()
 		{
 			IntrinsicAbilities = new List<Ability>();
+			ResourceValue = new Resources();
 		}
 
 		/// <summary>
@@ -87,6 +88,11 @@ namespace FrEee.Game
 				return IntrinsicAbilities;
 			}
 		}
+
+		/// <summary>
+		/// The resource value of this asteroid field, in %.
+		/// </summary>
+		public Resources ResourceValue { get; set; }
 
 		/// <summary>
 		/// Just copy the asteroid field's data.

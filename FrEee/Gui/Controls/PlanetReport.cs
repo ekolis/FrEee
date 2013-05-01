@@ -54,10 +54,9 @@ namespace FrEee.Gui.Controls
 				txtAtmosphere.Text = Planet.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 
-				// TODO - load resource value
-				txtValueMinerals.Text = "";
-				txtValueOrganics.Text = "";
-				txtValueRadioactives.Text = "";
+				txtValueMinerals.Text = Planet.ResourceValue["minerals"] + "%";
+				txtValueOrganics.Text = Planet.ResourceValue["organics"] + "%";
+				txtValueRadioactives.Text = Planet.ResourceValue["radioactives"] + "%";
 
 				txtDescription.Text = Planet.Description;
 

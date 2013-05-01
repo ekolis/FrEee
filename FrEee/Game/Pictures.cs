@@ -21,8 +21,8 @@ namespace FrEee.Game
 			// Set up the fake image
 			fakeImage = new Bitmap(128, 128);
 			var g = Graphics.FromImage(fakeImage);
-			g.DrawEllipse(new Pen(Color.White, 1), 0, 0, 128, 128);
-			g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, 128, 128);
+			g.FillEllipse(new SolidBrush(Color.Blue), 10, 10, 108, 108);
+			g.DrawEllipse(new Pen(Color.White, 3), 10, 10, 108, 108);
 		}
 
 		/// <summary>
