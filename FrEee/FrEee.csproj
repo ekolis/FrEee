@@ -87,7 +87,15 @@
       <DependentUpon>PlanetReport.cs</DependentUpon>
     </Compile>
     <Compile Include="INamed.cs" />
+    <Compile Include="Modding\IStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\GalaxyLoader.cs" />
     <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
+    <Compile Include="Modding\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\StarSystemPlacementStrategies\DiffuseStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Templates\GalaxyTemplate.cs" />
     <Compile Include="Modding\Templates\RandomAbilityTemplate.cs" />
     <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />
     <Compile Include="Modding\CoordStellarObjectLocation.cs" />

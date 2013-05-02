@@ -43,14 +43,9 @@ namespace FrEee
 			//starSystemView.StarSystem = starsys;
 
 			// TODO - load QuadrantTypes.txt as galaxy templates
-			var galaxy = new Galaxy();
+			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
+			var galaxy = galtemp.Instantiate();
 			galaxyView.Galaxy = galaxy;
-			var r = new Random();
-			for (var i = 0; i < 50; i++)
-			{
-				var coords = new Point(r.Next(-20, 20), r.Next(-20, 20));
-				galaxy.StarSystemLocations[coords] = Mod.Current.StarSystemTemplates.PickRandom().Instantiate();
-			}
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
 		}
 

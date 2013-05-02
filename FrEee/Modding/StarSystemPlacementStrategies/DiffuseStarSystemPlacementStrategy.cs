@@ -1,0 +1,32 @@
+﻿using FrEee.Game;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+
+namespace FrEee.Modding.StarSystemPlacementStrategies
+{
+	/// <summary>
+	/// Places stars spaced roughly evenly.
+	/// </summary>
+	public class DiffuseStarSystemPlacementStrategy : IStarSystemPlacementStrategy
+	{
+		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
+		{
+			var openPositions = bounds.GetAllPoints();
+			foreach (var sspos in galaxy.StarSystemLocations.Keys)
+				openPositions = openPositions.BlockOut(sspos, buffer);
+			if (!openPositions.Any())
+				return null;
+
+			var r = new Random();
+
+			// sort positions by distance to nearest star
+			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Keys.MinOrDefault(p2 => p2.ManhattanDistance(p)));
+
+			// place a star off in the middle of nowhere
+			return ordered.Last();
+		}
+	}
+}

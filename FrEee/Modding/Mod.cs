@@ -40,6 +40,9 @@ namespace FrEee.Modding
 			CurrentFileName = Path.Combine("Mods", path, "Data", "SystemTypes.txt");
 			new StarSystemLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
+			CurrentFileName = Path.Combine("Mods", path, "Data", "QuadrantTypes.txt");
+			new GalaxyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+
 			CurrentFileName = null;
 
 			if (setCurrent)
@@ -57,6 +60,7 @@ namespace FrEee.Modding
 			Errors = new List<DataParsingException>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
+			GalaxyTemplates = new List<GalaxyTemplate>();
 		}
 
 		/// <summary>
@@ -68,6 +72,11 @@ namespace FrEee.Modding
 		/// Templates for stellar abilities.
 		/// </summary>
 		public ICollection<RandomAbilityTemplate> StellarAbilityTemplates { get; private set; }
+
+		/// <summary>
+		/// Templates for galaxies.
+		/// </summary>
+		public ICollection<GalaxyTemplate> GalaxyTemplates { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.
