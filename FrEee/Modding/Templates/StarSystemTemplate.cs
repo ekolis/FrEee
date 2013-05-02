@@ -10,7 +10,7 @@ namespace FrEee.Modding.Templates
 	/// A template for creating star systems.
 	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
-	public class StarSystemTemplate : ITemplate<StarSystem>
+	public class StarSystemTemplate : ITemplate<StarSystem>, INamed
 	{
 		/// <summary>
 		/// Creates an empty star system template.
@@ -22,6 +22,11 @@ namespace FrEee.Modding.Templates
 			StellarObjectLocations = new List<IStellarObjectLocation>();
 			Radius = 8;
 		}
+
+		/// <summary>
+		/// The name of this star system template.
+		/// </summary>
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The radius of star systems generated from this template.

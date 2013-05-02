@@ -22,7 +22,8 @@ namespace FrEee.Modding.Loaders
 				int index = -1;
 
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
-				mod.StarSystemTemplates.Add(temp, sst);
+				sst.Name = temp;
+				mod.StarSystemTemplates.Add(sst);
 
 				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
 				sst.Description = temp;
@@ -74,14 +75,14 @@ namespace FrEee.Modding.Loaders
 							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for star.", Mod.CurrentFileName, rec));
 							continue; // skip this stellar object
 						}
-						else if (!mod.StellarAbilityTemplates.ContainsKey(temp))
-						{
-							Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
-							continue; // skip this stellar object
-						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates[temp];
+							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							if (template.Abilities == null)
+							{
+								template.Abilities = new RandomAbilityTemplate();
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
@@ -146,14 +147,14 @@ namespace FrEee.Modding.Loaders
 							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for planet.", Mod.CurrentFileName, rec));
 							continue; // skip this stellar object
 						}
-						else if (!mod.StellarAbilityTemplates.ContainsKey(temp))
-						{
-							Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
-							continue; // skip this stellar object
-						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates[temp];
+							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							if (template.Abilities == null)
+							{
+								template.Abilities = new RandomAbilityTemplate();
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
@@ -209,14 +210,14 @@ namespace FrEee.Modding.Loaders
 							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for asteroid field.", Mod.CurrentFileName, rec));
 							continue; // skip this stellar object
 						}
-						else if (!mod.StellarAbilityTemplates.ContainsKey(temp))
-						{
-							Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
-							continue; // skip this stellar object
-						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates[temp];
+							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							if (template.Abilities == null)
+							{
+								template.Abilities = new RandomAbilityTemplate();
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))
@@ -272,14 +273,14 @@ namespace FrEee.Modding.Loaders
 							Mod.Errors.Add(new DataParsingException("Could not find \"Obj Stellar Abil Type\" field for storm.", Mod.CurrentFileName, rec));
 							continue; // skip this stellar object
 						}
-						else if (!mod.StellarAbilityTemplates.ContainsKey(temp))
-						{
-							Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
-							continue; // skip this stellar object
-						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates[temp];
+							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							if (template.Abilities == null)
+							{
+								template.Abilities = new RandomAbilityTemplate();
+								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
+							}
 						}
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Size", "Obj Size" }, out temp, ref start, null, start, true))

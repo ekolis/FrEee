@@ -21,7 +21,8 @@ namespace FrEee.Modding.Loaders
 				int index = -1;
 
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
-				mod.StellarAbilityTemplates.Add(temp, sabil);
+				sabil.Name = temp;
+				mod.StellarAbilityTemplates.Add(sabil);
 
 				foreach (var abil in LoadRecord(rec))
 					sabil.AbilityChances.Add(abil);

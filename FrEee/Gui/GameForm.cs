@@ -49,7 +49,7 @@ namespace FrEee
 			for (var i = 0; i < 50; i++)
 			{
 				var coords = new Point(r.Next(-20, 20), r.Next(-20, 20));
-				galaxy.StarSystemLocations[coords] = Mod.Current.StarSystemTemplates.PickRandom().Value.Instantiate();
+				galaxy.StarSystemLocations[coords] = Mod.Current.StarSystemTemplates.PickRandom().Instantiate();
 			}
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
 		}

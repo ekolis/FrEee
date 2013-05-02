@@ -55,19 +55,19 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
-			StarSystemTemplates = new Dictionary<string, StarSystemTemplate>();
-			StellarAbilityTemplates = new Dictionary<string, RandomAbilityTemplate>();
+			StarSystemTemplates = new List<StarSystemTemplate>();
+			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 		}
 
 		/// <summary>
 		/// Templates for star systems.
 		/// </summary>
-		public IDictionary<string, StarSystemTemplate> StarSystemTemplates { get; private set; }
+		public ICollection<StarSystemTemplate> StarSystemTemplates { get; private set; }
 
 		/// <summary>
 		/// Templates for stellar abilities.
 		/// </summary>
-		public IDictionary<string, RandomAbilityTemplate> StellarAbilityTemplates { get; private set; }
+		public ICollection<RandomAbilityTemplate> StellarAbilityTemplates { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.

@@ -86,6 +86,7 @@
     <Compile Include="Gui\Controls\PlanetReport.Designer.cs">
       <DependentUpon>PlanetReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="INamed.cs" />
     <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
     <Compile Include="Modding\Templates\RandomAbilityTemplate.cs" />
     <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />

@@ -67,5 +67,10 @@ namespace FrEee
 		{
 			return stuff.Select(selector).MaxOrDefault();
 		}
+
+		public static T Find<T>(this IEnumerable<T> stuff, string name) where T : INamed
+		{
+			return stuff.FirstOrDefault(item => item.Name == name);
+		}
 	}
 }
