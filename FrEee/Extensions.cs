@@ -8,8 +8,6 @@ namespace FrEee
 {
 	public static class Extensions
 	{
-		private static Random rand = new Random();
-
 		/// <summary>
 		/// Adds SI prefixes to a value and rounds it off.
 		/// e.g. 25000 becomes 25.00k
@@ -42,7 +40,7 @@ namespace FrEee
 		/// <returns></returns>
 		public static T PickRandom<T>(this IEnumerable<T> src)
 		{
-			return src.ElementAt(rand.Next(src.Count()));
+			return src.ElementAt(Rng.Next(src.Count()));
 		}
 
 		/// <summary>
@@ -54,7 +52,7 @@ namespace FrEee
 		public static T PickWeighted<T>(this IDictionary<T, int> src)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = rand.Next(total);
+			var num = Rng.Next(total);
 			int sofar = 0;
 			foreach (var kvp in src)
 			{

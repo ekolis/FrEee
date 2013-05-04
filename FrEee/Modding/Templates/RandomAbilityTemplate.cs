@@ -11,8 +11,6 @@ namespace FrEee.Modding.Templates
 	/// </summary>
 	public class RandomAbilityTemplate : ITemplate<Ability>, INamed
 	{
-		private static Random r = new Random();
-
 		public RandomAbilityTemplate()
 		{
 			AbilityChances = new List<AbilityChance>();
@@ -32,7 +30,7 @@ namespace FrEee.Modding.Templates
 
 		public Ability Instantiate()
 		{
-			var num = r.Next(1000);
+			var num = Rng.Next(1000);
 			var howFar = 0;
 			foreach (var ac in AbilityChances)
 			{

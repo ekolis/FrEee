@@ -20,12 +20,10 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			if (!openPositions.Any())
 				return null;
 
-			var r = new Random();
-
 			// sort positions by distance to nearest star
 			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Keys.MinOrDefault(p2 => p2.ManhattanDistance(p)));
 
-			if (r.Next(2) == 0)
+			if (Rng.Next(2) == 0)
 			{
 				// place a star near other stars
 				return ordered.First();

@@ -44,10 +44,9 @@ namespace FrEee.Modding.Templates
 			asteroids.Atmosphere = Atmosphere ?? new string[] { "None", "Methane", "Oxygen", "Hydrogen", "Carbon Dioxide" }.PickRandom();
 			asteroids.Surface = Surface ?? new string[] { "Rock", "Ice", "Gas Giant" }.PickRandom();
 
-			var r = new Random();
-			asteroids.ResourceValue["minerals"] = r.Next(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue + 1);
-			asteroids.ResourceValue["organics"] = r.Next(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue + 1);
-			asteroids.ResourceValue["radioactives"] = r.Next(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue + 1);
+			asteroids.ResourceValue["minerals"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
+			asteroids.ResourceValue["organics"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
+			asteroids.ResourceValue["radioactives"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
 
 			return asteroids;
 		}

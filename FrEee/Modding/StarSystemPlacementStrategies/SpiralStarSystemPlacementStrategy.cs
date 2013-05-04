@@ -20,8 +20,6 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			if (!openPositions.Any())
 				return null;
 
-			var r = new Random();
-
 			// sort positions by distance to center
 			var ordered = openPositions.OrderBy(p => p.ManhattanDistance(new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2)));
 
