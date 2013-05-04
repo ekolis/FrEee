@@ -60,7 +60,10 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="Game\Ability.cs" />
     <Compile Include="Game\AsteroidField.cs" />
+    <Compile Include="Game\Colony.cs" />
+    <Compile Include="Game\Empire.cs" />
     <Compile Include="Game\Galaxy.cs" />
+    <Compile Include="Game\GameSetup.cs" />
     <Compile Include="Game\Resources.cs" />
     <Compile Include="Game\StellarObject.cs" />
     <Compile Include="Gui\Controls\AsteroidFieldReport.cs">

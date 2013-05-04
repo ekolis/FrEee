@@ -46,7 +46,7 @@ namespace FrEee.Gui.Controls
 			{
 				Visible = true;
 
-				picOwnerFlag.Image = null; // TODO - load owner flag
+				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Flag;
 				picPortrait.Image = Planet.Portrait;
 
 				txtName.Text = Planet.Name;
@@ -60,7 +60,7 @@ namespace FrEee.Gui.Controls
 
 				txtDescription.Text = Planet.Description;
 
-				txtColonyType.Text = ""; // TODO - load colony type
+				txtColonyType.Text = Planet.Owner == null ? "" : Planet.Owner.Name + " Colony"; // TODO - load colony type
 				txtPopulation.Text = ""; // TODO - load population
 				txtReproduction.Text = ""; // TODO - load reproduction
 				txtMood.Text = ""; // TODO - load mood

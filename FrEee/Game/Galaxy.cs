@@ -14,12 +14,18 @@ namespace FrEee.Game
 		public Galaxy()
 		{
 			StarSystemLocations = new Dictionary<Point, StarSystem>();
+			Empires = new List<Empire>();
 		}
 
 		/// <summary>
 		/// The locations of the star systems in the galaxy.
 		/// </summary>
 		public IDictionary<Point, StarSystem> StarSystemLocations { get; private set; }
+
+		/// <summary>
+		/// The empires participating in the game.
+		/// </summary>
+		public IList<Empire> Empires { get; private set; }
 
 		public int MinX { get { return StarSystemLocations.MinOrDefault(kvp => kvp.Key.X); } }
 

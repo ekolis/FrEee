@@ -66,5 +66,10 @@ namespace FrEee.Game
 		{
 			return this.Clone();
 		}
+
+		/// <summary>
+		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
+		/// </summary>
+		public virtual Empire Owner { get { return null; } }
 	}
 }

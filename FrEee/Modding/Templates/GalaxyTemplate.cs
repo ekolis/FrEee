@@ -16,12 +16,6 @@ namespace FrEee.Modding.Templates
 		public GalaxyTemplate()
 		{
 			StarSystemTemplateChances = new Dictionary<StarSystemTemplate, int>();
-
-			// TODO - let mods specify galaxy size?
-			Bounds = new Rectangle(-30, -20, 60, 40);
-
-			// TODO - let game setup specify star system count
-			StarSystemCount = 50;
 		}
 
 		/// <summary>
@@ -61,23 +55,19 @@ namespace FrEee.Modding.Templates
 		public IDictionary<StarSystemTemplate, int> StarSystemTemplateChances { get; set; }
 
 		/// <summary>
-		/// Where are we allowed to place star systems?
+		/// Setup parameters for the game.
 		/// </summary>
-		public Rectangle Bounds { get; set; }
-
-		/// <summary>
-		/// How many star systems will we place?
-		/// </summary>
-		public int StarSystemCount { get; set; }
+		public GameSetup GameSetup { get; set; }
 
 		public Galaxy Instantiate()
 		{
 			var gal = new Galaxy();
+			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			// create star systems
-			for (int i = 0; i < StarSystemCount; i++)
+			for (int i = 0; i < GameSetup.StarSystemCount; i++)
 			{
-				var p = StarSystemPlacementStrategy.PlaceStarSystem(gal, MinimumStarSystemDistance, Bounds, StarSystemCount - i);
+				var p = StarSystemPlacementStrategy.PlaceStarSystem(gal, MinimumStarSystemDistance, bounds, GameSetup.StarSystemCount - i);
 				if (p == null)
 					break; // no more locations available
 

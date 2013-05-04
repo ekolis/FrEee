@@ -129,5 +129,30 @@ namespace FrEee.Game
 
 			throw new ArgumentException("The specified sector was not found in this star system.");
 		}
+		
+		/// <summary>
+		/// Searches for space objects matching criteria.
+		/// </summary>
+		/// <typeparam name="T">The type of space object.</typeparam>
+		/// <param name="criteria">The criteria.</param>
+		/// <returns>The matching space objects, grouped by location.</returns>
+		public ILookup<Point, T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		{
+			var list = new List<Tuple<Point, T>>();
+			for (int x = -Radius; x <= Radius; x++)
+			{
+				for (int y = -Radius; y <= Radius; y++)
+				{
+					var sector = GetSector(x, y);
+					var coords = new Point(x, y);
+					foreach (var sobj in sector.SpaceObjects)
+					{
+						if (sobj is T && (criteria == null || criteria((T)sobj)))
+							list.Add(Tuple.Create(coords, (T)sobj));
+					}
+				}
+			}
+			return list.ToLookup(t => t.Item1, t => t.Item2);
+		}
 	}
 }

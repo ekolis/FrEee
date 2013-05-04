@@ -62,5 +62,21 @@ namespace FrEee.Game
 		{
 			return this.Clone();
 		}
+
+		/// <summary>
+		/// The empire which has a colony on this planet, if any.
+		/// </summary>
+		public override Empire Owner
+		{
+			get
+			{
+				return Colony == null ? null : Colony.Owner;
+			}
+		}
+
+		/// <summary>
+		/// The colony on this planet, if any.
+		/// </summary>
+		public Colony Colony { get; set; }
 	}
 }
