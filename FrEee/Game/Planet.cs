@@ -10,23 +10,12 @@ namespace FrEee.Game
 	/// <summary>
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
-	public class Planet : ISpaceObject, ITemplate<Planet>
+	public class Planet : StellarObject, ITemplate<Planet>
 	{
 		public Planet()
 		{
-			IntrinsicAbilities = new List<Ability>();
 			ResourceValue = new Resources();
 		}
-
-		/// <summary>
-		/// The name of this planet.
-		/// </summary>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Planets cannot be obscured by fog of war.
-		/// </summary>
-		public bool CanBeFogged { get { return false; } }
 
 		/// <summary>
 		/// The size of this planet.
@@ -49,35 +38,9 @@ namespace FrEee.Game
 		public string Description { get; set; }
 
 		/// <summary>
-		/// Index of the picture to use to represent this planet.
+		/// Planet abilities take into account abilities on the colony if one is present.
 		/// </summary>
-		public int PictureNumber { get; set; }
-
-		/// <summary>
-		/// A picture used to represent this planet on the map.
-		/// </summary>
-		public Image Icon
-		{
-			get
-			{
-				return Pictures.GetStellarObjectIcon(PictureNumber);
-			}
-		}
-
-		/// <summary>
-		/// A picture used to represent this planet in reports.
-		/// </summary>
-		public Image Portrait
-		{
-			get
-			{
-				return Pictures.GetStellarObjectPortrait(PictureNumber);
-			}
-		}
-
-		public IList<Ability> IntrinsicAbilities { get; private set; }
-
-		public IEnumerable<Ability> Abilities
+		public override IEnumerable<Ability> Abilities
 		{
 			get
 			{
@@ -95,7 +58,7 @@ namespace FrEee.Game
 		/// Just copy the planet's data.
 		/// </summary>
 		/// <returns>A copy of the planet.</returns>
-		public Planet Instantiate()
+		public new Planet Instantiate()
 		{
 			return this.Clone();
 		}

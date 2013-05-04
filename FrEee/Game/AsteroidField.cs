@@ -9,23 +9,12 @@ namespace FrEee.Game
 	/// <summary>
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
-	public class AsteroidField : ISpaceObject, ITemplate<AsteroidField>
+	public class AsteroidField : StellarObject, ITemplate<AsteroidField>
 	{
 		public AsteroidField()
 		{
-			IntrinsicAbilities = new List<Ability>();
 			ResourceValue = new Resources();
 		}
-
-		/// <summary>
-		/// The name of this asteroid field.
-		/// </summary>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Asteroids cannot be obscured by fog of war.
-		/// </summary>
-		public bool CanBeFogged { get { return false; } }
 
 		/// <summary>
 		/// The size of this asteroid field.
@@ -48,47 +37,9 @@ namespace FrEee.Game
 		public string Description { get; set; }
 
 		/// <summary>
-		/// Index of the picture to use to represent this asteroid field.
-		/// </summary>
-		public int PictureNumber { get; set; }
-
-		/// <summary>
-		/// A picture used to represent this asteroid field on the map.
-		/// </summary>
-		public Image Icon
-		{
-			get
-			{
-				return Pictures.GetStellarObjectIcon(PictureNumber);
-			}
-		}
-
-		/// <summary>
-		/// A picture used to represent this asteroid field in reports.
-		/// </summary>
-		public Image Portrait
-		{
-			get
-			{
-				return Pictures.GetStellarObjectPortrait(PictureNumber);
-			}
-		}
-
-		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
 		public string CombatTile { get; set; }
-
-		public IList<Ability> IntrinsicAbilities { get; private set; }
-
-		public IEnumerable<Ability> Abilities
-		{
-			get
-			{
-				return IntrinsicAbilities;
-			}
-		}
-
 		/// <summary>
 		/// The resource value of this asteroid field, in %.
 		/// </summary>
@@ -98,7 +49,7 @@ namespace FrEee.Game
 		/// Just copy the asteroid field's data.
 		/// </summary>
 		/// <returns>A copy of the asteroid field.</returns>
-		public AsteroidField Instantiate()
+		public new AsteroidField Instantiate()
 		{
 			return this.Clone();
 		}
