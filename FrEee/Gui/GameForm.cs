@@ -10,6 +10,9 @@ using System.Windows.Forms;
 using FrEee.Gui.Controls;
 using FrEee.Game;
 using FrEee.Modding;
+using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Serialization;
 
 namespace FrEee
 {
@@ -45,6 +48,22 @@ namespace FrEee
 			// TODO - load QuadrantTypes.txt as galaxy templates
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
 			var galaxy = galtemp.Instantiate();
+
+			var sw = new StreamWriter("save.gam");
+			var js = new JsonSerializer();
+			js.TypeNameHandling = TypeNameHandling.All;
+			js.Formatting = Formatting.Indented;
+			js.Converters.Add(new Serialization.GalaxyMapConverter());
+			var cr = new DefaultContractResolver();
+			cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
+			js.ContractResolver = cr;
+			js.Serialize(sw, galaxy);
+			sw.Close();
+
+			var sr = new StreamReader("save.gam");
+			galaxy = js.Deserialize<Galaxy>(new JsonTextReader(sr));
+			sr.Close();
+
 			galaxyView.Galaxy = galaxy;
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
 		}
