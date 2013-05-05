@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -66,6 +67,7 @@ namespace FrEee.Game
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
+		[JsonIgnore]
 		public override Empire Owner
 		{
 			get
@@ -78,5 +80,19 @@ namespace FrEee.Game
 		/// The colony on this planet, if any.
 		/// </summary>
 		public Colony Colony { get; set; }
+
+		/// <summary>
+		/// Planets need to have their colony redacted if the empire can't see them anymore.
+		/// </summary>
+		/// <param name="galaxy"></param>
+		/// <param name="starSystem"></param>
+		/// <param name="visibility"></param>
+		public virtual void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
+		{
+			base.Redact(galaxy, starSystem, visibility);
+			if (visibility == Visibility.Fogged)
+				Colony = null;
+			// TODO - memory sight
+		}
 	}
 }

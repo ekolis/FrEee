@@ -46,7 +46,7 @@ namespace FrEee
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
 			var gsu = new GameSetup();
 			gsu.GalaxyTemplate = galtemp;
-			gsu.StarSystemCount = 50;
+			gsu.StarSystemCount = 10;
 			gsu.GalaxySize = new System.Drawing.Size(40, 30);
 			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red });
 			gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
@@ -64,6 +64,8 @@ namespace FrEee
 			var cr = new DefaultContractResolver();
 			cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
 			js.ContractResolver = cr;
+			js.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
+			js.ObjectCreationHandling = ObjectCreationHandling.Reuse;
 			js.Serialize(sw, galaxy);
 			sw.Close();
 
@@ -71,6 +73,10 @@ namespace FrEee
 			var sr = new StreamReader("save.gam");
 			galaxy = js.Deserialize<Galaxy>(new JsonTextReader(sr));
 			sr.Close();
+
+			// test redacting fogged info
+			galaxy.CurrentEmpire = galaxy.Empires[0];
+			galaxy.Redact();
 
 			// set up GUI
 			galaxyView.Galaxy = galaxy;

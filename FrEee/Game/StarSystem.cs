@@ -154,5 +154,27 @@ namespace FrEee.Game
 			}
 			return list.ToLookup(t => t.Item1, t => t.Item2);
 		}
+
+		/// <summary>
+		/// Removes any space objects, etc. that the current empire cannot see.
+		/// </summary>
+		/// <param name="galaxy">The galaxy, for context.</param>
+		public void Redact(Galaxy galaxy)
+		{
+			var toRemove = new List<Tuple<Point, ISpaceObject>>();
+			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
+			{
+				foreach (var sobj in group)
+				{
+					var vis = sobj.CheckVisibility(galaxy, this);
+					if (vis != Visibility.Unknown)
+						sobj.Redact(galaxy, this, vis);
+					else
+						toRemove.Add(Tuple.Create(group.Key, sobj));
+				}
+			}
+			foreach (var t in toRemove)
+				GetSector(t.Item1).SpaceObjects.Remove(t.Item2);
+		}
 	}
 }

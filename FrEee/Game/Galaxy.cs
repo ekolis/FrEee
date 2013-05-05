@@ -27,6 +27,11 @@ namespace FrEee.Game
 		/// </summary>
 		public IList<Empire> Empires { get; private set; }
 
+		/// <summary>
+		/// The empire whose turn it is.
+		/// </summary>
+		public Empire CurrentEmpire { get; set; }
+
 		public int MinX { get { return StarSystemLocations.MinOrDefault(kvp => kvp.Key.X); } }
 
 		public int MinY { get { return StarSystemLocations.MinOrDefault(kvp => kvp.Key.Y); } }
@@ -38,5 +43,19 @@ namespace FrEee.Game
 		public int Width { get { return MaxX - MinX + 1; } }
 
 		public int Height { get { return MaxY - MinY + 1; } }
+
+		/// <summary>
+		/// Removes any space objects, etc. that the current empire cannot see.
+		/// </summary>
+		public void Redact()
+		{
+			if (CurrentEmpire != null)
+			{
+				foreach (var kvp in StarSystemLocations)
+				{
+					kvp.Value.Redact(this);
+				}
+			}
+		}
 	}
 }

@@ -22,14 +22,6 @@ namespace FrEee.Game
 		public string Name { get; set; }
 
 		/// <summary>
-		/// Stellar objects cannot be obscured by fog of war.
-		/// </summary>
-		public bool CanBeFogged
-		{
-			get { return false; }
-		}
-
-		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>
@@ -71,5 +63,34 @@ namespace FrEee.Game
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>
 		public virtual Empire Owner { get { return null; } }
+
+		/// <summary>
+		/// Stellar objects are visible so long as the empire has explored the star system containing them.
+		/// </summary>
+		public Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem)
+		{
+			if (galaxy.CurrentEmpire == null)
+				return Visibility.Scanned; // host can see everything
+
+			if (starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
+				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in
+
+			if (galaxy.CurrentEmpire.ExploredStarSystems.Contains(starSystem))
+				return Visibility.Fogged; // player gets fogged data for stellar objects in systems he has explored
+
+			return Visibility.Unknown;
+		}
+
+		/// <summary>
+		/// Most stellar objects don't need to have any data redacted.
+		/// </summary>
+		/// <param name="galaxy"></param>
+		/// <param name="starSystem"></param>
+		/// <param name="visibility"></param>
+		public virtual void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
+		{
+			if (visibility == Visibility.Unknown)
+				throw new ArgumentException("If a stellar object is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
+		}
 	}
 }

@@ -66,6 +66,7 @@
     <Compile Include="Game\GameSetup.cs" />
     <Compile Include="Game\Resources.cs" />
     <Compile Include="Game\StellarObject.cs" />
+    <Compile Include="Game\Visibility.cs" />
     <Compile Include="Gui\Controls\AsteroidFieldReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
