@@ -44,8 +44,6 @@
 			this.pagResources = new FrEee.Gui.Controls.Pager();
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
-			this.txtEmperorName = new System.Windows.Forms.Label();
-			this.txtEmpireName = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 			this.pnlSystemMap.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
@@ -205,8 +203,6 @@
 			this.pnlHeader.Controls.Add(this.pagResources);
 			this.pnlHeader.Controls.Add(this.txtGameDate);
 			this.pnlHeader.Controls.Add(this.lblGameDate);
-			this.pnlHeader.Controls.Add(this.txtEmperorName);
-			this.pnlHeader.Controls.Add(this.txtEmpireName);
 			this.pnlHeader.Controls.Add(this.picEmpireFlag);
 			this.pnlHeader.ForeColor = System.Drawing.Color.White;
 			this.pnlHeader.Location = new System.Drawing.Point(15, 15);
@@ -225,12 +221,12 @@
 			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
 			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-			this.gameProgressBar1.Location = new System.Drawing.Point(935, 4);
+			this.gameProgressBar1.Location = new System.Drawing.Point(603, 4);
 			this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
 			this.gameProgressBar1.Maximum = 500000;
 			this.gameProgressBar1.Name = "gameProgressBar1";
 			this.gameProgressBar1.RightText = "0.2 years";
-			this.gameProgressBar1.Size = new System.Drawing.Size(40, 22);
+			this.gameProgressBar1.Size = new System.Drawing.Size(372, 22);
 			this.gameProgressBar1.TabIndex = 9;
 			this.gameProgressBar1.Value = 350000;
 			// 
@@ -240,7 +236,7 @@
 			this.pagResources.Content = null;
 			this.pagResources.CurrentPage = 0;
 			this.pagResources.ForeColor = System.Drawing.Color.White;
-			this.pagResources.Location = new System.Drawing.Point(515, 5);
+			this.pagResources.Location = new System.Drawing.Point(186, 5);
 			this.pagResources.Margin = new System.Windows.Forms.Padding(0);
 			this.pagResources.Name = "pagResources";
 			this.pagResources.ShowPager = false;
@@ -249,7 +245,7 @@
 			// 
 			// txtGameDate
 			// 
-			this.txtGameDate.Location = new System.Drawing.Point(460, 5);
+			this.txtGameDate.Location = new System.Drawing.Point(131, 5);
 			this.txtGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.txtGameDate.Name = "txtGameDate";
 			this.txtGameDate.Size = new System.Drawing.Size(51, 21);
@@ -260,33 +256,13 @@
 			// lblGameDate
 			// 
 			this.lblGameDate.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblGameDate.Location = new System.Drawing.Point(379, 5);
+			this.lblGameDate.Location = new System.Drawing.Point(50, 5);
 			this.lblGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
 			this.lblGameDate.Name = "lblGameDate";
 			this.lblGameDate.Size = new System.Drawing.Size(73, 21);
 			this.lblGameDate.TabIndex = 3;
 			this.lblGameDate.Text = "Game Date";
 			this.lblGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// txtEmperorName
-			// 
-			this.txtEmperorName.Location = new System.Drawing.Point(214, 5);
-			this.txtEmperorName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.txtEmperorName.Name = "txtEmperorName";
-			this.txtEmperorName.Size = new System.Drawing.Size(157, 21);
-			this.txtEmperorName.TabIndex = 2;
-			this.txtEmperorName.Text = "Master General Jar-Nolath";
-			this.txtEmperorName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// txtEmpireName
-			// 
-			this.txtEmpireName.Location = new System.Drawing.Point(49, 5);
-			this.txtEmpireName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.txtEmpireName.Name = "txtEmpireName";
-			this.txtEmpireName.Size = new System.Drawing.Size(157, 21);
-			this.txtEmpireName.TabIndex = 1;
-			this.txtEmpireName.Text = "Jraenar Imperium";
-			this.txtEmpireName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// picEmpireFlag
 			// 
@@ -337,9 +313,7 @@
 		private Gui.Controls.GamePanel pnlSystemMap;
 		private Gui.Controls.GamePanel pnlDetailReport;
 		private Gui.Controls.GamePanel pnlGalaxyMap;
-		private System.Windows.Forms.Label txtEmpireName;
 		private System.Windows.Forms.PictureBox picEmpireFlag;
-		private System.Windows.Forms.Label txtEmperorName;
 		private System.Windows.Forms.Label lblGameDate;
 		private System.Windows.Forms.Label txtGameDate;
 		private Gui.Controls.Pager pagResources;

@@ -48,7 +48,7 @@ namespace FrEee
 			gsu.GalaxyTemplate = galtemp;
 			gsu.StarSystemCount = 10;
 			gsu.GalaxySize = new System.Drawing.Size(40, 30);
-			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red });
+			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
 			gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
 			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
 			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
@@ -81,6 +81,8 @@ namespace FrEee
 			// set up GUI
 			galaxyView.Galaxy = galaxy;
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
+			Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
+			picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
