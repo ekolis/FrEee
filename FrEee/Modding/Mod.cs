@@ -34,6 +34,9 @@ namespace FrEee.Modding
 		{
 			var mod = new Mod();
 
+			CurrentFileName = Path.Combine("Mods", path, "Data", "SectType.txt");
+			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+
 			CurrentFileName = Path.Combine("Mods", path, "Data", "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
@@ -61,6 +64,7 @@ namespace FrEee.Modding
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 			GalaxyTemplates = new List<GalaxyTemplate>();
+			StellarObjectTemplates = new List<StellarObject>();
 		}
 
 		/// <summary>
@@ -77,6 +81,11 @@ namespace FrEee.Modding
 		/// Templates for galaxies.
 		/// </summary>
 		public ICollection<GalaxyTemplate> GalaxyTemplates { get; private set; }
+
+		/// <summary>
+		/// Templates for stellar objects.
+		/// </summary>
+		public ICollection<StellarObject> StellarObjectTemplates { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.

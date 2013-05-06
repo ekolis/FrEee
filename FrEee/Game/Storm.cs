@@ -13,11 +13,6 @@ namespace FrEee.Game
 	public class Storm : StellarObject, ITemplate<Storm>
 	{
 		/// <summary>
-		/// A description of this storm.
-		/// </summary>
-		public string Description { get; set; }
-
-		/// <summary>
 		/// The size of this storm.
 		/// </summary>
 		public Size Size { get; set; }

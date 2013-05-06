@@ -22,6 +22,11 @@ namespace FrEee.Game
 		public Sector Target { get; set; }
 
 		/// <summary>
+		/// Should this warp point be one-way, or should it have a return connection?
+		/// </summary>
+		public bool IsOneWay { get; set; }
+
+		/// <summary>
 		/// Does this warp point have special abilities?
 		/// </summary>
 		public bool IsUnusual { get; set; }

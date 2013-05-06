@@ -22,6 +22,11 @@ namespace FrEee.Game
 		public string Name { get; set; }
 
 		/// <summary>
+		/// A description of this stellar object.
+		/// </summary>
+		public string Description { get; set; }
+
+		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>

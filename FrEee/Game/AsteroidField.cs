@@ -32,11 +32,6 @@ namespace FrEee.Game
 		public string Atmosphere { get; set; }
 
 		/// <summary>
-		/// Description of this asteroid field. (For flavor)
-		/// </summary>
-		public string Description { get; set; }
-
-		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
 		public string CombatTile { get; set; }

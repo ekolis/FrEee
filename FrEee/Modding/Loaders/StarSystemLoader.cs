@@ -66,9 +66,12 @@ namespace FrEee.Modding.Loaders
 					start++;
 
 					ITemplate<ISpaceObject> sobjTemplate;
-					if (sobjtype == "Star")
+					if (sobjtype == "Star" || sobjtype == "Destroyed Star")
 					{
 						var template = new StarTemplate();
+
+						if (sobjtype == "DestroyedStar")
+							template.IsDestroyed = true;
 
 						if (!rec.TryFindFieldValue(new string[] { "Obj " + count + " Stellar Abil Type", "Obj Stellar Abil Type" }, out temp, ref start, null, start, true))
 						{

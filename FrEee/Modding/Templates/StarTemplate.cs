@@ -36,6 +36,11 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public string Brightness { get; set; }
 
+		/// <summary>
+		/// Do we want a destroyed star?
+		/// </summary>
+		public bool IsDestroyed { get; set; }
+
 		public Star Instantiate()
 		{
 			var star = new Star();

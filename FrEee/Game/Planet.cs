@@ -34,11 +34,6 @@ namespace FrEee.Game
 		public string Atmosphere { get; set; }
 
 		/// <summary>
-		/// Description of this planet. (For flavor)
-		/// </summary>
-		public string Description { get; set; }
-
-		/// <summary>
 		/// Planet abilities take into account abilities on the colony if one is present.
 		/// </summary>
 		public override IEnumerable<Ability> Abilities
@@ -87,7 +82,7 @@ namespace FrEee.Game
 		/// <param name="galaxy"></param>
 		/// <param name="starSystem"></param>
 		/// <param name="visibility"></param>
-		public virtual void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
+		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
 		{
 			base.Redact(galaxy, starSystem, visibility);
 			if (visibility == Visibility.Fogged)

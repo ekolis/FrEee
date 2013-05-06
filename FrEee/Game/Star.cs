@@ -33,9 +33,9 @@ namespace FrEee.Game
 		public string Age { get; set; }
 
 		/// <summary>
-		/// Description of this star. (For flavor)
+		/// Is this a destroyed star?
 		/// </summary>
-		public string Description { get; set; }
+		public bool IsDestroyed { get; set; }
 
 		/// <summary>
 		/// Just copy the star's data.
