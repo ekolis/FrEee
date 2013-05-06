@@ -95,7 +95,7 @@ namespace FrEee.Modding
 		// TODO - load these constants from Settings.txt
 		public readonly int MinPlanetResourceValue = 0;
 		public readonly int MaxPlanetResourceValue = 150;
-		public readonly int MinAsteroidResourceValue = 0;
-		public readonly int MaxAsteroidResourceValue = 250;
+		public readonly int MinAsteroidResourceValue = 50;
+		public readonly int MaxAsteroidResourceValue = 300;
 	}
 }
