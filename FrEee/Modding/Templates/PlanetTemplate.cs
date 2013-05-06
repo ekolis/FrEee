@@ -33,16 +33,21 @@ namespace FrEee.Modding.Templates
 
 		public Planet Instantiate()
 		{
-			var planet = new Planet();
+			var candidates = Mod.Current.StellarObjectTemplates.OfType<Planet>();
+			if (Size != null)
+				candidates = candidates.Where(p => p.Size == Size.Value);
+			if (Atmosphere != null)
+				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
+			if (Surface != null)
+				candidates = candidates.Where(p => p.Surface == Surface);
+			if (!candidates.Any())
+				throw new Exception("No planets in SectType.txt match the criteria!");
+
+			var planet = candidates.PickRandom().Instantiate();
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
-
-			// TODO - use SectType.txt entries for instantiating planets
-			planet.Size = Size ?? new Size[] { Game.Size.Tiny, Game.Size.Small, Game.Size.Medium, Game.Size.Large, Game.Size.Huge }.PickRandom();
-			planet.Atmosphere = Atmosphere ?? new string[] { "None", "Methane", "Oxygen", "Hydrogen", "Carbon Dioxide" }.PickRandom();
-			planet.Surface = Surface ?? new string[] { "Rock", "Ice", "Gas Giant" }.PickRandom();
 
 			planet.ResourceValue["minerals"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
 			planet.ResourceValue["organics"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);

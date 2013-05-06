@@ -43,17 +43,23 @@ namespace FrEee.Modding.Templates
 
 		public Star Instantiate()
 		{
-			var star = new Star();
+			var candidates = Mod.Current.StellarObjectTemplates.OfType<Star>();
+			if (Size != null)
+				candidates = candidates.Where(s => s.Size == Size.Value);
+			if (Age != null)
+				candidates = candidates.Where(s => s.Age == Age);
+			if (Color != null)
+				candidates = candidates.Where(s => s.Color == Color);
+			if (Brightness != null)
+				candidates = candidates.Where(s => s.Brightness == Brightness);
+			if (!candidates.Any())
+				throw new Exception("No stars in SectType.txt match the criteria!");
+
+			var star = candidates.PickRandom().Instantiate();
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)
 				star.IntrinsicAbilities.Add(abil);
-
-			// TODO - use SectType.txt entries for instantiating stars
-			star.Size = Size ?? new Size[] { Game.Size.Tiny, Game.Size.Small, Game.Size.Medium, Game.Size.Large, Game.Size.Huge }.PickRandom();
-			star.Age = Age ?? new string[] { "Young", "Average", "Old", "Ancient" }.PickRandom();
-			star.Color = Color ?? new string[] { "Yellow", "Red", "Purple", "Green", "Blue", "White", "Orange" }.PickRandom();
-			star.Brightness = Brightness ?? new string[] { "Dim", "Average", "Bright", "Super Bright" }.PickRandom();
 
 			return star;
 		}

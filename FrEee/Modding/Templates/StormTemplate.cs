@@ -23,15 +23,18 @@ namespace FrEee.Modding.Templates
 
 		public Storm Instantiate()
 		{
-			var storm = new Storm();
+			var candidates = Mod.Current.StellarObjectTemplates.OfType<Storm>();
+			if (Size != null)
+				candidates = candidates.Where(p => p.Size == Size.Value);
+			if (!candidates.Any())
+				throw new Exception("No storms in SectType.txt match the criteria!");
+
+			var storm = candidates.PickRandom().Instantiate();
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)
 				storm.IntrinsicAbilities.Add(abil);
 
-			// TODO - use SectType.txt entries for instantiating storms
-			storm.Size = Size ?? new Size[] { Game.Size.Tiny, Game.Size.Small, Game.Size.Medium, Game.Size.Large, Game.Size.Huge }.PickRandom();
-			
 			return storm;
 		}
 	}

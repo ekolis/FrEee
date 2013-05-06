@@ -33,16 +33,21 @@ namespace FrEee.Modding.Templates
 
 		public AsteroidField Instantiate()
 		{
-			var asteroids = new AsteroidField();
+			var candidates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>();
+			if (Size != null)
+				candidates = candidates.Where(ast => ast.Size == Size.Value);
+			if (Atmosphere != null)
+				candidates = candidates.Where(ast => ast.Atmosphere == Atmosphere);
+			if (Surface != null)
+				candidates = candidates.Where(ast => ast.Surface == Surface);
+			if (!candidates.Any())
+				throw new Exception("No asteroid fields in SectType.txt match the criteria!");
+
+			var asteroids = candidates.PickRandom().Instantiate();
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)
 				asteroids.IntrinsicAbilities.Add(abil);
-
-			// TODO - use SectType.txt entries for instantiating planets
-			asteroids.Size = Size ?? new Size[] { Game.Size.Tiny, Game.Size.Small, Game.Size.Medium, Game.Size.Large, Game.Size.Huge }.PickRandom();
-			asteroids.Atmosphere = Atmosphere ?? new string[] { "None", "Methane", "Oxygen", "Hydrogen", "Carbon Dioxide" }.PickRandom();
-			asteroids.Surface = Surface ?? new string[] { "Rock", "Ice", "Gas Giant" }.PickRandom();
 
 			asteroids.ResourceValue["minerals"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
 			asteroids.ResourceValue["organics"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
