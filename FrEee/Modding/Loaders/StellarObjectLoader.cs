@@ -212,7 +212,7 @@ namespace FrEee.Modding.Loaders
 					continue;
 				}
 
-				rec.TryFindFieldValue("Picture", out temp, ref index, Mod.Errors, 0, true);
+				rec.TryFindFieldValue("Picture", out temp, ref index, null, 0, true); // ignore error for now, might use Picture Num
 				if (temp == null)
 				{
 					rec.TryFindFieldValue("Picture Num", out temp, ref index, Mod.Errors, 0, true);
@@ -221,7 +221,13 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Picture field or Picture Num field.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					sobj.PictureName = "p" + temp; // to match SE4
+					int pnum;
+					if (!int.TryParse(temp, out pnum))
+					{
+						Mod.Errors.Add(new DataParsingException("Picture Num field was not an integer.", Mod.CurrentFileName, rec));
+						continue;
+					}
+					sobj.PictureName = "p" + (pnum + 1).ToString("0000"); // to match SE4
 				}
 				else
 					sobj.PictureName = temp;

@@ -16,6 +16,7 @@ namespace FrEee.Game
 		/// <returns>The clone.</returns>
 		public static T Clone<T>(this T obj) where T : new()
 		{
+			// TODO - figure out why planets aren't being cloned and just being reference-copied when copied out of SectType.txt (I once got 2 identical homeworlds in different systems!)
 			return Mapper.Map(obj, new T());
 		}
 
