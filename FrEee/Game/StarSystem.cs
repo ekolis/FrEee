@@ -1,4 +1,5 @@
 ﻿using FrEee.Modding;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -88,7 +89,31 @@ namespace FrEee.Game
 			return AreCoordsInBounds(p.X, p.Y);
 		}
 
+		[JsonIgnore]
 		private Sector[,] sectors;
+
+		/// <summary>
+		/// For serialization purposes mostly.
+		/// </summary>
+		private ICollection<ObjectLocation<Sector>> Sectors
+		{
+			get
+			{
+				var list = new List<ObjectLocation<Sector>>();
+				for (int x = -Radius; x <= Radius; x++)
+				{
+					for (int y = -Radius; y <= Radius; y++)
+						list.Add(new ObjectLocation<Sector> { Location = new Point(x, y), Item = GetSector(x, y) });
+				}
+				return list;
+			}
+			set
+			{
+				sectors = new Sector[Diameter, Diameter];
+				foreach (var loc in value)
+					SetSector(loc.Location, loc.Item);
+			}
+		}
 
 		public Sector GetSector(int x, int y)
 		{

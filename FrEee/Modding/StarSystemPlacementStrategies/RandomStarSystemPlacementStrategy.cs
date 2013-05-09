@@ -15,8 +15,8 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
 		{
 			var openPositions = bounds.GetAllPoints();
-			foreach (var sspos in galaxy.StarSystemLocations.Keys)
-				openPositions = openPositions.BlockOut(sspos, buffer);
+			foreach (var sspos in galaxy.StarSystemLocations)
+				openPositions = openPositions.BlockOut(sspos.Location, buffer);
 			if (!openPositions.Any())
 				return null;
 			return openPositions.PickRandom();

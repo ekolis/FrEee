@@ -13,14 +13,14 @@ namespace FrEee.Game
 	{
 		public Galaxy()
 		{
-			StarSystemLocations = new Dictionary<Point, StarSystem>();
+			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 		}
 
 		/// <summary>
 		/// The locations of the star systems in the galaxy.
 		/// </summary>
-		public IDictionary<Point, StarSystem> StarSystemLocations { get; private set; }
+		public ICollection<ObjectLocation<StarSystem>> StarSystemLocations { get; private set; }
 
 		/// <summary>
 		/// The empires participating in the game.
@@ -32,13 +32,13 @@ namespace FrEee.Game
 		/// </summary>
 		public Empire CurrentEmpire { get; set; }
 
-		public int MinX { get { return StarSystemLocations.MinOrDefault(kvp => kvp.Key.X); } }
+		public int MinX { get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.X); } }
 
-		public int MinY { get { return StarSystemLocations.MinOrDefault(kvp => kvp.Key.Y); } }
+		public int MinY { get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); } }
 
-		public int MaxX { get { return StarSystemLocations.MaxOrDefault(kvp => kvp.Key.X); } }
+		public int MaxX { get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.X); } }
 
-		public int MaxY { get { return StarSystemLocations.MaxOrDefault(kvp => kvp.Key.Y); } }
+		public int MaxY { get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.Y); } }
 
 		public int Width { get { return MaxX - MinX + 1; } }
 
@@ -51,9 +51,9 @@ namespace FrEee.Game
 		{
 			if (CurrentEmpire != null)
 			{
-				foreach (var kvp in StarSystemLocations)
+				foreach (var ssl in StarSystemLocations)
 				{
-					kvp.Value.Redact(this);
+					ssl.Item.Redact(this);
 				}
 			}
 		}

@@ -14,10 +14,12 @@ using Newtonsoft.Json;
 using System.IO;
 using Newtonsoft.Json.Serialization;
 
-namespace FrEee
+namespace FrEee.Gui
 {
 	public partial class GameForm : Form
 	{
+		private Galaxy galaxy;
+
 		public GameForm()
 		{
 			InitializeComponent();
@@ -53,19 +55,18 @@ namespace FrEee
 			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
 			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
 			gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
-			var galaxy = gsu.CreateGalaxy();
+			galaxy = gsu.CreateGalaxy();
 
 			// test saving the game
 			var sw = new StreamWriter("save.gam");
 			var js = new JsonSerializer();
 			js.TypeNameHandling = TypeNameHandling.All;
 			js.Formatting = Formatting.Indented;
-			js.Converters.Add(new Serialization.GalaxyMapConverter());
+			//js.Converters.Add(new Serialization.GalaxyMapConverter());
 			var cr = new DefaultContractResolver();
 			cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
 			js.ContractResolver = cr;
-			js.PreserveReferencesHandling = PreserveReferencesHandling.Objects;
-			js.ObjectCreationHandling = ObjectCreationHandling.Reuse;
+			js.PreserveReferencesHandling = PreserveReferencesHandling.All;
 			js.Serialize(sw, galaxy);
 			sw.Close();
 
@@ -78,9 +79,14 @@ namespace FrEee
 			galaxy.CurrentEmpire = galaxy.Empires[0];
 			galaxy.Redact();
 
+			// test saving the player's view
+			sw = new StreamWriter("p1.gam");
+			js.Serialize(sw, galaxy);
+			sw.Close();
+
 			// set up GUI
 			galaxyView.Galaxy = galaxy;
-			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Values.PickRandom();
+			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Select(ssl => ssl.Item).PickRandom();
 			Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
 			picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
 		}
@@ -181,6 +187,12 @@ namespace FrEee
 		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
 		{
 			starSystemView.StarSystem = starSystem;
+		}
+
+		private void btnPlanets_Click(object sender, EventArgs e)
+		{
+			var form = new PlanetListForm(galaxy);
+			form.ShowDialog();
 		}
 	}
 }

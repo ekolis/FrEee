@@ -1,4 +1,4 @@
-﻿namespace FrEee
+﻿namespace FrEee.Gui
 {
 	partial class GameForm
 	{
@@ -45,9 +45,11 @@
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
+			this.btnPlanets = new FrEee.Gui.Controls.GameButton();
 			this.pnlSystemMap.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.pnlDetailReport.SuspendLayout();
+			this.pnlSubCommands.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.SuspendLayout();
@@ -173,6 +175,7 @@
 			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSubCommands.Controls.Add(this.btnPlanets);
 			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
 			this.pnlSubCommands.Location = new System.Drawing.Point(335, 54);
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
@@ -273,6 +276,18 @@
 			this.picEmpireFlag.TabIndex = 0;
 			this.picEmpireFlag.TabStop = false;
 			// 
+			// btnPlanets
+			// 
+			this.btnPlanets.BackColor = System.Drawing.Color.Black;
+			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPlanets.Location = new System.Drawing.Point(3, 4);
+			this.btnPlanets.Name = "btnPlanets";
+			this.btnPlanets.Size = new System.Drawing.Size(57, 45);
+			this.btnPlanets.TabIndex = 0;
+			this.btnPlanets.Text = "Planets";
+			this.btnPlanets.UseVisualStyleBackColor = false;
+			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
+			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -297,6 +312,7 @@
 			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlGalaxyMap.ResumeLayout(false);
 			this.pnlDetailReport.ResumeLayout(false);
+			this.pnlSubCommands.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.ResumeLayout(false);
@@ -321,6 +337,7 @@
 		private Gui.Controls.ShipReport gameShipReport1;
 		private Gui.Controls.StarSystemView starSystemView;
 		private Gui.Controls.GalaxyView galaxyView;
+		private Gui.Controls.GameButton btnPlanets;
 	}
 }
 

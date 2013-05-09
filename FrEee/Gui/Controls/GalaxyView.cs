@@ -60,10 +60,10 @@ namespace FrEee.Gui.Controls
 			var x = (int)Math.Round((p.X - Width / 2f) / drawsize);
 			var y = (int)Math.Round((p.Y - Height / 2f) / drawsize);
 			var p2 = new Point(x, y);
-			if (Galaxy.StarSystemLocations.ContainsKey(p2))
-				return Galaxy.StarSystemLocations[p2];
-			else
+			var ssloc = Galaxy.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
+			if (ssloc == null)
 				return null;
+			return ssloc.Item;
 		}
 
 		/// <summary>
@@ -123,18 +123,18 @@ namespace FrEee.Gui.Controls
 
 			if (Galaxy != null)
 			{
-				foreach (var kvp in Galaxy.StarSystemLocations)
+				foreach (var ssl in Galaxy.StarSystemLocations)
 				{
 					// where and how big will we draw the star system?
 					// TODO - don't cut off the systems on the edges
 					var drawsize = StarSystemDrawSize;
-					var x = kvp.Key.X;
-					var y = kvp.Key.Y;
+					var x = ssl.Location.X;
+					var y = ssl.Location.Y;
 					var drawx = x * drawsize + Width / 2f;
 					var drawy = y * drawsize + Height / 2f;
 
 					// find star system
-					var sys = kvp.Value;
+					var sys = ssl.Item;
 
 					// draw circle for star system
 					// do SE3-style split circles for contested systems because they are AWESOME!

@@ -15,13 +15,13 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
 		{
 			var openPositions = bounds.GetAllPoints();
-			foreach (var sspos in galaxy.StarSystemLocations.Keys)
+			foreach (var sspos in galaxy.StarSystemLocations.Select(sspos => sspos.Location))
 				openPositions = openPositions.BlockOut(sspos, buffer);
 			if (!openPositions.Any())
 				return null;
 
 			// sort positions by distance to nearest star
-			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Keys.MinOrDefault(p2 => p2.ManhattanDistance(p)));
+			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Select(sspos => sspos.Location).MinOrDefault(p2 => p2.ManhattanDistance(p)));
 
 			// place a star off in the middle of nowhere
 			return ordered.Last();

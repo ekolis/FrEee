@@ -71,7 +71,7 @@ namespace FrEee.Modding.Templates
 				if (p == null)
 					break; // no more locations available
 
-				gal.StarSystemLocations[p.Value] = StarSystemTemplateChances.PickWeighted().Instantiate();
+				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = StarSystemTemplateChances.PickWeighted().Instantiate()});
 			}
 
 			// TODO - create warp points

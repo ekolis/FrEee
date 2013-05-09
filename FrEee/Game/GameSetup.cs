@@ -41,10 +41,18 @@ namespace FrEee.Game
 			{
 				galaxy.Empires.Add(emp);
 				// TODO - place homeworlds fairly
-				var planets = galaxy.StarSystemLocations.SelectMany(kvp => kvp.Value.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
+				var planets = galaxy.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
-				planets.PickRandom().Colony = new Colony { Owner = emp };
+				var hw = planets.PickRandom();
+				hw.Colony = new Colony { Owner = emp };
+
+				// mark home systems explored
+				foreach (var sys in galaxy.StarSystemLocations.Select(ssl => ssl.Item))
+				{
+					if (!emp.ExploredStarSystems.Contains(sys) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
+						emp.ExploredStarSystems.Add(sys);
+				}
 			}
 
 			// done
