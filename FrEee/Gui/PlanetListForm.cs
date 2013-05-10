@@ -28,7 +28,8 @@ namespace FrEee.Gui
 			// show planet counts
 			var systems = galaxy.CurrentEmpire.ExploredStarSystems;
 			txtSystems.Text = systems.Count.ToString();
-			var planets = systems.SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
+			// HACK - why are there null explored star systems?
+			var planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
 			txtPlanets.Text = planets.Count().ToString();
 			// TODO - colonizable planets and various subcategories
 			// TODO - colony ships
