@@ -160,7 +160,8 @@ namespace FrEee.Gui
 
 				// add new report
 				var item = lv.GetItemAt(e.X, e.Y);
-				pnlDetailReport.Controls.Add(CreateSpaceObjectReport((ISpaceObject)item.Tag));
+				if (item != null)
+					pnlDetailReport.Controls.Add(CreateSpaceObjectReport((ISpaceObject)item.Tag));
 			}
 		}
 
