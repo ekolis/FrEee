@@ -26,8 +26,8 @@ namespace FrEee.Gui
 				return;
 
 			// show planet counts
-			var systems = galaxy.CurrentEmpire.ExploredStarSystems;
-			txtSystems.Text = systems.Count.ToString();
+			var systems = galaxy.ExploredStarSystems;
+			txtSystems.Text = systems.Count().ToString();
 			// HACK - why are there null explored star systems?
 			var planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
 			txtPlanets.Text = planets.Count().ToString();

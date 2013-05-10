@@ -80,7 +80,7 @@ namespace FrEee.Game
 			if (starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
 				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in
 
-			if (galaxy.CurrentEmpire.ExploredStarSystems.Contains(starSystem))
+			if (starSystem.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				return Visibility.Fogged; // player gets fogged data for stellar objects in systems he has explored
 
 			return Visibility.Unknown;

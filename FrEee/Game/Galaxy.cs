@@ -57,5 +57,10 @@ namespace FrEee.Game
 				}
 			}
 		}
+
+		public IEnumerable<StarSystem> ExploredStarSystems
+		{
+			get { return StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(CurrentEmpire)); }
+		}
 	}
 }

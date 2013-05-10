@@ -29,6 +29,7 @@ namespace FrEee.Game
 			}
 			Abilities = new List<Ability>();
 			WarpPointAbilities = new List<Ability>();
+			ExploredByEmpires = new HashSet<Empire>();
 		}
 
 		/// <summary>
@@ -154,7 +155,7 @@ namespace FrEee.Game
 
 			throw new ArgumentException("The specified sector was not found in this star system.");
 		}
-		
+
 		/// <summary>
 		/// Searches for space objects matching criteria.
 		/// </summary>
@@ -181,11 +182,17 @@ namespace FrEee.Game
 		}
 
 		/// <summary>
+		/// Empires which have explored this star system.
+		/// </summary>
+		public ICollection<Empire> ExploredByEmpires { get; private set; }
+
+		/// <summary>
 		/// Removes any space objects, etc. that the current empire cannot see.
 		/// </summary>
 		/// <param name="galaxy">The galaxy, for context.</param>
 		public void Redact(Galaxy galaxy)
 		{
+			// hide space objects
 			var toRemove = new List<Tuple<Point, ISpaceObject>>();
 			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
 			{
@@ -200,6 +207,10 @@ namespace FrEee.Game
 			}
 			foreach (var t in toRemove)
 				GetSector(t.Item1).SpaceObjects.Remove(t.Item2);
+
+			// hide explored-by empires
+			foreach (var emp in ExploredByEmpires.Where(emp => emp != galaxy.CurrentEmpire).ToArray())
+				ExploredByEmpires.Remove(emp);
 		}
 	}
 }

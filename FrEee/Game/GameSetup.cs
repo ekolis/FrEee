@@ -50,8 +50,8 @@ namespace FrEee.Game
 				// mark home systems explored
 				foreach (var sys in galaxy.StarSystemLocations.Select(ssl => ssl.Item))
 				{
-					if (!emp.ExploredStarSystems.Contains(sys) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
-						emp.ExploredStarSystems.Add(sys);
+					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
+						sys.ExploredByEmpires.Add(emp);
 				}
 			}
 

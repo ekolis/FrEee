@@ -11,11 +11,6 @@ namespace FrEee.Game
 	/// </summary>
 	public class Empire : INamed
 	{
-		public Empire()
-		{
-			ExploredStarSystems = new HashSet<StarSystem>();
-		}
-
 		/// <summary>
 		/// The name of the empire.
 		/// </summary>
@@ -52,10 +47,5 @@ namespace FrEee.Game
 		/// The color used to represent this empire's star systems on the galaxy map.
 		/// </summary>
 		public Color Color { get; set; }
-
-		/// <summary>
-		/// Star systems which have been explored by this empire.
-		/// </summary>
-		public ICollection<StarSystem> ExploredStarSystems { get; private set; }
 	}
 }
