@@ -41,5 +41,10 @@ namespace FrEee.Game
 				result.Add(key, (int)Math.Round(r[key] / scalar));
 			return result;
 		}
+
+		public override string ToString()
+		{
+			return string.Join(", ", this.Select(kvp => kvp.Value + " " + kvp.Key));
+		}
 	}
 }

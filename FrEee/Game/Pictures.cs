@@ -74,10 +74,10 @@ namespace FrEee.Game
 		/// <returns></returns>
 		public static Image GetIcon(StellarObject sobj)
 		{
-			return
-				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
-				GetGenericImage(sobj.GetType());
+			var portrait = GetPortrait(sobj);
+			if (portrait == null)
+				return null;
+			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 		}
 
 		/// <summary>

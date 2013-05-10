@@ -40,5 +40,29 @@ namespace FrEee.Gui
 			// show planet data
 			planetBindingSource.DataSource = planets.ToList();
 		}
+
+		private void gridPlanets_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			// ignore silly errors
+			e.ThrowException = false;
+		}
+
+		private void gridPlanets_RowEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			var planet = (Planet)gridPlanets.Rows[e.RowIndex].DataBoundItem;
+			foreach (var sys in galaxy.ExploredStarSystems)
+			{
+				if (sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(p => p == planet))
+				{
+					galaxyView.SelectedStarSystem = sys;
+					break;
+				}
+			}
+		}
+
+		private void gridPlanets_RowLeave(object sender, DataGridViewCellEventArgs e)
+		{
+			galaxyView.SelectedStarSystem = null;
+		}
 	}
 }

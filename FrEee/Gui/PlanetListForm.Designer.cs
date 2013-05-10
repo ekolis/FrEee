@@ -328,6 +328,7 @@
 			this.gridPlanets.AllowUserToAddRows = false;
 			this.gridPlanets.AllowUserToDeleteRows = false;
 			this.gridPlanets.AllowUserToOrderColumns = true;
+			this.gridPlanets.AllowUserToResizeRows = false;
 			this.gridPlanets.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -346,10 +347,17 @@
 			this.gridPlanets.Location = new System.Drawing.Point(13, 183);
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
+			this.gridPlanets.RowHeadersVisible = false;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
 			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle1;
+			this.gridPlanets.RowTemplate.Height = 32;
+			this.gridPlanets.RowTemplate.ReadOnly = true;
+			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridPlanets.Size = new System.Drawing.Size(759, 366);
 			this.gridPlanets.TabIndex = 1;
+			this.gridPlanets.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridPlanets_DataError);
+			this.gridPlanets.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowEnter);
+			this.gridPlanets.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowLeave);
 			// 
 			// iconDataGridViewImageColumn
 			// 
@@ -357,6 +365,7 @@
 			this.iconDataGridViewImageColumn.HeaderText = "Icon";
 			this.iconDataGridViewImageColumn.Name = "iconDataGridViewImageColumn";
 			this.iconDataGridViewImageColumn.ReadOnly = true;
+			this.iconDataGridViewImageColumn.Width = 32;
 			// 
 			// nameDataGridViewTextBoxColumn
 			// 
@@ -371,6 +380,7 @@
 			this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
 			this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
 			this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
+			this.sizeDataGridViewTextBoxColumn.Width = 50;
 			// 
 			// surfaceDataGridViewTextBoxColumn
 			// 
@@ -392,6 +402,7 @@
 			this.resourceValueDataGridViewTextBoxColumn.HeaderText = "ResourceValue";
 			this.resourceValueDataGridViewTextBoxColumn.Name = "resourceValueDataGridViewTextBoxColumn";
 			this.resourceValueDataGridViewTextBoxColumn.ReadOnly = true;
+			this.resourceValueDataGridViewTextBoxColumn.Width = 200;
 			// 
 			// ownerDataGridViewTextBoxColumn
 			// 
@@ -416,8 +427,6 @@
 			this.DoubleBuffered = true;
 			this.ForeColor = System.Drawing.Color.White;
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
 			this.Name = "PlanetListForm";
 			this.Text = "Planets";
 			this.Load += new System.EventHandler(this.PlanetListForm_Load);

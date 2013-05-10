@@ -47,5 +47,10 @@ namespace FrEee.Game
 		/// The color used to represent this empire's star systems on the galaxy map.
 		/// </summary>
 		public Color Color { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
