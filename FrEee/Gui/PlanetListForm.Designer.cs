@@ -29,6 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlanetListForm));
 			this.pnlHeader = new FrEee.Gui.Controls.GamePanel();
 			this.galaxyView = new FrEee.Gui.Controls.GalaxyView();
@@ -345,6 +346,8 @@
 			this.gridPlanets.Location = new System.Drawing.Point(13, 183);
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridPlanets.Size = new System.Drawing.Size(759, 366);
 			this.gridPlanets.TabIndex = 1;
 			// 

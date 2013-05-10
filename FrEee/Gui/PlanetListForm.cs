@@ -38,7 +38,7 @@ namespace FrEee.Gui
 			galaxyView.Galaxy = galaxy;
 
 			// show planet data
-			gridPlanets.DataSource = planets;
+			planetBindingSource.DataSource = planets.ToList();
 		}
 	}
 }
