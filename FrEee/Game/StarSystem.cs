@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -48,9 +49,20 @@ namespace FrEee.Game
 		public string Description { get; set; }
 
 		/// <summary>
-		/// The path to the background image.
+		/// The path to the background image, relative to Pictures/Systems.
 		/// </summary>
 		public string BackgroundImagePath { get; set; }
+
+		[JsonIgnore]
+		public Image BackgroundImage
+		{
+			get
+			{
+				if (BackgroundImagePath == null)
+					return null;
+				return Pictures.GetCachedImage(Path.Combine("Pictures", "Systems", BackgroundImagePath));
+			}
+		}
 
 		/// <summary>
 		/// If true, empire homeworlds can be located in this system.
@@ -211,6 +223,10 @@ namespace FrEee.Game
 			// hide explored-by empires
 			foreach (var emp in ExploredByEmpires.Where(emp => emp != galaxy.CurrentEmpire).ToArray())
 				ExploredByEmpires.Remove(emp);
+
+			// hide background image (so player can't see what kind of system it is)
+			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+				BackgroundImagePath = null;
 		}
 	}
 }

@@ -18,6 +18,7 @@ namespace FrEee.Gui.Controls
 			BackColor = Color.Black;
 			this.SizeChanged += StarSystemView_SizeChanged;
 			this.MouseClick += StarSystemView_MouseClicked;
+			DoubleBuffered = true;
 		}
 
 		/// <summary>
@@ -117,8 +118,17 @@ namespace FrEee.Gui.Controls
 
 			if (StarSystem != null)
 			{
-				// TODO - draw star system background
+				if (StarSystem.BackgroundImage != null)
+				{
+					// draw star system background
+					var size = Math.Min(Width, Height);
+					if (Width >= Height)
+						pe.Graphics.DrawImage(StarSystem.BackgroundImage, (Width - Height) / 2, 0, size, size);
+					else
+						pe.Graphics.DrawImage(StarSystem.BackgroundImage, 0, (Height - Width) / 2, size, size);
+				}
 
+				// draw sectors
 				for (var x = -StarSystem.Radius; x <= StarSystem.Radius; x++)
 				{
 					for (var y = -StarSystem.Radius; y <= StarSystem.Radius; y++)

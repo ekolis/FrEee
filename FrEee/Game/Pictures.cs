@@ -93,7 +93,7 @@ namespace FrEee.Game
 				GetGenericImage(sobj.GetType());
 		}
 
-		private static Image GetCachedImage(string path)
+		public static Image GetCachedImage(string path)
 		{
 			if (!pictures.ContainsKey(path))
 			{
