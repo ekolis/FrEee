@@ -95,7 +95,7 @@ namespace FrEee.Gui
 
 			// set up GUI
 			galaxyView.Galaxy = galaxy;
-			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.StarSystemLocations.Select(ssl => ssl.Item).PickRandom();
+			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.ExploredStarSystems.PickRandom();
 			Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
 			picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
 		}
