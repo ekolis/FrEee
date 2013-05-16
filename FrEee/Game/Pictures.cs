@@ -95,6 +95,12 @@ namespace FrEee.Game
 
 		public static Image GetCachedImage(string path)
 		{
+			if (string.IsNullOrEmpty(Path.GetExtension(path)))
+			{
+				// check PNG, then BMP, if no extension specified
+				return GetCachedImage(path + ".png") ?? GetCachedImage(path + ".bmp");
+			}
+
 			if (!pictures.ContainsKey(path))
 			{
 				try

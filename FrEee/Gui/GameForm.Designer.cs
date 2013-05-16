@@ -38,6 +38,7 @@
 			this.pnlSystemTabs = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSearch = new FrEee.Gui.Controls.GamePanel();
 			this.pnlSubCommands = new FrEee.Gui.Controls.GamePanel();
+			this.btnPlanets = new FrEee.Gui.Controls.GameButton();
 			this.pnlMainCommands = new FrEee.Gui.Controls.GamePanel();
 			this.pnlHeader = new FrEee.Gui.Controls.GamePanel();
 			this.gameProgressBar1 = new FrEee.Gui.Controls.GameProgressBar();
@@ -45,11 +46,16 @@
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
-			this.btnPlanets = new FrEee.Gui.Controls.GameButton();
+			this.btnMenu = new FrEee.Gui.Controls.GameButton();
+			this.btnDesigns = new FrEee.Gui.Controls.GameButton();
+			this.btnEmpires = new FrEee.Gui.Controls.GameButton();
+			this.btnShips = new FrEee.Gui.Controls.GameButton();
+			this.btnQueues = new FrEee.Gui.Controls.GameButton();
+			this.btnLog = new FrEee.Gui.Controls.GameButton();
 			this.pnlSystemMap.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.pnlDetailReport.SuspendLayout();
-			this.pnlSubCommands.SuspendLayout();
+			this.pnlMainCommands.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.SuspendLayout();
@@ -150,10 +156,10 @@
 			this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemTabs.Location = new System.Drawing.Point(335, 115);
+			this.pnlSystemTabs.Location = new System.Drawing.Point(320, 108);
 			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemTabs.Name = "pnlSystemTabs";
-			this.pnlSystemTabs.Size = new System.Drawing.Size(292, 37);
+			this.pnlSystemTabs.Size = new System.Drawing.Size(307, 46);
 			this.pnlSystemTabs.TabIndex = 3;
 			// 
 			// pnlSearch
@@ -162,10 +168,10 @@
 			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlSearch.ForeColor = System.Drawing.Color.White;
-			this.pnlSearch.Location = new System.Drawing.Point(15, 115);
+			this.pnlSearch.Location = new System.Drawing.Point(15, 108);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSearch.Name = "pnlSearch";
-			this.pnlSearch.Size = new System.Drawing.Size(313, 37);
+			this.pnlSearch.Size = new System.Drawing.Size(297, 46);
 			this.pnlSearch.TabIndex = 2;
 			// 
 			// pnlSubCommands
@@ -175,24 +181,43 @@
 			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSubCommands.Controls.Add(this.btnPlanets);
 			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlSubCommands.Location = new System.Drawing.Point(335, 54);
+			this.pnlSubCommands.Location = new System.Drawing.Point(320, 54);
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSubCommands.Name = "pnlSubCommands";
-			this.pnlSubCommands.Size = new System.Drawing.Size(292, 54);
+			this.pnlSubCommands.Size = new System.Drawing.Size(307, 46);
 			this.pnlSubCommands.TabIndex = 2;
+			// 
+			// btnPlanets
+			// 
+			this.btnPlanets.BackColor = System.Drawing.Color.Black;
+			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPlanets.Location = new System.Drawing.Point(87, 4);
+			this.btnPlanets.Name = "btnPlanets";
+			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
+			this.btnPlanets.TabIndex = 0;
+			this.btnPlanets.Text = "Planets";
+			this.btnPlanets.UseVisualStyleBackColor = false;
+			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
 			// 
 			// pnlMainCommands
 			// 
 			this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlMainCommands.Controls.Add(this.btnLog);
+			this.pnlMainCommands.Controls.Add(this.btnQueues);
+			this.pnlMainCommands.Controls.Add(this.btnShips);
+			this.pnlMainCommands.Controls.Add(this.btnEmpires);
+			this.pnlMainCommands.Controls.Add(this.btnPlanets);
+			this.pnlMainCommands.Controls.Add(this.btnDesigns);
+			this.pnlMainCommands.Controls.Add(this.btnMenu);
 			this.pnlMainCommands.ForeColor = System.Drawing.Color.White;
 			this.pnlMainCommands.Location = new System.Drawing.Point(15, 54);
 			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlMainCommands.Name = "pnlMainCommands";
-			this.pnlMainCommands.Size = new System.Drawing.Size(313, 54);
+			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(4);
+			this.pnlMainCommands.Size = new System.Drawing.Size(297, 46);
 			this.pnlMainCommands.TabIndex = 1;
 			// 
 			// pnlHeader
@@ -276,17 +301,71 @@
 			this.picEmpireFlag.TabIndex = 0;
 			this.picEmpireFlag.TabStop = false;
 			// 
-			// btnPlanets
+			// btnMenu
 			// 
-			this.btnPlanets.BackColor = System.Drawing.Color.Black;
-			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPlanets.Location = new System.Drawing.Point(3, 4);
-			this.btnPlanets.Name = "btnPlanets";
-			this.btnPlanets.Size = new System.Drawing.Size(57, 45);
-			this.btnPlanets.TabIndex = 0;
-			this.btnPlanets.Text = "Planets";
-			this.btnPlanets.UseVisualStyleBackColor = false;
-			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
+			this.btnMenu.BackColor = System.Drawing.Color.Black;
+			this.btnMenu.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMenu.Location = new System.Drawing.Point(4, 4);
+			this.btnMenu.Name = "btnMenu";
+			this.btnMenu.Size = new System.Drawing.Size(36, 36);
+			this.btnMenu.TabIndex = 1;
+			this.btnMenu.Text = "Menu";
+			this.btnMenu.UseVisualStyleBackColor = false;
+			// 
+			// btnDesigns
+			// 
+			this.btnDesigns.BackColor = System.Drawing.Color.Black;
+			this.btnDesigns.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDesigns.Location = new System.Drawing.Point(46, 4);
+			this.btnDesigns.Name = "btnDesigns";
+			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
+			this.btnDesigns.TabIndex = 2;
+			this.btnDesigns.Text = "Designs";
+			this.btnDesigns.UseVisualStyleBackColor = false;
+			// 
+			// btnEmpires
+			// 
+			this.btnEmpires.BackColor = System.Drawing.Color.Black;
+			this.btnEmpires.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpires.Location = new System.Drawing.Point(129, 4);
+			this.btnEmpires.Name = "btnEmpires";
+			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
+			this.btnEmpires.TabIndex = 3;
+			this.btnEmpires.Text = "Empires";
+			this.btnEmpires.UseVisualStyleBackColor = false;
+			// 
+			// btnShips
+			// 
+			this.btnShips.BackColor = System.Drawing.Color.Black;
+			this.btnShips.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnShips.Location = new System.Drawing.Point(171, 4);
+			this.btnShips.Name = "btnShips";
+			this.btnShips.Size = new System.Drawing.Size(36, 36);
+			this.btnShips.TabIndex = 4;
+			this.btnShips.Text = "Ships";
+			this.btnShips.UseVisualStyleBackColor = false;
+			// 
+			// btnQueues
+			// 
+			this.btnQueues.BackColor = System.Drawing.Color.Black;
+			this.btnQueues.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnQueues.Location = new System.Drawing.Point(213, 4);
+			this.btnQueues.Name = "btnQueues";
+			this.btnQueues.Size = new System.Drawing.Size(36, 36);
+			this.btnQueues.TabIndex = 5;
+			this.btnQueues.Text = "Queues";
+			this.btnQueues.UseVisualStyleBackColor = false;
+			// 
+			// btnLog
+			// 
+			this.btnLog.BackColor = System.Drawing.Color.Black;
+			this.btnLog.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLog.Location = new System.Drawing.Point(255, 4);
+			this.btnLog.Name = "btnLog";
+			this.btnLog.Size = new System.Drawing.Size(36, 36);
+			this.btnLog.TabIndex = 6;
+			this.btnLog.Text = "Log";
+			this.btnLog.UseVisualStyleBackColor = false;
 			// 
 			// GameForm
 			// 
@@ -312,7 +391,7 @@
 			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlGalaxyMap.ResumeLayout(false);
 			this.pnlDetailReport.ResumeLayout(false);
-			this.pnlSubCommands.ResumeLayout(false);
+			this.pnlMainCommands.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.ResumeLayout(false);
@@ -338,6 +417,12 @@
 		private Gui.Controls.StarSystemView starSystemView;
 		private Gui.Controls.GalaxyView galaxyView;
 		private Gui.Controls.GameButton btnPlanets;
+		private Controls.GameButton btnEmpires;
+		private Controls.GameButton btnDesigns;
+		private Controls.GameButton btnMenu;
+		private Controls.GameButton btnShips;
+		private Controls.GameButton btnLog;
+		private Controls.GameButton btnQueues;
 	}
 }
 
