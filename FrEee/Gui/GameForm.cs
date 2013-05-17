@@ -111,6 +111,9 @@ namespace FrEee.Gui
 			// remove old report, if any
 			pnlDetailReport.Controls.Clear();
 
+			if (sector == null)
+				return;
+
 			if (sector.SpaceObjects.Count > 0)
 			{
 				// add new report
