@@ -65,6 +65,12 @@ namespace FrEee.Game
 			g.DrawEllipse(new Pen(Color.Blue, 3), 20, 20, 88, 88);
 			g.DrawEllipse(new Pen(Color.Blue, 3), 30, 20, 68, 68);
 			genericPictures.Add(typeof(WarpPoint), img);
+
+			// facility
+			img = new Bitmap(128, 128);
+			g = Graphics.FromImage(img);
+			g.FillRectangle(new SolidBrush(Color.Silver), 10, 10, 108, 108);
+			genericPictures.Add(typeof(Facility), img);
 		}
 
 		/// <summary>
@@ -87,10 +93,38 @@ namespace FrEee.Game
 		/// <returns></returns>
 		public static Image GetPortrait(StellarObject sobj)
 		{
+			// TODO - check mod folders for images too
 			return
 				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
 				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
 				GetGenericImage(sobj.GetType());
+		}
+
+		/// <summary>
+		/// Gets the icon image for a facility.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Facility f)
+		{
+			var portrait = GetPortrait(f);
+			if (portrait == null)
+				return null;
+			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+		}
+
+		/// <summary>
+		/// Gets the portrait image for a facility.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetPortrait(Facility f)
+		{
+			// TODO - check mod folders for images too
+			return
+				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
+				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
+				GetGenericImage(f.GetType());
 		}
 
 		public static Image GetCachedImage(string path)

@@ -40,6 +40,28 @@ namespace FrEee.Modding
 				return Fields.First().ToString() + " (" + Fields.Count + " fields)";
 			return "(0 fields)";
 		}
+
+		public Field FindField(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return FindField(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
+		public Field FindField(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			for (var i = startIndex; i < Fields.Count; i++)
+			{
+				if (fieldNames.Contains(Fields[i].Name))
+				{
+					index = i;
+					return Fields[i];
+				}
+				if (!allowSkip)
+					break;
+			}
+			if (logErrors)
+				Mod.Errors.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
+			return null;
+		}
 		
 		/// <summary>
 		/// Tries to find a field value.
@@ -60,29 +82,26 @@ namespace FrEee.Modding
 		/// Tries to find a field value from the first of any of a number of fields.
 		/// </summary>
 		/// <param name="fieldNames">The name to search for.</param>
-		/// <param name="log">If an exception needs to be logged, pass it here.</param>
+		/// <param name="log">If an exception needs to be logged, pass it here. Note that now all errors are logged to Mod.Errors.</param>
 		/// <param name="value">The field value.</param>
 		/// <param name="index">The field index.</param>
 		/// <param name="startIndex">Where to start in the field list.</param>
 		/// <param name="allowSkip">Allow skipping fields to find the one we want?</param>
 		/// <returns>true on success, false on failure</returns>
+		// TODO - change method signature to take a bool instead of a collection of errors
 		public bool TryFindFieldValue(IEnumerable<string> fieldNames, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0, bool allowSkip = false)
 		{
-			for (var i = startIndex; i < Fields.Count; i++)
+			var field = FindField(fieldNames, ref index, log != null, startIndex, allowSkip);
+			if (field == null)
 			{
-				if (fieldNames.Contains(Fields[i].Name))
-				{
-					value = Fields[i].Value;
-					index = i;
-					return true;
-				}
-				if (!allowSkip)
-					break;
+				value = null;
+				return false;
 			}
-			if (log != null)
-				log.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
-			value = null;
-			return false;
+			else
+			{
+				value = field.Value;
+				return true;
+			}
 		}
 	}
 }

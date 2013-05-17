@@ -63,11 +63,15 @@
     <Compile Include="Game\AsteroidField.cs" />
     <Compile Include="Game\Colony.cs" />
     <Compile Include="Game\Empire.cs" />
+    <Compile Include="Game\Facility.cs" />
     <Compile Include="Game\Galaxy.cs" />
     <Compile Include="Game\GameSetup.cs" />
+    <Compile Include="Game\IResearchable.cs" />
     <Compile Include="Game\Resources.cs" />
     <Compile Include="Game\Location.cs" />
     <Compile Include="Game\StellarObject.cs" />
+    <Compile Include="Game\Technology.cs" />
+    <Compile Include="Game\TechnologyRequirement.cs" />
     <Compile Include="Game\Visibility.cs" />
     <Compile Include="Gui\Controls\AsteroidFieldReport.cs">
       <SubType>UserControl</SubType>
@@ -101,9 +105,12 @@
     </Compile>
     <Compile Include="INamed.cs" />
     <Compile Include="Modding\IStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\Extensions.cs" />
     <Compile Include="Modding\Loaders\StellarObjectLoader.cs" />
     <Compile Include="Modding\Loaders\GalaxyLoader.cs" />
     <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
+    <Compile Include="Modding\Loaders\TechnologyLoader.cs" />
+    <Compile Include="Modding\Loaders\TechnologyRequirementLoader.cs" />
     <Compile Include="Modding\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\StarSystemPlacementStrategies\SpiralStarSystemPlacementStrategy.cs" />

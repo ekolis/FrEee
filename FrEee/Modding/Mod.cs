@@ -40,6 +40,9 @@ namespace FrEee.Modding
 			CurrentFileName = Path.Combine("Mods", path, "Data", "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
+			CurrentFileName = Path.Combine("Mods", path, "Data", "TechArea.txt");
+			new TechnologyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+
 			CurrentFileName = Path.Combine("Mods", path, "Data", "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
@@ -65,6 +68,7 @@ namespace FrEee.Modding
 		{
 			Errors = new List<DataParsingException>();
 			StarSystemNames = new List<string>();
+			Technologies = new List<Technology>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 			GalaxyTemplates = new List<GalaxyTemplate>();
@@ -95,6 +99,11 @@ namespace FrEee.Modding
 		/// Templates for stellar objects.
 		/// </summary>
 		public ICollection<StellarObject> StellarObjectTemplates { get; private set; }
+
+		/// <summary>
+		/// The technologies in the game.
+		/// </summary>
+		public ICollection<Technology> Technologies { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.
