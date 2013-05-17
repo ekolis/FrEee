@@ -40,7 +40,7 @@ namespace FrEee.Modding.Loaders
 				ac.Ability = new Ability();
 				string temp;
 
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Chance", "Ability Chance" }, out temp, ref start, null, start))
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Chance", "Ability Chance" }, out temp, ref start, null, start, true))
 					yield break; // couldn't load next ability
 				else
 				{
