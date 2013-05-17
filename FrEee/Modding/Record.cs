@@ -103,5 +103,54 @@ namespace FrEee.Modding
 				return true;
 			}
 		}
+
+		public double GetDouble(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return GetDouble(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
+		public int GetInt(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return GetInt(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
+		public bool GetBool(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return GetBool(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
+		public string GetString(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return GetString(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
+		public double GetDouble(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
+			if (f == null)
+				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+			return f.DoubleValue(this);
+		}
+
+		public int GetInt(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
+			if (f == null)
+				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+			return f.IntValue(this);
+		}
+
+		public bool GetBool(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
+			if (f == null)
+				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+			return f.BoolValue(this);
+		}
+
+		public string GetString(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
+		{
+			return FindField(fieldNames, ref index, logErrors, startIndex, allowSkip).Value;
+		}
 	}
 }

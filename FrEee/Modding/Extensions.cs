@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Modding.Loaders
+namespace FrEee.Modding
 {
 	public static class Extensions
 	{

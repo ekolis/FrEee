@@ -19,6 +19,7 @@ namespace FrEee.Game
 		{
 			Abilities = new List<Ability>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
+			Cost = new Resources();
 		}
 
 		/// <summary>

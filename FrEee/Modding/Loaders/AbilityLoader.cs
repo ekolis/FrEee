@@ -22,7 +22,7 @@ namespace FrEee.Modding.Loaders
 				var abil = new Ability();
 				string temp;
 
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start))
+				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start, count == 1))
 					yield break; // couldn't load next ability
 				else
 					abil.Name = temp;
