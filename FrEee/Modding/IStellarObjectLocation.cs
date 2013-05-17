@@ -12,7 +12,7 @@ namespace FrEee.Modding
 	/// </summary>
 	public interface IStellarObjectLocation
 	{
-		ITemplate<ISpaceObject> StellarObjectTemplate { get; set; }
+		ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
 		/// <summary>
 		/// Chooses a sector.

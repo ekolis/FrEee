@@ -14,7 +14,7 @@ namespace FrEee.Modding
 	/// </summary>
 	public class RingStellarObjectLocation : IStellarObjectLocation
 	{
-		public ITemplate<ISpaceObject> StellarObjectTemplate { get; set; }
+		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
 		public int Ring { get; set; }
 

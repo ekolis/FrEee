@@ -19,6 +19,11 @@ namespace FrEee.Game
 		}
 
 		/// <summary>
+		/// Used for naming.
+		/// </summary>
+		public Planet MoonOf { get; set; }
+
+		/// <summary>
 		/// The size of this planet.
 		/// </summary>
 		public Size Size { get; set; }

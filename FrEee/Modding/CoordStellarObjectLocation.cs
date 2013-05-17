@@ -12,7 +12,7 @@ namespace FrEee.Modding
 	/// </summary>
 	public class CoordStellarObjectLocation : IStellarObjectLocation
 	{
-		public ITemplate<ISpaceObject> StellarObjectTemplate { get; set; }
+		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
 		public Point Coordinates { get; set; }
 

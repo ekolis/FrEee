@@ -171,5 +171,81 @@ namespace FrEee
 					yield return p;
 			}
 		}
+
+		/// <summary>
+		/// Flattens a grouping into a single sequence.
+		/// </summary>
+		/// <typeparam name="TKey"></typeparam>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="lookup"></param>
+		/// <returns></returns>
+		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> lookup)
+		{
+			return lookup.SelectMany(g => g);
+		}
+
+		/// <summary>
+		/// Gets a capital letter from the English alphabet.
+		/// </summary>
+		/// <param name="i">1 to 26</param>
+		/// <returns>A to Z</returns>
+		/// <exception cref="ArgumentException">if i is not from 1 to 26</exception>
+		public static char ToLetter(this int i)
+		{
+			if (i < 1 || i > 26)
+				throw new ArgumentException("Only 26 letters in the alphabet, can't get letter #" + i + ".", "i");
+			return (char)('A' + i - 1);
+		}
+
+		/// <summary>
+		/// Gets a roman numeral.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public static string ToRomanNumeral(this int i)
+		{
+			// do we already know this?
+			if (!RomanNumeralCache.ContainsKey(i))
+			{
+				// get silly negative numbers and zeroes out of the way
+				if (i < 0)
+					RomanNumeralCache.Add(i, "-" + ToRomanNumeral(-i));
+				else if (i == 0)
+					RomanNumeralCache.Add(i, "");
+				else
+				{
+					// scan the roman numeral parts list recursively
+					foreach (var part in RomanNumeralParts.OrderByDescending(part => part.Item1))
+					{
+						if (i >= part.Item1)
+						{
+							RomanNumeralCache.Add(i, part.Item2 + (i - part.Item1).ToRomanNumeral());
+							break;
+						}
+					}
+				}
+			}
+
+			return RomanNumeralCache[i];
+		}
+
+		private static Tuple<int, string>[] RomanNumeralParts = new Tuple<int, string>[]
+		{
+			Tuple.Create(1000, "M"),
+			Tuple.Create(900, "CM"),
+			Tuple.Create(500, "D"),
+			Tuple.Create(400, "CD"),
+			Tuple.Create(100, "C"),
+			Tuple.Create(90, "XC"),
+			Tuple.Create(50, "L"),
+			Tuple.Create(40, "XL"),
+			Tuple.Create(10, "X"),
+			Tuple.Create(9, "IX"),
+			Tuple.Create(5, "V"),
+			Tuple.Create(4, "IV"),
+			Tuple.Create(1, "I"),
+		};
+
+		private static IDictionary<int, string> RomanNumeralCache = new Dictionary<int, string>();
 	}
 }

@@ -12,7 +12,7 @@ namespace FrEee.Modding
 	/// </summary>
 	public class CircleRadiusStellarObjectLocation : IStellarObjectLocation
 	{
-		public ITemplate<ISpaceObject> StellarObjectTemplate { get; set; }
+		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
 		public int Radius { get; set; }
 

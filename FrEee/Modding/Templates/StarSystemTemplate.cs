@@ -79,8 +79,31 @@ namespace FrEee.Modding.Templates
 			foreach (var abil in Abilities)
 				sys.Abilities.Add(abil);
 			sys.WarpPointAbilities = WarpPointAbilities; // warp points will be generated later in galaxy generation
+
+			var planets = new Dictionary<IStellarObjectLocation, Planet>();
+
 			foreach (var loc in StellarObjectLocations)
-				sys.GetSector(loc.Resolve(sys)).SpaceObjects.Add(loc.StellarObjectTemplate.Instantiate());
+			{
+				// create object
+				var sobj = loc.StellarObjectTemplate.Instantiate();
+				
+				// place object
+				sys.GetSector(loc.Resolve(sys)).SpaceObjects.Add(sobj);
+
+				// for planets with moons
+				if (sobj is Planet)
+					planets.Add(loc, (Planet)sobj);
+
+				// set flags for naming
+				sobj.Index = sys.FindSpaceObjects<StellarObject>(s => s.GetType() == sobj.GetType()).Count + 1;
+				sobj.IsUnique = StellarObjectLocations.Where(l => typeof(ITemplate<>).MakeGenericType(sobj.GetType()).IsAssignableFrom(l.StellarObjectTemplate.GetType())).Count() == 1;
+				if (sobj is Planet && loc is SameAsStellarObjectLocation)
+				{
+					var planet = (Planet)sobj;
+					var loc2 = (SameAsStellarObjectLocation)loc;
+					planet.MoonOf = planets[StellarObjectLocations[loc2.TargetIndex - 1]];
+				}
+			}
 			return sys;
 		}
 	}

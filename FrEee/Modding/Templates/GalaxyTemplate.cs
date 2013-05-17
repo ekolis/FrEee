@@ -64,6 +64,8 @@ namespace FrEee.Modding.Templates
 			var gal = new Galaxy();
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
+			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
+
 			// create star systems
 			for (int i = 0; i < GameSetup.StarSystemCount; i++)
 			{
@@ -71,12 +73,101 @@ namespace FrEee.Modding.Templates
 				if (p == null)
 					break; // no more locations available
 
-				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = StarSystemTemplateChances.PickWeighted().Instantiate()});
+				var sys = StarSystemTemplateChances.PickWeighted().Instantiate();
+				sys.Name = unusedNames.PickRandom();
+				unusedNames.Remove(sys.Name);
+				NameStellarObjects(sys);
+				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys});
 			}
 
 			// TODO - create warp points
 
 			return gal;
+		}
+
+		private void NameStellarObjects(StarSystem sys)
+		{
+			int index;
+
+			index = 1;
+			var stars = sys.FindSpaceObjects<Star>().Flatten().ToArray();
+			foreach (var star in stars)
+			{
+				if (stars.Count() == 1)
+					star.Name = sys.Name; // just name star after system
+				else
+				{
+					try
+					{
+						star.Name = sys.Name + " " + index.ToLetter();
+					}
+					catch (ArgumentException)
+					{
+						// seriously, 27 stars? fine, just name it after system again!
+						star.Name = sys.Name;
+					}
+				}
+				index++;
+			}
+
+			index = 1;
+			var moonIndices = new Dictionary<Planet, int>();
+			var planets = sys.FindSpaceObjects<Planet>().Flatten().ToArray();
+			foreach (var planet in planets)
+			{
+				if (planet.MoonOf != null)
+				{
+					// it's a moon, give it a fancy name
+					if (moonIndices.ContainsKey(planet.MoonOf))
+						moonIndices[planet.MoonOf]++;
+					else
+						moonIndices.Add(planet.MoonOf, 1);
+					try
+					{
+						planet.Name = planet.MoonOf.Name + " " + moonIndices[planet.MoonOf].ToLetter();
+					}
+					catch (ArgumentException)
+					{
+						// seriously, 27 moons? just call it a moon
+						planet.Name = planet.MoonOf.Name + " Moon";
+					}
+				}
+				else
+				{
+					// just a regular planet
+					planet.Name = sys.Name + " " + index.ToRomanNumeral();
+					index++;
+				}
+			}
+
+			index = 1;
+			var asteroids = sys.FindSpaceObjects<AsteroidField>().Flatten().ToArray();
+			foreach (var asteroid in asteroids)
+			{
+				asteroid.Name = sys.Name + " Asteroid Field " + index.ToRomanNumeral();
+				index++;
+			}
+
+			index = 1;
+			var storms = sys.FindSpaceObjects<Storm>().Flatten().ToArray();
+			foreach (var storm in storms)
+			{
+				if (storms.Count() == 1)
+					storm.Name = sys.Name + " Storm";
+				else
+				{
+					try
+					{
+						storm.Name = sys.Name + " Storm " + index.ToLetter();
+					}
+					catch (ArgumentException)
+					{
+						// seriously, 27 storms? fine, just call it a storm!
+						storm.Name = sys.Name + " Storm";
+					}
+				}
+				index++;	
+			}
 		}
 	}
 }

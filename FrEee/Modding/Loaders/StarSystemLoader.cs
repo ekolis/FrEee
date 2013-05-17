@@ -65,7 +65,7 @@ namespace FrEee.Modding.Loaders
 						pos = temp;
 					start++;
 
-					ITemplate<ISpaceObject> sobjTemplate;
+					ITemplate<StellarObject> sobjTemplate;
 					if (sobjtype == "Star" || sobjtype == "Destroyed Star")
 					{
 						var template = new StarTemplate();

@@ -13,7 +13,7 @@ namespace FrEee.Modding
 	/// </summary>
 	public class SameAsStellarObjectLocation : IStellarObjectLocation
 	{
-		public ITemplate<ISpaceObject> StellarObjectTemplate { get; set; }
+		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 
 		public StarSystemTemplate StarSystemTemplate { get; set; }
 

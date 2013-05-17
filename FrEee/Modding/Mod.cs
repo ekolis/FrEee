@@ -34,6 +34,9 @@ namespace FrEee.Modding
 		{
 			var mod = new Mod();
 
+			foreach (var line in File.ReadAllLines(Path.Combine("Mods", path, "Data", "SystemNames.txt")))
+				mod.StarSystemNames.Add(line);
+
 			CurrentFileName = Path.Combine("Mods", path, "Data", "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
@@ -61,11 +64,17 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
+			StarSystemNames = new List<string>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
 		}
+
+		/// <summary>
+		/// Names to use for star systems.
+		/// </summary>
+		public ICollection<string> StarSystemNames { get; private set; }
 
 		/// <summary>
 		/// Templates for star systems.

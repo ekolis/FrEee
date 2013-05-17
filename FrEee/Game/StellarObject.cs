@@ -17,6 +17,16 @@ namespace FrEee.Game
 		}
 
 		/// <summary>
+		/// Used for naming.
+		/// </summary>
+		public int Index { get; set; }
+
+		/// <summary>
+		/// Used for naming.
+		/// </summary>
+		public bool IsUnique { get; set; }
+
+		/// <summary>
 		/// The name of this stellar object.
 		/// </summary>
 		public string Name { get; set; }
