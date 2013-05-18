@@ -281,7 +281,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s
-xcopy "$(ProjectDir)Pictures" "$(TargetDir)Mods\" /y /e /s</PostBuildEvent>
+xcopy "$(ProjectDir)Pictures" "$(TargetDir)Pictures\" /y /e /s
+xcopy "$(ProjectDir)Docs" "$(TargetDir)Docs\" /y /e /s</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
