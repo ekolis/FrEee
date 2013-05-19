@@ -41,12 +41,12 @@ namespace FrEee.Game
 		/// <summary>
 		/// Planet abilities take into account abilities on the colony if one is present.
 		/// </summary>
+		[JsonIgnore]
 		public override IEnumerable<Ability> Abilities
 		{
 			get
 			{
-				// TODO - take into account colony abilities once we have colonies
-				return IntrinsicAbilities;
+				return IntrinsicAbilities.Concat(Colony == null ? Enumerable.Empty<Ability>() : Colony.Abilities);
 			}
 		}
 

@@ -66,5 +66,16 @@ namespace FrEee.Game
 		{
 			return obj.Abilities.Any(abil => abil.Name == abilityName);
 		}
+
+		/// <summary>
+		/// Stacks any abilities of the same type according to the default stacking rules.
+		/// </summary>
+		/// <param name="abilities"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities)
+		{
+			// TODO - actually stack abilities
+			return abilities;
+		}
 	}
 }

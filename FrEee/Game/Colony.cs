@@ -8,7 +8,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// A colony on a planet.
 	/// </summary>
-	public class Colony
+	public class Colony : IAbilityObject
 	{
 		public Colony()
 		{
@@ -25,6 +25,9 @@ namespace FrEee.Game
 		/// </summary>
 		public ICollection<Facility> Facilities { get; set; }
 
-		// TODO - more colony attributes
+		public IEnumerable<Ability> Abilities
+		{
+			get { return Facilities.SelectMany(f => f.Abilities); }
+		}
 	}
 }

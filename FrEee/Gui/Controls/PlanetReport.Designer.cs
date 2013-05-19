@@ -28,6 +28,10 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
 			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
 			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
 			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
@@ -40,10 +44,6 @@
 			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
             treeNode4,
             treeNode5});
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
 			this.gameTabControl1 = new FrEee.Gui.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
@@ -86,12 +86,12 @@
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageFacil = new System.Windows.Forms.TabPage();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
+			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
 			this.pageCargo = new System.Windows.Forms.TabPage();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
-			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -625,6 +625,27 @@
 			this.txtFacilitySlotsFree.TabIndex = 36;
 			this.txtFacilitySlotsFree.Text = "0/12 slots free";
 			// 
+			// lstFacilitiesDetail
+			// 
+			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
+			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
+			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
+			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
+			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
+			this.lstFacilitiesDetail.TabIndex = 24;
+			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
+			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
+			// 
 			// pageCargo
 			// 
 			this.pageCargo.BackColor = System.Drawing.Color.Black;
@@ -680,8 +701,10 @@
 			// 
 			// treeAbilities
 			// 
+			this.treeAbilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.treeAbilities.BackColor = System.Drawing.Color.Black;
-			this.treeAbilities.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeAbilities.ForeColor = System.Drawing.Color.White;
 			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
 			this.treeAbilities.Name = "treeAbilities";
@@ -705,27 +728,6 @@
             treeNode6});
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
-			// 
-			// lstFacilitiesDetail
-			// 
-			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
-			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
-			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
-			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
-			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
-			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
-			this.lstFacilitiesDetail.TabIndex = 24;
-			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
-			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
 			// 
 			// PlanetReport
 			// 
