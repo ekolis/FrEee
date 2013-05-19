@@ -94,5 +94,30 @@ namespace FrEee.Game
 				Colony = null;
 			// TODO - memory sight
 		}
+
+		/// <summary>
+		/// The resource income from this planet.
+		/// </summary>
+		public Resources Income
+		{
+			get
+			{
+				var income = new Resources();
+				var prefix = "Resource Generation - ";
+				foreach (var abil in Abilities.Where(abil => abil.Name.StartsWith(prefix)))
+				{
+					var resource = abil.Name.Substring(prefix.Length);
+					int amount;
+					int.TryParse(abil.Values[0], out amount);
+
+					// do modifiers to income
+					amount = (int)(amount * ResourceValue[resource] / 100d);
+					// TODO - other modifiers (population, happiness, robotoid factories, etc.)
+
+					income.Add(resource, amount);
+				}
+				return income;
+			}
+		}
 	}
 }

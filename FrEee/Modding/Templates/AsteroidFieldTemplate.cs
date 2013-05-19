@@ -49,9 +49,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				asteroids.IntrinsicAbilities.Add(abil);
 
-			asteroids.ResourceValue["minerals"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
-			asteroids.ResourceValue["organics"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
-			asteroids.ResourceValue["radioactives"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
+			asteroids.ResourceValue["Minerals"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
+			asteroids.ResourceValue["Organics"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
+			asteroids.ResourceValue["Radioactives"] = Rng.Range(Mod.Current.MinAsteroidResourceValue, Mod.Current.MaxAsteroidResourceValue);
 
 			return asteroids;
 		}

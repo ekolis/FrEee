@@ -54,9 +54,9 @@ namespace FrEee.Gui.Controls
 				txtAtmosphere.Text = Planet.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 
-				txtValueMinerals.Text = Planet.ResourceValue["minerals"] + "%";
-				txtValueOrganics.Text = Planet.ResourceValue["organics"] + "%";
-				txtValueRadioactives.Text = Planet.ResourceValue["radioactives"] + "%";
+				txtValueMinerals.Text = Planet.ResourceValue["Minerals"] + "%";
+				txtValueOrganics.Text = Planet.ResourceValue["Organics"] + "%";
+				txtValueRadioactives.Text = Planet.ResourceValue["Radioactives"] + "%";
 
 				txtDescription.Text = Planet.Description;
 
@@ -66,9 +66,10 @@ namespace FrEee.Gui.Controls
 				txtMood.Text = ""; // TODO - load mood
 
 				// TODO - load income
-				resIncomeMinerals.Amount = 0;
-				resIncomeOrganics.Amount = 0;
-				resIncomeRadioactives.Amount = 0;
+				var income = Planet.Income;
+				resIncomeMinerals.Amount = income["Minerals"];
+				resIncomeOrganics.Amount = income["Organics"];
+				resIncomeRadioactives.Amount = income["Radioactives"];
 				resResearch.Amount = 0;
 				resIntel.Amount = 0;
 

@@ -46,5 +46,24 @@ namespace FrEee.Game
 		{
 			return string.Join(", ", this.Select(kvp => kvp.Value + " " + kvp.Key));
 		}
+
+		/// <summary>
+		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
+		/// </summary>
+		/// <param name="item"></param>
+		public override void Add(KeyValuePair<string, int> item)
+		{
+			Add(item.Key, item.Value);
+		}
+
+		/// <summary>
+		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		public override void Add(string key, int value)
+		{
+			this[key] += value;
+		}
 	}
 }

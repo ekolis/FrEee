@@ -14,7 +14,7 @@ namespace FrEee
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 
-		public void Add(TKey key, TValue value)
+		public virtual void Add(TKey key, TValue value)
 		{
 			this[key] = value;
 		}
@@ -63,7 +63,7 @@ namespace FrEee
 			}
 		}
 
-		public void Add(KeyValuePair<TKey, TValue> item)
+		public virtual void Add(KeyValuePair<TKey, TValue> item)
 		{
 			this[item.Key] = item.Value;
 		}

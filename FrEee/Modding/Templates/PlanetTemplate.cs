@@ -49,9 +49,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
 
-			planet.ResourceValue["minerals"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["organics"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["radioactives"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Minerals"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Organics"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Radioactives"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
 
 			return planet;
 		}
