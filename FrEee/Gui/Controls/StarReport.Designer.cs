@@ -142,11 +142,12 @@
 			// 
 			// txtDescription
 			// 
-			this.txtDescription.AutoSize = true;
+			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDescription.Location = new System.Drawing.Point(163, 135);
 			this.txtDescription.Name = "txtDescription";
-			this.txtDescription.Size = new System.Drawing.Size(88, 15);
+			this.txtDescription.Size = new System.Drawing.Size(156, 27);
 			this.txtDescription.TabIndex = 29;
 			this.txtDescription.Text = "An old red star.";
 			// 

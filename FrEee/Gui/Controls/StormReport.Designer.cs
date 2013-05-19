@@ -89,11 +89,12 @@
 			// 
 			// txtDescription
 			// 
-			this.txtDescription.AutoSize = true;
+			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDescription.Location = new System.Drawing.Point(10, 163);
 			this.txtDescription.Name = "txtDescription";
-			this.txtDescription.Size = new System.Drawing.Size(229, 15);
+			this.txtDescription.Size = new System.Drawing.Size(296, 36);
 			this.txtDescription.TabIndex = 50;
 			this.txtDescription.Text = "A storm composed of electrostatic gases.";
 			// 

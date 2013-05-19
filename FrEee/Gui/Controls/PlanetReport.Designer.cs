@@ -28,22 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Happiness: +10");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Population: +30");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("1x Space Yard");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("War Shrine: +10");
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8});
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Happiness: +10");
+			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Population: +30");
+			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
+            treeNode10,
+            treeNode11});
 			this.gameTabControl1 = new FrEee.Gui.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
@@ -169,7 +169,7 @@
 			// 
 			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionTime.Location = new System.Drawing.Point(137, 322);
+			this.txtConstructionTime.Location = new System.Drawing.Point(141, 353);
 			this.txtConstructionTime.Name = "txtConstructionTime";
 			this.txtConstructionTime.Size = new System.Drawing.Size(153, 15);
 			this.txtConstructionTime.TabIndex = 65;
@@ -181,7 +181,7 @@
 			this.lblConstructionTime.AutoSize = true;
 			this.lblConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblConstructionTime.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblConstructionTime.Location = new System.Drawing.Point(6, 322);
+			this.lblConstructionTime.Location = new System.Drawing.Point(10, 353);
 			this.lblConstructionTime.Name = "lblConstructionTime";
 			this.lblConstructionTime.Size = new System.Drawing.Size(99, 15);
 			this.lblConstructionTime.TabIndex = 64;
@@ -191,7 +191,7 @@
 			// 
 			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionItem.Location = new System.Drawing.Point(136, 307);
+			this.txtConstructionItem.Location = new System.Drawing.Point(140, 338);
 			this.txtConstructionItem.Name = "txtConstructionItem";
 			this.txtConstructionItem.Size = new System.Drawing.Size(153, 15);
 			this.txtConstructionItem.TabIndex = 63;
@@ -203,7 +203,7 @@
 			this.lblConstructionItem.AutoSize = true;
 			this.lblConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblConstructionItem.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblConstructionItem.Location = new System.Drawing.Point(5, 307);
+			this.lblConstructionItem.Location = new System.Drawing.Point(9, 338);
 			this.lblConstructionItem.Name = "lblConstructionItem";
 			this.lblConstructionItem.Size = new System.Drawing.Size(112, 15);
 			this.lblConstructionItem.TabIndex = 62;
@@ -217,7 +217,7 @@
 			this.resIntel.Change = null;
 			this.resIntel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIntel.ForeColor = System.Drawing.Color.Magenta;
-			this.resIntel.Location = new System.Drawing.Point(153, 276);
+			this.resIntel.Location = new System.Drawing.Point(157, 307);
 			this.resIntel.Margin = new System.Windows.Forms.Padding(0);
 			this.resIntel.Name = "resIntel";
 			this.resIntel.ResourceColor = System.Drawing.Color.Empty;
@@ -232,7 +232,7 @@
 			this.resResearch.Change = null;
 			this.resResearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resResearch.ForeColor = System.Drawing.Color.Yellow;
-			this.resResearch.Location = new System.Drawing.Point(68, 276);
+			this.resResearch.Location = new System.Drawing.Point(72, 307);
 			this.resResearch.Margin = new System.Windows.Forms.Padding(0);
 			this.resResearch.Name = "resResearch";
 			this.resResearch.ResourceColor = System.Drawing.Color.Empty;
@@ -244,7 +244,7 @@
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label1.Location = new System.Drawing.Point(7, 281);
+			this.label1.Location = new System.Drawing.Point(11, 312);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(55, 15);
 			this.label1.TabIndex = 59;
@@ -254,7 +254,7 @@
 			// 
 			this.txtMood.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtMood.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtMood.Location = new System.Drawing.Point(137, 232);
+			this.txtMood.Location = new System.Drawing.Point(141, 263);
 			this.txtMood.Name = "txtMood";
 			this.txtMood.Size = new System.Drawing.Size(153, 15);
 			this.txtMood.TabIndex = 58;
@@ -266,7 +266,7 @@
 			this.lblMood.AutoSize = true;
 			this.lblMood.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblMood.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblMood.Location = new System.Drawing.Point(7, 232);
+			this.lblMood.Location = new System.Drawing.Point(11, 263);
 			this.lblMood.Name = "lblMood";
 			this.lblMood.Size = new System.Drawing.Size(39, 15);
 			this.lblMood.TabIndex = 57;
@@ -276,7 +276,7 @@
 			// 
 			this.txtReproduction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtReproduction.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtReproduction.Location = new System.Drawing.Point(136, 217);
+			this.txtReproduction.Location = new System.Drawing.Point(140, 248);
 			this.txtReproduction.Name = "txtReproduction";
 			this.txtReproduction.Size = new System.Drawing.Size(153, 15);
 			this.txtReproduction.TabIndex = 56;
@@ -288,7 +288,7 @@
 			this.lblReproduction.AutoSize = true;
 			this.lblReproduction.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblReproduction.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblReproduction.Location = new System.Drawing.Point(6, 217);
+			this.lblReproduction.Location = new System.Drawing.Point(10, 248);
 			this.lblReproduction.Name = "lblReproduction";
 			this.lblReproduction.Size = new System.Drawing.Size(81, 15);
 			this.lblReproduction.TabIndex = 55;
@@ -298,7 +298,7 @@
 			// 
 			this.txtPopulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPopulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtPopulation.Location = new System.Drawing.Point(136, 202);
+			this.txtPopulation.Location = new System.Drawing.Point(140, 233);
 			this.txtPopulation.Name = "txtPopulation";
 			this.txtPopulation.Size = new System.Drawing.Size(153, 15);
 			this.txtPopulation.TabIndex = 54;
@@ -310,7 +310,7 @@
 			this.lblPopulation.AutoSize = true;
 			this.lblPopulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblPopulation.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblPopulation.Location = new System.Drawing.Point(6, 202);
+			this.lblPopulation.Location = new System.Drawing.Point(10, 233);
 			this.lblPopulation.Name = "lblPopulation";
 			this.lblPopulation.Size = new System.Drawing.Size(66, 15);
 			this.lblPopulation.TabIndex = 53;
@@ -320,7 +320,7 @@
 			// 
 			this.txtColonyType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtColonyType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtColonyType.Location = new System.Drawing.Point(150, 187);
+			this.txtColonyType.Location = new System.Drawing.Point(154, 218);
 			this.txtColonyType.Name = "txtColonyType";
 			this.txtColonyType.Size = new System.Drawing.Size(139, 15);
 			this.txtColonyType.TabIndex = 52;
@@ -332,7 +332,7 @@
 			this.lblColonyType.AutoSize = true;
 			this.lblColonyType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblColonyType.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblColonyType.Location = new System.Drawing.Point(6, 187);
+			this.lblColonyType.Location = new System.Drawing.Point(10, 218);
 			this.lblColonyType.Name = "lblColonyType";
 			this.lblColonyType.Size = new System.Drawing.Size(73, 15);
 			this.lblColonyType.TabIndex = 51;
@@ -340,11 +340,12 @@
 			// 
 			// txtDescription
 			// 
-			this.txtDescription.AutoSize = true;
+			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtDescription.Location = new System.Drawing.Point(10, 163);
 			this.txtDescription.Name = "txtDescription";
-			this.txtDescription.Size = new System.Drawing.Size(244, 15);
+			this.txtDescription.Size = new System.Drawing.Size(283, 55);
 			this.txtDescription.TabIndex = 50;
 			this.txtDescription.Text = "Large planet with an extended troposphere.";
 			// 
@@ -386,7 +387,7 @@
 			this.resIncomeMinerals.Change = null;
 			this.resIncomeMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeMinerals.ForeColor = System.Drawing.Color.Blue;
-			this.resIncomeMinerals.Location = new System.Drawing.Point(68, 252);
+			this.resIncomeMinerals.Location = new System.Drawing.Point(72, 283);
 			this.resIncomeMinerals.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeMinerals.Name = "resIncomeMinerals";
 			this.resIncomeMinerals.ResourceColor = System.Drawing.Color.Empty;
@@ -401,7 +402,7 @@
 			this.resIncomeOrganics.Change = null;
 			this.resIncomeOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeOrganics.ForeColor = System.Drawing.Color.Lime;
-			this.resIncomeOrganics.Location = new System.Drawing.Point(149, 252);
+			this.resIncomeOrganics.Location = new System.Drawing.Point(153, 283);
 			this.resIncomeOrganics.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeOrganics.Name = "resIncomeOrganics";
 			this.resIncomeOrganics.ResourceColor = System.Drawing.Color.Empty;
@@ -416,7 +417,7 @@
 			this.resIncomeRadioactives.Change = null;
 			this.resIncomeRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resIncomeRadioactives.ForeColor = System.Drawing.Color.Red;
-			this.resIncomeRadioactives.Location = new System.Drawing.Point(230, 252);
+			this.resIncomeRadioactives.Location = new System.Drawing.Point(234, 283);
 			this.resIncomeRadioactives.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeRadioactives.Name = "resIncomeRadioactives";
 			this.resIncomeRadioactives.ResourceColor = System.Drawing.Color.Empty;
@@ -428,7 +429,7 @@
 			this.lblIncome.AutoSize = true;
 			this.lblIncome.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblIncome.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblIncome.Location = new System.Drawing.Point(7, 257);
+			this.lblIncome.Location = new System.Drawing.Point(11, 288);
 			this.lblIncome.Name = "lblIncome";
 			this.lblIncome.Size = new System.Drawing.Size(48, 15);
 			this.lblIncome.TabIndex = 43;
@@ -635,10 +636,10 @@
 			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
 			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9,
+            listViewItem10});
 			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
 			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
@@ -679,8 +680,8 @@
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
+            listViewItem11,
+            listViewItem12});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(313, 399);
@@ -708,24 +709,24 @@
 			this.treeAbilities.ForeColor = System.Drawing.Color.White;
 			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
 			this.treeAbilities.Name = "treeAbilities";
-			treeNode1.Name = "Node1";
-			treeNode1.Text = "Racial Trait: +5";
-			treeNode2.Name = "Node3";
-			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode2.Text = "War Shrine: +10";
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Attack Modifier: +15";
-			treeNode4.Name = "Node1";
-			treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode4.Text = "Happiness: +10";
-			treeNode5.Name = "Node2";
-			treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode5.Text = "Population: +30";
-			treeNode6.Name = "Node0";
-			treeNode6.Text = "Minerals Income Modifier: +40";
+			treeNode7.Name = "Node1";
+			treeNode7.Text = "Racial Trait: +5";
+			treeNode8.Name = "Node3";
+			treeNode8.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode8.Text = "War Shrine: +10";
+			treeNode9.Name = "Node0";
+			treeNode9.Text = "Attack Modifier: +15";
+			treeNode10.Name = "Node1";
+			treeNode10.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode10.Text = "Happiness: +10";
+			treeNode11.Name = "Node2";
+			treeNode11.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode11.Text = "Population: +30";
+			treeNode12.Name = "Node0";
+			treeNode12.Text = "Minerals Income Modifier: +40";
 			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode6});
+            treeNode9,
+            treeNode12});
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
 			// 
