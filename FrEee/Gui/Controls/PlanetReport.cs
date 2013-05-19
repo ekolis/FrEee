@@ -82,6 +82,22 @@ namespace FrEee.Gui.Controls
 				// TODO - load facilities
 				txtFacilitySlotsFree.Text = "0 / 0 slots free";
 				lstFacilitiesDetail.Items.Clear();
+				if (Planet.Colony != null)
+				{
+					var il = new ImageList();
+					il.ImageSize = new System.Drawing.Size(32, 32);
+					lstFacilitiesDetail.LargeImageList = il;
+					lstFacilitiesDetail.SmallImageList = il;
+					int i = 0;
+					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f))
+					{
+						var item = new ListViewItem(fg.Count() + "x " + fg.Key.Name);
+						item.ImageIndex = i;
+						il.Images.Add(fg.Key.Icon);
+						lstFacilitiesDetail.Items.Add(item);
+						i++;
+					}
+				}
 
 				// TODO - load cargo
 				txtCargoSpaceFree.Text = "0 kT / 0 kT free";

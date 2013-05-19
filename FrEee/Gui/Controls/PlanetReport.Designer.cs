@@ -28,10 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
 			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
 			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
 			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
@@ -44,6 +40,10 @@
 			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
             treeNode4,
             treeNode5});
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
 			this.gameTabControl1 = new FrEee.Gui.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
@@ -86,12 +86,13 @@
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageFacil = new System.Windows.Forms.TabPage();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
-			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
 			this.pageCargo = new System.Windows.Forms.TabPage();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
+			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
+			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
@@ -103,6 +104,11 @@
 			// 
 			// gameTabControl1
 			// 
+			this.gameTabControl1.Controls.Add(this.pageDetail);
+			this.gameTabControl1.Controls.Add(this.pageOrders);
+			this.gameTabControl1.Controls.Add(this.pageFacil);
+			this.gameTabControl1.Controls.Add(this.pageCargo);
+			this.gameTabControl1.Controls.Add(this.pageAbility);
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -158,7 +164,6 @@
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
-			this.gameTabControl1.TabPages.Add(this.pageDetail);
 			// 
 			// txtConstructionTime
 			// 
@@ -497,7 +502,7 @@
 			this.txtName.AutoSize = true;
 			this.txtName.Location = new System.Drawing.Point(143, 6);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(54, 13);
+			this.txtName.Size = new System.Drawing.Size(79, 20);
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Tudran IV";
 			// 
@@ -531,7 +536,6 @@
 			this.pageOrders.Size = new System.Drawing.Size(312, 426);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
-			this.gameTabControl1.TabPages.Add(this.pageOrders);
 			// 
 			// btnOrdersClear
 			// 
@@ -590,11 +594,12 @@
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
+			this.lstOrdersDetail.ItemHeight = 20;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Launch All Fighters"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 416);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 400);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageFacil
@@ -608,7 +613,6 @@
 			this.pageFacil.Size = new System.Drawing.Size(312, 426);
 			this.pageFacil.TabIndex = 2;
 			this.pageFacil.Text = "Facil";
-			this.gameTabControl1.TabPages.Add(this.pageFacil);
 			// 
 			// txtFacilitySlotsFree
 			// 
@@ -621,27 +625,6 @@
 			this.txtFacilitySlotsFree.TabIndex = 36;
 			this.txtFacilitySlotsFree.Text = "0/12 slots free";
 			// 
-			// lstFacilitiesDetail
-			// 
-			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
-			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
-			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
-			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
-			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
-			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
-			this.lstFacilitiesDetail.TabIndex = 24;
-			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
-			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
-			// 
 			// pageCargo
 			// 
 			this.pageCargo.BackColor = System.Drawing.Color.Black;
@@ -653,7 +636,6 @@
 			this.pageCargo.Size = new System.Drawing.Size(312, 426);
 			this.pageCargo.TabIndex = 3;
 			this.pageCargo.Text = "Cargo";
-			this.gameTabControl1.TabPages.Add(this.pageCargo);
 			// 
 			// txtCargoSpaceFree
 			// 
@@ -695,7 +677,6 @@
 			this.pageAbility.Size = new System.Drawing.Size(312, 426);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
-			this.gameTabControl1.TabPages.Add(this.pageAbility);
 			// 
 			// treeAbilities
 			// 
@@ -725,6 +706,27 @@
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
 			// 
+			// lstFacilitiesDetail
+			// 
+			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
+			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
+			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
+			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
+			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
+			this.lstFacilitiesDetail.TabIndex = 24;
+			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
+			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
+			// 
 			// PlanetReport
 			// 
 			this.AutoScroll = true;
@@ -733,6 +735,7 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "PlanetReport";
 			this.Size = new System.Drawing.Size(320, 459);
+			this.gameTabControl1.ResumeLayout(false);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
@@ -771,7 +774,6 @@
 		private GameButton btnOrderUp;
 		private System.Windows.Forms.ListBox lstOrdersDetail;
 		private System.Windows.Forms.TabPage pageFacil;
-		private System.Windows.Forms.ListView lstFacilitiesDetail;
 		private System.Windows.Forms.TabPage pageCargo;
 		private System.Windows.Forms.Label txtCargoSpaceFree;
 		private System.Windows.Forms.ListView lstCargoDetail;
@@ -797,5 +799,6 @@
 		private System.Windows.Forms.Label txtConstructionItem;
 		private System.Windows.Forms.Label lblConstructionItem;
 		private System.Windows.Forms.Label txtFacilitySlotsFree;
+		private System.Windows.Forms.ListView lstFacilitiesDetail;
 	}
 }

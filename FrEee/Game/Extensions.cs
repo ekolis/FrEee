@@ -55,5 +55,16 @@ namespace FrEee.Game
 			// TODO - fleets, ships/bases, unit groups
 			return null;
 		}
+
+		/// <summary>
+		/// Determines if an object has a specified ability.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="abilityName"></param>
+		/// <returns></returns>
+		public static bool HasAbility(this IAbilityObject obj, string abilityName)
+		{
+			return obj.Abilities.Any(abil => abil.Name == abilityName);
+		}
 	}
 }

@@ -9,7 +9,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// An object that can exist independently in space.
 	/// </summary>
-	public interface ISpaceObject
+	public interface ISpaceObject : IAbilityObject
 	{
 		/// <summary>
 		/// The name of this space object.

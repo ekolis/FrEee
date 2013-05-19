@@ -13,7 +13,7 @@ namespace FrEee.Game
 	/// Thus instances are not needed, and each facility can serve as a "singleton" of sorts.
 	/// Instead colonies store quantities of facilities.
 	/// </summary>
-	public class Facility : INamed, IResearchable
+	public class Facility : INamed, IResearchable, IAbilityObject
 	{
 		public Facility()
 		{
@@ -77,5 +77,10 @@ namespace FrEee.Game
 		/// Abilities possessed by this facility.
 		/// </summary>
 		public IList<Ability> Abilities { get; private set; }
+
+		IEnumerable<Ability> IAbilityObject.Abilities
+		{
+			get { return Abilities; }
+		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FrEee.Modding.Templates;
+﻿using FrEee.Modding;
+using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,16 @@ namespace FrEee.Game
 			GalaxyTemplate.GameSetup = this;
 			var galaxy = GalaxyTemplate.Instantiate();
 
+			// find facilities to place on homeworlds
+			// TODO - if facility not found, don't place it, but don't crash
+			var sy = Mod.Current.Facilities.Last(facil => facil.HasAbility("Space Yard"));
+			var sp = Mod.Current.Facilities.Last(facil => facil.HasAbility("Spaceport"));
+			var rd = Mod.Current.Facilities.Last(facil => facil.HasAbility("Supply Generation"));
+			var min = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Minerals"));
+			var org = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Organics"));
+			var rad = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Radioactives"));
+			var res = Mod.Current.Facilities.Last(facil => facil.HasAbility("Point Generation - Research"));
+
 			// add players and place homeworlds
 			foreach (var emp in Empires)
 			{
@@ -46,6 +57,17 @@ namespace FrEee.Game
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
 				hw.Colony = new Colony { Owner = emp };
+				hw.Colony.Facilities.Add(sy);
+				hw.Colony.Facilities.Add(sp); // TODO - don't add spaceport for Natural Merchants
+				hw.Colony.Facilities.Add(rd);
+				// TODO - respect planet facility space once we have PlanetSize.txt loaded
+				for (int i = 0; i < 5; i++)
+				{
+					hw.Colony.Facilities.Add(min);
+					hw.Colony.Facilities.Add(org);
+					hw.Colony.Facilities.Add(rad);
+					hw.Colony.Facilities.Add(res);
+				}
 
 				// mark home systems explored
 				foreach (var sys in galaxy.StarSystemLocations.Select(ssl => ssl.Item))

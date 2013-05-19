@@ -66,6 +66,7 @@
     <Compile Include="Game\Facility.cs" />
     <Compile Include="Game\Galaxy.cs" />
     <Compile Include="Game\GameSetup.cs" />
+    <Compile Include="Game\IAbilityObject.cs" />
     <Compile Include="Game\IResearchable.cs" />
     <Compile Include="Game\Resources.cs" />
     <Compile Include="Game\Location.cs" />
