@@ -280,6 +280,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s
+xcopy "$(ProjectDir)Data" "$(TargetDir)Data\" /y /e /s
 xcopy "$(ProjectDir)Pictures" "$(TargetDir)Pictures\" /y /e /s
 xcopy "$(ProjectDir)Docs" "$(TargetDir)Docs\" /y /e /s</PostBuildEvent>
   </PropertyGroup>

@@ -28,31 +28,35 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Loads a mod.
 		/// </summary>
-		/// <param name="path">The mod root path, relative to the Mods folder.</param>
+		/// <param name="path">The mod root path, relative to the Mods folder. Or null to load the stock mod.</param>
 		/// <param name="setCurrent">Set the current mod to the new mod?</param>
 		public static Mod Load(string path, bool setCurrent = true)
 		{
 			var mod = new Mod();
 
-			foreach (var line in File.ReadAllLines(Path.Combine("Mods", path, "Data", "SystemNames.txt")))
+			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
+
+			// TODO - fall back on stock when mod data not found
+
+			foreach (var line in File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt")))
 				mod.StarSystemNames.Add(line);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "SectType.txt");
+			CurrentFileName = Path.Combine(datapath, "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "TechArea.txt");
+			CurrentFileName = Path.Combine(datapath, "TechArea.txt");
 			new TechnologyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "Facility.txt");
+			CurrentFileName = Path.Combine(datapath, "Facility.txt");
 			new FacilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "StellarAbilityTypes.txt");
+			CurrentFileName = Path.Combine(datapath, "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "SystemTypes.txt");
+			CurrentFileName = Path.Combine(datapath, "SystemTypes.txt");
 			new StarSystemLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
-			CurrentFileName = Path.Combine("Mods", path, "Data", "QuadrantTypes.txt");
+			CurrentFileName = Path.Combine(datapath, "QuadrantTypes.txt");
 			new GalaxyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
 			CurrentFileName = null;

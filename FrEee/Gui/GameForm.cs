@@ -34,7 +34,7 @@ namespace FrEee.Gui
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
 
 			// load the stock mod
-			Mod.Load("Stock");
+			Mod.Load(null);
 
 			// create the game
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
