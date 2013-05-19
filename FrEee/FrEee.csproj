@@ -219,8 +219,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rng.cs" />
     <Compile Include="SafeDictionary.cs" />
-    <Compile Include="Serialization\GalaxyMapConverter.cs" />
-    <Compile Include="Serialization\SimpleSerializationBinder.cs" />
     <EmbeddedResource Include="Gui\Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </EmbeddedResource>
