@@ -11,6 +11,14 @@ namespace FrEee.Game
 	/// </summary>
 	public class Empire : INamed
 	{
+		public Empire()
+		{
+			StoredResources = new Resources();
+			StoredResources.Add("Minerals", 50000);
+			StoredResources.Add("Organics", 50000);
+			StoredResources.Add("Radioactives", 50000);
+		}
+
 		/// <summary>
 		/// The name of the empire.
 		/// </summary>
@@ -52,5 +60,10 @@ namespace FrEee.Game
 		{
 			return Name;
 		}
+
+		/// <summary>
+		/// The resources stored by the empire.
+		/// </summary>
+		public Resources StoredResources { get; set; }
 	}
 }

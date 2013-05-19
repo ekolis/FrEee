@@ -33,23 +33,6 @@ namespace FrEee.Gui
 			btnQueues.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
 
-			// set up resource display
-			var pnlResources = new FlowLayoutPanel();
-			pnlResources.FlowDirection = FlowDirection.LeftToRight;
-			pnlResources.WrapContents = false;
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = 500000, Change = -25000});
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = 250000, Change = +10000});
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = 0, Change = -5000});
-			var pnlResIntel = new FlowLayoutPanel();
-			pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
-			pnlResIntel.WrapContents = false;
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
-			pagResources.Content = new List<Control>();
-			pagResources.Content.Add(pnlResources);
-			pagResources.Content.Add(pnlResIntel);
-			pagResources.CurrentPage = 0;
-			
 			// load the stock mod
 			Mod.Load("Stock");
 
@@ -92,6 +75,23 @@ namespace FrEee.Gui
 			sw = new StreamWriter("p1.gam");
 			js.Serialize(sw, galaxy);
 			sw.Close();
+
+			// set up resource display
+			var pnlResources = new FlowLayoutPanel();
+			pnlResources.FlowDirection = FlowDirection.LeftToRight;
+			pnlResources.WrapContents = false;
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = galaxy.CurrentEmpire.StoredResources["Minerals"], Change = galaxy.Income["Minerals"] });
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = galaxy.CurrentEmpire.StoredResources["Organics"], Change = galaxy.Income["Organics"] });
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = galaxy.CurrentEmpire.StoredResources["Radioactives"], Change = galaxy.Income["Radioactives"] });
+			var pnlResIntel = new FlowLayoutPanel();
+			pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
+			pnlResIntel.WrapContents = false;
+			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
+			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
+			pagResources.Content = new List<Control>();
+			pagResources.Content.Add(pnlResources);
+			pagResources.Content.Add(pnlResIntel);
+			pagResources.CurrentPage = 0;
 
 			// set up GUI
 			galaxyView.Galaxy = galaxy;

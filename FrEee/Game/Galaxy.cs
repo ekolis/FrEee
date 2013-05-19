@@ -58,9 +58,35 @@ namespace FrEee.Game
 			}
 		}
 
+		/// <summary>
+		/// Star systems explored by the current empire.
+		/// </summary>
 		public IEnumerable<StarSystem> ExploredStarSystems
 		{
 			get { return StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(CurrentEmpire)); }
+		}
+
+		/// <summary>
+		/// Planets colonized by the current empire.
+		/// </summary>
+		public IEnumerable<Planet> ColonizedPlanets
+		{
+			get
+			{
+				return StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == CurrentEmpire).Flatten());
+			}
+		}
+
+		/// <summary>
+		/// Income (minus expenses) of the current empire.
+		/// </summary>
+		public Resources Income
+		{
+			get
+			{
+				// TODO - take into account maintenance costs
+				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
+			}
 		}
 	}
 }
