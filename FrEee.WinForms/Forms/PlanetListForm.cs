@@ -12,7 +12,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.galaxy = galaxy;
-            this.Icon = new Icon(FrEee.Properties.Resources.FrEeeIcon);
+            this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private Galaxy galaxy;

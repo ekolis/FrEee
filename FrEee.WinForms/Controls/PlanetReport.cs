@@ -89,7 +89,7 @@ namespace FrEee.WinForms.Controls
 					{
 						var item = new ListViewItem(fg.Count() + "x " + fg.Key.Name);
 						item.ImageIndex = i;
-						il.Images.Add(fg.Key.Icon);
+						il.Images.Add((Image) fg.Key.Icon);
 						lstFacilitiesDetail.Items.Add(item);
 						i++;
 					}

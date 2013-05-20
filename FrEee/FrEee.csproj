@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E19A4330-CE19-45D6-BCFC-375E065EF041}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>FrEee</RootNamespace>
     <AssemblyName>FrEee</AssemblyName>
@@ -33,10 +33,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>FrEee.WinForms.Program</StartupObject>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>FrEee.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
@@ -123,103 +125,6 @@
     <Compile Include="Utility\RandomIntHelper.cs" />
     <Compile Include="Utility\Resources.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
-    <Compile Include="WinForms\Controls\AsteroidFieldReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\AsteroidFieldReport.Designer.cs">
-      <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GalaxyView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GalaxyView.Designer.cs">
-      <DependentUpon>GalaxyView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameButton.Designer.cs">
-      <DependentUpon>GameButton.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GamePanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GamePanel.Designer.cs">
-      <DependentUpon>GamePanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameProgressBar.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameProgressBar.Designer.cs">
-      <DependentUpon>GameProgressBar.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameTabControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameTabControl.Designer.cs">
-      <DependentUpon>GameTabControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameTableLayoutPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\GameTableLayoutPanel.Designer.cs">
-      <DependentUpon>GameTableLayoutPanel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\Pager.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\Pager.Designer.cs">
-      <DependentUpon>Pager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\PlanetReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\PlanetReport.Designer.cs">
-      <DependentUpon>PlanetReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\ResourceDisplay.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\ResourceDisplay.Designer.cs">
-      <DependentUpon>ResourceDisplay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\ShipReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\ShipReport.Designer.cs">
-      <DependentUpon>ShipReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\StarReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\StarReport.Designer.cs">
-      <DependentUpon>StarReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\StarSystemView.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\StarSystemView.Designer.cs">
-      <DependentUpon>StarSystemView.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Controls\StormReport.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="WinForms\Controls\StormReport.Designer.cs">
-      <DependentUpon>StormReport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Forms\GameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\Forms\GameForm.Designer.cs">
-      <DependentUpon>GameForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Forms\PlanetListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WinForms\Forms\PlanetListForm.Designer.cs">
-      <DependentUpon>PlanetListForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WinForms\Program.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -230,36 +135,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="WinForms\Controls\AsteroidFieldReport.resx">
-      <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\GameProgressBar.resx">
-      <DependentUpon>GameProgressBar.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\Pager.resx">
-      <DependentUpon>Pager.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\PlanetReport.resx">
-      <DependentUpon>PlanetReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\ResourceDisplay.resx">
-      <DependentUpon>ResourceDisplay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\ShipReport.resx">
-      <DependentUpon>ShipReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\StarReport.resx">
-      <DependentUpon>StarReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Controls\StormReport.resx">
-      <DependentUpon>StormReport.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Forms\GameForm.resx">
-      <DependentUpon>GameForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WinForms\Forms\PlanetListForm.resx">
-      <DependentUpon>PlanetListForm.cs</DependentUpon>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\FrEee.Game.Space.Planet.datasource" />
     <None Include="Properties\Settings.settings">
@@ -278,18 +153,10 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="FrEee.ico" />
-    <Content Include="WinForms\FrEee.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)Mods" "$(TargetDir)Mods\" /y /e /s
-xcopy "$(ProjectDir)Data" "$(TargetDir)Data\" /y /e /s
-xcopy "$(ProjectDir)Pictures" "$(TargetDir)Pictures\" /y /e /s
-xcopy "$(ProjectDir)Docs" "$(TargetDir)Docs\" /y /e /s</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
