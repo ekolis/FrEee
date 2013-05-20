@@ -5,6 +5,7 @@ using FrEee.Utility;
 using System.Collections.Generic;
 using FrEee.Game.Objects.Space;
 using Newtonsoft.Json;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Civilization
 {

@@ -55,25 +55,25 @@ namespace FrEee.WinForms.Forms
 					gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
 					gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
 					gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
-					galaxy = gsu.CreateGalaxy();
+					Galaxy.Current = gsu.CreateGalaxy();
 
-			// test saving the game
-			var sw = new StreamWriter("save.gam");
-			sw.Write(Galaxy.Current.SerializeGameState());
-			sw.Close();
+					// test saving the game
+					var sw = new StreamWriter("save.gam");
+					sw.Write(Galaxy.Current.SerializeGameState());
+					sw.Close();
 
-			// test loading the game
-			var sr = new StreamReader("save.gam");
-			Galaxy.Current = Galaxy.DeserializeGameState(sr);
-			sr.Close();
+					// test loading the game
+					var sr = new StreamReader("save.gam");
+					Galaxy.Current = Galaxy.DeserializeGameState(sr);
+					sr.Close();
 
-			// test redacting fogged info
-			Galaxy.Current.CurrentEmpire = Galaxy.Current.Empires[0];
-			Galaxy.Current.Redact();
+					// test redacting fogged info
+					Galaxy.Current.CurrentEmpire = Galaxy.Current.Empires[0];
+					Galaxy.Current.Redact();
 
 					// test saving the player's view
 					sw = new StreamWriter("p1.gam");
-					js.Serialize(sw, galaxy);
+					sw.Write(Galaxy.Current.SerializeGameState());
 					sw.Close();
 				})
 				.ContinueWith(t =>
@@ -85,9 +85,9 @@ namespace FrEee.WinForms.Forms
 					var pnlResources = new FlowLayoutPanel();
 					pnlResources.FlowDirection = FlowDirection.LeftToRight;
 					pnlResources.WrapContents = false;
-					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = galaxy.CurrentEmpire.StoredResources["Minerals"], Change = galaxy.Income["Minerals"] });
-					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = galaxy.CurrentEmpire.StoredResources["Organics"], Change = galaxy.Income["Organics"] });
-					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = galaxy.CurrentEmpire.StoredResources["Radioactives"], Change = galaxy.Income["Radioactives"] });
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"], Change = Galaxy.Current.CurrentEmpire.Income["Minerals"] });
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Organics"], Change = Galaxy.Current.CurrentEmpire.Income["Organics"] });
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Radioactives"], Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"] });
 					var pnlResIntel = new FlowLayoutPanel();
 					pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
 					pnlResIntel.WrapContents = false;
@@ -99,10 +99,10 @@ namespace FrEee.WinForms.Forms
 					pagResources.CurrentPage = 0;
 
 					// set up GUI
-					galaxyView.Galaxy = galaxy;
-					starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.ExploredStarSystems.PickRandom();
-					Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
-					picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
+					galaxyView.Galaxy = Galaxy.Current;
+					starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.PickRandom();
+					Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
+					picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
 
 					Enabled = true;
 				}, scheduler);
