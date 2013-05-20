@@ -3,6 +3,7 @@ using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -29,7 +30,7 @@ namespace FrEee.Modding.Loaders
 				sst.Description = temp;
 
 				rec.TryFindFieldValue("Background Bitmap", out temp, ref index, Mod.Errors, 0, true);
-				sst.BackgroundImagePath = temp;
+				sst.BackgroundImagePath = Path.GetFileNameWithoutExtension(temp); // so we can use PNG when SE4 specifies BMP files
 
 				rec.TryFindFieldValue("Empires Can Start In", out temp, ref index, Mod.Errors, 0, true);
 				sst.EmpiresCanStartIn = bool.Parse(temp);
