@@ -8,7 +8,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An order issued by a player to an object to do something.
 	/// </summary>
-	public interface IOrder<T> where T : IOrderable<T>
+	public interface IOrder<in T> where T : IOrderable<T>
 	{
 		/// <summary>
 		/// Executes the order.

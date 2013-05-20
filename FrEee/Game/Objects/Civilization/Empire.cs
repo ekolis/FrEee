@@ -1,6 +1,7 @@
 using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
+using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -12,9 +13,13 @@ namespace FrEee.Game.Objects.Civilization
 		public Empire()
 		{
 			StoredResources = new Resources();
+
+			// TODO - make starting resources moddable
 			StoredResources.Add("Minerals", 50000);
 			StoredResources.Add("Organics", 50000);
 			StoredResources.Add("Radioactives", 50000);
+
+			Commands = new List<ICommand>();
 		}
 
 		/// <summary>
@@ -63,5 +68,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// The resources stored by the empire.
 		/// </summary>
 		public Resources StoredResources { get; set; }
+
+		/// <summary>
+		/// Commands issued by the player this turn.
+		/// </summary>
+		public IList<ICommand> Commands { get; private set; }
 	}
 }

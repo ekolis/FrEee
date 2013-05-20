@@ -59,23 +59,15 @@ namespace FrEee.WinForms.Forms
 					gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
 					galaxy = gsu.CreateGalaxy();
 
-					// test saving the game
-					var sw = new StreamWriter("save.gam");
-					var js = new JsonSerializer();
-					js.TypeNameHandling = TypeNameHandling.All;
-					js.Formatting = Formatting.Indented;
-					//js.Converters.Add(new Serialization.GalaxyMapConverter());
-					var cr = new DefaultContractResolver();
-					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
-					js.ContractResolver = cr;
-					js.PreserveReferencesHandling = PreserveReferencesHandling.All;
-					js.Serialize(sw, galaxy);
-					sw.Close();
+			// test saving the game
+			var sw = new StreamWriter("save.gam");
+			sw.Write(galaxy.SerializeGameState());
+			sw.Close();
 
-					// test loading the game
-					var sr = new StreamReader("save.gam");
-					galaxy = js.Deserialize<Galaxy>(new JsonTextReader(sr));
-					sr.Close();
+			// test loading the game
+			var sr = new StreamReader("save.gam");
+			galaxy = Galaxy.DeserializeGameState(sr);
+			sr.Close();
 
 					// test redacting fogged info
 					galaxy.CurrentEmpire = galaxy.Empires[0];

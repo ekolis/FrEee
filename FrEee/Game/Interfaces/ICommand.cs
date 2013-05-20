@@ -9,13 +9,24 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to manipulate an object's order queue.
 	/// </summary>
-	public interface ICommand<T> where T : IOrderable<T>
+	public interface ICommand
 	{
 		/// <summary>
 		/// The empire issuing the command.
 		/// </summary>
 		Empire Issuer { get; set; }
 
+		/// <summary>
+		/// Executes the command.
+		/// </summary>
+		void Execute();
+	}
+
+	/// <summary>
+	/// A command to manipulate an object's order queue.
+	/// </summary>
+	public interface ICommand<T> : ICommand where T : IOrderable<T>
+	{
 		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
@@ -25,10 +36,5 @@ namespace FrEee.Game.Interfaces
 		/// The specific order being manipulated.
 		/// </summary>
 		IOrder<T> Order { get; set; }
-
-		/// <summary>
-		/// Executes the command.
-		/// </summary>
-		void Execute();
 	}
 }

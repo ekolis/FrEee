@@ -4,6 +4,10 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
+using System.IO;
+using Newtonsoft.Json.Serialization;
+using System;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -16,6 +20,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
+			TurnNumber = 24000;
 		}
 
 		/// <summary>
@@ -90,6 +95,96 @@ namespace FrEee.Game.Objects.Space
 			{
 				// TODO - take into account maintenance costs
 				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
+			}
+		}
+
+		/// <summary>
+		/// The current turn number.
+		/// </summary>
+		public int TurnNumber { get; set; }
+		
+		/// <summary>
+		/// The current stardate. Advances 0.1 years per turn.
+		/// </summary>
+		public string Stardate
+		{
+			get
+			{
+				return (TurnNumber / 10.0).ToString("0.0");
+			}
+		}
+
+		/// <summary>
+		/// Serializes the game state.
+		/// </summary>
+		/// <returns></returns>
+		public string SerializeGameState()
+		{
+			var sw = new StringWriter();
+			JsonSerializer.Serialize(sw, this);
+			sw.Close();
+			return sw.ToString();
+		}
+
+		/// <summary>
+		/// Serializes the player's commands.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if no current empire</exception>
+		/// <returns></returns>
+		public string SerializeCommands()
+		{
+			if (CurrentEmpire == null)
+				throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
+
+			var sw = new StringWriter();
+			JsonSerializer.Serialize(sw, CurrentEmpire.Commands);
+			sw.Close();
+			return sw.ToString();
+		}
+
+		/// <summary>
+		/// Deserializes the game state.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <returns></returns>
+		public static Galaxy DeserializeGameState(TextReader reader)
+		{
+			return JsonSerializer.Deserialize<Galaxy>(new JsonTextReader(reader));
+		}
+
+		/// <summary>
+		/// Deserializes the player's commands.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <returns></returns>
+		public static IList<ICommand> DeserializeCommands(TextReader reader)
+		{
+			return JsonSerializer.Deserialize<IList<ICommand>>(new JsonTextReader(reader));
+		}
+
+		private static JsonSerializer jsonSerializer;
+
+		/// <summary>
+		/// A JSON serializer used to save game state and commands.
+		/// </summary>
+		public static JsonSerializer JsonSerializer
+		{
+			get
+			{
+				if (jsonSerializer == null)
+				{
+					var js = new JsonSerializer();
+					js.TypeNameHandling = TypeNameHandling.All;
+#if DEBUG
+					js.Formatting = Formatting.Indented;
+#endif
+					var cr = new DefaultContractResolver();
+					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
+					js.ContractResolver = cr;
+					js.PreserveReferencesHandling = PreserveReferencesHandling.All;
+					jsonSerializer = js;
+				}
+				return jsonSerializer;
 			}
 		}
 	}
