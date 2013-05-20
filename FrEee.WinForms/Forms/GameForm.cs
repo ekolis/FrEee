@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Game;
 using FrEee.Game.Interfaces;
@@ -10,6 +11,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -24,7 +26,8 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 
-            this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			this.Enabled = false;
 
 			// set up GUI images
 			btnMenu.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
@@ -38,68 +41,81 @@ namespace FrEee.WinForms.Forms
 			// load the stock mod
 			Mod.Load(null);
 
-			// create the game
-			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
-			var gsu = new GameSetup();
-			gsu.GalaxyTemplate = galtemp;
-			gsu.StarSystemCount = 10;
-			gsu.GalaxySize = new System.Drawing.Size(40, 30);
-			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
-			gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
-			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
-			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
-			gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
-			galaxy = gsu.CreateGalaxy();
+			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+			Task.Factory.StartNewWithExceptionHandling(() =>
+				{
+					// create the game
+					var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
+					var gsu = new GameSetup
+					{
+						GalaxyTemplate = galtemp,
+						StarSystemCount = 10,
+						GalaxySize = new System.Drawing.Size(40, 30)
+					};
+					gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
+					gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
+					gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
+					gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
+					gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
+					galaxy = gsu.CreateGalaxy();
 
-			// test saving the game
-			var sw = new StreamWriter("save.gam");
-			var js = new JsonSerializer();
-			js.TypeNameHandling = TypeNameHandling.All;
-			js.Formatting = Formatting.Indented;
-			//js.Converters.Add(new Serialization.GalaxyMapConverter());
-			var cr = new DefaultContractResolver();
-			cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
-			js.ContractResolver = cr;
-			js.PreserveReferencesHandling = PreserveReferencesHandling.All;
-			js.Serialize(sw, galaxy);
-			sw.Close();
+					// test saving the game
+					var sw = new StreamWriter("save.gam");
+					var js = new JsonSerializer();
+					js.TypeNameHandling = TypeNameHandling.All;
+					js.Formatting = Formatting.Indented;
+					//js.Converters.Add(new Serialization.GalaxyMapConverter());
+					var cr = new DefaultContractResolver();
+					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
+					js.ContractResolver = cr;
+					js.PreserveReferencesHandling = PreserveReferencesHandling.All;
+					js.Serialize(sw, galaxy);
+					sw.Close();
 
-			// test loading the game
-			var sr = new StreamReader("save.gam");
-			galaxy = js.Deserialize<Galaxy>(new JsonTextReader(sr));
-			sr.Close();
+					// test loading the game
+					var sr = new StreamReader("save.gam");
+					galaxy = js.Deserialize<Galaxy>(new JsonTextReader(sr));
+					sr.Close();
 
-			// test redacting fogged info
-			galaxy.CurrentEmpire = galaxy.Empires[0];
-			galaxy.Redact();
+					// test redacting fogged info
+					galaxy.CurrentEmpire = galaxy.Empires[0];
+					galaxy.Redact();
 
-			// test saving the player's view
-			sw = new StreamWriter("p1.gam");
-			js.Serialize(sw, galaxy);
-			sw.Close();
+					// test saving the player's view
+					sw = new StreamWriter("p1.gam");
+					js.Serialize(sw, galaxy);
+					sw.Close();
+				})
+				.ContinueWith(t =>
+				{
+					if (t.Exception != null)
+						throw t.Exception;
 
-			// set up resource display
-			var pnlResources = new FlowLayoutPanel();
-			pnlResources.FlowDirection = FlowDirection.LeftToRight;
-			pnlResources.WrapContents = false;
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = galaxy.CurrentEmpire.StoredResources["Minerals"], Change = galaxy.Income["Minerals"] });
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = galaxy.CurrentEmpire.StoredResources["Organics"], Change = galaxy.Income["Organics"] });
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = galaxy.CurrentEmpire.StoredResources["Radioactives"], Change = galaxy.Income["Radioactives"] });
-			var pnlResIntel = new FlowLayoutPanel();
-			pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
-			pnlResIntel.WrapContents = false;
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
-			pagResources.Content = new List<Control>();
-			pagResources.Content.Add(pnlResources);
-			pagResources.Content.Add(pnlResIntel);
-			pagResources.CurrentPage = 0;
+					// set up resource display
+					var pnlResources = new FlowLayoutPanel();
+					pnlResources.FlowDirection = FlowDirection.LeftToRight;
+					pnlResources.WrapContents = false;
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = galaxy.CurrentEmpire.StoredResources["Minerals"], Change = galaxy.Income["Minerals"] });
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = galaxy.CurrentEmpire.StoredResources["Organics"], Change = galaxy.Income["Organics"] });
+					pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = galaxy.CurrentEmpire.StoredResources["Radioactives"], Change = galaxy.Income["Radioactives"] });
+					var pnlResIntel = new FlowLayoutPanel();
+					pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
+					pnlResIntel.WrapContents = false;
+					pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
+					pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
+					pagResources.Content = new List<Control>();
+					pagResources.Content.Add(pnlResources);
+					pagResources.Content.Add(pnlResIntel);
+					pagResources.CurrentPage = 0;
 
-			// set up GUI
-			galaxyView.Galaxy = galaxy;
-			starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.ExploredStarSystems.PickRandom();
-			Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
-			picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
+					// set up GUI
+					galaxyView.Galaxy = galaxy;
+					starSystemView.StarSystem = galaxyView.SelectedStarSystem = galaxy.ExploredStarSystems.PickRandom();
+					Text = "FrEee - " + galaxy.CurrentEmpire.Name + " - " + galaxy.CurrentEmpire.EmperorTitle + " " + galaxy.CurrentEmpire.EmperorName;
+					picEmpireFlag.Image = galaxy.CurrentEmpire.Flag;
+
+					Enabled = true;
+				}, scheduler);
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)

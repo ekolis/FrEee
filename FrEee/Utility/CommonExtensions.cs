@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
@@ -11,7 +11,7 @@ using FrEee.Modding;
 
 namespace FrEee.Utility
 {
-	public static class Extensions
+	public static class CommonExtensions
 	{
 		/// <summary>
 		/// Clones an object.
