@@ -24,6 +24,8 @@ namespace FrEee.Gui
 		{
 			InitializeComponent();
 
+            this.Icon = new Icon(Properties.Resources.FrEeeIcon);
+
 			// set up GUI images
 			btnMenu.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
 			btnDesigns.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));

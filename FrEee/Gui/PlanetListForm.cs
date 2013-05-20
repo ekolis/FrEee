@@ -16,6 +16,7 @@ namespace FrEee.Gui
 		{
 			InitializeComponent();
 			this.galaxy = galaxy;
+            this.Icon = new Icon(Properties.Resources.FrEeeIcon);
 		}
 
 		private Galaxy galaxy;
