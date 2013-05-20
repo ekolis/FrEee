@@ -138,11 +138,11 @@ namespace FrEee.WinForms.Controls
 						// find sector
 						var sector = StarSystem.GetSector(x, y);
 
-						// draw icon and owner flag of largest space object (if any)
+						// draw image and owner flag of largest space object (if any)
 						var largest = sector.SpaceObjects.Largest();
 						if (largest != null)
 						{
-							pe.Graphics.DrawImage(largest.Icon, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+							pe.Graphics.DrawImage(largest.Portrait, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 							
 							// TODO - draw owner flag
 						}
