@@ -65,6 +65,7 @@
     <Compile Include="Game\Enumerations\Visibility.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
+    <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\INamed.cs" />
     <Compile Include="Game\Interfaces\IOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderable.cs" />
@@ -74,12 +75,14 @@
     <Compile Include="Game\Objects\Abilities\Ability.cs" />
     <Compile Include="Game\Objects\Abilities\AbilityRule.cs" />
     <Compile Include="Game\Objects\Civilization\Colony.cs" />
+    <Compile Include="Game\Objects\Civilization\ConstructionQueue.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Civilization\Facility.cs" />
     <Compile Include="Game\Objects\Commands\AddOrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\Command.cs" />
     <Compile Include="Game\Objects\Commands\RearrangeOrdersCommand.cs" />
     <Compile Include="Game\Objects\Commands\RemoveOrderCommand.cs" />
+    <Compile Include="Game\Objects\Orders\ConstructionOrder.cs" />
     <Compile Include="Game\Objects\Research\Technology.cs" />
     <Compile Include="Game\Objects\Research\TechnologyRequirement.cs" />
     <Compile Include="Game\Objects\Space\AsteroidField.cs" />
@@ -160,7 +163,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\Objects\Orders\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
