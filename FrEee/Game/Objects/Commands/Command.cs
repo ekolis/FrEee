@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace FrEee.Game.Objects.Commands
 	{
 		public int IssuerID { get; set; }
 
+		[JsonIgnore]
 		public Empire Issuer
 		{
 			get
@@ -30,6 +32,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
+		[JsonIgnore]
 		public T Target
 		{
 			get
@@ -48,6 +51,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
+		[JsonIgnore]
 		public IOrder<T> Order
 		{
 			get
