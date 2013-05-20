@@ -90,6 +90,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The current stardate. Advances 0.1 years per turn.
 		/// </summary>
+		[JsonIgnore]
 		public string Stardate
 		{
 			get
