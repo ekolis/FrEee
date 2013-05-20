@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Abilities
 {

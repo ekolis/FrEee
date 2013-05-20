@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {

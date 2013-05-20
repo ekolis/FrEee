@@ -9,7 +9,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 
-namespace FrEee.Utility
+namespace FrEee.Utility.Extensions
 {
 	public static class CommonExtensions
 	{

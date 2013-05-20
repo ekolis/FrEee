@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using Size = FrEee.Game.Enumerations.Size;
 
 namespace FrEee.Modding.Loaders

@@ -7,6 +7,7 @@ using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Modding.Templates
 {

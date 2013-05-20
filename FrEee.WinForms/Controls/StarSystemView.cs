@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Space

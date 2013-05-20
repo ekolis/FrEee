@@ -1,6 +1,7 @@
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Space
 {

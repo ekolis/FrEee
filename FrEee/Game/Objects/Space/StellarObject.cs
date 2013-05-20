@@ -7,6 +7,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Space
 {
