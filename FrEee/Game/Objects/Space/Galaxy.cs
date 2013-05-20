@@ -25,8 +25,14 @@ namespace FrEee.Game.Objects.Space
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
+			Name = "Unnamed";
 			TurnNumber = 24000;
 		}
+
+		/// <summary>
+		/// The game name.
+		/// </summary>
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The locations of the star systems in the galaxy.
@@ -157,6 +163,82 @@ namespace FrEee.Game.Objects.Space
 					jsonSerializer = js;
 				}
 				return jsonSerializer;
+			}
+		}
+
+		/// <summary>
+		/// Saves the game to an appropriately named file in the Savegame folder.
+		/// Files are named GameName_TurnNumber_PlayerNumber.gam for players (PlayerNumber is 1-indexed)
+		/// and GameName_TurnNumber.gam for the host.
+		/// </summary>
+		public void Save()
+		{
+			string filename;
+			if (CurrentEmpire == null)
+				filename = Name + "_" + TurnNumber + ".gam";
+			else
+				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".gam";
+			if (!Directory.Exists("Savegame"))
+				Directory.CreateDirectory("Savegame");
+			var sw = new StreamWriter(Path.Combine("Savegame", filename));
+			sw.Write(SerializeGameState());
+			sw.Close();
+		}
+
+		/// <summary>
+		/// Loads a savegame from the Savegame folder.
+		/// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
+		/// </summary>
+		/// <param name="filename"></param>
+		public static Galaxy Load(string filename)
+		{
+			var sr = new StreamReader(Path.Combine("Savegame", filename));
+			var gal = DeserializeGameState(sr);
+			sr.Close();
+			return gal;
+		}
+
+		/// <summary>
+		/// Saves the player's commands to an appropriately named file in the Savegame folder.
+		/// Files are named GameName_TurnNumber_PlayerNumber.plr. (PlayerNumber is 1-indexed)
+		/// This doesn't make sense for the host view, so an exception will be thrown if there is no current empire.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
+		public void SaveCommands()
+		{
+			if (CurrentEmpire == null)
+				throw new InvalidOperationException("Can't save commands without a current empire.");
+			string filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".plr";
+			if (!Directory.Exists("Savegame"))
+				Directory.CreateDirectory("Savegame");
+			var sw = new StreamWriter(Path.Combine("Savegame", filename));
+			sw.Write(SerializeCommands());
+			sw.Close();
+		}
+
+		/// <summary>
+		/// Loads player commands into the current game state.
+		/// If this is the host view, commands will be loaded for all players.
+		/// </summary>
+		public void LoadCommands()
+		{
+			// whose commands are we loading?
+			var emps = new List<Empire>();
+			if (CurrentEmpire == null)
+				emps.AddRange(Empires);
+			else
+				emps.Add(CurrentEmpire);
+
+			foreach (var emp in emps)
+			{
+				int i = Empires.IndexOf(emp);
+				string filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".plr";
+				var sr = new StreamReader(filename);
+				var cmds = DeserializeCommands(sr);
+				sr.Close();
+				emp.Commands.Clear();
+				foreach (var cmd in cmds)
+					emp.Commands.Add(cmd);
 			}
 		}
 
