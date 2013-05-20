@@ -12,9 +12,14 @@ namespace FrEee.Game.Interfaces
 	public interface ICommand
 	{
 		/// <summary>
+		/// The index of the empire issuing the command (the first empire is number 1).
+		/// </summary>
+		int IssuerID { get; set; }
+
+		/// <summary>
 		/// The empire issuing the command.
 		/// </summary>
-		Empire Issuer { get; set; }
+		Empire Issuer { get; }
 
 		/// <summary>
 		/// Executes the command.
@@ -28,9 +33,19 @@ namespace FrEee.Game.Interfaces
 	public interface ICommand<T> : ICommand where T : IOrderable<T>
 	{
 		/// <summary>
+		/// The ID of the target.
+		/// </summary>
+		int TargetID { get; set; }
+
+		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
 		T Target { get; set; }
+
+		/// <summary>
+		/// The ID of the order being manipulated (if it already exists).
+		/// </summary>
+		int OrderID { get; set; }
 
 		/// <summary>
 		/// The specific order being manipulated.

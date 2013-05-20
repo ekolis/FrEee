@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something which can accept orders from an empire.
 	/// </summary>
-	public interface IOrderable<T> where T : IOrderable<T>
+	public interface IOrderable
 	{
 		/// <summary>
 		/// A unique ID by which the player orders file can reference this orderable.
@@ -20,7 +20,13 @@ namespace FrEee.Game.Interfaces
 		/// The owner of this object. Only the owner can issue orders.
 		/// </summary>
 		Empire Owner { get; }
+	}
 
+	/// <summary>
+	/// Something which can accept orders from an empire.
+	/// </summary>
+	public interface IOrderable<T> : IOrderable  where T : IOrderable<T>
+	{
 		/// <summary>
 		/// The queued orders.
 		/// </summary>

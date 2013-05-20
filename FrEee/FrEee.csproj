@@ -77,6 +77,7 @@
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Civilization\Facility.cs" />
     <Compile Include="Game\Objects\Commands\AddOrderCommand.cs" />
+    <Compile Include="Game\Objects\Commands\Command.cs" />
     <Compile Include="Game\Objects\Commands\RearrangeOrdersCommand.cs" />
     <Compile Include="Game\Objects\Commands\RemoveOrderCommand.cs" />
     <Compile Include="Game\Objects\Research\Technology.cs" />

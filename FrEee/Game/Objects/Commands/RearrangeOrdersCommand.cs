@@ -11,26 +11,8 @@ namespace FrEee.Game.Objects.Commands
 	/// Moves an order to another location in the queue.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class RearrangeOrdersCommand<T> : ICommand<T> where T : IOrderable<T>
+	public class RearrangeOrdersCommand<T> : Command<T> where T : IOrderable<T>
 	{
-		public Empire Issuer
-		{
-			get;
-			set;
-		}
-
-		public T Target
-		{
-			get;
-			set;
-		}
-
-		public IOrder<T> Order
-		{
-			get;
-			set;
-		}
-
 		/// <summary>
 		/// How many spaces up (if negative) or down (if positive) to move the order.
 		/// </summary>
@@ -40,7 +22,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
-		public void Execute()
+		public override void Execute()
 		{
 			if (Issuer == Target.Owner)
 			{

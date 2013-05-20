@@ -27,6 +27,7 @@ namespace FrEee.Game.Objects.Space
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 24000;
+			OrderTargets = new List<IOrderable>();
 		}
 
 		/// <summary>
@@ -266,6 +267,21 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// TODO - other turn processing stuff
+		}
+
+		/// <summary>
+		/// Anything in the game that can receive orders... stuff needs to be registered to be found though!
+		/// </summary>
+		public IList<IOrderable> OrderTargets { get; private set; }
+
+		/// <summary>
+		/// Registers something so it can receive orders.
+		/// </summary>
+		/// <param name="orderable"></param>
+		public void Register(IOrderable orderable)
+		{
+			orderable.ID = OrderTargets.Count;
+			OrderTargets.Add(orderable);
 		}
 	}
 }

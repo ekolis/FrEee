@@ -11,6 +11,11 @@ namespace FrEee.Game.Interfaces
 	public interface IOrder<in T> where T : IOrderable<T>
 	{
 		/// <summary>
+		/// The ID of this order, for referencing in command files.
+		/// </summary>
+		int ID { get; set; }
+
+		/// <summary>
 		/// Executes the order.
 		/// </summary>
 		/// <param name="target">The object which is executing the order.</param>
