@@ -30,179 +30,157 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.pnlSystemMap = new GamePanel();
-            this.starSystemView = new StarSystemView();
-            this.pnlGalaxyMap = new GamePanel();
-            this.galaxyView = new GalaxyView();
-            this.pnlDetailReport = new GamePanel();
-            this.gameShipReport1 = new ShipReport();
-            this.pnlSystemTabs = new GamePanel();
-            this.pnlSearch = new GamePanel();
-            this.pnlSubCommands = new GamePanel();
-            this.btnPlanets = new GameButton();
-            this.pnlMainCommands = new GamePanel();
-            this.btnLog = new GameButton();
-            this.btnQueues = new GameButton();
-            this.btnShips = new GameButton();
-            this.btnEmpires = new GameButton();
-            this.btnDesigns = new GameButton();
-            this.btnMenu = new GameButton();
-            this.pnlHeader = new GamePanel();
-            this.gameProgressBar1 = new GameProgressBar();
-            this.pagResources = new Pager();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+            this.gameProgressBar1 = new FrEee.WinForms.Controls.GameProgressBar();
+            this.pagResources = new FrEee.WinForms.Controls.Pager();
             this.txtGameDate = new System.Windows.Forms.Label();
             this.lblGameDate = new System.Windows.Forms.Label();
             this.picEmpireFlag = new System.Windows.Forms.PictureBox();
-            this.pnlSystemMap.SuspendLayout();
-            this.pnlGalaxyMap.SuspendLayout();
-            this.pnlDetailReport.SuspendLayout();
-            this.pnlMainCommands.SuspendLayout();
+            this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
+            this.btnLog = new FrEee.WinForms.Controls.GameButton();
+            this.btnQueues = new FrEee.WinForms.Controls.GameButton();
+            this.btnShips = new FrEee.WinForms.Controls.GameButton();
+            this.btnEmpires = new FrEee.WinForms.Controls.GameButton();
+            this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
+            this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
+            this.btnMenu = new FrEee.WinForms.Controls.GameButton();
+            this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+            this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
+            this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
+            this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+            this.gameShipReport1 = new FrEee.WinForms.Controls.ShipReport();
+            this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
+            this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
+            this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
+            this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+            this.tableLayoutPanel1.SuspendLayout();
             this.pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
+            this.pnlMainCommands.SuspendLayout();
+            this.pnlDetailReport.SuspendLayout();
+            this.pnlSystemMap.SuspendLayout();
+            this.pnlGalaxyMap.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pnlSystemMap
+            // tableLayoutPanel1
             // 
-            this.pnlSystemMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlSystemMap.BackColor = System.Drawing.Color.Black;
-            this.pnlSystemMap.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlSystemMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlSystemMap.Controls.Add(this.starSystemView);
-            this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
-            this.pnlSystemMap.Location = new System.Drawing.Point(15, 159);
-            this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlSystemMap.Name = "pnlSystemMap";
-            this.pnlSystemMap.Size = new System.Drawing.Size(612, 557);
-            this.pnlSystemMap.TabIndex = 4;
+            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 304F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 358F));
+            this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pnlMainCommands, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pnlSubCommands, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pnlSearch, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pnlSystemTabs, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.pnlDetailReport, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.pnlSystemMap, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.pnlGalaxyMap, 3, 4);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 308F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1205, 755);
+            this.tableLayoutPanel1.TabIndex = 7;
             // 
-            // starSystemView
+            // pnlHeader
             // 
-            this.starSystemView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlHeader.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.starSystemView.BackColor = System.Drawing.Color.Black;
-            this.starSystemView.Location = new System.Drawing.Point(4, 3);
-            this.starSystemView.Name = "starSystemView";
-            this.starSystemView.SelectedSector = null;
-            this.starSystemView.Size = new System.Drawing.Size(603, 549);
-            this.starSystemView.StarSystem = null;
-            this.starSystemView.TabIndex = 0;
-            this.starSystemView.SectorClicked += new StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
-            this.starSystemView.SectorSelected += new StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
+            this.pnlHeader.BackColor = System.Drawing.Color.Black;
+            this.pnlHeader.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tableLayoutPanel1.SetColumnSpan(this.pnlHeader, 4);
+            this.pnlHeader.Controls.Add(this.gameProgressBar1);
+            this.pnlHeader.Controls.Add(this.pagResources);
+            this.pnlHeader.Controls.Add(this.txtGameDate);
+            this.pnlHeader.Controls.Add(this.lblGameDate);
+            this.pnlHeader.Controls.Add(this.picEmpireFlag);
+            this.pnlHeader.ForeColor = System.Drawing.Color.White;
+            this.pnlHeader.Location = new System.Drawing.Point(4, 4);
+            this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlHeader.Name = "pnlHeader";
+            this.pnlHeader.Size = new System.Drawing.Size(1197, 31);
+            this.pnlHeader.TabIndex = 0;
             // 
-            // pnlGalaxyMap
+            // gameProgressBar1
             // 
-            this.pnlGalaxyMap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlGalaxyMap.BackColor = System.Drawing.Color.Black;
-            this.pnlGalaxyMap.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlGalaxyMap.Controls.Add(this.galaxyView);
-            this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
-            this.pnlGalaxyMap.Location = new System.Drawing.Point(635, 522);
-            this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlGalaxyMap.Name = "pnlGalaxyMap";
-            this.pnlGalaxyMap.Size = new System.Drawing.Size(360, 194);
-            this.pnlGalaxyMap.TabIndex = 5;
+            this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
+            this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
+            this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
+            this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
+            this.gameProgressBar1.LeftText = "Ice Planet Colonization";
+            this.gameProgressBar1.Location = new System.Drawing.Point(603, 3);
+            this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
+            this.gameProgressBar1.Maximum = 500000;
+            this.gameProgressBar1.Name = "gameProgressBar1";
+            this.gameProgressBar1.RightText = "0.2 years";
+            this.gameProgressBar1.Size = new System.Drawing.Size(438, 22);
+            this.gameProgressBar1.TabIndex = 9;
+            this.gameProgressBar1.Value = 350000;
             // 
-            // galaxyView
+            // pagResources
             // 
-            this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.galaxyView.BackColor = System.Drawing.Color.Black;
-            this.galaxyView.Galaxy = null;
-            this.galaxyView.Location = new System.Drawing.Point(4, 3);
-            this.galaxyView.Name = "galaxyView";
-            this.galaxyView.SelectedStarSystem = null;
-            this.galaxyView.Size = new System.Drawing.Size(351, 186);
-            this.galaxyView.TabIndex = 0;
-            this.galaxyView.Text = "galaxyView1";
-            this.galaxyView.StarSystemClicked += new GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
-            this.galaxyView.StarSystemSelected += new GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
+            this.pagResources.BackColor = System.Drawing.Color.Black;
+            this.pagResources.Content = null;
+            this.pagResources.CurrentPage = 0;
+            this.pagResources.ForeColor = System.Drawing.Color.White;
+            this.pagResources.Location = new System.Drawing.Point(185, 5);
+            this.pagResources.Margin = new System.Windows.Forms.Padding(0);
+            this.pagResources.Name = "pagResources";
+            this.pagResources.ShowPager = false;
+            this.pagResources.Size = new System.Drawing.Size(416, 21);
+            this.pagResources.TabIndex = 7;
             // 
-            // pnlDetailReport
+            // txtGameDate
             // 
-            this.pnlDetailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlDetailReport.BackColor = System.Drawing.Color.Black;
-            this.pnlDetailReport.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlDetailReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlDetailReport.Controls.Add(this.gameShipReport1);
-            this.pnlDetailReport.ForeColor = System.Drawing.Color.White;
-            this.pnlDetailReport.Location = new System.Drawing.Point(635, 54);
-            this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlDetailReport.Name = "pnlDetailReport";
-            this.pnlDetailReport.Size = new System.Drawing.Size(360, 460);
-            this.pnlDetailReport.TabIndex = 3;
+            this.txtGameDate.Location = new System.Drawing.Point(131, 5);
+            this.txtGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.txtGameDate.Name = "txtGameDate";
+            this.txtGameDate.Size = new System.Drawing.Size(51, 21);
+            this.txtGameDate.TabIndex = 4;
+            this.txtGameDate.Text = "2400.6";
+            this.txtGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // gameShipReport1
+            // lblGameDate
             // 
-            this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameShipReport1.BackColor = System.Drawing.Color.Black;
-            this.gameShipReport1.ForeColor = System.Drawing.Color.White;
-            this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
-            this.gameShipReport1.Name = "gameShipReport1";
-            this.gameShipReport1.Size = new System.Drawing.Size(351, 451);
-            this.gameShipReport1.TabIndex = 0;
+            this.lblGameDate.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.lblGameDate.Location = new System.Drawing.Point(50, 5);
+            this.lblGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGameDate.Name = "lblGameDate";
+            this.lblGameDate.Size = new System.Drawing.Size(73, 21);
+            this.lblGameDate.TabIndex = 3;
+            this.lblGameDate.Text = "Game Date";
+            this.lblGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlSystemTabs
+            // picEmpireFlag
             // 
-            this.pnlSystemTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlSystemTabs.BackColor = System.Drawing.Color.Black;
-            this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-            this.pnlSystemTabs.Location = new System.Drawing.Point(320, 108);
-            this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlSystemTabs.Name = "pnlSystemTabs";
-            this.pnlSystemTabs.Size = new System.Drawing.Size(307, 46);
-            this.pnlSystemTabs.TabIndex = 3;
-            // 
-            // pnlSearch
-            // 
-            this.pnlSearch.BackColor = System.Drawing.Color.Black;
-            this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlSearch.ForeColor = System.Drawing.Color.White;
-            this.pnlSearch.Location = new System.Drawing.Point(15, 108);
-            this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlSearch.Name = "pnlSearch";
-            this.pnlSearch.Size = new System.Drawing.Size(297, 46);
-            this.pnlSearch.TabIndex = 2;
-            // 
-            // pnlSubCommands
-            // 
-            this.pnlSubCommands.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
-            this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
-            this.pnlSubCommands.Location = new System.Drawing.Point(320, 54);
-            this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlSubCommands.Name = "pnlSubCommands";
-            this.pnlSubCommands.Size = new System.Drawing.Size(307, 46);
-            this.pnlSubCommands.TabIndex = 2;
-            // 
-            // btnPlanets
-            // 
-            this.btnPlanets.BackColor = System.Drawing.Color.Black;
-            this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnPlanets.Location = new System.Drawing.Point(87, 4);
-            this.btnPlanets.Name = "btnPlanets";
-            this.btnPlanets.Size = new System.Drawing.Size(36, 36);
-            this.btnPlanets.TabIndex = 0;
-            this.btnPlanets.Text = "Planets";
-            this.btnPlanets.UseVisualStyleBackColor = false;
-            this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
+            this.picEmpireFlag.Location = new System.Drawing.Point(4, 5);
+            this.picEmpireFlag.Margin = new System.Windows.Forms.Padding(4);
+            this.picEmpireFlag.Name = "picEmpireFlag";
+            this.picEmpireFlag.Size = new System.Drawing.Size(38, 21);
+            this.picEmpireFlag.TabIndex = 0;
+            this.picEmpireFlag.TabStop = false;
             // 
             // pnlMainCommands
             // 
+            this.pnlMainCommands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
             this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
             this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -214,11 +192,11 @@ namespace FrEee.WinForms.Forms
             this.pnlMainCommands.Controls.Add(this.btnDesigns);
             this.pnlMainCommands.Controls.Add(this.btnMenu);
             this.pnlMainCommands.ForeColor = System.Drawing.Color.White;
-            this.pnlMainCommands.Location = new System.Drawing.Point(15, 54);
+            this.pnlMainCommands.Location = new System.Drawing.Point(4, 43);
             this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(4);
             this.pnlMainCommands.Name = "pnlMainCommands";
             this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(4);
-            this.pnlMainCommands.Size = new System.Drawing.Size(297, 46);
+            this.pnlMainCommands.Size = new System.Drawing.Size(296, 46);
             this.pnlMainCommands.TabIndex = 1;
             // 
             // btnLog
@@ -265,6 +243,18 @@ namespace FrEee.WinForms.Forms
             this.btnEmpires.Text = "Empires";
             this.btnEmpires.UseVisualStyleBackColor = false;
             // 
+            // btnPlanets
+            // 
+            this.btnPlanets.BackColor = System.Drawing.Color.Black;
+            this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPlanets.Location = new System.Drawing.Point(87, 4);
+            this.btnPlanets.Name = "btnPlanets";
+            this.btnPlanets.Size = new System.Drawing.Size(36, 36);
+            this.btnPlanets.TabIndex = 0;
+            this.btnPlanets.Text = "Planets";
+            this.btnPlanets.UseVisualStyleBackColor = false;
+            this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
+            // 
             // btnDesigns
             // 
             this.btnDesigns.BackColor = System.Drawing.Color.Black;
@@ -287,113 +277,168 @@ namespace FrEee.WinForms.Forms
             this.btnMenu.Text = "Menu";
             this.btnMenu.UseVisualStyleBackColor = false;
             // 
-            // pnlHeader
+            // pnlSubCommands
             // 
-            this.pnlHeader.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlSubCommands.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pnlHeader.BackColor = System.Drawing.Color.Black;
-            this.pnlHeader.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHeader.Controls.Add(this.gameProgressBar1);
-            this.pnlHeader.Controls.Add(this.pagResources);
-            this.pnlHeader.Controls.Add(this.txtGameDate);
-            this.pnlHeader.Controls.Add(this.lblGameDate);
-            this.pnlHeader.Controls.Add(this.picEmpireFlag);
-            this.pnlHeader.ForeColor = System.Drawing.Color.White;
-            this.pnlHeader.Location = new System.Drawing.Point(15, 15);
-            this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(980, 32);
-            this.pnlHeader.TabIndex = 0;
+            this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
+            this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tableLayoutPanel1.SetColumnSpan(this.pnlSubCommands, 2);
+            this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
+            this.pnlSubCommands.Location = new System.Drawing.Point(308, 43);
+            this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSubCommands.Name = "pnlSubCommands";
+            this.pnlSubCommands.Size = new System.Drawing.Size(534, 46);
+            this.pnlSubCommands.TabIndex = 2;
             // 
-            // gameProgressBar1
+            // pnlSearch
             // 
-            this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
-            this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
-            this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
-            this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
-            this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-            this.gameProgressBar1.Location = new System.Drawing.Point(603, 4);
-            this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
-            this.gameProgressBar1.Maximum = 500000;
-            this.gameProgressBar1.Name = "gameProgressBar1";
-            this.gameProgressBar1.RightText = "0.2 years";
-            this.gameProgressBar1.Size = new System.Drawing.Size(372, 22);
-            this.gameProgressBar1.TabIndex = 9;
-            this.gameProgressBar1.Value = 350000;
+            this.pnlSearch.BackColor = System.Drawing.Color.Black;
+            this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tableLayoutPanel1.SetColumnSpan(this.pnlSearch, 2);
+            this.pnlSearch.ForeColor = System.Drawing.Color.White;
+            this.pnlSearch.Location = new System.Drawing.Point(4, 97);
+            this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSearch.Name = "pnlSearch";
+            this.pnlSearch.Size = new System.Drawing.Size(567, 42);
+            this.pnlSearch.TabIndex = 2;
             // 
-            // pagResources
+            // pnlSystemTabs
             // 
-            this.pagResources.BackColor = System.Drawing.Color.Black;
-            this.pagResources.Content = null;
-            this.pagResources.CurrentPage = 0;
-            this.pagResources.ForeColor = System.Drawing.Color.White;
-            this.pagResources.Location = new System.Drawing.Point(186, 5);
-            this.pagResources.Margin = new System.Windows.Forms.Padding(0);
-            this.pagResources.Name = "pagResources";
-            this.pagResources.ShowPager = false;
-            this.pagResources.Size = new System.Drawing.Size(417, 21);
-            this.pagResources.TabIndex = 7;
+            this.pnlSystemTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlSystemTabs.BackColor = System.Drawing.Color.Black;
+            this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
+            this.pnlSystemTabs.Location = new System.Drawing.Point(579, 97);
+            this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSystemTabs.Name = "pnlSystemTabs";
+            this.pnlSystemTabs.Size = new System.Drawing.Size(263, 42);
+            this.pnlSystemTabs.TabIndex = 3;
             // 
-            // txtGameDate
+            // pnlDetailReport
             // 
-            this.txtGameDate.Location = new System.Drawing.Point(131, 5);
-            this.txtGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.txtGameDate.Name = "txtGameDate";
-            this.txtGameDate.Size = new System.Drawing.Size(51, 21);
-            this.txtGameDate.TabIndex = 4;
-            this.txtGameDate.Text = "2400.6";
-            this.txtGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pnlDetailReport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlDetailReport.BackColor = System.Drawing.Color.Black;
+            this.pnlDetailReport.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlDetailReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlDetailReport.Controls.Add(this.gameShipReport1);
+            this.pnlDetailReport.ForeColor = System.Drawing.Color.White;
+            this.pnlDetailReport.Location = new System.Drawing.Point(850, 43);
+            this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlDetailReport.Name = "pnlDetailReport";
+            this.tableLayoutPanel1.SetRowSpan(this.pnlDetailReport, 3);
+            this.pnlDetailReport.Size = new System.Drawing.Size(351, 379);
+            this.pnlDetailReport.TabIndex = 3;
             // 
-            // lblGameDate
+            // gameShipReport1
             // 
-            this.lblGameDate.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.lblGameDate.Location = new System.Drawing.Point(50, 5);
-            this.lblGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lblGameDate.Name = "lblGameDate";
-            this.lblGameDate.Size = new System.Drawing.Size(73, 21);
-            this.lblGameDate.TabIndex = 3;
-            this.lblGameDate.Text = "Game Date";
-            this.lblGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gameShipReport1.BackColor = System.Drawing.Color.Black;
+            this.gameShipReport1.ForeColor = System.Drawing.Color.White;
+            this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
+            this.gameShipReport1.Name = "gameShipReport1";
+            this.gameShipReport1.Size = new System.Drawing.Size(342, 370);
+            this.gameShipReport1.TabIndex = 0;
             // 
-            // picEmpireFlag
+            // pnlSystemMap
             // 
-            this.picEmpireFlag.Location = new System.Drawing.Point(4, 5);
-            this.picEmpireFlag.Margin = new System.Windows.Forms.Padding(4);
-            this.picEmpireFlag.Name = "picEmpireFlag";
-            this.picEmpireFlag.Size = new System.Drawing.Size(38, 21);
-            this.picEmpireFlag.TabIndex = 0;
-            this.picEmpireFlag.TabStop = false;
+            this.pnlSystemMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlSystemMap.BackColor = System.Drawing.Color.Black;
+            this.pnlSystemMap.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlSystemMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tableLayoutPanel1.SetColumnSpan(this.pnlSystemMap, 3);
+            this.pnlSystemMap.Controls.Add(this.starSystemView);
+            this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
+            this.pnlSystemMap.Location = new System.Drawing.Point(4, 147);
+            this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlSystemMap.Name = "pnlSystemMap";
+            this.tableLayoutPanel1.SetRowSpan(this.pnlSystemMap, 2);
+            this.pnlSystemMap.Size = new System.Drawing.Size(838, 583);
+            this.pnlSystemMap.TabIndex = 4;
+            // 
+            // starSystemView
+            // 
+            this.starSystemView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.starSystemView.BackColor = System.Drawing.Color.Black;
+            this.starSystemView.Location = new System.Drawing.Point(4, 3);
+            this.starSystemView.Name = "starSystemView";
+            this.starSystemView.SelectedSector = null;
+            this.starSystemView.Size = new System.Drawing.Size(678, 571);
+            this.starSystemView.StarSystem = null;
+            this.starSystemView.TabIndex = 0;
+            this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
+            this.starSystemView.SectorSelected += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
+            // 
+            // pnlGalaxyMap
+            // 
+            this.pnlGalaxyMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pnlGalaxyMap.BackColor = System.Drawing.Color.Black;
+            this.pnlGalaxyMap.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlGalaxyMap.Controls.Add(this.galaxyView);
+            this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
+            this.pnlGalaxyMap.Location = new System.Drawing.Point(850, 430);
+            this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlGalaxyMap.Name = "pnlGalaxyMap";
+            this.pnlGalaxyMap.Size = new System.Drawing.Size(351, 300);
+            this.pnlGalaxyMap.TabIndex = 5;
+            // 
+            // galaxyView
+            // 
+            this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.galaxyView.BackColor = System.Drawing.Color.Black;
+            this.galaxyView.Galaxy = null;
+            this.galaxyView.Location = new System.Drawing.Point(4, 3);
+            this.galaxyView.Name = "galaxyView";
+            this.galaxyView.SelectedStarSystem = null;
+            this.galaxyView.Size = new System.Drawing.Size(342, 288);
+            this.galaxyView.TabIndex = 0;
+            this.galaxyView.Text = "galaxyView1";
+            this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
+            this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
             // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(1008, 729);
-            this.Controls.Add(this.pnlSystemMap);
-            this.Controls.Add(this.pnlGalaxyMap);
-            this.Controls.Add(this.pnlDetailReport);
-            this.Controls.Add(this.pnlSystemTabs);
-            this.Controls.Add(this.pnlSearch);
-            this.Controls.Add(this.pnlSubCommands);
-            this.Controls.Add(this.pnlMainCommands);
-            this.Controls.Add(this.pnlHeader);
+            this.ClientSize = new System.Drawing.Size(1229, 779);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.White;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MinimumSize = new System.Drawing.Size(900, 700);
             this.Name = "GameForm";
             this.Text = "FrEee";
-            this.pnlSystemMap.ResumeLayout(false);
-            this.pnlGalaxyMap.ResumeLayout(false);
-            this.pnlDetailReport.ResumeLayout(false);
-            this.pnlMainCommands.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.pnlHeader.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
+            this.pnlMainCommands.ResumeLayout(false);
+            this.pnlDetailReport.ResumeLayout(false);
+            this.pnlSystemMap.ResumeLayout(false);
+            this.pnlGalaxyMap.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -422,7 +467,8 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnMenu;
 		private GameButton btnShips;
 		private GameButton btnLog;
-		private GameButton btnQueues;
+        private GameButton btnQueues;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 	}
 }
 
