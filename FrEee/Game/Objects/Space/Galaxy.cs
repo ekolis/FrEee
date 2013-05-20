@@ -79,6 +79,11 @@ namespace FrEee.Game.Objects.Space
 					if (OrderTargets[i].Owner != CurrentEmpire)
 						OrderTargets[i] = null;
 				}
+
+				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
+				{
+					emp.StoredResources.Clear();
+				}
 			}
 		}
 
