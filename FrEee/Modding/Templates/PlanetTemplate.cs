@@ -3,6 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Templates
 {
@@ -49,9 +53,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
 
-			planet.ResourceValue["Minerals"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["Organics"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["Radioactives"] = Rng.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Minerals"] = RandomIntHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Organics"] = RandomIntHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Radioactives"] = RandomIntHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
 
 			return planet;
 		}

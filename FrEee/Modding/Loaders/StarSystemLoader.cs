@@ -1,4 +1,6 @@
 ﻿using FrEee.Game;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
+using Size = FrEee.Game.Enumerations.Size;
 
 namespace FrEee.Modding.Loaders
 {
@@ -102,7 +106,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+									template.Size = (Size)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{
@@ -174,7 +178,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+									template.Size = (Size)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{
@@ -237,7 +241,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+									template.Size = (Size)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{
@@ -300,7 +304,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.Size = (Game.Size)Enum.Parse(typeof(Game.Size), temp);
+									template.Size = (Size)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{

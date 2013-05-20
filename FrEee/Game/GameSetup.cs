@@ -1,9 +1,12 @@
-﻿using FrEee.Modding;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game
 {

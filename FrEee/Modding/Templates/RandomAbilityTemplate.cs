@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Templates
 {
@@ -30,7 +33,7 @@ namespace FrEee.Modding.Templates
 
 		public Ability Instantiate()
 		{
-			var num = Rng.Next(1000);
+			var num = RandomIntHelper.Next(1000);
 			var howFar = 0;
 			foreach (var ac in AbilityChances)
 			{

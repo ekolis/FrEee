@@ -1,4 +1,5 @@
 ﻿using FrEee.Game;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;

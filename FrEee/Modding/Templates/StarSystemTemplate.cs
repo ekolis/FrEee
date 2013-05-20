@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Modding.Templates
 {

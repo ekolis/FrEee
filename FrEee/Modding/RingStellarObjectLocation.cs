@@ -5,6 +5,9 @@ using System.Linq;
 using System.Text;
 using FrEee;
 using FrEee.Game;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
