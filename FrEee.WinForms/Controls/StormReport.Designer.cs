@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Controls
 			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
             treeNode4,
             treeNode5});
-			this.gameTabControl1 = new GameTabControl();
+			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.txtSize = new System.Windows.Forms.Label();
@@ -122,6 +122,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.Location = new System.Drawing.Point(8, 32);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 9;
 			this.picPortrait.TabStop = false;
 			// 
@@ -130,6 +131,7 @@ namespace FrEee.WinForms.Controls
 			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
 			this.picOwnerFlag.Name = "picOwnerFlag";
 			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
+			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picOwnerFlag.TabIndex = 8;
 			this.picOwnerFlag.TabStop = false;
 			// 

@@ -28,32 +28,32 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Hull Size: -10");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Defense Modifier: -10", new System.Windows.Forms.TreeNode[] {
-            treeNode4});
+			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
+			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("War Shrine: +10");
+			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
+            treeNode6,
+            treeNode7});
+			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Hull Size: -10");
+			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Defense Modifier: -10", new System.Windows.Forms.TreeNode[] {
+            treeNode9});
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
-			this.gameResourceDisplay3 = new ResourceDisplay();
+			this.gameResourceDisplay3 = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblComponents = new System.Windows.Forms.Label();
-			this.gameResourceDisplay2 = new ResourceDisplay();
-			this.gameResourceDisplay1 = new ResourceDisplay();
+			this.gameResourceDisplay2 = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.gameResourceDisplay1 = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblMaint = new System.Windows.Forms.Label();
 			this.txtFleet = new System.Windows.Forms.Label();
 			this.lblFleet = new System.Windows.Forms.Label();
@@ -62,28 +62,28 @@ namespace FrEee.WinForms.Controls
 			this.txtOrder = new System.Windows.Forms.Label();
 			this.lblOrder = new System.Windows.Forms.Label();
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
-			this.gamePanel2 = new GamePanel();
+			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstCargoSummary = new System.Windows.Forms.ListView();
 			this.lblCargo = new System.Windows.Forms.Label();
-			this.gamePanel1 = new GamePanel();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstComponentsSummary = new System.Windows.Forms.ListView();
 			this.pnlStats = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.lblSupplies = new System.Windows.Forms.Label();
-			this.progSupplies = new GameProgressBar();
+			this.progSupplies = new FrEee.WinForms.Controls.GameProgressBar();
 			this.lblAmmunition = new System.Windows.Forms.Label();
-			this.progAmmunition = new GameProgressBar();
+			this.progAmmunition = new FrEee.WinForms.Controls.GameProgressBar();
 			this.label3 = new System.Windows.Forms.Label();
-			this.progFuel = new GameProgressBar();
+			this.progFuel = new FrEee.WinForms.Controls.GameProgressBar();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-			this.progHull = new GameProgressBar();
-			this.progArmor = new GameProgressBar();
+			this.progHull = new FrEee.WinForms.Controls.GameProgressBar();
+			this.progArmor = new FrEee.WinForms.Controls.GameProgressBar();
 			this.lblShields = new System.Windows.Forms.Label();
-			this.progShields = new GameProgressBar();
+			this.progShields = new FrEee.WinForms.Controls.GameProgressBar();
 			this.lblArmor = new System.Windows.Forms.Label();
 			this.lblHull = new System.Windows.Forms.Label();
 			this.txtMovement = new System.Windows.Forms.Label();
-			this.progMovement = new GameProgressBar();
+			this.progMovement = new FrEee.WinForms.Controls.GameProgressBar();
 			this.lblMovement = new System.Windows.Forms.Label();
 			this.txtSize = new System.Windows.Forms.Label();
 			this.lblSize = new System.Windows.Forms.Label();
@@ -94,10 +94,10 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageOrders = new System.Windows.Forms.TabPage();
-			this.btnOrdersClear = new GameButton();
-			this.btnOrderDelete = new GameButton();
-			this.btnOrderDown = new GameButton();
-			this.btnOrderUp = new GameButton();
+			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageComps = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctionalDetail = new System.Windows.Forms.Label();
@@ -107,7 +107,7 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeView1 = new System.Windows.Forms.TreeView();
-			this.gameTabControl1 = new GameTabControl();
+			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
@@ -120,6 +120,7 @@ namespace FrEee.WinForms.Controls
 			this.pageComps.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageAbility.SuspendLayout();
+			this.gameTabControl1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pageDetail
@@ -160,7 +161,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(292, 614);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
-			this.gameTabControl1.TabPages.Add(this.pageDetail);
 			// 
 			// txtComponentsFunctional
 			// 
@@ -341,9 +341,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
 			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem13,
+            listViewItem14,
+            listViewItem15});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
 			this.lstCargoSummary.Size = new System.Drawing.Size(265, 92);
@@ -384,9 +384,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem16,
+            listViewItem17,
+            listViewItem18});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
 			this.lstComponentsSummary.Size = new System.Drawing.Size(265, 92);
@@ -735,7 +735,7 @@ namespace FrEee.WinForms.Controls
 			this.txtName.AutoSize = true;
 			this.txtName.Location = new System.Drawing.Point(143, 6);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(89, 13);
+			this.txtName.Size = new System.Drawing.Size(134, 20);
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Constitution 0001";
 			// 
@@ -744,6 +744,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.Location = new System.Drawing.Point(8, 32);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 9;
 			this.picPortrait.TabStop = false;
 			// 
@@ -752,6 +753,7 @@ namespace FrEee.WinForms.Controls
 			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
 			this.picOwnerFlag.Name = "picOwnerFlag";
 			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
+			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picOwnerFlag.TabIndex = 8;
 			this.picOwnerFlag.TabStop = false;
 			// 
@@ -769,7 +771,6 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Size = new System.Drawing.Size(292, 614);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
-			this.gameTabControl1.TabPages.Add(this.pageOrders);
 			// 
 			// btnOrdersClear
 			// 
@@ -828,6 +829,7 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
+			this.lstOrdersDetail.ItemHeight = 20;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Move to Kartogia (0, -5)",
             "Drop All Eee Population",
@@ -835,7 +837,7 @@ namespace FrEee.WinForms.Controls
             "Move to Fizbon (3, 6)"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 611);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 600);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageComps
@@ -849,7 +851,6 @@ namespace FrEee.WinForms.Controls
 			this.pageComps.Size = new System.Drawing.Size(292, 614);
 			this.pageComps.TabIndex = 2;
 			this.pageComps.Text = "Comps";
-			this.gameTabControl1.TabPages.Add(this.pageComps);
 			// 
 			// txtComponentsFunctionalDetail
 			// 
@@ -872,9 +873,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem19,
+            listViewItem20,
+            listViewItem21});
 			this.lstComponentsDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstComponentsDetail.Name = "lstComponentsDetail";
 			this.lstComponentsDetail.Size = new System.Drawing.Size(292, 646);
@@ -893,7 +894,6 @@ namespace FrEee.WinForms.Controls
 			this.pageCargo.Size = new System.Drawing.Size(292, 614);
 			this.pageCargo.TabIndex = 3;
 			this.pageCargo.Text = "Cargo";
-			this.gameTabControl1.TabPages.Add(this.pageCargo);
 			// 
 			// txtCargoSpaceFreeDetail
 			// 
@@ -916,9 +916,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem22,
+            listViewItem23,
+            listViewItem24});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
@@ -936,35 +936,38 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.Size = new System.Drawing.Size(292, 614);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
-			this.gameTabControl1.TabPages.Add(this.pageAbility);
 			// 
 			// treeView1
 			// 
 			this.treeView1.BackColor = System.Drawing.Color.Black;
 			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeView1.ForeColor = System.Drawing.Color.White;
-			this.treeView1.LineColor = System.Drawing.Color.Empty;
 			this.treeView1.Location = new System.Drawing.Point(3, 3);
 			this.treeView1.Name = "treeView1";
-			treeNode1.Name = "Node1";
-			treeNode1.Text = "Racial Trait: +5";
-			treeNode2.Name = "Node3";
-			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode2.Text = "War Shrine: +10";
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Attack Modifier: +15";
-			treeNode4.Name = "Node5";
-			treeNode4.Text = "Hull Size: -10";
-			treeNode5.Name = "Node4";
-			treeNode5.Text = "Defense Modifier: -10";
+			treeNode6.Name = "Node1";
+			treeNode6.Text = "Racial Trait: +5";
+			treeNode7.Name = "Node3";
+			treeNode7.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode7.Text = "War Shrine: +10";
+			treeNode8.Name = "Node0";
+			treeNode8.Text = "Attack Modifier: +15";
+			treeNode9.Name = "Node5";
+			treeNode9.Text = "Hull Size: -10";
+			treeNode10.Name = "Node4";
+			treeNode10.Text = "Defense Modifier: -10";
 			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode5});
+            treeNode8,
+            treeNode10});
 			this.treeView1.Size = new System.Drawing.Size(286, 608);
 			this.treeView1.TabIndex = 0;
 			// 
 			// gameTabControl1
 			// 
+			this.gameTabControl1.Controls.Add(this.pageDetail);
+			this.gameTabControl1.Controls.Add(this.pageOrders);
+			this.gameTabControl1.Controls.Add(this.pageComps);
+			this.gameTabControl1.Controls.Add(this.pageCargo);
+			this.gameTabControl1.Controls.Add(this.pageAbility);
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1004,6 +1007,7 @@ namespace FrEee.WinForms.Controls
 			this.pageCargo.ResumeLayout(false);
 			this.pageCargo.PerformLayout();
 			this.pageAbility.ResumeLayout(false);
+			this.gameTabControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}

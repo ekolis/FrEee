@@ -44,14 +44,14 @@ namespace FrEee.WinForms.Controls
 			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
             treeNode10,
             treeNode11});
-			this.gameTabControl1 = new GameTabControl();
+			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
 			this.lblConstructionTime = new System.Windows.Forms.Label();
 			this.txtConstructionItem = new System.Windows.Forms.Label();
 			this.lblConstructionItem = new System.Windows.Forms.Label();
-			this.resIntel = new ResourceDisplay();
-			this.resResearch = new ResourceDisplay();
+			this.resIntel = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resResearch = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.label1 = new System.Windows.Forms.Label();
 			this.txtMood = new System.Windows.Forms.Label();
 			this.lblMood = new System.Windows.Forms.Label();
@@ -65,9 +65,9 @@ namespace FrEee.WinForms.Controls
 			this.txtValueRadioactives = new System.Windows.Forms.Label();
 			this.txtValueOrganics = new System.Windows.Forms.Label();
 			this.txtValueMinerals = new System.Windows.Forms.Label();
-			this.resIncomeMinerals = new ResourceDisplay();
-			this.resIncomeOrganics = new ResourceDisplay();
-			this.resIncomeRadioactives = new ResourceDisplay();
+			this.resIncomeMinerals = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resIncomeOrganics = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resIncomeRadioactives = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblIncome = new System.Windows.Forms.Label();
 			this.lblValue = new System.Windows.Forms.Label();
 			this.txtConditions = new System.Windows.Forms.Label();
@@ -79,10 +79,10 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageOrders = new System.Windows.Forms.TabPage();
-			this.btnOrdersClear = new GameButton();
-			this.btnOrderDelete = new GameButton();
-			this.btnOrderDown = new GameButton();
-			this.btnOrderUp = new GameButton();
+			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageFacil = new System.Windows.Forms.TabPage();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
@@ -512,6 +512,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.Location = new System.Drawing.Point(8, 32);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 9;
 			this.picPortrait.TabStop = false;
 			// 
@@ -520,6 +521,7 @@ namespace FrEee.WinForms.Controls
 			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
 			this.picOwnerFlag.Name = "picOwnerFlag";
 			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
+			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picOwnerFlag.TabIndex = 8;
 			this.picOwnerFlag.TabStop = false;
 			// 
