@@ -73,6 +73,12 @@ namespace FrEee.Game.Objects.Space
 				{
 					ssl.Item.Redact(this);
 				}
+
+				for (int i = 0; i < OrderTargets.Count; i++)
+				{
+					if (OrderTargets[i].Owner != CurrentEmpire)
+						OrderTargets[i] = null;
+				}
 			}
 		}
 
