@@ -15,7 +15,6 @@ namespace FrEee.WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Thread.Sleep(3000);
             Application.Run(new GameForm());
         }
     }
