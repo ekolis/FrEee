@@ -41,6 +41,9 @@ namespace FrEee.Modding
 			foreach (var line in File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt")))
 				mod.StarSystemNames.Add(line);
 
+			CurrentFileName = Path.Combine(datapath, "AbilityRules.txt");
+			new AbilityRuleLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+
 			CurrentFileName = Path.Combine(datapath, "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 
@@ -74,6 +77,7 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
+			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
 			Facilities = new List<Facility>();
@@ -82,6 +86,11 @@ namespace FrEee.Modding
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
 		}
+
+		/// <summary>
+		/// Rules for grouping and stacking abilities.
+		/// </summary>
+		public ICollection<AbilityRule> AbilityRules { get; private set; }
 
 		/// <summary>
 		/// Names to use for star systems.

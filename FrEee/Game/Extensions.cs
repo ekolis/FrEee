@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
+using FrEee.Modding;
 
 namespace FrEee.Game
 {
@@ -16,12 +17,17 @@ namespace FrEee.Game
 		/// <returns>The clone.</returns>
 		public static T Clone<T>(this T obj) where T : new()
 		{
-			// TODO - figure out why planets aren't being cloned and just being reference-copied when copied out of SectType.txt (I once got 2 identical homeworlds in different systems!)
-			Mapper.CreateMap<T, T>();
+			if (!mappedTypes.Contains(typeof(T)))
+			{
+				mappedTypes.Add(typeof(T));
+				Mapper.CreateMap<T, T>();
+			}
 			var t = new T();
 			Mapper.Map(obj, t);
 			return t;
 		}
+
+		private static List<Type> mappedTypes = new List<Type>();
 
 		/// <summary>
 		/// Finds the largest space object out of a group of space objects.
@@ -68,13 +74,14 @@ namespace FrEee.Game
 		}
 
 		/// <summary>
-		/// Stacks any abilities of the same type according to the default stacking rules.
+		/// Stacks any abilities of the same type according to the current mod's stacking rules.
 		/// </summary>
 		/// <param name="abilities"></param>
 		/// <returns></returns>
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities)
 		{
-			// TODO - actually stack abilities
+			foreach (var rule in Mod.Current.AbilityRules)
+				abilities = rule.GroupAndStack(abilities);
 			return abilities;
 		}
 	}

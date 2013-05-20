@@ -124,6 +124,11 @@ namespace FrEee.Modding
 			return GetString(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
 		}
 
+		public T GetEnum<T>(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false) where T : struct
+		{
+			return GetEnum<T>(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+		}
+
 		public double GetDouble(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
 		{
 			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
@@ -151,6 +156,14 @@ namespace FrEee.Modding
 		public string GetString(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false)
 		{
 			return FindField(fieldNames, ref index, logErrors, startIndex, allowSkip).Value;
+		}
+
+		public T GetEnum<T>(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = false) where T : struct
+		{
+			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
+			if (f == null)
+				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+			return f.EnumValue<T>(this);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -61,6 +62,7 @@ namespace FrEee.Game
 		/// <summary>
 		/// Star systems explored by the current empire.
 		/// </summary>
+		[JsonIgnore]
 		public IEnumerable<StarSystem> ExploredStarSystems
 		{
 			get { return StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(CurrentEmpire)); }
@@ -69,6 +71,7 @@ namespace FrEee.Game
 		/// <summary>
 		/// Planets colonized by the current empire.
 		/// </summary>
+		[JsonIgnore]
 		public IEnumerable<Planet> ColonizedPlanets
 		{
 			get
@@ -80,6 +83,7 @@ namespace FrEee.Game
 		/// <summary>
 		/// Income (minus expenses) of the current empire.
 		/// </summary>
+		[JsonIgnore]
 		public Resources Income
 		{
 			get

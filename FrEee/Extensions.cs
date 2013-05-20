@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -247,5 +248,76 @@ namespace FrEee
 		};
 
 		private static IDictionary<int, string> RomanNumeralCache = new Dictionary<int, string>();
+
+		/// <summary>
+		/// Determines if a string can be parsed as an integer.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool IsInt(this string s)
+		{
+			int i;
+			return int.TryParse(s, out i);
+		}
+
+		/// <summary>
+		/// Determines if a string can be parsed as a double.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="cultureCode">The LCID of the culture used to parse. Defaults to 127, which represents the invariant culture.</param>
+		/// <returns></returns>
+		public static bool IsDouble(this string s, int cultureCode = 127)
+		{
+			double d;
+			return double.TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.GetCultureInfo(cultureCode), out d);
+		}
+
+		/// <summary>
+		/// Determines if a string can be parsed as an boolean.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool IsBool(this string s)
+		{
+			bool b;
+			return bool.TryParse(s, out b);
+		}
+
+		/// <summary>
+		/// Parses a string as an integer. Returns 0 if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static int ToInt(this string s)
+		{
+			int i;
+			int.TryParse(s, out i);
+			return i;
+		}
+
+		/// <summary>
+		/// Parses a string as a double. Returns 0 if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="cultureCode">The LCID of the culture used to parse. Defaults to 127, which represents the invariant culture.</param>
+		/// <returns></returns>
+		public static double ToDouble(this string s, int cultureCode = 127)
+		{
+			double d;
+			double.TryParse(s, NumberStyles.Float | NumberStyles.AllowThousands, CultureInfo.GetCultureInfo(cultureCode), out d);
+			return d;
+		}
+
+		/// <summary>
+		/// Parses a string as a boolean. Returns false if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool ToBool(this string s)
+		{
+			bool b;
+			bool.TryParse(s, out b);
+			return b;
+		}
 	}
 }

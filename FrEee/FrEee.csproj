@@ -105,8 +105,10 @@
       <DependentUpon>PlanetListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="INamed.cs" />
+    <Compile Include="Game\AbilityRule.cs" />
     <Compile Include="Modding\IStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\Extensions.cs" />
+    <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />
     <Compile Include="Modding\Loaders\FacilityLoader.cs" />
     <Compile Include="Modding\Loaders\StellarObjectLoader.cs" />
     <Compile Include="Modding\Loaders\GalaxyLoader.cs" />

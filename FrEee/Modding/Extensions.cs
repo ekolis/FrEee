@@ -5,6 +5,7 @@ using System.Text;
 
 namespace FrEee.Modding
 {
+	// TODO - just put these methods on the Field class!
 	public static class Extensions
 	{
 		/// <summary>
@@ -47,6 +48,20 @@ namespace FrEee.Modding
 			if (!bool.TryParse(f.Value, out b))
 				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + f.Value + "\" as a boolean.", Mod.CurrentFileName, rec, f));
 			return b;
+		}
+
+		/// <summary>
+		/// Parses a field as an enum and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public static T EnumValue<T>(this Field f, Record rec) where T : struct
+		{
+			T t;
+			if (!Enum.TryParse<T>(f.Value, out t))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + f.Value + "\" as an enumerated value of type " + typeof(T).Name + ".", Mod.CurrentFileName, rec, f));
+			return t;
 		}
 	}
 }

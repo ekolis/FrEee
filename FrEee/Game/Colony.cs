@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,9 +26,10 @@ namespace FrEee.Game
 		/// </summary>
 		public ICollection<Facility> Facilities { get; set; }
 
+		[JsonIgnore]
 		public IEnumerable<Ability> Abilities
 		{
-			get { return Facilities.SelectMany(f => f.Abilities); }
+			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Stack(); }
 		}
 	}
 }

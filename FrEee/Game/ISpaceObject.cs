@@ -32,11 +32,6 @@ namespace FrEee.Game
 		IList<Ability> IntrinsicAbilities { get; }
 
 		/// <summary>
-		/// All abilities possessed by this space object, whether intrinsic or inherited.
-		/// </summary>
-		IEnumerable<Ability> Abilities { get; }
-
-		/// <summary>
 		/// The empire owning this space object.
 		/// </summary>
 		Empire Owner { get; }
