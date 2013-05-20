@@ -16,6 +16,11 @@ namespace FrEee.Game.Objects.Space
 	/// </summary>
 	public class Galaxy
 	{
+		/// <summary>
+		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
+		/// </summary>
+		public static Galaxy Current { get; set; }
+
 		public Galaxy()
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
@@ -61,40 +66,6 @@ namespace FrEee.Game.Objects.Space
 				{
 					ssl.Item.Redact(this);
 				}
-			}
-		}
-
-		/// <summary>
-		/// Star systems explored by the current empire.
-		/// </summary>
-		[JsonIgnore]
-		public IEnumerable<StarSystem> ExploredStarSystems
-		{
-			get { return StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(CurrentEmpire)); }
-		}
-
-		/// <summary>
-		/// Planets colonized by the current empire.
-		/// </summary>
-		[JsonIgnore]
-		public IEnumerable<Planet> ColonizedPlanets
-		{
-			get
-			{
-				return StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == CurrentEmpire).Flatten());
-			}
-		}
-
-		/// <summary>
-		/// Income (minus expenses) of the current empire.
-		/// </summary>
-		[JsonIgnore]
-		public Resources Income
-		{
-			get
-			{
-				// TODO - take into account maintenance costs
-				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
 			}
 		}
 
@@ -178,6 +149,7 @@ namespace FrEee.Game.Objects.Space
 #if DEBUG
 					js.Formatting = Formatting.Indented;
 #endif
+					// TODO - use a variant of this code http://daniel.wertheim.se/2010/11/06/json-net-private-setters/ so I don't have to put [JsonIgnore] everywhere there's a property with no setter
 					var cr = new DefaultContractResolver();
 					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
 					js.ContractResolver = cr;
@@ -186,6 +158,32 @@ namespace FrEee.Game.Objects.Space
 				}
 				return jsonSerializer;
 			}
+		}
+
+		/// <summary>
+		/// Processes the turn.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
+		public void ProcessTurn()
+		{
+			if (CurrentEmpire != null)
+				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
+
+			if (Galaxy.Current != this)
+				throw new InvalidOperationException("Can't process the turn on a galaxy that is not the current galaxy. Set Galaxy.Current = this first.");
+
+			// empire stuff
+			foreach (var emp in Empires)
+			{
+				// give empire its income
+				emp.StoredResources += emp.Income;
+
+				// execute commands
+				foreach (var cmd in emp.Commands)
+					cmd.Execute();
+			}
+
+			// TODO - other turn processing stuff
 		}
 	}
 }

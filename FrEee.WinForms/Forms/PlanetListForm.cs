@@ -8,22 +8,19 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class PlanetListForm : Form
 	{
-		public PlanetListForm(Galaxy galaxy)
+		public PlanetListForm()
 		{
 			InitializeComponent();
-			this.galaxy = galaxy;
             this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
-		private Galaxy galaxy;
-
 		private void PlanetListForm_Load(object sender, EventArgs e)
 		{
-			if (galaxy == null)
+			if (Galaxy.Current == null)
 				return;
 
 			// show planet counts
-			var systems = galaxy.ExploredStarSystems;
+			var systems = Galaxy.Current.CurrentEmpire.ExploredStarSystems;
 			txtSystems.Text = systems.Count().ToString();
 			// HACK - why are there null explored star systems?
 			var planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
@@ -32,7 +29,7 @@ namespace FrEee.WinForms.Forms
 			// TODO - colony ships
 
 			// show galaxy view
-			galaxyView.Galaxy = galaxy;
+			galaxyView.Galaxy = Galaxy.Current;
 
 			// show planet data
 			planetBindingSource.DataSource = planets.ToList();
@@ -47,7 +44,7 @@ namespace FrEee.WinForms.Forms
 		private void gridPlanets_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			var planet = (Planet)gridPlanets.Rows[e.RowIndex].DataBoundItem;
-			foreach (var sys in galaxy.ExploredStarSystems)
+			foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
 			{
 				if (sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(p => p == planet))
 				{

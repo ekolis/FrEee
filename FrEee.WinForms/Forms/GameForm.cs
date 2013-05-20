@@ -20,8 +20,6 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class GameForm : Form
 	{
-		private Galaxy galaxy;
-
 		public GameForm()
 		{
 			InitializeComponent();
@@ -61,17 +59,17 @@ namespace FrEee.WinForms.Forms
 
 			// test saving the game
 			var sw = new StreamWriter("save.gam");
-			sw.Write(galaxy.SerializeGameState());
+			sw.Write(Galaxy.Current.SerializeGameState());
 			sw.Close();
 
 			// test loading the game
 			var sr = new StreamReader("save.gam");
-			galaxy = Galaxy.DeserializeGameState(sr);
+			Galaxy.Current = Galaxy.DeserializeGameState(sr);
 			sr.Close();
 
-					// test redacting fogged info
-					galaxy.CurrentEmpire = galaxy.Empires[0];
-					galaxy.Redact();
+			// test redacting fogged info
+			Galaxy.Current.CurrentEmpire = Galaxy.Current.Empires[0];
+			Galaxy.Current.Redact();
 
 					// test saving the player's view
 					sw = new StreamWriter("p1.gam");
@@ -214,7 +212,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnPlanets_Click(object sender, EventArgs e)
 		{
-			var form = new PlanetListForm(galaxy);
+			var form = new PlanetListForm();
 			form.ShowDialog();
 		}
 	}

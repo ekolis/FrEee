@@ -1,7 +1,10 @@
 using System.Drawing;
+using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;
+using FrEee.Game.Objects.Space;
+using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -73,5 +76,41 @@ namespace FrEee.Game.Objects.Civilization
 		/// Commands issued by the player this turn.
 		/// </summary>
 		public IList<ICommand> Commands { get; private set; }
+
+		/// <summary>
+		/// The empire's resource income.
+		/// </summary>
+		/// <param name="galaxy"></param>
+		/// <returns></returns>
+		[JsonIgnore]
+		public Resources Income
+		{
+			get
+			{
+				// TODO - take into account maintenance costs
+				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
+			}
+		}
+
+		/// <summary>
+		/// Finds star systems explored by the empire.
+		/// </summary>
+		[JsonIgnore]
+		public IEnumerable<StarSystem> ExploredStarSystems
+		{
+			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
+		}
+
+		/// <summary>
+		/// Planets colonized by the empire.
+		/// </summary>
+		[JsonIgnore]
+		public IEnumerable<Planet> ColonizedPlanets
+		{
+			get
+			{
+				return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this).Flatten());
+			}
+		}
 	}
 }
