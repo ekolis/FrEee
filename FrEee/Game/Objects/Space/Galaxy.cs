@@ -1,13 +1,12 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using Newtonsoft.Json;
-using System.IO;
 using Newtonsoft.Json.Serialization;
-using System;
-using FrEee.Game.Interfaces;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -16,11 +15,6 @@ namespace FrEee.Game.Objects.Space
 	/// </summary>
 	public class Galaxy
 	{
-		/// <summary>
-		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
-		/// </summary>
-		public static Galaxy Current { get; set; }
-
 		public Galaxy()
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
@@ -29,6 +23,13 @@ namespace FrEee.Game.Objects.Space
 			TurnNumber = 24000;
 			OrderTargets = new List<IOrderable>();
 		}
+
+		#region Properties
+
+		/// <summary>
+		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
+		/// </summary>
+		public static Galaxy Current { get; set; }
 
 		/// <summary>
 		/// The game name.
@@ -50,48 +51,41 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public Empire CurrentEmpire { get; set; }
 
-		public int MinX { get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.X); } }
-
-		public int MinY { get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); } }
-
-		public int MaxX { get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.X); } }
-
-		public int MaxY { get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.Y); } }
-
-		public int Width { get { return MaxX - MinX + 1; } }
-
-		public int Height { get { return MaxY - MinY + 1; } }
-
-		/// <summary>
-		/// Removes any space objects, etc. that the current empire cannot see.
-		/// </summary>
-		public void Redact()
+		public int MinX
 		{
-			if (CurrentEmpire != null)
-			{
-				foreach (var ssl in StarSystemLocations)
-				{
-					ssl.Item.Redact(this);
-				}
+			get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.X); }
+		}
 
-				for (int i = 0; i < OrderTargets.Count; i++)
-				{
-					if (OrderTargets[i].Owner != CurrentEmpire)
-						OrderTargets[i] = null;
-				}
+		public int MinY
+		{
+			get { return StarSystemLocations.MinOrDefault(ssl => ssl.Location.Y); }
+		}
 
-				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
-				{
-					emp.StoredResources.Clear();
-				}
-			}
+		public int MaxX
+		{
+			get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.X); }
+		}
+
+		public int MaxY
+		{
+			get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.Y); }
+		}
+
+		public int Width
+		{
+			get { return MaxX - MinX + 1; }
+		}
+
+		public int Height
+		{
+			get { return MaxY - MinY + 1; }
 		}
 
 		/// <summary>
 		/// The current turn number.
 		/// </summary>
 		public int TurnNumber { get; set; }
-		
+
 		/// <summary>
 		/// The current stardate. Advances 0.1 years per turn.
 		/// </summary>
@@ -104,6 +98,10 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		#endregion
+
+		#region Data Access
+
 		/// <summary>
 		/// Serializes the game state.
 		/// </summary>
@@ -114,6 +112,16 @@ namespace FrEee.Game.Objects.Space
 			JsonSerializer.Serialize(sw, this);
 			sw.Close();
 			return sw.ToString();
+		}
+
+		/// <summary>
+		/// Deserializes the game state.
+		/// </summary>
+		/// <param name="reader"></param>
+		/// <returns></returns>
+		public static Galaxy DeserializeGameState(TextReader reader)
+		{
+			return JsonSerializer.Deserialize<Galaxy>(new JsonTextReader(reader));
 		}
 
 		/// <summary>
@@ -133,16 +141,6 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Deserializes the game state.
-		/// </summary>
-		/// <param name="reader"></param>
-		/// <returns></returns>
-		public static Galaxy DeserializeGameState(TextReader reader)
-		{
-			return JsonSerializer.Deserialize<Galaxy>(new JsonTextReader(reader));
-		}
-
-		/// <summary>
 		/// Deserializes the player's commands.
 		/// </summary>
 		/// <param name="reader"></param>
@@ -152,8 +150,7 @@ namespace FrEee.Game.Objects.Space
 			return JsonSerializer.Deserialize<IList<ICommand>>(new JsonTextReader(reader));
 		}
 
-		private static JsonSerializer jsonSerializer;
-
+		private static JsonSerializer _jsonSerializer;
 		/// <summary>
 		/// A JSON serializer used to save game state and commands.
 		/// </summary>
@@ -161,22 +158,25 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				if (jsonSerializer == null)
+				if (_jsonSerializer == null)
 				{
-					var js = new JsonSerializer();
-					js.TypeNameHandling = TypeNameHandling.All;
-					js.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+					var js = new JsonSerializer
+					{
+						TypeNameHandling = TypeNameHandling.All,
+						ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
 #if DEBUG
-					js.Formatting = Formatting.Indented;
+						Formatting = Formatting.Indented
 #endif
+					};
+
 					// TODO - use a variant of this code http://daniel.wertheim.se/2010/11/06/json-net-private-setters/ so I don't have to put [JsonIgnore] everywhere there's a property with no setter
 					var cr = new DefaultContractResolver();
 					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
 					js.ContractResolver = cr;
 					js.PreserveReferencesHandling = PreserveReferencesHandling.All;
-					jsonSerializer = js;
+					_jsonSerializer = js;
 				}
-				return jsonSerializer;
+				return _jsonSerializer;
 			}
 		}
 
@@ -260,6 +260,35 @@ namespace FrEee.Game.Objects.Space
 				String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.SaveGameExtension);
 		}
 
+		#endregion
+
+		#region Public Methods
+
+		/// <summary>
+		/// Removes any space objects, etc. that the current empire cannot see.
+		/// </summary>
+		public void Redact()
+		{
+			if (CurrentEmpire != null)
+			{
+				foreach (var ssl in StarSystemLocations)
+				{
+					ssl.Item.Redact(this);
+				}
+
+				for (int i = 0; i < OrderTargets.Count; i++)
+				{
+					if (OrderTargets[i].Owner != CurrentEmpire)
+						OrderTargets[i] = null;
+				}
+
+				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
+				{
+					emp.StoredResources.Clear();
+				}
+			}
+		}
+
 		/// <summary>
 		/// Processes the turn.
 		/// </summary>
@@ -300,5 +329,7 @@ namespace FrEee.Game.Objects.Space
 			orderable.ID = OrderTargets.Count;
 			OrderTargets.Add(orderable);
 		}
+
+		#endregion
 	}
 }
