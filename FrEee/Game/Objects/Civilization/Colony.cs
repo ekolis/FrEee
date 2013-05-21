@@ -33,5 +33,11 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Stack(); }
 		}
+
+		public ConstructionQueue ConstructionQueue
+		{
+			get;
+			set;
+		}
 	}
 }

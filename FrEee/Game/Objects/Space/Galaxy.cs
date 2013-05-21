@@ -165,6 +165,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					var js = new JsonSerializer();
 					js.TypeNameHandling = TypeNameHandling.All;
+					js.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
 #if DEBUG
 					js.Formatting = Formatting.Indented;
 #endif

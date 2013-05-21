@@ -35,11 +35,11 @@ namespace FrEee.Game
 
 		public GalaxyTemplate GalaxyTemplate { get; set; }
 
-		public Galaxy CreateGalaxy()
+		public void CreateGalaxy()
 		{
 			// create galaxy
 			GalaxyTemplate.GameSetup = this;
-			var galaxy = GalaxyTemplate.Instantiate();
+			Galaxy.Current = GalaxyTemplate.Instantiate();
 
 			// find facilities to place on homeworlds
 			// TODO - if facility not found, don't place it, but don't crash
@@ -51,16 +51,34 @@ namespace FrEee.Game
 			var rad = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Radioactives"));
 			var res = Mod.Current.Facilities.Last(facil => facil.HasAbility("Point Generation - Research"));
 
+			// SY rate, for colonies
+			var rate = new Resources();
+			// TODO - define mappings between SY ability numbers and resource names in a mod file
+			rate.Add("Minerals", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
+			rate.Add("Organics", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
+			rate.Add("Radioactives", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+
 			// add players and place homeworlds
 			foreach (var emp in Empires)
 			{
-				galaxy.Empires.Add(emp);
+				Galaxy.Current.Empires.Add(emp);
 				// TODO - place homeworlds fairly
-				var planets = galaxy.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
+				var planets = Galaxy.Current.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
-				hw.Colony = new Colony { Owner = emp };
+				hw.Colony = new Colony
+				{
+					Owner = emp,
+					ConstructionQueue = new ConstructionQueue
+					{
+						IsColonyQueue = true,
+						IsSpaceYardQueue = true,
+						IconPath = System.IO.Path.Combine("Pictures", "Planets", hw.PictureName),
+						Owner = emp,
+						Rate = rate,
+					}
+				};
 				hw.Colony.Facilities.Add(sy);
 				hw.Colony.Facilities.Add(sp); // TODO - don't add spaceport for Natural Merchants
 				hw.Colony.Facilities.Add(rd);
@@ -74,15 +92,12 @@ namespace FrEee.Game
 				}
 
 				// mark home systems explored
-				foreach (var sys in galaxy.StarSystemLocations.Select(ssl => ssl.Item))
+				foreach (var sys in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
 				{
 					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
 						sys.ExploredByEmpires.Add(emp);
 				}
 			}
-
-			// done
-			return galaxy;
 		}
 	}
 }

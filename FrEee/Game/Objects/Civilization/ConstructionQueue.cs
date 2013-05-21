@@ -1,7 +1,10 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -35,6 +38,11 @@ namespace FrEee.Game.Objects.Civilization
 			return (IsSpaceYardQueue || !item.RequiresSpaceYardQueue) && (IsColonyQueue || !item.RequiresColonyQueue);
 		}
 
+		/// <summary>
+		/// The rate at which this queue can construct.
+		/// </summary>
+		public Resources Rate { get; set; }
+
 		public IList<IOrder<ConstructionQueue>> Orders
 		{
 			get;
@@ -51,6 +59,27 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
+		}
+
+		public string Name
+		{
+			get;
+			set;
+		}
+
+		public string IconPath
+		{
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public Image Icon
+		{
+			get
+			{
+				return Pictures.GetCachedImage(IconPath).GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			}
 		}
 	}
 }

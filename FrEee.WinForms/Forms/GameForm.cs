@@ -55,7 +55,7 @@ namespace FrEee.WinForms.Forms
 					gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
 					gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
 					gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
-					Galaxy.Current = gsu.CreateGalaxy();
+					gsu.CreateGalaxy();
 
 					// test saving the game
 					var sw = new StreamWriter("save.gam");
@@ -213,6 +213,12 @@ namespace FrEee.WinForms.Forms
 		private void btnPlanets_Click(object sender, EventArgs e)
 		{
 			var form = new PlanetListForm();
+			form.ShowDialog();
+		}
+
+		private void btnQueues_Click(object sender, EventArgs e)
+		{
+			var form = new ConstructionQueueListForm();
 			form.ShowDialog();
 		}
 	}

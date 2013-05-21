@@ -28,22 +28,22 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("1x Space Yard");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8});
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Happiness: +10");
-			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Population: +30");
-			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11});
+			System.Windows.Forms.ListViewItem listViewItem49 = new System.Windows.Forms.ListViewItem("1x Space Yard");
+			System.Windows.Forms.ListViewItem listViewItem50 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
+			System.Windows.Forms.ListViewItem listViewItem51 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
+			System.Windows.Forms.ListViewItem listViewItem52 = new System.Windows.Forms.ListViewItem("2x Radioactives Extraction");
+			System.Windows.Forms.ListViewItem listViewItem53 = new System.Windows.Forms.ListViewItem("10x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem54 = new System.Windows.Forms.ListViewItem("500x \"Guard\" class Troop");
+			System.Windows.Forms.TreeNode treeNode49 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
+			System.Windows.Forms.TreeNode treeNode50 = new System.Windows.Forms.TreeNode("War Shrine: +10");
+			System.Windows.Forms.TreeNode treeNode51 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
+            treeNode49,
+            treeNode50});
+			System.Windows.Forms.TreeNode treeNode52 = new System.Windows.Forms.TreeNode("Happiness: +10");
+			System.Windows.Forms.TreeNode treeNode53 = new System.Windows.Forms.TreeNode("Population: +30");
+			System.Windows.Forms.TreeNode treeNode54 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
+            treeNode52,
+            treeNode53});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
@@ -92,7 +92,6 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
-			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
@@ -104,11 +103,6 @@ namespace FrEee.WinForms.Controls
 			// 
 			// gameTabControl1
 			// 
-			this.gameTabControl1.Controls.Add(this.pageDetail);
-			this.gameTabControl1.Controls.Add(this.pageOrders);
-			this.gameTabControl1.Controls.Add(this.pageFacil);
-			this.gameTabControl1.Controls.Add(this.pageCargo);
-			this.gameTabControl1.Controls.Add(this.pageAbility);
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -503,7 +497,7 @@ namespace FrEee.WinForms.Controls
 			this.txtName.AutoSize = true;
 			this.txtName.Location = new System.Drawing.Point(143, 6);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(79, 20);
+			this.txtName.Size = new System.Drawing.Size(54, 13);
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Tudran IV";
 			// 
@@ -597,12 +591,11 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Launch All Fighters"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 400);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 390);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageFacil
@@ -638,10 +631,10 @@ namespace FrEee.WinForms.Controls
 			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
 			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9,
-            listViewItem10});
+            listViewItem49,
+            listViewItem50,
+            listViewItem51,
+            listViewItem52});
 			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
 			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
@@ -682,8 +675,8 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem11,
-            listViewItem12});
+            listViewItem53,
+            listViewItem54});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(313, 399);
@@ -711,24 +704,24 @@ namespace FrEee.WinForms.Controls
 			this.treeAbilities.ForeColor = System.Drawing.Color.White;
 			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
 			this.treeAbilities.Name = "treeAbilities";
-			treeNode7.Name = "Node1";
-			treeNode7.Text = "Racial Trait: +5";
-			treeNode8.Name = "Node3";
-			treeNode8.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode8.Text = "War Shrine: +10";
-			treeNode9.Name = "Node0";
-			treeNode9.Text = "Attack Modifier: +15";
-			treeNode10.Name = "Node1";
-			treeNode10.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode10.Text = "Happiness: +10";
-			treeNode11.Name = "Node2";
-			treeNode11.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode11.Text = "Population: +30";
-			treeNode12.Name = "Node0";
-			treeNode12.Text = "Minerals Income Modifier: +40";
+			treeNode49.Name = "Node1";
+			treeNode49.Text = "Racial Trait: +5";
+			treeNode50.Name = "Node3";
+			treeNode50.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode50.Text = "War Shrine: +10";
+			treeNode51.Name = "Node0";
+			treeNode51.Text = "Attack Modifier: +15";
+			treeNode52.Name = "Node1";
+			treeNode52.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode52.Text = "Happiness: +10";
+			treeNode53.Name = "Node2";
+			treeNode53.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode53.Text = "Population: +30";
+			treeNode54.Name = "Node0";
+			treeNode54.Text = "Minerals Income Modifier: +40";
 			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode12});
+            treeNode51,
+            treeNode54});
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
 			// 
@@ -740,7 +733,6 @@ namespace FrEee.WinForms.Controls
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "PlanetReport";
 			this.Size = new System.Drawing.Size(320, 459);
-			this.gameTabControl1.ResumeLayout(false);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();

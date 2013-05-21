@@ -399,5 +399,23 @@ namespace FrEee.Utility.Extensions
 			bool.TryParse(s, out b);
 			return b;
 		}
+
+		/// <summary>
+		/// Gets an ability value.
+		/// If the stacking rule in the mod is DoNotStack, an arbitrary matching ability will be chosen.
+		/// If there are no values, null will be returned.
+		/// </summary>
+		/// <param name="name">The name of the ability.</param>
+		/// <param name="obj">The object from which to get the value.</param>
+		/// <param name="index">The ability value index (usually 1 or 2).</param>
+		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
+		/// <returns>The ability value.</returns>
+		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var abils = obj.Abilities.Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
 	}
 }
