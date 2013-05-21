@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
-			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.IconColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -57,7 +57,7 @@
 			this.gridQueues.BackgroundColor = System.Drawing.Color.Black;
 			this.gridQueues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridQueues.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Icon,
+            this.IconColumn,
             this.NameColumn,
             this.isSpaceYardQueueDataGridViewCheckBoxColumn,
             this.isColonyQueueDataGridViewCheckBoxColumn,
@@ -84,11 +84,11 @@
 			// 
 			// Icon
 			// 
-			this.Icon.DataPropertyName = "Icon";
-			this.Icon.HeaderText = "Icon";
-			this.Icon.Name = "Icon";
-			this.Icon.ReadOnly = true;
-			this.Icon.Width = 32;
+			this.IconColumn.DataPropertyName = "Icon";
+			this.IconColumn.HeaderText = "Icon";
+			this.IconColumn.Name = "Icon";
+			this.IconColumn.ReadOnly = true;
+			this.IconColumn.Width = 32;
 			// 
 			// NameColumn
 			// 
@@ -170,7 +170,7 @@
 		private System.Windows.Forms.BindingSource constructionQueueBindingSource;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
+		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isSpaceYardQueueDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isColonyQueueDataGridViewCheckBoxColumn;

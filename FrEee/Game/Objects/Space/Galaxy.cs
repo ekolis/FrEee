@@ -6,13 +6,17 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
+using FrEee.Modding;
+using System.Drawing;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
 	/// A galaxy in which the game is played.
 	/// </summary>
-	 [Serializable] public class Galaxy
+	[Serializable]
+	public class Galaxy
 	{
 		public Galaxy()
 		{
@@ -28,7 +32,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
 		/// </summary>
-		public static Galaxy Current { get; set; }
+		public static Galaxy Current { get; private set; }
 
 		/// <summary>
 		/// The game name.
@@ -104,7 +108,7 @@ namespace FrEee.Game.Objects.Space
 		/// Serializes the game state.
 		/// </summary>
 		/// <returns></returns>
-		public void SerializeGameState(Stream stream)
+		private void SerializeGameState(Stream stream)
 		{
 			var bf = new BinaryFormatter();
 			bf.Serialize(stream, this);
@@ -115,7 +119,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="stream"></param>
 		/// <returns></returns>
-		public static Galaxy DeserializeGameState(Stream stream)
+		private static Galaxy DeserializeGameState(Stream stream)
 		{
 			var bf = new BinaryFormatter();
 			return (Galaxy)bf.Deserialize(stream);
@@ -126,7 +130,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if no current empire</exception>
 		/// <returns></returns>
-		public void SerializeCommands(Stream stream)
+		private void SerializeCommands(Stream stream)
 		{
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
@@ -140,7 +144,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="stream"></param>
 		/// <returns></returns>
-		public static IList<ICommand> DeserializeCommands(Stream stream)
+		private static IList<ICommand> DeserializeCommands(Stream stream)
 		{
 			var bf = new BinaryFormatter();
 			return (IList<ICommand>)bf.Deserialize(stream);
@@ -172,12 +176,11 @@ namespace FrEee.Game.Objects.Space
 		/// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
 		/// </summary>
 		/// <param name="filename"></param>
-		public static Galaxy Load(string filename)
+		public static void Load(string filename)
 		{
 			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-			var gal = DeserializeGameState(fs);
+			Galaxy.Current = DeserializeGameState(fs);
 			fs.Close();
-			return gal;
 		}
 
 		/// <summary>
@@ -303,6 +306,41 @@ namespace FrEee.Game.Objects.Space
 		{
 			orderable.ID = OrderTargets.Count;
 			OrderTargets.Add(orderable);
+		}
+
+		/// <summary>
+		/// Initializes a new game. Sets Galaxy.Current.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if there is no mod loaded.</exception>
+		public static void Initialize(GameSetup gsu)
+		{
+			if (Mod.Current == null)
+				throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
+
+			// create the game
+			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
+			
+			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
+			gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
+			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });
+			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
+			gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
+			galtemp.GameSetup = gsu;
+			Current = galtemp.Instantiate();
+			gsu.PopulateGalaxy(Current);
+
+			// test saving the game;
+			var savefile = Galaxy.Current.Save();
+
+			// test loading the game
+			Galaxy.Load(savefile);
+
+			// test redacting fogged info
+			Current.CurrentEmpire = Current.Empires[0];
+			Current.Redact();
+
+			// test saving the player's view
+			Current.Save();
 		}
 
 		#endregion

@@ -35,12 +35,8 @@ namespace FrEee.Game
 
 		public GalaxyTemplate GalaxyTemplate { get; set; }
 
-		public void CreateGalaxy()
+		public void PopulateGalaxy(Galaxy gal)
 		{
-			// create galaxy
-			GalaxyTemplate.GameSetup = this;
-			Galaxy.Current = GalaxyTemplate.Instantiate();
-
 			// find facilities to place on homeworlds
 			// TODO - if facility not found, don't place it, but don't crash
 			var sy = Mod.Current.Facilities.Last(facil => facil.HasAbility("Space Yard"));
@@ -61,9 +57,9 @@ namespace FrEee.Game
 			// add players and place homeworlds
 			foreach (var emp in Empires)
 			{
-				Galaxy.Current.Empires.Add(emp);
+				gal.Empires.Add(emp);
 				// TODO - place homeworlds fairly
-				var planets = Galaxy.Current.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
+				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
@@ -92,7 +88,7 @@ namespace FrEee.Game
 				}
 
 				// mark home systems explored
-				foreach (var sys in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
+				foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
 				{
 					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
 						sys.ExploredByEmpires.Add(emp);
