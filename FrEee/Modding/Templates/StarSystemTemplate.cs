@@ -13,7 +13,7 @@ namespace FrEee.Modding.Templates
 	/// A template for creating star systems.
 	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
-	public class StarSystemTemplate : ITemplate<StarSystem>, INamed
+	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, INamed
 	{
 		/// <summary>
 		/// Creates an empty star system template.

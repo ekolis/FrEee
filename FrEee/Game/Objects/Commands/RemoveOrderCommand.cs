@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Commands
 	/// Removes an order from the queue.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class RemoveOrderCommand<T> : Command<T> where T : IOrderable<T>
+	 [Serializable] public class RemoveOrderCommand<T> : Command<T> where T : IOrderable<T>
 	{
 		public override void Execute()
 		{

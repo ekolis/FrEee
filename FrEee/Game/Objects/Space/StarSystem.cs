@@ -8,7 +8,6 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
-using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -16,7 +15,7 @@ namespace FrEee.Game.Objects.Space
 	/// A star system containing a grid of sectors.
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
-	public class StarSystem
+	 [Serializable] public class StarSystem
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -56,8 +55,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public string BackgroundImagePath { get; set; }
 
-		[JsonIgnore]
-		public Image BackgroundImage
+				public Image BackgroundImage
 		{
 			get
 			{
@@ -105,8 +103,7 @@ namespace FrEee.Game.Objects.Space
 			return AreCoordsInBounds(p.X, p.Y);
 		}
 
-		[JsonIgnore]
-		private Sector[,] sectors;
+				private Sector[,] sectors;
 
 		/// <summary>
 		/// For serialization purposes mostly.

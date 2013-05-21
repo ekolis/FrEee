@@ -1,3 +1,4 @@
+using System;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
@@ -8,7 +9,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A space storm.
 	/// </summary>
-	public class Storm : StellarObject, ITemplate<Storm>
+	 [Serializable] public class Storm : StellarObject, ITemplate<Storm>
 	{
 		/// <summary>
 		/// The size of this storm.

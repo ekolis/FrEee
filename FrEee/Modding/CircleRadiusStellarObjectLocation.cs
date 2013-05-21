@@ -14,7 +14,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// Places a stellar object on a "true" circle at a specified distance from the center.
 	/// </summary>
-	public class CircleRadiusStellarObjectLocation : IStellarObjectLocation
+	 [Serializable] public class CircleRadiusStellarObjectLocation : IStellarObjectLocation
 	{
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 

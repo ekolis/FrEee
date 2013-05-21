@@ -5,15 +5,14 @@ using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
 	/// A galaxy in which the game is played.
 	/// </summary>
-	public class Galaxy
+	 [Serializable] public class Galaxy
 	{
 		public Galaxy()
 		{
@@ -89,7 +88,6 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The current stardate. Advances 0.1 years per turn.
 		/// </summary>
-		[JsonIgnore]
 		public string Stardate
 		{
 			get
@@ -106,12 +104,10 @@ namespace FrEee.Game.Objects.Space
 		/// Serializes the game state.
 		/// </summary>
 		/// <returns></returns>
-		public string SerializeGameState()
+		public void SerializeGameState(Stream stream)
 		{
-			var sw = new StringWriter();
-			JsonSerializer.Serialize(sw, this);
-			sw.Close();
-			return sw.ToString();
+			var bf = new BinaryFormatter();
+			bf.Serialize(stream, this);
 		}
 
 		/// <summary>
@@ -129,55 +125,35 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if no current empire</exception>
 		/// <returns></returns>
-		public string SerializeCommands()
+		public void SerializeCommands(Stream stream)
 		{
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-			var sw = new StringWriter();
-			JsonSerializer.Serialize(sw, CurrentEmpire.Commands);
-			sw.Close();
-			return sw.ToString();
+			var bf = new BinaryFormatter();
+			bf.Serialize(stream, CurrentEmpire.Commands);
+		}
+
+		/// <summary>
+		/// Deserializes the game state.
+		/// </summary>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public static Galaxy DeserializeGameState(Stream stream)
+		{
+			var bf = new BinaryFormatter();
+			return (Galaxy)bf.Deserialize(stream);
 		}
 
 		/// <summary>
 		/// Deserializes the player's commands.
 		/// </summary>
-		/// <param name="reader"></param>
+		/// <param name="stream"></param>
 		/// <returns></returns>
-		public static IList<ICommand> DeserializeCommands(TextReader reader)
+		public static IList<ICommand> DeserializeCommands(Stream stream)
 		{
-			return JsonSerializer.Deserialize<IList<ICommand>>(new JsonTextReader(reader));
-		}
-
-		private static JsonSerializer _jsonSerializer;
-		/// <summary>
-		/// A JSON serializer used to save game state and commands.
-		/// </summary>
-		public static JsonSerializer JsonSerializer
-		{
-			get
-			{
-				if (_jsonSerializer == null)
-				{
-					var js = new JsonSerializer
-					{
-						TypeNameHandling = TypeNameHandling.All,
-						ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
-#if DEBUG
-						Formatting = Formatting.Indented
-#endif
-					};
-
-					// TODO - use a variant of this code http://daniel.wertheim.se/2010/11/06/json-net-private-setters/ so I don't have to put [JsonIgnore] everywhere there's a property with no setter
-					var cr = new DefaultContractResolver();
-					cr.DefaultMembersSearchFlags |= System.Reflection.BindingFlags.NonPublic;
-					js.ContractResolver = cr;
-					js.PreserveReferencesHandling = PreserveReferencesHandling.All;
-					_jsonSerializer = js;
-				}
-				return _jsonSerializer;
-			}
+			var bf = new BinaryFormatter();
+			return (IList<ICommand>)bf.Deserialize(stream);
 		}
 
 		/// <summary>
@@ -185,13 +161,20 @@ namespace FrEee.Game.Objects.Space
 		/// Files are named GameName_TurnNumber_PlayerNumber.gam for players (PlayerNumber is 1-indexed)
 		/// and GameName_TurnNumber.gam for the host.
 		/// </summary>
-		public void Save()
+		/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
+		public string Save()
 		{
+			string filename;
+			if (CurrentEmpire == null)
+				filename = Name + "_" + TurnNumber + ".gam";
+			else
+				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".gam";
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			var sw = new StreamWriter(Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireSavePath()));
-			sw.Write(SerializeGameState());
-			sw.Close();
+			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
+			SerializeGameState(fs);
+			fs.Close();
+			return filename;
 		}
 
 		/// <summary>
@@ -212,8 +195,9 @@ namespace FrEee.Game.Objects.Space
 		/// Files are named GameName_TurnNumber_PlayerNumber.plr. (PlayerNumber is 1-indexed)
 		/// This doesn't make sense for the host view, so an exception will be thrown if there is no current empire.
 		/// </summary>
+		/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
 		/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
-		public void SaveCommands()
+		public string SaveCommands()
 		{
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't save commands without a current empire.");
@@ -222,6 +206,7 @@ namespace FrEee.Game.Objects.Space
 			var sw = new StreamWriter(Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireCommandsSavePath()));
 			sw.Write(SerializeCommands());
 			sw.Close();
+			return filename;
 		}
 
 		/// <summary>
@@ -239,9 +224,9 @@ namespace FrEee.Game.Objects.Space
 
 			foreach (var emp in emps)
 			{
-				var sr = new StreamReader(GetEmpireCommandsSavePath());
-				var cmds = DeserializeCommands(sr);
-				sr.Close();
+				var fs = new FileStream(GetEmpireCommandsSavePath());
+				var cmds = DeserializeCommands(fs);
+				fs.Close();
 				emp.Commands.Clear();
 				foreach (var cmd in cmds)
 					emp.Commands.Add(cmd);
@@ -304,8 +289,7 @@ namespace FrEee.Game.Objects.Space
 			// empire stuff
 			foreach (var emp in Empires)
 			{
-				// give empire its income
-				emp.StoredResources += emp.Income;
+				// give empire its incom				emp.StoredResources += emp.Income;
 
 				// execute commands
 				foreach (var cmd in emp.Commands)

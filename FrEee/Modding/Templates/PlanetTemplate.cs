@@ -14,7 +14,7 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating planets.
 	/// </summary>
-	public class PlanetTemplate : ITemplate<Planet>
+	 [Serializable] public class PlanetTemplate : ITemplate<Planet>
 	{
 		/// <summary>
 		/// Abilities to assign to the planet.

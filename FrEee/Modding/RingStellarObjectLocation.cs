@@ -16,7 +16,7 @@ namespace FrEee.Modding
 	/// Chooses a sector at a particular distance from the center of the system.
 	/// Ring 1 is the center, ring 2 is one sector from the center, etc.
 	/// </summary>
-	public class RingStellarObjectLocation : IStellarObjectLocation
+	 [Serializable] public class RingStellarObjectLocation : IStellarObjectLocation
 	{
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 

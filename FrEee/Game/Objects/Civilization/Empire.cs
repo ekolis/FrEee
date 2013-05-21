@@ -1,10 +1,10 @@
+using System;
 using System.Drawing;
 using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System.Collections.Generic;
 using FrEee.Game.Objects.Space;
-using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Civilization
@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
-	public class Empire : INamed
+	 [Serializable] public class Empire : INamed
 	{
 		public Empire()
 		{
@@ -83,8 +83,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
-		[JsonIgnore]
-		public Resources Income
+				public Resources Income
 		{
 			get
 			{
@@ -96,8 +95,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Finds star systems explored by the empire.
 		/// </summary>
-		[JsonIgnore]
-		public IEnumerable<StarSystem> ExploredStarSystems
+				public IEnumerable<StarSystem> ExploredStarSystems
 		{
 			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
 		}
@@ -105,8 +103,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Planets colonized by the empire.
 		/// </summary>
-		[JsonIgnore]
-		public IEnumerable<Planet> ColonizedPlanets
+				public IEnumerable<Planet> ColonizedPlanets
 		{
 			get
 			{

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 
@@ -6,7 +7,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A sector in a star system. Can contain space objects.
 	/// </summary>
-	public class Sector
+	 [Serializable] public class Sector
 	{
 		public Sector()
 		{

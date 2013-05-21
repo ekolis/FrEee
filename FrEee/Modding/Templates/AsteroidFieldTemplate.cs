@@ -14,7 +14,7 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating asteroid fields.
 	/// </summary>
-	public class AsteroidFieldTemplate : ITemplate<AsteroidField>
+	 [Serializable] public class AsteroidFieldTemplate : ITemplate<AsteroidField>
 	{
 		/// <summary>
 		/// Abilities to assign to the asteroid field.

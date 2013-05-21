@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 
@@ -6,7 +7,7 @@ namespace FrEee.Game.Objects.Research
 	/// <summary>
 	/// A technology that can be researched in the game.
 	/// </summary>
-	public class Technology : INamed, IResearchable
+	 [Serializable] public class Technology : INamed, IResearchable
 	{
 		/// <summary>
 		/// The name of the technology.

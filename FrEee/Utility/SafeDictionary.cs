@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	 [Serializable] public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,7 +7,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// <summary>
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
-	public class Ability
+	 [Serializable] public class Ability
 	{
 		public Ability()
 		{

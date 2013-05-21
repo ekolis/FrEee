@@ -14,7 +14,7 @@ namespace FrEee.Game
 	/// <summary>
 	/// Setup parameters for a game.
 	/// </summary>
-	public class GameSetup
+	 [Serializable] public class GameSetup
 	{
 		public GameSetup()
 		{

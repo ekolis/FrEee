@@ -13,7 +13,7 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads galaxy templates from QuadrantTypes.txt.
 	/// </summary>
-	public class GalaxyLoader : ILoader
+	 [Serializable] public class GalaxyLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{

@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Commands
 	/// Adds an order to the end of the queue.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class AddOrderCommand<T> : Command<T> where T : IOrderable<T>
+	 [Serializable] public class AddOrderCommand<T> : Command<T> where T : IOrderable<T>
 	{
 		public override void Execute()
 		{

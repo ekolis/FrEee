@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Game.Enumerations;
@@ -6,14 +7,13 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
-	public class Planet : StellarObject, ITemplate<Planet>
+	 [Serializable] public class Planet : StellarObject, ITemplate<Planet>
 	{
 		public Planet()
 		{
@@ -43,8 +43,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Planet abilities take into account abilities on the colony if one is present.
 		/// </summary>
-		[JsonIgnore]
-		public override IEnumerable<Ability> Abilities
+				public override IEnumerable<Ability> Abilities
 		{
 			get
 			{
@@ -69,8 +68,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
-		[JsonIgnore]
-		public override Empire Owner
+				public override Empire Owner
 		{
 			get
 			{
@@ -97,14 +95,12 @@ namespace FrEee.Game.Objects.Space
 			// TODO - memory sight
 		}
 
-		[JsonIgnore]
-		private Resources income;
+				private Resources income;
 
 		/// <summary>
 		/// The resource income from this planet.
 		/// </summary>
-		[JsonIgnore]
-		public Resources Income
+				public Resources Income
 		{
 			get
 			{

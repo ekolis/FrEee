@@ -12,7 +12,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// Chooses a specific sector of a system.
 	/// </summary>
-	public class CoordStellarObjectLocation : IStellarObjectLocation
+	 [Serializable] public class CoordStellarObjectLocation : IStellarObjectLocation
 	{
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 

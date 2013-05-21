@@ -8,7 +8,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A data file which is part of a mod.
 	/// </summary>
-	public class DataFile
+	 [Serializable] public class DataFile
 	{
 		/// <summary>
 		/// Creates a data file with no records

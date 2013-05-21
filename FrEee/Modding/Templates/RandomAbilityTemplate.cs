@@ -12,7 +12,7 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// Chooses a random ability, or none at all, based on a roll of a d1000.
 	/// </summary>
-	public class RandomAbilityTemplate : ITemplate<Ability>, INamed
+	 [Serializable] public class RandomAbilityTemplate : ITemplate<Ability>, INamed
 	{
 		public RandomAbilityTemplate()
 		{

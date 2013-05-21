@@ -7,7 +7,7 @@ namespace FrEee.Utility
 	/// <summary>
 	/// Quantities of resources.
 	/// </summary>
-	public class Resources : SafeDictionary<string, int>
+	 [Serializable] public class Resources : SafeDictionary<string, int>
 	{
 		public static Resources operator +(Resources r1, Resources r2)
 		{

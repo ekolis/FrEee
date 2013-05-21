@@ -15,7 +15,7 @@ namespace FrEee.Modding.Templates
 	/// A template for creating galaxies
 	/// Maps to a record in QuadrantTypes.txt.
 	/// </summary>
-	public class GalaxyTemplate : ITemplate<Galaxy>, INamed
+	 [Serializable] public class GalaxyTemplate : ITemplate<Galaxy>, INamed
 	{
 		public GalaxyTemplate()
 		{

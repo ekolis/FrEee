@@ -10,7 +10,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// <summary>
 	/// A rule for grouping and stacking abilities.
 	/// </summary>
-	public class AbilityRule
+	 [Serializable] public class AbilityRule
 	{
 		public AbilityRule()
 		{

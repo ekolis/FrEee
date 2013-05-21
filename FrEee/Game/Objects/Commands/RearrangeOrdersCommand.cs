@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Commands
 	/// Moves an order to another location in the queue.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class RearrangeOrdersCommand<T> : Command<T> where T : IOrderable<T>
+	 [Serializable] public class RearrangeOrdersCommand<T> : Command<T> where T : IOrderable<T>
 	{
 		/// <summary>
 		/// How many spaces up (if negative) or down (if positive) to move the order.

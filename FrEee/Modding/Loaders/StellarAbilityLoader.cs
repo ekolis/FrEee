@@ -11,7 +11,7 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads stellar abilities from StellarAbilityTypes.txt.
 	/// </summary>
-	public class StellarAbilityLoader : ILoader
+	 [Serializable] public class StellarAbilityLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{

@@ -1,3 +1,5 @@
+using System;
+
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
@@ -8,7 +10,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A star. Normally found at the center of a star system.
 	/// </summary>
-	public class Star : StellarObject, ITemplate<Star>
+	 [Serializable] public class Star : StellarObject, ITemplate<Star>
 	{
 		/// <summary>
 		/// The size of this star.

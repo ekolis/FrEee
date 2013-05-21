@@ -1,3 +1,4 @@
+using System;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
@@ -8,7 +9,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
-	public class AsteroidField : StellarObject, ITemplate<AsteroidField>
+	 [Serializable] public class AsteroidField : StellarObject, ITemplate<AsteroidField>
 	{
 		public AsteroidField()
 		{

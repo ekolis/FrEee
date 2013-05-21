@@ -13,7 +13,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// Places one stellar object at the same location as another.
 	/// </summary>
-	public class SameAsStellarObjectLocation : IStellarObjectLocation
+	 [Serializable] public class SameAsStellarObjectLocation : IStellarObjectLocation
 	{
 		public ITemplate<StellarObject> StellarObjectTemplate { get; set; }
 

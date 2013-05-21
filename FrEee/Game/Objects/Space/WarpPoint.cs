@@ -1,3 +1,4 @@
+using System;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
@@ -8,7 +9,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A warp point connecting two sectors.
 	/// </summary>
-	public class WarpPoint : StellarObject, ITemplate<WarpPoint>
+	 [Serializable] public class WarpPoint : StellarObject, ITemplate<WarpPoint>
 	{
 		/// <summary>
 		/// The size of this warp point.

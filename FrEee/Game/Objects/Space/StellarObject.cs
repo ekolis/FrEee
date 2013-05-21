@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	public class StellarObject : ISpaceObject, ITemplate<StellarObject>
+	 [Serializable] public class StellarObject : ISpaceObject, ITemplate<StellarObject>
 	{
 		public StellarObject()
 		{

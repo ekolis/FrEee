@@ -14,7 +14,7 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating stars.
 	/// </summary>
-	public class StarTemplate : ITemplate<Star>
+	 [Serializable] public class StarTemplate : ITemplate<Star>
 	{
 		/// <summary>
 		/// Abilities to assign to the star.

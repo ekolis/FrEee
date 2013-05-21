@@ -17,7 +17,7 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads star system templates from SystemTypes.txt.
 	/// </summary>
-	public class StarSystemLoader : ILoader
+	 [Serializable] public class StarSystemLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{

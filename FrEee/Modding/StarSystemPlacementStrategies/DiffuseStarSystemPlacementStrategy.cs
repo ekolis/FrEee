@@ -13,7 +13,7 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 	/// <summary>
 	/// Places stars spaced roughly evenly.
 	/// </summary>
-	public class DiffuseStarSystemPlacementStrategy : IStarSystemPlacementStrategy
+	 [Serializable] public class DiffuseStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 	{
 		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
 		{

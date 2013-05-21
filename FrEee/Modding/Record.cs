@@ -8,7 +8,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A record in a data file.
 	/// </summary>
-	public class Record
+	 [Serializable] public class Record
 	{
 		/// <summary>
 		/// Creates a record with no fields.

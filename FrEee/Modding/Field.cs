@@ -8,7 +8,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A field in a data file.
 	/// </summary>
-	public class Field
+	 [Serializable] public class Field
 	{
 		public const string Separator = ":=";
 

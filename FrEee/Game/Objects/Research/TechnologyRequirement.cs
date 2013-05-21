@@ -1,9 +1,11 @@
+using System;
+
 namespace FrEee.Game.Objects.Research
 {
 	/// <summary>
 	/// Requirement for a technology to be researched to a particular level.
 	/// </summary>
-	public class TechnologyRequirement
+	[Serializable] public class TechnologyRequirement
 	{
 		public TechnologyRequirement(Technology tech, int level)
 		{

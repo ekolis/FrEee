@@ -77,24 +77,18 @@ namespace FrEee.WinForms.Forms
                 gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
                 gsu.CreateGalaxy();
 
-                // test saving the game
-                var sw = new StreamWriter("save.gam");
-                sw.Write(Galaxy.Current.SerializeGameState());
-                sw.Close();
+                // test saving the game;
+                var savefile = Galaxy.Current.Save();
 
                 // test loading the game
-                var sr = new StreamReader("save.gam");
-                Galaxy.Current = Galaxy.DeserializeGameState(sr);
-                sr.Close();
+				Galaxy.Current = Galaxy.Load(savefile);
 
                 // test redacting fogged info
                 Galaxy.Current.CurrentEmpire = Galaxy.Current.Empires[0];
                 Galaxy.Current.Redact();
 
                 // test saving the player's view
-                sw = new StreamWriter("p1.gam");
-                sw.Write(Galaxy.Current.SerializeGameState());
-                sw.Close();
+				Galaxy.Current.Save();
             })
                 .ContinueWithWithExceptionHandling(t =>
                 {

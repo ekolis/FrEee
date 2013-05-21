@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using FrEee.Game.Interfaces;
@@ -14,7 +15,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// Thus instances are not needed, and each facility can serve as a "singleton" of sorts.
 	/// Instead colonies store quantities of facilities.
 	/// </summary>
-	public class Facility : INamed, IResearchable, IAbilityObject
+	 [Serializable] public class Facility : INamed, IResearchable, IAbilityObject
 	{
 		public Facility()
 		{

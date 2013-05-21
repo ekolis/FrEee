@@ -13,7 +13,7 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads stellar object templates from SectType.txt.
 	/// </summary>
-	public class StellarObjectLoader : ILoader
+	 [Serializable] public class StellarObjectLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{

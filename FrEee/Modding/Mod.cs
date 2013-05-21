@@ -17,7 +17,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A set of data files containing templates for game objects.
 	/// </summary>
-	public class Mod
+	 [Serializable] public class Mod
 	{		
 		/// <summary>
 		/// The currently loaded mod.

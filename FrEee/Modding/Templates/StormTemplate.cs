@@ -14,7 +14,7 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating storms.
 	/// </summary>
-	public class StormTemplate : ITemplate<Storm>
+	 [Serializable] public class StormTemplate : ITemplate<Storm>
 	{
 		/// <summary>
 		/// Abilities to assign to the storm.

@@ -13,7 +13,6 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace FrEee.WinForms.Forms

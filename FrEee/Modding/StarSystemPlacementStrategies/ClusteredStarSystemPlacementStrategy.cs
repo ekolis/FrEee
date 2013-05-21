@@ -13,7 +13,7 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 	/// <summary>
 	/// Places stars grouped together in tight clusters separated by long distances.
 	/// </summary>
-	public class ClusteredStarSystemPlacementStrategy : IStarSystemPlacementStrategy
+	 [Serializable] public class ClusteredStarSystemPlacementStrategy : IStarSystemPlacementStrategy
 	{
 		public Point? PlaceStarSystem(Galaxy galaxy, int buffer, Rectangle bounds, int starsLeft)
 		{

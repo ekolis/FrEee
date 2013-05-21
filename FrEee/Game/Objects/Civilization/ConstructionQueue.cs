@@ -1,7 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -10,7 +9,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Civilization
 {
-	public class ConstructionQueue : IOrderable<ConstructionQueue>
+	 [Serializable] public class ConstructionQueue : IOrderable<ConstructionQueue>
 	{
 		public ConstructionQueue()
 		{
@@ -73,7 +72,6 @@ namespace FrEee.Game.Objects.Civilization
 			set;
 		}
 
-		[JsonIgnore]
 		public Image Icon
 		{
 			get

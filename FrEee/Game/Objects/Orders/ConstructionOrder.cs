@@ -10,7 +10,7 @@ namespace FrEee.Game.Objects.Orders
 	/// <summary>
 	/// An order for a construction queue to build something.
 	/// </summary>
-	public class ConstructionOrder<T> : IOrder<ConstructionQueue>
+	 [Serializable] public class ConstructionOrder<T> : IOrder<ConstructionQueue>
 	{
 		/// <summary>
 		/// The construction item.

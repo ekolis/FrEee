@@ -10,7 +10,7 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads technologies from TechArea.txt.
 	/// </summary>
-	public class TechnologyLoader : ILoader
+	 [Serializable] public class TechnologyLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{

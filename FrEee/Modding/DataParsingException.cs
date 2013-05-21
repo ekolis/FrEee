@@ -8,7 +8,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// Exceptiion thrown when parsing mod data.
 	/// </summary>
-	public class DataParsingException : Exception
+	 [Serializable] public class DataParsingException : Exception
 	{
 		public string Filename { get; private set; }
 		public Record Record { get; private set; }
