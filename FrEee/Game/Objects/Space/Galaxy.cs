@@ -113,11 +113,12 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Deserializes the game state.
 		/// </summary>
-		/// <param name="reader"></param>
+		/// <param name="stream"></param>
 		/// <returns></returns>
-		public static Galaxy DeserializeGameState(TextReader reader)
+		public static Galaxy DeserializeGameState(Stream stream)
 		{
-			return JsonSerializer.Deserialize<Galaxy>(new JsonTextReader(reader));
+			var bf = new BinaryFormatter();
+			return (Galaxy)bf.Deserialize(stream);
 		}
 
 		/// <summary>
@@ -132,17 +133,6 @@ namespace FrEee.Game.Objects.Space
 
 			var bf = new BinaryFormatter();
 			bf.Serialize(stream, CurrentEmpire.Commands);
-		}
-
-		/// <summary>
-		/// Deserializes the game state.
-		/// </summary>
-		/// <param name="stream"></param>
-		/// <returns></returns>
-		public static Galaxy DeserializeGameState(Stream stream)
-		{
-			var bf = new BinaryFormatter();
-			return (Galaxy)bf.Deserialize(stream);
 		}
 
 		/// <summary>
@@ -184,9 +174,9 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="filename"></param>
 		public static Galaxy Load(string filename)
 		{
-			var sr = new StreamReader(Path.Combine(FrEeeConstants.SaveGameDirectory, filename));
-			var gal = DeserializeGameState(sr);
-			sr.Close();
+			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
+			var gal = DeserializeGameState(fs);
+			fs.Close();
 			return gal;
 		}
 
@@ -203,9 +193,10 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can't save commands without a current empire.");
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			var sw = new StreamWriter(Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireCommandsSavePath()));
-			sw.Write(SerializeCommands());
-			sw.Close();
+			var filename = Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireCommandsSavePath());
+			var fs = new FileStream(filename, FileMode.Create);
+			SerializeCommands(fs);
+			fs.Close();
 			return filename;
 		}
 
@@ -224,7 +215,7 @@ namespace FrEee.Game.Objects.Space
 
 			foreach (var emp in emps)
 			{
-				var fs = new FileStream(GetEmpireCommandsSavePath());
+				var fs = new FileStream(GetEmpireCommandsSavePath(), FileMode.Open);
 				var cmds = DeserializeCommands(fs);
 				fs.Close();
 				emp.Commands.Clear();
