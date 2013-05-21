@@ -169,6 +169,12 @@
     <Compile Include="Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\MainMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainMenuForm.Designer.cs">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\PlanetListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +213,9 @@
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainMenuForm.resx">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetListForm.resx">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -238,10 +247,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="FrEee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s

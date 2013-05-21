@@ -1,6 +1,7 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.WinForms", "FrEee.WinForms\FrEee.WinForms.csproj", "{0EE6CCB3-0A56-4353-B9D1-6D2D6C5737A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee", "FrEee\FrEee.csproj", "{E19A4330-CE19-45D6-BCFC-375E065EF041}"

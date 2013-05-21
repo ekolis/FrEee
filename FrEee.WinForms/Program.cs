@@ -15,7 +15,7 @@ namespace FrEee.WinForms
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new GameForm());
+            Application.Run(MainMenuForm.GetInstance());
         }
     }
 }
