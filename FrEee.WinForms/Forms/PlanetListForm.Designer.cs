@@ -33,8 +33,8 @@ namespace FrEee.WinForms.Forms
 		{
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.pnlHeader = new GamePanel();
-            this.galaxyView = new GalaxyView();
+            this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+            this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
             this.txtAvailable = new System.Windows.Forms.Label();
             this.txtShips = new System.Windows.Forms.Label();
             this.txtBreathable = new System.Windows.Forms.Label();
@@ -64,13 +64,16 @@ namespace FrEee.WinForms.Forms
             this.resourceValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ownerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.planetBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.pnlHeader.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).BeginInit();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlHeader
             // 
+            this.pnlHeader.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pnlHeader.BackColor = System.Drawing.Color.Black;
             this.pnlHeader.BorderColor = System.Drawing.Color.CornflowerBlue;
             this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -96,131 +99,141 @@ namespace FrEee.WinForms.Forms
             this.pnlHeader.Controls.Add(this.label2);
             this.pnlHeader.Controls.Add(this.label1);
             this.pnlHeader.ForeColor = System.Drawing.Color.White;
-            this.pnlHeader.Location = new System.Drawing.Point(13, 13);
+            this.pnlHeader.Location = new System.Drawing.Point(3, 3);
+            this.pnlHeader.MaximumSize = new System.Drawing.Size(800, 200);
             this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(759, 163);
+            this.pnlHeader.Size = new System.Drawing.Size(754, 165);
             this.pnlHeader.TabIndex = 0;
             // 
             // galaxyView
             // 
-            this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.galaxyView.BackColor = System.Drawing.Color.Black;
             this.galaxyView.Galaxy = null;
-            this.galaxyView.Location = new System.Drawing.Point(195, 4);
+            this.galaxyView.Location = new System.Drawing.Point(215, 4);
             this.galaxyView.Name = "galaxyView";
             this.galaxyView.SelectedStarSystem = null;
-            this.galaxyView.Size = new System.Drawing.Size(559, 154);
+            this.galaxyView.Size = new System.Drawing.Size(534, 156);
             this.galaxyView.TabIndex = 20;
             this.galaxyView.Text = "galaxyView1";
             // 
             // txtAvailable
             // 
-            this.txtAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAvailable.AutoSize = true;
-            this.txtAvailable.Location = new System.Drawing.Point(176, 141);
+            this.txtAvailable.Location = new System.Drawing.Point(183, 141);
+            this.txtAvailable.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtAvailable.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtAvailable.Name = "txtAvailable";
-            this.txtAvailable.Size = new System.Drawing.Size(13, 13);
+            this.txtAvailable.Size = new System.Drawing.Size(30, 13);
             this.txtAvailable.TabIndex = 19;
             this.txtAvailable.Text = "0";
             this.txtAvailable.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtShips
             // 
-            this.txtShips.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtShips.AutoSize = true;
-            this.txtShips.Location = new System.Drawing.Point(176, 128);
+            this.txtShips.Location = new System.Drawing.Point(183, 128);
+            this.txtShips.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtShips.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtShips.Name = "txtShips";
-            this.txtShips.Size = new System.Drawing.Size(13, 13);
+            this.txtShips.Size = new System.Drawing.Size(30, 13);
             this.txtShips.TabIndex = 18;
             this.txtShips.Text = "0";
             this.txtShips.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtBreathable
             // 
-            this.txtBreathable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtBreathable.AutoSize = true;
-            this.txtBreathable.Location = new System.Drawing.Point(176, 95);
+            this.txtBreathable.Location = new System.Drawing.Point(183, 95);
+            this.txtBreathable.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtBreathable.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtBreathable.Name = "txtBreathable";
-            this.txtBreathable.Size = new System.Drawing.Size(13, 13);
+            this.txtBreathable.Size = new System.Drawing.Size(30, 13);
             this.txtBreathable.TabIndex = 17;
             this.txtBreathable.Text = "0";
             this.txtBreathable.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtUncolonized
             // 
-            this.txtUncolonized.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtUncolonized.AutoSize = true;
-            this.txtUncolonized.Location = new System.Drawing.Point(176, 82);
+            this.txtUncolonized.Location = new System.Drawing.Point(183, 82);
+            this.txtUncolonized.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtUncolonized.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtUncolonized.Name = "txtUncolonized";
-            this.txtUncolonized.Size = new System.Drawing.Size(13, 13);
+            this.txtUncolonized.Size = new System.Drawing.Size(30, 13);
             this.txtUncolonized.TabIndex = 16;
             this.txtUncolonized.Text = "0";
             this.txtUncolonized.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtNonAligned
             // 
-            this.txtNonAligned.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtNonAligned.AutoSize = true;
-            this.txtNonAligned.Location = new System.Drawing.Point(176, 69);
+            this.txtNonAligned.Location = new System.Drawing.Point(183, 69);
+            this.txtNonAligned.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtNonAligned.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtNonAligned.Name = "txtNonAligned";
-            this.txtNonAligned.Size = new System.Drawing.Size(13, 13);
+            this.txtNonAligned.Size = new System.Drawing.Size(30, 13);
             this.txtNonAligned.TabIndex = 15;
             this.txtNonAligned.Text = "0";
             this.txtNonAligned.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtAllies
             // 
-            this.txtAllies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtAllies.AutoSize = true;
-            this.txtAllies.Location = new System.Drawing.Point(176, 56);
+            this.txtAllies.Location = new System.Drawing.Point(183, 56);
+            this.txtAllies.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtAllies.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtAllies.Name = "txtAllies";
-            this.txtAllies.Size = new System.Drawing.Size(13, 13);
+            this.txtAllies.Size = new System.Drawing.Size(30, 13);
             this.txtAllies.TabIndex = 14;
             this.txtAllies.Text = "0";
             this.txtAllies.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtEnemies
             // 
-            this.txtEnemies.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtEnemies.AutoSize = true;
-            this.txtEnemies.Location = new System.Drawing.Point(176, 43);
+            this.txtEnemies.Location = new System.Drawing.Point(183, 43);
+            this.txtEnemies.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtEnemies.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtEnemies.Name = "txtEnemies";
-            this.txtEnemies.Size = new System.Drawing.Size(13, 13);
+            this.txtEnemies.Size = new System.Drawing.Size(30, 13);
             this.txtEnemies.TabIndex = 13;
             this.txtEnemies.Text = "0";
             this.txtEnemies.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtColonizable
             // 
-            this.txtColonizable.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtColonizable.AutoSize = true;
-            this.txtColonizable.Location = new System.Drawing.Point(176, 30);
+            this.txtColonizable.Location = new System.Drawing.Point(183, 30);
+            this.txtColonizable.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtColonizable.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtColonizable.Name = "txtColonizable";
-            this.txtColonizable.Size = new System.Drawing.Size(13, 13);
+            this.txtColonizable.Size = new System.Drawing.Size(30, 13);
             this.txtColonizable.TabIndex = 12;
             this.txtColonizable.Text = "0";
             this.txtColonizable.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtPlanets
             // 
-            this.txtPlanets.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPlanets.AutoSize = true;
-            this.txtPlanets.Location = new System.Drawing.Point(176, 17);
+            this.txtPlanets.Location = new System.Drawing.Point(183, 17);
+            this.txtPlanets.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtPlanets.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtPlanets.Name = "txtPlanets";
-            this.txtPlanets.Size = new System.Drawing.Size(13, 13);
+            this.txtPlanets.Size = new System.Drawing.Size(30, 13);
             this.txtPlanets.TabIndex = 11;
             this.txtPlanets.Text = "0";
             this.txtPlanets.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // txtSystems
             // 
-            this.txtSystems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSystems.AutoSize = true;
-            this.txtSystems.Location = new System.Drawing.Point(176, 4);
+            this.txtSystems.Location = new System.Drawing.Point(183, 4);
+            this.txtSystems.MaximumSize = new System.Drawing.Size(30, 30);
+            this.txtSystems.MinimumSize = new System.Drawing.Size(30, 0);
             this.txtSystems.Name = "txtSystems";
-            this.txtSystems.Size = new System.Drawing.Size(13, 13);
+            this.txtSystems.Size = new System.Drawing.Size(30, 13);
             this.txtSystems.TabIndex = 10;
             this.txtSystems.Text = "0";
             this.txtSystems.TextAlign = System.Drawing.ContentAlignment.TopRight;
@@ -335,6 +348,7 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridPlanets.AutoGenerateColumns = false;
+            this.gridPlanets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridPlanets.BackgroundColor = System.Drawing.Color.Black;
             this.gridPlanets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.gridPlanets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -346,7 +360,7 @@ namespace FrEee.WinForms.Forms
             this.resourceValueDataGridViewTextBoxColumn,
             this.ownerDataGridViewTextBoxColumn});
             this.gridPlanets.DataSource = this.planetBindingSource;
-            this.gridPlanets.Location = new System.Drawing.Point(13, 183);
+            this.gridPlanets.Location = new System.Drawing.Point(3, 174);
             this.gridPlanets.Name = "gridPlanets";
             this.gridPlanets.ReadOnly = true;
             this.gridPlanets.RowHeadersVisible = false;
@@ -355,7 +369,7 @@ namespace FrEee.WinForms.Forms
             this.gridPlanets.RowTemplate.Height = 32;
             this.gridPlanets.RowTemplate.ReadOnly = true;
             this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPlanets.Size = new System.Drawing.Size(759, 366);
+            this.gridPlanets.Size = new System.Drawing.Size(754, 360);
             this.gridPlanets.TabIndex = 1;
             this.gridPlanets.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridPlanets_DataError);
             this.gridPlanets.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowEnter);
@@ -367,7 +381,6 @@ namespace FrEee.WinForms.Forms
             this.iconDataGridViewImageColumn.HeaderText = "Icon";
             this.iconDataGridViewImageColumn.Name = "iconDataGridViewImageColumn";
             this.iconDataGridViewImageColumn.ReadOnly = true;
-            this.iconDataGridViewImageColumn.Width = 32;
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -382,7 +395,6 @@ namespace FrEee.WinForms.Forms
             this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
             this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
             this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.sizeDataGridViewTextBoxColumn.Width = 50;
             // 
             // surfaceDataGridViewTextBoxColumn
             // 
@@ -404,7 +416,6 @@ namespace FrEee.WinForms.Forms
             this.resourceValueDataGridViewTextBoxColumn.HeaderText = "ResourceValue";
             this.resourceValueDataGridViewTextBoxColumn.Name = "resourceValueDataGridViewTextBoxColumn";
             this.resourceValueDataGridViewTextBoxColumn.ReadOnly = true;
-            this.resourceValueDataGridViewTextBoxColumn.Width = 200;
             // 
             // ownerDataGridViewTextBoxColumn
             // 
@@ -416,7 +427,25 @@ namespace FrEee.WinForms.Forms
             // planetBindingSource
             // 
             this.planetBindingSource.AllowNew = false;
-            this.planetBindingSource.DataSource = typeof(Planet);
+            this.planetBindingSource.DataSource = typeof(FrEee.Game.Objects.Space.Planet);
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.gridPlanets, 0, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 171F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(760, 537);
+            this.tableLayoutPanel1.TabIndex = 2;
             // 
             // PlanetListForm
             // 
@@ -424,10 +453,10 @@ namespace FrEee.WinForms.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(784, 561);
-            this.Controls.Add(this.gridPlanets);
-            this.Controls.Add(this.pnlHeader);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.DoubleBuffered = true;
             this.ForeColor = System.Drawing.Color.White;
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "PlanetListForm";
             this.Text = "Planets";
             this.Load += new System.EventHandler(this.PlanetListForm_Load);
@@ -435,6 +464,7 @@ namespace FrEee.WinForms.Forms
             this.pnlHeader.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).EndInit();
+            this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -472,5 +502,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridViewTextBoxColumn atmosphereDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn resourceValueDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ownerDataGridViewTextBoxColumn;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 	}
 }
