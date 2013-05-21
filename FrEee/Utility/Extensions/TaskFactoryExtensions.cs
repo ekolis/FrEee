@@ -77,5 +77,13 @@ namespace FrEee.Utility.Extensions
 
             return task.Result;
         }
+
+        /// <remarks>
+        /// Mono support
+        /// </remarks>
+        public static DispatcherOperation BeginInvoke(this Dispatcher dispatcher, Delegate method)
+        {
+            return dispatcher.BeginInvoke(method, new object[0]);
+        }
     }
 }
