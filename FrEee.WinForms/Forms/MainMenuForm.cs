@@ -1,4 +1,5 @@
-﻿using FrEee.Game;
+﻿using System.Windows.Threading;
+using FrEee.Game;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
@@ -41,8 +42,10 @@ namespace FrEee.WinForms.Forms
             set
             {
                 _isBusy = value;
-                tblButtonPanel.Enabled = !IsBusy;
+                tblButtonPanel.Visible = !IsBusy;
                 progressBar1.Visible = IsBusy;
+                if (!IsBusy)
+                    lblStatus.Text = string.Empty;
             }
         }
 
