@@ -207,7 +207,6 @@ namespace FrEee.WinForms.Forms
 			this.btnLog.Name = "btnLog";
 			this.btnLog.Size = new System.Drawing.Size(36, 36);
 			this.btnLog.TabIndex = 6;
-			this.btnLog.Text = "Log";
 			this.btnLog.UseVisualStyleBackColor = false;
 			// 
 			// btnQueues
@@ -218,7 +217,6 @@ namespace FrEee.WinForms.Forms
 			this.btnQueues.Name = "btnQueues";
 			this.btnQueues.Size = new System.Drawing.Size(36, 36);
 			this.btnQueues.TabIndex = 5;
-			this.btnQueues.Text = "Queues";
 			this.btnQueues.UseVisualStyleBackColor = false;
 			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
 			// 
@@ -230,7 +228,6 @@ namespace FrEee.WinForms.Forms
 			this.btnShips.Name = "btnShips";
 			this.btnShips.Size = new System.Drawing.Size(36, 36);
 			this.btnShips.TabIndex = 4;
-			this.btnShips.Text = "Ships";
 			this.btnShips.UseVisualStyleBackColor = false;
 			// 
 			// btnEmpires
@@ -241,7 +238,6 @@ namespace FrEee.WinForms.Forms
 			this.btnEmpires.Name = "btnEmpires";
 			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
 			this.btnEmpires.TabIndex = 3;
-			this.btnEmpires.Text = "Empires";
 			this.btnEmpires.UseVisualStyleBackColor = false;
 			// 
 			// btnPlanets
@@ -252,7 +248,6 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets.Name = "btnPlanets";
 			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
 			this.btnPlanets.TabIndex = 0;
-			this.btnPlanets.Text = "Planets";
 			this.btnPlanets.UseVisualStyleBackColor = false;
 			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
 			// 
@@ -264,7 +259,6 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns.Name = "btnDesigns";
 			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
 			this.btnDesigns.TabIndex = 2;
-			this.btnDesigns.Text = "Designs";
 			this.btnDesigns.UseVisualStyleBackColor = false;
 			// 
 			// btnMenu
@@ -275,7 +269,6 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.Name = "btnMenu";
 			this.btnMenu.Size = new System.Drawing.Size(36, 36);
 			this.btnMenu.TabIndex = 1;
-			this.btnMenu.Text = "Menu";
 			this.btnMenu.UseVisualStyleBackColor = false;
 			// 
 			// pnlSubCommands
