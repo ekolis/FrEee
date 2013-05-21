@@ -724,6 +724,14 @@ namespace FrEee.WinForms.Controls
             treeNode54});
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
+
+			// stupid winforms quit hiding my tabs!
+			this.gameTabControl1.TabPages.Add(pageDetail);
+			this.gameTabControl1.TabPages.Add(pageFacil);
+			this.gameTabControl1.TabPages.Add(pageCargo);
+			this.gameTabControl1.TabPages.Add(pageOrders);
+			this.gameTabControl1.TabPages.Add(pageAbility);
+
 			// 
 			// PlanetReport
 			// 
