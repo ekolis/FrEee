@@ -22,5 +22,12 @@ namespace FrEee.WinForms.Forms
 		{
 			constructionQueueBindingSource.DataSource = Galaxy.Current.OrderTargets.OfType<ConstructionQueue>();
 		}
+
+		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
+			var form = new ConstructionQueueForm(queue);
+			form.ShowDialog();
+		}
 	}
 }

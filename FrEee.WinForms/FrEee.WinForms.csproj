@@ -159,6 +159,12 @@
     <Compile Include="Controls\StormReport.Designer.cs">
       <DependentUpon>StormReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ConstructionQueueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConstructionQueueForm.Designer.cs">
+      <DependentUpon>ConstructionQueueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConstructionQueueListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +214,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StormReport.resx">
       <DependentUpon>StormReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConstructionQueueForm.resx">
+      <DependentUpon>ConstructionQueueForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConstructionQueueListForm.resx">
       <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>

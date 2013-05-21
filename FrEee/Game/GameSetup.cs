@@ -70,8 +70,7 @@ namespace FrEee.Game
 					{
 						IsColonyQueue = true,
 						IsSpaceYardQueue = true,
-						IconPath = System.IO.Path.Combine("Pictures", "Planets", hw.PictureName),
-						Owner = emp,
+						SpaceObject = hw,
 						Rate = rate,
 					}
 				};

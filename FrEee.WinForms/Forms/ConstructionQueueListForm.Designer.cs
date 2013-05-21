@@ -31,7 +31,7 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
-			this.IconColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
 			this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -57,7 +57,7 @@
 			this.gridQueues.BackgroundColor = System.Drawing.Color.Black;
 			this.gridQueues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridQueues.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IconColumn,
+            this.Icon,
             this.NameColumn,
             this.isSpaceYardQueueDataGridViewCheckBoxColumn,
             this.isColonyQueueDataGridViewCheckBoxColumn,
@@ -81,14 +81,15 @@
 			this.gridQueues.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridQueues.Size = new System.Drawing.Size(784, 469);
 			this.gridQueues.TabIndex = 0;
+			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
 			// 
 			// Icon
 			// 
-			this.IconColumn.DataPropertyName = "Icon";
-			this.IconColumn.HeaderText = "Icon";
-			this.IconColumn.Name = "Icon";
-			this.IconColumn.ReadOnly = true;
-			this.IconColumn.Width = 32;
+			this.Icon.DataPropertyName = "Icon";
+			this.Icon.HeaderText = "Icon";
+			this.Icon.Name = "Icon";
+			this.Icon.ReadOnly = true;
+			this.Icon.Width = 32;
 			// 
 			// NameColumn
 			// 
@@ -176,5 +177,6 @@
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isColonyQueueDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ordersDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewImageColumn Icon;
 	}
 }

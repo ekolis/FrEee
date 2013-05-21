@@ -54,30 +54,24 @@ namespace FrEee.Game.Objects.Civilization
 			set;
 		}
 
-		public Empire Owner
-		{
-			get;
-			set;
-		}
-
-		public string Name
-		{
-			get;
-			set;
-		}
-
-		public string IconPath
-		{
-			get;
-			set;
-		}
+		public ISpaceObject SpaceObject { get; set; }
 
 		public Image Icon
 		{
 			get
 			{
-				return Pictures.GetCachedImage(IconPath).GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+				return SpaceObject.Icon;
 			}
+		}
+
+		public Empire Owner
+		{
+			get { return SpaceObject.Owner; }
+		}
+
+		public string Name
+		{
+			get { return SpaceObject.Name; }
 		}
 	}
 }
