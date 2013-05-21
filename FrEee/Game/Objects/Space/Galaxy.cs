@@ -187,14 +187,9 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Save()
 		{
-			string filename;
-			if (CurrentEmpire == null)
-				filename = Name + "_" + TurnNumber + ".gam";
-			else
-				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".gam";
-			if (!Directory.Exists("Savegame"))
-				Directory.CreateDirectory("Savegame");
-			var sw = new StreamWriter(Path.Combine("Savegame", filename));
+			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
+				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
+			var sw = new StreamWriter(Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireSavePath()));
 			sw.Write(SerializeGameState());
 			sw.Close();
 		}
@@ -206,7 +201,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="filename"></param>
 		public static Galaxy Load(string filename)
 		{
-			var sr = new StreamReader(Path.Combine("Savegame", filename));
+			var sr = new StreamReader(Path.Combine(FrEeeConstants.SaveGameDirectory, filename));
 			var gal = DeserializeGameState(sr);
 			sr.Close();
 			return gal;
@@ -222,10 +217,9 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't save commands without a current empire.");
-			string filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".plr";
-			if (!Directory.Exists("Savegame"))
-				Directory.CreateDirectory("Savegame");
-			var sw = new StreamWriter(Path.Combine("Savegame", filename));
+			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
+				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
+			var sw = new StreamWriter(Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireCommandsSavePath()));
 			sw.Write(SerializeCommands());
 			sw.Close();
 		}
@@ -245,15 +239,25 @@ namespace FrEee.Game.Objects.Space
 
 			foreach (var emp in emps)
 			{
-				int i = Empires.IndexOf(emp);
-				string filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1) + ".plr";
-				var sr = new StreamReader(filename);
+				var sr = new StreamReader(GetEmpireCommandsSavePath());
 				var cmds = DeserializeCommands(sr);
 				sr.Close();
 				emp.Commands.Clear();
 				foreach (var cmd in cmds)
 					emp.Commands.Add(cmd);
 			}
+		}
+
+		private string GetEmpireCommandsSavePath()
+		{
+			return String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension);
+		}
+
+		private string GetEmpireSavePath()
+		{
+			return CurrentEmpire == null ?
+				String.Format("{0}_{1}{2}", Name, TurnNumber, FrEeeConstants.SaveGameExtension) :
+				String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.SaveGameExtension);
 		}
 
 		/// <summary>
