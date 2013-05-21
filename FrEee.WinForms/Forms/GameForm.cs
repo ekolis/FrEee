@@ -47,7 +47,7 @@ namespace FrEee.WinForms.Forms
 					var gsu = new GameSetup
 					{
 						GalaxyTemplate = galtemp,
-						StarSystemCount = 10,
+						StarSystemCount = 50,
 						GalaxySize = new System.Drawing.Size(40, 30)
 					};
 					gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
