@@ -74,6 +74,7 @@ namespace FrEee.WinForms.Forms
 					game.FormClosed += (s, args) =>
 					{
 						game.Dispose();
+						Galaxy.Current.SaveCommands();
 						Show();
 						IsBusy = false;
 					};

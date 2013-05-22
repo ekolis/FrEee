@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a construction queue to build something.
 	/// </summary>
 	[Serializable]
-	public class ConstructionOrder<T> : IOrder<ConstructionQueue, IConstructionOrder> where T : IConstructable
+	public class ConstructionOrder<T> : IOrder<ConstructionQueue, IConstructionOrder>, IConstructionOrder where T : IConstructable
 	{
 		/// <summary>
 		/// The construction template.
@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The item being built.
 		/// </summary>
-		public T Item { get; private set; }
+		public T Item { get; set; }
 
 		/// <summary>
 		/// Does 1 turn's worth of building.
@@ -47,6 +47,11 @@ namespace FrEee.Game.Objects.Orders
 		public bool IsComplete
 		{
 			get { return Item.ConstructionProgress >= Item.Cost; }
+		}
+
+		IConstructable IConstructionOrder.Item
+		{
+			get { return Item; }
 		}
 	}
 }

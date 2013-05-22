@@ -36,6 +36,7 @@
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.lblFacilityName = new System.Windows.Forms.Label();
 			this.resFacilityRadioactivesCost = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resFacilityOrganicsCost = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resFacilityMineralsCost = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -45,17 +46,20 @@
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstQueue = new System.Windows.Forms.ListView();
+			this.Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.chkEmergency = new System.Windows.Forms.CheckBox();
 			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.chkOnHold = new System.Windows.Forms.CheckBox();
 			this.btnSetMoveTo = new FrEee.WinForms.Controls.GameButton();
 			this.btnClearMoveTo = new FrEee.WinForms.Controls.GameButton();
-			this.btnSave = new FrEee.WinForms.Controls.GameButton();
-			this.btnLoad = new FrEee.WinForms.Controls.GameButton();
+			this.btnSaveQueue = new FrEee.WinForms.Controls.GameButton();
+			this.btnLoadQueue = new FrEee.WinForms.Controls.GameButton();
 			this.btnClear = new FrEee.WinForms.Controls.GameButton();
 			this.btnReorder = new FrEee.WinForms.Controls.GameButton();
-			this.lblFacilityName = new System.Windows.Forms.Label();
+			this.btnOK = new FrEee.WinForms.Controls.GameButton();
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -169,6 +173,15 @@
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Facilities";
 			// 
+			// lblFacilityName
+			// 
+			this.lblFacilityName.AutoSize = true;
+			this.lblFacilityName.Location = new System.Drawing.Point(3, 352);
+			this.lblFacilityName.Name = "lblFacilityName";
+			this.lblFacilityName.Size = new System.Drawing.Size(62, 13);
+			this.lblFacilityName.TabIndex = 12;
+			this.lblFacilityName.Text = "(No Facility)";
+			// 
 			// resFacilityRadioactivesCost
 			// 
 			this.resFacilityRadioactivesCost.Amount = 0;
@@ -230,6 +243,7 @@
 			this.lstFacilities.UseCompatibleStateImageBehavior = false;
 			this.lstFacilities.View = System.Windows.Forms.View.SmallIcon;
 			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
+			this.lstFacilities.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDoubleClick);
 			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
 			// 
 			// tabPage2
@@ -272,12 +286,27 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstQueue.BackColor = System.Drawing.Color.Black;
 			this.lstQueue.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstQueue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Item,
+            this.ETA});
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
+			this.lstQueue.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
 			this.lstQueue.Size = new System.Drawing.Size(341, 418);
 			this.lstQueue.TabIndex = 6;
+			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
+			this.lstQueue.View = System.Windows.Forms.View.Details;
+			// 
+			// Item
+			// 
+			this.Item.Text = "Item";
+			this.Item.Width = 200;
+			// 
+			// ETA
+			// 
+			this.ETA.Text = "ETA";
 			// 
 			// chkOnlyLatest
 			// 
@@ -345,31 +374,31 @@
 			this.btnClearMoveTo.Text = "Clear Move To";
 			this.btnClearMoveTo.UseVisualStyleBackColor = false;
 			// 
-			// btnSave
+			// btnSaveQueue
 			// 
-			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnSaveQueue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.BackColor = System.Drawing.Color.Black;
-			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(611, 199);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(169, 29);
-			this.btnSave.TabIndex = 14;
-			this.btnSave.Text = "Save Queue";
-			this.btnSave.UseVisualStyleBackColor = false;
+			this.btnSaveQueue.BackColor = System.Drawing.Color.Black;
+			this.btnSaveQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSaveQueue.Location = new System.Drawing.Point(611, 199);
+			this.btnSaveQueue.Name = "btnSaveQueue";
+			this.btnSaveQueue.Size = new System.Drawing.Size(169, 29);
+			this.btnSaveQueue.TabIndex = 14;
+			this.btnSaveQueue.Text = "Save Queue";
+			this.btnSaveQueue.UseVisualStyleBackColor = false;
 			// 
-			// btnLoad
+			// btnLoadQueue
 			// 
-			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnLoadQueue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnLoad.BackColor = System.Drawing.Color.Black;
-			this.btnLoad.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoad.Location = new System.Drawing.Point(611, 234);
-			this.btnLoad.Name = "btnLoad";
-			this.btnLoad.Size = new System.Drawing.Size(169, 29);
-			this.btnLoad.TabIndex = 15;
-			this.btnLoad.Text = "Load Queue";
-			this.btnLoad.UseVisualStyleBackColor = false;
+			this.btnLoadQueue.BackColor = System.Drawing.Color.Black;
+			this.btnLoadQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLoadQueue.Location = new System.Drawing.Point(611, 234);
+			this.btnLoadQueue.Name = "btnLoadQueue";
+			this.btnLoadQueue.Size = new System.Drawing.Size(169, 29);
+			this.btnLoadQueue.TabIndex = 15;
+			this.btnLoadQueue.Text = "Load Queue";
+			this.btnLoadQueue.UseVisualStyleBackColor = false;
 			// 
 			// btnClear
 			// 
@@ -397,14 +426,33 @@
 			this.btnReorder.Text = "Reorder Queue";
 			this.btnReorder.UseVisualStyleBackColor = false;
 			// 
-			// lblFacilityName
+			// btnOK
 			// 
-			this.lblFacilityName.AutoSize = true;
-			this.lblFacilityName.Location = new System.Drawing.Point(3, 352);
-			this.lblFacilityName.Name = "lblFacilityName";
-			this.lblFacilityName.Size = new System.Drawing.Size(62, 13);
-			this.lblFacilityName.TabIndex = 12;
-			this.lblFacilityName.Text = "(No Facility)";
+			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOK.BackColor = System.Drawing.Color.Black;
+			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOK.Location = new System.Drawing.Point(611, 433);
+			this.btnOK.Name = "btnOK";
+			this.btnOK.Size = new System.Drawing.Size(169, 29);
+			this.btnOK.TabIndex = 18;
+			this.btnOK.Text = "OK";
+			this.btnOK.UseVisualStyleBackColor = false;
+			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCancel.Location = new System.Drawing.Point(611, 398);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(169, 29);
+			this.btnCancel.TabIndex = 19;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = false;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
 			// ConstructionQueueForm
 			// 
@@ -412,10 +460,12 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(784, 474);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnReorder);
 			this.Controls.Add(this.btnClear);
-			this.Controls.Add(this.btnLoad);
-			this.Controls.Add(this.btnSave);
+			this.Controls.Add(this.btnLoadQueue);
+			this.Controls.Add(this.btnSaveQueue);
 			this.Controls.Add(this.btnClearMoveTo);
 			this.Controls.Add(this.btnSetMoveTo);
 			this.Controls.Add(this.chkOnHold);
@@ -432,6 +482,7 @@
 			this.MaximumSize = new System.Drawing.Size(800, 99999);
 			this.Name = "ConstructionQueueForm";
 			this.Text = "Construction Queue";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConstructionQueueForm_FormClosing);
 			this.gamePanel1.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
@@ -463,8 +514,8 @@
 		private System.Windows.Forms.CheckBox chkOnHold;
 		private Controls.GameButton btnSetMoveTo;
 		private Controls.GameButton btnClearMoveTo;
-		private Controls.GameButton btnSave;
-		private Controls.GameButton btnLoad;
+		private Controls.GameButton btnSaveQueue;
+		private Controls.GameButton btnLoadQueue;
 		private Controls.GameButton btnClear;
 		private Controls.GameButton btnReorder;
 		private Controls.ResourceDisplay resFacilityRadioactivesCost;
@@ -472,5 +523,9 @@
 		private Controls.ResourceDisplay resFacilityMineralsCost;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label lblFacilityName;
+		private System.Windows.Forms.ColumnHeader Item;
+		private System.Windows.Forms.ColumnHeader ETA;
+		private Controls.GameButton btnOK;
+		private Controls.GameButton btnCancel;
 	}
 }

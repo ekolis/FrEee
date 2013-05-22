@@ -8,6 +8,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Commands
 {
+	[Serializable]
 	public abstract class Command<T, TOrder> : ICommand<T, TOrder>
 		where T : IOrderable<T, TOrder>
 		where TOrder : IOrder<T, TOrder>

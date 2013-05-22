@@ -1,4 +1,8 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using System;
 using System.Collections.Generic;
@@ -26,10 +30,10 @@ namespace FrEee.WinForms.Forms
 			// add facilities to constructable items
 			// TODO - hide unresearched facilities
 			int i = 0;
-			var il = new ImageList();
-			il.ImageSize = new Size(32, 32);
-			lstFacilities.LargeImageList = il;
-			lstFacilities.SmallImageList = il;
+			var ilFacil = new ImageList();
+			ilFacil.ImageSize = new Size(32, 32);
+			lstFacilities.LargeImageList = ilFacil;
+			lstFacilities.SmallImageList = ilFacil;
 			foreach (var facil in Mod.Current.Facilities)
 			{
 				var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
@@ -41,17 +45,27 @@ namespace FrEee.WinForms.Forms
 				var item = new ListViewItem(facil.Name, i, group);
 				item.ImageIndex = i;
 				item.Tag = facil;
-				il.Images.Add(facil.Icon);
+				ilFacil.Images.Add(facil.Icon);
 				lstFacilities.Items.Add(item);
 				i++;
 			}
+
+			// show existing queued items
+			BindQueueListView();
+
+			// setup command list
+			newCommands = new List<ICommand>();
+
+			oldQueue = new List<IConstructionOrder>();
+			foreach (var order in ConstructionQueue.Orders)
+				oldQueue.Add(order);
 		}
 
 		public ConstructionQueue ConstructionQueue { get; private set; }
 
 		private void lstFacilities_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
 		{
-			var facil =(Facility)e.Item.Tag;
+			var facil = (Facility)e.Item.Tag;
 			lblFacilityName.Text = facil.Name;
 			resFacilityMineralsCost.Amount = facil.Cost["Minerals"];
 			resFacilityOrganicsCost.Amount = facil.Cost["Organics"];
@@ -64,6 +78,100 @@ namespace FrEee.WinForms.Forms
 			resFacilityMineralsCost.Amount = 0;
 			resFacilityOrganicsCost.Amount = 0;
 			resFacilityRadioactivesCost.Amount = 0;
+		}
+
+		private void lstFacilities_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (lstFacilities.SelectedItems.Count == 1)
+			{
+				var item = lstFacilities.SelectedItems[0];
+				var facil = (Facility)item.Tag;
+				var order = new ConstructionOrder<Facility> { Template = facil, Item = facil.Instantiate() };
+				ConstructionQueue.Orders.Add(order);
+				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
+				{
+					Issuer = Galaxy.Current.CurrentEmpire,
+					Target = ConstructionQueue,
+					Order = order,
+				};
+				newCommands.Add(cmd);
+				BindQueueListView();
+			}
+		}
+
+		private void BindQueueListView()
+		{
+			lstQueue.Items.Clear();
+			var il = new ImageList();
+			il.ImageSize = new Size(32, 32);
+			lstQueue.SmallImageList = il;
+			lstQueue.LargeImageList = il;
+			int i = 0;
+			foreach (var order in ConstructionQueue.Orders)
+			{
+				var item = new ListViewItem(order.Item.Name);
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Math.Ceiling(order.Item.Cost.Keys.Max(res => (double)order.Item.Cost[res] / (double)ConstructionQueue.Rate[res])) + " turns"));
+				item.ImageIndex = i;
+				il.Images.Add(order.Item.Icon);
+				lstQueue.Items.Add(item);
+				i++;
+			}
+		}
+
+		/// <summary>
+		/// Commands that need to be sent to the game host if the user doesn't cancel
+		/// </summary>
+		private IList<ICommand> newCommands;
+
+		/// <summary>
+		/// Old queue, to be restored in case the user cancels
+		/// </summary>
+		private IList<IConstructionOrder> oldQueue;
+
+		private void ConstructionQueueForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (newCommands.Any())
+			{
+				switch (MessageBox.Show("Save changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+				{
+					case DialogResult.Yes:
+						SaveCommands();
+						break;
+					case DialogResult.No:
+						CancelChanges();
+						break;
+					case DialogResult.Cancel:
+						e.Cancel = true;
+						break;
+				}
+			}
+		}
+
+		private void SaveCommands()
+		{
+			foreach (var cmd in newCommands)
+				Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
+		}
+
+		private void CancelChanges()
+		{
+			ConstructionQueue.Orders.Clear();
+			foreach (var order in oldQueue)
+				ConstructionQueue.Orders.Add(order);
+		}
+
+		private void btnOK_Click(object sender, EventArgs e)
+		{
+			SaveCommands();
+			newCommands.Clear();
+			Close();
+		}
+
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			CancelChanges();
+			newCommands.Clear();
+			Close();
 		}
 	}
 }
