@@ -65,7 +65,7 @@ namespace FrEee.Modding.Templates
 
 		public Galaxy Instantiate()
 		{
-			var gal = new Galaxy();
+			var gal = new Galaxy(Mod.Current);
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);

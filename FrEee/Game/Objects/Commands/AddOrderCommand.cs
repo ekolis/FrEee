@@ -23,5 +23,11 @@ namespace FrEee.Game.Objects.Commands
 				Console.WriteLine(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!");
 			}
 		}
+
+		public override TOrder Order
+		{
+			get;
+			set;
+		}
 	}
 }

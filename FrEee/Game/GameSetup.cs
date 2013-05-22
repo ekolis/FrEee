@@ -68,7 +68,6 @@ namespace FrEee.Game
 					Owner = emp,
 					ConstructionQueue = new ConstructionQueue
 					{
-						IsColonyQueue = true,
 						IsSpaceYardQueue = true,
 						SpaceObject = hw,
 						Rate = rate,

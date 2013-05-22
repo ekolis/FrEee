@@ -22,7 +22,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
-		public static Mod Current { get; private set; }
+		public static Mod Current { get; set; }
 
 		/// <summary>
 		/// The file name being loaded. (For error reporting)

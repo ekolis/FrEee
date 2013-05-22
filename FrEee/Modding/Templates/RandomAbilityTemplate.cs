@@ -45,6 +45,7 @@ namespace FrEee.Modding.Templates
 		}
 	}
 
+	[Serializable]
 	public struct AbilityChance
 	{
 		/// <summary>

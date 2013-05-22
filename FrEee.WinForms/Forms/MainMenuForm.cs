@@ -66,6 +66,9 @@ namespace FrEee.WinForms.Forms
 					GalaxySize = new System.Drawing.Size(40, 30)
 				};
 				Galaxy.Initialize(gsu);
+				var name = Galaxy.Current.Name;
+				var turn = Galaxy.Current.TurnNumber;
+				Galaxy.Load(name + "_" + turn + "_1.gam");
 			})
 				.ContinueWithWithExceptionHandling(t =>
 				{
@@ -80,6 +83,37 @@ namespace FrEee.WinForms.Forms
 					};
 					Hide();
 				}, scheduler);
+		}
+
+		private void btnLoad_Click(object sender, EventArgs e)
+		{
+			var dlg = new OpenFileDialog();
+			dlg.Filter = "Savegames (*.gam)|*.gam";
+			dlg.InitialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Savegame");
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				Galaxy.Load(dlg.FileName);
+				if (Galaxy.Current.CurrentEmpire == null)
+				{
+					// host view, prompt for turn processing
+					if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+					{
+						Galaxy.Current.ProcessTurn();
+						Galaxy.SaveAll();
+						MessageBox.Show("Turn successfully processed. It is now stardate " + Galaxy.Current.Stardate + ".");
+					}
+				}
+				else
+				{
+					// player view, load up the game
+					var form = new GameForm(Galaxy.Current);
+					Hide();
+					form.ShowDialog();
+					Galaxy.Current.SaveCommands();
+					Show();
+				}
+			}
 		}
 
 		private void btnQuit_Click(object sender, EventArgs e)

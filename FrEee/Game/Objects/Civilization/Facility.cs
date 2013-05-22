@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Research;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -113,6 +114,23 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// Places the facility.
+		/// </summary>
+		/// <param name="sobj">Must be a colonized planet.</param>
+		public void Place(ISpaceObject sobj)
+		{
+			if (sobj is Planet)
+			{
+				var planet = (Planet)sobj;
+				if (planet.Colony == null)
+					throw new ArgumentException("Facilities can only be placed on colonized planets.");
+				planet.Colony.Facilities.Add(this);
+			}
+			else
+				throw new ArgumentException("Facilities can only be placed on colonized planets.");
 		}
 	}
 }

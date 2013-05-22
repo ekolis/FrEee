@@ -36,5 +36,11 @@ namespace FrEee.Game.Interfaces
 		/// An icon used to represent this item in the construction queue.
 		/// </summary>
 		Image Icon { get; }
+
+		/// <summary>
+		/// Places the newly constructed item at a location.
+		/// </summary>
+		/// <param name="target">The space object which the item should be placed on or near.</param>
+		void Place(ISpaceObject target);
 	}
 }

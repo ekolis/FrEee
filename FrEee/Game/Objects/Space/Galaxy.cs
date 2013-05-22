@@ -18,13 +18,14 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Galaxy
 	{
-		public Galaxy()
+		public Galaxy(Mod mod)
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 24000;
 			OrderTargets = new List<IOrderable>();
+			Mod = mod;
 		}
 
 		#region Properties
@@ -33,6 +34,11 @@ namespace FrEee.Game.Objects.Space
 		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
 		/// </summary>
 		public static Galaxy Current { get; private set; }
+
+		/// <summary>
+		/// The mod being played.
+		/// </summary>
+		public Mod Mod { get; set; }
 
 		/// <summary>
 		/// The game name.
@@ -180,6 +186,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Galaxy.Current = DeserializeGameState(fs);
+			Mod.Current = Galaxy.Current.Mod;
 			fs.Close();
 		}
 
@@ -196,7 +203,7 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can't save commands without a current empire.");
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			var filename = Path.Combine(FrEeeConstants.SaveGameDirectory, GetEmpireCommandsSavePath());
+			var filename = GetEmpireCommandsSavePath(CurrentEmpire);
 			var fs = new FileStream(filename, FileMode.Create);
 			SerializeCommands(fs);
 			fs.Close();
@@ -218,25 +225,31 @@ namespace FrEee.Game.Objects.Space
 
 			foreach (var emp in emps)
 			{
-				var fs = new FileStream(GetEmpireCommandsSavePath(), FileMode.Open);
-				var cmds = DeserializeCommands(fs);
-				fs.Close();
-				emp.Commands.Clear();
-				foreach (var cmd in cmds)
-					emp.Commands.Add(cmd);
+				var plrfile = GetEmpireCommandsSavePath(emp);
+				if (File.Exists(plrfile))
+				{
+					var fs = new FileStream(plrfile, FileMode.Open);
+					var cmds = DeserializeCommands(fs);
+					fs.Close();
+					emp.Commands.Clear();
+					foreach (var cmd in cmds)
+						emp.Commands.Add(cmd);
+				}
+				else
+					Console.WriteLine(emp.Name + " did not submit a PLR file.");
 			}
 		}
 
-		private string GetEmpireCommandsSavePath()
+		private string GetEmpireCommandsSavePath(Empire emp)
 		{
-			return String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension);
+			return Path.Combine("Savegame", String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(emp) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension));
 		}
 
 		private string GetEmpireSavePath()
 		{
-			return CurrentEmpire == null ?
+			return Path.Combine("Savegame", CurrentEmpire == null ?
 				String.Format("{0}_{1}{2}", Name, TurnNumber, FrEeeConstants.SaveGameExtension) :
-				String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.SaveGameExtension);
+				String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.SaveGameExtension));
 		}
 
 		#endregion
@@ -280,17 +293,36 @@ namespace FrEee.Game.Objects.Space
 			if (Galaxy.Current != this)
 				throw new InvalidOperationException("Can't process the turn on a galaxy that is not the current galaxy. Set Galaxy.Current = this first.");
 
+			// load commands
+			LoadCommands();
+
+			// advance turn number
+			TurnNumber++;
+
 			// empire stuff
 			foreach (var emp in Empires)
 			{
-				// give empire its incom				emp.StoredResources += emp.Income;
+				// give empire its income
+				emp.StoredResources += emp.Income;
 
 				// execute commands
 				foreach (var cmd in emp.Commands)
-					cmd.Execute();
+				{
+					if (cmd.Issuer == emp)
+						cmd.Execute();
+					else
+					{
+						// no hacking!
+						Console.WriteLine(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!");
+					}
+				}
 			}
 
-			// TODO - other turn processing stuff
+			// construction queues
+			foreach (var q in OrderTargets.OfType<ConstructionQueue>())
+				q.ExecuteOrders();
+			
+			// TODO - more turn stuff
 		}
 
 		/// <summary>
@@ -329,18 +361,27 @@ namespace FrEee.Game.Objects.Space
 			Current = galtemp.Instantiate();
 			gsu.PopulateGalaxy(Current);
 
-			// test saving the game;
-			var savefile = Galaxy.Current.Save();
+			// save the game
+			Galaxy.SaveAll();
+		}
 
-			// test loading the game
-			Galaxy.Load(savefile);
-
-			// test redacting fogged info
-			Current.CurrentEmpire = Current.Empires[0];
-			Current.Redact();
-
-			// test saving the player's view
-			Current.Save();
+		/// <summary>
+		/// Saves the master view and all players' views of the galaxy.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
+		public static void SaveAll()
+		{
+			if (Current.CurrentEmpire != null)
+				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
+			var gamname = Current.Save();
+			for (int i = 0; i < Current.Empires.Count; i++)
+			{
+				Load(gamname);
+				Current.CurrentEmpire = Current.Empires[i];
+				Current.Redact();
+				Current.Save();
+			}
+			Load(gamname);
 		}
 
 		#endregion

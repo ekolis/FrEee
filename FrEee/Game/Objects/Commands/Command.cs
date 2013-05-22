@@ -51,7 +51,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
-		public TOrder Order
+		public virtual TOrder Order
 		{
 			get
 			{

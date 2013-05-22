@@ -26,7 +26,20 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Is this a colony queue?
 		/// </summary>
-		public bool IsColonyQueue { get; set; }
+		public bool IsColonyQueue { get { return Colony != null; } }
+
+		/// <summary>
+		/// The colony (if any) associated with this queue.
+		/// </summary>
+		public Colony Colony
+		{
+			get
+			{
+				if (SpaceObject is Planet)
+					return ((Planet)SpaceObject).Colony;
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// Can this queue construct something?
@@ -94,7 +107,10 @@ namespace FrEee.Game.Objects.Civilization
 				var order = Orders[0];
 				order.Execute(this);
 				if (order.IsComplete)
+				{
+					order.Item.Place(SpaceObject);
 					Orders.Remove(order);
+				}
 
 				if (Orders.Count == numOrders)
 					break; // couldn't accomplish any orders
