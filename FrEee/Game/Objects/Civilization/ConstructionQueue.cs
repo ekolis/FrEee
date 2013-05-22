@@ -9,11 +9,12 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Civilization
 {
-	 [Serializable] public class ConstructionQueue : IOrderable<ConstructionQueue>
+	[Serializable]
+	public class ConstructionQueue : IOrderable<ConstructionQueue, IConstructionOrder>
 	{
 		public ConstructionQueue()
 		{
-			Orders = new List<IOrder<ConstructionQueue>>();
+			Orders = new List<IConstructionOrder>();
 			Galaxy.Current.Register(this);
 		}
 
@@ -42,7 +43,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Resources Rate { get; set; }
 
-		public IList<IOrder<ConstructionQueue>> Orders
+		/// <summary>
+		/// Unspent build rate for this turn.
+		/// </summary>
+		public Resources UnspentRate { get; set; }
+
+		public IList<IConstructionOrder> Orders
 		{
 			get;
 			private set;
@@ -72,6 +78,27 @@ namespace FrEee.Game.Objects.Civilization
 		public string Name
 		{
 			get { return SpaceObject.Name; }
+		}
+
+		/// <summary>
+		/// Executes orders for a turn.
+		/// </summary>
+		public void ExecuteOrders()
+		{
+			UnspentRate = Rate;
+			var empty = new Resources();
+			while (UnspentRate > empty && Orders.Any())
+			{
+				var numOrders = Orders.Count;
+
+				var order = Orders[0];
+				order.Execute(this);
+				if (order.IsComplete)
+					Orders.Remove(order);
+
+				if (Orders.Count == numOrders)
+					break; // couldn't accomplish any orders
+			}
 		}
 	}
 }

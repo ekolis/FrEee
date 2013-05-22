@@ -20,16 +20,22 @@ namespace FrEee.Game.Interfaces
 		/// The owner of this object. Only the owner can issue orders.
 		/// </summary>
 		Empire Owner { get; }
+
+		/// <summary>
+		/// Executes orders for an appropriate amount of time.
+		/// Some objects execute orders for an entire turn at once; others only for smaller ticks.
+		/// </summary>
+		void ExecuteOrders();
 	}
 
 	/// <summary>
 	/// Something which can accept orders from an empire.
 	/// </summary>
-	public interface IOrderable<T> : IOrderable  where T : IOrderable<T>
+	public interface IOrderable<T, TOrder> : IOrderable  where T : IOrderable<T, TOrder> where TOrder : IOrder<T, TOrder>
 	{
 		/// <summary>
 		/// The queued orders.
 		/// </summary>
-		IList<IOrder<T>> Orders { get; }
+		IList<TOrder> Orders { get; }
 	}
 }

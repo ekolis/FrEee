@@ -8,7 +8,9 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Commands
 {
-	public abstract class Command<T> : ICommand<T> where T : IOrderable<T>
+	public abstract class Command<T, TOrder> : ICommand<T, TOrder>
+		where T : IOrderable<T, TOrder>
+		where TOrder : IOrder<T, TOrder>
 	{
 		public int IssuerID { get; set; }
 
@@ -48,7 +50,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
-				public IOrder<T> Order
+		public TOrder Order
 		{
 			get
 			{

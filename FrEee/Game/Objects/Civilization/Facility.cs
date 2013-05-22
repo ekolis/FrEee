@@ -5,23 +5,22 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Research;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Civilization
 {
 	/// <summary>
 	/// A large immobile installation on a colony.
-	/// Note that colonies do not actually contain facilities, since facilities store no data
-	/// that is specific to a single instance of the given facility.
-	/// Thus instances are not needed, and each facility can serve as a "singleton" of sorts.
-	/// Instead colonies store quantities of facilities.
 	/// </summary>
-	 [Serializable] public class Facility : INamed, IResearchable, IAbilityObject
+	[Serializable]
+	public class Facility : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IConstructable
 	{
 		public Facility()
 		{
 			Abilities = new List<Ability>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
 			Cost = new Resources();
+			ConstructionProgress = new Resources();
 		}
 
 		/// <summary>
@@ -83,6 +82,37 @@ namespace FrEee.Game.Objects.Civilization
 		IEnumerable<Ability> IAbilityObject.Abilities
 		{
 			get { return Abilities; }
+		}
+
+		/// <summary>
+		/// Facilities must be built on a colony.
+		/// </summary>
+		public bool RequiresColonyQueue
+		{
+			get { return true; }
+		}
+
+		/// <summary>
+		/// Facilities do not require a space yard.
+		/// </summary>
+		public bool RequiresSpaceYardQueue
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		/// <summary>
+		/// Just clones the facility.
+		/// </summary>
+		/// <returns></returns>
+		public Facility Instantiate()
+		{
+			return this.Clone();
+		}
+
+		public Resources ConstructionProgress
+		{
+			get;
+			set;
 		}
 	}
 }

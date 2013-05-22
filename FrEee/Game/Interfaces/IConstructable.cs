@@ -25,13 +25,10 @@ namespace FrEee.Game.Interfaces
 		/// The resource cost to build this item.
 		/// </summary>
 		Resources Cost { get; }
-	}
 
-	/// <summary>
-	/// Something which can be constructed at a construction queue and instantiated as an object.
-	/// </summary>
-	public interface IConstructableTemplate<T> : IConstructable, ITemplate<T>
-	{
-		
+		/// <summary>
+		/// The progress toward constructing this item.
+		/// </summary>
+		Resources ConstructionProgress { get; set; }
 	}
 }

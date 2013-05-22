@@ -7,7 +7,8 @@ namespace FrEee.Utility
 	/// <summary>
 	/// Quantities of resources.
 	/// </summary>
-	 [Serializable] public class Resources : SafeDictionary<string, int>
+	[Serializable]
+	public class Resources : SafeDictionary<string, int>
 	{
 		public static Resources operator +(Resources r1, Resources r2)
 		{
@@ -63,6 +64,109 @@ namespace FrEee.Utility
 		public override void Add(string key, int value)
 		{
 			this[key] += value;
+		}
+
+		/// <summary>
+		/// Computes the maximum of two resource amounts.
+		/// Missing values are treated as zeroes!
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns></returns>
+		public static Resources Max(Resources r1, Resources r2)
+		{
+			var result = new Resources();
+			foreach (var key in r1.Keys.Union(r2.Keys))
+				result.Add(key, Math.Max(r1[key], r2[key]));
+			return result;
+		}
+
+		/// <summary>
+		/// Computes the minimum of two resource amounts.
+		/// Missing values are treated as zeroes!
+		/// </summary>
+		/// <param name="r1"></param>
+		/// <param name="r2"></param>
+		/// <returns></returns>
+		public static Resources Min(Resources r1, Resources r2)
+		{
+			var result = new Resources();
+			foreach (var key in r1.Keys.Union(r2.Keys))
+				result.Add(key, Math.Min(r1[key], r2[key]));
+			return result;
+		}
+
+		public static bool operator ==(Resources r1, Resources r2)
+		{
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] != r2[key])
+					return false;
+			}
+			return true;
+		}
+
+		public static bool operator !=(Resources r1, Resources r2)
+		{
+			return !(r1 == r2);
+		}
+
+		public override int GetHashCode()
+		{
+			var hash = 0;
+			foreach (var kvp in this)
+			{
+				if (kvp.Value != 0)
+					hash ^= kvp.GetHashCode();
+			}
+			return hash;
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Resources)
+				return (Resources)obj == this;
+			return false;
+		}
+
+		public static bool operator >=(Resources r1, Resources r2)
+		{
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] < r2[key])
+					return false;
+			}
+			return true;
+		}
+
+		public static bool operator <=(Resources r1, Resources r2)
+		{
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] > r2[key])
+					return false;
+			}
+			return true;
+		}
+
+		public static bool operator >(Resources r1, Resources r2)
+		{
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] <= r2[key])
+					return false;
+			}
+			return true;
+		}
+
+		public static bool operator <(Resources r1, Resources r2)
+		{
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] >= r2[key])
+					return false;
+			}
+			return true;
 		}
 	}
 }

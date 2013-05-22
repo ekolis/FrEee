@@ -30,7 +30,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to manipulate an object's order queue.
 	/// </summary>
-	public interface ICommand<T> : ICommand where T : IOrderable<T>
+	public interface ICommand<T, TOrder> : ICommand where T : IOrderable<T, TOrder> where TOrder : IOrder<T, TOrder>
 	{
 		/// <summary>
 		/// The ID of the target.
@@ -50,6 +50,6 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The specific order being manipulated.
 		/// </summary>
-		IOrder<T> Order { get; set; }
+		TOrder Order { get; set; }
 	}
 }
