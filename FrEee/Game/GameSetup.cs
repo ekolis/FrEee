@@ -14,7 +14,8 @@ namespace FrEee.Game
 	/// <summary>
 	/// Setup parameters for a game.
 	/// </summary>
-	 [Serializable] public class GameSetup
+	[Serializable]
+	public class GameSetup
 	{
 		public GameSetup()
 		{
@@ -31,12 +32,20 @@ namespace FrEee.Game
 		/// </summary>
 		public int StarSystemCount { get; set; }
 
+		/// <summary>
+		/// Are we setting up a single player game?
+		/// </summary>
+		public bool IsSinglePlayer { get; set; }
+
 		public IList<Empire> Empires { get; private set; }
 
 		public GalaxyTemplate GalaxyTemplate { get; set; }
 
 		public void PopulateGalaxy(Galaxy gal)
 		{
+			// set single player flag
+			gal.IsSinglePlayer = IsSinglePlayer;
+
 			// find facilities to place on homeworlds
 			// TODO - if facility not found, don't place it, but don't crash
 			var sy = Mod.Current.Facilities.Last(facil => facil.HasAbility("Space Yard"));

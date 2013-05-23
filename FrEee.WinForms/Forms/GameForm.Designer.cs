@@ -38,6 +38,7 @@ namespace FrEee.WinForms.Forms
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
 			this.btnLog = new FrEee.WinForms.Controls.GameButton();
 			this.btnQueues = new FrEee.WinForms.Controls.GameButton();
 			this.btnShips = new FrEee.WinForms.Controls.GameButton();
@@ -69,10 +70,10 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.ColumnCount = 4;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 304F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 344F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 358F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 359F));
 			this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.pnlMainCommands, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.pnlSubCommands, 1, 1);
@@ -184,6 +185,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlMainCommands.Controls.Add(this.btnEndTurn);
 			this.pnlMainCommands.Controls.Add(this.btnLog);
 			this.pnlMainCommands.Controls.Add(this.btnQueues);
 			this.pnlMainCommands.Controls.Add(this.btnShips);
@@ -196,8 +198,19 @@ namespace FrEee.WinForms.Forms
 			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlMainCommands.Name = "pnlMainCommands";
 			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(4);
-			this.pnlMainCommands.Size = new System.Drawing.Size(296, 46);
+			this.pnlMainCommands.Size = new System.Drawing.Size(336, 46);
 			this.pnlMainCommands.TabIndex = 1;
+			// 
+			// btnEndTurn
+			// 
+			this.btnEndTurn.BackColor = System.Drawing.Color.Black;
+			this.btnEndTurn.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEndTurn.Location = new System.Drawing.Point(295, 4);
+			this.btnEndTurn.Name = "btnEndTurn";
+			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
+			this.btnEndTurn.TabIndex = 7;
+			this.btnEndTurn.UseVisualStyleBackColor = false;
+			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
 			// 
 			// btnLog
 			// 
@@ -281,10 +294,10 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSubCommands, 2);
 			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlSubCommands.Location = new System.Drawing.Point(308, 43);
+			this.pnlSubCommands.Location = new System.Drawing.Point(348, 43);
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSubCommands.Name = "pnlSubCommands";
-			this.pnlSubCommands.Size = new System.Drawing.Size(534, 46);
+			this.pnlSubCommands.Size = new System.Drawing.Size(494, 46);
 			this.pnlSubCommands.TabIndex = 2;
 			// 
 			// pnlSearch
@@ -300,7 +313,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.Location = new System.Drawing.Point(4, 97);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSearch.Name = "pnlSearch";
-			this.pnlSearch.Size = new System.Drawing.Size(567, 42);
+			this.pnlSearch.Size = new System.Drawing.Size(587, 42);
 			this.pnlSearch.TabIndex = 2;
 			// 
 			// pnlSystemTabs
@@ -312,10 +325,10 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemTabs.Location = new System.Drawing.Point(579, 97);
+			this.pnlSystemTabs.Location = new System.Drawing.Point(599, 97);
 			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemTabs.Name = "pnlSystemTabs";
-			this.pnlSystemTabs.Size = new System.Drawing.Size(263, 42);
+			this.pnlSystemTabs.Size = new System.Drawing.Size(243, 42);
 			this.pnlSystemTabs.TabIndex = 3;
 			// 
 			// pnlDetailReport
@@ -342,7 +355,7 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gameShipReport1.BackColor = System.Drawing.Color.Black;
 			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
-			this.gameShipReport1.Location = new System.Drawing.Point(4, 4);
+			this.gameShipReport1.Location = new System.Drawing.Point(3, 3);
 			this.gameShipReport1.Name = "gameShipReport1";
 			this.gameShipReport1.Size = new System.Drawing.Size(342, 370);
 			this.gameShipReport1.TabIndex = 0;
@@ -426,6 +439,7 @@ namespace FrEee.WinForms.Forms
 			this.MinimumSize = new System.Drawing.Size(900, 700);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
@@ -440,7 +454,6 @@ namespace FrEee.WinForms.Forms
 		#endregion
 
 		private GamePanel pnlHeader;
-		private GamePanel pnlMainCommands;
 		private GamePanel pnlSubCommands;
 		private GamePanel pnlSearch;
 		private GamePanel pnlSystemTabs;
@@ -455,14 +468,16 @@ namespace FrEee.WinForms.Forms
 		private ShipReport gameShipReport1;
 		private StarSystemView starSystemView;
 		private GalaxyView galaxyView;
-		private GameButton btnPlanets;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private GamePanel pnlMainCommands;
+		private GameButton btnLog;
+		private GameButton btnQueues;
+		private GameButton btnShips;
 		private GameButton btnEmpires;
+		private GameButton btnPlanets;
 		private GameButton btnDesigns;
 		private GameButton btnMenu;
-		private GameButton btnShips;
-		private GameButton btnLog;
-        private GameButton btnQueues;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+		private GameButton btnEndTurn;
 	}
 }
 

@@ -33,29 +33,10 @@ namespace FrEee.WinForms.Forms
 			btnShips.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Ships"));
 			btnQueues.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
+			btnEndTurn.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
 
-		    // set up resource display
-		    var pnlResources = new FlowLayoutPanel();
-		    pnlResources.FlowDirection = FlowDirection.LeftToRight;
-		    pnlResources.WrapContents = false;
-		    pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"], Change = Galaxy.Current.CurrentEmpire.Income["Minerals"] });
-		    pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Organics"], Change = Galaxy.Current.CurrentEmpire.Income["Organics"] });
-		    pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Radioactives"], Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"] });
-		    var pnlResIntel = new FlowLayoutPanel();
-		    pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
-		    pnlResIntel.WrapContents = false;
-		    pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
-		    pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
-		    pagResources.Content = new List<Control>();
-		    pagResources.Content.Add(pnlResources);
-		    pagResources.Content.Add(pnlResIntel);
-		    pagResources.CurrentPage = 0;
-
-		    // set up GUI
-		    galaxyView.Galaxy = Galaxy.Current;
-		    starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.PickRandom();
-		    Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
-		    picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
+		    // set up GUI bindings to galaxy
+			SetUpGui();
 
             Enabled = true;
 		}
@@ -172,6 +153,85 @@ namespace FrEee.WinForms.Forms
 		{
 			var form = new ConstructionQueueListForm();
 			form.ShowDialog();
+		}
+
+		private void btnEndTurn_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Really end your turn now?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+			{
+				EndTurn();
+				if (!Galaxy.Current.IsSinglePlayer)
+				{
+					turnEnded = true;
+					Close();
+				}
+			}
+		}
+
+		private void SetUpGui()
+		{
+			galaxyView.Galaxy = Galaxy.Current;
+			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.PickRandom();
+			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
+			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
+			txtGameDate.Text = Galaxy.Current.Stardate;
+
+			// set up resource display
+			var pnlResources = new FlowLayoutPanel();
+			pnlResources.FlowDirection = FlowDirection.LeftToRight;
+			pnlResources.WrapContents = false;
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"], Change = Galaxy.Current.CurrentEmpire.Income["Minerals"] });
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Organics"], Change = Galaxy.Current.CurrentEmpire.Income["Organics"] });
+			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Radioactives"], Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"] });
+			var pnlResIntel = new FlowLayoutPanel();
+			pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
+			pnlResIntel.WrapContents = false;
+			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
+			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
+			pagResources.Content = new List<Control>();
+			pagResources.Content.Add(pnlResources);
+			pagResources.Content.Add(pnlResIntel);
+			pagResources.CurrentPage = 0;
+		}
+
+		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (!turnEnded)
+			{
+				switch (MessageBox.Show("Save your commands before quitting?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+				{
+					case DialogResult.Yes:
+						EndTurn();
+						break;
+					case DialogResult.No:
+						break; // nothing to do here
+					case DialogResult.Cancel:
+						e.Cancel = true; // don't quit!
+						break;
+				}
+			}
+		}
+
+		private bool turnEnded;
+
+		private void EndTurn()
+		{
+			Galaxy.Current.SaveCommands();
+			if (Galaxy.Current.IsSinglePlayer)
+			{
+				Enabled = false;
+				var plrnum = Galaxy.Current.PlayerNumber;
+				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+				Galaxy.Current.ProcessTurn();
+				Galaxy.SaveAll();
+				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+				SetUpGui();
+				Enabled = true;
+			}
+			else
+			{
+				MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
+			}
 		}
 	}
 }

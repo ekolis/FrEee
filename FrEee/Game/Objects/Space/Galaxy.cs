@@ -36,6 +36,11 @@ namespace FrEee.Game.Objects.Space
 		public static Galaxy Current { get; private set; }
 
 		/// <summary>
+		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
+		/// </summary>
+		public bool IsSinglePlayer { get; set; }
+
+		/// <summary>
 		/// The mod being played.
 		/// </summary>
 		public Mod Mod { get; set; }
@@ -59,6 +64,28 @@ namespace FrEee.Game.Objects.Space
 		/// The empire whose turn it is.
 		/// </summary>
 		public Empire CurrentEmpire { get; set; }
+
+		public string GameFileName
+		{
+			get
+			{
+				if (PlayerNumber > 0)
+					return Name + "_" + TurnNumber + "_" + PlayerNumber + FrEeeConstants.SaveGameExtension;
+				else
+					return Name + "_" + TurnNumber + FrEeeConstants.SaveGameExtension;
+			}
+		}
+
+		public string CommandFileName
+		{
+			get
+			{
+				if (PlayerNumber > 0)
+					return Name + "_" + TurnNumber + "_" + PlayerNumber + FrEeeConstants.PlayerCommandsSaveGameExtension;
+				else
+					throw new InvalidOperationException("The game host does not have a command file.");
+			}
+		}
 
 		public int MinX
 		{
@@ -94,6 +121,14 @@ namespace FrEee.Game.Objects.Space
 		/// The current turn number.
 		/// </summary>
 		public int TurnNumber { get; set; }
+
+		/// <summary>
+		/// The current player number (1 is the first player, 0 is the game host).
+		/// </summary>
+		public int PlayerNumber
+		{
+			get { return Empires.IndexOf(CurrentEmpire) + 1; }
+		}
 
 		/// <summary>
 		/// The current stardate. Advances 0.1 years per turn.
@@ -188,6 +223,27 @@ namespace FrEee.Game.Objects.Space
 			Galaxy.Current = DeserializeGameState(fs);
 			Mod.Current = Galaxy.Current.Mod;
 			fs.Close();
+		}
+
+		/// <summary>
+		/// Loads a host savegame from the Savegame folder.
+		/// </summary>
+		/// <param name="gameName"></param>
+		/// <param name="turnNumber"></param>
+		public static void Load(string gameName, int turnNumber)
+		{
+			Load(gameName + "_" + turnNumber + FrEeeConstants.SaveGameExtension);
+		}
+
+		/// <summary>
+		/// Loads a player savegame from the Savegame folder.
+		/// </summary>
+		/// <param name="gameName"></param>
+		/// <param name="turnNumber"></param>
+		/// <param param name="playerNumber"></param>
+		public static void Load(string gameName, int turnNumber, int playerNumber)
+		{
+			Load(gameName + "_" + turnNumber + "_" + playerNumber + FrEeeConstants.SaveGameExtension);
 		}
 
 		/// <summary>
@@ -321,7 +377,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			foreach (var q in OrderTargets.OfType<ConstructionQueue>())
 				q.ExecuteOrders();
-			
+
 			// TODO - more turn stuff
 		}
 
@@ -351,7 +407,7 @@ namespace FrEee.Game.Objects.Space
 
 			// create the game
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
-			
+
 			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
 			gsu.Empires.Add(new Empire { Name = "Eee Consortium", Color = Color.Cyan });
 			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", Color = Color.Green });

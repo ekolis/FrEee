@@ -61,7 +61,8 @@ namespace FrEee.WinForms.Forms
 				{
 					GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
 					StarSystemCount = 50,
-					GalaxySize = new System.Drawing.Size(40, 30)
+					GalaxySize = new System.Drawing.Size(40, 30),
+					IsSinglePlayer = true,
 				};
 				Galaxy.Initialize(gsu);
 				var name = Galaxy.Current.Name;
@@ -75,7 +76,6 @@ namespace FrEee.WinForms.Forms
 					game.FormClosed += (s, args) =>
 					{
 						game.Dispose();
-						Galaxy.Current.SaveCommands();
 						Show();
 						IsBusy = false;
 					};
