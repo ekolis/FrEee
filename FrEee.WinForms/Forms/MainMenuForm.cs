@@ -44,8 +44,6 @@ namespace FrEee.WinForms.Forms
 				_isBusy = value;
 				tblButtonPanel.Visible = !IsBusy;
 				progressBar1.Visible = IsBusy;
-				if (!IsBusy)
-					lblStatus.Text = string.Empty;
 			}
 		}
 
