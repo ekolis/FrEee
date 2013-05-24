@@ -15,7 +15,8 @@ namespace FrEee.Modding.Templates
 	/// A template for creating galaxies
 	/// Maps to a record in QuadrantTypes.txt.
 	/// </summary>
-	 [Serializable] public class GalaxyTemplate : ITemplate<Galaxy>, INamed
+	[Serializable]
+	public class GalaxyTemplate : ITemplate<Galaxy>, INamed
 	{
 		public GalaxyTemplate()
 		{
@@ -81,7 +82,7 @@ namespace FrEee.Modding.Templates
 				sys.Name = unusedNames.PickRandom();
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);
-				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys});
+				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys });
 			}
 
 			// TODO - create warp points
@@ -115,32 +116,27 @@ namespace FrEee.Modding.Templates
 			}
 
 			index = 1;
-			var moonIndices = new Dictionary<Planet, int>();
 			var planets = sys.FindSpaceObjects<Planet>().Flatten().ToArray();
-			foreach (var planet in planets)
+			foreach (var planet in planets.Where(p => p.MoonOf == null))
 			{
-				if (planet.MoonOf != null)
-				{
-					// it's a moon, give it a fancy name
-					if (moonIndices.ContainsKey(planet.MoonOf))
-						moonIndices[planet.MoonOf]++;
-					else
-						moonIndices.Add(planet.MoonOf, 1);
-					try
-					{
-						planet.Name = planet.MoonOf.Name + " " + moonIndices[planet.MoonOf].ToLetter();
-					}
-					catch (ArgumentException)
-					{
-						// seriously, 27 moons? just call it a moon
-						planet.Name = planet.MoonOf.Name + " Moon";
-					}
-				}
+				planet.Name = sys.Name + " " + index.ToRomanNumeral();
+				index++;
+			}
+			var moonIndices = new Dictionary<Planet, int>();
+			foreach (var moon in planets.Where(p => p.MoonOf != null))
+			{
+				if (moonIndices.ContainsKey(moon.MoonOf))
+					moonIndices[moon.MoonOf]++;
 				else
+					moonIndices.Add(moon.MoonOf, 1);
+				try
 				{
-					// just a regular planet
-					planet.Name = sys.Name + " " + index.ToRomanNumeral();
-					index++;
+					moon.Name = moon.MoonOf.Name + " " + moonIndices[moon.MoonOf].ToLetter();
+				}
+				catch (ArgumentException)
+				{
+					// seriously, 27 moons? just call it a moon
+					moon.Name = moon.MoonOf.Name + " Moon";
 				}
 			}
 
@@ -170,7 +166,7 @@ namespace FrEee.Modding.Templates
 						storm.Name = sys.Name + " Storm";
 					}
 				}
-				index++;	
+				index++;
 			}
 		}
 	}
