@@ -107,6 +107,9 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
 					GetGenericImage(sobj.GetType());
 
+				// clone the image so we don't mess up the original cached version
+				portrait = (Image)portrait.Clone();
+
 				if (sobj is Planet)
 				{
 					var planet = (Planet)sobj;
