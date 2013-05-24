@@ -41,6 +41,25 @@ namespace FrEee.WinForms.Controls
 			{
 				Visible = true;
 
+				bool showColonyInfo = planet.Colony != null;
+				pnlColony.Visible = showColonyInfo;
+				if (showColonyInfo)
+				{
+					if (!gameTabControl1.TabPages.Contains(pageFacil))
+						gameTabControl1.TabPages.Insert(1, pageFacil);
+					if (!gameTabControl1.TabPages.Contains(pageCargo))
+						gameTabControl1.TabPages.Insert(2, pageCargo);
+					if (!gameTabControl1.TabPages.Contains(pageOrders))
+						gameTabControl1.TabPages.Insert(3, pageOrders);
+				}
+				else
+				{
+					gameTabControl1.TabPages.Remove(pageFacil);
+					gameTabControl1.TabPages.Remove(pageCargo);
+					gameTabControl1.TabPages.Remove(pageOrders);
+				}
+
+
 				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Flag;
 				picPortrait.Image = Planet.Portrait;
 
