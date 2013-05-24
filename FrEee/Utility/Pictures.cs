@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Utility
 {
@@ -13,9 +14,14 @@ namespace FrEee.Utility
 	public static class Pictures
 	{
 		/// <summary>
-		/// Picture cache.
+		/// Picture cache for raw images on disk.
 		/// </summary>
-		private static IDictionary<string, Image> pictures = new Dictionary<string, Image>();
+		private static IDictionary<string, Image> fileCache = new Dictionary<string, Image>();
+
+		/// <summary>
+		/// Picture cache for objects.
+		/// </summary>
+		private static IDictionary<object, Image> objectPortraits = new Dictionary<object, Image>();
 
 		/// <summary>
 		/// Generic pictures to use for space objects with missing pictures.
@@ -93,11 +99,34 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(StellarObject sobj)
 		{
-			// TODO - check mod folders for images too
-			return
-				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
-				GetGenericImage(sobj.GetType());
+			if (!objectPortraits.ContainsKey(sobj))
+			{
+				// TODO - check mod folders for images too
+				var portrait =
+					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
+					GetGenericImage(sobj.GetType());
+
+				if (sobj is Planet)
+				{
+					var planet = (Planet)sobj;
+					if (planet.Colony != null)
+					{
+						// draw population bar
+						var g = Graphics.FromImage(portrait);
+						var rect = new Rectangle(portrait.Width * 2 / 3, 0, portrait.Width / 3, portrait.Width / 8);
+						var pen = new Pen(planet.Colony.Owner.Color);
+						g.DrawRectangle(pen, rect);
+						// TODO - fill population bar only partway if planet is not full, once colonies actually have population
+						var brush = new SolidBrush(planet.Colony.Owner.Color);
+						g.FillRectangle(brush, rect);
+					}
+				}
+
+				objectPortraits.Add(sobj, portrait);
+			}
+
+			return objectPortraits[sobj];
 		}
 
 		/// <summary>
@@ -135,19 +164,19 @@ namespace FrEee.Utility
 				return GetCachedImage(path + ".png") ?? GetCachedImage(path + ".bmp");
 			}
 
-			if (!pictures.ContainsKey(path))
+			if (!fileCache.ContainsKey(path))
 			{
 				try
 				{
-					pictures[path] = Image.FromFile(path);
+					fileCache[path] = Image.FromFile(path);
 				}
 				catch
 				{
 					// TODO - log missing images
-					pictures[path] = null;
+					fileCache[path] = null;
 				}
 			}
-			return pictures[path];
+			return fileCache[path];
 		}
 
 		private static Image GetGenericImage(Type type)
