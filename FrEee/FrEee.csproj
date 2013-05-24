@@ -127,6 +127,7 @@
     <Compile Include="Utility\RandomIntHelper.cs" />
     <Compile Include="Utility\Resources.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
+    <Compile Include="Utility\Status.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

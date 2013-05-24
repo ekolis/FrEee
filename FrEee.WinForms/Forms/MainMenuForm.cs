@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
@@ -54,9 +55,17 @@ namespace FrEee.WinForms.Forms
 			IsBusy = true;
 
 			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
-			Task.Factory.StartNewWithExceptionHandling(() =>
+			var status = new Status
 			{
-				Mod.Load(null);
+				Progress = 0d,
+				Message = "Initializing",
+			};
+			var task = Task.Factory.StartNewWithExceptionHandling(s =>
+			{
+				var st = (Status)s;
+				st.Message = "Loading mod";
+				Mod.Load(null, true, st, 0.5);
+				st.Message = "Setting up game";
 				var gsu = new GameSetup
 				{
 					GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
@@ -64,11 +73,13 @@ namespace FrEee.WinForms.Forms
 					GalaxySize = new System.Drawing.Size(40, 30),
 					IsSinglePlayer = true,
 				};
-				Galaxy.Initialize(gsu);
+				st.Message = "Setting up galaxy";
+				Galaxy.Initialize(gsu, st, 1.0);
 				var name = Galaxy.Current.Name;
 				var turn = Galaxy.Current.TurnNumber;
+				st.Message = "Loading game";
 				Galaxy.Load(name + "_" + turn + "_1.gam");
-			})
+			}, status)
 				.ContinueWithWithExceptionHandling(t =>
 				{
 					var game = new GameForm(Galaxy.Current);
@@ -81,6 +92,12 @@ namespace FrEee.WinForms.Forms
 					};
 					Hide();
 				}, scheduler);
+			while (!task.IsCompleted)
+			{
+				Text = "FrEee - " + status.Message;
+				progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
+				Application.DoEvents();
+			}
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)

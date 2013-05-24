@@ -11,6 +11,7 @@ using FrEee.Game.Objects.Research;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
@@ -34,37 +35,74 @@ namespace FrEee.Modding
 		/// </summary>
 		/// <param name="path">The mod root path, relative to the Mods folder. Or null to load the stock mod.</param>
 		/// <param name="setCurrent">Set the current mod to the new mod?</param>
-		public static Mod Load(string path, bool setCurrent = true)
+		/// <param name="status">A status object to report status back to the GUI.</param>
+		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done loading the mod? 1.0 means all done with everything that needs to be done.</param>
+		public static Mod Load(string path, bool setCurrent = true, Status status = null, double desiredProgress = 1.0)
 		{
 			var mod = new Mod();
+
+			// TODO - change the 8 at the end to match whatever number of data files we have
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 8;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
 			// TODO - fall back on stock when mod data not found
 
+			if (status != null)
+				status.Message = "Loading SystemNames.txt";
 			foreach (var line in File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt")))
 				mod.StarSystemNames.Add(line);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading AbilityRules.txt";
 			CurrentFileName = Path.Combine(datapath, "AbilityRules.txt");
 			new AbilityRuleLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading SectType.txt";
 			CurrentFileName = Path.Combine(datapath, "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading TechArea.txt";
 			CurrentFileName = Path.Combine(datapath, "TechArea.txt");
 			new TechnologyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading Facility.txt";
 			CurrentFileName = Path.Combine(datapath, "Facility.txt");
 			new FacilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading StellarAbilityTypes.txt";
 			CurrentFileName = Path.Combine(datapath, "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading SystemTypes.txt";
 			CurrentFileName = Path.Combine(datapath, "SystemTypes.txt");
 			new StarSystemLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading QuadrantTypes.txt";
 			CurrentFileName = Path.Combine(datapath, "QuadrantTypes.txt");
 			new GalaxyLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
 
 			CurrentFileName = null;
 

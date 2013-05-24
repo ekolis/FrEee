@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -400,7 +401,9 @@ namespace FrEee.Game.Objects.Space
 		/// Initializes a new game. Sets Galaxy.Current.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if there is no mod loaded.</exception>
-		public static void Initialize(GameSetup gsu)
+		/// <param name="status">A status object to report status back to the GUI.</param>
+		/// <param name="desiredProgress">How much progress should we report back to the GUI when we're done initializing the galaxy? 1.0 means all done with everything that needs to be done.</param>
+		public static void Initialize(GameSetup gsu, Status status = null, double desiredProgress = 1.0)
 		{
 			if (Mod.Current == null)
 				throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
@@ -414,7 +417,7 @@ namespace FrEee.Game.Objects.Space
 			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", Color = Color.Blue });
 			gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", Color = Color.Orange });
 			galtemp.GameSetup = gsu;
-			Current = galtemp.Instantiate();
+			Current = galtemp.Instantiate(status, desiredProgress);
 			gsu.PopulateGalaxy(Current);
 
 			// save the game
