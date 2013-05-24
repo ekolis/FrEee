@@ -85,7 +85,7 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities)
 		{
 			foreach (var rule in Mod.Current.AbilityRules)
-				abilities = rule.GroupAndStack(abilities);
+				abilities = rule.GroupAndStack(abilities).ToArray();
 			return abilities;
 		}
 
