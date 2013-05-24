@@ -108,7 +108,6 @@ namespace FrEee.WinForms.Forms
 					var form = new GameForm(Galaxy.Current);
 					Hide();
 					form.ShowDialog();
-					Galaxy.Current.SaveCommands();
 					Show();
 				}
 			}
