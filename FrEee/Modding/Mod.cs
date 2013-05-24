@@ -110,8 +110,8 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - display errors to user
-			foreach (var err in Mod.Errors)
-				Console.WriteLine(err.Message);
+			/*foreach (var err in Mod.Errors)
+				Console.WriteLine(err.Message);*/
 
 			return mod;
 		}
