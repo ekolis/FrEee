@@ -6,6 +6,7 @@ using FrEee.Game;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
+using System.Drawing;
 
 namespace FrEee.Modding.Templates
 {
@@ -87,11 +88,23 @@ namespace FrEee.Modding.Templates
 
 			foreach (var loc in StellarObjectLocations)
 			{
+				Point pos;
+				try
+				{
+					pos = loc.Resolve(sys);
+				}
+				catch (Exception ex)
+				{
+					// Can't place this space object because there is no room for it
+					// So just skip it
+					continue;
+				}
+
 				// create object
 				var sobj = loc.StellarObjectTemplate.Instantiate();
 				
 				// place object
-				sys.GetSector(loc.Resolve(sys)).SpaceObjects.Add(sobj);
+				sys.GetSector(pos).SpaceObjects.Add(sobj);
 
 				// for planets with moons
 				if (sobj is Planet)
