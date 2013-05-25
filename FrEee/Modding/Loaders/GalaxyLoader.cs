@@ -13,7 +13,8 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads galaxy templates from QuadrantTypes.txt.
 	/// </summary>
-	 [Serializable] public class GalaxyLoader : ILoader
+	[Serializable]
+	public class GalaxyLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)
 		{
@@ -95,7 +96,12 @@ namespace FrEee.Modding.Loaders
 					}
 					start++;
 
-					galtemp.StarSystemTemplateChances.Add(sst, chance);
+					// silly Adamant Mod refers to the same star system type twice...
+					if (galtemp.StarSystemTemplateChances.ContainsKey(sst))
+						galtemp.StarSystemTemplateChances[sst] += chance;
+					else
+						galtemp.StarSystemTemplateChances.Add(sst, chance);
+
 
 					count++;
 				}
