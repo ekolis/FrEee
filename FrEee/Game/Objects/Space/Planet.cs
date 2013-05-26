@@ -7,6 +7,8 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Templates;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -26,9 +28,9 @@ namespace FrEee.Game.Objects.Space
 		public Planet MoonOf { get; set; }
 
 		/// <summary>
-		/// The name of the PlanetSize.txt entry for this planet's size.
+		/// The PlanetSize.txt entry for this planet's size.
 		/// </summary>
-		public string Size { get; set; }
+		public StellarObjectSize Size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this planet.

@@ -13,11 +13,6 @@ namespace FrEee.Game.Objects.Space
 	 [Serializable] public class Star : StellarObject, ITemplate<Star>
 	{
 		/// <summary>
-		/// The size of this star.
-		/// </summary>
-		 public StellarSize StellarSize { get; set; }
-
-		/// <summary>
 		/// The brightness of this star. (For flavor)
 		/// </summary>
 		public string Brightness { get; set; }

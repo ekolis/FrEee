@@ -3,6 +3,8 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Templates;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -18,9 +20,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// The name of the PlanetSize.txt entry for this asteroid field's size.
+		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		public string Size { get; set; }
+		public StellarObjectSize Size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.

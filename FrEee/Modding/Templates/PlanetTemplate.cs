@@ -14,7 +14,8 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating planets.
 	/// </summary>
-	 [Serializable] public class PlanetTemplate : ITemplate<Planet>
+	[Serializable]
+	public class PlanetTemplate : ITemplate<Planet>
 	{
 		/// <summary>
 		/// Abilities to assign to the planet.
@@ -24,7 +25,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The size of the planet, or null to choose a size randomly.
 		/// </summary>
-		public StellarSize? Size { get; set; }
+		public StellarSize? StellarSize { get; set; }
 
 		/// <summary>
 		/// The atmosphere of the planet, or null to choose a planet randomly.
@@ -39,14 +40,15 @@ namespace FrEee.Modding.Templates
 		public Planet Instantiate()
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<Planet>();
-			if (Size != null)
-				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (Atmosphere != null)
 				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
 			if (Surface != null)
 				candidates = candidates.Where(p => p.Surface == Surface);
+			var size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value)).PickRandom();
+			candidates = candidates.Where(p => p.Size == size);
+
 			if (!candidates.Any())
-				throw new Exception("No planets in SectType.txt match the criteria!");
+				throw new Exception("No planets in SectType.txt match the criteria:\n\tAtmosphere: " + Atmosphere + "\n\tSurface: " + Surface + "\n\tSize: " + size.Name);
 
 			var planet = candidates.PickRandom().Instantiate();
 

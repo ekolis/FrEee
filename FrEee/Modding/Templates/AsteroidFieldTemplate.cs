@@ -39,14 +39,15 @@ namespace FrEee.Modding.Templates
 		public AsteroidField Instantiate()
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>();
-			if (StellarSize != null)
-				candidates = candidates.Where(ast => ast.StellarSize == StellarSize.Value);
 			if (Atmosphere != null)
 				candidates = candidates.Where(ast => ast.Atmosphere == Atmosphere);
 			if (Surface != null)
 				candidates = candidates.Where(ast => ast.Surface == Surface);
+			var size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value)).PickRandom();
+			candidates = candidates.Where(p => p.Size == size);
+
 			if (!candidates.Any())
-				throw new Exception("No asteroid fields in SectType.txt match the criteria!");
+				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + Atmosphere + "\n\tSurface: " + Surface + "\n\tSize: " + size.Name);
 
 			var asteroids = candidates.PickRandom().Instantiate();
 

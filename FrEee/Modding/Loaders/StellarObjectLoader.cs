@@ -78,11 +78,11 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for planet.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					StellarSize size;
-					if (Enum.TryParse<StellarSize>(temp, out size))
-						planet.StellarSize = size;
+					StellarObjectSize size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && sos.Name == temp).FirstOrDefault();
+					if (size != null)
+						planet.Size = size;
 					else
-						Mod.Errors.Add(new DataParsingException("Invalid planet size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Cannot find planet size entry " + temp + " in PlanetSize.txt.", Mod.CurrentFileName, rec));
 
 					rec.TryFindFieldValue(new string[] { "Physical Type", "Planet Physical Type" }, out temp, ref index, Mod.Errors, 1, true); // skip the original Physical Type field which just says it's a planet
 					if (temp == null)
@@ -111,11 +111,11 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for asteroids.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					StellarSize size;
-					if (Enum.TryParse<StellarSize>(temp, out size))
-						ast.StellarSize = size;
+					StellarObjectSize size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && sos.Name == temp).FirstOrDefault();
+					if (size != null)
+						ast.Size = size;
 					else
-						Mod.Errors.Add(new DataParsingException("Invalid asteroids size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
+						Mod.Errors.Add(new DataParsingException("Cannot find asteroids size entry " + temp + " in PlanetSize.txt.", Mod.CurrentFileName, rec));
 
 					rec.TryFindFieldValue(new string[] { "Physical Type", "Planet Physical Type" }, out temp, ref index, Mod.Errors, 1, true); // skip the original Physical Type field which just says it's asteroids
 					if (temp == null)

@@ -175,12 +175,12 @@ namespace FrEee.Modding.Loaders
 						else
 						{
 							if (temp == "Any")
-								template.Size = null;
+								template.StellarSize = null;
 							else
 							{
 								try
 								{
-									template.Size = (Size)Enum.Parse(typeof(Size), temp);
+									template.StellarSize = (Size)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{

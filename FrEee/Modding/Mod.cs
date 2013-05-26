@@ -41,8 +41,11 @@ namespace FrEee.Modding
 		{
 			var mod = new Mod();
 
-			// TODO - change the 8 at the end to match whatever number of data files we have
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 8;
+			if (setCurrent)
+				Current = mod;
+
+			// TODO - change the number at the end to match whatever number of data files we have
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 9;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -59,6 +62,13 @@ namespace FrEee.Modding
 				status.Message = "Loading AbilityRules.txt";
 			CurrentFileName = Path.Combine(datapath, "AbilityRules.txt");
 			new AbilityRuleLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
+			if (status != null)
+				status.Message = "Loading PlanetSize.txt";
+			CurrentFileName = Path.Combine(datapath, "PlanetSize.txt");
+			new StellarObjectSizeLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 			if (status != null)
 				status.Progress += progressPerFile;
 
@@ -106,9 +116,6 @@ namespace FrEee.Modding
 
 			CurrentFileName = null;
 
-			if (setCurrent)
-				Current = mod;
-
 			// TODO - display errors to user
 			/*foreach (var err in Mod.Errors)
 				Console.WriteLine(err.Message);*/
@@ -123,6 +130,7 @@ namespace FrEee.Modding
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
 			Facilities = new List<Facility>();
+			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 			GalaxyTemplates = new List<GalaxyTemplate>();
@@ -138,6 +146,11 @@ namespace FrEee.Modding
 		/// Names to use for star systems.
 		/// </summary>
 		public ICollection<string> StarSystemNames { get; private set; }
+
+		/// <summary>
+		/// Planet and asteroid field sizes.
+		/// </summary>
+		public ICollection<StellarObjectSize> StellarObjectSizes { get; private set; }
 
 		/// <summary>
 		/// Templates for star systems.
