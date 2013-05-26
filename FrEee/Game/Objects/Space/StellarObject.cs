@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public string PictureName { get; set; }
 
-		public Image Icon
+		public virtual Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
 		}

@@ -89,7 +89,12 @@ namespace FrEee.Utility
 			var portrait = GetPortrait(sobj);
 			if (portrait == null)
 				return null;
-			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			var img = portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+
+			if (sobj is Planet)
+				((Planet)sobj).DrawPopulationBars(img);
+
+			return img;
 		}
 
 		/// <summary>
@@ -109,29 +114,6 @@ namespace FrEee.Utility
 
 				// clone the image so we don't mess up the original cached version
 				portrait = (Image)portrait.Clone();
-
-				if (sobj is Planet)
-				{
-					var planet = (Planet)sobj;
-					if (planet.Colony != null)
-					{
-						// draw population bar
-						var g = Graphics.FromImage(portrait);
-						var rect = new Rectangle(portrait.Width / 2, portrait.Width / 16, portrait.Width / 2, portrait.Width / 4);
-						var pen = new Pen(planet.Colony.Owner.Color, portrait.Width / 16);
-						g.DrawRectangle(pen, rect);
-						// TODO - fill population bar only partway if planet is not full, once colonies actually have population
-						var brush = new SolidBrush(planet.Colony.Owner.Color);
-						rect.Width /= 3;
-						rect.Inflate(-portrait.Width / 32, -portrait.Height / 16);
-						rect.X += portrait.Width / 32;
-						g.FillRectangle(brush, rect);
-						rect.X += portrait.Width / 6 - portrait.Width / 32;
-						g.FillRectangle(brush, rect);
-						rect.X += portrait.Width / 6 - portrait.Width / 32;
-						g.FillRectangle(brush, rect);
-					}
-				}
 
 				objectPortraits.Add(sobj, portrait);
 			}

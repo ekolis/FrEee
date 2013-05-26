@@ -9,13 +9,15 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
 using FrEee.Modding;
+using System.Drawing;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
-	 [Serializable] public class Planet : StellarObject, ITemplate<Planet>
+	[Serializable]
+	public class Planet : StellarObject, ITemplate<Planet>
 	{
 		public Planet()
 		{
@@ -45,7 +47,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Planet abilities take into account abilities on the colony if one is present.
 		/// </summary>
-				public override IEnumerable<Ability> Abilities
+		public override IEnumerable<Ability> Abilities
 		{
 			get
 			{
@@ -70,7 +72,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
-				public override Empire Owner
+		public override Empire Owner
 		{
 			get
 			{
@@ -119,6 +121,45 @@ namespace FrEee.Game.Objects.Space
 					income.Add(resource, amount);
 				}
 				return income;
+			}
+		}
+
+		/// <summary>
+		/// Draws "population bars" on an image of the planet.
+		/// Make sure not to draw on an original; make a copy first!
+		/// </summary>
+		/// <param name="img"></param>
+		public void DrawPopulationBars(Image img)
+		{
+			if (Colony != null)
+			{
+				// draw population bar
+				var g = Graphics.FromImage(img);
+				var rect = new Rectangle(img.Width - 21, 1, 20, 8);
+				var pen = new Pen(Colony.Owner.Color);
+				g.DrawRectangle(pen, rect);
+				// TODO - fill population bar only partway if planet is not full, once colonies actually have population
+				var brush = new SolidBrush(Colony.Owner.Color);
+				rect.Width = 5;
+				rect.X++;
+				rect.Y+=2;
+				rect.Height -= 3;
+				rect.X += 1;
+				g.FillRectangle(brush, rect);
+				rect.X += 6;
+				g.FillRectangle(brush, rect);
+				rect.X += 6;
+				g.FillRectangle(brush, rect);
+			}
+		}
+
+		public override Image Icon
+		{
+			get
+			{
+				var icon = (Image)base.Icon.Clone();
+				DrawPopulationBars(icon);
+				return icon;
 			}
 		}
 	}
