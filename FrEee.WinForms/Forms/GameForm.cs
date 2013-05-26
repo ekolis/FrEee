@@ -74,6 +74,7 @@ namespace FrEee.WinForms.Forms
 					lv.ForeColor = Color.White;
 					lv.BorderStyle = BorderStyle.None;
 					var il = new ImageList();
+					il.ColorDepth = ColorDepth.Depth32Bit;
 					il.ImageSize = new Size(48, 48);
 					lv.LargeImageList = il;
 					lv.SmallImageList = il;
