@@ -24,7 +24,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The size of the planet, or null to choose a size randomly.
 		/// </summary>
-		public Size? Size { get; set; }
+		public StellarSize? Size { get; set; }
 
 		/// <summary>
 		/// The atmosphere of the planet, or null to choose a planet randomly.
@@ -40,7 +40,7 @@ namespace FrEee.Modding.Templates
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<Planet>();
 			if (Size != null)
-				candidates = candidates.Where(p => p.Size == Size.Value);
+				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (Atmosphere != null)
 				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
 			if (Surface != null)

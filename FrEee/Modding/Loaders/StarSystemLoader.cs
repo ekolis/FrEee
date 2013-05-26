@@ -10,7 +10,8 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Size = FrEee.Game.Enumerations.Size;
+using Size = FrEee.Game.Enumerations.StellarSize;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Modding.Loaders
 {
@@ -102,12 +103,12 @@ namespace FrEee.Modding.Loaders
 						else
 						{
 							if (temp == "Any")
-								template.Size = null;
+								template.StellarSize = null;
 							else
 							{
 								try
 								{
-									template.Size = (Size)Enum.Parse(typeof(Size), temp);
+									template.StellarSize = (StellarSize)Enum.Parse(typeof(StellarSize), temp);
 								}
 								catch (ArgumentException ex)
 								{
@@ -237,12 +238,12 @@ namespace FrEee.Modding.Loaders
 						else
 						{
 							if (temp == "Any")
-								template.Size = null;
+								template.StellarSize = null;
 							else
 							{
 								try
 								{
-									template.Size = (Size)Enum.Parse(typeof(Size), temp);
+									template.StellarSize = (StellarSize)Enum.Parse(typeof(Size), temp);
 								}
 								catch (ArgumentException ex)
 								{

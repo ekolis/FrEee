@@ -24,7 +24,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The size of the asteroid field, or null to choose a size randomly.
 		/// </summary>
-		public Size? Size { get; set; }
+		public StellarSize? StellarSize { get; set; }
 
 		/// <summary>
 		/// The atmosphere of the asteroid field, or null to choose a planet randomly.
@@ -39,8 +39,8 @@ namespace FrEee.Modding.Templates
 		public AsteroidField Instantiate()
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>();
-			if (Size != null)
-				candidates = candidates.Where(ast => ast.Size == Size.Value);
+			if (StellarSize != null)
+				candidates = candidates.Where(ast => ast.StellarSize == StellarSize.Value);
 			if (Atmosphere != null)
 				candidates = candidates.Where(ast => ast.Atmosphere == Atmosphere);
 			if (Surface != null)

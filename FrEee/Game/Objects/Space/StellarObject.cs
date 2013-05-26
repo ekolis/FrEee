@@ -42,6 +42,11 @@ namespace FrEee.Game.Objects.Space
 		public string Description { get; set; }
 
 		/// <summary>
+		/// The size of this stellar object.
+		/// </summary>
+		public StellarSize StellarSize { get; set; }
+
+		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>

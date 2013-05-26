@@ -26,9 +26,9 @@ namespace FrEee.Game.Objects.Space
 		public Planet MoonOf { get; set; }
 
 		/// <summary>
-		/// The size of this planet.
+		/// The name of the PlanetSize.txt entry for this planet's size.
 		/// </summary>
-		public Size Size { get; set; }
+		public string Size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this planet.

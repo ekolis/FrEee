@@ -44,7 +44,7 @@ namespace FrEee.WinForms.Controls
 				txtAge.Text = Star.Age;
 				txtBrightness.Text = Star.Brightness;
 				txtName.Text = Star.Name;
-				txtSizeColor.Text = Star.Size + " " + Star.Color + " Star";
+				txtSizeColor.Text = Star.StellarSize + " " + Star.Color + " Star";
 				txtDescription.Text = Star.Description;
 				picPortrait.Image = Star.Portrait;
 				lstAbilities.Items.Clear();

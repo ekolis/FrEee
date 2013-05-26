@@ -1,9 +1,9 @@
 namespace FrEee.Game.Enumerations
 {
 	/// <summary>
-	/// The size of a space object.
+	/// The size of a stellar object.
 	/// </summary>
-	public enum Size
+	public enum StellarSize
 	{
 		Tiny = 1,
 		Small,

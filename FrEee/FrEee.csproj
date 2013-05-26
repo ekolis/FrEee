@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
-    <Compile Include="Game\Enumerations\Size.cs" />
+    <Compile Include="Game\Enumerations\StellarSize.cs" />
     <Compile Include="Game\Enumerations\Visibility.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />

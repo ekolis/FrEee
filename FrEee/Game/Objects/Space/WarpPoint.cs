@@ -9,13 +9,9 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A warp point connecting two sectors.
 	/// </summary>
-	 [Serializable] public class WarpPoint : StellarObject, ITemplate<WarpPoint>
+	[Serializable]
+	public class WarpPoint : StellarObject, ITemplate<WarpPoint>
 	{
-		/// <summary>
-		/// The size of this warp point.
-		/// </summary>
-		public Size Size { get; set; }
-
 		/// <summary>
 		/// The sector that ships will appear in when they go through this warp point.
 		/// </summary>

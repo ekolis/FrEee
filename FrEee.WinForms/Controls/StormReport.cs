@@ -45,7 +45,7 @@ namespace FrEee.WinForms.Controls
 				picPortrait.Image = Storm.Portrait;
 
 				txtName.Text = Storm.Name;
-				txtSize.Text = Storm.Size + " Storm";
+				txtSize.Text = Storm.StellarSize + " Storm";
 				txtDescription.Text = Storm.Description;
 
 				treeAbilities.Nodes.Clear();

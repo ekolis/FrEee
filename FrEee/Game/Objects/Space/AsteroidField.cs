@@ -9,7 +9,8 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
-	 [Serializable] public class AsteroidField : StellarObject, ITemplate<AsteroidField>
+	[Serializable]
+	public class AsteroidField : StellarObject, ITemplate<AsteroidField>
 	{
 		public AsteroidField()
 		{
@@ -17,9 +18,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// The size of this asteroid field.
+		/// The name of the PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		public Size Size { get; set; }
+		public string Size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.

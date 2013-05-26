@@ -9,13 +9,9 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A space storm.
 	/// </summary>
-	 [Serializable] public class Storm : StellarObject, ITemplate<Storm>
+	[Serializable]
+	public class Storm : StellarObject, ITemplate<Storm>
 	{
-		/// <summary>
-		/// The size of this storm.
-		/// </summary>
-		public Size Size { get; set; }
-
 		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>

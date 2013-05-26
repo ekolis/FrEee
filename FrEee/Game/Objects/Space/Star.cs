@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The size of this star.
 		/// </summary>
-		public Size Size { get; set; }
+		 public StellarSize StellarSize { get; set; }
 
 		/// <summary>
 		/// The brightness of this star. (For flavor)

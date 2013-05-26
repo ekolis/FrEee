@@ -24,7 +24,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The size of the star, or null to choose a size randomly.
 		/// </summary>
-		public Size? Size { get; set; }
+		public StellarSize? StellarSize { get; set; }
 
 		/// <summary>
 		/// The age of the star, or null to choose an age randomly.
@@ -49,8 +49,8 @@ namespace FrEee.Modding.Templates
 		public Star Instantiate()
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<Star>();
-			if (Size != null)
-				candidates = candidates.Where(s => s.Size == Size.Value);
+			if (StellarSize != null)
+				candidates = candidates.Where(s => s.StellarSize == StellarSize.Value);
 			if (Age != null)
 				candidates = candidates.Where(s => s.Age == Age);
 			if (Color != null)

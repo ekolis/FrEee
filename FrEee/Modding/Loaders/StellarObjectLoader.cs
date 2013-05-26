@@ -1,12 +1,11 @@
 ﻿using FrEee.Game;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using Size = FrEee.Game.Enumerations.Size;
 
 namespace FrEee.Modding.Loaders
 {
@@ -35,9 +34,9 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for star.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					Size size;
-					if (Enum.TryParse<Size>(temp, out size))
-						star.Size = size;
+					StellarSize size;
+					if (Enum.TryParse<StellarSize>(temp, out size))
+						star.StellarSize = size;
 					else
 						Mod.Errors.Add(new DataParsingException("Invalid star size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
 
@@ -79,9 +78,9 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for planet.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					Size size;
-					if (Enum.TryParse<Size>(temp, out size))
-						planet.Size = size;
+					StellarSize size;
+					if (Enum.TryParse<StellarSize>(temp, out size))
+						planet.StellarSize = size;
 					else
 						Mod.Errors.Add(new DataParsingException("Invalid planet size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
 
@@ -112,9 +111,9 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for asteroids.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					Size size;
-					if (Enum.TryParse<Size>(temp, out size))
-						ast.Size = size;
+					StellarSize size;
+					if (Enum.TryParse<StellarSize>(temp, out size))
+						ast.StellarSize = size;
 					else
 						Mod.Errors.Add(new DataParsingException("Invalid asteroids size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
 
@@ -153,9 +152,9 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for storm.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					Size size;
-					if (Enum.TryParse<Size>(temp, out size))
-						storm.Size = size;
+					StellarSize size;
+					if (Enum.TryParse<StellarSize>(temp, out size))
+						storm.StellarSize = size;
 					else
 						Mod.Errors.Add(new DataParsingException("Invalid storm size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
 
@@ -178,9 +177,9 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for warp point.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					Size size;
-					if (Enum.TryParse<Size>(temp, out size))
-						wp.Size = size;
+					StellarSize size;
+					if (Enum.TryParse<StellarSize>(temp, out size))
+						wp.StellarSize = size;
 					else
 						Mod.Errors.Add(new DataParsingException("Invalid warp point size. Must be Tiny, Small, Medium, Large, or Huge.", Mod.CurrentFileName, rec));
 
