@@ -84,9 +84,9 @@ namespace FrEee.WinForms.Forms
 						item.Text = sobj.Name;
 						item.Tag = sobj;
 						if (sobj is Planet)
-							il.Images.Add(sobj.Portrait.DrawPopulationBars((Planet)sobj));
+							il.Images.Add(sobj.Portrait.Resize(48).DrawPopulationBars((Planet)sobj));
 						else
-							il.Images.Add(sobj.Portrait);
+							il.Images.Add(sobj.Portrait.Resize(48));
 						item.ImageIndex = i;
 						i++;
 						lv.Items.Add(item);

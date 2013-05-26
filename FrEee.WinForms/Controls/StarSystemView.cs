@@ -143,7 +143,7 @@ namespace FrEee.WinForms.Controls
 						var largest = sector.SpaceObjects.Largest();
 						if (largest != null)
 						{
-							var portrait = largest.Portrait.GetThumbnailImage((int)drawsize, (int)drawsize, () => false, IntPtr.Zero);
+							var portrait = largest.Portrait.Resize((int)drawsize);
 							if (largest is Planet)
 								((Planet)largest).DrawPopulationBars(portrait);
 							pe.Graphics.DrawImage(portrait, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);

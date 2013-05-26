@@ -441,6 +441,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var result = new Bitmap(size, size);
 			var g = Graphics.FromImage(result);
+			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 			g.DrawImage(image, 0, 0, size, size);
 			return result;
 		}
