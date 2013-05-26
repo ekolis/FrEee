@@ -117,11 +117,18 @@ namespace FrEee.Utility
 					{
 						// draw population bar
 						var g = Graphics.FromImage(portrait);
-						var rect = new Rectangle(portrait.Width * 2 / 3, 0, portrait.Width / 3, portrait.Width / 8);
-						var pen = new Pen(planet.Colony.Owner.Color);
+						var rect = new Rectangle(portrait.Width / 2, portrait.Width / 16, portrait.Width / 2, portrait.Width / 4);
+						var pen = new Pen(planet.Colony.Owner.Color, portrait.Width / 16);
 						g.DrawRectangle(pen, rect);
 						// TODO - fill population bar only partway if planet is not full, once colonies actually have population
 						var brush = new SolidBrush(planet.Colony.Owner.Color);
+						rect.Width /= 3;
+						rect.Inflate(-portrait.Width / 32, -portrait.Height / 16);
+						rect.X += portrait.Width / 32;
+						g.FillRectangle(brush, rect);
+						rect.X += portrait.Width / 6 - portrait.Width / 32;
+						g.FillRectangle(brush, rect);
+						rect.X += portrait.Width / 6 - portrait.Width / 32;
 						g.FillRectangle(brush, rect);
 					}
 				}
