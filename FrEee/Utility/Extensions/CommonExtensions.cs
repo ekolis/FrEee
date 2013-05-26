@@ -417,5 +417,29 @@ namespace FrEee.Utility.Extensions
 				return null;
 			return abils.First().Values[index - 1];
 		}
+
+		/// <summary>
+		/// Copies an image and draws planet population bars on it.
+		/// </summary>
+		/// <param name="image">The image.</param>
+		/// <param name="planet">The planet whose population bars should be drawn.</param>
+		/// <returns>The copied image with the population bars.</returns>
+		public static Image DrawPopulationBars(this Image image, Planet planet)
+		{
+			var img2 = (Image)image.Clone();
+			planet.DrawPopulationBars(img2);
+			return img2;
+		}
+
+		/// <summary>
+		/// Gets a square thumbnail image.
+		/// </summary>
+		/// <param name="image"></param>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Image GetThumbnailImage(this Image image, int size)
+		{
+			return image.GetThumbnailImage(size, size, () => false, IntPtr.Zero);
+		}
 	}
 }

@@ -74,6 +74,7 @@ namespace FrEee.WinForms.Forms
 					lv.ForeColor = Color.White;
 					lv.BorderStyle = BorderStyle.None;
 					var il = new ImageList();
+					il.ImageSize = new Size(48, 48);
 					lv.LargeImageList = il;
 					lv.SmallImageList = il;
 					int i = 0;
@@ -82,7 +83,10 @@ namespace FrEee.WinForms.Forms
 						var item = new ListViewItem();
 						item.Text = sobj.Name;
 						item.Tag = sobj;
-						il.Images.Add(sobj.Icon);
+						if (sobj is Planet)
+							il.Images.Add(sobj.Portrait.DrawPopulationBars((Planet)sobj));
+						else
+							il.Images.Add(sobj.Portrait);
 						item.ImageIndex = i;
 						i++;
 						lv.Items.Add(item);
