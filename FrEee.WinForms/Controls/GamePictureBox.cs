@@ -31,6 +31,7 @@ namespace FrEee.WinForms.Controls
 			var pic = new PictureBox();
 			pic.Image = Image;
 			pic.Size = Image.Size;
+			pic.BackColor = Color.Black;
 			form.Controls.Add(pic);
 			form.ShowDialog();
 		}
