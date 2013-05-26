@@ -132,8 +132,9 @@ namespace FrEee.WinForms.Controls
 					{
 						// where and how big will we draw the sector?
 						var drawsize = SectorDrawSize;
-						var drawx = x * drawsize + Width / 2f;
-						var drawy = y * drawsize + Height / 2f;
+						int border = 1; // how much of a border between sectors?
+						var drawx = x * (drawsize + border) + Width / 2f + border;
+						var drawy = y * (drawsize + border) + Height / 2f + border;
 
 						// find sector
 						var sector = StarSystem.GetSector(x, y);
