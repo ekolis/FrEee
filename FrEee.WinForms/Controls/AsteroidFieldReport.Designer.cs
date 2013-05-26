@@ -108,6 +108,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.Location = new System.Drawing.Point(6, 32);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 51;
 			this.picPortrait.TabStop = false;
 			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);

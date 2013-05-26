@@ -46,6 +46,7 @@ namespace FrEee.WinForms.Controls
             treeNode5});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.pnlColony = new FrEee.WinForms.Controls.GamePanel();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
 			this.lblConstructionTime = new System.Windows.Forms.Label();
@@ -92,16 +93,15 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
-			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlColony.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
 			this.pageFacil.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageOrders.SuspendLayout();
 			this.pageAbility.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// gameTabControl1
@@ -148,6 +148,16 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(7, 33);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picPortrait.TabIndex = 67;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// pnlColony
 			// 
@@ -739,15 +749,6 @@ namespace FrEee.WinForms.Controls
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
 			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(7, 33);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.TabIndex = 67;
-			this.picPortrait.TabStop = false;
-			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
-			// 
 			// PlanetReport
 			// 
 			this.AutoScroll = true;
@@ -759,6 +760,7 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.ResumeLayout(false);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.pnlColony.ResumeLayout(false);
 			this.pnlColony.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
@@ -768,7 +770,6 @@ namespace FrEee.WinForms.Controls
 			this.pageCargo.PerformLayout();
 			this.pageOrders.ResumeLayout(false);
 			this.pageAbility.ResumeLayout(false);
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 
 		}

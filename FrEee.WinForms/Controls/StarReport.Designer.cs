@@ -28,7 +28,7 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Star is unstable and could explode at any time.");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Star is unstable and could explode at any time.");
 			this.txtAge = new System.Windows.Forms.Label();
 			this.lblAge = new System.Windows.Forms.Label();
 			this.txtBrightness = new System.Windows.Forms.Label();
@@ -113,7 +113,7 @@ namespace FrEee.WinForms.Controls
 			this.lstAbilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstAbilities.ForeColor = System.Drawing.Color.White;
 			this.lstAbilities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem2});
+            listViewItem1});
 			this.lstAbilities.Location = new System.Drawing.Point(4, 169);
 			this.lstAbilities.Name = "lstAbilities";
 			this.lstAbilities.Size = new System.Drawing.Size(315, 329);
@@ -148,6 +148,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.Location = new System.Drawing.Point(3, 34);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 52;
 			this.picPortrait.TabStop = false;
 			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
