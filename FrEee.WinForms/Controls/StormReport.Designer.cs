@@ -40,10 +40,10 @@ namespace FrEee.WinForms.Controls
             treeNode5});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.txtSize = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
@@ -75,10 +75,10 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.txtDescription);
 			this.pageDetail.Controls.Add(this.txtSize);
 			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
@@ -86,6 +86,15 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(6, 32);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.TabIndex = 52;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// txtDescription
 			// 
@@ -116,15 +125,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName.Size = new System.Drawing.Size(52, 20);
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Storm";
-			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(8, 32);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 9;
-			this.picPortrait.TabStop = false;
 			// 
 			// picOwnerFlag
 			// 
@@ -198,10 +198,10 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.TabPage pageDetail;
 		private System.Windows.Forms.Label txtSize;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
 		private System.Windows.Forms.TreeView treeAbilities;
 		private System.Windows.Forms.Label txtDescription;
+		private GamePictureBox picPortrait;
 	}
 }

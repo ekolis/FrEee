@@ -28,18 +28,19 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8});
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Happiness: +10");
-			System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("Population: +30");
-			System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
-            treeNode10,
-            treeNode11});
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Happiness: +10");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Population: +30");
+			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
+            treeNode4,
+            treeNode5});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.txtValueRadioactives = new System.Windows.Forms.Label();
 			this.txtValueOrganics = new System.Windows.Forms.Label();
@@ -51,7 +52,6 @@ namespace FrEee.WinForms.Controls
 			this.lblAtmosphere = new System.Windows.Forms.Label();
 			this.txtSizeSurface = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
@@ -83,6 +83,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.txtDescription);
 			this.pageDetail.Controls.Add(this.txtValueRadioactives);
 			this.pageDetail.Controls.Add(this.txtValueOrganics);
@@ -94,7 +95,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblAtmosphere);
 			this.pageDetail.Controls.Add(this.txtSizeSurface);
 			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
@@ -102,6 +102,15 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(6, 32);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.TabIndex = 51;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// txtDescription
 			// 
@@ -216,15 +225,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Tudran Asteroid Field I";
 			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(8, 32);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 9;
-			this.picPortrait.TabStop = false;
-			// 
 			// picOwnerFlag
 			// 
 			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
@@ -252,24 +252,24 @@ namespace FrEee.WinForms.Controls
 			this.treeAbilities.ForeColor = System.Drawing.Color.White;
 			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
 			this.treeAbilities.Name = "treeAbilities";
-			treeNode7.Name = "Node1";
-			treeNode7.Text = "Racial Trait: +5";
-			treeNode8.Name = "Node3";
-			treeNode8.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode8.Text = "War Shrine: +10";
-			treeNode9.Name = "Node0";
-			treeNode9.Text = "Attack Modifier: +15";
-			treeNode10.Name = "Node1";
-			treeNode10.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode10.Text = "Happiness: +10";
-			treeNode11.Name = "Node2";
-			treeNode11.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode11.Text = "Population: +30";
-			treeNode12.Name = "Node0";
-			treeNode12.Text = "Minerals Income Modifier: +40";
+			treeNode1.Name = "Node1";
+			treeNode1.Text = "Racial Trait: +5";
+			treeNode2.Name = "Node3";
+			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode2.Text = "War Shrine: +10";
+			treeNode3.Name = "Node0";
+			treeNode3.Text = "Attack Modifier: +15";
+			treeNode4.Name = "Node1";
+			treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode4.Text = "Happiness: +10";
+			treeNode5.Name = "Node2";
+			treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode5.Text = "Population: +30";
+			treeNode6.Name = "Node0";
+			treeNode6.Text = "Minerals Income Modifier: +40";
 			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode12});
+            treeNode3,
+            treeNode6});
 			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
 			this.treeAbilities.TabIndex = 0;
 			// 
@@ -302,7 +302,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblAtmosphere;
 		private System.Windows.Forms.Label txtSizeSurface;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
 		private System.Windows.Forms.TreeView treeAbilities;
@@ -310,5 +309,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtValueOrganics;
 		private System.Windows.Forms.Label txtValueMinerals;
 		private System.Windows.Forms.Label txtDescription;
+		private GamePictureBox picPortrait;
 	}
 }

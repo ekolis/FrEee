@@ -46,33 +46,6 @@ namespace FrEee.WinForms.Controls
             treeNode5});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
-			this.txtDescription = new System.Windows.Forms.Label();
-			this.txtValueRadioactives = new System.Windows.Forms.Label();
-			this.txtValueOrganics = new System.Windows.Forms.Label();
-			this.txtValueMinerals = new System.Windows.Forms.Label();
-			this.lblValue = new System.Windows.Forms.Label();
-			this.txtConditions = new System.Windows.Forms.Label();
-			this.lblConditions = new System.Windows.Forms.Label();
-			this.txtAtmosphere = new System.Windows.Forms.Label();
-			this.lblAtmosphere = new System.Windows.Forms.Label();
-			this.txtSizeSurface = new System.Windows.Forms.Label();
-			this.txtName = new System.Windows.Forms.Label();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
-			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
-			this.pageFacil = new System.Windows.Forms.TabPage();
-			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
-			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
-			this.pageCargo = new System.Windows.Forms.TabPage();
-			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
-			this.lstCargoDetail = new System.Windows.Forms.ListView();
-			this.pageOrders = new System.Windows.Forms.TabPage();
-			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
-			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
-			this.pageAbility = new System.Windows.Forms.TabPage();
-			this.treeAbilities = new System.Windows.Forms.TreeView();
 			this.pnlColony = new FrEee.WinForms.Controls.GamePanel();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
 			this.lblConstructionTime = new System.Windows.Forms.Label();
@@ -93,15 +66,42 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeOrganics = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resIncomeRadioactives = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblIncome = new System.Windows.Forms.Label();
+			this.txtDescription = new System.Windows.Forms.Label();
+			this.txtValueRadioactives = new System.Windows.Forms.Label();
+			this.txtValueOrganics = new System.Windows.Forms.Label();
+			this.txtValueMinerals = new System.Windows.Forms.Label();
+			this.lblValue = new System.Windows.Forms.Label();
+			this.txtConditions = new System.Windows.Forms.Label();
+			this.lblConditions = new System.Windows.Forms.Label();
+			this.txtAtmosphere = new System.Windows.Forms.Label();
+			this.lblAtmosphere = new System.Windows.Forms.Label();
+			this.txtSizeSurface = new System.Windows.Forms.Label();
+			this.txtName = new System.Windows.Forms.Label();
+			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
+			this.pageFacil = new System.Windows.Forms.TabPage();
+			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
+			this.lstFacilitiesDetail = new System.Windows.Forms.ListView();
+			this.pageCargo = new System.Windows.Forms.TabPage();
+			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
+			this.lstCargoDetail = new System.Windows.Forms.ListView();
+			this.pageOrders = new System.Windows.Forms.TabPage();
+			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
+			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
+			this.pageAbility = new System.Windows.Forms.TabPage();
+			this.treeAbilities = new System.Windows.Forms.TreeView();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.pnlColony.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
 			this.pageFacil.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageOrders.SuspendLayout();
 			this.pageAbility.SuspendLayout();
-			this.pnlColony.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// gameTabControl1
@@ -128,6 +128,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.pnlColony);
 			this.pageDetail.Controls.Add(this.txtDescription);
 			this.pageDetail.Controls.Add(this.txtValueRadioactives);
@@ -140,7 +141,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblAtmosphere);
 			this.pageDetail.Controls.Add(this.txtSizeSurface);
 			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
@@ -148,344 +148,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
-			// 
-			// txtDescription
-			// 
-			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDescription.Location = new System.Drawing.Point(10, 163);
-			this.txtDescription.Name = "txtDescription";
-			this.txtDescription.Size = new System.Drawing.Size(283, 55);
-			this.txtDescription.TabIndex = 50;
-			this.txtDescription.Text = "Large planet with an extended troposphere.";
-			// 
-			// txtValueRadioactives
-			// 
-			this.txtValueRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueRadioactives.ForeColor = System.Drawing.Color.Red;
-			this.txtValueRadioactives.Location = new System.Drawing.Point(227, 133);
-			this.txtValueRadioactives.Name = "txtValueRadioactives";
-			this.txtValueRadioactives.Size = new System.Drawing.Size(45, 23);
-			this.txtValueRadioactives.TabIndex = 49;
-			this.txtValueRadioactives.Text = "150%";
-			// 
-			// txtValueOrganics
-			// 
-			this.txtValueOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueOrganics.ForeColor = System.Drawing.Color.Lime;
-			this.txtValueOrganics.Location = new System.Drawing.Point(190, 133);
-			this.txtValueOrganics.Name = "txtValueOrganics";
-			this.txtValueOrganics.Size = new System.Drawing.Size(45, 23);
-			this.txtValueOrganics.TabIndex = 48;
-			this.txtValueOrganics.Text = "150%";
-			// 
-			// txtValueMinerals
-			// 
-			this.txtValueMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueMinerals.ForeColor = System.Drawing.Color.Blue;
-			this.txtValueMinerals.Location = new System.Drawing.Point(156, 133);
-			this.txtValueMinerals.Name = "txtValueMinerals";
-			this.txtValueMinerals.Size = new System.Drawing.Size(45, 23);
-			this.txtValueMinerals.TabIndex = 47;
-			this.txtValueMinerals.Text = "150%";
-			// 
-			// lblValue
-			// 
-			this.lblValue.AutoSize = true;
-			this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblValue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblValue.Location = new System.Drawing.Point(144, 118);
-			this.lblValue.Name = "lblValue";
-			this.lblValue.Size = new System.Drawing.Size(38, 15);
-			this.lblValue.TabIndex = 16;
-			this.lblValue.Text = "Value";
-			// 
-			// txtConditions
-			// 
-			this.txtConditions.AutoSize = true;
-			this.txtConditions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConditions.Location = new System.Drawing.Point(159, 103);
-			this.txtConditions.Name = "txtConditions";
-			this.txtConditions.Size = new System.Drawing.Size(50, 15);
-			this.txtConditions.TabIndex = 15;
-			this.txtConditions.Text = "Optimal";
-			// 
-			// lblConditions
-			// 
-			this.lblConditions.AutoSize = true;
-			this.lblConditions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblConditions.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblConditions.Location = new System.Drawing.Point(144, 88);
-			this.lblConditions.Name = "lblConditions";
-			this.lblConditions.Size = new System.Drawing.Size(65, 15);
-			this.lblConditions.TabIndex = 14;
-			this.lblConditions.Text = "Conditions";
-			// 
-			// txtAtmosphere
-			// 
-			this.txtAtmosphere.AutoSize = true;
-			this.txtAtmosphere.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtAtmosphere.Location = new System.Drawing.Point(159, 73);
-			this.txtAtmosphere.Name = "txtAtmosphere";
-			this.txtAtmosphere.Size = new System.Drawing.Size(56, 15);
-			this.txtAtmosphere.TabIndex = 13;
-			this.txtAtmosphere.Text = "Methane";
-			// 
-			// lblAtmosphere
-			// 
-			this.lblAtmosphere.AutoSize = true;
-			this.lblAtmosphere.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblAtmosphere.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblAtmosphere.Location = new System.Drawing.Point(144, 58);
-			this.lblAtmosphere.Name = "lblAtmosphere";
-			this.lblAtmosphere.Size = new System.Drawing.Size(73, 15);
-			this.lblAtmosphere.TabIndex = 12;
-			this.lblAtmosphere.Text = "Atmosphere";
-			// 
-			// txtSizeSurface
-			// 
-			this.txtSizeSurface.AutoSize = true;
-			this.txtSizeSurface.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtSizeSurface.Location = new System.Drawing.Point(159, 26);
-			this.txtSizeSurface.Name = "txtSizeSurface";
-			this.txtSizeSurface.Size = new System.Drawing.Size(108, 15);
-			this.txtSizeSurface.TabIndex = 11;
-			this.txtSizeSurface.Text = "Large Rock Planet";
-			// 
-			// txtName
-			// 
-			this.txtName.AutoSize = true;
-			this.txtName.Location = new System.Drawing.Point(143, 6);
-			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(79, 20);
-			this.txtName.TabIndex = 10;
-			this.txtName.Text = "Tudran IV";
-			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(8, 32);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 9;
-			this.picPortrait.TabStop = false;
-			// 
-			// picOwnerFlag
-			// 
-			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
-			this.picOwnerFlag.Name = "picOwnerFlag";
-			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
-			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picOwnerFlag.TabIndex = 8;
-			this.picOwnerFlag.TabStop = false;
-			// 
-			// pageFacil
-			// 
-			this.pageFacil.BackColor = System.Drawing.Color.Black;
-			this.pageFacil.Controls.Add(this.txtFacilitySlotsFree);
-			this.pageFacil.Controls.Add(this.lstFacilitiesDetail);
-			this.pageFacil.Location = new System.Drawing.Point(4, 29);
-			this.pageFacil.Name = "pageFacil";
-			this.pageFacil.Padding = new System.Windows.Forms.Padding(3);
-			this.pageFacil.Size = new System.Drawing.Size(312, 426);
-			this.pageFacil.TabIndex = 2;
-			this.pageFacil.Text = "Facil";
-			// 
-			// txtFacilitySlotsFree
-			// 
-			this.txtFacilitySlotsFree.AutoSize = true;
-			this.txtFacilitySlotsFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFacilitySlotsFree.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtFacilitySlotsFree.Location = new System.Drawing.Point(3, 3);
-			this.txtFacilitySlotsFree.Name = "txtFacilitySlotsFree";
-			this.txtFacilitySlotsFree.Size = new System.Drawing.Size(83, 15);
-			this.txtFacilitySlotsFree.TabIndex = 36;
-			this.txtFacilitySlotsFree.Text = "0/12 slots free";
-			// 
-			// lstFacilitiesDetail
-			// 
-			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
-			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
-			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3,
-            listViewItem4});
-			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
-			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
-			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
-			this.lstFacilitiesDetail.TabIndex = 24;
-			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
-			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
-			// 
-			// pageCargo
-			// 
-			this.pageCargo.BackColor = System.Drawing.Color.Black;
-			this.pageCargo.Controls.Add(this.txtCargoSpaceFree);
-			this.pageCargo.Controls.Add(this.lstCargoDetail);
-			this.pageCargo.Location = new System.Drawing.Point(4, 29);
-			this.pageCargo.Name = "pageCargo";
-			this.pageCargo.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCargo.Size = new System.Drawing.Size(312, 426);
-			this.pageCargo.TabIndex = 3;
-			this.pageCargo.Text = "Cargo";
-			// 
-			// txtCargoSpaceFree
-			// 
-			this.txtCargoSpaceFree.AutoSize = true;
-			this.txtCargoSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCargoSpaceFree.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtCargoSpaceFree.Location = new System.Drawing.Point(3, 3);
-			this.txtCargoSpaceFree.Name = "txtCargoSpaceFree";
-			this.txtCargoSpaceFree.Size = new System.Drawing.Size(122, 15);
-			this.txtCargoSpaceFree.TabIndex = 37;
-			this.txtCargoSpaceFree.Text = "1000kT / 4000kT free";
-			// 
-			// lstCargoDetail
-			// 
-			this.lstCargoDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstCargoDetail.BackColor = System.Drawing.Color.Black;
-			this.lstCargoDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
-			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem5,
-            listViewItem6});
-			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
-			this.lstCargoDetail.Name = "lstCargoDetail";
-			this.lstCargoDetail.Size = new System.Drawing.Size(313, 399);
-			this.lstCargoDetail.TabIndex = 24;
-			this.lstCargoDetail.UseCompatibleStateImageBehavior = false;
-			this.lstCargoDetail.View = System.Windows.Forms.View.Tile;
-			// 
-			// pageOrders
-			// 
-			this.pageOrders.BackColor = System.Drawing.Color.Black;
-			this.pageOrders.Controls.Add(this.btnOrdersClear);
-			this.pageOrders.Controls.Add(this.btnOrderDelete);
-			this.pageOrders.Controls.Add(this.btnOrderDown);
-			this.pageOrders.Controls.Add(this.btnOrderUp);
-			this.pageOrders.Controls.Add(this.lstOrdersDetail);
-			this.pageOrders.Location = new System.Drawing.Point(4, 29);
-			this.pageOrders.Name = "pageOrders";
-			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
-			this.pageOrders.Size = new System.Drawing.Size(312, 426);
-			this.pageOrders.TabIndex = 1;
-			this.pageOrders.Text = "Orders";
-			// 
-			// btnOrdersClear
-			// 
-			this.btnOrdersClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrdersClear.BackColor = System.Drawing.Color.Black;
-			this.btnOrdersClear.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrdersClear.Location = new System.Drawing.Point(244, 443);
-			this.btnOrdersClear.Name = "btnOrdersClear";
-			this.btnOrdersClear.Size = new System.Drawing.Size(57, 33);
-			this.btnOrdersClear.TabIndex = 4;
-			this.btnOrdersClear.Text = "Clear";
-			this.btnOrdersClear.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDelete
-			// 
-			this.btnOrderDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrderDelete.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDelete.Location = new System.Drawing.Point(172, 443);
-			this.btnOrderDelete.Name = "btnOrderDelete";
-			this.btnOrderDelete.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDelete.TabIndex = 3;
-			this.btnOrderDelete.Text = "Del";
-			this.btnOrderDelete.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDown
-			// 
-			this.btnOrderDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderDown.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDown.Location = new System.Drawing.Point(80, 443);
-			this.btnOrderDown.Name = "btnOrderDown";
-			this.btnOrderDown.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDown.TabIndex = 2;
-			this.btnOrderDown.Text = "Dn";
-			this.btnOrderDown.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderUp
-			// 
-			this.btnOrderUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderUp.BackColor = System.Drawing.Color.Black;
-			this.btnOrderUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderUp.Location = new System.Drawing.Point(8, 443);
-			this.btnOrderUp.Name = "btnOrderUp";
-			this.btnOrderUp.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderUp.TabIndex = 1;
-			this.btnOrderUp.Text = "Up";
-			this.btnOrderUp.UseVisualStyleBackColor = false;
-			// 
-			// lstOrdersDetail
-			// 
-			this.lstOrdersDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
-			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
-			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
-			this.lstOrdersDetail.Items.AddRange(new object[] {
-            "Launch All Fighters"});
-			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
-			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 380);
-			this.lstOrdersDetail.TabIndex = 0;
-			// 
-			// pageAbility
-			// 
-			this.pageAbility.BackColor = System.Drawing.Color.Black;
-			this.pageAbility.Controls.Add(this.treeAbilities);
-			this.pageAbility.Location = new System.Drawing.Point(4, 29);
-			this.pageAbility.Name = "pageAbility";
-			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
-			this.pageAbility.Size = new System.Drawing.Size(312, 426);
-			this.pageAbility.TabIndex = 4;
-			this.pageAbility.Text = "Ability";
-			// 
-			// treeAbilities
-			// 
-			this.treeAbilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.treeAbilities.BackColor = System.Drawing.Color.Black;
-			this.treeAbilities.ForeColor = System.Drawing.Color.White;
-			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
-			this.treeAbilities.Name = "treeAbilities";
-			treeNode1.Name = "Node1";
-			treeNode1.Text = "Racial Trait: +5";
-			treeNode2.Name = "Node3";
-			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode2.Text = "War Shrine: +10";
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Attack Modifier: +15";
-			treeNode4.Name = "Node1";
-			treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode4.Text = "Happiness: +10";
-			treeNode5.Name = "Node2";
-			treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode5.Text = "Population: +30";
-			treeNode6.Name = "Node0";
-			treeNode6.Text = "Minerals Income Modifier: +40";
-			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode6});
-			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
-			this.treeAbilities.TabIndex = 0;
 			// 
 			// pnlColony
 			// 
@@ -748,6 +410,344 @@ namespace FrEee.WinForms.Controls
 			this.lblIncome.TabIndex = 66;
 			this.lblIncome.Text = "Income";
 			// 
+			// txtDescription
+			// 
+			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtDescription.Location = new System.Drawing.Point(10, 163);
+			this.txtDescription.Name = "txtDescription";
+			this.txtDescription.Size = new System.Drawing.Size(283, 55);
+			this.txtDescription.TabIndex = 50;
+			this.txtDescription.Text = "Large planet with an extended troposphere.";
+			// 
+			// txtValueRadioactives
+			// 
+			this.txtValueRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueRadioactives.ForeColor = System.Drawing.Color.Red;
+			this.txtValueRadioactives.Location = new System.Drawing.Point(227, 133);
+			this.txtValueRadioactives.Name = "txtValueRadioactives";
+			this.txtValueRadioactives.Size = new System.Drawing.Size(45, 23);
+			this.txtValueRadioactives.TabIndex = 49;
+			this.txtValueRadioactives.Text = "150%";
+			// 
+			// txtValueOrganics
+			// 
+			this.txtValueOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueOrganics.ForeColor = System.Drawing.Color.Lime;
+			this.txtValueOrganics.Location = new System.Drawing.Point(190, 133);
+			this.txtValueOrganics.Name = "txtValueOrganics";
+			this.txtValueOrganics.Size = new System.Drawing.Size(45, 23);
+			this.txtValueOrganics.TabIndex = 48;
+			this.txtValueOrganics.Text = "150%";
+			// 
+			// txtValueMinerals
+			// 
+			this.txtValueMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueMinerals.ForeColor = System.Drawing.Color.Blue;
+			this.txtValueMinerals.Location = new System.Drawing.Point(156, 133);
+			this.txtValueMinerals.Name = "txtValueMinerals";
+			this.txtValueMinerals.Size = new System.Drawing.Size(45, 23);
+			this.txtValueMinerals.TabIndex = 47;
+			this.txtValueMinerals.Text = "150%";
+			// 
+			// lblValue
+			// 
+			this.lblValue.AutoSize = true;
+			this.lblValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblValue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblValue.Location = new System.Drawing.Point(144, 118);
+			this.lblValue.Name = "lblValue";
+			this.lblValue.Size = new System.Drawing.Size(38, 15);
+			this.lblValue.TabIndex = 16;
+			this.lblValue.Text = "Value";
+			// 
+			// txtConditions
+			// 
+			this.txtConditions.AutoSize = true;
+			this.txtConditions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtConditions.Location = new System.Drawing.Point(159, 103);
+			this.txtConditions.Name = "txtConditions";
+			this.txtConditions.Size = new System.Drawing.Size(50, 15);
+			this.txtConditions.TabIndex = 15;
+			this.txtConditions.Text = "Optimal";
+			// 
+			// lblConditions
+			// 
+			this.lblConditions.AutoSize = true;
+			this.lblConditions.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblConditions.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblConditions.Location = new System.Drawing.Point(144, 88);
+			this.lblConditions.Name = "lblConditions";
+			this.lblConditions.Size = new System.Drawing.Size(65, 15);
+			this.lblConditions.TabIndex = 14;
+			this.lblConditions.Text = "Conditions";
+			// 
+			// txtAtmosphere
+			// 
+			this.txtAtmosphere.AutoSize = true;
+			this.txtAtmosphere.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAtmosphere.Location = new System.Drawing.Point(159, 73);
+			this.txtAtmosphere.Name = "txtAtmosphere";
+			this.txtAtmosphere.Size = new System.Drawing.Size(56, 15);
+			this.txtAtmosphere.TabIndex = 13;
+			this.txtAtmosphere.Text = "Methane";
+			// 
+			// lblAtmosphere
+			// 
+			this.lblAtmosphere.AutoSize = true;
+			this.lblAtmosphere.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblAtmosphere.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblAtmosphere.Location = new System.Drawing.Point(144, 58);
+			this.lblAtmosphere.Name = "lblAtmosphere";
+			this.lblAtmosphere.Size = new System.Drawing.Size(73, 15);
+			this.lblAtmosphere.TabIndex = 12;
+			this.lblAtmosphere.Text = "Atmosphere";
+			// 
+			// txtSizeSurface
+			// 
+			this.txtSizeSurface.AutoSize = true;
+			this.txtSizeSurface.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtSizeSurface.Location = new System.Drawing.Point(159, 26);
+			this.txtSizeSurface.Name = "txtSizeSurface";
+			this.txtSizeSurface.Size = new System.Drawing.Size(108, 15);
+			this.txtSizeSurface.TabIndex = 11;
+			this.txtSizeSurface.Text = "Large Rock Planet";
+			// 
+			// txtName
+			// 
+			this.txtName.AutoSize = true;
+			this.txtName.Location = new System.Drawing.Point(143, 6);
+			this.txtName.Name = "txtName";
+			this.txtName.Size = new System.Drawing.Size(79, 20);
+			this.txtName.TabIndex = 10;
+			this.txtName.Text = "Tudran IV";
+			// 
+			// picOwnerFlag
+			// 
+			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
+			this.picOwnerFlag.Name = "picOwnerFlag";
+			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
+			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picOwnerFlag.TabIndex = 8;
+			this.picOwnerFlag.TabStop = false;
+			// 
+			// pageFacil
+			// 
+			this.pageFacil.BackColor = System.Drawing.Color.Black;
+			this.pageFacil.Controls.Add(this.txtFacilitySlotsFree);
+			this.pageFacil.Controls.Add(this.lstFacilitiesDetail);
+			this.pageFacil.Location = new System.Drawing.Point(4, 29);
+			this.pageFacil.Name = "pageFacil";
+			this.pageFacil.Padding = new System.Windows.Forms.Padding(3);
+			this.pageFacil.Size = new System.Drawing.Size(312, 426);
+			this.pageFacil.TabIndex = 2;
+			this.pageFacil.Text = "Facil";
+			// 
+			// txtFacilitySlotsFree
+			// 
+			this.txtFacilitySlotsFree.AutoSize = true;
+			this.txtFacilitySlotsFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtFacilitySlotsFree.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtFacilitySlotsFree.Location = new System.Drawing.Point(3, 3);
+			this.txtFacilitySlotsFree.Name = "txtFacilitySlotsFree";
+			this.txtFacilitySlotsFree.Size = new System.Drawing.Size(83, 15);
+			this.txtFacilitySlotsFree.TabIndex = 36;
+			this.txtFacilitySlotsFree.Text = "0/12 slots free";
+			// 
+			// lstFacilitiesDetail
+			// 
+			this.lstFacilitiesDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstFacilitiesDetail.BackColor = System.Drawing.Color.Black;
+			this.lstFacilitiesDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstFacilitiesDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstFacilitiesDetail.ForeColor = System.Drawing.Color.White;
+			this.lstFacilitiesDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3,
+            listViewItem4});
+			this.lstFacilitiesDetail.Location = new System.Drawing.Point(0, 22);
+			this.lstFacilitiesDetail.Name = "lstFacilitiesDetail";
+			this.lstFacilitiesDetail.Size = new System.Drawing.Size(312, 408);
+			this.lstFacilitiesDetail.TabIndex = 24;
+			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
+			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
+			// 
+			// pageCargo
+			// 
+			this.pageCargo.BackColor = System.Drawing.Color.Black;
+			this.pageCargo.Controls.Add(this.txtCargoSpaceFree);
+			this.pageCargo.Controls.Add(this.lstCargoDetail);
+			this.pageCargo.Location = new System.Drawing.Point(4, 29);
+			this.pageCargo.Name = "pageCargo";
+			this.pageCargo.Padding = new System.Windows.Forms.Padding(3);
+			this.pageCargo.Size = new System.Drawing.Size(312, 426);
+			this.pageCargo.TabIndex = 3;
+			this.pageCargo.Text = "Cargo";
+			// 
+			// txtCargoSpaceFree
+			// 
+			this.txtCargoSpaceFree.AutoSize = true;
+			this.txtCargoSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCargoSpaceFree.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.txtCargoSpaceFree.Location = new System.Drawing.Point(3, 3);
+			this.txtCargoSpaceFree.Name = "txtCargoSpaceFree";
+			this.txtCargoSpaceFree.Size = new System.Drawing.Size(122, 15);
+			this.txtCargoSpaceFree.TabIndex = 37;
+			this.txtCargoSpaceFree.Text = "1000kT / 4000kT free";
+			// 
+			// lstCargoDetail
+			// 
+			this.lstCargoDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstCargoDetail.BackColor = System.Drawing.Color.Black;
+			this.lstCargoDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
+			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem5,
+            listViewItem6});
+			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
+			this.lstCargoDetail.Name = "lstCargoDetail";
+			this.lstCargoDetail.Size = new System.Drawing.Size(313, 399);
+			this.lstCargoDetail.TabIndex = 24;
+			this.lstCargoDetail.UseCompatibleStateImageBehavior = false;
+			this.lstCargoDetail.View = System.Windows.Forms.View.Tile;
+			// 
+			// pageOrders
+			// 
+			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.btnOrdersClear);
+			this.pageOrders.Controls.Add(this.btnOrderDelete);
+			this.pageOrders.Controls.Add(this.btnOrderDown);
+			this.pageOrders.Controls.Add(this.btnOrderUp);
+			this.pageOrders.Controls.Add(this.lstOrdersDetail);
+			this.pageOrders.Location = new System.Drawing.Point(4, 29);
+			this.pageOrders.Name = "pageOrders";
+			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
+			this.pageOrders.Size = new System.Drawing.Size(312, 426);
+			this.pageOrders.TabIndex = 1;
+			this.pageOrders.Text = "Orders";
+			// 
+			// btnOrdersClear
+			// 
+			this.btnOrdersClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrdersClear.BackColor = System.Drawing.Color.Black;
+			this.btnOrdersClear.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrdersClear.Location = new System.Drawing.Point(244, 443);
+			this.btnOrdersClear.Name = "btnOrdersClear";
+			this.btnOrdersClear.Size = new System.Drawing.Size(57, 33);
+			this.btnOrdersClear.TabIndex = 4;
+			this.btnOrdersClear.Text = "Clear";
+			this.btnOrdersClear.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderDelete
+			// 
+			this.btnOrderDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderDelete.BackColor = System.Drawing.Color.Black;
+			this.btnOrderDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderDelete.Location = new System.Drawing.Point(172, 443);
+			this.btnOrderDelete.Name = "btnOrderDelete";
+			this.btnOrderDelete.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderDelete.TabIndex = 3;
+			this.btnOrderDelete.Text = "Del";
+			this.btnOrderDelete.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderDown
+			// 
+			this.btnOrderDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOrderDown.BackColor = System.Drawing.Color.Black;
+			this.btnOrderDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderDown.Location = new System.Drawing.Point(80, 443);
+			this.btnOrderDown.Name = "btnOrderDown";
+			this.btnOrderDown.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderDown.TabIndex = 2;
+			this.btnOrderDown.Text = "Dn";
+			this.btnOrderDown.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderUp
+			// 
+			this.btnOrderUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOrderUp.BackColor = System.Drawing.Color.Black;
+			this.btnOrderUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderUp.Location = new System.Drawing.Point(8, 443);
+			this.btnOrderUp.Name = "btnOrderUp";
+			this.btnOrderUp.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderUp.TabIndex = 1;
+			this.btnOrderUp.Text = "Up";
+			this.btnOrderUp.UseVisualStyleBackColor = false;
+			// 
+			// lstOrdersDetail
+			// 
+			this.lstOrdersDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
+			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
+			this.lstOrdersDetail.FormattingEnabled = true;
+			this.lstOrdersDetail.ItemHeight = 20;
+			this.lstOrdersDetail.Items.AddRange(new object[] {
+            "Launch All Fighters"});
+			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
+			this.lstOrdersDetail.Name = "lstOrdersDetail";
+			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 380);
+			this.lstOrdersDetail.TabIndex = 0;
+			// 
+			// pageAbility
+			// 
+			this.pageAbility.BackColor = System.Drawing.Color.Black;
+			this.pageAbility.Controls.Add(this.treeAbilities);
+			this.pageAbility.Location = new System.Drawing.Point(4, 29);
+			this.pageAbility.Name = "pageAbility";
+			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
+			this.pageAbility.Size = new System.Drawing.Size(312, 426);
+			this.pageAbility.TabIndex = 4;
+			this.pageAbility.Text = "Ability";
+			// 
+			// treeAbilities
+			// 
+			this.treeAbilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.treeAbilities.BackColor = System.Drawing.Color.Black;
+			this.treeAbilities.ForeColor = System.Drawing.Color.White;
+			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
+			this.treeAbilities.Name = "treeAbilities";
+			treeNode1.Name = "Node1";
+			treeNode1.Text = "Racial Trait: +5";
+			treeNode2.Name = "Node3";
+			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode2.Text = "War Shrine: +10";
+			treeNode3.Name = "Node0";
+			treeNode3.Text = "Attack Modifier: +15";
+			treeNode4.Name = "Node1";
+			treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode4.Text = "Happiness: +10";
+			treeNode5.Name = "Node2";
+			treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			treeNode5.Text = "Population: +30";
+			treeNode6.Name = "Node0";
+			treeNode6.Text = "Minerals Income Modifier: +40";
+			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode6});
+			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
+			this.treeAbilities.TabIndex = 0;
+			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(7, 33);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.TabIndex = 67;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
+			// 
 			// PlanetReport
 			// 
 			this.AutoScroll = true;
@@ -759,7 +759,8 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.ResumeLayout(false);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
+			this.pnlColony.ResumeLayout(false);
+			this.pnlColony.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
 			this.pageFacil.ResumeLayout(false);
 			this.pageFacil.PerformLayout();
@@ -767,8 +768,7 @@ namespace FrEee.WinForms.Controls
 			this.pageCargo.PerformLayout();
 			this.pageOrders.ResumeLayout(false);
 			this.pageAbility.ResumeLayout(false);
-			this.pnlColony.ResumeLayout(false);
-			this.pnlColony.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -784,7 +784,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblAtmosphere;
 		private System.Windows.Forms.Label txtSizeSurface;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageOrders;
 		private GameButton btnOrdersClear;
@@ -824,5 +823,6 @@ namespace FrEee.WinForms.Controls
 		private ResourceDisplay resIncomeOrganics;
 		private ResourceDisplay resIncomeRadioactives;
 		private System.Windows.Forms.Label lblIncome;
+		private GamePictureBox picPortrait;
 	}
 }

@@ -54,5 +54,10 @@ namespace FrEee.WinForms.Controls
 
 			base.OnPaint(e);
 		}
+
+		private void picPortrait_Click(object sender, System.EventArgs e)
+		{
+			picPortrait.ShowFullSize(Star.Name);
+		}
 	}
 }

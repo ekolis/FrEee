@@ -28,17 +28,17 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Star is unstable and could explode at any time.");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("Star is unstable and could explode at any time.");
 			this.txtAge = new System.Windows.Forms.Label();
 			this.lblAge = new System.Windows.Forms.Label();
 			this.txtBrightness = new System.Windows.Forms.Label();
 			this.lblBrightness = new System.Windows.Forms.Label();
 			this.txtSizeColor = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.lstAbilities = new System.Windows.Forms.ListView();
 			this.lblDescription = new System.Windows.Forms.Label();
 			this.txtDescription = new System.Windows.Forms.Label();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -104,15 +104,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName.TabIndex = 21;
 			this.txtName.Text = "Tudran Star";
 			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(3, 34);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 20;
-			this.picPortrait.TabStop = false;
-			// 
 			// lstAbilities
 			// 
 			this.lstAbilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -122,7 +113,7 @@ namespace FrEee.WinForms.Controls
 			this.lstAbilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstAbilities.ForeColor = System.Drawing.Color.White;
 			this.lstAbilities.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem2});
 			this.lstAbilities.Location = new System.Drawing.Point(4, 169);
 			this.lstAbilities.Name = "lstAbilities";
 			this.lstAbilities.Size = new System.Drawing.Size(315, 329);
@@ -152,11 +143,21 @@ namespace FrEee.WinForms.Controls
 			this.txtDescription.TabIndex = 29;
 			this.txtDescription.Text = "An old red star.";
 			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(3, 34);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.TabIndex = 52;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
+			// 
 			// StarReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
+			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtDescription);
 			this.Controls.Add(this.lblDescription);
 			this.Controls.Add(this.lstAbilities);
@@ -166,7 +167,6 @@ namespace FrEee.WinForms.Controls
 			this.Controls.Add(this.lblBrightness);
 			this.Controls.Add(this.txtSizeColor);
 			this.Controls.Add(this.txtName);
-			this.Controls.Add(this.picPortrait);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "StarReport";
 			this.Size = new System.Drawing.Size(322, 501);
@@ -184,9 +184,9 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblBrightness;
 		private System.Windows.Forms.Label txtSizeColor;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.ListView lstAbilities;
 		private System.Windows.Forms.Label lblDescription;
 		private System.Windows.Forms.Label txtDescription;
+		private GamePictureBox picPortrait;
 	}
 }

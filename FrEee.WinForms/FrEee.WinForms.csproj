@@ -96,6 +96,12 @@
     <Compile Include="Controls\GamePanel.Designer.cs">
       <DependentUpon>GamePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\GamePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GamePictureBox.Designer.cs">
+      <DependentUpon>GamePictureBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GameProgressBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
