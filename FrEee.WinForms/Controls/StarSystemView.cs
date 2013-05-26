@@ -153,7 +153,7 @@ namespace FrEee.WinForms.Controls
 							var font = new Font("Sans Serif", 8);
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center; // center align our name
-							sf.LineAlignment = StringAlignment.Far; // bottom align our name
+							sf.LineAlignment = StringAlignment.Near; // top align our name
 							pe.Graphics.DrawString(largest.Name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 						}
 
