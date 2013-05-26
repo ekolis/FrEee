@@ -154,7 +154,7 @@ namespace FrEee.WinForms.Controls
 							var font = new Font("Sans Serif", 8);
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center; // center align our name
-							sf.LineAlignment = StringAlignment.Near; // top align our name
+							sf.LineAlignment = StringAlignment.Far; // bottom align our name
 							pe.Graphics.DrawString(largest.Name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 						}
 
@@ -166,7 +166,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Far; // right align our number
 							sf.LineAlignment = StringAlignment.Far; // bottom align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.Count.ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f, sf);
+							pe.Graphics.DrawString(sector.SpaceObjects.Count.ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f - 12, sf);
 						}
 
 						// draw selection reticule
