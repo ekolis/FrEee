@@ -432,14 +432,17 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Gets a square thumbnail image.
+		/// Resizes an image. The image should be square.
 		/// </summary>
 		/// <param name="image"></param>
 		/// <param name="size"></param>
 		/// <returns></returns>
-		public static Image GetThumbnailImage(this Image image, int size)
+		public static Image Resize(this Image image, int size)
 		{
-			return image.GetThumbnailImage(size, size, () => false, IntPtr.Zero);
+			var result = new Bitmap(size, size);
+			var g = Graphics.FromImage(result);
+			g.DrawImage(image, 0, 0, size, size);
+			return result;
 		}
 	}
 }
