@@ -138,7 +138,7 @@ namespace FrEee.WinForms.Controls
 						// find sector
 						var sector = StarSystem.GetSector(x, y);
 
-						// draw image and owner flag of largest space object (if any)
+						// draw image, owner flag, and name of largest space object (if any)
 						var largest = sector.SpaceObjects.Largest();
 						if (largest != null)
 						{
@@ -146,10 +146,17 @@ namespace FrEee.WinForms.Controls
 							if (largest is Planet)
 								((Planet)largest).DrawPopulationBars(portrait);
 							pe.Graphics.DrawImage(portrait, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
-							
+
 							// TODO - draw owner flag
+
+							// TODO - cache font and brush assets
+							var font = new Font("Sans Serif", 8);
+							var sf = new StringFormat();
+							sf.Alignment = StringAlignment.Center; // center align our name
+							sf.LineAlignment = StringAlignment.Far; // bottom align our name
+							pe.Graphics.DrawString(largest.Name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 						}
-						
+
 						// draw number to indicate how many space objects are present if >1
 						if (sector.SpaceObjects.Count > 1)
 						{
