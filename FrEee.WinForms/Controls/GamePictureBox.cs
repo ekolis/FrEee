@@ -27,10 +27,10 @@ namespace FrEee.WinForms.Controls
 			form.MaximizeBox = false;
 			form.FormBorderStyle = FormBorderStyle.FixedDialog;
 			form.ClientSize = Image.Size;
-			if (form.ClientSize.Width > Screen.PrimaryScreen.WorkingArea.Width)
-				form.ClientSize = new Size(Screen.PrimaryScreen.WorkingArea.Width, form.ClientSize.Height);
-			if (form.ClientSize.Height > Screen.PrimaryScreen.WorkingArea.Height)
-				form.ClientSize = new Size(form.ClientSize.Height, Screen.PrimaryScreen.WorkingArea.Height);
+			if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
+				form.Width = Screen.PrimaryScreen.WorkingArea.Width;
+			if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
+				form.Height = Screen.PrimaryScreen.WorkingArea.Height;
 			form.StartPosition = FormStartPosition.CenterParent;
 			var pic = new PictureBox();
 			pic.Image = Image;
