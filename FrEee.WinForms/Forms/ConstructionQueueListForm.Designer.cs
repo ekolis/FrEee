@@ -31,15 +31,17 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
+			this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
 			this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.Rate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.ordersDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.FirstItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.FirstItemEta = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.Eta = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.constructionQueueBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -62,7 +64,9 @@
             this.isSpaceYardQueueDataGridViewCheckBoxColumn,
             this.isColonyQueueDataGridViewCheckBoxColumn,
             this.Rate,
-            this.ordersDataGridViewTextBoxColumn});
+            this.FirstItemName,
+            this.FirstItemEta,
+            this.Eta});
 			this.gridQueues.DataSource = this.constructionQueueBindingSource;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
@@ -82,6 +86,24 @@
 			this.gridQueues.Size = new System.Drawing.Size(784, 469);
 			this.gridQueues.TabIndex = 0;
 			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
+			// 
+			// constructionQueueBindingSource
+			// 
+			this.constructionQueueBindingSource.AllowNew = false;
+			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
 			// 
 			// Icon
 			// 
@@ -122,31 +144,26 @@
 			this.Rate.ReadOnly = true;
 			this.Rate.Width = 200;
 			// 
-			// ordersDataGridViewTextBoxColumn
+			// FirstItemName
 			// 
-			this.ordersDataGridViewTextBoxColumn.DataPropertyName = "Orders";
-			this.ordersDataGridViewTextBoxColumn.HeaderText = "Orders";
-			this.ordersDataGridViewTextBoxColumn.Name = "ordersDataGridViewTextBoxColumn";
-			this.ordersDataGridViewTextBoxColumn.ReadOnly = true;
-			this.ordersDataGridViewTextBoxColumn.Width = 200;
+			this.FirstItemName.DataPropertyName = "FirstItemName";
+			this.FirstItemName.HeaderText = "Building";
+			this.FirstItemName.Name = "FirstItemName";
+			this.FirstItemName.ReadOnly = true;
 			// 
-			// constructionQueueBindingSource
+			// FirstItemEta
 			// 
-			this.constructionQueueBindingSource.AllowNew = false;
-			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
+			this.FirstItemEta.DataPropertyName = "FirstItemEta";
+			this.FirstItemEta.HeaderText = "1st ETA";
+			this.FirstItemEta.Name = "FirstItemEta";
+			this.FirstItemEta.ReadOnly = true;
 			// 
-			// dataGridViewTextBoxColumn1
+			// Eta
 			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			// 
-			// dataGridViewTextBoxColumn2
-			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.Eta.DataPropertyName = "Eta";
+			this.Eta.HeaderText = "Queue ETA";
+			this.Eta.Name = "Eta";
+			this.Eta.ReadOnly = true;
 			// 
 			// ConstructionQueueListForm
 			// 
@@ -172,11 +189,13 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
+		private System.Windows.Forms.DataGridViewImageColumn Icon;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isSpaceYardQueueDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isColonyQueueDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Rate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ordersDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
+		private System.Windows.Forms.DataGridViewTextBoxColumn FirstItemName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn FirstItemEta;
+		private System.Windows.Forms.DataGridViewTextBoxColumn Eta;
 	}
 }

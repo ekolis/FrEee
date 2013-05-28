@@ -116,5 +116,46 @@ namespace FrEee.Game.Objects.Civilization
 					break; // couldn't accomplish any orders
 			}
 		}
+
+		/// <summary>
+		/// The name of the first item.
+		/// </summary>
+		public string FirstItemName
+		{
+			get
+			{
+				if (!Orders.Any())
+					return null;
+				return Orders[0].Item.Name;
+			}
+		}
+
+		/// <summary>
+		/// The ETA for completion of the first item, in turns.
+		/// </summary>
+		public int? FirstItemEta
+		{
+			get
+			{
+				if (!Orders.Any())
+					return null;
+				var remainingCost = Orders[0].Item.Cost - Orders[0].Item.ConstructionProgress;
+				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
+			}
+		}
+
+		/// <summary>
+		/// The ETA for completion of the whole queue, in turns.
+		/// </summary>
+		public int? Eta
+		{
+			get
+			{
+				if (!Orders.Any())
+					return null;
+				var remainingCost = Orders.Select(o => o.Item.Cost - o.Item.ConstructionProgress).Aggregate((r1, r2) => r1 + r2);
+				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
+			}
+		}
 	}
 }
