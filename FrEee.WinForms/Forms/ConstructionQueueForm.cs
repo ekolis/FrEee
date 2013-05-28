@@ -110,7 +110,12 @@ namespace FrEee.WinForms.Forms
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var item = new ListViewItem(order.Item.Name);
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, Math.Ceiling(order.Item.Cost.Keys.Max(res => (double)order.Item.Cost[res] / (double)ConstructionQueue.Rate[res])) + " turns"));
+				var duration = Math.Ceiling(order.Item.Cost.Keys.Max(res => (double)order.Item.Cost[res] / (double)ConstructionQueue.Rate[res]));
+				var remainingCost = order.Item.Cost - order.Item.ConstructionProgress;
+				var progress = order.Item.ConstructionProgress.Min(kvp => (double)kvp.Value / (double)order.Item.Cost[kvp.Key]);
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, (int)Math.Round(progress * 100) + "%"));
+				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)remainingCost[res] / (double)ConstructionQueue.Rate[res]));
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta + " turns"));
 				item.ImageIndex = i;
 				il.Images.Add(order.Item.Icon);
 				lstQueue.Items.Add(item);

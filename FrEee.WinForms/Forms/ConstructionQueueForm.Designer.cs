@@ -47,7 +47,7 @@
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstQueue = new System.Windows.Forms.ListView();
 			this.Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.Progress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.chkEmergency = new System.Windows.Forms.CheckBox();
 			this.chkRepeat = new System.Windows.Forms.CheckBox();
@@ -60,6 +60,7 @@
 			this.btnReorder = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -288,6 +289,7 @@
 			this.lstQueue.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstQueue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Item,
+            this.Progress,
             this.ETA});
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
 			this.lstQueue.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
@@ -304,9 +306,9 @@
 			this.Item.Text = "Item";
 			this.Item.Width = 200;
 			// 
-			// ETA
+			// Progress
 			// 
-			this.ETA.Text = "ETA";
+			this.Progress.Text = "Progress";
 			// 
 			// chkOnlyLatest
 			// 
@@ -454,6 +456,10 @@
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
+			// ETA
+			// 
+			this.ETA.Text = "ETA";
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -524,8 +530,9 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label lblFacilityName;
 		private System.Windows.Forms.ColumnHeader Item;
-		private System.Windows.Forms.ColumnHeader ETA;
+		private System.Windows.Forms.ColumnHeader Progress;
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
+		private System.Windows.Forms.ColumnHeader ETA;
 	}
 }
