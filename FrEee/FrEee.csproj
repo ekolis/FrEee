@@ -123,6 +123,7 @@
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\ConnectivityGraph.cs" />
     <Compile Include="Utility\Extensions\CommonExtensions.cs" />
     <Compile Include="Utility\Extensions\TaskFactoryExtensions.cs" />
     <Compile Include="Utility\Pictures.cs" />

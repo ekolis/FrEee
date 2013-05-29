@@ -228,5 +228,10 @@ namespace FrEee.Game.Objects.Space
 			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				BackgroundImagePath = null;
 		}
+
+		public bool Contains(Sector sector)
+		{
+			return sectors.Cast<Sector>().Contains(sector);
+		}
 	}
 }

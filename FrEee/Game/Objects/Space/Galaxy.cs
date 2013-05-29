@@ -27,6 +27,7 @@ namespace FrEee.Game.Objects.Space
 			TurnNumber = 24000;
 			OrderTargets = new List<IOrderable>();
 			Mod = mod;
+			Galaxy.Current = this;
 		}
 
 		#region Properties

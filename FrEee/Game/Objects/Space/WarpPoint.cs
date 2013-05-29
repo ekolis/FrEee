@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
@@ -34,6 +35,17 @@ namespace FrEee.Game.Objects.Space
 		public new WarpPoint Instantiate()
 		{
 			return this.Clone();
+		}
+
+		/// <summary>
+		/// The star system that ships will appear in when they go through this warp point.
+		/// </summary>
+		public ObjectLocation<StarSystem> TargetStarSystemLocation
+		{
+			get
+			{
+				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item.Contains(Target));
+			}
 		}
 	}
 }

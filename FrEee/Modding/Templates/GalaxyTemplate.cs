@@ -8,6 +8,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Modding.Templates
 {
@@ -99,10 +100,160 @@ namespace FrEee.Modding.Templates
 					status.Progress += progressPerStarSystem;
 			}
 
-			// TODO - create warp points
+			// create warp points
+			var graph = new ConnectivityGraph<ObjectLocation<StarSystem>>();
+			foreach (var ssl in gal.StarSystemLocations)
+				graph.Add(ssl);
+			bool triedEverything = false;
+			while (!graph.IsConnected)
+			{
+				// pick 2 systems
+				ObjectLocation<StarSystem> startLocation, endLocation = null;
+				var ssls = gal.StarSystemLocations;
+				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
+				if (fewest < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem && !triedEverything)
+				{
+					// place warp points where there aren't many to begin with
+					var candidates = ssls.Where(ssl => GetWarpPointCount(ssl.Item) == fewest);
+					startLocation = candidates.PickRandom();
+
+					// pick a nearby star system to create a warp point to
+					for (int dist = 1; dist < gal.Width + gal.Height; dist++)
+					{
+						var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(startLocation.Location) == dist);
+						nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
+						nearby = nearby.Where(ssl => AreWarpPointAnglesOk(startLocation, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
+						if (nearby.Any())
+						{
+							endLocation = nearby.PickRandom();
+							break;
+						}
+					}
+
+					// time to give up and place warp points willy nilly?
+					if (endLocation == null)
+					{
+						triedEverything = true;
+						continue;
+					}
+				}
+				else
+				{
+					// systems are full of warp points - need to connect systems that are not very connected yet
+					var subgraphs = graph.Subdivide();
+					var smallest = subgraphs.Min(sg => sg.Count);
+					var candidates = subgraphs.Where(sg => sg.Count == smallest);
+					var subgraph1 = candidates.PickRandom();
+					var subgraph2 = subgraphs.Where(sg => sg != subgraph1).PickRandom();
+					
+					// try to pick systems that are nearby
+					var crosstable = subgraph1.Join(subgraph2, ssl => 0, ssl => 0, (ssl1, ssl2) => Tuple.Create(ssl1, ssl2));
+					var mindist = crosstable.Min(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location));
+					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist).PickRandom();
+					startLocation = pair.Item1;
+					endLocation = pair.Item2;
+				}
+
+				// create the warp points
+				// TODO - use mod files data for warp points
+				var angleOut = startLocation.Location.AngleTo(endLocation.Location);
+				var angleBack = angleOut + 180d;
+				var sector1 = GetWarpPointSector(startLocation.Item, angleOut);
+				var sector2 = GetWarpPointSector(endLocation.Item, angleBack);
+				var wp1 = new WarpPoint
+				{
+					Description = "A warp point connecting two star systems.",
+					IsOneWay = false,
+					Name = "Warp Point to " + endLocation.Item.Name,
+					StellarSize = StellarSize.Medium,
+					Target = sector2,
+				};
+				sector1.SpaceObjects.Add(wp1);
+				var wp2 = new WarpPoint
+				{
+					Description = "A warp point connecting two star systems.",
+					IsOneWay = false,
+					Name = "Warp Point to " + startLocation.Item.Name,
+					StellarSize = StellarSize.Medium,
+					Target = sector1,
+				};
+				sector2.SpaceObjects.Add(wp2);
+				foreach (var abil in startLocation.Item.WarpPointAbilities.Concat(endLocation.Item.WarpPointAbilities))
+				{
+					wp1.IntrinsicAbilities.Add(abil);
+					wp2.IntrinsicAbilities.Add(abil);
+				}
+
+				// mark systems connected
+				graph.Connect(startLocation, endLocation, true);
+			}
 
 			return gal;
 		}
+
+#region Helper methods for greating warp points
+
+		private int GetWarpPointCount(StarSystem sys)
+		{
+			return sys.FindSpaceObjects<WarpPoint>().Flatten().Count();
+		}
+
+		private IEnumerable<double> GetWarpPointAngles(ObjectLocation<StarSystem> ssl, Galaxy gal)
+		{
+			foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
+			{
+				var target = wp.TargetStarSystemLocation;
+				var offset = target.Location.AngleTo(ssl.Location);
+				yield return offset;
+			}
+		}
+
+		private bool AreWarpPointAnglesOk(ObjectLocation<StarSystem> start, ObjectLocation<StarSystem> end, Galaxy gal, int minAngle)
+		{
+			var angleOut = NormalizeAngle(start.Location.AngleTo(end.Location));
+			var angleBack = NormalizeAngle(angleOut + 180d);
+
+			// test warp points going out
+			foreach (var angle in GetWarpPointAngles(start, gal))
+			{
+				if (IsInRangeExclusive(angleOut, angle, minAngle))
+					return false;
+			}
+
+			// test warp points coming back
+			foreach (var angle in GetWarpPointAngles(end, gal))
+			{
+				if (IsInRangeExclusive(angleBack, angle, minAngle))
+					return false;
+			}
+
+			return true;
+		}
+
+		private double NormalizeAngle(double angle)
+		{
+			angle %= 360d;
+			if (angle < 0)
+				angle += 360d;
+			return angle;
+		}
+
+		private bool IsInRangeExclusive(double d, double middle, double range)
+		{
+			return d > middle - range && d < middle + range;
+		}
+
+		private Sector GetWarpPointSector(StarSystem sys, double angle)
+		{
+			var x = Math.Sin(angle / 180d * Math.PI) * sys.Radius;
+			var y = Math.Cos(angle / 180d * Math.PI) * sys.Radius;
+			var multiplier = sys.Radius / Math.Max(Math.Abs(x), Math.Abs(y));
+			x *= multiplier;
+			y *= multiplier;
+			return sys.GetSector((int)Math.Round(x), (int)Math.Round(y));
+		}
+
+#endregion
 
 		private void NameStellarObjects(StarSystem sys)
 		{
