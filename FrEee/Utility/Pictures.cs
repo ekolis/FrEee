@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Modding;
+using System.Linq;
 
 namespace FrEee.Utility
 {
@@ -110,12 +111,24 @@ namespace FrEee.Utility
 		{
 			if (!objectPortraits.ContainsKey(sobj))
 			{
-				var portrait =
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".png")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".bmp")) ??
-					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
-					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
-					GetGenericImage(sobj.GetType());
+				Image portrait;
+				if (Mod.Current.RootPath != null)
+				{
+					portrait =
+						GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".png")) ??
+						GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".bmp")) ??
+						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
+						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
+						GetGenericImage(sobj.GetType());
+				}
+				else
+				{
+					// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+					portrait =
+						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
+						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
+						GetGenericImage(sobj.GetType());
+				}
 
 				// clone the image so we don't mess up the original cached version
 				portrait = (Image)portrait.Clone();
@@ -146,12 +159,23 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(FacilityTemplate f)
 		{
-			return
-				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".bmp")) ??
-				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
-				GetGenericImage(f.GetType());
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".bmp")) ??
+					GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
+					GetGenericImage(f.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
+					GetGenericImage(f.GetType());
+			}
 		}
 
 		/// <summary>
@@ -170,12 +194,23 @@ namespace FrEee.Utility
 		/// </summary>
 		public static Image GetPortrait(ComponentTemplate c)
 		{
-			return
-				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".bmp")) ??
-				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".bmp")) ??
-				GetGenericImage(c.GetType());
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".bmp")) ??
+					GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".bmp")) ??
+					GetGenericImage(c.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".bmp")) ??
+					GetGenericImage(c.GetType());
+			}
 		}
 
 		public static Image GetCachedImage(string path)
