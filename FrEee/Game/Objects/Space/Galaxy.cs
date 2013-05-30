@@ -215,6 +215,25 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Saves the master view and all players' views of the galaxy.
+		/// </summary>
+		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
+		public static void SaveAll()
+		{
+			if (Current.CurrentEmpire != null)
+				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
+			var gamname = Current.Save();
+			for (int i = 0; i < Current.Empires.Count; i++)
+			{
+				Load(gamname);
+				Current.CurrentEmpire = Current.Empires[i];
+				Current.Redact();
+				Current.Save();
+			}
+			Load(gamname);
+		}
+
+		/// <summary>
 		/// Loads a savegame from the Savegame folder.
 		/// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
 		/// </summary>
@@ -426,22 +445,21 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Saves the master view and all players' views of the galaxy.
+		/// Searches for space objects matching criteria.
 		/// </summary>
-		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
-		public static void SaveAll()
+		/// <typeparam name="T">The type of space object.</typeparam>
+		/// <param name="criteria">The criteria.</param>
+		/// <returns>The matching space objects, grouped by location.</returns>
+		public ILookup<ObjectLocation<StarSystem>, ILookup<Point, T>> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			if (Current.CurrentEmpire != null)
-				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
-			var gamname = Current.Save();
-			for (int i = 0; i < Current.Empires.Count; i++)
+			var list = new List<Tuple<ObjectLocation<StarSystem>, ILookup<Point, T>>>();
+			foreach (var ssl in StarSystemLocations)
 			{
-				Load(gamname);
-				Current.CurrentEmpire = Current.Empires[i];
-				Current.Redact();
-				Current.Save();
+				var lookup = ssl.Item.FindSpaceObjects(criteria);
+				if (lookup.Any())
+					list.Add(Tuple.Create(ssl, lookup));
 			}
-			Load(gamname);
+			return list.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
 		#endregion

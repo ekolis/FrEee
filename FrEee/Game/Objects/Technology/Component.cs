@@ -30,5 +30,10 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public string Name { get { return Template.Name; } }
+
+		/// <summary>
+		/// The mount used on this component.
+		/// </summary>
+		public Mount Mount { get; set; }
 	}
 }

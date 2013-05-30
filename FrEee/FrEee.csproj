@@ -58,6 +58,12 @@
     <Compile Include="Game\Interfaces\ICommand.cs" />
     <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
+    <Compile Include="Game\Interfaces\IDesign.cs" />
+    <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Objects\Technology\Hull.cs" />
+    <Compile Include="Game\Objects\Technology\Mount.cs" />
+    <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />
+    <Compile Include="Game\Objects\Vehicles\Design.cs" />
     <Compile Include="Game\Interfaces\INamed.cs" />
     <Compile Include="Game\Interfaces\IOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderable.cs" />
@@ -75,6 +81,7 @@
     <Compile Include="Game\Objects\Combat\WeaponDisplayEffect.cs" />
     <Compile Include="Game\Objects\Technology\Component.cs" />
     <Compile Include="Game\Objects\Technology\Facility.cs" />
+    <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
