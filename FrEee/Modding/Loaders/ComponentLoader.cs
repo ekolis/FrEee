@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,8 @@ namespace FrEee.Modding.Loaders
 		{
 			foreach (var rec in df.Records)
 			{
-				var c = new Component();
-				mod.Components.Add(c);
+				var c = new ComponentTemplate();
+				mod.ComponentTemplates.Add(c);
 
 				int index = -1;
 

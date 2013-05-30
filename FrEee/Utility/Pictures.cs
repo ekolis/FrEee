@@ -5,6 +5,7 @@ using System.IO;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Utility
 {
@@ -151,9 +152,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Gets the icon image for a component.
 		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static Image GetIcon(Component c)
+		public static Image GetIcon(ComponentTemplate c)
 		{
 			var portrait = GetPortrait(c);
 			if (portrait == null)
@@ -164,15 +163,29 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Gets the portrait image for a component.
 		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static Image GetPortrait(Component c)
+		public static Image GetPortrait(ComponentTemplate c)
 		{
 			// TODO - check mod folders for images too
 			return
 				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
-				GetCachedImage(Path.Combine("Pictures", "Facilities", c.PictureName + ".bmp")) ??
+				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".bmp")) ??
 				GetGenericImage(c.GetType());
+		}
+
+		/// <summary>
+		/// Gets the icon image for a component.
+		/// </summary>
+		public static Image GetIcon(Component c)
+		{
+			return GetIcon(c.Template);
+		}
+
+		/// <summary>
+		/// Gets the portrait image for a component.
+		/// </summary>
+		public static Image GetPortrait(Component c)
+		{
+			return GetPortrait(c.Template);
 		}
 
 		public static Image GetCachedImage(string path)
