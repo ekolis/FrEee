@@ -498,6 +498,7 @@
 			this.Name = "ConstructionQueueForm";
 			this.Text = "Construction Queue";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConstructionQueueForm_FormClosing);
+			this.Load += new System.EventHandler(this.ConstructionQueueForm_Load);
 			this.gamePanel1.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);

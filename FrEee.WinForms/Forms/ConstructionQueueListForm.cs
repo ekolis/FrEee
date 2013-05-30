@@ -25,9 +25,11 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
 			var form = new ConstructionQueueForm(queue);
 			form.ShowDialog();
+			Cursor = Cursors.Default;
 		}
 	}
 }

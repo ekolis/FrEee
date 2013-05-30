@@ -156,8 +156,10 @@ namespace FrEee.WinForms.Forms
 
 		private void btnQueues_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			var form = new ConstructionQueueListForm();
 			form.ShowDialog();
+			Cursor = Cursors.Default;
 		}
 
 		private void btnEndTurn_Click(object sender, EventArgs e)

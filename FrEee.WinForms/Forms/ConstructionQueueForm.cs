@@ -23,10 +23,14 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			ConstructionQueue = queue;
-			Text = queue.SpaceObject.Name + " Construction Queue";
-			resMineralsRate.Amount = queue.Rate["Minerals"];
-			resOrganicsRate.Amount = queue.Rate["Organics"];
-			resRadioactivesRate.Amount = queue.Rate["Radioactives"];
+		}
+
+		private void ConstructionQueueForm_Load(object sender, EventArgs e)
+		{
+			Text = ConstructionQueue.SpaceObject.Name + " Construction Queue";
+			resMineralsRate.Amount = ConstructionQueue.Rate["Minerals"];
+			resOrganicsRate.Amount = ConstructionQueue.Rate["Organics"];
+			resRadioactivesRate.Amount = ConstructionQueue.Rate["Radioactives"];
 
 			// add facilities to constructable items
 			// TODO - hide unresearched facilities
