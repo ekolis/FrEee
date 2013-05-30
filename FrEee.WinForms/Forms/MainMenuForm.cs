@@ -60,9 +60,14 @@ namespace FrEee.WinForms.Forms
 				Progress = 0d,
 				Message = "Initializing",
 			};
+//#if !DEBUG
 			var task = Task.Factory.StartNewWithExceptionHandling(s =>
 			{
 				var st = (Status)s;
+//#endif
+//#if DEBUG
+			var st = new Status(); // just to stop the other code from whining
+//#endif
 				st.Message = "Loading mod";
 				Mod.Load(null, true, st, 0.5);
 				st.Message = "Setting up game";
@@ -79,9 +84,11 @@ namespace FrEee.WinForms.Forms
 				var turn = Galaxy.Current.TurnNumber;
 				st.Message = "Loading game";
 				Galaxy.Load(name + "_" + turn + "_1.gam");
+//#if !DEBUG
 			}, status)
 				.ContinueWithWithExceptionHandling(t =>
 				{
+//#endif
 					var game = new GameForm(Galaxy.Current);
 					game.Show();
 					game.FormClosed += (s, args) =>
@@ -91,6 +98,7 @@ namespace FrEee.WinForms.Forms
 						IsBusy = false;
 					};
 					Hide();
+//#if !DEBUG
 				}, scheduler);
 			while (!task.IsCompleted)
 			{
@@ -98,6 +106,7 @@ namespace FrEee.WinForms.Forms
 				progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
 				Application.DoEvents();
 			}
+//#endif
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)
