@@ -94,7 +94,7 @@ namespace FrEee.WinForms.Controls
 				lstOrdersDetail.Items.Clear();
 				// TODO - load orders
 
-				// TODO - load facilities
+				// TODO - load facility slots free
 				txtFacilitySlotsFree.Text = "0 / 0 slots free";
 				lstFacilitiesDetail.Items.Clear();
 				if (Planet.Colony != null)
@@ -104,7 +104,7 @@ namespace FrEee.WinForms.Controls
 					lstFacilitiesDetail.LargeImageList = il;
 					lstFacilitiesDetail.SmallImageList = il;
 					int i = 0;
-					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f))
+					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
 					{
 						var item = new ListViewItem(fg.Count() + "x " + fg.Key.Name);
 						item.ImageIndex = i;
