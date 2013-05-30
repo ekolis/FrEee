@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\WeaponTargets.cs" />
     <Compile Include="Game\Enumerations\StellarSize.cs" />
+    <Compile Include="Game\Enumerations\VehicleTypes.cs" />
     <Compile Include="Game\Enumerations\Visibility.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
@@ -66,15 +68,23 @@
     <Compile Include="Game\Objects\Abilities\AbilityRule.cs" />
     <Compile Include="Game\Objects\Civilization\Colony.cs" />
     <Compile Include="Game\Objects\Civilization\ConstructionQueue.cs" />
+    <Compile Include="Game\Objects\Combat\BeamWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\DamageType.cs" />
+    <Compile Include="Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\SeekerWeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Combat\WeaponDisplayEffect.cs" />
+    <Compile Include="Game\Objects\Technology\Component.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
-    <Compile Include="Game\Objects\Civilization\Facility.cs" />
+    <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
+    <Compile Include="Game\Objects\Technology\Facility.cs" />
     <Compile Include="Game\Objects\Commands\AddOrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\Command.cs" />
     <Compile Include="Game\Objects\Commands\RearrangeOrdersCommand.cs" />
     <Compile Include="Game\Objects\Commands\RemoveOrderCommand.cs" />
     <Compile Include="Game\Objects\Orders\ConstructionOrder.cs" />
-    <Compile Include="Game\Objects\Research\Technology.cs" />
-    <Compile Include="Game\Objects\Research\TechnologyRequirement.cs" />
+    <Compile Include="Game\Objects\Technology\SeekingWeaponInfo.cs" />
+    <Compile Include="Game\Objects\Technology\Technology.cs" />
+    <Compile Include="Game\Objects\Technology\TechnologyRequirement.cs" />
     <Compile Include="Game\Objects\Space\AsteroidField.cs" />
     <Compile Include="Game\Objects\Space\Galaxy.cs" />
     <Compile Include="Game\Objects\Space\Location.cs" />
@@ -86,6 +96,7 @@
     <Compile Include="Game\Objects\Space\Storm.cs" />
     <Compile Include="Game\Objects\Space\WarpPoint.cs" />
     <Compile Include="Game\GameSetup.cs" />
+    <Compile Include="Game\Objects\Technology\WeaponInfo.cs" />
     <Compile Include="Modding\IStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\Extensions.cs" />
     <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />

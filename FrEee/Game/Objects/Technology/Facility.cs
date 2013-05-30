@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Research;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
 
-namespace FrEee.Game.Objects.Civilization
+namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// A large immobile installation on a colony.
@@ -50,7 +49,7 @@ namespace FrEee.Game.Objects.Civilization
 		public int RomanNumeral { get; set; }
 
 		/// <summary>
-		/// Name of the picture used to represent this stellar object, excluding the file extension.
+		/// Name of the picture used to represent this facility, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>
 		public string PictureName { get; set; }

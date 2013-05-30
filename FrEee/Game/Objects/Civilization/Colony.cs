@@ -5,6 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game.Objects.Civilization
 {

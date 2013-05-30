@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using System;
 using System.Collections.Generic;

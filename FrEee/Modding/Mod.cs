@@ -7,7 +7,7 @@ using FrEee.Game;
 using System.Drawing;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Research;
+using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;

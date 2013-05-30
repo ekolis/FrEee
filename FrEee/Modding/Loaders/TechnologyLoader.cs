@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FrEee.Game.Objects.Research;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Modding.Loaders
 {

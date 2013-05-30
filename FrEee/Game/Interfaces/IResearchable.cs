@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using FrEee.Game.Objects.Research;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game.Interfaces
 {

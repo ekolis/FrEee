@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
 
 namespace FrEee.Utility
@@ -146,6 +146,33 @@ namespace FrEee.Utility
 				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
 				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
 				GetGenericImage(f.GetType());
+		}
+
+		/// <summary>
+		/// Gets the icon image for a component.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Component c)
+		{
+			var portrait = GetPortrait(c);
+			if (portrait == null)
+				return null;
+			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+		}
+
+		/// <summary>
+		/// Gets the portrait image for a component.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetPortrait(Component c)
+		{
+			// TODO - check mod folders for images too
+			return
+				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
+				GetCachedImage(Path.Combine("Pictures", "Facilities", c.PictureName + ".bmp")) ??
+				GetGenericImage(c.GetType());
 		}
 
 		public static Image GetCachedImage(string path)

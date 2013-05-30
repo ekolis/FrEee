@@ -1,6 +1,6 @@
 using System;
 
-namespace FrEee.Game.Objects.Research
+namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// Requirement for a technology to be researched to a particular level.

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 
-namespace FrEee.Game.Objects.Research
+namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// A technology that can be researched in the game.
