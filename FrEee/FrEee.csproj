@@ -97,7 +97,7 @@
     <Compile Include="Game\Objects\Space\WarpPoint.cs" />
     <Compile Include="Game\GameSetup.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfo.cs" />
-    <Compile Include="Modding\IStarSystemPlacementStrategy.cs" />
+    <Compile Include="Modding\Interfaces\IStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\Extensions.cs" />
     <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />
     <Compile Include="Modding\Loaders\FacilityLoader.cs" />
@@ -115,8 +115,8 @@
     <Compile Include="Modding\StarSystemPlacementStrategies\RandomStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\Templates\GalaxyTemplate.cs" />
     <Compile Include="Modding\Templates\RandomAbilityTemplate.cs" />
-    <Compile Include="Modding\CircleRadiusStellarObjectLocation.cs" />
-    <Compile Include="Modding\CoordStellarObjectLocation.cs" />
+    <Compile Include="Modding\StellarObjectLocations\CircleRadiusStellarObjectLocation.cs" />
+    <Compile Include="Modding\StellarObjectLocations\CoordStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\AsteroidFieldTemplate.cs" />
     <Compile Include="Modding\Templates\StormTemplate.cs" />
     <Compile Include="Modding\DataFile.cs" />
@@ -124,13 +124,13 @@
     <Compile Include="Modding\Field.cs" />
     <Compile Include="Modding\Loaders\AbilityLoader.cs" />
     <Compile Include="Modding\Loaders\ILoader.cs" />
-    <Compile Include="Modding\IStellarObjectLocation.cs" />
+    <Compile Include="Modding\Interfaces\IStellarObjectLocation.cs" />
     <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
     <Compile Include="Modding\Templates\PlanetTemplate.cs" />
     <Compile Include="Modding\Record.cs" />
-    <Compile Include="Modding\RingStellarObjectLocation.cs" />
+    <Compile Include="Modding\StellarObjectLocations\RingStellarObjectLocation.cs" />
     <Compile Include="Modding\Mod.cs" />
-    <Compile Include="Modding\SameAsStellarObjectLocation.cs" />
+    <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

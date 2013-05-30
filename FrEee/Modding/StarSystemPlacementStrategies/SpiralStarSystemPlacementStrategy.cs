@@ -7,6 +7,7 @@ using System.Text;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.StarSystemPlacementStrategies
 {

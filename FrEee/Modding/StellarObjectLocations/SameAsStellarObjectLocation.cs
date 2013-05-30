@@ -1,6 +1,7 @@
 ﻿using FrEee.Game;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.StellarObjectLocations
 {
 	/// <summary>
 	/// Places one stellar object at the same location as another.

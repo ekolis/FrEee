@@ -12,6 +12,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using Size = FrEee.Game.Enumerations.StellarSize;
 using FrEee.Game.Enumerations;
+using FrEee.Modding.StellarObjectLocations;
 
 namespace FrEee.Modding.Loaders
 {

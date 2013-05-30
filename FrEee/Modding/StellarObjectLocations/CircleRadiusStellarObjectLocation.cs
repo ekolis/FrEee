@@ -8,8 +8,9 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.StellarObjectLocations
 {
 	/// <summary>
 	/// Places a stellar object on a "true" circle at a specified distance from the center.

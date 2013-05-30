@@ -7,7 +7,7 @@ using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.Interfaces
 {
 	/// <summary>
 	/// A location that may specify either a specific sector's coordinates, or a group of sectors, from which one is chosen randomly.

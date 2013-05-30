@@ -6,8 +6,9 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.StellarObjectLocations
 {
 	/// <summary>
 	/// Chooses a specific sector of a system.

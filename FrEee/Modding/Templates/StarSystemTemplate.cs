@@ -7,6 +7,8 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
 using System.Drawing;
+using FrEee.Modding.Interfaces;
+using FrEee.Modding.StellarObjectLocations;
 
 namespace FrEee.Modding.Templates
 {

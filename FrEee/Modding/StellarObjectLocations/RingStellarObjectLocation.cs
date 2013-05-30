@@ -9,8 +9,9 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
-namespace FrEee.Modding
+namespace FrEee.Modding.StellarObjectLocations
 {
 	/// <summary>
 	/// Chooses a sector at a particular distance from the center of the system.
