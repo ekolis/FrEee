@@ -8,6 +8,6 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The name of the object.
 		/// </summary>
-		string Name { get; set; }
+		string Name { get; }
 	}
 }

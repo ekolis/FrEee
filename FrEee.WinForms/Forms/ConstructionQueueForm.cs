@@ -35,7 +35,7 @@ namespace FrEee.WinForms.Forms
 			ilFacil.ImageSize = new Size(32, 32);
 			lstFacilities.LargeImageList = ilFacil;
 			lstFacilities.SmallImageList = ilFacil;
-			foreach (var facil in Mod.Current.Facilities)
+			foreach (var facil in Mod.Current.FacilityTemplates)
 			{
 				var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
 				if (group == null)
@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 
 		private void lstFacilities_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
 		{
-			var facil = (Facility)e.Item.Tag;
+			var facil = (FacilityTemplate)e.Item.Tag;
 			lblFacilityName.Text = facil.Name;
 			resFacilityMineralsCost.Amount = facil.Cost["Minerals"];
 			resFacilityOrganicsCost.Amount = facil.Cost["Organics"];
@@ -86,8 +86,8 @@ namespace FrEee.WinForms.Forms
 			if (lstFacilities.SelectedItems.Count == 1)
 			{
 				var item = lstFacilities.SelectedItems[0];
-				var facil = (Facility)item.Tag;
-				var order = new ConstructionOrder<Facility> { Template = facil, Item = facil.Instantiate() };
+				var template = (FacilityTemplate)item.Tag;
+				var order = new ConstructionOrder<Facility> { Template = template, Item = template.Instantiate() };
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
 				{

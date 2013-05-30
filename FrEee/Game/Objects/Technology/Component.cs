@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A component of a vehicle.
 	/// </summary>
-	public class Component : IAbilityObject
+	public class Component : IAbilityObject, INamed
 	{
 		public Component(ComponentTemplate template)
 		{
@@ -28,5 +28,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Template.Abilities; }
 		}
+
+		public string Name { get { return Template.Name; } }
 	}
 }

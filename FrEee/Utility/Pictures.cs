@@ -77,7 +77,7 @@ namespace FrEee.Utility
 			img = new Bitmap(128, 128);
 			g = Graphics.FromImage(img);
 			g.FillRectangle(new SolidBrush(Color.Silver), 10, 10, 108, 108);
-			genericPictures.Add(typeof(Facility), img);
+			genericPictures.Add(typeof(FacilityTemplate), img);
 		}
 
 		/// <summary>
@@ -127,7 +127,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Image GetIcon(Facility f)
+		public static Image GetIcon(FacilityTemplate f)
 		{
 			var portrait = GetPortrait(f);
 			if (portrait == null)
@@ -140,7 +140,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Image GetPortrait(Facility f)
+		public static Image GetPortrait(FacilityTemplate f)
 		{
 			// TODO - check mod folders for images too
 			return

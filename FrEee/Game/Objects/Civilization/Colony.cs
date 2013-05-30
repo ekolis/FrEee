@@ -12,7 +12,8 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A colony on a planet.
 	/// </summary>
-	 [Serializable] public class Colony : IAbilityObject
+	[Serializable]
+	public class Colony : IAbilityObject
 	{
 		public Colony()
 		{
@@ -29,7 +30,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ICollection<Facility> Facilities { get; set; }
 
-				public IEnumerable<Ability> Abilities
+		public IEnumerable<Ability> Abilities
 		{
 			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Stack(); }
 		}

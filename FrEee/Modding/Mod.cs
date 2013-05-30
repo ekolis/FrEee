@@ -137,7 +137,7 @@ namespace FrEee.Modding
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
-			Facilities = new List<Facility>();
+			FacilityTemplates = new List<FacilityTemplate>();
 			ComponentTemplates = new List<ComponentTemplate>();
 			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
@@ -169,7 +169,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The facilities in the mod.
 		/// </summary>
-		public ICollection<Facility> Facilities { get; private set; }
+		public ICollection<FacilityTemplate> FacilityTemplates { get; private set; }
 
 		/// <summary>
 		/// The components in the mod.

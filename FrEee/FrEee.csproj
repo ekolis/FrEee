@@ -74,10 +74,11 @@
     <Compile Include="Game\Objects\Combat\SeekerWeaponDisplayEffect.cs" />
     <Compile Include="Game\Objects\Combat\WeaponDisplayEffect.cs" />
     <Compile Include="Game\Objects\Technology\Component.cs" />
+    <Compile Include="Game\Objects\Technology\Facility.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
-    <Compile Include="Game\Objects\Technology\Facility.cs" />
+    <Compile Include="Modding\Templates\FacilityTemplate.cs" />
     <Compile Include="Game\Objects\Commands\AddOrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\Command.cs" />
     <Compile Include="Game\Objects\Commands\RearrangeOrdersCommand.cs" />

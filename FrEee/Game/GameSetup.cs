@@ -48,13 +48,13 @@ namespace FrEee.Game
 
 			// find facilities to place on homeworlds
 			// TODO - if facility not found, don't place it, but don't crash
-			var sy = Mod.Current.Facilities.Last(facil => facil.HasAbility("Space Yard"));
-			var sp = Mod.Current.Facilities.Last(facil => facil.HasAbility("Spaceport"));
-			var rd = Mod.Current.Facilities.Last(facil => facil.HasAbility("Supply Generation"));
-			var min = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Minerals"));
-			var org = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Organics"));
-			var rad = Mod.Current.Facilities.Last(facil => facil.HasAbility("Resource Generation - Radioactives"));
-			var res = Mod.Current.Facilities.Last(facil => facil.HasAbility("Point Generation - Research"));
+			var sy = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Space Yard"));
+			var sp = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Spaceport"));
+			var rd = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Supply Generation"));
+			var min = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Minerals"));
+			var org = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Organics"));
+			var rad = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Radioactives"));
+			var res = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Point Generation - Research"));
 
 			// SY rate, for colonies
 			var rate = new Resources();
@@ -82,16 +82,16 @@ namespace FrEee.Game
 						Rate = rate,
 					}
 				};
-				hw.Colony.Facilities.Add(sy);
-				hw.Colony.Facilities.Add(sp); // TODO - don't add spaceport for Natural Merchants
-				hw.Colony.Facilities.Add(rd);
+				hw.Colony.Facilities.Add(sy.Instantiate());
+				hw.Colony.Facilities.Add(sp.Instantiate()); // TODO - don't add spaceport for Natural Merchants
+				hw.Colony.Facilities.Add(rd.Instantiate());
 				// TODO - respect planet facility space once we have PlanetSize.txt loaded
 				for (int i = 0; i < 5; i++)
 				{
-					hw.Colony.Facilities.Add(min);
-					hw.Colony.Facilities.Add(org);
-					hw.Colony.Facilities.Add(rad);
-					hw.Colony.Facilities.Add(res);
+					hw.Colony.Facilities.Add(min.Instantiate());
+					hw.Colony.Facilities.Add(org.Instantiate());
+					hw.Colony.Facilities.Add(rad.Instantiate());
+					hw.Colony.Facilities.Add(res.Instantiate());
 				}
 
 				// mark home systems explored

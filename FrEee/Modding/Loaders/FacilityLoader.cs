@@ -16,8 +16,8 @@ namespace FrEee.Modding.Loaders
 		{
 			foreach (var rec in df.Records)
 			{
-				var f = new Facility();
-				mod.Facilities.Add(f);
+				var f = new FacilityTemplate();
+				mod.FacilityTemplates.Add(f);
 
 				int index = -1;
 
