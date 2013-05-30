@@ -188,11 +188,19 @@ namespace FrEee.Utility
 
 			if (!fileCache.ContainsKey(path))
 			{
-				try
+				if (File.Exists(path))
 				{
-					fileCache[path] = Image.FromFile(path);
+					try
+					{
+						fileCache[path] = Image.FromFile(path);
+					}
+					catch
+					{
+						// TODO - log missing images
+						fileCache[path] = null;
+					}
 				}
-				catch
+				else
 				{
 					// TODO - log missing images
 					fileCache[path] = null;
