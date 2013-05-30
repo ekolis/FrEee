@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 				var st = (Status)s;
 //#endif
 //#if DEBUG
-			var st = new Status(); // just to stop the other code from whining
+//			var st = new Status(); // just to stop the other code from whining
 //#endif
 				st.Message = "Loading mod";
 				Mod.Load(null, true, st, 0.5);
