@@ -30,26 +30,7 @@ namespace FrEee.WinForms.Forms
 
 			// add facilities to constructable items
 			// TODO - hide unresearched facilities
-			int i = 0;
-			var ilFacil = new ImageList();
-			ilFacil.ImageSize = new Size(32, 32);
-			lstFacilities.LargeImageList = ilFacil;
-			lstFacilities.SmallImageList = ilFacil;
-			foreach (var facil in Mod.Current.FacilityTemplates)
-			{
-				var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
-				if (group == null)
-				{
-					group = new ListViewGroup(facil.Group);
-					lstFacilities.Groups.Add(group);
-				}
-				var item = new ListViewItem(facil.Name, i, group);
-				item.ImageIndex = i;
-				item.Tag = facil;
-				ilFacil.Images.Add(facil.Icon);
-				lstFacilities.Items.Add(item);
-				i++;
-			}
+			BindFacilityListView(Mod.Current.FacilityTemplates);
 
 			// show existing queued items
 			BindQueueListView();
@@ -151,6 +132,8 @@ namespace FrEee.WinForms.Forms
 						break;
 				}
 			}
+
+			// TODO - remember "only latest" between invocations of this form
 		}
 
 		private void SaveCommands()
@@ -178,6 +161,39 @@ namespace FrEee.WinForms.Forms
 			CancelChanges();
 			newCommands.Clear();
 			Close();
+		}
+
+		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
+		{
+			if (chkOnlyLatest.Checked)
+				BindFacilityListView(Mod.Current.FacilityTemplates.GroupBy(f => f.Family).Select(g => g.OrderBy(f2 => f2.RomanNumeral).Last()));
+			else
+				BindFacilityListView(Mod.Current.FacilityTemplates);
+		}
+
+		private void BindFacilityListView(IEnumerable<FacilityTemplate> templates)
+		{
+			int i = 0;
+			var ilFacil = new ImageList();
+			ilFacil.ImageSize = new Size(32, 32);
+			lstFacilities.LargeImageList = ilFacil;
+			lstFacilities.SmallImageList = ilFacil;
+			lstFacilities.Items.Clear();
+			foreach (var facil in templates)
+			{
+				var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
+				if (group == null)
+				{
+					group = new ListViewGroup(facil.Group);
+					lstFacilities.Groups.Add(group);
+				}
+				var item = new ListViewItem(facil.Name, i, group);
+				item.ImageIndex = i;
+				item.Tag = facil;
+				ilFacil.Images.Add(facil.Icon);
+				lstFacilities.Items.Add(item);
+				i++;
+			}
 		}
 	}
 }

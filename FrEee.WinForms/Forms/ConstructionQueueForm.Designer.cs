@@ -48,6 +48,7 @@
 			this.lstQueue = new System.Windows.Forms.ListView();
 			this.Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.Progress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.chkEmergency = new System.Windows.Forms.CheckBox();
 			this.chkRepeat = new System.Windows.Forms.CheckBox();
@@ -60,7 +61,6 @@
 			this.btnReorder = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -310,6 +310,10 @@
 			// 
 			this.Progress.Text = "Progress";
 			// 
+			// ETA
+			// 
+			this.ETA.Text = "ETA";
+			// 
 			// chkOnlyLatest
 			// 
 			this.chkOnlyLatest.AutoSize = true;
@@ -319,6 +323,7 @@
 			this.chkOnlyLatest.TabIndex = 8;
 			this.chkOnlyLatest.Text = "Only Latest";
 			this.chkOnlyLatest.UseVisualStyleBackColor = true;
+			this.chkOnlyLatest.CheckedChanged += new System.EventHandler(this.chkOnlyLatest_CheckedChanged);
 			// 
 			// chkEmergency
 			// 
@@ -455,10 +460,6 @@
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-			// 
-			// ETA
-			// 
-			this.ETA.Text = "ETA";
 			// 
 			// ConstructionQueueForm
 			// 
