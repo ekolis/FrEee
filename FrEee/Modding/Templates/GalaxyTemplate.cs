@@ -83,7 +83,7 @@ namespace FrEee.Modding.Templates
 			// create star systems
 			if (status != null)
 			status.Message = "Creating star systems";
-			var progressPerStarSystem = (desiredProgress - (status == null ? 0 : status.Progress)) / GameSetup.StarSystemCount;
+			var progressPerStarSystem = (desiredProgress - (status == null ? 0 : status.Progress)) / GameSetup.StarSystemCount / 2d;
 			for (int i = 0; i < GameSetup.StarSystemCount; i++)
 			{
 				if (status != null)
@@ -101,7 +101,11 @@ namespace FrEee.Modding.Templates
 					status.Progress += progressPerStarSystem;
 			}
 
+			var doneCreatingStarSystemsProgress = status == null ? 0.5 : status.Progress;
+
 			// create warp points
+			if (status != null)
+				status.Message = "Creating warp points";
 			var graph = new ConnectivityGraph<ObjectLocation<StarSystem>>();
 			foreach (var ssl in gal.StarSystemLocations)
 				graph.Add(ssl);
@@ -143,6 +147,12 @@ namespace FrEee.Modding.Templates
 					// systems are full of warp points - need to connect systems that are not very connected yet
 					var subgraphs = graph.Subdivide();
 					var smallest = subgraphs.Min(sg => sg.Count);
+					if (status != null)
+					{
+						var largest = subgraphs.Max(sg => sg.Count);
+						status.Message = "Creating warp points (" + largest + " systems connected)";
+						status.Progress = doneCreatingStarSystemsProgress + largest * progressPerStarSystem;
+					}
 					var candidates = subgraphs.Where(sg => sg.Count == smallest);
 					var subgraph1 = candidates.PickRandom();
 					var subgraph2 = subgraphs.Where(sg => sg != subgraph1).PickRandom();
