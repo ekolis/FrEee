@@ -176,6 +176,7 @@
 			// 
 			// lblFacilityName
 			// 
+			this.lblFacilityName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lblFacilityName.AutoSize = true;
 			this.lblFacilityName.Location = new System.Drawing.Point(3, 352);
 			this.lblFacilityName.Name = "lblFacilityName";
@@ -186,6 +187,7 @@
 			// resFacilityRadioactivesCost
 			// 
 			this.resFacilityRadioactivesCost.Amount = 0;
+			this.resFacilityRadioactivesCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.resFacilityRadioactivesCost.BackColor = System.Drawing.Color.Black;
 			this.resFacilityRadioactivesCost.Change = null;
 			this.resFacilityRadioactivesCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -199,6 +201,7 @@
 			// resFacilityOrganicsCost
 			// 
 			this.resFacilityOrganicsCost.Amount = 0;
+			this.resFacilityOrganicsCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.resFacilityOrganicsCost.BackColor = System.Drawing.Color.Black;
 			this.resFacilityOrganicsCost.Change = null;
 			this.resFacilityOrganicsCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
@@ -212,6 +215,7 @@
 			// resFacilityMineralsCost
 			// 
 			this.resFacilityMineralsCost.Amount = 0;
+			this.resFacilityMineralsCost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.resFacilityMineralsCost.BackColor = System.Drawing.Color.Black;
 			this.resFacilityMineralsCost.Change = null;
 			this.resFacilityMineralsCost.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
@@ -224,6 +228,7 @@
 			// 
 			// label2
 			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
 			this.label2.Location = new System.Drawing.Point(3, 365);
 			this.label2.Name = "label2";
@@ -233,6 +238,9 @@
 			// 
 			// lstFacilities
 			// 
+			this.lstFacilities.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstFacilities.BackColor = System.Drawing.Color.Black;
 			this.lstFacilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstFacilities.ForeColor = System.Drawing.Color.White;
