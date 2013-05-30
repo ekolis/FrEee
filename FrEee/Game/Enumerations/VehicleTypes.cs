@@ -15,10 +15,16 @@ namespace FrEee.Game.Enumerations
 		Ship = 0x1,
 		Base = 0x2,
 		Fighter = 0x4,
+		Ftr = Fighter,
 		Satellite = 0x8,
+		Sat = 0x8,
 		Mine = 0x10,
 		Troop = 0x20,
+		Trp = Troop,
 		Drone = 0x40,
-		WeaponPlatform = 0x80
+		WeaponPlatform = 0x80,
+		WeapPlatform = WeaponPlatform,
+		WeapPlat = WeaponPlatform,
+		All = Ship | Base | Fighter | Satellite | Mine | Troop | Drone | WeaponPlatform,
 	}
 }

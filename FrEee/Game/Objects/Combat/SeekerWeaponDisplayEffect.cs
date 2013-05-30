@@ -5,6 +5,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Combat
 {
+	[Serializable]
 	public class SeekerWeaponDisplayEffect : WeaponDisplayEffect
 	{
 	}

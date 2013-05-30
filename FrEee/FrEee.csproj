@@ -96,10 +96,12 @@
     <Compile Include="Game\Objects\Space\Storm.cs" />
     <Compile Include="Game\Objects\Space\WarpPoint.cs" />
     <Compile Include="Game\GameSetup.cs" />
+    <Compile Include="Game\Objects\Technology\WarheadWeaponInfo.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfo.cs" />
     <Compile Include="Modding\Interfaces\IStarSystemPlacementStrategy.cs" />
     <Compile Include="Modding\Extensions.cs" />
     <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />
+    <Compile Include="Modding\Loaders\ComponentLoader.cs" />
     <Compile Include="Modding\Loaders\FacilityLoader.cs" />
     <Compile Include="Modding\Loaders\StellarObjectLoader.cs" />
     <Compile Include="Modding\Loaders\GalaxyLoader.cs" />

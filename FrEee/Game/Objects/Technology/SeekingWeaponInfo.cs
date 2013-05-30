@@ -5,16 +5,17 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Technology
 {
+	[Serializable]
 	public class SeekingWeaponInfo : WeaponInfo
 	{
 		/// <summary>
 		/// The speed at which the seeker travels.
 		/// </summary>
-		int SeekerSpeed { get; set; }
+		public int SeekerSpeed { get; set; }
 
 		/// <summary>
 		/// The durability of the seeker.
 		/// </summary>
-		int SeekerDurability { get; set; }
+		public int SeekerDurability { get; set; }
 	}
 }

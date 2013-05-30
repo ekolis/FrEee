@@ -18,8 +18,9 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A set of data files containing templates for game objects.
 	/// </summary>
-	 [Serializable] public class Mod
-	{		
+	[Serializable]
+	public class Mod
+	{
 		/// <summary>
 		/// The currently loaded mod.
 		/// </summary>
@@ -45,7 +46,7 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - change the number at the end to match whatever number of data files we have
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 9;
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 10;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -94,6 +95,13 @@ namespace FrEee.Modding
 				status.Progress += progressPerFile;
 
 			if (status != null)
+				status.Message = "Loading Components.txt";
+			CurrentFileName = Path.Combine(datapath, "Components.txt");
+			new ComponentLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
+			if (status != null)
 				status.Message = "Loading StellarAbilityTypes.txt";
 			CurrentFileName = Path.Combine(datapath, "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
@@ -130,6 +138,7 @@ namespace FrEee.Modding
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
 			Facilities = new List<Facility>();
+			Components = new List<Component>();
 			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
@@ -161,6 +170,11 @@ namespace FrEee.Modding
 		/// The facilities in the mod.
 		/// </summary>
 		public ICollection<Facility> Facilities { get; private set; }
+
+		/// <summary>
+		/// The components in the mod.
+		/// </summary>
+		public ICollection<Component> Components { get; private set; }
 
 		/// <summary>
 		/// Templates for stellar abilities.

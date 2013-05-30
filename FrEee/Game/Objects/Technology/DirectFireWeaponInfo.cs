@@ -5,6 +5,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Technology
 {
+	[Serializable]
 	public class DirectFireWeaponInfo : WeaponInfo
 	{
 		/// <summary>

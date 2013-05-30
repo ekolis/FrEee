@@ -8,6 +8,7 @@ namespace FrEee.Game.Objects.Combat
 	/// <summary>
 	/// The display effect to use for a weapon in combat.
 	/// </summary>
+	[Serializable]
 	public class WeaponDisplayEffect
 	{
 		/// <summary>

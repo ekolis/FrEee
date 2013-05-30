@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Game.Objects.Combat
+namespace FrEee.Game.Objects.Technology
 {
 	[Serializable]
-	public class BeamWeaponDisplayEffect : WeaponDisplayEffect
+	public class WarheadWeaponInfo : WeaponInfo
 	{
 	}
 }

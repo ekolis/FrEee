@@ -13,14 +13,20 @@ namespace FrEee.Game.Enumerations
 	{
 		None = 0x0,
 		Ship = 0x1,
+		Ships = Ship,
 		Base = 0x2,
+		Bases = Base,
 		Fighter = 0x4,
+		Fighters = Fighter,
+		Ftr = Fighter,
 		Satellite = 0x8,
-		Mine = 0x10,
-		Troop = 0x20,
+		Satellites = Satellite,
+		Sat = Satellite,
 		Drone = 0x40,
-		WeaponPlatform = 0x80,
+		Drones = Drone,
 		Planet = 0x100,
-		Seeker = 0x200
+		Planets = Planet,
+		Seeker = 0x200,
+		Seekers = Seeker,
 	}
 }

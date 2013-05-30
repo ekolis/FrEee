@@ -10,6 +10,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// Information about a weapon component.
 	/// </summary>
+	[Serializable]
 	public abstract class WeaponInfo
 	{
 		/// <summary>
