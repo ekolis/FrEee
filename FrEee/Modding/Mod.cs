@@ -41,6 +41,7 @@ namespace FrEee.Modding
 		public static Mod Load(string path, bool setCurrent = true, Status status = null, double desiredProgress = 1.0)
 		{
 			var mod = new Mod();
+			mod.RootPath = path;
 
 			if (setCurrent)
 				Current = mod;
@@ -145,6 +146,11 @@ namespace FrEee.Modding
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
 		}
+
+		/// <summary>
+		/// The path to the mod's root folder, relative to the Mods folder.
+		/// </summary>
+		public string RootPath { get; set; }
 
 		/// <summary>
 		/// Rules for grouping and stacking abilities.

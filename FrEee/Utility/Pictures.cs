@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
 using FrEee.Modding.Templates;
+using FrEee.Modding;
 
 namespace FrEee.Utility
 {
@@ -78,6 +79,8 @@ namespace FrEee.Utility
 			g = Graphics.FromImage(img);
 			g.FillRectangle(new SolidBrush(Color.Silver), 10, 10, 108, 108);
 			genericPictures.Add(typeof(FacilityTemplate), img);
+
+			// TODO - generic image for component
 		}
 
 		/// <summary>
@@ -107,8 +110,9 @@ namespace FrEee.Utility
 		{
 			if (!objectPortraits.ContainsKey(sobj))
 			{
-				// TODO - check mod folders for images too
 				var portrait =
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".png")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName + ".bmp")) ??
 					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".png")) ??
 					GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName + ".bmp")) ??
 					GetGenericImage(sobj.GetType());
@@ -142,8 +146,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(FacilityTemplate f)
 		{
-			// TODO - check mod folders for images too
 			return
+				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".png")) ??
+				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Facilities", f.PictureName + ".bmp")) ??
 				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".png")) ??
 				GetCachedImage(Path.Combine("Pictures", "Facilities", f.PictureName + ".bmp")) ??
 				GetGenericImage(f.GetType());
@@ -165,27 +170,12 @@ namespace FrEee.Utility
 		/// </summary>
 		public static Image GetPortrait(ComponentTemplate c)
 		{
-			// TODO - check mod folders for images too
 			return
+				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".png")) ??
+				GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", c.PictureName + ".bmp")) ??
 				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".png")) ??
 				GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName + ".bmp")) ??
 				GetGenericImage(c.GetType());
-		}
-
-		/// <summary>
-		/// Gets the icon image for a component.
-		/// </summary>
-		public static Image GetIcon(Component c)
-		{
-			return GetIcon(c.Template);
-		}
-
-		/// <summary>
-		/// Gets the portrait image for a component.
-		/// </summary>
-		public static Image GetPortrait(Component c)
-		{
-			return GetPortrait(c.Template);
 		}
 
 		public static Image GetCachedImage(string path)
