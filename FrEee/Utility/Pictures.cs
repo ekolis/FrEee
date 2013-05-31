@@ -299,7 +299,7 @@ namespace FrEee.Utility
 			return fileCache[path];
 		}
 
-		private static Image GetGenericImage(Type type)
+		public static Image GetGenericImage(Type type)
 		{
 			if (genericPictures.ContainsKey(type))
 				return genericPictures[type];

@@ -6,6 +6,8 @@ using FrEee.Utility;
 using System.Collections.Generic;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using System.IO;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -54,8 +56,19 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				// TODO - implement empire flag
-				return null;
+				if (Mod.Current.RootPath != null)
+				{
+					return
+						Pictures.GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", ShipsetPath, "Flag")) ??
+						Pictures.GetCachedImage(Path.Combine("Pictures", "Races", ShipsetPath, "Flag")) ??
+						Pictures.GetGenericImage(typeof(Empire));
+				}
+				else
+				{
+					return
+						Pictures.GetCachedImage(Path.Combine("Pictures", "Races", ShipsetPath, "Flag")) ??
+						Pictures.GetGenericImage(typeof(Empire));
+				}
 			}
 		}
 
