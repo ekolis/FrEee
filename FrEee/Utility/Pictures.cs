@@ -81,7 +81,19 @@ namespace FrEee.Utility
 			g.FillRectangle(new SolidBrush(Color.Silver), 10, 10, 108, 108);
 			genericPictures.Add(typeof(FacilityTemplate), img);
 
-			// TODO - generic image for component
+			// component
+			img = new Bitmap(128, 128);
+			g = Graphics.FromImage(img);
+			g.FillEllipse(new SolidBrush(Color.Silver), 10, 10, 108, 108);
+			genericPictures.Add(typeof(ComponentTemplate), img);
+
+			// hull
+			img = new Bitmap(128, 128);
+			g = Graphics.FromImage(img);
+			g.FillEllipse(new SolidBrush(Color.Silver), 40, 40, 68, 68);
+			g.FillRectangle(new SolidBrush(Color.Silver), 40, 50, 50, 108);
+			g.FillRectangle(new SolidBrush(Color.Silver), 58, 50, 68, 108);
+			genericPictures.Add(typeof(IHull), img);
 		}
 
 		/// <summary>
@@ -291,6 +303,31 @@ namespace FrEee.Utility
 		{
 			if (genericPictures.ContainsKey(type))
 				return genericPictures[type];
+			else
+			{
+				// check base type and interfaces
+				if (type.BaseType != null && genericPictures.ContainsKey(type.BaseType))
+					return genericPictures[type.BaseType];
+
+				foreach (var i in type.GetInterfaces())
+				{
+					if (genericPictures.ContainsKey(i))
+						return genericPictures[i];
+				}
+
+				// yay recursion
+				Image img = null;
+				if (type.BaseType != null)
+					img = GetGenericImage(type.BaseType);
+				if (img != null)
+					return img;
+				foreach (var i in type.GetInterfaces())
+				{
+					img = GetGenericImage(i);
+					if (img != null)
+						return img;
+				}
+			}
 			return null;
 		}
 	}
