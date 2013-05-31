@@ -17,6 +17,19 @@ namespace FrEee.Game.Objects.Civilization
 	[Serializable]
 	public class Empire : INamed
 	{
+		/// <summary>
+		/// The current empire being controlled by the player.
+		/// </summary>
+		public static Empire Current
+		{
+			get
+			{
+				if (Galaxy.Current == null)
+					return null;
+				return Galaxy.Current.CurrentEmpire;
+			}
+		}
+
 		public Empire()
 		{
 			StoredResources = new Resources();

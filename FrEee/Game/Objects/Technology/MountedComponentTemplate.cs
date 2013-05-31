@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,8 +13,14 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A combination of component template and mount.
 	/// </summary>
-	public struct MountedComponentTemplate : ITemplate<Component>, INamed
+	public struct MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
 	{
+		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null) : this()
+		{
+			ComponentTemplate = ct;
+			Mount = mount;
+		}
+
 		/// <summary>
 		/// The component template used.
 		/// </summary>
@@ -55,9 +63,52 @@ namespace FrEee.Game.Objects.Technology
 
 		public Component Instantiate()
 		{
-			var comp = ComponentTemplate.Instantiate();
-			comp.Mount = Mount;
-			return comp;
+			return new Component(this);
+		}
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				// TODO - take into effect mounts
+				return ComponentTemplate.Abilities;
+			}
+		}
+
+		public int Size
+		{
+			get
+			{
+				// TODO - take into effect mounts
+				return ComponentTemplate.Size;
+			}
+		}
+
+		public Resources Cost
+		{
+			get
+			{
+				// TODO - take into effect mounts
+				return ComponentTemplate.Cost;
+			}
+		}
+
+		public int SupplyUsage
+		{
+			get
+			{
+				// TODO - take into effect mounts
+				return ComponentTemplate.SupplyUsage;
+			}
+		}
+
+		public int Durability
+		{
+			get
+			{
+				// TODO - take into effect mounts
+				return ComponentTemplate.Durability;
+			}
 		}
 	}
 }

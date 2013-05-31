@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle design.
 	/// </summary>
-	public interface IDesign : INamed
+	public interface IDesign : INamed, IAbilityObject
 	{
 		/// <summary>
 		/// The empire which created this design.
@@ -37,7 +38,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The vehicle's hull.
 		/// </summary>
-		IHull Hull { get; }
+		IHull Hull { get; set; }
 
 		/// <summary>
 		/// The ship's role (design type in SE4).
@@ -54,5 +55,44 @@ namespace FrEee.Game.Interfaces
 		/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
 		/// </summary>
 		bool IsObsolete { get; set; }
+
+		/// <summary>
+		/// Warnings that need to be resolved before the design can be saved.
+		/// </summary>
+		IEnumerable<string> Warnings { get; }
+
+		/// <summary>
+		/// Unused space on the design.
+		/// </summary>
+		int SpaceFree { get; }
+
+		/// <summary>
+		/// The resource cost to build the design.
+		/// </summary>
+		Resources Cost { get; }
+
+		/// <summary>
+		/// The movement speed of the design, in sectors per turn.
+		/// </summary>
+		int Speed { get; }
+
+		/// <summary>
+		/// Supply used for each sector of movement.
+		/// </summary>
+		int SupplyUsage { get; }
+
+		int ShieldHitpoints { get; }
+
+		int ShieldRegeneration { get; }
+
+		int ArmorHitpoints { get; }
+
+		int HullHitpoints { get; }
+
+		int Accuracy { get; }
+
+		int Evasion { get; }
+
+		int CargoCapacity { get; }
 	}
 }

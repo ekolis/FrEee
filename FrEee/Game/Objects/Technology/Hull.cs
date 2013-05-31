@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
@@ -139,6 +140,30 @@ namespace FrEee.Game.Objects.Technology
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public VehicleTypes VehicleType
+		{
+			get
+			{
+				if (typeof(T) == typeof(Ship))
+					return VehicleTypes.Ship;
+				if (typeof(T) == typeof(Base))
+					return VehicleTypes.Base;
+				if (typeof(T) == typeof(Fighter))
+					return VehicleTypes.Fighter;
+				if (typeof(T) == typeof(Troop))
+					return VehicleTypes.Troop;
+				if (typeof(T) == typeof(Satellite))
+					return VehicleTypes.Satellite;
+				if (typeof(T) == typeof(Drone))
+					return VehicleTypes.Drone;
+				if (typeof(T) == typeof(Mine))
+					return VehicleTypes.Mine;
+				if (typeof(T) == typeof(WeaponPlatform))
+					return VehicleTypes.WeaponPlatform;
+				throw new Exception("Invalid vehicle type " + typeof(T) + " for hull " + this + ".");
+			}
 		}
 	}
 }

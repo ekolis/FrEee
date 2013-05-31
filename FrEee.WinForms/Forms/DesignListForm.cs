@@ -77,5 +77,13 @@ namespace FrEee.WinForms.Forms
 			else
 				designReport.Design = null;
 		}
+
+		private void btnCreate_Click(object sender, EventArgs e)
+		{
+			Cursor = Cursors.WaitCursor;
+			var form = new VehicleDesignForm();
+			form.ShowDialog();
+			Cursor = Cursors.Default;
+		}
 	}
 }

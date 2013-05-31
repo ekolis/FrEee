@@ -192,6 +192,12 @@
     <Compile Include="Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\HullPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HullPickerForm.Designer.cs">
+      <DependentUpon>HullPickerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,8 +210,15 @@
     <Compile Include="Forms\PlanetListForm.Designer.cs">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\VehicleDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VehicleDesignForm.Designer.cs">
+      <DependentUpon>VehicleDesignForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Extensions\GuiExtensions.cs" />
     <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,11 +258,17 @@
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HullPickerForm.resx">
+      <DependentUpon>HullPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetListForm.resx">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
+      <DependentUpon>VehicleDesignForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

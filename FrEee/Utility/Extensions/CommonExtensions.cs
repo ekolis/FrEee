@@ -493,5 +493,15 @@ namespace FrEee.Utility.Extensions
 			g.DrawImage(image, 0, 0, size, size);
 			return result;
 		}
+
+		/// <summary>
+		/// Adds up a bunch of resources.
+		/// </summary>
+		/// <param name="resources"></param>
+		/// <returns></returns>
+		public static Resources Sum(this IEnumerable<Resources> resources)
+		{
+			return resources.Aggregate((r1, r2) => r1 + r2);
+		}
 	}
 }

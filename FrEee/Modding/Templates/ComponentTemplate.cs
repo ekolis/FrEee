@@ -126,7 +126,7 @@ namespace FrEee.Modding.Templates
 		/// <returns></returns>
 		public Component Instantiate()
 		{
-			return new Component(this);
+			return new Component(new MountedComponentTemplate(this, null));
 		}
 	}
 }

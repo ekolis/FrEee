@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -67,5 +68,10 @@ namespace FrEee.Game.Interfaces
 		/// Minimum percentage of space required to be used for cargo-storage components.
 		/// </summary>
 		int MinPercentCargoBays { get; set; }
+
+		/// <summary>
+		/// The vehicle type of this hull.
+		/// </summary>
+		VehicleTypes VehicleType { get; }
 	}
 }
