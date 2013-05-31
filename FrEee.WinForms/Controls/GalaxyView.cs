@@ -180,10 +180,10 @@ namespace FrEee.WinForms.Controls
 						// draw arrow
 						var angle = startPos.AngleTo(endPos);
 						var radians = Math.PI * angle / 180d;
-						var adx1 = (float)Math.Sin(radians + Math.PI / 6d) * drawsize / 2f;
+						var adx1 = -(float)Math.Sin(radians + Math.PI / 6d) * drawsize / 2f;
 						var ady1 = (float)Math.Cos(radians + Math.PI / 6d) * drawsize / 2f;
 						var arrowEndPos1 = new PointF(realEndPos.X + adx1, realEndPos.Y + ady1);
-						var adx2 = (float)Math.Sin(radians - Math.PI / 6d) * drawsize / 2f;
+						var adx2 = -(float)Math.Sin(radians - Math.PI / 6d) * drawsize / 2f;
 						var ady2 = (float)Math.Cos(radians - Math.PI / 6d) * drawsize / 2f;
 						var arrowEndPos2 = new PointF(realEndPos.X + adx2, realEndPos.Y + ady2);
 						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos1);
