@@ -114,6 +114,28 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Kilotons(this int value)
+		{
+			if (value < 10)
+				return value + "kT";
+			return (value * 1000).ToUnitString() + "T";
+		}
+
+		/// <summary>
+		/// Converts a turn number to a stardate.
+		/// </summary>
+		/// <param name="turnNumber"></param>
+		/// <returns></returns>
+		public static string ToStardate(this int turnNumber)
+		{
+			return (turnNumber / 10.0).ToString("0.0");
+		}
+
+		/// <summary>
 		/// Picks a random element from a sequence.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>

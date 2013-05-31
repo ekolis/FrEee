@@ -14,6 +14,8 @@ namespace FrEee.WinForms.Controls
 			ForeColor = Color.White;
 			BorderColor = Color.CornflowerBlue;
 			DoubleBuffered = true;
+			Padding = new Padding(3);
+			BorderStyle = BorderStyle.FixedSingle;
 		}
 
 		void GamePanel_SizeChanged(object sender, EventArgs e)

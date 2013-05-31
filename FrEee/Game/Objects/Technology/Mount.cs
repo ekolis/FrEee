@@ -11,5 +11,7 @@ namespace FrEee.Game.Objects.Technology
 	public class Mount
 	{
 		// TODO - implement mount
+
+		public string Name { get; set; }
 	}
 }

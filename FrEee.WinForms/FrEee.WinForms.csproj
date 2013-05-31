@@ -78,6 +78,12 @@
     <Compile Include="Controls\AsteroidFieldReport.Designer.cs">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\DesignReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DesignReport.Designer.cs">
+      <DependentUpon>DesignReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\GalaxyView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -174,6 +180,12 @@
     <Compile Include="Forms\ConstructionQueueListForm.Designer.cs">
       <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DesignListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DesignListForm.Designer.cs">
+      <DependentUpon>DesignListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -196,6 +208,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DesignReport.resx">
+      <DependentUpon>DesignReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\GameProgressBar.resx">
       <DependentUpon>GameProgressBar.cs</DependentUpon>
@@ -223,6 +238,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConstructionQueueListForm.resx">
       <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DesignListForm.resx">
+      <DependentUpon>DesignListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>

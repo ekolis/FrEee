@@ -139,7 +139,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return (TurnNumber / 10.0).ToString("0.0");
+				return TurnNumber.ToStardate();
 			}
 		}
 
@@ -348,12 +348,13 @@ namespace FrEee.Game.Objects.Space
 				for (int i = 0; i < OrderTargets.Count; i++)
 				{
 					if (OrderTargets[i].Owner != CurrentEmpire)
-						OrderTargets[i] = null;
+						OrderTargets[i] = null; // keep stuff with the same indices so PLR files can find it
 				}
 
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
 				{
 					emp.StoredResources.Clear();
+					emp.KnownDesigns.Clear();
 				}
 			}
 		}

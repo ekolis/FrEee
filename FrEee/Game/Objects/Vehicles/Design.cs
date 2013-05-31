@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
@@ -22,10 +23,14 @@ namespace FrEee.Game.Objects.Vehicles
 			Components = new List<MountedComponentTemplate>();
 		}
 
+		public string Name { get; set; }
+
 		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
 		public Empire Owner { get; set; }
+
+		IHull IDesign.Hull { get { return Hull; } }
 
 		/// <summary>
 		/// The hull used in this design.
@@ -49,5 +54,33 @@ namespace FrEee.Game.Objects.Vehicles
 				t.Components.Add(mct.Instantiate());
 			return t;
 		}
+
+		public VehicleTypes VehicleType
+		{
+			get
+			{
+				// TODO - implement vehicle types once we have actual vehicle classes
+				return VehicleTypes.None;
+			}
+		}
+
+		public string VehicleTypeName
+		{
+			get
+			{
+				// TODO - add spaces where necessary
+				return VehicleType.ToString();
+			}
+		}
+
+		/// <summary>
+		/// The ship's role (design type in SE4).
+		/// </summary>
+		public string Role { get; set; }
+
+		/// <summary>
+		/// The turn this design was created (for our designs) or discovered (for alien designs).
+		/// </summary>
+		public int TurnNumber { get; set; }
 	}
 }

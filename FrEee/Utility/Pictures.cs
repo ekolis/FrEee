@@ -161,6 +161,7 @@ namespace FrEee.Utility
 			var portrait = GetPortrait(f);
 			if (portrait == null)
 				return null;
+			// TODO - draw level roman numeral on the icon
 			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 		}
 
@@ -197,6 +198,7 @@ namespace FrEee.Utility
 			var portrait = GetPortrait(c);
 			if (portrait == null)
 				return null;
+			// TODO - draw level roman numeral on the icon
 			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 		}
 

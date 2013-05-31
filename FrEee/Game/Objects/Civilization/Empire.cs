@@ -27,6 +27,7 @@ namespace FrEee.Game.Objects.Civilization
 			StoredResources.Add("Radioactives", 50000);
 
 			Commands = new List<ICommand>();
+			KnownDesigns = new List<IDesign>();
 		}
 
 		/// <summary>
@@ -124,5 +125,10 @@ namespace FrEee.Game.Objects.Civilization
 				return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this).Flatten());
 			}
 		}
+
+		/// <summary>
+		/// Designs known by this empire.
+		/// </summary>
+		public ICollection<IDesign> KnownDesigns { get; private set; }
 	}
 }
