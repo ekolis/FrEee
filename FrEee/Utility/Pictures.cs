@@ -159,6 +159,8 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(FacilityTemplate f)
 		{
+			if (f.PictureName == null)
+				return GetGenericImage(f.GetType());
 			if (Mod.Current.RootPath != null)
 			{
 				return
@@ -191,6 +193,8 @@ namespace FrEee.Utility
 		/// </summary>
 		public static Image GetPortrait(ComponentTemplate c)
 		{
+			if (c.PictureName == null)
+				return GetGenericImage(c.GetType());
 			if (Mod.Current.RootPath != null)
 			{
 				return
@@ -225,6 +229,8 @@ namespace FrEee.Utility
 
 		public static Image GetPortrait(IHull hull, string shipsetPath)
 		{
+			if (!hull.PictureNames.Any())
+				return GetGenericImage(hull.GetType());
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
