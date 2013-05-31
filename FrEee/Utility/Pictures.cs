@@ -111,6 +111,9 @@ namespace FrEee.Utility
 		{
 			if (!objectPortraits.ContainsKey(sobj))
 			{
+				if (sobj.PictureName == null)
+					return GetGenericImage(sobj.GetType());
+
 				Image portrait;
 				if (Mod.Current.RootPath != null)
 				{

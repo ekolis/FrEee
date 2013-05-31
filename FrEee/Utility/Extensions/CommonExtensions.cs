@@ -463,6 +463,8 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static Image Resize(this Image image, int size)
 		{
+			if (image == null)
+				return null;
 			var result = new Bitmap(size, size);
 			var g = Graphics.FromImage(result);
 			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
