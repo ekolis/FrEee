@@ -384,10 +384,10 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.starSystemView.BackColor = System.Drawing.Color.Black;
-			this.starSystemView.Location = new System.Drawing.Point(4, 3);
+			this.starSystemView.Location = new System.Drawing.Point(3, 3);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
-			this.starSystemView.Size = new System.Drawing.Size(678, 571);
+			this.starSystemView.Size = new System.Drawing.Size(830, 575);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
