@@ -204,6 +204,49 @@ namespace FrEee.Utility
 			}
 		}
 
+		public static Image GetIcon(IHull hull, string shipsetPath)
+		{
+			var paths = new List<string>();
+			foreach (var s in hull.PictureNames)
+			{
+				if (Mod.Current.RootPath != null)
+				{
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+				}
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + s));
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+			}
+			return GetCachedImage(paths);
+		}
+
+		public static Image GetPortrait(IHull hull, string shipsetPath)
+		{
+			var paths = new List<string>();
+			foreach (var s in hull.PictureNames)
+			{
+				if (Mod.Current.RootPath != null)
+				{
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+				}
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + s));
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+			}
+			return GetCachedImage(paths);
+		}
+
+		public static Image GetCachedImage(IEnumerable<string> paths)
+		{
+			foreach (var path in paths)
+			{
+				var img = GetCachedImage(path);
+				if (img != null)
+					return img;
+			}
+			return null;
+		}
+
 		public static Image GetCachedImage(string path)
 		{
 			if (string.IsNullOrEmpty(Path.GetExtension(path)))

@@ -12,7 +12,8 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
-	 [Serializable] public class Empire : INamed
+	[Serializable]
+	public class Empire : INamed
 	{
 		public Empire()
 		{
@@ -44,7 +45,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The folder (under Pictures/Races) where the empire's shipset is located.
 		/// </summary>
-		public string ShipsetFolder { get; set; }
+		public string ShipsetPath { get; set; }
 
 		/// <summary>
 		/// The empire's flag.
@@ -83,7 +84,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
-				public Resources Income
+		public Resources Income
 		{
 			get
 			{
@@ -95,7 +96,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Finds star systems explored by the empire.
 		/// </summary>
-				public IEnumerable<StarSystem> ExploredStarSystems
+		public IEnumerable<StarSystem> ExploredStarSystems
 		{
 			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
 		}
@@ -103,7 +104,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Planets colonized by the empire.
 		/// </summary>
-				public IEnumerable<Planet> ColonizedPlanets
+		public IEnumerable<Planet> ColonizedPlanets
 		{
 			get
 			{

@@ -58,7 +58,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Image Icon
 		{
-			get { return Design.Hull.Icon; }
+			get { return Design.Hull.GetIcon(Design.Owner.ShipsetPath); }
 		}
 
 		public void Place(ISpaceObject target)

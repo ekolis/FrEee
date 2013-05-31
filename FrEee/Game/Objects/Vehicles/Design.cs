@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding.Templates;
@@ -20,6 +21,11 @@ namespace FrEee.Game.Objects.Vehicles
 			Hull = hull;
 			Components = new List<MountedComponentTemplate>();
 		}
+
+		/// <summary>
+		/// The empire which created this design.
+		/// </summary>
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The hull used in this design.
