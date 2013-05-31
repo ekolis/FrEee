@@ -28,24 +28,189 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstDesigns = new System.Windows.Forms.ListView();
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 			this.chkForeign = new System.Windows.Forms.CheckBox();
 			this.chkHideObsolete = new System.Windows.Forms.CheckBox();
+			this.btnClose = new FrEee.WinForms.Controls.GameButton();
+			this.btnGroundSimulator = new FrEee.WinForms.Controls.GameButton();
+			this.btnSpaceSimulator = new FrEee.WinForms.Controls.GameButton();
+			this.btnObsolete = new FrEee.WinForms.Controls.GameButton();
+			this.btnUpgrade = new FrEee.WinForms.Controls.GameButton();
+			this.btnEdit = new FrEee.WinForms.Controls.GameButton();
+			this.btnCopy = new FrEee.WinForms.Controls.GameButton();
+			this.btnCreate = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.designReport = new FrEee.WinForms.Controls.DesignReport();
-			this.btnCreate = new FrEee.WinForms.Controls.GameButton();
-			this.btnCopy = new FrEee.WinForms.Controls.GameButton();
-			this.btnEdit = new FrEee.WinForms.Controls.GameButton();
-			this.btnUpgrade = new FrEee.WinForms.Controls.GameButton();
-			this.btnObsolete = new FrEee.WinForms.Controls.GameButton();
-			this.btnSpaceSimulator = new FrEee.WinForms.Controls.GameButton();
-			this.btnGroundSimulator = new FrEee.WinForms.Controls.GameButton();
-			this.btnClose = new FrEee.WinForms.Controls.GameButton();
-			this.gamePanel1.SuspendLayout();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstDesigns = new System.Windows.Forms.ListView();
 			this.gamePanel2.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// ddlVehicleType
+			// 
+			this.ddlVehicleType.DisplayMember = "Name";
+			this.ddlVehicleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlVehicleType.FormattingEnabled = true;
+			this.ddlVehicleType.Location = new System.Drawing.Point(12, 13);
+			this.ddlVehicleType.Name = "ddlVehicleType";
+			this.ddlVehicleType.Size = new System.Drawing.Size(200, 21);
+			this.ddlVehicleType.TabIndex = 2;
+			this.ddlVehicleType.ValueMember = "VehicleTypes";
+			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
+			// 
+			// chkForeign
+			// 
+			this.chkForeign.AutoSize = true;
+			this.chkForeign.Location = new System.Drawing.Point(111, 40);
+			this.chkForeign.Name = "chkForeign";
+			this.chkForeign.Size = new System.Drawing.Size(102, 17);
+			this.chkForeign.TabIndex = 3;
+			this.chkForeign.Text = "Foreign Designs";
+			this.chkForeign.UseVisualStyleBackColor = true;
+			this.chkForeign.CheckedChanged += new System.EventHandler(this.chkForeign_CheckedChanged);
+			// 
+			// chkHideObsolete
+			// 
+			this.chkHideObsolete.AutoSize = true;
+			this.chkHideObsolete.Checked = true;
+			this.chkHideObsolete.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkHideObsolete.Location = new System.Drawing.Point(12, 40);
+			this.chkHideObsolete.Name = "chkHideObsolete";
+			this.chkHideObsolete.Size = new System.Drawing.Size(93, 17);
+			this.chkHideObsolete.TabIndex = 4;
+			this.chkHideObsolete.Text = "Hide Obsolete";
+			this.chkHideObsolete.UseVisualStyleBackColor = true;
+			this.chkHideObsolete.CheckedChanged += new System.EventHandler(this.chkHideObsolete_CheckedChanged);
+			// 
+			// btnClose
+			// 
+			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClose.BackColor = System.Drawing.Color.Black;
+			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClose.Location = new System.Drawing.Point(551, 405);
+			this.btnClose.Name = "btnClose";
+			this.btnClose.Size = new System.Drawing.Size(151, 29);
+			this.btnClose.TabIndex = 14;
+			this.btnClose.Text = "Close";
+			this.btnClose.UseVisualStyleBackColor = false;
+			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+			// 
+			// btnGroundSimulator
+			// 
+			this.btnGroundSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGroundSimulator.BackColor = System.Drawing.Color.Black;
+			this.btnGroundSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnGroundSimulator.Location = new System.Drawing.Point(551, 222);
+			this.btnGroundSimulator.Name = "btnGroundSimulator";
+			this.btnGroundSimulator.Size = new System.Drawing.Size(151, 29);
+			this.btnGroundSimulator.TabIndex = 13;
+			this.btnGroundSimulator.Text = "Ground Simulator";
+			this.btnGroundSimulator.UseVisualStyleBackColor = false;
+			// 
+			// btnSpaceSimulator
+			// 
+			this.btnSpaceSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSpaceSimulator.BackColor = System.Drawing.Color.Black;
+			this.btnSpaceSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSpaceSimulator.Location = new System.Drawing.Point(550, 187);
+			this.btnSpaceSimulator.Name = "btnSpaceSimulator";
+			this.btnSpaceSimulator.Size = new System.Drawing.Size(151, 29);
+			this.btnSpaceSimulator.TabIndex = 12;
+			this.btnSpaceSimulator.Text = "Space Simulator";
+			this.btnSpaceSimulator.UseVisualStyleBackColor = false;
+			// 
+			// btnObsolete
+			// 
+			this.btnObsolete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnObsolete.BackColor = System.Drawing.Color.Black;
+			this.btnObsolete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnObsolete.Location = new System.Drawing.Point(551, 152);
+			this.btnObsolete.Name = "btnObsolete";
+			this.btnObsolete.Size = new System.Drawing.Size(151, 29);
+			this.btnObsolete.TabIndex = 11;
+			this.btnObsolete.Text = "Obsolete";
+			this.btnObsolete.UseVisualStyleBackColor = false;
+			// 
+			// btnUpgrade
+			// 
+			this.btnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUpgrade.BackColor = System.Drawing.Color.Black;
+			this.btnUpgrade.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnUpgrade.Location = new System.Drawing.Point(551, 117);
+			this.btnUpgrade.Name = "btnUpgrade";
+			this.btnUpgrade.Size = new System.Drawing.Size(151, 29);
+			this.btnUpgrade.TabIndex = 10;
+			this.btnUpgrade.Text = "Upgrade";
+			this.btnUpgrade.UseVisualStyleBackColor = false;
+			// 
+			// btnEdit
+			// 
+			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnEdit.BackColor = System.Drawing.Color.Black;
+			this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEdit.Location = new System.Drawing.Point(551, 82);
+			this.btnEdit.Name = "btnEdit";
+			this.btnEdit.Size = new System.Drawing.Size(151, 29);
+			this.btnEdit.TabIndex = 9;
+			this.btnEdit.Text = "Edit";
+			this.btnEdit.UseVisualStyleBackColor = false;
+			// 
+			// btnCopy
+			// 
+			this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCopy.BackColor = System.Drawing.Color.Black;
+			this.btnCopy.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCopy.Location = new System.Drawing.Point(551, 47);
+			this.btnCopy.Name = "btnCopy";
+			this.btnCopy.Size = new System.Drawing.Size(151, 29);
+			this.btnCopy.TabIndex = 8;
+			this.btnCopy.Text = "Copy";
+			this.btnCopy.UseVisualStyleBackColor = false;
+			// 
+			// btnCreate
+			// 
+			this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCreate.BackColor = System.Drawing.Color.Black;
+			this.btnCreate.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCreate.Location = new System.Drawing.Point(551, 12);
+			this.btnCreate.Name = "btnCreate";
+			this.btnCreate.Size = new System.Drawing.Size(151, 29);
+			this.btnCreate.TabIndex = 7;
+			this.btnCreate.Text = "Create";
+			this.btnCreate.UseVisualStyleBackColor = false;
+			// 
+			// gamePanel2
+			// 
+			this.gamePanel2.BackColor = System.Drawing.Color.Black;
+			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel2.Controls.Add(this.designReport);
+			this.gamePanel2.ForeColor = System.Drawing.Color.White;
+			this.gamePanel2.Location = new System.Drawing.Point(219, 12);
+			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel2.Size = new System.Drawing.Size(325, 422);
+			this.gamePanel2.TabIndex = 6;
+			// 
+			// designReport
+			// 
+			this.designReport.BackColor = System.Drawing.Color.Black;
+			this.designReport.Design = null;
+			this.designReport.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.designReport.ForeColor = System.Drawing.Color.White;
+			this.designReport.Location = new System.Drawing.Point(3, 3);
+			this.designReport.Name = "designReport";
+			this.designReport.Size = new System.Drawing.Size(317, 414);
+			this.designReport.TabIndex = 1;
 			// 
 			// gamePanel1
 			// 
@@ -74,171 +239,6 @@
 			this.lstDesigns.UseCompatibleStateImageBehavior = false;
 			this.lstDesigns.SelectedIndexChanged += new System.EventHandler(this.lstDesigns_SelectedIndexChanged);
 			// 
-			// ddlVehicleType
-			// 
-			this.ddlVehicleType.DisplayMember = "Name";
-			this.ddlVehicleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlVehicleType.FormattingEnabled = true;
-			this.ddlVehicleType.Location = new System.Drawing.Point(12, 13);
-			this.ddlVehicleType.Name = "ddlVehicleType";
-			this.ddlVehicleType.Size = new System.Drawing.Size(200, 21);
-			this.ddlVehicleType.TabIndex = 2;
-			this.ddlVehicleType.ValueMember = "Value";
-			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
-			// 
-			// chkForeign
-			// 
-			this.chkForeign.AutoSize = true;
-			this.chkForeign.Location = new System.Drawing.Point(111, 40);
-			this.chkForeign.Name = "chkForeign";
-			this.chkForeign.Size = new System.Drawing.Size(102, 17);
-			this.chkForeign.TabIndex = 3;
-			this.chkForeign.Text = "Foreign Designs";
-			this.chkForeign.UseVisualStyleBackColor = true;
-			this.chkForeign.CheckedChanged += new System.EventHandler(this.chkForeign_CheckedChanged);
-			// 
-			// chkHideObsolete
-			// 
-			this.chkHideObsolete.AutoSize = true;
-			this.chkHideObsolete.Checked = true;
-			this.chkHideObsolete.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkHideObsolete.Location = new System.Drawing.Point(12, 40);
-			this.chkHideObsolete.Name = "chkHideObsolete";
-			this.chkHideObsolete.Size = new System.Drawing.Size(93, 17);
-			this.chkHideObsolete.TabIndex = 4;
-			this.chkHideObsolete.Text = "Hide Obsolete";
-			this.chkHideObsolete.UseVisualStyleBackColor = true;
-			this.chkHideObsolete.CheckedChanged += new System.EventHandler(this.chkHideObsolete_CheckedChanged);
-			// 
-			// gamePanel2
-			// 
-			this.gamePanel2.BackColor = System.Drawing.Color.Black;
-			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel2.Controls.Add(this.designReport);
-			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(219, 12);
-			this.gamePanel2.Name = "gamePanel2";
-			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(325, 422);
-			this.gamePanel2.TabIndex = 6;
-			// 
-			// designReport
-			// 
-			this.designReport.BackColor = System.Drawing.Color.Black;
-			this.designReport.Design = null;
-			this.designReport.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.designReport.ForeColor = System.Drawing.Color.White;
-			this.designReport.Location = new System.Drawing.Point(3, 3);
-			this.designReport.Name = "designReport";
-			this.designReport.Size = new System.Drawing.Size(317, 414);
-			this.designReport.TabIndex = 1;
-			// 
-			// btnCreate
-			// 
-			this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCreate.BackColor = System.Drawing.Color.Black;
-			this.btnCreate.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCreate.Location = new System.Drawing.Point(551, 12);
-			this.btnCreate.Name = "btnCreate";
-			this.btnCreate.Size = new System.Drawing.Size(151, 29);
-			this.btnCreate.TabIndex = 7;
-			this.btnCreate.Text = "Create";
-			this.btnCreate.UseVisualStyleBackColor = false;
-			// 
-			// btnCopy
-			// 
-			this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCopy.BackColor = System.Drawing.Color.Black;
-			this.btnCopy.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCopy.Location = new System.Drawing.Point(551, 47);
-			this.btnCopy.Name = "btnCopy";
-			this.btnCopy.Size = new System.Drawing.Size(151, 29);
-			this.btnCopy.TabIndex = 8;
-			this.btnCopy.Text = "Copy";
-			this.btnCopy.UseVisualStyleBackColor = false;
-			// 
-			// btnEdit
-			// 
-			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnEdit.BackColor = System.Drawing.Color.Black;
-			this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEdit.Location = new System.Drawing.Point(551, 82);
-			this.btnEdit.Name = "btnEdit";
-			this.btnEdit.Size = new System.Drawing.Size(151, 29);
-			this.btnEdit.TabIndex = 9;
-			this.btnEdit.Text = "Edit";
-			this.btnEdit.UseVisualStyleBackColor = false;
-			// 
-			// btnUpgrade
-			// 
-			this.btnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnUpgrade.BackColor = System.Drawing.Color.Black;
-			this.btnUpgrade.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnUpgrade.Location = new System.Drawing.Point(551, 117);
-			this.btnUpgrade.Name = "btnUpgrade";
-			this.btnUpgrade.Size = new System.Drawing.Size(151, 29);
-			this.btnUpgrade.TabIndex = 10;
-			this.btnUpgrade.Text = "Upgrade";
-			this.btnUpgrade.UseVisualStyleBackColor = false;
-			// 
-			// btnObsolete
-			// 
-			this.btnObsolete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnObsolete.BackColor = System.Drawing.Color.Black;
-			this.btnObsolete.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnObsolete.Location = new System.Drawing.Point(551, 152);
-			this.btnObsolete.Name = "btnObsolete";
-			this.btnObsolete.Size = new System.Drawing.Size(151, 29);
-			this.btnObsolete.TabIndex = 11;
-			this.btnObsolete.Text = "Obsolete";
-			this.btnObsolete.UseVisualStyleBackColor = false;
-			// 
-			// btnSpaceSimulator
-			// 
-			this.btnSpaceSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSpaceSimulator.BackColor = System.Drawing.Color.Black;
-			this.btnSpaceSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSpaceSimulator.Location = new System.Drawing.Point(550, 187);
-			this.btnSpaceSimulator.Name = "btnSpaceSimulator";
-			this.btnSpaceSimulator.Size = new System.Drawing.Size(151, 29);
-			this.btnSpaceSimulator.TabIndex = 12;
-			this.btnSpaceSimulator.Text = "Space Simulator";
-			this.btnSpaceSimulator.UseVisualStyleBackColor = false;
-			// 
-			// btnGroundSimulator
-			// 
-			this.btnGroundSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnGroundSimulator.BackColor = System.Drawing.Color.Black;
-			this.btnGroundSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnGroundSimulator.Location = new System.Drawing.Point(551, 222);
-			this.btnGroundSimulator.Name = "btnGroundSimulator";
-			this.btnGroundSimulator.Size = new System.Drawing.Size(151, 29);
-			this.btnGroundSimulator.TabIndex = 13;
-			this.btnGroundSimulator.Text = "Ground Simulator";
-			this.btnGroundSimulator.UseVisualStyleBackColor = false;
-			// 
-			// btnClose
-			// 
-			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClose.BackColor = System.Drawing.Color.Black;
-			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(551, 405);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(151, 29);
-			this.btnClose.TabIndex = 14;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = false;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-			// 
 			// DesignListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -262,8 +262,8 @@
 			this.MaximumSize = new System.Drawing.Size(730, 9999);
 			this.Name = "DesignListForm";
 			this.Text = "Designs";
-			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel2.ResumeLayout(false);
+			this.gamePanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

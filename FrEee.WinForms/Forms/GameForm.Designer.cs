@@ -274,6 +274,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
 			this.btnDesigns.TabIndex = 2;
 			this.btnDesigns.UseVisualStyleBackColor = false;
+			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
 			// 
 			// btnMenu
 			// 

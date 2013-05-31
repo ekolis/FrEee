@@ -82,5 +82,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The turn this design was created (for our designs) or discovered (for alien designs).
 		/// </summary>
 		public int TurnNumber { get; set; }
+
+		public bool IsObsolete { get; set; }
 	}
 }

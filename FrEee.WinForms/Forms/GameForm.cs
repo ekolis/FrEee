@@ -148,10 +148,20 @@ namespace FrEee.WinForms.Forms
 			starSystemView.StarSystem = starSystem;
 		}
 
+		private void btnDesigns_Click(object sender, EventArgs e)
+		{
+			Cursor = Cursors.WaitCursor;
+			var form = new DesignListForm();
+			form.ShowDialog();
+			Cursor = Cursors.Default;
+		}
+
 		private void btnPlanets_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
 			var form = new PlanetListForm();
 			form.ShowDialog();
+			Cursor = Cursors.Default;
 		}
 
 		private void btnQueues_Click(object sender, EventArgs e)

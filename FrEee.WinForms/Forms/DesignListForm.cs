@@ -29,12 +29,12 @@ namespace FrEee.WinForms.Forms
 		private void BindVehicleTypeList()
 		{
 			ddlVehicleType.Items.Clear();
-			ddlVehicleType.Items.Add(new { Name = "All", Value = VehicleTypes.All });
-			ddlVehicleType.Items.Add(new { Name = "Ships/Bases", Value = VehicleTypes.Ship | VehicleTypes.Base });
-			ddlVehicleType.Items.Add(new { Name = "Units", Value = VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Troop | VehicleTypes.Mine | VehicleTypes.WeaponPlatform });
-			ddlVehicleType.Items.Add(new { Name = "Space", Value = VehicleTypes.Ship | VehicleTypes.Base |  VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Mine });
-			ddlVehicleType.Items.Add(new { Name = "Ground", Value = VehicleTypes.Troop | VehicleTypes.WeaponPlatform });
-			ddlVehicleType.SelectedIndex = 0;
+			ddlVehicleType.Items.Add(new { Name = "All", VehicleTypes = VehicleTypes.All });
+			ddlVehicleType.Items.Add(new { Name = "Ships/Bases", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base });
+			ddlVehicleType.Items.Add(new { Name = "Units", VehicleTypes = VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Troop | VehicleTypes.Mine | VehicleTypes.WeaponPlatform });
+			ddlVehicleType.Items.Add(new { Name = "Space", VehicleTypes = VehicleTypes.Ship | VehicleTypes.Base | VehicleTypes.Fighter | VehicleTypes.Satellite | VehicleTypes.Drone | VehicleTypes.Mine });
+			ddlVehicleType.Items.Add(new { Name = "Ground", VehicleTypes = VehicleTypes.Troop | VehicleTypes.WeaponPlatform });
+			ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
 		}
 
 		private void BindDesignList()
@@ -43,7 +43,8 @@ namespace FrEee.WinForms.Forms
 			IEnumerable<IDesign> designs = emp.KnownDesigns;
 
 			// filter by vehicle type
-			var vehicleTypeFilter = (VehicleTypes)ddlVehicleType.SelectedValue;
+			var item = (dynamic)ddlVehicleType.SelectedItem;
+			var vehicleTypeFilter = (VehicleTypes)item.VehicleTypes;
 			designs = designs.Where(d => vehicleTypeFilter.HasFlag(d.VehicleType));
 
 			// filter by ours/foreign (using an exclusive or)
