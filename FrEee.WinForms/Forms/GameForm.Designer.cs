@@ -112,6 +112,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Location = new System.Drawing.Point(4, 4);
 			this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlHeader.Name = "pnlHeader";
+			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlHeader.Size = new System.Drawing.Size(1197, 31);
 			this.pnlHeader.TabIndex = 0;
 			// 
@@ -297,6 +298,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Location = new System.Drawing.Point(348, 43);
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSubCommands.Name = "pnlSubCommands";
+			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlSubCommands.Size = new System.Drawing.Size(494, 46);
 			this.pnlSubCommands.TabIndex = 2;
 			// 
@@ -313,6 +315,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.Location = new System.Drawing.Point(4, 97);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSearch.Name = "pnlSearch";
+			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlSearch.Size = new System.Drawing.Size(587, 42);
 			this.pnlSearch.TabIndex = 2;
 			// 
@@ -328,6 +331,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemTabs.Location = new System.Drawing.Point(599, 97);
 			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemTabs.Name = "pnlSystemTabs";
+			this.pnlSystemTabs.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlSystemTabs.Size = new System.Drawing.Size(243, 42);
 			this.pnlSystemTabs.TabIndex = 3;
 			// 
@@ -344,6 +348,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Location = new System.Drawing.Point(850, 43);
 			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlDetailReport.Name = "pnlDetailReport";
+			this.pnlDetailReport.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlDetailReport, 3);
 			this.pnlDetailReport.Size = new System.Drawing.Size(351, 379);
 			this.pnlDetailReport.TabIndex = 3;
@@ -374,6 +379,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemMap.Location = new System.Drawing.Point(4, 147);
 			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemMap.Name = "pnlSystemMap";
+			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlSystemMap, 2);
 			this.pnlSystemMap.Size = new System.Drawing.Size(838, 583);
 			this.pnlSystemMap.TabIndex = 4;
@@ -384,10 +390,10 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.starSystemView.BackColor = System.Drawing.Color.Black;
-			this.starSystemView.Location = new System.Drawing.Point(3, 3);
+			this.starSystemView.Location = new System.Drawing.Point(6, 6);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
-			this.starSystemView.Size = new System.Drawing.Size(830, 575);
+			this.starSystemView.Size = new System.Drawing.Size(824, 569);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
@@ -406,6 +412,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap.Location = new System.Drawing.Point(850, 430);
 			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
+			this.pnlGalaxyMap.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlGalaxyMap.Size = new System.Drawing.Size(351, 300);
 			this.pnlGalaxyMap.TabIndex = 5;
 			// 

@@ -7,6 +7,9 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
+	/// <summary>
+	/// Displays a map of a star system.
+	/// </summary>
 	public partial class StarSystemView : Control
 	{
 		public StarSystemView()
@@ -61,15 +64,20 @@ namespace FrEee.WinForms.Controls
 		/// <summary>
 		/// The size at which each sector will be drawn, in pixels.
 		/// </summary>
-		public float SectorDrawSize
+		public int SectorDrawSize
 		{
 			get
 			{
 				if (StarSystem == null)
 					return 0;
-				return (float)Math.Min(Width, Height) / (float)StarSystem.Diameter;
+				return Math.Min(Width - SectorBorderSize, Height - SectorBorderSize) / StarSystem.Diameter - SectorBorderSize;
 			}
 		}
+
+		/// <summary>
+		/// Border in pixels between sectors and around the entire map.
+		/// </summary>
+		private const int SectorBorderSize = 1;
 
 		void StarSystemView_SizeChanged(object sender, EventArgs e)
 		{
@@ -132,9 +140,8 @@ namespace FrEee.WinForms.Controls
 					{
 						// where and how big will we draw the sector?
 						var drawsize = SectorDrawSize;
-						int border = 1; // how much of a border between sectors?
-						var drawx = x * (drawsize + border) + Width / 2f + border;
-						var drawy = y * (drawsize + border) + Height / 2f + border;
+						var drawx = x * (drawsize + SectorBorderSize) + Width / 2f + SectorBorderSize;
+						var drawy = y * (drawsize + SectorBorderSize) + Height / 2f + SectorBorderSize;
 
 						// find sector
 						var sector = StarSystem.GetSector(x, y);
