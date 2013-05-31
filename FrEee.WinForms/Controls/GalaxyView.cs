@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -50,14 +51,14 @@ namespace FrEee.WinForms.Controls
 		/// <returns></returns>
 		public StarSystem GetStarSystemAtPoint(Point p)
 		{
-			if (Galaxy == null)
+			if (Galaxy.Current == null)
 				return null; // no such sector
 			var drawsize = StarSystemDrawSize;
 			// TODO - don't cut off the systems on the edges
 			var x = (int)Math.Round((p.X - Width / 2f) / drawsize);
 			var y = (int)Math.Round((p.Y - Height / 2f) / drawsize);
 			var p2 = new Point(x, y);
-			var ssloc = Galaxy.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
+			var ssloc = Galaxy.Current.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
 			if (ssloc == null)
 				return null;
 			return ssloc.Item;
@@ -70,30 +71,15 @@ namespace FrEee.WinForms.Controls
 		{
 			get
 			{
-				if (Galaxy == null)
+				if (Galaxy.Current == null)
 					return 0;
-				return (float)Math.Min(Width, Height) / ((float)Math.Max(Galaxy.Width, Galaxy.Height));
+				return (float)Math.Min(Width, Height) / ((float)Math.Max(Galaxy.Current.Width, Galaxy.Current.Height));
 			}
 		}
 
 		void GalaxyView_SizeChanged(object sender, EventArgs e)
 		{
 			Invalidate();
-		}
-
-		private Galaxy galaxy;
-
-		/// <summary>
-		/// The galaxy to display.
-		/// </summary>
-		public Galaxy Galaxy
-		{
-			get { return galaxy; }
-			set
-			{
-				galaxy = value;
-				Invalidate();
-			}
 		}
 
 		private StarSystem selectedStarSystem;
@@ -118,13 +104,16 @@ namespace FrEee.WinForms.Controls
 
 			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-			if (Galaxy != null)
+			if (Galaxy.Current != null)
 			{
-				foreach (var ssl in Galaxy.StarSystemLocations)
+				var drawsize = StarSystemDrawSize;
+				var whitePen = new Pen(Color.White);
+
+				// draw star systems
+				foreach (var ssl in Galaxy.Current.StarSystemLocations)
 				{
-					// where and how big will we draw the star system?
+					// where will we draw the star system?
 					// TODO - don't cut off the systems on the edges
-					var drawsize = StarSystemDrawSize;
 					var x = ssl.Location.X;
 					var y = ssl.Location.Y;
 					var drawx = x * drawsize + Width / 2f;
@@ -149,13 +138,56 @@ namespace FrEee.WinForms.Controls
 						}
 					}
 
-					// TODO - draw star system name
+					// TODO - draw star system name?
 
 					// draw selection reticule (just a square for now)
 					if (sys == SelectedStarSystem)
+						pe.Graphics.DrawRectangle(whitePen, drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2);
+				}
+
+				// draw warp points
+				foreach (var ssl in Galaxy.Current.StarSystemLocations)
+				{
+					var startPos = new PointF
+					(
+						ssl.Location.X * drawsize + Width / 2f,
+						ssl.Location.Y * drawsize + Height / 2f
+					);
+					foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
 					{
-						// TOOD - cache pen asset
-						pe.Graphics.DrawRectangle(new Pen(Color.White), drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2);
+						var endPos = new PointF
+						(
+							wp.TargetStarSystemLocation.Location.X * drawsize + Width / 2f,
+							wp.TargetStarSystemLocation.Location.Y * drawsize + Height / 2f
+						);
+
+						// overlapping systems or same system
+						if (startPos == endPos)
+							continue;
+
+						// push the ends out past the system circles
+						var dx = endPos.X - startPos.X;
+						var dy = endPos.Y - startPos.Y;
+						var length = Math.Max(Math.Abs(dx), Math.Abs(dy));
+						var ndx = dx / length * drawsize / 2f;
+						var ndy = dy / length * drawsize / 2f;
+						var realStartPos = new PointF(startPos.X + ndx, startPos.Y + ndy);
+						var realEndPos = new PointF(endPos.X - ndx, endPos.Y - ndy);
+
+						// draw line
+						pe.Graphics.DrawLine(whitePen, realStartPos, realEndPos); 
+
+						// draw arrow
+						var angle = startPos.AngleTo(endPos);
+						var radians = Math.PI * angle / 180d;
+						var adx1 = (float)Math.Sin(radians + Math.PI / 6d) * drawsize / 2f;
+						var ady1 = (float)Math.Cos(radians + Math.PI / 6d) * drawsize / 2f;
+						var arrowEndPos1 = new PointF(realEndPos.X + adx1, realEndPos.Y + ady1);
+						var adx2 = (float)Math.Sin(radians - Math.PI / 6d) * drawsize / 2f;
+						var ady2 = (float)Math.Cos(radians - Math.PI / 6d) * drawsize / 2f;
+						var arrowEndPos2 = new PointF(realEndPos.X + adx2, realEndPos.Y + ady2);
+						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos1);
+						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos2);
 					}
 				}
 			}

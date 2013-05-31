@@ -250,6 +250,18 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Computes the angle from one point to the other.
+		/// Zero degrees is north, and positive is clockwise.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static double AngleTo(this PointF p, PointF target)
+		{
+			return Math.Atan2(target.X - p.X, p.Y - target.Y) * 180d / Math.PI;
+		}
+
+		/// <summary>
 		/// Removes points within a certain Manhattan distance of a certain point.
 		/// </summary>
 		/// <param name="points">The points to start with.</param>

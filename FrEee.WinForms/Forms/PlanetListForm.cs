@@ -27,10 +27,7 @@ namespace FrEee.WinForms.Forms
 			txtPlanets.Text = planets.Count().ToString();
 			// TODO - colonizable planets and various subcategories
 			// TODO - colony ships
-
-			// show galaxy view
-			galaxyView.Galaxy = Galaxy.Current;
-
+			
 			// show planet data
 			planetBindingSource.DataSource = planets.ToList();
 		}

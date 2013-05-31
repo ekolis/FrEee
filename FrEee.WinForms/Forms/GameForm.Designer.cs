@@ -422,7 +422,6 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
-			this.galaxyView.Galaxy = null;
 			this.galaxyView.Location = new System.Drawing.Point(4, 3);
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;

@@ -177,7 +177,6 @@ namespace FrEee.WinForms.Forms
 
 		private void SetUpGui()
 		{
-			galaxyView.Galaxy = Galaxy.Current;
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.PickRandom();
 			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
