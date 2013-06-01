@@ -118,6 +118,7 @@ namespace FrEee.WinForms.Forms
 					var sw = new StreamWriter("errorlog.txt");
 					sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
 					sw.WriteLine(status.Exception.ToString());
+					sw.Close();
 					break;
 				}
 				else
