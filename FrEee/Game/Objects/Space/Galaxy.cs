@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
 using FrEee.Utility;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -401,8 +402,7 @@ namespace FrEee.Game.Objects.Space
 					else
 					{
 						// no hacking!
-						// TODO - send message to empire log
-						Console.WriteLine(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!");
+						cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
 					}
 				}
 			}

@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +29,7 @@ namespace FrEee.Game.Objects.Commands
 				Target.Orders.Remove(Order);
 			else
 			{
-				// TODO - log message in empire's log?
-				Console.WriteLine(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!");
+				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
 			}
 		}
 	}

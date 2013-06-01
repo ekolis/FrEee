@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,12 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public abstract class LogMessage
 	{
+		protected LogMessage(string text)
+		{
+			Text = text;
+			TurnNumber = Galaxy.Current.TurnNumber;
+		}
+
 		protected LogMessage(string text, int turn)
 		{
 			Text = text;

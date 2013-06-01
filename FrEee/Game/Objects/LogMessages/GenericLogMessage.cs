@@ -11,6 +11,11 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public class GenericLogMessage : LogMessage
 	{
+		public GenericLogMessage(string text)
+			: base(text)
+		{
+		}
+
 		public GenericLogMessage(string text, int turn) : base(text, turn)
 		{ }
 
