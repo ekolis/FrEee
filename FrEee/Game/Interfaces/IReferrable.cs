@@ -17,7 +17,7 @@ namespace FrEee.Game.Interfaces
 		int ID { get; set; }
 
 		/// <summary>
-		/// The owner of this object. Only the owner can issue orders or see this object in his referrables list.
+		/// The owner of this object. If this is null, everyone can see it, otherwise only the owner can.
 		/// </summary>
 		Empire Owner { get; }
 	}

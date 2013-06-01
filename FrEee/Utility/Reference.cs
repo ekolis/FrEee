@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 
@@ -11,18 +12,20 @@ namespace FrEee.Utility
 	/// A reference to some shared object that can be passed around on the network as a surrogate for said object.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class Reference<T> where T : IReferrable<object>
+	[Serializable]
+	public class Reference<T> : DynamicObject where T : IReferrable<object>
 	{
 		public Reference(T t)
 		{
-			if (Galaxy.Current.Referrables.Contains(t))
+			if (t == null)
+				ID = -1;
+			else if (Galaxy.Current.Referrables.Contains(t))
 				ID = t.ID;
-			if (Galaxy.Current.CurrentEmpire == null)
+			else
 			{
 				Galaxy.Current.Register(t);
 				ID = t.ID;
 			}
-			throw new Exception("Can't create a reference to a brand-new object from the client side. Pass the object itself to the server instead.");
 		}
 
 
@@ -32,9 +35,16 @@ namespace FrEee.Utility
 		/// Resolves the reference.
 		/// </summary>
 		/// <returns></returns>
-		public T Resolve()
+		public T Value
 		{
-			return (T)Galaxy.Current.Referrables[ID];
+			get
+			{
+				if (ID < 0)
+					return default(T);
+				if (ID >= Galaxy.Current.Referrables.Count)
+					throw new Exception("ID is too high. Trying to reference a newly created object, or one that was not assigned an ID by the server?");
+				return (T)Galaxy.Current.Referrables[ID];
+			}
 		}
 
 		public static implicit operator Reference<T>(T t)
@@ -44,7 +54,45 @@ namespace FrEee.Utility
 
 		public static implicit operator T(Reference<T> r)
 		{
-			return r.Resolve();
+			return r.Value;
+		}
+
+		public override IEnumerable<string> GetDynamicMemberNames()
+		{
+			return typeof(T).GetProperties().Select(p => p.Name);
+		}
+
+		/// <summary>
+		/// Gets a value from the referenced object.
+		/// </summary>
+		/// <param name="binder"></param>
+		/// <param name="result"></param>
+		/// <returns></returns>
+		public override bool TryGetMember(GetMemberBinder binder, out object result)
+		{
+			var prop = typeof(T).GetProperty(binder.Name);
+			if (prop == null || prop.GetIndexParameters().Length > 0)
+			{
+				result = null;
+				return false;
+			}
+			result = prop.GetValue(Value, new object[] { });
+			return true;
+		}
+
+		/// <summary>
+		/// Sets a value on the referenced object.
+		/// </summary>
+		/// <param name="binder"></param>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public override bool TrySetMember(SetMemberBinder binder, object value)
+		{
+			var prop = typeof(T).GetProperty(binder.Name);
+			if (prop == null || prop.GetIndexParameters().Length > 0)
+				return false;
+			prop.SetValue(Value, value, new object[] { });
+			return true;
 		}
 	}
 }

@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IOrderable<Empire, IEmpireOrder>
+	public class Empire : INamed, ICommandable<Empire>
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -145,12 +145,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ICollection<IDesign> KnownDesigns { get; private set; }
 
-		public IList<IEmpireOrder> Orders
-		{
-			get;
-			private set;
-		}
-
 		/// <summary>
 		/// Not the empire index (1 for player 1, etc.), just the index in the list of orderable objects.
 		/// </summary>
@@ -166,12 +160,6 @@ namespace FrEee.Game.Objects.Civilization
 		public Empire Owner
 		{
 			get { return this; }
-		}
-
-		public void ExecuteOrders()
-		{
-			foreach (var order in Orders)
-				order.Execute(this);
 		}
 
 		/// <summary>

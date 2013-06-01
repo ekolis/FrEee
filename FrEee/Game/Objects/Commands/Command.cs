@@ -8,14 +8,23 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Commands
 {
+	/// <summary>
+	/// A generic command.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class Command<T, TOrder> : ICommand<T, TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public abstract class Command<T> : ICommand<T>
+		where T : ICommandable<T>
 	{
+		protected Command(Empire issuer, T target)
+		{
+			Issuer = issuer;
+			Target = target;
+		}
+
 		public int IssuerID { get; set; }
 
-				public Empire Issuer
+		public Empire Issuer
 		{
 			get
 			{
@@ -33,7 +42,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
-				public T Target
+		public T Target
 		{
 			get
 			{
@@ -41,28 +50,9 @@ namespace FrEee.Game.Objects.Commands
 			}
 			set
 			{
-				TargetID = Galaxy.Current.Referrables.IndexOf(value) + 1;
+				TargetID = Galaxy.Current.Referrables.IndexOf((IReferrable<object>)value) + 1;
 			}
 		}
-
-		public int OrderID
-		{
-			get;
-			set;
-		}
-
-		public virtual TOrder Order
-		{
-			get
-			{
-				return Target.Orders[OrderID - 1];
-			}
-			set
-			{
-				OrderID = Target.Orders.IndexOf(value) + 1;
-			}
-		}
-
 
 		public abstract void Execute();
 	}

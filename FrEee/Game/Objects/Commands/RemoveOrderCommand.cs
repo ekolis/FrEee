@@ -16,6 +16,11 @@ namespace FrEee.Game.Objects.Commands
 		where T : IOrderable<T, TOrder>
 		where TOrder : IOrder<T, TOrder>
 	{
+		public RemoveOrderCommand(Empire issuer, T target, TOrder order)
+			: base(issuer, target, order)
+		 {
+		 }
+
 		public override void Execute()
 		{
 			if (Issuer == Target.Owner)

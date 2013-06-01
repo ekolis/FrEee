@@ -99,5 +99,11 @@ namespace FrEee.Game.Interfaces
 		int Evasion { get; }
 
 		int CargoCapacity { get; }
+
+		/// <summary>
+		/// Creates a command to create this design on the server.
+		/// </summary>
+		/// <returns></returns>
+		ICommand<Empire> CreateCreationCommand();
 	}
 }

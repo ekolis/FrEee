@@ -13,6 +13,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A combination of component template and mount.
 	/// </summary>
+	[Serializable]
 	public struct MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
 	{
 		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null) : this()
@@ -24,12 +25,12 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The component template used.
 		/// </summary>
-		public ComponentTemplate ComponentTemplate { get; set; }
+		public Reference<ComponentTemplate> ComponentTemplate { get; set; }
 
 		/// <summary>
 		/// The mount used.
 		/// </summary>
-		public Mount Mount { get; set; }
+		public Reference<Mount> Mount { get; set; }
 
 		/// <summary>
 		/// The name of the component, prefixed with the name of the mount (if any).
@@ -38,9 +39,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				if (Mount == null)
-					return ComponentTemplate.Name;
-				return Mount.Name + " " + ComponentTemplate.Name;
+				if (Mount == null || Mount.Value == null)
+					return ComponentTemplate.Value.Name;
+				return Mount.Value.Name + " " + ComponentTemplate.Value.Name;
 			}
 		}
 
@@ -49,7 +50,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - draw mount code on the icon
-				return ComponentTemplate.Icon;
+				return ComponentTemplate.Value.Icon;
 			}
 		}
 
@@ -57,7 +58,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return ComponentTemplate.Portrait;
+				return ComponentTemplate.Value.Portrait;
 			}
 		}
 
@@ -71,7 +72,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - take into effect mounts
-				return ComponentTemplate.Abilities;
+				return ComponentTemplate.Value.Abilities;
 			}
 		}
 
@@ -80,7 +81,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - take into effect mounts
-				return ComponentTemplate.Size;
+				return ComponentTemplate.Value.Size;
 			}
 		}
 
@@ -89,7 +90,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - take into effect mounts
-				return ComponentTemplate.Cost;
+				return ComponentTemplate.Value.Cost;
 			}
 		}
 
@@ -98,7 +99,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - take into effect mounts
-				return ComponentTemplate.SupplyUsage;
+				return ComponentTemplate.Value.SupplyUsage;
 			}
 		}
 
@@ -107,7 +108,7 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - take into effect mounts
-				return ComponentTemplate.Durability;
+				return ComponentTemplate.Value.Durability;
 			}
 		}
 	}

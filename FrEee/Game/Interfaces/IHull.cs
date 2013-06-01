@@ -12,7 +12,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle hull.
 	/// </summary>
-	public interface IHull : INamed, IResearchable, IAbilityObject
+	public interface IHull : INamed, IResearchable, IAbilityObject, IReferrable<IHull>
 	{
 		string ShortName { get; set; }
 
@@ -83,7 +83,7 @@ namespace FrEee.Game.Interfaces
 
 		new string Name { get; set; }
 
-		ICollection<Ability> Abilities { get; }
+		new ICollection<Ability> Abilities { get; }
 
 		/// <summary>
 		/// The icon image for this hull for the current empire.

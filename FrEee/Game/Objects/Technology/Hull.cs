@@ -184,5 +184,16 @@ namespace FrEee.Game.Objects.Technology
 				return GetPortrait(Empire.Current.ShipsetPath);
 			}
 		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
+		}
 	}
 }

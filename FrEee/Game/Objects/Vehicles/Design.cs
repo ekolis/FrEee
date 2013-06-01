@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility;
 using System.Drawing;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -151,7 +152,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				if (Hull == null)
 					yield return "You must select a hull for your design.";
-				var comps = Components.Select(comp => comp.ComponentTemplate);
+				var comps = Components.Select(comp => comp.ComponentTemplate.Value);
 				if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")))
 					yield return "This hull requires a bridge.";
 				if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
@@ -258,12 +259,12 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int ArmorHitpoints
 		{
-			get { return this.Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+			get { return this.Components.Where(c => c.ComponentTemplate.Value.HasAbility("Armor")).Sum(c => c.Durability); }
 		}
 
 		public int HullHitpoints
 		{
-			get { return this.Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
+			get { return this.Components.Where(c => !c.ComponentTemplate.Value.HasAbility("Armor")).Sum(c => c.Durability); }
 		}
 
 		public int Accuracy
@@ -295,6 +296,11 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				return Hull.GetPortrait(Owner.ShipsetPath);
 			}
+		}
+
+		public ICommand<Empire> CreateCreationCommand()
+		{
+			return new CreateDesignCommand<T>(this);
 		}
 	}
 }

@@ -7,15 +7,10 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// A command to manipulate an object's order queue.
+	/// A command to some object.
 	/// </summary>
 	public interface ICommand
 	{
-		/// <summary>
-		/// The index of the empire issuing the command (the first empire is number 1).
-		/// </summary>
-		int IssuerID { get; set; }
-
 		/// <summary>
 		/// The empire issuing the command.
 		/// </summary>
@@ -28,9 +23,9 @@ namespace FrEee.Game.Interfaces
 	}
 
 	/// <summary>
-	/// A command to manipulate an object's order queue.
+	/// A command to some object.
 	/// </summary>
-	public interface ICommand<T, TOrder> : ICommand where T : IOrderable<T, TOrder> where TOrder : IOrder<T, TOrder>
+	public interface ICommand<T> : ICommand where T : ICommandable<T>
 	{
 		/// <summary>
 		/// The ID of the target.
@@ -43,13 +38,8 @@ namespace FrEee.Game.Interfaces
 		T Target { get; set; }
 
 		/// <summary>
-		/// The ID of the order being manipulated (if it already exists).
+		/// The index of the empire issuing the command (the first empire is number 1).
 		/// </summary>
-		int OrderID { get; set; }
-
-		/// <summary>
-		/// The specific order being manipulated.
-		/// </summary>
-		TOrder Order { get; set; }
+		int IssuerID { get; set; }
 	}
 }

@@ -75,11 +75,11 @@ namespace FrEee.WinForms.Forms
 				var order = new ConstructionOrder<Facility> { Template = template, Item = template.Instantiate() };
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
-				{
-					Issuer = Galaxy.Current.CurrentEmpire,
-					Target = ConstructionQueue,
-					Order = order,
-				};
+				(
+					Galaxy.Current.CurrentEmpire,
+					ConstructionQueue,
+					order
+				);
 				newCommands.Add(cmd);
 				BindQueueListView();
 			}

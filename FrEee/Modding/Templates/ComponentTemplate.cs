@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Modding.Templates
 {
@@ -15,7 +16,7 @@ namespace FrEee.Modding.Templates
 	/// A template for a vehicle component.
 	/// </summary>
 	[Serializable]
-	public class ComponentTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Component>
+	public class ComponentTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Component>, IReferrable<ComponentTemplate>
 	{
 		public ComponentTemplate()
 		{
@@ -23,6 +24,16 @@ namespace FrEee.Modding.Templates
 			TechnologyRequirements = new List<TechnologyRequirement>();
 			Cost = new Resources();
 		}
+
+		/// <summary>
+		/// For reference tracking.
+		/// </summary>
+		public int ID { get; set; }
+
+		/// <summary>
+		/// No one owns component templates; they are shared.
+		/// </summary>
+		public Empire Owner { get { return null; } }
 
 		/// <summary>
 		/// The name of the component.

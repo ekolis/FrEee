@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -13,7 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A template for a facility.
 	/// </summary>
 	[Serializable]
-	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>
+	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable<FacilityTemplate>
 	{
 		public FacilityTemplate()
 		{
@@ -90,6 +91,17 @@ namespace FrEee.Game.Objects.Technology
 		public Facility Instantiate()
 		{
 			return new Facility(this);
+		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
 		}
 	}
 }

@@ -16,6 +16,11 @@ namespace FrEee.Game.Objects.Commands
 		where T : IOrderable<T, TOrder>
 		where TOrder : IOrder<T, TOrder>
 	{
+		public RearrangeOrdersCommand(Empire issuer, T target, TOrder order)
+			: base(issuer, target, order)
+		 {
+		 }
+
 		/// <summary>
 		/// How many spaces up (if negative) or down (if positive) to move the order.
 		/// </summary>

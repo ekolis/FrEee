@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
+using System.Threading;
 
 namespace FrEee.WinForms.Forms
 {
@@ -54,14 +55,16 @@ namespace FrEee.WinForms.Forms
 		{
 			IsBusy = true;
 
-			var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
+			//var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 			var status = new Status
 			{
 				Progress = 0d,
 				Message = "Initializing",
 				Exception = null,
 			};
-			var task = Task.Factory.StartNewWithExceptionHandling(s =>
+			//var task = Task.Factory.StartNewWithExceptionHandling(s =>
+			//{
+			Thread t = new Thread(new ThreadStart(() =>
 			{
 				try
 				{
@@ -86,27 +89,9 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Exception = ex;
 				}
-			}, status)
-				.ContinueWithWithExceptionHandling(t =>
-				{
-					try
-					{
-						var game = new GameForm(Galaxy.Current);
-						game.Show();
-						game.FormClosed += (s, args) =>
-						{
-							game.Dispose();
-							Show();
-							IsBusy = false;
-						};
-						Hide();
-					}
-					catch (Exception ex)
-					{
-						status.Exception = ex;
-					}
-				}, scheduler);
-			while (!task.IsCompleted)
+			}));
+			t.Start();
+			while (t.IsAlive)
 			{
 				if (status.Exception != null)
 				{
@@ -119,6 +104,7 @@ namespace FrEee.WinForms.Forms
 					sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
 					sw.WriteLine(status.Exception.ToString());
 					sw.Close();
+					t.Abort();
 					break;
 				}
 				else
@@ -128,7 +114,16 @@ namespace FrEee.WinForms.Forms
 					Application.DoEvents();
 				}
 			}
-			//#endif
+
+			var game = new GameForm(Galaxy.Current);
+			game.Show();
+			game.FormClosed += (s, args) =>
+			{
+				game.Dispose();
+				Show();
+				IsBusy = false;
+			};
+			Hide();
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)

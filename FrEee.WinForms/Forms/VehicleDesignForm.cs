@@ -122,7 +122,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon);
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Value.Group, g.Count() + "x " + g.First().ComponentTemplate.Value.Name, g.First(), g.First().Icon);
 			}
 		}
 
@@ -202,7 +202,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.KnownDesigns.Add(Design);
 
 				// tell server to add design too so we can still see it next turn
-				Empire.Current.Commands.Add(new CreateDesignCommand(Design));
+				Empire.Current.Commands.Add(Design.CreateCreationCommand());
 
 				// done
 				DialogResult = DialogResult.OK;
@@ -251,13 +251,13 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				var v = mct.Value;
-				picDetailIcon.Image = v.ComponentTemplate.Icon;
+				picDetailIcon.Image = v.ComponentTemplate.Value.Icon;
 				txtDetailName.Text = v.Name;
 				txtDetailSize.Text = v.Size.Kilotons();
 				resDetailMin.Amount = v.Cost["Minerals"];
 				resDetailOrg.Amount = v.Cost["Organics"];
 				resDetailRad.Amount = v.Cost["Radioactives"];
-				txtDetailDescription.Text = v.ComponentTemplate.Description;
+				txtDetailDescription.Text = v.ComponentTemplate.Value.Description;
 			}
 		}
 

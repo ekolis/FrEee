@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,13 @@ namespace FrEee.Game.Objects.Commands
 	/// A command to create a new vehicle design.
 	/// </summary>
 	[Serializable]
-	public class CreateDesignCommand : Command<Empire, IEmpireOrder>
+	public class CreateDesignCommand<T> : Command<Empire> where T : Vehicle<T>, new()
 	{
-		public CreateDesignCommand(IDesign design)
-		{
-			Design = design;
-		}
+		public CreateDesignCommand(Design<T> design)
+			: base(design.Owner, design.Owner)
+		 {
+			 Design = design;
+		 }
 
 		public IDesign Design { get; set; }
 

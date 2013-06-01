@@ -56,13 +56,15 @@
     <Compile Include="Game\Enumerations\Visibility.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
+    <Compile Include="Game\Interfaces\ICommandable.cs" />
     <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
-    <Compile Include="Game\Interfaces\IEmpireOrder.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
+    <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />

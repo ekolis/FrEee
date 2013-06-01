@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// A technology that can be researched in the game.
 	/// </summary>
-	 [Serializable] public class Technology : INamed, IResearchable
+	 [Serializable] public class Technology : INamed, IResearchable, IReferrable<Technology>
 	{
 		/// <summary>
 		/// The name of the technology.
@@ -65,5 +66,16 @@ namespace FrEee.Game.Objects.Technology
 		/// The prerequisites for this technology.
 		/// </summary>
 		public IList<TechnologyRequirement> TechnologyRequirements { get; private set; }
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
+		}
 	}
 }
