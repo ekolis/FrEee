@@ -84,6 +84,7 @@ namespace FrEee.WinForms.Forms
 		{
 			// pick the hull and close the form
 			Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
+			DialogResult = DialogResult.OK;
 			Close();
 		}
 	}
