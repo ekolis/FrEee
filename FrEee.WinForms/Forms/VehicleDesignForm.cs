@@ -244,5 +244,17 @@ namespace FrEee.WinForms.Forms
 				BindDesignData();
 			}
 		}
+
+		private void lstComponentsInstalled_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var mct = (MountedComponentTemplate)item.Tag;
+				Design.Components.Remove(mct);
+				BindInstalledComponents();
+				BindDesignData();
+			}
+		}
 	}
 }

@@ -698,6 +698,7 @@
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
+			this.lstComponentsInstalled.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDoubleClick);
 			// 
 			// gamePanel1
 			// 
