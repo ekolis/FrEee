@@ -29,31 +29,21 @@
 		private void InitializeComponent()
 		{
 			this.label1 = new System.Windows.Forms.Label();
-			this.btnHull = new FrEee.WinForms.Controls.GameButton();
 			this.label2 = new System.Windows.Forms.Label();
 			this.ddlRole = new System.Windows.Forms.ComboBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.ddlName = new System.Windows.Forms.ComboBox();
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.label4 = new System.Windows.Forms.Label();
-			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstComponentsInstalled = new System.Windows.Forms.ListView();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
-			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstWarnings = new System.Windows.Forms.ListBox();
 			this.label7 = new System.Windows.Forms.Label();
-			this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
-			this.txtDetailDescription = new System.Windows.Forms.Label();
-			this.resDetailRad = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.resDetailOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.resDetailMin = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.lblDetailSize = new System.Windows.Forms.Label();
-			this.txtDetailName = new System.Windows.Forms.Label();
-			this.picDetailIcon = new FrEee.WinForms.Controls.GamePictureBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
+			this.picPortrait = new System.Windows.Forms.PictureBox();
+			this.btnWeaponsReport = new FrEee.WinForms.Controls.GameButton();
+			this.btnMount = new FrEee.WinForms.Controls.GameButton();
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
 			this.txtSupplyUsage = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
@@ -79,18 +69,28 @@
 			this.resCostMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
-			this.btnSave = new FrEee.WinForms.Controls.GameButton();
-			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-			this.btnMount = new FrEee.WinForms.Controls.GameButton();
-			this.btnWeaponsReport = new FrEee.WinForms.Controls.GameButton();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
-			this.gamePanel1.SuspendLayout();
-			this.gamePanel2.SuspendLayout();
-			this.gamePanel3.SuspendLayout();
+			this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
+			this.txtDetailDescription = new System.Windows.Forms.Label();
+			this.resDetailRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resDetailOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resDetailMin = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.lblDetailSize = new System.Windows.Forms.Label();
+			this.txtDetailName = new System.Windows.Forms.Label();
+			this.picDetailIcon = new FrEee.WinForms.Controls.GamePictureBox();
+			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstWarnings = new System.Windows.Forms.ListBox();
+			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstComponentsInstalled = new System.Windows.Forms.ListView();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
+			this.btnHull = new FrEee.WinForms.Controls.GameButton();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
-			this.pnlStats.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.gamePanel3.SuspendLayout();
+			this.gamePanel2.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -102,18 +102,6 @@
 			this.label1.Size = new System.Drawing.Size(25, 13);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Hull";
-			// 
-			// btnHull
-			// 
-			this.btnHull.BackColor = System.Drawing.Color.Black;
-			this.btnHull.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnHull.Location = new System.Drawing.Point(80, 8);
-			this.btnHull.Name = "btnHull";
-			this.btnHull.Size = new System.Drawing.Size(167, 23);
-			this.btnHull.TabIndex = 2;
-			this.btnHull.Text = "(choose)";
-			this.btnHull.UseVisualStyleBackColor = false;
-			this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
 			// 
 			// label2
 			// 
@@ -155,32 +143,6 @@
 			this.ddlName.Size = new System.Drawing.Size(167, 21);
 			this.ddlName.TabIndex = 6;
 			// 
-			// gamePanel1
-			// 
-			this.gamePanel1.BackColor = System.Drawing.Color.Black;
-			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel1.Controls.Add(this.lstComponentsAvailable);
-			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(12, 155);
-			this.gamePanel1.Name = "gamePanel1";
-			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(234, 186);
-			this.gamePanel1.TabIndex = 7;
-			// 
-			// lstComponentsAvailable
-			// 
-			this.lstComponentsAvailable.BackColor = System.Drawing.Color.Black;
-			this.lstComponentsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstComponentsAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
-			this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
-			this.lstComponentsAvailable.Name = "lstComponentsAvailable";
-			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 178);
-			this.lstComponentsAvailable.TabIndex = 0;
-			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
-			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
@@ -190,34 +152,6 @@
 			this.label4.Size = new System.Drawing.Size(112, 13);
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Components Available";
-			// 
-			// gamePanel2
-			// 
-			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.gamePanel2.BackColor = System.Drawing.Color.Black;
-			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel2.Controls.Add(this.lstComponentsInstalled);
-			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(253, 155);
-			this.gamePanel2.Name = "gamePanel2";
-			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(234, 186);
-			this.gamePanel2.TabIndex = 9;
-			// 
-			// lstComponentsInstalled
-			// 
-			this.lstComponentsInstalled.BackColor = System.Drawing.Color.Black;
-			this.lstComponentsInstalled.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstComponentsInstalled.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
-			this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
-			this.lstComponentsInstalled.Name = "lstComponentsInstalled";
-			this.lstComponentsInstalled.Size = new System.Drawing.Size(226, 178);
-			this.lstComponentsInstalled.TabIndex = 0;
-			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			// 
 			// label5
 			// 
@@ -239,34 +173,9 @@
 			this.label6.TabIndex = 13;
 			this.label6.Text = "Use Mount";
 			// 
-			// gamePanel3
-			// 
-			this.gamePanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.gamePanel3.BackColor = System.Drawing.Color.Black;
-			this.gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel3.Controls.Add(this.lstWarnings);
-			this.gamePanel3.ForeColor = System.Drawing.Color.White;
-			this.gamePanel3.Location = new System.Drawing.Point(12, 361);
-			this.gamePanel3.Name = "gamePanel3";
-			this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel3.Size = new System.Drawing.Size(234, 81);
-			this.gamePanel3.TabIndex = 17;
-			// 
-			// lstWarnings
-			// 
-			this.lstWarnings.BackColor = System.Drawing.Color.Black;
-			this.lstWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstWarnings.ForeColor = System.Drawing.Color.Salmon;
-			this.lstWarnings.FormattingEnabled = true;
-			this.lstWarnings.Location = new System.Drawing.Point(3, 3);
-			this.lstWarnings.Name = "lstWarnings";
-			this.lstWarnings.Size = new System.Drawing.Size(226, 73);
-			this.lstWarnings.TabIndex = 16;
-			// 
 			// label7
 			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label7.AutoSize = true;
 			this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label7.Location = new System.Drawing.Point(12, 345);
@@ -275,102 +184,9 @@
 			this.label7.TabIndex = 18;
 			this.label7.Text = "Warnings";
 			// 
-			// gamePanel4
-			// 
-			this.gamePanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.gamePanel4.BackColor = System.Drawing.Color.Black;
-			this.gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel4.Controls.Add(this.txtDetailDescription);
-			this.gamePanel4.Controls.Add(this.resDetailRad);
-			this.gamePanel4.Controls.Add(this.resDetailOrg);
-			this.gamePanel4.Controls.Add(this.resDetailMin);
-			this.gamePanel4.Controls.Add(this.lblDetailSize);
-			this.gamePanel4.Controls.Add(this.txtDetailName);
-			this.gamePanel4.Controls.Add(this.picDetailIcon);
-			this.gamePanel4.ForeColor = System.Drawing.Color.White;
-			this.gamePanel4.Location = new System.Drawing.Point(253, 361);
-			this.gamePanel4.Name = "gamePanel4";
-			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel4.Size = new System.Drawing.Size(234, 81);
-			this.gamePanel4.TabIndex = 19;
-			// 
-			// txtDetailDescription
-			// 
-			this.txtDetailDescription.Location = new System.Drawing.Point(7, 46);
-			this.txtDetailDescription.Name = "txtDetailDescription";
-			this.txtDetailDescription.Size = new System.Drawing.Size(156, 23);
-			this.txtDetailDescription.TabIndex = 6;
-			this.txtDetailDescription.Text = "label9";
-			// 
-			// resDetailRad
-			// 
-			this.resDetailRad.Amount = 0;
-			this.resDetailRad.BackColor = System.Drawing.Color.Black;
-			this.resDetailRad.Change = null;
-			this.resDetailRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resDetailRad.Location = new System.Drawing.Point(166, 54);
-			this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
-			this.resDetailRad.Name = "resDetailRad";
-			this.resDetailRad.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailRad.Size = new System.Drawing.Size(60, 15);
-			this.resDetailRad.TabIndex = 5;
-			// 
-			// resDetailOrg
-			// 
-			this.resDetailOrg.Amount = 0;
-			this.resDetailOrg.BackColor = System.Drawing.Color.Black;
-			this.resDetailOrg.Change = null;
-			this.resDetailOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resDetailOrg.Location = new System.Drawing.Point(166, 39);
-			this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
-			this.resDetailOrg.Name = "resDetailOrg";
-			this.resDetailOrg.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailOrg.Size = new System.Drawing.Size(60, 15);
-			this.resDetailOrg.TabIndex = 4;
-			// 
-			// resDetailMin
-			// 
-			this.resDetailMin.Amount = 0;
-			this.resDetailMin.BackColor = System.Drawing.Color.Black;
-			this.resDetailMin.Change = null;
-			this.resDetailMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resDetailMin.Location = new System.Drawing.Point(166, 24);
-			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
-			this.resDetailMin.Name = "resDetailMin";
-			this.resDetailMin.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailMin.Size = new System.Drawing.Size(60, 15);
-			this.resDetailMin.TabIndex = 3;
-			// 
-			// lblDetailSize
-			// 
-			this.lblDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblDetailSize.Location = new System.Drawing.Point(180, 7);
-			this.lblDetailSize.Name = "lblDetailSize";
-			this.lblDetailSize.Size = new System.Drawing.Size(46, 13);
-			this.lblDetailSize.TabIndex = 2;
-			this.lblDetailSize.Text = "(no size)";
-			this.lblDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// txtDetailName
-			// 
-			this.txtDetailName.AutoSize = true;
-			this.txtDetailName.Location = new System.Drawing.Point(45, 7);
-			this.txtDetailName.Name = "txtDetailName";
-			this.txtDetailName.Size = new System.Drawing.Size(81, 13);
-			this.txtDetailName.TabIndex = 1;
-			this.txtDetailName.Text = "(no component)";
-			// 
-			// picDetailIcon
-			// 
-			this.picDetailIcon.Location = new System.Drawing.Point(7, 7);
-			this.picDetailIcon.Name = "picDetailIcon";
-			this.picDetailIcon.Size = new System.Drawing.Size(32, 32);
-			this.picDetailIcon.TabIndex = 0;
-			this.picDetailIcon.TabStop = false;
-			// 
 			// label8
 			// 
+			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label8.AutoSize = true;
 			this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label8.Location = new System.Drawing.Point(254, 345);
@@ -388,6 +204,69 @@
 			this.chkOnlyLatest.TabIndex = 21;
 			this.chkOnlyLatest.Text = "Only Latest";
 			this.chkOnlyLatest.UseVisualStyleBackColor = true;
+			// 
+			// picPortrait
+			// 
+			this.picPortrait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.picPortrait.Location = new System.Drawing.Point(502, 195);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(146, 146);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picPortrait.TabIndex = 27;
+			this.picPortrait.TabStop = false;
+			// 
+			// btnWeaponsReport
+			// 
+			this.btnWeaponsReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnWeaponsReport.BackColor = System.Drawing.Color.Black;
+			this.btnWeaponsReport.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWeaponsReport.Location = new System.Drawing.Point(493, 155);
+			this.btnWeaponsReport.Name = "btnWeaponsReport";
+			this.btnWeaponsReport.Size = new System.Drawing.Size(155, 29);
+			this.btnWeaponsReport.TabIndex = 26;
+			this.btnWeaponsReport.Text = "Weapons Report";
+			this.btnWeaponsReport.UseVisualStyleBackColor = false;
+			// 
+			// btnMount
+			// 
+			this.btnMount.BackColor = System.Drawing.Color.Black;
+			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMount.Location = new System.Drawing.Point(78, 100);
+			this.btnMount.Name = "btnMount";
+			this.btnMount.Size = new System.Drawing.Size(167, 23);
+			this.btnMount.TabIndex = 25;
+			this.btnMount.Text = "(none)";
+			this.btnMount.UseVisualStyleBackColor = false;
+			this.btnMount.Click += new System.EventHandler(this.btnMount_Click);
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCancel.Location = new System.Drawing.Point(493, 378);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(155, 29);
+			this.btnCancel.TabIndex = 24;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = false;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSave.BackColor = System.Drawing.Color.Black;
+			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSave.Location = new System.Drawing.Point(493, 413);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(155, 29);
+			this.btnSave.TabIndex = 23;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = false;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// pnlStats
 			// 
@@ -665,67 +544,193 @@
 			this.label9.TabIndex = 1;
 			this.label9.Text = "Space Free";
 			// 
-			// btnSave
+			// gamePanel4
 			// 
-			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.BackColor = System.Drawing.Color.Black;
-			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(493, 413);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(155, 29);
-			this.btnSave.TabIndex = 23;
-			this.btnSave.Text = "Save";
-			this.btnSave.UseVisualStyleBackColor = false;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			this.gamePanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel4.BackColor = System.Drawing.Color.Black;
+			this.gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel4.Controls.Add(this.txtDetailDescription);
+			this.gamePanel4.Controls.Add(this.resDetailRad);
+			this.gamePanel4.Controls.Add(this.resDetailOrg);
+			this.gamePanel4.Controls.Add(this.resDetailMin);
+			this.gamePanel4.Controls.Add(this.lblDetailSize);
+			this.gamePanel4.Controls.Add(this.txtDetailName);
+			this.gamePanel4.Controls.Add(this.picDetailIcon);
+			this.gamePanel4.ForeColor = System.Drawing.Color.White;
+			this.gamePanel4.Location = new System.Drawing.Point(253, 361);
+			this.gamePanel4.Name = "gamePanel4";
+			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel4.Size = new System.Drawing.Size(234, 81);
+			this.gamePanel4.TabIndex = 19;
 			// 
-			// btnCancel
+			// txtDetailDescription
 			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.BackColor = System.Drawing.Color.Black;
-			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(493, 378);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(155, 29);
-			this.btnCancel.TabIndex = 24;
-			this.btnCancel.Text = "Cancel";
-			this.btnCancel.UseVisualStyleBackColor = false;
-			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			this.txtDetailDescription.Location = new System.Drawing.Point(7, 46);
+			this.txtDetailDescription.Name = "txtDetailDescription";
+			this.txtDetailDescription.Size = new System.Drawing.Size(156, 23);
+			this.txtDetailDescription.TabIndex = 6;
+			this.txtDetailDescription.Text = "label9";
 			// 
-			// btnMount
+			// resDetailRad
 			// 
-			this.btnMount.BackColor = System.Drawing.Color.Black;
-			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMount.Location = new System.Drawing.Point(78, 100);
-			this.btnMount.Name = "btnMount";
-			this.btnMount.Size = new System.Drawing.Size(167, 23);
-			this.btnMount.TabIndex = 25;
-			this.btnMount.Text = "(none)";
-			this.btnMount.UseVisualStyleBackColor = false;
-			this.btnMount.Click += new System.EventHandler(this.btnMount_Click);
+			this.resDetailRad.Amount = 0;
+			this.resDetailRad.BackColor = System.Drawing.Color.Black;
+			this.resDetailRad.Change = null;
+			this.resDetailRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resDetailRad.Location = new System.Drawing.Point(166, 54);
+			this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resDetailRad.Name = "resDetailRad";
+			this.resDetailRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resDetailRad.Size = new System.Drawing.Size(60, 15);
+			this.resDetailRad.TabIndex = 5;
 			// 
-			// btnWeaponsReport
+			// resDetailOrg
 			// 
-			this.btnWeaponsReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnWeaponsReport.BackColor = System.Drawing.Color.Black;
-			this.btnWeaponsReport.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWeaponsReport.Location = new System.Drawing.Point(493, 155);
-			this.btnWeaponsReport.Name = "btnWeaponsReport";
-			this.btnWeaponsReport.Size = new System.Drawing.Size(155, 29);
-			this.btnWeaponsReport.TabIndex = 26;
-			this.btnWeaponsReport.Text = "Weapons Report";
-			this.btnWeaponsReport.UseVisualStyleBackColor = false;
+			this.resDetailOrg.Amount = 0;
+			this.resDetailOrg.BackColor = System.Drawing.Color.Black;
+			this.resDetailOrg.Change = null;
+			this.resDetailOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resDetailOrg.Location = new System.Drawing.Point(166, 39);
+			this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resDetailOrg.Name = "resDetailOrg";
+			this.resDetailOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resDetailOrg.Size = new System.Drawing.Size(60, 15);
+			this.resDetailOrg.TabIndex = 4;
 			// 
-			// picPortrait
+			// resDetailMin
 			// 
-			this.picPortrait.Location = new System.Drawing.Point(502, 195);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(146, 146);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 27;
-			this.picPortrait.TabStop = false;
+			this.resDetailMin.Amount = 0;
+			this.resDetailMin.BackColor = System.Drawing.Color.Black;
+			this.resDetailMin.Change = null;
+			this.resDetailMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resDetailMin.Location = new System.Drawing.Point(166, 24);
+			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resDetailMin.Name = "resDetailMin";
+			this.resDetailMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resDetailMin.Size = new System.Drawing.Size(60, 15);
+			this.resDetailMin.TabIndex = 3;
+			// 
+			// lblDetailSize
+			// 
+			this.lblDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblDetailSize.Location = new System.Drawing.Point(180, 7);
+			this.lblDetailSize.Name = "lblDetailSize";
+			this.lblDetailSize.Size = new System.Drawing.Size(46, 13);
+			this.lblDetailSize.TabIndex = 2;
+			this.lblDetailSize.Text = "(no size)";
+			this.lblDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// txtDetailName
+			// 
+			this.txtDetailName.AutoSize = true;
+			this.txtDetailName.Location = new System.Drawing.Point(45, 7);
+			this.txtDetailName.Name = "txtDetailName";
+			this.txtDetailName.Size = new System.Drawing.Size(81, 13);
+			this.txtDetailName.TabIndex = 1;
+			this.txtDetailName.Text = "(no component)";
+			// 
+			// picDetailIcon
+			// 
+			this.picDetailIcon.Location = new System.Drawing.Point(7, 7);
+			this.picDetailIcon.Name = "picDetailIcon";
+			this.picDetailIcon.Size = new System.Drawing.Size(32, 32);
+			this.picDetailIcon.TabIndex = 0;
+			this.picDetailIcon.TabStop = false;
+			// 
+			// gamePanel3
+			// 
+			this.gamePanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel3.BackColor = System.Drawing.Color.Black;
+			this.gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel3.Controls.Add(this.lstWarnings);
+			this.gamePanel3.ForeColor = System.Drawing.Color.White;
+			this.gamePanel3.Location = new System.Drawing.Point(12, 361);
+			this.gamePanel3.Name = "gamePanel3";
+			this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel3.Size = new System.Drawing.Size(234, 81);
+			this.gamePanel3.TabIndex = 17;
+			// 
+			// lstWarnings
+			// 
+			this.lstWarnings.BackColor = System.Drawing.Color.Black;
+			this.lstWarnings.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstWarnings.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstWarnings.ForeColor = System.Drawing.Color.Salmon;
+			this.lstWarnings.FormattingEnabled = true;
+			this.lstWarnings.Location = new System.Drawing.Point(3, 3);
+			this.lstWarnings.Name = "lstWarnings";
+			this.lstWarnings.Size = new System.Drawing.Size(226, 73);
+			this.lstWarnings.TabIndex = 16;
+			// 
+			// gamePanel2
+			// 
+			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel2.BackColor = System.Drawing.Color.Black;
+			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel2.Controls.Add(this.lstComponentsInstalled);
+			this.gamePanel2.ForeColor = System.Drawing.Color.White;
+			this.gamePanel2.Location = new System.Drawing.Point(253, 155);
+			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel2.Size = new System.Drawing.Size(234, 186);
+			this.gamePanel2.TabIndex = 9;
+			// 
+			// lstComponentsInstalled
+			// 
+			this.lstComponentsInstalled.BackColor = System.Drawing.Color.Black;
+			this.lstComponentsInstalled.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstComponentsInstalled.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
+			this.lstComponentsInstalled.Name = "lstComponentsInstalled";
+			this.lstComponentsInstalled.Size = new System.Drawing.Size(226, 178);
+			this.lstComponentsInstalled.TabIndex = 0;
+			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
+			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
+			// 
+			// gamePanel1
+			// 
+			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.lstComponentsAvailable);
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(12, 155);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(234, 186);
+			this.gamePanel1.TabIndex = 7;
+			// 
+			// lstComponentsAvailable
+			// 
+			this.lstComponentsAvailable.BackColor = System.Drawing.Color.Black;
+			this.lstComponentsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstComponentsAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
+			this.lstComponentsAvailable.Name = "lstComponentsAvailable";
+			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 178);
+			this.lstComponentsAvailable.TabIndex = 0;
+			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
+			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
+			// 
+			// btnHull
+			// 
+			this.btnHull.BackColor = System.Drawing.Color.Black;
+			this.btnHull.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnHull.Location = new System.Drawing.Point(80, 8);
+			this.btnHull.Name = "btnHull";
+			this.btnHull.Size = new System.Drawing.Size(167, 23);
+			this.btnHull.TabIndex = 2;
+			this.btnHull.Text = "(choose)";
+			this.btnHull.UseVisualStyleBackColor = false;
+			this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
 			// 
 			// VehicleDesignForm
 			// 
@@ -756,17 +761,19 @@
 			this.Controls.Add(this.btnHull);
 			this.Controls.Add(this.label1);
 			this.ForeColor = System.Drawing.Color.White;
+			this.MaximumSize = new System.Drawing.Size(676, 9999);
+			this.MinimumSize = new System.Drawing.Size(676, 493);
 			this.Name = "VehicleDesignForm";
 			this.Text = "Vehicle Designer";
-			this.gamePanel1.ResumeLayout(false);
-			this.gamePanel2.ResumeLayout(false);
-			this.gamePanel3.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
+			this.pnlStats.ResumeLayout(false);
+			this.pnlStats.PerformLayout();
 			this.gamePanel4.ResumeLayout(false);
 			this.gamePanel4.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).EndInit();
-			this.pnlStats.ResumeLayout(false);
-			this.pnlStats.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
+			this.gamePanel3.ResumeLayout(false);
+			this.gamePanel2.ResumeLayout(false);
+			this.gamePanel1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
