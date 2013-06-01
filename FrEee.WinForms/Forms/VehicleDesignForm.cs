@@ -78,7 +78,7 @@ namespace FrEee.WinForms.Forms
 			}
 
 			// bind portrait
-			picPortrait.Image = Design == null ? null : Design.Hull.GetPortrait(Empire.Current.ShipsetPath);
+			picPortrait.Image = Design == null || Design.Hull == null? null : Design.Hull.GetPortrait(Empire.Current.ShipsetPath);
 
 			// bind stats
 			if (Design == null)
@@ -98,7 +98,10 @@ namespace FrEee.WinForms.Forms
 				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
 				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
 				txtSupplyUsage.Text = Design.SupplyUsage.ToString();
-				txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsage) + " sectors";
+				if (Design.SupplyUsage == 0 || Design.HasAbility("Quantum Reactor"))
+					txtRange.Text = "Unlimited";
+				else
+					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsage) + " sectors";
 				txtShields.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
 				txtArmor.Text = Design.ArmorHitpoints + " armor";
 				txtHull.Text = Design.HullHitpoints + " hull";
@@ -118,9 +121,10 @@ namespace FrEee.WinForms.Forms
 
 		private void btnHull_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
 			var form = new HullPickerForm();
-			form.ShowDialog();
+			if (Design != null && Design.Hull != null)
+				form.SelectedVehicleType = Design.Hull.VehicleType;
+			this.ShowChildForm(form);
 			Cursor = Cursors.Default;
 			if (form.DialogResult == DialogResult.OK)
 			{
@@ -129,8 +133,9 @@ namespace FrEee.WinForms.Forms
 					// Changing vehicle types requires starting over, so warn the user
 					if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 					{
-						Design = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
-						Design.Hull = form.Hull;
+						var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+						d.Hull = form.Hull;
+						Design = d;
 						Bind();
 					}
 				}
@@ -141,8 +146,9 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					Design = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
-					Design.Hull = form.Hull;
+					var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+					d.Hull = form.Hull;
+					Design = d;
 					Bind();
 				}
 			}

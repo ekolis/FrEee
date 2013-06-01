@@ -13,6 +13,7 @@ using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
@@ -150,26 +151,17 @@ namespace FrEee.WinForms.Forms
 
 		private void btnDesigns_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
-			var form = new DesignListForm();
-			form.ShowDialog();
-			Cursor = Cursors.Default;
+			this.ShowChildForm(new DesignListForm());
 		}
 
 		private void btnPlanets_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
-			var form = new PlanetListForm();
-			form.ShowDialog();
-			Cursor = Cursors.Default;
+			this.ShowChildForm(new PlanetListForm());
 		}
 
 		private void btnQueues_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
-			var form = new ConstructionQueueListForm();
-			form.ShowDialog();
-			Cursor = Cursors.Default;
+			this.ShowChildForm(new ConstructionQueueListForm());
 		}
 
 		private void btnEndTurn_Click(object sender, EventArgs e)

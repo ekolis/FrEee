@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Modding
 {
@@ -47,7 +48,7 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - change the number at the end to match whatever number of data files we have
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 10;
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 11;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -96,6 +97,13 @@ namespace FrEee.Modding
 				status.Progress += progressPerFile;
 
 			if (status != null)
+				status.Message = "Loading VehicleSize.txt";
+			CurrentFileName = Path.Combine(datapath, "VehicleSize.txt");
+			new HullLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
+			if (status != null)
 				status.Message = "Loading Components.txt";
 			CurrentFileName = Path.Combine(datapath, "Components.txt");
 			new ComponentLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
@@ -139,6 +147,7 @@ namespace FrEee.Modding
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
+			Hulls = new List<IHull>();
 			ComponentTemplates = new List<ComponentTemplate>();
 			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
@@ -176,6 +185,11 @@ namespace FrEee.Modding
 		/// The facilities in the mod.
 		/// </summary>
 		public ICollection<FacilityTemplate> FacilityTemplates { get; private set; }
+
+		/// <summary>
+		/// The vehicle hulls in the mod.
+		/// </summary>
+		public ICollection<IHull> Hulls { get; private set; }
 
 		/// <summary>
 		/// The components in the mod.

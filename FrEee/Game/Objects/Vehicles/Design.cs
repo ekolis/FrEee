@@ -186,6 +186,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (!Components.Any())
+					return Hull.Cost;
 				return Hull.Cost + Components.Select(c => c.Cost).Sum();
 			}
 		}

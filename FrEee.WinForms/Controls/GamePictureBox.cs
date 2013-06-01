@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -38,7 +39,7 @@ namespace FrEee.WinForms.Controls
 			pic.BackColor = Color.Black;
 			pic.SizeMode = PictureBoxSizeMode.Zoom;
 			form.Controls.Add(pic);
-			form.ShowDialog();
+			this.FindForm().ShowChildForm(form);
 		}
 	}
 }

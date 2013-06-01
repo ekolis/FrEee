@@ -90,6 +90,7 @@
     <Compile Include="Game\Objects\Vehicles\Troop.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
+    <Compile Include="Modding\Loaders\HullLoader.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />

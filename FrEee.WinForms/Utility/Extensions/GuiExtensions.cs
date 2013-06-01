@@ -43,5 +43,28 @@ namespace FrEee.WinForms.Utility.Extensions
 			item.ImageKey = imageKey;
 			lv.Items.Add(item);
 		}
+
+		/// <summary>
+		/// Shows a form as a dialog in the center of its parent form with a wait cursor while the form loads.
+		/// </summary>
+		/// <param name="parent"></param>
+		public static void ShowChildForm(this Form parent, Form form)
+		{
+			parent.Cursor = Cursors.WaitCursor;
+			form.StartPosition = FormStartPosition.CenterParent;
+			form.ShowDialog();
+			parent.Cursor = Cursors.Default;
+		}
+
+		/// <summary>
+		/// Finds the form that contains a control.
+		/// </summary>
+		/// <param name="control"></param>
+		public static Form FindForm(this Control control)
+		{
+			if (control is Form)
+				return (Form)control;
+			return control.Parent.FindForm();
+		}
 	}
 }

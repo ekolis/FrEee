@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using System;
@@ -15,6 +16,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A vehicle hull.
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
+	[Serializable]
 	public class Hull<T> : IHull where T : Vehicle<T>, new()
 	{
 		public Hull()
@@ -22,6 +24,7 @@ namespace FrEee.Game.Objects.Technology
 			PictureNames = new List<string>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
 			Abilities = new List<Ability>();
+			Cost = new Resources();
 		}
 
 		/// <summary>
@@ -95,7 +98,7 @@ namespace FrEee.Game.Objects.Technology
 			get { return Abilities; }
 		}
 
-		public IList<Ability> Abilities { get; private set; }
+		public ICollection<Ability> Abilities { get; private set; }
 
 		/// <summary>
 		/// Does this hull need a component with the Ship Bridge ability?
@@ -163,6 +166,22 @@ namespace FrEee.Game.Objects.Technology
 				if (typeof(T) == typeof(WeaponPlatform))
 					return VehicleTypes.WeaponPlatform;
 				throw new Exception("Invalid vehicle type " + typeof(T) + " for hull " + this + ".");
+			}
+		}
+
+		public Image Icon
+		{
+			get
+			{
+				return GetIcon(Empire.Current.ShipsetPath);
+			}
+		}
+
+		public Image Portrait
+		{
+			get
+			{
+				return GetPortrait(Empire.Current.ShipsetPath);
 			}
 		}
 	}

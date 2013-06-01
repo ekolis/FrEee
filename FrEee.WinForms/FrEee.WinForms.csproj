@@ -281,6 +281,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

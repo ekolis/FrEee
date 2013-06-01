@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,12 @@ namespace FrEee.Game.Interfaces
 		Image GetPortrait(string shipsetPath);
 
 		int Size { get; set; }
+
+		/// <summary>
+		/// Thrust points required to move one sector per turn.
+		/// SE4 called this "engines per move" but this was a misnomer because engines were allowed to produce more than one thrust point.
+		/// </summary>
+		int Mass { get; set; }
 
 		Resources Cost { get; set; }
 
@@ -73,5 +80,19 @@ namespace FrEee.Game.Interfaces
 		/// The vehicle type of this hull.
 		/// </summary>
 		VehicleTypes VehicleType { get; }
+
+		new string Name { get; set; }
+
+		ICollection<Ability> Abilities { get; }
+
+		/// <summary>
+		/// The icon image for this hull for the current empire.
+		/// </summary>
+		Image Icon { get; }
+
+		/// <summary>
+		/// The portriat image for this hull for the current empire.
+		/// </summary>
+		Image Portrait { get; }
 	}
 }

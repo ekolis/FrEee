@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
@@ -80,10 +81,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCreate_Click(object sender, EventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
 			var form = new VehicleDesignForm();
-			form.ShowDialog();
-			Cursor = Cursors.Default;
+			this.ShowChildForm(form);
 		}
 	}
 }

@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
@@ -25,11 +26,9 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			Cursor = Cursors.WaitCursor;
 			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
 			var form = new ConstructionQueueForm(queue);
-			form.ShowDialog();
-			Cursor = Cursors.Default;
+			this.ShowChildForm(form);
 		}
 	}
 }
