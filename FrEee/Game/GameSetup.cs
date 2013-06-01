@@ -67,6 +67,7 @@ namespace FrEee.Game
 			foreach (var emp in Empires)
 			{
 				gal.Empires.Add(emp);
+				gal.Register(emp);
 				// TODO - place homeworlds fairly
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())

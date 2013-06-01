@@ -63,7 +63,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
-		public Empire Owner { get; set; }
+		public Empire Owner { get { return owner; } set { owner = value; } }
+
+		private Reference<Empire> owner;
 
 		IHull IDesign.Hull
 		{
@@ -80,7 +82,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The hull used in this design.
 		/// </summary>
-		public Hull<T> Hull { get; set; }
+		public Hull<T> Hull { get { return hull; } set { hull = value; } }
+
+		private Reference<Hull<T>> hull;
 
 		/// <summary>
 		/// The components used in this design.
@@ -152,7 +156,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				if (Hull == null)
 					yield return "You must select a hull for your design.";
-				var comps = Components.Select(comp => comp.ComponentTemplate.Value);
+				var comps = Components.Select(comp => comp.ComponentTemplate);
 				if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")))
 					yield return "This hull requires a bridge.";
 				if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
@@ -259,12 +263,12 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int ArmorHitpoints
 		{
-			get { return this.Components.Where(c => c.ComponentTemplate.Value.HasAbility("Armor")).Sum(c => c.Durability); }
+			get { return this.Components.Where(c => c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 		}
 
 		public int HullHitpoints
 		{
-			get { return this.Components.Where(c => !c.ComponentTemplate.Value.HasAbility("Armor")).Sum(c => c.Durability); }
+			get { return this.Components.Where(c => !c.ComponentTemplate.HasAbility("Armor")).Sum(c => c.Durability); }
 		}
 
 		public int Accuracy

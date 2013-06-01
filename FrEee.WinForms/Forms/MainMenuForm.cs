@@ -115,15 +115,18 @@ namespace FrEee.WinForms.Forms
 				}
 			}
 
-			var game = new GameForm(Galaxy.Current);
-			game.Show();
-			game.FormClosed += (s, args) =>
+			if (status.Exception == null)
 			{
-				game.Dispose();
-				Show();
-				IsBusy = false;
-			};
-			Hide();
+				var game = new GameForm(Galaxy.Current);
+				game.Show();
+				game.FormClosed += (s, args) =>
+				{
+					game.Dispose();
+					Show();
+					IsBusy = false;
+				};
+				Hide();
+			}
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)
