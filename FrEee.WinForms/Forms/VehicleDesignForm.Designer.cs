@@ -178,7 +178,7 @@
 			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label7.AutoSize = true;
 			this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label7.Location = new System.Drawing.Point(12, 345);
+			this.label7.Location = new System.Drawing.Point(12, 527);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(52, 13);
 			this.label7.TabIndex = 18;
@@ -189,7 +189,7 @@
 			this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label8.AutoSize = true;
 			this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label8.Location = new System.Drawing.Point(254, 345);
+			this.label8.Location = new System.Drawing.Point(254, 527);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(96, 13);
 			this.label8.TabIndex = 20;
@@ -249,7 +249,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(551, 378);
+			this.btnCancel.Location = new System.Drawing.Point(551, 560);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(146, 29);
 			this.btnCancel.TabIndex = 24;
@@ -263,7 +263,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.BackColor = System.Drawing.Color.Black;
 			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(551, 413);
+			this.btnSave.Location = new System.Drawing.Point(551, 595);
 			this.btnSave.Name = "btnSave";
 			this.btnSave.Size = new System.Drawing.Size(146, 29);
 			this.btnSave.TabIndex = 23;
@@ -561,7 +561,7 @@
 			this.gamePanel4.Controls.Add(this.txtDetailName);
 			this.gamePanel4.Controls.Add(this.picDetailIcon);
 			this.gamePanel4.ForeColor = System.Drawing.Color.White;
-			this.gamePanel4.Location = new System.Drawing.Point(253, 361);
+			this.gamePanel4.Location = new System.Drawing.Point(253, 543);
 			this.gamePanel4.Name = "gamePanel4";
 			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel4.Size = new System.Drawing.Size(292, 81);
@@ -652,7 +652,7 @@
 			this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gamePanel3.Controls.Add(this.lstWarnings);
 			this.gamePanel3.ForeColor = System.Drawing.Color.White;
-			this.gamePanel3.Location = new System.Drawing.Point(12, 361);
+			this.gamePanel3.Location = new System.Drawing.Point(12, 543);
 			this.gamePanel3.Name = "gamePanel3";
 			this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel3.Size = new System.Drawing.Size(234, 81);
@@ -682,7 +682,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(253, 155);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(292, 186);
+			this.gamePanel2.Size = new System.Drawing.Size(292, 368);
 			this.gamePanel2.TabIndex = 9;
 			// 
 			// lstComponentsInstalled
@@ -693,7 +693,7 @@
 			this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsInstalled.Name = "lstComponentsInstalled";
-			this.lstComponentsInstalled.Size = new System.Drawing.Size(284, 178);
+			this.lstComponentsInstalled.Size = new System.Drawing.Size(284, 360);
 			this.lstComponentsInstalled.TabIndex = 0;
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
@@ -711,7 +711,7 @@
 			this.gamePanel1.Location = new System.Drawing.Point(12, 155);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(234, 186);
+			this.gamePanel1.Size = new System.Drawing.Size(234, 368);
 			this.gamePanel1.TabIndex = 7;
 			// 
 			// lstComponentsAvailable
@@ -722,7 +722,7 @@
 			this.lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsAvailable.Name = "lstComponentsAvailable";
-			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 178);
+			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 360);
 			this.lstComponentsAvailable.TabIndex = 0;
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
@@ -746,7 +746,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(709, 454);
+			this.ClientSize = new System.Drawing.Size(709, 636);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.btnWeaponsReport);
 			this.Controls.Add(this.btnMount);
