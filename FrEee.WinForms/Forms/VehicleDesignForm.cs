@@ -70,13 +70,13 @@ namespace FrEee.WinForms.Forms
 				resCostRad.Amount = Design.Cost["Radioactives"];
 				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
 				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
-				txtSupplyUsage.Text = Design.SupplyUsage.ToString();
+				txtSupplyUsage.Text = Design.SupplyUsagePerSector.ToString();
 				if (Design.Speed == 0)
 					txtRange.Text = "0 sectors";
-				else if (Design.SupplyUsage == 0 || Design.HasAbility("Quantum Reactor"))
+				else if (Design.SupplyUsagePerSector == 0 || Design.HasAbility("Quantum Reactor"))
 					txtRange.Text = "Unlimited";
 				else
-					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsage) + " sectors";
+					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsagePerSector) + " sectors";
 				txtShields.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
 				txtArmor.Text = Design.ArmorHitpoints + " armor";
 				txtHull.Text = Design.HullHitpoints + " hull";

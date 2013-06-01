@@ -79,7 +79,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Supply used for each sector of movement.
 		/// </summary>
-		int SupplyUsage { get; }
+		int SupplyUsagePerSector { get; }
 
 		int ShieldHitpoints { get; }
 

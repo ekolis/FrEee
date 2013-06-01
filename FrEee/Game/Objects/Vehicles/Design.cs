@@ -236,11 +236,11 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.Abilities)).Stack(); }
 		}
 
-		public int SupplyUsage
+		public int SupplyUsagePerSector
 		{
 			get
 			{
-				return Speed * Components.Where(comp => comp.HasAbility("Standard Ship Movement") || comp.HasAbility("Extra Movement") || comp.HasAbility("Movement Bonus")).Sum(comp => comp.SupplyUsage);
+				return Components.Where(comp => comp.HasAbility("Standard Ship Movement") || comp.HasAbility("Extra Movement") || comp.HasAbility("Movement Bonus")).Sum(comp => comp.SupplyUsage);
 			}
 		}
 
