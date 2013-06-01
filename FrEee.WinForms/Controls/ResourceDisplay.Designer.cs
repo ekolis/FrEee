@@ -47,13 +47,15 @@ namespace FrEee.WinForms.Controls
 			// 
 			// picIcon
 			// 
+			this.picIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.picIcon.Location = new System.Drawing.Point(83, 0);
 			this.picIcon.Name = "picIcon";
 			this.picIcon.Size = new System.Drawing.Size(20, 20);
 			this.picIcon.TabIndex = 1;
 			this.picIcon.TabStop = false;
 			// 
-			// GameResourceDisplay
+			// ResourceDisplay
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -62,7 +64,7 @@ namespace FrEee.WinForms.Controls
 			this.Controls.Add(this.lblAmount);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Margin = new System.Windows.Forms.Padding(0);
-			this.Name = "GameResourceDisplay";
+			this.Name = "ResourceDisplay";
 			this.Size = new System.Drawing.Size(106, 20);
 			((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
 			this.ResumeLayout(false);

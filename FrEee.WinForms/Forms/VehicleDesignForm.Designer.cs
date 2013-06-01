@@ -209,7 +209,7 @@
 			// picPortrait
 			// 
 			this.picPortrait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.picPortrait.Location = new System.Drawing.Point(502, 195);
+			this.picPortrait.Location = new System.Drawing.Point(551, 195);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(146, 146);
 			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -222,9 +222,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnWeaponsReport.BackColor = System.Drawing.Color.Black;
 			this.btnWeaponsReport.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWeaponsReport.Location = new System.Drawing.Point(493, 155);
+			this.btnWeaponsReport.Location = new System.Drawing.Point(551, 155);
 			this.btnWeaponsReport.Name = "btnWeaponsReport";
-			this.btnWeaponsReport.Size = new System.Drawing.Size(155, 29);
+			this.btnWeaponsReport.Size = new System.Drawing.Size(146, 29);
 			this.btnWeaponsReport.TabIndex = 26;
 			this.btnWeaponsReport.Text = "Weapons Report";
 			this.btnWeaponsReport.UseVisualStyleBackColor = false;
@@ -247,9 +247,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(493, 378);
+			this.btnCancel.Location = new System.Drawing.Point(551, 378);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(155, 29);
+			this.btnCancel.Size = new System.Drawing.Size(146, 29);
 			this.btnCancel.TabIndex = 24;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
@@ -261,9 +261,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSave.BackColor = System.Drawing.Color.Black;
 			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(493, 413);
+			this.btnSave.Location = new System.Drawing.Point(551, 413);
 			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(155, 29);
+			this.btnSave.Size = new System.Drawing.Size(146, 29);
 			this.btnSave.TabIndex = 23;
 			this.btnSave.Text = "Save";
 			this.btnSave.UseVisualStyleBackColor = false;
@@ -304,7 +304,7 @@
 			this.pnlStats.Location = new System.Drawing.Point(257, 8);
 			this.pnlStats.Name = "pnlStats";
 			this.pnlStats.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlStats.Size = new System.Drawing.Size(391, 128);
+			this.pnlStats.Size = new System.Drawing.Size(440, 128);
 			this.pnlStats.TabIndex = 22;
 			// 
 			// txtSupplyUsage
@@ -562,60 +562,63 @@
 			this.gamePanel4.Location = new System.Drawing.Point(253, 361);
 			this.gamePanel4.Name = "gamePanel4";
 			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel4.Size = new System.Drawing.Size(234, 81);
+			this.gamePanel4.Size = new System.Drawing.Size(292, 81);
 			this.gamePanel4.TabIndex = 19;
 			// 
 			// txtDetailDescription
 			// 
-			this.txtDetailDescription.Location = new System.Drawing.Point(7, 46);
+			this.txtDetailDescription.Location = new System.Drawing.Point(3, 46);
 			this.txtDetailDescription.Name = "txtDetailDescription";
-			this.txtDetailDescription.Size = new System.Drawing.Size(156, 23);
+			this.txtDetailDescription.Size = new System.Drawing.Size(197, 30);
 			this.txtDetailDescription.TabIndex = 6;
 			this.txtDetailDescription.Text = "label9";
 			// 
 			// resDetailRad
 			// 
 			this.resDetailRad.Amount = 0;
+			this.resDetailRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.resDetailRad.BackColor = System.Drawing.Color.Black;
 			this.resDetailRad.Change = null;
 			this.resDetailRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resDetailRad.Location = new System.Drawing.Point(166, 54);
+			this.resDetailRad.Location = new System.Drawing.Point(206, 61);
 			this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailRad.Name = "resDetailRad";
 			this.resDetailRad.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailRad.Size = new System.Drawing.Size(60, 15);
+			this.resDetailRad.Size = new System.Drawing.Size(81, 15);
 			this.resDetailRad.TabIndex = 5;
 			// 
 			// resDetailOrg
 			// 
 			this.resDetailOrg.Amount = 0;
+			this.resDetailOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.resDetailOrg.BackColor = System.Drawing.Color.Black;
 			this.resDetailOrg.Change = null;
 			this.resDetailOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resDetailOrg.Location = new System.Drawing.Point(166, 39);
+			this.resDetailOrg.Location = new System.Drawing.Point(206, 45);
 			this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailOrg.Name = "resDetailOrg";
 			this.resDetailOrg.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailOrg.Size = new System.Drawing.Size(60, 15);
+			this.resDetailOrg.Size = new System.Drawing.Size(81, 15);
 			this.resDetailOrg.TabIndex = 4;
 			// 
 			// resDetailMin
 			// 
 			this.resDetailMin.Amount = 0;
+			this.resDetailMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.resDetailMin.BackColor = System.Drawing.Color.Black;
 			this.resDetailMin.Change = null;
 			this.resDetailMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resDetailMin.Location = new System.Drawing.Point(166, 24);
+			this.resDetailMin.Location = new System.Drawing.Point(206, 24);
 			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailMin.Name = "resDetailMin";
 			this.resDetailMin.ResourceColor = System.Drawing.Color.Empty;
-			this.resDetailMin.Size = new System.Drawing.Size(60, 15);
+			this.resDetailMin.Size = new System.Drawing.Size(81, 21);
 			this.resDetailMin.TabIndex = 3;
 			// 
 			// txtDetailSize
 			// 
 			this.txtDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDetailSize.Location = new System.Drawing.Point(180, 7);
+			this.txtDetailSize.Location = new System.Drawing.Point(238, 7);
 			this.txtDetailSize.Name = "txtDetailSize";
 			this.txtDetailSize.Size = new System.Drawing.Size(46, 13);
 			this.txtDetailSize.TabIndex = 2;
@@ -677,7 +680,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(253, 155);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(234, 186);
+			this.gamePanel2.Size = new System.Drawing.Size(292, 186);
 			this.gamePanel2.TabIndex = 9;
 			// 
 			// lstComponentsInstalled
@@ -688,7 +691,7 @@
 			this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsInstalled.Name = "lstComponentsInstalled";
-			this.lstComponentsInstalled.Size = new System.Drawing.Size(226, 178);
+			this.lstComponentsInstalled.Size = new System.Drawing.Size(284, 178);
 			this.lstComponentsInstalled.TabIndex = 0;
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
@@ -740,7 +743,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(660, 454);
+			this.ClientSize = new System.Drawing.Size(709, 454);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.btnWeaponsReport);
 			this.Controls.Add(this.btnMount);
@@ -764,8 +767,8 @@
 			this.Controls.Add(this.btnHull);
 			this.Controls.Add(this.label1);
 			this.ForeColor = System.Drawing.Color.White;
-			this.MaximumSize = new System.Drawing.Size(676, 9999);
-			this.MinimumSize = new System.Drawing.Size(676, 493);
+			this.MaximumSize = new System.Drawing.Size(725, 9999);
+			this.MinimumSize = new System.Drawing.Size(725, 493);
 			this.Name = "VehicleDesignForm";
 			this.Text = "Vehicle Designer";
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
