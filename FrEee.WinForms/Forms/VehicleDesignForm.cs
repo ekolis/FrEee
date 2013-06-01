@@ -177,8 +177,17 @@ namespace FrEee.WinForms.Forms
 
 		private void btnSave_Click(object sender, EventArgs e)
 		{
+			if (TrySaveDesign())
+				Close();
+		}
+
+		private bool TrySaveDesign()
+		{
 			if (Design.Warnings.Any())
+			{
 				MessageBox.Show("You cannot save your design while there are warnings.");
+				return false;
+			}
 			else
 			{
 				// add design here
@@ -189,7 +198,7 @@ namespace FrEee.WinForms.Forms
 
 				// done
 				DialogResult = DialogResult.OK;
-				Close();
+				return true;
 			}
 		}
 
@@ -243,7 +252,7 @@ namespace FrEee.WinForms.Forms
 				txtDetailDescription.Text = v.ComponentTemplate.Description;
 			}
 		}
-		
+
 		/// <summary>
 		/// The currently used mount for placing new components.
 		/// </summary>
@@ -270,6 +279,29 @@ namespace FrEee.WinForms.Forms
 				Design.Components.Remove(mct);
 				BindInstalledComponents();
 				BindDesignData();
+			}
+		}
+
+		private void VehicleDesignForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (Design != null)
+			{
+				var result = MessageBox.Show("Save your design before closing the ship designer?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+				{
+					// try to save design and cancel if we can't
+					if (!TrySaveDesign())
+						e.Cancel = true;
+				}
+				else if (result == DialogResult.No)
+				{
+					// do nothing, let form close
+				}
+				else if (result == DialogResult.Cancel)
+				{
+					// cancel the close
+					e.Cancel = true;
+				}
 			}
 		}
 	}

@@ -775,6 +775,7 @@
 			this.MinimumSize = new System.Drawing.Size(725, 493);
 			this.Name = "VehicleDesignForm";
 			this.Text = "Vehicle Designer";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VehicleDesignForm_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.pnlStats.ResumeLayout(false);
 			this.pnlStats.PerformLayout();
