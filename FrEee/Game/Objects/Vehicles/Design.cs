@@ -101,8 +101,23 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				// TODO - implement vehicle types once we have actual vehicle classes
-				return VehicleTypes.None;
+				if (typeof(T) == typeof(Ship))
+					return VehicleTypes.Ship;
+				if (typeof(T) == typeof(Base))
+					return VehicleTypes.Base;
+				if (typeof(T) == typeof(Fighter))
+					return VehicleTypes.Fighter;
+				if (typeof(T) == typeof(Satellite))
+					return VehicleTypes.Satellite;
+				if (typeof(T) == typeof(Troop))
+					return VehicleTypes.Troop;
+				if (typeof(T) == typeof(Drone))
+					return VehicleTypes.Drone;
+				if (typeof(T) == typeof(Mine))
+					return VehicleTypes.Mine;
+				if (typeof(T) == typeof(WeaponPlatform))
+					return VehicleTypes.WeaponPlatform;
+				throw new Exception("Invalid vehicle type " + typeof(T) + ".");
 			}
 		}
 
@@ -110,7 +125,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				// TODO - add spaces where necessary
+				if (VehicleType == VehicleTypes.WeaponPlatform)
+					return "Weapon Platform"; // add the space
 				return VehicleType.ToString();
 			}
 		}

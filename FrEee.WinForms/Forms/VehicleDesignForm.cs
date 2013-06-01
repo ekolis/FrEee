@@ -100,7 +100,6 @@ namespace FrEee.WinForms.Forms
 				IEnumerable<ComponentTemplate> comps = Mod.Current.ComponentTemplates;
 
 				// filter by vehicle type
-				// TODO - why is filter by vehicle type not working?
 				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
 
 				// TODO - filter by can-use-mount?
