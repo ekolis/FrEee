@@ -171,6 +171,8 @@ namespace FrEee.Game.Objects.Vehicles
 					if (!c.VehicleTypes.HasFlag(VehicleType))
 						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
 				}
+
+				// TODO - warnings for illegal mount usage
 			}
 		}
 

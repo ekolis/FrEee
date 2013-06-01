@@ -221,5 +221,16 @@ namespace FrEee.WinForms.Forms
 		/// The currently used mount for placing new components.
 		/// </summary>
 		public Mount CurrentMount { get; private set; }
+
+		private void lstComponentsAvailable_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var comp = (ComponentTemplate)item.Tag;
+				Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
+				Bind();
+			}
+		}
 	}
 }

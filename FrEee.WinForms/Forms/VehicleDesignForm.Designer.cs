@@ -725,6 +725,7 @@
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
+			this.lstComponentsAvailable.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDoubleClick);
 			// 
 			// btnHull
 			// 
