@@ -13,10 +13,11 @@ namespace FrEee.WinForms.Utility.Extensions
 	public static class GuiExtensions
 	{
 		/// <summary>
-		/// Creates image lists for a list view.
+		/// Creates image lists for a list view and clears the items.
 		/// </summary>
-		public static void InitializeImageLists(this ListView lv, int largeImageSize, int smallImageSize)
+		public static void Initialize(this ListView lv, int largeImageSize, int smallImageSize)
 		{
+			lv.Items.Clear();
 			lv.LargeImageList = new ImageList { ImageSize = new Size(largeImageSize, largeImageSize), ColorDepth = ColorDepth.Depth32Bit };
 			lv.SmallImageList = new ImageList { ImageSize = new Size(smallImageSize, smallImageSize), ColorDepth = ColorDepth.Depth32Bit };
 		}
@@ -28,11 +29,11 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// <param name="group"></param>
 		/// <param name="text"></param>
 		/// <param name="image"></param>
-		/// <param name="imageKey">Needs to be unique for the image lists!</param>
-		public static void AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, string imageKey)
+		public static void AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image)
 		{
-			lv.LargeImageList.Images.Add(imageKey, image);
-			lv.SmallImageList.Images.Add(imageKey, image);
+			int imageNum = lv.Items.Count;
+			lv.LargeImageList.Images.Add(image);
+			lv.SmallImageList.Images.Add(image);
 			var group = lv.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == groupName);
 			if (group == null)
 			{
@@ -41,7 +42,7 @@ namespace FrEee.WinForms.Utility.Extensions
 			}
 			var item = new ListViewItem(text, group);
 			item.Tag = tag;
-			item.ImageKey = imageKey;
+			item.ImageIndex = imageNum;
 			lv.Items.Add(item);
 		}
 

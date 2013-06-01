@@ -238,7 +238,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 			}
-			return GetCachedImage(paths);
+			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
 		}
 
 		public static Image GetPortrait(IHull hull, string shipsetPath)
@@ -256,7 +256,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
 			}
-			return GetCachedImage(paths);
+			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
 		}
 
 		public static Image GetCachedImage(IEnumerable<string> paths)

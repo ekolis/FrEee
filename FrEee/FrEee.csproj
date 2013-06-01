@@ -59,7 +59,13 @@
     <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
+    <Compile Include="Game\Interfaces\IEmpireOrder.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\IPictorial.cs" />
+    <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
+    <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
+    <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
+    <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
     <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />

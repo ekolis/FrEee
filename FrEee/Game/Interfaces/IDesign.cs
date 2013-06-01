@@ -13,7 +13,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle design.
 	/// </summary>
-	public interface IDesign : INamed, IAbilityObject
+	public interface IDesign : INamed, IPictorial, IAbilityObject
 	{
 		/// <summary>
 		/// The empire which created this design.

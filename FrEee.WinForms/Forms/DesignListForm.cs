@@ -49,11 +49,16 @@ namespace FrEee.WinForms.Forms
 			designs = designs.Where(d => vehicleTypeFilter.HasFlag(d.VehicleType));
 
 			// filter by ours/foreign (using an exclusive or)
-			designs = designs.Where(d => d.Owner == emp ^ !chkForeign.Checked);
+			designs = designs.Where(d => d.Owner == emp ^ chkForeign.Checked);
 
 			// filter by obsoleteness
 			if (chkHideObsolete.Checked)
 				designs = designs.Where(d => !d.IsObsolete);
+
+			// display it!
+			lstDesigns.Initialize(32, 32);
+			foreach (var design in designs)
+				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon);
 		}
 
 		private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)
@@ -83,6 +88,8 @@ namespace FrEee.WinForms.Forms
 		{
 			var form = new VehicleDesignForm();
 			this.ShowChildForm(form);
+			if (form.DialogResult == DialogResult.OK)
+				BindDesignList();
 		}
 	}
 }

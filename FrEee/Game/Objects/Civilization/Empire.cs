@@ -8,6 +8,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System.IO;
 using FrEee.Modding;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed
+	public class Empire : INamed, IOrderable<Empire, IEmpireOrder>
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -143,5 +144,39 @@ namespace FrEee.Game.Objects.Civilization
 		/// Designs known by this empire.
 		/// </summary>
 		public ICollection<IDesign> KnownDesigns { get; private set; }
+
+		public IList<IEmpireOrder> Orders
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Not the empire index (1 for player 1, etc.), just the index in the list of orderable objects.
+		/// </summary>
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The empire owns itself, of course.
+		/// </summary>
+		public Empire Owner
+		{
+			get { return this; }
+		}
+
+		public void ExecuteOrders()
+		{
+			foreach (var order in Orders)
+				order.Execute(this);
+		}
+
+		/// <summary>
+		/// Empire history log.
+		/// </summary>
+		public IList<LogMessage> Log { get; set; }
 	}
 }

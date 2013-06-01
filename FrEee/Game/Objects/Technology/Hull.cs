@@ -53,7 +53,7 @@ namespace FrEee.Game.Objects.Technology
 		public IList<string> PictureNames { get; private set; }
 
 		/// <summary>
-		/// TODO - implement hull icons (will need knowledge of shipset!)
+		/// The icon for this hull.
 		/// </summary>
 		public Image GetIcon(string shipsetPath)
 		{
@@ -61,7 +61,7 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		/// <summary>
-		/// TODO - implement hull portraits (will need knowledge of shipset!)
+		/// The portrait for this hull.
 		/// </summary>
 		public Image GetPortrait(string shipsetPath)
 		{

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility;
+using System.Drawing;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -277,6 +278,22 @@ namespace FrEee.Game.Objects.Vehicles
 		public int CargoCapacity
 		{
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
+		}
+
+		public Image Icon
+		{
+			get
+			{
+				return Hull.GetIcon(Owner.ShipsetPath);
+			}
+		}
+
+		public Image Portrait
+		{
+			get
+			{
+				return Hull.GetPortrait(Owner.ShipsetPath);
+			}
 		}
 	}
 }

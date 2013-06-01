@@ -13,6 +13,7 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.WinForms.Forms
 {
@@ -93,8 +94,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindAvailableComponents()
 		{
-			lstComponentsAvailable.InitializeImageLists(32, 32);
-			lstComponentsAvailable.Items.Clear();
+			lstComponentsAvailable.Initialize(32, 32);
 			if (Design != null)
 			{
 				IEnumerable<ComponentTemplate> comps = Mod.Current.ComponentTemplates;
@@ -110,18 +110,17 @@ namespace FrEee.WinForms.Forms
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)
-					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon, complist.IndexOf(comp).ToString());
+					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon);
 			}
 		}
 
 		private void BindInstalledComponents()
 		{
-			lstComponentsInstalled.InitializeImageLists(32, 32);
-			lstComponentsInstalled.Items.Clear();
+			lstComponentsInstalled.Initialize(32, 32);
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon, Design.Components.IndexOf(g.First()).ToString());
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon);
 			}
 		}
 
@@ -147,6 +146,7 @@ namespace FrEee.WinForms.Forms
 					if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 					{
 						var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+						d.Owner = Empire.Current;
 						d.Hull = form.Hull;
 						Design = d;
 						BindAll();
@@ -160,6 +160,7 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+					d.Owner = Empire.Current;
 					d.Hull = form.Hull;
 					Design = d;
 					BindAll();
@@ -174,7 +175,20 @@ namespace FrEee.WinForms.Forms
 
 		private void btnSave_Click(object sender, EventArgs e)
 		{
-			// TODO - implement save
+			if (Design.Warnings.Any())
+				MessageBox.Show("You cannot save your design while there are warnings.");
+			else
+			{
+				// add design here
+				Empire.Current.KnownDesigns.Add(Design);
+
+				// tell server to add design too so we can still see it next turn
+				Empire.Current.Commands.Add(new CreateDesignCommand(Design));
+
+				// done
+				DialogResult = DialogResult.OK;
+				Close();
+			}
 		}
 
 		private void btnMount_Click(object sender, EventArgs e)
@@ -247,7 +261,7 @@ namespace FrEee.WinForms.Forms
 
 		private void lstComponentsInstalled_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
 				var mct = (MountedComponentTemplate)item.Tag;
