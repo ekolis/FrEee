@@ -164,6 +164,13 @@ namespace FrEee.Game.Objects.Vehicles
 						yield return "The " + name + " family of components is limited to " + limit + " per vehicle.";
 					}
 				}
+				if (SpaceFree < 0)
+					yield return "You are over the hull size limit by " + (-SpaceFree).Kilotons() + ".";
+				foreach (var c in comps.Distinct())
+				{
+					if (!c.VehicleTypes.HasFlag(VehicleType))
+						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
+				}
 			}
 		}
 
