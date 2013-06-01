@@ -17,8 +17,8 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// </summary>
 		public static void InitializeImageLists(this ListView lv, int largeImageSize, int smallImageSize)
 		{
-			lv.LargeImageList = new ImageList { ImageSize = new Size(largeImageSize, largeImageSize) };
-			lv.SmallImageList = new ImageList { ImageSize = new Size(smallImageSize, smallImageSize) };
+			lv.LargeImageList = new ImageList { ImageSize = new Size(largeImageSize, largeImageSize), ColorDepth = ColorDepth.Depth32Bit };
+			lv.SmallImageList = new ImageList { ImageSize = new Size(smallImageSize, smallImageSize), ColorDepth = ColorDepth.Depth32Bit };
 		}
 
 		/// <summary>
