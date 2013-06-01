@@ -82,6 +82,7 @@
 			this.gridHulls.RowHeadersVisible = false;
 			this.gridHulls.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
 			this.gridHulls.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
+			this.gridHulls.RowTemplate.Height = 32;
 			this.gridHulls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridHulls.Size = new System.Drawing.Size(457, 344);
 			this.gridHulls.TabIndex = 1;

@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Modding;
+using FrEee.Utility.Extensions;
 using System.Linq;
 
 namespace FrEee.Utility
@@ -225,7 +226,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetIcon(IHull hull, string shipsetPath)
+		public static Image GetIcon(IHull hull, string shipsetPath, int size = 32)
 		{
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
@@ -238,7 +239,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 			}
-			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
+			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType())).Resize(32);
 		}
 
 		public static Image GetPortrait(IHull hull, string shipsetPath)
