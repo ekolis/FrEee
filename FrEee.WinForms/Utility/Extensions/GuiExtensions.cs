@@ -29,7 +29,7 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// <param name="text"></param>
 		/// <param name="image"></param>
 		/// <param name="imageKey">Needs to be unique for the image lists!</param>
-		public static void AddItemWithImage(this ListView lv, string groupName, string text, Image image, string imageKey)
+		public static void AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, string imageKey)
 		{
 			lv.LargeImageList.Images.Add(imageKey, image);
 			lv.SmallImageList.Images.Add(imageKey, image);
@@ -40,6 +40,7 @@ namespace FrEee.WinForms.Utility.Extensions
 				lv.Groups.Add(group);
 			}
 			var item = new ListViewItem(text, group);
+			item.Tag = tag;
 			item.ImageKey = imageKey;
 			lv.Items.Add(item);
 		}

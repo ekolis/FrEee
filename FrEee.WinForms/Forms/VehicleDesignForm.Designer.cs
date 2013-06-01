@@ -74,7 +74,7 @@
 			this.resDetailRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resDetailOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resDetailMin = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.lblDetailSize = new System.Windows.Forms.Label();
+			this.txtDetailSize = new System.Windows.Forms.Label();
 			this.txtDetailName = new System.Windows.Forms.Label();
 			this.picDetailIcon = new FrEee.WinForms.Controls.GamePictureBox();
 			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
@@ -204,6 +204,7 @@
 			this.chkOnlyLatest.TabIndex = 21;
 			this.chkOnlyLatest.Text = "Only Latest";
 			this.chkOnlyLatest.UseVisualStyleBackColor = true;
+			this.chkOnlyLatest.CheckedChanged += new System.EventHandler(this.chkOnlyLatest_CheckedChanged);
 			// 
 			// picPortrait
 			// 
@@ -554,7 +555,7 @@
 			this.gamePanel4.Controls.Add(this.resDetailRad);
 			this.gamePanel4.Controls.Add(this.resDetailOrg);
 			this.gamePanel4.Controls.Add(this.resDetailMin);
-			this.gamePanel4.Controls.Add(this.lblDetailSize);
+			this.gamePanel4.Controls.Add(this.txtDetailSize);
 			this.gamePanel4.Controls.Add(this.txtDetailName);
 			this.gamePanel4.Controls.Add(this.picDetailIcon);
 			this.gamePanel4.ForeColor = System.Drawing.Color.White;
@@ -611,15 +612,15 @@
 			this.resDetailMin.Size = new System.Drawing.Size(60, 15);
 			this.resDetailMin.TabIndex = 3;
 			// 
-			// lblDetailSize
+			// txtDetailSize
 			// 
-			this.lblDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.lblDetailSize.Location = new System.Drawing.Point(180, 7);
-			this.lblDetailSize.Name = "lblDetailSize";
-			this.lblDetailSize.Size = new System.Drawing.Size(46, 13);
-			this.lblDetailSize.TabIndex = 2;
-			this.lblDetailSize.Text = "(no size)";
-			this.lblDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.txtDetailSize.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtDetailSize.Location = new System.Drawing.Point(180, 7);
+			this.txtDetailSize.Name = "txtDetailSize";
+			this.txtDetailSize.Size = new System.Drawing.Size(46, 13);
+			this.txtDetailSize.TabIndex = 2;
+			this.txtDetailSize.Text = "(no size)";
+			this.txtDetailSize.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// txtDetailName
 			// 
@@ -691,6 +692,7 @@
 			this.lstComponentsInstalled.TabIndex = 0;
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
+			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
 			// 
 			// gamePanel1
 			// 
@@ -719,6 +721,7 @@
 			this.lstComponentsAvailable.TabIndex = 0;
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
+			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
 			// 
 			// btnHull
 			// 
@@ -801,7 +804,7 @@
 		private System.Windows.Forms.Label label8;
 		private Controls.GamePictureBox picDetailIcon;
 		private System.Windows.Forms.Label txtDetailName;
-		private System.Windows.Forms.Label lblDetailSize;
+		private System.Windows.Forms.Label txtDetailSize;
 		private Controls.ResourceDisplay resDetailRad;
 		private Controls.ResourceDisplay resDetailOrg;
 		private Controls.ResourceDisplay resDetailMin;

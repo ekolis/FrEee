@@ -12,6 +12,7 @@ using FrEee.WinForms.Utility.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Forms
 {
@@ -20,6 +21,7 @@ namespace FrEee.WinForms.Forms
 		public VehicleDesignForm()
 		{
 			InitializeComponent();
+			ShowComponentDetails(null);
 		}
 
 		private IDesign design;
@@ -65,7 +67,7 @@ namespace FrEee.WinForms.Forms
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)
-					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp.Icon, complist.IndexOf(comp).ToString());
+					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon, complist.IndexOf(comp).ToString());
 			}
 
 			// bind components installed list
@@ -74,7 +76,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First().Icon, Design.Components.IndexOf(g.First()).ToString());
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon, Design.Components.IndexOf(g.First()).ToString());
 			}
 
 			// bind portrait
@@ -168,5 +170,56 @@ namespace FrEee.WinForms.Forms
 		{
 			// TODO - implement use mount
 		}
+
+		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
+		{
+			Bind();
+		}
+
+		private void lstComponentsAvailable_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+		{
+			if (e.Item == null)
+				ShowComponentDetails(null);
+			else
+				ShowComponentDetails(new MountedComponentTemplate((ComponentTemplate)e.Item.Tag, CurrentMount));
+		}
+
+		private void lstComponentsInstalled_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+		{
+			if (e.Item == null)
+				ShowComponentDetails(null);
+			else
+				ShowComponentDetails((MountedComponentTemplate)e.Item.Tag);
+		}
+
+		private void ShowComponentDetails(MountedComponentTemplate? mct)
+		{
+			if (mct == null)
+			{
+				picDetailIcon.Image = null;
+				txtDetailName.Text = "(no component)";
+				txtDetailSize.Text = null;
+				resDetailMin.Amount = 0;
+				resDetailOrg.Amount = 0;
+				resDetailRad.Amount = 0;
+				txtDetailDescription.Text = null;
+			}
+			else
+			{
+				var v = mct.Value;
+				picDetailIcon.Image = v.ComponentTemplate.Icon;
+				txtDetailName.Text = v.Name;
+				txtDetailSize.Text = v.Size.Kilotons();
+				resDetailMin.Amount = v.Cost["Minerals"];
+				resDetailOrg.Amount = v.Cost["Organics"];
+				resDetailRad.Amount = v.Cost["Radioactives"];
+				txtDetailDescription.Text = v.ComponentTemplate.Description;
+			}
+		}
+		
+		/// <summary>
+		/// The currently used mount for placing new components.
+		/// </summary>
+		public Mount CurrentMount { get; private set; }
 	}
 }
