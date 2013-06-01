@@ -242,6 +242,7 @@ namespace FrEee.WinForms.Forms
 				var comp = (ComponentTemplate)item.Tag;
 				Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
 				BindInstalledComponents();
+				BindDesignData();
 			}
 		}
 	}
