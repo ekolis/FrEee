@@ -104,7 +104,12 @@ namespace FrEee.WinForms.Controls
 			this.SuspendLayout();
 			// 
 			// gameTabControl1
-			// 
+			//
+			this.gameTabControl1.Controls.Add(this.pageDetail);
+			this.gameTabControl1.Controls.Add(this.pageFacil);
+			this.gameTabControl1.Controls.Add(this.pageCargo);
+			this.gameTabControl1.Controls.Add(this.pageOrders);
+			this.gameTabControl1.Controls.Add(this.pageAbility); 
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
