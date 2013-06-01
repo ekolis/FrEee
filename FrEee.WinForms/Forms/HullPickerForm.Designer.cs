@@ -85,6 +85,7 @@
 			this.gridHulls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridHulls.Size = new System.Drawing.Size(457, 344);
 			this.gridHulls.TabIndex = 1;
+			this.gridHulls.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridHulls_CellDoubleClick);
 			this.gridHulls.SelectionChanged += new System.EventHandler(this.gridHulls_SelectionChanged);
 			// 
 			// Icon

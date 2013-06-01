@@ -79,5 +79,12 @@ namespace FrEee.WinForms.Forms
 			else
 				Hull = null;
 		}
+
+		private void gridHulls_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		{
+			// pick the hull and close the form
+			Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
+			Close();
+		}
 	}
 }
