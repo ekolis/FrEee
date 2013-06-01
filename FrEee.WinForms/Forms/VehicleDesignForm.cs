@@ -167,6 +167,10 @@ namespace FrEee.WinForms.Forms
 					Design = d;
 					BindAll();
 				}
+
+				ddlName.Enabled = true;
+				ddlRole.Enabled = true;
+				btnMount.Enabled = true;
 			}
 		}
 
@@ -303,6 +307,18 @@ namespace FrEee.WinForms.Forms
 					e.Cancel = true;
 				}
 			}
+		}
+
+		private void ddlRole_TextChanged(object sender, EventArgs e)
+		{
+			if (Design != null)
+				Design.Role = ddlRole.Text;
+		}
+
+		private void ddlName_TextChanged(object sender, EventArgs e)
+		{
+			if (Design != null)
+				Design.Name = ddlName.Text;
 		}
 	}
 }

@@ -116,12 +116,14 @@
 			// ddlRole
 			// 
 			this.ddlRole.BackColor = System.Drawing.Color.Black;
+			this.ddlRole.Enabled = false;
 			this.ddlRole.ForeColor = System.Drawing.Color.White;
 			this.ddlRole.FormattingEnabled = true;
 			this.ddlRole.Location = new System.Drawing.Point(80, 38);
 			this.ddlRole.Name = "ddlRole";
 			this.ddlRole.Size = new System.Drawing.Size(167, 21);
 			this.ddlRole.TabIndex = 4;
+			this.ddlRole.TextChanged += new System.EventHandler(this.ddlRole_TextChanged);
 			// 
 			// label3
 			// 
@@ -136,12 +138,14 @@
 			// ddlName
 			// 
 			this.ddlName.BackColor = System.Drawing.Color.Black;
+			this.ddlName.Enabled = false;
 			this.ddlName.ForeColor = System.Drawing.Color.White;
 			this.ddlName.FormattingEnabled = true;
 			this.ddlName.Location = new System.Drawing.Point(80, 67);
 			this.ddlName.Name = "ddlName";
 			this.ddlName.Size = new System.Drawing.Size(167, 21);
 			this.ddlName.TabIndex = 6;
+			this.ddlName.TextChanged += new System.EventHandler(this.ddlName_TextChanged);
 			// 
 			// label4
 			// 
@@ -234,6 +238,7 @@
 			// btnMount
 			// 
 			this.btnMount.BackColor = System.Drawing.Color.Black;
+			this.btnMount.Enabled = false;
 			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnMount.Location = new System.Drawing.Point(78, 100);
 			this.btnMount.Name = "btnMount";

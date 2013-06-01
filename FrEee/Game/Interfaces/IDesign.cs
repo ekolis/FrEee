@@ -16,6 +16,11 @@ namespace FrEee.Game.Interfaces
 	public interface IDesign : INamed, IPictorial, IAbilityObject
 	{
 		/// <summary>
+		/// The name of the design.
+		/// </summary>
+		new string Name { get; set; }
+
+		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
 		Empire Owner { get; set; }
