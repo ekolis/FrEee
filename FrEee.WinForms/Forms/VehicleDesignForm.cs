@@ -71,7 +71,9 @@ namespace FrEee.WinForms.Forms
 				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
 				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
 				txtSupplyUsage.Text = Design.SupplyUsage.ToString();
-				if (Design.SupplyUsage == 0 || Design.HasAbility("Quantum Reactor"))
+				if (Design.Speed == 0)
+					txtRange.Text = "0 sectors";
+				else if (Design.SupplyUsage == 0 || Design.HasAbility("Quantum Reactor"))
 					txtRange.Text = "Unlimited";
 				else
 					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsage) + " sectors";
