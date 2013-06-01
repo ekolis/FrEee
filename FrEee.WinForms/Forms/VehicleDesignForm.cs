@@ -176,13 +176,17 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
+			abort = true;
 			Close();
 		}
 
 		private void btnSave_Click(object sender, EventArgs e)
 		{
 			if (TrySaveDesign())
+			{
+				abort = true;
 				Close();
+			}
 		}
 
 		private bool TrySaveDesign()
@@ -286,9 +290,14 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		/// <summary>
+		/// Are we closing the form no matter what, even if there's a design?
+		/// </summary>
+		private bool abort;
+
 		private void VehicleDesignForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (Design != null)
+			if (Design != null && !abort)
 			{
 				var result = MessageBox.Show("Save your design before closing the ship designer?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
