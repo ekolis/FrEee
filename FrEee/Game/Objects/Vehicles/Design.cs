@@ -227,7 +227,7 @@ namespace FrEee.Game.Objects.Vehicles
 					return 0;
 				var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
 				// TODO - make sure that Movement Bonus and Extra Movement are not in fact affected by Engines Per Move in SE4
-				return thrust / Hull.Mass + this.GetAbilityValue("Movement Bonus").ToInt() + this.GetAbilityValue("Extra Movement").ToInt();
+				return thrust / Hull.Mass + this.GetAbilityValue("Movement Bonus").ToInt() + this.GetAbilityValue("Extra Movement Generation").ToInt();
 			}
 		}
 
@@ -240,7 +240,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Components.Where(comp => comp.HasAbility("Standard Ship Movement") || comp.HasAbility("Extra Movement") || comp.HasAbility("Movement Bonus")).Sum(comp => comp.SupplyUsage);
+				return Components.Where(comp => comp.HasAbility("Standard Ship Movement") || comp.HasAbility("Extra Movement Generation") || comp.HasAbility("Movement Bonus")).Sum(comp => comp.SupplyUsage);
 			}
 		}
 
