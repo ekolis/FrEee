@@ -12,12 +12,16 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a construction queue to build something.
 	/// </summary>
 	[Serializable]
-	public class ConstructionOrder<T> : IOrder<ConstructionQueue, IConstructionOrder>, IConstructionOrder where T : IConstructable
+	public class ConstructionOrder<T, TTemplate> : IOrder<ConstructionQueue, IConstructionOrder>, IConstructionOrder
+		where T : IConstructable
+		where TTemplate : ITemplate<T>, IReferrable<object>
 	{
 		/// <summary>
 		/// The construction template.
 		/// </summary>
-		public ITemplate<T> Template { get; set; }
+		public TTemplate Template { get { return template; } set { template = value; } }
+
+		private Reference<TTemplate> template;
 
 		/// <summary>
 		/// The item being built.

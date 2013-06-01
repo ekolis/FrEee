@@ -72,7 +72,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstFacilities.SelectedItems[0];
 				var template = (FacilityTemplate)item.Tag;
-				var order = new ConstructionOrder<Facility> { Template = template, Item = template.Instantiate() };
+				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template, Item = template.Instantiate() };
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
 				(
@@ -98,7 +98,11 @@ namespace FrEee.WinForms.Forms
 				var item = new ListViewItem(order.Item.Name);
 				var duration = Math.Ceiling(order.Item.Cost.Keys.Max(res => (double)order.Item.Cost[res] / (double)ConstructionQueue.Rate[res]));
 				var remainingCost = order.Item.Cost - order.Item.ConstructionProgress;
-				var progress = order.Item.ConstructionProgress.Min(kvp => (double)kvp.Value / (double)order.Item.Cost[kvp.Key]);
+				double progress;
+				if (order.Item.ConstructionProgress.Any())
+					progress = order.Item.ConstructionProgress.Min(kvp => (double)kvp.Value / (double)order.Item.Cost[kvp.Key]);
+				else
+					progress = 0d;
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, (int)Math.Round(progress * 100) + "%"));
 				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)remainingCost[res] / (double)ConstructionQueue.Rate[res]));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta + " turns"));
