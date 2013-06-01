@@ -21,5 +21,10 @@ namespace FrEee.Utility
 		/// Message indicating current sub-operation.
 		/// </summary>
 		public string Message { get; set; }
+
+		/// <summary>
+		/// Any exception that may have occurred.
+		/// </summary>
+		public Exception Exception { get; set; }
 	}
 }

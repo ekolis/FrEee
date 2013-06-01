@@ -59,54 +59,75 @@ namespace FrEee.WinForms.Forms
 			{
 				Progress = 0d,
 				Message = "Initializing",
+				Exception = null,
 			};
-//#if !DEBUG
 			var task = Task.Factory.StartNewWithExceptionHandling(s =>
 			{
-				var st = (Status)s;
-//#endif
-//#if DEBUG
-//			var st = new Status(); // just to stop the other code from whining
-//#endif
-				st.Message = "Loading mod";
-				Mod.Load(null, true, st, 0.5);
-				st.Message = "Setting up game";
-				var gsu = new GameSetup
+				try
 				{
-					GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
-					StarSystemCount = 50,
-					GalaxySize = new System.Drawing.Size(40, 30),
-					IsSinglePlayer = true,
-				};
-				st.Message = "Setting up galaxy";
-				Galaxy.Initialize(gsu, st, 1.0);
-				var name = Galaxy.Current.Name;
-				var turn = Galaxy.Current.TurnNumber;
-				st.Message = "Loading game";
-				Galaxy.Load(name + "_" + turn + "_1.gam");
-//#if !DEBUG
+					status.Message = "Loading mod";
+					Mod.Load(null, true, status, 0.5);
+					status.Message = "Setting up game";
+					var gsu = new GameSetup
+					{
+						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
+						StarSystemCount = 50,
+						GalaxySize = new System.Drawing.Size(40, 30),
+						IsSinglePlayer = true,
+					};
+					status.Message = "Setting up galaxy";
+					Galaxy.Initialize(gsu, status, 1.0);
+					var name = Galaxy.Current.Name;
+					var turn = Galaxy.Current.TurnNumber;
+					status.Message = "Loading game";
+					Galaxy.Load(name + "_" + turn + "_1.gam");
+				}
+				catch (Exception ex)
+				{
+					status.Exception = ex;
+				}
 			}, status)
 				.ContinueWithWithExceptionHandling(t =>
 				{
-//#endif
-					var game = new GameForm(Galaxy.Current);
-					game.Show();
-					game.FormClosed += (s, args) =>
+					try
 					{
-						game.Dispose();
-						Show();
-						IsBusy = false;
-					};
-					Hide();
-//#if !DEBUG
+						var game = new GameForm(Galaxy.Current);
+						game.Show();
+						game.FormClosed += (s, args) =>
+						{
+							game.Dispose();
+							Show();
+							IsBusy = false;
+						};
+						Hide();
+					}
+					catch (Exception ex)
+					{
+						status.Exception = ex;
+					}
 				}, scheduler);
 			while (!task.IsCompleted)
 			{
-				Text = "FrEee - " + status.Message;
-				progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
-				Application.DoEvents();
+				if (status.Exception != null)
+				{
+					Text = "FrEee - Error";
+					MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
+					Enabled = true;
+					IsBusy = false;
+					progressBar1.Value = 0;
+					var sw = new StreamWriter("errorlog.txt");
+					sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
+					sw.WriteLine(status.Exception.ToString());
+					break;
+				}
+				else
+				{
+					Text = "FrEee - " + status.Message;
+					progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
+					Application.DoEvents();
+				}
 			}
-//#endif
+			//#endif
 		}
 
 		private void btnLoad_Click(object sender, EventArgs e)
