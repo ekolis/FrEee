@@ -198,6 +198,8 @@
 			// chkOnlyLatest
 			// 
 			this.chkOnlyLatest.AutoSize = true;
+			this.chkOnlyLatest.Checked = true;
+			this.chkOnlyLatest.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.chkOnlyLatest.Location = new System.Drawing.Point(167, 139);
 			this.chkOnlyLatest.Name = "chkOnlyLatest";
 			this.chkOnlyLatest.Size = new System.Drawing.Size(79, 17);

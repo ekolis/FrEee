@@ -32,11 +32,11 @@ namespace FrEee.WinForms.Forms
 			set
 			{
 				design = value;
-				Bind();
+				BindAll();
 			}
 		}
 
-		private void Bind()
+		private void BindDesignData()
 		{
 			// bind hull name
 			btnHull.Text = Design == null || Design.Hull == null ? "(choose)" : Design.Hull.Name;
@@ -49,38 +49,8 @@ namespace FrEee.WinForms.Forms
 			// TODO - populate name dropdown from design names text file
 			ddlName.Text = Design == null ? null : Design.Name;
 
-			// bind components available list
-			lstComponentsAvailable.InitializeImageLists(32, 32);
-			lstComponentsAvailable.Items.Clear();
-			if (Design != null)
-			{
-				IEnumerable<ComponentTemplate> comps = Mod.Current.ComponentTemplates;
-
-				// filter by vehicle type
-				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
-
-				// TODO - filter by can-use-mount?
-
-				// filter by only-latest
-				if (chkOnlyLatest.Checked)
-					comps = comps.GroupBy(comp => comp.Family).Select(g => g.OrderByDescending(comp => comp.RomanNumeral).First());
-
-				var complist = comps.ToList();
-				foreach (var comp in complist)
-					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon, complist.IndexOf(comp).ToString());
-			}
-
-			// bind components installed list
-			lstComponentsInstalled.InitializeImageLists(32, 32);
-			lstComponentsInstalled.Items.Clear();
-			if (Design != null)
-			{
-				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon, Design.Components.IndexOf(g.First()).ToString());
-			}
-
 			// bind portrait
-			picPortrait.Image = Design == null || Design.Hull == null? null : Design.Hull.GetPortrait(Empire.Current.ShipsetPath);
+			picPortrait.Image = Design == null || Design.Hull == null ? null : Design.Hull.GetPortrait(Empire.Current.ShipsetPath);
 
 			// bind stats
 			if (Design == null)
@@ -121,6 +91,48 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private void BindAvailableComponents()
+		{
+			lstComponentsAvailable.InitializeImageLists(32, 32);
+			lstComponentsAvailable.Items.Clear();
+			if (Design != null)
+			{
+				IEnumerable<ComponentTemplate> comps = Mod.Current.ComponentTemplates;
+
+				// filter by vehicle type
+				// TODO - why is filter by vehicle type not working?
+				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
+
+				// TODO - filter by can-use-mount?
+
+				// filter by only-latest
+				if (chkOnlyLatest.Checked)
+					comps = comps.GroupBy(comp => comp.Family).Select(g => g.OrderByDescending(comp => comp.RomanNumeral).First());
+
+				var complist = comps.ToList();
+				foreach (var comp in complist)
+					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon, complist.IndexOf(comp).ToString());
+			}
+		}
+
+		private void BindInstalledComponents()
+		{
+			lstComponentsInstalled.InitializeImageLists(32, 32);
+			lstComponentsInstalled.Items.Clear();
+			if (Design != null)
+			{
+				foreach (var g in Design.Components.GroupBy(mct => mct))
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon, Design.Components.IndexOf(g.First()).ToString());
+			}
+		}
+
+		private void BindAll()
+		{
+			BindDesignData();
+			BindAvailableComponents();
+			BindInstalledComponents();
+		}
+
 		private void btnHull_Click(object sender, EventArgs e)
 		{
 			var form = new HullPickerForm();
@@ -138,20 +150,20 @@ namespace FrEee.WinForms.Forms
 						var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
 						d.Hull = form.Hull;
 						Design = d;
-						Bind();
+						BindAll();
 					}
 				}
 				else if (Design != null)
 				{
 					Design.Hull = form.Hull;
-					Bind();
+					BindDesignData();
 				}
 				else
 				{
 					var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
 					d.Hull = form.Hull;
 					Design = d;
-					Bind();
+					BindAll();
 				}
 			}
 		}
@@ -173,7 +185,7 @@ namespace FrEee.WinForms.Forms
 
 		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
 		{
-			Bind();
+			BindAvailableComponents();
 		}
 
 		private void lstComponentsAvailable_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
@@ -229,7 +241,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var comp = (ComponentTemplate)item.Tag;
 				Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
-				Bind();
+				BindInstalledComponents();
 			}
 		}
 	}
