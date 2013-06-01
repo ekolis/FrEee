@@ -90,9 +90,9 @@ namespace FrEee.Utility
 			// hull
 			img = new Bitmap(128, 128);
 			g = Graphics.FromImage(img);
-			g.FillEllipse(new SolidBrush(Color.Silver), 40, 40, 68, 68);
-			g.FillRectangle(new SolidBrush(Color.Silver), 40, 50, 50, 108);
-			g.FillRectangle(new SolidBrush(Color.Silver), 58, 50, 68, 108);
+			g.FillEllipse(new SolidBrush(Color.Silver), 40, 0, 68, 68);
+			g.FillRectangle(new SolidBrush(Color.Silver), 50, 50, 10, 50);
+			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
 			genericPictures.Add(typeof(IHull), img);
 		}
 
