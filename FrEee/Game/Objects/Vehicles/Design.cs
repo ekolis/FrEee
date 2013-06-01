@@ -49,6 +49,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A vehicle design.
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
+		[Serializable]
 	public class Design<T> : IDesign, ITemplate<T> where T : Vehicle<T>, new()
 	{
 		public Design()

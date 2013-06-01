@@ -12,6 +12,7 @@ namespace FrEee.Game.Objects.Commands
 	/// <summary>
 	/// A command to create a new vehicle design.
 	/// </summary>
+	[Serializable]
 	public class CreateDesignCommand : Command<Empire, IEmpireOrder>
 	{
 		public CreateDesignCommand(IDesign design)

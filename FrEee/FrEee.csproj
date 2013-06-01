@@ -62,6 +62,7 @@
     <Compile Include="Game\Interfaces\IEmpireOrder.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />
+    <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="Utility\Extensions\TaskFactoryExtensions.cs" />
     <Compile Include="Utility\Pictures.cs" />
     <Compile Include="Utility\RandomIntHelper.cs" />
+    <Compile Include="Utility\Reference.cs" />
     <Compile Include="Utility\Resources.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
     <Compile Include="Utility\Status.cs" />

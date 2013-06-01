@@ -37,11 +37,11 @@ namespace FrEee.Game.Objects.Commands
 		{
 			get
 			{
-				return (T)Galaxy.Current.OrderTargets[TargetID - 1];
+				return (T)Galaxy.Current.Referrables[TargetID - 1];
 			}
 			set
 			{
-				TargetID = Galaxy.Current.OrderTargets.IndexOf(value) + 1;
+				TargetID = Galaxy.Current.Referrables.IndexOf(value) + 1;
 			}
 		}
 

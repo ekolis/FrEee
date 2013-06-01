@@ -233,6 +233,7 @@
 			this.lstDesigns.BackColor = System.Drawing.Color.Black;
 			this.lstDesigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstDesigns.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstDesigns.ForeColor = System.Drawing.Color.White;
 			this.lstDesigns.Location = new System.Drawing.Point(3, 3);
 			this.lstDesigns.Name = "lstDesigns";
 			this.lstDesigns.Size = new System.Drawing.Size(192, 363);

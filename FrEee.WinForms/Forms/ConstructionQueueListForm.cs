@@ -21,7 +21,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ConstructionQueueListForm_Load(object sender, EventArgs e)
 		{
-			constructionQueueBindingSource.DataSource = Galaxy.Current.OrderTargets.OfType<ConstructionQueue>();
+			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>();
 		}
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

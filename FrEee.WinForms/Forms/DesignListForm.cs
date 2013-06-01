@@ -79,7 +79,7 @@ namespace FrEee.WinForms.Forms
 		private void lstDesigns_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (lstDesigns.SelectedItems.Count > 0)
-				designReport.Design = (IDesign)lstDesigns.SelectedItems[0];
+				designReport.Design = (IDesign)lstDesigns.SelectedItems[0].Tag;
 			else
 				designReport.Design = null;
 		}

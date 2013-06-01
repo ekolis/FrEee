@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Space
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 24000;
-			OrderTargets = new List<IOrderable>();
+			Referrables = new List<IReferrable<object>>();
 			Mod = mod;
 			Galaxy.Current = this;
 		}
@@ -345,10 +345,10 @@ namespace FrEee.Game.Objects.Space
 					ssl.Item.Redact(this);
 				}
 
-				for (int i = 0; i < OrderTargets.Count; i++)
+				for (int i = 0; i < Referrables.Count; i++)
 				{
-					if (OrderTargets[i].Owner != CurrentEmpire)
-						OrderTargets[i] = null; // keep stuff with the same indices so PLR files can find it
+					if (Referrables[i].Owner != CurrentEmpire)
+						Referrables[i] = null; // keep stuff with the same indices so PLR files can find it
 				}
 
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
@@ -391,31 +391,34 @@ namespace FrEee.Game.Objects.Space
 					else
 					{
 						// no hacking!
+						// TODO - send message to empire log
 						Console.WriteLine(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!");
 					}
 				}
 			}
 
 			// construction queues
-			foreach (var q in OrderTargets.OfType<ConstructionQueue>())
+			foreach (var q in Referrables.OfType<ConstructionQueue>())
 				q.ExecuteOrders();
 
 			// TODO - more turn stuff
 		}
 
 		/// <summary>
-		/// Anything in the game that can receive orders... stuff needs to be registered to be found though!
+		/// Anything in the game that can be referenced from the client side
+		/// using a Reference object instead of passing whole objects around.
+		/// Stuff needs to be registered to be found though!
 		/// </summary>
-		public IList<IOrderable> OrderTargets { get; private set; }
+		public IList<IReferrable<object>> Referrables { get; private set; }
 
 		/// <summary>
-		/// Registers something so it can receive orders.
+		/// Registers something so it can be referenced from the client side.
 		/// </summary>
 		/// <param name="orderable"></param>
-		public void Register(IOrderable orderable)
+		public void Register(IReferrable<object> r)
 		{
-			orderable.ID = OrderTargets.Count;
-			OrderTargets.Add(orderable);
+			r.ID = Referrables.Count;
+			Referrables.Add(r);
 		}
 
 		/// <summary>

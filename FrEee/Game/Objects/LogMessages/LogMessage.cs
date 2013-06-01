@@ -8,6 +8,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.LogMessages
 {
+	[Serializable]
 	public abstract class LogMessage
 	{
 		protected LogMessage(string text, int turn)

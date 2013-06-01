@@ -8,6 +8,7 @@ namespace FrEee.Game.Objects.LogMessages
 	/// <summary>
 	/// A generic text log message with no picture.
 	/// </summary>
+	[Serializable]
 	public class GenericLogMessage : LogMessage
 	{
 		public GenericLogMessage(string text, int turn) : base(text, turn)

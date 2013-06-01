@@ -11,6 +11,7 @@ namespace FrEee.Game.Objects.LogMessages
 	/// A log message which displays a message including a picture from some object.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
+	[Serializable]
 	public class PictorialLogMessage<T> : LogMessage where T : IPictorial
 	{
 		public PictorialLogMessage(string text, int turn, T context)
