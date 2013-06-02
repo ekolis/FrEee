@@ -366,6 +366,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					emp.StoredResources.Clear();
 					emp.KnownDesigns.Clear();
+					emp.Log.Clear();
 				}
 
 				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
@@ -417,6 +418,10 @@ namespace FrEee.Game.Objects.Space
 				q.ExecuteOrders();
 
 			// TODO - more turn stuff
+
+			// clear empire commands
+			foreach (var emp in Empires)
+				emp.Commands.Clear();
 		}
 
 		/// <summary>

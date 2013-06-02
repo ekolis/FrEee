@@ -42,6 +42,7 @@ namespace FrEee.Game.Objects.Civilization
 
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
+			Log = new List<LogMessage>();
 		}
 
 		/// <summary>
