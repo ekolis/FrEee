@@ -120,6 +120,17 @@ namespace FrEee.Game.Objects.Space
 
 					income.Add(resource, amount);
 				}
+				prefix = "Point Generation - ";
+				foreach (var abil in Abilities.ToArray().Where(abil => abil.Name.StartsWith(prefix)))
+				{
+					var resource = abil.Name.Substring(prefix.Length);
+					int amount;
+					int.TryParse(abil.Values[0], out amount);
+
+					// TODO - modifiers (population, happiness, central computers, etc.)
+
+					income.Add(resource, amount);
+				}
 				return income;
 			}
 		}

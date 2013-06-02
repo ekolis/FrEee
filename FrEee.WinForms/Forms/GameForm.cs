@@ -37,10 +37,10 @@ namespace FrEee.WinForms.Forms
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
 			btnEndTurn.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
 
-		    // set up GUI bindings to galaxy
+			// set up GUI bindings to galaxy
 			SetUpGui();
 
-            Enabled = true;
+			Enabled = true;
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
@@ -188,21 +188,14 @@ namespace FrEee.WinForms.Forms
 			txtGameDate.Text = Galaxy.Current.Stardate;
 
 			// set up resource display
-			var pnlResources = new FlowLayoutPanel();
-			pnlResources.FlowDirection = FlowDirection.LeftToRight;
-			pnlResources.WrapContents = false;
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Blue, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"], Change = Galaxy.Current.CurrentEmpire.Income["Minerals"] });
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Green, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Organics"], Change = Galaxy.Current.CurrentEmpire.Income["Organics"] });
-			pnlResources.Controls.Add(new ResourceDisplay { ResourceColor = Color.Red, Amount = Galaxy.Current.CurrentEmpire.StoredResources["Radioactives"], Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"] });
-			var pnlResIntel = new FlowLayoutPanel();
-			pnlResIntel.FlowDirection = FlowDirection.LeftToRight;
-			pnlResIntel.WrapContents = false;
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.Magenta, Amount = 50000 });
-			pnlResIntel.Controls.Add(new ResourceDisplay { ResourceColor = Color.White, Amount = 10000 });
-			pagResources.Content = new List<Control>();
-			pagResources.Content.Add(pnlResources);
-			pagResources.Content.Add(pnlResIntel);
-			pagResources.CurrentPage = 0;
+			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"];
+			resMin.Change = Galaxy.Current.CurrentEmpire.Income["Minerals"];
+			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources["Organics"];
+			resOrg.Change = Galaxy.Current.CurrentEmpire.Income["Organics"];
+			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources["Radioactives"];
+			resRad.Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"];
+			resRes.Amount = Galaxy.Current.CurrentEmpire.Income["Research"];
+			resInt.Amount = Galaxy.Current.CurrentEmpire.Income["Intelligence"];
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)

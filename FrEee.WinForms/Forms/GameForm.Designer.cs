@@ -32,8 +32,12 @@ namespace FrEee.WinForms.Forms
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.gameProgressBar1 = new FrEee.WinForms.Controls.GameProgressBar();
-			this.pagResources = new FrEee.WinForms.Controls.Pager();
 			this.txtGameDate = new System.Windows.Forms.Label();
 			this.lblGameDate = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
@@ -101,8 +105,12 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlHeader, 4);
+			this.pnlHeader.Controls.Add(this.resInt);
+			this.pnlHeader.Controls.Add(this.resRes);
+			this.pnlHeader.Controls.Add(this.resRad);
+			this.pnlHeader.Controls.Add(this.resOrg);
+			this.pnlHeader.Controls.Add(this.resMin);
 			this.pnlHeader.Controls.Add(this.gameProgressBar1);
-			this.pnlHeader.Controls.Add(this.pagResources);
 			this.pnlHeader.Controls.Add(this.txtGameDate);
 			this.pnlHeader.Controls.Add(this.lblGameDate);
 			this.pnlHeader.Controls.Add(this.picEmpireFlag);
@@ -114,6 +122,71 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Size = new System.Drawing.Size(1197, 31);
 			this.pnlHeader.TabIndex = 0;
 			// 
+			// resInt
+			// 
+			this.resInt.Amount = 0;
+			this.resInt.BackColor = System.Drawing.Color.Black;
+			this.resInt.Change = null;
+			this.resInt.ForeColor = System.Drawing.Color.White;
+			this.resInt.Location = new System.Drawing.Point(675, 5);
+			this.resInt.Margin = new System.Windows.Forms.Padding(0);
+			this.resInt.Name = "resInt";
+			this.resInt.ResourceColor = System.Drawing.Color.Empty;
+			this.resInt.Size = new System.Drawing.Size(111, 20);
+			this.resInt.TabIndex = 14;
+			// 
+			// resRes
+			// 
+			this.resRes.Amount = 0;
+			this.resRes.BackColor = System.Drawing.Color.Black;
+			this.resRes.Change = null;
+			this.resRes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			this.resRes.Location = new System.Drawing.Point(574, 5);
+			this.resRes.Margin = new System.Windows.Forms.Padding(0);
+			this.resRes.Name = "resRes";
+			this.resRes.ResourceColor = System.Drawing.Color.Empty;
+			this.resRes.Size = new System.Drawing.Size(111, 20);
+			this.resRes.TabIndex = 13;
+			// 
+			// resRad
+			// 
+			this.resRad.Amount = 0;
+			this.resRad.BackColor = System.Drawing.Color.Black;
+			this.resRad.Change = null;
+			this.resRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resRad.Location = new System.Drawing.Point(449, 5);
+			this.resRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resRad.Name = "resRad";
+			this.resRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resRad.Size = new System.Drawing.Size(111, 20);
+			this.resRad.TabIndex = 12;
+			// 
+			// resOrg
+			// 
+			this.resOrg.Amount = 0;
+			this.resOrg.BackColor = System.Drawing.Color.Black;
+			this.resOrg.Change = null;
+			this.resOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resOrg.Location = new System.Drawing.Point(324, 5);
+			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resOrg.Name = "resOrg";
+			this.resOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resOrg.Size = new System.Drawing.Size(111, 20);
+			this.resOrg.TabIndex = 11;
+			// 
+			// resMin
+			// 
+			this.resMin.Amount = 0;
+			this.resMin.BackColor = System.Drawing.Color.Black;
+			this.resMin.Change = null;
+			this.resMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resMin.Location = new System.Drawing.Point(213, 5);
+			this.resMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resMin.Name = "resMin";
+			this.resMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resMin.Size = new System.Drawing.Size(111, 20);
+			this.resMin.TabIndex = 10;
+			// 
 			// gameProgressBar1
 			// 
 			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -124,27 +197,14 @@ namespace FrEee.WinForms.Forms
 			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
 			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-			this.gameProgressBar1.Location = new System.Drawing.Point(603, 3);
+			this.gameProgressBar1.Location = new System.Drawing.Point(845, 3);
 			this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
 			this.gameProgressBar1.Maximum = 500000;
 			this.gameProgressBar1.Name = "gameProgressBar1";
 			this.gameProgressBar1.RightText = "0.2 years";
-			this.gameProgressBar1.Size = new System.Drawing.Size(438, 22);
+			this.gameProgressBar1.Size = new System.Drawing.Size(347, 22);
 			this.gameProgressBar1.TabIndex = 9;
 			this.gameProgressBar1.Value = 350000;
-			// 
-			// pagResources
-			// 
-			this.pagResources.BackColor = System.Drawing.Color.Black;
-			this.pagResources.Content = null;
-			this.pagResources.CurrentPage = 0;
-			this.pagResources.ForeColor = System.Drawing.Color.White;
-			this.pagResources.Location = new System.Drawing.Point(185, 5);
-			this.pagResources.Margin = new System.Windows.Forms.Padding(0);
-			this.pagResources.Name = "pagResources";
-			this.pagResources.ShowPager = false;
-			this.pagResources.Size = new System.Drawing.Size(416, 21);
-			this.pagResources.TabIndex = 7;
 			// 
 			// txtGameDate
 			// 
@@ -454,7 +514,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.PictureBox picEmpireFlag;
 		private System.Windows.Forms.Label lblGameDate;
 		private System.Windows.Forms.Label txtGameDate;
-		private Pager pagResources;
 		private GameProgressBar gameProgressBar1;
 		private StarSystemView starSystemView;
 		private GalaxyView galaxyView;
@@ -468,6 +527,11 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnDesigns;
 		private GameButton btnMenu;
 		private GameButton btnEndTurn;
+		private ResourceDisplay resInt;
+		private ResourceDisplay resRes;
+		private ResourceDisplay resRad;
+		private ResourceDisplay resOrg;
+		private ResourceDisplay resMin;
 	}
 }
 
