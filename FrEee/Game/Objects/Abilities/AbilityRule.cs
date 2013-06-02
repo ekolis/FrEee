@@ -80,17 +80,27 @@ namespace FrEee.Game.Objects.Abilities
 							return abilities;
 					}
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
-					double oldval = result.Values.Count > i ? result.Values[i].ToDouble() : 0;
+					double? oldval = result.Values.Count > i ? (double?)result.Values[i].ToDouble() : null;
 					double incoming = abil.Values.Count > i ? abil.Values[i].ToDouble() : 0;
-					double newval = oldval;
+					double newval = oldval ?? 0;
 					if (rule == AbilityValueStackingRule.Add)
-						newval = oldval + incoming;
+						newval = (oldval ?? 0) + incoming;
 					else if (rule == AbilityValueStackingRule.TakeAverage)
-						newval = oldval + incoming / abilities.Count();
+						newval = (oldval ?? 0) + incoming / abilities.Count();
 					else if (rule == AbilityValueStackingRule.TakeHighest)
-						newval = Math.Max(oldval, incoming);
+					{
+						if (oldval == null)
+							newval = incoming;
+						else
+							newval = Math.Max(oldval.Value, incoming);
+					}
 					else if (rule == AbilityValueStackingRule.TakeLowest)
-						newval = Math.Min(oldval, incoming);
+					{
+						if (oldval == null)
+							newval = incoming;
+						else
+							newval = Math.Min(oldval.Value, incoming);
+					}
 					else if (GroupingRule == AbilityGroupingRule.GroupByValue1 && i == 0 || GroupingRule == AbilityGroupingRule.GroupByValue2 && i == 1)
 						newval = incoming;
 					if (result.Values.Count > i)
