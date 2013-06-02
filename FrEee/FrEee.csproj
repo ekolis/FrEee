@@ -64,6 +64,7 @@
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />
+    <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />

@@ -121,5 +121,10 @@ namespace FrEee.Game.Objects.Space
 			if (visibility == Visibility.Unknown)
 				throw new ArgumentException("If a stellar object is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

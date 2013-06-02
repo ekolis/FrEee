@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.LogMessages
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class PictorialLogMessage<T> : LogMessage where T : IPictorial
+	public class PictorialLogMessage<T> : LogMessage, IPictorialLogMessage<T> where T : IPictorial
 	{
 		public PictorialLogMessage(string text, T context)
 			: base(text)

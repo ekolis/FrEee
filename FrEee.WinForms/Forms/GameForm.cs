@@ -23,7 +23,11 @@ namespace FrEee.WinForms.Forms
 		public GameForm(Galaxy galaxy)
 		{
 			InitializeComponent();
+		}
 
+
+		private void GameForm_Load(object sender, EventArgs e)
+		{
 			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 			this.Enabled = false;
 
@@ -41,6 +45,10 @@ namespace FrEee.WinForms.Forms
 			SetUpGui();
 
 			Enabled = true;
+
+			// show empire log if there's anything new there
+			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+				this.ShowChildForm(new LogForm(this));
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
@@ -177,6 +185,9 @@ namespace FrEee.WinForms.Forms
 					turnEnded = true;
 					Close();
 				}
+				// show empire log if there's anything new there
+				if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+					this.ShowChildForm(new LogForm(this));
 			}
 		}
 
@@ -236,6 +247,34 @@ namespace FrEee.WinForms.Forms
 			{
 				MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
 			}
+		}
+
+		public void SelectSpaceObject(ISpaceObject sobj)
+		{
+			var lookup = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj2 => sobj2 == sobj);
+			if (lookup.Any() && lookup.First().Any() && lookup.First().First().Any())
+			{
+				SelectStarSystem(lookup.First().Key.Item);
+				SelectSector(lookup.First().First().First().Key);
+				pnlDetailReport.Controls.Clear();
+				pnlDetailReport.Controls.Add(CreateSpaceObjectReport(sobj));
+			}
+		}
+
+		public void SelectStarSystem(StarSystem sys)
+		{
+			galaxyView.SelectedStarSystem = sys;
+			starSystemView.StarSystem = sys;
+		}
+
+		public void SelectSector(Point p)
+		{
+			starSystemView.SelectedSector = starSystemView.StarSystem.GetSector(p);
+		}
+
+		private void btnLog_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new LogForm(this));
 		}
 	}
 }

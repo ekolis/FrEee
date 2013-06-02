@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.LogMessages
 		/// <summary>
 		/// The turn number on which the log message was generated.
 		/// </summary>
-		int TurnNumber { get; set; }
+		public int TurnNumber { get; set; }
 
 		/// <summary>
 		/// A picture to display with the log message.

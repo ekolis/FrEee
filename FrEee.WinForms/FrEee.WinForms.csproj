@@ -198,6 +198,12 @@
     <Compile Include="Forms\HullPickerForm.Designer.cs">
       <DependentUpon>HullPickerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MainMenuForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HullPickerForm.resx">
       <DependentUpon>HullPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>

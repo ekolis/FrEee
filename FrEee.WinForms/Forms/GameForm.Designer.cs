@@ -280,6 +280,7 @@ namespace FrEee.WinForms.Forms
 			this.btnLog.Size = new System.Drawing.Size(36, 36);
 			this.btnLog.TabIndex = 6;
 			this.btnLog.UseVisualStyleBackColor = false;
+			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
 			// 
 			// btnQueues
 			// 
@@ -492,6 +493,7 @@ namespace FrEee.WinForms.Forms
 			this.Name = "GameForm";
 			this.Text = "FrEee";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
+			this.Load += new System.EventHandler(this.GameForm_Load);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();

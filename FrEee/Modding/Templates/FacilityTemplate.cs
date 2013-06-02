@@ -119,5 +119,10 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return false; }
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
