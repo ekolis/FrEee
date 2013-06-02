@@ -17,7 +17,7 @@ namespace FrEee.Modding.Loaders
 		{
 			foreach (var rec in df.Records)
 			{
-				IHull hull;
+				IHull<IVehicle> hull;
 				int index = -1;
 				var hullname = rec.GetString("Name", ref index, true, 0, true);
 				var hulltype = rec.GetString("Vehicle Type", ref index, true, 0, true);

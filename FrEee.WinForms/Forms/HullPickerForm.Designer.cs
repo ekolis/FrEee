@@ -1,4 +1,5 @@
-﻿namespace FrEee.WinForms.Forms
+﻿using FrEee.Game.Interfaces;
+namespace FrEee.WinForms.Forms
 {
 	partial class HullPickerForm
 	{
@@ -136,7 +137,7 @@
 			// 
 			// iHullBindingSource
 			// 
-			this.iHullBindingSource.DataSource = typeof(FrEee.Game.Interfaces.IHull);
+			this.iHullBindingSource.DataSource = typeof(FrEee.Game.Interfaces.IHull<IVehicle>);
 			// 
 			// btnOk
 			// 

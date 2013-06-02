@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle<T> : INamed, IConstructable, IVehicle where T : Vehicle<T>, new()
+	public abstract class Vehicle : INamed, IConstructable, IVehicle
 	{
 		public Vehicle()
 		{
@@ -31,7 +31,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
-		public Design<T> Design { get; set; }
+		public IDesign Design { get; set; }
 
 		/// <summary>
 		/// The components on this vehicle.

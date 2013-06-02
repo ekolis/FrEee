@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
 	[Serializable]
-	public class Design<T> : IDesign, ITemplate<T> where T : Vehicle<T>, new()
+	public class Design<T> : IDesign<T>, ITemplate<T> where T : Vehicle
 	{
 		public Design()
 		{
@@ -68,7 +68,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		private Reference<Empire> owner;
 
-		IHull IDesign.Hull
+		IHull<IVehicle> IDesign.Hull
 		{
 			get { return Hull; }
 			set
@@ -83,9 +83,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The hull used in this design.
 		/// </summary>
-		public Hull<T> Hull { get { return hull; } set { hull = value; } }
+		public IHull<T> Hull { get { return hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
 
-		private Reference<Hull<T>> hull;
+		private Reference<IHull<T>> hull;
 
 		/// <summary>
 		/// The components used in this design.
@@ -98,7 +98,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public T Instantiate()
 		{
-			var t = new T();
+			var t = Activator.CreateInstance<T>();
 			t.Design = this;
 			foreach (var mct in Components)
 				t.Components.Add(mct.Instantiate());
@@ -341,5 +341,31 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Should not be visible for enemy designs.
 		/// </summary>
 		public int VehiclesBuilt { get; set; }
+
+
+		public int SupplyStorage
+		{
+			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
+		}
+
+		public int CargoStorage
+		{
+			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
+		}
+
+		public int ShieldsMaxHP
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public int ArmorMaxHP
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public int HullMaxHP
+		{
+			get { throw new NotImplementedException(); }
+		}
 	}
 }

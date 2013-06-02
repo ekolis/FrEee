@@ -144,11 +144,11 @@
     <Compile Include="Controls\ResourceDisplay.Designer.cs">
       <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ShipReport.cs">
+    <Compile Include="Controls\AutonomousSpaceVehicleReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controls\ShipReport.Designer.cs">
-      <DependentUpon>ShipReport.cs</DependentUpon>
+    <Compile Include="Controls\AutonomousSpaceVehicleReport.Designer.cs">
+      <DependentUpon>AutonomousSpaceVehicleReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\StarReport.cs">
       <SubType>UserControl</SubType>
@@ -237,8 +237,8 @@
     <EmbeddedResource Include="Controls\ResourceDisplay.resx">
       <DependentUpon>ResourceDisplay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\ShipReport.resx">
-      <DependentUpon>ShipReport.cs</DependentUpon>
+    <EmbeddedResource Include="Controls\AutonomousSpaceVehicleReport.resx">
+      <DependentUpon>AutonomousSpaceVehicleReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StarReport.resx">
       <DependentUpon>StarReport.cs</DependentUpon>

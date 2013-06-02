@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Technology
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
 	[Serializable]
-	public class Hull<T> : IHull where T : Vehicle<T>, new()
+	public class Hull<T> : IHull<T> where T : Vehicle
 	{
 		public Hull()
 		{

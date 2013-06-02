@@ -62,7 +62,8 @@ namespace FrEee.WinForms.Controls
 			lblCenter.Visible = lblLeft.Visible = lblRight.Visible = Width > 100;
 			base.OnPaint(e);
 			e.Graphics.Clear(BackColor);
-			e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
+			if (Maximum != 0)
+				e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
 			if (BorderStyle == BorderStyle.FixedSingle)
 				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
 		}

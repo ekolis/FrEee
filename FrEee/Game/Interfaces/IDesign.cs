@@ -44,7 +44,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The vehicle's hull.
 		/// </summary>
-		IHull Hull { get; set; }
+		IHull<IVehicle> Hull { get; set; }
 
 		/// <summary>
 		/// The ship's role (design type in SE4).
@@ -109,6 +109,10 @@ namespace FrEee.Game.Interfaces
 		IConstructionOrder CreateConstructionOrder();
 
 		int VehiclesBuilt { get; set; }
+
+		int SupplyStorage { get; }
+
+		int CargoStorage { get; }
 	}
 
 	public interface IDesign<T> : IDesign where T : IVehicle

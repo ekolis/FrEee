@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class AutonomousSpaceVehicle<T> : Vehicle<T>, ISpaceObject where T : AutonomousSpaceVehicle<T>, new()
+	public abstract class AutonomousSpaceVehicle : Vehicle, ISpaceObject
 	{
 		public AutonomousSpaceVehicle()
 		{
@@ -76,8 +76,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design
-				var d = new Design<T>();
-				d.Hull = Design.Hull;
+				var d = new Design<AutonomousSpaceVehicle>();
+				d.Hull = (IHull<AutonomousSpaceVehicle>)Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;
 			}
@@ -87,5 +87,15 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return IntrinsicAbilities.Concat(Design.Abilities).Stack(); }
 		}
+
+		/// <summary>
+		/// Amount of movement remaining for this turn.
+		/// </summary>
+		public int MovementRemaining { get; set; }
+
+		/// <summary>
+		/// The amount of supply present on this vehicle.
+		/// </summary>
+		public int SupplyRemaining { get; set; }
 	}
 }

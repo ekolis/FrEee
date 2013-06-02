@@ -147,7 +147,7 @@ namespace FrEee.Modding
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
-			Hulls = new List<IHull>();
+			Hulls = new List<IHull<IVehicle>>();
 			ComponentTemplates = new List<ComponentTemplate>();
 			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
@@ -189,7 +189,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The vehicle hulls in the mod.
 		/// </summary>
-		public ICollection<IHull> Hulls { get; private set; }
+		public ICollection<IHull<IVehicle>> Hulls { get; private set; }
 
 		/// <summary>
 		/// The components in the mod.

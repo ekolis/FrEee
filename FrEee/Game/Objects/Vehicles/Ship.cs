@@ -6,7 +6,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Ship : AutonomousSpaceVehicle<Ship>
+	public class Ship : AutonomousSpaceVehicle
 	{
 		public override bool RequiresSpaceYardQueue
 		{

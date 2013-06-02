@@ -10,7 +10,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class GroundUnit<T> : Unit<T> where T : GroundUnit<T>, new()
+	public class GroundUnit : Unit
 	{
 	}
 }

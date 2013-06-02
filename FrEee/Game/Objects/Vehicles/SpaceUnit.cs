@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class SpaceUnit<T> : Unit<T>, ISpaceObject where T : SpaceUnit<T>, new()
+	public class SpaceUnit : Unit, ISpaceObject
 	{
 		public SpaceUnit()
 		{
@@ -58,8 +58,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design
-				var d = new Design<T>();
-				d.Hull = Design.Hull;
+				var d = new Design<Unit>();
+				d.Hull = (IHull<Unit>)Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;
 			}

@@ -50,7 +50,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
-			this.gameShipReport1 = new FrEee.WinForms.Controls.ShipReport();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
@@ -59,7 +58,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.pnlMainCommands.SuspendLayout();
-			this.pnlDetailReport.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
@@ -344,7 +342,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.BackColor = System.Drawing.Color.Black;
 			this.pnlDetailReport.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlDetailReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlDetailReport.Controls.Add(this.gameShipReport1);
 			this.pnlDetailReport.ForeColor = System.Drawing.Color.White;
 			this.pnlDetailReport.Location = new System.Drawing.Point(850, 43);
 			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
@@ -353,18 +350,6 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.SetRowSpan(this.pnlDetailReport, 3);
 			this.pnlDetailReport.Size = new System.Drawing.Size(351, 379);
 			this.pnlDetailReport.TabIndex = 3;
-			// 
-			// gameShipReport1
-			// 
-			this.gameShipReport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameShipReport1.BackColor = System.Drawing.Color.Black;
-			this.gameShipReport1.ForeColor = System.Drawing.Color.White;
-			this.gameShipReport1.Location = new System.Drawing.Point(3, 3);
-			this.gameShipReport1.Name = "gameShipReport1";
-			this.gameShipReport1.Size = new System.Drawing.Size(342, 370);
-			this.gameShipReport1.TabIndex = 0;
 			// 
 			// pnlSystemMap
 			// 
@@ -451,7 +436,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.pnlMainCommands.ResumeLayout(false);
-			this.pnlDetailReport.ResumeLayout(false);
 			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlGalaxyMap.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -472,7 +456,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.Label txtGameDate;
 		private Pager pagResources;
 		private GameProgressBar gameProgressBar1;
-		private ShipReport gameShipReport1;
 		private StarSystemView starSystemView;
 		private GalaxyView galaxyView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

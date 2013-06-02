@@ -1,6 +1,6 @@
 namespace FrEee.WinForms.Controls
 {
-	partial class ShipReport
+	partial class AutonomousSpaceVehicleReport
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,32 +28,32 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode6,
-            treeNode7});
-			System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("Hull Size: -10");
-			System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("Defense Modifier: -10", new System.Windows.Forms.TreeNode[] {
-            treeNode9});
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
+			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
+			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Hull Size: -10");
+			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Defense Modifier: -10", new System.Windows.Forms.TreeNode[] {
+            treeNode4});
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
-			this.gameResourceDisplay3 = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblComponents = new System.Windows.Forms.Label();
-			this.gameResourceDisplay2 = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.gameResourceDisplay1 = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblMaint = new System.Windows.Forms.Label();
 			this.txtFleet = new System.Windows.Forms.Label();
 			this.lblFleet = new System.Windows.Forms.Label();
@@ -106,7 +106,7 @@ namespace FrEee.WinForms.Controls
 			this.txtCargoSpaceFreeDetail = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
-			this.treeView1 = new System.Windows.Forms.TreeView();
+			this.treeAbilities = new System.Windows.Forms.TreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
@@ -128,10 +128,10 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
 			this.pageDetail.Controls.Add(this.txtComponentsFunctional);
-			this.pageDetail.Controls.Add(this.gameResourceDisplay3);
+			this.pageDetail.Controls.Add(this.resMaintMin);
 			this.pageDetail.Controls.Add(this.lblComponents);
-			this.pageDetail.Controls.Add(this.gameResourceDisplay2);
-			this.pageDetail.Controls.Add(this.gameResourceDisplay1);
+			this.pageDetail.Controls.Add(this.resMaintOrg);
+			this.pageDetail.Controls.Add(this.resMaintRad);
 			this.pageDetail.Controls.Add(this.lblMaint);
 			this.pageDetail.Controls.Add(this.txtFleet);
 			this.pageDetail.Controls.Add(this.lblFleet);
@@ -172,20 +172,20 @@ namespace FrEee.WinForms.Controls
 			this.txtComponentsFunctional.TabIndex = 35;
 			this.txtComponentsFunctional.Text = "11/11 functional";
 			// 
-			// gameResourceDisplay3
+			// resMaintMin
 			// 
-			this.gameResourceDisplay3.Amount = 500;
-			this.gameResourceDisplay3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameResourceDisplay3.BackColor = System.Drawing.Color.Black;
-			this.gameResourceDisplay3.Change = null;
-			this.gameResourceDisplay3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gameResourceDisplay3.ForeColor = System.Drawing.Color.Blue;
-			this.gameResourceDisplay3.Location = new System.Drawing.Point(64, 346);
-			this.gameResourceDisplay3.Margin = new System.Windows.Forms.Padding(0);
-			this.gameResourceDisplay3.Name = "gameResourceDisplay3";
-			this.gameResourceDisplay3.ResourceColor = System.Drawing.Color.Empty;
-			this.gameResourceDisplay3.Size = new System.Drawing.Size(68, 20);
-			this.gameResourceDisplay3.TabIndex = 46;
+			this.resMaintMin.Amount = 500;
+			this.resMaintMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resMaintMin.BackColor = System.Drawing.Color.Black;
+			this.resMaintMin.Change = null;
+			this.resMaintMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resMaintMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resMaintMin.Location = new System.Drawing.Point(64, 346);
+			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintMin.Name = "resMaintMin";
+			this.resMaintMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintMin.Size = new System.Drawing.Size(68, 20);
+			this.resMaintMin.TabIndex = 46;
 			// 
 			// lblComponents
 			// 
@@ -198,35 +198,35 @@ namespace FrEee.WinForms.Controls
 			this.lblComponents.TabIndex = 21;
 			this.lblComponents.Text = "Components";
 			// 
-			// gameResourceDisplay2
+			// resMaintOrg
 			// 
-			this.gameResourceDisplay2.Amount = 100;
-			this.gameResourceDisplay2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameResourceDisplay2.BackColor = System.Drawing.Color.Black;
-			this.gameResourceDisplay2.Change = null;
-			this.gameResourceDisplay2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gameResourceDisplay2.ForeColor = System.Drawing.Color.Lime;
-			this.gameResourceDisplay2.Location = new System.Drawing.Point(139, 346);
-			this.gameResourceDisplay2.Margin = new System.Windows.Forms.Padding(0);
-			this.gameResourceDisplay2.Name = "gameResourceDisplay2";
-			this.gameResourceDisplay2.ResourceColor = System.Drawing.Color.Empty;
-			this.gameResourceDisplay2.Size = new System.Drawing.Size(68, 20);
-			this.gameResourceDisplay2.TabIndex = 45;
+			this.resMaintOrg.Amount = 100;
+			this.resMaintOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resMaintOrg.BackColor = System.Drawing.Color.Black;
+			this.resMaintOrg.Change = null;
+			this.resMaintOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resMaintOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resMaintOrg.Location = new System.Drawing.Point(139, 346);
+			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintOrg.Name = "resMaintOrg";
+			this.resMaintOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintOrg.Size = new System.Drawing.Size(68, 20);
+			this.resMaintOrg.TabIndex = 45;
 			// 
-			// gameResourceDisplay1
+			// resMaintRad
 			// 
-			this.gameResourceDisplay1.Amount = 200;
-			this.gameResourceDisplay1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameResourceDisplay1.BackColor = System.Drawing.Color.Black;
-			this.gameResourceDisplay1.Change = null;
-			this.gameResourceDisplay1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gameResourceDisplay1.ForeColor = System.Drawing.Color.Red;
-			this.gameResourceDisplay1.Location = new System.Drawing.Point(214, 346);
-			this.gameResourceDisplay1.Margin = new System.Windows.Forms.Padding(0);
-			this.gameResourceDisplay1.Name = "gameResourceDisplay1";
-			this.gameResourceDisplay1.ResourceColor = System.Drawing.Color.Empty;
-			this.gameResourceDisplay1.Size = new System.Drawing.Size(68, 20);
-			this.gameResourceDisplay1.TabIndex = 44;
+			this.resMaintRad.Amount = 200;
+			this.resMaintRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resMaintRad.BackColor = System.Drawing.Color.Black;
+			this.resMaintRad.Change = null;
+			this.resMaintRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resMaintRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resMaintRad.Location = new System.Drawing.Point(214, 346);
+			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resMaintRad.Name = "resMaintRad";
+			this.resMaintRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintRad.Size = new System.Drawing.Size(68, 20);
+			this.resMaintRad.TabIndex = 44;
 			// 
 			// lblMaint
 			// 
@@ -329,6 +329,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel2.ForeColor = System.Drawing.Color.White;
 			this.gamePanel2.Location = new System.Drawing.Point(11, 505);
 			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel2.Size = new System.Drawing.Size(272, 100);
 			this.gamePanel2.TabIndex = 24;
 			// 
@@ -341,9 +342,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
 			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
 			this.lstCargoSummary.Size = new System.Drawing.Size(265, 92);
@@ -372,6 +373,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
 			this.gamePanel1.Location = new System.Drawing.Point(13, 384);
 			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel1.Size = new System.Drawing.Size(272, 100);
 			this.gamePanel1.TabIndex = 23;
 			// 
@@ -384,9 +386,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem16,
-            listViewItem17,
-            listViewItem18});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
 			this.lstComponentsSummary.Size = new System.Drawing.Size(265, 92);
@@ -873,9 +875,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem19,
-            listViewItem20,
-            listViewItem21});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
 			this.lstComponentsDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstComponentsDetail.Name = "lstComponentsDetail";
 			this.lstComponentsDetail.Size = new System.Drawing.Size(292, 646);
@@ -916,9 +918,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem22,
-            listViewItem23,
-            listViewItem24});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
@@ -929,7 +931,7 @@ namespace FrEee.WinForms.Controls
 			// pageAbility
 			// 
 			this.pageAbility.BackColor = System.Drawing.Color.Black;
-			this.pageAbility.Controls.Add(this.treeView1);
+			this.pageAbility.Controls.Add(this.treeAbilities);
 			this.pageAbility.Location = new System.Drawing.Point(4, 29);
 			this.pageAbility.Name = "pageAbility";
 			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
@@ -937,29 +939,29 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
 			// 
-			// treeView1
+			// treeAbilities
 			// 
-			this.treeView1.BackColor = System.Drawing.Color.Black;
-			this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeView1.ForeColor = System.Drawing.Color.White;
-			this.treeView1.Location = new System.Drawing.Point(3, 3);
-			this.treeView1.Name = "treeView1";
-			treeNode6.Name = "Node1";
-			treeNode6.Text = "Racial Trait: +5";
-			treeNode7.Name = "Node3";
-			treeNode7.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode7.Text = "War Shrine: +10";
-			treeNode8.Name = "Node0";
-			treeNode8.Text = "Attack Modifier: +15";
-			treeNode9.Name = "Node5";
-			treeNode9.Text = "Hull Size: -10";
-			treeNode10.Name = "Node4";
-			treeNode10.Text = "Defense Modifier: -10";
-			this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode8,
-            treeNode10});
-			this.treeView1.Size = new System.Drawing.Size(286, 608);
-			this.treeView1.TabIndex = 0;
+			this.treeAbilities.BackColor = System.Drawing.Color.Black;
+			this.treeAbilities.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeAbilities.ForeColor = System.Drawing.Color.White;
+			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
+			this.treeAbilities.Name = "treeAbilities";
+			treeNode1.Name = "Node1";
+			treeNode1.Text = "Racial Trait: +5";
+			treeNode2.Name = "Node3";
+			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
+			treeNode2.Text = "War Shrine: +10";
+			treeNode3.Name = "Node0";
+			treeNode3.Text = "Attack Modifier: +15";
+			treeNode4.Name = "Node5";
+			treeNode4.Text = "Hull Size: -10";
+			treeNode5.Name = "Node4";
+			treeNode5.Text = "Defense Modifier: -10";
+			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
+            treeNode3,
+            treeNode5});
+			this.treeAbilities.Size = new System.Drawing.Size(286, 608);
+			this.treeAbilities.TabIndex = 0;
 			// 
 			// gameTabControl1
 			// 
@@ -981,15 +983,16 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
 			// 
-			// ShipReport
+			// AutonomousSpaceVehicleReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.gameTabControl1);
 			this.ForeColor = System.Drawing.Color.White;
-			this.Name = "ShipReport";
+			this.Name = "AutonomousSpaceVehicleReport";
 			this.Size = new System.Drawing.Size(300, 647);
+			this.Paint += new System.Windows.Forms.PaintEventHandler(this.AutonomousSpaceVehicleReport_Paint);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			this.gamePanel2.ResumeLayout(false);
@@ -1048,7 +1051,7 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtComponentsFunctional;
 		private System.Windows.Forms.Label txtComponentsFunctionalDetail;
 		private System.Windows.Forms.Label txtCargoSpaceFreeDetail;
-		private System.Windows.Forms.TreeView treeView1;
+		private System.Windows.Forms.TreeView treeAbilities;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label lblSupplies;
 		private GameProgressBar progSupplies;
@@ -1063,9 +1066,9 @@ namespace FrEee.WinForms.Controls
 		private GameProgressBar progShields;
 		private System.Windows.Forms.Label lblArmor;
 		private System.Windows.Forms.Label lblHull;
-		private ResourceDisplay gameResourceDisplay3;
-		private ResourceDisplay gameResourceDisplay2;
-		private ResourceDisplay gameResourceDisplay1;
+		private ResourceDisplay resMaintMin;
+		private ResourceDisplay resMaintOrg;
+		private ResourceDisplay resMaintRad;
 		private System.Windows.Forms.Label lblMaint;
 		private System.Windows.Forms.Label txtFleet;
 		private System.Windows.Forms.Label lblFleet;

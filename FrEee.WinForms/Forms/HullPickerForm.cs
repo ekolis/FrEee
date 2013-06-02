@@ -31,7 +31,7 @@ namespace FrEee.WinForms.Forms
 		/// <summary>
 		/// The hull that the user selected.
 		/// </summary>
-		public IHull Hull { get; private set; }
+		public IHull<IVehicle> Hull { get; private set; }
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Forms
 		private void gridHulls_SelectionChanged(object sender, EventArgs e)
 		{
 			if (gridHulls.SelectedRows.Count > 0)
-				Hull = (IHull)gridHulls.SelectedRows[0].DataBoundItem;
+				Hull = (IHull<IVehicle>)gridHulls.SelectedRows[0].DataBoundItem;
 			else
 				Hull = null;
 		}
@@ -83,7 +83,7 @@ namespace FrEee.WinForms.Forms
 		private void gridHulls_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
 			// pick the hull and close the form
-			Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
+			Hull = (IHull<IVehicle>)gridHulls.Rows[e.RowIndex].DataBoundItem;
 			DialogResult = DialogResult.OK;
 			Close();
 		}

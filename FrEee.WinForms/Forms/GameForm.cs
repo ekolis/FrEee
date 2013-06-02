@@ -14,6 +14,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.WinForms.Forms
 {
@@ -134,7 +135,9 @@ namespace FrEee.WinForms.Forms
 				return new AsteroidFieldReport((AsteroidField)sobj);
 			if (sobj is Storm)
 				return new StormReport((Storm)sobj);
-			// TODO - warp point, ship, fleet, unit group reports
+			if (sobj is AutonomousSpaceVehicle)
+				return new AutonomousSpaceVehicleReport((AutonomousSpaceVehicle)sobj);
+			// TODO - warp point, fleet, unit group reports
 			return null;
 		}
 

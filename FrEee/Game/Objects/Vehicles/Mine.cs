@@ -6,7 +6,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Mine : SpaceUnit<Mine>
+	public class Mine : SpaceUnit
 	{
 		public override bool RequiresSpaceYardQueue
 		{

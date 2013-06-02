@@ -94,7 +94,7 @@ namespace FrEee.Utility
 			g.FillEllipse(new SolidBrush(Color.Silver), 40, 0, 68, 68);
 			g.FillRectangle(new SolidBrush(Color.Silver), 50, 50, 10, 50);
 			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
-			genericPictures.Add(typeof(IHull), img);
+			genericPictures.Add(typeof(IHull<IVehicle>), img);
 		}
 
 		/// <summary>
@@ -226,7 +226,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetIcon(IHull hull, string shipsetPath, int size = 32)
+		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath, int size = 32)
 		{
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
@@ -242,7 +242,7 @@ namespace FrEee.Utility
 			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType())).Resize(32);
 		}
 
-		public static Image GetPortrait(IHull hull, string shipsetPath)
+		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
 		{
 			if (!hull.PictureNames.Any())
 				return GetGenericImage(hull.GetType());
