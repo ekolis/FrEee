@@ -190,18 +190,21 @@ namespace FrEee.WinForms.Forms
 			lstFacilities.Items.Clear();
 			foreach (var facil in templates)
 			{
-				var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
-				if (group == null)
+				if (ConstructionQueue.CanConstruct(facil))
 				{
-					group = new ListViewGroup(facil.Group);
-					lstFacilities.Groups.Add(group);
+					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
+					if (group == null)
+					{
+						group = new ListViewGroup(facil.Group);
+						lstFacilities.Groups.Add(group);
+					}
+					var item = new ListViewItem(facil.Name, i, group);
+					item.ImageIndex = i;
+					item.Tag = facil;
+					ilFacil.Images.Add(facil.Icon);
+					lstFacilities.Items.Add(item);
+					i++;
 				}
-				var item = new ListViewItem(facil.Name, i, group);
-				item.ImageIndex = i;
-				item.Tag = facil;
-				ilFacil.Images.Add(facil.Icon);
-				lstFacilities.Items.Add(item);
-				i++;
 			}
 		}
 	}
