@@ -108,7 +108,7 @@ namespace FrEee.WinForms.Forms
 
 				// filter by only-latest
 				if (chkOnlyLatest.Checked)
-					comps = comps.GroupBy(comp => comp.Family).Select(g => g.OrderByDescending(comp => comp.RomanNumeral).First());
+					comps = comps.OnlyLatest(comp => comp.Family);
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)

@@ -503,5 +503,35 @@ namespace FrEee.Utility.Extensions
 		{
 			return resources.Aggregate((r1, r2) => r1 + r2);
 		}
+
+		public static IEnumerable<T> OnlyLatest<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
+			where T : class
+		{
+			string family = null;
+			T latest = null;
+			foreach (var t in stuff)
+			{
+				if (family == null)
+				{
+					// first item
+					latest = t;
+					family = familySelector(t);
+				}
+				else if (family == familySelector(t))
+				{
+					// same family
+					latest = t;
+				}
+				else
+				{
+					// different family
+					yield return latest;
+					latest = t;
+					family = familySelector(t);
+				}
+			}
+			if (stuff.Any())
+				yield return stuff.Last();
+		}
 	}
 }

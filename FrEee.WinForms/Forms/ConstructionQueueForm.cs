@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -174,7 +175,7 @@ namespace FrEee.WinForms.Forms
 		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chkOnlyLatest.Checked)
-				BindFacilityListView(Mod.Current.FacilityTemplates.GroupBy(f => f.Family).Select(g => g.OrderBy(f2 => f2.RomanNumeral).Last()));
+				BindFacilityListView(Mod.Current.FacilityTemplates.OnlyLatest(f => f.Family));
 			else
 				BindFacilityListView(Mod.Current.FacilityTemplates);
 		}
