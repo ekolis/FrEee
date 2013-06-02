@@ -164,6 +164,7 @@ namespace FrEee.WinForms.Forms
 		{
 			SaveCommands();
 			newCommands.Clear();
+			DialogResult = DialogResult.OK;
 			Close();
 		}
 
@@ -171,6 +172,7 @@ namespace FrEee.WinForms.Forms
 		{
 			CancelChanges();
 			newCommands.Clear();
+			DialogResult = DialogResult.Cancel;
 			Close();
 		}
 

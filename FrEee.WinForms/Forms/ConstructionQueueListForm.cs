@@ -19,9 +19,14 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 		}
 
-		private void ConstructionQueueListForm_Load(object sender, EventArgs e)
+		private void BindQueueList()
 		{
 			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>();
+		}
+
+		private void ConstructionQueueListForm_Load(object sender, EventArgs e)
+		{
+			BindQueueList();
 		}
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -29,6 +34,8 @@ namespace FrEee.WinForms.Forms
 			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
 			var form = new ConstructionQueueForm(queue);
 			this.ShowChildForm(form);
+			if (form.DialogResult == DialogResult.OK)
+				BindQueueList();
 		}
 	}
 }
