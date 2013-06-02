@@ -133,7 +133,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				return Orders[0].Item.Name;
+				return Orders[0].Template.Name;
 			}
 		}
 
