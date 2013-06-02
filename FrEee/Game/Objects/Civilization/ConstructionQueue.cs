@@ -105,18 +105,20 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var numOrders = Orders.Count;
 
-				var order = Orders[0];
-				if (!CanConstruct(order.Template))
+				foreach (var order in Orders)
 				{
-					// can't build that here!
-					Orders.RemoveAt(0);
-					Owner.Log.Add(new PictorialLogMessage<ISpaceObject>(order.Template + " cannot be built at " + this + " because it requires a space yard and/or colony to construct it.", SpaceObject));
-				}
-				order.Execute(this);
-				if (order.IsComplete)
-				{
-					order.Item.Place(SpaceObject);
-					Orders.Remove(order);
+					if (!CanConstruct(order.Template))
+					{
+						// can't build that here!
+						Orders.RemoveAt(0);
+						Owner.Log.Add(new PictorialLogMessage<ISpaceObject>(order.Template + " cannot be built at " + this + " because it requires a space yard and/or colony to construct it.", SpaceObject));
+					}
+					order.Execute(this);
+					if (order.IsComplete)
+					{
+						order.Item.Place(SpaceObject);
+						Orders.Remove(order);
+					}
 				}
 
 				if (Orders.Count == numOrders)
