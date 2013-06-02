@@ -260,6 +260,7 @@
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
 			this.lstQueue.View = System.Windows.Forms.View.Details;
+			this.lstQueue.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseDoubleClick);
 			// 
 			// Item
 			// 

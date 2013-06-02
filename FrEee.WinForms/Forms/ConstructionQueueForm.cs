@@ -99,6 +99,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var item = new ListViewItem(order.Template.Name);
+				item.Tag = order;
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
 				var remainingCost = order.Template.Cost - (order.Item == null ? new Resources() : order.Item.ConstructionProgress);
 				double progress;
@@ -258,6 +259,19 @@ namespace FrEee.WinForms.Forms
 			resCostMin.Amount = 0;
 			resCostOrg.Amount = 0;
 			resCostRad.Amount = 0;
+		}
+
+		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			var item = lstQueue.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var order = (IConstructionOrder)item.Tag;
+				var cmd = new RemoveOrderCommand<ConstructionQueue, IConstructionOrder>(Empire.Current, ConstructionQueue, order);
+				ConstructionQueue.Orders.Remove(order);
+				newCommands.Add(cmd);
+				BindQueueListView();
+			}
 		}
 	}
 }
