@@ -5,7 +5,9 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,6 +35,9 @@ namespace FrEee.WinForms.Forms
 			resOrganicsRate.Amount = ConstructionQueue.Rate["Organics"];
 			resRadioactivesRate.Amount = ConstructionQueue.Rate["Radioactives"];
 
+			// add ships/bases to constructable items
+			BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current));
+
 			// add facilities to constructable items
 			// TODO - hide unresearched facilities
 			BindFacilityListView(Mod.Current.FacilityTemplates);
@@ -53,18 +58,15 @@ namespace FrEee.WinForms.Forms
 		private void lstFacilities_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
 		{
 			var facil = (FacilityTemplate)e.Item.Tag;
-			lblFacilityName.Text = facil.Name;
-			resFacilityMineralsCost.Amount = facil.Cost["Minerals"];
-			resFacilityOrganicsCost.Amount = facil.Cost["Organics"];
-			resFacilityRadioactivesCost.Amount = facil.Cost["Radioactives"];
+			txtName.Text = facil.Name;
+			resCostMin.Amount = facil.Cost["Minerals"];
+			resCostOrg.Amount = facil.Cost["Organics"];
+			resCostRad.Amount = facil.Cost["Radioactives"];
 		}
 
 		private void lstFacilities_MouseLeave(object sender, EventArgs e)
 		{
-			lblFacilityName.Text = "(No Facility)";
-			resFacilityMineralsCost.Amount = 0;
-			resFacilityOrganicsCost.Amount = 0;
-			resFacilityRadioactivesCost.Amount = 0;
+			ClearDetails();
 		}
 
 		private void lstFacilities_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -73,7 +75,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstFacilities.SelectedItems[0];
 				var template = (FacilityTemplate)item.Tag;
-				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template, Item = template.Instantiate() };
+				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
 				(
@@ -96,11 +98,11 @@ namespace FrEee.WinForms.Forms
 			int i = 0;
 			foreach (var order in ConstructionQueue.Orders)
 			{
-				var item = new ListViewItem(order.Item.Name);
-				var duration = Math.Ceiling(order.Item.Cost.Keys.Max(res => (double)order.Item.Cost[res] / (double)ConstructionQueue.Rate[res]));
-				var remainingCost = order.Item.Cost - order.Item.ConstructionProgress;
+				var item = new ListViewItem(order.Template.Name);
+				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
+				var remainingCost = order.Template.Cost - (order.Item == null ? new Resources() : order.Item.ConstructionProgress);
 				double progress;
-				if (order.Item.ConstructionProgress.Any())
+				if (order.Item != null && order.Item.ConstructionProgress.Any())
 					progress = order.Item.ConstructionProgress.Min(kvp => (double)kvp.Value / (double)order.Item.Cost[kvp.Key]);
 				else
 					progress = 0d;
@@ -108,7 +110,7 @@ namespace FrEee.WinForms.Forms
 				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)remainingCost[res] / (double)ConstructionQueue.Rate[res]));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta + " turns"));
 				item.ImageIndex = i;
-				il.Images.Add(order.Item.Icon);
+				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);
 				i++;
 			}
@@ -206,6 +208,54 @@ namespace FrEee.WinForms.Forms
 					i++;
 				}
 			}
+		}
+
+		private void BindShipListView(IEnumerable<IDesign> designs)
+		{
+			lstShips.Initialize(32, 32);
+			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)))
+				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon);
+		}
+
+		private void lstShips_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (lstShips.SelectedItems.Count == 1)
+			{
+				var item = lstShips.SelectedItems[0];
+				var design = (IDesign)item.Tag;
+				var order = design.CreateConstructionOrder();
+				ConstructionQueue.Orders.Add(order);
+				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
+				(
+					Galaxy.Current.CurrentEmpire,
+					ConstructionQueue,
+					order
+				);
+				newCommands.Add(cmd);
+				BindQueueListView();
+			}
+		}
+
+		private void lstShips_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+		{
+			var d = (IDesign)e.Item.Tag;
+			txtName.Text = d.Name;
+			resCostMin.Amount = d.Cost["Minerals"];
+			resCostOrg.Amount = d.Cost["Organics"];
+			resCostRad.Amount = d.Cost["Radioactives"];			
+		}
+
+		private void lstShips_MouseLeave(object sender, EventArgs e)
+		{
+			ClearDetails();
+		}
+
+		private void ClearDetails()
+		{
+			txtName.Text = "(No Item)";
+			resCostMin.Amount = 0;
+			resCostOrg.Amount = 0;
+			resCostRad.Amount = 0;
 		}
 	}
 }

@@ -146,7 +146,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders[0].Item.Cost - Orders[0].Item.ConstructionProgress;
+				var remainingCost = Orders[0].Template.Cost - (Orders[0].Item == null ? new Resources() : Orders[0].Item.ConstructionProgress);
 				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
 			}
 		}
@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders.Select(o => o.Item.Cost - o.Item.ConstructionProgress).Aggregate((r1, r2) => r1 + r2);
+				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new Resources() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
 				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
 			}
 		}

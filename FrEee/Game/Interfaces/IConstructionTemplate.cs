@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// Template for constructable items.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public interface IConstructionTemplate : IReferrable<object>
+	public interface IConstructionTemplate : IReferrable<object>, IPictorial
 	{
 		/// <summary>
 		/// Does this template require a colony to build it?
@@ -20,5 +21,15 @@ namespace FrEee.Game.Interfaces
 		/// Does this template require a space yard to build it?
 		/// </summary>
 		bool RequiresSpaceYardQueue { get; }
+
+		/// <summary>
+		/// The nam of the template.
+		/// </summary>
+		string Name { get; }
+
+		/// <summary>
+		/// The cost to build it.
+		/// </summary>
+		Resources Cost { get; }
 	}
 }

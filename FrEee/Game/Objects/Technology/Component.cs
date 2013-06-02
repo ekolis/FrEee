@@ -11,6 +11,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A component of a vehicle.
 	/// </summary>
+	[Serializable]
 	public class Component : IAbilityObject, INamed
 	{
 		public Component(MountedComponentTemplate template)

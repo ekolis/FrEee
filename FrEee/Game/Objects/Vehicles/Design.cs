@@ -12,6 +12,7 @@ using System.Text;
 using FrEee.Utility;
 using System.Drawing;
 using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Orders;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -305,6 +306,32 @@ namespace FrEee.Game.Objects.Vehicles
 		public ICommand<Empire> CreateCreationCommand()
 		{
 			return new CreateDesignCommand<T>(this);
+		}
+
+		public bool RequiresColonyQueue
+		{
+			get { return false; }
+		}
+
+		public bool RequiresSpaceYardQueue
+		{
+			get { return VehicleType == VehicleTypes.Ship || VehicleType == VehicleTypes.Base;}
+		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		public IConstructionOrder CreateConstructionOrder()
+		{
+			var dtype = GetType();
+			var vtype = dtype.GetGenericArguments()[0];
+			var ordertype = typeof(ConstructionOrder<,>).MakeGenericType(vtype, dtype);
+			var o = (IConstructionOrder)Activator.CreateInstance(ordertype);
+			o.GetType().GetProperty("Template").SetValue(o, this, new object[] { });
+			return o;
 		}
 	}
 }

@@ -13,11 +13,13 @@ namespace FrEee.Game.Objects.Vehicles
 	/// <summary>
 	/// A ship, base, or unit.
 	/// </summary>
-	public abstract class Vehicle<T> : INamed, IConstructable where T : Vehicle<T>, new()
+	[Serializable]
+	public abstract class Vehicle<T> : INamed, IConstructable, IVehicle where T : Vehicle<T>, new()
 	{
 		public Vehicle()
 		{
 			Components = new List<Component>();
+			ConstructionProgress = new Resources();
 		}
 
 		/// <summary>

@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using System;
@@ -13,7 +14,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle design.
 	/// </summary>
-	public interface IDesign : INamed, IPictorial, IAbilityObject
+	public interface IDesign : INamed, IPictorial, IAbilityObject, IConstructionTemplate
 	{
 		/// <summary>
 		/// The name of the design.
@@ -23,7 +24,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
-		Empire Owner { get; set; }
+		new Empire Owner { get; set; }
 
 		/// <summary>
 		/// The vehicle's components.
@@ -72,11 +73,6 @@ namespace FrEee.Game.Interfaces
 		int SpaceFree { get; }
 
 		/// <summary>
-		/// The resource cost to build the design.
-		/// </summary>
-		Resources Cost { get; }
-
-		/// <summary>
 		/// The movement speed of the design, in sectors per turn.
 		/// </summary>
 		int Speed { get; }
@@ -105,5 +101,15 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <returns></returns>
 		ICommand<Empire> CreateCreationCommand();
+
+		/// <summary>
+		/// Creates an order to build this design.
+		/// </summary>
+		/// <returns></returns>
+		IConstructionOrder CreateConstructionOrder();
+	}
+
+	public interface IDesign<T> : IDesign where T : IVehicle
+	{
 	}
 }

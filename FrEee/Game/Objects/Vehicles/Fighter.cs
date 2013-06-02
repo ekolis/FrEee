@@ -5,6 +5,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Vehicles
 {
+	[Serializable]
 	public class Fighter : Vehicle<Fighter>
 	{
 		public override bool RequiresSpaceYardQueue
