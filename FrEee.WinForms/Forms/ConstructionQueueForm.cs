@@ -96,6 +96,7 @@ namespace FrEee.WinForms.Forms
 			lstQueue.SmallImageList = il;
 			lstQueue.LargeImageList = il;
 			int i = 0;
+			var prevCost = new Resources();
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var item = new ListViewItem(order.Template.Name);
@@ -108,12 +109,13 @@ namespace FrEee.WinForms.Forms
 				else
 					progress = 0d;
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, (int)Math.Round(progress * 100) + "%"));
-				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)remainingCost[res] / (double)ConstructionQueue.Rate[res]));
+				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta + " turns"));
 				item.ImageIndex = i;
 				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);
 				i++;
+				prevCost += order.Template.Cost;
 			}
 		}
 
