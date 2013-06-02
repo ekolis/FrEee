@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,6 +13,11 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IConstructable : INamed
 	{
+		/// <summary>
+		/// The empire which owns this item.
+		/// </summary>
+		Empire Owner { get; set; }
+
 		/// <summary>
 		/// The resource cost to build this item.
 		/// </summary>

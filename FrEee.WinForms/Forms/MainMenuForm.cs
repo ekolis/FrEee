@@ -143,9 +143,11 @@ namespace FrEee.WinForms.Forms
 					// host view, prompt for turn processing
 					if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
 					{
+						Cursor = Cursors.WaitCursor;
 						Galaxy.Current.ProcessTurn();
 						Galaxy.SaveAll();
 						MessageBox.Show("Turn successfully processed. It is now stardate " + Galaxy.Current.Stardate + ".");
+						Cursor = Cursors.Default;
 					}
 				}
 				else

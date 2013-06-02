@@ -97,6 +97,10 @@ namespace FrEee.Game.Objects.Space
 			if (galaxy.CurrentEmpire == null)
 				return Visibility.Scanned; // host can see everything
 
+			// TODO - check for cloaking vs. sensors
+
+			// TODO - check for long range scanners
+
 			if (starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
 				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in
 

@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System;
@@ -21,6 +22,8 @@ namespace FrEee.Game.Objects.Technology
 			Template = template;
 			ConstructionProgress = new Resources();
 		}
+
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The template for this facility.

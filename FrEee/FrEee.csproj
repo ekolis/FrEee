@@ -74,6 +74,7 @@
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
     <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />
+    <Compile Include="Game\Objects\Vehicles\AutonomousSpaceVehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\Base.cs" />
     <Compile Include="Game\Objects\Vehicles\Design.cs" />
     <Compile Include="Game\Interfaces\INamed.cs" />
@@ -95,10 +96,13 @@
     <Compile Include="Game\Objects\Technology\Facility.cs" />
     <Compile Include="Game\Objects\Vehicles\Drone.cs" />
     <Compile Include="Game\Objects\Vehicles\Fighter.cs" />
+    <Compile Include="Game\Objects\Vehicles\GroundUnit.cs" />
+    <Compile Include="Game\Objects\Vehicles\SpaceUnit.cs" />
     <Compile Include="Game\Objects\Vehicles\Mine.cs" />
     <Compile Include="Game\Objects\Vehicles\Satellite.cs" />
     <Compile Include="Game\Objects\Vehicles\Ship.cs" />
     <Compile Include="Game\Objects\Vehicles\Troop.cs" />
+    <Compile Include="Game\Objects\Vehicles\Unit.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />

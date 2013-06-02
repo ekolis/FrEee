@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
@@ -63,15 +64,16 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Design.Hull.GetIcon(Design.Owner.ShipsetPath); }
 		}
 
-		public void Place(ISpaceObject target)
+		public Image Portrait
 		{
-			var search = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj == target);
-			if (!search.Any() || !search.First().Any() || !search.First().First().Any())
-				throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
-			var sys = search.First().Key.Item;
-			var coords = search.First().First().First().Key;
-			var sector = sys.GetSector(coords);
-			sector.SpaceObjects.Add(target);
+			get { return Design.Hull.GetPortrait(Design.Owner.ShipsetPath); }
 		}
+
+		public abstract void Place(ISpaceObject target);
+
+		/// <summary>
+		/// The owner of this vehicle.
+		/// </summary>
+		public Empire Owner { get; set; }
 	}
 }

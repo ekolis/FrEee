@@ -38,7 +38,10 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// create item if needed
 			if (Item == null)
+			{
 				Item = Template.Instantiate();
+				Item.Owner = target.Owner;
+			}
 
 			// apply build rate
 			var costLeft = Item.Cost - Item.ConstructionProgress;
