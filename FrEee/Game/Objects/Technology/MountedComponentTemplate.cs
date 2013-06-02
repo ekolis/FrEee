@@ -14,9 +14,9 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public struct MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
 	{
-		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null) : this()
+		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null)
 		{
 			ComponentTemplate = ct;
 			Mount = mount;
@@ -114,6 +114,34 @@ namespace FrEee.Game.Objects.Technology
 				// TODO - take into effect mounts
 				return ComponentTemplate.Durability;
 			}
+		}
+
+		public static bool operator ==(MountedComponentTemplate t1, MountedComponentTemplate t2)
+		{
+			if ((object)t1 == null && (object)t2 == null)
+				return true;
+			if ((object)t1 == null || (object)t2 == null)
+				return false;
+			return t1.ComponentTemplate == t2.ComponentTemplate && t1.Mount == t2.Mount;
+		}
+
+		public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
+		{
+			return !(t1 == t2);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is MountedComponentTemplate)
+				return this == (MountedComponentTemplate)obj;
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			if (Mount == null)
+				return ComponentTemplate.GetHashCode();
+			return ComponentTemplate.GetHashCode() ^ Mount.GetHashCode();
 		}
 	}
 }

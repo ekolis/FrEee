@@ -236,7 +236,7 @@ namespace FrEee.WinForms.Forms
 				ShowComponentDetails((MountedComponentTemplate)e.Item.Tag);
 		}
 
-		private void ShowComponentDetails(MountedComponentTemplate? mct)
+		private void ShowComponentDetails(MountedComponentTemplate mct)
 		{
 			if (mct == null)
 			{
@@ -250,7 +250,7 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 			{
-				var v = mct.Value;
+				var v = mct;
 				picDetailIcon.Image = v.ComponentTemplate.Icon;
 				txtDetailName.Text = v.Name;
 				txtDetailSize.Text = v.Size.Kilotons();
