@@ -107,6 +107,8 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <returns></returns>
 		IConstructionOrder CreateConstructionOrder();
+
+		int VehiclesBuilt { get; set; }
 	}
 
 	public interface IDesign<T> : IDesign where T : IVehicle

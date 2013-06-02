@@ -367,6 +367,11 @@ namespace FrEee.Game.Objects.Space
 					emp.StoredResources.Clear();
 					emp.KnownDesigns.Clear();
 				}
+
+				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
+				{
+					d.VehiclesBuilt = 0;
+				}
 			}
 		}
 

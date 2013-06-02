@@ -51,7 +51,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A vehicle design.
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
-		[Serializable]
+	[Serializable]
 	public class Design<T> : IDesign, ITemplate<T> where T : Vehicle<T>, new()
 	{
 		public Design()
@@ -102,6 +102,8 @@ namespace FrEee.Game.Objects.Vehicles
 			t.Design = this;
 			foreach (var mct in Components)
 				t.Components.Add(mct.Instantiate());
+			VehiclesBuilt++;
+			t.Name = Name + " " + VehiclesBuilt;
 			return t;
 		}
 
@@ -315,7 +317,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool RequiresSpaceYardQueue
 		{
-			get { return VehicleType == VehicleTypes.Ship || VehicleType == VehicleTypes.Base;}
+			get { return VehicleType == VehicleTypes.Ship || VehicleType == VehicleTypes.Base; }
 		}
 
 		public int ID
@@ -333,5 +335,11 @@ namespace FrEee.Game.Objects.Vehicles
 			o.GetType().GetProperty("Template").SetValue(o, this, new object[] { });
 			return o;
 		}
+
+		/// <summary>
+		/// How many vehicles have been built using this design?
+		/// Should not be visible for enemy designs.
+		/// </summary>
+		public int VehiclesBuilt { get; set; }
 	}
 }
