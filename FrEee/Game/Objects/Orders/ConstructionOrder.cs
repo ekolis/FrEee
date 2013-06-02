@@ -14,12 +14,14 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class ConstructionOrder<T, TTemplate> : IOrder<ConstructionQueue, IConstructionOrder>, IConstructionOrder
 		where T : IConstructable
-		where TTemplate : ITemplate<T>, IReferrable<object>
+		where TTemplate : ITemplate<T>, IReferrable<object>, IConstructionTemplate
 	{
 		/// <summary>
 		/// The construction template.
 		/// </summary>
 		public TTemplate Template { get { return template; } set { template = value; } }
+
+		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
 
 		private Reference<TTemplate> template;
 

@@ -14,9 +14,10 @@ namespace FrEee.Game.Objects.LogMessages
 	[Serializable]
 	public class PictorialLogMessage<T> : LogMessage where T : IPictorial
 	{
-		public PictorialLogMessage(string text)
+		public PictorialLogMessage(string text, T context)
 			: base(text)
 		{
+			Context = context;
 		}
 
 		public PictorialLogMessage(string text, int turn, T context)

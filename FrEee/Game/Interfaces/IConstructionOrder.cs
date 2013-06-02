@@ -9,6 +9,11 @@ namespace FrEee.Game.Interfaces
 	public interface IConstructionOrder : IOrder<ConstructionQueue, IConstructionOrder>
 	{
 		/// <summary>
+		/// The template.
+		/// </summary>
+		IConstructionTemplate Template { get; }
+
+		/// <summary>
 		/// The item being constructed.
 		/// </summary>
 		IConstructable Item { get; }

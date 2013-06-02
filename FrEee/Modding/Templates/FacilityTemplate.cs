@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A template for a facility.
 	/// </summary>
 	[Serializable]
-	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable<FacilityTemplate>
+	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable<FacilityTemplate>, IConstructionTemplate
 	{
 		public FacilityTemplate()
 		{
@@ -102,6 +102,22 @@ namespace FrEee.Game.Objects.Technology
 		public Empire Owner
 		{
 			get { return null; }
+		}
+
+		/// <summary>
+		/// Facilities must be built on a colony.
+		/// </summary>
+		public bool RequiresColonyQueue
+		{
+			get { return true; }
+		}
+
+		/// <summary>
+		/// Facilities do not require a space yard.
+		/// </summary>
+		public bool RequiresSpaceYardQueue
+		{
+			get { return false; }
 		}
 	}
 }

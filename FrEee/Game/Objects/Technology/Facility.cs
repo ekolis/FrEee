@@ -33,22 +33,6 @@ namespace FrEee.Game.Objects.Technology
 			get { return Template.Abilities; }
 		}
 
-		/// <summary>
-		/// Facilities must be built on a colony.
-		/// </summary>
-		public bool RequiresColonyQueue
-		{
-			get { return true; }
-		}
-
-		/// <summary>
-		/// Facilities do not require a space yard.
-		/// </summary>
-		public bool RequiresSpaceYardQueue
-		{
-			get { return false; }
-		}
-
 		public Resources Cost
 		{
 			get { return Template.Cost; }

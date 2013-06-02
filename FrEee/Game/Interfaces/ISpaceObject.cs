@@ -11,22 +11,12 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can exist independently in space.
 	/// </summary>
-	public interface ISpaceObject : IAbilityObject
+	public interface ISpaceObject : IAbilityObject, IPictorial
 	{
 		/// <summary>
 		/// The name of this space object.
 		/// </summary>
 		string Name { get; set; }
-
-		/// <summary>
-		/// A picture used to represent this space object on the map.
-		/// </summary>
-		Image Icon { get; }
-
-		/// <summary>
-		/// A picture used to represent this space object in reports.
-		/// </summary>
-		Image Portrait { get; }
 
 		/// <summary>
 		/// Abilities intrinsically possessed by this space object.
