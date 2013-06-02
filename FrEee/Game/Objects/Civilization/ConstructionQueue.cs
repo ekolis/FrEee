@@ -105,7 +105,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var numOrders = Orders.Count;
 
-				foreach (var order in Orders)
+				foreach (var order in Orders.ToArray())
 				{
 					if (!CanConstruct(order.Template))
 					{

@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -79,13 +80,13 @@ namespace FrEee.WinForms.Controls
 				txtReproduction.Text = ""; // TODO - load reproduction
 				txtMood.Text = ""; // TODO - load mood
 
-				// TODO - load income
+				// load income
 				var income = Planet.Income;
 				resIncomeMinerals.Amount = income["Minerals"];
 				resIncomeOrganics.Amount = income["Organics"];
 				resIncomeRadioactives.Amount = income["Radioactives"];
-				resResearch.Amount = 0;
-				resIntel.Amount = 0;
+				resResearch.Amount = income["Research"];
+				resIntel.Amount = income["Intelligence"];
 
 				// TODO - load construction data
 				txtConstructionItem.Text = "";
@@ -95,10 +96,11 @@ namespace FrEee.WinForms.Controls
 				// TODO - load orders
 
 				// TODO - load facility slots free
-				txtFacilitySlotsFree.Text = "0 / 0 slots free";
 				lstFacilitiesDetail.Items.Clear();
 				if (Planet.Colony != null)
 				{
+					txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
+
 					var il = new ImageList();
 					il.ImageSize = new System.Drawing.Size(32, 32);
 					lstFacilitiesDetail.LargeImageList = il;
@@ -108,14 +110,16 @@ namespace FrEee.WinForms.Controls
 					{
 						var item = new ListViewItem(fg.Count() + "x " + fg.Key.Name);
 						item.ImageIndex = i;
-						il.Images.Add((Image) fg.Key.Icon);
+						il.Images.Add((Image)fg.Key.Icon);
 						lstFacilitiesDetail.Items.Add(item);
 						i++;
 					}
 				}
+				else
+					txtFacilitySlotsFree.Text = "";
 
 				// TODO - load cargo
-				txtCargoSpaceFree.Text = "0 kT / 0 kT free";
+				txtCargoSpaceFree.Text = string.Format("{0} / {0} free", Planet.MaxCargo.Kilotons());
 				lstCargoDetail.Items.Clear();
 
 				treeAbilities.Nodes.Clear();

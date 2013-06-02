@@ -94,22 +94,22 @@ namespace FrEee.Utility.Extensions
 		/// e.g. 25000 becomes 25.00k
 		/// </summary>
 		/// <param name="value"></param>
-		public static string ToUnitString(this int value)
+		public static string ToUnitString(this int value, int sigfigs = 3)
 		{
 			if (Math.Abs(value) >= 1e13)
-				return Math.Round(value / 1e12, 2) + "T";
+				return (value / 1e12).ToString("f" + (sigfigs - 1)) + "T";
 			if (Math.Abs(value) >= 1e12)
-				return Math.Round(value / 1e12, 3) + "T";
+				return (value / 1e12).ToString("f" + sigfigs) + "T";
 			if (Math.Abs(value) >= 1e10)
-				return Math.Round(value / 1e9, 2) + "G";
+				return (value / 1e9).ToString("f" + (sigfigs - 1)) + "G";
 			if (Math.Abs(value) >= 1e9)
-				return Math.Round(value / 1e9, 3) + "G";
+				return (value / 1e9).ToString("f" + sigfigs) + "G";
 			if (Math.Abs(value) >= 1e7)
-				return Math.Round(value / 1e6, 2) + "M";
+				return (value / 1e6).ToString("f" + (sigfigs - 1)) + "M";
 			if (Math.Abs(value) >= 1e6)
-				return Math.Round(value / 1e6, 3) + "M";
+				return (value / 1e6).ToString("f" + sigfigs) + "M";
 			if (Math.Abs(value) >= 1e4)
-				return Math.Round(value / 1e3, 2) + "k";
+				return (value / 1e3).ToString("f" + (sigfigs - 1)) + "k";
 			return value.ToString();
 		}
 
@@ -120,7 +120,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static string Kilotons(this int value)
 		{
-			if (value < 10)
+			if (value < 10000)
 				return value + "kT";
 			return (value * 1000).ToUnitString() + "T";
 		}

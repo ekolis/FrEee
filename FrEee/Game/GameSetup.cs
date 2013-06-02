@@ -83,16 +83,22 @@ namespace FrEee.Game
 						Rate = rate,
 					}
 				};
-				hw.Colony.Facilities.Add(sy.Instantiate());
-				hw.Colony.Facilities.Add(sp.Instantiate()); // TODO - don't add spaceport for Natural Merchants
-				hw.Colony.Facilities.Add(rd.Instantiate());
-				// TODO - respect planet facility space once we have PlanetSize.txt loaded
-				for (int i = 0; i < 5; i++)
+				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					hw.Colony.Facilities.Add(sy.Instantiate());
+				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					hw.Colony.Facilities.Add(sp.Instantiate()); // TODO - don't add spaceport for Natural Merchants
+				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					hw.Colony.Facilities.Add(rd.Instantiate());
+				while (hw.Colony.Facilities.Count < hw.MaxFacilities)
 				{
-					hw.Colony.Facilities.Add(min.Instantiate());
-					hw.Colony.Facilities.Add(org.Instantiate());
-					hw.Colony.Facilities.Add(rad.Instantiate());
-					hw.Colony.Facilities.Add(res.Instantiate());
+					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+						hw.Colony.Facilities.Add(min.Instantiate());
+					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+						hw.Colony.Facilities.Add(org.Instantiate());
+					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+						hw.Colony.Facilities.Add(rad.Instantiate());
+					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+						hw.Colony.Facilities.Add(res.Instantiate());
 				}
 
 				// mark home systems explored

@@ -162,5 +162,47 @@ namespace FrEee.Game.Objects.Space
 				return icon;
 			}
 		}
+
+		/// <summary>
+		/// Is this planet domed? Domed planets usually have less space for population, facilities, and cargo.
+		/// </summary>
+		public bool IsDomed
+		{
+			get
+			{
+				// TODO - check races populating colony to see if it's domed, once we have races
+				return false;
+			}
+		}
+
+		public int MaxFacilities
+		{
+			get
+			{
+				if (IsDomed)
+					return Size.MaxFacilitiesDomed;
+				return Size.MaxFacilities;
+			}
+		}
+
+		public int MaxPopulation
+		{
+			get
+			{
+				if (IsDomed)
+					return Size.MaxPopulationDomed;
+				return Size.MaxPopulation;
+			}
+		}
+
+		public int MaxCargo
+		{
+			get
+			{
+				if (IsDomed)
+					return Size.MaxCargoDomed;
+				return Size.MaxCargo;
+			}
+		}
 	}
 }
