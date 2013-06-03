@@ -194,7 +194,7 @@ namespace FrEee.WinForms.Forms
 		private void SetUpGui()
 		{
 			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.First();
-			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.Stardate + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
+			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName + " - " + Galaxy.Current.Stardate;
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
 
 			// set up resource display
