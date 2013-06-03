@@ -58,6 +58,10 @@ namespace FrEee.Game.Objects.Orders
 				// spend time
 				Target.TimeToNextMove += Target.TimePerMove;
 
+				// mark system explored
+				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)Target).Owner))
+					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)Target).Owner);
+
 				// done warping
 				IsComplete = true;
 			}
