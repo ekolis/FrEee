@@ -12,6 +12,7 @@ namespace FrEee.Game.Interfaces
 		double TimePerMove { get; }
 		void ExecuteOrders();
 		void RefillMovement();
+		bool CanWarp { get; }
 	}
 
 	/// <summary>

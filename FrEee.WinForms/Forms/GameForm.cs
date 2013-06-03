@@ -34,6 +34,7 @@ namespace FrEee.WinForms.Forms
 			this.Enabled = false;
 
 			// set up GUI images
+			// TODO - get GUI icons from mod too
 			btnMenu.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
 			btnDesigns.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));
 			btnPlanets.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Planets"));
@@ -43,6 +44,9 @@ namespace FrEee.WinForms.Forms
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
 			btnEndTurn.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
 			btnMove.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Move"));
+			btnPursue.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Pursue"));
+			btnEvade.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
+			btnWarp.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();
@@ -64,7 +68,7 @@ namespace FrEee.WinForms.Forms
 					if (SelectedSpaceObject is AutonomousSpaceVehicle)
 					{
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						var order = new MoveOrder<AutonomousSpaceVehicle>(v, sector, true);
+						var order = new MoveOrder<AutonomousSpaceVehicle>(v, sector, !aggressiveMode);
 						v.Orders.Add(order);
 						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
@@ -76,7 +80,42 @@ namespace FrEee.WinForms.Forms
 					ChangeCommandMode(CommandMode.None, null);
 				}
 			}
-			else
+			else if (commandMode == CommandMode.Pursue)
+			{
+				// TODO - implement pursue orders
+				MessageBox.Show("Sorry, pursue orders are not yet implemented.");
+				ChangeCommandMode(CommandMode.None, null);
+			}
+			else if (commandMode == CommandMode.Evade)
+			{
+				// TODO - implement evade orders
+				MessageBox.Show("Sorry, evade orders are not yet implemented.");
+				ChangeCommandMode(CommandMode.None, null);
+			}
+			else if (commandMode == CommandMode.Warp)
+			{
+				if (sector != null && sector.SpaceObjects.OfType<WarpPoint>().Any())
+				{
+					// TODO - space object picker dialog
+					var wp = sector.SpaceObjects.OfType<WarpPoint>().First();
+
+					// warp
+					if (SelectedSpaceObject is AutonomousSpaceVehicle)
+					{
+						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+						var order = new WarpOrder<AutonomousSpaceVehicle>(v, wp, !aggressiveMode);
+						v.Orders.Add(order);
+						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
+						Empire.Current.Commands.Add(cmd);
+					}
+					else
+					{
+						// TODO - warp orders for unit groups
+					}
+					ChangeCommandMode(CommandMode.None, null);
+				}
+			}
+			else if (commandMode == CommandMode.None)
 			{
 				// select the sector that was clicked
 				starSystemView.SelectedSector = sector;
@@ -415,23 +454,63 @@ namespace FrEee.WinForms.Forms
 
 				// show/hide command buttons
 				btnMove.Visible = value is IMobileSpaceObject;
+				btnPursue.Visible = value is IMobileSpaceObject;
+				btnEvade.Visible = value is IMobileSpaceObject;
+				btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
 			}
 		}
 
 		private void GameForm_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.M && SelectedSpaceObject != null)
+			if (e.KeyCode == Keys.M && btnMove.Visible)
 				ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
+			if (e.KeyCode == Keys.P && btnPursue.Visible)
+				ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
+			if (e.KeyCode == Keys.V && btnEvade.Visible)
+				ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
+			if (e.KeyCode == Keys.W && btnWarp.Visible)
+				ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
 			else if (e.KeyCode == Keys.Escape)
 				ChangeCommandMode(CommandMode.None, null);
+			else if (e.KeyCode == Keys.Control)
+				aggressiveMode = true;
 		}
+
+		private void GameForm_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Control)
+				aggressiveMode = false;
+		}
+
+		/// <summary>
+		/// Aggressive movement mode. Unless this is set, movement orders will avoid enemies.
+		/// </summary>
+		private bool aggressiveMode;
 
 		private CommandMode commandMode;
 
 		private enum CommandMode
 		{
+			/// <summary>
+			/// No command is being issued.
+			/// </summary>
 			None,
-			Move
+			/// <summary>
+			/// Moves to a sector.
+			/// </summary>
+			Move,
+			/// <summary>
+			/// Pursues a target.
+			/// </summary>
+			Pursue,
+			/// <summary>
+			/// Evades a target.
+			/// </summary>
+			Evade,
+			/// <summary>
+			/// Moves to and traverses a warp point.
+			/// </summary>
+			Warp,
 		}
 
 		private void ChangeCommandMode(CommandMode mode, ISpaceObject sobj)
@@ -443,7 +522,16 @@ namespace FrEee.WinForms.Forms
 					Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName + " - " + Galaxy.Current.Stardate;
 					break;
 				case CommandMode.Move:
-					Text = "Select a sector to move " + sobj + " to.";
+					Text = "Click a sector for " + sobj + " to move to. (Ctrl-click to move aggressively)";
+					break;
+				case CommandMode.Pursue:
+					Text = "Click a space object for " + sobj + " to pursue.";
+					break;
+				case CommandMode.Evade:
+					Text = "Click a space object for " + sobj + " to evade.";
+					break;
+				case CommandMode.Warp:
+					Text = "Click a warp point for " + sobj + " to traverse. (Ctrl-click to move aggressively)";
 					break;
 			}
 		}
@@ -452,6 +540,24 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedSpaceObject != null)
 				ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
+		}
+
+		private void btnPursue_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
+		}
+
+		private void btnEvade_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
+		}
+
+		private void btnWarp_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
 		}
 	}
 }

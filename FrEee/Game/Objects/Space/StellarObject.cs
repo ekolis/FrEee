@@ -14,11 +14,13 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	 [Serializable] public class StellarObject : ISpaceObject, ITemplate<StellarObject>
+	 [Serializable] public class StellarObject : ISpaceObject, ITemplate<StellarObject>, IReferrable<StellarObject>
 	{
 		public StellarObject()
 		{
 			IntrinsicAbilities = new List<Ability>();
+			if (Galaxy.Current != null)
+				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
@@ -125,6 +127,12 @@ namespace FrEee.Game.Objects.Space
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public int ID
+		{
+			get;
+			set;
 		}
 	}
 }

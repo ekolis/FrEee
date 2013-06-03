@@ -597,5 +597,18 @@ namespace FrEee.Utility.Extensions
 				return null;
 			return results.First().Item1.Item.GetSector(results.First().Item2);
 		}
+
+		/// <summary>
+		/// Finds the star system containing a space object.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static StarSystem FindStarSystem(this ISpaceObject sobj)
+		{
+			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
+			if (!results.Any())
+				return null;
+			return results.First().Item1.Item;
+		}
 	}
 }

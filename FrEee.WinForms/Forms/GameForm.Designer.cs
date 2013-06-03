@@ -49,6 +49,9 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnEvade = new FrEee.WinForms.Controls.GameButton();
+			this.btnWarp = new FrEee.WinForms.Controls.GameButton();
+			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
 			this.btnMove = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
@@ -337,6 +340,9 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSubCommands, 2);
+			this.pnlSubCommands.Controls.Add(this.btnEvade);
+			this.pnlSubCommands.Controls.Add(this.btnWarp);
+			this.pnlSubCommands.Controls.Add(this.btnPursue);
 			this.pnlSubCommands.Controls.Add(this.btnMove);
 			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
 			this.pnlSubCommands.Location = new System.Drawing.Point(348, 43);
@@ -346,6 +352,42 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Size = new System.Drawing.Size(494, 46);
 			this.pnlSubCommands.TabIndex = 2;
 			// 
+			// btnEvade
+			// 
+			this.btnEvade.BackColor = System.Drawing.Color.Black;
+			this.btnEvade.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEvade.Location = new System.Drawing.Point(86, 4);
+			this.btnEvade.Name = "btnEvade";
+			this.btnEvade.Size = new System.Drawing.Size(36, 36);
+			this.btnEvade.TabIndex = 6;
+			this.btnEvade.Text = "Ev";
+			this.btnEvade.UseVisualStyleBackColor = false;
+			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
+			// 
+			// btnWarp
+			// 
+			this.btnWarp.BackColor = System.Drawing.Color.Black;
+			this.btnWarp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWarp.Location = new System.Drawing.Point(127, 4);
+			this.btnWarp.Name = "btnWarp";
+			this.btnWarp.Size = new System.Drawing.Size(36, 36);
+			this.btnWarp.TabIndex = 5;
+			this.btnWarp.Text = "Wp";
+			this.btnWarp.UseVisualStyleBackColor = false;
+			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
+			// 
+			// btnPursue
+			// 
+			this.btnPursue.BackColor = System.Drawing.Color.Black;
+			this.btnPursue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPursue.Location = new System.Drawing.Point(47, 4);
+			this.btnPursue.Name = "btnPursue";
+			this.btnPursue.Size = new System.Drawing.Size(36, 36);
+			this.btnPursue.TabIndex = 4;
+			this.btnPursue.Text = "Pur";
+			this.btnPursue.UseVisualStyleBackColor = false;
+			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
+			// 
 			// btnMove
 			// 
 			this.btnMove.BackColor = System.Drawing.Color.Black;
@@ -354,6 +396,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.Name = "btnMove";
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
+			this.btnMove.Text = "Mv";
 			this.btnMove.UseVisualStyleBackColor = false;
 			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
 			// 
@@ -515,6 +558,7 @@ namespace FrEee.WinForms.Forms
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
 			this.Load += new System.EventHandler(this.GameForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyUp);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
@@ -559,6 +603,9 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.FlowLayoutPanel pnlTabs;
 		private GameButton btnNewTab;
 		private GameButton btnMove;
+		private GameButton btnWarp;
+		private GameButton btnPursue;
+		private GameButton btnEvade;
 	}
 }
 

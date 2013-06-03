@@ -149,5 +149,10 @@ namespace FrEee.Game.Objects.Vehicles
 			MovementRemaining = Speed;
 			TimeToNextMove = TimePerMove;
 		}
+
+		/// <summary>
+		/// Autonomous space vehicles can warp.
+		/// </summary>
+		public bool CanWarp { get { return true; } }
 	}
 }
