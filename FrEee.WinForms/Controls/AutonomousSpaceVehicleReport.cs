@@ -1,9 +1,13 @@
 using System.Linq;
 using System.Windows.Forms;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Orders;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.WinForms.Controls
 {
@@ -62,7 +66,7 @@ namespace FrEee.WinForms.Controls
 				progHull.Value = progHull.Maximum;
 
 				// orders and stuff
-				txtOrder.Text = "None"; // TODO - orders for ships
+				txtOrder.Text = vehicle.Orders.Any() ? vehicle.Orders.First().ToString() : "None";
 				txtExperience.Text = "None"; // TODO - crew XP
 				txtFleet.Text = "None"; // TODO - fleets
 				
@@ -83,8 +87,10 @@ namespace FrEee.WinForms.Controls
 				txtCargoSpaceFree.Text = vehicle.Design.CargoStorage.Kilotons() + " / " + vehicle.Design.CargoStorage.Kilotons() + " free";
 				lstCargoSummary.Initialize(32, 32);
 
-				// TODO - orders detail
+				// orders detail
 				lstOrdersDetail.Items.Clear();
+				foreach (var o in vehicle.Orders)
+					lstOrdersDetail.Items.Add(o);
 
 				// component detail
 				// TODO - damaged components
@@ -119,6 +125,83 @@ namespace FrEee.WinForms.Controls
 						branch.Nodes.Add(twig);
 					}
 				}
+			}
+		}
+
+		private void btnOrderToTop_Click(object sender, System.EventArgs e)
+		{
+			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			if (order != null)
+			{
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order, -vehicle.Orders.IndexOf(order));
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
+			}
+		}
+
+		private void btnOrderToBottom_Click(object sender, System.EventArgs e)
+		{
+			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			if (order != null)
+			{
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
+			}
+		}
+
+		private void btnOrderGoesUp_Click(object sender, System.EventArgs e)
+		{
+			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			if (order != null && vehicle.Orders.IndexOf(order) > 0)
+			{
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order, -1);
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
+			}
+		}
+
+		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
+		{
+			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
+			{
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order, 1);
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
+			}
+		}
+
+		private void btnClearOrders_Click(object sender, System.EventArgs e)
+		{
+			foreach (var order in vehicle.Orders)
+			{
+				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order);
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
+			}
+		}
+
+		private void btnDeleteOrder_Click(object sender, System.EventArgs e)
+		{
+			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			if (order != null)
+			{
+				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+					Empire.Current, vehicle, order);
+				Empire.Current.Commands.Add(cmd);
+				cmd.Execute(); // show change locally
+				Invalidate();
 			}
 		}
 	}

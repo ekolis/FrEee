@@ -101,7 +101,10 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
-			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
+			if (AvoidEnemies)
+				return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
+			else
+				return "Attack and Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
 		}
 	}
 }

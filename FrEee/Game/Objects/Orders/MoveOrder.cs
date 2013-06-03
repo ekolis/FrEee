@@ -82,7 +82,10 @@ namespace FrEee.Game.Objects.Orders
 		public override string ToString()
 		{
 			var coords = Destination.Coordinates;
-			return "Move to " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
+			if (AvoidEnemies)
+				return "Move to " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
+			else
+				return "Attack " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
 		}
 	}
 }

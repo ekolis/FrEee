@@ -93,12 +93,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName = new System.Windows.Forms.Label();
 			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
-			this.pageOrders = new System.Windows.Forms.TabPage();
-			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
-			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageComps = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctionalDetail = new System.Windows.Forms.Label();
 			this.lstComponentsDetail = new System.Windows.Forms.ListView();
@@ -108,6 +102,18 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.treeAbilities = new System.Windows.Forms.TreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
+			this.pageOrders = new System.Windows.Forms.TabPage();
+			this.btnDeleteOrder = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderGoesDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderToBottom = new FrEee.WinForms.Controls.GameButton();
+			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
+			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
@@ -116,11 +122,11 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
-			this.pageOrders.SuspendLayout();
 			this.pageComps.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageAbility.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
+			this.pageOrders.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pageDetail
@@ -347,7 +353,7 @@ namespace FrEee.WinForms.Controls
             listViewItem3});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
-			this.lstCargoSummary.Size = new System.Drawing.Size(265, 92);
+			this.lstCargoSummary.Size = new System.Drawing.Size(271, 92);
 			this.lstCargoSummary.TabIndex = 23;
 			this.lstCargoSummary.UseCompatibleStateImageBehavior = false;
 			// 
@@ -391,7 +397,7 @@ namespace FrEee.WinForms.Controls
             listViewItem6});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
-			this.lstComponentsSummary.Size = new System.Drawing.Size(265, 92);
+			this.lstComponentsSummary.Size = new System.Drawing.Size(271, 92);
 			this.lstComponentsSummary.TabIndex = 23;
 			this.lstComponentsSummary.UseCompatibleStateImageBehavior = false;
 			// 
@@ -759,89 +765,6 @@ namespace FrEee.WinForms.Controls
 			this.picOwnerFlag.TabIndex = 8;
 			this.picOwnerFlag.TabStop = false;
 			// 
-			// pageOrders
-			// 
-			this.pageOrders.BackColor = System.Drawing.Color.Black;
-			this.pageOrders.Controls.Add(this.btnOrdersClear);
-			this.pageOrders.Controls.Add(this.btnOrderDelete);
-			this.pageOrders.Controls.Add(this.btnOrderDown);
-			this.pageOrders.Controls.Add(this.btnOrderUp);
-			this.pageOrders.Controls.Add(this.lstOrdersDetail);
-			this.pageOrders.Location = new System.Drawing.Point(4, 29);
-			this.pageOrders.Name = "pageOrders";
-			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
-			this.pageOrders.Size = new System.Drawing.Size(292, 614);
-			this.pageOrders.TabIndex = 1;
-			this.pageOrders.Text = "Orders";
-			// 
-			// btnOrdersClear
-			// 
-			this.btnOrdersClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrdersClear.BackColor = System.Drawing.Color.Black;
-			this.btnOrdersClear.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrdersClear.Location = new System.Drawing.Point(224, 631);
-			this.btnOrdersClear.Name = "btnOrdersClear";
-			this.btnOrdersClear.Size = new System.Drawing.Size(57, 33);
-			this.btnOrdersClear.TabIndex = 4;
-			this.btnOrdersClear.Text = "Clear";
-			this.btnOrdersClear.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDelete
-			// 
-			this.btnOrderDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrderDelete.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDelete.Location = new System.Drawing.Point(152, 631);
-			this.btnOrderDelete.Name = "btnOrderDelete";
-			this.btnOrderDelete.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDelete.TabIndex = 3;
-			this.btnOrderDelete.Text = "Del";
-			this.btnOrderDelete.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDown
-			// 
-			this.btnOrderDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderDown.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDown.Location = new System.Drawing.Point(80, 631);
-			this.btnOrderDown.Name = "btnOrderDown";
-			this.btnOrderDown.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDown.TabIndex = 2;
-			this.btnOrderDown.Text = "Dn";
-			this.btnOrderDown.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderUp
-			// 
-			this.btnOrderUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderUp.BackColor = System.Drawing.Color.Black;
-			this.btnOrderUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderUp.Location = new System.Drawing.Point(8, 631);
-			this.btnOrderUp.Name = "btnOrderUp";
-			this.btnOrderUp.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderUp.TabIndex = 1;
-			this.btnOrderUp.Text = "Up";
-			this.btnOrderUp.UseVisualStyleBackColor = false;
-			// 
-			// lstOrdersDetail
-			// 
-			this.lstOrdersDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
-			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
-			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
-			this.lstOrdersDetail.Items.AddRange(new object[] {
-            "Move to Kartogia (0, -5)",
-            "Drop All Eee Population",
-            "Load All Troops",
-            "Move to Fizbon (3, 6)"});
-			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
-			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 600);
-			this.lstOrdersDetail.TabIndex = 0;
-			// 
 			// pageComps
 			// 
 			this.pageComps.BackColor = System.Drawing.Color.Black;
@@ -983,6 +906,180 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
 			// 
+			// pageOrders
+			// 
+			this.pageOrders.AutoScroll = true;
+			this.pageOrders.BackColor = System.Drawing.Color.Black;
+			this.pageOrders.Controls.Add(this.btnDeleteOrder);
+			this.pageOrders.Controls.Add(this.btnOrderGoesDown);
+			this.pageOrders.Controls.Add(this.btnOrderToBottom);
+			this.pageOrders.Controls.Add(this.btnClearOrders);
+			this.pageOrders.Controls.Add(this.btnOrderGoesUp);
+			this.pageOrders.Controls.Add(this.btnOrderToTop);
+			this.pageOrders.Controls.Add(this.btnOrdersClear);
+			this.pageOrders.Controls.Add(this.btnOrderDelete);
+			this.pageOrders.Controls.Add(this.btnOrderDown);
+			this.pageOrders.Controls.Add(this.btnOrderUp);
+			this.pageOrders.Controls.Add(this.lstOrdersDetail);
+			this.pageOrders.Location = new System.Drawing.Point(4, 29);
+			this.pageOrders.Name = "pageOrders";
+			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
+			this.pageOrders.Size = new System.Drawing.Size(292, 614);
+			this.pageOrders.TabIndex = 1;
+			this.pageOrders.Text = "Orders";
+			// 
+			// btnDeleteOrder
+			// 
+			this.btnDeleteOrder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDeleteOrder.BackColor = System.Drawing.Color.Black;
+			this.btnDeleteOrder.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDeleteOrder.Location = new System.Drawing.Point(214, 37);
+			this.btnDeleteOrder.Name = "btnDeleteOrder";
+			this.btnDeleteOrder.Size = new System.Drawing.Size(72, 30);
+			this.btnDeleteOrder.TabIndex = 17;
+			this.btnDeleteOrder.Text = "Delete";
+			this.btnDeleteOrder.UseVisualStyleBackColor = false;
+			this.btnDeleteOrder.Click += new System.EventHandler(this.btnDeleteOrder_Click);
+			// 
+			// btnOrderGoesDown
+			// 
+			this.btnOrderGoesDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderGoesDown.BackColor = System.Drawing.Color.Black;
+			this.btnOrderGoesDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderGoesDown.Location = new System.Drawing.Point(113, 37);
+			this.btnOrderGoesDown.Name = "btnOrderGoesDown";
+			this.btnOrderGoesDown.Size = new System.Drawing.Size(72, 30);
+			this.btnOrderGoesDown.TabIndex = 16;
+			this.btnOrderGoesDown.Text = "Down";
+			this.btnOrderGoesDown.UseVisualStyleBackColor = false;
+			this.btnOrderGoesDown.Click += new System.EventHandler(this.btnOrderGoesDown_Click);
+			// 
+			// btnOrderToBottom
+			// 
+			this.btnOrderToBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderToBottom.BackColor = System.Drawing.Color.Black;
+			this.btnOrderToBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderToBottom.Location = new System.Drawing.Point(8, 37);
+			this.btnOrderToBottom.Name = "btnOrderToBottom";
+			this.btnOrderToBottom.Size = new System.Drawing.Size(72, 30);
+			this.btnOrderToBottom.TabIndex = 15;
+			this.btnOrderToBottom.Text = "Bottom";
+			this.btnOrderToBottom.UseVisualStyleBackColor = false;
+			this.btnOrderToBottom.Click += new System.EventHandler(this.btnOrderToBottom_Click);
+			// 
+			// btnClearOrders
+			// 
+			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
+			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearOrders.Location = new System.Drawing.Point(214, 6);
+			this.btnClearOrders.Name = "btnClearOrders";
+			this.btnClearOrders.Size = new System.Drawing.Size(72, 30);
+			this.btnClearOrders.TabIndex = 14;
+			this.btnClearOrders.Text = "Clear";
+			this.btnClearOrders.UseVisualStyleBackColor = false;
+			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
+			// 
+			// btnOrderGoesUp
+			// 
+			this.btnOrderGoesUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderGoesUp.BackColor = System.Drawing.Color.Black;
+			this.btnOrderGoesUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderGoesUp.Location = new System.Drawing.Point(113, 6);
+			this.btnOrderGoesUp.Name = "btnOrderGoesUp";
+			this.btnOrderGoesUp.Size = new System.Drawing.Size(72, 30);
+			this.btnOrderGoesUp.TabIndex = 13;
+			this.btnOrderGoesUp.Text = "Up";
+			this.btnOrderGoesUp.UseVisualStyleBackColor = false;
+			this.btnOrderGoesUp.Click += new System.EventHandler(this.btnOrderGoesUp_Click);
+			// 
+			// btnOrderToTop
+			// 
+			this.btnOrderToTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderToTop.BackColor = System.Drawing.Color.Black;
+			this.btnOrderToTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderToTop.Location = new System.Drawing.Point(8, 6);
+			this.btnOrderToTop.Name = "btnOrderToTop";
+			this.btnOrderToTop.Size = new System.Drawing.Size(72, 30);
+			this.btnOrderToTop.TabIndex = 12;
+			this.btnOrderToTop.Text = "Top";
+			this.btnOrderToTop.UseVisualStyleBackColor = false;
+			this.btnOrderToTop.Click += new System.EventHandler(this.btnOrderToTop_Click);
+			// 
+			// btnOrdersClear
+			// 
+			this.btnOrdersClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrdersClear.BackColor = System.Drawing.Color.Black;
+			this.btnOrdersClear.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrdersClear.Location = new System.Drawing.Point(224, 631);
+			this.btnOrdersClear.Name = "btnOrdersClear";
+			this.btnOrdersClear.Size = new System.Drawing.Size(57, 33);
+			this.btnOrdersClear.TabIndex = 4;
+			this.btnOrdersClear.Text = "Clear";
+			this.btnOrdersClear.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderDelete
+			// 
+			this.btnOrderDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOrderDelete.BackColor = System.Drawing.Color.Black;
+			this.btnOrderDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderDelete.Location = new System.Drawing.Point(152, 631);
+			this.btnOrderDelete.Name = "btnOrderDelete";
+			this.btnOrderDelete.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderDelete.TabIndex = 3;
+			this.btnOrderDelete.Text = "Del";
+			this.btnOrderDelete.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderDown
+			// 
+			this.btnOrderDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOrderDown.BackColor = System.Drawing.Color.Black;
+			this.btnOrderDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderDown.Location = new System.Drawing.Point(80, 631);
+			this.btnOrderDown.Name = "btnOrderDown";
+			this.btnOrderDown.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderDown.TabIndex = 2;
+			this.btnOrderDown.Text = "Dn";
+			this.btnOrderDown.UseVisualStyleBackColor = false;
+			// 
+			// btnOrderUp
+			// 
+			this.btnOrderUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.btnOrderUp.BackColor = System.Drawing.Color.Black;
+			this.btnOrderUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOrderUp.Location = new System.Drawing.Point(8, 631);
+			this.btnOrderUp.Name = "btnOrderUp";
+			this.btnOrderUp.Size = new System.Drawing.Size(57, 33);
+			this.btnOrderUp.TabIndex = 1;
+			this.btnOrderUp.Text = "Up";
+			this.btnOrderUp.UseVisualStyleBackColor = false;
+			// 
+			// lstOrdersDetail
+			// 
+			this.lstOrdersDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
+			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
+			this.lstOrdersDetail.FormattingEnabled = true;
+			this.lstOrdersDetail.ItemHeight = 20;
+			this.lstOrdersDetail.Items.AddRange(new object[] {
+            "Move to Kartogia (0, -5)",
+            "Drop All Eee Population",
+            "Load All Troops",
+            "Move to Fizbon (3, 6)"});
+			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
+			this.lstOrdersDetail.Name = "lstOrdersDetail";
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 520);
+			this.lstOrdersDetail.TabIndex = 0;
+			// 
 			// AutonomousSpaceVehicleReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1004,13 +1101,13 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
-			this.pageOrders.ResumeLayout(false);
 			this.pageComps.ResumeLayout(false);
 			this.pageComps.PerformLayout();
 			this.pageCargo.ResumeLayout(false);
 			this.pageCargo.PerformLayout();
 			this.pageAbility.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
+			this.pageOrders.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1018,7 +1115,6 @@ namespace FrEee.WinForms.Controls
 		#endregion
 
 		private System.Windows.Forms.TabPage pageDetail;
-		private System.Windows.Forms.TabPage pageOrders;
 		private System.Windows.Forms.TabPage pageComps;
 		private System.Windows.Forms.TabPage pageCargo;
 		private System.Windows.Forms.Label txtSize;
@@ -1040,11 +1136,6 @@ namespace FrEee.WinForms.Controls
 		private GamePanel gamePanel2;
 		private System.Windows.Forms.ListView lstCargoSummary;
 		private System.Windows.Forms.Label lblCargo;
-		private GameButton btnOrdersClear;
-		private GameButton btnOrderDelete;
-		private GameButton btnOrderDown;
-		private GameButton btnOrderUp;
-		private System.Windows.Forms.ListBox lstOrdersDetail;
 		private System.Windows.Forms.ListView lstComponentsDetail;
 		private System.Windows.Forms.ListView lstCargoDetail;
 		private System.Windows.Forms.Label txtCargoSpaceFree;
@@ -1077,5 +1168,17 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtOrder;
 		private System.Windows.Forms.Label lblOrder;
 		private GameTabControl gameTabControl1;
+		private System.Windows.Forms.TabPage pageOrders;
+		private GameButton btnDeleteOrder;
+		private GameButton btnOrderGoesDown;
+		private GameButton btnOrderToBottom;
+		private GameButton btnClearOrders;
+		private GameButton btnOrderGoesUp;
+		private GameButton btnOrderToTop;
+		private GameButton btnOrdersClear;
+		private GameButton btnOrderDelete;
+		private GameButton btnOrderDown;
+		private GameButton btnOrderUp;
+		private System.Windows.Forms.ListBox lstOrdersDetail;
 	}
 }

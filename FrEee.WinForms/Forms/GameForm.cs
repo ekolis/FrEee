@@ -70,6 +70,9 @@ namespace FrEee.WinForms.Forms
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
 						var order = new MoveOrder<AutonomousSpaceVehicle>(v, sector, !aggressiveMode);
 						v.Orders.Add(order);
+						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Invalidate();
 						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
 					}
@@ -105,6 +108,9 @@ namespace FrEee.WinForms.Forms
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
 						var order = new WarpOrder<AutonomousSpaceVehicle>(v, wp, !aggressiveMode);
 						v.Orders.Add(order);
+						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Invalidate();
 						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
 					}

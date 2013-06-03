@@ -233,5 +233,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			return sectors.Cast<Sector>().Contains(sector);
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
