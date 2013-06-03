@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.WinForms.Controls
 {
@@ -150,10 +151,14 @@ namespace FrEee.WinForms.Controls
 						var largest = sector.SpaceObjects.Largest();
 						if (largest != null)
 						{
-							var portrait = largest.Portrait.Resize((int)drawsize);
+							Image pic;
+							if (largest is AutonomousSpaceVehicle)
+								pic = largest.Icon.Resize((int)drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
+							else
+								pic = largest.Portrait.Resize((int)drawsize);
 							if (largest is Planet)
-								((Planet)largest).DrawPopulationBars(portrait);
-							pe.Graphics.DrawImage(portrait, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+								((Planet)largest).DrawPopulationBars(pic);
+							pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 
 							// TODO - draw owner flag
 

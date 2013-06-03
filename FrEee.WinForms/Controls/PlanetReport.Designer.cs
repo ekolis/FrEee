@@ -104,7 +104,12 @@ namespace FrEee.WinForms.Controls
 			this.SuspendLayout();
 			// 
 			// gameTabControl1
-			// 
+			//
+			this.gameTabControl1.Controls.Add(this.pageDetail);
+			this.gameTabControl1.Controls.Add(this.pageFacil);
+			this.gameTabControl1.Controls.Add(this.pageCargo);
+			this.gameTabControl1.Controls.Add(this.pageOrders);
+			this.gameTabControl1.Controls.Add(this.pageAbility); 
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -160,7 +165,6 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlColony.BackColor = System.Drawing.Color.Black;
 			this.pnlColony.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.pnlColony.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlColony.Controls.Add(this.txtConstructionTime);
 			this.pnlColony.Controls.Add(this.lblConstructionTime);
 			this.pnlColony.Controls.Add(this.txtConstructionItem);
@@ -183,7 +187,6 @@ namespace FrEee.WinForms.Controls
 			this.pnlColony.ForeColor = System.Drawing.Color.White;
 			this.pnlColony.Location = new System.Drawing.Point(13, 189);
 			this.pnlColony.Name = "pnlColony";
-			this.pnlColony.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlColony.Size = new System.Drawing.Size(293, 231);
 			this.pnlColony.TabIndex = 66;
 			// 
@@ -700,7 +703,7 @@ namespace FrEee.WinForms.Controls
             "Launch All Fighters"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 351);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 377);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageAbility

@@ -11,6 +11,7 @@ using FrEee.Modding;
 using System.Drawing;
 using FrEee.Utility;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -414,8 +415,20 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// construction queues
-			foreach (var q in Referrables.OfType<ConstructionQueue>())
+			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
+
+			// ship movement
+			CurrentTick = 0;
+			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+				v.RefillMovement();
+			while (CurrentTick < 1)
+			{
+				ComputeNextTickSize();
+				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+					v.ExecuteOrders();
+				CurrentTick += NextTickSize;
+			}
 
 			// TODO - more turn stuff
 
@@ -484,6 +497,25 @@ namespace FrEee.Game.Objects.Space
 					list.Add(Tuple.Create(ssl, lookup));
 			}
 			return list.ToLookup(t => t.Item1, t => t.Item2);
+		}
+
+		/// <summary>
+		/// The next tick size, for ship movement.
+		/// </summary>
+		public double NextTickSize { get; private set; }
+
+		/// <summary>
+		/// The current tick in turn processing. 0 = start of turn, 1 = end of turn.
+		/// </summary>
+		public double CurrentTick { get; set; }
+
+		public void ComputeNextTickSize()
+		{
+			var objs = Referrables.OfType<AutonomousSpaceVehicle>().Where(obj => obj.Orders.Any());
+			if (objs.Any())
+				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
+			else
+				NextTickSize = 1.0 - CurrentTick;
 		}
 
 		#endregion

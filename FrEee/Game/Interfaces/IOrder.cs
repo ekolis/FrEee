@@ -8,15 +8,19 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An order issued by a player to an object to do something.
 	/// </summary>
-	public interface IOrder<in T, out TOrder>
+	public interface IOrder<T, out TOrder>
 		where T : IOrderable<T, TOrder>
 		where TOrder : IOrder<T, TOrder>
 	{
 		/// <summary>
+		/// The object receiving the order.
+		/// </summary>
+		T Target { get; set; }
+
+		/// <summary>
 		/// Executes the order.
 		/// </summary>
-		/// <param name="target">The object which is executing the order.</param>
-		void Execute(T target);
+		void Execute();
 
 		/// <summary>
 		/// Is this order done executing?

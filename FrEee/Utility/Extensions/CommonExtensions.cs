@@ -8,6 +8,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Utility.Extensions
 {
@@ -62,7 +63,12 @@ namespace FrEee.Utility.Extensions
 			{
 				return objects.OfType<WarpPoint>().OrderByDescending(obj => obj.StellarSize).First();
 			}
-			// TODO - fleets, ships/bases, unit groups
+			// TODO - fleets
+			if (objects.OfType<AutonomousSpaceVehicle>().Any())
+			{
+				return objects.OfType<AutonomousSpaceVehicle>().OrderByDescending(obj => obj.Design.Hull.Size).First();
+			}
+			// TODO - unit groups
 			return null;
 		}
 
@@ -164,6 +170,16 @@ namespace FrEee.Utility.Extensions
 					return kvp.Key;
 			}
 			return default(T); // nothing to pick...
+		}
+		
+		/// <summary>
+		/// Orders elements randomly.
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src)
+		{
+			return src.OrderBy(t => RandomIntHelper.Next(int.MaxValue));
 		}
 
 		public static T MinOrDefault<T>(this IEnumerable<T> stuff)
@@ -300,7 +316,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Flattens a grouping into a single sequence.
+		/// Flattens groupings into a single sequence.
 		/// </summary>
 		/// <typeparam name="TKey"></typeparam>
 		/// <typeparam name="TValue"></typeparam>
@@ -309,6 +325,41 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> lookup)
 		{
 			return lookup.SelectMany(g => g);
+		}
+
+		/// <summary>
+		/// Flattens lookups into a single sequence.
+		/// </summary>
+		/// <typeparam name="TKey"></typeparam>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="lookups"></param>
+		/// <returns></returns>
+		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<ILookup<TKey, TValue>> lookups)
+		{
+			return lookups.SelectMany(g => g).Flatten();
+		}
+
+		/// <summary>
+		/// "Squashes" a nested lookup into a collection of tuples.
+		/// </summary>
+		/// <typeparam name="TKey1"></typeparam>
+		/// <typeparam name="TKey2"></typeparam>
+		/// <typeparam name="TValue"></typeparam>
+		/// <param name="lookup"></param>
+		/// <returns></returns>
+		public static IEnumerable<Tuple<TKey1, TKey2, TValue>> Squash<TKey1, TKey2, TValue>(this ILookup<TKey1, ILookup<TKey2, TValue>> lookup)
+		{
+			foreach (var group1 in lookup)
+			{
+				foreach (var sublookup in group1)
+				{
+					foreach (var group2 in sublookup)
+					{
+						foreach (var item in group2)
+							yield return Tuple.Create(group1.Key, group2.Key, item);
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -532,6 +583,19 @@ namespace FrEee.Utility.Extensions
 			}
 			if (stuff.Any())
 				yield return stuff.Last();
+		}
+
+		/// <summary>
+		/// Finds the sector containing a space object.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Sector FindSector(this ISpaceObject sobj)
+		{
+			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
+			if (!results.Any())
+				return null;
+			return results.First().Item1.Item.GetSector(results.First().Item2);
 		}
 	}
 }

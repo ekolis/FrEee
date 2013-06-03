@@ -326,13 +326,14 @@ namespace FrEee.Game.Objects.Vehicles
 			set;
 		}
 
-		public IConstructionOrder CreateConstructionOrder()
+		public IConstructionOrder CreateConstructionOrder(ConstructionQueue queue)
 		{
 			var dtype = GetType();
 			var vtype = dtype.GetGenericArguments()[0];
 			var ordertype = typeof(ConstructionOrder<,>).MakeGenericType(vtype, dtype);
 			var o = (IConstructionOrder)Activator.CreateInstance(ordertype);
 			o.GetType().GetProperty("Template").SetValue(o, this, new object[] { });
+			o.GetType().GetProperty("Target").SetValue(o, queue, new object[] { });
 			return o;
 		}
 

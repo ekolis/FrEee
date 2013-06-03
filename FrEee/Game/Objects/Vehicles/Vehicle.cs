@@ -1,8 +1,10 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,6 +23,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Components = new List<Component>();
 			ConstructionProgress = new Resources();
+			Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
@@ -75,5 +78,37 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The owner of this vehicle.
 		/// </summary>
 		public Empire Owner { get; set; }
+
+		public IEnumerable<Ability> Abilities
+		{
+			get
+			{
+				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDamaged).SelectMany(c => c.Abilities).Stack());
+			}
+		}
+
+		public int Speed
+		{
+			get
+			{
+				// no Engines Per Move rating? then no movement
+				if (Design.Hull.Mass == 0)
+					return 0;
+				var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
+				// TODO - make sure that Movement Bonus and Extra Movement are not in fact affected by Engines Per Move in SE4
+				return thrust / Design.Hull.Mass + this.GetAbilityValue("Movement Bonus").ToInt() + this.GetAbilityValue("Extra Movement Generation").ToInt();
+			}
+		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
 	}
 }

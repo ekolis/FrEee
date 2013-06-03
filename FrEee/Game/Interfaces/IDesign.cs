@@ -106,7 +106,7 @@ namespace FrEee.Game.Interfaces
 		/// Creates an order to build this design.
 		/// </summary>
 		/// <returns></returns>
-		IConstructionOrder CreateConstructionOrder();
+		IConstructionOrder CreateConstructionOrder(ConstructionQueue queue);
 
 		int VehiclesBuilt { get; set; }
 

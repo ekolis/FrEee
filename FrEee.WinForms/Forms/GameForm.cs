@@ -15,6 +15,8 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.WinForms.Forms
 {
@@ -40,6 +42,7 @@ namespace FrEee.WinForms.Forms
 			btnQueues.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
 			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
 			btnEndTurn.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
+			btnMove.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Move"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();
@@ -53,8 +56,31 @@ namespace FrEee.WinForms.Forms
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
 		{
-			// select the sector that was clicked
-			starSystemView.SelectedSector = sector;
+			if (commandMode == CommandMode.Move)
+			{
+				if (sector != null)
+				{
+					// move ship to sector clicked
+					if (SelectedSpaceObject is AutonomousSpaceVehicle)
+					{
+						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+						var order = new MoveOrder<AutonomousSpaceVehicle>(v, sector, true);
+						v.Orders.Add(order);
+						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
+						Empire.Current.Commands.Add(cmd);
+					}
+					else
+					{
+						// TODO - move orders for unit groups
+					}
+					ChangeCommandMode(CommandMode.None, null);
+				}
+			}
+			else
+			{
+				// select the sector that was clicked
+				starSystemView.SelectedSector = sector;
+			}
 		}
 
 		private void starSystemView_SectorSelected(StarSystemView sender, Sector sector)
@@ -71,8 +97,7 @@ namespace FrEee.WinForms.Forms
 				Control newReport = null;
 				if (sector.SpaceObjects.Count == 1)
 				{
-					// add new report
-					newReport = CreateSpaceObjectReport(sector.SpaceObjects.Single());
+					SelectedSpaceObject = sector.SpaceObjects.Single();
 				}
 				else
 				{
@@ -121,16 +146,9 @@ namespace FrEee.WinForms.Forms
 		void SpaceObjectListReport_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			var lv = (ListView)sender;
-			if (lv.SelectedItems.Count > 0)
-			{
-				// remove list view
-				pnlDetailReport.Controls.Clear();
-
-				// add new report
-				var item = lv.GetItemAt(e.X, e.Y);
-				if (item != null)
-					pnlDetailReport.Controls.Add(CreateSpaceObjectReport((ISpaceObject)item.Tag));
-			}
+			var item = lv.GetItemAt(e.X, e.Y);
+			if (item != null)
+				SelectedSpaceObject = (ISpaceObject)item.Tag;
 		}
 
 		private Control CreateSpaceObjectReport(ISpaceObject sobj)
@@ -194,7 +212,10 @@ namespace FrEee.WinForms.Forms
 		private void SetUpGui()
 		{
 			// set title
-			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName + " - " + Galaxy.Current.Stardate;
+			ChangeCommandMode(CommandMode.None, null);
+
+			// select nothing
+			SelectedSpaceObject = null;
 
 			// display empire flag
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
@@ -376,5 +397,61 @@ namespace FrEee.WinForms.Forms
 			SelectTab(AddTab(null));
 		}
 		#endregion
+
+		private ISpaceObject selectedSpaceObject;
+		public ISpaceObject SelectedSpaceObject
+		{
+			get { return selectedSpaceObject; }
+			set
+			{
+				selectedSpaceObject = value;
+
+				// remove list view
+				pnlDetailReport.Controls.Clear();
+
+				// add new report
+				if (value != null)
+					pnlDetailReport.Controls.Add(CreateSpaceObjectReport(value));
+
+				// show/hide command buttons
+				btnMove.Visible = value is IMobileSpaceObject;
+			}
+		}
+
+		private void GameForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.M && SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
+			else if (e.KeyCode == Keys.Escape)
+				ChangeCommandMode(CommandMode.None, null);
+		}
+
+		private CommandMode commandMode;
+
+		private enum CommandMode
+		{
+			None,
+			Move
+		}
+
+		private void ChangeCommandMode(CommandMode mode, ISpaceObject sobj)
+		{
+			commandMode = mode;
+			switch (mode)
+			{
+				case CommandMode.None:
+					Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName + " - " + Galaxy.Current.Stardate;
+					break;
+				case CommandMode.Move:
+					Text = "Select a sector to move " + sobj + " to.";
+					break;
+			}
+		}
+
+		private void btnMove_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
+		}
 	}
 }

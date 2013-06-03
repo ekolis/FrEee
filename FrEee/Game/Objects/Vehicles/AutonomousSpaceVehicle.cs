@@ -17,11 +17,12 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class AutonomousSpaceVehicle : Vehicle, ISpaceObject
+	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>
 	{
 		public AutonomousSpaceVehicle()
 		{
 			IntrinsicAbilities = new List<Ability>();
+			Orders = new List<IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>();
 		}
 
 		public override bool RequiresSpaceYardQueue
@@ -97,5 +98,56 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The amount of supply present on this vehicle.
 		/// </summary>
 		public int SupplyRemaining { get; set; }
+
+		public IList<IMobileSpaceObjectOrder<AutonomousSpaceVehicle>> Orders
+		{
+			get;
+			private set;
+		}
+
+		public void ExecuteOrders()
+		{
+			TimeToNextMove -= Galaxy.Current.NextTickSize;
+			while (TimeToNextMove <= 0)
+			{
+				if (!Orders.Any())
+					break;
+				Orders.First().Execute();
+				if (Orders.First().IsComplete)
+					Orders.RemoveAt(0);
+			}
+		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Fractional turns until the vehicle has saved up another move point.
+		/// </summary>
+		public double TimeToNextMove
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The fraction of a turn that moving one sector takes.
+		/// </summary>
+		public double TimePerMove
+		{
+			get { return 1.0 / (double)Speed; }
+		}
+
+		/// <summary>
+		/// Refills the vehicle's movement points.
+		/// </summary>
+		public void RefillMovement()
+		{
+			MovementRemaining = Speed;
+			TimeToNextMove = TimePerMove;
+		}
 	}
 }

@@ -34,5 +34,10 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public string Name { get { return Template.Name; } }
+
+		/// <summary>
+		/// Is this component out of commission?
+		/// </summary>
+		public bool IsDamaged { get; set; }
 	}
 }

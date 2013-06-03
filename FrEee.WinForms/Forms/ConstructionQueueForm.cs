@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstFacilities.SelectedItems[0];
 				var template = (FacilityTemplate)item.Tag;
-				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
+				var order = new ConstructionOrder<Facility, FacilityTemplate> { Target = ConstructionQueue, Template = template };
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
 				(
@@ -228,7 +228,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstShips.SelectedItems[0];
 				var design = (IDesign)item.Tag;
-				var order = design.CreateConstructionOrder();
+				var order = design.CreateConstructionOrder(ConstructionQueue);
 				ConstructionQueue.Orders.Add(order);
 				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
 				(
