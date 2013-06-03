@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using System.Drawing;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -44,40 +45,33 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public bool AvoidEnemies { get; set; }
 
+		/// <summary>
+		/// Finds the path for executing this order.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Sector> Pathfind()
+		{
+			return Pathfinder.Pathfind(Target, Destination, AvoidEnemies);
+		}
+
 		public void Execute()
 		{
-			var here = Target.FindSector();
-			var hereSys = here.FindStarSystem();
-			Sector gotoSector = null;
-			if (hereSys == Destination.FindStarSystem())
-			{
-				// pathfind within system
-				var hereCoords = here.Coordinates;
-				var thereCoords = Destination.Coordinates;
-				var dx = Math.Sign(thereCoords.X - hereCoords.X);
-				var dy = Math.Sign(thereCoords.Y - hereCoords.Y);
-				// TODO - smart pathfinding that can avoid obstacles and enemies
-				gotoSector = hereSys.GetSector(hereCoords.X + dx, hereCoords.Y + dy);
-			}
-			else
-			{
-				// TODO - pathfind via warp points
-			}
+			var gotoSector = Pathfind().FirstOrDefault();
 
 			// TODO - movement logs
 			if (gotoSector != null)
 			{
 				// move
-				here.SpaceObjects.Remove(Target);
+				Target.FindSector().SpaceObjects.Remove(Target);
 				gotoSector.SpaceObjects.Add(Target);
-
-				// spend time
-				Target.TimeToNextMove += Target.TimePerMove;
 			}
 			else
 			{
 				// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
 			}
+
+			// spend time
+			Target.TimeToNextMove += Target.TimePerMove;
 		}
 
 		public bool IsComplete

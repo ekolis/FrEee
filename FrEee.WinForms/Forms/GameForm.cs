@@ -472,13 +472,13 @@ namespace FrEee.WinForms.Forms
 				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
 			else if (e.KeyCode == Keys.Escape)
 				ChangeCommandMode(CommandMode.None, null);
-			else if (e.KeyCode == Keys.Control)
+			else if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
 				aggressiveMode = true;
 		}
 
 		private void GameForm_KeyUp(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.Control)
+			if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
 				aggressiveMode = false;
 		}
 

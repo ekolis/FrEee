@@ -110,5 +110,11 @@ namespace FrEee.Game.Objects.Vehicles
 			get;
 			set;
 		}
+
+		public bool IsHostileTo(Empire emp)
+		{
+			// TODO - treaties making empires non-hostile
+			return emp != null && Owner != null && emp != Owner;
+		}
 	}
 }

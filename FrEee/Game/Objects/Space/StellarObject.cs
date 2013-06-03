@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	 [Serializable] public class StellarObject : ISpaceObject, ITemplate<StellarObject>, IReferrable<StellarObject>
+	 [Serializable] public abstract class StellarObject : ISpaceObject, IReferrable<StellarObject>
 	{
 		public StellarObject()
 		{
@@ -78,15 +78,6 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Just copy the data of this stellar object.
-		/// </summary>
-		/// <returns></returns>
-		public StellarObject Instantiate()
-		{
-			return this.Clone();
-		}
-
-		/// <summary>
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>
 		public virtual Empire Owner { get { return null; } }
@@ -133,6 +124,12 @@ namespace FrEee.Game.Objects.Space
 		{
 			get;
 			set;
+		}
+
+		public bool IsHostileTo(Empire emp)
+		{
+			// TODO - treaties making empires non-hostile
+			return emp != null && Owner != null && emp != Owner;
 		}
 	}
 }

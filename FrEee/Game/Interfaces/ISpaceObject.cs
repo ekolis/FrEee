@@ -44,5 +44,10 @@ namespace FrEee.Game.Interfaces
 		/// <param name="visibility">The visibility rating of this object.</param>
 		/// <exception cref="ArgumentException">if the visibility parameter is Visibility.Unknown. (The object should be removed instead of redacted!)</exception>
 		void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility);
+
+		/// <summary>
+		/// Is this space object hostile to an empire?
+		/// </summary>
+		bool IsHostileTo(Empire emp);
 	}
 }

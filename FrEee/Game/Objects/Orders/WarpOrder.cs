@@ -44,20 +44,23 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public bool AvoidEnemies { get; set; }
 
+		/// <summary>
+		/// Finds the path for executing this order.
+		/// </summary>
+		/// <returns></returns>
+		public IEnumerable<Sector> Pathfind()
+		{
+			return Pathfinder.Pathfind(Target, WarpPoint.FindSector(), AvoidEnemies);
+		}
+
 		public void Execute()
 		{
 			var here = Target.FindSector();
-			var hereSys = here.FindStarSystem();
-			Sector gotoSector = WarpPoint.FindSector();
-			if (here == gotoSector)
+			if (here == WarpPoint.FindSector())
 			{
 				// warp now!!!
 				here.SpaceObjects.Remove(Target);
 				WarpPoint.Target.SpaceObjects.Add(Target);
-
-				// spend time
-				Target.TimeToNextMove += Target.TimePerMove;
-
 				// mark system explored
 				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)Target).Owner))
 					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)Target).Owner);
@@ -65,36 +68,29 @@ namespace FrEee.Game.Objects.Orders
 				// done warping
 				IsComplete = true;
 			}
-			else if (hereSys == gotoSector.FindStarSystem())
-			{
-				// pathfind within system
-				var hereCoords = here.Coordinates;
-				var thereCoords = gotoSector.Coordinates;
-				var dx = Math.Sign(thereCoords.X - hereCoords.X);
-				var dy = Math.Sign(thereCoords.Y - hereCoords.Y);
-				// TODO - smart pathfinding that can avoid obstacles and enemies
-				gotoSector = hereSys.GetSector(hereCoords.X + dx, hereCoords.Y + dy);
-			}
 			else
 			{
-				// TODO - pathfind via warp points
-				gotoSector = null;
-			}
-
-			// TODO - movement logs
-			if (!IsComplete && gotoSector != null)
-			{
 				// move toward warp point
-				here.SpaceObjects.Remove(Target);
-				gotoSector.SpaceObjects.Add(Target);
+				var gotoSector = Pathfind().FirstOrDefault();
+
+				// TODO - movement logs
+				if (gotoSector != null)
+				{
+					// move
+					Target.FindSector().SpaceObjects.Remove(Target);
+					gotoSector.SpaceObjects.Add(Target);
+				}
+				else
+				{
+					// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
+				}
 
 				// spend time
 				Target.TimeToNextMove += Target.TimePerMove;
 			}
-			else
-			{
-				// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
-			}
+
+			// spend time
+			Target.TimeToNextMove += Target.TimePerMove;
 		}
 
 		public bool IsComplete
