@@ -157,7 +157,7 @@ namespace FrEee.WinForms.Forms
 
 		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
 		{
-			starSystemView.StarSystem = starSystem;
+			SetTabSystem(currentTab, starSystem);
 		}
 
 		private void btnDesigns_Click(object sender, EventArgs e)
@@ -193,9 +193,16 @@ namespace FrEee.WinForms.Forms
 
 		private void SetUpGui()
 		{
-			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.First();
+			// set title
 			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName + " - " + Galaxy.Current.Stardate;
+
+			// display empire flag
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
+
+			// create homesystem tab
+			foreach (var tab in ListTabs().ToArray())
+				RemoveTab(tab);
+			SelectTab(AddTab(Galaxy.Current.CurrentEmpire.ExploredStarSystems.First()));
 
 			// set up resource display
 			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"];
@@ -262,8 +269,10 @@ namespace FrEee.WinForms.Forms
 
 		public void SelectStarSystem(StarSystem sys)
 		{
-			galaxyView.SelectedStarSystem = sys;
-			starSystemView.StarSystem = sys;
+			var tab = FindTab(sys);
+			if (tab == null)
+				tab = AddTab(sys);
+			SelectTab(tab);
 		}
 
 		public void SelectSector(Point p)
@@ -275,5 +284,97 @@ namespace FrEee.WinForms.Forms
 		{
 			this.ShowChildForm(new LogForm(this));
 		}
+
+		#region Star System Tabs
+		private FlowLayoutPanel currentTab;
+
+		private FlowLayoutPanel AddTab(StarSystem sys = null)
+		{
+			var pnlTab = new FlowLayoutPanel();
+			pnlTab.Padding = new Padding(0);
+			pnlTab.Margin = new Padding(0);
+			pnlTab.Height = 24;
+			var btnTab = new GameButton();
+			btnTab.Width = 98;
+			var btnX = new GameButton();
+			btnX.Width = 25;
+			btnX.Text = "X";
+			btnTab.Click += btnTab_Click;
+			btnX.Click += btnX_Click;
+			pnlTab.Controls.Add(btnTab);
+			pnlTab.Controls.Add(btnX);
+			SetTabSystem(pnlTab, sys);
+			pnlTab.Controls.Remove(btnNewTab);
+			pnlTabs.Controls.Add(pnlTab);
+			pnlTabs.Controls.Add(btnNewTab);
+			return pnlTab;
+		}
+
+		private void RemoveTab(FlowLayoutPanel tab)
+		{
+			if (currentTab == tab)
+			{
+				galaxyView.SelectedStarSystem = null;
+				starSystemView.StarSystem = null;
+				currentTab = null;
+			}
+			pnlTabs.Controls.Remove(tab);
+		}
+
+		private void SetTabSystem(FlowLayoutPanel tab, StarSystem sys)
+		{
+			var btnTab = (GameButton)tab.Controls[0];
+			btnTab.Tag = sys;
+			if (sys == null)
+				btnTab.Text = "(No System)";
+			else
+				btnTab.Text = sys.Name;
+			if (tab == currentTab)
+				SelectTab(tab);
+		}
+
+		private FlowLayoutPanel FindTab(StarSystem sys)
+		{
+			foreach (FlowLayoutPanel tab in pnlTabs.Controls)
+			{
+				if (tab.Controls[0].Tag == sys)
+					return tab;
+			}
+			return null;
+		}
+
+		private IEnumerable<FlowLayoutPanel> ListTabs()
+		{
+			return pnlTabs.Controls.OfType<FlowLayoutPanel>();
+		}
+
+		private void SelectTab(FlowLayoutPanel tab)
+		{
+			btnTab_Click(tab.Controls[0], new EventArgs());
+		}
+
+		void btnTab_Click(object sender, EventArgs e)
+		{
+			var btnTab = (GameButton)sender;
+			currentTab = (FlowLayoutPanel)btnTab.Parent;
+			var sys = (StarSystem)btnTab.Tag;
+			if (galaxyView.SelectedStarSystem != sys)
+				galaxyView.SelectedStarSystem = sys;
+			if (starSystemView.StarSystem != sys)
+				starSystemView.StarSystem = sys;
+		}
+
+		void btnX_Click(object sender, EventArgs e)
+		{
+			var btnX = (GameButton)sender;
+			var pnlTab = (FlowLayoutPanel)btnX.Parent;
+			RemoveTab(pnlTab);
+		}
+
+		private void btnNewTab_Click(object sender, EventArgs e)
+		{
+			SelectTab(AddTab(null));
+		}
+		#endregion
 	}
 }

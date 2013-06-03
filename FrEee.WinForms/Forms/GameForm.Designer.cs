@@ -51,15 +51,19 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
+			this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.pnlMainCommands.SuspendLayout();
+			this.pnlSystemTabs.SuspendLayout();
+			this.pnlTabs.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
@@ -69,18 +73,19 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.ColumnCount = 4;
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 344F));
+			this.tableLayoutPanel1.ColumnCount = 5;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 359F));
 			this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.pnlMainCommands, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.pnlSubCommands, 1, 1);
+			this.tableLayoutPanel1.Controls.Add(this.pnlSubCommands, 2, 1);
 			this.tableLayoutPanel1.Controls.Add(this.pnlSearch, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.pnlSystemTabs, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.pnlSystemTabs, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.pnlDetailReport, 3, 1);
-			this.tableLayoutPanel1.Controls.Add(this.pnlSystemMap, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.pnlSystemMap, 1, 3);
 			this.tableLayoutPanel1.Controls.Add(this.pnlGalaxyMap, 3, 4);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -102,7 +107,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.BackColor = System.Drawing.Color.Black;
 			this.pnlHeader.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tableLayoutPanel1.SetColumnSpan(this.pnlHeader, 4);
+			this.tableLayoutPanel1.SetColumnSpan(this.pnlHeader, 5);
 			this.pnlHeader.Controls.Add(this.resInt);
 			this.pnlHeader.Controls.Add(this.resRes);
 			this.pnlHeader.Controls.Add(this.resRad);
@@ -219,6 +224,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tableLayoutPanel1.SetColumnSpan(this.pnlMainCommands, 2);
 			this.pnlMainCommands.Controls.Add(this.btnEndTurn);
 			this.pnlMainCommands.Controls.Add(this.btnLog);
 			this.pnlMainCommands.Controls.Add(this.btnQueues);
@@ -345,13 +351,13 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.BackColor = System.Drawing.Color.Black;
 			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tableLayoutPanel1.SetColumnSpan(this.pnlSearch, 2);
+			this.tableLayoutPanel1.SetColumnSpan(this.pnlSearch, 4);
 			this.pnlSearch.ForeColor = System.Drawing.Color.White;
 			this.pnlSearch.Location = new System.Drawing.Point(4, 97);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSearch.Size = new System.Drawing.Size(587, 42);
+			this.pnlSearch.Size = new System.Drawing.Size(838, 42);
 			this.pnlSearch.TabIndex = 2;
 			// 
 			// pnlSystemTabs
@@ -362,13 +368,25 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemTabs.BackColor = System.Drawing.Color.Black;
 			this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSystemTabs.Controls.Add(this.pnlTabs);
 			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemTabs.Location = new System.Drawing.Point(599, 97);
+			this.pnlSystemTabs.Location = new System.Drawing.Point(4, 147);
 			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemTabs.Name = "pnlSystemTabs";
 			this.pnlSystemTabs.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSystemTabs.Size = new System.Drawing.Size(243, 42);
+			this.tableLayoutPanel1.SetRowSpan(this.pnlSystemTabs, 2);
+			this.pnlSystemTabs.Size = new System.Drawing.Size(142, 583);
 			this.pnlSystemTabs.TabIndex = 3;
+			// 
+			// pnlTabs
+			// 
+			this.pnlTabs.Controls.Add(this.btnNewTab);
+			this.pnlTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlTabs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.pnlTabs.Location = new System.Drawing.Point(3, 3);
+			this.pnlTabs.Name = "pnlTabs";
+			this.pnlTabs.Size = new System.Drawing.Size(134, 575);
+			this.pnlTabs.TabIndex = 0;
 			// 
 			// pnlDetailReport
 			// 
@@ -398,12 +416,12 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSystemMap, 3);
 			this.pnlSystemMap.Controls.Add(this.starSystemView);
 			this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemMap.Location = new System.Drawing.Point(4, 147);
+			this.pnlSystemMap.Location = new System.Drawing.Point(154, 147);
 			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
 			this.pnlSystemMap.Name = "pnlSystemMap";
 			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlSystemMap, 2);
-			this.pnlSystemMap.Size = new System.Drawing.Size(838, 583);
+			this.pnlSystemMap.Size = new System.Drawing.Size(688, 583);
 			this.pnlSystemMap.TabIndex = 4;
 			// 
 			// starSystemView
@@ -415,7 +433,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Location = new System.Drawing.Point(6, 6);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
-			this.starSystemView.Size = new System.Drawing.Size(824, 569);
+			this.starSystemView.Size = new System.Drawing.Size(674, 569);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
@@ -453,6 +471,18 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
 			this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
 			// 
+			// btnNewTab
+			// 
+			this.btnNewTab.BackColor = System.Drawing.Color.Black;
+			this.btnNewTab.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNewTab.Location = new System.Drawing.Point(3, 3);
+			this.btnNewTab.Name = "btnNewTab";
+			this.btnNewTab.Size = new System.Drawing.Size(128, 23);
+			this.btnNewTab.TabIndex = 0;
+			this.btnNewTab.Text = "(New Tab)";
+			this.btnNewTab.UseVisualStyleBackColor = false;
+			this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
+			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -473,6 +503,8 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.pnlMainCommands.ResumeLayout(false);
+			this.pnlSystemTabs.ResumeLayout(false);
+			this.pnlTabs.ResumeLayout(false);
 			this.pnlSystemMap.ResumeLayout(false);
 			this.pnlGalaxyMap.ResumeLayout(false);
 			this.ResumeLayout(false);
@@ -507,6 +539,8 @@ namespace FrEee.WinForms.Forms
 		private ResourceDisplay resRad;
 		private ResourceDisplay resOrg;
 		private ResourceDisplay resMin;
+		private System.Windows.Forms.FlowLayoutPanel pnlTabs;
+		private GameButton btnNewTab;
 	}
 }
 
