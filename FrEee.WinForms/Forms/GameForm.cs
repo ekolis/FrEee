@@ -193,10 +193,9 @@ namespace FrEee.WinForms.Forms
 
 		private void SetUpGui()
 		{
-			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.PickRandom();
-			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
+			starSystemView.StarSystem = galaxyView.SelectedStarSystem = Galaxy.Current.CurrentEmpire.ExploredStarSystems.First();
+			Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.Stardate + " - " + Galaxy.Current.CurrentEmpire.EmperorTitle + " " + Galaxy.Current.CurrentEmpire.EmperorName;
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Flag;
-			txtGameDate.Text = Galaxy.Current.Stardate;
 
 			// set up resource display
 			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources["Minerals"];

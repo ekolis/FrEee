@@ -38,8 +38,6 @@ namespace FrEee.WinForms.Forms
 			this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.gameProgressBar1 = new FrEee.WinForms.Controls.GameProgressBar();
-			this.txtGameDate = new System.Windows.Forms.Label();
-			this.lblGameDate = new System.Windows.Forms.Label();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
 			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
@@ -111,8 +109,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Controls.Add(this.resOrg);
 			this.pnlHeader.Controls.Add(this.resMin);
 			this.pnlHeader.Controls.Add(this.gameProgressBar1);
-			this.pnlHeader.Controls.Add(this.txtGameDate);
-			this.pnlHeader.Controls.Add(this.lblGameDate);
 			this.pnlHeader.Controls.Add(this.picEmpireFlag);
 			this.pnlHeader.ForeColor = System.Drawing.Color.White;
 			this.pnlHeader.Location = new System.Drawing.Point(4, 4);
@@ -128,7 +124,7 @@ namespace FrEee.WinForms.Forms
 			this.resInt.BackColor = System.Drawing.Color.Black;
 			this.resInt.Change = null;
 			this.resInt.ForeColor = System.Drawing.Color.White;
-			this.resInt.Location = new System.Drawing.Point(675, 5);
+			this.resInt.Location = new System.Drawing.Point(515, 5);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
 			this.resInt.ResourceColor = System.Drawing.Color.Empty;
@@ -141,7 +137,7 @@ namespace FrEee.WinForms.Forms
 			this.resRes.BackColor = System.Drawing.Color.Black;
 			this.resRes.Change = null;
 			this.resRes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			this.resRes.Location = new System.Drawing.Point(574, 5);
+			this.resRes.Location = new System.Drawing.Point(404, 5);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
 			this.resRes.ResourceColor = System.Drawing.Color.Empty;
@@ -154,7 +150,7 @@ namespace FrEee.WinForms.Forms
 			this.resRad.BackColor = System.Drawing.Color.Black;
 			this.resRad.Change = null;
 			this.resRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resRad.Location = new System.Drawing.Point(449, 5);
+			this.resRad.Location = new System.Drawing.Point(279, 5);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
 			this.resRad.ResourceColor = System.Drawing.Color.Empty;
@@ -167,7 +163,7 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.BackColor = System.Drawing.Color.Black;
 			this.resOrg.Change = null;
 			this.resOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resOrg.Location = new System.Drawing.Point(324, 5);
+			this.resOrg.Location = new System.Drawing.Point(154, 5);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
 			this.resOrg.ResourceColor = System.Drawing.Color.Empty;
@@ -180,7 +176,7 @@ namespace FrEee.WinForms.Forms
 			this.resMin.BackColor = System.Drawing.Color.Black;
 			this.resMin.Change = null;
 			this.resMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resMin.Location = new System.Drawing.Point(213, 5);
+			this.resMin.Location = new System.Drawing.Point(43, 5);
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
 			this.resMin.ResourceColor = System.Drawing.Color.Empty;
@@ -205,27 +201,6 @@ namespace FrEee.WinForms.Forms
 			this.gameProgressBar1.Size = new System.Drawing.Size(347, 22);
 			this.gameProgressBar1.TabIndex = 9;
 			this.gameProgressBar1.Value = 350000;
-			// 
-			// txtGameDate
-			// 
-			this.txtGameDate.Location = new System.Drawing.Point(131, 5);
-			this.txtGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.txtGameDate.Name = "txtGameDate";
-			this.txtGameDate.Size = new System.Drawing.Size(51, 21);
-			this.txtGameDate.TabIndex = 4;
-			this.txtGameDate.Text = "2400.6";
-			this.txtGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			// 
-			// lblGameDate
-			// 
-			this.lblGameDate.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblGameDate.Location = new System.Drawing.Point(50, 5);
-			this.lblGameDate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-			this.lblGameDate.Name = "lblGameDate";
-			this.lblGameDate.Size = new System.Drawing.Size(73, 21);
-			this.lblGameDate.TabIndex = 3;
-			this.lblGameDate.Text = "Game Date";
-			this.lblGameDate.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// picEmpireFlag
 			// 
@@ -514,8 +489,6 @@ namespace FrEee.WinForms.Forms
 		private GamePanel pnlDetailReport;
 		private GamePanel pnlGalaxyMap;
 		private System.Windows.Forms.PictureBox picEmpireFlag;
-		private System.Windows.Forms.Label lblGameDate;
-		private System.Windows.Forms.Label txtGameDate;
 		private GameProgressBar gameProgressBar1;
 		private StarSystemView starSystemView;
 		private GalaxyView galaxyView;
