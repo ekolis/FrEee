@@ -25,17 +25,39 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 				return null;
 
 			// sort positions by distance to nearest star
-			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Select(sspos => sspos.Location).MinOrDefault(p2 => p2.ManhattanDistance(p)));
+			var ordered = openPositions.Select(p => new {
+				Position = p, 
+				Distances = galaxy.StarSystemLocations.Select(sspos => sspos.Location.ManhattanDistance(p)).OrderBy(dist => dist)
+			}).OrderBy(p => p.Distances.MinOrDefault());
+			var minDist = ordered.SelectMany(p => p.Distances).MinOrDefault();
 
 			if (RandomHelper.NextInt(2) == 0)
 			{
-				// place a star near other stars
-				return ordered.First();
+				// place a star near other stars, but not near TOO many other stars
+				var ok = ordered.Where(item => item.Distances.FirstOrDefault() == minDist);
+				Dictionary<Point, double> dict;
+				if (ok.Any())
+				{
+					dict = new Dictionary<Point, double>();
+					foreach (var p in ok)
+						dict.Add(p.Position, 1d / p.Distances.Sum(d => Math.Pow(d, 3)));
+				}
+				else
+				{
+					// place a star off in the middle of nowhere
+					dict = new Dictionary<Point, double>();
+					foreach (var p in ordered)
+						dict.Add(p.Position, p.Distances.Sum(d => Math.Pow(d, 3)));
+				}
+				return dict.PickWeighted();
 			}
 			else
 			{
 				// place a star off in the middle of nowhere
-				return ordered.Last();
+				var dict = new Dictionary<Point, double>();
+				foreach (var p in ordered)
+					dict.Add(p.Position, p.Distances.Sum(d => Math.Pow(d, 3)));
+				return dict.PickWeighted();
 			}
 		}
 	}

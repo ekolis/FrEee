@@ -80,9 +80,6 @@ namespace FrEee.Modding.Templates
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
 
-			// XXX - just for testing!
-			StarSystemPlacementStrategy = new StarSystemPlacementStrategies.SpiralStarSystemPlacementStrategy();
-
 			// create star systems
 			if (status != null)
 			status.Message = "Creating star systems";

@@ -149,6 +149,8 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static T PickRandom<T>(this IEnumerable<T> src)
 		{
+			if (!src.Any())
+				return default(T);
 			return src.ElementAt(RandomHelper.NextInt(src.Count()));
 		}
 
