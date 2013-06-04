@@ -171,14 +171,17 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Are two nodes connected, either way?
+		/// Are two nodes connected?
 		/// </summary>
 		/// <param name="node1"></param>
 		/// <param name="node2"></param>
 		/// <returns></returns>
-		public bool AreConnected(T node1, T node2)
+		public bool AreConnected(T node1, T node2, bool eitherWay = true)
 		{
-			return ComputeDistance(node1, node2) != null || ComputeDistance(node2, node1) != null;
+			if (eitherWay)
+				return ComputeDistance(node1, node2) != null || ComputeDistance(node2, node1) != null;
+			else
+				return ComputeDistance(node1, node2) != null;
 		}
 
 		/// <summary>

@@ -128,6 +128,7 @@ namespace FrEee.Modding.Templates
 						var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(startLocation.Location) == dist);
 						nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
 						nearby = nearby.Where(ssl => AreWarpPointAnglesOk(startLocation, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
+						nearby = nearby.Where(ssl => !graph.GetExits(startLocation).Contains(ssl));
 						if (nearby.Any())
 						{
 							endLocation = nearby.PickRandom();
@@ -157,10 +158,11 @@ namespace FrEee.Modding.Templates
 					var subgraph1 = candidates.PickRandom();
 					var subgraph2 = subgraphs.Where(sg => sg != subgraph1).PickRandom();
 					
-					// try to pick systems that are nearby
+					// try to pick systems that are nearby but not already connected
 					var crosstable = subgraph1.Join(subgraph2, ssl => 0, ssl => 0, (ssl1, ssl2) => Tuple.Create(ssl1, ssl2));
+					crosstable = crosstable.Where(t => !graph.GetExits(t.Item1).Contains(t.Item2));
 					var mindist = crosstable.Min(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location));
-					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist).PickRandom();
+					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist) .PickRandom();
 					startLocation = pair.Item1;
 					endLocation = pair.Item2;
 				}
