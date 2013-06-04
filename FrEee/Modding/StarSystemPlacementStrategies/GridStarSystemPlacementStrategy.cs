@@ -25,8 +25,8 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 				return null;
 
 			int totalStars = starsLeft + galaxy.StarSystemLocations.Count;
-			double xfactor = Math.Sqrt(totalStars) * (double)bounds.Width / (double)bounds.Height;
-			double yfactor = Math.Sqrt(totalStars) * (double)bounds.Height / (double)bounds.Width;
+			double xfactor = Math.Sqrt(totalStars) * (double)bounds.Height / (double)bounds.Width;
+			double yfactor = Math.Sqrt(totalStars) * (double)bounds.Width / (double)bounds.Height;
 			int xstars = (int)(totalStars / xfactor);
 			int ystars = (int)(totalStars / yfactor);
 
