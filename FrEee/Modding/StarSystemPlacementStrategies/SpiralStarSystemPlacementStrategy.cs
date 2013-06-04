@@ -27,8 +27,16 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			// sort positions by distance to center
 			var ordered = openPositions.OrderBy(p => p.ManhattanDistance(new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2)));
 
-			// place a star close to the center
-			return ordered.First();
+			if (RandomIntHelper.Next(2) == 0)
+			{
+				// place a star near the center
+				return ordered.First();
+			}
+			else
+			{
+				// place a star off in the middle of nowhere
+				return ordered.Last();
+			}
 		}
 	}
 }

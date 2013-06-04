@@ -27,8 +27,8 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			int totalStars = starsLeft + galaxy.StarSystemLocations.Count;
 			double xfactor = Math.Sqrt(totalStars) * (double)bounds.Width / (double)bounds.Height;
 			double yfactor = Math.Sqrt(totalStars) * (double)bounds.Height / (double)bounds.Width;
-			int xstars = (int)(totalStars * xfactor);
-			int ystars = (int)(totalStars * yfactor);
+			int xstars = (int)(totalStars / xfactor);
+			int ystars = (int)(totalStars / yfactor);
 
 			if (xstars * ystars <= galaxy.StarSystemLocations.Count)
 				return null;
@@ -38,7 +38,7 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			int rowsize = bounds.Width / (xstars - 1);
 			int colsize = bounds.Height / (ystars - 1);
 
-			var idealPos = new Point(row * rowsize, col * colsize);
+			var idealPos = new Point(row * rowsize + bounds.Left, col * colsize + bounds.Top);
 
 			return openPositions.OrderBy(p => p.ManhattanDistance(idealPos)).First();
 		}
