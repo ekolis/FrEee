@@ -284,7 +284,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static double AngleTo(this Point p, Point target)
 		{
-			return Math.Atan2(target.X - p.X, p.Y - target.Y) * 180d / Math.PI;
+			return Math.Atan2(target.X - p.X, target.Y - p.Y) * 180d / Math.PI;
 		}
 
 		/// <summary>
