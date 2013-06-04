@@ -50,6 +50,11 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
+			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
+			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
+			this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
+			this.btnColonize = new FrEee.WinForms.Controls.GameButton();
 			this.btnEvade = new FrEee.WinForms.Controls.GameButton();
 			this.btnWarp = new FrEee.WinForms.Controls.GameButton();
 			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
@@ -63,11 +68,6 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.btnColonize = new FrEee.WinForms.Controls.GameButton();
-			this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
-			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
-			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
-			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
@@ -82,9 +82,6 @@ namespace FrEee.WinForms.Forms
 			// 
 			// tableLayoutPanel1
 			// 
-			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.ColumnCount = 5;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 150F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 194F));
@@ -99,7 +96,9 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.Controls.Add(this.pnlDetailReport, 3, 1);
 			this.tableLayoutPanel1.Controls.Add(this.pnlSystemMap, 1, 3);
 			this.tableLayoutPanel1.Controls.Add(this.pnlGalaxyMap, 3, 4);
-			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
+			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 6;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
@@ -108,7 +107,7 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 308F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(1205, 755);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1229, 779);
 			this.tableLayoutPanel1.TabIndex = 7;
 			// 
 			// pnlHeader
@@ -128,11 +127,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Controls.Add(this.gameProgressBar1);
 			this.pnlHeader.Controls.Add(this.picEmpireFlag);
 			this.pnlHeader.ForeColor = System.Drawing.Color.White;
-			this.pnlHeader.Location = new System.Drawing.Point(4, 4);
-			this.pnlHeader.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlHeader.Location = new System.Drawing.Point(2, 2);
+			this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlHeader.Size = new System.Drawing.Size(1197, 31);
+			this.pnlHeader.Size = new System.Drawing.Size(1225, 35);
 			this.pnlHeader.TabIndex = 0;
 			// 
 			// resInt
@@ -202,20 +201,19 @@ namespace FrEee.WinForms.Forms
 			// 
 			// gameProgressBar1
 			// 
-			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
 			this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
 			this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
 			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-			this.gameProgressBar1.Location = new System.Drawing.Point(845, 3);
+			this.gameProgressBar1.Location = new System.Drawing.Point(869, 3);
 			this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
 			this.gameProgressBar1.Maximum = 500000;
 			this.gameProgressBar1.Name = "gameProgressBar1";
 			this.gameProgressBar1.RightText = "0.2 years";
-			this.gameProgressBar1.Size = new System.Drawing.Size(347, 22);
+			this.gameProgressBar1.Size = new System.Drawing.Size(351, 27);
 			this.gameProgressBar1.TabIndex = 9;
 			this.gameProgressBar1.Value = 350000;
 			// 
@@ -246,18 +244,18 @@ namespace FrEee.WinForms.Forms
 			this.pnlMainCommands.Controls.Add(this.btnDesigns);
 			this.pnlMainCommands.Controls.Add(this.btnMenu);
 			this.pnlMainCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlMainCommands.Location = new System.Drawing.Point(4, 43);
-			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlMainCommands.Location = new System.Drawing.Point(2, 41);
+			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlMainCommands.Name = "pnlMainCommands";
-			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(4);
-			this.pnlMainCommands.Size = new System.Drawing.Size(336, 46);
+			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(6);
+			this.pnlMainCommands.Size = new System.Drawing.Size(340, 50);
 			this.pnlMainCommands.TabIndex = 1;
 			// 
 			// btnEndTurn
 			// 
 			this.btnEndTurn.BackColor = System.Drawing.Color.Black;
 			this.btnEndTurn.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEndTurn.Location = new System.Drawing.Point(295, 4);
+			this.btnEndTurn.Location = new System.Drawing.Point(296, 6);
 			this.btnEndTurn.Name = "btnEndTurn";
 			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
 			this.btnEndTurn.TabIndex = 7;
@@ -269,7 +267,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnLog.BackColor = System.Drawing.Color.Black;
 			this.btnLog.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLog.Location = new System.Drawing.Point(255, 4);
+			this.btnLog.Location = new System.Drawing.Point(256, 6);
 			this.btnLog.Name = "btnLog";
 			this.btnLog.Size = new System.Drawing.Size(36, 36);
 			this.btnLog.TabIndex = 6;
@@ -281,7 +279,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnQueues.BackColor = System.Drawing.Color.Black;
 			this.btnQueues.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnQueues.Location = new System.Drawing.Point(213, 4);
+			this.btnQueues.Location = new System.Drawing.Point(214, 6);
 			this.btnQueues.Name = "btnQueues";
 			this.btnQueues.Size = new System.Drawing.Size(36, 36);
 			this.btnQueues.TabIndex = 5;
@@ -293,7 +291,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnShips.BackColor = System.Drawing.Color.Black;
 			this.btnShips.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnShips.Location = new System.Drawing.Point(171, 4);
+			this.btnShips.Location = new System.Drawing.Point(172, 6);
 			this.btnShips.Name = "btnShips";
 			this.btnShips.Size = new System.Drawing.Size(36, 36);
 			this.btnShips.TabIndex = 4;
@@ -304,7 +302,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnEmpires.BackColor = System.Drawing.Color.Black;
 			this.btnEmpires.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpires.Location = new System.Drawing.Point(129, 4);
+			this.btnEmpires.Location = new System.Drawing.Point(130, 6);
 			this.btnEmpires.Name = "btnEmpires";
 			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
 			this.btnEmpires.TabIndex = 3;
@@ -315,7 +313,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnPlanets.BackColor = System.Drawing.Color.Black;
 			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPlanets.Location = new System.Drawing.Point(87, 4);
+			this.btnPlanets.Location = new System.Drawing.Point(88, 6);
 			this.btnPlanets.Name = "btnPlanets";
 			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
 			this.btnPlanets.TabIndex = 0;
@@ -327,7 +325,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnDesigns.BackColor = System.Drawing.Color.Black;
 			this.btnDesigns.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDesigns.Location = new System.Drawing.Point(46, 4);
+			this.btnDesigns.Location = new System.Drawing.Point(47, 6);
 			this.btnDesigns.Name = "btnDesigns";
 			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
 			this.btnDesigns.TabIndex = 2;
@@ -339,7 +337,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnMenu.BackColor = System.Drawing.Color.Black;
 			this.btnMenu.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMenu.Location = new System.Drawing.Point(4, 4);
+			this.btnMenu.Location = new System.Drawing.Point(5, 6);
 			this.btnMenu.Name = "btnMenu";
 			this.btnMenu.Size = new System.Drawing.Size(36, 36);
 			this.btnMenu.TabIndex = 1;
@@ -365,12 +363,77 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Controls.Add(this.btnPursue);
 			this.pnlSubCommands.Controls.Add(this.btnMove);
 			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlSubCommands.Location = new System.Drawing.Point(348, 43);
-			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlSubCommands.Location = new System.Drawing.Point(346, 41);
+			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlSubCommands.Name = "pnlSubCommands";
-			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSubCommands.Size = new System.Drawing.Size(494, 46);
+			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
+			this.pnlSubCommands.Size = new System.Drawing.Size(522, 50);
 			this.pnlSubCommands.TabIndex = 2;
+			// 
+			// btnClearOrders
+			// 
+			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
+			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearOrders.Location = new System.Drawing.Point(476, 4);
+			this.btnClearOrders.Name = "btnClearOrders";
+			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
+			this.btnClearOrders.TabIndex = 11;
+			this.btnClearOrders.Text = "Clr";
+			this.toolTip.SetToolTip(this.btnClearOrders, "Clear Orders");
+			this.btnClearOrders.UseVisualStyleBackColor = false;
+			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
+			// 
+			// btnFleetTransfer
+			// 
+			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
+			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnFleetTransfer.Location = new System.Drawing.Point(295, 4);
+			this.btnFleetTransfer.Name = "btnFleetTransfer";
+			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
+			this.btnFleetTransfer.TabIndex = 10;
+			this.btnFleetTransfer.Text = "Flt";
+			this.toolTip.SetToolTip(this.btnFleetTransfer, "Fleet Transfer");
+			this.btnFleetTransfer.UseVisualStyleBackColor = false;
+			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
+			// 
+			// btnTransferCargo
+			// 
+			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
+			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTransferCargo.Location = new System.Drawing.Point(253, 4);
+			this.btnTransferCargo.Name = "btnTransferCargo";
+			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
+			this.btnTransferCargo.TabIndex = 9;
+			this.btnTransferCargo.Text = "TC";
+			this.toolTip.SetToolTip(this.btnTransferCargo, "Transfer Cargo");
+			this.btnTransferCargo.UseVisualStyleBackColor = false;
+			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
+			// 
+			// btnConstructionQueue
+			// 
+			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
+			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnConstructionQueue.Location = new System.Drawing.Point(211, 4);
+			this.btnConstructionQueue.Name = "btnConstructionQueue";
+			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
+			this.btnConstructionQueue.TabIndex = 8;
+			this.btnConstructionQueue.Text = "CQ";
+			this.toolTip.SetToolTip(this.btnConstructionQueue, "Construction Queue");
+			this.btnConstructionQueue.UseVisualStyleBackColor = false;
+			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
+			// 
+			// btnColonize
+			// 
+			this.btnColonize.BackColor = System.Drawing.Color.Black;
+			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnColonize.Location = new System.Drawing.Point(169, 4);
+			this.btnColonize.Name = "btnColonize";
+			this.btnColonize.Size = new System.Drawing.Size(36, 36);
+			this.btnColonize.TabIndex = 7;
+			this.btnColonize.Text = "Col";
+			this.toolTip.SetToolTip(this.btnColonize, "Colonize");
+			this.btnColonize.UseVisualStyleBackColor = false;
+			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
 			// 
 			// btnEvade
 			// 
@@ -415,7 +478,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnMove.BackColor = System.Drawing.Color.Black;
 			this.btnMove.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMove.Location = new System.Drawing.Point(6, 4);
+			this.btnMove.Location = new System.Drawing.Point(7, 4);
 			this.btnMove.Name = "btnMove";
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
@@ -434,11 +497,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSearch, 4);
 			this.pnlSearch.ForeColor = System.Drawing.Color.White;
-			this.pnlSearch.Location = new System.Drawing.Point(4, 97);
-			this.pnlSearch.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlSearch.Location = new System.Drawing.Point(2, 95);
+			this.pnlSearch.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSearch.Size = new System.Drawing.Size(838, 42);
+			this.pnlSearch.Size = new System.Drawing.Size(866, 46);
 			this.pnlSearch.TabIndex = 2;
 			// 
 			// pnlSystemTabs
@@ -451,12 +514,12 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlSystemTabs.Controls.Add(this.pnlTabs);
 			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemTabs.Location = new System.Drawing.Point(4, 147);
-			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlSystemTabs.Location = new System.Drawing.Point(2, 145);
+			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlSystemTabs.Name = "pnlSystemTabs";
 			this.pnlSystemTabs.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlSystemTabs, 2);
-			this.pnlSystemTabs.Size = new System.Drawing.Size(142, 583);
+			this.pnlSystemTabs.Size = new System.Drawing.Size(146, 611);
 			this.pnlSystemTabs.TabIndex = 3;
 			// 
 			// pnlTabs
@@ -466,7 +529,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlTabs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.pnlTabs.Location = new System.Drawing.Point(3, 3);
 			this.pnlTabs.Name = "pnlTabs";
-			this.pnlTabs.Size = new System.Drawing.Size(134, 575);
+			this.pnlTabs.Size = new System.Drawing.Size(138, 603);
 			this.pnlTabs.TabIndex = 0;
 			// 
 			// btnNewTab
@@ -490,12 +553,12 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlDetailReport.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlDetailReport.ForeColor = System.Drawing.Color.White;
-			this.pnlDetailReport.Location = new System.Drawing.Point(850, 43);
-			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlDetailReport.Location = new System.Drawing.Point(872, 41);
+			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlDetailReport.Name = "pnlDetailReport";
 			this.pnlDetailReport.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlDetailReport, 3);
-			this.pnlDetailReport.Size = new System.Drawing.Size(351, 379);
+			this.pnlDetailReport.Size = new System.Drawing.Size(355, 407);
 			this.pnlDetailReport.TabIndex = 3;
 			// 
 			// pnlSystemMap
@@ -509,12 +572,12 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSystemMap, 3);
 			this.pnlSystemMap.Controls.Add(this.starSystemView);
 			this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemMap.Location = new System.Drawing.Point(154, 147);
-			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlSystemMap.Location = new System.Drawing.Point(152, 145);
+			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlSystemMap.Name = "pnlSystemMap";
 			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
 			this.tableLayoutPanel1.SetRowSpan(this.pnlSystemMap, 2);
-			this.pnlSystemMap.Size = new System.Drawing.Size(688, 583);
+			this.pnlSystemMap.Size = new System.Drawing.Size(716, 611);
 			this.pnlSystemMap.TabIndex = 4;
 			// 
 			// starSystemView
@@ -526,7 +589,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Location = new System.Drawing.Point(6, 6);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
-			this.starSystemView.Size = new System.Drawing.Size(674, 569);
+			this.starSystemView.Size = new System.Drawing.Size(702, 597);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
@@ -542,11 +605,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlGalaxyMap.Controls.Add(this.galaxyView);
 			this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
-			this.pnlGalaxyMap.Location = new System.Drawing.Point(850, 430);
-			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(4);
+			this.pnlGalaxyMap.Location = new System.Drawing.Point(872, 452);
+			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
 			this.pnlGalaxyMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlGalaxyMap.Size = new System.Drawing.Size(351, 300);
+			this.pnlGalaxyMap.Size = new System.Drawing.Size(355, 304);
 			this.pnlGalaxyMap.TabIndex = 5;
 			// 
 			// galaxyView
@@ -558,76 +621,11 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.Location = new System.Drawing.Point(4, 3);
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(342, 288);
+			this.galaxyView.Size = new System.Drawing.Size(346, 292);
 			this.galaxyView.TabIndex = 0;
 			this.galaxyView.Text = "galaxyView1";
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
 			this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
-			// 
-			// btnColonize
-			// 
-			this.btnColonize.BackColor = System.Drawing.Color.Black;
-			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnColonize.Location = new System.Drawing.Point(169, 4);
-			this.btnColonize.Name = "btnColonize";
-			this.btnColonize.Size = new System.Drawing.Size(36, 36);
-			this.btnColonize.TabIndex = 7;
-			this.btnColonize.Text = "Col";
-			this.toolTip.SetToolTip(this.btnColonize, "Colonize");
-			this.btnColonize.UseVisualStyleBackColor = false;
-			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
-			// 
-			// btnConstructionQueue
-			// 
-			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
-			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnConstructionQueue.Location = new System.Drawing.Point(211, 4);
-			this.btnConstructionQueue.Name = "btnConstructionQueue";
-			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
-			this.btnConstructionQueue.TabIndex = 8;
-			this.btnConstructionQueue.Text = "CQ";
-			this.toolTip.SetToolTip(this.btnConstructionQueue, "Construction Queue");
-			this.btnConstructionQueue.UseVisualStyleBackColor = false;
-			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
-			// 
-			// btnTransferCargo
-			// 
-			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
-			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTransferCargo.Location = new System.Drawing.Point(253, 4);
-			this.btnTransferCargo.Name = "btnTransferCargo";
-			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
-			this.btnTransferCargo.TabIndex = 9;
-			this.btnTransferCargo.Text = "TC";
-			this.toolTip.SetToolTip(this.btnTransferCargo, "Transfer Cargo");
-			this.btnTransferCargo.UseVisualStyleBackColor = false;
-			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
-			// 
-			// btnFleetTransfer
-			// 
-			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
-			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnFleetTransfer.Location = new System.Drawing.Point(295, 4);
-			this.btnFleetTransfer.Name = "btnFleetTransfer";
-			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
-			this.btnFleetTransfer.TabIndex = 10;
-			this.btnFleetTransfer.Text = "Flt";
-			this.toolTip.SetToolTip(this.btnFleetTransfer, "Fleet Transfer");
-			this.btnFleetTransfer.UseVisualStyleBackColor = false;
-			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
-			// 
-			// btnClearOrders
-			// 
-			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
-			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearOrders.Location = new System.Drawing.Point(450, 4);
-			this.btnClearOrders.Name = "btnClearOrders";
-			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
-			this.btnClearOrders.TabIndex = 11;
-			this.btnClearOrders.Text = "Clr";
-			this.toolTip.SetToolTip(this.btnClearOrders, "Clear Orders");
-			this.btnClearOrders.UseVisualStyleBackColor = false;
-			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
 			// 
 			// GameForm
 			// 
