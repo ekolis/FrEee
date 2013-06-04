@@ -17,11 +17,12 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable<Planet, IPlanetOrder>
 	{
 		public Planet()
 		{
 			ResourceValue = new Resources();
+			Orders = new List<IPlanetOrder>();
 		}
 
 		/// <summary>
@@ -213,6 +214,27 @@ namespace FrEee.Game.Objects.Space
 				if (IsDomed)
 					return Size.MaxCargoDomed;
 				return Size.MaxCargo;
+			}
+		}
+
+		public IList<IPlanetOrder> Orders
+		{
+			get;
+			private set;
+		}
+
+		public void ExecuteOrders()
+		{
+			// TODO - execute planet orders
+		}
+
+		public override ConstructionQueue ConstructionQueue
+		{
+			get
+			{
+				if (Colony != null)
+					return Colony.ConstructionQueue;
+				return null;
 			}
 		}
 	}

@@ -131,5 +131,43 @@ namespace FrEee.Game.Objects.Space
 			// TODO - treaties making empires non-hostile
 			return emp != null && Owner != null && emp != Owner;
 		}
+
+		 /// <summary>
+		 /// Most stellar objects don't have construction queues.
+		 /// </summary>
+		public virtual ConstructionQueue ConstructionQueue { get { return null; } }
+
+
+		 /// <summary>
+		 /// Stellar objects can not be placed in fleets.
+		 /// </summary>
+		public bool CanBeInFleet
+		{
+			get { return false; }
+		}
+
+		 /// <summary>
+		 /// Stellar objects don't store cargo, by default.
+		 /// </summary>
+		public virtual int CargoStorage
+		{
+			get { return 0; }
+		}
+
+		 /// <summary>
+		 /// Stellar objects have no supply storage, but they do have infinite supplies.
+		 /// </summary>
+		public int SupplyStorage
+		{
+			get { return 0; }
+		}
+
+		 /// <summary>
+		 /// Stellar objects have infinite supplies.
+		 /// </summary>
+		public bool HasInfiniteSupplies
+		{
+			get { return true; }
+		}
 	}
 }

@@ -49,5 +49,32 @@ namespace FrEee.Game.Interfaces
 		/// Is this space object hostile to an empire?
 		/// </summary>
 		bool IsHostileTo(Empire emp);
+
+		/// <summary>
+		/// This space object's construction queue, if any.
+		/// </summary>
+		ConstructionQueue ConstructionQueue { get; }
+
+		/// <summary>
+		/// Can this space object be placed in a fleet?
+		/// </summary>
+		bool CanBeInFleet { get; }
+
+		/// <summary>
+		/// Cargo storage capacity.
+		/// </summary>
+		int CargoStorage { get; }
+
+		/// <summary>
+		/// Supply storage capacity.
+		/// TODO - make supply a resource?
+		/// </summary>
+		int SupplyStorage { get; }
+
+		/// <summary>
+		/// Does this space object have infinite supplies?
+		/// TODO - make supply a resource?
+		/// </summary>
+		bool HasInfiniteSupplies { get; }
 	}
 }

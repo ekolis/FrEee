@@ -1,7 +1,9 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -13,16 +15,17 @@ namespace FrEee.Game.Objects.Civilization
 	[Serializable]
 	public class ConstructionQueue : IOrderable<ConstructionQueue, IConstructionOrder>
 	{
-		public ConstructionQueue()
+		public ConstructionQueue(ISpaceObject sobj)
 		{
 			Orders = new List<IConstructionOrder>();
+			SpaceObject = sobj;
 			Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
 		/// Is this a space yard queue?
 		/// </summary>
-		public bool IsSpaceYardQueue { get; set; }
+		public bool IsSpaceYardQueue { get { return SpaceObject.HasAbility("Space Yard"); } }
 
 		/// <summary>
 		/// Is this a colony queue?
@@ -55,7 +58,46 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The rate at which this queue can construct.
 		/// </summary>
-		public Resources Rate { get; set; }
+		public Resources Rate
+		{
+			get
+			{
+				var rate = ComputeSYAbilityRate();
+				if (Colony != null)
+				{
+					if (rate == null)
+						rate = Mod.Current.DefaultColonyConstructionRate;
+					// TODO - population/happiness/etc. modifiers
+				}
+				if (rate == null)
+					rate = new Resources();
+				return rate;
+			}
+		}
+
+		private Resources ComputeSYAbilityRate()
+		{
+			if (SpaceObject.HasAbility("Space Yard"))
+			{
+				var rate = new Resources();
+				// TODO - moddable resources?
+				for (int i = 1; i <= 3; i++)
+				{
+					var amount = Colony.GetAbilityValue("Space Yard", 2, a => a.Value1 == i.ToString()).ToInt();
+					string res = null;
+					if (i == 1)
+						res = "Minerals";
+					else if (i == 2)
+						res = "Organics";
+					else if (i == 3)
+						res = "Radioactives";
+					rate[res] = amount;
+				}
+				return rate;
+			}
+			else
+				return null;
+		}
 
 		/// <summary>
 		/// Unspent build rate for this turn.

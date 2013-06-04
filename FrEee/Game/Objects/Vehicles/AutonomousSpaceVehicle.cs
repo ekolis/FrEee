@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			IntrinsicAbilities = new List<Ability>();
 			Orders = new List<IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>();
+			constructionQueue = new ConstructionQueue(this);
 		}
 
 		public override bool RequiresSpaceYardQueue
@@ -154,5 +156,50 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Autonomous space vehicles can warp.
 		/// </summary>
 		public bool CanWarp { get { return true; } }
+
+		private ConstructionQueue constructionQueue;
+
+		public ConstructionQueue ConstructionQueue
+		{
+			get
+			{
+				if (this.HasAbility("Space Yard"))
+					return constructionQueue;
+				else
+					return null;
+			}
+		}
+
+		/// <summary>
+		/// Autonomous space vehicles can be placed in fleets.
+		/// </summary>
+		public bool CanBeInFleet
+		{
+			get { return true; }
+		}
+
+		/// <summary>
+		/// Autonomous space vehicles' cargo storage depends on their abilities.
+		/// </summary>
+		public int CargoStorage
+		{
+			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
+		}
+
+		/// <summary>
+		/// Autonomous space vehicles' supply storage depends on their abilities.
+		/// </summary>
+		public int SupplyStorage
+		{
+			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
+		}
+
+		/// <summary>
+		/// Autonomouse space vehicles do not have infinite supplies unless they have a quantum reactor.
+		/// </summary>
+		public bool HasInfiniteSupplies
+		{
+			get { return this.HasAbility("Quantum Reactor"); }
+		}
 	}
 }

@@ -76,12 +76,7 @@ namespace FrEee.Game
 				hw.Colony = new Colony
 				{
 					Owner = emp,
-					ConstructionQueue = new ConstructionQueue
-					{
-						IsSpaceYardQueue = true,
-						SpaceObject = hw,
-						Rate = rate,
-					}
+					ConstructionQueue = new ConstructionQueue(hw)
 				};
 				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sy.Instantiate());

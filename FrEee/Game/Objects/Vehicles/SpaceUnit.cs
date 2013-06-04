@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class SpaceUnit : Unit, ISpaceObject
+	public class SpaceUnit : Unit
 	{
 		public SpaceUnit()
 		{
@@ -63,11 +63,6 @@ namespace FrEee.Game.Objects.Vehicles
 				d.Owner = Design.Owner;
 				Design = d;
 			}
-		}
-
-		public IEnumerable<Ability> Abilities
-		{
-			get { return IntrinsicAbilities.Concat(Design.Abilities).Stack(); }
 		}
 	}
 }

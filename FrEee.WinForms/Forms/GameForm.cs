@@ -134,7 +134,10 @@ namespace FrEee.WinForms.Forms
 			pnlDetailReport.Controls.Clear();
 
 			if (sector == null)
+			{
+				SelectedSpaceObject = null;
 				return;
+			}
 
 			if (sector.SpaceObjects.Count > 0)
 			{
@@ -173,6 +176,7 @@ namespace FrEee.WinForms.Forms
 						lv.Items.Add(item);
 					}
 					lv.MouseDoubleClick += SpaceObjectListReport_MouseDoubleClick;
+					SelectedSpaceObject = null;
 				}
 
 				if (newReport != null)
@@ -186,6 +190,8 @@ namespace FrEee.WinForms.Forms
 					newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 				}
 			}
+			else
+				SelectedSpaceObject = null;
 		}
 
 		void SpaceObjectListReport_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -463,6 +469,11 @@ namespace FrEee.WinForms.Forms
 				btnPursue.Visible = value is IMobileSpaceObject;
 				btnEvade.Visible = value is IMobileSpaceObject;
 				btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
+				btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+				btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
+				btnTransferCargo.Visible = value != null && (value.CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
+				btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
+				btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 			}
 		}
 
@@ -564,6 +575,53 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedSpaceObject != null)
 				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
+		}
+
+		private void btnColonize_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, colonize orders are not yet implemented.");
+		}
+
+		private void btnConstructionQueue_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
+			{
+				var form = new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue);
+				this.ShowChildForm(form);
+			}
+		}
+
+		private void btnTransferCargo_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, transfer cargo orders are not yet implemented.");
+		}
+
+		private void btnFleetTransfer_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, fleet transfer orders are not yet implemented.");
+		}
+
+		private void btnClearOrders_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject.Owner == Empire.Current)
+			{
+				if (SelectedSpaceObject is AutonomousSpaceVehicle)
+				{
+					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+					v.Orders.Clear();
+					var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+					if (report != null)
+						report.Invalidate();
+				}
+				else if (SelectedSpaceObject is Planet)
+				{
+					var p = (Planet)SelectedSpaceObject;
+					p.Orders.Clear();
+					var report = pnlDetailReport.Controls.OfType<PlanetReport>().FirstOrDefault();
+					if (report != null)
+						report.Invalidate();
+				}
+			}
 		}
 	}
 }

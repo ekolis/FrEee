@@ -98,6 +98,10 @@ namespace FrEee.Utility
 
 		public static bool operator ==(Resources r1, Resources r2)
 		{
+			if (((object)r1 == null) ^ ((object)r2 == null))
+				return false;
+			if (((object)r1 == null) && ((object)r2 == null))
+				return true;
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
 				if (r1[key] != r2[key])

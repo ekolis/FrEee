@@ -143,6 +143,11 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
+			DefaultColonyConstructionRate = new Resources();
+			// TODO - moddable default colony construction rate
+			DefaultColonyConstructionRate.Add("Minerals", 2000);
+			DefaultColonyConstructionRate.Add("Organics", 2000);
+			DefaultColonyConstructionRate.Add("Radioactives", 2000);
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
@@ -160,6 +165,11 @@ namespace FrEee.Modding
 		/// The path to the mod's root folder, relative to the Mods folder.
 		/// </summary>
 		public string RootPath { get; set; }
+
+		/// <summary>
+		/// The construction rate for colonies lacking a spaceyard.
+		/// </summary>
+		public Resources DefaultColonyConstructionRate { get; set; }
 
 		/// <summary>
 		/// Rules for grouping and stacking abilities.

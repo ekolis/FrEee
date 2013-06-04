@@ -30,6 +30,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -62,6 +63,12 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.btnColonize = new FrEee.WinForms.Controls.GameButton();
+			this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
+			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
+			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
+			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -254,6 +261,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEndTurn.Name = "btnEndTurn";
 			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
 			this.btnEndTurn.TabIndex = 7;
+			this.toolTip.SetToolTip(this.btnEndTurn, "End Turn");
 			this.btnEndTurn.UseVisualStyleBackColor = false;
 			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
 			// 
@@ -265,6 +273,7 @@ namespace FrEee.WinForms.Forms
 			this.btnLog.Name = "btnLog";
 			this.btnLog.Size = new System.Drawing.Size(36, 36);
 			this.btnLog.TabIndex = 6;
+			this.toolTip.SetToolTip(this.btnLog, "Log");
 			this.btnLog.UseVisualStyleBackColor = false;
 			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
 			// 
@@ -276,6 +285,7 @@ namespace FrEee.WinForms.Forms
 			this.btnQueues.Name = "btnQueues";
 			this.btnQueues.Size = new System.Drawing.Size(36, 36);
 			this.btnQueues.TabIndex = 5;
+			this.toolTip.SetToolTip(this.btnQueues, "Construction Queues");
 			this.btnQueues.UseVisualStyleBackColor = false;
 			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
 			// 
@@ -287,6 +297,7 @@ namespace FrEee.WinForms.Forms
 			this.btnShips.Name = "btnShips";
 			this.btnShips.Size = new System.Drawing.Size(36, 36);
 			this.btnShips.TabIndex = 4;
+			this.toolTip.SetToolTip(this.btnShips, "Ships");
 			this.btnShips.UseVisualStyleBackColor = false;
 			// 
 			// btnEmpires
@@ -297,6 +308,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEmpires.Name = "btnEmpires";
 			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
 			this.btnEmpires.TabIndex = 3;
+			this.toolTip.SetToolTip(this.btnEmpires, "Empires");
 			this.btnEmpires.UseVisualStyleBackColor = false;
 			// 
 			// btnPlanets
@@ -307,6 +319,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets.Name = "btnPlanets";
 			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
 			this.btnPlanets.TabIndex = 0;
+			this.toolTip.SetToolTip(this.btnPlanets, "Planets");
 			this.btnPlanets.UseVisualStyleBackColor = false;
 			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
 			// 
@@ -318,6 +331,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns.Name = "btnDesigns";
 			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
 			this.btnDesigns.TabIndex = 2;
+			this.toolTip.SetToolTip(this.btnDesigns, "Designs");
 			this.btnDesigns.UseVisualStyleBackColor = false;
 			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
 			// 
@@ -329,6 +343,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.Name = "btnMenu";
 			this.btnMenu.Size = new System.Drawing.Size(36, 36);
 			this.btnMenu.TabIndex = 1;
+			this.toolTip.SetToolTip(this.btnMenu, "Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
 			// 
 			// pnlSubCommands
@@ -340,6 +355,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSubCommands, 2);
+			this.pnlSubCommands.Controls.Add(this.btnClearOrders);
+			this.pnlSubCommands.Controls.Add(this.btnFleetTransfer);
+			this.pnlSubCommands.Controls.Add(this.btnTransferCargo);
+			this.pnlSubCommands.Controls.Add(this.btnConstructionQueue);
+			this.pnlSubCommands.Controls.Add(this.btnColonize);
 			this.pnlSubCommands.Controls.Add(this.btnEvade);
 			this.pnlSubCommands.Controls.Add(this.btnWarp);
 			this.pnlSubCommands.Controls.Add(this.btnPursue);
@@ -361,6 +381,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEvade.Size = new System.Drawing.Size(36, 36);
 			this.btnEvade.TabIndex = 6;
 			this.btnEvade.Text = "Ev";
+			this.toolTip.SetToolTip(this.btnEvade, "Evade");
 			this.btnEvade.UseVisualStyleBackColor = false;
 			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
 			// 
@@ -373,6 +394,7 @@ namespace FrEee.WinForms.Forms
 			this.btnWarp.Size = new System.Drawing.Size(36, 36);
 			this.btnWarp.TabIndex = 5;
 			this.btnWarp.Text = "Wp";
+			this.toolTip.SetToolTip(this.btnWarp, "Warp");
 			this.btnWarp.UseVisualStyleBackColor = false;
 			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
 			// 
@@ -385,6 +407,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue.Size = new System.Drawing.Size(36, 36);
 			this.btnPursue.TabIndex = 4;
 			this.btnPursue.Text = "Pur";
+			this.toolTip.SetToolTip(this.btnPursue, "Pursue");
 			this.btnPursue.UseVisualStyleBackColor = false;
 			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
 			// 
@@ -397,6 +420,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
 			this.btnMove.Text = "Mv";
+			this.toolTip.SetToolTip(this.btnMove, "Move");
 			this.btnMove.UseVisualStyleBackColor = false;
 			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
 			// 
@@ -540,6 +564,71 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
 			this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
 			// 
+			// btnColonize
+			// 
+			this.btnColonize.BackColor = System.Drawing.Color.Black;
+			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnColonize.Location = new System.Drawing.Point(169, 4);
+			this.btnColonize.Name = "btnColonize";
+			this.btnColonize.Size = new System.Drawing.Size(36, 36);
+			this.btnColonize.TabIndex = 7;
+			this.btnColonize.Text = "Col";
+			this.toolTip.SetToolTip(this.btnColonize, "Colonize");
+			this.btnColonize.UseVisualStyleBackColor = false;
+			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
+			// 
+			// btnConstructionQueue
+			// 
+			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
+			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnConstructionQueue.Location = new System.Drawing.Point(211, 4);
+			this.btnConstructionQueue.Name = "btnConstructionQueue";
+			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
+			this.btnConstructionQueue.TabIndex = 8;
+			this.btnConstructionQueue.Text = "CQ";
+			this.toolTip.SetToolTip(this.btnConstructionQueue, "Construction Queue");
+			this.btnConstructionQueue.UseVisualStyleBackColor = false;
+			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
+			// 
+			// btnTransferCargo
+			// 
+			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
+			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTransferCargo.Location = new System.Drawing.Point(253, 4);
+			this.btnTransferCargo.Name = "btnTransferCargo";
+			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
+			this.btnTransferCargo.TabIndex = 9;
+			this.btnTransferCargo.Text = "TC";
+			this.toolTip.SetToolTip(this.btnTransferCargo, "Transfer Cargo");
+			this.btnTransferCargo.UseVisualStyleBackColor = false;
+			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
+			// 
+			// btnFleetTransfer
+			// 
+			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
+			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnFleetTransfer.Location = new System.Drawing.Point(295, 4);
+			this.btnFleetTransfer.Name = "btnFleetTransfer";
+			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
+			this.btnFleetTransfer.TabIndex = 10;
+			this.btnFleetTransfer.Text = "Flt";
+			this.toolTip.SetToolTip(this.btnFleetTransfer, "Fleet Transfer");
+			this.btnFleetTransfer.UseVisualStyleBackColor = false;
+			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
+			// 
+			// btnClearOrders
+			// 
+			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
+			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearOrders.Location = new System.Drawing.Point(450, 4);
+			this.btnClearOrders.Name = "btnClearOrders";
+			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
+			this.btnClearOrders.TabIndex = 11;
+			this.btnClearOrders.Text = "Clr";
+			this.toolTip.SetToolTip(this.btnClearOrders, "Clear Orders");
+			this.btnClearOrders.UseVisualStyleBackColor = false;
+			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
+			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -606,6 +695,12 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnWarp;
 		private GameButton btnPursue;
 		private GameButton btnEvade;
+		private GameButton btnClearOrders;
+		private GameButton btnFleetTransfer;
+		private GameButton btnTransferCargo;
+		private GameButton btnConstructionQueue;
+		private GameButton btnColonize;
+		private System.Windows.Forms.ToolTip toolTip;
 	}
 }
 
