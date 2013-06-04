@@ -5,7 +5,7 @@ namespace FrEee.Utility
 	/// <summary>
 	/// Generates random numbers.
 	/// </summary>
-	public static class RandomIntHelper
+	public static class RandomHelper
 	{
 		private static Random rng = new Random();
 
@@ -14,7 +14,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static int Next(int upper)
+		public static int NextInt(int upper)
 		{
 			return rng.Next(upper);
 		}
@@ -28,6 +28,16 @@ namespace FrEee.Utility
 		public static int Range(int min, int max)
 		{
 			return rng.Next(min, max + 1);
+		}
+
+		/// <summary>
+		/// Generates a random number >= 0 but less than the upper bound.
+		/// </summary>
+		/// <param name="upper">The upper bound.</param>
+		/// <returns></returns>
+		public static double NextDouble(double upper)
+		{
+			return rng.NextDouble() * upper;
 		}
 	}
 }

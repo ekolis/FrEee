@@ -24,19 +24,14 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			if (!openPositions.Any())
 				return null;
 
-			// sort positions by distance to center
-			var ordered = openPositions.OrderBy(p => p.ManhattanDistance(new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2)));
+			// weight locations based on gradient from distance to center
+			var center = new Point(bounds.X + bounds.Width / 2, bounds.Y + bounds.Height / 2);
+			var ordered = openPositions.Select(p => new KeyValuePair<Point, double>(p, Math.Pow(p.ManhattanDistance(center), 2))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			var max = ordered.Max(kvp => kvp.Value);
+			foreach (var p in ordered.Keys.ToArray())
+				ordered[p] = max / ordered[p];
+			return ordered.PickWeighted();
 
-			if (RandomIntHelper.Next(2) == 0)
-			{
-				// place a star near the center
-				return ordered.First();
-			}
-			else
-			{
-				// place a star off in the middle of nowhere
-				return ordered.Last();
-			}
 		}
 	}
 }

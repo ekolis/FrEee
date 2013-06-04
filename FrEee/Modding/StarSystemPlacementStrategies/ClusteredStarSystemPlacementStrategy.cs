@@ -27,7 +27,7 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 			// sort positions by distance to nearest star
 			var ordered = openPositions.OrderBy(p => galaxy.StarSystemLocations.Select(sspos => sspos.Location).MinOrDefault(p2 => p2.ManhattanDistance(p)));
 
-			if (RandomIntHelper.Next(2) == 0)
+			if (RandomHelper.NextInt(2) == 0)
 			{
 				// place a star near other stars
 				return ordered.First();

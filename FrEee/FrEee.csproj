@@ -180,7 +180,7 @@
     <Compile Include="Utility\Extensions\TaskFactoryExtensions.cs" />
     <Compile Include="Utility\Pathfinder.cs" />
     <Compile Include="Utility\Pictures.cs" />
-    <Compile Include="Utility\RandomIntHelper.cs" />
+    <Compile Include="Utility\RandomHelper.cs" />
     <Compile Include="Utility\Reference.cs" />
     <Compile Include="Utility\Resources.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
