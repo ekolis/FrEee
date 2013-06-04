@@ -33,12 +33,12 @@
             this.tblButtonPanel = new System.Windows.Forms.TableLayoutPanel();
             this.btnQuit = new FrEee.WinForms.Controls.GameButton();
             this.gameButton6 = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton5 = new FrEee.WinForms.Controls.GameButton();
             this.btnLoad = new FrEee.WinForms.Controls.GameButton();
             this.gameButton3 = new FrEee.WinForms.Controls.GameButton();
             this.gameButton2 = new FrEee.WinForms.Controls.GameButton();
-            this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
             this.gameButton7 = new FrEee.WinForms.Controls.GameButton();
+            this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
+            this.gameButton5 = new FrEee.WinForms.Controls.GameButton();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -86,12 +86,12 @@
             this.tblButtonPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblButtonPanel.Controls.Add(this.btnQuit, 0, 8);
             this.tblButtonPanel.Controls.Add(this.gameButton6, 0, 5);
-            this.tblButtonPanel.Controls.Add(this.btnLoad, 0, 3);
-            this.tblButtonPanel.Controls.Add(this.gameButton3, 0, 2);
             this.tblButtonPanel.Controls.Add(this.gameButton2, 0, 1);
             this.tblButtonPanel.Controls.Add(this.gameButton7, 0, 7);
-            this.tblButtonPanel.Controls.Add(this.btnQuickStart, 0, 4);
             this.tblButtonPanel.Controls.Add(this.gameButton5, 0, 0);
+            this.tblButtonPanel.Controls.Add(this.btnQuickStart, 0, 2);
+            this.tblButtonPanel.Controls.Add(this.btnLoad, 0, 4);
+            this.tblButtonPanel.Controls.Add(this.gameButton3, 0, 3);
             this.tblButtonPanel.Location = new System.Drawing.Point(416, 3);
             this.tblButtonPanel.Name = "tblButtonPanel";
             this.tblButtonPanel.RowCount = 9;
@@ -120,7 +120,7 @@
             this.btnQuit.Padding = new System.Windows.Forms.Padding(4);
             this.btnQuit.Size = new System.Drawing.Size(148, 35);
             this.btnQuit.TabIndex = 7;
-            this.btnQuit.Text = "Quit Game";
+            this.btnQuit.Text = "Quit";
             this.btnQuit.UseVisualStyleBackColor = false;
             this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
             // 
@@ -139,34 +139,19 @@
             this.gameButton6.Text = "Scenario";
             this.gameButton6.UseVisualStyleBackColor = false;
             // 
-            // gameButton5
-            // 
-            this.gameButton5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton5.BackColor = System.Drawing.Color.Black;
-            this.gameButton5.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton5.Location = new System.Drawing.Point(5, 5);
-            this.gameButton5.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton5.Name = "gameButton5";
-            this.gameButton5.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton5.Size = new System.Drawing.Size(148, 35);
-            this.gameButton5.TabIndex = 4;
-            this.gameButton5.Text = "Load Mod";
-            this.gameButton5.UseVisualStyleBackColor = false;
-            // 
             // btnLoad
             // 
             this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnLoad.BackColor = System.Drawing.Color.Black;
             this.btnLoad.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnLoad.Location = new System.Drawing.Point(5, 137);
+            this.btnLoad.Location = new System.Drawing.Point(5, 181);
             this.btnLoad.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Padding = new System.Windows.Forms.Padding(4);
             this.btnLoad.Size = new System.Drawing.Size(148, 35);
             this.btnLoad.TabIndex = 3;
-            this.btnLoad.Text = "Load Game";
+            this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = false;
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
@@ -176,13 +161,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gameButton3.BackColor = System.Drawing.Color.Black;
             this.gameButton3.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton3.Location = new System.Drawing.Point(5, 93);
+            this.gameButton3.Location = new System.Drawing.Point(5, 137);
             this.gameButton3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
             this.gameButton3.Name = "gameButton3";
             this.gameButton3.Padding = new System.Windows.Forms.Padding(4);
             this.gameButton3.Size = new System.Drawing.Size(148, 35);
             this.gameButton3.TabIndex = 2;
-            this.gameButton3.Text = "Resume Game";
+            this.gameButton3.Text = "Resume";
             this.gameButton3.UseVisualStyleBackColor = false;
             // 
             // gameButton2
@@ -197,24 +182,8 @@
             this.gameButton2.Padding = new System.Windows.Forms.Padding(4);
             this.gameButton2.Size = new System.Drawing.Size(148, 35);
             this.gameButton2.TabIndex = 1;
-            this.gameButton2.Text = "New Game";
+            this.gameButton2.Text = "New";
             this.gameButton2.UseVisualStyleBackColor = false;
-            // 
-            // btnQuickStart
-            // 
-            this.btnQuickStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuickStart.BackColor = System.Drawing.Color.Black;
-            this.btnQuickStart.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnQuickStart.Location = new System.Drawing.Point(5, 181);
-            this.btnQuickStart.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.btnQuickStart.Name = "btnQuickStart";
-            this.btnQuickStart.Padding = new System.Windows.Forms.Padding(4);
-            this.btnQuickStart.Size = new System.Drawing.Size(148, 35);
-            this.btnQuickStart.TabIndex = 0;
-            this.btnQuickStart.Text = "Quick Start";
-            this.btnQuickStart.UseVisualStyleBackColor = false;
-            this.btnQuickStart.Click += new System.EventHandler(this.btnQuickStart_Click);
             // 
             // gameButton7
             // 
@@ -230,6 +199,37 @@
             this.gameButton7.TabIndex = 6;
             this.gameButton7.Text = "Credits";
             this.gameButton7.UseVisualStyleBackColor = false;
+            // 
+            // btnQuickStart
+            // 
+            this.btnQuickStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnQuickStart.BackColor = System.Drawing.Color.Black;
+            this.btnQuickStart.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.btnQuickStart.Location = new System.Drawing.Point(5, 93);
+            this.btnQuickStart.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+            this.btnQuickStart.Name = "btnQuickStart";
+            this.btnQuickStart.Padding = new System.Windows.Forms.Padding(4);
+            this.btnQuickStart.Size = new System.Drawing.Size(148, 35);
+            this.btnQuickStart.TabIndex = 0;
+            this.btnQuickStart.Text = "Quick";
+            this.btnQuickStart.UseVisualStyleBackColor = false;
+            this.btnQuickStart.Click += new System.EventHandler(this.btnQuickStart_Click);
+            // 
+            // gameButton5
+            // 
+            this.gameButton5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gameButton5.BackColor = System.Drawing.Color.Black;
+            this.gameButton5.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.gameButton5.Location = new System.Drawing.Point(5, 5);
+            this.gameButton5.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+            this.gameButton5.Name = "gameButton5";
+            this.gameButton5.Padding = new System.Windows.Forms.Padding(4);
+            this.gameButton5.Size = new System.Drawing.Size(148, 35);
+            this.gameButton5.TabIndex = 4;
+            this.gameButton5.Text = "Mods";
+            this.gameButton5.UseVisualStyleBackColor = false;
             // 
             // progressBar1
             // 
