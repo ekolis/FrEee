@@ -229,14 +229,14 @@ namespace FrEee.Modding.Templates
 			// test warp points going out
 			foreach (var angle in GetWarpPointAngles(start, gal))
 			{
-				if (IsInRangeExclusive(angleOut, angle, minAngle))
+				if (IsInRangeExclusive(angleOut, angle, minAngle, 360))
 					return false;
 			}
 
 			// test warp points coming back
 			foreach (var angle in GetWarpPointAngles(end, gal))
 			{
-				if (IsInRangeExclusive(angleBack, angle, minAngle))
+				if (IsInRangeExclusive(angleBack, angle, minAngle, 360))
 					return false;
 			}
 
@@ -251,9 +251,12 @@ namespace FrEee.Modding.Templates
 			return angle;
 		}
 
-		private bool IsInRangeExclusive(double d, double middle, double range)
+		private bool IsInRangeExclusive(double d, double middle, double range, double modulo = 0)
 		{
-			return d > middle - range && d < middle + range;
+			if (modulo == 0)
+				return d > (middle - range) && d < (middle + range);
+			else
+				return d % modulo > (middle - range) % modulo && d % modulo < (middle + range) % modulo;
 		}
 
 		private Sector GetWarpPointSector(StarSystem sys, double angle)
