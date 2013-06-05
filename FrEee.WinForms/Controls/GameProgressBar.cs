@@ -12,6 +12,7 @@ namespace FrEee.WinForms.Controls
 		{
 			InitializeComponent();
 			this.SizeChanged += GameProgressBar_SizeChanged;
+			Padding = new Padding(5, 5, 5, 5);
 		}
 
 		void GameProgressBar_SizeChanged(object sender, EventArgs e)
@@ -52,20 +53,35 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		public string LeftText { get { return lblLeft.Text; } set { lblLeft.Text = value; } }
+		private string leftText, rightText;
 
-		public string RightText { get { return lblRight.Text; } set { lblRight.Text = value; } }
+		public string LeftText { get { return leftText; } set { leftText = value; Invalidate(); } }
+
+		public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			lblCenter.Text = Value.ToUnitString() + "/" + Maximum.ToUnitString() + " (" + Math.Round(((double)Value / (double)Maximum * 100)) + "%)";
-			lblCenter.Visible = lblLeft.Visible = lblRight.Visible = Width > 100;
+			var centerText = Value.ToUnitString() + "/" + Maximum.ToUnitString() + " (" + Math.Round(((double)Value / (double)Maximum * 100)) + "%)";
 			base.OnPaint(e);
 			e.Graphics.Clear(BackColor);
 			if (Maximum != 0)
 				e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
 			if (BorderStyle == BorderStyle.FixedSingle)
 				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
+			Brush brush;
+			if (BarColor.R + BarColor.G + BarColor.B > 128 * 3 && BackColor.R + BackColor.G + BackColor.B > 128 * 3)
+				brush = new SolidBrush(Color.Black);
+			else
+				brush = new SolidBrush(Color.White);
+			var rect = new Rectangle(0, 0, Width, Height);
+			rect.X += Padding.Left;
+			rect.Y += Padding.Top;
+			rect.Width -= Padding.Left + Padding.Right;
+			rect.Height -= Padding.Top + Padding.Bottom;
+			e.Graphics.DrawString(LeftText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
+			e.Graphics.DrawString(RightText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
+			if (Width > 100)
+				e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 		}
 
 		private Color borderColor;

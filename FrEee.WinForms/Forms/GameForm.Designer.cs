@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Forms
 			this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.gameProgressBar1 = new FrEee.WinForms.Controls.GameProgressBar();
+			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.picEmpireFlag = new System.Windows.Forms.PictureBox();
 			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
 			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
@@ -124,7 +124,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Controls.Add(this.resRad);
 			this.pnlHeader.Controls.Add(this.resOrg);
 			this.pnlHeader.Controls.Add(this.resMin);
-			this.pnlHeader.Controls.Add(this.gameProgressBar1);
+			this.pnlHeader.Controls.Add(this.progResearch);
 			this.pnlHeader.Controls.Add(this.picEmpireFlag);
 			this.pnlHeader.ForeColor = System.Drawing.Color.White;
 			this.pnlHeader.Location = new System.Drawing.Point(2, 2);
@@ -199,23 +199,24 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Size = new System.Drawing.Size(111, 20);
 			this.resMin.TabIndex = 10;
 			// 
-			// gameProgressBar1
+			// progResearch
 			// 
-			this.gameProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameProgressBar1.BackColor = System.Drawing.Color.Black;
-			this.gameProgressBar1.BarColor = System.Drawing.Color.Magenta;
-			this.gameProgressBar1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gameProgressBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gameProgressBar1.ForeColor = System.Drawing.Color.White;
-			this.gameProgressBar1.LeftText = "Ice Planet Colonization";
-			this.gameProgressBar1.Location = new System.Drawing.Point(869, 3);
-			this.gameProgressBar1.Margin = new System.Windows.Forms.Padding(0);
-			this.gameProgressBar1.Maximum = 500000;
-			this.gameProgressBar1.Name = "gameProgressBar1";
-			this.gameProgressBar1.RightText = "0.2 years";
-			this.gameProgressBar1.Size = new System.Drawing.Size(351, 27);
-			this.gameProgressBar1.TabIndex = 9;
-			this.gameProgressBar1.Value = 350000;
+			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.progResearch.BackColor = System.Drawing.Color.Black;
+			this.progResearch.BarColor = System.Drawing.Color.Magenta;
+			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.progResearch.ForeColor = System.Drawing.Color.White;
+			this.progResearch.LeftText = "Ice Planet Colonization";
+			this.progResearch.Location = new System.Drawing.Point(869, 3);
+			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
+			this.progResearch.Maximum = 500000;
+			this.progResearch.Name = "progResearch";
+			this.progResearch.RightText = "0.2 years";
+			this.progResearch.Size = new System.Drawing.Size(351, 27);
+			this.progResearch.TabIndex = 9;
+			this.progResearch.Value = 350000;
+			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
 			// 
 			// picEmpireFlag
 			// 
@@ -669,7 +670,7 @@ namespace FrEee.WinForms.Forms
 		private GamePanel pnlDetailReport;
 		private GamePanel pnlGalaxyMap;
 		private System.Windows.Forms.PictureBox picEmpireFlag;
-		private GameProgressBar gameProgressBar1;
+		private GameProgressBar progResearch;
 		private StarSystemView starSystemView;
 		private GalaxyView galaxyView;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

@@ -168,6 +168,8 @@
     <Compile Include="Controls\StormReport.Designer.cs">
       <DependentUpon>StormReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridView\DataGridViewProgressCell.cs" />
+    <Compile Include="DataGridView\DataGridViewProgressColumn.cs" />
     <Compile Include="Forms\ConstructionQueueForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,6 +217,12 @@
     </Compile>
     <Compile Include="Forms\PlanetListForm.Designer.cs">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ResearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ResearchForm.Designer.cs">
+      <DependentUpon>ResearchForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\VehicleDesignForm.cs">
       <SubType>Form</SubType>
@@ -277,6 +285,9 @@
     <EmbeddedResource Include="Forms\PlanetListForm.resx">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ResearchForm.resx">
+      <DependentUpon>ResearchForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -293,6 +304,7 @@
     <None Include="app.config" />
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

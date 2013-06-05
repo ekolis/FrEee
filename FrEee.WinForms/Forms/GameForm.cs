@@ -623,5 +623,10 @@ namespace FrEee.WinForms.Forms
 				}
 			}
 		}
+
+		private void progResearch_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new ResearchForm());
+		}
 	}
 }

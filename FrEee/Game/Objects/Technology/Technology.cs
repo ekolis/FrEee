@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// A technology that can be researched in the game.
 	/// </summary>
-	 [Serializable] public class Technology : INamed, IResearchable, IReferrable<Technology>
+	[Serializable]
+	public class Technology : INamed, IResearchable, IReferrable<Technology>
 	{
 		/// <summary>
 		/// The name of the technology.
@@ -76,6 +78,54 @@ namespace FrEee.Game.Objects.Technology
 		public Empire Owner
 		{
 			get { return null; }
+		}
+
+		/// <summary>
+		/// Current empire's cost to research the next level.
+		/// </summary>
+		public int NextLevelCost
+		{
+			get
+			{
+				// TODO - compute level cost using empire's tech level and galaxy choice of research cost progression
+				return LevelCost;
+			}
+		}
+
+		/// <summary>
+		/// Current empire's level in this technology.
+		/// </summary>
+		public int CurrentLevel
+		{
+			get
+			{
+				// TODO - get level from empire
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Current empire's research progress in this technology.
+		/// </summary>
+		public Progress Progress
+		{
+			get
+			{
+				// TODO - get progress from empire
+				return new Progress(0, NextLevelCost);
+			}
+		}
+
+		/// <summary>
+		/// Current empire's spending percentage on this technology.
+		/// </summary>
+		public Progress Spending
+		{
+			get
+			{
+				// TODO - get spending from empire
+				return new Progress(0, 100);
+			}
 		}
 	}
 }
