@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Pictures.GetIcon(this); }
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}

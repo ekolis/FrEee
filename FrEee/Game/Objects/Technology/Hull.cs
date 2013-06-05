@@ -169,7 +169,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get
 			{
@@ -177,7 +177,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get
 			{

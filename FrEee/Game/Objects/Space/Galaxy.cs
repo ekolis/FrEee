@@ -5,7 +5,6 @@ using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
@@ -21,13 +20,18 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Galaxy
 	{
-		public Galaxy(Mod mod)
+		public Galaxy()
 		{
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 24000;
 			Referrables = new List<IReferrable<object>>();
+		}
+
+		public Galaxy(Mod mod)
+			: this()
+		{
 			Mod = mod;
 			Galaxy.Current = this;
 
@@ -165,8 +169,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private void SerializeGameState(Stream stream)
 		{
-			var bf = new BinaryFormatter();
-			bf.Serialize(stream, this);
+			Serializer.Serialize(this, stream);
 		}
 
 		/// <summary>
@@ -176,8 +179,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static Galaxy DeserializeGameState(Stream stream)
 		{
-			var bf = new BinaryFormatter();
-			return (Galaxy)bf.Deserialize(stream);
+			return Serializer.Deserialize<Galaxy>(stream);
 		}
 
 		/// <summary>
@@ -190,8 +192,7 @@ namespace FrEee.Game.Objects.Space
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't serialize commands if there is no current empire.");
 
-			var bf = new BinaryFormatter();
-			bf.Serialize(stream, CurrentEmpire.Commands);
+			Serializer.Serialize(CurrentEmpire.Commands, stream);
 		}
 
 		/// <summary>
@@ -201,8 +202,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static IList<ICommand> DeserializeCommands(Stream stream)
 		{
-			var bf = new BinaryFormatter();
-			return (IList<ICommand>)bf.Deserialize(stream);
+			return Serializer.Deserialize<IList<ICommand>>(stream);
 		}
 
 		/// <summary>
@@ -227,7 +227,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Saves the master view and all players' views of the galaxy.
+		/// Saves the master view and all players' views of the galaxy, unless single player, in which case only the first player's view is saved.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
 		public static void SaveAll()
@@ -237,10 +237,13 @@ namespace FrEee.Game.Objects.Space
 			var gamname = Current.Save();
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
-				Load(gamname);
-				Current.CurrentEmpire = Current.Empires[i];
-				Current.Redact();
-				Current.Save();
+				if (i == 0 || !Current.IsSinglePlayer)
+				{
+					Load(gamname);
+					Current.CurrentEmpire = Current.Empires[i];
+					Current.Redact();
+					Current.Save();
+				}
 			}
 			Load(gamname);
 		}
@@ -476,6 +479,9 @@ namespace FrEee.Game.Objects.Space
 			galtemp.GameSetup = gsu;
 			Current = galtemp.Instantiate(status, desiredProgress);
 			gsu.PopulateGalaxy(Current);
+
+			if (status != null)
+				status.Message = "Saving game";
 
 			// save the game
 			Galaxy.SaveAll();

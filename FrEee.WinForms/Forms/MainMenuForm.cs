@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 			//{
 			Thread t = new Thread(new ThreadStart(() =>
 			{
-				try
+				//try
 				{
 					status.Message = "Loading mod";
 					Mod.Load(null, true, status, 0.5);
@@ -85,10 +85,10 @@ namespace FrEee.WinForms.Forms
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_1.gam");
 				}
-				catch (Exception ex)
-				{
-					status.Exception = ex;
-				}
+				//catch (Exception ex)
+				//{
+					//status.Exception = ex;
+				//}
 			}));
 			t.Start();
 			while (t.IsAlive)

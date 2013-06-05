@@ -23,7 +23,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Components = new List<Component>();
 			ConstructionProgress = new Resources();
-			Galaxy.Current.Register(this);
+			if (Galaxy.Current != null) 
+				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
@@ -62,12 +63,12 @@ namespace FrEee.Game.Objects.Vehicles
 			set;
 		}
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get { return Design.Hull.GetIcon(Design.Owner.ShipsetPath); }
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get { return Design.Hull.GetPortrait(Design.Owner.ShipsetPath); }
 		}

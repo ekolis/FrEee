@@ -19,7 +19,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Orders = new List<IConstructionOrder>();
 			SpaceObject = sobj;
-			Galaxy.Current.Register(this);
+			if (Galaxy.Current != null)
+				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
@@ -118,7 +119,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public ISpaceObject SpaceObject { get; set; }
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get
 			{

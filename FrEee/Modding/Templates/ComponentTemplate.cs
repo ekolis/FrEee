@@ -51,12 +51,12 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public string PictureName { get; set; }
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}

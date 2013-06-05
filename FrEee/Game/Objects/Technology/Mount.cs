@@ -17,7 +17,8 @@ namespace FrEee.Game.Objects.Technology
 
 		public Mount()
 		{
-			Galaxy.Current.Register(this);
+			if (Galaxy.Current != null)
+				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>

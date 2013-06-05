@@ -289,7 +289,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get
 			{
@@ -297,7 +297,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get
 			{

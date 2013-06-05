@@ -48,12 +48,12 @@ namespace FrEee.Game.Objects.Technology
 			set;
 		}
 
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
 			get { return Template.Icon; }
 		}
 
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get { return Template.Portrait; }
 		}

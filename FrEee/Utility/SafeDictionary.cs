@@ -20,6 +20,10 @@ namespace FrEee.Utility
 
 		public bool ContainsKey(TKey key)
 		{
+			// need to check for nulls when deserializing...
+			if (dict == null)
+				dict = new Dictionary<TKey, TValue>();
+
 			return dict.ContainsKey(key);
 		}
 

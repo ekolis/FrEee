@@ -9,6 +9,8 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Game.Objects.Vehicles;
+using System.Text;
+using System.IO;
 
 namespace FrEee.Utility.Extensions
 {
@@ -631,6 +633,31 @@ namespace FrEee.Utility.Extensions
 			if (!results.Any())
 				return null;
 			return results.First().Item1.Item;
+		}
+
+		/// <summary>
+		/// Reads characters until the specified character is found or end of stream.
+		/// Returns all characters read except the specified character.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static string ReadTo(this TextReader r, char c, StringBuilder log)
+		{
+			var sb = new StringBuilder();
+			int data = 0;
+			do
+			{
+				data = r.Read();
+				if (data > 0 && data != (int)c)
+				{
+					sb.Append((char)data);
+					log.Append((char)data);
+				}
+			} while (data > 0 && data != (int)c);
+			if (data == c)
+				log.Append(c);
+			return sb.ToString();
 		}
 	}
 }

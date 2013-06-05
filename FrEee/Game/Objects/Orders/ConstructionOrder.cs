@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public ConstructionQueue Target { get { return target; } set { target = value; } }
 
-		public Reference<ConstructionQueue> target;
+		private Reference<ConstructionQueue> target;
 
 		/// <summary>
 		/// The construction template.

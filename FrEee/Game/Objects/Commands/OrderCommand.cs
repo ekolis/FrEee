@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,7 @@ namespace FrEee.Game.Objects.Commands
 			set;
 		}
 
+		[DoNotSerialize]
 		public virtual TOrder Order
 		{
 			get
