@@ -14,6 +14,7 @@ using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.WinForms.Forms
 {
@@ -158,6 +159,7 @@ namespace FrEee.WinForms.Forms
 					if (MessageBox.Show("Changing the vehicle type requires starting over with your design. Abandon your old design?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
 					{
 						var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+						d.TurnNumber = Galaxy.Current.TurnNumber;
 						d.Owner = Empire.Current;
 						d.Hull = form.Hull;
 						Design = d;
@@ -172,6 +174,7 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					var d = FrEee.Game.Objects.Vehicles.Design.Create(form.Hull.VehicleType);
+					d.TurnNumber = Galaxy.Current.TurnNumber;
 					d.Owner = Empire.Current;
 					d.Hull = form.Hull;
 					Design = d;
