@@ -34,11 +34,11 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				design = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
 			if (Design == null)
 				Visible = false;
@@ -67,8 +67,6 @@ namespace FrEee.WinForms.Controls
 					i++;
 				}
 			}
-
-			base.OnPaint(e);
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)
