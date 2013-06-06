@@ -43,10 +43,16 @@ namespace FrEee.WinForms.DataGridView
 			switch (ProgressDisplayMode)
 			{
 				case ProgressDisplayMode.Raw:
-					text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString() + "(" + (progress.IncrementalProgress >= 0 ? "+" + progress.IncrementalProgress.ToUnitString() : progress.IncrementalProgress.ToUnitString()) + " / turn)";
+					if (progress.IncrementalProgress != 0)
+						text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString() + " (" + (progress.IncrementalProgress >= 0 ? "+" + progress.IncrementalProgress.ToUnitString() : progress.IncrementalProgress.ToUnitString()) + " / turn)";
+					else
+						text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString();
 					break;
 				case ProgressDisplayMode.Percentage:
-					text = ((double)progress.Value / (double)progress.Maximum).ToString("f0") + "% (" + (progress.IncrementalProgress >= 0 ? "+" + ((double)progress.Value / (double)progress.Maximum).ToString("f0") : ((double)progress.Value / (double)progress.Maximum).ToString("f0")) + " / turn)";
+					if (progress.IncrementalProgress != 0)
+						text = ((double)progress.Value / (double)progress.Maximum * 100).ToString("f0") + "% (" + (progress.IncrementalProgress >= 0 ? "+" + ((double)progress.IncrementalProgress / (double)progress.Maximum * 100).ToString("f0") : ((double)progress.IncrementalProgress / (double)progress.Maximum * 100).ToString("f0")) + " / turn)";
+					else
+						text = ((double)progress.Value / (double)progress.Maximum * 100).ToString("f0") + "%";
 					break;
 				case ProgressDisplayMode.Eta:
 					if (progress.IncrementalProgress <= 0)

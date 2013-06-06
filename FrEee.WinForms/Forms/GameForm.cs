@@ -17,6 +17,7 @@ using FrEee.WinForms.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Forms
 {
@@ -285,6 +286,9 @@ namespace FrEee.WinForms.Forms
 			resRad.Change = Galaxy.Current.CurrentEmpire.Income["Radioactives"];
 			resRes.Amount = Galaxy.Current.CurrentEmpire.Income["Research"];
 			resInt.Amount = Galaxy.Current.CurrentEmpire.Income["Intelligence"];
+
+			// show research progress
+			BindResearch();
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -627,6 +631,39 @@ namespace FrEee.WinForms.Forms
 		private void progResearch_Click(object sender, EventArgs e)
 		{
 			this.ShowChildForm(new ResearchForm());
+			BindResearch();
+		}
+
+		private void BindResearch()
+		{
+			if (Empire.Current.ResearchSpending.Any() || Empire.Current.ResearchQueue.Any())
+			{
+				var techs = Empire.Current.ResearchSpending.Keys.Union(Empire.Current.ResearchQueue);
+				var maxPoints = techs.Max(t => GetTotalSpending(t));
+				var tech = techs.Where(t => GetTotalSpending(t) == maxPoints).First();
+
+				progResearch.Value = tech.Progress.Value;
+				progResearch.Maximum = tech.NextLevelCost;
+				progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
+				if (tech.Progress.Eta == null)
+					progResearch.RightText = "Never";
+				else
+					progResearch.RightText = tech.Progress.Eta + " turns";
+			}
+			else
+			{
+				progResearch.Value = 0;
+				progResearch.Maximum = 1;
+				progResearch.LeftText = "No Research - Click to Begin";
+				progResearch.RightText = "";
+			}
+		}
+
+		private int GetTotalSpending(Technology t)
+		{
+			var budget = Empire.Current.Income["Research"];
+			var forQueue = 100 - Empire.Current.ResearchSpending.Sum(kvp => kvp.Value);
+			return t.Spending.Value * budget / 100 + (Empire.Current.ResearchQueue.FirstOrDefault() == t ? forQueue : 0);
 		}
 	}
 }

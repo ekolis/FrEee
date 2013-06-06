@@ -8,6 +8,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System.IO;
 using FrEee.Modding;
+using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Civilization
@@ -43,6 +44,10 @@ namespace FrEee.Game.Objects.Civilization
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
 			Log = new List<LogMessage>();
+			ResearchedTechnologies = new SafeDictionary<Technology.Technology, int>();
+			ResearchProgress = new SafeDictionary<Technology.Technology, int>();
+			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
+			ResearchQueue = new List<Technology.Technology>();
 		}
 
 		/// <summary>
@@ -167,5 +172,41 @@ namespace FrEee.Game.Objects.Civilization
 		/// Empire history log.
 		/// </summary>
 		public IList<LogMessage> Log { get; set; }
+
+		/// <summary>
+		/// Technologies that have been researched by this empire and the levels they have been researched to.
+		/// </summary>
+		public IDictionary<Technology.Technology, int> ResearchedTechnologies
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Progress towards completing next levels of techs.
+		/// </summary>
+		public IDictionary<Technology.Technology, int> ResearchProgress
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Research spending as a percentage of budget.
+		/// </summary>
+		public IDictionary<Technology.Technology, int> ResearchSpending
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Queue for unallocated research spending.
+		/// </summary>
+		public IList<Technology.Technology> ResearchQueue
+		{
+			get;
+			private set;
+		}
 	}
 }

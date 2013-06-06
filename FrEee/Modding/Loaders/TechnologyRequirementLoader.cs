@@ -23,7 +23,7 @@ namespace FrEee.Modding.Loaders
 			while (true)
 			{
 				count++;
-				var nfield = rec.FindField(new string[] { "Tech Area Req " + count, "Tech Area Req" }, ref start, false, start);
+				var nfield = rec.FindField(new string[] { "Tech Area Req " + count, "Tech Area Req" }, ref start, false, start, true);
 				if (nfield == null)
 					break; // no more tech requirements
 				var tech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == nfield.Value);
@@ -32,7 +32,7 @@ namespace FrEee.Modding.Loaders
 					Mod.Errors.Add(new DataParsingException("Could not find technology named \"" + nfield.Value + "\".", Mod.CurrentFileName, rec));
 					break;
 				}
-				var lfield = rec.FindField(new string[] { "Tech Level Req " + count, "Tech Level Req" }, ref start, false, start);
+				var lfield = rec.FindField(new string[] { "Tech Level Req " + count, "Tech Level Req" }, ref start, false, start, true);
 				if (lfield == null)
 				{
 					Mod.Errors.Add(new DataParsingException("Could not find Tech Level Req field to match Tech Area Req field.", Mod.CurrentFileName, rec));

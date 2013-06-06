@@ -61,7 +61,7 @@ namespace FrEee.WinForms.Controls
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var centerText = Value.ToUnitString() + "/" + Maximum.ToUnitString() + " (" + Math.Round(((double)Value / (double)Maximum * 100)) + "%)";
+			var centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
 			base.OnPaint(e);
 			e.Graphics.Clear(BackColor);
 			if (Maximum != 0)

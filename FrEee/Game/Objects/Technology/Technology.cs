@@ -1,8 +1,10 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -12,6 +14,11 @@ namespace FrEee.Game.Objects.Technology
 	[Serializable]
 	public class Technology : INamed, IResearchable, IReferrable<Technology>
 	{
+		public Technology()
+		{
+			TechnologyRequirements = new List<TechnologyRequirement>();
+		}
+
 		/// <summary>
 		/// The name of the technology.
 		/// </summary>
@@ -87,8 +94,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - compute level cost using empire's tech level and galaxy choice of research cost progression
-				return LevelCost;
+				// TODO - use galaxy tech cost formula
+				return LevelCost * (Empire.Current.ResearchedTechnologies[this] + 1);
 			}
 		}
 
@@ -99,8 +106,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - get level from empire
-				return 0;
+				return Empire.Current.ResearchedTechnologies[this];
 			}
 		}
 
@@ -111,8 +117,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - get progress from empire
-				return new Progress(0, NextLevelCost);
+				return new Progress(Empire.Current.ResearchProgress[this], NextLevelCost, Empire.Current.Income["Research"] * Spending.Value / 100);
 			}
 		}
 
@@ -124,8 +129,72 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				// TODO - get spending from empire
-				return new Progress(0, 100);
+				return new Progress(Empire.Current.ResearchSpending[this], 100);
 			}
+		}
+
+		/// <summary>
+		/// Current empire's expected results for researching the next level of this tech.
+		/// </summary>
+		public IEnumerable<IResearchable> ExpectedResults
+		{
+			get
+			{
+				var techs = Empire.Current.ResearchedTechnologies;
+				var techs2 = new SafeDictionary<Technology, int>();
+				foreach (var kvp in techs)
+					techs2.Add(kvp);
+				techs2[this]++;
+				var have = GetUnlockedItems(techs);
+				var willHave = GetUnlockedItems(techs2);
+				return willHave.Except(have);
+			}
+		}
+
+		public static IEnumerable<IResearchable> GetUnlockedItems(IDictionary<Technology, int> levels)
+		{
+			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
+			{
+				bool ok = true;
+				foreach (var req in item.TechnologyRequirements)
+				{
+					if (levels[req.Technology] < req.Level)
+					{
+						// didn't meet the requirement
+						ok = false;
+						break;
+					}
+				}
+				if (ok)
+					yield return item;
+			}
+		}
+
+		/// <summary>
+		/// TODO - technology icons?
+		/// </summary>
+		public System.Drawing.Image Icon
+		{
+			get { return null; }
+		}
+
+		/// <summary>
+		/// TODO - technology portraits?
+		/// </summary>
+		public System.Drawing.Image Portrait
+		{
+			get { return null; }
+		}
+
+
+		public string ResearchGroup
+		{
+			get { return "Technologies"; }
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

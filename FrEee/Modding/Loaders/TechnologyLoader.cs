@@ -38,9 +38,18 @@ namespace FrEee.Modding.Loaders
 				tech.UniqueTechID = rec.FindField("Unique Area", ref index, true, 0, true).IntValue(rec);
 				tech.CanBeRemoved = rec.FindField("Can Be Removed", ref index, true, 0, true).BoolValue(rec);
 
+			}
+
+			foreach (var tech in mod.Technologies)
+			{
+				// find this tech's record
+				int index = -1;
+				var rec = df.Records.Single(r => r.GetString("Name", ref index, false, 0, true) == tech.Name);
+
+				// load its tech reqs
+				// couldn't do it before because some early techs can reference later techs
 				foreach (var tr in TechnologyRequirementLoader.Load(rec))
 					tech.TechnologyRequirements.Add(tr);
-
 			}
 		}
 	}

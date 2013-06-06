@@ -199,10 +199,10 @@ namespace FrEee.WinForms.Forms
 			{
 				if (ConstructionQueue.CanConstruct(facil))
 				{
-					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
+					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.ResearchGroup);
 					if (group == null)
 					{
-						group = new ListViewGroup(facil.Group);
+						group = new ListViewGroup(facil.ResearchGroup);
 						lstFacilities.Groups.Add(group);
 					}
 					var item = new ListViewItem(facil.Name, i, group);

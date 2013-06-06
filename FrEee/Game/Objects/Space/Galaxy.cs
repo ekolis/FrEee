@@ -371,6 +371,7 @@ namespace FrEee.Game.Objects.Space
 					emp.StoredResources.Clear();
 					emp.KnownDesigns.Clear();
 					emp.Log.Clear();
+					emp.ResearchedTechnologies.Clear();
 				}
 
 				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))

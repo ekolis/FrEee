@@ -139,5 +139,10 @@ namespace FrEee.Modding.Templates
 		{
 			return new Component(new MountedComponentTemplate(this, null));
 		}
+
+		public string ResearchGroup
+		{
+			get { return "Components"; }
+		}
 	}
 }

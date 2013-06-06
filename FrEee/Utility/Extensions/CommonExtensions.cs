@@ -659,5 +659,10 @@ namespace FrEee.Utility.Extensions
 				log.Append(c);
 			return sb.ToString();
 		}
+
+		public static IEnumerable<T> Except<T>(this IEnumerable<T> src, T badguy)
+		{
+			return src.Except(new T[] { badguy });
+		}
 	}
 }

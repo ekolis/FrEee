@@ -195,5 +195,11 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return null; }
 		}
+
+
+		public string ResearchGroup
+		{
+			get { return "Hulls"; }
+		}
 	}
 }

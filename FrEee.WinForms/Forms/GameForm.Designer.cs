@@ -212,6 +212,7 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
 			this.progResearch.Maximum = 500000;
 			this.progResearch.Name = "progResearch";
+			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
 			this.progResearch.RightText = "0.2 years";
 			this.progResearch.Size = new System.Drawing.Size(351, 27);
 			this.progResearch.TabIndex = 9;
