@@ -681,5 +681,35 @@ namespace FrEee.Utility.Extensions
 			else
 				return new PictorialLogMessage<T>(text, turnNumber.Value, context);
 		}
+
+		/// <summary>
+		/// Returns the elements of a sequence that have the maximum of some selected value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TCompared"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="getter"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> WithMax<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
+		{
+			var list = src.Select(item => new { Item = item, Value = selector(item) });
+			var max = list.Max(x => x.Value);
+			return list.Where(x => x.Value.Equals(max)).Select(x => x.Item);
+		}
+
+		/// <summary>
+		/// Returns the elements of a sequence that have the minimum of some selected value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TCompared"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="getter"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> WithMin<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
+		{
+			var list = src.Select(item => new { Item = item, Value = selector(item) });
+			var min = list.Min(x => x.Value);
+			return list.Where(x => x.Value.Equals(min)).Select(x => x.Item);
+		}
 	}
 }

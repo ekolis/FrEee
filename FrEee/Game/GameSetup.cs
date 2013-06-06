@@ -47,28 +47,34 @@ namespace FrEee.Game
 			// set single player flag
 			gal.IsSinglePlayer = IsSinglePlayer;
 
-			// find facilities to place on homeworlds
-			// TODO - if facility not found, don't place it, but don't crash
-			var sy = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Space Yard"));
-			var sp = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Spaceport"));
-			var rd = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Supply Generation"));
-			var min = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Minerals"));
-			var org = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Organics"));
-			var rad = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Resource Generation - Radioactives"));
-			var res = Mod.Current.FacilityTemplates.Last(facil => facil.HasAbility("Point Generation - Research"));
-
-			// SY rate, for colonies
-			var rate = new Resources();
-			// TODO - define mappings between SY ability numbers and resource names in a mod file
-			rate.Add("Minerals", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
-			rate.Add("Organics", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
-			rate.Add("Radioactives", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
-
 			// add players and place homeworlds
 			foreach (var emp in Empires)
 			{
 				gal.Empires.Add(emp);
 				gal.Register(emp);
+
+				// TODO - let game host and/or players configure starting techs
+				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
+					emp.ResearchedTechnologies[tech] = tech.StartLevel;
+
+				// find facilities to place on homeworlds
+				// TODO - don't crash if facilities not found in mod
+				var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
+				var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).Last();
+				var sp = facils.Last(facil => facil.HasAbility("Spaceport"));
+				var rd = facils.Last(facil => facil.HasAbility("Supply Generation"));
+				var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).Last();
+				var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).Last();
+				var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).Last();
+				var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).Last();
+
+				// SY rate, for colonies
+				var rate = new Resources();
+				// TODO - define mappings between SY ability numbers and resource names in a mod file
+				rate.Add("Minerals", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
+				rate.Add("Organics", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
+				rate.Add("Radioactives", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+
 				// TODO - place homeworlds fairly
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
@@ -103,13 +109,6 @@ namespace FrEee.Game
 					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
 						sys.ExploredByEmpires.Add(emp);
 				}
-			}
-
-			// TODO - let game host and/or players configure starting techs
-			foreach (var emp in Galaxy.Current.Empires)
-			{
-				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
-					emp.ResearchedTechnologies[tech] = tech.StartLevel;
 			}
 		}
 	}
