@@ -11,6 +11,8 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Templates;
 
 namespace FrEee.WinForms.Forms
 {
@@ -28,7 +30,7 @@ namespace FrEee.WinForms.Forms
 		{
 			lstLog.Initialize(32, 32);
 			foreach (var message in Empire.Current.Log.OrderByDescending(message => message.TurnNumber))
-				lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.Text, message, message.Picture);
+				lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
 		}
 
 		private void lstLog_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -37,15 +39,34 @@ namespace FrEee.WinForms.Forms
 			if (item != null)
 			{
 				var message = (LogMessage)item.Tag;
-				if (message is IPictorialLogMessage<ISpaceObject>)
+				if (message is IPictorialLogMessage<IPictorial>)
 				{
-					// go to space object
-					var m = (IPictorialLogMessage<ISpaceObject>)message;
-					gameForm.SelectSpaceObject(m.Context);
-					Close();
-				}
+					var context = ((IPictorialLogMessage<IPictorial>)message).Context;
+					if (context is ISpaceObject)
+					{
+						// go to space object
+						gameForm.SelectSpaceObject((ISpaceObject)context);
+						Close();
+					}
+					else if (context is Technology)
+					{
+						// go to research screen
+						gameForm.ShowResearchForm(new ResearchForm());
+					}
+					else if (context is IHull<IVehicle>)
+					{
+						// go to design screen and create a new design using this hull 
+						var hull = (IHull<IVehicle>)context;
+						gameForm.ShowVehicleDesignForm(new VehicleDesignForm(hull));
+					}
+					else if (context is ComponentTemplate || context is Mount)
+					{
+						// go to design screen
+						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
+					}
 
-				// TODO - more types of goto-messages
+					// TODO - more types of goto-messages
+				}
 			}
 		}
 	}

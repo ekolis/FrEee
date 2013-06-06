@@ -17,6 +17,7 @@ namespace FrEee.Game.Objects.Technology
 		public Technology()
 		{
 			TechnologyRequirements = new List<TechnologyRequirement>();
+			expectedResults = new Lazy<IEnumerable<IResearchable>>(() => GetExpectedResults(Empire.Current));
 		}
 
 		/// <summary>
@@ -87,6 +88,12 @@ namespace FrEee.Game.Objects.Technology
 			get { return null; }
 		}
 
+		public int GetNextLevelCost(Empire emp)
+		{
+			// TODO - use galaxy tech cost formula
+			return LevelCost * (emp.ResearchedTechnologies[this] + 1);
+		}
+
 		/// <summary>
 		/// Current empire's cost to research the next level.
 		/// </summary>
@@ -94,8 +101,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - use galaxy tech cost formula
-				return LevelCost * (Empire.Current.ResearchedTechnologies[this] + 1);
+				return GetNextLevelCost(Empire.Current);
 			}
 		}
 
@@ -133,6 +139,20 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
+		public IEnumerable<IResearchable> GetExpectedResults(Empire emp)
+		{
+			var techs = emp.ResearchedTechnologies;
+			var techs2 = new SafeDictionary<Technology, int>();
+			foreach (var kvp in techs)
+				techs2.Add(kvp);
+			techs2[this]++;
+			var have = GetUnlockedItems(techs);
+			var willHave = GetUnlockedItems(techs2);
+			return willHave.Except(have);
+		}
+
+		private Lazy<IEnumerable<IResearchable>> expectedResults;
+
 		/// <summary>
 		/// Current empire's expected results for researching the next level of this tech.
 		/// </summary>
@@ -140,14 +160,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				var techs = Empire.Current.ResearchedTechnologies;
-				var techs2 = new SafeDictionary<Technology, int>();
-				foreach (var kvp in techs)
-					techs2.Add(kvp);
-				techs2[this]++;
-				var have = GetUnlockedItems(techs);
-				var willHave = GetUnlockedItems(techs2);
-				return willHave.Except(have);
+				return expectedResults.Value;
 			}
 		}
 
@@ -189,7 +202,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public string ResearchGroup
 		{
-			get { return "Technologies"; }
+			get { return "Technology"; }
 		}
 
 		public override string ToString()

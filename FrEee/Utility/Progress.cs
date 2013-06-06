@@ -29,7 +29,7 @@ namespace FrEee.Utility
 			{
 				if (IncrementalProgress <= 0)
 					return null;
-				return (Maximum - Value) / IncrementalProgress;
+				return (int)Math.Ceiling((double)(Maximum - Value) / (double)IncrementalProgress);
 			}
 		}
 	}

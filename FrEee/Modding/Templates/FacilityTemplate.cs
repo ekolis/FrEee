@@ -128,7 +128,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public string ResearchGroup
 		{
-			get { return "Facilities"; }
+			get { return "Facility"; }
 		}
 	}
 }

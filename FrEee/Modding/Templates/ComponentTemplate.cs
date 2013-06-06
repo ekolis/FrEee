@@ -142,7 +142,12 @@ namespace FrEee.Modding.Templates
 
 		public string ResearchGroup
 		{
-			get { return "Components"; }
+			get { return "Component"; }
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

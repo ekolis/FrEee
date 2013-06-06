@@ -372,6 +372,9 @@ namespace FrEee.Game.Objects.Space
 					emp.KnownDesigns.Clear();
 					emp.Log.Clear();
 					emp.ResearchedTechnologies.Clear();
+					emp.ResearchProgress.Clear();
+					emp.ResearchQueue.Clear();
+					emp.ResearchSpending.Clear();
 				}
 
 				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
@@ -406,7 +409,7 @@ namespace FrEee.Game.Objects.Space
 				emp.StoredResources += emp.Income;
 
 				// execute commands
-				foreach (var cmd in emp.Commands)
+				foreach (var cmd in emp.Commands.Where(cmd => cmd != null))
 				{
 					if (cmd.Issuer == emp)
 						cmd.Execute();
@@ -416,6 +419,26 @@ namespace FrEee.Game.Objects.Space
 						cmd.Issuer.Log.Add(new GenericLogMessage(cmd.Issuer.Name + " cannot issue a command to an object belonging to " + emp + "!"));
 					}
 				}
+
+				// do research
+				var Spending = emp.ResearchSpending;
+				var Queue = emp.ResearchQueue;
+				// spend research from spending % priorities
+				foreach (var tech in Spending.Keys)
+					emp.Research(tech, Spending[tech] * emp.Income["Research"] / 100);
+
+				// spend research from queues
+				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * emp.Income["Research"] / 100;
+				if (Queue.Any())
+					// first tech in queue
+					emp.Research(Queue.First(), leftovers);
+				else if (Spending.Any(kvp => kvp.Value > 0))
+					// no queued techs, pick tech with highest % focus
+					emp.Research(Spending.Where(kvp => kvp.Value == Spending.Max(kvp2 => kvp2.Value)).First().Key, leftovers);
+				else
+					// no techs queued or prioritized, pick a random tech
+					emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
+
 			}
 
 			// construction queues

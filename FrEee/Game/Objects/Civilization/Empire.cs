@@ -10,6 +10,7 @@ using System.IO;
 using FrEee.Modding;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -207,6 +208,67 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			private set;
+		}
+
+		/// <summary>
+		/// The empire's research priorities for this turn.
+		/// </summary>
+		public ResearchCommand ResearchCommand
+		{
+			get
+			{
+				return Commands.OfType<ResearchCommand>().SingleOrDefault();
+			}
+			set
+			{
+				Commands.Remove(ResearchCommand);
+				Commands.Add(value);
+			}
+		}
+
+		/// <summary>
+		/// Determines if something has been unlocked in the tech tree.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public bool HasUnlocked(IResearchable item)
+		{
+			return item.TechnologyRequirements.All(r => ResearchedTechnologies[r.Technology] >= r.Level);
+		}
+
+		/// <summary>
+		/// Spends research points on a technology.
+		/// </summary>
+		/// <param name="tech"></param>
+		/// <param name="points"></param>
+		public void Research(Technology.Technology tech, int points)
+		{
+			var oldlvl = ResearchedTechnologies[tech];
+			ResearchProgress[tech] += points;
+			var newStuff = new List<IResearchable>();
+			while (ResearchProgress[tech] >= tech.GetNextLevelCost(this))
+			{
+				// advanced a level!
+				ResearchProgress[tech] -= tech.GetNextLevelCost(this);
+				newStuff.AddRange(tech.GetExpectedResults(this));
+				ResearchedTechnologies[tech]++;
+			}
+			if (ResearchedTechnologies[tech] > oldlvl)
+				Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + ResearchedTechnologies[tech] + " in " + tech + "!"));
+			foreach (var item in newStuff)
+				Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
+		}
+
+		/// <summary>
+		/// Technologies which are available for research.
+		/// </summary>
+		public IEnumerable<Technology.Technology> AvailableTechnologies
+		{
+			get
+			{
+				return Galaxy.Current.Referrables.OfType<Technology.Technology>().Where(
+					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
+			}
 		}
 	}
 }

@@ -12,7 +12,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle hull.
 	/// </summary>
-	public interface IHull<out T> : INamed, IResearchable, IAbilityObject, IReferrable<IHull<T>> where T : IVehicle
+	public interface IHull<out T> : INamed, IResearchable, IAbilityObject, IReferrable<IHull<T>>, IPictorial where T : IVehicle
 	{
 		string ShortName { get; set; }
 

@@ -143,5 +143,10 @@ namespace FrEee.Game.Objects.Technology
 				return ComponentTemplate.GetHashCode();
 			return ComponentTemplate.GetHashCode() ^ Mount.GetHashCode();
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

@@ -11,6 +11,7 @@ using FrEee.Modding;
 using FrEee.Game.Objects.Vehicles;
 using System.Text;
 using System.IO;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Utility.Extensions
 {
@@ -663,6 +664,22 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<T> Except<T>(this IEnumerable<T> src, T badguy)
 		{
 			return src.Except(new T[] { badguy });
+		}
+
+		public static Reference<T> Reference<T>(this T t) where T : IReferrable<T>, IReferrable<object>
+		{
+			if (Galaxy.Current.Referrables.Contains(t))
+				return new Reference<T>(Galaxy.Current.Referrables.IndexOf(t));
+			return new Reference<T>(t);
+		}
+
+		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
+			where T : IPictorial
+		{
+			if (turnNumber == null)
+				return new PictorialLogMessage<T>(text, context);
+			else
+				return new PictorialLogMessage<T>(text, turnNumber.Value, context);
 		}
 	}
 }

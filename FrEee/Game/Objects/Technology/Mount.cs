@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A mount that can be applied to a component.
 	/// </summary>
-	public class Mount : IReferrable<Mount>
+	public class Mount : IResearchable
 	{
 		// TODO - implement mount
 
@@ -19,6 +19,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
+			TechnologyRequirements = new List<TechnologyRequirement>();
 		}
 
 		/// <summary>
@@ -32,5 +33,32 @@ namespace FrEee.Game.Objects.Technology
 		public Empire Owner { get { return null; } }
 
 		public string Name { get; set; }
+
+		public IList<TechnologyRequirement> TechnologyRequirements
+		{
+			get;
+			private set;
+		}
+
+		public string ResearchGroup
+		{
+			get { return "Mount"; }
+		}
+
+		/// <summary>
+		/// TODO - pics for mounts?
+		/// </summary>
+		public System.Drawing.Image Icon
+		{
+			get { return null; }
+		}
+
+		/// <summary>
+		/// TODO - pics for mounts?
+		/// </summary>
+		public System.Drawing.Image Portrait
+		{
+			get { return null; }
+		}
 	}
 }

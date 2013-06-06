@@ -115,7 +115,7 @@ namespace FrEee.Game.Interfaces
 		int CargoStorage { get; }
 	}
 
-	public interface IDesign<T> : IDesign where T : IVehicle
+	public interface IDesign<T> : IDesign, IPictorial where T : IVehicle
 	{
 	}
 }

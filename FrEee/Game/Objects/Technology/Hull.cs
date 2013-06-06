@@ -199,7 +199,12 @@ namespace FrEee.Game.Objects.Technology
 
 		public string ResearchGroup
 		{
-			get { return "Hulls"; }
+			get { return "Hull"; }
+		}
+
+		public IDesign<T> CreateDesign()
+		{
+			return new Design<T> { Hull = this };
 		}
 	}
 }

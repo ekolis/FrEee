@@ -316,6 +316,8 @@ namespace FrEee.WinForms.Forms
 			Galaxy.Current.SaveCommands();
 			if (Galaxy.Current.IsSinglePlayer)
 			{
+				// TODO - use multithreading to prevent locking the GUI when processing turns
+				Cursor = Cursors.WaitCursor;
 				Enabled = false;
 				var plrnum = Galaxy.Current.PlayerNumber;
 				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
@@ -324,6 +326,7 @@ namespace FrEee.WinForms.Forms
 				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
 				SetUpGui();
 				Enabled = true;
+				Cursor = Cursors.Default;
 			}
 			else
 			{
@@ -649,8 +652,8 @@ namespace FrEee.WinForms.Forms
 			if (Empire.Current.ResearchSpending.Any() || Empire.Current.ResearchQueue.Any())
 			{
 				var techs = Empire.Current.ResearchSpending.Keys.Union(Empire.Current.ResearchQueue);
-				var maxPoints = techs.Max(t => GetTotalSpending(t));
-				var tech = techs.Where(t => GetTotalSpending(t) == maxPoints).First();
+				var minEta = techs.Min(t => t.Progress.Eta);
+				var tech = techs.Where(t => t.Progress.Eta == minEta).First();
 
 				progResearch.Progress = tech.Progress;
 				progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
@@ -673,6 +676,17 @@ namespace FrEee.WinForms.Forms
 			var budget = Empire.Current.Income["Research"];
 			var forQueue = 100 - Empire.Current.ResearchSpending.Sum(kvp => kvp.Value);
 			return t.Spending.Value * budget / 100 + (Empire.Current.ResearchQueue.FirstOrDefault() == t ? forQueue : 0);
+		}
+
+		public void ShowResearchForm(ResearchForm f)
+		{
+			this.ShowChildForm(f);
+			BindResearch();
+		}
+
+		public void ShowVehicleDesignForm(VehicleDesignForm f)
+		{
+			this.ShowChildForm(f);
 		}
 	}
 }

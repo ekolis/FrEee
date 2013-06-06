@@ -45,6 +45,11 @@ namespace FrEee.Game.Objects.Vehicles
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
 			}
 		}
+
+		public static IDesign Create(IHull<IVehicle> hull)
+		{
+			return Create(hull.VehicleType);
+		}
 	}
 
 	/// <summary>

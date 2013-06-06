@@ -143,6 +143,7 @@ namespace FrEee.WinForms.Forms
 					// host view, prompt for turn processing
 					if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
 					{
+						// TODO - use multithreading to avoid locking the GUI when processing turns
 						Cursor = Cursors.WaitCursor;
 						Galaxy.Current.ProcessTurn();
 						Galaxy.SaveAll();

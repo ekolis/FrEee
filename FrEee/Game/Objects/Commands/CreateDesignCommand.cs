@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			if (Design.Warnings.Any())
-				Issuer.Log.Add(new PictorialLogMessage<IDesign>("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings.", Galaxy.Current.TurnNumber, Design));
+				Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings."));
 			Issuer.KnownDesigns.Add(Design);
 			Galaxy.Current.Register(Design);
 		}

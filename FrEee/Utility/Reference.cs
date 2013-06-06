@@ -29,6 +29,14 @@ namespace FrEee.Utility
 			}
 		}
 
+		public Reference(int id)
+		{
+			if (Galaxy.Current.Referrables[id] is T)
+				ID = id;
+			else
+				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+		}
+
 
 		public int ID { get; private set; }
 

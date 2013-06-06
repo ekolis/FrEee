@@ -29,21 +29,33 @@
 		private void InitializeComponent()
 		{
 			this.lstLog = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.SuspendLayout();
 			// 
 			// lstLog
 			// 
 			this.lstLog.BackColor = System.Drawing.Color.Black;
+			this.lstLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3});
 			this.lstLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstLog.ForeColor = System.Drawing.Color.White;
+			this.lstLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstLog.Location = new System.Drawing.Point(0, 0);
 			this.lstLog.Name = "lstLog";
 			this.lstLog.ShowItemToolTips = true;
 			this.lstLog.Size = new System.Drawing.Size(774, 492);
 			this.lstLog.TabIndex = 0;
 			this.lstLog.UseCompatibleStateImageBehavior = false;
-			this.lstLog.View = System.Windows.Forms.View.SmallIcon;
+			this.lstLog.View = System.Windows.Forms.View.List;
 			this.lstLog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstLog_MouseDoubleClick);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Width = 0;
 			// 
 			// LogForm
 			// 
@@ -63,5 +75,9 @@
 		#endregion
 
 		private System.Windows.Forms.ListView lstLog;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
+
 	}
 }

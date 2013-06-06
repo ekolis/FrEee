@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game
 {
@@ -102,6 +103,13 @@ namespace FrEee.Game
 					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
 						sys.ExploredByEmpires.Add(emp);
 				}
+			}
+
+			// TODO - let game host and/or players configure starting techs
+			foreach (var emp in Galaxy.Current.Empires)
+			{
+				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
+					emp.ResearchedTechnologies[tech] = tech.StartLevel;
 			}
 		}
 	}

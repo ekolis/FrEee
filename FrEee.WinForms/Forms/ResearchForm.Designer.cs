@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
 			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CurrentLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,7 +44,7 @@
 			this.lblSpending = new System.Windows.Forms.Label();
 			this.sldSpending = new System.Windows.Forms.TrackBar();
 			this.lblResults = new System.Windows.Forms.Label();
-			this.btnClose = new FrEee.WinForms.Controls.GameButton();
+			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.btnDown = new FrEee.WinForms.Controls.GameButton();
 			this.btnBottom = new FrEee.WinForms.Controls.GameButton();
@@ -57,6 +57,7 @@
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstResults = new System.Windows.Forms.ListView();
 			this.dataGridViewProgressColumn1 = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
@@ -82,14 +83,14 @@
             this.Progress,
             this.Spending});
 			this.gridQueues.DataSource = this.technologyBindingSource;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle4;
 			this.gridQueues.Location = new System.Drawing.Point(12, 40);
 			this.gridQueues.Name = "gridQueues";
 			this.gridQueues.ReadOnly = true;
@@ -222,24 +223,22 @@
 			this.lblResults.TabIndex = 8;
 			this.lblResults.Text = "Expected Results";
 			// 
-			// btnClose
+			// btnSave
 			// 
-			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClose.BackColor = System.Drawing.Color.Black;
-			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(553, 528);
-			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(194, 30);
-			this.btnClose.TabIndex = 24;
-			this.btnClose.Text = "Close";
-			this.btnClose.UseVisualStyleBackColor = false;
-			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSave.BackColor = System.Drawing.Color.Black;
+			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSave.Location = new System.Drawing.Point(653, 528);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(94, 30);
+			this.btnSave.TabIndex = 24;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = false;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// btnDelete
 			// 
-			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDelete.BackColor = System.Drawing.Color.Black;
 			this.btnDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnDelete.Location = new System.Drawing.Point(686, 491);
@@ -251,8 +250,7 @@
 			// 
 			// btnDown
 			// 
-			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDown.BackColor = System.Drawing.Color.Black;
 			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnDown.Location = new System.Drawing.Point(619, 491);
@@ -264,8 +262,7 @@
 			// 
 			// btnBottom
 			// 
-			this.btnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnBottom.BackColor = System.Drawing.Color.Black;
 			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnBottom.Location = new System.Drawing.Point(553, 492);
@@ -277,8 +274,7 @@
 			// 
 			// btnClear
 			// 
-			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.BackColor = System.Drawing.Color.Black;
 			this.btnClear.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnClear.Location = new System.Drawing.Point(686, 457);
@@ -290,8 +286,7 @@
 			// 
 			// btnUp
 			// 
-			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnUp.BackColor = System.Drawing.Color.Black;
 			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnUp.Location = new System.Drawing.Point(619, 457);
@@ -303,8 +298,7 @@
 			// 
 			// btnTop
 			// 
-			this.btnTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnTop.BackColor = System.Drawing.Color.Black;
 			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnTop.Location = new System.Drawing.Point(553, 457);
@@ -330,9 +324,10 @@
 			// 
 			// lstQueue
 			// 
+			this.lstQueue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstQueue.BackColor = System.Drawing.Color.Black;
 			this.lstQueue.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstQueue.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
 			this.lstQueue.FormattingEnabled = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
@@ -389,13 +384,27 @@
 			this.dataGridViewProgressColumn1.HeaderText = "Progress";
 			this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
 			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCancel.Location = new System.Drawing.Point(553, 528);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(94, 30);
+			this.btnCancel.TabIndex = 25;
+			this.btnCancel.Text = "Close";
+			this.btnCancel.UseVisualStyleBackColor = false;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
 			// ResearchForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(759, 561);
-			this.Controls.Add(this.btnClose);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.btnDelete);
 			this.Controls.Add(this.btnDown);
 			this.Controls.Add(this.btnBottom);
@@ -418,6 +427,7 @@
 			this.MinimumSize = new System.Drawing.Size(775, 600);
 			this.Name = "ResearchForm";
 			this.Text = "Research";
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResearchForm_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).EndInit();
@@ -456,7 +466,8 @@
 		private Controls.GameButton btnClear;
 		private Controls.GameButton btnUp;
 		private Controls.GameButton btnTop;
-		private Controls.GameButton btnClose;
+		private Controls.GameButton btnSave;
+		private Controls.GameButton btnCancel;
 
 	}
 }

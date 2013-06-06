@@ -25,6 +25,16 @@ namespace FrEee.WinForms.Forms
 			ShowComponentDetails(null);
 		}
 
+		public VehicleDesignForm(IHull<IVehicle> hull)
+		{
+			Design = FrEee.Game.Objects.Vehicles.Design.Create(hull);
+		}
+
+		public VehicleDesignForm(IDesign design)
+		{
+			Design = design;
+		}
+
 		private IDesign design;
 
 		public IDesign Design

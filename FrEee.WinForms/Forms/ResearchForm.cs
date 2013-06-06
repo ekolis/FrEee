@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility.Extensions;
@@ -27,9 +28,17 @@ namespace FrEee.WinForms.Forms
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();
 			ddlGroup.Items.Add(new { Text = "All", GroupName = "" });
-			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.ResearchGroup).Distinct())
+			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
 				ddlGroup.Items.Add(new { Text = group, GroupName = group });
 			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
+
+			// save off old research priorities in case user cancels
+			oldPcts = new Dictionary<Technology, int>();
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				oldPcts.Add(kvp.Key, kvp.Value);
+			oldQueue = new List<Technology>();
+			foreach (var tech in Empire.Current.ResearchQueue)
+				oldQueue.Add(tech);
 		}
 
 		private IEnumerable<Technology> allTechs;
@@ -37,8 +46,8 @@ namespace FrEee.WinForms.Forms
 
 		private void BindTechGrid()
 		{
-			allTechs = Galaxy.Current.Mod.Technologies.Where(t => ((dynamic)ddlGroup.SelectedItem).GroupName == "" || t.ResearchGroup == ((dynamic)ddlGroup.SelectedItem).GroupName).ToArray();
-			technologyBindingSource.DataSource = allTechs;
+			allTechs = Empire.Current.AvailableTechnologies.Where(t => ((dynamic)ddlGroup.SelectedItem).GroupName == "" || t.Group == ((dynamic)ddlGroup.SelectedItem).GroupName).ToArray();
+			technologyBindingSource.DataSource = allTechs.ToArray();
 		}
 
 		private void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
@@ -88,10 +97,59 @@ namespace FrEee.WinForms.Forms
 			BindTechGrid();
 		}
 
-		private void btnClose_Click(object sender, EventArgs e)
+		private bool abort;
+		private Dictionary<Technology, int> oldPcts;
+		private List<Technology> oldQueue;
+
+		private void btnSave_Click(object sender, EventArgs e)
 		{
-			// TODO - send research command to empire
+			abort = true;
+			Save();
 			Close();
+		}
+
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			abort = true;
+			Cancel();
+			Close();
+		}
+
+		private void ResearchForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (!abort)
+			{
+				switch (MessageBox.Show("Save your changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+				{
+					case DialogResult.Yes:
+						Save();
+						break;
+					case DialogResult.No:
+						Cancel();
+						break;
+					case DialogResult.Cancel:
+						e.Cancel = true;
+						break;
+				}
+			}
+		}
+
+		private void Save()
+		{
+			var cmd = new ResearchCommand(Empire.Current);
+			cmd.Spending = Empire.Current.ResearchSpending;
+			cmd.Queue = Empire.Current.ResearchQueue;
+			Empire.Current.ResearchCommand = cmd;
+		}
+
+		private void Cancel()
+		{
+			Empire.Current.ResearchSpending.Clear();
+			foreach (var kvp in oldPcts)
+				Empire.Current.ResearchSpending.Add(kvp);
+			Empire.Current.ResearchQueue.Clear();
+			foreach (var tech in oldQueue)
+				Empire.Current.ResearchQueue.Add(tech);
 		}
 	}
 }

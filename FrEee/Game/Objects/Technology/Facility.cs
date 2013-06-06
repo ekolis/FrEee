@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -70,7 +71,7 @@ namespace FrEee.Game.Objects.Technology
 				if (planet.Colony == null)
 					throw new ArgumentException("Facilities can only be placed on colonized planets.");
 				if (planet.Colony.Facilities.Count >= planet.MaxFacilities)
-					planet.Colony.Owner.Log.Add(new PictorialLogMessage<Planet>(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there.", planet));
+					planet.Colony.Owner.Log.Add(planet.CreateLogMessage(this + " cannot be constructed at " + planet + " because there is no more space available for facilities there."));
 				else
 					planet.Colony.Facilities.Add(this);
 			}

@@ -154,7 +154,7 @@ namespace FrEee.Game.Objects.Civilization
 					{
 						// can't build that here!
 						Orders.RemoveAt(0);
-						Owner.Log.Add(new PictorialLogMessage<ISpaceObject>(order.Template + " cannot be built at " + this + " because it requires a space yard and/or colony to construct it.", SpaceObject));
+						Owner.Log.Add(SpaceObject.CreateLogMessage(order.Template + " cannot be built at " + this + " because it requires a space yard and/or colony to construct it."));
 					}
 					order.Execute();
 					if (order.IsComplete)
