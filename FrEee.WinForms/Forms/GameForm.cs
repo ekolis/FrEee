@@ -469,15 +469,24 @@ namespace FrEee.WinForms.Forms
 					pnlDetailReport.Controls.Add(CreateSpaceObjectReport(value));
 
 				// show/hide command buttons
-				btnMove.Visible = value is IMobileSpaceObject;
-				btnPursue.Visible = value is IMobileSpaceObject;
-				btnEvade.Visible = value is IMobileSpaceObject;
-				btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
-				btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
-				btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
-				btnTransferCargo.Visible = value != null && (value.CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
-				btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
-				btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
+				if (value == null || value.Owner != Empire.Current)
+				{
+					// can't issue commands to objects we don't own
+					foreach (GameButton btn in pnlSubCommands.Controls)
+						btn.Visible = false;
+				}
+				{
+					// determine what commands are appropriate
+					btnMove.Visible = value is IMobileSpaceObject;
+					btnPursue.Visible = value is IMobileSpaceObject;
+					btnEvade.Visible = value is IMobileSpaceObject;
+					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
+					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
+					btnTransferCargo.Visible = value != null && (value.CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
+					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
+					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
+				}
 			}
 		}
 
