@@ -3,6 +3,7 @@ using System.Linq;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
 
 namespace FrEee.WinForms.Controls
@@ -53,19 +54,9 @@ namespace FrEee.WinForms.Controls
 				txtDate.Text = Design.TurnNumber.ToStardate();
 
 				lstComponents.Items.Clear();
-				var il = new ImageList();
-				il.ImageSize = new Size(32, 32);
-				lstComponents.LargeImageList = il;
-				lstComponents.SmallImageList = il;
-				int i = 0;
+				lstComponents.Initialize(32, 32);
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-				{
-					il.Images.Add(g.First().Icon);
-					var item = new ListViewItem(g.First().Name);
-					item.ImageIndex = i;
-					lstComponents.Items.Add(item);
-					i++;
-				}
+					lstComponents.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ToString(), g, g.First().Icon);
 			}
 		}
 
