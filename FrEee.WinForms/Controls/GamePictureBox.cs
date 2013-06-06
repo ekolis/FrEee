@@ -23,23 +23,26 @@ namespace FrEee.WinForms.Controls
 		/// <param name="text">The title for the form.</param>
 		public void ShowFullSize(string text)
 		{
-			var form = new Form();
-			form.Text = text;
-			form.MaximizeBox = false;
-			form.FormBorderStyle = FormBorderStyle.FixedDialog;
-			form.ClientSize = Image.Size;
-			if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
-				form.Width = Screen.PrimaryScreen.WorkingArea.Width;
-			if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
-				form.Height = Screen.PrimaryScreen.WorkingArea.Height;
-			form.StartPosition = FormStartPosition.CenterParent;
-			var pic = new PictureBox();
-			pic.Image = Image;
-			pic.Size = Image.Size;
-			pic.BackColor = Color.Black;
-			pic.SizeMode = PictureBoxSizeMode.Zoom;
-			form.Controls.Add(pic);
-			this.FindForm().ShowChildForm(form);
+			if (Image != null)
+			{
+				var form = new Form();
+				form.Text = text;
+				form.MaximizeBox = false;
+				form.FormBorderStyle = FormBorderStyle.FixedDialog;
+				form.ClientSize = Image.Size;
+				if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
+					form.Width = Screen.PrimaryScreen.WorkingArea.Width;
+				if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
+					form.Height = Screen.PrimaryScreen.WorkingArea.Height;
+				form.StartPosition = FormStartPosition.CenterParent;
+				var pic = new PictureBox();
+				pic.Image = Image;
+				pic.Size = Image.Size;
+				pic.BackColor = Color.Black;
+				pic.SizeMode = PictureBoxSizeMode.Zoom;
+				form.Controls.Add(pic);
+				this.FindForm().ShowChildForm(form);
+			}
 		}
 	}
 }
