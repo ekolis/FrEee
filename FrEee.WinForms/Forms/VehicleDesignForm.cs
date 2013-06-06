@@ -109,7 +109,7 @@ namespace FrEee.WinForms.Forms
 			lstComponentsAvailable.Initialize(32, 32);
 			if (Design != null)
 			{
-				IEnumerable<ComponentTemplate> comps = Mod.Current.ComponentTemplates;
+				IEnumerable<ComponentTemplate> comps = Empire.Current.UnlockedItems.OfType<ComponentTemplate>();
 
 				// filter by vehicle type
 				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
@@ -122,7 +122,7 @@ namespace FrEee.WinForms.Forms
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)
-					lstComponentsAvailable.AddItemWithImage(comp.ResearchGroup, comp.Name, comp, comp.Icon);
+					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon);
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.ResearchGroup, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon);
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon);
 			}
 		}
 

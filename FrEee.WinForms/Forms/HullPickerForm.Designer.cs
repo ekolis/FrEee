@@ -33,13 +33,13 @@ namespace FrEee.WinForms.Forms
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 			this.gridHulls = new System.Windows.Forms.DataGridView();
 			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.sizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.costDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.iHullBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.btnOk = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.iHullBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.costDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.sizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridHulls)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.iHullBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -99,46 +99,6 @@ namespace FrEee.WinForms.Forms
 			this.Icon.ReadOnly = true;
 			this.Icon.Width = 32;
 			// 
-			// nameDataGridViewTextBoxColumn
-			// 
-			this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			this.nameDataGridViewTextBoxColumn.Width = 60;
-			// 
-			// sizeDataGridViewTextBoxColumn
-			// 
-			this.sizeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.sizeDataGridViewTextBoxColumn.DataPropertyName = "Size";
-			this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
-			this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
-			this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
-			this.sizeDataGridViewTextBoxColumn.Width = 52;
-			// 
-			// descriptionDataGridViewTextBoxColumn
-			// 
-			this.descriptionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-			this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-			this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-			this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
-			this.descriptionDataGridViewTextBoxColumn.Width = 85;
-			// 
-			// costDataGridViewTextBoxColumn
-			// 
-			this.costDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.costDataGridViewTextBoxColumn.DataPropertyName = "Cost";
-			this.costDataGridViewTextBoxColumn.HeaderText = "Cost";
-			this.costDataGridViewTextBoxColumn.Name = "costDataGridViewTextBoxColumn";
-			this.costDataGridViewTextBoxColumn.ReadOnly = true;
-			this.costDataGridViewTextBoxColumn.Width = 53;
-			// 
-			// iHullBindingSource
-			// 
-			this.iHullBindingSource.DataSource = typeof(FrEee.Game.Interfaces.IHull<IVehicle>);
-			// 
 			// btnOk
 			// 
 			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -165,6 +125,46 @@ namespace FrEee.WinForms.Forms
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
+			// iHullBindingSource
+			// 
+			this.iHullBindingSource.DataSource = typeof(FrEee.Game.Interfaces.IHull);
+			// 
+			// costDataGridViewTextBoxColumn
+			// 
+			this.costDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.costDataGridViewTextBoxColumn.DataPropertyName = "Cost";
+			this.costDataGridViewTextBoxColumn.HeaderText = "Cost";
+			this.costDataGridViewTextBoxColumn.Name = "costDataGridViewTextBoxColumn";
+			this.costDataGridViewTextBoxColumn.ReadOnly = true;
+			this.costDataGridViewTextBoxColumn.Width = 53;
+			// 
+			// descriptionDataGridViewTextBoxColumn
+			// 
+			this.descriptionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
+			this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
+			this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
+			this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
+			this.descriptionDataGridViewTextBoxColumn.Width = 85;
+			// 
+			// sizeDataGridViewTextBoxColumn
+			// 
+			this.sizeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.sizeDataGridViewTextBoxColumn.DataPropertyName = "Size";
+			this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
+			this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
+			this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
+			this.sizeDataGridViewTextBoxColumn.Width = 52;
+			// 
+			// nameDataGridViewTextBoxColumn
+			// 
+			this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn.Width = 60;
+			// 
 			// HullPickerForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,11 +190,11 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridView gridHulls;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.BindingSource iHullBindingSource;
 		private System.Windows.Forms.DataGridViewImageColumn Icon;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn costDataGridViewTextBoxColumn;
+		private System.Windows.Forms.BindingSource iHullBindingSource;
 	}
 }

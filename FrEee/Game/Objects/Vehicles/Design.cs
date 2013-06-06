@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		private Reference<Empire> owner;
 
-		IHull<IVehicle> IDesign.Hull
+		IHull IDesign.Hull
 		{
 			get { return Hull; }
 			set
@@ -205,6 +205,16 @@ namespace FrEee.Game.Objects.Vehicles
 
 				// TODO - warnings for illegal mount usage
 			}
+		}
+
+		/// <summary>
+		/// Has the empire unlocked the hull, components, and mounts used on this design?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public bool HasEmpireUnlocked(Empire emp)
+		{
+			return emp.HasUnlocked(Hull) && Components.All(mct => emp.HasUnlocked(mct.ComponentTemplate) && emp.HasUnlocked(mct.Mount));
 		}
 
 		/// <summary>
@@ -373,5 +383,17 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { throw new NotImplementedException(); }
 		}
+
+
+		/// <summary>
+		/// A design is unlocked if its hull and all used mounts/components are unlocked.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public bool HasBeenUnlockedBy(Empire emp)
+		{
+			return emp.HasUnlocked(Hull) && Components.All(c => emp.HasUnlocked(c.ComponentTemplate) && emp.HasUnlocked(c.Mount));
+		}
+
 	}
 }

@@ -9,10 +9,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// A vehicle hull.
-	/// </summary>
-	public interface IHull<out T> : INamed, IResearchable, IAbilityObject, IReferrable<IHull<T>>, IPictorial where T : IVehicle
+	public interface IHull : INamed, IResearchable, IAbilityObject, IReferrable<IHull>, IPictorial
 	{
 		string ShortName { get; set; }
 
@@ -94,5 +91,13 @@ namespace FrEee.Game.Interfaces
 		/// The portriat image for this hull for the current empire.
 		/// </summary>
 		Image Portrait { get; }
+	}
+
+	/// <summary>
+	/// A vehicle hull.
+	/// </summary>
+	public interface IHull<out T> : IHull, IReferrable<IHull<T>> where T : IVehicle
+	{
+		
 	}
 }

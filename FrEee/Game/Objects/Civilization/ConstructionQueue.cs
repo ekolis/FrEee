@@ -53,7 +53,23 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool CanConstruct(IConstructionTemplate item)
 		{
-			return (IsSpaceYardQueue || !item.RequiresSpaceYardQueue) && (IsColonyQueue || !item.RequiresColonyQueue);
+			return GetReasonForBeingUnableToConstruct(item) == null;
+		}
+
+		/// <summary>
+		/// Gets the reason why this queue cannot construct an item, or null if it can be constructed.
+		/// </summary>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public string GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
+		{
+			if (!item.HasBeenUnlockedBy(Owner))
+				return Owner + " has not yet unlocked " + item + ".";
+			if (!IsSpaceYardQueue && item.RequiresSpaceYardQueue)
+				return item + " requires a space yard queue.";
+			if (!IsColonyQueue && item.RequiresColonyQueue)
+				return item + " requires a colony queue.";
+			return null;
 		}
 
 		/// <summary>
@@ -150,17 +166,21 @@ namespace FrEee.Game.Objects.Civilization
 
 				foreach (var order in Orders.ToArray())
 				{
-					if (!CanConstruct(order.Template))
+					var reasonForNotBuilding = GetReasonForBeingUnableToConstruct(order.Template);
+					if (reasonForNotBuilding != null)
 					{
 						// can't build that here!
 						Orders.RemoveAt(0);
-						Owner.Log.Add(SpaceObject.CreateLogMessage(order.Template + " cannot be built at " + this + " because it requires a space yard and/or colony to construct it."));
+						Owner.Log.Add(SpaceObject.CreateLogMessage(order.Template + " cannot be built at " + this + " because " + reasonForNotBuilding));
 					}
-					order.Execute();
-					if (order.IsComplete)
+					else
 					{
-						order.Item.Place(SpaceObject);
-						Orders.Remove(order);
+						order.Execute();
+						if (order.IsComplete)
+						{
+							order.Item.Place(SpaceObject);
+							Orders.Remove(order);
+						}
 					}
 				}
 

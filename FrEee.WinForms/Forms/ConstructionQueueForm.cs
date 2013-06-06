@@ -36,11 +36,10 @@ namespace FrEee.WinForms.Forms
 			resRadioactivesRate.Amount = ConstructionQueue.Rate["Radioactives"];
 
 			// add ships/bases to constructable items
-			BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current));
+			BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
 
 			// add facilities to constructable items
-			// TODO - hide unresearched facilities
-			BindFacilityListView(Mod.Current.FacilityTemplates);
+			BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>());
 
 			// show existing queued items
 			BindQueueListView();
@@ -199,7 +198,7 @@ namespace FrEee.WinForms.Forms
 			{
 				if (ConstructionQueue.CanConstruct(facil))
 				{
-					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.ResearchGroup);
+					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
 					if (group == null)
 					{
 						group = new ListViewGroup(facil.ResearchGroup);

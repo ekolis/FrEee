@@ -130,5 +130,11 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return "Facility"; }
 		}
+
+
+		public bool HasBeenUnlockedBy(Empire emp)
+		{
+			return emp.HasUnlocked(this);
+		}
 	}
 }

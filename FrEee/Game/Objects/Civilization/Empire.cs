@@ -270,5 +270,16 @@ namespace FrEee.Game.Objects.Civilization
 					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 			}
 		}
+
+		/// <summary>
+		/// Unlocked research items such as component and facility templates.
+		/// </summary>
+		public IEnumerable<IResearchable> UnlockedItems
+		{
+			get
+			{
+				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
+			}
+		}
 	}
 }

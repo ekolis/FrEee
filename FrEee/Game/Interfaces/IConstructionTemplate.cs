@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +32,12 @@ namespace FrEee.Game.Interfaces
 		/// The cost to build it.
 		/// </summary>
 		Resources Cost { get; }
+
+		/// <summary>
+		/// Has the empire unlocked this construction template?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		bool HasBeenUnlockedBy(Empire emp);
 	}
 }

@@ -44,7 +44,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The vehicle's hull.
 		/// </summary>
-		IHull<IVehicle> Hull { get; set; }
+		IHull Hull { get; set; }
 
 		/// <summary>
 		/// The ship's role (design type in SE4).

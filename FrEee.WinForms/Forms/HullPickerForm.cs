@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,7 @@ namespace FrEee.WinForms.Forms
 		public HullPickerForm()
 		{
 			InitializeComponent();
+			ddlVehicleType.Items.Add(new { Name = "All", VehicleType = VehicleTypes.All });
 			ddlVehicleType.Items.Add(new { Name = "Ships", VehicleType = VehicleTypes.Ship });
 			ddlVehicleType.Items.Add(new { Name = "Bases", VehicleType = VehicleTypes.Base });
 			ddlVehicleType.Items.Add(new { Name = "Fighters", VehicleType = VehicleTypes.Fighter });
@@ -31,7 +33,7 @@ namespace FrEee.WinForms.Forms
 		/// <summary>
 		/// The hull that the user selected.
 		/// </summary>
-		public IHull<IVehicle> Hull { get; private set; }
+		public IHull Hull { get; private set; }
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
@@ -62,8 +64,9 @@ namespace FrEee.WinForms.Forms
 
 		private void Bind()
 		{
-			var hulls = Mod.Current.Hulls.Where(h => h.VehicleType == SelectedVehicleType);
-			iHullBindingSource.DataSource = hulls;
+			var vt = (VehicleTypes)((dynamic)ddlVehicleType.SelectedItem).VehicleType;
+			var hulls = Empire.Current.UnlockedItems.OfType<IHull>().Where(h => vt.HasFlag(h.VehicleType));
+			iHullBindingSource.DataSource = hulls.ToArray();
 			gridHulls.Visible = hulls.Any();
 		}
 
@@ -83,7 +86,7 @@ namespace FrEee.WinForms.Forms
 		private void gridHulls_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
 			// pick the hull and close the form
-			Hull = (IHull<IVehicle>)gridHulls.Rows[e.RowIndex].DataBoundItem;
+			Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
 			DialogResult = DialogResult.OK;
 			Close();
 		}
