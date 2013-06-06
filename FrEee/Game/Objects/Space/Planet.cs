@@ -237,5 +237,16 @@ namespace FrEee.Game.Objects.Space
 				return null;
 			}
 		}
+
+		/// <summary>
+		/// Planets get cargo storage both from facilities and intrinsically.
+		/// </summary>
+		public override int CargoStorage
+		{
+			get
+			{
+				return base.CargoStorage + MaxCargo;
+			}
+		}
 	}
 }

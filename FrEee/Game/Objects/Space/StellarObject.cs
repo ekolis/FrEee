@@ -163,11 +163,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		 /// <summary>
-		 /// Stellar objects have infinite supplies.
+		 /// Stellar objects don't normally use supplies.
 		 /// </summary>
-		public bool HasInfiniteSupplies
+		public virtual bool HasInfiniteSupplies
 		{
-			get { return true; }
+			get { return false; }
 		}
 	}
 }
