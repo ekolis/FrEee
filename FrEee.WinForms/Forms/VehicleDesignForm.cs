@@ -281,26 +281,12 @@ namespace FrEee.WinForms.Forms
 
 		private void lstComponentsAvailable_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
-			if (item != null)
-			{
-				var comp = (ComponentTemplate)item.Tag;
-				Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
-				BindInstalledComponents();
-				BindDesignData();
-			}
+			
 		}
 
 		private void lstComponentsInstalled_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
-			if (item != null)
-			{
-				var mct = (MountedComponentTemplate)item.Tag;
-				Design.Components.Remove(mct);
-				BindInstalledComponents();
-				BindDesignData();
-			}
+			
 		}
 
 		/// <summary>
@@ -341,6 +327,44 @@ namespace FrEee.WinForms.Forms
 		{
 			if (Design != null)
 				Design.Name = ddlName.Text;
+		}
+
+		private void lstComponentsAvailable_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var comp = (ComponentTemplate)item.Tag;
+					Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
+					BindInstalledComponents();
+					BindDesignData();
+				}
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				// TODO - show mounted component template report
+			}
+		}
+
+		private void lstComponentsInstalled_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var mct = (MountedComponentTemplate)item.Tag;
+					Design.Components.Remove(mct);
+					BindInstalledComponents();
+					BindDesignData();
+				}
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				// TODO - show mounted component template report
+			}
 		}
 	}
 }

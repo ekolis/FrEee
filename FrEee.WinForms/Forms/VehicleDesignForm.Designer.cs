@@ -696,6 +696,7 @@
 			this.lstComponentsInstalled.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstComponentsInstalled.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstComponentsInstalled.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsInstalled.HoverSelection = true;
 			this.lstComponentsInstalled.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsInstalled.Name = "lstComponentsInstalled";
 			this.lstComponentsInstalled.Size = new System.Drawing.Size(284, 360);
@@ -703,6 +704,7 @@
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
+			this.lstComponentsInstalled.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseClick);
 			this.lstComponentsInstalled.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDoubleClick);
 			// 
 			// gamePanel1
@@ -726,6 +728,7 @@
 			this.lstComponentsAvailable.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstComponentsAvailable.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstComponentsAvailable.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsAvailable.HoverSelection = true;
 			this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsAvailable.Name = "lstComponentsAvailable";
 			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 360);
@@ -733,6 +736,7 @@
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
+			this.lstComponentsAvailable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseClick);
 			this.lstComponentsAvailable.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDoubleClick);
 			// 
 			// btnHull
