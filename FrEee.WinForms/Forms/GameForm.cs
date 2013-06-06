@@ -475,6 +475,7 @@ namespace FrEee.WinForms.Forms
 					foreach (GameButton btn in pnlSubCommands.Controls)
 						btn.Visible = false;
 				}
+				else
 				{
 					// determine what commands are appropriate
 					btnMove.Visible = value is IMobileSpaceObject;
