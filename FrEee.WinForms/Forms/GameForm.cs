@@ -652,8 +652,7 @@ namespace FrEee.WinForms.Forms
 				var maxPoints = techs.Max(t => GetTotalSpending(t));
 				var tech = techs.Where(t => GetTotalSpending(t) == maxPoints).First();
 
-				progResearch.Value = tech.Progress.Value;
-				progResearch.Maximum = tech.NextLevelCost;
+				progResearch.Progress = tech.Progress;
 				progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
 				if (tech.Progress.Eta == null)
 					progResearch.RightText = "Never";

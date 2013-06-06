@@ -42,6 +42,17 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
+		private int incrementalProgress = 0;
+		public int IncrementalProgress
+		{
+			get { return incrementalProgress; }
+			set
+			{
+				incrementalProgress = value;
+				Invalidate();
+			}
+		}
+
 		private Color barColor = Color.Blue;
 		public Color BarColor
 		{
@@ -50,6 +61,20 @@ namespace FrEee.WinForms.Controls
 			{
 				barColor = value;
 				Invalidate();
+			}
+		}
+
+		public Progress Progress
+		{
+			get
+			{
+				return new Progress(Value, Maximum, IncrementalProgress);
+			}
+			set
+			{
+				Value = value.Value;
+				Maximum = value.Maximum;
+				IncrementalProgress = value.IncrementalProgress;
 			}
 		}
 
@@ -65,7 +90,10 @@ namespace FrEee.WinForms.Controls
 			base.OnPaint(e);
 			e.Graphics.Clear(BackColor);
 			if (Maximum != 0)
+			{
 				e.Graphics.FillRectangle(new SolidBrush(BarColor), 0, 0, Value * Width / Maximum, Height);
+				e.Graphics.FillRectangle(new SolidBrush(Color.FromArgb(128, BarColor)), Value * Width / Maximum, 0, IncrementalProgress * Width / Maximum, Height);
+			}
 			if (BorderStyle == BorderStyle.FixedSingle)
 				ControlPaint.DrawBorder(e.Graphics, ClientRectangle, BorderColor, ButtonBorderStyle.Solid);
 			Brush brush;
