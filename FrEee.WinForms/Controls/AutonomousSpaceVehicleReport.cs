@@ -109,24 +109,8 @@ namespace FrEee.WinForms.Controls
 				lstCargoDetail.Initialize(32, 32);
 
 				// abilities
-				treeAbilities.Nodes.Clear();
-				foreach (var group in vehicle.Abilities.GroupBy(abil => abil.Name))
-				{
-					foreach (var stacked in group.Stack())
-					{
-						var branch = new TreeNode(stacked.ToString());
-						if (group.Any(abil => !vehicle.IntrinsicAbilities.Contains(abil)))
-							branch.NodeFont = new Font(Font, FontStyle.Italic);
-						treeAbilities.Nodes.Add(branch);
-						foreach (var abil in group)
-						{
-							var twig = new TreeNode(abil.Description);
-							if (vehicle.IntrinsicAbilities.Contains(abil))
-								twig.NodeFont = new Font(Font, FontStyle.Italic);
-							branch.Nodes.Add(twig);
-						}
-					}
-				}
+				abilityTreeView.Abilities = Vehicle.Abilities.StackToTree();
+				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDamaged).SelectMany(c => c.Abilities));
 			}
 		}
 

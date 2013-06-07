@@ -40,14 +40,6 @@ namespace FrEee.WinForms.Controls
 			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
 			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
 			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Hull Size: -10");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Defense Modifier: -10", new System.Windows.Forms.TreeNode[] {
-            treeNode4});
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
 			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -100,7 +92,6 @@ namespace FrEee.WinForms.Controls
 			this.txtCargoSpaceFreeDetail = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
-			this.treeAbilities = new System.Windows.Forms.TreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageOrders = new System.Windows.Forms.TabPage();
 			this.btnDeleteOrder = new FrEee.WinForms.Controls.GameButton();
@@ -114,6 +105,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
+			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
@@ -460,11 +452,13 @@ namespace FrEee.WinForms.Controls
 			this.progSupplies.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progSupplies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progSupplies.ForeColor = System.Drawing.Color.White;
+			this.progSupplies.IncrementalProgress = 0;
 			this.progSupplies.LeftText = "";
 			this.progSupplies.Location = new System.Drawing.Point(0, 20);
 			this.progSupplies.Margin = new System.Windows.Forms.Padding(0);
 			this.progSupplies.Maximum = 3000;
 			this.progSupplies.Name = "progSupplies";
+			this.progSupplies.Padding = new System.Windows.Forms.Padding(5);
 			this.progSupplies.RightText = "";
 			this.progSupplies.Size = new System.Drawing.Size(133, 19);
 			this.progSupplies.TabIndex = 18;
@@ -490,11 +484,13 @@ namespace FrEee.WinForms.Controls
 			this.progAmmunition.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progAmmunition.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progAmmunition.ForeColor = System.Drawing.Color.White;
+			this.progAmmunition.IncrementalProgress = 0;
 			this.progAmmunition.LeftText = "";
 			this.progAmmunition.Location = new System.Drawing.Point(0, 59);
 			this.progAmmunition.Margin = new System.Windows.Forms.Padding(0);
 			this.progAmmunition.Maximum = 500;
 			this.progAmmunition.Name = "progAmmunition";
+			this.progAmmunition.Padding = new System.Windows.Forms.Padding(5);
 			this.progAmmunition.RightText = "";
 			this.progAmmunition.Size = new System.Drawing.Size(133, 19);
 			this.progAmmunition.TabIndex = 20;
@@ -520,11 +516,13 @@ namespace FrEee.WinForms.Controls
 			this.progFuel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progFuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progFuel.ForeColor = System.Drawing.Color.White;
+			this.progFuel.IncrementalProgress = 0;
 			this.progFuel.LeftText = "";
 			this.progFuel.Location = new System.Drawing.Point(0, 98);
 			this.progFuel.Margin = new System.Windows.Forms.Padding(0);
 			this.progFuel.Maximum = 2000;
 			this.progFuel.Name = "progFuel";
+			this.progFuel.Padding = new System.Windows.Forms.Padding(5);
 			this.progFuel.RightText = "";
 			this.progFuel.Size = new System.Drawing.Size(133, 19);
 			this.progFuel.TabIndex = 22;
@@ -566,11 +564,13 @@ namespace FrEee.WinForms.Controls
 			this.progHull.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progHull.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progHull.ForeColor = System.Drawing.Color.White;
+			this.progHull.IncrementalProgress = 0;
 			this.progHull.LeftText = "";
 			this.progHull.Location = new System.Drawing.Point(0, 98);
 			this.progHull.Margin = new System.Windows.Forms.Padding(0);
 			this.progHull.Maximum = 200;
 			this.progHull.Name = "progHull";
+			this.progHull.Padding = new System.Windows.Forms.Padding(5);
 			this.progHull.RightText = "";
 			this.progHull.Size = new System.Drawing.Size(133, 19);
 			this.progHull.TabIndex = 30;
@@ -585,11 +585,13 @@ namespace FrEee.WinForms.Controls
 			this.progArmor.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progArmor.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progArmor.ForeColor = System.Drawing.Color.White;
+			this.progArmor.IncrementalProgress = 0;
 			this.progArmor.LeftText = "";
 			this.progArmor.Location = new System.Drawing.Point(0, 59);
 			this.progArmor.Margin = new System.Windows.Forms.Padding(0);
 			this.progArmor.Maximum = 300;
 			this.progArmor.Name = "progArmor";
+			this.progArmor.Padding = new System.Windows.Forms.Padding(5);
 			this.progArmor.RightText = "";
 			this.progArmor.Size = new System.Drawing.Size(133, 19);
 			this.progArmor.TabIndex = 29;
@@ -615,11 +617,13 @@ namespace FrEee.WinForms.Controls
 			this.progShields.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progShields.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progShields.ForeColor = System.Drawing.Color.White;
+			this.progShields.IncrementalProgress = 0;
 			this.progShields.LeftText = "";
 			this.progShields.Location = new System.Drawing.Point(0, 20);
 			this.progShields.Margin = new System.Windows.Forms.Padding(0);
 			this.progShields.Maximum = 200;
 			this.progShields.Name = "progShields";
+			this.progShields.Padding = new System.Windows.Forms.Padding(5);
 			this.progShields.RightText = "";
 			this.progShields.Size = new System.Drawing.Size(133, 19);
 			this.progShields.TabIndex = 24;
@@ -665,11 +669,13 @@ namespace FrEee.WinForms.Controls
 			this.progMovement.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.progMovement.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.progMovement.ForeColor = System.Drawing.Color.White;
+			this.progMovement.IncrementalProgress = 0;
 			this.progMovement.LeftText = "";
 			this.progMovement.Location = new System.Drawing.Point(212, 132);
 			this.progMovement.Margin = new System.Windows.Forms.Padding(0);
 			this.progMovement.Maximum = 6;
 			this.progMovement.Name = "progMovement";
+			this.progMovement.Padding = new System.Windows.Forms.Padding(6, 6, 6, 6);
 			this.progMovement.RightText = "";
 			this.progMovement.Size = new System.Drawing.Size(47, 15);
 			this.progMovement.TabIndex = 18;
@@ -854,37 +860,13 @@ namespace FrEee.WinForms.Controls
 			// pageAbility
 			// 
 			this.pageAbility.BackColor = System.Drawing.Color.Black;
-			this.pageAbility.Controls.Add(this.treeAbilities);
+			this.pageAbility.Controls.Add(this.abilityTreeView);
 			this.pageAbility.Location = new System.Drawing.Point(4, 29);
 			this.pageAbility.Name = "pageAbility";
 			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
 			this.pageAbility.Size = new System.Drawing.Size(292, 614);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
-			// 
-			// treeAbilities
-			// 
-			this.treeAbilities.BackColor = System.Drawing.Color.Black;
-			this.treeAbilities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeAbilities.ForeColor = System.Drawing.Color.White;
-			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
-			this.treeAbilities.Name = "treeAbilities";
-			treeNode1.Name = "Node1";
-			treeNode1.Text = "Racial Trait: +5";
-			treeNode2.Name = "Node3";
-			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode2.Text = "War Shrine: +10";
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Attack Modifier: +15";
-			treeNode4.Name = "Node5";
-			treeNode4.Text = "Hull Size: -10";
-			treeNode5.Name = "Node4";
-			treeNode5.Text = "Defense Modifier: -10";
-			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode5});
-			this.treeAbilities.Size = new System.Drawing.Size(286, 608);
-			this.treeAbilities.TabIndex = 0;
 			// 
 			// gameTabControl1
 			// 
@@ -1080,6 +1062,19 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 520);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
+			// abilityTreeView
+			// 
+			this.abilityTreeView.Abilities = null;
+			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
+			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
+			this.abilityTreeView.IntrinsicAbilities = null;
+			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
+			this.abilityTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.abilityTreeView.Name = "abilityTreeView";
+			this.abilityTreeView.Size = new System.Drawing.Size(286, 608);
+			this.abilityTreeView.TabIndex = 0;
+			// 
 			// AutonomousSpaceVehicleReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1142,7 +1137,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtComponentsFunctional;
 		private System.Windows.Forms.Label txtComponentsFunctionalDetail;
 		private System.Windows.Forms.Label txtCargoSpaceFreeDetail;
-		private System.Windows.Forms.TreeView treeAbilities;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label lblSupplies;
 		private GameProgressBar progSupplies;
@@ -1180,5 +1174,6 @@ namespace FrEee.WinForms.Controls
 		private GameButton btnOrderDown;
 		private GameButton btnOrderUp;
 		private System.Windows.Forms.ListBox lstOrdersDetail;
+		private AbilityTreeView abilityTreeView;
 	}
 }
