@@ -11,6 +11,7 @@ using System.Drawing;
 using FrEee.Utility;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
+using System.Reflection;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -202,7 +203,18 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static IList<ICommand> DeserializeCommands(Stream stream)
 		{
-			return Serializer.Deserialize<IList<ICommand>>(stream);
+			var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
+
+			// check for client safety
+			foreach (var cmd in cmds)
+			{
+				var props = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
+				var badProps = props.Where(prop => !prop.PropertyType.IsClientSafe());
+				if (badProps.Any())
+					throw new Exception(cmd.GetType() + " contained a non-client-safe type " + badProps.First().PropertyType + " in property " + badProps.First().Name);
+			}
+
+			return cmds;
 		}
 
 		/// <summary>

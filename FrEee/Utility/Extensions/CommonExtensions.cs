@@ -711,5 +711,17 @@ namespace FrEee.Utility.Extensions
 			var min = list.Min(x => x.Value);
 			return list.Where(x => x.Value.Equals(min)).Select(x => x.Item);
 		}
+
+		/// <summary>
+		/// Is this type safe to pass from the client to the server?
+		/// Primitives, strings, points and colors are client safe.
+		/// So are types marked with ClientSafeAttribute.
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		public static bool IsClientSafe(this Type t)
+		{
+			return t.IsPrimitive || t == typeof(string) || t == typeof(Point) || t == typeof(Color) || t.GetCustomAttributes(typeof(ClientSafeAttribute), true).Any();
+		}
 	}
 }
