@@ -168,30 +168,33 @@ namespace FrEee.Modding.Templates
 				}
 
 				// create the warp points
-				// TODO - use mod files data for warp points
+				var abils = startLocation.Item.WarpPointAbilities.Concat(endLocation.Item.WarpPointAbilities);
+				ITemplate<WarpPoint> wpTemplate;
+				if (abils.Any())
+				{
+					// use unusual warp point templates
+					wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
+				}
+				else
+				{
+					// use normal warp point templates
+					wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+				}
 				var angleOut = startLocation.Location.AngleTo(endLocation.Location);
 				var angleBack = angleOut + 180d;
 				var sector1 = GetWarpPointSector(startLocation.Item, angleOut);
 				var sector2 = GetWarpPointSector(endLocation.Item, angleBack);
-				var wp1 = new WarpPoint
-				{
-					Description = "A warp point connecting two star systems.",
-					IsOneWay = false,
-					Name = "Warp Point to " + endLocation.Item.Name,
-					StellarSize = StellarSize.Medium,
-					Target = sector2,
-				};
+				var wp1 = wpTemplate.Instantiate();
+				wp1.IsOneWay = false;
+				wp1.Name = "Warp Point to " + endLocation.Item.Name;
+				wp1.Target = sector2;
 				sector1.SpaceObjects.Add(wp1);
-				var wp2 = new WarpPoint
-				{
-					Description = "A warp point connecting two star systems.",
-					IsOneWay = false,
-					Name = "Warp Point to " + startLocation.Item.Name,
-					StellarSize = StellarSize.Medium,
-					Target = sector1,
-				};
+				var wp2 = wpTemplate.Instantiate();
+				wp2.IsOneWay = false;
+				wp2.Name = "Warp Point to " + startLocation.Item.Name;
+				wp2.Target = sector1;
 				sector2.SpaceObjects.Add(wp2);
-				foreach (var abil in startLocation.Item.WarpPointAbilities.Concat(endLocation.Item.WarpPointAbilities))
+				foreach (var abil in abils)
 				{
 					wp1.IntrinsicAbilities.Add(abil);
 					wp2.IntrinsicAbilities.Add(abil);
