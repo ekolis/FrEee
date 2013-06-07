@@ -77,11 +77,13 @@ namespace FrEee.WinForms.Controls
 				resMaintRad.Amount = vehicle.Design.Cost["Radioactives"] / 5;
 
 				// component summary
-				// TODO - damaged components
-				txtComponentsFunctional.Text = vehicle.Components.Count + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsSummary.Initialize(32, 32);
-				foreach (var g in vehicle.Components.GroupBy(c => new { Template = c.Template, IsDamaged = false }))
-					lstComponentsSummary.AddItemWithImage(null, g.Count().ToString(), g.First(), g.First().Template.Icon);
+				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
+				{
+					var text = g.Any(c => c.IsDamaged) ? g.Where(c => !c.IsDamaged).Count() + " / " + g.Count() : g.Count().ToString();
+					lstComponentsSummary.AddItemWithImage(null, text, g.First(), g.First().Template.Icon);
+				}
 
 				// TODO - cargo summary
 				txtCargoSpaceFree.Text = vehicle.Design.CargoStorage.Kilotons() + " / " + vehicle.Design.CargoStorage.Kilotons() + " free";
@@ -93,11 +95,14 @@ namespace FrEee.WinForms.Controls
 					lstOrdersDetail.Items.Add(o);
 
 				// component detail
-				// TODO - damaged components
-				txtComponentsFunctional.Text = vehicle.Components.Count + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsSummary.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
-					lstComponentsSummary.AddItemWithImage(null, g.Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
+				{
+					lstComponentsSummary.AddItemWithImage(null, g.Where(c => !c.IsDamaged).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
+					if (g.Where(c => c.IsDamaged).Any())
+						lstComponentsSummary.AddItemWithImage(null, g.Where(c => c.IsDamaged).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
+				}
 
 				// TODO - cargo detail
 				txtCargoSpaceFreeDetail.Text = vehicle.Design.CargoStorage.Kilotons() + " / " + vehicle.Design.CargoStorage.Kilotons() + " free";
