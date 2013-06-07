@@ -19,18 +19,20 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The construction queue performing construction.
 		/// </summary>
+		[DoNotSerialize]
 		public ConstructionQueue Target { get { return target; } set { target = value; } }
 
-		private Reference<ConstructionQueue> target;
+		private Reference<ConstructionQueue> target { get; set; }
 
 		/// <summary>
 		/// The construction template.
 		/// </summary>
+		[DoNotSerialize]
 		public TTemplate Template { get { return template; } set { template = value; } }
 
 		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
 
-		private Reference<TTemplate> template;
+		private Reference<TTemplate> template { get; set; }
 
 		/// <summary>
 		/// The item being built.
