@@ -69,10 +69,15 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The empire which created this design.
 		/// </summary>
+		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
 
-		private Reference<Empire> owner;
+		/// <summary>
+		/// For serialization and client safety
+		/// </summary>
+		private Reference<Empire> owner { get; set; }
 
+		[DoNotSerialize]
 		IHull IDesign.Hull
 		{
 			get { return Hull; }
@@ -88,9 +93,10 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The hull used in this design.
 		/// </summary>
+		[DoNotSerialize]
 		public IHull<T> Hull { get { return hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
 
-		private Reference<IHull<T>> hull;
+		private Reference<IHull<T>> hull { get; set; }
 
 		/// <summary>
 		/// The components used in this design.
@@ -304,7 +310,8 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get
 			{
@@ -312,7 +319,8 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get
 			{

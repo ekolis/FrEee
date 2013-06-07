@@ -14,6 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
+	[ClientSafe]
 	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
 	{
 		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null)
@@ -25,16 +26,18 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The component template used.
 		/// </summary>
+		[DoNotSerialize]
 		public ComponentTemplate ComponentTemplate { get { return componentTemplate; } set { componentTemplate = value; } }
 
-		private Reference<ComponentTemplate> componentTemplate;
+		private Reference<ComponentTemplate> componentTemplate { get; set; }
 
 		/// <summary>
 		/// The mount used.
 		/// </summary>
+		[DoNotSerialize]
 		public Mount Mount { get { return mount; } set { mount = value; } }
 
-		private Reference<Mount> mount;
+		private Reference<Mount> mount { get; set; }
 
 		/// <summary>
 		/// The name of the component, prefixed with the name of the mount (if any).

@@ -14,6 +14,7 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
+	[ClientSafe]
 	public class Reference<T> : DynamicObject where T : IReferrable<object>
 	{
 		public Reference(T t)
