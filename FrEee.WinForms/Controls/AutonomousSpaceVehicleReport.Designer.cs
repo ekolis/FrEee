@@ -28,18 +28,18 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("100x Eee Population");
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
 			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -340,9 +340,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
 			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem25,
+            listViewItem26,
+            listViewItem27});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
 			this.lstCargoSummary.Size = new System.Drawing.Size(271, 92);
@@ -384,9 +384,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem28,
+            listViewItem29,
+            listViewItem30});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
 			this.lstComponentsSummary.Size = new System.Drawing.Size(271, 92);
@@ -804,9 +804,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem31,
+            listViewItem32,
+            listViewItem33});
 			this.lstComponentsDetail.Location = new System.Drawing.Point(0, 22);
 			this.lstComponentsDetail.Name = "lstComponentsDetail";
 			this.lstComponentsDetail.Size = new System.Drawing.Size(292, 646);
@@ -847,9 +847,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
+            listViewItem34,
+            listViewItem35,
+            listViewItem36});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
@@ -873,6 +873,7 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Abilities = null;
 			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
 			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.abilityTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
 			this.abilityTreeView.IntrinsicAbilities = null;
 			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
@@ -928,6 +929,7 @@ namespace FrEee.WinForms.Controls
 			this.btnDeleteOrder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDeleteOrder.BackColor = System.Drawing.Color.Black;
+			this.btnDeleteOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnDeleteOrder.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnDeleteOrder.Location = new System.Drawing.Point(214, 37);
 			this.btnDeleteOrder.Name = "btnDeleteOrder";
@@ -942,6 +944,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOrderGoesDown.BackColor = System.Drawing.Color.Black;
+			this.btnOrderGoesDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnOrderGoesDown.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnOrderGoesDown.Location = new System.Drawing.Point(113, 37);
 			this.btnOrderGoesDown.Name = "btnOrderGoesDown";
@@ -956,6 +959,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderToBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOrderToBottom.BackColor = System.Drawing.Color.Black;
+			this.btnOrderToBottom.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnOrderToBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnOrderToBottom.Location = new System.Drawing.Point(8, 37);
 			this.btnOrderToBottom.Name = "btnOrderToBottom";
@@ -970,6 +974,7 @@ namespace FrEee.WinForms.Controls
 			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
+			this.btnClearOrders.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnClearOrders.Location = new System.Drawing.Point(214, 6);
 			this.btnClearOrders.Name = "btnClearOrders";
@@ -984,6 +989,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOrderGoesUp.BackColor = System.Drawing.Color.Black;
+			this.btnOrderGoesUp.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnOrderGoesUp.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnOrderGoesUp.Location = new System.Drawing.Point(113, 6);
 			this.btnOrderGoesUp.Name = "btnOrderGoesUp";
@@ -998,6 +1004,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderToTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOrderToTop.BackColor = System.Drawing.Color.Black;
+			this.btnOrderToTop.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnOrderToTop.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnOrderToTop.Location = new System.Drawing.Point(8, 6);
 			this.btnOrderToTop.Name = "btnOrderToTop";
@@ -1062,9 +1069,10 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstOrdersDetail.BackColor = System.Drawing.Color.Black;
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstOrdersDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
+			this.lstOrdersDetail.ItemHeight = 15;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Move to Kartogia (0, -5)",
             "Drop All Eee Population",
@@ -1072,7 +1080,7 @@ namespace FrEee.WinForms.Controls
             "Move to Fizbon (3, 6)"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 520);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 525);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// AutonomousSpaceVehicleReport
