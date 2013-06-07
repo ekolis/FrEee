@@ -215,7 +215,7 @@ namespace FrEee.Game.Objects.Civilization
 			var totalRP = Income["Research"];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
-			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetNextLevelCost(this),
+			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetLevelCost(level),
 					ResearchSpending[tech] * totalRP / 100, GetResearchQueueDelay(tech, level), queueSpending * totalRP / 100);
 		}
 
@@ -240,6 +240,8 @@ namespace FrEee.Game.Objects.Civilization
 					break; // found the tech and level we ant
 				costBefore += tech.GetLevelCost(foundLevels[queuedTech]);
 			}
+			if (queueSpending == 0)
+				return double.PositiveInfinity;
 			return costBefore / (queueSpending * totalRP / 100);
 		}
 

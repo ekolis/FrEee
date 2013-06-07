@@ -46,7 +46,7 @@ namespace FrEee.Utility
 					return (double)(Maximum - Value) / (double)(IncrementalProgressBeforeDelay + ExtraIncrementalProgressAfterDelay);
 				else
 				{
-					var progressAfterDelay = new Progress((int)(Value + Delay * IncrementalProgressBeforeDelay), Maximum, ExtraIncrementalProgressAfterDelay);
+					var progressAfterDelay = new Progress(Value, Maximum, ExtraIncrementalProgressAfterDelay);
 					return progressAfterDelay.RawEta + Delay;
 				}
 			}
