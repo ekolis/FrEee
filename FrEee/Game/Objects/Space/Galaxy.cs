@@ -206,7 +206,7 @@ namespace FrEee.Game.Objects.Space
 			var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
 
 			// check for client safety
-			foreach (var cmd in cmds)
+			foreach (var cmd in cmds.Where(cmd => cmd != null))
 			{
 				var props = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
 				var badProps = props.Where(prop => !prop.PropertyType.IsClientSafe());

@@ -431,6 +431,7 @@ namespace FrEee.Utility
 					if (!int.TryParse(sizeStr, out size))
 						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
 					var coll = Activator.CreateInstance(type);
+					context.Add(coll);
 					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
 					Type itemType;
 					if (type.GetGenericArguments().Length == 2)
@@ -454,7 +455,6 @@ namespace FrEee.Utility
 						adder.Invoke(coll, new object[] { item });
 					}
 					o = coll;
-					context.Add(o);
 
 					// clean up
 					ReadSemicolon(r, type, log);
@@ -466,6 +466,7 @@ namespace FrEee.Utility
 					if (!int.TryParse(sizeStr, out size))
 						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
 					var coll = Activator.CreateInstance(type);
+					context.Add(coll);
 					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
 					Type itemType;
 					if (type.GetGenericArguments().Count() == 2)
@@ -480,7 +481,6 @@ namespace FrEee.Utility
 						adder.Invoke(coll, new object[] { key, val });
 					}
 					o = coll;
-					context.Add(o);
 
 					// clean up
 					ReadSemicolon(r, type, log);
