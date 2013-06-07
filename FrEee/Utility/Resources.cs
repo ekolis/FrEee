@@ -91,6 +91,8 @@ namespace FrEee.Utility
 		public static Resources Min(Resources r1, Resources r2)
 		{
 			var result = new Resources();
+			if (r1 == null || r2 == null)
+				return new Resources();
 			foreach (var key in r1.Keys.Union(r2.Keys))
 				result.Add(key, Math.Min(r1[key], r2[key]));
 			return result;
