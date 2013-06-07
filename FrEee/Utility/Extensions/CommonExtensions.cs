@@ -721,7 +721,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool IsClientSafe(this Type t)
 		{
-			return t.IsPrimitive || t == typeof(string) || t == typeof(Point) || t == typeof(Color) || t.GetCustomAttributes(typeof(ClientSafeAttribute), true).Any();
+			return t.IsPrimitive || t == typeof(string) || t == typeof(Point) || t == typeof(Color) || t.GetCustomAttributes(typeof(ClientSafeAttribute), true).Any() || t.BaseType != null && t.BaseType.IsClientSafe() || t.GetInterfaces().Any(i => i.IsClientSafe());
 		}
 	}
 }

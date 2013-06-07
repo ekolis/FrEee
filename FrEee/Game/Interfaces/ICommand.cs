@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to some object.
 	/// </summary>
+	[ClientSafe]
 	public interface ICommand
 	{
 		/// <summary>

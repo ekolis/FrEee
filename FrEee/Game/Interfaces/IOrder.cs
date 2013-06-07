@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An order issued by a player to an object to do something.
 	/// </summary>
+	[ClientSafe]
 	public interface IOrder<T, out TOrder>
 		where T : IOrderable<T, TOrder>
 		where TOrder : IOrder<T, TOrder>

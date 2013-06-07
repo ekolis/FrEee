@@ -208,10 +208,10 @@ namespace FrEee.Game.Objects.Space
 			// check for client safety
 			foreach (var cmd in cmds.Where(cmd => cmd != null))
 			{
-				var props = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
-				var badProps = props.Where(prop => !prop.PropertyType.IsClientSafe());
-				if (badProps.Any())
-					throw new Exception(cmd.GetType() + " contained a non-client-safe type " + badProps.First().PropertyType + " in property " + badProps.First().Name);
+				var vals = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null).Select(prop => new { Name = prop.Name, Value = prop.GetValue(cmd, new object[0])});
+				var badVals = vals.Where(val => val.Value != null && !val.Value.GetType().IsClientSafe());
+				if (badVals.Any())
+					throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
 			}
 
 			return cmds;
