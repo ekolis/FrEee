@@ -95,13 +95,13 @@ namespace FrEee.WinForms.Controls
 					lstOrdersDetail.Items.Add(o);
 
 				// component detail
-				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
-				lstComponentsSummary.Initialize(32, 32);
+				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
+				lstComponentsDetail.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
-					lstComponentsSummary.AddItemWithImage(null, g.Where(c => !c.IsDamaged).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
+					lstComponentsDetail.AddItemWithImage(null, g.Where(c => !c.IsDamaged).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
 					if (g.Where(c => c.IsDamaged).Any())
-						lstComponentsSummary.AddItemWithImage(null, g.Where(c => c.IsDamaged).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
+						lstComponentsDetail.AddItemWithImage(null, g.Where(c => c.IsDamaged).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
 				}
 
 				// TODO - cargo detail

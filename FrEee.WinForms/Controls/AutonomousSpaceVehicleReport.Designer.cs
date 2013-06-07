@@ -92,6 +92,7 @@ namespace FrEee.WinForms.Controls
 			this.txtCargoSpaceFreeDetail = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
+			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageOrders = new System.Windows.Forms.TabPage();
 			this.btnDeleteOrder = new FrEee.WinForms.Controls.GameButton();
@@ -105,7 +106,6 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
-			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
@@ -812,7 +812,7 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.Size = new System.Drawing.Size(292, 646);
 			this.lstComponentsDetail.TabIndex = 24;
 			this.lstComponentsDetail.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsDetail.View = System.Windows.Forms.View.Tile;
+			this.lstComponentsDetail.View = System.Windows.Forms.View.List;
 			// 
 			// pageCargo
 			// 
@@ -855,7 +855,7 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
 			this.lstCargoDetail.TabIndex = 24;
 			this.lstCargoDetail.UseCompatibleStateImageBehavior = false;
-			this.lstCargoDetail.View = System.Windows.Forms.View.Tile;
+			this.lstCargoDetail.View = System.Windows.Forms.View.List;
 			// 
 			// pageAbility
 			// 
@@ -867,6 +867,19 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.Size = new System.Drawing.Size(292, 614);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
+			// 
+			// abilityTreeView
+			// 
+			this.abilityTreeView.Abilities = null;
+			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
+			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
+			this.abilityTreeView.IntrinsicAbilities = null;
+			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
+			this.abilityTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.abilityTreeView.Name = "abilityTreeView";
+			this.abilityTreeView.Size = new System.Drawing.Size(286, 608);
+			this.abilityTreeView.TabIndex = 0;
 			// 
 			// gameTabControl1
 			// 
@@ -1061,19 +1074,6 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 520);
 			this.lstOrdersDetail.TabIndex = 0;
-			// 
-			// abilityTreeView
-			// 
-			this.abilityTreeView.Abilities = null;
-			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
-			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
-			this.abilityTreeView.IntrinsicAbilities = null;
-			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
-			this.abilityTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.abilityTreeView.Name = "abilityTreeView";
-			this.abilityTreeView.Size = new System.Drawing.Size(286, 608);
-			this.abilityTreeView.TabIndex = 0;
 			// 
 			// AutonomousSpaceVehicleReport
 			// 
