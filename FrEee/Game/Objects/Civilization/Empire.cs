@@ -295,6 +295,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool HasUnlocked(IResearchable item)
 		{
+			if (item == null)
+				return true;
 			return item.TechnologyRequirements.All(r => ResearchedTechnologies[r.Technology] >= r.Level);
 		}
 
