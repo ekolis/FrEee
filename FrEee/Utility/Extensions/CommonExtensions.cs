@@ -105,6 +105,8 @@ namespace FrEee.Utility.Extensions
 						stacked.Add(Tuple.Create(group.Key, abil));
 				}
 			}
+			foreach (var abil in abilities.Where(a =>!Mod.Current.AbilityRules.Any(r => r.Name == a.Name)))
+				stacked.Add(Tuple.Create(abil, abil));
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
