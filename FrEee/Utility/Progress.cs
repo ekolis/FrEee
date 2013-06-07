@@ -6,31 +6,81 @@ using System.Text;
 
 namespace FrEee.Utility
 {
-	public struct Progress
+	/// <summary>
+	/// Progress towards completing something.
+	/// </summary>
+	public class Progress
 	{
-		public Progress(int value, int maximum, int incrementalProgress = 0)
-			: this()
+		public Progress(int value, int maximum, int incrementalProgressBeforeDelay = 0, double? delay = null, int extraIncrementalProgressAfterDelay = 0)
 		{
 			Value = value;
 			Maximum = maximum;
-			IncrementalProgress = incrementalProgress;
+			IncrementalProgressBeforeDelay = incrementalProgressBeforeDelay;
+			Delay = delay;
+			ExtraIncrementalProgressAfterDelay = extraIncrementalProgressAfterDelay;
 		}
 
 		public int Value { get; set; }
 		public int Maximum { get; set; }
-		public int IncrementalProgress { get; set; }
+		public int IncrementalProgressBeforeDelay { get; set; }
+		public double? Delay { get; set; }
+		public int ExtraIncrementalProgressAfterDelay { get; set; }
 
 		/// <summary>
 		/// Estimated time to completion (null for never).
+		/// </summary>
+		public double? RawEta
+		{
+			get
+			{
+				if (IncrementalProgressBeforeDelay <= 0 && ExtraIncrementalProgressAfterDelay <= 0)
+					return null;
+				else if (Delay == null)
+				{
+					if (IncrementalProgressBeforeDelay <= 0)
+						return null;
+					else
+						return (double)(Maximum - Value) / (double)(IncrementalProgressBeforeDelay);
+				}
+				else if (Delay <= 0)
+					return (double)(Maximum - Value) / (double)(IncrementalProgressBeforeDelay + ExtraIncrementalProgressAfterDelay);
+				else
+				{
+					var progressAfterDelay = new Progress((int)(Value + Delay * IncrementalProgressBeforeDelay), Maximum, ExtraIncrementalProgressAfterDelay);
+					return progressAfterDelay.RawEta + Delay;
+				}
+			}
+		}
+
+		/// <summary>
+		/// ETA rounded up to the next turn.
 		/// </summary>
 		public int? Eta
 		{
 			get
 			{
-				if (IncrementalProgress <= 0)
+				if (RawEta == null)
 					return null;
-				return (int)Math.Ceiling((double)(Maximum - Value) / (double)IncrementalProgress);
+				return (int)Math.Ceiling(RawEta.Value);
 			}
 		}
+	}
+
+	/// <summary>
+	/// Progress towards completing something.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class Progress<T> : Progress
+	{
+		public Progress(T item, int value, int maximum, int incrementalProgressBeforeDelay = 0, double? delay = 0, int extraIncrementalProgressAfterDelay = 0)
+			: base(value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)
+		{
+			Item = item;
+		}
+
+		/// <summary>
+		/// The item being worked towards.
+		/// </summary>
+		public T Item { get; set; }
 	}
 }

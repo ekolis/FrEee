@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Controls
 			{
 				Value = value.Value;
 				Maximum = value.Maximum;
-				IncrementalProgress = value.IncrementalProgress;
+				IncrementalProgress = value.IncrementalProgressBeforeDelay;
 			}
 		}
 

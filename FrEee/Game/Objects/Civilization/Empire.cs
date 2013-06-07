@@ -11,6 +11,7 @@ using FrEee.Modding;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Commands;
+using Tech = FrEee.Game.Objects.Technology.Technology;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -46,7 +47,7 @@ namespace FrEee.Game.Objects.Civilization
 			KnownDesigns = new List<IDesign>();
 			Log = new List<LogMessage>();
 			ResearchedTechnologies = new SafeDictionary<Technology.Technology, int>();
-			ResearchProgress = new SafeDictionary<Technology.Technology, int>();
+			AccumulatedResearch = new SafeDictionary<Tech, int>();
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 		}
@@ -186,7 +187,51 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Progress towards completing next levels of techs.
 		/// </summary>
-		public IDictionary<Technology.Technology, int> ResearchProgress
+		public IEnumerable<Progress<Tech>> ResearchProgress
+		{
+			get
+			{
+				return AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1));
+			}
+		}
+
+		public Progress<Tech> GetResearchProgress(Tech tech, int level)
+		{
+			var totalRP = Income["Research"];
+			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
+			var queueSpending = 100 - pctSpending;
+			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetNextLevelCost(this),
+					ResearchSpending[tech] * totalRP / 100, GetResearchQueueDelay(tech, level), queueSpending * totalRP / 100);
+		}
+
+		/// <summary>
+		/// How long until this empire can research a tech in its queue?
+		/// </summary>
+		/// <param name="tech"></param>
+		/// <returns></returns>
+		private double? GetResearchQueueDelay(Tech tech, int level)
+		{
+			if (!ResearchQueue.Contains(tech))
+				return null;
+			var totalRP = Income["Research"];
+			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
+			var queueSpending = 100 - pctSpending;
+			var foundLevels = new Dictionary<Tech, int>(ResearchedTechnologies);
+			int costBefore = 0;
+			foreach (var queuedTech in ResearchQueue)
+			{
+				foundLevels[queuedTech]++;
+				if (queuedTech == tech && foundLevels[queuedTech] == level)
+					break; // found the tech and level we ant
+				costBefore += tech.GetLevelCost(foundLevels[queuedTech]);
+			}
+			return costBefore / (queueSpending * totalRP / 100);
+		}
+
+		/// <summary>
+		/// Accumulated research points.
+		/// </summary>
+		public IDictionary<Technology.Technology, int> AccumulatedResearch
 		{
 			get;
 			private set;
@@ -244,12 +289,12 @@ namespace FrEee.Game.Objects.Civilization
 		public void Research(Technology.Technology tech, int points)
 		{
 			var oldlvl = ResearchedTechnologies[tech];
-			ResearchProgress[tech] += points;
+			AccumulatedResearch[tech] += points;
 			var newStuff = new List<IResearchable>();
-			while (ResearchProgress[tech] >= tech.GetNextLevelCost(this))
+			while (AccumulatedResearch[tech] >= tech.GetNextLevelCost(this))
 			{
 				// advanced a level!
-				ResearchProgress[tech] -= tech.GetNextLevelCost(this);
+				AccumulatedResearch[tech] -= tech.GetNextLevelCost(this);
 				newStuff.AddRange(tech.GetExpectedResults(this));
 				ResearchedTechnologies[tech]++;
 			}
@@ -257,6 +302,8 @@ namespace FrEee.Game.Objects.Civilization
 				Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + ResearchedTechnologies[tech] + " in " + tech + "!"));
 			foreach (var item in newStuff)
 				Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
+			// if it was in the queue, remove the first instance
+			ResearchQueue.Remove(tech);
 		}
 
 		/// <summary>

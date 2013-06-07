@@ -88,14 +88,20 @@ namespace FrEee.Game.Objects.Technology
 			get { return null; }
 		}
 
-		public int GetNextLevelCost(Empire emp)
+		public int GetLevelCost(int level)
 		{
 			// TODO - use galaxy tech cost formula
-			return LevelCost * (emp.ResearchedTechnologies[this] + 1);
+			return LevelCost * level;
+		}
+
+		public int GetNextLevelCost(Empire emp)
+		{
+			return GetLevelCost(emp.ResearchedTechnologies[this] + 1);
 		}
 
 		/// <summary>
 		/// Current empire's cost to research the next level.
+		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
 		public int NextLevelCost
 		{
@@ -107,6 +113,7 @@ namespace FrEee.Game.Objects.Technology
 
 		/// <summary>
 		/// Current empire's level in this technology.
+		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
 		public int CurrentLevel
 		{
@@ -118,23 +125,24 @@ namespace FrEee.Game.Objects.Technology
 
 		/// <summary>
 		/// Current empire's research progress in this technology.
+		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
 		public Progress Progress
 		{
 			get
 			{
-				return new Progress(Empire.Current.ResearchProgress[this], NextLevelCost, Empire.Current.Income["Research"] * Spending.Value / 100);
+				return Empire.Current.ResearchProgress.SingleOrDefault(p => p.Item == this);
 			}
 		}
 
 		/// <summary>
 		/// Current empire's spending percentage on this technology.
+		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
 		public Progress Spending
 		{
 			get
 			{
-				// TODO - get spending from empire
 				return new Progress(Empire.Current.ResearchSpending[this], 100);
 			}
 		}
@@ -155,6 +163,7 @@ namespace FrEee.Game.Objects.Technology
 
 		/// <summary>
 		/// Current empire's expected results for researching the next level of this tech.
+		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
 		public IEnumerable<IResearchable> ExpectedResults
 		{

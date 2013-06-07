@@ -43,22 +43,24 @@ namespace FrEee.WinForms.DataGridView
 			switch (ProgressDisplayMode)
 			{
 				case ProgressDisplayMode.Raw:
-					if (progress.IncrementalProgress != 0)
-						text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString() + " (" + (progress.IncrementalProgress >= 0 ? "+" + progress.IncrementalProgress.ToUnitString() : progress.IncrementalProgress.ToUnitString()) + " / turn)";
+					// TODO - show incremental progress after delay?
+					if (progress.IncrementalProgressBeforeDelay != 0)
+						text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString() + " (" + (progress.IncrementalProgressBeforeDelay >= 0 ? "+" + progress.IncrementalProgressBeforeDelay.ToUnitString() : progress.IncrementalProgressBeforeDelay.ToUnitString()) + " / turn)";
 					else
 						text = progress.Value.ToUnitString() + " / " + progress.Maximum.ToUnitString();
 					break;
 				case ProgressDisplayMode.Percentage:
-					if (progress.IncrementalProgress != 0)
-						text = ((double)progress.Value / (double)progress.Maximum * 100).ToString("f0") + "% (" + (progress.IncrementalProgress >= 0 ? "+" + ((double)progress.IncrementalProgress / (double)progress.Maximum * 100).ToString("f0") : ((double)progress.IncrementalProgress / (double)progress.Maximum * 100).ToString("f0")) + " / turn)";
+					// TODO - show incremental progress after delay?
+					if (progress.IncrementalProgressBeforeDelay != 0)
+						text = ((double)progress.Value / (double)progress.Maximum * 100).ToString("f0") + "% (" + (progress.IncrementalProgressBeforeDelay >= 0 ? "+" + ((double)progress.IncrementalProgressBeforeDelay / (double)progress.Maximum * 100).ToString("f0") : ((double)progress.IncrementalProgressBeforeDelay / (double)progress.Maximum * 100).ToString("f0")) + " / turn)";
 					else
 						text = ((double)progress.Value / (double)progress.Maximum * 100).ToString("f0") + "%";
 					break;
 				case ProgressDisplayMode.Eta:
-					if (progress.IncrementalProgress <= 0)
+					if (progress.Eta == null)
 						text = "Never";
 					else
-						text = Math.Ceiling((double)(progress.Maximum - progress.Value) / (double)progress.IncrementalProgress) + " turns";
+						text = progress.Eta + " turns";
 					break;
 			}
 			graphics.DrawString(text, cellStyle.Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });

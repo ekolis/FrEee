@@ -372,7 +372,7 @@ namespace FrEee.Game.Objects.Space
 					emp.KnownDesigns.Clear();
 					emp.Log.Clear();
 					emp.ResearchedTechnologies.Clear();
-					emp.ResearchProgress.Clear();
+					emp.AccumulatedResearch.Clear();
 					emp.ResearchQueue.Clear();
 					emp.ResearchSpending.Clear();
 				}

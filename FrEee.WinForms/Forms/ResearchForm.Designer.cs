@@ -29,7 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
 			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CurrentLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -83,14 +83,14 @@
             this.Progress,
             this.Spending});
 			this.gridQueues.DataSource = this.technologyBindingSource;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
-			dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-			dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle4;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle1.ForeColor = System.Drawing.Color.White;
+			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle1;
 			this.gridQueues.Location = new System.Drawing.Point(12, 40);
 			this.gridQueues.Name = "gridQueues";
 			this.gridQueues.ReadOnly = true;
@@ -247,6 +247,7 @@
 			this.btnDelete.TabIndex = 23;
 			this.btnDelete.Text = "Delete";
 			this.btnDelete.UseVisualStyleBackColor = false;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
 			// btnDown
 			// 
@@ -259,6 +260,7 @@
 			this.btnDown.TabIndex = 22;
 			this.btnDown.Text = "Down";
 			this.btnDown.UseVisualStyleBackColor = false;
+			this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
 			// 
 			// btnBottom
 			// 
@@ -271,6 +273,7 @@
 			this.btnBottom.TabIndex = 21;
 			this.btnBottom.Text = "Bottom";
 			this.btnBottom.UseVisualStyleBackColor = false;
+			this.btnBottom.Click += new System.EventHandler(this.btnBottom_Click);
 			// 
 			// btnClear
 			// 
@@ -283,6 +286,7 @@
 			this.btnClear.TabIndex = 20;
 			this.btnClear.Text = "Clear";
 			this.btnClear.UseVisualStyleBackColor = false;
+			this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
 			// 
 			// btnUp
 			// 
@@ -295,6 +299,7 @@
 			this.btnUp.TabIndex = 19;
 			this.btnUp.Text = "Up";
 			this.btnUp.UseVisualStyleBackColor = false;
+			this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
 			// 
 			// btnTop
 			// 
@@ -307,6 +312,7 @@
 			this.btnTop.TabIndex = 18;
 			this.btnTop.Text = "Top";
 			this.btnTop.UseVisualStyleBackColor = false;
+			this.btnTop.Click += new System.EventHandler(this.btnTop_Click);
 			// 
 			// gamePanel2
 			// 
@@ -332,7 +338,7 @@
 			this.lstQueue.FormattingEnabled = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
-			this.lstQueue.Size = new System.Drawing.Size(186, 118);
+			this.lstQueue.Size = new System.Drawing.Size(186, 117);
 			this.lstQueue.TabIndex = 0;
 			// 
 			// btnAddToQueue
@@ -347,6 +353,7 @@
 			this.btnAddToQueue.TabIndex = 11;
 			this.btnAddToQueue.Text = "Add to Queue";
 			this.btnAddToQueue.UseVisualStyleBackColor = false;
+			this.btnAddToQueue.Click += new System.EventHandler(this.btnAddToQueue_Click);
 			// 
 			// gamePanel1
 			// 
@@ -393,7 +400,7 @@
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(94, 30);
 			this.btnCancel.TabIndex = 25;
-			this.btnCancel.Text = "Close";
+			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 

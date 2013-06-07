@@ -39,6 +39,9 @@ namespace FrEee.WinForms.Forms
 			oldQueue = new List<Technology>();
 			foreach (var tech in Empire.Current.ResearchQueue)
 				oldQueue.Add(tech);
+
+			// bind queue
+			BindQueue();
 		}
 
 		private IEnumerable<Technology> allTechs;
@@ -77,7 +80,7 @@ namespace FrEee.WinForms.Forms
 			{
 				txtTechName.Text = curTech.Name;
 				var spent = allTechs.Sum(t => t.Spending.Value);
-				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent";
+				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
 				sldSpending.Maximum = 100 - spent + curTech.Spending.Value;
 				sldSpending.Value = curTech.Spending.Value;
 				sldSpending.Enabled = true;
@@ -95,6 +98,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
 			BindTechGrid();
+			BindQueue();
 		}
 
 		private bool abort;
@@ -150,6 +154,97 @@ namespace FrEee.WinForms.Forms
 			Empire.Current.ResearchQueue.Clear();
 			foreach (var tech in oldQueue)
 				Empire.Current.ResearchQueue.Add(tech);
+		}
+
+		private void BindQueue()
+		{
+			lstQueue.Items.Clear();
+			var idx = 0;
+			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			foreach (var tech in Empire.Current.ResearchQueue)
+			{
+				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
+				var eta = Empire.Current.GetResearchProgress(tech, levels[tech]).Eta;
+				if (eta == null)
+					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
+				else
+					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
+				idx++;
+			}
+		}
+
+		private void btnAddToQueue_Click(object sender, EventArgs e)
+		{
+			if (curTech != null)
+			{
+				Empire.Current.ResearchQueue.Add(curTech);
+				BindQueue();
+			}
+		}
+
+		private void btnTop_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(0, selTech);
+				BindQueue();
+			}
+		}
+
+		private void btnBottom_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Add(selTech);
+				BindQueue();
+			}
+		}
+
+		private void btnUp_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(Math.Max(0, selIdx - 1), selTech);
+				BindQueue();
+			}
+		}
+
+		private void btnDown_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				Empire.Current.ResearchQueue.Insert(Math.Min(Empire.Current.ResearchQueue.Count, selIdx + 1), selTech);
+				BindQueue();
+			}
+		}
+
+		private void btnClear_Click(object sender, EventArgs e)
+		{
+			Empire.Current.ResearchQueue.Clear();
+			BindQueue();
+		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			var selIdx = lstQueue.SelectedIndex;
+			if (selIdx >= 0)
+			{
+				var selTech = Empire.Current.ResearchQueue[selIdx];
+				Empire.Current.ResearchQueue.RemoveAt(selIdx);
+				BindQueue();
+			}
 		}
 	}
 }
