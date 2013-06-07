@@ -52,11 +52,11 @@ namespace FrEee.Utility
 			{
 				if (!context.KnownTypes.Contains(desiredType))
 				{
-					w.Write(desiredType.AssemblyQualifiedName + ":n;");
+					w.WriteLine(desiredType.AssemblyQualifiedName + ":n;");
 					context.KnownTypes.Add(desiredType);
 				}
 				else
-					w.Write(context.KnownTypes.IndexOf(desiredType) + ":n;");
+					w.WriteLine(context.KnownTypes.IndexOf(desiredType) + ":n;");
 				return;
 			}
 
