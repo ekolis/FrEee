@@ -191,9 +191,24 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1));
+				if (researchProgress == null)
+				{
+					ComputeResearchProgress();
+				}
+				return researchProgress;
 			}
 		}
+
+		/// <summary>
+		/// Recomputes the empire's research progress stats.
+		/// Call this when you modify the research spending priorities or the research queue.
+		/// </summary>
+		public void ComputeResearchProgress()
+		{
+			researchProgress = AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1)).ToArray();
+		}
+
+		private Progress<Tech>[] researchProgress;
 
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{

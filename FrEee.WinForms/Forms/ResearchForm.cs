@@ -161,6 +161,7 @@ namespace FrEee.WinForms.Forms
 			lstQueue.Items.Clear();
 			var idx = 0;
 			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			Empire.Current.ComputeResearchProgress();
 			foreach (var tech in Empire.Current.ResearchQueue)
 			{
 				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
