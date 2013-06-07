@@ -28,240 +28,245 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.tblButtonPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.btnQuit = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton6 = new FrEee.WinForms.Controls.GameButton();
-            this.btnLoad = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton3 = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton2 = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton7 = new FrEee.WinForms.Controls.GameButton();
-            this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
-            this.gameButton5 = new FrEee.WinForms.Controls.GameButton();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.tableLayoutPanel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.tblButtonPanel.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.tblButtonPanel = new System.Windows.Forms.TableLayoutPanel();
+			this.btnQuit = new FrEee.WinForms.Controls.GameButton();
+			this.btnScenario = new FrEee.WinForms.Controls.GameButton();
+			this.btnNew = new FrEee.WinForms.Controls.GameButton();
+			this.btnCredits = new FrEee.WinForms.Controls.GameButton();
+			this.btnMods = new FrEee.WinForms.Controls.GameButton();
+			this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
+			this.btnLoad = new FrEee.WinForms.Controls.GameButton();
+			this.btnResume = new FrEee.WinForms.Controls.GameButton();
+			this.progressBar1 = new System.Windows.Forms.ProgressBar();
+			this.tableLayoutPanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.tblButtonPanel.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// tableLayoutPanel1
+			// 
+			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 413F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.tblButtonPanel, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.progressBar1, 0, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 403);
-            this.tableLayoutPanel1.TabIndex = 0;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.tableLayoutPanel1.ColumnCount = 2;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 413F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.tblButtonPanel, 1, 0);
+			this.tableLayoutPanel1.Controls.Add(this.progressBar1, 0, 1);
+			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
+			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 403);
+			this.tableLayoutPanel1.TabIndex = 0;
+			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(407, 362);
-            this.pictureBox1.TabIndex = 2;
-            this.pictureBox1.TabStop = false;
-            // 
-            // tblButtonPanel
-            // 
-            this.tblButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(407, 362);
+			this.pictureBox1.TabIndex = 2;
+			this.pictureBox1.TabStop = false;
+			// 
+			// tblButtonPanel
+			// 
+			this.tblButtonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tblButtonPanel.ColumnCount = 1;
-            this.tblButtonPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblButtonPanel.Controls.Add(this.btnQuit, 0, 8);
-            this.tblButtonPanel.Controls.Add(this.gameButton6, 0, 5);
-            this.tblButtonPanel.Controls.Add(this.gameButton2, 0, 1);
-            this.tblButtonPanel.Controls.Add(this.gameButton7, 0, 7);
-            this.tblButtonPanel.Controls.Add(this.gameButton5, 0, 0);
-            this.tblButtonPanel.Controls.Add(this.btnQuickStart, 0, 2);
-            this.tblButtonPanel.Controls.Add(this.btnLoad, 0, 4);
-            this.tblButtonPanel.Controls.Add(this.gameButton3, 0, 3);
-            this.tblButtonPanel.Location = new System.Drawing.Point(416, 3);
-            this.tblButtonPanel.Name = "tblButtonPanel";
-            this.tblButtonPanel.RowCount = 9;
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tblButtonPanel.Size = new System.Drawing.Size(158, 362);
-            this.tblButtonPanel.TabIndex = 3;
-            // 
-            // btnQuit
-            // 
-            this.btnQuit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.tblButtonPanel.ColumnCount = 1;
+			this.tblButtonPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tblButtonPanel.Controls.Add(this.btnQuit, 0, 8);
+			this.tblButtonPanel.Controls.Add(this.btnScenario, 0, 5);
+			this.tblButtonPanel.Controls.Add(this.btnNew, 0, 1);
+			this.tblButtonPanel.Controls.Add(this.btnCredits, 0, 7);
+			this.tblButtonPanel.Controls.Add(this.btnMods, 0, 0);
+			this.tblButtonPanel.Controls.Add(this.btnQuickStart, 0, 2);
+			this.tblButtonPanel.Controls.Add(this.btnLoad, 0, 4);
+			this.tblButtonPanel.Controls.Add(this.btnResume, 0, 3);
+			this.tblButtonPanel.Location = new System.Drawing.Point(416, 3);
+			this.tblButtonPanel.Name = "tblButtonPanel";
+			this.tblButtonPanel.RowCount = 9;
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tblButtonPanel.Size = new System.Drawing.Size(158, 362);
+			this.tblButtonPanel.TabIndex = 3;
+			// 
+			// btnQuit
+			// 
+			this.btnQuit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuit.BackColor = System.Drawing.Color.Black;
-            this.btnQuit.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnQuit.Location = new System.Drawing.Point(5, 323);
-            this.btnQuit.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.btnQuit.Name = "btnQuit";
-            this.btnQuit.Padding = new System.Windows.Forms.Padding(4);
-            this.btnQuit.Size = new System.Drawing.Size(148, 35);
-            this.btnQuit.TabIndex = 7;
-            this.btnQuit.Text = "Quit";
-            this.btnQuit.UseVisualStyleBackColor = false;
-            this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
-            // 
-            // gameButton6
-            // 
-            this.gameButton6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnQuit.BackColor = System.Drawing.Color.Black;
+			this.btnQuit.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnQuit.Location = new System.Drawing.Point(5, 323);
+			this.btnQuit.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnQuit.Name = "btnQuit";
+			this.btnQuit.Padding = new System.Windows.Forms.Padding(4);
+			this.btnQuit.Size = new System.Drawing.Size(148, 35);
+			this.btnQuit.TabIndex = 7;
+			this.btnQuit.Text = "Quit";
+			this.btnQuit.UseVisualStyleBackColor = false;
+			this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
+			// 
+			// btnScenario
+			// 
+			this.btnScenario.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton6.BackColor = System.Drawing.Color.Black;
-            this.gameButton6.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton6.Location = new System.Drawing.Point(5, 225);
-            this.gameButton6.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton6.Name = "gameButton6";
-            this.gameButton6.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton6.Size = new System.Drawing.Size(148, 35);
-            this.gameButton6.TabIndex = 5;
-            this.gameButton6.Text = "Scenario";
-            this.gameButton6.UseVisualStyleBackColor = false;
-            // 
-            // btnLoad
-            // 
-            this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnScenario.BackColor = System.Drawing.Color.Black;
+			this.btnScenario.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnScenario.Location = new System.Drawing.Point(5, 225);
+			this.btnScenario.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnScenario.Name = "btnScenario";
+			this.btnScenario.Padding = new System.Windows.Forms.Padding(4);
+			this.btnScenario.Size = new System.Drawing.Size(148, 35);
+			this.btnScenario.TabIndex = 5;
+			this.btnScenario.Text = "Scenario";
+			this.btnScenario.UseVisualStyleBackColor = false;
+			this.btnScenario.Click += new System.EventHandler(this.btnScenario_Click);
+			// 
+			// btnNew
+			// 
+			this.btnNew.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnLoad.BackColor = System.Drawing.Color.Black;
-            this.btnLoad.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnLoad.Location = new System.Drawing.Point(5, 181);
-            this.btnLoad.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Padding = new System.Windows.Forms.Padding(4);
-            this.btnLoad.Size = new System.Drawing.Size(148, 35);
-            this.btnLoad.TabIndex = 3;
-            this.btnLoad.Text = "Load";
-            this.btnLoad.UseVisualStyleBackColor = false;
-            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
-            // 
-            // gameButton3
-            // 
-            this.gameButton3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnNew.BackColor = System.Drawing.Color.Black;
+			this.btnNew.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNew.Location = new System.Drawing.Point(5, 49);
+			this.btnNew.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnNew.Name = "btnNew";
+			this.btnNew.Padding = new System.Windows.Forms.Padding(4);
+			this.btnNew.Size = new System.Drawing.Size(148, 35);
+			this.btnNew.TabIndex = 1;
+			this.btnNew.Text = "New";
+			this.btnNew.UseVisualStyleBackColor = false;
+			this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
+			// 
+			// btnCredits
+			// 
+			this.btnCredits.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton3.BackColor = System.Drawing.Color.Black;
-            this.gameButton3.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton3.Location = new System.Drawing.Point(5, 137);
-            this.gameButton3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton3.Name = "gameButton3";
-            this.gameButton3.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton3.Size = new System.Drawing.Size(148, 35);
-            this.gameButton3.TabIndex = 2;
-            this.gameButton3.Text = "Resume";
-            this.gameButton3.UseVisualStyleBackColor = false;
-            // 
-            // gameButton2
-            // 
-            this.gameButton2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnCredits.BackColor = System.Drawing.Color.Black;
+			this.btnCredits.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCredits.Location = new System.Drawing.Point(5, 279);
+			this.btnCredits.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnCredits.Name = "btnCredits";
+			this.btnCredits.Padding = new System.Windows.Forms.Padding(4);
+			this.btnCredits.Size = new System.Drawing.Size(148, 35);
+			this.btnCredits.TabIndex = 6;
+			this.btnCredits.Text = "Credits";
+			this.btnCredits.UseVisualStyleBackColor = false;
+			this.btnCredits.Click += new System.EventHandler(this.btnCredits_Click);
+			// 
+			// btnMods
+			// 
+			this.btnMods.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton2.BackColor = System.Drawing.Color.Black;
-            this.gameButton2.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton2.Location = new System.Drawing.Point(5, 49);
-            this.gameButton2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton2.Name = "gameButton2";
-            this.gameButton2.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton2.Size = new System.Drawing.Size(148, 35);
-            this.gameButton2.TabIndex = 1;
-            this.gameButton2.Text = "New";
-            this.gameButton2.UseVisualStyleBackColor = false;
-            // 
-            // gameButton7
-            // 
-            this.gameButton7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnMods.BackColor = System.Drawing.Color.Black;
+			this.btnMods.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMods.Location = new System.Drawing.Point(5, 5);
+			this.btnMods.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnMods.Name = "btnMods";
+			this.btnMods.Padding = new System.Windows.Forms.Padding(4);
+			this.btnMods.Size = new System.Drawing.Size(148, 35);
+			this.btnMods.TabIndex = 4;
+			this.btnMods.Text = "Mods";
+			this.btnMods.UseVisualStyleBackColor = false;
+			this.btnMods.Click += new System.EventHandler(this.btnMods_Click);
+			// 
+			// btnQuickStart
+			// 
+			this.btnQuickStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton7.BackColor = System.Drawing.Color.Black;
-            this.gameButton7.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton7.Location = new System.Drawing.Point(5, 279);
-            this.gameButton7.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton7.Name = "gameButton7";
-            this.gameButton7.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton7.Size = new System.Drawing.Size(148, 35);
-            this.gameButton7.TabIndex = 6;
-            this.gameButton7.Text = "Credits";
-            this.gameButton7.UseVisualStyleBackColor = false;
-            // 
-            // btnQuickStart
-            // 
-            this.btnQuickStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnQuickStart.BackColor = System.Drawing.Color.Black;
+			this.btnQuickStart.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnQuickStart.Location = new System.Drawing.Point(5, 93);
+			this.btnQuickStart.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnQuickStart.Name = "btnQuickStart";
+			this.btnQuickStart.Padding = new System.Windows.Forms.Padding(4);
+			this.btnQuickStart.Size = new System.Drawing.Size(148, 35);
+			this.btnQuickStart.TabIndex = 0;
+			this.btnQuickStart.Text = "Quickstart";
+			this.btnQuickStart.UseVisualStyleBackColor = false;
+			this.btnQuickStart.Click += new System.EventHandler(this.btnQuickStart_Click);
+			// 
+			// btnLoad
+			// 
+			this.btnLoad.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnQuickStart.BackColor = System.Drawing.Color.Black;
-            this.btnQuickStart.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnQuickStart.Location = new System.Drawing.Point(5, 93);
-            this.btnQuickStart.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.btnQuickStart.Name = "btnQuickStart";
-            this.btnQuickStart.Padding = new System.Windows.Forms.Padding(4);
-            this.btnQuickStart.Size = new System.Drawing.Size(148, 35);
-            this.btnQuickStart.TabIndex = 0;
-            this.btnQuickStart.Text = "Quick";
-            this.btnQuickStart.UseVisualStyleBackColor = false;
-            this.btnQuickStart.Click += new System.EventHandler(this.btnQuickStart_Click);
-            // 
-            // gameButton5
-            // 
-            this.gameButton5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.btnLoad.BackColor = System.Drawing.Color.Black;
+			this.btnLoad.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLoad.Location = new System.Drawing.Point(5, 181);
+			this.btnLoad.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnLoad.Name = "btnLoad";
+			this.btnLoad.Padding = new System.Windows.Forms.Padding(4);
+			this.btnLoad.Size = new System.Drawing.Size(148, 35);
+			this.btnLoad.TabIndex = 3;
+			this.btnLoad.Text = "Load";
+			this.btnLoad.UseVisualStyleBackColor = false;
+			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
+			// 
+			// btnResume
+			// 
+			this.btnResume.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gameButton5.BackColor = System.Drawing.Color.Black;
-            this.gameButton5.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.gameButton5.Location = new System.Drawing.Point(5, 5);
-            this.gameButton5.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
-            this.gameButton5.Name = "gameButton5";
-            this.gameButton5.Padding = new System.Windows.Forms.Padding(4);
-            this.gameButton5.Size = new System.Drawing.Size(148, 35);
-            this.gameButton5.TabIndex = 4;
-            this.gameButton5.Text = "Mods";
-            this.gameButton5.UseVisualStyleBackColor = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.tableLayoutPanel1.SetColumnSpan(this.progressBar1, 2);
-            this.progressBar1.Location = new System.Drawing.Point(184, 378);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(0);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(208, 14);
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar1.TabIndex = 4;
-            this.progressBar1.Visible = false;
-            // 
-            // MainMenuForm
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(575, 403);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "MainMenuForm";
-            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrEee";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.tblButtonPanel.ResumeLayout(false);
-            this.ResumeLayout(false);
+			this.btnResume.BackColor = System.Drawing.Color.Black;
+			this.btnResume.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnResume.Location = new System.Drawing.Point(5, 137);
+			this.btnResume.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnResume.Name = "btnResume";
+			this.btnResume.Padding = new System.Windows.Forms.Padding(4);
+			this.btnResume.Size = new System.Drawing.Size(148, 35);
+			this.btnResume.TabIndex = 2;
+			this.btnResume.Text = "Resume";
+			this.btnResume.UseVisualStyleBackColor = false;
+			this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
+			// 
+			// progressBar1
+			// 
+			this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.tableLayoutPanel1.SetColumnSpan(this.progressBar1, 2);
+			this.progressBar1.Location = new System.Drawing.Point(184, 378);
+			this.progressBar1.Margin = new System.Windows.Forms.Padding(0);
+			this.progressBar1.Name = "progressBar1";
+			this.progressBar1.Size = new System.Drawing.Size(208, 14);
+			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+			this.progressBar1.TabIndex = 4;
+			this.progressBar1.Visible = false;
+			// 
+			// MainMenuForm
+			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Black;
+			this.ClientSize = new System.Drawing.Size(575, 403);
+			this.Controls.Add(this.tableLayoutPanel1);
+			this.ForeColor = System.Drawing.Color.White;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.Name = "MainMenuForm";
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+			this.Text = "FrEee";
+			this.tableLayoutPanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.tblButtonPanel.ResumeLayout(false);
+			this.ResumeLayout(false);
 
         }
 
@@ -271,12 +276,12 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TableLayoutPanel tblButtonPanel;
         private Controls.GameButton btnQuit;
-        private Controls.GameButton gameButton7;
-        private Controls.GameButton gameButton6;
-        private Controls.GameButton gameButton5;
+        private Controls.GameButton btnCredits;
+        private Controls.GameButton btnScenario;
+        private Controls.GameButton btnMods;
         private Controls.GameButton btnLoad;
-        private Controls.GameButton gameButton3;
-        private Controls.GameButton gameButton2;
+        private Controls.GameButton btnResume;
+        private Controls.GameButton btnNew;
 		private Controls.GameButton btnQuickStart;
 		private System.Windows.Forms.ProgressBar progressBar1;
 

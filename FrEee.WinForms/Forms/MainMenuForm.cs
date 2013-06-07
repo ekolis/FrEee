@@ -16,6 +16,7 @@ using System.Windows.Forms;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using System.Threading;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -165,6 +166,47 @@ namespace FrEee.WinForms.Forms
 		private void btnQuit_Click(object sender, EventArgs e)
 		{
 			Application.Exit();
+		}
+
+		private void btnMods_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, loading custom mods is not yet supported. But you can edit the stock files, if you really want to...");
+		}
+
+		private void btnNew_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, configuring a new game is not yet supported. But you can start a single player game (albeit with no AI opponents) using Quickstart.");
+		}
+
+		private void btnResume_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, resuming your latest game is not yet supported. But you can load a game of your choosing using Load.");
+		}
+
+		private void btnScenario_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, playing a scenario is not yet supported.");
+		}
+
+		private void btnCredits_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show(
+@"Project Lead:
+	James Phillips (Combat Wombat)
+
+Programming:
+	Ed Kolis (ekolis)
+	Kevin Seitz (guttsy)
+
+Art:
+	James Phillips (Combat Wombat)
+
+Special Thanks:
+	Aaron Hall - For creating Space Empires!
+	Nick Dumas (Suicide Junkie) - For suggesting the title!
+	All the denizens of #spaceempires and spaceempires.net
+
+FrEee is licensed under a Creative Commons Attribution License.", "FrEee v" + Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
 		}
 
 		#endregion
