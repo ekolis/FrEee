@@ -112,16 +112,19 @@ namespace FrEee.WinForms.Controls
 				treeAbilities.Nodes.Clear();
 				foreach (var group in vehicle.Abilities.GroupBy(abil => abil.Name))
 				{
-					var branch = new TreeNode(group.Stack().First().ToString());
-					if (group.Any(abil => !vehicle.IntrinsicAbilities.Contains(abil)))
-						branch.NodeFont = new Font(Font, FontStyle.Italic);
-					treeAbilities.Nodes.Add(branch);
-					foreach (var abil in group)
+					foreach (var stacked in group.Stack())
 					{
-						var twig = new TreeNode(abil.Description);
-						if (vehicle.IntrinsicAbilities.Contains(abil))
-							twig.NodeFont = new Font(Font, FontStyle.Italic);
-						branch.Nodes.Add(twig);
+						var branch = new TreeNode(stacked.ToString());
+						if (group.Any(abil => !vehicle.IntrinsicAbilities.Contains(abil)))
+							branch.NodeFont = new Font(Font, FontStyle.Italic);
+						treeAbilities.Nodes.Add(branch);
+						foreach (var abil in group)
+						{
+							var twig = new TreeNode(abil.Description);
+							if (vehicle.IntrinsicAbilities.Contains(abil))
+								twig.NodeFont = new Font(Font, FontStyle.Italic);
+							branch.Nodes.Add(twig);
+						}
 					}
 				}
 			}

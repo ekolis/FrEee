@@ -122,27 +122,12 @@ namespace FrEee.WinForms.Controls
 				txtCargoSpaceFree.Text = string.Format("{0} / {0} free", Planet.MaxCargo.Kilotons());
 				lstCargoDetail.Items.Clear();
 
-				treeAbilities.Nodes.Clear();
-				foreach (var group in Planet.Abilities.GroupBy(abil => abil.Name))
-				{
-					// TODO - deal with nonstacking abilities
-					var branch = new TreeNode(group.Key + ": " + group.Sum(abil =>
-						{
-							double result = 0;
-							double.TryParse(abil.Values.FirstOrDefault(), out result);
-							return result;
-						}));
-					if (group.Any(abil => !Planet.IntrinsicAbilities.Contains(abil)))
-						branch.NodeFont = new Font(Font, FontStyle.Italic);
-					treeAbilities.Nodes.Add(branch);
-					foreach (var abil in group)
-					{
-						var twig = new TreeNode(abil.Description);
-						if (Planet.IntrinsicAbilities.Contains(abil))
-							twig.NodeFont = new Font(Font, FontStyle.Italic);
-						branch.Nodes.Add(twig);
-					}
-				}
+				abilityTreeView.Abilities = Planet.Abilities.StackToTree();
+				if (Planet.Colony == null)
+					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
+				else
+					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities);
+
 			}
 
 			base.OnPaint(e);

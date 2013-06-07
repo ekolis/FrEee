@@ -28,16 +28,6 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("Racial Trait: +5");
-			System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("War Shrine: +10");
-			System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("Attack Modifier: +15", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2});
-			System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("Happiness: +10");
-			System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("Population: +30");
-			System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("Minerals Income Modifier: +40", new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5});
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
@@ -54,7 +44,7 @@ namespace FrEee.WinForms.Controls
 			this.txtName = new System.Windows.Forms.Label();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
-			this.treeAbilities = new System.Windows.Forms.TreeView();
+			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -238,7 +228,7 @@ namespace FrEee.WinForms.Controls
 			// pageAbility
 			// 
 			this.pageAbility.BackColor = System.Drawing.Color.Black;
-			this.pageAbility.Controls.Add(this.treeAbilities);
+			this.pageAbility.Controls.Add(this.abilityTreeView);
 			this.pageAbility.Location = new System.Drawing.Point(4, 29);
 			this.pageAbility.Name = "pageAbility";
 			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
@@ -246,33 +236,18 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
 			// 
-			// treeAbilities
+			// abilityTreeView
 			// 
-			this.treeAbilities.BackColor = System.Drawing.Color.Black;
-			this.treeAbilities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.treeAbilities.ForeColor = System.Drawing.Color.White;
-			this.treeAbilities.Location = new System.Drawing.Point(3, 3);
-			this.treeAbilities.Name = "treeAbilities";
-			treeNode1.Name = "Node1";
-			treeNode1.Text = "Racial Trait: +5";
-			treeNode2.Name = "Node3";
-			treeNode2.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic);
-			treeNode2.Text = "War Shrine: +10";
-			treeNode3.Name = "Node0";
-			treeNode3.Text = "Attack Modifier: +15";
-			treeNode4.Name = "Node1";
-			treeNode4.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode4.Text = "Happiness: +10";
-			treeNode5.Name = "Node2";
-			treeNode5.NodeFont = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			treeNode5.Text = "Population: +30";
-			treeNode6.Name = "Node0";
-			treeNode6.Text = "Minerals Income Modifier: +40";
-			this.treeAbilities.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode3,
-            treeNode6});
-			this.treeAbilities.Size = new System.Drawing.Size(306, 420);
-			this.treeAbilities.TabIndex = 0;
+			this.abilityTreeView.Abilities = null;
+			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
+			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.abilityTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
+			this.abilityTreeView.IntrinsicAbilities = null;
+			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
+			this.abilityTreeView.Name = "abilityTreeView";
+			this.abilityTreeView.Size = new System.Drawing.Size(306, 420);
+			this.abilityTreeView.TabIndex = 1;
 			// 
 			// AsteroidFieldReport
 			// 
@@ -305,11 +280,11 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtName;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
-		private System.Windows.Forms.TreeView treeAbilities;
 		private System.Windows.Forms.Label txtValueRadioactives;
 		private System.Windows.Forms.Label txtValueOrganics;
 		private System.Windows.Forms.Label txtValueMinerals;
 		private System.Windows.Forms.Label txtDescription;
 		private GamePictureBox picPortrait;
+		private AbilityTreeView abilityTreeView;
 	}
 }

@@ -49,21 +49,8 @@ namespace FrEee.WinForms.Controls
 				txtSize.Text = Storm.StellarSize + " Storm";
 				txtDescription.Text = Storm.Description;
 
-				treeAbilities.Nodes.Clear();
-				foreach (var group in Storm.Abilities.GroupBy(abil => abil.Name))
-				{
-					var branch = new TreeNode(group.Stack().First().ToString());
-					if (group.Any(abil => !Storm.IntrinsicAbilities.Contains(abil)))
-						branch.NodeFont = new Font(Font, FontStyle.Italic);
-					treeAbilities.Nodes.Add(branch);
-					foreach (var abil in group)
-					{
-						var twig = new TreeNode(abil.Description);
-						if (Storm.IntrinsicAbilities.Contains(abil))
-							twig.NodeFont = new Font(Font, FontStyle.Italic);
-						branch.Nodes.Add(twig);
-					}
-				}
+				abilityTreeView.Abilities = Storm.Abilities.StackToTree();
+				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
 			}
 
 			base.OnPaint(e);

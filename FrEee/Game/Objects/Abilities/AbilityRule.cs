@@ -37,31 +37,39 @@ namespace FrEee.Game.Objects.Abilities
 		/// </summary>
 		/// <param name="abilities"></param>
 		/// <returns></returns>
-		public IEnumerable<Ability> GroupAndStack(IEnumerable<Ability> abilities)
+		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities)
 		{
 			var ours = abilities.Where(a => a.Name == Name);
-			if (!ours.Any())
-				return abilities;
-
-			var others = abilities.Where(a => a.Name != Name);
-
-			// default grouping: one big group
-			IEnumerable<IGrouping<string, Ability>> result = ours.GroupBy(a => "");
 
 			// group abilities
+			IEnumerable<IGrouping<string, Ability>> grouped;
 			if (GroupingRule == AbilityGroupingRule.GroupByValue1)
-				result = ours.GroupBy(a => a.Value1);
+				grouped = ours.GroupBy(a => a.Value1);
 			else if (GroupingRule == AbilityGroupingRule.GroupByValue2)
-				result = ours.GroupBy(a => a.Value2);
+				grouped = ours.GroupBy(a => a.Value1);
+			else
+				grouped = ours.GroupBy(a => "");
 
 			// stack abilities		
-			result = result.SelectMany(g => Stack(g).GroupBy(a => g.Key));
+			var list = new List<Tuple<Ability, Ability>>();
+			foreach (var group in grouped)
+			{
+				var stacked = Stack(group);
+				foreach (var stack in stacked)
+				{
+					foreach (var abil in stack)
+						list.Add(Tuple.Create(stack.Key, abil));
+				}
+			}
 
-			return result.Flatten().Concat(others);
+			return list.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
-		private IEnumerable<Ability> Stack(IEnumerable<Ability> abilities)
+		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities)
 		{
+			if (abilities.Count() <= 1)
+				return abilities.ToLookup(a => a, a => a);
+
 			Ability result = new Ability();
 			result.Name = abilities.First().Name;
 			foreach (var abil in abilities)
@@ -73,11 +81,11 @@ namespace FrEee.Game.Objects.Abilities
 					{
 						// don't stack when Do Not Stack rule is found unless it's the value we're grouping by
 						if (i == 0 && GroupingRule != AbilityGroupingRule.GroupByValue1)
-							return abilities;
+							return abilities.ToLookup(a => a, a => a);
 						if (i == 1 && GroupingRule != AbilityGroupingRule.GroupByValue2)
-							return abilities;
+							return abilities.ToLookup(a => a, a => a);
 						if (i >= 2)
-							return abilities;
+							return abilities.ToLookup(a => a, a => a);
 					}
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
 					double? oldval = result.Values.Count > i ? (double?)result.Values[i].ToDouble() : null;
@@ -117,7 +125,7 @@ namespace FrEee.Game.Objects.Abilities
 				result.Description = result.Name + ": " + string.Join(", ", result.Values.ToArray());
 			else
 				result.Description = result.Name;
-			return new Ability[] { result };
+			return abilities.ToLookup(a => result, a => a);
 		}
 	}
 }

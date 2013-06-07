@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IEnumerable<Ability> Abilities
 		{
-			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Stack(); }
+			get { return Facilities.SelectMany(f => f.Abilities).ToArray(); }
 		}
 
 		public ConstructionQueue ConstructionQueue

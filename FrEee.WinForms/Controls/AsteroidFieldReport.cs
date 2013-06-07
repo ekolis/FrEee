@@ -57,21 +57,8 @@ namespace FrEee.WinForms.Controls
 
 				txtDescription.Text = AsteroidField.Description;
 
-				treeAbilities.Nodes.Clear();
-				foreach (var group in AsteroidField.Abilities.GroupBy(abil => abil.Name))
-				{
-					var branch = new TreeNode(group.Stack().First().ToString());
-					if (group.Any(abil => !AsteroidField.IntrinsicAbilities.Contains(abil)))
-						branch.NodeFont = new Font(Font, FontStyle.Italic);
-					treeAbilities.Nodes.Add(branch);
-					foreach (var abil in group)
-					{
-						var twig = new TreeNode(abil.Description);
-						if (AsteroidField.IntrinsicAbilities.Contains(abil))
-							twig.NodeFont = new Font(Font, FontStyle.Italic);
-						branch.Nodes.Add(twig);
-					}
-				}
+				abilityTreeView.Abilities = AsteroidField.Abilities.StackToTree();
+				abilityTreeView.IntrinsicAbilities = AsteroidField.IntrinsicAbilities;
 			}
 
 			base.OnPaint(e);

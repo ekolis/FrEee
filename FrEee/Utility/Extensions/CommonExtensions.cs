@@ -88,14 +88,29 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Stacks any abilities of the same type according to the current mod's stacking rules.
+		/// Keeps the original abilities in a handy tree format under the stacked abilities
+		/// so you can tell which abilities contributed to which stacked abilities.
 		/// </summary>
 		/// <param name="abilities"></param>
 		/// <returns></returns>
+		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities)
+		{
+			var stacked = new List<Tuple<Ability, Ability>>();
+			foreach (var rule in Mod.Current.AbilityRules)
+			{
+				var lookup = rule.GroupAndStack(abilities);
+				foreach (var group in lookup)
+				{
+					foreach (var abil in group)
+						stacked.Add(Tuple.Create(group.Key, abil));
+				}
+			}
+			return stacked.ToLookup(t => t.Item1, t => t.Item2);
+		}
+
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities)
 		{
-			foreach (var rule in Mod.Current.AbilityRules)
-				abilities = rule.GroupAndStack(abilities).ToArray();
-			return abilities;
+			return abilities.StackToTree().Select(g => g.Key);
 		}
 
 		/// <summary>
