@@ -2,6 +2,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -59,13 +60,7 @@ namespace FrEee.WinForms.Controls
 				treeAbilities.Nodes.Clear();
 				foreach (var group in AsteroidField.Abilities.GroupBy(abil => abil.Name))
 				{
-					// TODO - deal with nonstacking abilities
-					var branch = new TreeNode(group.Key + ": " + group.Sum(abil =>
-						{
-							double result = 0;
-							double.TryParse(abil.Values.FirstOrDefault(), out result);
-							return result;
-						}));
+					var branch = new TreeNode(group.Stack().First().ToString());
 					if (group.Any(abil => !AsteroidField.IntrinsicAbilities.Contains(abil)))
 						branch.NodeFont = new Font(Font, FontStyle.Italic);
 					treeAbilities.Nodes.Add(branch);
