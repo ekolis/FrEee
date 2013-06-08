@@ -60,8 +60,11 @@ namespace FrEee.Game.Objects.Combat
 			{
 				LogRound(i + 1);
 				// TODO - real 2D combat mechanics
-				foreach (var attacker in Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => sobj.Weapons.Any()))
+				foreach (var attacker in Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
+					if (attacker.IsDestroyed)
+						continue;
+
 					var defenders = Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => attacker.CanTarget(sobj));
 					if (!defenders.Any())
 						continue; // no one to shoot at
@@ -69,7 +72,14 @@ namespace FrEee.Game.Objects.Combat
 
 					LogSalvo(attacker, defender);
 					foreach (var weapon in attacker.Weapons.Where(w => w.CanTarget(defender)))
+					{
 						weapon.Attack(defender, this); // TODO - range and such
+						if (defender.IsDestroyed)
+						{
+							Location.SpaceObjects.Remove(defender);
+							break;
+						}
+					}
 				}
 			}
 

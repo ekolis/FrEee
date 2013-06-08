@@ -128,6 +128,7 @@ namespace FrEee.Utility
 		private static void WriteString(string s, TextWriter w)
 		{
 			// escape any backslashes and semicolons inside them
+			// TODO - quote strings so null strings can be distinguished from the letter "n"
 			w.Write(s.Replace("\\", "\\\\").Replace(";", "\\;"));
 
 			// write end object
@@ -318,6 +319,7 @@ namespace FrEee.Utility
 			else if (type == typeof(string))
 			{
 				// parse strings
+				// TODO - quote strings so null strings can be distinguished from the letter "n"
 				bool foundRealSemicolon = false;
 				string s = "";
 				while (!foundRealSemicolon)
