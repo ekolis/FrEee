@@ -93,5 +93,10 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Template.Portrait; }
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
