@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Components = new List<Component>();
 			ConstructionProgress = new Resources();
-			if (Galaxy.Current != null) 
+			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
 		}
 
@@ -64,12 +64,14 @@ namespace FrEee.Game.Objects.Vehicles
 			set;
 		}
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get { return Design.Hull.GetIcon(Design.Owner.ShipsetPath); }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Design.Hull.GetPortrait(Design.Owner.ShipsetPath); }
 		}
@@ -152,7 +154,7 @@ namespace FrEee.Game.Objects.Vehicles
 				shieldDmg += dmg;
 			}
 			if (shieldDmg > 0)
-				battle.LogShieldDamage(this, shieldDmg);
+				battle.LogShieldDamage(this.CombatObject, shieldDmg);
 			var comps = Components.Where(c => c.Hitpoints > 0);
 			var comp = Components.PickRandom();
 			if (comp.Hitpoints < damage)
@@ -174,7 +176,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Is this vehicle destroyed?
 		/// Vehicles are destroyed when all components are destroyed.
 		/// </summary>
-		public bool IsDestroyed { get { return Components.All(c => c.Hitpoints <= 0);}}
+		public bool IsDestroyed { get { return Components.All(c => c.Hitpoints <= 0); } }
 
 		/// <summary>
 		/// The current amount of shields.
@@ -189,7 +191,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Total shields.
 		/// </summary>
-		public int Shields {get { return NormalShields + PhasedShields; }}
+		public int Shields { get { return NormalShields + PhasedShields; } }
 
 		/// <summary>
 		/// The maximum shields.
@@ -220,5 +222,12 @@ namespace FrEee.Game.Objects.Vehicles
 			NormalShields = MaxNormalShields;
 			PhasedShields = MaxPhasedShields;
 		}
+
+		/// <summary>
+		/// The combat object associated with this vehicle.
+		/// For autonomous vehicles, this would be the vehicle itself.
+		/// For grouped vehicles, this would be the group.
+		/// </summary>
+		public abstract ICombatObject CombatObject {get; }
 	}
 }

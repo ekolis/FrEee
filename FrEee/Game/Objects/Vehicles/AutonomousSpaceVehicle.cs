@@ -217,5 +217,10 @@ namespace FrEee.Game.Objects.Vehicles
 			NormalShields = MaxNormalShields;
 			PhasedShields = MaxPhasedShields;
 		}
+
+		public override ICombatObject CombatObject
+		{
+			get { return this; }
+		}
 	}
 }
