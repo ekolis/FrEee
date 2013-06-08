@@ -476,7 +476,7 @@ namespace FrEee.Game.Objects.Space
 					// check for battles
 					// TODO - alliances
 					var sector = v.FindSector();
-					if (sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner))
+					if (sector != null && sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner))
 					{
 						var battle = new Battle(sector);
 						battle.Resolve();
