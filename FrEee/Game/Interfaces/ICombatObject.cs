@@ -42,5 +42,13 @@ namespace FrEee.Game.Interfaces
 		/// Is this object destroyed?
 		/// </summary>
 		bool IsDestroyed { get; }
+
+		int NormalShields { get; set; }
+
+		int PhasedShields { get; set; }
+
+		int MaxNormalShields { get; }
+
+		int MaxPhasedShields { get; }
 	}
 }
