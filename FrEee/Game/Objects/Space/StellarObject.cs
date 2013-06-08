@@ -8,6 +8,8 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -168,6 +170,43 @@ namespace FrEee.Game.Objects.Space
 		public virtual bool HasInfiniteSupplies
 		{
 			get { return false; }
+		}
+
+
+		 /// <summary>
+		 /// Stellar objects aren't usually armed.
+		 /// </summary>
+		 /// <param name="target"></param>
+		 /// <returns></returns>
+		public virtual bool CanTarget(ISpaceObject target)
+		{
+			return false;
+		}
+
+		 /// <summary>
+		 /// Stellar objects can't normally be targeted by weapons.
+		 /// </summary>
+		public virtual WeaponTargets WeaponTargetType
+		{
+			get { return WeaponTargets.None; }
+		}
+
+		 /// <summary>
+		 /// Stellar objects don't normally have weapons.
+		 /// </summary>
+		public virtual IEnumerable<Component> Weapons
+		{
+			get { return Enumerable.Empty<Component>(); }
+		}
+
+		 /// <summary>
+		 /// Most stellar objects don't take damage.
+		 /// </summary>
+		 /// <param name="damageType"></param>
+		 /// <param name="damage"></param>
+		public virtual void TakeDamage(DamageType damageType, int damage)
+		{
+			// Do nothing.
 		}
 	}
 }

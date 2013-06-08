@@ -77,11 +77,11 @@ namespace FrEee.WinForms.Controls
 				resMaintRad.Amount = vehicle.Design.Cost["Radioactives"] / 5;
 
 				// component summary
-				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsSummary.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
-					var text = g.Any(c => c.IsDamaged) ? g.Where(c => !c.IsDamaged).Count() + " / " + g.Count() : g.Count().ToString();
+					var text = g.Any(c => c.IsDestroyed) ? g.Where(c => !c.IsDestroyed).Count() + " / " + g.Count() : g.Count().ToString();
 					lstComponentsSummary.AddItemWithImage(null, text, g.First(), g.First().Template.Icon);
 				}
 
@@ -95,13 +95,13 @@ namespace FrEee.WinForms.Controls
 					lstOrdersDetail.Items.Add(o);
 
 				// component detail
-				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(c => !c.IsDamaged).Count() + " / " + vehicle.Components.Count + " functional";
+				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsDetail.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
-					lstComponentsDetail.AddItemWithImage(null, g.Where(c => !c.IsDamaged).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
-					if (g.Where(c => c.IsDamaged).Any())
-						lstComponentsDetail.AddItemWithImage(null, g.Where(c => c.IsDamaged).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
+					lstComponentsDetail.AddItemWithImage(null, g.Where(c => !c.IsDestroyed).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
+					if (g.Where(c => c.IsDestroyed).Any())
+						lstComponentsDetail.AddItemWithImage(null, g.Where(c => c.IsDestroyed).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
 				}
 
 				// TODO - cargo detail
@@ -110,7 +110,7 @@ namespace FrEee.WinForms.Controls
 
 				// abilities
 				abilityTreeView.Abilities = Vehicle.Abilities.StackToTree();
-				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDamaged).SelectMany(c => c.Abilities));
+				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities));
 			}
 		}
 

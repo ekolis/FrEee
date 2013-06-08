@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
@@ -84,7 +85,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDamaged).SelectMany(c => c.Abilities).Stack());
+				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities).Stack());
 			}
 		}
 
@@ -117,5 +118,40 @@ namespace FrEee.Game.Objects.Vehicles
 			// TODO - treaties making empires non-hostile
 			return emp != null && Owner != null && emp != Owner;
 		}
+
+		/// <summary>
+		/// The undamaged weapons installed on this vehicle.
+		/// </summary>
+		public IEnumerable<Component> Weapons
+		{
+			get
+			{
+				return Components.Where(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null);
+			}
+		}
+
+		public void TakeDamage(DamageType damageType, int damage)
+		{
+			if (IsDestroyed)
+				return; // she canna take any more!
+
+			// TODO - worry about damage types
+			var comps = Components.Where(c => c.Hitpoints > 0);
+			var comp = Components.PickRandom();
+			if (comp.Hitpoints < damage)
+			{
+				var leftover = damage - comp.Hitpoints;
+				comp.Hitpoints = 0;
+				TakeDamage(damageType, leftover);
+			}
+			else
+				comp.Hitpoints -= damage;
+		}
+
+		/// <summary>
+		/// Is this vehicle destroyed?
+		/// Vehicles are destroyed when all components are destroyed.
+		/// </summary>
+		public bool IsDestroyed { get { return Components.All(c => c.Hitpoints <= 0);}}
 	}
 }

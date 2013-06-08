@@ -10,6 +10,8 @@ using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
 using FrEee.Modding;
 using System.Drawing;
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -247,6 +249,34 @@ namespace FrEee.Game.Objects.Space
 			{
 				return base.CargoStorage + MaxCargo;
 			}
+		}
+
+		public override bool CanTarget(ISpaceObject target)
+		{
+			// TODO - weapon platforms on planets
+			return false;
+		}
+
+		public override WeaponTargets WeaponTargetType
+		{
+			get
+			{
+				return WeaponTargets.Planet;
+			}
+		}
+
+		public override IEnumerable<Component> Weapons
+		{
+			get
+			{
+				// TODO - weapon platforms on planets
+				return base.Weapons;
+			}
+		}
+
+		public override void TakeDamage(DamageType damageType, int damage)
+		{
+			// TODO - planetary damage
 		}
 	}
 }

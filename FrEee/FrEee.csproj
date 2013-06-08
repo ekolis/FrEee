@@ -70,6 +70,7 @@
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
+    <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />

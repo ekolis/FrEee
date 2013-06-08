@@ -11,5 +11,10 @@ namespace FrEee.Game.Objects.Combat
 	{
 		// TODO - implement damage type
 		public string Name { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

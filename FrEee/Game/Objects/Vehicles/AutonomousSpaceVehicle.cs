@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -201,5 +202,13 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
+
+		public bool CanTarget(ISpaceObject target)
+		{
+			// TODO - alliances
+			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(WeaponTargetType));
+		}
+
+		public abstract WeaponTargets WeaponTargetType { get; }
 	}
 }
