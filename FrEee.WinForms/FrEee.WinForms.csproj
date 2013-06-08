@@ -156,6 +156,12 @@
     <Compile Include="Controls\AutonomousSpaceVehicleReport.Designer.cs">
       <DependentUpon>AutonomousSpaceVehicleReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\SearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SearchBox.Designer.cs">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\StarReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AutonomousSpaceVehicleReport.resx">
       <DependentUpon>AutonomousSpaceVehicleReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SearchBox.resx">
+      <DependentUpon>SearchBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StarReport.resx">
       <DependentUpon>StarReport.cs</DependentUpon>

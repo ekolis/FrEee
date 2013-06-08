@@ -32,6 +32,7 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -60,6 +61,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
 			this.btnMove = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
+			this.searchBox = new FrEee.WinForms.Controls.SearchBox();
 			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
@@ -68,12 +70,12 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
 			this.pnlMainCommands.SuspendLayout();
 			this.pnlSubCommands.SuspendLayout();
+			this.pnlSearch.SuspendLayout();
 			this.pnlSystemTabs.SuspendLayout();
 			this.pnlTabs.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -207,6 +209,7 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.progResearch.ForeColor = System.Drawing.Color.White;
+			this.progResearch.IncrementalProgress = 0;
 			this.progResearch.LeftText = "Ice Planet Colonization";
 			this.progResearch.Location = new System.Drawing.Point(869, 3);
 			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
@@ -498,6 +501,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSearch, 4);
+			this.pnlSearch.Controls.Add(this.searchBox);
 			this.pnlSearch.ForeColor = System.Drawing.Color.White;
 			this.pnlSearch.Location = new System.Drawing.Point(2, 95);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(2);
@@ -505,6 +509,18 @@ namespace FrEee.WinForms.Forms
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlSearch.Size = new System.Drawing.Size(866, 46);
 			this.pnlSearch.TabIndex = 2;
+			// 
+			// searchBox
+			// 
+			this.searchBox.BackColor = System.Drawing.Color.Black;
+			this.searchBox.ForeColor = System.Drawing.Color.White;
+			this.searchBox.Location = new System.Drawing.Point(9, 6);
+			this.searchBox.Name = "searchBox";
+			this.searchBox.ObjectsToSearch = null;
+			this.searchBox.Size = new System.Drawing.Size(332, 21);
+			this.searchBox.StarSystem = null;
+			this.searchBox.TabIndex = 0;
+			this.searchBox.ObjectSelected += new FrEee.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
 			// 
 			// pnlSystemTabs
 			// 
@@ -653,6 +669,7 @@ namespace FrEee.WinForms.Forms
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).EndInit();
 			this.pnlMainCommands.ResumeLayout(false);
 			this.pnlSubCommands.ResumeLayout(false);
+			this.pnlSearch.ResumeLayout(false);
 			this.pnlSystemTabs.ResumeLayout(false);
 			this.pnlTabs.ResumeLayout(false);
 			this.pnlSystemMap.ResumeLayout(false);
@@ -701,6 +718,7 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnConstructionQueue;
 		private GameButton btnColonize;
 		private System.Windows.Forms.ToolTip toolTip;
+		private SearchBox searchBox;
 	}
 }
 

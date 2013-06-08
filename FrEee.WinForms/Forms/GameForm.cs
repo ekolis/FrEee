@@ -228,7 +228,8 @@ namespace FrEee.WinForms.Forms
 
 		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
 		{
-			SetTabSystem(currentTab, starSystem);
+			if (starSystem != GetTabSystem(currentTab))
+				SetTabSystem(currentTab, starSystem);
 		}
 
 		private void btnDesigns_Click(object sender, EventArgs e)
@@ -290,6 +291,9 @@ namespace FrEee.WinForms.Forms
 
 			// show research progress
 			BindResearch();
+
+			// load space objects for search box
+			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -401,6 +405,13 @@ namespace FrEee.WinForms.Forms
 			pnlTabs.Controls.Remove(tab);
 		}
 
+		private StarSystem GetTabSystem(FlowLayoutPanel tab)
+		{
+			if (tab == null)
+				return null;
+			return (StarSystem)tab.Controls[0].Tag;
+		}
+
 		private void SetTabSystem(FlowLayoutPanel tab, StarSystem sys)
 		{
 			var btnTab = (GameButton)tab.Controls[0];
@@ -471,6 +482,19 @@ namespace FrEee.WinForms.Forms
 			set
 			{
 				selectedSpaceObject = value;
+
+				if (value != null)
+				{
+					var sys = value.FindStarSystem();
+					if (galaxyView.SelectedStarSystem  != sys)
+						galaxyView.SelectedStarSystem = sys;
+					if (starSystemView.StarSystem != sys)
+						starSystemView.StarSystem = galaxyView.SelectedStarSystem;
+
+					var sector = value.FindSector();
+					if (starSystemView.SelectedSector != sector)
+						starSystemView.SelectedSector = sector;
+				}
 
 				// remove list view
 				pnlDetailReport.Controls.Clear();
@@ -710,6 +734,11 @@ namespace FrEee.WinForms.Forms
 		public void ShowLogForm(LogForm f)
 		{
 			this.ShowChildForm(f);
+		}
+
+		private void searchBox_ObjectSelected(SearchBox sender, ISpaceObject sobj)
+		{
+			SelectedSpaceObject = sobj;
 		}
 	}
 }
