@@ -35,8 +35,15 @@ namespace FrEee.Modding.StarSystemPlacementStrategies
 
 			int row = galaxy.StarSystemLocations.Count % xstars;
 			int col = galaxy.StarSystemLocations.Count / xstars;
-			int rowsize = bounds.Width / (xstars - 1);
-			int colsize = bounds.Height / (ystars - 1);
+			int rowsize, colsize;
+			if (xstars == 1)
+				rowsize = bounds.Width / 2;
+			else
+				rowsize = bounds.Width / (xstars - 1);
+			if (ystars == 1)
+				colsize = bounds.Height / 2;
+			else
+				colsize = bounds.Height / (ystars - 1);
 
 			var idealPos = new Point(row * rowsize + bounds.Left, col * colsize + bounds.Top);
 
