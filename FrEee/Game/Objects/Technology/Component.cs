@@ -18,6 +18,7 @@ namespace FrEee.Game.Objects.Technology
 		public Component(MountedComponentTemplate template)
 		{
 			this.Template = template;
+			Hitpoints = template.Durability;
 		}
 
 		/// <summary>

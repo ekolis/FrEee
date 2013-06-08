@@ -273,16 +273,10 @@ namespace FrEee.Game.Objects.Space
 				return base.Weapons;
 			}
 		}
-
-		public override void TakeDamage(DamageType damageType, int damage)
-		{
-			// TODO - planetary damage
-		}
-
-
+		
 		public void TakeDamage(DamageType damageType, int damage, Battle battle)
 		{
-			throw new NotImplementedException();
+			// TODO - planetary damage
 		}
 
 		/// <summary>
