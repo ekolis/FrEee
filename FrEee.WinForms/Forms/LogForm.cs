@@ -28,14 +28,20 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
+			if (battle == null)
+				messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
+			else
+				messages = battle.Log;
 		}
+
+		IEnumerable<LogMessage> messages;
 
 		private GameForm gameForm;
 
 		private void LogForm_Load(object sender, EventArgs e)
 		{
 			lstLog.Initialize(32, 32);
-			foreach (var message in Empire.Current.Log.OrderByDescending(message => message.TurnNumber))
+			foreach (var message in messages)
 				lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
 		}
 
