@@ -163,11 +163,12 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// The empire owns itself, of course.
+		/// Empires don't really have owners...
+		/// They could be said to own themselves but it makes more sense for referencing purposes to have no owner.
 		/// </summary>
 		public Empire Owner
 		{
-			get { return this; }
+			get { return null; }
 		}
 
 		/// <summary>

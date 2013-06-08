@@ -77,7 +77,7 @@ namespace FrEee.WinForms.Forms
 						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
 						StarSystemCount = 5,
 						GalaxySize = new System.Drawing.Size(40, 30),
-						IsSinglePlayer = true,
+						//IsSinglePlayer = true,
 					};
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(gsu, status, 1.0);
