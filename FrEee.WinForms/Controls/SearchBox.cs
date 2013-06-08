@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.WinForms.Forms;
 
 namespace FrEee.WinForms.Controls
 {
@@ -18,37 +19,49 @@ namespace FrEee.WinForms.Controls
 		public SearchBox()
 		{
 			InitializeComponent();
-			lstItems = new ListView();
-			lstItems.Width = Width;
-			lstItems.Height = 128;
-			lstItems.ItemSelectionChanged += lstItems_ItemSelectionChanged;
-			lstItems.BackColor = Color.Black;
-			lstItems.ForeColor = Color.White;
-			lstItems.View = View.Details;
-			lstItems.Columns.Add("", Width - 32);
-			lstItems.HeaderStyle = ColumnHeaderStyle.None;
-			popup = new ToolStripDropDown();
-			host = new ToolStripControlHost(lstItems);
-			host.Width = Width;
-			host.Height = Height;
-
-			popup.Items.Add(host);
+			resultsForm = new SearchBoxResultsForm();
+			resultsForm.ObjectSelected += resultsForm_ObjectSelected;
+			ResultsPopupHeight = 128;
 		}
 
-		void lstItems_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+		private void SearchBox_Load(object sender, EventArgs e)
 		{
-			HideResults();
-			if (ObjectSelected != null)
-				ObjectSelected(this, SelectedObject);
+			var form = this.FindForm();
+			form.LocationChanged += form_LocationChanged;
+			form.Resize += form_Resize;
+		}
+
+		void form_Resize(object sender, EventArgs e)
+		{
+			var form = (Form)sender;
+			if (form.WindowState == FormWindowState.Minimized)
+				resultsForm.Hide();
+		}
+
+		void form_LocationChanged(object sender, EventArgs e)
+		{
+			PlaceResultsForm();
+		}
+
+		private void PlaceResultsForm()
+		{
+			var screenPos = PointToScreen(Location);
+			resultsForm.Left = screenPos.X;
+			resultsForm.Top = screenPos.Y + Height;
+			resultsForm.Width = Width;
+			resultsForm.Height = ResultsPopupHeight;
+		}
+
+		void resultsForm_ObjectSelected(SearchBoxResultsForm sender, ISpaceObject sobj)
+		{
+			SelectedObject = sobj;
 		}
 
 		public delegate void ObjectSelectedDelegate(SearchBox sender, ISpaceObject sobj);
 
 		public event ObjectSelectedDelegate ObjectSelected;
 
-		private ListView lstItems;
-		private ToolStripDropDown popup;
-		private ToolStripControlHost host;
+		private SearchBoxResultsForm resultsForm;
 
 		private IEnumerable<ISpaceObject> objectsToSearch;
 		public IEnumerable<ISpaceObject> ObjectsToSearch
@@ -74,25 +87,28 @@ namespace FrEee.WinForms.Controls
 
 		public ISpaceObject SelectedObject
 		{
-			get
-			{
-				return lstItems.SelectedItems.Count == 0 ? null : (ISpaceObject)lstItems.SelectedItems[0].Tag;
-			}
+			get;
+			private set;
+		}
+
+		public int ResultsPopupHeight
+		{
+			get;
+			set;
 		}
 
 		public void ShowResults()
 		{
-			lstItems.Initialize(32, 32);
-			// TODO - sort by warp distance
-			foreach (var sobj in ObjectsToSearch.Where(o=> o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.FindStarSystem() == StarSystem ? 0 : 1))
-				lstItems.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
-			popup.Show(PointToScreen(new Point(Location.X, Location.Y + Height)));
-			textBox.Focus();
+			var results = ObjectsToSearch.Where(o => o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.FindStarSystem() == StarSystem ? 0 : 1);
+			resultsForm.Results = results;
+			if (!resultsForm.Visible)
+				resultsForm.Show(this);
+			PlaceResultsForm();
 		}
 
 		public void HideResults()
 		{
-			popup.Hide();
+			resultsForm.Hide();
 		}
 
 		private void textBox_SizeChanged(object sender, EventArgs e)
@@ -102,8 +118,8 @@ namespace FrEee.WinForms.Controls
 
 		private void SearchBox_SizeChanged(object sender, EventArgs e)
 		{
-			host.Width = Width;
-			lstItems.Width = Width;
+			textBox.Width = Width;
+			resultsForm.Width = Width;
 		}
 
 		private void SearchBox_KeyDown(object sender, KeyEventArgs e)
@@ -111,8 +127,7 @@ namespace FrEee.WinForms.Controls
 			if (e.KeyCode == Keys.Enter)
 			{
 				// select first item
-				if (lstItems.Items.Count > 0)
-					lstItems.Items[0].Selected = true;
+				SelectedObject = resultsForm.Results.First();
 			}
 			else if (e.KeyCode == Keys.Escape)
 			{
@@ -130,6 +145,16 @@ namespace FrEee.WinForms.Controls
 		{
 			// update results
 			ShowResults();
+		}
+
+		private void SearchBox_Leave(object sender, EventArgs e)
+		{
+			HideResults();
+		}
+
+		private void textBox_Leave(object sender, EventArgs e)
+		{
+			HideResults();
 		}
 	}
 }

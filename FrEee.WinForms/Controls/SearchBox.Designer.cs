@@ -40,6 +40,7 @@
 			this.textBox.TabIndex = 0;
 			this.textBox.SizeChanged += new System.EventHandler(this.textBox_SizeChanged);
 			this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+			this.textBox.Leave += new System.EventHandler(this.textBox_Leave);
 			// 
 			// SearchBox
 			// 
@@ -50,8 +51,10 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "SearchBox";
 			this.Size = new System.Drawing.Size(591, 22);
+			this.Load += new System.EventHandler(this.SearchBox_Load);
 			this.SizeChanged += new System.EventHandler(this.SearchBox_SizeChanged);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchBox_KeyDown);
+			this.Leave += new System.EventHandler(this.SearchBox_Leave);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

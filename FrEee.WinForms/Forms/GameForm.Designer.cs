@@ -32,7 +32,6 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -70,6 +69,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -517,6 +517,7 @@ namespace FrEee.WinForms.Forms
 			this.searchBox.Location = new System.Drawing.Point(9, 6);
 			this.searchBox.Name = "searchBox";
 			this.searchBox.ObjectsToSearch = null;
+			this.searchBox.ResultsPopupHeight = 128;
 			this.searchBox.Size = new System.Drawing.Size(332, 21);
 			this.searchBox.StarSystem = null;
 			this.searchBox.TabIndex = 0;

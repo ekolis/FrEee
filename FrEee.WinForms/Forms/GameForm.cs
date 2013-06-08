@@ -58,6 +58,17 @@ namespace FrEee.WinForms.Forms
 			// show empire log if there's anything new there
 			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
 				this.ShowChildForm(new LogForm(this));
+
+			// so the search box can lose focus...
+			foreach (Control ctl in tableLayoutPanel1.Controls)
+			{
+				ctl.Click += ctl_Click;
+			}
+		}
+
+		void ctl_Click(object sender, EventArgs e)
+		{
+			((Control)sender).Focus();
 		}
 
 		private void starSystemView_SectorClicked(StarSystemView sender, Sector sector)
