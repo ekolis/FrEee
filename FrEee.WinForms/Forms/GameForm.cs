@@ -358,7 +358,10 @@ namespace FrEee.WinForms.Forms
 				SelectStarSystem(lookup.First().Key.Item);
 				SelectSector(lookup.First().First().First().Key);
 				pnlDetailReport.Controls.Clear();
-				pnlDetailReport.Controls.Add(CreateSpaceObjectReport(sobj));
+				var rpt = CreateSpaceObjectReport(sobj);
+				if (rpt != null) // HACK - for warp points which still lack reports
+					rpt.Dock = DockStyle.Fill;
+				pnlDetailReport.Controls.Add(rpt);
 			}
 		}
 
@@ -512,7 +515,12 @@ namespace FrEee.WinForms.Forms
 
 				// add new report
 				if (value != null)
-					pnlDetailReport.Controls.Add(CreateSpaceObjectReport(value));
+				{
+					var rpt = CreateSpaceObjectReport(value);
+					if (rpt != null) // HACK - for warp points which still lack reports
+						rpt.Dock = DockStyle.Fill;
+					pnlDetailReport.Controls.Add(rpt);
+				}
 
 				// show/hide command buttons
 				if (value == null || value.Owner != Empire.Current)
