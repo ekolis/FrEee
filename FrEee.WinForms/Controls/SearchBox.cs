@@ -22,6 +22,10 @@ namespace FrEee.WinForms.Controls
 			resultsForm = new SearchBoxResultsForm();
 			resultsForm.ObjectSelected += resultsForm_ObjectSelected;
 			ResultsPopupHeight = 128;
+
+			textBox.GotFocus += textBox1_GotFocus;
+			textBox.MouseUp += textBox1_MouseUp;
+			textBox.Leave += textBox1_Leave;
 		}
 
 		private void SearchBox_Load(object sender, EventArgs e)
@@ -155,6 +159,48 @@ namespace FrEee.WinForms.Controls
 		private void textBox_Leave(object sender, EventArgs e)
 		{
 			HideResults();
+		}
+
+		private void textBox_Enter(object sender, EventArgs e)
+		{
+			textBox.SelectAll();
+		}
+
+		private void SearchBox_Enter(object sender, EventArgs e)
+		{
+			textBox.SelectAll();
+		}
+
+		// http://stackoverflow.com/questions/97459/automatically-select-all-text-on-focus-in-winforms-textbox
+		private bool alreadyFocused;
+
+		void textBox1_Leave(object sender, EventArgs e)
+		{
+			alreadyFocused = false;
+		}
+
+
+		void textBox1_GotFocus(object sender, EventArgs e)
+		{
+			// Select all text only if the mouse isn't down.
+			// This makes tabbing to the textbox give focus.
+			if (MouseButtons == MouseButtons.None)
+			{
+				this.textBox.SelectAll();
+				alreadyFocused = true;
+			}
+		}
+
+		void textBox1_MouseUp(object sender, MouseEventArgs e)
+		{
+			// Web browsers like Google Chrome select the text on mouse up.
+			// They only do it if the textbox isn't already focused,
+			// and if the user hasn't selected all text.
+			if (!alreadyFocused && this.textBox.SelectionLength == 0)
+			{
+				alreadyFocused = true;
+				this.textBox.SelectAll();
+			}
 		}
 	}
 }
