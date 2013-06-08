@@ -31,8 +31,11 @@ namespace FrEee.WinForms.Controls
 		private void SearchBox_Load(object sender, EventArgs e)
 		{
 			var form = this.FindForm();
-			form.LocationChanged += form_LocationChanged;
-			form.Resize += form_Resize;
+			if (form != null)
+			{
+				form.LocationChanged += form_LocationChanged;
+				form.Resize += form_Resize;
+			}
 		}
 
 		void form_Resize(object sender, EventArgs e)
@@ -59,6 +62,8 @@ namespace FrEee.WinForms.Controls
 		void resultsForm_ObjectSelected(SearchBoxResultsForm sender, ISpaceObject sobj)
 		{
 			SelectedObject = sobj;
+			if (ObjectSelected != null)
+				ObjectSelected(this, sobj);
 		}
 
 		public delegate void ObjectSelectedDelegate(SearchBox sender, ISpaceObject sobj);
