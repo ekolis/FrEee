@@ -115,6 +115,16 @@ namespace FrEee.Utility.Extensions
 			return abilities.StackToTree().Select(g => g.Key);
 		}
 
+		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs)
+		{
+			return objs.SelectMany(obj => obj.Abilities).Stack();
+		}
+
+		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs)
+		{
+			return objs.SelectMany(obj => obj.Abilities).StackToTree();
+		}
+
 		/// <summary>
 		/// Adds SI prefixes to a value and rounds it off.
 		/// e.g. 25000 becomes 25.00k
@@ -552,6 +562,14 @@ namespace FrEee.Utility.Extensions
 		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var abils = obj.Abilities.Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var abils = objs.Select(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];

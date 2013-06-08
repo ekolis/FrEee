@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IMobileSpaceObject : ISpaceObject
+	public interface IMobileSpaceObject : ICombatObject
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }

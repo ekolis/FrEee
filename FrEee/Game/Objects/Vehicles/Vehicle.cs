@@ -130,22 +130,30 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public void TakeDamage(DamageType damageType, int damage)
+		public void TakeDamage(DamageType damageType, int damage, Battle battle)
 		{
 			if (IsDestroyed)
 				return; // she canna take any more!
 
 			// TODO - worry about damage types
+			if (NormalShields > 0)
+			{
+			}
 			var comps = Components.Where(c => c.Hitpoints > 0);
 			var comp = Components.PickRandom();
 			if (comp.Hitpoints < damage)
 			{
+				var actualDamage = comp.Hitpoints;
 				var leftover = damage - comp.Hitpoints;
 				comp.Hitpoints = 0;
-				TakeDamage(damageType, leftover);
+				battle.LogComponentDamage(comp, actualDamage);
+				TakeDamage(damageType, leftover, battle);
 			}
 			else
+			{
 				comp.Hitpoints -= damage;
+				battle.LogComponentDamage(comp, damage);
+			}
 		}
 
 		/// <summary>
@@ -153,5 +161,44 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Vehicles are destroyed when all components are destroyed.
 		/// </summary>
 		public bool IsDestroyed { get { return Components.All(c => c.Hitpoints <= 0);}}
+
+		/// <summary>
+		/// The current amount of shields.
+		/// </summary>
+		public int NormalShields { get; set; }
+
+		/// <summary>
+		/// The current amount of phased shields.
+		/// </summary>
+		public int PhasedShields { get; set; }
+
+		/// <summary>
+		/// Total shields.
+		/// </summary>
+		public int Shields {get { return NormalShields + PhasedShields; }}
+
+		/// <summary>
+		/// The maximum shields.
+		/// </summary>
+		public int MaxNormalShields
+		{
+			get
+			{
+				var comps = Components.Where(comp => !comp.IsDestroyed);
+				return comps.GetAbilityValue("Shield Generation").ToInt() + comps.GetAbilityValue("Planet - Shield Generation").ToInt();
+			}
+		}
+
+		/// <summary>
+		/// The maximum phased shields.
+		/// </summary>
+		public int MaxPhasedShields
+		{
+			get
+			{
+				var comps = Components.Where(comp => !comp.IsDestroyed);
+				return comps.GetAbilityValue("Phased Shield Generation").ToInt();
+			}
+		}
 	}
 }

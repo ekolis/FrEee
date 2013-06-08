@@ -78,31 +78,5 @@ namespace FrEee.Game.Interfaces
 		/// TODO - make supply a resource?
 		/// </summary>
 		bool HasInfiniteSupplies { get; }
-
-		/// <summary>
-		/// Can this space object fire on another space object?
-		/// </summary>
-		/// <param name="target"></param>
-		/// <returns>true if the target is an enemy and this space object has weapons capable of targeting it</returns>
-		bool CanTarget(ISpaceObject target);
-
-		/// <summary>
-		/// What type of object is this for weapon targeting purposes?
-		/// TODO - move this into an IDamageable interface
-		/// </summary>
-		WeaponTargets WeaponTargetType { get; }
-
-		/// <summary>
-		/// Any undamaged weapons this space object is armed with.
-		/// </summary>
-		IEnumerable<Component> Weapons { get; }
-
-		/// <summary>
-		/// Inflicts damage on this space object.
-		/// TODO - move this into an IDamageable interface
-		/// </summary>
-		/// <param name="damageType"></param>
-		/// <param name="damage"></param>
-		void TakeDamage(DamageType damageType, int damage);
 	}
 }

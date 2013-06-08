@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public bool CanTarget(ISpaceObject target)
+		public bool CanTarget(ICombatObject target)
 		{
 			if (IsDestroyed)
 				return false; // damaged weapons can't fire!
@@ -66,15 +66,17 @@ namespace FrEee.Game.Objects.Technology
 		/// If not a weapon, does nothing.
 		/// </summary>
 		/// <param name="target"></param>
-		public void Attack(ISpaceObject target, Battle battle)
+		public void Attack(ICombatObject target, Battle battle)
 		{
 			if (!CanTarget(target))
 				return;
 
 			// TODO - check range too
 			// TODO - take into account weapon mounts
-			target.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.ComponentTemplate.WeaponInfo.Damage[1]);
-			battle.LogShot(this, Template.ComponentTemplate.WeaponInfo.DamageType, Template.ComponentTemplate.WeaponInfo.Damage[1]);
+			battle.LogShot(this);
+			target.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.ComponentTemplate.WeaponInfo.Damage[1], battle);
+			if (target.IsDestroyed)
+				battle.LogTargetDeath(target);
 		}
 
 		public System.Drawing.Image Icon

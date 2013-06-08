@@ -47,9 +47,9 @@ namespace FrEee.Game.Objects.Combat
 			{
 				LogRound(i + 1);
 				// TODO - real 2D combat mechanics
-				foreach (var attacker in Location.SpaceObjects.Where(sobj => sobj.Weapons.Any()))
+				foreach (var attacker in Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => sobj.Weapons.Any()))
 				{
-					var defenders = Location.SpaceObjects.Where(sobj => attacker.CanTarget(sobj));
+					var defenders = Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => attacker.CanTarget(sobj));
 					if (!defenders.Any())
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom();
@@ -67,14 +67,33 @@ namespace FrEee.Game.Objects.Combat
 			Log.Add(new GenericLogMessage("Begin round " + i + "!"));
 		}
 
-		public void LogSalvo(ISpaceObject attacker, ISpaceObject defender)
+		public void LogSalvo(ICombatObject attacker, ICombatObject defender)
 		{
-			Log.Add(new PictorialLogMessage<ISpaceObject>(attacker + " attacks " + defender + "!", attacker));
+			Log.Add(new PictorialLogMessage<ICombatObject>(attacker + " attacks " + defender + "!", attacker));
 		}
 
-		public void LogShot(Component weapon, DamageType damageType, int damage)
+		public void LogShot(Component weapon)
 		{
-			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + " for " + damage + " " + damageType.Name.ToLower() + " damage!", weapon));
+			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + "!", weapon));
+		}
+
+		public void LogShieldDamage(ICombatObject defender, int damage)
+		{
+			Log.Add(new PictorialLogMessage<ICombatObject>(defender + "'s shields take " + damage + " damage!", defender));
+		}
+
+		public void LogComponentDamage(Component component, int damage)
+		{
+			if (component.IsDestroyed)
+				Log.Add(new PictorialLogMessage<Component>(component + " takes " + damage + " damage and is destroyed!", component));
+			else
+				Log.Add(new PictorialLogMessage<Component>(component + " takes " + damage + " damage!", component));
+			
+		}
+
+		public void LogTargetDeath(ICombatObject defender)
+		{
+			Log.Add(new PictorialLogMessage<ICombatObject>(defender + " is destroyed!", defender));
 		}
 	}
 }
