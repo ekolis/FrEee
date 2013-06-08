@@ -31,11 +31,14 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
-			var form = new ConstructionQueueForm(queue);
-			this.ShowChildForm(form);
-			if (form.DialogResult == DialogResult.OK)
-				BindQueueList();
+			if (e.RowIndex >= 0
+			{
+				var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
+				var form = new ConstructionQueueForm(queue);
+				this.ShowChildForm(form);
+				if (form.DialogResult == DialogResult.OK)
+					BindQueueList();
+			}
 		}
 	}
 }
