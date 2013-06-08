@@ -31,7 +31,7 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (e.RowIndex >= 0
+			if (e.RowIndex >= 0)
 			{
 				var queue = (ConstructionQueue)gridQueues.Rows[e.RowIndex].DataBoundItem;
 				var form = new ConstructionQueueForm(queue);
