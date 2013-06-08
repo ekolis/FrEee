@@ -136,9 +136,23 @@ namespace FrEee.Game.Objects.Vehicles
 				return; // she canna take any more!
 
 			// TODO - worry about damage types
+			int shieldDmg = 0;
 			if (NormalShields > 0)
 			{
+				var dmg = Math.Min(damage, NormalShields);
+				NormalShields -= dmg;
+				damage -= dmg;
+				shieldDmg += dmg;
 			}
+			if (PhasedShields > 0)
+			{
+				var dmg = Math.Min(damage, PhasedShields);
+				NormalShields -= dmg;
+				damage -= dmg;
+				shieldDmg += dmg;
+			}
+			if (shieldDmg > 0)
+				battle.LogShieldDamage(this, shieldDmg);
 			var comps = Components.Where(c => c.Hitpoints > 0);
 			var comp = Components.PickRandom();
 			if (comp.Hitpoints < damage)
