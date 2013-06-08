@@ -58,6 +58,12 @@ namespace FrEee.Game.Objects.Combat
 						weapon.Attack(defender, this); // TODO - range and such
 				}
 			}
+
+			// replenish combatants' shields
+			foreach (var combatant in Location.SpaceObjects.OfType<ICombatObject>())
+			{
+				combatant.ReplenishShields();
+			}
 		}
 
 		public IList<LogMessage> Log { get; private set; }

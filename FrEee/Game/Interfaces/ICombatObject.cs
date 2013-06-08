@@ -50,5 +50,7 @@ namespace FrEee.Game.Interfaces
 		int MaxNormalShields { get; }
 
 		int MaxPhasedShields { get; }
+
+		void ReplenishShields();
 	}
 }

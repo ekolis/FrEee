@@ -453,6 +453,10 @@ namespace FrEee.Game.Objects.Space
 
 			}
 
+			// replenish shields
+			foreach (var sobj in FindSpaceObjects<ICombatObject>().Flatten().Flatten())
+				sobj.ReplenishShields();
+
 			// construction queues
 			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();

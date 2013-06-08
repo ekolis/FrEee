@@ -210,5 +210,12 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public abstract WeaponTargets WeaponTargetType { get; }
+
+
+		public void ReplenishShields()
+		{
+			NormalShields = MaxNormalShields;
+			PhasedShields = MaxPhasedShields;
+		}
 	}
 }
