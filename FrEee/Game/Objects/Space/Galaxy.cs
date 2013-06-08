@@ -532,11 +532,6 @@ namespace FrEee.Game.Objects.Space
 			// create the game
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
 
-			gsu.Empires.Add(new Empire { Name = "Jraenar Empire", ShipsetPath = "Jraenar", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
-			gsu.Empires.Add(new Empire { Name = "Eee Consortium", ShipsetPath = "Eee", Color = Color.Cyan });
-			gsu.Empires.Add(new Empire { Name = "Drushocka Empire", ShipsetPath = "Drushocka", Color = Color.Green });
-			gsu.Empires.Add(new Empire { Name = "Norak Ascendancy", ShipsetPath = "Norak", Color = Color.Blue });
-			gsu.Empires.Add(new Empire { Name = "Abbidon Enclave", ShipsetPath = "Abbidon", Color = Color.Orange });
 			galtemp.GameSetup = gsu;
 			Current = galtemp.Instantiate(status, desiredProgress);
 			gsu.PopulateGalaxy(Current);

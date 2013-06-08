@@ -206,6 +206,12 @@
     <Compile Include="Forms\GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GameSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameSetupForm.Designer.cs">
+      <DependentUpon>GameSetupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\HullPickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -297,6 +303,9 @@
     <EmbeddedResource Include="Forms\GameForm.resx">
       <DependentUpon>GameForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameSetupForm.resx">
+      <DependentUpon>GameSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HullPickerForm.resx">
       <DependentUpon>HullPickerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -332,6 +341,7 @@
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
+    <None Include="Properties\DataSources\FrEee.Modding.Templates.GalaxyTemplate.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

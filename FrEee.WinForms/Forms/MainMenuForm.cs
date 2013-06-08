@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
+using FrEee.WinForms.Utility.Extensions;
 using System.Threading;
 using System.Reflection;
 
@@ -45,7 +46,7 @@ namespace FrEee.WinForms.Forms
 			set
 			{
 				_isBusy = value;
-				tblButtonPanel.Visible = !IsBusy;
+				tblButtonPanel.Enabled = !IsBusy;
 				progressBar1.Visible = IsBusy;
 			}
 		}
@@ -63,21 +64,20 @@ namespace FrEee.WinForms.Forms
 				Message = "Initializing",
 				Exception = null,
 			};
-			//var task = Task.Factory.StartNewWithExceptionHandling(s =>
-			//{
 			Thread t = new Thread(new ThreadStart(() =>
 			{
-				//try
+				try
 				{
 					status.Message = "Loading mod";
 					Mod.Load(null, true, status, 0.5);
 					status.Message = "Setting up game";
 					var gsu = new GameSetup
 					{
+						GameName = "Quickstart",
 						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
 						StarSystemCount = 5,
 						GalaxySize = new System.Drawing.Size(40, 30),
-						//IsSinglePlayer = true,
+						IsSinglePlayer = true,
 					};
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(gsu, status, 1.0);
@@ -86,10 +86,10 @@ namespace FrEee.WinForms.Forms
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_1.gam");
 				}
-				//catch (Exception ex)
-				//{
-					//status.Exception = ex;
-				//}
+				catch (Exception ex)
+				{
+					status.Exception = ex;
+				}
 			}));
 			t.Start();
 			while (t.IsAlive)
@@ -175,7 +175,55 @@ namespace FrEee.WinForms.Forms
 
 		private void btnNew_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, configuring a new game is not yet supported. But you can start a single player game (albeit with no AI opponents) using Quickstart.");
+			if (Mod.Current == null)
+			{
+				progressBar1.Visible = true;
+				var status = new Status
+				{
+					Progress = 0d,
+					Message = "Initializing",
+					Exception = null,
+				};
+				Thread t = new Thread(new ThreadStart(() =>
+				{
+					try
+					{
+						status.Message = "Loading mod";
+						Mod.Load(null, true, status, 1d);
+					}
+					catch (Exception ex)
+					{
+						status.Exception = ex;
+					}
+				}));
+				t.Start();
+				while (t.IsAlive)
+				{
+					if (status.Exception != null)
+					{
+						Text = "FrEee - Error";
+						MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
+						Enabled = true;
+						IsBusy = false;
+						progressBar1.Value = 0;
+						var sw = new StreamWriter("errorlog.txt");
+						sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
+						sw.WriteLine(status.Exception.ToString());
+						sw.Close();
+						t.Abort();
+						break;
+					}
+					else
+					{
+						Text = "FrEee - " + status.Message;
+						progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
+						Application.DoEvents();
+					}
+				}
+			}
+			Text = "FrEee";
+			progressBar1.Visible = false;
+			this.ShowChildForm(new GameSetupForm());
 		}
 
 		private void btnResume_Click(object sender, EventArgs e)

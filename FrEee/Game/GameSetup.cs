@@ -24,6 +24,11 @@ namespace FrEee.Game
 		}
 
 		/// <summary>
+		/// The name of the game. Used in save file names.
+		/// </summary>
+		public string GameName { get; set; }
+
+		/// <summary>
 		/// The size of the galaxy.
 		/// </summary>
 		public System.Drawing.Size GalaxySize { get; set; }
@@ -42,10 +47,27 @@ namespace FrEee.Game
 
 		public GalaxyTemplate GalaxyTemplate { get; set; }
 
+		/// <summary>
+		/// Problems with this game setup.
+		/// </summary>
+		public IEnumerable<string> Warnings
+		{
+			get
+			{
+				if (string.IsNullOrWhiteSpace(GameName))
+					yield return "You must specify a name for the game.";
+				if (GalaxyTemplate == null)
+					yield return "You must specify a galaxy type.";
+				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
+					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
+				if (!Empires.Any())
+					yield return "You must add at least one empire.";
+			}
+		}
+
 		public void PopulateGalaxy(Galaxy gal)
 		{
-			// set single player flag
-			gal.IsSinglePlayer = IsSinglePlayer;
+			gal.Name = GameName;
 
 			// add players and place homeworlds
 			foreach (var emp in Empires)
