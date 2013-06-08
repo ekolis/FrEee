@@ -156,7 +156,6 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlColony.BackColor = System.Drawing.Color.Black;
 			this.pnlColony.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.pnlColony.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlColony.Controls.Add(this.txtConstructionTime);
 			this.pnlColony.Controls.Add(this.lblConstructionTime);
 			this.pnlColony.Controls.Add(this.txtConstructionItem);
@@ -187,7 +186,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionTime.Location = new System.Drawing.Point(117, 135);
+			this.txtConstructionTime.Location = new System.Drawing.Point(119, 135);
 			this.txtConstructionTime.Name = "txtConstructionTime";
 			this.txtConstructionTime.Size = new System.Drawing.Size(153, 15);
 			this.txtConstructionTime.TabIndex = 84;
@@ -209,7 +208,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionItem.Location = new System.Drawing.Point(116, 120);
+			this.txtConstructionItem.Location = new System.Drawing.Point(118, 120);
 			this.txtConstructionItem.Name = "txtConstructionItem";
 			this.txtConstructionItem.Size = new System.Drawing.Size(153, 15);
 			this.txtConstructionItem.TabIndex = 82;
@@ -234,8 +233,8 @@ namespace FrEee.WinForms.Controls
 			this.resIntel.BackColor = System.Drawing.Color.Black;
 			this.resIntel.Change = null;
 			this.resIntel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resIntel.ForeColor = System.Drawing.Color.Magenta;
-			this.resIntel.Location = new System.Drawing.Point(133, 89);
+			this.resIntel.ForeColor = System.Drawing.Color.White;
+			this.resIntel.Location = new System.Drawing.Point(135, 89);
 			this.resIntel.Margin = new System.Windows.Forms.Padding(0);
 			this.resIntel.Name = "resIntel";
 			this.resIntel.ResourceColor = System.Drawing.Color.Empty;
@@ -249,8 +248,8 @@ namespace FrEee.WinForms.Controls
 			this.resResearch.BackColor = System.Drawing.Color.Black;
 			this.resResearch.Change = null;
 			this.resResearch.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resResearch.ForeColor = System.Drawing.Color.Yellow;
-			this.resResearch.Location = new System.Drawing.Point(48, 89);
+			this.resResearch.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			this.resResearch.Location = new System.Drawing.Point(54, 94);
 			this.resResearch.Margin = new System.Windows.Forms.Padding(0);
 			this.resResearch.Name = "resResearch";
 			this.resResearch.ResourceColor = System.Drawing.Color.Empty;
@@ -272,7 +271,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtMood.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtMood.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtMood.Location = new System.Drawing.Point(117, 45);
+			this.txtMood.Location = new System.Drawing.Point(119, 45);
 			this.txtMood.Name = "txtMood";
 			this.txtMood.Size = new System.Drawing.Size(153, 15);
 			this.txtMood.TabIndex = 77;
@@ -294,7 +293,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtReproduction.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtReproduction.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtReproduction.Location = new System.Drawing.Point(116, 30);
+			this.txtReproduction.Location = new System.Drawing.Point(118, 30);
 			this.txtReproduction.Name = "txtReproduction";
 			this.txtReproduction.Size = new System.Drawing.Size(153, 15);
 			this.txtReproduction.TabIndex = 75;
@@ -316,7 +315,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtPopulation.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPopulation.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtPopulation.Location = new System.Drawing.Point(116, 15);
+			this.txtPopulation.Location = new System.Drawing.Point(118, 15);
 			this.txtPopulation.Name = "txtPopulation";
 			this.txtPopulation.Size = new System.Drawing.Size(153, 15);
 			this.txtPopulation.TabIndex = 73;
@@ -338,7 +337,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtColonyType.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtColonyType.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtColonyType.Location = new System.Drawing.Point(130, 0);
+			this.txtColonyType.Location = new System.Drawing.Point(132, 0);
 			this.txtColonyType.Name = "txtColonyType";
 			this.txtColonyType.Size = new System.Drawing.Size(139, 15);
 			this.txtColonyType.TabIndex = 71;
@@ -363,8 +362,8 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeMinerals.BackColor = System.Drawing.Color.Black;
 			this.resIncomeMinerals.Change = null;
 			this.resIncomeMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resIncomeMinerals.ForeColor = System.Drawing.Color.Blue;
-			this.resIncomeMinerals.Location = new System.Drawing.Point(48, 65);
+			this.resIncomeMinerals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resIncomeMinerals.Location = new System.Drawing.Point(50, 65);
 			this.resIncomeMinerals.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeMinerals.Name = "resIncomeMinerals";
 			this.resIncomeMinerals.ResourceColor = System.Drawing.Color.Empty;
@@ -378,8 +377,8 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeOrganics.BackColor = System.Drawing.Color.Black;
 			this.resIncomeOrganics.Change = null;
 			this.resIncomeOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resIncomeOrganics.ForeColor = System.Drawing.Color.Lime;
-			this.resIncomeOrganics.Location = new System.Drawing.Point(129, 65);
+			this.resIncomeOrganics.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resIncomeOrganics.Location = new System.Drawing.Point(131, 65);
 			this.resIncomeOrganics.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeOrganics.Name = "resIncomeOrganics";
 			this.resIncomeOrganics.ResourceColor = System.Drawing.Color.Empty;
@@ -393,8 +392,8 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeRadioactives.BackColor = System.Drawing.Color.Black;
 			this.resIncomeRadioactives.Change = null;
 			this.resIncomeRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resIncomeRadioactives.ForeColor = System.Drawing.Color.Red;
-			this.resIncomeRadioactives.Location = new System.Drawing.Point(210, 65);
+			this.resIncomeRadioactives.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resIncomeRadioactives.Location = new System.Drawing.Point(212, 65);
 			this.resIncomeRadioactives.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeRadioactives.Name = "resIncomeRadioactives";
 			this.resIncomeRadioactives.ResourceColor = System.Drawing.Color.Empty;
@@ -426,7 +425,7 @@ namespace FrEee.WinForms.Controls
 			// txtValueRadioactives
 			// 
 			this.txtValueRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueRadioactives.ForeColor = System.Drawing.Color.Red;
+			this.txtValueRadioactives.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.txtValueRadioactives.Location = new System.Drawing.Point(227, 133);
 			this.txtValueRadioactives.Name = "txtValueRadioactives";
 			this.txtValueRadioactives.Size = new System.Drawing.Size(45, 23);
@@ -436,7 +435,7 @@ namespace FrEee.WinForms.Controls
 			// txtValueOrganics
 			// 
 			this.txtValueOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueOrganics.ForeColor = System.Drawing.Color.Lime;
+			this.txtValueOrganics.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
 			this.txtValueOrganics.Location = new System.Drawing.Point(190, 133);
 			this.txtValueOrganics.Name = "txtValueOrganics";
 			this.txtValueOrganics.Size = new System.Drawing.Size(45, 23);
@@ -446,7 +445,7 @@ namespace FrEee.WinForms.Controls
 			// txtValueMinerals
 			// 
 			this.txtValueMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueMinerals.ForeColor = System.Drawing.Color.Blue;
+			this.txtValueMinerals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
 			this.txtValueMinerals.Location = new System.Drawing.Point(156, 133);
 			this.txtValueMinerals.Name = "txtValueMinerals";
 			this.txtValueMinerals.Size = new System.Drawing.Size(45, 23);
