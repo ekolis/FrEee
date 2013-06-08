@@ -512,6 +512,8 @@ namespace FrEee.WinForms.Forms
 				ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
 			if (e.KeyCode == Keys.W && btnWarp.Visible)
 				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
+			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
+				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
 				ChangeCommandMode(CommandMode.None, null);
 			else if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
@@ -627,6 +629,14 @@ namespace FrEee.WinForms.Forms
 		}
 
 		private void btnClearOrders_Click(object sender, EventArgs e)
+		{
+			ClearOrders();
+		}
+
+		/// <summary>
+		/// Clears the selected space object's orders.
+		/// </summary>
+		private void ClearOrders()
 		{
 			if (SelectedSpaceObject.Owner == Empire.Current)
 			{
