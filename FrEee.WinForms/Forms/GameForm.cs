@@ -18,6 +18,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.WinForms.Forms
 {
@@ -692,6 +693,11 @@ namespace FrEee.WinForms.Forms
 		}
 
 		public void ShowVehicleDesignForm(VehicleDesignForm f)
+		{
+			this.ShowChildForm(f);
+		}
+
+		public void ShowLogForm(LogForm f)
 		{
 			this.ShowChildForm(f);
 		}

@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Forms
 					var gsu = new GameSetup
 					{
 						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
-						StarSystemCount = 50,
+						StarSystemCount = 5,
 						GalaxySize = new System.Drawing.Size(40, 30),
 						IsSinglePlayer = true,
 					};

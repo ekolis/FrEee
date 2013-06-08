@@ -13,12 +13,18 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.WinForms.Forms
 {
 	public partial class LogForm : Form
 	{
-		public LogForm(GameForm gameForm)
+		/// <summary>
+		/// Creates a log form.
+		/// </summary>
+		/// <param name="gameForm"></param>
+		/// <param name="battle">The battle whose log we should display, or null to display the turn log.</param>
+		public LogForm(GameForm gameForm, Battle battle = null)
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
@@ -63,6 +69,11 @@ namespace FrEee.WinForms.Forms
 					{
 						// go to design screen
 						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
+					}
+					else if (context is Battle)
+					{
+						// show battle log
+						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
 					}
 
 					// TODO - more types of goto-messages

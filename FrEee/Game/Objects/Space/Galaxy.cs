@@ -12,6 +12,7 @@ using FrEee.Utility;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -469,7 +470,20 @@ namespace FrEee.Game.Objects.Space
 			{
 				ComputeNextTickSize();
 				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+				{
 					v.ExecuteOrders();
+					
+					// check for battles
+					// TODO - alliances
+					var sector = v.FindSector();
+					if (sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner))
+					{
+						var battle = new Battle(sector);
+						battle.Resolve();
+						foreach (var emp in battle.Empires)
+							emp.Log.Add(battle.CreateLogMessage(battle.Name));
+					}
+				}
 				CurrentTick += NextTickSize;
 			}
 

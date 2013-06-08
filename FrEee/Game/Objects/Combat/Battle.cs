@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
@@ -10,18 +11,30 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Combat
 {
-	public class Battle : INamed
+	public class Battle : INamed, IPictorial
 	{
 		public Battle(Sector location)
 		{
 			Location = location;
 			Log = new List<LogMessage>();
+			Empires = Location.SpaceObjects.OfType<ICombatObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Combatants = Location.SpaceObjects.OfType<ICombatObject>();
 		}
 
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
 		public Sector Location { get; private set; }
+
+		/// <summary>
+		/// The empires engagaed in battle.
+		/// </summary>
+		public IEnumerable<Empire> Empires { get; private set; }
+
+		/// <summary>
+		/// The combatants in this battle.
+		/// </summary>
+		public IEnumerable<ICombatObject> Combatants { get; private set; }
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -100,6 +113,16 @@ namespace FrEee.Game.Objects.Combat
 		public void LogTargetDeath(ICombatObject defender)
 		{
 			Log.Add(new PictorialLogMessage<ICombatObject>(defender + " is destroyed!", defender));
+		}
+
+		public System.Drawing.Image Icon
+		{
+			get { return Combatants.Largest().Icon; }
+		}
+
+		public System.Drawing.Image Portrait
+		{
+			get { return Combatants.Largest().Portrait; }
 		}
 	}
 }
