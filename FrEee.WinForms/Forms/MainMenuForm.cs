@@ -71,7 +71,7 @@ namespace FrEee.WinForms.Forms
 					status.Message = "Loading mod";
 					Mod.Load(null, true, status, 0.5);
 					status.Message = "Setting up game";
-					var gsu = new GameSetup
+					var setup = new GameSetup
 					{
 						GameName = "Quickstart",
 						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
@@ -79,8 +79,15 @@ namespace FrEee.WinForms.Forms
 						GalaxySize = new System.Drawing.Size(40, 30),
 						IsSinglePlayer = true,
 					};
+					// TODO - pick random empires from a list
+					// TODO - use empire templates
+					setup.Empires.Add(new Empire { Name = "Jraenar Empire", ShipsetPath = "Jraenar", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
+					setup.Empires.Add(new Empire { Name = "Eee Consortium", ShipsetPath = "Eee", Color = Color.Cyan });
+					setup.Empires.Add(new Empire { Name = "Drushocka Empire", ShipsetPath = "Drushocka", Color = Color.Green });
+					setup.Empires.Add(new Empire { Name = "Norak Ascendancy", ShipsetPath = "Norak", Color = Color.Blue });
+					setup.Empires.Add(new Empire { Name = "Abbidon Enclave", ShipsetPath = "Abbidon", Color = Color.Orange });
 					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(gsu, status, 1.0);
+					Galaxy.Initialize(setup, status, 1.0);
 					var name = Galaxy.Current.Name;
 					var turn = Galaxy.Current.TurnNumber;
 					status.Message = "Loading game";
