@@ -67,6 +67,7 @@ namespace FrEee.Game.Objects.Combat
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom();
 
+					LogSalvo(attacker, defender);
 					foreach (var weapon in attacker.Weapons.Where(w => w.CanTarget(defender)))
 						weapon.Attack(defender, this); // TODO - range and such
 				}
