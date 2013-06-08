@@ -200,5 +200,11 @@ namespace FrEee.Game.Objects.Vehicles
 				return comps.GetAbilityValue("Phased Shield Generation").ToInt();
 			}
 		}
+
+		public void ReplenishShields()
+		{
+			NormalShields = MaxNormalShields;
+			PhasedShields = MaxPhasedShields;
+		}
 	}
 }

@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable<Planet, IPlanetOrder>
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable<Planet, IPlanetOrder>, ICombatObject
 	{
 		public Planet()
 		{
@@ -277,6 +277,58 @@ namespace FrEee.Game.Objects.Space
 		public override void TakeDamage(DamageType damageType, int damage)
 		{
 			// TODO - planetary damage
+		}
+
+
+		public void TakeDamage(DamageType damageType, int damage, Battle battle)
+		{
+			throw new NotImplementedException();
+		}
+
+		/// <summary>
+		/// Planets can't be destroyed in combat.
+		/// </summary>
+		public bool IsDestroyed
+		{
+			get { return false; }
+		}
+
+		public int NormalShields
+		{
+			get;
+			set;
+		}
+
+		public int PhasedShields
+		{
+			get;
+			set;
+		}
+
+		public int MaxNormalShields
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return Colony.Facilities.GetAbilityValue("Shield Generation").ToInt() + Colony.Facilities.GetAbilityValue("Planet - Shield Generation").ToInt();
+			}
+		}
+
+		public int MaxPhasedShields
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return Colony.Facilities.GetAbilityValue("Phased Shield Generation").ToInt();
+			}
+		}
+
+		public void ReplenishShields()
+		{
+			NormalShields = MaxNormalShields;
+			PhasedShields = MaxPhasedShields;
 		}
 	}
 }
