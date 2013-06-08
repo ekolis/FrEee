@@ -569,7 +569,7 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = objs.Select(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
