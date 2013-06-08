@@ -29,16 +29,18 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The object that is moving.
 		/// </summary>
+		[DoNotSerialize]
 		public T Target { get { return target; } set { target = value; } }
 
-		private Reference<T> target;
+		private Reference<T> target {get; set;}
 
 		/// <summary>
 		/// The sector we are moving to.
 		/// </summary>
+		[DoNotSerialize]
 		public Sector Destination { get { return destination; } set { destination = value; } }
 
-		private Reference<Sector> destination;
+		private Reference<Sector> destination {get; set;}
 
 		/// <summary>
 		/// Should pathfinding avoid enemies?

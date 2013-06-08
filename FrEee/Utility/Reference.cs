@@ -52,7 +52,7 @@ namespace FrEee.Utility
 				if (ID < 0)
 					return default(T);
 				if (ID >= Galaxy.Current.Referrables.Count)
-					throw new Exception("ID is too high. Trying to reference a newly created object, or one that was not assigned an ID by the server?");
+					throw new ReferenceException("ID " + ID +  " is too high for " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
 				return (T)Galaxy.Current.Referrables[ID];
 			}
 		}
@@ -104,5 +104,19 @@ namespace FrEee.Utility
 			prop.SetValue(Value, value, new object[] { });
 			return true;
 		}
+	}
+
+	public class ReferenceException : Exception
+	{
+		public ReferenceException(string message, int id, Type type)
+			: base(message)
+		{
+			ID = id;
+			Type = type;
+		}
+
+		public int ID { get; private set; }
+
+		public Type Type { get; private set; }
 	}
 }

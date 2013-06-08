@@ -181,7 +181,14 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static Galaxy DeserializeGameState(Stream stream)
 		{
-			return Serializer.Deserialize<Galaxy>(stream);
+			var gal = Serializer.Deserialize<Galaxy>(stream);
+			// HACK - why isn't the deserializer setting the ID's?
+			for (int id = 0; id < gal.Referrables.Count; id++)
+			{
+				if (gal.Referrables[id] != null)
+					gal.Referrables[id].ID = id;
+			}
+			return gal;
 		}
 
 		/// <summary>

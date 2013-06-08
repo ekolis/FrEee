@@ -238,7 +238,16 @@ namespace FrEee.Utility
 			{
 				// serialize field value
 				var val = p.GetValue(o, new object[]{});
-				Serialize(val, w, p.PropertyType, context, tabLevel + 1);
+				try
+				{
+					Serialize(val, w, p.PropertyType, context, tabLevel + 1);
+				}
+				catch (Exception ex)
+				{
+					while (ex.InnerException != null)
+						ex = ex.InnerException;
+					throw new SerializationException("Could not serialize property " + p.Name + " of " + o + " because the property accessor threw an exception: " + ex.Message, ex);
+				}
 			}
 
 			// write end object
