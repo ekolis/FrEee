@@ -156,7 +156,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (shieldDmg > 0)
 				battle.LogShieldDamage(this.CombatObject, shieldDmg);
 			var comps = Components.Where(c => c.Hitpoints > 0);
-			var comp = Components.PickRandom();
+			var comp = comps.PickRandom();
 			if (comp.Hitpoints < damage)
 			{
 				var actualDamage = comp.Hitpoints;
