@@ -750,6 +750,7 @@ namespace FrEee.WinForms.Forms
 		private void searchBox_ObjectSelected(SearchBox sender, ISpaceObject sobj)
 		{
 			SelectedSpaceObject = sobj;
+			searchBox.HideResults();
 		}
 	}
 }
