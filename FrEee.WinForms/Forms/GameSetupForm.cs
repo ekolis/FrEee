@@ -202,5 +202,61 @@ namespace FrEee.WinForms.Forms
 		{
 			setup.StarSystemGroups = (int)spnSystemGroups.Value;
 		}
+
+		private void btnLoadResourcePreset_Click(object sender, EventArgs e)
+		{
+			// TODO - customizable presets?
+			if (ddlPresets.SelectedIndex == 0)
+			{
+				// standard, remote mining depletes
+				spnRateStandard.Value = spnRateRemote.Value = 0;
+				spnBonusStandard.Value = spnBonusRemote.Value = 1;
+				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 0;
+				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = false;
+				spnDepletionTurnStandard.Value = 0;
+				spnDepletionTurnRemote.Value = 1;
+				spnMinValuePlanet.Value = spnMinValueAsteroid.Value = 0;
+				spnMinSpawnValuePlanet.Value = 0;
+				spnMinSpawnValueAsteroid.Value = 50;
+				spnHomeworldValue.Value = 120;
+				spnMaxSpawnValuePlanet.Value = 150;
+				spnMaxSpawnValueAsteroid.Value = 300;
+				spnMaxValuePlanet.Value = 250;
+			}
+			else if (ddlPresets.SelectedIndex == 1)
+			{
+				// standard, remote mining doesn't deplete
+				spnRateStandard.Value = spnRateRemote.Value = 0;
+				spnBonusStandard.Value = spnBonusRemote.Value = 1;
+				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 0;
+				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = false;
+				spnDepletionTurnStandard.Value = 0;
+				spnDepletionTurnRemote.Value = 0;
+				spnMinValuePlanet.Value = spnMinValueAsteroid.Value = 0;
+				spnMinSpawnValuePlanet.Value = 0;
+				spnMinSpawnValueAsteroid.Value = 50;
+				spnHomeworldValue.Value = 120;
+				spnMaxSpawnValuePlanet.Value = 150;
+				spnMaxSpawnValueAsteroid.Value = 300;
+				spnMaxValuePlanet.Value = 250;
+			}
+			else if (ddlPresets.SelectedIndex == 2)
+			{
+				// finite
+				spnRateStandard.Value = spnRateRemote.Value = 1;
+				spnBonusStandard.Value = spnBonusRemote.Value = 0;
+				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 1;
+				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = true;
+				spnDepletionTurnStandard.Value = 0;
+				spnDepletionTurnRemote.Value = 0;
+				spnMinValuePlanet.Value = spnMinValueAsteroid.Value = 0;
+				spnMinSpawnValuePlanet.Value = 0;
+				spnMinSpawnValueAsteroid.Value = 100e3m;
+				spnHomeworldValue.Value = 2e6m;
+				spnMaxSpawnValuePlanet.Value = 500e3m;
+				spnMaxSpawnValueAsteroid.Value = 800e3m;
+				spnMaxValuePlanet.Value = 10e6m;
+			}
+		}
 	}
 }

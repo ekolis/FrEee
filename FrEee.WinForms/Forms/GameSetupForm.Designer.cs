@@ -45,8 +45,6 @@
 			this.label7 = new System.Windows.Forms.Label();
 			this.ddlEventFrequency = new System.Windows.Forms.ComboBox();
 			this.label6 = new System.Windows.Forms.Label();
-			this.ddlResources = new System.Windows.Forms.ComboBox();
-			this.label5 = new System.Windows.Forms.Label();
 			this.chkOmniscient = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.chkAllSystemsExplored = new System.Windows.Forms.CheckBox();
@@ -60,6 +58,42 @@
 			this.ddlGalaxyType = new System.Windows.Forms.ComboBox();
 			this.galaxyTemplateBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.lblGalaxyType = new System.Windows.Forms.Label();
+			this.tabResources = new System.Windows.Forms.TabPage();
+			this.spnHomeworldValue = new System.Windows.Forms.NumericUpDown();
+			this.label25 = new System.Windows.Forms.Label();
+			this.chkBonusDepletionRemote = new System.Windows.Forms.CheckBox();
+			this.chkBonusDepletionStandard = new System.Windows.Forms.CheckBox();
+			this.label17 = new System.Windows.Forms.Label();
+			this.spnDepletionTurnRemote = new System.Windows.Forms.NumericUpDown();
+			this.spnDepletionTurnStandard = new System.Windows.Forms.NumericUpDown();
+			this.label24 = new System.Windows.Forms.Label();
+			this.spnMaxValuePlanet = new System.Windows.Forms.NumericUpDown();
+			this.spnMaxSpawnValueAsteroid = new System.Windows.Forms.NumericUpDown();
+			this.spnMinSpawnValueAsteroid = new System.Windows.Forms.NumericUpDown();
+			this.spnMinValueAsteroid = new System.Windows.Forms.NumericUpDown();
+			this.spnMaxSpawnValuePlanet = new System.Windows.Forms.NumericUpDown();
+			this.spnMinSpawnValuePlanet = new System.Windows.Forms.NumericUpDown();
+			this.spnMinValuePlanet = new System.Windows.Forms.NumericUpDown();
+			this.label23 = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.label21 = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.label19 = new System.Windows.Forms.Label();
+			this.label18 = new System.Windows.Forms.Label();
+			this.spnDepletionResourceRemote = new System.Windows.Forms.NumericUpDown();
+			this.spnBonusRemote = new System.Windows.Forms.NumericUpDown();
+			this.spnRateRemote = new System.Windows.Forms.NumericUpDown();
+			this.spnDepletionResourceStandard = new System.Windows.Forms.NumericUpDown();
+			this.spnBonusStandard = new System.Windows.Forms.NumericUpDown();
+			this.spnRateStandard = new System.Windows.Forms.NumericUpDown();
+			this.label16 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.btnLoadResourcePreset = new FrEee.WinForms.Controls.GameButton();
+			this.ddlPresets = new System.Windows.Forms.ComboBox();
+			this.label5 = new System.Windows.Forms.Label();
 			this.tabTechnology = new System.Windows.Forms.TabPage();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
 			this.tabVictory = new System.Windows.Forms.TabPage();
@@ -78,6 +112,23 @@
 			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStarSystems)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).BeginInit();
+			this.tabResources.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnHomeworldValue)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnRemote)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnStandard)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxValuePlanet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxSpawnValueAsteroid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinSpawnValueAsteroid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinValueAsteroid)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxSpawnValuePlanet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinSpawnValuePlanet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinValuePlanet)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceRemote)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnBonusRemote)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRateRemote)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceStandard)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnBonusStandard)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -86,6 +137,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabGalaxy);
+			this.tabs.Controls.Add(this.tabResources);
 			this.tabs.Controls.Add(this.tabTechnology);
 			this.tabs.Controls.Add(this.tabEmpires);
 			this.tabs.Controls.Add(this.tabVictory);
@@ -98,7 +150,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(500, 479);
+			this.tabs.Size = new System.Drawing.Size(553, 479);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -120,8 +172,6 @@
 			this.tabGalaxy.Controls.Add(this.label7);
 			this.tabGalaxy.Controls.Add(this.ddlEventFrequency);
 			this.tabGalaxy.Controls.Add(this.label6);
-			this.tabGalaxy.Controls.Add(this.ddlResources);
-			this.tabGalaxy.Controls.Add(this.label5);
 			this.tabGalaxy.Controls.Add(this.chkOmniscient);
 			this.tabGalaxy.Controls.Add(this.label4);
 			this.tabGalaxy.Controls.Add(this.chkAllSystemsExplored);
@@ -137,7 +187,7 @@
 			this.tabGalaxy.Location = new System.Drawing.Point(4, 29);
 			this.tabGalaxy.Name = "tabGalaxy";
 			this.tabGalaxy.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGalaxy.Size = new System.Drawing.Size(492, 446);
+			this.tabGalaxy.Size = new System.Drawing.Size(545, 446);
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
@@ -203,7 +253,7 @@
 			this.ddlEventSeverity.Items.AddRange(new object[] {
             "Percentage Value",
             "Finite Pool"});
-			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 356);
+			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 330);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
 			this.ddlEventSeverity.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventSeverity.TabIndex = 22;
@@ -212,7 +262,7 @@
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label10.Location = new System.Drawing.Point(11, 359);
+			this.label10.Location = new System.Drawing.Point(11, 333);
 			this.label10.Margin = new System.Windows.Forms.Padding(3);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(82, 15);
@@ -295,7 +345,7 @@
 			this.ddlEventFrequency.Items.AddRange(new object[] {
             "Percentage Value",
             "Finite Pool"});
-			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 327);
+			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 301);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventFrequency.TabIndex = 15;
@@ -304,35 +354,12 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(11, 330);
+			this.label6.Location = new System.Drawing.Point(11, 304);
 			this.label6.Margin = new System.Windows.Forms.Padding(3);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(97, 15);
 			this.label6.TabIndex = 14;
 			this.label6.Text = "Event Frequency";
-			// 
-			// ddlResources
-			// 
-			this.ddlResources.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlResources.FormattingEnabled = true;
-			this.ddlResources.Items.AddRange(new object[] {
-            "Percentage Value",
-            "Finite Pool"});
-			this.ddlResources.Location = new System.Drawing.Point(114, 298);
-			this.ddlResources.Name = "ddlResources";
-			this.ddlResources.Size = new System.Drawing.Size(152, 23);
-			this.ddlResources.TabIndex = 13;
-			// 
-			// label5
-			// 
-			this.label5.AutoSize = true;
-			this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label5.Location = new System.Drawing.Point(11, 301);
-			this.label5.Margin = new System.Windows.Forms.Padding(3);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(66, 15);
-			this.label5.TabIndex = 12;
-			this.label5.Text = "Resources";
 			// 
 			// chkOmniscient
 			// 
@@ -474,13 +501,528 @@
 			this.lblGalaxyType.TabIndex = 0;
 			this.lblGalaxyType.Text = "Type";
 			// 
+			// tabResources
+			// 
+			this.tabResources.BackColor = System.Drawing.Color.Black;
+			this.tabResources.Controls.Add(this.spnHomeworldValue);
+			this.tabResources.Controls.Add(this.label25);
+			this.tabResources.Controls.Add(this.chkBonusDepletionRemote);
+			this.tabResources.Controls.Add(this.chkBonusDepletionStandard);
+			this.tabResources.Controls.Add(this.label17);
+			this.tabResources.Controls.Add(this.spnDepletionTurnRemote);
+			this.tabResources.Controls.Add(this.spnDepletionTurnStandard);
+			this.tabResources.Controls.Add(this.label24);
+			this.tabResources.Controls.Add(this.spnMaxValuePlanet);
+			this.tabResources.Controls.Add(this.spnMaxSpawnValueAsteroid);
+			this.tabResources.Controls.Add(this.spnMinSpawnValueAsteroid);
+			this.tabResources.Controls.Add(this.spnMinValueAsteroid);
+			this.tabResources.Controls.Add(this.spnMaxSpawnValuePlanet);
+			this.tabResources.Controls.Add(this.spnMinSpawnValuePlanet);
+			this.tabResources.Controls.Add(this.spnMinValuePlanet);
+			this.tabResources.Controls.Add(this.label23);
+			this.tabResources.Controls.Add(this.label22);
+			this.tabResources.Controls.Add(this.label21);
+			this.tabResources.Controls.Add(this.label20);
+			this.tabResources.Controls.Add(this.label19);
+			this.tabResources.Controls.Add(this.label18);
+			this.tabResources.Controls.Add(this.spnDepletionResourceRemote);
+			this.tabResources.Controls.Add(this.spnBonusRemote);
+			this.tabResources.Controls.Add(this.spnRateRemote);
+			this.tabResources.Controls.Add(this.spnDepletionResourceStandard);
+			this.tabResources.Controls.Add(this.spnBonusStandard);
+			this.tabResources.Controls.Add(this.spnRateStandard);
+			this.tabResources.Controls.Add(this.label16);
+			this.tabResources.Controls.Add(this.label15);
+			this.tabResources.Controls.Add(this.label14);
+			this.tabResources.Controls.Add(this.label13);
+			this.tabResources.Controls.Add(this.label12);
+			this.tabResources.Controls.Add(this.btnLoadResourcePreset);
+			this.tabResources.Controls.Add(this.ddlPresets);
+			this.tabResources.Controls.Add(this.label5);
+			this.tabResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tabResources.Location = new System.Drawing.Point(4, 29);
+			this.tabResources.Name = "tabResources";
+			this.tabResources.Size = new System.Drawing.Size(545, 446);
+			this.tabResources.TabIndex = 7;
+			this.tabResources.Text = "Resources";
+			// 
+			// spnHomeworldValue
+			// 
+			this.spnHomeworldValue.Location = new System.Drawing.Point(153, 275);
+			this.spnHomeworldValue.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnHomeworldValue.Name = "spnHomeworldValue";
+			this.spnHomeworldValue.Size = new System.Drawing.Size(95, 21);
+			this.spnHomeworldValue.TabIndex = 50;
+			this.spnHomeworldValue.ThousandsSeparator = true;
+			this.spnHomeworldValue.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label25.Location = new System.Drawing.Point(8, 277);
+			this.label25.Margin = new System.Windows.Forms.Padding(3);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(105, 15);
+			this.label25.TabIndex = 49;
+			this.label25.Text = "Homeworld Value";
+			// 
+			// chkBonusDepletionRemote
+			// 
+			this.chkBonusDepletionRemote.AutoSize = true;
+			this.chkBonusDepletionRemote.Location = new System.Drawing.Point(257, 136);
+			this.chkBonusDepletionRemote.Name = "chkBonusDepletionRemote";
+			this.chkBonusDepletionRemote.Size = new System.Drawing.Size(15, 14);
+			this.chkBonusDepletionRemote.TabIndex = 48;
+			this.chkBonusDepletionRemote.UseVisualStyleBackColor = true;
+			// 
+			// chkBonusDepletionStandard
+			// 
+			this.chkBonusDepletionStandard.AutoSize = true;
+			this.chkBonusDepletionStandard.Location = new System.Drawing.Point(153, 136);
+			this.chkBonusDepletionStandard.Name = "chkBonusDepletionStandard";
+			this.chkBonusDepletionStandard.Size = new System.Drawing.Size(15, 14);
+			this.chkBonusDepletionStandard.TabIndex = 47;
+			this.chkBonusDepletionStandard.UseVisualStyleBackColor = true;
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label17.Location = new System.Drawing.Point(8, 135);
+			this.label17.Margin = new System.Windows.Forms.Padding(3);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(136, 15);
+			this.label17.TabIndex = 46;
+			this.label17.Text = "Bonus Affects Depletion";
+			// 
+			// spnDepletionTurnRemote
+			// 
+			this.spnDepletionTurnRemote.Location = new System.Drawing.Point(257, 156);
+			this.spnDepletionTurnRemote.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnDepletionTurnRemote.Name = "spnDepletionTurnRemote";
+			this.spnDepletionTurnRemote.Size = new System.Drawing.Size(95, 21);
+			this.spnDepletionTurnRemote.TabIndex = 45;
+			this.spnDepletionTurnRemote.ThousandsSeparator = true;
+			this.spnDepletionTurnRemote.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// spnDepletionTurnStandard
+			// 
+			this.spnDepletionTurnStandard.Location = new System.Drawing.Point(153, 156);
+			this.spnDepletionTurnStandard.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnDepletionTurnStandard.Name = "spnDepletionTurnStandard";
+			this.spnDepletionTurnStandard.Size = new System.Drawing.Size(95, 21);
+			this.spnDepletionTurnStandard.TabIndex = 44;
+			this.spnDepletionTurnStandard.ThousandsSeparator = true;
+			// 
+			// label24
+			// 
+			this.label24.AutoSize = true;
+			this.label24.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label24.Location = new System.Drawing.Point(8, 158);
+			this.label24.Margin = new System.Windows.Forms.Padding(3);
+			this.label24.Name = "label24";
+			this.label24.Size = new System.Drawing.Size(132, 15);
+			this.label24.TabIndex = 43;
+			this.label24.Text = "Depletion / Turn Mined";
+			// 
+			// spnMaxValuePlanet
+			// 
+			this.spnMaxValuePlanet.Location = new System.Drawing.Point(153, 329);
+			this.spnMaxValuePlanet.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMaxValuePlanet.Name = "spnMaxValuePlanet";
+			this.spnMaxValuePlanet.Size = new System.Drawing.Size(95, 21);
+			this.spnMaxValuePlanet.TabIndex = 41;
+			this.spnMaxValuePlanet.ThousandsSeparator = true;
+			this.spnMaxValuePlanet.Value = new decimal(new int[] {
+            250,
+            0,
+            0,
+            0});
+			// 
+			// spnMaxSpawnValueAsteroid
+			// 
+			this.spnMaxSpawnValueAsteroid.Location = new System.Drawing.Point(257, 302);
+			this.spnMaxSpawnValueAsteroid.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMaxSpawnValueAsteroid.Name = "spnMaxSpawnValueAsteroid";
+			this.spnMaxSpawnValueAsteroid.Size = new System.Drawing.Size(95, 21);
+			this.spnMaxSpawnValueAsteroid.TabIndex = 40;
+			this.spnMaxSpawnValueAsteroid.ThousandsSeparator = true;
+			this.spnMaxSpawnValueAsteroid.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+			// 
+			// spnMinSpawnValueAsteroid
+			// 
+			this.spnMinSpawnValueAsteroid.Location = new System.Drawing.Point(257, 248);
+			this.spnMinSpawnValueAsteroid.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMinSpawnValueAsteroid.Name = "spnMinSpawnValueAsteroid";
+			this.spnMinSpawnValueAsteroid.Size = new System.Drawing.Size(95, 21);
+			this.spnMinSpawnValueAsteroid.TabIndex = 39;
+			this.spnMinSpawnValueAsteroid.ThousandsSeparator = true;
+			this.spnMinSpawnValueAsteroid.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+			// 
+			// spnMinValueAsteroid
+			// 
+			this.spnMinValueAsteroid.Location = new System.Drawing.Point(257, 221);
+			this.spnMinValueAsteroid.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMinValueAsteroid.Name = "spnMinValueAsteroid";
+			this.spnMinValueAsteroid.Size = new System.Drawing.Size(95, 21);
+			this.spnMinValueAsteroid.TabIndex = 38;
+			this.spnMinValueAsteroid.ThousandsSeparator = true;
+			// 
+			// spnMaxSpawnValuePlanet
+			// 
+			this.spnMaxSpawnValuePlanet.Location = new System.Drawing.Point(153, 302);
+			this.spnMaxSpawnValuePlanet.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMaxSpawnValuePlanet.Name = "spnMaxSpawnValuePlanet";
+			this.spnMaxSpawnValuePlanet.Size = new System.Drawing.Size(95, 21);
+			this.spnMaxSpawnValuePlanet.TabIndex = 37;
+			this.spnMaxSpawnValuePlanet.ThousandsSeparator = true;
+			this.spnMaxSpawnValuePlanet.Value = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+			// 
+			// spnMinSpawnValuePlanet
+			// 
+			this.spnMinSpawnValuePlanet.Location = new System.Drawing.Point(153, 248);
+			this.spnMinSpawnValuePlanet.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMinSpawnValuePlanet.Name = "spnMinSpawnValuePlanet";
+			this.spnMinSpawnValuePlanet.Size = new System.Drawing.Size(95, 21);
+			this.spnMinSpawnValuePlanet.TabIndex = 36;
+			this.spnMinSpawnValuePlanet.ThousandsSeparator = true;
+			// 
+			// spnMinValuePlanet
+			// 
+			this.spnMinValuePlanet.Location = new System.Drawing.Point(153, 221);
+			this.spnMinValuePlanet.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnMinValuePlanet.Name = "spnMinValuePlanet";
+			this.spnMinValuePlanet.Size = new System.Drawing.Size(95, 21);
+			this.spnMinValuePlanet.TabIndex = 35;
+			this.spnMinValuePlanet.ThousandsSeparator = true;
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label23.Location = new System.Drawing.Point(254, 198);
+			this.label23.Margin = new System.Windows.Forms.Padding(3);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(57, 15);
+			this.label23.TabIndex = 34;
+			this.label23.Text = "Asteroids";
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label22.Location = new System.Drawing.Point(150, 198);
+			this.label22.Margin = new System.Windows.Forms.Padding(3);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(48, 15);
+			this.label22.TabIndex = 33;
+			this.label22.Text = "Planets";
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label21.Location = new System.Drawing.Point(8, 331);
+			this.label21.Margin = new System.Windows.Forms.Padding(3);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(65, 15);
+			this.label21.TabIndex = 32;
+			this.label21.Text = "Max Value";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label20.Location = new System.Drawing.Point(8, 221);
+			this.label20.Margin = new System.Windows.Forms.Padding(3);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(62, 15);
+			this.label20.TabIndex = 31;
+			this.label20.Text = "Min Value";
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label19.Location = new System.Drawing.Point(8, 304);
+			this.label19.Margin = new System.Windows.Forms.Padding(3);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(106, 15);
+			this.label19.TabIndex = 30;
+			this.label19.Text = "Max Spawn Value";
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label18.Location = new System.Drawing.Point(8, 250);
+			this.label18.Margin = new System.Windows.Forms.Padding(3);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(103, 15);
+			this.label18.TabIndex = 29;
+			this.label18.Text = "Min Spawn Value";
+			// 
+			// spnDepletionResourceRemote
+			// 
+			this.spnDepletionResourceRemote.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			this.spnDepletionResourceRemote.Location = new System.Drawing.Point(257, 105);
+			this.spnDepletionResourceRemote.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnDepletionResourceRemote.Name = "spnDepletionResourceRemote";
+			this.spnDepletionResourceRemote.Size = new System.Drawing.Size(95, 21);
+			this.spnDepletionResourceRemote.TabIndex = 27;
+			// 
+			// spnBonusRemote
+			// 
+			this.spnBonusRemote.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			this.spnBonusRemote.Location = new System.Drawing.Point(257, 78);
+			this.spnBonusRemote.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnBonusRemote.Name = "spnBonusRemote";
+			this.spnBonusRemote.Size = new System.Drawing.Size(95, 21);
+			this.spnBonusRemote.TabIndex = 26;
+			this.spnBonusRemote.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// spnRateRemote
+			// 
+			this.spnRateRemote.Location = new System.Drawing.Point(257, 51);
+			this.spnRateRemote.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.spnRateRemote.Name = "spnRateRemote";
+			this.spnRateRemote.Size = new System.Drawing.Size(95, 21);
+			this.spnRateRemote.TabIndex = 25;
+			// 
+			// spnDepletionResourceStandard
+			// 
+			this.spnDepletionResourceStandard.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			this.spnDepletionResourceStandard.Location = new System.Drawing.Point(153, 105);
+			this.spnDepletionResourceStandard.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnDepletionResourceStandard.Name = "spnDepletionResourceStandard";
+			this.spnDepletionResourceStandard.Size = new System.Drawing.Size(95, 21);
+			this.spnDepletionResourceStandard.TabIndex = 23;
+			// 
+			// spnBonusStandard
+			// 
+			this.spnBonusStandard.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+			this.spnBonusStandard.Location = new System.Drawing.Point(153, 78);
+			this.spnBonusStandard.Maximum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnBonusStandard.Name = "spnBonusStandard";
+			this.spnBonusStandard.Size = new System.Drawing.Size(95, 21);
+			this.spnBonusStandard.TabIndex = 22;
+			this.spnBonusStandard.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// spnRateStandard
+			// 
+			this.spnRateStandard.Location = new System.Drawing.Point(153, 51);
+			this.spnRateStandard.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.spnRateStandard.Name = "spnRateStandard";
+			this.spnRateStandard.Size = new System.Drawing.Size(95, 21);
+			this.spnRateStandard.TabIndex = 21;
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label16.Location = new System.Drawing.Point(8, 107);
+			this.label16.Margin = new System.Windows.Forms.Padding(3);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(122, 15);
+			this.label16.TabIndex = 19;
+			this.label16.Text = "Depletion / Resource";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label15.Location = new System.Drawing.Point(8, 80);
+			this.label15.Margin = new System.Windows.Forms.Padding(3);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(90, 15);
+			this.label15.TabIndex = 18;
+			this.label15.Text = "Value % Bonus";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(8, 53);
+			this.label14.Margin = new System.Windows.Forms.Padding(3);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(47, 15);
+			this.label14.TabIndex = 17;
+			this.label14.Text = "Rate %";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label13.Location = new System.Drawing.Point(254, 32);
+			this.label13.Margin = new System.Windows.Forms.Padding(3);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(92, 15);
+			this.label13.TabIndex = 16;
+			this.label13.Text = "Remote Mining";
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label12.Location = new System.Drawing.Point(150, 32);
+			this.label12.Margin = new System.Windows.Forms.Padding(3);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(98, 15);
+			this.label12.TabIndex = 15;
+			this.label12.Text = "Standard Mining";
+			// 
+			// btnLoadResourcePreset
+			// 
+			this.btnLoadResourcePreset.BackColor = System.Drawing.Color.Black;
+			this.btnLoadResourcePreset.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLoadResourcePreset.Location = new System.Drawing.Point(312, 2);
+			this.btnLoadResourcePreset.Name = "btnLoadResourcePreset";
+			this.btnLoadResourcePreset.Size = new System.Drawing.Size(75, 23);
+			this.btnLoadResourcePreset.TabIndex = 13;
+			this.btnLoadResourcePreset.Text = "Load";
+			this.btnLoadResourcePreset.UseVisualStyleBackColor = false;
+			this.btnLoadResourcePreset.Click += new System.EventHandler(this.btnLoadResourcePreset_Click);
+			// 
+			// ddlPresets
+			// 
+			this.ddlPresets.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlPresets.FormattingEnabled = true;
+			this.ddlPresets.Items.AddRange(new object[] {
+            "Standard, Remote Mining Depletes",
+            "Standard, Remote Mining Doesn\'t Deplete",
+            "Finite"});
+			this.ddlPresets.Location = new System.Drawing.Point(57, 3);
+			this.ddlPresets.Name = "ddlPresets";
+			this.ddlPresets.Size = new System.Drawing.Size(249, 23);
+			this.ddlPresets.TabIndex = 12;
+			// 
+			// label5
+			// 
+			this.label5.AutoSize = true;
+			this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label5.Location = new System.Drawing.Point(3, 6);
+			this.label5.Margin = new System.Windows.Forms.Padding(3);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(48, 15);
+			this.label5.TabIndex = 11;
+			this.label5.Text = "Presets";
+			// 
 			// tabTechnology
 			// 
 			this.tabTechnology.BackColor = System.Drawing.Color.Black;
 			this.tabTechnology.Location = new System.Drawing.Point(4, 29);
 			this.tabTechnology.Name = "tabTechnology";
 			this.tabTechnology.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTechnology.Size = new System.Drawing.Size(492, 446);
+			this.tabTechnology.Size = new System.Drawing.Size(545, 446);
 			this.tabTechnology.TabIndex = 2;
 			this.tabTechnology.Text = "Technology";
 			// 
@@ -490,7 +1032,7 @@
 			this.tabEmpires.Location = new System.Drawing.Point(4, 29);
 			this.tabEmpires.Name = "tabEmpires";
 			this.tabEmpires.Padding = new System.Windows.Forms.Padding(3);
-			this.tabEmpires.Size = new System.Drawing.Size(492, 446);
+			this.tabEmpires.Size = new System.Drawing.Size(545, 446);
 			this.tabEmpires.TabIndex = 3;
 			this.tabEmpires.Text = "Empires";
 			// 
@@ -500,7 +1042,7 @@
 			this.tabVictory.Location = new System.Drawing.Point(4, 29);
 			this.tabVictory.Name = "tabVictory";
 			this.tabVictory.Padding = new System.Windows.Forms.Padding(3);
-			this.tabVictory.Size = new System.Drawing.Size(492, 446);
+			this.tabVictory.Size = new System.Drawing.Size(545, 446);
 			this.tabVictory.TabIndex = 4;
 			this.tabVictory.Text = "Victory";
 			// 
@@ -510,7 +1052,7 @@
 			this.tabSettings.Location = new System.Drawing.Point(4, 29);
 			this.tabSettings.Name = "tabSettings";
 			this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSettings.Size = new System.Drawing.Size(492, 446);
+			this.tabSettings.Size = new System.Drawing.Size(545, 446);
 			this.tabSettings.TabIndex = 5;
 			this.tabSettings.Text = "Settings";
 			// 
@@ -520,7 +1062,7 @@
 			this.tabMechanics.Location = new System.Drawing.Point(4, 29);
 			this.tabMechanics.Name = "tabMechanics";
 			this.tabMechanics.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMechanics.Size = new System.Drawing.Size(492, 446);
+			this.tabMechanics.Size = new System.Drawing.Size(545, 446);
 			this.tabMechanics.TabIndex = 6;
 			this.tabMechanics.Text = "Mechanics";
 			// 
@@ -529,7 +1071,7 @@
 			this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnStart.BackColor = System.Drawing.Color.Black;
 			this.btnStart.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnStart.Location = new System.Drawing.Point(425, 485);
+			this.btnStart.Location = new System.Drawing.Point(478, 485);
 			this.btnStart.Name = "btnStart";
 			this.btnStart.Size = new System.Drawing.Size(75, 23);
 			this.btnStart.TabIndex = 0;
@@ -542,7 +1084,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(344, 485);
+			this.btnCancel.Location = new System.Drawing.Point(397, 485);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 1;
@@ -582,7 +1124,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar.Location = new System.Drawing.Point(168, 491);
 			this.progressBar.Name = "progressBar";
-			this.progressBar.Size = new System.Drawing.Size(170, 14);
+			this.progressBar.Size = new System.Drawing.Size(223, 14);
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
@@ -592,7 +1134,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(512, 517);
+			this.ClientSize = new System.Drawing.Size(565, 517);
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.btnSaveSetup);
 			this.Controls.Add(this.btnLoadSetup);
@@ -611,6 +1153,24 @@
 			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStarSystems)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).EndInit();
+			this.tabResources.ResumeLayout(false);
+			this.tabResources.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnHomeworldValue)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnRemote)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnStandard)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxValuePlanet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxSpawnValueAsteroid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinSpawnValueAsteroid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinValueAsteroid)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxSpawnValuePlanet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinSpawnValuePlanet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinValuePlanet)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceRemote)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnBonusRemote)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRateRemote)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceStandard)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnBonusStandard)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -637,8 +1197,6 @@
 		private System.Windows.Forms.CheckBox chkOmniscient;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.CheckBox chkAllSystemsExplored;
-		private System.Windows.Forms.ComboBox ddlResources;
-		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.ComboBox ddlEventFrequency;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label9;
@@ -658,5 +1216,41 @@
 		private System.Windows.Forms.BindingSource warpPointPlacementStrategyBindingSource;
 		private System.Windows.Forms.NumericUpDown spnSystemGroups;
 		private System.Windows.Forms.Label label11;
+		private System.Windows.Forms.TabPage tabResources;
+		private Controls.GameButton btnLoadResourcePreset;
+		private System.Windows.Forms.ComboBox ddlPresets;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.NumericUpDown spnDepletionResourceStandard;
+		private System.Windows.Forms.NumericUpDown spnBonusStandard;
+		private System.Windows.Forms.NumericUpDown spnRateStandard;
+		private System.Windows.Forms.NumericUpDown spnDepletionResourceRemote;
+		private System.Windows.Forms.NumericUpDown spnBonusRemote;
+		private System.Windows.Forms.NumericUpDown spnRateRemote;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.Label label23;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.NumericUpDown spnMaxValuePlanet;
+		private System.Windows.Forms.NumericUpDown spnMaxSpawnValueAsteroid;
+		private System.Windows.Forms.NumericUpDown spnMinSpawnValueAsteroid;
+		private System.Windows.Forms.NumericUpDown spnMinValueAsteroid;
+		private System.Windows.Forms.NumericUpDown spnMaxSpawnValuePlanet;
+		private System.Windows.Forms.NumericUpDown spnMinSpawnValuePlanet;
+		private System.Windows.Forms.NumericUpDown spnMinValuePlanet;
+		private System.Windows.Forms.CheckBox chkBonusDepletionRemote;
+		private System.Windows.Forms.CheckBox chkBonusDepletionStandard;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.NumericUpDown spnDepletionTurnRemote;
+		private System.Windows.Forms.NumericUpDown spnDepletionTurnStandard;
+		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.NumericUpDown spnHomeworldValue;
+		private System.Windows.Forms.Label label25;
 	}
 }

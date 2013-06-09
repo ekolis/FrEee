@@ -195,6 +195,7 @@
     <Compile Include="Utility\ProgressDisplayMode.cs" />
     <Compile Include="Utility\RandomHelper.cs" />
     <Compile Include="Utility\Reference.cs" />
+    <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\Resources.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
     <Compile Include="Utility\Serializer.cs" />
