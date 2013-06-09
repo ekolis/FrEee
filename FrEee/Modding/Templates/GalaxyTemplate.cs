@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Setup;
 
 namespace FrEee.Modding.Templates
 {
@@ -168,37 +169,7 @@ namespace FrEee.Modding.Templates
 				}
 
 				// create the warp points
-				var abils = startLocation.Item.WarpPointAbilities.Concat(endLocation.Item.WarpPointAbilities);
-				ITemplate<WarpPoint> wpTemplate;
-				if (abils.Any())
-				{
-					// use unusual warp point templates
-					wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
-				}
-				else
-				{
-					// use normal warp point templates
-					wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
-				}
-				var angleOut = startLocation.Location.AngleTo(endLocation.Location);
-				var angleBack = angleOut + 180d;
-				var sector1 = GetWarpPointSector(startLocation.Item, angleOut);
-				var sector2 = GetWarpPointSector(endLocation.Item, angleBack);
-				var wp1 = wpTemplate.Instantiate();
-				wp1.IsOneWay = false;
-				wp1.Name = "Warp Point to " + endLocation.Item.Name;
-				wp1.Target = sector2;
-				sector1.SpaceObjects.Add(wp1);
-				var wp2 = wpTemplate.Instantiate();
-				wp2.IsOneWay = false;
-				wp2.Name = "Warp Point to " + startLocation.Item.Name;
-				wp2.Target = sector1;
-				sector2.SpaceObjects.Add(wp2);
-				foreach (var abil in abils)
-				{
-					wp1.IntrinsicAbilities.Add(abil);
-					wp2.IntrinsicAbilities.Add(abil);
-				}
+				GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);
 
 				// mark systems connected
 				graph.Connect(startLocation, endLocation, true);
@@ -206,8 +177,6 @@ namespace FrEee.Modding.Templates
 
 			return gal;
 		}
-
-#region Helper methods for greating warp points
 
 		private int GetWarpPointCount(StarSystem sys)
 		{
@@ -261,18 +230,6 @@ namespace FrEee.Modding.Templates
 			else
 				return d % modulo > (middle - range) % modulo && d % modulo < (middle + range) % modulo;
 		}
-
-		private Sector GetWarpPointSector(StarSystem sys, double angle)
-		{
-			var x = Math.Sin(angle / 180d * Math.PI) * sys.Radius;
-			var y = Math.Cos(angle / 180d * Math.PI) * sys.Radius;
-			var multiplier = sys.Radius / Math.Max(Math.Abs(x), Math.Abs(y));
-			x *= multiplier;
-			y *= multiplier;
-			return sys.GetSector((int)Math.Round(x), (int)Math.Round(y));
-		}
-
-#endregion
 
 		private void NameStellarObjects(StarSystem sys)
 		{

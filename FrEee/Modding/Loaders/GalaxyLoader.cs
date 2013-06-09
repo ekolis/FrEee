@@ -1,5 +1,5 @@
 ﻿using FrEee.Game;
-using FrEee.Modding.StarSystemPlacementStrategies;
+using FrEee.Game.Setup.StarSystemPlacementStrategies;
 using FrEee.Modding.Templates;
 using System;
 using System.Collections.Generic;

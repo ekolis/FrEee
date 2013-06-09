@@ -18,6 +18,7 @@ using FrEee.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using System.Threading;
 using System.Reflection;
+using FrEee.Game.Setup;
 
 namespace FrEee.WinForms.Forms
 {

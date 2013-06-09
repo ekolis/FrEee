@@ -13,6 +13,7 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Setup;
 
 namespace FrEee.Game.Objects.Space
 {

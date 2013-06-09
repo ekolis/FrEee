@@ -1,0 +1,83 @@
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
+using FrEee.Modding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace FrEee.Game.Setup.WarpPointPlacementStrategies
+{
+	/// <summary>
+	/// Strategy for placing warp points in a star system.
+	/// </summary>
+	public abstract class WarpPointPlacementStrategy
+	{
+		private static ICollection<WarpPointPlacementStrategy> all = new List<WarpPointPlacementStrategy>();
+		public static IEnumerable<WarpPointPlacementStrategy> All { get { return all; } }
+
+		static WarpPointPlacementStrategy()
+		{
+			all.Add(EdgeAlignedWarpPointPlacementStrategy.Instance);
+			all.Add(RandomAlignedWarpPointPlacementStrategy.Instance);
+			all.Add(RandomWarpPointPlacementStrategy.Instance);
+			all.Add(CenterWarpPointPlacementStrategy.Instance);
+			all.Add(StarWarpPointPlacementStrategy.Instance);
+			all.Add(PlanetWarpPointPlacementStrategy.Instance);
+		}
+
+		protected WarpPointPlacementStrategy(string name, string description)
+		{
+			Name = name;
+			Description = description;
+		}
+
+		public string Name { get; set; }
+
+		public string Description { get; set; }
+
+		/// <summary>
+		/// Gets the sector that a warp point should be placed in.
+		/// </summary>
+		/// <param name="here"></param>
+		/// <param name="there"></param>
+		/// <returns></returns>
+		public abstract Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there);
+
+		public void PlaceWarpPoints(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
+		{
+			var abils = here.Item.WarpPointAbilities.Concat(there.Item.WarpPointAbilities);
+			ITemplate<WarpPoint> wpTemplate;
+			if (abils.Any())
+			{
+				// use unusual warp point templates
+				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
+			}
+			else
+			{
+				// use normal warp point templates
+				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+			}
+
+			var sector1 = GetWarpPointSector(here, there);
+			var sector2 = GetWarpPointSector(there, here);
+
+			var wp1 = wpTemplate.Instantiate();
+			wp1.IsOneWay = false;
+			wp1.Name = "Warp Point to " + there.Item.Name;
+			wp1.Target = sector2;
+			sector1.SpaceObjects.Add(wp1);
+			var wp2 = wpTemplate.Instantiate();
+			wp2.IsOneWay = false;
+			wp2.Name = "Warp Point to " + here.Item.Name;
+			wp2.Target = sector1;
+			sector2.SpaceObjects.Add(wp2);
+			foreach (var abil in abils)
+			{
+				wp1.IntrinsicAbilities.Add(abil);
+				wp2.IntrinsicAbilities.Add(abil);
+			}
+		}
+	}
+}

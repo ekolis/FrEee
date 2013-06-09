@@ -31,6 +31,9 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
+			this.txtWarpPointLocation = new System.Windows.Forms.Label();
+			this.txtGalaxyName = new System.Windows.Forms.TextBox();
+			this.labelName = new System.Windows.Forms.Label();
 			this.ddlEventSeverity = new System.Windows.Forms.ComboBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
@@ -45,7 +48,8 @@
 			this.chkOmniscient = new System.Windows.Forms.CheckBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.chkAllSystemsExplored = new System.Windows.Forms.CheckBox();
-			this.comboBox1 = new System.Windows.Forms.ComboBox();
+			this.ddlWarpPointLocation = new System.Windows.Forms.ComboBox();
+			this.warpPointPlacementStrategyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.label3 = new System.Windows.Forms.Label();
 			this.ddlWarpPoints = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
@@ -65,12 +69,11 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.labelName = new System.Windows.Forms.Label();
-			this.txtGalaxyName = new System.Windows.Forms.TextBox();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStarSystems)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -101,6 +104,7 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.txtWarpPointLocation);
 			this.tabGalaxy.Controls.Add(this.txtGalaxyName);
 			this.tabGalaxy.Controls.Add(this.labelName);
 			this.tabGalaxy.Controls.Add(this.ddlEventSeverity);
@@ -117,7 +121,7 @@
 			this.tabGalaxy.Controls.Add(this.chkOmniscient);
 			this.tabGalaxy.Controls.Add(this.label4);
 			this.tabGalaxy.Controls.Add(this.chkAllSystemsExplored);
-			this.tabGalaxy.Controls.Add(this.comboBox1);
+			this.tabGalaxy.Controls.Add(this.ddlWarpPointLocation);
 			this.tabGalaxy.Controls.Add(this.label3);
 			this.tabGalaxy.Controls.Add(this.ddlWarpPoints);
 			this.tabGalaxy.Controls.Add(this.label2);
@@ -134,6 +138,35 @@
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
+			// txtWarpPointLocation
+			// 
+			this.txtWarpPointLocation.Location = new System.Drawing.Point(19, 188);
+			this.txtWarpPointLocation.Margin = new System.Windows.Forms.Padding(3);
+			this.txtWarpPointLocation.MaximumSize = new System.Drawing.Size(467, 36);
+			this.txtWarpPointLocation.Name = "txtWarpPointLocation";
+			this.txtWarpPointLocation.Size = new System.Drawing.Size(467, 36);
+			this.txtWarpPointLocation.TabIndex = 25;
+			this.txtWarpPointLocation.Text = "Choose a warp point placement option.";
+			// 
+			// txtGalaxyName
+			// 
+			this.txtGalaxyName.Location = new System.Drawing.Point(114, 4);
+			this.txtGalaxyName.Name = "txtGalaxyName";
+			this.txtGalaxyName.Size = new System.Drawing.Size(152, 21);
+			this.txtGalaxyName.TabIndex = 24;
+			this.txtGalaxyName.TextChanged += new System.EventHandler(this.txtGalaxyName_TextChanged);
+			// 
+			// labelName
+			// 
+			this.labelName.AutoSize = true;
+			this.labelName.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.labelName.Location = new System.Drawing.Point(11, 7);
+			this.labelName.Margin = new System.Windows.Forms.Padding(3);
+			this.labelName.Name = "labelName";
+			this.labelName.Size = new System.Drawing.Size(41, 15);
+			this.labelName.TabIndex = 23;
+			this.labelName.Text = "Name";
+			// 
 			// ddlEventSeverity
 			// 
 			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -141,7 +174,7 @@
 			this.ddlEventSeverity.Items.AddRange(new object[] {
             "Percentage Value",
             "Finite Pool"});
-			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 319);
+			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 356);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
 			this.ddlEventSeverity.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventSeverity.TabIndex = 22;
@@ -150,7 +183,7 @@
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label10.Location = new System.Drawing.Point(11, 322);
+			this.label10.Location = new System.Drawing.Point(11, 359);
 			this.label10.Margin = new System.Windows.Forms.Padding(3);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(82, 15);
@@ -233,7 +266,7 @@
 			this.ddlEventFrequency.Items.AddRange(new object[] {
             "Percentage Value",
             "Finite Pool"});
-			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 290);
+			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 327);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventFrequency.TabIndex = 15;
@@ -242,7 +275,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(11, 293);
+			this.label6.Location = new System.Drawing.Point(11, 330);
 			this.label6.Margin = new System.Windows.Forms.Padding(3);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(97, 15);
@@ -256,7 +289,7 @@
 			this.ddlResources.Items.AddRange(new object[] {
             "Percentage Value",
             "Finite Pool"});
-			this.ddlResources.Location = new System.Drawing.Point(114, 261);
+			this.ddlResources.Location = new System.Drawing.Point(114, 298);
 			this.ddlResources.Name = "ddlResources";
 			this.ddlResources.Size = new System.Drawing.Size(152, 23);
 			this.ddlResources.TabIndex = 13;
@@ -265,7 +298,7 @@
 			// 
 			this.label5.AutoSize = true;
 			this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label5.Location = new System.Drawing.Point(11, 264);
+			this.label5.Location = new System.Drawing.Point(11, 301);
 			this.label5.Margin = new System.Windows.Forms.Padding(3);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(66, 15);
@@ -275,7 +308,7 @@
 			// chkOmniscient
 			// 
 			this.chkOmniscient.AutoSize = true;
-			this.chkOmniscient.Location = new System.Drawing.Point(22, 239);
+			this.chkOmniscient.Location = new System.Drawing.Point(22, 276);
 			this.chkOmniscient.Name = "chkOmniscient";
 			this.chkOmniscient.Size = new System.Drawing.Size(231, 19);
 			this.chkOmniscient.TabIndex = 11;
@@ -286,7 +319,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label4.Location = new System.Drawing.Point(11, 193);
+			this.label4.Location = new System.Drawing.Point(11, 230);
 			this.label4.Margin = new System.Windows.Forms.Padding(3);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(66, 15);
@@ -296,24 +329,28 @@
 			// chkAllSystemsExplored
 			// 
 			this.chkAllSystemsExplored.AutoSize = true;
-			this.chkAllSystemsExplored.Location = new System.Drawing.Point(22, 214);
+			this.chkAllSystemsExplored.Location = new System.Drawing.Point(22, 251);
 			this.chkAllSystemsExplored.Name = "chkAllSystemsExplored";
 			this.chkAllSystemsExplored.Size = new System.Drawing.Size(140, 19);
 			this.chkAllSystemsExplored.TabIndex = 9;
 			this.chkAllSystemsExplored.Text = "All Systems Explored";
 			this.chkAllSystemsExplored.UseVisualStyleBackColor = true;
 			// 
-			// comboBox1
+			// ddlWarpPointLocation
 			// 
-			this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox1.FormattingEnabled = true;
-			this.comboBox1.Items.AddRange(new object[] {
-            "System Edges",
-            "Random"});
-			this.comboBox1.Location = new System.Drawing.Point(114, 162);
-			this.comboBox1.Name = "comboBox1";
-			this.comboBox1.Size = new System.Drawing.Size(152, 23);
-			this.comboBox1.TabIndex = 8;
+			this.ddlWarpPointLocation.DataSource = this.warpPointPlacementStrategyBindingSource;
+			this.ddlWarpPointLocation.DisplayMember = "Name";
+			this.ddlWarpPointLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlWarpPointLocation.FormattingEnabled = true;
+			this.ddlWarpPointLocation.Location = new System.Drawing.Point(114, 162);
+			this.ddlWarpPointLocation.Name = "ddlWarpPointLocation";
+			this.ddlWarpPointLocation.Size = new System.Drawing.Size(152, 23);
+			this.ddlWarpPointLocation.TabIndex = 8;
+			this.ddlWarpPointLocation.SelectedIndexChanged += new System.EventHandler(this.ddlWarpPointLocation_SelectedIndexChanged);
+			// 
+			// warpPointPlacementStrategyBindingSource
+			// 
+			this.warpPointPlacementStrategyBindingSource.DataSource = typeof(FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy);
 			// 
 			// label3
 			// 
@@ -322,9 +359,9 @@
 			this.label3.Location = new System.Drawing.Point(9, 165);
 			this.label3.Margin = new System.Windows.Forms.Padding(3);
 			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(76, 15);
+			this.label3.Size = new System.Drawing.Size(88, 15);
 			this.label3.TabIndex = 7;
-			this.label3.Text = "WP Location";
+			this.label3.Text = "WP Placement";
 			// 
 			// ddlWarpPoints
 			// 
@@ -534,25 +571,6 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
-			// labelName
-			// 
-			this.labelName.AutoSize = true;
-			this.labelName.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.labelName.Location = new System.Drawing.Point(11, 7);
-			this.labelName.Margin = new System.Windows.Forms.Padding(3);
-			this.labelName.Name = "labelName";
-			this.labelName.Size = new System.Drawing.Size(41, 15);
-			this.labelName.TabIndex = 23;
-			this.labelName.Text = "Name";
-			// 
-			// txtGalaxyName
-			// 
-			this.txtGalaxyName.Location = new System.Drawing.Point(114, 4);
-			this.txtGalaxyName.Name = "txtGalaxyName";
-			this.txtGalaxyName.Size = new System.Drawing.Size(152, 21);
-			this.txtGalaxyName.TabIndex = 24;
-			this.txtGalaxyName.TextChanged += new System.EventHandler(this.txtGalaxyName_TextChanged);
-			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -573,6 +591,7 @@
 			this.tabGalaxy.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStarSystems)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).EndInit();
 			this.ResumeLayout(false);
@@ -597,7 +616,7 @@
 		private System.Windows.Forms.NumericUpDown spnStarSystems;
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.ComboBox ddlWarpPoints;
-		private System.Windows.Forms.ComboBox comboBox1;
+		private System.Windows.Forms.ComboBox ddlWarpPointLocation;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.CheckBox chkOmniscient;
 		private System.Windows.Forms.Label label4;
@@ -619,5 +638,7 @@
 		private System.Windows.Forms.ProgressBar progressBar;
 		private System.Windows.Forms.TextBox txtGalaxyName;
 		private System.Windows.Forms.Label labelName;
+		private System.Windows.Forms.Label txtWarpPointLocation;
+		private System.Windows.Forms.BindingSource warpPointPlacementStrategyBindingSource;
 	}
 }

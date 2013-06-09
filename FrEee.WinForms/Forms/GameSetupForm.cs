@@ -1,6 +1,8 @@
 ﻿using FrEee.Game;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Setup;
+using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -26,7 +28,10 @@ namespace FrEee.WinForms.Forms
 			setup = new GameSetup();
 			if (Mod.Current == null)
 				Mod.Load(null);
+
+			// bind data
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
+			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -183,6 +188,12 @@ namespace FrEee.WinForms.Forms
 		private void txtGalaxyName_TextChanged(object sender, EventArgs e)
 		{
 			setup.GameName = txtGalaxyName.Text;
+		}
+
+		private void ddlWarpPointLocation_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			setup.WarpPointPlacementStrategy = (WarpPointPlacementStrategy)ddlWarpPointLocation.SelectedItem;
+			txtWarpPointLocation.Text = setup.WarpPointPlacementStrategy.Description;
 		}
 	}
 }

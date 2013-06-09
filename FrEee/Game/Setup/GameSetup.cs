@@ -9,8 +9,9 @@ using System.Text;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Setup.WarpPointPlacementStrategies;
 
-namespace FrEee.Game
+namespace FrEee.Game.Setup
 {
 	/// <summary>
 	/// Setup parameters for a game.
@@ -39,6 +40,11 @@ namespace FrEee.Game
 		public int StarSystemCount { get; set; }
 
 		/// <summary>
+		/// Strategy for placing warp points within systems.
+		/// </summary>
+		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
+
+		/// <summary>
 		/// Are we setting up a single player game?
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
@@ -60,6 +66,8 @@ namespace FrEee.Game
 					yield return "You must specify a galaxy type.";
 				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
 					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
+				if (WarpPointPlacementStrategy == null)
+					yield return "You must choose an option for warp point placement.";
 				if (!Empires.Any())
 					yield return "You must add at least one empire.";
 			}

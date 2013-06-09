@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Space;
 
-namespace FrEee.Modding.Interfaces
+namespace FrEee.Game.Interfaces
 {
 	/// <summary>
 	/// Algorithm for placing star systems on the galaxy map.

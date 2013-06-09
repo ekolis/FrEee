@@ -8,8 +8,9 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Interfaces;
 
-namespace FrEee.Modding.StarSystemPlacementStrategies
+namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 {
 	/// <summary>
 	/// Places stars randomly.
