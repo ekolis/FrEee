@@ -1,4 +1,5 @@
 ﻿using FrEee.Game;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Setup;
@@ -38,6 +39,7 @@ namespace FrEee.WinForms.Forms
 			spnWidth_ValueChanged(spnWidth, new EventArgs());
 			spnHeight_ValueChanged(spnHeight, new EventArgs());
 			spnStarSystems_ValueChanged(spnStarSystems, new EventArgs());
+			ddlWarpPointLocation_SelectedIndexChanged(ddlWarpPointLocation, new EventArgs());
 		}
 
 		private GameSetup setup;
@@ -183,6 +185,7 @@ namespace FrEee.WinForms.Forms
 		private void spnStarSystems_ValueChanged(object sender, EventArgs e)
 		{
 			setup.StarSystemCount = (int)spnStarSystems.Value;
+			spnSystemGroups.Maximum = spnStarSystems.Value;
 		}
 
 		private void txtGalaxyName_TextChanged(object sender, EventArgs e)
@@ -194,6 +197,11 @@ namespace FrEee.WinForms.Forms
 		{
 			setup.WarpPointPlacementStrategy = (WarpPointPlacementStrategy)ddlWarpPointLocation.SelectedItem;
 			txtWarpPointLocation.Text = setup.WarpPointPlacementStrategy.Description;
+		}
+
+		private void spnSystemGroups_ValueChanged(object sender, EventArgs e)
+		{
+			setup.StarSystemGroups = (int)spnSystemGroups.Value;
 		}
 	}
 }

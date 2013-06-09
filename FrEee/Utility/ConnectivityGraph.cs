@@ -12,6 +12,22 @@ namespace FrEee.Utility
 	/// <typeparam name="T">The type of objects being connected.</typeparam>
 	public class ConnectivityGraph<T> : ISet<T>
 	{
+		public ConnectivityGraph()
+		{
+		}
+
+		public ConnectivityGraph(IEnumerable<T> items)
+		{
+			foreach (var item in items)
+				Add(item);
+		}
+
+		public ConnectivityGraph(ConnectivityGraph<T> sub1, ConnectivityGraph<T> sub2)
+		{
+			foreach (var item in sub1.Union(sub2))
+				Add(item);
+		}
+
 		/// <summary>
 		/// Connects two nodes.
 		/// </summary>
@@ -22,7 +38,18 @@ namespace FrEee.Utility
 		{
 			var link = Tuple.Create(start, end);
 			if (!connections.Contains(link))
+			{
+				var sub1 = Subgraphs.Single(s => s.Contains(start));
+				var sub2 = Subgraphs.Single(s => s.Contains(end));
+				if (sub1 != sub2)
+				{
+					var sub3 = new ConnectivityGraph<T>(sub1, sub2);
+					subgraphs.Remove(sub1);
+					subgraphs.Remove(sub2);
+					subgraphs.Add(sub3);
+				}
 				connections.Add(link);
+			}
 			if (twoWay)
 				Connect(end, start, false);
 		}
@@ -37,7 +64,13 @@ namespace FrEee.Utility
 		{
 			var link = Tuple.Create(start, end);
 			if (connections.Contains(link))
+			{
+				var sub = Subgraphs.Single(s => s.Contains(start));
+				var subs = sub.Subdivide();
+				subgraphs.Remove(sub);
+				subgraphs.AddRange(subs);
 				connections.Remove(link);
+			}
 			if (twoWay)
 				Disconnect(end, start, false);
 		}
@@ -185,21 +218,13 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Is the graph connected? That is, are any two nodes connected?
+		/// Is the graph connected? That is, are any two nodes connected? Or, is there no more than one subgraph?
 		/// </summary>
 		public bool IsConnected
 		{
 			get
 			{
-				foreach (var n1 in this)
-				{
-					foreach (var n2 in this)
-					{
-						if (!AreConnected(n1, n2))
-							return false;
-					}
-				}
-				return true;
+				return Subgraphs.Count() <= 1;
 			}
 		}
 
@@ -207,7 +232,7 @@ namespace FrEee.Utility
 		/// Subdivides the graph into discrete connected subgraphs.
 		/// </summary>
 		/// <returns></returns>
-		public IEnumerable<ConnectivityGraph<T>> Subdivide()
+		private IEnumerable<ConnectivityGraph<T>> Subdivide()
 		{
 			var subgraphs = new List<ConnectivityGraph<T>>();
 			while (true)
@@ -220,7 +245,26 @@ namespace FrEee.Utility
 				var subgraph = ComputeSubgraph(node);
 				subgraphs.Add(subgraph);
 			}
-			return subgraphs;
+			return subgraphs.ToList();
+		}
+
+		private List<ConnectivityGraph<T>> subgraphs = new List<ConnectivityGraph<T>>();
+
+		/// <summary>
+		/// Any discrete connected subgraphs of this graph.
+		/// </summary>
+		public IEnumerable<ConnectivityGraph<T>> Subgraphs
+		{
+			get
+			{
+				var singletons = this.Where(node => !GetEntrances(node).Any() && !GetExits(node).Any()).Select(n =>
+				{
+					var sub = new ConnectivityGraph<T>();
+					sub.Add(n);
+					return sub;
+				});
+				return subgraphs.Concat(singletons).Where(sg => sg != null); // HACK - null subgraphs?!
+			}
 		}
 
 		/// <summary>
@@ -245,7 +289,7 @@ namespace FrEee.Utility
 			items.ExceptWith(other);
 			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
 			foreach (var link in toRemove)
-				connections.Remove(link);
+				Disconnect(link.Item1, link.Item2);
 		}
 
 		public void IntersectWith(IEnumerable<T> other)
@@ -253,7 +297,7 @@ namespace FrEee.Utility
 			items.IntersectWith(other);
 			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
 			foreach (var link in toRemove)
-				connections.Remove(link);
+				Disconnect(link.Item1, link.Item2);
 		}
 
 		public bool IsProperSubsetOf(IEnumerable<T> other)

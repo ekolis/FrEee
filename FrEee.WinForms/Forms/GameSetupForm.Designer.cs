@@ -31,6 +31,8 @@
 			this.components = new System.ComponentModel.Container();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabGalaxy = new System.Windows.Forms.TabPage();
+			this.label11 = new System.Windows.Forms.Label();
+			this.spnSystemGroups = new System.Windows.Forms.NumericUpDown();
 			this.txtWarpPointLocation = new System.Windows.Forms.Label();
 			this.txtGalaxyName = new System.Windows.Forms.TextBox();
 			this.labelName = new System.Windows.Forms.Label();
@@ -51,7 +53,6 @@
 			this.ddlWarpPointLocation = new System.Windows.Forms.ComboBox();
 			this.warpPointPlacementStrategyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.label3 = new System.Windows.Forms.Label();
-			this.ddlWarpPoints = new System.Windows.Forms.ComboBox();
 			this.label2 = new System.Windows.Forms.Label();
 			this.spnStarSystems = new System.Windows.Forms.NumericUpDown();
 			this.label1 = new System.Windows.Forms.Label();
@@ -71,6 +72,7 @@
 			this.progressBar = new System.Windows.Forms.ProgressBar();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).BeginInit();
@@ -104,6 +106,8 @@
 			// tabGalaxy
 			// 
 			this.tabGalaxy.BackColor = System.Drawing.Color.Black;
+			this.tabGalaxy.Controls.Add(this.label11);
+			this.tabGalaxy.Controls.Add(this.spnSystemGroups);
 			this.tabGalaxy.Controls.Add(this.txtWarpPointLocation);
 			this.tabGalaxy.Controls.Add(this.txtGalaxyName);
 			this.tabGalaxy.Controls.Add(this.labelName);
@@ -123,7 +127,6 @@
 			this.tabGalaxy.Controls.Add(this.chkAllSystemsExplored);
 			this.tabGalaxy.Controls.Add(this.ddlWarpPointLocation);
 			this.tabGalaxy.Controls.Add(this.label3);
-			this.tabGalaxy.Controls.Add(this.ddlWarpPoints);
 			this.tabGalaxy.Controls.Add(this.label2);
 			this.tabGalaxy.Controls.Add(this.spnStarSystems);
 			this.tabGalaxy.Controls.Add(this.label1);
@@ -137,6 +140,33 @@
 			this.tabGalaxy.Size = new System.Drawing.Size(492, 446);
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(191, 136);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(287, 15);
+			this.label11.TabIndex = 27;
+			this.label11.Text = "Fewer groups means more warp point connections.";
+			// 
+			// spnSystemGroups
+			// 
+			this.spnSystemGroups.Location = new System.Drawing.Point(114, 134);
+			this.spnSystemGroups.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnSystemGroups.Name = "spnSystemGroups";
+			this.spnSystemGroups.Size = new System.Drawing.Size(71, 21);
+			this.spnSystemGroups.TabIndex = 26;
+			this.spnSystemGroups.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnSystemGroups.ValueChanged += new System.EventHandler(this.spnSystemGroups_ValueChanged);
 			// 
 			// txtWarpPointLocation
 			// 
@@ -363,19 +393,6 @@
 			this.label3.TabIndex = 7;
 			this.label3.Text = "WP Placement";
 			// 
-			// ddlWarpPoints
-			// 
-			this.ddlWarpPoints.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlWarpPoints.FormattingEnabled = true;
-			this.ddlWarpPoints.Items.AddRange(new object[] {
-            "Connected",
-            "Disconnected",
-            "None"});
-			this.ddlWarpPoints.Location = new System.Drawing.Point(114, 133);
-			this.ddlWarpPoints.Name = "ddlWarpPoints";
-			this.ddlWarpPoints.Size = new System.Drawing.Size(152, 23);
-			this.ddlWarpPoints.TabIndex = 6;
-			// 
 			// label2
 			// 
 			this.label2.AutoSize = true;
@@ -383,9 +400,9 @@
 			this.label2.Location = new System.Drawing.Point(9, 136);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(73, 15);
+			this.label2.Size = new System.Drawing.Size(90, 15);
 			this.label2.TabIndex = 5;
-			this.label2.Text = "Warp Points";
+			this.label2.Text = "System Groups";
 			// 
 			// spnStarSystems
 			// 
@@ -589,6 +606,7 @@
 			this.tabs.ResumeLayout(false);
 			this.tabGalaxy.ResumeLayout(false);
 			this.tabGalaxy.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHeight)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnWidth)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.warpPointPlacementStrategyBindingSource)).EndInit();
@@ -615,7 +633,6 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.NumericUpDown spnStarSystems;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.ComboBox ddlWarpPoints;
 		private System.Windows.Forms.ComboBox ddlWarpPointLocation;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.CheckBox chkOmniscient;
@@ -640,5 +657,7 @@
 		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.Label txtWarpPointLocation;
 		private System.Windows.Forms.BindingSource warpPointPlacementStrategyBindingSource;
+		private System.Windows.Forms.NumericUpDown spnSystemGroups;
+		private System.Windows.Forms.Label label11;
 	}
 }

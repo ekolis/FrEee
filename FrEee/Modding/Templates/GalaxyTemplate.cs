@@ -83,7 +83,7 @@ namespace FrEee.Modding.Templates
 
 			// create star systems
 			if (status != null)
-			status.Message = "Creating star systems";
+				status.Message = "Creating star systems";
 			var progressPerStarSystem = (desiredProgress - (status == null ? 0 : status.Progress)) / GameSetup.StarSystemCount / 2d;
 			for (int i = 0; i < GameSetup.StarSystemCount; i++)
 			{
@@ -111,7 +111,7 @@ namespace FrEee.Modding.Templates
 			foreach (var ssl in gal.StarSystemLocations)
 				graph.Add(ssl);
 			bool triedEverything = false;
-			while (!graph.IsConnected)
+			while (graph.Subgraphs.Count() > GameSetup.StarSystemGroups)
 			{
 				// pick 2 systems
 				ObjectLocation<StarSystem> startLocation, endLocation = null;
@@ -137,7 +137,7 @@ namespace FrEee.Modding.Templates
 						}
 					}
 
-					// time to give up and place warp points willy nilly?
+					// time to give up and place warp points willy nilly (or give up for disconnected maps)?
 					if (endLocation == null)
 					{
 						triedEverything = true;
@@ -147,7 +147,7 @@ namespace FrEee.Modding.Templates
 				else
 				{
 					// systems are full of warp points - need to connect systems that are not very connected yet
-					var subgraphs = graph.Subdivide();
+					var subgraphs = graph.Subgraphs;
 					var smallest = subgraphs.Min(sg => sg.Count);
 					if (status != null)
 					{
@@ -158,12 +158,14 @@ namespace FrEee.Modding.Templates
 					var candidates = subgraphs.Where(sg => sg.Count == smallest);
 					var subgraph1 = candidates.PickRandom();
 					var subgraph2 = subgraphs.Where(sg => sg != subgraph1).PickRandom();
-					
+					if (subgraph2 == null)
+						break; // no more subgraphs to merge!
+
 					// try to pick systems that are nearby but not already connected
 					var crosstable = subgraph1.Join(subgraph2, ssl => 0, ssl => 0, (ssl1, ssl2) => Tuple.Create(ssl1, ssl2));
 					crosstable = crosstable.Where(t => !graph.GetExits(t.Item1).Contains(t.Item2));
 					var mindist = crosstable.Min(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location));
-					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist) .PickRandom();
+					var pair = crosstable.Where(tuple => tuple.Item1.Location.ManhattanDistance(tuple.Item2.Location) == mindist).PickRandom();
 					startLocation = pair.Item1;
 					endLocation = pair.Item2;
 				}

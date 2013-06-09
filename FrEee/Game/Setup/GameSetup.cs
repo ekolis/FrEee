@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Setup
 {
@@ -40,6 +41,15 @@ namespace FrEee.Game.Setup
 		public int StarSystemCount { get; set; }
 
 		/// <summary>
+		/// Number of groups of connected star systems to generate.
+		/// 1 = all warp points connected
+		/// 2 = 2 distinct groups
+		/// ...
+		/// StarSystemCount = no warp points
+		/// </summary>
+		public int StarSystemGroups { get; set; }
+
+		/// <summary>
 		/// Strategy for placing warp points within systems.
 		/// </summary>
 		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
@@ -66,8 +76,6 @@ namespace FrEee.Game.Setup
 					yield return "You must specify a galaxy type.";
 				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
 					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
-				if (WarpPointPlacementStrategy == null)
-					yield return "You must choose an option for warp point placement.";
 				if (!Empires.Any())
 					yield return "You must add at least one empire.";
 			}

@@ -19,6 +19,7 @@ using FrEee.WinForms.Utility.Extensions;
 using System.Threading;
 using System.Reflection;
 using FrEee.Game.Setup;
+using FrEee.Game.Setup.WarpPointPlacementStrategies;
 
 namespace FrEee.WinForms.Forms
 {
@@ -79,6 +80,8 @@ namespace FrEee.WinForms.Forms
 						StarSystemCount = 5,
 						GalaxySize = new System.Drawing.Size(40, 30),
 						IsSinglePlayer = true,
+						StarSystemGroups = 1,
+						WarpPointPlacementStrategy = EdgeAlignedWarpPointPlacementStrategy.Instance,
 					};
 					// TODO - pick random empires from a list
 					// TODO - use empire templates
