@@ -63,7 +63,31 @@ namespace FrEee.WinForms.Forms
 			setup.GameName = txtGalaxyName.Text;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
 			setup.OmniscientView = chkOmniscient.Checked;
-
+			setup.StandardMiningModel = new MiningModel
+			{
+				RatePercentage = (double)spnRateStandard.Value,
+				ValuePercentageBonus = (double)spnBonusStandard.Value,
+				ValueDepletionPerResource = (double)spnDepletionResourceStandard.Value,
+				BonusAffectsDepletion = chkBonusDepletionStandard.Checked,
+				ValueDepletionPerTurn = (int)spnDepletionTurnStandard.Value,
+			};
+			setup.RemoteMiningModel = new MiningModel
+			{
+				RatePercentage = (double)spnRateRemote.Value,
+				ValuePercentageBonus = (double)spnBonusRemote.Value,
+				ValueDepletionPerResource = (double)spnDepletionResourceRemote.Value,
+				BonusAffectsDepletion = chkBonusDepletionRemote.Checked,
+				ValueDepletionPerTurn = (int)spnDepletionTurnRemote.Value,
+			};
+			setup.MinPlanetValue = (int)spnMinValuePlanet.Value;
+			setup.MinSpawnedPlanetValue = (int)spnMinSpawnValuePlanet.Value;
+			setup.HomeworldValue = (int)spnHomeworldValue.Value;
+			setup.MaxSpawnedPlanetValue = (int)spnMaxSpawnValuePlanet.Value;
+			setup.MaxPlanetValue = (int)spnMaxValuePlanet.Value;
+			setup.MinAsteroidValue = (int)spnMinValueAsteroid.Value;
+			setup.MinSpawnedAsteroidValue = (int)spnMinSpawnValueAsteroid.Value;
+			setup.MaxSpawnedAsteroidValue = (int)spnMaxSpawnValueAsteroid.Value;
+			
 			if (setup.Warnings.Any())
 			{
 				MessageBox.Show(setup.Warnings.First(), "FrEee");

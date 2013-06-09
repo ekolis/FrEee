@@ -56,9 +56,9 @@ namespace FrEee.Modding.Templates
 			if (abil != null)
 				planet.IntrinsicAbilities.Add(abil);
 
-			planet.ResourceValue["Minerals"] = RandomHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["Organics"] = RandomHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
-			planet.ResourceValue["Radioactives"] = RandomHelper.Range(Mod.Current.MinPlanetResourceValue, Mod.Current.MaxPlanetResourceValue);
+			planet.ResourceValue["Minerals"] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
+			planet.ResourceValue["Organics"] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
+			planet.ResourceValue["Radioactives"] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
 
 			return planet;
 		}

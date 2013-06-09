@@ -118,7 +118,7 @@ namespace FrEee.Game.Objects.Space
 					int.TryParse(abil.Values[0], out amount);
 
 					// do modifiers to income
-					amount = (int)(amount * ResourceValue[resource] / 100d);
+					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource]);
 					// TODO - other modifiers (population, happiness, robotoid factories, etc.)
 
 					income.Add(resource, amount);

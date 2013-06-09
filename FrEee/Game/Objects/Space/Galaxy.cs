@@ -64,6 +64,30 @@ namespace FrEee.Game.Objects.Space
 		public bool OmniscientView { get; set; }
 
 		/// <summary>
+		/// Model to use for standard planetary mining.
+		/// </summary>
+		public MiningModel StandardMiningModel { get; set; }
+
+		/// <summary>
+		/// Model to use for remote mining.
+		/// </summary>
+		public MiningModel RemoteMiningModel { get; set; }
+
+		public int MinPlanetValue {get; set;}
+
+		public int MinSpawnedPlanetValue {get; set;}
+
+		public int MaxSpawnedPlanetValue {get; set;}
+
+		public int MaxPlanetValue {get; set;}
+
+		public int MinAsteroidValue {get; set;}
+
+		public int MinSpawnedAsteroidValue {get; set;}
+
+		public int MaxSpawnedAsteroidValue {get; set;}
+
+		/// <summary>
 		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
@@ -430,12 +454,22 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			TurnNumber++;
 
+			// mining
+			foreach (var p in FindSpaceObjects<Planet>(p => p.Owner != null).Flatten().Flatten())
+			{
+				// give owner his income
+				p.Owner.StoredResources += p.Income;
+
+				// adjust resource value
+				foreach (var kvp in p.Income)
+					p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+			}
+
+			// TODO - remote mining and raw resource generation
+
 			// empire stuff
 			foreach (var emp in Empires)
 			{
-				// give empire its income
-				emp.StoredResources += emp.Income;
-
 				// execute commands
 				foreach (var cmd in emp.Commands.Where(cmd => cmd != null))
 				{

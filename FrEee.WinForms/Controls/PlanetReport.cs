@@ -69,9 +69,9 @@ namespace FrEee.WinForms.Controls
 				txtAtmosphere.Text = Planet.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 
-				txtValueMinerals.Text = Planet.ResourceValue["Minerals"] + "%";
-				txtValueOrganics.Text = Planet.ResourceValue["Organics"] + "%";
-				txtValueRadioactives.Text = Planet.ResourceValue["Radioactives"] + "%";
+				txtValueMinerals.Text = Planet.ResourceValue["Minerals"].ToUnitString();
+				txtValueOrganics.Text = Planet.ResourceValue["Organics"].ToUnitString();
+				txtValueRadioactives.Text = Planet.ResourceValue["Radioactives"].ToUnitString();
 
 				txtDescription.Text = Planet.Description;
 

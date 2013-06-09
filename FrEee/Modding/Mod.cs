@@ -230,11 +230,5 @@ namespace FrEee.Modding
 		/// Errors encountered when loading the mod.
 		/// </summary>
 		public static IList<DataParsingException> Errors { get; private set; }
-
-		// TODO - load these constants from Settings.txt
-		public readonly int MinPlanetResourceValue = 0;
-		public readonly int MaxPlanetResourceValue = 150;
-		public readonly int MinAsteroidResourceValue = 50;
-		public readonly int MaxAsteroidResourceValue = 300;
 	}
 }

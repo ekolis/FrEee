@@ -72,6 +72,32 @@ namespace FrEee.Game.Setup
 		public bool OmniscientView { get; set; }
 
 		/// <summary>
+		/// Model to use for standard planetary mining.
+		/// </summary>
+		public MiningModel StandardMiningModel { get; set; }
+
+		/// <summary>
+		/// Model to use for remote mining.
+		/// </summary>
+		public MiningModel RemoteMiningModel { get; set; }
+
+		public int MinPlanetValue {get; set;}
+
+		public int MinSpawnedPlanetValue {get; set;}
+
+		public int HomeworldValue {get; set;}
+
+		public int MaxSpawnedPlanetValue {get; set;}
+
+		public int MaxPlanetValue {get; set;}
+
+		public int MinAsteroidValue {get; set;}
+
+		public int MinSpawnedAsteroidValue {get; set;}
+
+		public int MaxSpawnedAsteroidValue {get; set;}
+
+		/// <summary>
 		/// Are we setting up a single player game?
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
@@ -118,6 +144,16 @@ namespace FrEee.Game.Setup
 				if (OmniscientView)
 					gal.OmniscientView = true;
 
+				gal.StandardMiningModel = StandardMiningModel;
+				gal.RemoteMiningModel = RemoteMiningModel;
+				gal.MinPlanetValue = MinPlanetValue;
+				gal.MinSpawnedPlanetValue = MinSpawnedPlanetValue;
+				gal.MaxSpawnedPlanetValue = MaxSpawnedPlanetValue;
+				gal.MaxPlanetValue = MaxPlanetValue;
+				gal.MinAsteroidValue = MinAsteroidValue;
+				gal.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
+				gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
+
 				// TODO - let game host and/or players configure starting techs
 				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
 					emp.ResearchedTechnologies[tech] = tech.StartLevel;
@@ -145,6 +181,7 @@ namespace FrEee.Game.Setup
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
+				hw.ResourceValue["Minerals"] = hw.ResourceValue["Organics"] = hw.ResourceValue["Radioactives"] = HomeworldValue;
 				hw.Colony = new Colony
 				{
 					Owner = emp,
