@@ -96,8 +96,8 @@ namespace FrEee.Game.Objects.Space
 
 			// TODO - check for long range scanners
 
-			if (starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
-				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in
+			if (galaxy.OmniscientView || starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
+				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in, or if he has omniscient view
 
 			if (starSystem.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				return Visibility.Fogged; // player gets fogged data for stellar objects in systems he has explored

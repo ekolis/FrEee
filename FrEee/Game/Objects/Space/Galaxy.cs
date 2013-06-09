@@ -57,6 +57,13 @@ namespace FrEee.Game.Objects.Space
 		public static Galaxy Current { get; private set; }
 
 		/// <summary>
+		/// Should players have an omniscient view of all explored systems?
+		/// Does not prevent cloaking from working; this is just basic sight.
+		/// Also does not give battle reports for other empires' battles.
+		/// </summary>
+		public bool OmniscientView { get; set; }
+
+		/// <summary>
 		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
@@ -377,9 +384,7 @@ namespace FrEee.Game.Objects.Space
 			if (CurrentEmpire != null)
 			{
 				foreach (var ssl in StarSystemLocations)
-				{
 					ssl.Item.Redact(this);
-				}
 
 				for (int i = 0; i < Referrables.Count; i++)
 				{

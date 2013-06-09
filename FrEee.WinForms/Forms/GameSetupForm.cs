@@ -60,6 +60,10 @@ namespace FrEee.WinForms.Forms
 			setup.Empires.Add(new Empire { Name = "Norak Ascendancy", ShipsetPath = "Norak", Color = Color.Blue });
 			setup.Empires.Add(new Empire { Name = "Abbidon Enclave", ShipsetPath = "Abbidon", Color = Color.Orange });
 
+			setup.GameName = txtGalaxyName.Text;
+			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
+			setup.OmniscientView = chkOmniscient.Checked;
+
 			if (setup.Warnings.Any())
 			{
 				MessageBox.Show(setup.Warnings.First(), "FrEee");
@@ -186,11 +190,6 @@ namespace FrEee.WinForms.Forms
 		{
 			setup.StarSystemCount = (int)spnStarSystems.Value;
 			spnSystemGroups.Maximum = spnStarSystems.Value;
-		}
-
-		private void txtGalaxyName_TextChanged(object sender, EventArgs e)
-		{
-			setup.GameName = txtGalaxyName.Text;
 		}
 
 		private void ddlWarpPointLocation_SelectedIndexChanged(object sender, EventArgs e)

@@ -184,7 +184,6 @@
 			this.txtGalaxyName.Name = "txtGalaxyName";
 			this.txtGalaxyName.Size = new System.Drawing.Size(152, 21);
 			this.txtGalaxyName.TabIndex = 24;
-			this.txtGalaxyName.TextChanged += new System.EventHandler(this.txtGalaxyName_TextChanged);
 			// 
 			// labelName
 			// 

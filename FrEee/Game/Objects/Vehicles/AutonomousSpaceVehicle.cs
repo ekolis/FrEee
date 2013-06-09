@@ -63,8 +63,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 			// TODO - check for long range scanners
 
-			if (starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
-				return Visibility.Visible; // player can see vehicles in systems he owns stuff in
+			if (galaxy.OmniscientView || starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
+				return Visibility.Visible; // player can see vehicles in systems he owns stuff in, or if he has an omniscient view
 
 			// no fog of war for space vehicles...
 			

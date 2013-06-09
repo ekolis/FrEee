@@ -31,6 +31,11 @@ namespace FrEee.Game.Setup
 		public string GameName { get; set; }
 
 		/// <summary>
+		/// The galaxy template to use.
+		/// </summary>
+		public GalaxyTemplate GalaxyTemplate { get; set; }
+
+		/// <summary>
 		/// The size of the galaxy.
 		/// </summary>
 		public System.Drawing.Size GalaxySize { get; set; }
@@ -55,13 +60,26 @@ namespace FrEee.Game.Setup
 		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 
 		/// <summary>
+		/// Should all systems start explored for all players?
+		/// </summary>
+		public bool AllSystemsExplored { get; set; }
+
+		/// <summary>
+		/// Should players have an omniscient view of all explored systems?
+		/// Does not prevent cloaking from working; this is just basic sight.
+		/// Also does not give battle reports for other empires' battles.
+		/// </summary>
+		public bool OmniscientView { get; set; }
+
+		/// <summary>
 		/// Are we setting up a single player game?
 		/// </summary>
 		public bool IsSinglePlayer { get; set; }
 
+		/// <summary>
+		/// TODO - use empire templates
+		/// </summary>
 		public IList<Empire> Empires { get; private set; }
-
-		public GalaxyTemplate GalaxyTemplate { get; set; }
 
 		/// <summary>
 		/// Problems with this game setup.
@@ -90,6 +108,15 @@ namespace FrEee.Game.Setup
 			{
 				gal.Empires.Add(emp);
 				gal.Register(emp);
+
+				if (AllSystemsExplored)
+				{
+					foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
+						sys.ExploredByEmpires.Add(emp);
+				}
+
+				if (OmniscientView)
+					gal.OmniscientView = true;
 
 				// TODO - let game host and/or players configure starting techs
 				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
