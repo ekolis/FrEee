@@ -222,6 +222,7 @@ namespace FrEee.WinForms.Forms
 				spnMaxSpawnValuePlanet.Value = 150;
 				spnMaxSpawnValueAsteroid.Value = 300;
 				spnMaxValuePlanet.Value = 250;
+				spnStartValue.Value = 100;
 			}
 			else if (ddlPresets.SelectedIndex == 1)
 			{
@@ -235,15 +236,16 @@ namespace FrEee.WinForms.Forms
 				spnMinValuePlanet.Value = spnMinValueAsteroid.Value = 0;
 				spnMinSpawnValuePlanet.Value = 0;
 				spnMinSpawnValueAsteroid.Value = 50;
-				spnHomeworldValue.Value = 120;
+				spnStartValue.Value = spnHomeworldValue.Value = 120;
 				spnMaxSpawnValuePlanet.Value = 150;
 				spnMaxSpawnValueAsteroid.Value = 300;
 				spnMaxValuePlanet.Value = 250;
+				spnStartValue.Value = 100;
 			}
 			else if (ddlPresets.SelectedIndex == 2)
 			{
 				// finite
-				spnRateStandard.Value = spnRateRemote.Value = 1;
+				spnRateStandard.Value = spnRateRemote.Value = 100;
 				spnBonusStandard.Value = spnBonusRemote.Value = 0;
 				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 1;
 				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = true;
@@ -252,11 +254,118 @@ namespace FrEee.WinForms.Forms
 				spnMinValuePlanet.Value = spnMinValueAsteroid.Value = 0;
 				spnMinSpawnValuePlanet.Value = 0;
 				spnMinSpawnValueAsteroid.Value = 100e3m;
-				spnHomeworldValue.Value = 2e6m;
+				spnStartValue.Value = spnHomeworldValue.Value = 2e6m;
 				spnMaxSpawnValuePlanet.Value = 500e3m;
 				spnMaxSpawnValueAsteroid.Value = 800e3m;
 				spnMaxValuePlanet.Value = 10e6m;
+				spnStartValue.Value = 500000;
 			}
+			btnRefreshGraphs_Click(btnLoadResourcePreset, new EventArgs());
+		}
+
+		private int startValue = 120;
+		private int miningRate = 1000;
+		private bool remote = false;
+
+		private void btnRefreshGraphs_Click(object sender, EventArgs e)
+		{
+			picMiningGraph.Invalidate();
+			picValueGraph.Invalidate();
+		}
+
+		private void picValueGraph_Paint(object sender, PaintEventArgs e)
+		{
+			var data = RunMiningSimulation(100).Select(t => t.Item2);
+			DrawLineGraph(e.Graphics, new RectangleF(Point.Empty, picValueGraph.Size), "Value", Color.Green, data);
+		}
+
+		private void picMiningGraph_Paint(object sender, PaintEventArgs e)
+		{
+			var data = RunMiningSimulation(100).Select(t => t.Item1);
+			DrawLineGraph(e.Graphics, new RectangleF(Point.Empty, picMiningGraph.Size), "Mining", Color.Blue, data);
+		}
+
+		private void DrawLineGraph(Graphics g, RectangleF bounds, string label, Color lineColor, IEnumerable<int> dataPoints)
+		{
+			var max = dataPoints.Max();
+			if (max <= 0)
+				return;
+			var xScale = bounds.Width / (dataPoints.Count() - 1);
+			var yScale = -bounds.Height / max;
+
+			// draw Y-axis
+			var pen = Pens.White;
+			g.DrawLine(pen, bounds.Left, bounds.Top, bounds.Left, bounds.Bottom);
+			var font = new Font(FontFamily.GenericSansSerif, 9);
+			var brush = Brushes.White;
+			g.DrawString(label, font, brush, 0, 0);
+
+			// draw horizontals
+			var sf = new StringFormat { Alignment = StringAlignment.Far };
+			for (int line = 0; line <= 5; line++)
+			{
+				var ypos = line * bounds.Height / -5 + bounds.Bottom;
+				g.DrawLine(pen, bounds.Left, ypos, bounds.Right, ypos);
+				g.DrawString((max * line / 5).ToString(), font, Brushes.White, bounds.Right, ypos, sf);
+			}
+
+			// draw chart
+			int prev = dataPoints.First();
+			var linePen = new Pen(lineColor);
+			for (int i = 1; i < dataPoints.Count(); i++)
+			{
+				var cur = dataPoints.ElementAt(i);
+				var xpos1 = bounds.Left + (i - 1) * xScale;
+				var xpos2 = bounds.Left + i * xScale;
+				var ypos1 = bounds.Bottom + prev * yScale;
+				var ypos2 = bounds.Bottom + cur * yScale;
+				g.DrawLine(linePen, xpos1, ypos1, xpos2, ypos2);
+				prev = cur;
+			}
+		}
+
+		private IEnumerable<Tuple<int, int>> RunMiningSimulation(int turns)
+		{
+			var model = new MiningModel();
+			if (remote)
+			{
+				model.RatePercentage = (double)spnRateRemote.Value;
+				model.ValuePercentageBonus = (double)spnBonusRemote.Value;
+				model.ValueDepletionPerResource = (double)spnDepletionResourceRemote.Value;
+				model.BonusAffectsDepletion = chkBonusDepletionRemote.Checked;
+				model.ValueDepletionPerTurn = (int)spnDepletionTurnRemote.Value;
+			}
+			else
+			{
+				model.RatePercentage = (double)spnRateStandard.Value;
+				model.ValuePercentageBonus = (double)spnBonusStandard.Value;
+				model.ValueDepletionPerResource = (double)spnDepletionResourceStandard.Value;
+				model.BonusAffectsDepletion = chkBonusDepletionStandard.Checked;
+				model.ValueDepletionPerTurn = (int)spnDepletionTurnStandard.Value;
+			}
+			int mined;
+			int value = startValue;
+			for (int i = 0; i < turns; i++)
+			{
+				mined = model.GetRate(miningRate, value);
+				yield return Tuple.Create(mined, value);
+				value -= model.GetDecay(miningRate, value);
+			}
+		}
+
+		private void spnStartValue_ValueChanged(object sender, EventArgs e)
+		{
+			startValue = (int)spnStartValue.Value;
+		}
+
+		private void spnMiningRate_ValueChanged(object sender, EventArgs e)
+		{
+			miningRate = (int)spnMiningRate.Value;
+		}
+
+		private void chkRemote_CheckedChanged(object sender, EventArgs e)
+		{
+			remote = chkRemote.Checked;
 		}
 	}
 }

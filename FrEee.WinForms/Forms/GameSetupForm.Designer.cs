@@ -59,6 +59,14 @@
 			this.galaxyTemplateBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.lblGalaxyType = new System.Windows.Forms.Label();
 			this.tabResources = new System.Windows.Forms.TabPage();
+			this.chkRemote = new System.Windows.Forms.CheckBox();
+			this.btnRefreshGraphs = new FrEee.WinForms.Controls.GameButton();
+			this.picMiningGraph = new System.Windows.Forms.PictureBox();
+			this.spnMiningRate = new System.Windows.Forms.NumericUpDown();
+			this.spnStartValue = new System.Windows.Forms.NumericUpDown();
+			this.label27 = new System.Windows.Forms.Label();
+			this.label26 = new System.Windows.Forms.Label();
+			this.picValueGraph = new System.Windows.Forms.PictureBox();
 			this.spnHomeworldValue = new System.Windows.Forms.NumericUpDown();
 			this.label25 = new System.Windows.Forms.Label();
 			this.chkBonusDepletionRemote = new System.Windows.Forms.CheckBox();
@@ -104,6 +112,7 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.label28 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -113,6 +122,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnStarSystems)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).BeginInit();
 			this.tabResources.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picMiningGraph)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMiningRate)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartValue)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.picValueGraph)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworldValue)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnRemote)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnStandard)).BeginInit();
@@ -504,6 +517,15 @@
 			// tabResources
 			// 
 			this.tabResources.BackColor = System.Drawing.Color.Black;
+			this.tabResources.Controls.Add(this.label28);
+			this.tabResources.Controls.Add(this.chkRemote);
+			this.tabResources.Controls.Add(this.btnRefreshGraphs);
+			this.tabResources.Controls.Add(this.picMiningGraph);
+			this.tabResources.Controls.Add(this.spnMiningRate);
+			this.tabResources.Controls.Add(this.spnStartValue);
+			this.tabResources.Controls.Add(this.label27);
+			this.tabResources.Controls.Add(this.label26);
+			this.tabResources.Controls.Add(this.picValueGraph);
 			this.tabResources.Controls.Add(this.spnHomeworldValue);
 			this.tabResources.Controls.Add(this.label25);
 			this.tabResources.Controls.Add(this.chkBonusDepletionRemote);
@@ -545,6 +567,110 @@
 			this.tabResources.Size = new System.Drawing.Size(545, 446);
 			this.tabResources.TabIndex = 7;
 			this.tabResources.Text = "Resources";
+			// 
+			// chkRemote
+			// 
+			this.chkRemote.AutoSize = true;
+			this.chkRemote.Location = new System.Drawing.Point(372, 85);
+			this.chkRemote.Name = "chkRemote";
+			this.chkRemote.Size = new System.Drawing.Size(70, 19);
+			this.chkRemote.TabIndex = 58;
+			this.chkRemote.Text = "Remote";
+			this.chkRemote.UseVisualStyleBackColor = true;
+			this.chkRemote.CheckedChanged += new System.EventHandler(this.chkRemote_CheckedChanged);
+			// 
+			// btnRefreshGraphs
+			// 
+			this.btnRefreshGraphs.BackColor = System.Drawing.Color.Black;
+			this.btnRefreshGraphs.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRefreshGraphs.Location = new System.Drawing.Point(458, 82);
+			this.btnRefreshGraphs.Name = "btnRefreshGraphs";
+			this.btnRefreshGraphs.Size = new System.Drawing.Size(84, 23);
+			this.btnRefreshGraphs.TabIndex = 57;
+			this.btnRefreshGraphs.Text = "Refresh";
+			this.btnRefreshGraphs.UseVisualStyleBackColor = false;
+			this.btnRefreshGraphs.Click += new System.EventHandler(this.btnRefreshGraphs_Click);
+			// 
+			// picMiningGraph
+			// 
+			this.picMiningGraph.Location = new System.Drawing.Point(368, 223);
+			this.picMiningGraph.Name = "picMiningGraph";
+			this.picMiningGraph.Size = new System.Drawing.Size(174, 106);
+			this.picMiningGraph.TabIndex = 56;
+			this.picMiningGraph.TabStop = false;
+			this.picMiningGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.picMiningGraph_Paint);
+			// 
+			// spnMiningRate
+			// 
+			this.spnMiningRate.Increment = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			this.spnMiningRate.Location = new System.Drawing.Point(458, 59);
+			this.spnMiningRate.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.spnMiningRate.Name = "spnMiningRate";
+			this.spnMiningRate.Size = new System.Drawing.Size(84, 21);
+			this.spnMiningRate.TabIndex = 55;
+			this.spnMiningRate.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.spnMiningRate.ValueChanged += new System.EventHandler(this.spnMiningRate_ValueChanged);
+			// 
+			// spnStartValue
+			// 
+			this.spnStartValue.Location = new System.Drawing.Point(458, 32);
+			this.spnStartValue.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+			this.spnStartValue.Name = "spnStartValue";
+			this.spnStartValue.Size = new System.Drawing.Size(84, 21);
+			this.spnStartValue.TabIndex = 54;
+			this.spnStartValue.Value = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+			this.spnStartValue.ValueChanged += new System.EventHandler(this.spnStartValue_ValueChanged);
+			// 
+			// label27
+			// 
+			this.label27.AutoSize = true;
+			this.label27.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label27.Location = new System.Drawing.Point(365, 61);
+			this.label27.Margin = new System.Windows.Forms.Padding(3);
+			this.label27.Name = "label27";
+			this.label27.Size = new System.Drawing.Size(74, 15);
+			this.label27.TabIndex = 53;
+			this.label27.Text = "Mining Rate";
+			// 
+			// label26
+			// 
+			this.label26.AutoSize = true;
+			this.label26.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label26.Location = new System.Drawing.Point(365, 32);
+			this.label26.Margin = new System.Windows.Forms.Padding(3);
+			this.label26.Name = "label26";
+			this.label26.Size = new System.Drawing.Size(66, 15);
+			this.label26.TabIndex = 52;
+			this.label26.Text = "Start Value";
+			// 
+			// picValueGraph
+			// 
+			this.picValueGraph.Location = new System.Drawing.Point(368, 111);
+			this.picValueGraph.Name = "picValueGraph";
+			this.picValueGraph.Size = new System.Drawing.Size(174, 106);
+			this.picValueGraph.TabIndex = 51;
+			this.picValueGraph.TabStop = false;
+			this.picValueGraph.Paint += new System.Windows.Forms.PaintEventHandler(this.picValueGraph_Paint);
 			// 
 			// spnHomeworldValue
 			// 
@@ -1129,6 +1255,17 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// label28
+			// 
+			this.label28.AutoSize = true;
+			this.label28.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label28.Location = new System.Drawing.Point(365, 335);
+			this.label28.Margin = new System.Windows.Forms.Padding(3);
+			this.label28.Name = "label28";
+			this.label28.Size = new System.Drawing.Size(142, 15);
+			this.label28.TabIndex = 59;
+			this.label28.Text = "Graphs display 100 turns";
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1155,6 +1292,10 @@
 			((System.ComponentModel.ISupportInitialize)(this.galaxyTemplateBindingSource)).EndInit();
 			this.tabResources.ResumeLayout(false);
 			this.tabResources.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picMiningGraph)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMiningRate)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartValue)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.picValueGraph)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworldValue)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnRemote)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionTurnStandard)).EndInit();
@@ -1252,5 +1393,14 @@
 		private System.Windows.Forms.Label label24;
 		private System.Windows.Forms.NumericUpDown spnHomeworldValue;
 		private System.Windows.Forms.Label label25;
+		private System.Windows.Forms.PictureBox picValueGraph;
+		private System.Windows.Forms.NumericUpDown spnMiningRate;
+		private System.Windows.Forms.NumericUpDown spnStartValue;
+		private System.Windows.Forms.Label label27;
+		private System.Windows.Forms.Label label26;
+		private System.Windows.Forms.PictureBox picMiningGraph;
+		private Controls.GameButton btnRefreshGraphs;
+		private System.Windows.Forms.CheckBox chkRemote;
+		private System.Windows.Forms.Label label28;
 	}
 }

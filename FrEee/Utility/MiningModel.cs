@@ -63,7 +63,7 @@ namespace FrEee.Utility
 		{
 			double rate;
 			if (BonusAffectsDepletion)
-				rate = baseRate * ValueBonus * value;
+				rate = baseRate + baseRate * ValueBonus * value;
 			else
 				rate = baseRate;
 			return (int)(rate * ValueDepletionPerResource) + ValueDepletionPerTurn;
