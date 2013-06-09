@@ -137,12 +137,14 @@ namespace FrEee.Game.Objects.Space
 
 		public int Width
 		{
-			get { return MaxX - MinX + 1; }
+			get;
+			set;
 		}
 
 		public int Height
 		{
-			get { return MaxY - MinY + 1; }
+			get;
+			set;
 		}
 
 		/// <summary>

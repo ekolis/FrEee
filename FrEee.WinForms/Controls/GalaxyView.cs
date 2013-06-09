@@ -54,7 +54,6 @@ namespace FrEee.WinForms.Controls
 			if (Galaxy.Current == null)
 				return null; // no such sector
 			var drawsize = StarSystemDrawSize;
-			// TODO - don't cut off the systems on the edges
 			var x = (int)Math.Round((p.X - Width / 2f) / drawsize);
 			var y = (int)Math.Round((p.Y - Height / 2f) / drawsize);
 			var p2 = new Point(x, y);
@@ -113,7 +112,6 @@ namespace FrEee.WinForms.Controls
 				foreach (var ssl in Galaxy.Current.StarSystemLocations)
 				{
 					// where will we draw the star system?
-					// TODO - don't cut off the systems on the edges
 					var x = ssl.Location.X;
 					var y = ssl.Location.Y;
 					var drawx = x * drawsize + Width / 2f;
@@ -138,9 +136,7 @@ namespace FrEee.WinForms.Controls
 						}
 					}
 
-					// TODO - draw star system name?
-
-					// draw selection reticule (just a square for now)
+					// draw selection reticule
 					if (sys == SelectedStarSystem)
 						pe.Graphics.DrawRectangle(whitePen, drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2);
 				}
