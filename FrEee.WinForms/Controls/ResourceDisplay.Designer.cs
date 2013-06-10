@@ -35,21 +35,18 @@ namespace FrEee.WinForms.Controls
 			// 
 			// lblAmount
 			// 
-			this.lblAmount.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lblAmount.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lblAmount.Location = new System.Drawing.Point(0, 0);
 			this.lblAmount.Margin = new System.Windows.Forms.Padding(0);
 			this.lblAmount.Name = "lblAmount";
-			this.lblAmount.Size = new System.Drawing.Size(91, 20);
+			this.lblAmount.Size = new System.Drawing.Size(111, 20);
 			this.lblAmount.TabIndex = 0;
 			this.lblAmount.Text = "0 (+0)";
 			this.lblAmount.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// picIcon
 			// 
-			this.picIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.picIcon.Dock = System.Windows.Forms.DockStyle.Right;
 			this.picIcon.Location = new System.Drawing.Point(91, 0);
 			this.picIcon.Margin = new System.Windows.Forms.Padding(0);
 			this.picIcon.Name = "picIcon";
