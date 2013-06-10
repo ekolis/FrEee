@@ -30,6 +30,7 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
 			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CurrentLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,7 +40,6 @@
 			this.technologyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.ddlGroup = new System.Windows.Forms.ComboBox();
 			this.lblPoints = new System.Windows.Forms.Label();
-			this.txtPoints = new System.Windows.Forms.Label();
 			this.txtTechName = new System.Windows.Forms.Label();
 			this.lblSpending = new System.Windows.Forms.Label();
 			this.sldSpending = new System.Windows.Forms.TrackBar();
@@ -58,6 +58,7 @@
 			this.lstResults = new System.Windows.Forms.ListView();
 			this.dataGridViewProgressColumn1 = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
@@ -171,15 +172,6 @@
 			this.lblPoints.Size = new System.Drawing.Size(134, 13);
 			this.lblPoints.TabIndex = 3;
 			this.lblPoints.Text = "Research Points Available:";
-			// 
-			// txtPoints
-			// 
-			this.txtPoints.AutoSize = true;
-			this.txtPoints.Location = new System.Drawing.Point(154, 13);
-			this.txtPoints.Name = "txtPoints";
-			this.txtPoints.Size = new System.Drawing.Size(13, 13);
-			this.txtPoints.TabIndex = 4;
-			this.txtPoints.Text = "0";
 			// 
 			// txtTechName
 			// 
@@ -404,12 +396,32 @@
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
+			// resRes
+			// 
+			this.resRes.Amount = 0;
+			this.resRes.BackColor = System.Drawing.Color.Black;
+			this.resRes.Change = null;
+			this.resRes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			this.resRes.Location = new System.Drawing.Point(150, 9);
+			this.resRes.Margin = new System.Windows.Forms.Padding(0);
+			this.resRes.Name = "resRes";
+			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource1.IsGlobal = false;
+			resource1.IsLocal = false;
+			resource1.Name = "Research";
+			resource1.PictureName = "Resource4";
+			this.resRes.Resource = resource1;
+			this.resRes.ResourceName = "Research";
+			this.resRes.Size = new System.Drawing.Size(88, 20);
+			this.resRes.TabIndex = 26;
+			// 
 			// ResearchForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(759, 561);
+			this.Controls.Add(this.resRes);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.btnDelete);
@@ -425,7 +437,6 @@
 			this.Controls.Add(this.sldSpending);
 			this.Controls.Add(this.lblSpending);
 			this.Controls.Add(this.txtTechName);
-			this.Controls.Add(this.txtPoints);
 			this.Controls.Add(this.lblPoints);
 			this.Controls.Add(this.ddlGroup);
 			this.Controls.Add(this.gridQueues);
@@ -452,7 +463,6 @@
 		private DataGridView.DataGridViewProgressColumn dataGridViewProgressColumn1;
 		private System.Windows.Forms.ComboBox ddlGroup;
 		private System.Windows.Forms.Label lblPoints;
-		private System.Windows.Forms.Label txtPoints;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn CurrentLevel;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NextLevelCost;
@@ -475,6 +485,7 @@
 		private Controls.GameButton btnTop;
 		private Controls.GameButton btnSave;
 		private Controls.GameButton btnCancel;
+		private Controls.ResourceDisplay resRes;
 
 	}
 }
