@@ -148,6 +148,7 @@ namespace FrEee.Modding
 			DefaultColonyConstructionRate.Add(Resource.Minerals, 2000);
 			DefaultColonyConstructionRate.Add(Resource.Organics, 2000);
 			DefaultColonyConstructionRate.Add(Resource.Radioactives, 2000);
+			PopulationFactor = (long)1e6; // TODO - let population factor be specified by mod files
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();
@@ -160,6 +161,11 @@ namespace FrEee.Modding
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
 		}
+
+		/// <summary>
+		/// How many people does 1 population represent in the mod files?
+		/// </summary>
+		public long PopulationFactor { get; set; }
 
 		/// <summary>
 		/// The path to the mod's root folder, relative to the Mods folder.

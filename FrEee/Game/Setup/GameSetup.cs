@@ -178,6 +178,7 @@ namespace FrEee.Game.Setup
 				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
 
 				// TODO - place homeworlds fairly
+				// TODO - make homeworlds breathable
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
@@ -186,8 +187,9 @@ namespace FrEee.Game.Setup
 				hw.Colony = new Colony
 				{
 					Owner = emp,
-					ConstructionQueue = new ConstructionQueue(hw)
+					ConstructionQueue = new ConstructionQueue(hw),
 				};
+				hw.Colony.Population.Add(emp.PrimaryRace, hw.Size.MaxPopulation);
 				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sy.Instantiate());
 				if (hw.Colony.Facilities.Count < hw.MaxFacilities)

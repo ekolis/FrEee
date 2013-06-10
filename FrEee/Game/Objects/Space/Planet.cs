@@ -184,8 +184,9 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				// TODO - check races populating colony to see if it's domed, once we have races
-				return false;
+				if (Colony == null)
+					return false;
+				return Colony.Population.Any(kvp => kvp.Key.NativeAtmosphere != Atmosphere);
 			}
 		}
 
@@ -199,7 +200,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int MaxPopulation
+		public long MaxPopulation
 		{
 			get
 			{

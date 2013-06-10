@@ -116,6 +116,7 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.label30 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -145,6 +146,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceStandard)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnBonusStandard)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).BeginInit();
+			this.tabTechnology.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -266,9 +268,6 @@
 			// 
 			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlEventSeverity.FormattingEnabled = true;
-			this.ddlEventSeverity.Items.AddRange(new object[] {
-            "Percentage Value",
-            "Finite Pool"});
 			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 330);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
 			this.ddlEventSeverity.Size = new System.Drawing.Size(152, 23);
@@ -358,9 +357,6 @@
 			// 
 			this.ddlEventFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlEventFrequency.FormattingEnabled = true;
-			this.ddlEventFrequency.Items.AddRange(new object[] {
-            "Percentage Value",
-            "Finite Pool"});
 			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 301);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
@@ -1181,6 +1177,8 @@
 			// tabTechnology
 			// 
 			this.tabTechnology.BackColor = System.Drawing.Color.Black;
+			this.tabTechnology.Controls.Add(this.label30);
+			this.tabTechnology.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabTechnology.Location = new System.Drawing.Point(4, 29);
 			this.tabTechnology.Name = "tabTechnology";
 			this.tabTechnology.Padding = new System.Windows.Forms.Padding(3);
@@ -1291,6 +1289,17 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// label30
+			// 
+			this.label30.AutoSize = true;
+			this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label30.Location = new System.Drawing.Point(3, 6);
+			this.label30.Margin = new System.Windows.Forms.Padding(3);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(111, 15);
+			this.label30.TabIndex = 12;
+			this.label30.Text = "Starting Tech Level";
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1337,6 +1346,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnDepletionResourceStandard)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnBonusStandard)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).EndInit();
+			this.tabTechnology.ResumeLayout(false);
+			this.tabTechnology.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -1430,5 +1441,6 @@
 		private System.Windows.Forms.CheckBox chkLimitRemote;
 		private System.Windows.Forms.CheckBox chkLimitStandard;
 		private System.Windows.Forms.Label label29;
+		private System.Windows.Forms.Label label30;
 	}
 }

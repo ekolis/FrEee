@@ -18,6 +18,7 @@ namespace FrEee.Game.Objects.Civilization
 		public Colony()
 		{
 			Facilities = new List<Facility>();
+			Population = new SafeDictionary<Race, long>();
 		}
 
 		/// <summary>
@@ -29,6 +30,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// The facilities on this colony.
 		/// </summary>
 		public ICollection<Facility> Facilities { get; set; }
+
+		/// <summary>
+		/// The population of this colony, by race.
+		/// </summary>
+		public SafeDictionary<Race, long> Population { get; private set; }
 
 		public IEnumerable<Ability> Abilities
 		{

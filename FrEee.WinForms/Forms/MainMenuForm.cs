@@ -100,11 +100,11 @@ namespace FrEee.WinForms.Forms
 						MaxSpawnedAsteroidValue = 150,
 					};
 					// TODO - pick random empires from a list
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { ShipsetPath = "Jraenar", Color = Color.Red } });
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { ShipsetPath = "Eee", Color = Color.Cyan } });
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Drushocka Empire", LeaderName = "Lord Fazrad", PrimaryRace = new Race { ShipsetPath = "Drushocka", Color = Color.Green } });
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Norak Ascendancy", LeaderName = "High Priest Rakul", PrimaryRace = new Race { ShipsetPath = "Norak", Color = Color.Blue } });
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Abbidon Enclave", LeaderName = "Speaker Verath", PrimaryRace = new Race { ShipsetPath = "Abbidon", Color = Color.Orange } });
+					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { ShipsetPath = "Jraenar", Color = Color.Red, NativeAtmosphere = "Hydrogen" } });
+					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { ShipsetPath = "Eee", Color = Color.Cyan, NativeAtmosphere = "Oxygen" } });
+					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Drushocka Empire", LeaderName = "Lord Fazrad", PrimaryRace = new Race { ShipsetPath = "Drushocka", Color = Color.Green, NativeAtmosphere = "None" } });
+					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Norak Ascendancy", LeaderName = "High Priest Rakul", PrimaryRace = new Race { ShipsetPath = "Norak", Color = Color.Blue, NativeAtmosphere = "Methane" } });
+					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Abbidon Enclave", LeaderName = "Speaker Verath", PrimaryRace = new Race { ShipsetPath = "Abbidon", Color = Color.Orange, NativeAtmosphere = "Carbon Dioxide" } });
 
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, status, 1.0);

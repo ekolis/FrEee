@@ -36,6 +36,11 @@ namespace FrEee.Game.Objects.Civilization
 		public string ShipsetPath { get; set; }
 
 		/// <summary>
+		/// The atmosphere which this race breathes.
+		/// </summary>
+		public string NativeAtmosphere { get; set; }
+
+		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
 		public EmpireAI AI { get; set; }

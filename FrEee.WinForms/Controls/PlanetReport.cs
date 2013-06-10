@@ -77,7 +77,7 @@ namespace FrEee.WinForms.Controls
 				txtDescription.Text = Planet.Description;
 
 				txtColonyType.Text = Planet.Owner == null ? "" : Planet.Owner.Name + " Colony"; // TODO - load colony type
-				txtPopulation.Text = ""; // TODO - load population
+				txtPopulation.Text = Planet.Colony.Population.Sum(kvp => kvp.Value).ToUnitString(3, true);
 				txtReproduction.Text = ""; // TODO - load reproduction
 				txtMood.Text = ""; // TODO - load mood
 

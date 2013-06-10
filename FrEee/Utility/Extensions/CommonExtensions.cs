@@ -130,16 +130,16 @@ namespace FrEee.Utility.Extensions
 		/// e.g. 25000 becomes 25.00k
 		/// </summary>
 		/// <param name="value"></param>
-		public static string ToUnitString(this int value, int sigfigs = 3)
+		public static string ToUnitString(this long value, int sigfigs = 3, bool bForBillions = false)
 		{
 			if (Math.Abs(value) >= 1e13)
 				return (value / 1e12).ToString("f" + (sigfigs - 1)) + "T";
 			if (Math.Abs(value) >= 1e12)
 				return (value / 1e12).ToString("f" + sigfigs) + "T";
 			if (Math.Abs(value) >= 1e10)
-				return (value / 1e9).ToString("f" + (sigfigs - 1)) + "G";
+				return (value / 1e9).ToString("f" + (sigfigs - 1)) + (bForBillions ? "B" : "G");
 			if (Math.Abs(value) >= 1e9)
-				return (value / 1e9).ToString("f" + sigfigs) + "G";
+				return (value / 1e9).ToString("f" + sigfigs) + (bForBillions ? "B" : "G");
 			if (Math.Abs(value) >= 1e7)
 				return (value / 1e6).ToString("f" + (sigfigs - 1)) + "M";
 			if (Math.Abs(value) >= 1e6)
@@ -150,16 +150,37 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Adds SI prefixes to a value and rounds it off.
+		/// e.g. 25000 becomes 25.00k
+		/// </summary>
+		/// <param name="value"></param>
+		public static string ToUnitString(this int value, int sigfigs = 3, bool bForBillions = false)
+		{
+			return ((long)value).ToUnitString(sigfigs);
+		}
+
+		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Kilotons(this long value)
+		{
+			if (value < 10000)
+				return value + "kT";
+			return (value * 1000).ToUnitString() + "T";
+		}
+
+		/// <summary>
 		/// Displays a number in kT, MT, etc.
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
 		public static string Kilotons(this int value)
 		{
-			if (value < 10000)
-				return value + "kT";
-			return (value * 1000).ToUnitString() + "T";
+			return ((long)value).Kilotons();
 		}
+
 
 		/// <summary>
 		/// Converts a turn number to a stardate.

@@ -36,9 +36,9 @@ namespace FrEee.Modding
 		public int MaxFacilities { get; set; }
 
 		/// <summary>
-		/// Maximum population in millions for a colony.
+		/// Maximum population for a colony.
 		/// </summary>
-		public int MaxPopulation { get; set; }
+		public long MaxPopulation { get; set; }
 
 		/// <summary>
 		/// Maximum kT cargo for a colony.
@@ -53,7 +53,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Maximum population in millions for a domed colony.
 		/// </summary>
-		public int MaxPopulationDomed { get; set; }
+		public long MaxPopulationDomed { get; set; }
 
 		/// <summary>
 		/// Maximum kT cargo for a domed colony.
