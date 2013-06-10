@@ -14,8 +14,8 @@ namespace FrEee.WinForms.Controls
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			lblAmount.ForeColor = Resource.Color;
-			picIcon.Image = Resource.Icon;
+			lblAmount.ForeColor = Resource == null ? Color.White : Resource.Color;
+			picIcon.Image = Resource == null ? null : Resource.Icon;
 			lblAmount.Text = Amount.ToUnitString();
 			if (Change != null)
 			{
@@ -41,7 +41,7 @@ namespace FrEee.WinForms.Controls
 
 		public string ResourceName
 		{
-			get { return Resource.Name; }
+			get { return Resource == null ? null : Resource.Name; }
 			set { Resource = Resource.Find(value); }
 		}
 
