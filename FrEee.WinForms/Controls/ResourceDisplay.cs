@@ -13,19 +13,11 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
-			if (Resource != null)
-			{
-				lblAmount.ForeColor = ResourceColor;
-				if (ResourceIcon != null)
-					picIcon.Image = ResourceIcon;
-			}
-			else
-			{
-				lblAmount.ForeColor = Color.White;
-				picIcon.Image = null;
-			}
+			lblAmount.ForeColor = ResourceColor;
+			if (ResourceIcon != null)
+				picIcon.Image = ResourceIcon;
 			lblAmount.Text = Amount.ToUnitString();
 			if (Change != null)
 			{
@@ -35,7 +27,6 @@ namespace FrEee.WinForms.Controls
 				lblAmount.Text += Change.Value.ToUnitString();
 				lblAmount.Text += ")";
 			}
-			base.OnPaint(e);
 		}
 
 		private Resource resource;
@@ -45,7 +36,7 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				resource = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
@@ -74,15 +65,27 @@ namespace FrEee.WinForms.Controls
 				catch (NullReferenceException ex)
 				{
 					// HACK - stupid forms designer thinks it's null and not null at the same time, WTF?!
-					return null;
+					var icon = new Bitmap(1, 1);
+					var color = Color.Gray;
+					if (Resource != null)
+						color = ResourceColor;
+					var g = Graphics.FromImage(icon);
+					g.Clear(color);
+					return icon;
 				}
 			}
 		}
 
 		private int amount;
-		public int Amount { get { return amount; } set { amount = value; Invalidate(); } }
+		public int Amount { get { return amount; } set { amount = value; Bind(); } }
 
 		private int? change;
-		public int? Change { get { return change; } set { change = value; Invalidate(); } }
+		public int? Change { get { return change; } set { change = value; Bind(); } }
+
+		private void ResourceDisplay_SizeChanged(object sender, EventArgs e)
+		{
+			lblAmount.MaximumSize = lblAmount.Size;
+			Invalidate();
+		}
 	}
 }
