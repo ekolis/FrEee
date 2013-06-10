@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Controls
 			else
 			{
 				// pictures
-				picOwnerFlag.Image = vehicle.Owner.Flag;
+				picOwnerFlag.Image = vehicle.Owner.Insignia;
 				picPortrait.Image = vehicle.Portrait;
 
 				// name and stuff

@@ -70,7 +70,11 @@
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
+    <Compile Include="Game\Interfaces\ITrait.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
+    <Compile Include="Game\Objects\AI\EmpireAI.cs" />
+    <Compile Include="Game\Objects\Civilization\Race.cs" />
+    <Compile Include="Game\Objects\Civilization\Traits\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
@@ -114,6 +118,7 @@
     <Compile Include="Game\Objects\Vehicles\Unit.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
+    <Compile Include="Game\Setup\EmpireTemplate.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\StarWarpPointPlacementStrategy.cs" />

@@ -12,6 +12,8 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Commands;
 using Tech = FrEee.Game.Objects.Technology.Technology;
+using AI = FrEee.Game.Objects.AI.EmpireAI;
+using FrEee.Game.Objects.AI;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -19,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, ICommandable<Empire>
+	public class Empire : INamed, ICommandable<Empire>, IAbilityObject
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -68,28 +70,53 @@ namespace FrEee.Game.Objects.Civilization
 		public string EmperorName { get; set; }
 
 		/// <summary>
-		/// The folder (under Pictures/Races) where the empire's shipset is located.
+		/// The native race of this empire.
+		/// </summary>
+		public Race PrimaryRace { get; set; }
+
+		/// <summary>
+		/// Traits of this empire.
+		/// </summary>
+		public IList<ITrait<Empire>> Traits { get; private set; }
+
+		/// <summary>
+		/// The name of the insignia picture file, relative to Pictures/Insignia.
+		/// </summary>
+		public string InsigniaName { get; set; }
+
+		/// <summary>
+		/// The name of the shipset, relative to Pictures/Shipsets.
 		/// </summary>
 		public string ShipsetPath { get; set; }
 
 		/// <summary>
-		/// The empire's flag.
+		/// The name of the leader's image file, relative to Pictures/Leaders.
 		/// </summary>
-		public Image Flag
+		public string LeaderPortraitName { get; set; }
+
+		/// <summary>
+		/// The AI which controls the behavior of empires of this race.
+		/// </summary>
+		public EmpireAI AI { get; set; }
+
+		/// <summary>
+		/// The empire's insignia.
+		/// </summary>
+		public Image Insignia
 		{
 			get
 			{
 				if (Mod.Current.RootPath != null)
 				{
 					return
-						Pictures.GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", ShipsetPath, "Flag")) ??
-						Pictures.GetCachedImage(Path.Combine("Pictures", "Races", ShipsetPath, "Flag")) ??
+						Pictures.GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Insignia", InsigniaName)) ??
+						Pictures.GetCachedImage(Path.Combine("Pictures", "Insignia", InsigniaName)) ??
 						Pictures.GetGenericImage(typeof(Empire));
 				}
 				else
 				{
 					return
-						Pictures.GetCachedImage(Path.Combine("Pictures", "Races", ShipsetPath, "Flag")) ??
+						Pictures.GetCachedImage(Path.Combine("Pictures", "Insignia", InsigniaName)) ??
 						Pictures.GetGenericImage(typeof(Empire));
 				}
 			}
@@ -356,6 +383,11 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
 			}
+		}
+
+		public IEnumerable<Abilities.Ability> Abilities
+		{
+			get { return Traits.SelectMany(t => t.Abilities); }
 		}
 	}
 }
