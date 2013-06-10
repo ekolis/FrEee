@@ -116,7 +116,6 @@ namespace FrEee.Game.Objects.Space
 					Colony.Facilities.Clear();
 					for (int i = 0; i < facilCount; i++)
 						Colony.Facilities.Add(new Facility(unknownFacilityTemplate));
-					Colony.Population.Clear();
 				}
 				if (visibility < Visibility.Visible)
 				{
