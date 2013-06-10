@@ -145,7 +145,7 @@ namespace FrEee.WinForms.Forms
 			this.resInt.Location = new System.Drawing.Point(515, 5);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
-			this.resInt.ResourceColor = System.Drawing.Color.Empty;
+			this.resInt.ResourceName = "Intelligence";
 			this.resInt.Size = new System.Drawing.Size(111, 20);
 			this.resInt.TabIndex = 14;
 			// 
@@ -158,7 +158,7 @@ namespace FrEee.WinForms.Forms
 			this.resRes.Location = new System.Drawing.Point(404, 5);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
-			this.resRes.ResourceColor = System.Drawing.Color.Empty;
+			this.resRes.ResourceName = "Research";
 			this.resRes.Size = new System.Drawing.Size(111, 20);
 			this.resRes.TabIndex = 13;
 			// 
@@ -171,7 +171,7 @@ namespace FrEee.WinForms.Forms
 			this.resRad.Location = new System.Drawing.Point(279, 5);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
-			this.resRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resRad.ResourceName = "Radioactives";
 			this.resRad.Size = new System.Drawing.Size(111, 20);
 			this.resRad.TabIndex = 12;
 			// 
@@ -184,7 +184,7 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.Location = new System.Drawing.Point(154, 5);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
-			this.resOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resOrg.ResourceName = "Organics";
 			this.resOrg.Size = new System.Drawing.Size(111, 20);
 			this.resOrg.TabIndex = 11;
 			// 
@@ -197,7 +197,7 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Location = new System.Drawing.Point(43, 5);
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
-			this.resMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resMin.ResourceName = "Minerals";
 			this.resMin.Size = new System.Drawing.Size(111, 20);
 			this.resMin.TabIndex = 10;
 			// 

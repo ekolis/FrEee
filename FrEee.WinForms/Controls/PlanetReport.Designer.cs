@@ -237,7 +237,7 @@ namespace FrEee.WinForms.Controls
 			this.resIntel.Location = new System.Drawing.Point(148, 92);
 			this.resIntel.Margin = new System.Windows.Forms.Padding(0);
 			this.resIntel.Name = "resIntel";
-			this.resIntel.ResourceColor = System.Drawing.Color.Empty;
+			this.resIntel.ResourceName = "Intelligence";
 			this.resIntel.Size = new System.Drawing.Size(86, 20);
 			this.resIntel.TabIndex = 80;
 			// 
@@ -252,7 +252,7 @@ namespace FrEee.WinForms.Controls
 			this.resResearch.Location = new System.Drawing.Point(65, 92);
 			this.resResearch.Margin = new System.Windows.Forms.Padding(0);
 			this.resResearch.Name = "resResearch";
-			this.resResearch.ResourceColor = System.Drawing.Color.Empty;
+			this.resResearch.ResourceName = "Research";
 			this.resResearch.Size = new System.Drawing.Size(81, 20);
 			this.resResearch.TabIndex = 79;
 			// 
@@ -366,7 +366,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeMinerals.Location = new System.Drawing.Point(65, 73);
 			this.resIncomeMinerals.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeMinerals.Name = "resIncomeMinerals";
-			this.resIncomeMinerals.ResourceColor = System.Drawing.Color.Empty;
+			this.resIncomeMinerals.ResourceName = "Minerals";
 			this.resIncomeMinerals.Size = new System.Drawing.Size(81, 20);
 			this.resIncomeMinerals.TabIndex = 69;
 			// 
@@ -381,7 +381,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeOrganics.Location = new System.Drawing.Point(146, 72);
 			this.resIncomeOrganics.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeOrganics.Name = "resIncomeOrganics";
-			this.resIncomeOrganics.ResourceColor = System.Drawing.Color.Empty;
+			this.resIncomeOrganics.ResourceName = "Organics";
 			this.resIncomeOrganics.Size = new System.Drawing.Size(85, 20);
 			this.resIncomeOrganics.TabIndex = 68;
 			// 
@@ -396,7 +396,7 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeRadioactives.Location = new System.Drawing.Point(231, 72);
 			this.resIncomeRadioactives.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeRadioactives.Name = "resIncomeRadioactives";
-			this.resIncomeRadioactives.ResourceColor = System.Drawing.Color.Empty;
+			this.resIncomeRadioactives.ResourceName = "Radioactives";
 			this.resIncomeRadioactives.Size = new System.Drawing.Size(73, 20);
 			this.resIncomeRadioactives.TabIndex = 67;
 			// 

@@ -315,7 +315,7 @@
 			this.resCostRad.Location = new System.Drawing.Point(153, 419);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
-			this.resCostRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resCostRad.ResourceName = "Radioactives";
 			this.resCostRad.Size = new System.Drawing.Size(69, 20);
 			this.resCostRad.TabIndex = 16;
 			// 
@@ -329,7 +329,7 @@
 			this.resCostOrg.Location = new System.Drawing.Point(75, 419);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
-			this.resCostOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resCostOrg.ResourceName = "Organics";
 			this.resCostOrg.Size = new System.Drawing.Size(69, 20);
 			this.resCostOrg.TabIndex = 15;
 			// 
@@ -343,7 +343,7 @@
 			this.resCostMin.Location = new System.Drawing.Point(6, 419);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
-			this.resCostMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resCostMin.ResourceName = "Minerals";
 			this.resCostMin.Size = new System.Drawing.Size(69, 20);
 			this.resCostMin.TabIndex = 14;
 			// 
@@ -460,7 +460,7 @@
 			this.resRadioactivesRate.Location = new System.Drawing.Point(499, 13);
 			this.resRadioactivesRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resRadioactivesRate.Name = "resRadioactivesRate";
-			this.resRadioactivesRate.ResourceColor = System.Drawing.Color.Empty;
+			this.resRadioactivesRate.ResourceName = "Radioactives";
 			this.resRadioactivesRate.Size = new System.Drawing.Size(72, 20);
 			this.resRadioactivesRate.TabIndex = 4;
 			// 
@@ -473,7 +473,7 @@
 			this.resOrganicsRate.Location = new System.Drawing.Point(427, 13);
 			this.resOrganicsRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrganicsRate.Name = "resOrganicsRate";
-			this.resOrganicsRate.ResourceColor = System.Drawing.Color.Empty;
+			this.resOrganicsRate.ResourceName = "Organics";
 			this.resOrganicsRate.Size = new System.Drawing.Size(72, 20);
 			this.resOrganicsRate.TabIndex = 3;
 			// 
@@ -486,7 +486,7 @@
 			this.resMineralsRate.Location = new System.Drawing.Point(355, 13);
 			this.resMineralsRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resMineralsRate.Name = "resMineralsRate";
-			this.resMineralsRate.ResourceColor = System.Drawing.Color.Empty;
+			this.resMineralsRate.ResourceName = "Minerals";
 			this.resMineralsRate.Size = new System.Drawing.Size(72, 20);
 			this.resMineralsRate.TabIndex = 2;
 			// 

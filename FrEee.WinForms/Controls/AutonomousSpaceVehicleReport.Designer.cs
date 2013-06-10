@@ -181,7 +181,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintMin.Location = new System.Drawing.Point(64, 346);
 			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintMin.Name = "resMaintMin";
-			this.resMaintMin.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintMin.ResourceName = "Minerals";
 			this.resMaintMin.Size = new System.Drawing.Size(68, 20);
 			this.resMaintMin.TabIndex = 46;
 			// 
@@ -207,7 +207,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintOrg.Location = new System.Drawing.Point(139, 346);
 			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintOrg.Name = "resMaintOrg";
-			this.resMaintOrg.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintOrg.ResourceName = "Organics";
 			this.resMaintOrg.Size = new System.Drawing.Size(68, 20);
 			this.resMaintOrg.TabIndex = 45;
 			// 
@@ -222,7 +222,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintRad.Location = new System.Drawing.Point(214, 346);
 			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintRad.Name = "resMaintRad";
-			this.resMaintRad.ResourceColor = System.Drawing.Color.Empty;
+			this.resMaintRad.ResourceName = "Radioactives";
 			this.resMaintRad.Size = new System.Drawing.Size(68, 20);
 			this.resMaintRad.TabIndex = 44;
 			// 

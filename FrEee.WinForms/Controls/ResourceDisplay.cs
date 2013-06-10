@@ -12,11 +12,10 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 		}
 
-		private Color resourceColor;
-
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			lblAmount.ForeColor = ResourceColor;
+			lblAmount.ForeColor = Resource.Color;
+			picIcon.Image = Resource.Icon;
 			lblAmount.Text = Amount.ToUnitString();
 			if (Change != null)
 			{
@@ -29,14 +28,21 @@ namespace FrEee.WinForms.Controls
 			base.OnPaint(e);
 		}
 
-		public Color ResourceColor
+		private Resource resource;
+		public Resource Resource
 		{
-			get { return resourceColor; }
+			get { return resource; }
 			set
 			{
-				resourceColor = value;
+				resource = value;
 				Invalidate();
 			}
+		}
+
+		public string ResourceName
+		{
+			get { return Resource.Name; }
+			set { Resource = Resource.Find(value); }
 		}
 
 		private int amount;
