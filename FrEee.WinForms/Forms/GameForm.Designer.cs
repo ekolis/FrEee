@@ -31,6 +31,11 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -145,6 +150,12 @@ namespace FrEee.WinForms.Forms
 			this.resInt.Location = new System.Drawing.Point(515, 5);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
+			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			resource1.IsGlobal = false;
+			resource1.IsLocal = false;
+			resource1.Name = "Intelligence";
+			resource1.PictureName = "Resource5";
+			this.resInt.Resource = resource1;
 			this.resInt.ResourceName = "Intelligence";
 			this.resInt.Size = new System.Drawing.Size(111, 20);
 			this.resInt.TabIndex = 14;
@@ -158,6 +169,12 @@ namespace FrEee.WinForms.Forms
 			this.resRes.Location = new System.Drawing.Point(404, 5);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
+			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource2.IsGlobal = false;
+			resource2.IsLocal = false;
+			resource2.Name = "Research";
+			resource2.PictureName = "Resource4";
+			this.resRes.Resource = resource2;
 			this.resRes.ResourceName = "Research";
 			this.resRes.Size = new System.Drawing.Size(111, 20);
 			this.resRes.TabIndex = 13;
@@ -171,6 +188,12 @@ namespace FrEee.WinForms.Forms
 			this.resRad.Location = new System.Drawing.Point(279, 5);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
+			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource3.IsGlobal = true;
+			resource3.IsLocal = false;
+			resource3.Name = "Radioactives";
+			resource3.PictureName = "Resource3";
+			this.resRad.Resource = resource3;
 			this.resRad.ResourceName = "Radioactives";
 			this.resRad.Size = new System.Drawing.Size(111, 20);
 			this.resRad.TabIndex = 12;
@@ -184,6 +207,12 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.Location = new System.Drawing.Point(154, 5);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
+			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource4.IsGlobal = true;
+			resource4.IsLocal = false;
+			resource4.Name = "Organics";
+			resource4.PictureName = "Resource2";
+			this.resOrg.Resource = resource4;
 			this.resOrg.ResourceName = "Organics";
 			this.resOrg.Size = new System.Drawing.Size(111, 20);
 			this.resOrg.TabIndex = 11;
@@ -197,8 +226,14 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Location = new System.Drawing.Point(43, 5);
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
+			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource5.IsGlobal = true;
+			resource5.IsLocal = false;
+			resource5.Name = "Minerals";
+			resource5.PictureName = "Resource1";
+			this.resMin.Resource = resource5;
 			this.resMin.ResourceName = "Minerals";
-			this.resMin.Size = new System.Drawing.Size(111, 20);
+			this.resMin.Size = new System.Drawing.Size(91, 20);
 			this.resMin.TabIndex = 10;
 			// 
 			// progResearch

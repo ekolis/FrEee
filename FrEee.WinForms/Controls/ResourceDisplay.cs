@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Utility;
@@ -14,8 +15,17 @@ namespace FrEee.WinForms.Controls
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			lblAmount.ForeColor = Resource == null ? Color.White : Resource.Color;
-			picIcon.Image = Resource == null ? null : Resource.Icon;
+			if (Resource != null)
+			{
+				lblAmount.ForeColor = ResourceColor;
+				if (ResourceIcon != null)
+					picIcon.Image = ResourceIcon;
+			}
+			else
+			{
+				lblAmount.ForeColor = Color.White;
+				picIcon.Image = null;
+			}
 			lblAmount.Text = Amount.ToUnitString();
 			if (Change != null)
 			{
@@ -43,6 +53,30 @@ namespace FrEee.WinForms.Controls
 		{
 			get { return Resource == null ? null : Resource.Name; }
 			set { Resource = Resource.Find(value); }
+		}
+
+		public Color ResourceColor
+		{
+			get
+			{
+				return Resource == null ? Color.White : Resource.Color;
+			}
+		}
+
+		public Image ResourceIcon
+		{
+			get
+			{
+				try
+				{
+					return Resource == null ? null : Resource.Icon;
+				}
+				catch (NullReferenceException ex)
+				{
+					// HACK - stupid forms designer thinks it's null and not null at the same time, WTF?!
+					return null;
+				}
+			}
 		}
 
 		private int amount;

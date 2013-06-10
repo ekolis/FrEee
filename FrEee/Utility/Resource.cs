@@ -165,7 +165,14 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			return Name.GetHashCode() ^ Color.GetHashCode() ^ IsGlobal.GetHashCode() ^ IsLocal.GetHashCode() ^ PictureName.GetHashCode();
+			var result =IsGlobal.GetHashCode() ^ IsLocal.GetHashCode();
+			if (Name != null)
+				result ^= Name.GetHashCode();
+			if (Color != Color.Empty)
+				result ^= Color.GetHashCode();
+			if (PictureName != null)
+				result ^= PictureName.GetHashCode();
+			return result;
 		}
 	}
 }
