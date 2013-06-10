@@ -28,6 +28,9 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.ddlRole = new System.Windows.Forms.ComboBox();
@@ -502,8 +505,14 @@
 			this.resCostRad.Location = new System.Drawing.Point(78, 47);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
+			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource1.IsGlobal = true;
+			resource1.IsLocal = false;
+			resource1.Name = "Radioactives";
+			resource1.PictureName = "Resource3";
+			this.resCostRad.Resource = resource1;
 			this.resCostRad.ResourceName = "Radioactives";
-			this.resCostRad.Size = new System.Drawing.Size(60, 15);
+			this.resCostRad.Size = new System.Drawing.Size(79, 15);
 			this.resCostRad.TabIndex = 8;
 			// 
 			// resCostOrg
@@ -515,8 +524,14 @@
 			this.resCostOrg.Location = new System.Drawing.Point(78, 32);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
+			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource2.IsGlobal = true;
+			resource2.IsLocal = false;
+			resource2.Name = "Organics";
+			resource2.PictureName = "Resource2";
+			this.resCostOrg.Resource = resource2;
 			this.resCostOrg.ResourceName = "Organics";
-			this.resCostOrg.Size = new System.Drawing.Size(60, 15);
+			this.resCostOrg.Size = new System.Drawing.Size(79, 15);
 			this.resCostOrg.TabIndex = 7;
 			// 
 			// resCostMin
@@ -528,8 +543,14 @@
 			this.resCostMin.Location = new System.Drawing.Point(78, 17);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
+			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource3.IsGlobal = true;
+			resource3.IsLocal = false;
+			resource3.Name = "Minerals";
+			resource3.PictureName = "Resource1";
+			this.resCostMin.Resource = resource3;
 			this.resCostMin.ResourceName = "Minerals";
-			this.resCostMin.Size = new System.Drawing.Size(60, 15);
+			this.resCostMin.Size = new System.Drawing.Size(79, 15);
 			this.resCostMin.TabIndex = 6;
 			// 
 			// label10
@@ -590,6 +611,7 @@
 			this.resDetailRad.Location = new System.Drawing.Point(206, 61);
 			this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailRad.Name = "resDetailRad";
+			this.resDetailRad.Resource = resource1;
 			this.resDetailRad.ResourceName = "Radioactives";
 			this.resDetailRad.Size = new System.Drawing.Size(81, 15);
 			this.resDetailRad.TabIndex = 5;
@@ -604,6 +626,7 @@
 			this.resDetailOrg.Location = new System.Drawing.Point(206, 45);
 			this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailOrg.Name = "resDetailOrg";
+			this.resDetailOrg.Resource = resource2;
 			this.resDetailOrg.ResourceName = "Organics";
 			this.resDetailOrg.Size = new System.Drawing.Size(81, 15);
 			this.resDetailOrg.TabIndex = 4;
@@ -618,6 +641,7 @@
 			this.resDetailMin.Location = new System.Drawing.Point(206, 24);
 			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailMin.Name = "resDetailMin";
+			this.resDetailMin.Resource = resource3;
 			this.resDetailMin.ResourceName = "Minerals";
 			this.resDetailMin.Size = new System.Drawing.Size(81, 21);
 			this.resDetailMin.TabIndex = 3;
