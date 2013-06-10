@@ -90,7 +90,10 @@ namespace FrEee.Game.Objects.Space
 		public Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem)
 		{
 			if (galaxy.CurrentEmpire == null)
-				return Visibility.Scanned; // host can see everything
+				return Visibility.Owned; // host can see everything
+
+			if (galaxy.CurrentEmpire == Owner)
+				return Visibility.Owned; // owner can see this
 
 			// TODO - check for cloaking vs. sensors
 

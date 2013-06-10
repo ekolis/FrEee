@@ -20,6 +20,10 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// Object is currently visible and scanned.
 		/// </summary>
-		Scanned
+		Scanned,
+		/// <summary>
+		/// Object is owned by the empire.
+		/// </summary>
+		Owned
 	}
 }

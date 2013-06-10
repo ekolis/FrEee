@@ -97,9 +97,33 @@ namespace FrEee.Game.Objects.Space
 		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
 		{
 			base.Redact(galaxy, starSystem, visibility);
-			if (visibility == Visibility.Fogged)
-				Colony = null;
-			// TODO - memory sight
+			if (Colony != null)
+			{
+				if (visibility < Visibility.Owned)
+				{
+					if (Colony.ConstructionQueue != null)
+					{
+						Colony.ConstructionQueue.Orders.Clear();
+						Colony.ConstructionQueue.Rate.Clear();
+						Colony.ConstructionQueue.UnspentRate.Clear();
+					}
+					// TODO - once we implement cargo, hide cargo on unonwed objects, but show cargo kT used if scanned (by adding fake "unknown" cargo item?)
+				}
+				if (visibility < Visibility.Scanned)
+				{
+					var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
+					var facilCount = Colony.Facilities.Count;
+					Colony.Facilities.Clear();
+					for (int i = 0; i < facilCount; i++)
+						Colony.Facilities.Add(new Facility(unknownFacilityTemplate));
+					Colony.Population.Clear();
+				}
+				if (visibility < Visibility.Visible)
+				{
+					Colony = null;
+					// TODO - memory sight
+				}
+			}
 		}
 
 		/// <summary>

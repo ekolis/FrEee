@@ -21,6 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 			SpaceObject = sobj;
 			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
+			UnspentRate = new Resources();
 		}
 
 		/// <summary>
