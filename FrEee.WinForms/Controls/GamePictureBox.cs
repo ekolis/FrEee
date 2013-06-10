@@ -37,7 +37,7 @@ namespace FrEee.WinForms.Controls
 				form.StartPosition = FormStartPosition.CenterParent;
 				var pic = new PictureBox();
 				pic.Image = Image;
-				pic.Size = Image.Size;
+				pic.Size = form.ClientSize;
 				pic.BackColor = Color.Black;
 				pic.SizeMode = PictureBoxSizeMode.Zoom;
 				form.Controls.Add(pic);
