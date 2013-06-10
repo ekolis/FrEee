@@ -271,14 +271,14 @@ namespace FrEee.Utility
 			{
 				return
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Resources", res.PictureName)) ??
-					GetCachedImage(Path.Combine("Pictures", "Resources", res.PictureName)) ??
+					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
 					GetGenericImage(res.GetType());
 			}
 			else
 			{
 				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 				return
-					GetCachedImage(Path.Combine("Pictures", "Resources", res.PictureName)) ??
+					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
 					GetGenericImage(res.GetType());
 			}
 		}

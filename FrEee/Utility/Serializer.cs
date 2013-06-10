@@ -73,6 +73,7 @@ namespace FrEee.Utility
 				context.AddProperties(type);
 
 				// write the full type name
+				// TODO - might want to save off a list of properties in case the data structures get new properties throwing off our indices
 				w.Write(type.AssemblyQualifiedName + ":");
 
 			}

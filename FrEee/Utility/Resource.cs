@@ -136,5 +136,36 @@ namespace FrEee.Utility
 		{
 			get { return Icon; }
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		public static bool operator ==(Resource r1, Resource r2)
+		{
+			if ((object)r1 == null && (object)r2 == null)
+				return true;
+			if ((object)r1 == null || (object)r2 == null)
+				return false;
+			return r1.Name == r2.Name && r1.Color == r2.Color && r1.IsGlobal == r2.IsGlobal && r1.IsLocal == r2.IsLocal && r1.PictureName == r2.PictureName;
+		}
+
+		public static bool operator !=(Resource r1, Resource r2)
+		{
+			return !(r1 == r2);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Resource)
+				return this == (Resource)obj;
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			return Name.GetHashCode() ^ Color.GetHashCode() ^ IsGlobal.GetHashCode() ^ IsLocal.GetHashCode() ^ PictureName.GetHashCode();
+		}
 	}
 }
