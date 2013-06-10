@@ -82,6 +82,22 @@ namespace FrEee.WinForms.Forms
 						IsSinglePlayer = true,
 						StarSystemGroups = 1,
 						WarpPointPlacementStrategy = EdgeAlignedWarpPointPlacementStrategy.Instance,
+						StandardMiningModel = new MiningModel
+						{
+							ValuePercentageBonus = 1,
+						},
+						RemoteMiningModel = new MiningModel
+						{
+							ValuePercentageBonus = 1,
+						},
+						MinPlanetValue = 0,
+						MinSpawnedPlanetValue = 0,
+						HomeworldValue = 120,
+						MaxSpawnedPlanetValue = 150,
+						MaxPlanetValue = 250,
+						MinAsteroidValue = 0,
+						MinSpawnedAsteroidValue = 50,
+						MaxSpawnedAsteroidValue = 150,
 					};
 					// TODO - pick random empires from a list
 					// TODO - use empire templates
