@@ -33,7 +33,7 @@ namespace FrEee.Utility
 				Color = Color.FromArgb(128, 128, 255),
 				IsGlobal = true,
 				IsLocal = false,
-				PictureName = "Minerals",
+				PictureName = "Resource1",
 			};
 
 		public static readonly Resource Organics = new Resource
@@ -42,7 +42,7 @@ namespace FrEee.Utility
 			Color = Color.FromArgb(0, 192, 0),
 			IsGlobal = true,
 			IsLocal = false,
-			PictureName = "Organics",
+			PictureName = "Resource2",
 		};
 
 		public static readonly Resource Radioactives = new Resource
@@ -51,7 +51,7 @@ namespace FrEee.Utility
 			Color = Color.FromArgb(192, 0, 0),
 			IsGlobal = true,
 			IsLocal = false,
-			PictureName = "Radioactives",
+			PictureName = "Resource3",
 		};
 
 		public static readonly Resource Research = new Resource
@@ -60,7 +60,7 @@ namespace FrEee.Utility
 			Color = Color.FromArgb(192, 0, 0),
 			IsGlobal = false,
 			IsLocal = false,
-			PictureName = "Research",
+			PictureName = "Resource4",
 		};
 
 		public static readonly Resource Intelligence = new Resource
@@ -69,7 +69,7 @@ namespace FrEee.Utility
 			Color = Color.FromArgb(255, 255, 255),
 			IsGlobal = false,
 			IsLocal = false,
-			PictureName = "Intelligence",
+			PictureName = "Resource5",
 		};
 
 		public static readonly Resource Supply = new Resource
@@ -78,7 +78,7 @@ namespace FrEee.Utility
 			Color = Color.FromArgb(255, 255, 0),
 			IsGlobal = false,
 			IsLocal = true,
-			PictureName = "Supply",
+			PictureName = "Resource6",
 		};
 		
 		/// <summary>
