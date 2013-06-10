@@ -57,7 +57,7 @@ namespace FrEee.Utility
 		public static readonly Resource Research = new Resource
 		{
 			Name = "Research",
-			Color = Color.FromArgb(192, 0, 0),
+			Color = Color.FromArgb(192, 0, 192),
 			IsGlobal = false,
 			IsLocal = false,
 			PictureName = "Resource4",
