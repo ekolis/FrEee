@@ -22,7 +22,7 @@ namespace FrEee.Game.Setup
 	{
 		public GameSetup()
 		{
-			Empires = new List<Empire>();
+			EmpireTemplates = new List<EmpireTemplate>();
 		}
 
 		/// <summary>
@@ -103,9 +103,9 @@ namespace FrEee.Game.Setup
 		public bool IsSinglePlayer { get; set; }
 
 		/// <summary>
-		/// TODO - use empire templates
+		/// Empire templates in this game setup.
 		/// </summary>
-		public IList<Empire> Empires { get; private set; }
+		public IList<EmpireTemplate> EmpireTemplates { get; private set; }
 
 		/// <summary>
 		/// Problems with this game setup.
@@ -120,7 +120,7 @@ namespace FrEee.Game.Setup
 					yield return "You must specify a galaxy type.";
 				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
 					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
-				if (!Empires.Any())
+				if (!EmpireTemplates.Any())
 					yield return "You must add at least one empire.";
 			}
 		}
@@ -130,8 +130,9 @@ namespace FrEee.Game.Setup
 			gal.Name = GameName;
 
 			// add players and place homeworlds
-			foreach (var emp in Empires)
+			foreach (var et in EmpireTemplates)
 			{
+				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
 				gal.Register(emp);
 

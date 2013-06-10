@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, ICommandable<Empire>, IAbilityObject
+	public class Empire : INamed, ICommandable<Empire>, IAbilityObject, IPictorial
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -60,14 +60,9 @@ namespace FrEee.Game.Objects.Civilization
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The title of the emperor.
+		/// The name and/or title of the leader of the empire.
 		/// </summary>
-		public string EmperorTitle { get; set; }
-
-		/// <summary>
-		/// The name of the emperor.
-		/// </summary>
-		public string EmperorName { get; set; }
+		public string LeaderName { get; set; }
 
 		/// <summary>
 		/// The native race of this empire.
@@ -388,6 +383,22 @@ namespace FrEee.Game.Objects.Civilization
 		public IEnumerable<Abilities.Ability> Abilities
 		{
 			get { return Traits.SelectMany(t => t.Abilities); }
+		}
+
+		/// <summary>
+		/// The insignia icon for this empire.
+		/// </summary>
+		public Image Icon
+		{
+			get { return Pictures.GetIcon(this); }
+		}
+
+		/// <summary>
+		/// Just use the icon.
+		/// </summary>
+		public Image Portrait
+		{
+			get { return Icon; }
 		}
 	}
 }

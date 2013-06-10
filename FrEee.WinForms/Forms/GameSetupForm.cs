@@ -53,12 +53,12 @@ namespace FrEee.WinForms.Forms
 		{
 			// TODO - don't add empires automatically, let the user specify them
 			// TODO - use empire templates
-			setup.Empires.Clear();
-			setup.Empires.Add(new Empire { Name = "Jraenar Empire", ShipsetPath = "Jraenar", Color = Color.Red, EmperorTitle = "Master General", EmperorName = "Jar-Nolath" });
-			setup.Empires.Add(new Empire { Name = "Eee Consortium", ShipsetPath = "Eee", Color = Color.Cyan });
-			setup.Empires.Add(new Empire { Name = "Drushocka Empire", ShipsetPath = "Drushocka", Color = Color.Green });
-			setup.Empires.Add(new Empire { Name = "Norak Ascendancy", ShipsetPath = "Norak", Color = Color.Blue });
-			setup.Empires.Add(new Empire { Name = "Abbidon Enclave", ShipsetPath = "Abbidon", Color = Color.Orange });
+			setup.EmpireTemplates.Clear();
+			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { ShipsetPath = "Jraenar", Color = Color.Red } });
+			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { ShipsetPath = "Eee", Color = Color.Cyan } });
+			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Drushocka Empire", LeaderName = "Lord Fazrad", PrimaryRace = new Race { ShipsetPath = "Drushocka", Color = Color.Green } });
+			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Norak Ascendancy", LeaderName = "High Priest Rakul", PrimaryRace = new Race { ShipsetPath = "Norak", Color = Color.Blue } });
+			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Abbidon Enclave", LeaderName = "Speaker Verath", PrimaryRace = new Race { ShipsetPath = "Abbidon", Color = Color.Orange } });
 
 			setup.GameName = txtGalaxyName.Text;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;

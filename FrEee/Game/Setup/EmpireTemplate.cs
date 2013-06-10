@@ -3,6 +3,7 @@ using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -24,14 +25,24 @@ namespace FrEee.Game.Setup
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The native race of this empire.
+		/// The name of the leader of this empire.
 		/// </summary>
-		public Race PrimaryRace { get; set; }
-		
+		public string LeaderName { get; set; }
+
 		/// <summary>
 		/// Traits of this empire.
 		/// </summary>
 		public IList<ITrait<Empire>> Traits { get; set; }
+
+		/// <summary>
+		/// The native race of this empire.
+		/// </summary>
+		public Race PrimaryRace { get; set; }
+
+		/// <summary>
+		/// Set this to override the color specified by the race.
+		/// </summary>
+		public Color? ColorOverride { get; set; }
 
 		/// <summary>
 		/// Set this to override the insignia name specified by the race.
@@ -57,10 +68,12 @@ namespace FrEee.Game.Setup
 		{
 			var emp = new Empire();
 			emp.Name = Name;
+			emp.LeaderName = LeaderName;
+			emp.Color = ColorOverride ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
-			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.InsigniaName;
+			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.Name;
 			emp.ShipsetPath = ShipsetPathOverride ?? PrimaryRace.ShipsetPath;
 			emp.LeaderPortraitName = LeaderPortraitNameOverride;
 			emp.AI = AIOverride ?? PrimaryRace.AI;

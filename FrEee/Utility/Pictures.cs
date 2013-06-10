@@ -9,6 +9,7 @@ using FrEee.Modding.Templates;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using System.Linq;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Utility
 {
@@ -37,6 +38,8 @@ namespace FrEee.Utility
 			// Set up the generic images
 			Image img;
 			Graphics g;
+
+			// TODO - moddable generic pics
 
 			// star
 			img = new Bitmap(128, 128);
@@ -95,6 +98,8 @@ namespace FrEee.Utility
 			g.FillRectangle(new SolidBrush(Color.Silver), 50, 50, 10, 50);
 			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
 			genericPictures.Add(typeof(IHull<IVehicle>), img);
+
+			// TODO - race, empire generic pics
 		}
 
 		/// <summary>
@@ -233,11 +238,11 @@ namespace FrEee.Utility
 			{
 				if (Mod.Current.RootPath != null)
 				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + s));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Shipsets", shipsetPath, "Mini_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Shipsets", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 				}
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + s));
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine("Pictures", "Shipsets", shipsetPath, "Mini_" + s));
+				paths.Add(Path.Combine("Pictures", "Shipsets", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 			}
 			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType())).Resize(32);
 		}
@@ -251,11 +256,11 @@ namespace FrEee.Utility
 			{
 				if (Mod.Current.RootPath != null)
 				{
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + s));
-					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Shipsets", shipsetPath, "Portrait_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Shipsets", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
 				}
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + s));
-				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
+				paths.Add(Path.Combine("Pictures", "Shipsets", shipsetPath, "Portrait_" + s));
+				paths.Add(Path.Combine("Pictures", "Shipsets", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
 			}
 			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
 		}
@@ -280,6 +285,75 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
 					GetGenericImage(res.GetType());
+			}
+		}
+
+		/// <summary>
+		/// Gets the population icon image for a race.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Race race)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Population", race.Name)) ??
+					GetCachedImage(Path.Combine("Pictures", "Population", race.Name)) ??
+					GetGenericImage(race.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Population", race.Name)) ??
+					GetGenericImage(race.GetType());
+			}
+		}
+
+		/// <summary>
+		/// Gets the leader portrait image for a race.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetPortrait(Race race)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Leaders", race.Name)) ??
+					GetCachedImage(Path.Combine("Pictures", "Leaders", race.Name)) ??
+					GetGenericImage(race.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Leaders", race.Name)) ??
+					GetGenericImage(race.GetType());
+			}
+		}
+
+		/// <summary>
+		/// Gets the insignia icon for an empire.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Empire emp)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Insignia", emp.Name)) ??
+					GetCachedImage(Path.Combine("Pictures", "Insignia", emp.Name)) ??
+					GetGenericImage(emp.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Insignia", emp.Name)) ??
+					GetGenericImage(emp.GetType());
 			}
 		}
 
