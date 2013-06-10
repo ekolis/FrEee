@@ -234,6 +234,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// standard, remote mining depletes
 				spnRateStandard.Value = spnRateRemote.Value = 0;
+				chkLimitStandard.Checked = chkLimitRemote.Checked = false;
 				spnBonusStandard.Value = spnBonusRemote.Value = 1;
 				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 0;
 				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = false;
@@ -252,6 +253,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// standard, remote mining doesn't deplete
 				spnRateStandard.Value = spnRateRemote.Value = 0;
+				chkLimitStandard.Checked = chkLimitRemote.Checked = false;
 				spnBonusStandard.Value = spnBonusRemote.Value = 1;
 				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 0;
 				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = false;
@@ -270,6 +272,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// finite
 				spnRateStandard.Value = spnRateRemote.Value = 100;
+				chkLimitStandard.Checked = chkLimitRemote.Checked = true;
 				spnBonusStandard.Value = spnBonusRemote.Value = 0;
 				spnDepletionResourceStandard.Value = spnDepletionResourceRemote.Value = 1;
 				chkBonusDepletionStandard.Checked = chkBonusDepletionRemote.Checked = true;
@@ -290,6 +293,7 @@ namespace FrEee.WinForms.Forms
 		private int startValue = 120;
 		private int miningRate = 1000;
 		private bool remote = false;
+		private bool limit = false;
 
 		private void btnRefreshGraphs_Click(object sender, EventArgs e)
 		{
@@ -354,6 +358,7 @@ namespace FrEee.WinForms.Forms
 			if (remote)
 			{
 				model.RatePercentage = (double)spnRateRemote.Value;
+				model.LimitRateToValue = chkLimitRemote.Checked;
 				model.ValuePercentageBonus = (double)spnBonusRemote.Value;
 				model.ValueDepletionPerResource = (double)spnDepletionResourceRemote.Value;
 				model.BonusAffectsDepletion = chkBonusDepletionRemote.Checked;
@@ -362,6 +367,7 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				model.RatePercentage = (double)spnRateStandard.Value;
+				model.LimitRateToValue = chkLimitStandard.Checked;
 				model.ValuePercentageBonus = (double)spnBonusStandard.Value;
 				model.ValueDepletionPerResource = (double)spnDepletionResourceStandard.Value;
 				model.BonusAffectsDepletion = chkBonusDepletionStandard.Checked;
@@ -371,7 +377,7 @@ namespace FrEee.WinForms.Forms
 			int value = startValue;
 			for (int i = 0; i < turns; i++)
 			{
-				mined = model.GetRate(miningRate, value);
+				mined = model.GetRate(miningRate, value, 1d);
 				yield return Tuple.Create(mined, value);
 				value -= model.GetDecay(miningRate, value);
 			}

@@ -26,6 +26,11 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
+		/// Limit mining rate after all bonuses are applied to value?
+		/// </summary>
+		public bool LimitRateToValue { get; set; }
+
+		/// <summary>
 		/// A percentage bonus to the mining rate for each point of planet/asteroid value.
 		/// </summary>
 		public double ValuePercentageBonus { get; set; }
@@ -54,11 +59,27 @@ namespace FrEee.Utility
 		/// </summary>
 		public bool BonusAffectsDepletion { get; set; }
 
-		public int GetRate(int baseRate, int value)
+		/// <summary>
+		/// Gets the mining rate.
+		/// </summary>
+		/// <param name="baseRate">The base mining rate.</param>
+		/// <param name="value">The planet/asteroid value.</param>
+		/// <param name="factor">Any mining rate multipliers from things such as population, e.g. 1.4 for a 40% bonus.</param>
+		/// <returns></returns>
+		public int GetRate(int baseRate, int value, double factor)
 		{
-			return (int)(baseRate * Rate + baseRate * ValueBonus * value);
+			var result = (int)((baseRate * Rate + baseRate * ValueBonus * value) * factor);
+			if (LimitRateToValue && value < result)
+				return value;
+			return result;
 		}
 
+		/// <summary>
+		/// Gets the decay rate.
+		/// </summary>
+		/// <param name="baseRate">The base mining rate.</param>
+		/// <param name="value">The planet/asteroid value.</param>
+		/// <returns></returns>
 		public int GetDecay(int baseRate, int value)
 		{
 			double rate;
