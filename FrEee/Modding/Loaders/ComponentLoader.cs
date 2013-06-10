@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace FrEee.Modding.Loaders
 				c.Durability = rec.GetInt("Tonnage Structure", ref index, true, 0, true);
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					c.Cost[costfield.Name.Substring("Cost ".Length)] = costfield.IntValue(rec);
+					c.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
 				var vtoverridefield = rec.FindField(new string[]{"Vehicle List Type Override", "Vechicle List Type Override"}, ref index, false, 0, true); // silly Aaron can't spell "vehicle"
 				if (vtoverridefield != null)

@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Utility.Extensions;
@@ -23,7 +24,7 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			// show RP available
-			txtPoints.Text = Empire.Current.Income["Research"].ToString();
+			txtPoints.Text = Empire.Current.Income[Resource.Research].ToString();
 
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();

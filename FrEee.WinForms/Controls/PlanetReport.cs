@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Controls
 {
@@ -69,9 +70,9 @@ namespace FrEee.WinForms.Controls
 				txtAtmosphere.Text = Planet.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 
-				txtValueMinerals.Text = Planet.ResourceValue["Minerals"].ToUnitString();
-				txtValueOrganics.Text = Planet.ResourceValue["Organics"].ToUnitString();
-				txtValueRadioactives.Text = Planet.ResourceValue["Radioactives"].ToUnitString();
+				txtValueMinerals.Text = Planet.ResourceValue[Resource.Minerals].ToUnitString();
+				txtValueOrganics.Text = Planet.ResourceValue[Resource.Organics].ToUnitString();
+				txtValueRadioactives.Text = Planet.ResourceValue[Resource.Radioactives].ToUnitString();
 
 				txtDescription.Text = Planet.Description;
 
@@ -82,11 +83,11 @@ namespace FrEee.WinForms.Controls
 
 				// load income
 				var income = Planet.Income;
-				resIncomeMinerals.Amount = income["Minerals"];
-				resIncomeOrganics.Amount = income["Organics"];
-				resIncomeRadioactives.Amount = income["Radioactives"];
-				resResearch.Amount = income["Research"];
-				resIntel.Amount = income["Intelligence"];
+				resIncomeMinerals.Amount = income[Resource.Minerals];
+				resIncomeOrganics.Amount = income[Resource.Organics];
+				resIncomeRadioactives.Amount = income[Resource.Radioactives];
+				resResearch.Amount = income[Resource.Research];
+				resIntel.Amount = income[Resource.Intelligence];
 
 				// TODO - load construction data
 				txtConstructionItem.Text = "";

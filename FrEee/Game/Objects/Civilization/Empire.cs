@@ -39,9 +39,9 @@ namespace FrEee.Game.Objects.Civilization
 			StoredResources = new Resources();
 
 			// TODO - make starting resources moddable
-			StoredResources.Add("Minerals", 50000);
-			StoredResources.Add("Organics", 50000);
-			StoredResources.Add("Radioactives", 50000);
+			StoredResources.Add(Resource.Minerals, 50000);
+			StoredResources.Add(Resource.Organics, 50000);
+			StoredResources.Add(Resource.Radioactives, 50000);
 
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
@@ -213,7 +213,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{
-			var totalRP = Income["Research"];
+			var totalRP = Income[Resource.Research];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetLevelCost(level),
@@ -229,7 +229,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (!ResearchQueue.Contains(tech))
 				return null;
-			var totalRP = Income["Research"];
+			var totalRP = Income[Resource.Research];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			var foundLevels = new Dictionary<Tech, int>(ResearchedTechnologies);

@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace FrEee.Modding.Loaders
 				hull.Size = rec.GetInt("Tonnage", ref index, true, 0, true);
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					hull.Cost[costfield.Name.Substring("Cost ".Length)] = costfield.IntValue(rec);
+					hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
 				hull.Mass = rec.GetInt("Engines Per Move", ref index, true, 0, true);
 

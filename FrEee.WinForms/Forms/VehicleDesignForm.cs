@@ -15,6 +15,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
@@ -76,9 +77,9 @@ namespace FrEee.WinForms.Forms
 					ctl.Visible = true;
 
 				txtSpaceFree.Text = Design.SpaceFree.Kilotons() + " / " + Design.Hull.Size.Kilotons();
-				resCostMin.Amount = Design.Cost["Minerals"];
-				resCostOrg.Amount = Design.Cost["Organics"];
-				resCostRad.Amount = Design.Cost["Radioactives"];
+				resCostMin.Amount = Design.Cost[Resource.Minerals];
+				resCostOrg.Amount = Design.Cost[Resource.Organics];
+				resCostRad.Amount = Design.Cost[Resource.Radioactives];
 				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
 				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
 				txtSupplyUsage.Text = Design.SupplyUsagePerSector.ToString();
@@ -267,9 +268,9 @@ namespace FrEee.WinForms.Forms
 				picDetailIcon.Image = v.ComponentTemplate.Icon;
 				txtDetailName.Text = v.Name;
 				txtDetailSize.Text = v.Size.Kilotons();
-				resDetailMin.Amount = v.Cost["Minerals"];
-				resDetailOrg.Amount = v.Cost["Organics"];
-				resDetailRad.Amount = v.Cost["Radioactives"];
+				resDetailMin.Amount = v.Cost[Resource.Minerals];
+				resDetailOrg.Amount = v.Cost[Resource.Organics];
+				resDetailRad.Amount = v.Cost[Resource.Radioactives];
 				txtDetailDescription.Text = v.ComponentTemplate.Description;
 			}
 		}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Loaders
 {
@@ -33,7 +34,7 @@ namespace FrEee.Modding.Loaders
 					f.PictureName = "Facil_" + rec.GetInt("Pic Num", ref index, true, 0, true).ToString("000"); // for compatibility with SE4
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					f.Cost[costfield.Name.Substring("Cost ".Length)] = costfield.IntValue(rec);
+					f.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
 				foreach (var tr in TechnologyRequirementLoader.Load(rec))
 					f.TechnologyRequirements.Add(tr);

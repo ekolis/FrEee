@@ -145,9 +145,9 @@ namespace FrEee.Modding
 			Errors = new List<DataParsingException>();
 			DefaultColonyConstructionRate = new Resources();
 			// TODO - moddable default colony construction rate
-			DefaultColonyConstructionRate.Add("Minerals", 2000);
-			DefaultColonyConstructionRate.Add("Organics", 2000);
-			DefaultColonyConstructionRate.Add("Radioactives", 2000);
+			DefaultColonyConstructionRate.Add(Resource.Minerals, 2000);
+			DefaultColonyConstructionRate.Add(Resource.Organics, 2000);
+			DefaultColonyConstructionRate.Add(Resource.Radioactives, 2000);
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Technologies = new List<Technology>();

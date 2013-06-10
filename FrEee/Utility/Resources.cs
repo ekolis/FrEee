@@ -8,7 +8,7 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class Resources : SafeDictionary<string, int>
+	public class Resources : SafeDictionary<Resource, int>
 	{
 		public static Resources operator +(Resources r1, Resources r2)
 		{
@@ -51,7 +51,7 @@ namespace FrEee.Utility
 		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
 		/// </summary>
 		/// <param name="item"></param>
-		public override void Add(KeyValuePair<string, int> item)
+		public override void Add(KeyValuePair<Resource, int> item)
 		{
 			Add(item.Key, item.Value);
 		}
@@ -61,7 +61,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="value"></param>
-		public override void Add(string key, int value)
+		public override void Add(Resource key, int value)
 		{
 			this[key] += value;
 		}

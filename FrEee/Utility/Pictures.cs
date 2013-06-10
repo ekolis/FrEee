@@ -260,6 +260,29 @@ namespace FrEee.Utility
 			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
 		}
 
+		/// <summary>
+		/// Gets the icon image for a resource.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Resource res)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Resources", res.PictureName)) ??
+					GetCachedImage(Path.Combine("Pictures", "Resources", res.PictureName)) ??
+					GetGenericImage(res.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Resources", res.PictureName)) ??
+					GetGenericImage(res.GetType());
+			}
+		}
+
 		public static Image GetCachedImage(IEnumerable<string> paths)
 		{
 			foreach (var path in paths)

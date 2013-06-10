@@ -101,13 +101,13 @@ namespace FrEee.Game.Objects.Civilization
 				for (int i = 1; i <= 3; i++)
 				{
 					var amount = Colony.GetAbilityValue("Space Yard", 2, a => a.Value1 == i.ToString()).ToInt();
-					string res = null;
+					Resource res = null;
 					if (i == 1)
-						res = "Minerals";
+						res = Resource.Minerals;
 					else if (i == 2)
-						res = "Organics";
+						res = Resource.Organics;
 					else if (i == 3)
-						res = "Radioactives";
+						res = Resource.Radioactives;
 					rate[res] = amount;
 				}
 				return rate;

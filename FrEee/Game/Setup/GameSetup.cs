@@ -172,16 +172,16 @@ namespace FrEee.Game.Setup
 				// SY rate, for colonies
 				var rate = new Resources();
 				// TODO - define mappings between SY ability numbers and resource names in a mod file
-				rate.Add("Minerals", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
-				rate.Add("Organics", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
-				rate.Add("Radioactives", sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+				rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
+				rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
+				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
 
 				// TODO - place homeworlds fairly
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
-				hw.ResourceValue["Minerals"] = hw.ResourceValue["Organics"] = hw.ResourceValue["Radioactives"] = HomeworldValue;
+				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
 				hw.Colony = new Colony
 				{
 					Owner = emp,

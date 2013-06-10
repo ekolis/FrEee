@@ -31,9 +31,9 @@ namespace FrEee.WinForms.Forms
 		private void ConstructionQueueForm_Load(object sender, EventArgs e)
 		{
 			Text = ConstructionQueue.SpaceObject.Name + " Construction Queue";
-			resMineralsRate.Amount = ConstructionQueue.Rate["Minerals"];
-			resOrganicsRate.Amount = ConstructionQueue.Rate["Organics"];
-			resRadioactivesRate.Amount = ConstructionQueue.Rate["Radioactives"];
+			resMineralsRate.Amount = ConstructionQueue.Rate[Resource.Minerals];
+			resOrganicsRate.Amount = ConstructionQueue.Rate[Resource.Organics];
+			resRadioactivesRate.Amount = ConstructionQueue.Rate[Resource.Radioactives];
 
 			// add ships/bases to constructable items
 			BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
@@ -58,9 +58,9 @@ namespace FrEee.WinForms.Forms
 		{
 			var facil = (FacilityTemplate)e.Item.Tag;
 			txtName.Text = facil.Name;
-			resCostMin.Amount = facil.Cost["Minerals"];
-			resCostOrg.Amount = facil.Cost["Organics"];
-			resCostRad.Amount = facil.Cost["Radioactives"];
+			resCostMin.Amount = facil.Cost[Resource.Minerals];
+			resCostOrg.Amount = facil.Cost[Resource.Organics];
+			resCostRad.Amount = facil.Cost[Resource.Radioactives];
 		}
 
 		private void lstFacilities_MouseLeave(object sender, EventArgs e)
@@ -244,9 +244,9 @@ namespace FrEee.WinForms.Forms
 		{
 			var d = (IDesign)e.Item.Tag;
 			txtName.Text = d.Name;
-			resCostMin.Amount = d.Cost["Minerals"];
-			resCostOrg.Amount = d.Cost["Organics"];
-			resCostRad.Amount = d.Cost["Radioactives"];			
+			resCostMin.Amount = d.Cost[Resource.Minerals];
+			resCostOrg.Amount = d.Cost[Resource.Organics];
+			resCostRad.Amount = d.Cost[Resource.Radioactives];			
 		}
 
 		private void lstShips_MouseLeave(object sender, EventArgs e)
