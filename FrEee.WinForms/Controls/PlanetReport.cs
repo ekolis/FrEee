@@ -89,14 +89,17 @@ namespace FrEee.WinForms.Controls
 				resResearch.Amount = income[Resource.Research];
 				resIntel.Amount = income[Resource.Intelligence];
 
-				// TODO - load construction data
-				txtConstructionItem.Text = "";
-				txtConstructionTime.Text = "";
+				// load construction data
+				txtConstructionItem.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemName ?? "(None)");
+				txtConstructionTime.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemEta == null ? "" : Planet.Colony.ConstructionQueue.FirstItemEta.ToString());
 
+				// load orders
+				// TODO - let player adjust orders here
 				lstOrdersDetail.Items.Clear();
-				// TODO - load orders
+				foreach (var order in Planet.Orders)
+					lstOrdersDetail.Items.Add(order);
 
-				// TODO - load facility slots free
+				// load facilities
 				lstFacilitiesDetail.Items.Clear();
 				if (Planet.Colony != null)
 				{
