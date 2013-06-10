@@ -275,7 +275,7 @@ namespace FrEee.Utility
 			if (Mod.Current.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Resources", res.PictureName)) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "UI", "Resources", res.PictureName)) ??
 					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
 					GetGenericImage(res.GetType());
 			}
