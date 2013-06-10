@@ -59,6 +59,9 @@
 			this.galaxyTemplateBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.lblGalaxyType = new System.Windows.Forms.Label();
 			this.tabResources = new System.Windows.Forms.TabPage();
+			this.chkLimitRemote = new System.Windows.Forms.CheckBox();
+			this.chkLimitStandard = new System.Windows.Forms.CheckBox();
+			this.label29 = new System.Windows.Forms.Label();
 			this.label28 = new System.Windows.Forms.Label();
 			this.chkRemote = new System.Windows.Forms.CheckBox();
 			this.btnRefreshGraphs = new FrEee.WinForms.Controls.GameButton();
@@ -113,9 +116,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.chkLimitRemote = new System.Windows.Forms.CheckBox();
-			this.chkLimitStandard = new System.Windows.Forms.CheckBox();
-			this.label29 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -574,6 +574,35 @@
 			this.tabResources.TabIndex = 7;
 			this.tabResources.Text = "Resources";
 			// 
+			// chkLimitRemote
+			// 
+			this.chkLimitRemote.AutoSize = true;
+			this.chkLimitRemote.Location = new System.Drawing.Point(257, 83);
+			this.chkLimitRemote.Name = "chkLimitRemote";
+			this.chkLimitRemote.Size = new System.Drawing.Size(15, 14);
+			this.chkLimitRemote.TabIndex = 62;
+			this.chkLimitRemote.UseVisualStyleBackColor = true;
+			// 
+			// chkLimitStandard
+			// 
+			this.chkLimitStandard.AutoSize = true;
+			this.chkLimitStandard.Location = new System.Drawing.Point(153, 83);
+			this.chkLimitStandard.Name = "chkLimitStandard";
+			this.chkLimitStandard.Size = new System.Drawing.Size(15, 14);
+			this.chkLimitStandard.TabIndex = 61;
+			this.chkLimitStandard.UseVisualStyleBackColor = true;
+			// 
+			// label29
+			// 
+			this.label29.AutoSize = true;
+			this.label29.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label29.Location = new System.Drawing.Point(8, 82);
+			this.label29.Margin = new System.Windows.Forms.Padding(3);
+			this.label29.Name = "label29";
+			this.label29.Size = new System.Drawing.Size(114, 15);
+			this.label29.TabIndex = 60;
+			this.label29.Text = "Limit Rate To Value";
+			// 
 			// label28
 			// 
 			this.label28.AutoSize = true;
@@ -991,11 +1020,6 @@
             0,
             131072});
 			this.spnBonusRemote.Location = new System.Drawing.Point(257, 103);
-			this.spnBonusRemote.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			this.spnBonusRemote.Name = "spnBonusRemote";
 			this.spnBonusRemote.Size = new System.Drawing.Size(95, 21);
 			this.spnBonusRemote.TabIndex = 26;
@@ -1042,11 +1066,6 @@
             0,
             131072});
 			this.spnBonusStandard.Location = new System.Drawing.Point(153, 103);
-			this.spnBonusStandard.Maximum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
 			this.spnBonusStandard.Name = "spnBonusStandard";
 			this.spnBonusStandard.Size = new System.Drawing.Size(95, 21);
 			this.spnBonusStandard.TabIndex = 22;
@@ -1271,35 +1290,6 @@
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
-			// 
-			// chkLimitRemote
-			// 
-			this.chkLimitRemote.AutoSize = true;
-			this.chkLimitRemote.Location = new System.Drawing.Point(257, 83);
-			this.chkLimitRemote.Name = "chkLimitRemote";
-			this.chkLimitRemote.Size = new System.Drawing.Size(15, 14);
-			this.chkLimitRemote.TabIndex = 62;
-			this.chkLimitRemote.UseVisualStyleBackColor = true;
-			// 
-			// chkLimitStandard
-			// 
-			this.chkLimitStandard.AutoSize = true;
-			this.chkLimitStandard.Location = new System.Drawing.Point(153, 83);
-			this.chkLimitStandard.Name = "chkLimitStandard";
-			this.chkLimitStandard.Size = new System.Drawing.Size(15, 14);
-			this.chkLimitStandard.TabIndex = 61;
-			this.chkLimitStandard.UseVisualStyleBackColor = true;
-			// 
-			// label29
-			// 
-			this.label29.AutoSize = true;
-			this.label29.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label29.Location = new System.Drawing.Point(8, 82);
-			this.label29.Margin = new System.Windows.Forms.Padding(3);
-			this.label29.Name = "label29";
-			this.label29.Size = new System.Drawing.Size(114, 15);
-			this.label29.TabIndex = 60;
-			this.label29.Text = "Limit Rate To Value";
 			// 
 			// GameSetupForm
 			// 
