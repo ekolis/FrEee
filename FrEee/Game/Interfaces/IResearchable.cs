@@ -6,7 +6,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be unlocked with research.
 	/// </summary>
-	public interface IResearchable : IReferrable<IResearchable>, IPictorial, INamed
+	public interface IResearchable : IReferrable, IPictorial, INamed
 	{
 		/// <summary>
 		/// The technology requirements of this item.

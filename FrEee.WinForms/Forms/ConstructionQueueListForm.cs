@@ -21,7 +21,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindQueueList()
 		{
-			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>();
+			constructionQueueBindingSource.DataSource = Empire.Current.Referrables.OfType<ConstructionQueue>();
 		}
 
 		private void ConstructionQueueListForm_Load(object sender, EventArgs e)

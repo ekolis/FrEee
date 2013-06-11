@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Commands
 			if (Design.Warnings.Any())
 				Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings."));
 			Issuer.KnownDesigns.Add(Design);
-			Galaxy.Current.Register(Design);
+			Galaxy.Current.Register(Design, Issuer);
 		}
 	}
 }

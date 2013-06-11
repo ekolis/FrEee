@@ -10,7 +10,7 @@ namespace FrEee.Game.Objects.Space
 	/// A sector in a star system. Can contain space objects.
 	/// </summary>
 	[Serializable]
-	public class Sector : IReferrable<Sector>
+	public class Sector : IReferrable
 	{
 		public Sector()
 		{

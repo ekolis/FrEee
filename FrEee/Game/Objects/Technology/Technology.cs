@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A technology that can be researched in the game.
 	/// </summary>
 	[Serializable]
-	public class Technology : INamed, IResearchable, IReferrable<Technology>
+	public class Technology : INamed, IResearchable, IReferrable
 	{
 		public Technology()
 		{
@@ -175,7 +175,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public static IEnumerable<IResearchable> GetUnlockedItems(IDictionary<Technology, int> levels)
 		{
-			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
+			foreach (var item in Empire.Current.Referrables.OfType<IResearchable>())
 			{
 				bool ok = true;
 				foreach (var req in item.TechnologyRequirements)

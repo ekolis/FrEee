@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatObject, ICargoContainer
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatObject, ICargoContainer, IReferrable
 	{
 		public Planet()
 		{
@@ -125,15 +125,7 @@ namespace FrEee.Game.Objects.Space
 					}
 
 					// can only see space used by cargo, not actual cargo
-					var kt = Colony.Cargo.Size;
-					var fakeUnit = new Unit();
-					fakeUnit.Design = new Design<Unit>();
-					fakeUnit.Design.Hull = new Hull<Unit>();
-					fakeUnit.Design.Name = "Unknown";
-					fakeUnit.Design.Hull.Size = kt;
-					Colony.Cargo.Population.Clear();
-					Colony.Cargo.Units.Clear();
-					Colony.Cargo.Units.Add(fakeUnit);
+					Colony.Cargo.SetFakeSize();
 				}
 				if (visibility < Visibility.Scanned)
 				{

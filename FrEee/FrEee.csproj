@@ -70,6 +70,7 @@
     <Compile Include="Game\Interfaces\IPictorial.cs" />
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
+    <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\ITrait.cs" />

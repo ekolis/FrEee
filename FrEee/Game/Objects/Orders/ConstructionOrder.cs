@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class ConstructionOrder<T, TTemplate> : IOrder<ConstructionQueue>, IConstructionOrder
 		where T : IConstructable
-		where TTemplate : ITemplate<T>, IReferrable<object>, IConstructionTemplate
+		where TTemplate : ITemplate<T>, IReferrable, IConstructionTemplate
 	{
 		/// <summary>
 		/// The construction template.

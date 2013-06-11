@@ -5,10 +5,10 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// Something which can accept commands from an empire.
-	/// </summary>
-	public interface ICommandable : IReferrable
+	public interface IReference<out T> where T : IReferrable
 	{
+		int ID { get; }
+		T Value { get; }
+		bool IsGlobal { get; }
 	}
 }

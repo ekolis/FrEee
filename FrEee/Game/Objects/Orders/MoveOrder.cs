@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class MoveOrder<T> : IMobileSpaceObjectOrder<T>
-		where T : IMobileSpaceObject<T>, IReferrable<object>
+		where T : IMobileSpaceObject<T>, IReferrable
 	{
 		public MoveOrder(Sector destination, bool avoidEnemies)
 		{

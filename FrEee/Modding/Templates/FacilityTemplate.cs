@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A template for a facility.
 	/// </summary>
 	[Serializable]
-	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable<FacilityTemplate>, IConstructionTemplate
+	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable, IConstructionTemplate
 	{
 		public FacilityTemplate()
 		{

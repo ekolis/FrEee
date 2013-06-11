@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A space object which can contain cargo.
 	/// </summary>
-	public interface ICargoContainer : IOrderable, ISpaceObject, IReferrable<ICargoContainer>
+	public interface ICargoContainer : IOrderable, ISpaceObject, IReferrable
 	{
 		/// <summary>
 		/// The cargo contained by this object.

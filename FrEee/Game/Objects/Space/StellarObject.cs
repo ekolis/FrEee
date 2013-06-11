@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	 [Serializable] public abstract class StellarObject : ISpaceObject, IReferrable<StellarObject>
+	 [Serializable] public abstract class StellarObject : ISpaceObject, IReferrable
 	{
 		public StellarObject()
 		{

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class WarpOrder<T> : IMobileSpaceObjectOrder<T>
-		where T : IMobileSpaceObject<T>, IReferrable<object>
+		where T : IMobileSpaceObject<T>, IReferrable
 	{
 		public WarpOrder(WarpPoint warpPoint)
 		{

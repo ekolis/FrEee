@@ -28,6 +28,19 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ICollection<Unit> Units { get; set; }
 
+		private int? fakeSize { get; set; }
+
+		/// <summary>
+		/// Sets this cargo's fake size to its size and clears the actual population and units.
+		/// Used for fog of war.
+		/// </summary>
+		public void SetFakeSize()
+		{
+			fakeSize = Size;
+			Population.Clear();
+			Units.Clear();
+		}
+
 		/// <summary>
 		/// The amount of space taken by this cargo.
 		/// </summary>
@@ -35,6 +48,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
+				if (fakeSize != null)
+					return fakeSize.Value;
+
 				// TODO - moddable population size, perhaps per race?
 				return (int)Math.Round(Population.Sum(kvp => kvp.Value) * 5 / 1e6) + Units.Sum(u => u.Design.Hull.Size);
 			}

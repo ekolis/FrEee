@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be referred to from the client side using an ID.
 	/// </summary>
-	public interface IReferrable<out T>
+	public interface IReferrable
 	{
 		/// <summary>
 		/// A unique ID by which the player orders file can reference this referrable.

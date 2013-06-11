@@ -11,7 +11,7 @@ namespace FrEee.Game.Interfaces
 	/// Template for constructable items.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public interface IConstructionTemplate : IReferrable<IConstructionTemplate>, IPictorial
+	public interface IConstructionTemplate : IReferrable, IPictorial
 	{
 		/// <summary>
 		/// Does this template require a colony to build it?

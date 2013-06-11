@@ -156,7 +156,7 @@ namespace FrEee.Game.Setup
 				gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
 
 				// TODO - let game host and/or players configure starting techs
-				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
+				foreach (var tech in emp.Referrables.OfType<Technology>())
 					emp.ResearchedTechnologies[tech] = tech.StartLevel;
 
 				// TODO - moddable colony techs?

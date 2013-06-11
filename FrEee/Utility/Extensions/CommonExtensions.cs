@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Vehicles;
 using System.Text;
 using System.IO;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Utility.Extensions
 {
@@ -722,11 +723,9 @@ namespace FrEee.Utility.Extensions
 			return src.Except(new T[] { badguy });
 		}
 
-		public static Reference<T> Reference<T>(this T t) where T : IReferrable<T>, IReferrable<object>
+		public static Reference<T> Reference<T>(this T t) where T : IReferrable
 		{
-			if (Galaxy.Current.Referrables.Contains(t))
-				return new Reference<T>(Galaxy.Current.Referrables.IndexOf(t));
-			return new Reference<T>(t);
+			return new Reference<T>(Empire.Current, t);
 		}
 
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)

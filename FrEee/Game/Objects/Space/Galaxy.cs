@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Space
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 24000;
-			Referrables = new List<IReferrable<object>>();
+			Referrables = new List<IList<IReferrable>>();
 		}
 
 		public Galaxy(Mod mod)
@@ -217,11 +217,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			var gal = Serializer.Deserialize<Galaxy>(stream);
 			// HACK - why isn't the deserializer setting the ID's?
-			for (int id = 0; id < gal.Referrables.Count; id++)
+			/*for (int id = 0; id < gal.Referrables.Count; id++)
 			{
 				if (gal.Referrables[id] != null)
 					gal.Referrables[id].ID = id;
-			}
+			}*/
 			return gal;
 		}
 
@@ -412,10 +412,23 @@ namespace FrEee.Game.Objects.Space
 				foreach (var ssl in StarSystemLocations)
 					ssl.Item.Redact(this);
 
-				for (int i = 0; i < Referrables.Count; i++)
+				for (int i = 0; i < Referrables[0].Count; i++)
 				{
-					if (Referrables[i].Owner != CurrentEmpire && Referrables[i].Owner != null)
-						Referrables[i] = null; // keep stuff with the same indices so PLR files can find it
+					if (Referrables[0][i].Owner != CurrentEmpire && Referrables[0][i].Owner != null)
+						Referrables[0][i] = null; // keep stuff with the same indices so PLR files can find it
+				}
+				for (int i = 1; i < Referrables.Count; i++)
+				{
+					if (i != Empires.IndexOf(CurrentEmpire) + 1)
+						Referrables[i] = null;
+				}
+				if (Referrables.Count > Empires.IndexOf(CurrentEmpire) + 1)
+				{
+					for (int i = 0; i < Referrables[Empires.IndexOf(CurrentEmpire) + 1].Count; i++)
+					{
+						if (Referrables[Empires.IndexOf(CurrentEmpire) + 1][i].Owner != CurrentEmpire && Referrables[Empires.IndexOf(CurrentEmpire) + 1][i].Owner != null)
+							Referrables[Empires.IndexOf(CurrentEmpire) + 1][i] = null; // keep stuff with the same indices so PLR files can find it
+					}
 				}
 
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
@@ -508,17 +521,17 @@ namespace FrEee.Game.Objects.Space
 				sobj.ReplenishShields();
 
 			// construction queues
-			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
+			foreach (var q in Referrables.SelectMany(g => g).OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
 
 			// ship movement
 			CurrentTick = 0;
-			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+			foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
 			while (CurrentTick < 1)
 			{
 				ComputeNextTickSize();
-				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+				foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
 				{
 					v.ExecuteOrders();
 					
@@ -548,16 +561,49 @@ namespace FrEee.Game.Objects.Space
 		/// using a Reference object instead of passing whole objects around.
 		/// Stuff needs to be registered to be found though!
 		/// </summary>
-		public IList<IReferrable<object>> Referrables { get; private set; }
+		public IList<IList<IReferrable>> Referrables { get; private set; }
 
 		/// <summary>
-		/// Registers something so it can be referenced from the client side.
+		/// Registers something so it can be referenced from the client side by a specific player.
 		/// </summary>
 		/// <param name="orderable"></param>
-		public void Register(IReferrable<object> r)
+		public int Register(IReferrable r, Empire emp)
 		{
-			r.ID = Referrables.Count;
-			Referrables.Add(r);
+			var empnum = Empires.IndexOf(emp) + 1;
+			while (Referrables.Count <= empnum)
+				Referrables.Add(new List<IReferrable>());
+			if (!Referrables[empnum].Contains(r))
+			{
+				Referrables[empnum].Add(r); // add to player list
+				int id = Referrables[empnum].Count - 1;
+				r.ID = id;
+				return id;
+			}
+			else
+				return Referrables[empnum].IndexOf(r);
+		}
+
+		/// <summary>
+		/// Registers something so it can be referenced from the client side by all players.
+		/// </summary>
+		/// <param name="r"></param>
+		public int Register(IReferrable r)
+		{
+			if (!Referrables.Any())
+				Referrables.Add(new List<IReferrable>());
+			if (!Referrables[0].Contains(r))
+			{
+				Referrables[0].Add(r); // add to global list
+				int id = Referrables[0].Count - 1;
+				r.ID = id;
+				return id;
+			}
+			else
+			{
+				int id = Referrables[0].IndexOf(r);
+				r.ID = id;
+				return id;
+			}
 		}
 
 		/// <summary>

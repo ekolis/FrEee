@@ -81,15 +81,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Owned)
 			{
 				// can only see space used by cargo, not actual cargo
-				var kt = Cargo.Size;
-				var fakeUnit = new Unit();
-				fakeUnit.Design = new Design<Unit>();
-				fakeUnit.Design.Hull = new Hull<Unit>();
-				fakeUnit.Design.Name = "Unknown";
-				fakeUnit.Design.Hull.Size = kt;
-				Cargo.Population.Clear();
-				Cargo.Units.Clear();
-				Cargo.Units.Add(fakeUnit);
+				Cargo.SetFakeSize();
 			}
 
 			// Can't see the ship's components if it's not scanned

@@ -363,13 +363,36 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// Objects which can be referenced from the client side by this empire.
+		/// </summary>
+		public IEnumerable<IReferrable> Referrables
+		{
+			get
+			{
+				var empnum = Galaxy.Current.Empires.IndexOf(this) + 1;
+				var list = new List<IReferrable>();
+				if (Galaxy.Current.Referrables.Count > 0)
+				{
+					foreach (var r in Galaxy.Current.Referrables[0])
+						list.Add(r);
+				}
+				if (Galaxy.Current.Referrables.Count > empnum)
+				{
+					foreach (var r in Galaxy.Current.Referrables[empnum].Where(r => !list.Any(r2 => r2 == r)))
+						list.Add(r);
+				}
+				return list;
+			}
+		}
+
+		/// <summary>
 		/// Technologies which are available for research.
 		/// </summary>
 		public IEnumerable<Technology.Technology> AvailableTechnologies
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<Technology.Technology>().Where(
+				return Referrables.OfType<Technology.Technology>().Where(
 					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 			}
 		}
@@ -381,7 +404,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
+				return Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
 			}
 		}
 

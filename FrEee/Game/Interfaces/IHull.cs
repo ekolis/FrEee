@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IHull : INamed, IResearchable, IAbilityObject, IReferrable<IHull>, IPictorial
+	public interface IHull : INamed, IResearchable, IAbilityObject, IReferrable, IPictorial
 	{
 		string ShortName { get; set; }
 
@@ -96,7 +96,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle hull.
 	/// </summary>
-	public interface IHull<out T> : IHull, IReferrable<IHull<T>> where T : IVehicle
+	public interface IHull<out T> : IHull, IReferrable where T : IVehicle
 	{
 		
 	}

@@ -6,6 +6,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Utility
 {
@@ -15,31 +16,73 @@ namespace FrEee.Utility
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
 	[ClientSafe]
-	public class Reference<T> : DynamicObject where T : IReferrable<object>
+	public class Reference<T> : IReference<T> where T : IReferrable
 	{
-		public Reference(T t)
+		public Reference(Empire empire, T t)
 		{
+			EmpireNumber = Galaxy.Current.Empires.IndexOf(empire) + 1;
 			if (t == null)
+			{
 				ID = -1;
-			else if (Galaxy.Current.Referrables.Contains(t))
+				IsGlobal = false;
+			}
+			else if (Galaxy.Current.Referrables[0].Contains(t))
+			{
 				ID = t.ID;
+				IsGlobal = true;
+			}
+			else if (Galaxy.Current.Referrables.Count - 1 >= EmpireNumber && Galaxy.Current.Referrables[EmpireNumber].Contains(t))
+			{
+				ID = t.ID;
+				IsGlobal = false;
+			}
 			else
 			{
-				Galaxy.Current.Register(t);
-				ID = t.ID;
+				if (Empire.Current == null)
+				{
+					ID = t.ID = Galaxy.Current.Register(t);
+					IsGlobal = true;
+				}
+				else
+				{
+					ID = t.ID = Galaxy.Current.Register(t, Empire.Current);
+					IsGlobal = false;
+				}
 			}
 		}
 
-		public Reference(int id)
+		public Reference(bool isGlobal, int id)
 		{
-			if (Galaxy.Current.Referrables[id] is T)
-				ID = id;
+			if (isGlobal)
+			{
+				EmpireNumber = 0;
+				IsGlobal = true;
+				if (Galaxy.Current.Referrables[EmpireNumber][id] is T)
+					ID = id;
+				else
+					throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+				IsGlobal = false;
+			}
 			else
-				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+			{
+				EmpireNumber = Galaxy.Current.Empires.IndexOf(Empire.Current);
+				IsGlobal = false;
+				if (Galaxy.Current.Referrables[EmpireNumber][id] is T)
+					ID = id;
+				else
+					throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
+				IsGlobal = false;
+			}
 		}
 
+		public int EmpireNumber { get; private set; }
 
 		public int ID { get; private set; }
+
+		/// <summary>
+		/// Referencing a global referrable? Or one that's only accessible to this player?
+		/// </summary>
+		public bool IsGlobal { get; private set; }
 
 		/// <summary>
 		/// Resolves the reference.
@@ -51,15 +94,19 @@ namespace FrEee.Utility
 			{
 				if (ID < 0)
 					return default(T);
-				if (ID >= Galaxy.Current.Referrables.Count)
-					throw new ReferenceException("ID " + ID +  " is too high for " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
-				return (T)Galaxy.Current.Referrables[ID];
+				if (IsGlobal)
+				{
+					if (ID >= Galaxy.Current.Referrables[0].Count)
+						throw new ReferenceException("ID " + ID + " is too high for global reference to " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
+					return (T)Galaxy.Current.Referrables[0][ID];
+				}
+				else
+				{
+					if (ID >= Galaxy.Current.Referrables[EmpireNumber].Count)
+						throw new ReferenceException("ID " + ID + " is too high for empire reference to " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
+					return (T)Galaxy.Current.Referrables[EmpireNumber][ID];
+				}
 			}
-		}
-
-		public static implicit operator Reference<T>(T t)
-		{
-			return new Reference<T>(t);
 		}
 
 		public static implicit operator T(Reference<T> r)
@@ -67,42 +114,17 @@ namespace FrEee.Utility
 			return r.Value;
 		}
 
-		public override IEnumerable<string> GetDynamicMemberNames()
+		public static implicit operator Reference<T>(T t)
 		{
-			return typeof(T).GetProperties().Select(p => p.Name);
+			return new Reference<T>(Empire.Current, t);
 		}
 
-		/// <summary>
-		/// Gets a value from the referenced object.
-		/// </summary>
-		/// <param name="binder"></param>
-		/// <param name="result"></param>
-		/// <returns></returns>
-		public override bool TryGetMember(GetMemberBinder binder, out object result)
+		public override string ToString()
 		{
-			var prop = typeof(T).GetProperty(binder.Name);
-			if (prop == null || prop.GetIndexParameters().Length > 0)
-			{
-				result = null;
-				return false;
-			}
-			result = prop.GetValue(Value, new object[] { });
-			return true;
-		}
-
-		/// <summary>
-		/// Sets a value on the referenced object.
-		/// </summary>
-		/// <param name="binder"></param>
-		/// <param name="value"></param>
-		/// <returns></returns>
-		public override bool TrySetMember(SetMemberBinder binder, object value)
-		{
-			var prop = typeof(T).GetProperty(binder.Name);
-			if (prop == null || prop.GetIndexParameters().Length > 0)
-				return false;
-			prop.SetValue(Value, value, new object[] { });
-			return true;
+			if (IsGlobal)
+				return "Global ID=" + ID + ", Value=" + Value;
+			else
+				return "ID=" + ID + ", Value=" + Value;
 		}
 	}
 

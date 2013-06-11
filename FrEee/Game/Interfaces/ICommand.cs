@@ -30,18 +30,8 @@ namespace FrEee.Game.Interfaces
 	public interface ICommand<T> : ICommand where T : ICommandable
 	{
 		/// <summary>
-		/// The ID of the target.
-		/// </summary>
-		int TargetID { get; set; }
-
-		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
 		T Target { get; set; }
-
-		/// <summary>
-		/// The index of the empire issuing the command (the first empire is number 1).
-		/// </summary>
-		int IssuerID { get; set; }
 	}
 }

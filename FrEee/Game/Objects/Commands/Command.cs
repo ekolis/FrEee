@@ -23,39 +23,15 @@ namespace FrEee.Game.Objects.Commands
 			Target = target;
 		}
 
-		public int IssuerID { get; set; }
+		[DoNotSerialize]
+		public Empire Issuer { get { return issuer; } set { issuer = value; } }
+
+		private Reference<Empire> issuer { get; set; }
 
 		[DoNotSerialize]
-		public Empire Issuer
-		{
-			get
-			{
-				return Galaxy.Current.Empires[IssuerID - 1];
-			}
-			set
-			{
-				IssuerID = Galaxy.Current.Empires.IndexOf(value) + 1;
-			}
-		}
+		public T Target { get { return target; } set { target = value; } }
 
-		public int TargetID
-		{
-			get;
-			set;
-		}
-
-		[DoNotSerialize]
-		public T Target
-		{
-			get
-			{
-				return (T)Galaxy.Current.Referrables[TargetID - 1];
-			}
-			set
-			{
-				TargetID = Galaxy.Current.Referrables.IndexOf((IReferrable<object>)value) + 1;
-			}
-		}
+		private Reference<T> target { get; set; }
 
 		public abstract void Execute();
 	}
