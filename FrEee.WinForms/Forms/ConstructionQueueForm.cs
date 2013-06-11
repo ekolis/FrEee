@@ -201,7 +201,7 @@ namespace FrEee.WinForms.Forms
 					var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g => g.Header == facil.Group);
 					if (group == null)
 					{
-						group = new ListViewGroup(facil.ResearchGroup);
+						group = new ListViewGroup(facil.Group);
 						lstFacilities.Groups.Add(group);
 					}
 					var item = new ListViewItem(facil.Name, i, group);
