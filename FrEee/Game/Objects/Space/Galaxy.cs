@@ -578,6 +578,9 @@ namespace FrEee.Game.Objects.Space
 			Current = galtemp.Instantiate(status, desiredProgress);
 			gsu.PopulateGalaxy(Current);
 
+			// set single player flag
+			Current.IsSinglePlayer = gsu.IsSinglePlayer;
+
 			if (status != null)
 				status.Message = "Saving game";
 
