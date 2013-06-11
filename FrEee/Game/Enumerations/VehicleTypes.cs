@@ -26,5 +26,6 @@ namespace FrEee.Game.Enumerations
 		WeapPlatform = WeaponPlatform,
 		WeapPlat = WeaponPlatform,
 		All = Ship | Base | Fighter | Satellite | Mine | Troop | Drone | WeaponPlatform,
+		Invalid = 0x1000,
 	}
 }

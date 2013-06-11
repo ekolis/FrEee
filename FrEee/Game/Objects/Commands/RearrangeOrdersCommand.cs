@@ -14,11 +14,10 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class RearrangeOrdersCommand<T, TOrder> : Command<T, TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public class RearrangeOrdersCommand<T> : OrderCommand<T>
+		where T : IOrderable
 	{
-		public RearrangeOrdersCommand(Empire issuer, T target, TOrder order, int deltaPosition)
+		public RearrangeOrdersCommand(Empire issuer, T target, IOrder<T> order, int deltaPosition)
 			: base(issuer, target, order)
 		 {
 			 DeltaPosition = deltaPosition;
@@ -37,9 +36,7 @@ namespace FrEee.Game.Objects.Commands
 		{
 			if (Issuer == Target.Owner)
 			{
-				int i = Target.Orders.IndexOf(Order);
-				Target.Orders.Remove(Order);
-				Target.Orders.Insert(i + DeltaPosition, Order);
+				Target.RearrangeOrder(Order, DeltaPosition);
 			}
 			else
 			{

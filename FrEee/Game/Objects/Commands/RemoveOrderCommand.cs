@@ -14,11 +14,10 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class RemoveOrderCommand<T, TOrder> : Command<T, TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public class RemoveOrderCommand<T> : OrderCommand<T>
+		where T : IOrderable
 	{
-		public RemoveOrderCommand(Empire issuer, T target, TOrder order)
+		public RemoveOrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target, order)
 		 {
 		 }
@@ -26,7 +25,7 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			if (Issuer == Target.Owner)
-				Target.Orders.Remove(Order);
+				Target.RemoveOrder(Order);
 			else
 			{
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));

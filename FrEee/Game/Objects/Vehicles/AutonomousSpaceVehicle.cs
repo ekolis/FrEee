@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -19,13 +20,14 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>
+	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>, ICargoContainer
 	{
 		public AutonomousSpaceVehicle()
 		{
 			IntrinsicAbilities = new List<Ability>();
-			Orders = new List<IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>();
+			Orders = new List<IOrder<AutonomousSpaceVehicle>>();
 			constructionQueue = new ConstructionQueue(this);
+			Cargo = new Cargo();
 		}
 
 		public override bool RequiresSpaceYardQueue
@@ -76,6 +78,20 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility == Visibility.Unknown)
 				throw new ArgumentException("If a space vehicle is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
 
+			if (visibility < Visibility.Owned)
+			{
+				// can only see space used by cargo, not actual cargo
+				var kt = Cargo.Size;
+				var fakeUnit = new Unit();
+				fakeUnit.Design = new Design<Unit>();
+				fakeUnit.Design.Hull = new Hull<Unit>();
+				fakeUnit.Design.Name = "Unknown";
+				fakeUnit.Design.Hull.Size = kt;
+				Cargo.Population.Clear();
+				Cargo.Units.Clear();
+				Cargo.Units.Add(fakeUnit);
+			}
+
 			// Can't see the ship's components if it's not scanned
 			if (visibility < Visibility.Scanned)
 			{
@@ -102,7 +118,12 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public int SupplyRemaining { get; set; }
 
-		public IList<IMobileSpaceObjectOrder<AutonomousSpaceVehicle>> Orders
+		IEnumerable<IOrder> IOrderable.Orders
+		{
+			get { return Orders; }
+		}
+
+		public IList<IOrder<AutonomousSpaceVehicle>> Orders
 		{
 			get;
 			private set;
@@ -115,7 +136,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				if (!Orders.Any())
 					break;
-				Orders.First().Execute();
+				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
 			}
@@ -221,6 +242,32 @@ namespace FrEee.Game.Objects.Vehicles
 		public override ICombatObject CombatObject
 		{
 			get { return this; }
+		}
+
+		public Cargo Cargo { get; set; }
+
+		public void AddOrder(IOrder order)
+		{
+			if (!(order is IOrder<AutonomousSpaceVehicle>))
+				throw new Exception("Can't add a " + order.GetType() + " to an autonomous space vehicle's orders.");
+			Orders.Add((IOrder<AutonomousSpaceVehicle>)order);
+		}
+
+		public void RemoveOrder(IOrder order)
+		{
+			if (!(order is IOrder<AutonomousSpaceVehicle>))
+				throw new Exception("Can't remove a " + order.GetType() + " from an autonomous space vehicle's orders.");
+			Orders.Remove((IOrder<AutonomousSpaceVehicle>)order);
+		}
+
+		public void RearrangeOrder(IOrder order, int delta)
+		{
+			if (!(order is IOrder<AutonomousSpaceVehicle>))
+				throw new Exception("Can't rearrange a " + order.GetType() + " in an autonomous space vehicle's orders.");
+			var o = (IOrder<AutonomousSpaceVehicle>)order;
+			var newpos = Orders.IndexOf(o) + delta;
+			Orders.Remove(o);
+			Orders.Insert(newpos, o);
 		}
 	}
 }

@@ -9,14 +9,18 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something which can accept orders from an empire and queue them for execution over time.
 	/// </summary>
-	public interface IOrderable<T, TOrder> : ICommandable<T>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public interface IOrderable : ICommandable
 	{
 		/// <summary>
 		/// The queued orders.
 		/// </summary>
-		IList<TOrder> Orders { get; }
+		IEnumerable<IOrder> Orders { get; }
+
+		void AddOrder(IOrder order);
+
+		void RemoveOrder(IOrder order);
+
+		void RearrangeOrder(IOrder order, int delta);
 
 		/// <summary>
 		/// Executes orders for an appropriate amount of time.

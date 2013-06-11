@@ -12,6 +12,7 @@ using FrEee.Modding;
 using System.Drawing;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -19,12 +20,12 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable<Planet, IPlanetOrder>, ICombatObject
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatObject, ICargoContainer
 	{
 		public Planet()
 		{
 			ResourceValue = new Resources();
-			Orders = new List<IPlanetOrder>();
+			Orders = new List<IOrder<Planet>>();
 		}
 
 		/// <summary>
@@ -41,6 +42,21 @@ namespace FrEee.Game.Objects.Space
 		/// The surface composition (e.g. rock, ice, gas) of this planet.
 		/// </summary>
 		public string Surface { get; set; }
+
+		public string ColonizationAbilityName
+		{
+			get
+			{
+				// TODO - custom surface types?
+				if (Surface == "Rock")
+					return "Colonize Planet - Rock";
+				else if (Surface == "Ice")
+					return "Colonize Planet - Ice";
+				else if (Surface == "Gas Giant")
+					return "Colonize Planet - Gas";
+				return null;
+			}
+		}
 
 		/// <summary>
 		/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this planet.
@@ -107,7 +123,17 @@ namespace FrEee.Game.Objects.Space
 						Colony.ConstructionQueue.Rate.Clear();
 						Colony.ConstructionQueue.UnspentRate.Clear();
 					}
-					// TODO - once we implement cargo, hide cargo on unonwed objects, but show cargo kT used if scanned (by adding fake "unknown" cargo item?)
+
+					// can only see space used by cargo, not actual cargo
+					var kt = Colony.Cargo.Size;
+					var fakeUnit = new Unit();
+					fakeUnit.Design = new Design<Unit>();
+					fakeUnit.Design.Hull = new Hull<Unit>();
+					fakeUnit.Design.Name = "Unknown";
+					fakeUnit.Design.Hull.Size = kt;
+					Colony.Cargo.Population.Clear();
+					Colony.Cargo.Units.Clear();
+					Colony.Cargo.Units.Add(fakeUnit);
 				}
 				if (visibility < Visibility.Scanned)
 				{
@@ -243,7 +269,12 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public IList<IPlanetOrder> Orders
+		IEnumerable<IOrder> IOrderable.Orders
+		{
+			get { return Orders; }
+		}
+
+		public IList<IOrder<Planet>> Orders
 		{
 			get;
 			private set;
@@ -347,6 +378,35 @@ namespace FrEee.Game.Objects.Space
 		{
 			NormalShields = MaxNormalShields;
 			PhasedShields = MaxPhasedShields;
+		}
+
+		public Cargo Cargo
+		{
+			get { return Colony == null ? null : Colony.Cargo; }
+		}
+
+		public void AddOrder(IOrder order)
+		{
+			if (!(order is IOrder<Planet>))
+				throw new Exception("Can't add a " + order.GetType() + " to a planet's orders.");
+			Orders.Add((IOrder<Planet>)order);
+		}
+
+		public void RemoveOrder(IOrder order)
+		{
+			if (!(order is IOrder<Planet>))
+				throw new Exception("Can't remove a " + order.GetType() + " from a planet's orders.");
+			Orders.Remove((IOrder<Planet>)order);
+		}
+
+		public void RearrangeOrder(IOrder order, int delta)
+		{
+			if (!(order is IOrder<Planet>))
+				throw new Exception("Can't rearrange a " + order.GetType() + " in a planet's orders.");
+			var o = (IOrder<Planet>)order;
+			var newpos = Orders.IndexOf(o) + delta;
+			Orders.Remove(o);
+			Orders.Insert(newpos, o);
 		}
 	}
 }

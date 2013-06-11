@@ -779,5 +779,17 @@ namespace FrEee.Utility.Extensions
 		{
 			return t.IsPrimitive || t == typeof(string) || t == typeof(Point) || t == typeof(Color) || t.GetCustomAttributes(typeof(ClientSafeAttribute), true).Any() || t.BaseType != null && t.BaseType.IsClientSafe() || t.GetInterfaces().Any(i => i.IsClientSafe());
 		}
+
+		public static int IndexOf<T>(this IEnumerable<T> haystack, T needle)
+		{
+			int i = 0;
+			foreach (var item in haystack)
+			{
+				if (item.Equals(needle))
+					return i;
+				i++;
+			}
+			return -1;
+		}
 	}
 }

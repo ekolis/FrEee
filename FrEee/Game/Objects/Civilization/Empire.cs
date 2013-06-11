@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, ICommandable<Empire>, IAbilityObject, IPictorial
+	public class Empire : INamed, ICommandable, IAbilityObject, IPictorial
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -68,6 +68,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// The native race of this empire.
 		/// </summary>
 		public Race PrimaryRace { get; set; }
+
+		/// <summary>
+		/// Empire's native planet surfac type.
+		/// </summary>
+		public string HomeworldSurface { get; set; }
 
 		/// <summary>
 		/// Traits of this empire.
@@ -399,6 +404,34 @@ namespace FrEee.Game.Objects.Civilization
 		public Image Portrait
 		{
 			get { return Icon; }
+		}
+
+		/// <summary>
+		/// Issues an order to an object.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TOrder"></typeparam>
+		/// <param name="order"></param>
+		public void IssueOrder<T>(T target, IOrder<T> order)
+			where T : IOrderable
+		{
+			target.AddOrder(order);
+			var cmd = new AddOrderCommand<T>(this, target, order);
+			Commands.Add(cmd);
+		}
+
+		/// <summary>
+		/// Belays (cancels) an order.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TOrder"></typeparam>
+		/// <param name="order"></param>
+		public void BelayOrder<T>(T target, IOrder<T> order)
+			where T : IOrderable
+		{
+			target.RemoveOrder(order);
+			var cmd = new RemoveOrderCommand<T>(this, target, order);
+			Commands.Add(cmd);
 		}
 	}
 }

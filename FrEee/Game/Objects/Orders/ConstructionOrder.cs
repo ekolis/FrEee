@@ -13,18 +13,10 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a construction queue to build something.
 	/// </summary>
 	[Serializable]
-	public class ConstructionOrder<T, TTemplate> : IOrder<ConstructionQueue, IConstructionOrder>, IConstructionOrder
+	public class ConstructionOrder<T, TTemplate> : IOrder<ConstructionQueue>, IConstructionOrder
 		where T : IConstructable
 		where TTemplate : ITemplate<T>, IReferrable<object>, IConstructionTemplate
 	{
-		/// <summary>
-		/// The construction queue performing construction.
-		/// </summary>
-		[DoNotSerialize]
-		public ConstructionQueue Target { get { return target; } set { target = value; } }
-
-		private Reference<ConstructionQueue> target { get; set; }
-
 		/// <summary>
 		/// The construction template.
 		/// </summary>
@@ -43,21 +35,21 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// Does 1 turn's worth of building.
 		/// </summary>
-		public void Execute()
+		public void Execute(ConstructionQueue queue)
 		{
 			// create item if needed
 			if (Item == null)
 			{
 				Item = Template.Instantiate();
-				Item.Owner = Target.Owner;
+				Item.Owner = queue.Owner;
 			}
 
 			// apply build rate
 			var costLeft = Item.Cost - Item.ConstructionProgress;
-			var spending = Resources.Min(costLeft, Target.UnspentRate);
-			spending = Resources.Min(spending, Target.Owner.StoredResources);
-			Target.Owner.StoredResources -= spending;
-			Target.UnspentRate -= spending;
+			var spending = Resources.Min(costLeft, queue.UnspentRate);
+			spending = Resources.Min(spending, queue.Owner.StoredResources);
+			queue.Owner.StoredResources -= spending;
+			queue.UnspentRate -= spending;
 			Item.ConstructionProgress += spending;
 		}
 

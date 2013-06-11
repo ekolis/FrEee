@@ -13,7 +13,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A race of beings.
 	/// </summary>
-	public class Race : INamed, IAbilityObject, IPictorial
+	public class Race : INamed, IAbilityObject, IPictorial, IReferrable<Race>
 	{
 		public Race()
 		{
@@ -41,6 +41,11 @@ namespace FrEee.Game.Objects.Civilization
 		public string NativeAtmosphere { get; set; }
 
 		/// <summary>
+		/// The native planet surface type of this race.
+		/// </summary>
+		public string NativeSurface { get; set; }
+
+		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
 		public EmpireAI AI { get; set; }
@@ -66,6 +71,20 @@ namespace FrEee.Game.Objects.Civilization
 		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
+		}
+
+		public int ID
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Races have no owner.
+		/// </summary>
+		public Empire Owner
+		{
+			get { return null; }
 		}
 	}
 }

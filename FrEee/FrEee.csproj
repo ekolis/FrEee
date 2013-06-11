@@ -55,6 +55,8 @@
     <Compile Include="Game\Enumerations\VehicleTypes.cs" />
     <Compile Include="Game\Enumerations\Visibility.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
+    <Compile Include="Game\Interfaces\ICargoContainer.cs" />
+    <Compile Include="Game\Interfaces\ICargoContainerOrder.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
     <Compile Include="Game\Interfaces\ICommandable.cs" />
     <Compile Include="Game\Interfaces\IConstructable.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Game\Interfaces\ITrait.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
+    <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Traits\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
@@ -82,6 +85,8 @@
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
+    <Compile Include="Game\Objects\Orders\ColonizeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\LoadCargoOrder.cs" />
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />

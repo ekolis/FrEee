@@ -19,7 +19,7 @@ namespace FrEee.Game.Interfaces
 	/// A space object which can be ordered to move.
 	/// </summary>
 	/// <typeparam name="T">The type of mobile space object.</typeparam>
-	public interface IMobileSpaceObject<T> : IMobileSpaceObject, IOrderable<T, IMobileSpaceObjectOrder<T>>
+	public interface IMobileSpaceObject<T> : IMobileSpaceObject, IOrderable
 		where T : IMobileSpaceObject<T>
 	{
 		

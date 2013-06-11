@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Modding;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -40,6 +41,11 @@ namespace FrEee.Game.Setup
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
+		/// The homeworld surface type of this empire.
+		/// </summary>
+		public string HomeworldSurfaceOverride { get; set; }
+
+		/// <summary>
 		/// Set this to override the color specified by the race.
 		/// </summary>
 		public Color? ColorOverride { get; set; }
@@ -71,12 +77,14 @@ namespace FrEee.Game.Setup
 			emp.LeaderName = LeaderName;
 			emp.Color = ColorOverride ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
+			emp.HomeworldSurface = HomeworldSurfaceOverride ?? PrimaryRace.NativeSurface;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
 			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.Name;
 			emp.ShipsetPath = ShipsetPathOverride ?? PrimaryRace.ShipsetPath;
 			emp.LeaderPortraitName = LeaderPortraitNameOverride;
 			emp.AI = AIOverride ?? PrimaryRace.AI;
+
 			return emp;
 		}
 	}

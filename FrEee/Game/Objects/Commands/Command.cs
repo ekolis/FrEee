@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Commands
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
 	public abstract class Command<T> : ICommand<T>
-		where T : ICommandable<T>
+		where T : ICommandable
 	{
 		protected Command(Empire issuer, T target)
 		{

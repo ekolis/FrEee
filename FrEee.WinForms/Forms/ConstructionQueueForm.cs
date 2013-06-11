@@ -74,9 +74,9 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = lstFacilities.SelectedItems[0];
 				var template = (FacilityTemplate)item.Tag;
-				var order = new ConstructionOrder<Facility, FacilityTemplate> { Target = ConstructionQueue, Template = template };
+				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
 				ConstructionQueue.Orders.Add(order);
-				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
+				var cmd = new AddOrderCommand<ConstructionQueue>
 				(
 					Galaxy.Current.CurrentEmpire,
 					ConstructionQueue,
@@ -229,7 +229,7 @@ namespace FrEee.WinForms.Forms
 				var design = (IDesign)item.Tag;
 				var order = design.CreateConstructionOrder(ConstructionQueue);
 				ConstructionQueue.Orders.Add(order);
-				var cmd = new AddOrderCommand<ConstructionQueue, IConstructionOrder>
+				var cmd = new AddOrderCommand<ConstructionQueue>
 				(
 					Galaxy.Current.CurrentEmpire,
 					ConstructionQueue,
@@ -268,7 +268,7 @@ namespace FrEee.WinForms.Forms
 			if (item != null)
 			{
 				var order = (IConstructionOrder)item.Tag;
-				var cmd = new RemoveOrderCommand<ConstructionQueue, IConstructionOrder>(Empire.Current, ConstructionQueue, order);
+				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
 				ConstructionQueue.Orders.Remove(order);
 				newCommands.Add(cmd);
 				BindQueueListView();

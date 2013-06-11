@@ -165,7 +165,7 @@ namespace FrEee.Game.Objects.Technology
 					return VehicleTypes.Mine;
 				if (typeof(T) == typeof(WeaponPlatform))
 					return VehicleTypes.WeaponPlatform;
-				throw new Exception("Invalid vehicle type " + typeof(T) + " for hull " + this + ".");
+				return VehicleTypes.Invalid;
 			}
 		}
 

@@ -159,6 +159,18 @@ namespace FrEee.Game.Setup
 				foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
 					emp.ResearchedTechnologies[tech] = tech.StartLevel;
 
+				// TODO - moddable colony techs?
+				string colonyTechName = null;
+				if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
+					colonyTechName = "Rock Planet Colonization";
+				else if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
+					colonyTechName = "Ice Planet Colonization";
+				else if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
+					colonyTechName = "Gas Giant Colonization";
+				var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
+				if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
+					emp.ResearchedTechnologies[colonyTech] = 1;
+
 				// find facilities to place on homeworlds
 				// TODO - don't crash if facilities not found in mod
 				var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
@@ -178,6 +190,7 @@ namespace FrEee.Game.Setup
 				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
 
 				// TODO - place homeworlds fairly
+				// TODO - give empires their native homeworld types
 				// TODO - make homeworlds breathable
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())

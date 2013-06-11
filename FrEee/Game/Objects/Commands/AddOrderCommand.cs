@@ -14,11 +14,10 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class AddOrderCommand<T, TOrder> : Command<T, TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public class AddOrderCommand<T> : OrderCommand<T>
+		where T : IOrderable
 	{
-		public AddOrderCommand(Empire issuer, T target, TOrder order)
+		public AddOrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target, order)
 		{
 		}
@@ -30,13 +29,13 @@ namespace FrEee.Game.Objects.Commands
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
 				else
-					Target.Orders.Add(Order);
+					Target.AddOrder(Order);
 			}
 			else
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 
-		public override TOrder Order
+		public override IOrder<T> Order
 		{
 			get;
 			set;

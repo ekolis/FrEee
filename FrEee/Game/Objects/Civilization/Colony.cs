@@ -19,6 +19,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Facilities = new List<Facility>();
 			Population = new SafeDictionary<Race, long>();
+			Cargo = new Cargo();
 		}
 
 		/// <summary>
@@ -41,10 +42,18 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Facilities.SelectMany(f => f.Abilities).ToArray(); }
 		}
 
+		/// <summary>
+		/// This colony's construction queue.
+		/// </summary>
 		public ConstructionQueue ConstructionQueue
 		{
 			get;
 			set;
 		}
+
+		/// <summary>
+		/// The cargo stored on this colony.
+		/// </summary>
+		public Cargo Cargo { get; set; }
 	}
 }

@@ -356,7 +356,6 @@ namespace FrEee.Game.Objects.Vehicles
 			var ordertype = typeof(ConstructionOrder<,>).MakeGenericType(vtype, dtype);
 			var o = (IConstructionOrder)Activator.CreateInstance(ordertype);
 			o.GetType().GetProperty("Template").SetValue(o, this, new object[] { });
-			o.GetType().GetProperty("Target").SetValue(o, queue, new object[] { });
 			return o;
 		}
 

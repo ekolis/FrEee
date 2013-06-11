@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,10 @@ namespace FrEee.Game.Objects.Commands
 	/// <typeparam name="T"></typeparam>
 	/// <typeparam name="TOrder"></typeparam>
 	[Serializable]
-	public abstract class Command<T, TOrder> : Command<T>, IOrderCommand<T, TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public abstract class OrderCommand<T> : Command<T>, IOrderCommand<T>
+		where T : IOrderable
 	{
-		protected Command(Empire issuer, T target, TOrder order)
+		protected OrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target)
 		{
 			Order = order;
@@ -31,15 +31,15 @@ namespace FrEee.Game.Objects.Commands
 		}
 
 		[DoNotSerialize]
-		public virtual TOrder Order
+		public virtual IOrder<T> Order
 		{
 			get
 			{
-				return Target.Orders[OrderID - 1];
+				return (IOrder<T>)Target.Orders.ElementAt(OrderID - 1);
 			}
 			set
 			{
-				OrderID = Target.Orders.IndexOf(value) + 1;
+				OrderID = Target.Orders.Cast<IOrder<T>>().IndexOf(value) + 1;
 			}
 		}
 	}

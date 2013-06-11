@@ -18,21 +18,12 @@ namespace FrEee.Game.Objects.Orders
 	public class MoveOrder<T> : IMobileSpaceObjectOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable<object>
 	{
-		public MoveOrder(T target, Sector destination, bool avoidEnemies)
+		public MoveOrder(Sector destination, bool avoidEnemies)
 		{
-			Target = target;
 			Destination = destination;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
-
-		/// <summary>
-		/// The object that is moving.
-		/// </summary>
-		[DoNotSerialize]
-		public T Target { get { return target; } set { target = value; } }
-
-		private Reference<T> target {get; set;}
 
 		/// <summary>
 		/// The sector we are moving to.
@@ -50,35 +41,39 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// Finds the path for executing this order.
 		/// </summary>
+		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind()
+		public IEnumerable<Sector> Pathfind(T sobj)
 		{
-			return Pathfinder.Pathfind(Target, Destination, AvoidEnemies);
+			return Pathfinder.Pathfind(sobj, Destination, AvoidEnemies);
 		}
 
-		public void Execute()
+		public void Execute(T sobj)
 		{
-			var gotoSector = Pathfind().FirstOrDefault();
+			var gotoSector = Pathfind(sobj).FirstOrDefault();
 
 			// TODO - movement logs
 			if (gotoSector != null)
 			{
 				// move
-				Target.FindSector().SpaceObjects.Remove(Target);
-				gotoSector.SpaceObjects.Add(Target);
+				sobj.FindSector().SpaceObjects.Remove(sobj);
+				gotoSector.SpaceObjects.Add(sobj);
 			}
+			else if (sobj.FindSector() == Destination)
+				IsComplete = true;
 			else
 			{
 				// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
 			}
 
 			// spend time
-			Target.TimeToNextMove += Target.TimePerMove;
+			sobj.TimeToNextMove += sobj.TimePerMove;
 		}
 
 		public bool IsComplete
 		{
-			get { return Target.FindSector() == Destination; }
+			get;
+			private set;
 		}
 
 		public override string ToString()

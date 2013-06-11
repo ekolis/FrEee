@@ -12,7 +12,7 @@ namespace FrEee.Game.Interfaces
 	public interface IReferrable<out T>
 	{
 		/// <summary>
-		/// A unique ID by which the player orders file can reference this orderable.
+		/// A unique ID by which the player orders file can reference this referrable.
 		/// </summary>
 		int ID { get; set; }
 

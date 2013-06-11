@@ -10,9 +10,6 @@ using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Interfaces
 {
-	/// <summary>
-	/// An object that can exist independently in space.
-	/// </summary>
 	public interface ISpaceObject : IAbilityObject, IPictorial
 	{
 		/// <summary>
@@ -24,11 +21,6 @@ namespace FrEee.Game.Interfaces
 		/// Abilities intrinsically possessed by this space object.
 		/// </summary>
 		IList<Ability> IntrinsicAbilities { get; }
-
-		/// <summary>
-		/// The empire owning this space object.
-		/// </summary>
-		Empire Owner { get; }
 
 		/// <summary>
 		/// Checks visibility of this space object for the current player.
@@ -63,11 +55,6 @@ namespace FrEee.Game.Interfaces
 		bool CanBeInFleet { get; }
 
 		/// <summary>
-		/// Cargo storage capacity.
-		/// </summary>
-		int CargoStorage { get; }
-
-		/// <summary>
 		/// Supply storage capacity.
 		/// TODO - make supply a resource?
 		/// </summary>
@@ -78,5 +65,7 @@ namespace FrEee.Game.Interfaces
 		/// TODO - make supply a resource?
 		/// </summary>
 		bool HasInfiniteSupplies { get; }
+
+		Empire Owner { get; }
 	}
 }

@@ -27,7 +27,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to some object.
 	/// </summary>
-	public interface ICommand<T> : ICommand where T : ICommandable<T>
+	public interface ICommand<T> : ICommand where T : ICommandable
 	{
 		/// <summary>
 		/// The ID of the target.

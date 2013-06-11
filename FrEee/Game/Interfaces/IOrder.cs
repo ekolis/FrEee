@@ -10,23 +10,23 @@ namespace FrEee.Game.Interfaces
 	/// An order issued by a player to an object to do something.
 	/// </summary>
 	[ClientSafe]
-	public interface IOrder<T, out TOrder>
-		where T : IOrderable<T, TOrder>
-		where TOrder : IOrder<T, TOrder>
+	public interface IOrder
 	{
-		/// <summary>
-		/// The object receiving the order.
-		/// </summary>
-		T Target { get; set; }
-
-		/// <summary>
-		/// Executes the order.
-		/// </summary>
-		void Execute();
-
 		/// <summary>
 		/// Is this order done executing?
 		/// </summary>
 		bool IsComplete { get; }
+	}
+
+	/// <summary>
+	/// An order issued by a player to an object to do something.
+	/// </summary>
+	public interface IOrder<in T> : IOrder
+		where T : IOrderable
+	{
+		/// <summary>
+		/// Executes the order.
+		/// </summary>
+		void Execute(T executor);
 	}
 }

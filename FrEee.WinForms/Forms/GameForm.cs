@@ -81,12 +81,12 @@ namespace FrEee.WinForms.Forms
 					if (SelectedSpaceObject is AutonomousSpaceVehicle)
 					{
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						var order = new MoveOrder<AutonomousSpaceVehicle>(v, sector, !aggressiveMode);
+						var order = new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode);
 						v.Orders.Add(order);
 						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 						if (report != null)
 							report.Invalidate();
-						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
+						var cmd = new AddOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
 					}
 					else
@@ -112,26 +112,53 @@ namespace FrEee.WinForms.Forms
 			{
 				if (sector != null && sector.SpaceObjects.OfType<WarpPoint>().Any())
 				{
-					// TODO - space object picker dialog
+					// TODO - let user pick which warp point to traverse
 					var wp = sector.SpaceObjects.OfType<WarpPoint>().First();
 
 					// warp
 					if (SelectedSpaceObject is AutonomousSpaceVehicle)
 					{
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						var order = new WarpOrder<AutonomousSpaceVehicle>(v, wp, !aggressiveMode);
-						v.Orders.Add(order);
+						// TODO - issue a pursue order instead of a move order, in case warp point closes or even moves
+						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(wp.FindSector(), !aggressiveMode));
+						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
 						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 						if (report != null)
 							report.Invalidate();
-						var cmd = new AddOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(Empire.Current, v, order);
-						Empire.Current.Commands.Add(cmd);
 					}
 					else
 					{
 						// TODO - warp orders for unit groups
 					}
 					ChangeCommandMode(CommandMode.None, null);
+				}
+			}
+			else if (commandMode == CommandMode.Colonize)
+			{
+				if (SelectedSpaceObject is AutonomousSpaceVehicle)
+				{
+					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+					if (sector != null)
+					{
+						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.HasAbility("Colonize Planet - " + p.Surface));
+						if (suitablePlanets.Any())
+						{
+							// TODO - let user pick which planet to colonize
+							var planet = suitablePlanets.First();
+							if (!ModifierKeys.HasFlag(Keys.Shift))
+							{
+								foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
+								{
+									var loadPopOrder = new LoadCargoOrder(pHere);
+									loadPopOrder.AnyPopulationToLoad = null; // load all population
+									Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, loadPopOrder);
+								}
+							}
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
+							ChangeCommandMode(CommandMode.None, null);
+						}
+					}
 				}
 			}
 			else if (commandMode == CommandMode.None)
@@ -538,7 +565,7 @@ namespace FrEee.WinForms.Forms
 					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
 					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
-					btnTransferCargo.Visible = value != null && (value.CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
+					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
@@ -555,6 +582,8 @@ namespace FrEee.WinForms.Forms
 				ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
 			if (e.KeyCode == Keys.W && btnWarp.Visible)
 				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
+			if (e.KeyCode == Keys.C && btnWarp.Visible)
+				ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
 			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
 				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
@@ -598,6 +627,10 @@ namespace FrEee.WinForms.Forms
 			/// Moves to and traverses a warp point.
 			/// </summary>
 			Warp,
+			/// <summary>
+			/// Moves to and colonizes a planet.
+			/// </summary>
+			Colonize,
 		}
 
 		private void ChangeCommandMode(CommandMode mode, ISpaceObject sobj)
@@ -619,6 +652,9 @@ namespace FrEee.WinForms.Forms
 					break;
 				case CommandMode.Warp:
 					Text = "Click a warp point for " + sobj + " to traverse. (Ctrl-click to move aggressively)";
+					break;
+				case CommandMode.Colonize:
+					Text = "Click a planet for " + sobj + " to colonize. (Ctrl-click to move aggressively; Shift-click to skip loading population)";
 					break;
 			}
 		}
@@ -649,7 +685,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnColonize_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, colonize orders are not yet implemented.");
+			if (SelectedSpaceObject != null)
+				ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
 		}
 
 		private void btnConstructionQueue_Click(object sender, EventArgs e)

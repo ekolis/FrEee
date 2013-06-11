@@ -17,80 +17,42 @@ namespace FrEee.Game.Objects.Orders
 	public class WarpOrder<T> : IMobileSpaceObjectOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable<object>
 	{
-		public WarpOrder(T target, WarpPoint warpPoint, bool avoidEnemies)
+		public WarpOrder(WarpPoint warpPoint)
 		{
-			Target = target;
 			WarpPoint = warpPoint;
-			AvoidEnemies = avoidEnemies;
-			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
-
-		/// <summary>
-		/// The object that is warping.
-		/// </summary>
-		public T Target { get { return target; } set { target = value; } }
-
-		private Reference<T> target;
 
 		/// <summary>
 		/// The warp point we are using.
 		/// </summary>
+		[DoNotSerialize]
 		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
 
-		private Reference<WarpPoint> warpPoint;
+		private Reference<WarpPoint> warpPoint {get; set;}
 
-		/// <summary>
-		/// Should pathfinding avoid enemies?
-		/// </summary>
-		public bool AvoidEnemies { get; set; }
-
-		/// <summary>
-		/// Finds the path for executing this order.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind()
+		public void Execute(T sobj)
 		{
-			return Pathfinder.Pathfind(Target, WarpPoint.FindSector(), AvoidEnemies);
-		}
-
-		public void Execute()
-		{
-			var here = Target.FindSector();
+			var here = sobj.FindSector();
 			if (here == WarpPoint.FindSector())
 			{
 				// warp now!!!
-				here.SpaceObjects.Remove(Target);
-				WarpPoint.Target.SpaceObjects.Add(Target);
+				here.SpaceObjects.Remove(sobj);
+				WarpPoint.Target.SpaceObjects.Add(sobj);
 				// mark system explored
-				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)Target).Owner))
-					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)Target).Owner);
+				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
+					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
 
 				// done warping
 				IsComplete = true;
 			}
 			else
 			{
-				// move toward warp point
-				var gotoSector = Pathfind().FirstOrDefault();
-
-				// TODO - movement logs
-				if (gotoSector != null)
-				{
-					// move
-					Target.FindSector().SpaceObjects.Remove(Target);
-					gotoSector.SpaceObjects.Add(Target);
-				}
-				else
-				{
-					// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
-				}
-
-				// spend time
-				Target.TimeToNextMove += Target.TimePerMove;
+				// can't warp here, maybe the GUI should have issued a move order?
+				((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point."));
 			}
 
 			// spend time
-			Target.TimeToNextMove += Target.TimePerMove;
+			sobj.TimeToNextMove += sobj.TimePerMove;
 		}
 
 		public bool IsComplete
@@ -101,10 +63,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
-			if (AvoidEnemies)
-				return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
-			else
-				return "Attack and Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
+			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
 		}
 	}
 }

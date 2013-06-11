@@ -120,7 +120,7 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order, -vehicle.Orders.IndexOf(order));
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -133,7 +133,7 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -146,7 +146,7 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) > 0)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order, -1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -159,7 +159,7 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order, 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -171,7 +171,7 @@ namespace FrEee.WinForms.Controls
 		{
 			foreach (var order in vehicle.Orders)
 			{
-				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -184,7 +184,7 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle, IMobileSpaceObjectOrder<AutonomousSpaceVehicle>>(
+				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally

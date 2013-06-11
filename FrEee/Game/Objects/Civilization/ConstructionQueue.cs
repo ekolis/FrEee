@@ -13,7 +13,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Civilization
 {
 	[Serializable]
-	public class ConstructionQueue : IOrderable<ConstructionQueue, IConstructionOrder>
+	public class ConstructionQueue : IOrderable
 	{
 		public ConstructionQueue(ISpaceObject sobj)
 		{
@@ -122,6 +122,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Resources UnspentRate { get; set; }
 
+		IEnumerable<IOrder> IOrderable.Orders
+		{
+			get
+			{
+				return Orders;
+			}
+		}
+
 		public IList<IConstructionOrder> Orders
 		{
 			get;
@@ -165,7 +173,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var numOrders = Orders.Count;
 
-				foreach (var order in Orders.ToArray())
+				foreach (var order in Orders.Cast<IConstructionOrder>().ToArray())
 				{
 					var reasonForNotBuilding = GetReasonForBeingUnableToConstruct(order.Template);
 					if (reasonForNotBuilding != null)
@@ -176,7 +184,7 @@ namespace FrEee.Game.Objects.Civilization
 					}
 					else
 					{
-						order.Execute();
+						order.Execute(this);
 						if (order.IsComplete)
 						{
 							order.Item.Place(SpaceObject);
@@ -229,6 +237,31 @@ namespace FrEee.Game.Objects.Civilization
 				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new Resources() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
 				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
 			}
+		}
+
+
+		public void AddOrder(IOrder order)
+		{
+			if (!(order is IConstructionOrder))
+				throw new Exception("Can't add a " + order.GetType() + " to a construction queue's orders.");
+			Orders.Add((IConstructionOrder)order);
+		}
+
+		public void RemoveOrder(IOrder order)
+		{
+			if (!(order is IConstructionOrder))
+				throw new Exception("Can't remove a " + order.GetType() + " from a construction queue's orders.");
+			Orders.Remove((IConstructionOrder)order);
+		}
+
+		public void RearrangeOrder(IOrder order, int delta)
+		{
+			if (!(order is IConstructionOrder))
+				throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
+			var o = (IConstructionOrder)order;
+			var newpos = Orders.IndexOf(o) + delta;
+			Orders.Remove(o);
+			Orders.Insert(newpos, o);
 		}
 	}
 }
