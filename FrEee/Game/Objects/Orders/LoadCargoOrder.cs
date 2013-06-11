@@ -136,7 +136,7 @@ namespace FrEee.Game.Objects.Orders
 				// how much we can safely load?
 				// TODO - moddable population size (per race?)
 				var canLoadKT = src.CargoStorage - src.Cargo.Size;
-				var canLoadPop = (long)(canLoadKT / 50 * 1e6);
+				var canLoadPop = (long)(canLoadKT / 5 * 1e6);
 
 				// load population
 				var loadable = Math.Min(canLoadPop, Origin.Cargo.Population[kvp.Key]);
@@ -154,7 +154,7 @@ namespace FrEee.Game.Objects.Orders
 				// how much we can safely load?
 				// TODO - moddable population size (per race?)
 				var canLoadKT = src.CargoStorage - src.Cargo.Size;
-				var canLoadPop = (long)(canLoadKT / 50 * 1e6);
+				var canLoadPop = (long)(canLoadKT / 5 * 1e6);
 
 				// load population
 				var loadable = Math.Min(canLoadPop, Origin.Cargo.Population[kvp.Key]);
@@ -180,7 +180,7 @@ namespace FrEee.Game.Objects.Orders
 					// how much we can safely load?
 					// TODO - moddable population size (per race?)
 					var canLoadKT = src.CargoStorage - src.Cargo.Size;
-					var canLoadPop = (long)(canLoadKT / 50 * 1e6);
+					var canLoadPop = (long)(canLoadKT / 5 * 1e6);
 
 					// load population
 					var loadable = Math.Min(canLoadPop, colony.Population[kvp.Key]);
@@ -198,7 +198,7 @@ namespace FrEee.Game.Objects.Orders
 					// how much we can safely load?
 					// TODO - moddable population size (per race?)
 					var canLoadKT = src.CargoStorage - src.Cargo.Size;
-					var canLoadPop = (long)(canLoadKT / 50 * 1e6);
+					var canLoadPop = (long)(canLoadKT / 5 * 1e6);
 
 					// load population
 					var loadable = Math.Min(canLoadPop, colony.Population[kvp.Key]);
