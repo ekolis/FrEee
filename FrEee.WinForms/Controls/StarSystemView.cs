@@ -1,5 +1,6 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
@@ -176,15 +177,36 @@ namespace FrEee.WinForms.Controls
 							pe.Graphics.DrawString(largest.Name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 						}
 
-						// draw number to indicate how many space objects are present if >1
-						if (sector.SpaceObjects.Count > 1)
+						// draw number to indicate how many stellar objects are present if >1
+						if (sector.SpaceObjects.OfType<StellarObject>().Count() > 1)
 						{
 							// TODO - cache font and brush assets
 							var font = new Font("Sans Serif", 8);
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Far; // right align our number
 							sf.LineAlignment = StringAlignment.Far; // bottom align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.Count.ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f - 12, sf);
+							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f - 12, sf);
+						}
+
+						var availForFlagsAndNums = Math.Min(drawsize - 21, 12);
+						var cornerx = drawx - drawsize / 2;
+						var cornery = drawy - drawsize / 2;
+						if (sector.SpaceObjects.Count > 1)
+						{
+							int top = 0;
+							int insigniaSize = availForFlagsAndNums / 2;
+							foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).GroupBy(sobj => sobj.Owner))
+							{
+								// draw empire insignia and space object count
+								var owner = g.Key;
+								var count = g.Count();
+								var aspect = owner.Icon;
+								if (owner.Icon != null)
+									pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
+								// TODO - cache font and brush assets
+								pe.Graphics.DrawString(count.ToString(), new Font("Sans Serif", insigniaSize), new SolidBrush(owner.Color), cornerx + insigniaSize, cornery + top);
+								top += insigniaSize;
+							}
 						}
 
 						// draw selection reticule
