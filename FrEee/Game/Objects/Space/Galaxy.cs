@@ -288,7 +288,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (Current.CurrentEmpire != null)
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
+
+			// recycle ID's
+			for (int i = 0; i < Current.Referrables.Count; i++)
+			{
+				Current.Referrables[i] = Current.Referrables[i].Where(r => r != null).ToList();
+			}
+
+			// save master view
 			var gamname = Current.Save();
+	
+			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
 				if (i == 0 || !Current.IsSinglePlayer)
