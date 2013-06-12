@@ -310,7 +310,7 @@ namespace FrEee.WinForms.Forms
 			SelectedSpaceObject = null;
 
 			// display empire flag
-			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Insignia;
+			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Icon;
 
 			// create homesystem tab
 			foreach (var tab in ListTabs().ToArray())

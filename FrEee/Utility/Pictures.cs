@@ -357,6 +357,29 @@ namespace FrEee.Utility
 			}
 		}
 
+		/// <summary>
+		/// Gets the leader portrait for an empire.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Image GetPortrait(Empire emp)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Leaders", emp.Name)) ??
+					GetCachedImage(Path.Combine("Pictures", "Leaders", emp.Name)) ??
+					GetGenericImage(emp.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Leaders", emp.Name)) ??
+					GetGenericImage(emp.GetType());
+			}
+		}
+
 		public static Image GetCachedImage(IEnumerable<string> paths)
 		{
 			foreach (var path in paths)

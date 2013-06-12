@@ -62,7 +62,7 @@ namespace FrEee.WinForms.Controls
 				}
 
 
-				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Insignia;
+				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Icon;
 				picPortrait.Image = Planet.Portrait;
 
 				txtName.Text = Planet.Name;

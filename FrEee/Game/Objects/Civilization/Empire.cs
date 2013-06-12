@@ -100,29 +100,6 @@ namespace FrEee.Game.Objects.Civilization
 		public EmpireAI AI { get; set; }
 
 		/// <summary>
-		/// The empire's insignia.
-		/// </summary>
-		public Image Insignia
-		{
-			get
-			{
-				if (Mod.Current.RootPath != null)
-				{
-					return
-						Pictures.GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Insignia", InsigniaName)) ??
-						Pictures.GetCachedImage(Path.Combine("Pictures", "Insignia", InsigniaName)) ??
-						Pictures.GetGenericImage(typeof(Empire));
-				}
-				else
-				{
-					return
-						Pictures.GetCachedImage(Path.Combine("Pictures", "Insignia", InsigniaName)) ??
-						Pictures.GetGenericImage(typeof(Empire));
-				}
-			}
-		}
-
-		/// <summary>
 		/// The color used to represent this empire's star systems on the galaxy map.
 		/// </summary>
 		public Color Color { get; set; }
@@ -422,11 +399,11 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Just use the icon.
+		/// The leader portrait for this empire.
 		/// </summary>
 		public Image Portrait
 		{
-			get { return Icon; }
+			get { return Pictures.GetPortrait(this); }
 		}
 
 		/// <summary>
