@@ -441,5 +441,17 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		/// <summary>
+		/// Is this empire defeated?
+		/// An empire is defeated when it no longer controls any space objects.
+		/// </summary>
+		public bool IsDefeated
+		{
+			get 
+			{
+				return !Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Any();
+			}
+		}
 	}
 }

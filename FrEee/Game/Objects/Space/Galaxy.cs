@@ -554,6 +554,29 @@ namespace FrEee.Game.Objects.Space
 						battle.Resolve();
 						foreach (var emp in battle.Empires)
 							emp.Log.Add(battle.CreateLogMessage(battle.Name));
+						
+						// check for defeated empires
+						foreach (var emp in Empires)
+						{
+							if (emp.IsDefeated)
+							{
+								foreach (var emp2 in Empires)
+								{
+									if (emp2 == emp)
+										emp2.Log.Add(emp.CreateLogMessage("You have been defeated! Your colonies and fleets are no more..."));
+									else
+										emp2.Log.Add(emp.CreateLogMessage(emp + " has been defeated!"));
+								}
+							}
+						}
+						
+						// check for victory
+						var survivors = Empires.Where(emp => !emp.IsDefeated);
+						if (survivors.Count() == 1)
+						{
+							var winner = survivors.First();
+							winner.Log.Add(winner.CreateLogMessage("You are victorious! You have eliminated all opposition and conquered the galaxy!"));
+						}
 					}
 				}
 				CurrentTick += NextTickSize;
