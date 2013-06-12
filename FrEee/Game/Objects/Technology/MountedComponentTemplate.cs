@@ -40,7 +40,7 @@ namespace FrEee.Game.Objects.Technology
 		private Reference<Mount> mount { get; set; }
 
 		/// <summary>
-		/// The name of the component, prefixed with the name of the mount (if any).
+		/// The name of the component, prefixed with the short name of the mount (if any).
 		/// </summary>
 		public string Name
 		{
@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Technology
 			{
 				if (Mount == null)
 					return ComponentTemplate.Name;
-				return Mount.Name + " " + ComponentTemplate.Name;
+				return Mount.ShortName + " " + ComponentTemplate.Name;
 			}
 		}
 

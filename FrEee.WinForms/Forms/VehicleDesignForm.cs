@@ -116,7 +116,11 @@ namespace FrEee.WinForms.Forms
 				// filter by vehicle type
 				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
 
-				// TODO - filter by can-use-mount?
+				// filter by can-use-mount
+				comps = comps.Where(comp => CurrentMount == null || (
+					(CurrentMount.RequiredComponentFamily == null || comp.Family == CurrentMount.RequiredComponentFamily) &&
+					CurrentMount.WeaponTypes.HasFlag(comp.WeaponType)
+					));
 
 				// filter by only-latest
 				if (chkOnlyLatest.Checked)
@@ -134,7 +138,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ComponentTemplate.Name, g.First(), g.First().Icon);
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ToString(), g.First(), g.First().Icon);
 			}
 		}
 
@@ -224,9 +228,17 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private Mount mount;
+
 		private void btnMount_Click(object sender, EventArgs e)
 		{
-			// TODO - implement use mount
+			if (Design == null || Design.Hull == null)
+				return; // no need to pick mounts now
+
+			var form = new MountPickerForm(Design.Hull);
+			this.ShowChildForm(form);
+			if (form.DialogResult == DialogResult.OK)
+				CurrentMount = form.Mount;
 		}
 
 		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
@@ -273,21 +285,6 @@ namespace FrEee.WinForms.Forms
 				resDetailRad.Amount = v.Cost[Resource.Radioactives];
 				txtDetailDescription.Text = v.ComponentTemplate.Description;
 			}
-		}
-
-		/// <summary>
-		/// The currently used mount for placing new components.
-		/// </summary>
-		public Mount CurrentMount { get; private set; }
-
-		private void lstComponentsAvailable_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			
-		}
-
-		private void lstComponentsInstalled_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			
 		}
 
 		/// <summary>
@@ -365,6 +362,31 @@ namespace FrEee.WinForms.Forms
 			else if (e.Button == MouseButtons.Right)
 			{
 				// TODO - show mounted component template report
+			}
+		}
+
+		private void btnClearMount_Click(object sender, EventArgs e)
+		{
+			CurrentMount = null;
+		}
+
+		/// <summary>
+		/// The currently used mount for placing new components.
+		/// </summary>
+		public Mount CurrentMount
+		{
+			get
+			{
+				return mount;
+			}
+			set
+			{
+				mount = value;
+				if (mount == null)
+					btnMount.Text = "(none)";
+				else
+					btnMount.Text = mount.ShortName;
+				BindAvailableComponents();
 			}
 		}
 	}

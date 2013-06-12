@@ -41,6 +41,8 @@ namespace FrEee.Game.Objects.Space
 			// register objects that need shared client/server ID's
 			foreach (var componentTemplate in Mod.ComponentTemplates)
 				Register(componentTemplate);
+			foreach (var mount in Mod.Mounts)
+				Register(mount);
 			foreach (var facilityTemplate in Mod.FacilityTemplates)
 				Register(facilityTemplate);
 			foreach (var hull in Mod.Hulls)

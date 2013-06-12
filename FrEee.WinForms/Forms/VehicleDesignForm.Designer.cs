@@ -87,6 +87,7 @@
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
+			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
@@ -245,7 +246,7 @@
 			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnMount.Location = new System.Drawing.Point(78, 100);
 			this.btnMount.Name = "btnMount";
-			this.btnMount.Size = new System.Drawing.Size(167, 23);
+			this.btnMount.Size = new System.Drawing.Size(142, 23);
 			this.btnMount.TabIndex = 25;
 			this.btnMount.Text = "(none)";
 			this.btnMount.UseVisualStyleBackColor = false;
@@ -729,7 +730,6 @@
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
 			this.lstComponentsInstalled.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseClick);
-			this.lstComponentsInstalled.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDoubleClick);
 			// 
 			// gamePanel1
 			// 
@@ -761,7 +761,6 @@
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
 			this.lstComponentsAvailable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseClick);
-			this.lstComponentsAvailable.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDoubleClick);
 			// 
 			// btnHull
 			// 
@@ -775,12 +774,26 @@
 			this.btnHull.UseVisualStyleBackColor = false;
 			this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
 			// 
+			// btnClearMount
+			// 
+			this.btnClearMount.BackColor = System.Drawing.Color.Black;
+			this.btnClearMount.Enabled = false;
+			this.btnClearMount.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearMount.Location = new System.Drawing.Point(226, 100);
+			this.btnClearMount.Name = "btnClearMount";
+			this.btnClearMount.Size = new System.Drawing.Size(20, 23);
+			this.btnClearMount.TabIndex = 26;
+			this.btnClearMount.Text = "X";
+			this.btnClearMount.UseVisualStyleBackColor = false;
+			this.btnClearMount.Click += new System.EventHandler(this.btnClearMount_Click);
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.btnClearMount);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.btnWeaponsReport);
 			this.Controls.Add(this.btnMount);
@@ -881,5 +894,6 @@
 		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label txtSupplyUsage;
+		private Controls.GameButton btnClearMount;
 	}
 }

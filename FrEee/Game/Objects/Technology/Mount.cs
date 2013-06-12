@@ -19,8 +19,6 @@ namespace FrEee.Game.Objects.Technology
 
 		public Mount()
 		{
-			if (Galaxy.Current != null)
-				Galaxy.Current.Register(this);
 			AbilityPercentages = new Dictionary<string, IDictionary<int, int>>();
 			AbilityModifiers = new Dictionary<string, IDictionary<int, int>>();
 			TechnologyRequirements = new List<TechnologyRequirement>();

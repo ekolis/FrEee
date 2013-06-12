@@ -156,5 +156,10 @@ namespace FrEee.Modding.Templates
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		public WeaponTypes WeaponType
+		{
+			get { return WeaponInfo == null ? WeaponTypes.None : WeaponInfo.WeaponType; }
+		}
 	}
 }
