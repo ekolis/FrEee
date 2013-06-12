@@ -31,7 +31,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			var angle = here.Location.AngleTo(there.Location);
 			var x = Math.Sin(angle / 180d * Math.PI) * here.Item.Radius;
 			var y = Math.Cos(angle / 180d * Math.PI) * here.Item.Radius;
-			var multiplier = RandomHelper.NextDouble(here.Item.Radius / Math.Max(Math.Abs(x), Math.Abs(y)));
+			var multiplier = RandomHelper.Next(here.Item.Radius / Math.Max(Math.Abs(x), Math.Abs(y)));
 			x *= multiplier;
 			y *= multiplier;
 			return here.Item.GetSector((int)Math.Round(x), (int)Math.Round(y));

@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,10 +88,14 @@ namespace FrEee.Game.Objects.Combat
 			get { return Enumerable.Empty<Component>(); }
 		}
 
-		public void TakeDamage(DamageType damageType, int damage, Battle battle)
+		public int TakeDamage(DamageType damageType, int damage, Battle battle)
 		{
 			// TODO - take into account damage types
-			Hitpoints -= damage;
+			int realDamage;
+			realDamage = Math.Min(Hitpoints, damage);
+			battle.LogSeekerDamage(this, realDamage);
+			Hitpoints -= realDamage;
+			return damage - realDamage;
 			if (Hitpoints <= 0)
 				battle.LogTargetDeath(this);
 		}
@@ -163,6 +168,36 @@ namespace FrEee.Game.Objects.Combat
 		public override string ToString()
 		{
 			return Name;
+		}
+
+
+		public int MaxHitpoints
+		{
+			get
+			{
+				return WeaponInfo.SeekerDurability; // TODO - let mounts affect seeker HP?
+			}
+		}
+
+		public int Repair(int? amount = null)
+		{
+			if (amount == null)
+			{
+				Hitpoints = MaxHitpoints;
+				return 0;
+			}
+			else
+			{
+				var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
+				Hitpoints += actual;
+				return amount.Value - actual;
+			}
+		}
+
+
+		public int HitChance
+		{
+			get { return 1; }
 		}
 	}
 }

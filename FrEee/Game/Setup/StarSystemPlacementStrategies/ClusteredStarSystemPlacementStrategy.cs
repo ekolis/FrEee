@@ -32,7 +32,7 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 			}).OrderBy(p => p.Distances.MinOrDefault());
 			var minDist = ordered.SelectMany(p => p.Distances).MinOrDefault();
 
-			if (RandomHelper.NextInt(2) == 0)
+			if (RandomHelper.Next(2) == 0)
 			{
 				// place a star near other stars, but not near TOO many other stars
 				var ok = ordered.Where(item => item.Distances.FirstOrDefault() == minDist);

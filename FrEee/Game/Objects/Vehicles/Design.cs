@@ -376,23 +376,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
-
-		public int ShieldsMaxHP
-		{
-			get { throw new NotImplementedException(); }
-		}
-
-		public int ArmorMaxHP
-		{
-			get { throw new NotImplementedException(); }
-		}
-
-		public int HullMaxHP
-		{
-			get { throw new NotImplementedException(); }
-		}
-
-
+		
 		/// <summary>
 		/// A design is unlocked if its hull and all used mounts/components are unlocked.
 		/// </summary>

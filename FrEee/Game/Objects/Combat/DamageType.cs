@@ -16,5 +16,27 @@ namespace FrEee.Game.Objects.Combat
 		{
 			return Name;
 		}
+
+		/// <summary>
+		/// Can this damage type damage a target?
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public bool CanDamage(IDamageable target)
+		{
+			// TODO - damage types being unable to affect targets
+			return true;
+		}
+
+		/// <summary>
+		/// Can this damage type target a target?
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public bool CanTarget(IDamageable target)
+		{
+			// TODO - damage types being unable to target targets
+			return true;
+		}
 	}
 }

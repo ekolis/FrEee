@@ -197,7 +197,7 @@ namespace FrEee.Game.Objects.Space
 				var brush = new SolidBrush(Colony.Owner.Color);
 				rect.Width = 5;
 				rect.X++;
-				rect.Y+=2;
+				rect.Y += 2;
 				rect.Height -= 3;
 				rect.X += 1;
 				g.FillRectangle(brush, rect);
@@ -320,10 +320,11 @@ namespace FrEee.Game.Objects.Space
 				return base.Weapons;
 			}
 		}
-		
-		public void TakeDamage(DamageType damageType, int damage, Battle battle)
+
+		public int TakeDamage(DamageType damageType, int damage, Battle battle)
 		{
 			// TODO - planetary damage
+			return damage;
 		}
 
 		/// <summary>
@@ -436,6 +437,55 @@ namespace FrEee.Game.Objects.Space
 				g.DrawEllipse(new Pen(brush), pic.Width * leftovers - 1, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
 				g.FillEllipse(brush, pic.Width * (leftovers + sizeFactor / 4f) - 1, pic.Width * sizeFactor / 4f, pic.Width * sizeFactor / 2f, pic.Height * sizeFactor / 2f);
 			}
+		}
+
+		[DoNotSerialize]
+		public int Hitpoints
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints);
+			}
+			set
+			{
+				// can't set HP of planet!
+			}
+		}
+
+		public int MaxHitpoints
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return Cargo.MaxHitpoints + Colony.Facilities.Sum(f => f.MaxHitpoints);
+			}
+		}
+
+		/// <summary>
+		/// Passes repair on to cargo.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public int Repair(int? amount = null)
+		{
+			if (Cargo != null)
+			{
+				return Cargo.Repair(amount);
+			}
+
+			// nothing to repair
+			if (amount == null)
+				return 0;
+			return amount.Value;
+		}
+
+
+		public int HitChance
+		{
+			get { return 1; }
 		}
 	}
 }

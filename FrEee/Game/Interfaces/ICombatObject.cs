@@ -12,7 +12,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A space object that fire weapons and be targeted by weapons.
 	/// </summary>
-	public interface ICombatObject : IPictorial, IOwnable
+	public interface ICombatObject : IPictorial, IOwnable, IDamageable
 	{
 		/// <summary>
 		/// Can this object fire on another space object?
@@ -30,28 +30,5 @@ namespace FrEee.Game.Interfaces
 		/// Any undamaged weapons this space object is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }
-
-		/// <summary>
-		/// Inflicts damage on this space object.
-		/// </summary>
-		/// <param name="damageType"></param>
-		/// <param name="damage"></param>
-		/// <param name="battle">For logging</param>
-		void TakeDamage(DamageType damageType, int damage, Battle battle);
-
-		/// <summary>
-		/// Is this object destroyed?
-		/// </summary>
-		bool IsDestroyed { get; }
-
-		int NormalShields { get; set; }
-
-		int PhasedShields { get; set; }
-
-		int MaxNormalShields { get; }
-
-		int MaxPhasedShields { get; }
-
-		void ReplenishShields();
 	}
 }

@@ -132,10 +132,10 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public void TakeDamage(DamageType damageType, int damage, Battle battle)
+		public int TakeDamage(DamageType damageType, int damage, Battle battle)
 		{
 			if (IsDestroyed)
-				return; // she canna take any more!
+				return damage; // she canna take any more!
 
 			// TODO - worry about damage types
 			int shieldDmg = 0;
@@ -155,21 +155,14 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			if (shieldDmg > 0)
 				battle.LogShieldDamage(this.CombatObject, shieldDmg);
-			var comps = Components.Where(c => c.Hitpoints > 0);
-			var comp = comps.PickRandom();
-			if (comp.Hitpoints < damage)
+			while (damage > 0 && !IsDestroyed)
 			{
-				var actualDamage = comp.Hitpoints;
-				var leftover = damage - comp.Hitpoints;
-				comp.Hitpoints = 0;
-				battle.LogComponentDamage(comp, actualDamage);
-				TakeDamage(damageType, leftover, battle);
+				var comps = Components.Where(c => c.Hitpoints > 0);
+				var comp = comps.PickRandom();
+				damage = comp.TakeDamage(damageType, damage, battle);
 			}
-			else
-			{
-				comp.Hitpoints -= damage;
-				battle.LogComponentDamage(comp, damage);
-			}
+
+			return damage;
 		}
 
 		/// <summary>
@@ -235,6 +228,53 @@ namespace FrEee.Game.Objects.Vehicles
 			Galaxy.Current.Unregister(this);
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
+		}
+
+		[DoNotSerialize]
+		public int Hitpoints
+		{
+			get
+			{
+				return Components.Sum(c => c.Hitpoints);
+			}
+			set
+			{
+				throw new NotSupportedException("Cannot directly set the hitpoints of a vehicle. Its hitpoints are determined by its components.");
+			}
+		}
+
+		public int MaxHitpoints
+		{
+			get { return Components.Sum(c => c.MaxHitpoints); }
+		}
+
+		/// <summary>
+		/// Repairs a specified number of components.
+		/// </summary>
+		/// <param name="amount"></param>
+		/// <returns></returns>
+		public int Repair(int? amount = null)
+		{
+			if (amount == null)
+			{
+				foreach (var comp in Components)
+					comp.Repair();
+				return 0;
+			}
+			else
+			{
+				// repair most-damage components first
+				// TODO - other repair priorities
+				foreach (var comp in Components.OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
+					amount = comp.Repair(amount);
+				return amount.Value;
+			}
+		}
+
+
+		public int HitChance
+		{
+			get { return 1; }
 		}
 	}
 }

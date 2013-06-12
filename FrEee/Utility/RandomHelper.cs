@@ -14,9 +14,19 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static int NextInt(int upper)
+		public static int Next(int upper)
 		{
 			return rng.Next(upper);
+		}
+
+		/// <summary>
+		/// Generates a random number >= 0 but less than the upper bound.
+		/// </summary>
+		/// <param name="upper">The upper bound.</param>
+		/// <returns></returns>
+		public static long Next(long upper)
+		{
+			return Next(upper / int.MaxValue) * int.MaxValue + Next(upper % int.MaxValue);
 		}
 
 		/// <summary>
@@ -35,7 +45,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static double NextDouble(double upper)
+		public static double Next(double upper)
 		{
 			return rng.NextDouble() * upper;
 		}

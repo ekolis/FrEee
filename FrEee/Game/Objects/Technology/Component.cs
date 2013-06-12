@@ -2,6 +2,8 @@
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat;
 using FrEee.Modding.Templates;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable
 	{
 		public Component(MountedComponentTemplate template)
 		{
@@ -97,6 +99,95 @@ namespace FrEee.Game.Objects.Technology
 		public override string ToString()
 		{
 			return Name;
+		}
+
+
+		/// <summary>
+		/// Components don't actually have shields; they just generate them for the vehicle.
+		/// </summary>
+		[DoNotSerialize]
+		public int NormalShields
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+				throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
+			}
+		}
+
+		/// <summary>
+		/// Components don't actually have shields; they just generate them for the vehicle.
+		/// </summary>
+		[DoNotSerialize]
+		public int PhasedShields
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+				throw new NotSupportedException("Components don't actually have shields; they just generate them for the vehicle.");
+			}
+		}
+
+		public int MaxHitpoints
+		{
+			get { return Template.Durability; }
+		}
+
+		public int MaxNormalShields
+		{
+			get { return 0; }
+		}
+
+		public int MaxPhasedShields
+		{
+			get { return 0; }
+		}
+
+		public void ReplenishShields()
+		{
+			// nothing to do
+		}
+
+		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		{
+			// TODO - take into account damage types
+			int realDamage;
+			realDamage = Math.Min(Hitpoints, damage);
+			battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage!"));
+			Hitpoints -= realDamage;
+			return damage - realDamage;
+		}
+
+
+		public int Repair(int? amount = null)
+		{
+			if (amount == null)
+			{
+				Hitpoints = MaxHitpoints;
+				return 0;
+			}
+			else
+			{
+				var actual = Math.Min(MaxHitpoints - Hitpoints, amount.Value);
+				Hitpoints += actual;
+				return amount.Value - actual;
+			}
+		}
+
+		/// <summary>
+		/// Component hit chances are normally determined by their maximum hitpoints.
+		/// This is what makes leaky armor work.
+		/// </summary>
+		public int HitChance
+		{
+			// TODO - moddable hit chance
+			get { return MaxHitpoints; }
 		}
 	}
 }

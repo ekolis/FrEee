@@ -164,6 +164,16 @@ namespace FrEee.Game.Objects.Combat
 
 		}
 
+		public void LogPopulationDamage(Race race, int casualties)
+		{
+			Log.Add(race.CreateLogMessage(casualties.ToUnitString(3, true) + " " + race + " are killed!"));
+		}
+
+		public void LogSeekerDamage(Seeker seeker, int damage)
+		{
+			Log.Add(seeker.CreateLogMessage(seeker + " takes " + damage + " damage!"));
+		}
+
 		public void LogTargetDeath(ICombatObject defender)
 		{
 			Log.Add(new PictorialLogMessage<ICombatObject>(defender + " is destroyed!", defender));

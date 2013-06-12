@@ -203,7 +203,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (!src.Any())
 				return default(T);
-			return src.ElementAt(RandomHelper.NextInt(src.Count()));
+			return src.ElementAt(RandomHelper.Next(src.Count()));
 		}
 
 		/// <summary>
@@ -215,8 +215,28 @@ namespace FrEee.Utility.Extensions
 		public static T PickWeighted<T>(this IDictionary<T, int> src)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.NextInt(total);
+			var num = RandomHelper.Next(total);
 			int sofar = 0;
+			foreach (var kvp in src)
+			{
+				sofar += kvp.Value;
+				if (num < sofar)
+					return kvp.Key;
+			}
+			return default(T); // nothing to pick...
+		}
+
+		/// <summary>
+		/// Picks a random element from a weighted sequence.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static T PickWeighted<T>(this IDictionary<T, long> src)
+		{
+			var total = src.Sum(kvp => kvp.Value);
+			var num = RandomHelper.Next(total);
+			long sofar = 0;
 			foreach (var kvp in src)
 			{
 				sofar += kvp.Value;
@@ -235,7 +255,7 @@ namespace FrEee.Utility.Extensions
 		public static T PickWeighted<T>(this IDictionary<T, double> src)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.NextDouble(total);
+			var num = RandomHelper.Next(total);
 			double sofar = 0;
 			foreach (var kvp in src)
 			{
@@ -253,7 +273,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src)
 		{
-			return src.OrderBy(t => RandomHelper.NextInt(int.MaxValue));
+			return src.OrderBy(t => RandomHelper.Next(int.MaxValue));
 		}
 
 		public static T MinOrDefault<T>(this IEnumerable<T> stuff)

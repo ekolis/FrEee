@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Utility.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +19,28 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return false; }
 		}
 
-		public override void Place(Interfaces.ISpaceObject target)
+		public override void Place(ISpaceObject target)
 		{
-			// TODO - place units in cargo once we have cargo
-			throw new NotImplementedException("Units need to go in cargo when constructed. But we haven't implemented cargo yet...");
+			if (target is ICargoContainer)
+			{
+				var container = (ICargoContainer)target;
+				var cargo = container.Cargo;
+				if (cargo.Size + Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(this);
+					return;
+				}
+			}
+			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoContainer>().Where(cc => cc.Owner == Owner))
+			{
+				var cargo = container.Cargo;
+				if (cargo.Size + Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(this);
+					return;
+				}
+			}
+			Owner.Log.Add(this.CreateLogMessage(this + " was lost due to insufficient cargo space at " + target + "."));
 		}
 
 		public override Interfaces.ICombatObject CombatObject

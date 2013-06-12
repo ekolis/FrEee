@@ -63,6 +63,7 @@
     <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\IConstructionTemplate.cs" />
     <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
+    <Compile Include="Game\Interfaces\IDamageable.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
