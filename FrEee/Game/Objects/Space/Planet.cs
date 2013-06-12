@@ -321,9 +321,42 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int TakeDamage(DamageType damageType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
 		{
-			// TODO - planetary damage
+			if (Colony == null)
+				return damage; // uninhabited planets can't take damage
+
+			// for now, have a 50% chance to hit population first and a 50% chance to hit cargo first
+			// TODO - base the chance to hit population vs. cargo on relative HP or something?
+			var coin = RandomHelper.Next(2);
+			int leftover;
+			if (coin == 0)
+				leftover = TakePopulationDamage(dmgType, damage, battle);
+			else
+				leftover = Cargo.TakeDamage(dmgType, damage, battle);
+			if (coin == 0)
+				return Cargo.TakeDamage(dmgType, leftover, battle);
+			else
+				return TakePopulationDamage(dmgType, damage, battle);
+		}
+
+		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
+		{
+			var killed = new SafeDictionary<Race, int>();
+			for (int i = 0; i < damage; i++)
+			{
+				// pick a race and kill some population
+				var race = Colony.Population.PickWeighted();
+				// TODO - moddable population HP
+				int popHPPerMillion = 100;
+				int popKilled = (int)1e6 / popHPPerMillion;
+				Colony.Population[race] -= popKilled;
+				killed[race] += popKilled;
+			}
+			foreach (var race in killed.Keys)
+			{
+				battle.LogPopulationDamage(race, killed[race]);
+			}
 			return damage;
 		}
 

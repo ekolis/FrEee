@@ -89,5 +89,10 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

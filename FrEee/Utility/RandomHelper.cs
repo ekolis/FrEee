@@ -26,7 +26,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static long Next(long upper)
 		{
-			return Next(upper / int.MaxValue) * int.MaxValue + Next(upper % int.MaxValue);
+			return Next((int)(upper / int.MaxValue / 2)) * int.MaxValue * 2 + Next((int)(upper % ((long)int.MaxValue))) * 2 + Next(2);
 		}
 
 		/// <summary>
