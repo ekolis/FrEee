@@ -17,5 +17,16 @@ namespace FrEee.Game.Objects.Technology
 		/// The durability of the seeker.
 		/// </summary>
 		public int SeekerDurability { get; set; }
+
+		public override Enumerations.WeaponTypes WeaponType
+		{
+			get
+			{
+				if (IsPointDefense)
+					return Enumerations.WeaponTypes.SeekingPointDefense;
+				else
+					return Enumerations.WeaponTypes.Seeking;
+			}
+		}
 	}
 }

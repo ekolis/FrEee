@@ -88,7 +88,7 @@ namespace FrEee.Modding.Loaders
 						dfw.AccuracyModifier = rec.GetInt("Weapon Modifier", ref index, true, 0, true);
 						w = dfw;
 					}
-					else if (wfield.Value == "Warhead")
+					else if (wfield.Value == "Warhead" || wfield.Value == "Warhead Point-Defense")
 					{
 						var ww = new WarheadWeaponInfo();
 						w = ww;

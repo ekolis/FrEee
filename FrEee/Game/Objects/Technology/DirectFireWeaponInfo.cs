@@ -12,5 +12,16 @@ namespace FrEee.Game.Objects.Technology
 		/// Accuracy bonus or penalty for this weapon.
 		/// </summary>
 		public int AccuracyModifier { get; set; }
+
+		public override Enumerations.WeaponTypes WeaponType
+		{
+			get
+			{
+				if (IsPointDefense)
+					return Enumerations.WeaponTypes.DirectPointDefense;
+				else
+					return Enumerations.WeaponTypes.Direct;
+			}
+		}
 	}
 }

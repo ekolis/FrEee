@@ -48,7 +48,7 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - change the number at the end to match whatever number of data files we have
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 11;
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 12;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -111,6 +111,13 @@ namespace FrEee.Modding
 				status.Progress += progressPerFile;
 
 			if (status != null)
+				status.Message = "Loading CompEnhancement.txt";
+			CurrentFileName = Path.Combine(datapath, "CompEnhancement.txt");
+			new MountLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
+			if (status != null)
 				status.Message = "Loading StellarAbilityTypes.txt";
 			CurrentFileName = Path.Combine(datapath, "StellarAbilityTypes.txt");
 			new StellarAbilityLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
@@ -155,6 +162,7 @@ namespace FrEee.Modding
 			FacilityTemplates = new List<FacilityTemplate>();
 			Hulls = new List<IHull<IVehicle>>();
 			ComponentTemplates = new List<ComponentTemplate>();
+			Mounts = new List<Mount>();
 			StellarObjectSizes = new List<StellarObjectSize>();
 			StarSystemTemplates = new List<StarSystemTemplate>();
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
@@ -211,6 +219,11 @@ namespace FrEee.Modding
 		/// The components in the mod.
 		/// </summary>
 		public ICollection<ComponentTemplate> ComponentTemplates { get; private set; }
+
+		/// <summary>
+		/// The component mounts in the mod.
+		/// </summary>
+		public ICollection<Mount> Mounts { get; private set; }
 
 		/// <summary>
 		/// Templates for stellar abilities.

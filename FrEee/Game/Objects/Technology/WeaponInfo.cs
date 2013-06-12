@@ -57,5 +57,10 @@ namespace FrEee.Game.Objects.Technology
 		/// Not sure what this is for, maybe the AI?
 		/// </summary>
 		public string Family { get; set; }
+
+		/// <summary>
+		/// The weapon type of this weapon.
+		/// </summary>
+		public abstract WeaponTypes WeaponType { get; }
 	}
 }

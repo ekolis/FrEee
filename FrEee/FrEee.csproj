@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\WeaponTypes.cs" />
     <Compile Include="Game\Enumerations\WeaponTargets.cs" />
     <Compile Include="Game\Enumerations\StellarSize.cs" />
     <Compile Include="Game\Enumerations\VehicleTypes.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />
+    <Compile Include="Modding\Loaders\MountLoader.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />

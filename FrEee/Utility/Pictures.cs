@@ -100,7 +100,7 @@ namespace FrEee.Utility
 			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
 			genericPictures.Add(typeof(IHull<IVehicle>), img);
 
-			// TODO - race, empire generic pics
+			// TODO - mount, race, empire generic pics
 		}
 
 		/// <summary>
@@ -235,6 +235,40 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Pictures", "Components", c.PictureName)) ??
 					GetGenericImage(c.GetType());
+			}
+		}
+
+		/// <summary>
+		/// Gets the icon image for a mount.
+		/// </summary>
+		public static Image GetIcon(Mount m)
+		{
+			var portrait = GetPortrait(m);
+			if (portrait == null)
+				return null;
+			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+		}
+
+		/// <summary>
+		/// Gets the portrait image for a mount.
+		/// </summary>
+		public static Image GetPortrait(Mount m)
+		{
+			if (m.PictureName == null)
+				return GetGenericImage(m.GetType());
+			if (Mod.Current.RootPath != null)
+			{
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Mounts", m.PictureName)) ??
+					GetCachedImage(Path.Combine("Pictures", "Mounts", m.PictureName)) ??
+					GetGenericImage(m.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				return
+					GetCachedImage(Path.Combine("Pictures", "Mounts", m.PictureName)) ??
+					GetGenericImage(m.GetType());
 			}
 		}
 

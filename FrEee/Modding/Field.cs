@@ -44,5 +44,117 @@ namespace FrEee.Modding
 		{
 			return Name + " := " + Value;
 		}
+
+		/// <summary>
+		/// Parses a field as a double and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public double DoubleValue(Record rec)
+		{
+			double d;
+			if (!double.TryParse(Value, out d))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a double.", Mod.CurrentFileName, rec, this));
+			return d;
+		}
+
+		/// <summary>
+		/// Parses a field as an integer and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public int IntValue(Record rec)
+		{
+			int i;
+			if (!int.TryParse(Value, out i))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an integer.", Mod.CurrentFileName, rec, this));
+			return i;
+		}
+
+		/// <summary>
+		/// Parses a field as a boolean and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public bool BoolValue(Record rec)
+		{
+			bool b;
+			if (!bool.TryParse(Value, out b))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a boolean.", Mod.CurrentFileName, rec, this));
+			return b;
+		}
+
+		/// <summary>
+		/// Parses a field as an enum and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public T EnumValue<T>(Record rec) where T : struct
+		{
+			T t;
+			if (!Enum.TryParse<T>(Value, out t))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as an enumerated value of type " + typeof(T).Name + ".", Mod.CurrentFileName, rec, this));
+			return t;
+		}
+
+		/// <summary>
+		/// Parses a field as a nullable double.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public double? NullDoubleValue()
+		{
+			double d;
+			if (!double.TryParse(Value, out d))
+				return null;
+			return d;
+		}
+
+		/// <summary>
+		/// Parses a field as a nullable integer.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public int? NullIntValue()
+		{
+			int i;
+			if (!int.TryParse(Value, out i))
+				return null;
+			return i;
+		}
+
+		/// <summary>
+		/// Parses a field as a nullable boolean.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public bool? NullBoolValue()
+		{
+			bool b;
+			if (!bool.TryParse(Value, out b))
+				return null;
+			return b;
+		}
+
+		/// <summary>
+		/// Parses a field as a nullable enum.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public T? NullEnumValue<T>() where T : struct
+		{
+			T t;
+			if (!Enum.TryParse<T>(Value, out t))
+				return null;
+			return t;
+		}
 	}
 }

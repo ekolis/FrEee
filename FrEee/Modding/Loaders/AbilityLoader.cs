@@ -47,8 +47,58 @@ namespace FrEee.Modding.Loaders
 					abil.Values.Add(temp);
 				start++;
 
+				// TODO - abilities with more or less than 2 values?
+
 				yield return abil;
 			}
+		}
+
+		/// <summary>
+		/// Loads ability percentages or modifiers.
+		/// </summary>
+		/// <param name="rec"></param>
+		/// <param name="what"></param>
+		/// <returns></returns>
+		public static IDictionary<string, IEnumerable<int>> LoadPercentagesOrModifiers(Record rec, string what)
+		{
+			var dict = new Dictionary<string, IEnumerable<int>>();
+			int count = 0;
+			int start = 0;
+			while (true)
+			{
+				count++;
+				string abilName;
+				var vals = new List<int>();
+
+				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start, true);
+				if (nameField == null)
+					break; // no more abilities
+
+				abilName = nameField.Value;
+
+				dict.Add(abilName, vals);
+
+				int vcount = 0;
+				while (true)
+				{
+					vcount++;
+					var valField = rec.FindField(new string[]
+						{
+							"Ability " + count + " " + what + " " + vcount,
+							"Ability " + count + " " + what,
+							"Ability " + what + " " + vcount,
+							"Ability " + what
+						}, ref start, false, start, true);
+
+					if (valField == null)
+						break; // no more values
+
+					vals.Add(valField.IntValue(rec));
+				}
+
+				dict.Add(abilName, vals);
+			}
+			return dict;
 		}
 	}
 }
