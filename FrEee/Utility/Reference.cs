@@ -28,24 +28,24 @@ namespace FrEee.Utility
 			}
 			else if (Galaxy.Current.Referrables[0].Contains(t))
 			{
-				ID = t.ID;
+				ID = Galaxy.Current.Referrables[0].IndexOf(t);
 				IsGlobal = true;
 			}
 			else if (Galaxy.Current.Referrables.Count - 1 >= EmpireNumber && Galaxy.Current.Referrables[EmpireNumber].Contains(t))
 			{
-				ID = t.ID;
+				ID = Galaxy.Current.Referrables[EmpireNumber].IndexOf(t);
 				IsGlobal = false;
 			}
 			else
 			{
 				if (Empire.Current == null)
 				{
-					ID = t.ID = Galaxy.Current.Register(t);
+					ID = Galaxy.Current.Register(t);
 					IsGlobal = true;
 				}
 				else
 				{
-					ID = t.ID = Galaxy.Current.Register(t, Empire.Current);
+					ID = Galaxy.Current.Register(t, Empire.Current);
 					IsGlobal = false;
 				}
 			}
