@@ -202,7 +202,18 @@ namespace FrEee.WinForms.Controls
 								var count = g.Count();
 								var aspect = owner.Icon;
 								if (owner.Icon != null)
-									pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
+								{
+									var mode = pe.Graphics.InterpolationMode;
+									if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
+									{
+										pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize * 2, insigniaSize * 2);
+										pe.Graphics.InterpolationMode = mode;
+									}
+									else
+										pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
+			
+								}
 								// TODO - cache font and brush assets
 								pe.Graphics.DrawString(count.ToString(), new Font("Sans Serif", insigniaSize), new SolidBrush(owner.Color), cornerx + insigniaSize, cornery + top);
 								top += insigniaSize;

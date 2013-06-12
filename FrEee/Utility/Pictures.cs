@@ -352,14 +352,14 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Insignia", emp.Name)) ??
 					GetCachedImage(Path.Combine("Pictures", "Insignia", emp.Name)) ??
-					GetGenericImage(emp.GetType());
+					GetSolidColorImage(emp.Color);
 			}
 			else
 			{
 				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 				return
 					GetCachedImage(Path.Combine("Pictures", "Insignia", emp.Name)) ??
-					GetGenericImage(emp.GetType());
+					GetSolidColorImage(emp.Color);
 			}
 		}
 
@@ -458,6 +458,14 @@ namespace FrEee.Utility
 				}
 			}
 			return null;
+		}
+
+		public static Image GetSolidColorImage(Color color)
+		{
+			var img = new Bitmap(1, 1);
+			var g = Graphics.FromImage(img);
+			g.Clear(color);
+			return img;
 		}
 	}
 }
