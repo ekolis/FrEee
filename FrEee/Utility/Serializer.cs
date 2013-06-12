@@ -128,8 +128,13 @@ namespace FrEee.Utility
 
 		private static void WriteString(string s, TextWriter w)
 		{
-			// quote strings and escape any backslashes and semicolons inside them
-			w.Write('"' + s.Replace("\\", "\\\\").Replace(";", "\\;").Replace("\"", "\\\"") + '"');
+			if (s == null)
+				w.Write("n");
+			else
+			{
+				// quote strings and escape any backslashes and semicolons inside them
+				w.Write('"' + s.Replace("\\", "\\\\").Replace(";", "\\;").Replace("\"", "\\\"") + '"');
+			}
 
 			// write end object
 			w.WriteLine(";");
@@ -327,8 +332,10 @@ namespace FrEee.Utility
 					if (!s.EndsWith("\\"))
 						foundRealSemicolon = true;
 				}
-				s = s.Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
-				o = s;
+				if (s == "n")
+					o = null;
+				else
+					o = s.Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
 			}
 			else if (type == typeof(Color))
 			{
