@@ -115,7 +115,13 @@ namespace FrEee.Utility
 			var img = portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
 
 			if (sobj is Planet)
-				((Planet)sobj).DrawPopulationBars(img);
+			{
+				var p = (Planet)sobj;
+				if (p.Colony == null)
+					p.DrawStatusIcons(img);
+				else
+					p.DrawPopulationBars(img);
+			}
 
 			return img;
 		}

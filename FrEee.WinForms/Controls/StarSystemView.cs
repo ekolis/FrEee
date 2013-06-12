@@ -157,7 +157,13 @@ namespace FrEee.WinForms.Controls
 							else
 								pic = largest.Portrait.Resize((int)drawsize);
 							if (largest is Planet)
-								((Planet)largest).DrawPopulationBars(pic);
+							{
+								var p = (Planet)largest;
+								if (p.Colony != null)
+									p.DrawPopulationBars(pic);
+								else
+									p.DrawStatusIcons(pic);
+							}
 							pe.Graphics.DrawImage(pic, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 
 							// TODO - draw owner flag

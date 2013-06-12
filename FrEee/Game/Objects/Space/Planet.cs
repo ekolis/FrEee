@@ -407,5 +407,35 @@ namespace FrEee.Game.Objects.Space
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		/// <summary>
+		/// Draws this planet's status icons on a picture.
+		/// If the planet has special abilities (such as ruins), a white square will be drawn.
+		/// If the planet is uncolonized but colonizable with the current empire's technology, a colonizability circle will also be drawn:
+		/// * Green for planets that and breathable by the current empire's primary race.
+		/// * Yellow for planets that and breathable by any subjugated population.
+		/// * Red for other colonizable planets.
+		/// </summary>
+		/// <param name="pic"></param>
+		public void DrawStatusIcons(Image pic)
+		{
+			var g = Graphics.FromImage(pic);
+			var sizeFactor = 1f / 4f;
+			var leftovers = 1f - sizeFactor;
+			if (IntrinsicAbilities.Any())
+				g.FillRectangle(Brushes.White, pic.Width * leftovers - 1, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
+			if (Colony == null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
+			{
+				Brush brush;
+				if (Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere)
+					brush = Brushes.Green;
+				else if (Empire.Current.ColonizedPlanets.Any(p => p.Colony.Population.Any(kvp => kvp.Key.NativeAtmosphere == Atmosphere)))
+					brush = Brushes.Yellow;
+				else
+					brush = Brushes.Red;
+				g.DrawEllipse(new Pen(brush), pic.Width * leftovers - 1, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
+				g.FillEllipse(brush, pic.Width * (leftovers + sizeFactor / 4f) - 1, pic.Width * sizeFactor / 4f, pic.Width * sizeFactor / 2f, pic.Height * sizeFactor / 2f);
+			}
+		}
 	}
 }
