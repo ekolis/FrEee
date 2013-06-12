@@ -149,5 +149,12 @@ namespace FrEee.Modding.Templates
 		{
 			return Name;
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

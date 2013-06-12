@@ -229,5 +229,12 @@ namespace FrEee.Game.Objects.Vehicles
 		/// For grouped vehicles, this would be the group.
 		/// </summary>
 		public abstract ICombatObject CombatObject {get; }
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

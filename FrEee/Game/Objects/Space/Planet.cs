@@ -400,5 +400,12 @@ namespace FrEee.Game.Objects.Space
 			Orders.Remove(o);
 			Orders.Insert(newpos, o);
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

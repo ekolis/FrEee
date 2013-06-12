@@ -13,6 +13,7 @@ using FrEee.Utility;
 using System.Drawing;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -402,5 +403,11 @@ namespace FrEee.Game.Objects.Vehicles
 			return emp.HasUnlocked(Hull) && Components.All(c => emp.HasUnlocked(c.ComponentTemplate) && emp.HasUnlocked(c.Mount));
 		}
 
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

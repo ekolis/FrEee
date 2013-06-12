@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
+using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,13 @@ namespace FrEee.Game.Objects.Civilization
 		public Empire Owner
 		{
 			get { return null; }
+		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
 		}
 	}
 }

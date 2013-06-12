@@ -576,7 +576,6 @@ namespace FrEee.Game.Objects.Space
 			{
 				Referrables[empnum].Add(r); // add to player list
 				int id = Referrables[empnum].Count - 1;
-				r.ID = id;
 				return id;
 			}
 			else
@@ -595,15 +594,36 @@ namespace FrEee.Game.Objects.Space
 			{
 				Referrables[0].Add(r); // add to global list
 				int id = Referrables[0].Count - 1;
-				r.ID = id;
 				return id;
 			}
 			else
 			{
 				int id = Referrables[0].IndexOf(r);
-				r.ID = id;
 				return id;
 			}
+		}
+
+		/// <summary>
+		/// Unregisters something so it can no longer be referenced from the client side by all players.
+		/// </summary>
+		/// <param name="r"></param>
+		public void Unregister(IReferrable r)
+		{
+			var id = Referrables[0].IndexOf(r);
+			if (id >= 0)
+				Referrables[0][id] = null;
+		}
+
+		/// <summary>
+		/// Unregisters something so it can no longer be referenced from the client side by a specific player.
+		/// </summary>
+		/// <param name="r"></param>
+		public void Unregister(IReferrable r, Empire emp)
+		{
+			var empnum = Empires.IndexOf(emp) + 1;
+			var id = Referrables[empnum].IndexOf(r);
+			if (id >= 0)
+				Referrables[empnum][id] = null;
 		}
 
 		/// <summary>

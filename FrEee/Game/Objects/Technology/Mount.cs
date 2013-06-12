@@ -60,5 +60,12 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return null; }
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

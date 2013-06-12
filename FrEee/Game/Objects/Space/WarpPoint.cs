@@ -47,5 +47,12 @@ namespace FrEee.Game.Objects.Space
 				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item.Contains(Target));
 			}
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

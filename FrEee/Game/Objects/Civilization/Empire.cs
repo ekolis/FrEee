@@ -456,5 +456,12 @@ namespace FrEee.Game.Objects.Civilization
 			var cmd = new RemoveOrderCommand<T>(this, target, order);
 			Commands.Add(cmd);
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
 	}
 }

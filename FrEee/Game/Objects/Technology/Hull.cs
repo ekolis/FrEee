@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using System;
@@ -205,6 +206,13 @@ namespace FrEee.Game.Objects.Technology
 		public IDesign<T> CreateDesign()
 		{
 			return new Design<T> { Hull = this };
+		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
 		}
 	}
 }
