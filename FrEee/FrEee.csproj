@@ -82,6 +82,7 @@
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Traits\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
+    <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />

@@ -57,17 +57,30 @@ namespace FrEee.Game.Objects.Combat
 		public void Resolve()
 		{
 			var reloads = new SafeDictionary<Component, double>();
+			var seekers = new Dictionary<Seeker, int>();
 			// fight for 100 rounds, just because
 			for (int i = 0; i < 100; i++)
 			{
 				LogRound(i + 1);
 				// TODO - real 2D combat mechanics
-				foreach (var attacker in Combatants.Where(sobj => sobj.Weapons.Any()).ToArray())
+				foreach (var seeker in seekers.Keys.ToArray())
+				{
+					seekers[seeker]--;
+					if (seekers[seeker] <= 0)
+					{
+						seekers.Remove(seeker);
+						Log.Add(seeker.CreateLogMessage(seeker + " detonates!"));
+						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.Damage[1], this);
+					}
+					else
+						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));
+				}
+				foreach (var attacker in Combatants.Shuffle().Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
 					if (attacker.IsDestroyed)
 						continue;
 
-					var defenders = Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => attacker.CanTarget(sobj));
+					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj));
 					if (!defenders.Any())
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom();
@@ -78,13 +91,25 @@ namespace FrEee.Game.Objects.Combat
 						while (reloads[weapon] <= 0)
 						{
 							// fire
-							// TODO - seekers
-							weapon.Attack(defender, this); // TODO - range and such
-							if (defender.IsDestroyed)
+							var winfo = weapon.Template.ComponentTemplate.WeaponInfo;
+							if (winfo is SeekingWeaponInfo)
 							{
-								if (defender is ISpaceObject)
-									Location.SpaceObjects.Remove((ISpaceObject)defender);
-								break;
+								// launch a seeker
+								var swinfo = (SeekingWeaponInfo)winfo;
+								var seeker = new Seeker(attacker.Owner, weapon, defender);
+								seekers.Add(seeker, 20 / swinfo.SeekerSpeed);
+								LogLaunch(seeker);
+							}
+							else
+							{
+								// direct fire
+								weapon.Attack(defender, this); // TODO - range and accuracy and such
+								if (defender.IsDestroyed)
+								{
+									if (defender is ISpaceObject)
+										Location.SpaceObjects.Remove((ISpaceObject)defender);
+									break;
+								}
 							}
 							// TODO - mounts that affect reload rate?
 							reloads[weapon] += weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;
@@ -118,6 +143,11 @@ namespace FrEee.Game.Objects.Combat
 		public void LogShot(Component weapon)
 		{
 			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + "!", weapon));
+		}
+
+		public void LogLaunch(ICombatObject craft)
+		{
+			Log.Add(new PictorialLogMessage<ICombatObject>("Launches " + craft + "!", craft));
 		}
 
 		public void LogShieldDamage(ICombatObject defender, int damage)

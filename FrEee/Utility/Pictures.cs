@@ -10,6 +10,7 @@ using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using System.Linq;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Utility
 {
@@ -383,6 +384,26 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Pictures", "Leaders", emp.Name)) ??
 					GetGenericImage(emp.GetType());
+			}
+		}
+
+		public static Image GetIcon(Seeker seeker)
+		{
+			if (Mod.Current.RootPath != null)
+			{
+				var fx = (SeekerWeaponDisplayEffect)seeker.WeaponInfo.DisplayEffect;
+				return
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Shipsets", seeker.Owner.ShipsetPath, fx.Name)) ??
+					GetCachedImage(Path.Combine("Pictures", "Shipsets", seeker.Owner.ShipsetPath)) ??
+					GetGenericImage(seeker.GetType());
+			}
+			else
+			{
+				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
+				var fx = (SeekerWeaponDisplayEffect)seeker.WeaponInfo.DisplayEffect;
+				return
+					GetCachedImage(Path.Combine("Pictures", "Shipsets", seeker.Owner.ShipsetPath, fx.Name)) ??
+					GetGenericImage(seeker.GetType());
 			}
 		}
 
