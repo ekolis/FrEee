@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatObject, ICargoContainer, IReferrable
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoContainer, IReferrable
 	{
 		public Planet()
 		{
@@ -298,7 +298,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public override bool CanTarget(ISpaceObject target)
+		public bool CanTarget(ICombatObject target)
 		{
 			// TODO - weapon platforms on planets
 			return false;

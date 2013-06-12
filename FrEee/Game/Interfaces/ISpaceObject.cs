@@ -10,7 +10,7 @@ using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface ISpaceObject : IAbilityObject, IPictorial
+	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable
 	{
 		/// <summary>
 		/// The name of this space object.
@@ -65,7 +65,5 @@ namespace FrEee.Game.Interfaces
 		/// TODO - make supply a resource?
 		/// </summary>
 		bool HasInfiniteSupplies { get; }
-
-		Empire Owner { get; }
 	}
 }

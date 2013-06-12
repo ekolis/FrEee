@@ -527,7 +527,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// replenish shields
-			foreach (var sobj in FindSpaceObjects<ICombatObject>().Flatten().Flatten())
+			foreach (var sobj in FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
 				sobj.ReplenishShields();
 
 			// construction queues

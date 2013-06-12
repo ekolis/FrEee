@@ -57,6 +57,7 @@
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICargoContainer.cs" />
     <Compile Include="Game\Interfaces\ICargoContainerOrder.cs" />
+    <Compile Include="Game\Interfaces\ICombatSpaceObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
     <Compile Include="Game\Interfaces\ICommandable.cs" />
     <Compile Include="Game\Interfaces\IConstructable.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObjectOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
+    <Compile Include="Game\Interfaces\IOwnable.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />

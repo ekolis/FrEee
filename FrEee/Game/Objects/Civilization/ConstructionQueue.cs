@@ -13,7 +13,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Civilization
 {
 	[Serializable]
-	public class ConstructionQueue : IOrderable
+	public class ConstructionQueue : IOrderable, IOwnable
 	{
 		public ConstructionQueue(ISpaceObject sobj)
 		{

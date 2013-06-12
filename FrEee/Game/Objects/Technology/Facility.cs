@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable
+	public class Facility : IAbilityObject, IConstructable, IOwnable
 	{
 		public Facility(FacilityTemplate template)
 		{

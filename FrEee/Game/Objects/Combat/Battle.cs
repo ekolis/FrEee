@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			Location = location;
 			Log = new List<LogMessage>();
-			Empires = Location.SpaceObjects.OfType<ICombatObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Combatants = Location.SpaceObjects.OfType<ICombatObject>().ToArray();
 		}
 
@@ -62,7 +62,7 @@ namespace FrEee.Game.Objects.Combat
 			{
 				LogRound(i + 1);
 				// TODO - real 2D combat mechanics
-				foreach (var attacker in Location.SpaceObjects.OfType<ICombatObject>().Where(sobj => sobj.Weapons.Any()).ToArray())
+				foreach (var attacker in Combatants.Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
 					if (attacker.IsDestroyed)
 						continue;
@@ -78,10 +78,12 @@ namespace FrEee.Game.Objects.Combat
 						while (reloads[weapon] <= 0)
 						{
 							// fire
+							// TODO - seekers
 							weapon.Attack(defender, this); // TODO - range and such
 							if (defender.IsDestroyed)
 							{
-								Location.SpaceObjects.Remove(defender);
+								if (defender is ISpaceObject)
+									Location.SpaceObjects.Remove((ISpaceObject)defender);
 								break;
 							}
 							// TODO - mounts that affect reload rate?
@@ -139,12 +141,12 @@ namespace FrEee.Game.Objects.Combat
 
 		public System.Drawing.Image Icon
 		{
-			get { return Combatants.Largest().Icon; }
+			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
 		}
 
 		public System.Drawing.Image Portrait
 		{
-			get { return Combatants.Largest().Portrait; }
+			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 	}
 }

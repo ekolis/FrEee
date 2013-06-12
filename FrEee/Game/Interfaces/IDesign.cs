@@ -15,7 +15,7 @@ namespace FrEee.Game.Interfaces
 	/// A vehicle design.
 	/// </summary>
 	[ClientSafe]
-	public interface IDesign : INamed, IPictorial, IAbilityObject, IConstructionTemplate
+	public interface IDesign : INamed, IPictorial, IAbilityObject, IConstructionTemplate, IOwnable
 	{
 		/// <summary>
 		/// The name of the design.

@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
-		public bool CanTarget(ISpaceObject target)
+		public bool CanTarget(ICombatObject target)
 		{
 			// TODO - alliances
 			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(WeaponTargetType));

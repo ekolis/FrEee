@@ -7,10 +7,10 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// Something that can be referred to from the client side using an ID.
+	/// Something which can be owned by an empire.
 	/// </summary>
-	public interface IReferrable : IDisposable, IOwnable
+	public interface IOwnable
 	{
-
+		Empire Owner { get; }
 	}
 }
