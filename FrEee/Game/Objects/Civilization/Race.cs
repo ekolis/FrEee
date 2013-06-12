@@ -31,12 +31,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Color Color { get; set; }
 
-		/// <summary>
-		/// The name of the shipset, relative to Pictures/Shipsets.
-		/// </summary>
-		public string ShipsetPath { get; set; }
-
-		/// <summary>
+				/// <summary>
 		/// The atmosphere which this race breathes.
 		/// </summary>
 		public string NativeAtmosphere { get; set; }

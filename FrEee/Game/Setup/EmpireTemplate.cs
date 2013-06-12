@@ -81,8 +81,8 @@ namespace FrEee.Game.Setup
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
 			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.Name;
-			emp.ShipsetPath = ShipsetPathOverride ?? PrimaryRace.ShipsetPath;
-			emp.LeaderPortraitName = LeaderPortraitNameOverride;
+			emp.ShipsetPath = ShipsetPathOverride ?? PrimaryRace.Name;
+			emp.LeaderPortraitName = LeaderPortraitNameOverride ?? PrimaryRace.Name;
 			emp.AI = AIOverride ?? PrimaryRace.AI;
 
 			return emp;
