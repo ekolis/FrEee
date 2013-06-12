@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -55,6 +56,7 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public void Resolve()
 		{
+			var reloads = new SafeDictionary<Component, double>();
 			// fight for 100 rounds, just because
 			for (int i = 0; i < 100; i++)
 			{
@@ -73,12 +75,21 @@ namespace FrEee.Game.Objects.Combat
 					LogSalvo(attacker, defender);
 					foreach (var weapon in attacker.Weapons.Where(w => w.CanTarget(defender)))
 					{
-						weapon.Attack(defender, this); // TODO - range and such
-						if (defender.IsDestroyed)
+						while (reloads[weapon] <= 0)
 						{
-							Location.SpaceObjects.Remove(defender);
-							break;
+							// fire
+							weapon.Attack(defender, this); // TODO - range and such
+							if (defender.IsDestroyed)
+							{
+								Location.SpaceObjects.Remove(defender);
+								break;
+							}
+							// TODO - mounts that affect reload rate?
+							reloads[weapon] = weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;
 						}
+
+						// reload
+						reloads[weapon] -= 1;
 					}
 				}
 			}
@@ -118,7 +129,7 @@ namespace FrEee.Game.Objects.Combat
 				Log.Add(new PictorialLogMessage<Component>(component + " takes " + damage + " damage and is destroyed!", component));
 			else
 				Log.Add(new PictorialLogMessage<Component>(component + " takes " + damage + " damage!", component));
-			
+
 		}
 
 		public void LogTargetDeath(ICombatObject defender)

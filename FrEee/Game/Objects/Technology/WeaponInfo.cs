@@ -36,7 +36,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The number of turns after firing that the weapon must wait to fire again. (1 means the weapon can fire every turn.)
 		/// </summary>
-		public int ReloadRate { get; set; }
+		public double ReloadRate { get; set; }
 
 		/// <summary>
 		/// The display effect used for this weapons.
