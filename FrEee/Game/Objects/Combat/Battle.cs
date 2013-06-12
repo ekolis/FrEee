@@ -85,7 +85,7 @@ namespace FrEee.Game.Objects.Combat
 								break;
 							}
 							// TODO - mounts that affect reload rate?
-							reloads[weapon] = weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;
+							reloads[weapon] += weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;
 						}
 
 						// reload
