@@ -96,6 +96,8 @@ namespace FrEee.Game.Objects.Technology
 
 		public int GetNextLevelCost(Empire emp)
 		{
+			if (emp == null)
+				return LevelCost;
 			return GetLevelCost(emp.ResearchedTechnologies[this] + 1);
 		}
 
@@ -119,6 +121,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return 0;
 				return Empire.Current.ResearchedTechnologies[this];
 			}
 		}
@@ -131,6 +135,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return new Progress(0, LevelCost);
 				return Empire.Current.ResearchProgress.SingleOrDefault(p => p.Item == this);
 			}
 		}
@@ -143,6 +149,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return new Progress(0, 100);
 				return new Progress(Empire.Current.ResearchSpending[this], 100);
 			}
 		}
@@ -169,6 +177,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return Enumerable.Empty<IResearchable>();
 				return expectedResults.Value;
 			}
 		}

@@ -458,7 +458,7 @@ namespace FrEee.Game.Objects.Space
 			var leftovers = 1f - sizeFactor;
 			if (IntrinsicAbilities.Any())
 				g.FillRectangle(Brushes.White, pic.Width * leftovers - 1, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
-			if (Colony == null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
+			if (Colony == null && Empire.Current != null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
 			{
 				Brush brush;
 				if (Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere)

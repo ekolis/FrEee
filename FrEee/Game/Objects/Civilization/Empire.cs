@@ -14,6 +14,7 @@ using FrEee.Game.Objects.Commands;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 using AI = FrEee.Game.Objects.AI.EmpireAI;
 using FrEee.Game.Objects.AI;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -385,9 +386,9 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public IEnumerable<Abilities.Ability> Abilities
+		public IEnumerable<Ability> Abilities
 		{
-			get { return Traits.SelectMany(t => t.Abilities); }
+			get { return Traits == null ? Enumerable.Empty<Ability>() : Traits.SelectMany(t => t.Abilities); }
 		}
 
 		/// <summary>

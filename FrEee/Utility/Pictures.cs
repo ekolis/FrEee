@@ -240,6 +240,8 @@ namespace FrEee.Utility
 
 		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath, int size = 32)
 		{
+			if (shipsetPath == null)
+				return null;
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
@@ -256,6 +258,8 @@ namespace FrEee.Utility
 
 		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
 		{
+			if (shipsetPath == null)
+				return null;
 			if (!hull.PictureNames.Any())
 				return GetGenericImage(hull.GetType());
 			var paths = new List<string>();

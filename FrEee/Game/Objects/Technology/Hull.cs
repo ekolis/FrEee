@@ -58,6 +58,8 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Image GetIcon(string shipsetPath)
 		{
+			if (shipsetPath == null)
+				return null;
 			return Pictures.GetIcon(this, shipsetPath);
 		}
 
@@ -66,6 +68,8 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Image GetPortrait(string shipsetPath)
 		{
+			if (shipsetPath == null)
+				return null;
 			return Pictures.GetPortrait(this, shipsetPath);
 		}
 
@@ -174,6 +178,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return null;
 				return GetIcon(Empire.Current.ShipsetPath);
 			}
 		}
@@ -182,6 +188,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
+				if (Empire.Current == null)
+					return null;
 				return GetPortrait(Empire.Current.ShipsetPath);
 			}
 		}
