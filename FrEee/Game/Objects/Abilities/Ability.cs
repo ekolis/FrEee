@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// Extra data for the ability.
 		/// </summary>
-		public IList<string> Values { get; private set; }
+		public IList<string> Values { get; set; }
 
 		/// <summary>
 		/// The first value of the ability. Not all abilities have values, so this might be null!
@@ -53,7 +53,7 @@ namespace FrEee.Game.Objects.Abilities
 
 		public override string ToString()
 		{
-			return Description;
+			return Description ?? (Name + ": " + string.Join(", ", Values.ToArray()));
 		}
 	}
 

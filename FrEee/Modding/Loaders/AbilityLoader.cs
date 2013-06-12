@@ -59,16 +59,16 @@ namespace FrEee.Modding.Loaders
 		/// <param name="rec"></param>
 		/// <param name="what"></param>
 		/// <returns></returns>
-		public static IDictionary<string, IEnumerable<int>> LoadPercentagesOrModifiers(Record rec, string what)
+		public static IDictionary<string, IDictionary<int, int>> LoadPercentagesOrModifiers(Record rec, string what)
 		{
-			var dict = new Dictionary<string, IEnumerable<int>>();
+			var dict = new Dictionary<string, IDictionary<int,int>>();
 			int count = 0;
 			int start = 0;
 			while (true)
 			{
 				count++;
 				string abilName;
-				var vals = new List<int>();
+				var vals = new Dictionary<int, int>();
 
 				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start, true);
 				if (nameField == null)
@@ -93,7 +93,7 @@ namespace FrEee.Modding.Loaders
 					if (valField == null)
 						break; // no more values
 
-					vals.Add(valField.IntValue(rec));
+					vals.Add(vcount, valField.IntValue(rec));
 				}
 
 				dict.Add(abilName, vals);

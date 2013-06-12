@@ -52,7 +52,8 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get
 			{
@@ -61,7 +62,8 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get
 			{
@@ -78,8 +80,35 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - take into effect mounts
-				return ComponentTemplate.Abilities;
+				return ComponentTemplate.Abilities.Select(a =>
+					{
+						var result = new Ability
+						{
+							Name = a.Name,
+							Values = new List<string>(a.Values),
+							Description = a.Description,
+						};
+						if (Mount != null)
+						{
+							if (Mount.AbilityPercentages.ContainsKey(a.Name))
+							{
+								foreach (var p in Mount.AbilityPercentages[a.Name])
+								{
+									result.Values[p.Key] = (double.Parse(result.Values[p.Key]) * p.Value / 100).ToString();
+									a.Description = null; // values have been modified, need to use generic description
+								}
+							}
+							if (Mount.AbilityModifiers.ContainsKey(a.Name))
+							{
+								foreach (var m in Mount.AbilityModifiers[a.Name])
+								{
+									result.Values[m.Key] = (double.Parse(result.Values[m.Key]) + m.Value).ToString();
+									a.Description = null; // values have been modified, need to use generic description
+								}
+							}
+						}
+						return result;
+					});
 			}
 		}
 
@@ -87,8 +116,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - take into effect mounts
-				return ComponentTemplate.Size;
+				if (Mount == null)
+					return ComponentTemplate.Size;
+				return ComponentTemplate.Size * Mount.SizePercent / 100;
 			}
 		}
 
@@ -96,8 +126,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - take into effect mounts
-				return ComponentTemplate.Cost;
+				if (Mount == null)
+					return ComponentTemplate.Cost;
+				return ComponentTemplate.Cost * Mount.CostPercent / 100;
 			}
 		}
 
@@ -105,8 +136,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - take into effect mounts
-				return ComponentTemplate.SupplyUsage;
+				if (Mount == null)
+					return ComponentTemplate.SupplyUsage;
+				return ComponentTemplate.SupplyUsage * Mount.SupplyUsagePercent / 100;
 			}
 		}
 
@@ -114,8 +146,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - take into effect mounts
-				return ComponentTemplate.Durability;
+				if (Mount == null)
+					return ComponentTemplate.Durability;
+				return ComponentTemplate.Durability * Mount.DurabilityPercent / 100;
 			}
 		}
 

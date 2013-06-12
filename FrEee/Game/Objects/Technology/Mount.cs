@@ -21,8 +21,8 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
-			AbilityPercentages = new Dictionary<string, IEnumerable<int>>();
-			AbilityModifiers = new Dictionary<string, IEnumerable<int>>();
+			AbilityPercentages = new Dictionary<string, IDictionary<int, int>>();
+			AbilityModifiers = new Dictionary<string, IDictionary<int, int>>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
 		}
 
@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Percentage of normal component hitpoints.
 		/// </summary>
-		public int HitpointsPercent { get; set; }
+		public int DurabilityPercent { get; set; }
 
 		/// <summary>
 		/// Percentage of normal component supply usage.
@@ -114,7 +114,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Percentage factors for abilities.
 		/// </summary>
-		public IDictionary<string, IEnumerable<int>> AbilityPercentages
+		public IDictionary<string, IDictionary<int, int>> AbilityPercentages
 		{
 			get;
 			set;
@@ -123,7 +123,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Additive modifiers for abilities.
 		/// </summary>
-		public IDictionary<string, IEnumerable<int>> AbilityModifiers
+		public IDictionary<string, IDictionary<int, int>> AbilityModifiers
 		{
 			get;
 			set;
