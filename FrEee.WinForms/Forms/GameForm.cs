@@ -797,5 +797,23 @@ namespace FrEee.WinForms.Forms
 			SelectedSpaceObject = sobj;
 			searchBox.HideResults();
 		}
+
+		private void btnMenu_Click(object sender, EventArgs e)
+		{
+			// TODO - game menu
+			MessageBox.Show("Sorry, the game menu is not yet implemented.");
+		}
+
+		private void btnEmpires_Click(object sender, EventArgs e)
+		{
+			// TODO - empires screen
+			MessageBox.Show("Sorry, the empires screen is not yet implemented.");
+		}
+
+		private void btnShips_Click(object sender, EventArgs e)
+		{
+			// TODO - ships screen
+			MessageBox.Show("Sorry, the ships screen is not yet implemented.");
+		}
 	}
 }

@@ -37,7 +37,6 @@ namespace FrEee.WinForms.Forms
 			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
 			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -75,6 +74,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -337,6 +337,7 @@ namespace FrEee.WinForms.Forms
 			this.btnShips.TabIndex = 4;
 			this.toolTip.SetToolTip(this.btnShips, "Ships");
 			this.btnShips.UseVisualStyleBackColor = false;
+			this.btnShips.Click += new System.EventHandler(this.btnShips_Click);
 			// 
 			// btnEmpires
 			// 
@@ -348,6 +349,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEmpires.TabIndex = 3;
 			this.toolTip.SetToolTip(this.btnEmpires, "Empires");
 			this.btnEmpires.UseVisualStyleBackColor = false;
+			this.btnEmpires.Click += new System.EventHandler(this.btnEmpires_Click);
 			// 
 			// btnPlanets
 			// 
@@ -383,6 +385,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.TabIndex = 1;
 			this.toolTip.SetToolTip(this.btnMenu, "Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
+			this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
 			// 
 			// pnlSubCommands
 			// 
