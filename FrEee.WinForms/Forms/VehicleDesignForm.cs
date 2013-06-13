@@ -189,6 +189,7 @@ namespace FrEee.WinForms.Forms
 				ddlName.Enabled = true;
 				ddlRole.Enabled = true;
 				btnMount.Enabled = true;
+				btnClearMount.Enabled = true;
 			}
 		}
 
