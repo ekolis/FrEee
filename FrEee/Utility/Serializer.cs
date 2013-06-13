@@ -220,8 +220,19 @@ namespace FrEee.Utility
 			{
 				if (isDict)
 				{
-					Serialize(item.GetType().GetProperty("Key").GetValue(item, new object[]{}), w, context, tabLevel + 1);
-					Serialize(item.GetType().GetProperty("Value").GetValue(item, new object[] { }), w, context, tabLevel + 1);
+					if (!context.KnownProperties.ContainsKey(itemType))
+					{
+						var props = new PropertyInfo[]
+						{
+							itemType.GetProperty("Key"),
+							itemType.GetProperty("Value"),
+						};
+						context.KnownProperties.Add(itemType, props);
+					}
+					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
+					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
+					Serialize(keyprop.GetValue(item, new object[]{}), w, context, tabLevel + 1);
+					Serialize(valprop.GetValue(item, new object[] { }), w, context, tabLevel + 1);
 				}
 				else
 					Serialize(item, w, itemType, context, tabLevel + 1);
@@ -493,8 +504,19 @@ namespace FrEee.Utility
 						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
 					for (int i = 0; i < size; i++)
 					{
-						var key = Deserialize(r, itemType.GetProperty("Key").PropertyType, context, log);
-						var val = Deserialize(r, itemType.GetProperty("Value").PropertyType, context, log);
+						if (!context.KnownProperties.ContainsKey(itemType))
+						{
+							var props = new PropertyInfo[]
+						{
+							itemType.GetProperty("Key"),
+							itemType.GetProperty("Value"),
+						};
+							context.KnownProperties.Add(itemType, props);
+						}
+						var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
+						var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
+						var key = Deserialize(r, keyprop.PropertyType, context, log);
+						var val = Deserialize(r, valprop.PropertyType, context, log);
 						adder.Invoke(coll, new object[] { key, val });
 					}
 					o = coll;
