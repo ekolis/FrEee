@@ -193,8 +193,8 @@ namespace FrEee.Game.Objects.Space
 				var rect = new Rectangle(img.Width - 21, 1, 20, 8);
 				var pen = new Pen(Colony.Owner.Color);
 				g.DrawRectangle(pen, rect);
-				// TODO - fill population bar only partway if planet is not full, once colonies actually have population
 				var brush = new SolidBrush(Colony.Owner.Color);
+				var pop = Colony.Population.Sum(kvp => kvp.Value);
 				rect.Width = 5;
 				rect.X++;
 				rect.Y += 2;
@@ -202,9 +202,11 @@ namespace FrEee.Game.Objects.Space
 				rect.X += 1;
 				g.FillRectangle(brush, rect);
 				rect.X += 6;
-				g.FillRectangle(brush, rect);
+				if (pop > MaxPopulation / 3)
+					g.FillRectangle(brush, rect);
 				rect.X += 6;
-				g.FillRectangle(brush, rect);
+				if (pop > MaxPopulation * 2 / 3)
+					g.FillRectangle(brush, rect);
 			}
 		}
 
