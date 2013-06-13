@@ -463,6 +463,7 @@ namespace FrEee.Game.Objects.Space
 				Brush brush;
 				if (Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere)
 					brush = Brushes.Green;
+				// TODO - check population in cargo too
 				else if (Empire.Current.ColonizedPlanets.Any(p => p.Colony.Population.Any(kvp => kvp.Key.NativeAtmosphere == Atmosphere)))
 					brush = Brushes.Yellow;
 				else

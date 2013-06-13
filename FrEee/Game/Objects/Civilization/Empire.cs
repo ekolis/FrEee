@@ -15,6 +15,7 @@ using Tech = FrEee.Game.Objects.Technology.Technology;
 using AI = FrEee.Game.Objects.AI.EmpireAI;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -452,6 +453,15 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				return !Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Any();
 			}
+		}
+
+		/// <summary>
+		/// Can this empire colonize a planet?
+		/// </summary>
+		/// <returns></returns>
+		public bool CanColonize(Planet planet)
+		{
+			return UnlockedItems.OfType<ComponentTemplate>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
 		}
 	}
 }
