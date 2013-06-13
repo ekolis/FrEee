@@ -134,7 +134,7 @@ namespace FrEee.WinForms.Forms
 						mct = new MountedComponentTemplate(comp, CurrentMount);
 					else
 						mct = new MountedComponentTemplate(comp);
-					lstComponentsAvailable.AddItemWithImage(comp.Group, mct.Name, mct, mct.Icon);
+					lstComponentsAvailable.AddItemWithImage(comp.Group, mct.Size.Kilotons() + " " + mct.Name, mct, mct.Icon);
 				}
 			}
 		}
@@ -145,7 +145,7 @@ namespace FrEee.WinForms.Forms
 			if (Design != null)
 			{
 				foreach (var g in Design.Components.GroupBy(mct => mct))
-					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ToString(), g.First(), g.First().Icon);
+					lstComponentsInstalled.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().Size.Kilotons() + " " + g.First().ToString(), g.First(), g.First().Icon);
 			}
 		}
 
