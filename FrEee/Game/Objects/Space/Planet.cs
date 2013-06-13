@@ -200,7 +200,8 @@ namespace FrEee.Game.Objects.Space
 				rect.Y += 2;
 				rect.Height -= 3;
 				rect.X += 1;
-				g.FillRectangle(brush, rect);
+				if (pop > 0)
+					g.FillRectangle(brush, rect);
 				rect.X += 6;
 				if (pop > MaxPopulation / 3)
 					g.FillRectangle(brush, rect);
