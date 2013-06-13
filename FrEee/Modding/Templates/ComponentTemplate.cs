@@ -159,7 +159,7 @@ namespace FrEee.Modding.Templates
 
 		public WeaponTypes WeaponType
 		{
-			get { return WeaponInfo == null ? WeaponTypes.None : WeaponInfo.WeaponType; }
+			get { return WeaponInfo == null ? WeaponTypes.NotAWeapon : WeaponInfo.WeaponType; }
 		}
 	}
 }

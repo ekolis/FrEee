@@ -18,9 +18,9 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (IsPointDefense)
-					return Enumerations.WeaponTypes.DirectPointDefense;
+					return Enumerations.WeaponTypes.DirectFirePointDefense;
 				else
-					return Enumerations.WeaponTypes.Direct;
+					return Enumerations.WeaponTypes.DirectFire;
 			}
 		}
 	}

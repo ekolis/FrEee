@@ -35,8 +35,65 @@ namespace FrEee.Modding.Loaders
 				m.MinimumVehicleSize = rec.GetNullInt("Vehicle Size Minimum", ref index, 0, true);
 				m.MaximumVehicleSize = rec.GetNullInt("Vehicle Size Maximum", ref index, 0, true);
 				m.RequiredComponentFamily = rec.GetNullString("Component Family Requirement", ref index, 0, true);
-				m.WeaponTypes = rec.GetNullEnum<WeaponTypes>("Weapon Type Requirement", ref index) ?? WeaponTypes.All;
-				m.VehicleTypes = rec.GetNullEnum<VehicleTypes>(new string[]{"Vehicle Type", "Vehicle Types", "Vehicle Type Requirement"}, ref index) ?? VehicleTypes.All;
+				var wtstring = rec.GetNullString(new string[]{"Weapon Type Requirement", "Weapon Type"}, ref index);
+				if (wtstring == null)
+					m.WeaponTypes = WeaponTypes.AnyComponent;
+				else
+				{
+					m.WeaponTypes = WeaponTypes.None;
+					foreach (var s in wtstring.Split(',').Select(s => s.Trim()))
+					{
+						if (s == "None") // none here really means not a weapon
+							m.WeaponTypes |= WeaponTypes.NotAWeapon;
+						else if (s == "Direct Fire")
+							m.WeaponTypes |= WeaponTypes.DirectFire;
+						else if (s == "Seeking")
+							m.WeaponTypes |= WeaponTypes.Seeking;
+						else if (s == "Warhead")
+							m.WeaponTypes |= WeaponTypes.Warhead;
+						else if (s == "Point-Defense" || s == "Direct Fire Point-Defense")
+							m.WeaponTypes |= WeaponTypes.DirectFirePointDefense;
+						else if (s == "Seeking Point-Defense")
+							m.WeaponTypes |= WeaponTypes.SeekingPointDefense;
+						else if (s == "Warhead Point-Defense")
+							m.WeaponTypes |= WeaponTypes.WarheadPointDefense;
+						else if (s == "All")
+							m.WeaponTypes |= WeaponTypes.All;
+						else if (s == "Any Component")
+							m.WeaponTypes |= WeaponTypes.AnyComponent;
+						else
+							Mod.Errors.Add(new DataParsingException("Unknown weapon type \"" + s + "\".", Mod.CurrentFileName, rec));
+					}
+				}
+				var vtstring = rec.GetNullString(new string[]{"Vehicle Type", "Vehicle Type Requirement"}, ref index);
+				if (vtstring == null)
+					m.VehicleTypes = VehicleTypes.All;
+				else
+				{
+					m.VehicleTypes = VehicleTypes.None;
+					foreach (var s in vtstring.Split(',').Select(s => s.Trim()))
+					{
+						var vals = Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>();
+						// special cases
+						if (s == "Weapon Platform")
+							m.VehicleTypes |= VehicleTypes.WeaponPlatform;
+						else
+						{
+							bool found = false;
+							foreach (var val in vals)
+							{
+								if (val.ToString() == s)
+								{
+									m.VehicleTypes |= val;
+									found = true;
+									break;
+								}
+							}
+							if (!found)
+								Mod.Errors.Add(new DataParsingException("Unknown vehicle type \"" + s + "\".", Mod.CurrentFileName, rec));
+						}
+					}
+				}
 				m.AbilityPercentages = AbilityLoader.LoadPercentagesOrModifiers(rec, "Percentage");
 				m.AbilityModifiers = AbilityLoader.LoadPercentagesOrModifiers(rec, "Modifier");
 				m.TechnologyRequirements = TechnologyRequirementLoader.Load(rec).ToList();
