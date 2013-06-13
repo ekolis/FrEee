@@ -88,6 +88,7 @@
 			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
 			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
+			this.chkFilterByMount = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
@@ -208,7 +209,7 @@
 			this.chkOnlyLatest.AutoSize = true;
 			this.chkOnlyLatest.Checked = true;
 			this.chkOnlyLatest.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkOnlyLatest.Location = new System.Drawing.Point(167, 139);
+			this.chkOnlyLatest.Location = new System.Drawing.Point(12, 162);
 			this.chkOnlyLatest.Name = "chkOnlyLatest";
 			this.chkOnlyLatest.Size = new System.Drawing.Size(79, 17);
 			this.chkOnlyLatest.TabIndex = 21;
@@ -740,10 +741,10 @@
 			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gamePanel1.Controls.Add(this.lstComponentsAvailable);
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(12, 155);
+			this.gamePanel1.Location = new System.Drawing.Point(12, 181);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(234, 368);
+			this.gamePanel1.Size = new System.Drawing.Size(234, 342);
 			this.gamePanel1.TabIndex = 7;
 			// 
 			// lstComponentsAvailable
@@ -755,7 +756,7 @@
 			this.lstComponentsAvailable.HoverSelection = true;
 			this.lstComponentsAvailable.Location = new System.Drawing.Point(3, 3);
 			this.lstComponentsAvailable.Name = "lstComponentsAvailable";
-			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 360);
+			this.lstComponentsAvailable.Size = new System.Drawing.Size(226, 334);
 			this.lstComponentsAvailable.TabIndex = 0;
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
@@ -787,12 +788,24 @@
 			this.btnClearMount.UseVisualStyleBackColor = false;
 			this.btnClearMount.Click += new System.EventHandler(this.btnClearMount_Click);
 			// 
+			// chkFilterByMount
+			// 
+			this.chkFilterByMount.AutoSize = true;
+			this.chkFilterByMount.Location = new System.Drawing.Point(97, 162);
+			this.chkFilterByMount.Name = "chkFilterByMount";
+			this.chkFilterByMount.Size = new System.Drawing.Size(96, 17);
+			this.chkFilterByMount.TabIndex = 28;
+			this.chkFilterByMount.Text = "Filter By Mount";
+			this.chkFilterByMount.UseVisualStyleBackColor = true;
+			this.chkFilterByMount.CheckedChanged += new System.EventHandler(this.chkFilterByMount_CheckedChanged);
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.chkFilterByMount);
 			this.Controls.Add(this.btnClearMount);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.btnWeaponsReport);
@@ -895,5 +908,6 @@
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label txtSupplyUsage;
 		private Controls.GameButton btnClearMount;
+		private System.Windows.Forms.CheckBox chkFilterByMount;
 	}
 }

@@ -116,11 +116,14 @@ namespace FrEee.WinForms.Forms
 				// filter by vehicle type
 				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
 
-				// filter by can-use-mount
-				comps = comps.Where(comp => CurrentMount == null || (
-					(CurrentMount.RequiredComponentFamily == null || comp.Family == CurrentMount.RequiredComponentFamily) &&
-					CurrentMount.WeaponTypes.HasFlag(comp.WeaponType)
-					));
+				// filter by can-use-mount if the user wants to
+				if (chkFilterByMount.Checked)
+				{
+					comps = comps.Where(comp => CurrentMount == null || (
+						(CurrentMount.RequiredComponentFamily == null || comp.Family == CurrentMount.RequiredComponentFamily) &&
+						CurrentMount.WeaponTypes.HasFlag(comp.WeaponType)
+						));
+				}
 
 				// filter by only-latest
 				if (chkOnlyLatest.Checked)
@@ -387,8 +390,14 @@ namespace FrEee.WinForms.Forms
 					btnMount.Text = "(none)";
 				else
 					btnMount.Text = mount.ShortName;
-				BindAvailableComponents();
+				if (chkFilterByMount.Checked)
+					BindAvailableComponents();
 			}
+		}
+
+		private void chkFilterByMount_CheckedChanged(object sender, EventArgs e)
+		{
+			BindAvailableComponents();
 		}
 	}
 }
