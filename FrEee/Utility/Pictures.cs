@@ -516,7 +516,7 @@ namespace FrEee.Utility
 						return img;
 				}
 			}
-			return null;
+			return GetSolidColorImage(Color.Transparent);
 		}
 
 		public static Image GetSolidColorImage(Color color)
