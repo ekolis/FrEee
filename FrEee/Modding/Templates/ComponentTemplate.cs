@@ -51,12 +51,14 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public string PictureName { get; set; }
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}
@@ -160,6 +162,19 @@ namespace FrEee.Modding.Templates
 		public WeaponTypes WeaponType
 		{
 			get { return WeaponInfo == null ? WeaponTypes.NotAWeapon : WeaponInfo.WeaponType; }
+		}
+
+		/// <summary>
+		/// Can this component use a mount?
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		public bool CanUseMount(Mount m)
+		{
+			return m == null || (
+			   (m.RequiredComponentFamily == null || Family == m.RequiredComponentFamily) &&
+			   m.WeaponTypes.HasFlag(WeaponType)
+			   );
 		}
 	}
 }

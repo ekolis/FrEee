@@ -119,10 +119,7 @@ namespace FrEee.WinForms.Forms
 				// filter by can-use-mount if the user wants to
 				if (chkFilterByMount.Checked)
 				{
-					comps = comps.Where(comp => CurrentMount == null || (
-						(CurrentMount.RequiredComponentFamily == null || comp.Family == CurrentMount.RequiredComponentFamily) &&
-						CurrentMount.WeaponTypes.HasFlag(comp.WeaponType)
-						));
+					comps = comps.Where(comp => comp.CanUseMount(CurrentMount));
 				}
 
 				// filter by only-latest
@@ -131,7 +128,14 @@ namespace FrEee.WinForms.Forms
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)
-					lstComponentsAvailable.AddItemWithImage(comp.Group, comp.Name, comp, comp.Icon);
+				{
+					MountedComponentTemplate mct;
+					if (comp.CanUseMount(CurrentMount))
+						mct = new MountedComponentTemplate(comp, CurrentMount);
+					else
+						mct = new MountedComponentTemplate(comp);
+					lstComponentsAvailable.AddItemWithImage(comp.Group, mct.Name, mct, mct.Icon);
+				}
 			}
 		}
 
@@ -255,7 +259,7 @@ namespace FrEee.WinForms.Forms
 			if (e.Item == null)
 				ShowComponentDetails(null);
 			else
-				ShowComponentDetails(new MountedComponentTemplate((ComponentTemplate)e.Item.Tag, CurrentMount));
+				ShowComponentDetails((MountedComponentTemplate)e.Item.Tag);
 		}
 
 		private void lstComponentsInstalled_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
@@ -338,8 +342,8 @@ namespace FrEee.WinForms.Forms
 				var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
 				if (item != null)
 				{
-					var comp = (ComponentTemplate)item.Tag;
-					Design.Components.Add(new MountedComponentTemplate(comp, CurrentMount));
+					var mct = (MountedComponentTemplate)item.Tag;
+					Design.Components.Add(mct);
 					BindInstalledComponents();
 					BindDesignData();
 				}
@@ -390,8 +394,7 @@ namespace FrEee.WinForms.Forms
 					btnMount.Text = "(none)";
 				else
 					btnMount.Text = mount.ShortName;
-				if (chkFilterByMount.Checked)
-					BindAvailableComponents();
+				BindAvailableComponents();
 			}
 		}
 
