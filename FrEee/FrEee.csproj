@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
     <Compile Include="Game\Enumerations\WeaponTypes.cs" />
     <Compile Include="Game\Enumerations\WeaponTargets.cs" />
     <Compile Include="Game\Enumerations\StellarSize.cs" />

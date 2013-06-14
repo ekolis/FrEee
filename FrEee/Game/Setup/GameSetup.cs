@@ -23,6 +23,7 @@ namespace FrEee.Game.Setup
 		public GameSetup()
 		{
 			EmpireTemplates = new List<EmpireTemplate>();
+			ForbiddenTechnologies = new List<Technology>();
 		}
 
 		/// <summary>
@@ -108,6 +109,17 @@ namespace FrEee.Game.Setup
 		public IList<EmpireTemplate> EmpireTemplates { get; private set; }
 
 		/// <summary>
+		/// The starting technology level for empires.
+		/// TODO - have a separate starting tech level setting for neutrals?
+		/// </summary>
+		public StartingTechnologyLevel StartingTechnologyLevel { get; set; }
+
+		/// <summary>
+		/// Technologies that are locked at level zero.
+		/// </summary>
+		public IList<Technology> ForbiddenTechnologies { get; private set; }
+
+		/// <summary>
 		/// Problems with this game setup.
 		/// </summary>
 		public IEnumerable<string> Warnings
@@ -128,6 +140,10 @@ namespace FrEee.Game.Setup
 		public void PopulateGalaxy(Galaxy gal)
 		{
 			gal.Name = GameName;
+
+			// remove forbidden techs
+			foreach (var tech in ForbiddenTechnologies)
+				gal.Unregister(tech);
 
 			// add players and place homeworlds
 			foreach (var et in EmpireTemplates)
@@ -155,9 +171,21 @@ namespace FrEee.Game.Setup
 				gal.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
 				gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
 
-				// TODO - let game host and/or players configure starting techs
 				foreach (var tech in emp.Referrables.OfType<Technology>())
-					emp.ResearchedTechnologies[tech] = tech.StartLevel;
+				{
+					switch (StartingTechnologyLevel)
+					{
+						case StartingTechnologyLevel.Low:
+							emp.ResearchedTechnologies[tech] = tech.StartLevel;
+							break;
+						case StartingTechnologyLevel.Medium:
+							emp.ResearchedTechnologies[tech] = tech.RaiseLevel;
+							break;
+						case StartingTechnologyLevel.High:
+							emp.ResearchedTechnologies[tech] = tech.MaximumLevel;
+							break;
+					}
+				}
 
 				// TODO - moddable colony techs?
 				string colonyTechName = null;
@@ -229,8 +257,13 @@ namespace FrEee.Game.Setup
 						hw.Colony.Facilities.Add(org.Instantiate());
 					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
 						hw.Colony.Facilities.Add(rad.Instantiate());
-					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
-						hw.Colony.Facilities.Add(res.Instantiate());
+
+					// no research facilities needed at max tech!
+					if (StartingTechnologyLevel != StartingTechnologyLevel.High)
+					{
+						if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+							hw.Colony.Facilities.Add(res.Instantiate());
+					}
 				}
 
 				// mark home systems explored

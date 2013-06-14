@@ -107,6 +107,10 @@
 			this.ddlPresets = new System.Windows.Forms.ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.tabTechnology = new System.Windows.Forms.TabPage();
+			this.label31 = new System.Windows.Forms.Label();
+			this.lstTechs = new System.Windows.Forms.CheckedListBox();
+			this.ddlStartTech = new System.Windows.Forms.ComboBox();
+			this.label30 = new System.Windows.Forms.Label();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
 			this.tabVictory = new System.Windows.Forms.TabPage();
 			this.tabSettings = new System.Windows.Forms.TabPage();
@@ -116,7 +120,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.label30 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -267,6 +270,7 @@
 			// ddlEventSeverity
 			// 
 			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlEventSeverity.Enabled = false;
 			this.ddlEventSeverity.FormattingEnabled = true;
 			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 330);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
@@ -356,6 +360,7 @@
 			// ddlEventFrequency
 			// 
 			this.ddlEventFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlEventFrequency.Enabled = false;
 			this.ddlEventFrequency.FormattingEnabled = true;
 			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 301);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
@@ -1177,6 +1182,9 @@
 			// tabTechnology
 			// 
 			this.tabTechnology.BackColor = System.Drawing.Color.Black;
+			this.tabTechnology.Controls.Add(this.label31);
+			this.tabTechnology.Controls.Add(this.lstTechs);
+			this.tabTechnology.Controls.Add(this.ddlStartTech);
 			this.tabTechnology.Controls.Add(this.label30);
 			this.tabTechnology.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabTechnology.Location = new System.Drawing.Point(4, 29);
@@ -1185,6 +1193,57 @@
 			this.tabTechnology.Size = new System.Drawing.Size(545, 446);
 			this.tabTechnology.TabIndex = 2;
 			this.tabTechnology.Text = "Technology";
+			// 
+			// label31
+			// 
+			this.label31.AutoSize = true;
+			this.label31.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label31.Location = new System.Drawing.Point(3, 42);
+			this.label31.Margin = new System.Windows.Forms.Padding(3);
+			this.label31.Name = "label31";
+			this.label31.Size = new System.Drawing.Size(133, 15);
+			this.label31.TabIndex = 15;
+			this.label31.Text = "Available Technologies";
+			// 
+			// lstTechs
+			// 
+			this.lstTechs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstTechs.BackColor = System.Drawing.Color.Black;
+			this.lstTechs.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstTechs.CheckOnClick = true;
+			this.lstTechs.ColumnWidth = 200;
+			this.lstTechs.ForeColor = System.Drawing.Color.White;
+			this.lstTechs.FormattingEnabled = true;
+			this.lstTechs.Location = new System.Drawing.Point(9, 63);
+			this.lstTechs.MultiColumn = true;
+			this.lstTechs.Name = "lstTechs";
+			this.lstTechs.Size = new System.Drawing.Size(530, 368);
+			this.lstTechs.TabIndex = 14;
+			// 
+			// ddlStartTech
+			// 
+			this.ddlStartTech.FormattingEnabled = true;
+			this.ddlStartTech.Items.AddRange(new object[] {
+            "Low",
+            "Medium",
+            "High"});
+			this.ddlStartTech.Location = new System.Drawing.Point(120, 6);
+			this.ddlStartTech.Name = "ddlStartTech";
+			this.ddlStartTech.Size = new System.Drawing.Size(121, 23);
+			this.ddlStartTech.TabIndex = 13;
+			// 
+			// label30
+			// 
+			this.label30.AutoSize = true;
+			this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label30.Location = new System.Drawing.Point(3, 9);
+			this.label30.Margin = new System.Windows.Forms.Padding(3);
+			this.label30.Name = "label30";
+			this.label30.Size = new System.Drawing.Size(111, 15);
+			this.label30.TabIndex = 12;
+			this.label30.Text = "Starting Tech Level";
 			// 
 			// tabEmpires
 			// 
@@ -1288,17 +1347,6 @@
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
-			// 
-			// label30
-			// 
-			this.label30.AutoSize = true;
-			this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label30.Location = new System.Drawing.Point(3, 6);
-			this.label30.Margin = new System.Windows.Forms.Padding(3);
-			this.label30.Name = "label30";
-			this.label30.Size = new System.Drawing.Size(111, 15);
-			this.label30.TabIndex = 12;
-			this.label30.Text = "Starting Tech Level";
 			// 
 			// GameSetupForm
 			// 
@@ -1442,5 +1490,8 @@
 		private System.Windows.Forms.CheckBox chkLimitStandard;
 		private System.Windows.Forms.Label label29;
 		private System.Windows.Forms.Label label30;
+		private System.Windows.Forms.ComboBox ddlStartTech;
+		private System.Windows.Forms.Label label31;
+		private System.Windows.Forms.CheckedListBox lstTechs;
 	}
 }

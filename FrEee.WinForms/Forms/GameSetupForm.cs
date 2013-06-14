@@ -2,6 +2,7 @@
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
@@ -33,6 +34,7 @@ namespace FrEee.WinForms.Forms
 			// bind data
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
+			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
 			
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -40,6 +42,11 @@ namespace FrEee.WinForms.Forms
 			spnHeight_ValueChanged(spnHeight, new EventArgs());
 			spnStarSystems_ValueChanged(spnStarSystems, new EventArgs());
 			ddlWarpPointLocation_SelectedIndexChanged(ddlWarpPointLocation, new EventArgs());
+			ddlStartTech.SelectedIndex = 0;
+			for (int i = 0; i < lstTechs.Items.Count; i++)
+			{
+				lstTechs.SetItemChecked(i, true);
+			}
 		}
 
 		private GameSetup setup;
@@ -52,7 +59,6 @@ namespace FrEee.WinForms.Forms
 		private void btnStart_Click(object sender, EventArgs e)
 		{
 			// TODO - don't add empires automatically, let the user specify them
-			// TODO - use empire templates
 			setup.EmpireTemplates.Clear();
 			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { Name = "Jraenar", Color = Color.Red, NativeAtmosphere = "Hydrogen" }, HomeworldSurfaceOverride = "Rock" });
 			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { Name = "Eee", Color = Color.Cyan, NativeAtmosphere = "Oxygen" }, HomeworldSurfaceOverride = "Gas Giant" });
@@ -87,6 +93,23 @@ namespace FrEee.WinForms.Forms
 			setup.MinAsteroidValue = (int)spnMinValueAsteroid.Value;
 			setup.MinSpawnedAsteroidValue = (int)spnMinSpawnValueAsteroid.Value;
 			setup.MaxSpawnedAsteroidValue = (int)spnMaxSpawnValueAsteroid.Value;
+			switch (ddlStartTech.SelectedIndex)
+			{
+				case 0:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.Low;
+					break;
+				case 1:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.Medium;
+					break;
+				case 2:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.High;
+					break;
+			}
+			for (int i = 0; i < lstTechs.Items.Count; i++)
+			{
+				if (!lstTechs.GetItemChecked(i))
+					setup.ForbiddenTechnologies.Add((Technology)lstTechs.Items[i]);
+			}
 			
 			if (setup.Warnings.Any())
 			{
