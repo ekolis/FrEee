@@ -15,6 +15,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		/// <summary>
 		/// The sector that ships will appear in when they go through this warp point.
+		/// TODO - make sure that players can't cheat and see through warp points!
 		/// </summary>
 		public Sector Target { get; set; }
 

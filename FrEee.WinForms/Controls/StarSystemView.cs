@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
@@ -115,6 +116,21 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
+		private ISpaceObject selectedSpaceObject;
+
+		/// <summary>
+		/// Path lines will be drawn for this space object.
+		/// </summary>
+		public ISpaceObject SelectedSpaceObject
+		{
+			get { return selectedSpaceObject; }
+			set
+			{
+				selectedSpaceObject = value;
+				Invalidate();
+			}
+		}
+
 		protected override void OnPaint(PaintEventArgs pe)
 		{
 			base.OnPaint(pe);
@@ -142,8 +158,9 @@ namespace FrEee.WinForms.Controls
 					{
 						// where and how big will we draw the sector?
 						var drawsize = SectorDrawSize;
-						var drawx = x * (drawsize + SectorBorderSize) + Width / 2f + SectorBorderSize;
-						var drawy = y * (drawsize + SectorBorderSize) + Height / 2f + SectorBorderSize;
+						var drawPoint = GetDrawPoint(x, y);
+						var drawx = drawPoint.X;
+						var drawy = drawPoint.Y;
 
 						// find sector
 						var sector = StarSystem.GetSector(x, y);
@@ -228,7 +245,77 @@ namespace FrEee.WinForms.Controls
 						}
 					}
 				}
+
+				if (SelectedSpaceObject is IMobileSpaceObject)
+				{
+					// draw path lines
+					var sobj = (IMobileSpaceObject)SelectedSpaceObject;
+					Sector last = SelectedSpaceObject.FindSector();
+					PointF? lastPoint = null;
+					if (last.FindStarSystem() == StarSystem)
+					{
+						var lastCoords = last.Coordinates;
+						lastPoint = GetDrawPoint(lastCoords.X, lastCoords.Y);
+					}
+					int moves = 0;
+					int turns = 0;
+					foreach (var cur in sobj.Path)
+					{
+						moves += 1;
+						if (moves >= sobj.Speed)
+						{
+							moves = 0;
+							turns++;
+						}
+
+						PointF? curPoint = null;
+						if (cur.FindStarSystem() == StarSystem)
+						{
+							var curCoords = cur.Coordinates;
+							curPoint = GetDrawPoint(curCoords.X, curCoords.Y);
+						}
+
+						if (lastPoint == null && curPoint == null)
+						{
+							// do nothing, we're not in this system
+						}
+						else if (lastPoint == null)
+						{
+							// entering the system, draw a circle
+							pe.Graphics.DrawEllipse(Pens.White, curPoint.Value.X - 5, curPoint.Value.Y - 5, 10, 10);
+						}
+						else if (curPoint == null)
+						{
+							// leaving the system, draw a square
+							pe.Graphics.DrawRectangle(Pens.White, lastPoint.Value.X - 5, lastPoint.Value.Y - 5, 10, 10);
+						}
+						else
+						{
+							// regular movement, draw a line
+							pe.Graphics.DrawLine(Pens.White, lastPoint.Value, curPoint.Value);
+						}
+
+						if (moves == 0 && curPoint != null)
+						{
+							// draw turn number
+							var sf = new StringFormat();
+							sf.Alignment = StringAlignment.Center;
+							sf.LineAlignment = StringAlignment.Center;
+							pe.Graphics.DrawString(turns.ToString(), new Font("Sans Serif", 8), Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
+						}
+
+						last = cur;
+						lastPoint = curPoint;
+					}
+				}
 			}
+		}
+
+		private PointF GetDrawPoint(int x, int y)
+		{
+			var drawx = x * (SectorDrawSize + SectorBorderSize) + Width / 2f + SectorBorderSize;
+			var drawy = y * (SectorDrawSize + SectorBorderSize) + Height / 2f + SectorBorderSize;
+			return new PointF(drawx, drawy);
 		}
 	}
 }

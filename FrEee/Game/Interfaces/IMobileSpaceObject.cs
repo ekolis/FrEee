@@ -13,6 +13,12 @@ namespace FrEee.Game.Interfaces
 		void ExecuteOrders();
 		void RefillMovement();
 		bool CanWarp { get; }
+		int Speed { get; }
+
+		/// <summary>
+		/// The path that this space object is ordered to follow.
+		/// </summary>
+		IEnumerable<Sector> Path { get; }
 	}
 
 	/// <summary>

@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
@@ -260,6 +261,34 @@ namespace FrEee.Game.Objects.Vehicles
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
 			Orders.Insert(newpos, o);
+		}
+
+
+		public IEnumerable<Sector> Path
+		{
+			get
+			{
+				var last = this.FindSector();
+				foreach (var order in Orders)
+				{
+					// TODO - figure out which orders should take a move to execute and which shouldn't - assuming only move and warp orders do now
+					if (order is MoveOrder<AutonomousSpaceVehicle>)
+					{
+						var mo = (MoveOrder<AutonomousSpaceVehicle>)order;
+						foreach (var sector in mo.Pathfind(this, last))
+						{
+							last = sector;
+							yield return last;
+						}
+					}
+					else if (order is WarpOrder<AutonomousSpaceVehicle>)
+					{
+						var wo = (WarpOrder<AutonomousSpaceVehicle>)order;
+						last = wo.WarpPoint.Target;
+						yield return last;
+					}
+				}
+			}
 		}
 	}
 }

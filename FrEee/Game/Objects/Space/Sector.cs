@@ -62,5 +62,11 @@ namespace FrEee.Game.Objects.Space
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		public override string ToString()
+		{
+			var coords = Coordinates;
+			return FindStarSystem() + " (" + coords.X + ", " + coords.Y + ")";
+		}
 	}
 }

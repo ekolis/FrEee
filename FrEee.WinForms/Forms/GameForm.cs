@@ -88,6 +88,7 @@ namespace FrEee.WinForms.Forms
 							report.Invalidate();
 						var cmd = new AddOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
+						starSystemView.Invalidate(); // show move lines
 					}
 					else
 					{
@@ -125,6 +126,7 @@ namespace FrEee.WinForms.Forms
 						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 						if (report != null)
 							report.Invalidate();
+						starSystemView.Invalidate(); // show move lines
 					}
 					else
 					{
@@ -524,6 +526,9 @@ namespace FrEee.WinForms.Forms
 			{
 				selectedSpaceObject = value;
 
+				// for movement lines
+				starSystemView.SelectedSpaceObject = value;
+
 				if (value != null)
 				{
 					var sys = value.FindStarSystem();
@@ -736,6 +741,8 @@ namespace FrEee.WinForms.Forms
 					if (report != null)
 						report.Invalidate();
 				}
+
+				starSystemView.Invalidate(); // show move lines
 			}
 		}
 

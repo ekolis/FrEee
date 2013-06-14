@@ -43,14 +43,14 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind(T sobj)
+		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
 		{
-			return Pathfinder.Pathfind(sobj, Destination, AvoidEnemies);
+			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies);
 		}
 
 		public void Execute(T sobj)
 		{
-			var gotoSector = Pathfind(sobj).FirstOrDefault();
+			var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
 
 			// TODO - movement logs
 			if (gotoSector != null)

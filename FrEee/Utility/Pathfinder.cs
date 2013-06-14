@@ -113,12 +113,12 @@ namespace FrEee.Utility
 		/// Navigation for space objects.
 		/// </summary>
 		/// <param name="me"></param>
+		/// <param name="start"></param>
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector end, bool avoidEnemies)
+		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies)
 		{
-			var start = me.FindSector();
 			var startSys = start.FindStarSystem();
 			if (startSys == end.FindStarSystem())
 			{
