@@ -38,7 +38,13 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the star.</returns>
 		public new Star Instantiate()
 		{
-			return this.Clone();
+			return this.Copy();
+		}
+
+		public StellarSize StellarSize
+		{
+			get;
+			set;
 		}
 	}
 }

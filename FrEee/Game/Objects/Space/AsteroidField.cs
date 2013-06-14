@@ -49,7 +49,12 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the asteroid field.</returns>
 		public new AsteroidField Instantiate()
 		{
-			return this.Clone();
+			return this.Copy();
+		}
+
+		public StellarSize StellarSize
+		{
+			get { return Size.StellarSize; }
 		}
 	}
 }

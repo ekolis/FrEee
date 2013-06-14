@@ -30,5 +30,7 @@ namespace FrEee.Game.Interfaces
 		/// Any undamaged weapons this space object is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }
+
+		bool IsHostileTo(Empire emp);
 	}
 }

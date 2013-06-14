@@ -77,7 +77,7 @@ namespace FrEee.Game.Setup
 			emp.LeaderName = LeaderName;
 			emp.Color = ColorOverride ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
-			emp.HomeworldSurface = HomeworldSurfaceOverride ?? PrimaryRace.NativeSurface;
+			emp.NativeSurface = HomeworldSurfaceOverride ?? PrimaryRace.NativeSurface;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
 			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.Name;

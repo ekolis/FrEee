@@ -85,7 +85,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the planet.</returns>
 		public new Planet Instantiate()
 		{
-			return this.Clone();
+			return this.Copy();
 		}
 
 		/// <summary>
@@ -280,7 +280,7 @@ namespace FrEee.Game.Objects.Space
 			// TODO - execute planet orders
 		}
 
-		public override ConstructionQueue ConstructionQueue
+		public ConstructionQueue ConstructionQueue
 		{
 			get
 			{
@@ -293,11 +293,11 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Planets get cargo storage both from facilities and intrinsically.
 		/// </summary>
-		public override int CargoStorage
+		public int CargoStorage
 		{
 			get
 			{
-				return base.CargoStorage + MaxCargo;
+				return MaxCargo + this.GetAbilityValue("Cargo Storage").ToInt();
 			}
 		}
 
@@ -307,7 +307,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public override WeaponTargets WeaponTargetType
+		public WeaponTargets WeaponTargetType
 		{
 			get
 			{
@@ -315,12 +315,12 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public override IEnumerable<Component> Weapons
+		public IEnumerable<Component> Weapons
 		{
 			get
 			{
 				// TODO - weapon platforms on planets
-				return base.Weapons;
+				return Enumerable.Empty<Component>();
 			}
 		}
 
@@ -523,6 +523,33 @@ namespace FrEee.Game.Objects.Space
 		public int HitChance
 		{
 			get { return 1; }
+		}
+
+		public StellarSize StellarSize
+		{
+			get { return Size.StellarSize; }
+		}
+
+
+		public bool IsHostileTo(Empire emp)
+		{
+			return Owner == null ? false : Owner.IsHostileTo(emp);
+		}
+
+
+		public bool CanBeInFleet
+		{
+			get { return false; }
+		}
+
+		public int SupplyStorage
+		{
+			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
+		}
+
+		public bool HasInfiniteSupplies
+		{
+			get { return false; }
 		}
 	}
 }

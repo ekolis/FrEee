@@ -199,5 +199,11 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get { return 1; }
 		}
+
+
+		public bool IsHostileTo(Empire emp)
+		{
+			return Owner == null ? false : Owner.IsHostileTo(emp);
+		}
 	}
 }

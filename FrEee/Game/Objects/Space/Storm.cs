@@ -23,7 +23,9 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the storm.</returns>
 		public new Storm Instantiate()
 		{
-			return this.Clone();
+			return this.Copy();
 		}
+
+		public StellarSize StellarSize { get; set; }
 	}
 }

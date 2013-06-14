@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the warp point.</returns>
 		public new WarpPoint Instantiate()
 		{
-			return this.Clone();
+			return this.Copy();
 		}
 
 		/// <summary>
@@ -54,5 +54,7 @@ namespace FrEee.Game.Objects.Space
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		public StellarSize StellarSize { get; set; }
 	}
 }

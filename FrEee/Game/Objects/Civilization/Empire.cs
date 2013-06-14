@@ -72,9 +72,9 @@ namespace FrEee.Game.Objects.Civilization
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
-		/// Empire's native planet surfac type.
+		/// Empire's native planet surface type.
 		/// </summary>
-		public string HomeworldSurface { get; set; }
+		public string NativeSurface { get; set; }
 
 		/// <summary>
 		/// Traits of this empire.
@@ -462,6 +462,20 @@ namespace FrEee.Game.Objects.Civilization
 		public bool CanColonize(Planet planet)
 		{
 			return UnlockedItems.OfType<ComponentTemplate>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
+		}
+
+		/// <summary>
+		/// Is this empire hostile to another empire?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public bool IsHostileTo(Empire emp)
+		{
+			if (emp == null)
+				return false;
+			if (emp == this)
+				return false;
+			return true; // TODO - alliances
 		}
 	}
 }

@@ -19,21 +19,32 @@ namespace FrEee.Utility.Extensions
 	public static class CommonExtensions
 	{
 		/// <summary>
-		/// Clones an object.
+		/// Shallow copies an object.
 		/// </summary>
-		/// <typeparam name="T">The type of object to clone.</typeparam>
-		/// <param name="obj">The object to clone.</param>
-		/// <returns>The clone.</returns>
-		public static T Clone<T>(this T obj) where T : new()
+		/// <typeparam name="T">The type of object to copy.</typeparam>
+		/// <param name="obj">The object to copy.</param>
+		/// <returns>The copy.</returns>
+		public static T Copy<T>(this T obj) where T : new()
+		{
+			var dest = new T();
+			obj.CopyTo(dest);
+			return dest;
+		}
+
+		/// <summary>
+		/// Shallow copies an object's data to another object.
+		/// </summary>
+		/// <typeparam name="T">The type of object to copy.</typeparam>
+		/// <param name="src">The object to copy.</param>
+		/// <param name="dest">The object to copy the source object's data to.</param>
+		public static void CopyTo<T>(this T src, T dest)
 		{
 			if (!mappedTypes.Contains(typeof(T)))
 			{
 				mappedTypes.Add(typeof(T));
 				Mapper.CreateMap<T, T>();
 			}
-			var t = new T();
-			Mapper.Map(obj, t);
-			return t;
+			Mapper.Map(src, dest);
 		}
 
 		private static List<Type> mappedTypes = new List<Type>();

@@ -161,11 +161,11 @@ namespace FrEee.Game.Setup
 
 				// TODO - moddable colony techs?
 				string colonyTechName = null;
-				if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
+				if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
 					colonyTechName = "Rock Planet Colonization";
-				else if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
+				else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
 					colonyTechName = "Ice Planet Colonization";
-				else if ((emp.HomeworldSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
+				else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
 					colonyTechName = "Gas Giant Colonization";
 				var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
 				if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
@@ -181,6 +181,7 @@ namespace FrEee.Game.Setup
 				var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).Last();
 				var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).Last();
 				var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).Last();
+				// TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
 
 				// SY rate, for colonies
 				var rate = new Resources();
@@ -196,6 +197,17 @@ namespace FrEee.Game.Setup
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
+				// TODO - let game setup specify a homeworld size (not just stellar size, a PlanetSize.txt entry?)
+				if (hw.Surface != emp.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != StellarSize.Large)
+				{
+					var replacementHomeworld = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
+						p.Surface == emp.NativeSurface &&
+						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
+						p.StellarSize == StellarSize.Large).PickRandom();
+					if (replacementHomeworld == null)
+						throw new Exception("No planets in the mod with surface " + emp.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size Large. Such a planet is required for creating the " + emp + " homeworld.");
+					replacementHomeworld.CopyTo(hw);
+				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
 				hw.Colony = new Colony
 				{
