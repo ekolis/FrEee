@@ -142,22 +142,32 @@ namespace FrEee.Utility.Extensions
 		/// e.g. 25000 becomes 25.00k
 		/// </summary>
 		/// <param name="value"></param>
-		public static string ToUnitString(this long value, int sigfigs = 3, bool bForBillions = false)
+		public static string ToUnitString(this long value, int sigfigs = 4, bool bForBillions = false)
 		{
 			if (Math.Abs(value) >= 1e13)
-				return (value / 1e12).ToString("f" + (sigfigs - 1)) + "T";
-			if (Math.Abs(value) >= 1e12)
-				return (value / 1e12).ToString("f" + sigfigs) + "T";
+			{
+				var log = (int)Math.Floor(Math.Log10(value / 1e12));
+				var decimals = sigfigs - log;
+				return (value / 1e12).ToString("f" + decimals) + "T";
+			}
 			if (Math.Abs(value) >= 1e10)
-				return (value / 1e9).ToString("f" + (sigfigs - 1)) + (bForBillions ? "B" : "G");
-			if (Math.Abs(value) >= 1e9)
-				return (value / 1e9).ToString("f" + sigfigs) + (bForBillions ? "B" : "G");
+			{
+				var log = (int)Math.Floor(Math.Log10(value / 1e9));
+				var decimals = sigfigs - log;
+				return (value / 1e9).ToString("f" + decimals) + (bForBillions ? "B" : "G");
+			}
 			if (Math.Abs(value) >= 1e7)
-				return (value / 1e6).ToString("f" + (sigfigs - 1)) + "M";
-			if (Math.Abs(value) >= 1e6)
-				return (value / 1e6).ToString("f" + sigfigs) + "M";
+			{
+				var log = (int)Math.Floor(Math.Log10(value / 1e6));
+				var decimals = sigfigs - log;
+				return (value / 1e6).ToString("f" + decimals) + "M";
+			}
 			if (Math.Abs(value) >= 1e4)
-				return (value / 1e3).ToString("f" + (sigfigs - 1)) + "k";
+			{
+				var log = (int)Math.Floor(Math.Log10(value / 1e3));
+				var decimals = sigfigs - log;
+				return (value / 1e3).ToString("f" + decimals) + "k";
+			}
 			return value.ToString();
 		}
 
