@@ -79,6 +79,15 @@ namespace FrEee.Modding.Templates
 			var gal = new Galaxy(Mod.Current);
 			gal.Width = GameSetup.GalaxySize.Width;
 			gal.Height = GameSetup.GalaxySize.Height;
+			gal.MinPlanetValue = GameSetup.MinAsteroidValue;
+			gal.MinSpawnedPlanetValue = GameSetup.MinSpawnedAsteroidValue;
+			gal.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedAsteroidValue;
+			gal.MaxPlanetValue = GameSetup.MaxPlanetValue;
+			gal.MinPlanetValue = GameSetup.MinAsteroidValue;
+			gal.MinPlanetValue = GameSetup.MinAsteroidValue;
+			gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
+			gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
+			gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
