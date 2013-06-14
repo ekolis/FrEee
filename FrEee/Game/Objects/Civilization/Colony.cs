@@ -39,7 +39,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IEnumerable<Ability> Abilities
 		{
-			get { return Facilities.SelectMany(f => f.Abilities).ToArray(); }
+			// TODO - take into account racial abilities if all races on colony share a trait
+			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Concat(Owner.Abilities); }
 		}
 
 		/// <summary>

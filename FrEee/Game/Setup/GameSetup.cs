@@ -159,7 +159,7 @@ namespace FrEee.Game.Setup
 					yield return "There are not enough star systems to give " + (EmpireTemplates.Count + RandomAIs + MinorEmpires > StarSystemCount) + " empires and minor races each their own home system.";
 				if (HomeworldSize == null)
 					yield return "You must specify a homeworld size.";
-				if (!EmpireTemplates.Any())
+				if (!EmpireTemplates.Any() && RandomAIs == 0)
 					yield return "You must add at least one empire.";
 				// TODO - check for empires spending too many racial points
 			}

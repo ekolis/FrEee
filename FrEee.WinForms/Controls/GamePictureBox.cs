@@ -15,6 +15,7 @@ namespace FrEee.WinForms.Controls
 		public GamePictureBox()
 		{
 			InitializeComponent();
+			SizeMode = PictureBoxSizeMode.Zoom;
 		}
 
 		/// <summary>

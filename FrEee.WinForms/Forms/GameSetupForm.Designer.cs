@@ -112,6 +112,7 @@
 			this.ddlStartTech = new System.Windows.Forms.ComboBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
+			this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
 			this.label44 = new System.Windows.Forms.Label();
 			this.spnMaxDispersion = new System.Windows.Forms.NumericUpDown();
 			this.label43 = new System.Windows.Forms.Label();
@@ -1292,6 +1293,7 @@
 			// tabEmpires
 			// 
 			this.tabEmpires.BackColor = System.Drawing.Color.Black;
+			this.tabEmpires.Controls.Add(this.btnToggleAI);
 			this.tabEmpires.Controls.Add(this.label44);
 			this.tabEmpires.Controls.Add(this.spnMaxDispersion);
 			this.tabEmpires.Controls.Add(this.label43);
@@ -1329,6 +1331,18 @@
 			this.tabEmpires.Size = new System.Drawing.Size(545, 540);
 			this.tabEmpires.TabIndex = 3;
 			this.tabEmpires.Text = "Empires";
+			// 
+			// btnToggleAI
+			// 
+			this.btnToggleAI.BackColor = System.Drawing.Color.Black;
+			this.btnToggleAI.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnToggleAI.Location = new System.Drawing.Point(307, 448);
+			this.btnToggleAI.Name = "btnToggleAI";
+			this.btnToggleAI.Size = new System.Drawing.Size(101, 31);
+			this.btnToggleAI.TabIndex = 43;
+			this.btnToggleAI.Text = "Toggle AI";
+			this.btnToggleAI.UseVisualStyleBackColor = false;
+			this.btnToggleAI.Click += new System.EventHandler(this.btnToggleAI_Click);
 			// 
 			// label44
 			// 
@@ -1398,34 +1412,37 @@
 			// 
 			this.btnSaveEmpire.BackColor = System.Drawing.Color.Black;
 			this.btnSaveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveEmpire.Location = new System.Drawing.Point(307, 485);
+			this.btnSaveEmpire.Location = new System.Drawing.Point(414, 374);
 			this.btnSaveEmpire.Name = "btnSaveEmpire";
 			this.btnSaveEmpire.Size = new System.Drawing.Size(101, 31);
 			this.btnSaveEmpire.TabIndex = 37;
 			this.btnSaveEmpire.Text = "Save";
 			this.btnSaveEmpire.UseVisualStyleBackColor = false;
+			this.btnSaveEmpire.Click += new System.EventHandler(this.btnSaveEmpire_Click);
 			// 
 			// btnRemoveEmpire
 			// 
 			this.btnRemoveEmpire.BackColor = System.Drawing.Color.Black;
 			this.btnRemoveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRemoveEmpire.Location = new System.Drawing.Point(307, 448);
+			this.btnRemoveEmpire.Location = new System.Drawing.Point(307, 411);
 			this.btnRemoveEmpire.Name = "btnRemoveEmpire";
 			this.btnRemoveEmpire.Size = new System.Drawing.Size(101, 31);
 			this.btnRemoveEmpire.TabIndex = 36;
 			this.btnRemoveEmpire.Text = "Remove";
 			this.btnRemoveEmpire.UseVisualStyleBackColor = false;
+			this.btnRemoveEmpire.Click += new System.EventHandler(this.btnRemoveEmpire_Click);
 			// 
 			// btnEditEmpire
 			// 
 			this.btnEditEmpire.BackColor = System.Drawing.Color.Black;
 			this.btnEditEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEditEmpire.Location = new System.Drawing.Point(307, 411);
+			this.btnEditEmpire.Location = new System.Drawing.Point(414, 337);
 			this.btnEditEmpire.Name = "btnEditEmpire";
 			this.btnEditEmpire.Size = new System.Drawing.Size(101, 31);
 			this.btnEditEmpire.TabIndex = 35;
 			this.btnEditEmpire.Text = "Edit";
 			this.btnEditEmpire.UseVisualStyleBackColor = false;
+			this.btnEditEmpire.Click += new System.EventHandler(this.btnEditEmpire_Click);
 			// 
 			// btnLoadEmpire
 			// 
@@ -1437,6 +1454,7 @@
 			this.btnLoadEmpire.TabIndex = 34;
 			this.btnLoadEmpire.Text = "Load";
 			this.btnLoadEmpire.UseVisualStyleBackColor = false;
+			this.btnLoadEmpire.Click += new System.EventHandler(this.btnLoadEmpire_Click);
 			// 
 			// btnCreateEmpire
 			// 
@@ -1448,6 +1466,7 @@
 			this.btnCreateEmpire.TabIndex = 33;
 			this.btnCreateEmpire.Text = "Create";
 			this.btnCreateEmpire.UseVisualStyleBackColor = false;
+			this.btnCreateEmpire.Click += new System.EventHandler(this.btnCreateEmpire_Click);
 			// 
 			// gamePanel1
 			// 
@@ -1475,6 +1494,7 @@
 			this.lstEmpires.Size = new System.Drawing.Size(282, 189);
 			this.lstEmpires.TabIndex = 0;
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
+			this.lstEmpires.View = System.Windows.Forms.View.List;
 			// 
 			// label41
 			// 
@@ -2001,5 +2021,6 @@
 		private System.Windows.Forms.Label label44;
 		private System.Windows.Forms.NumericUpDown spnMaxDispersion;
 		private System.Windows.Forms.Label label43;
+		private Controls.GameButton btnToggleAI;
 	}
 }

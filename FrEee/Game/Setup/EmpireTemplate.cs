@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -18,6 +19,7 @@ namespace FrEee.Game.Setup
 		public EmpireTemplate()
 		{
 			Traits = new List<ITrait<Empire>>();
+			IsPlayerEmpire = true;
 		}
 
 		/// <summary>
@@ -41,51 +43,83 @@ namespace FrEee.Game.Setup
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
-		/// The homeworld surface type of this empire.
-		/// </summary>
-		public string HomeworldSurfaceOverride { get; set; }
-
-		/// <summary>
 		/// Set this to override the color specified by the race.
 		/// </summary>
-		public Color? ColorOverride { get; set; }
+		public Color? Color { get; set; }
 
 		/// <summary>
 		/// Set this to override the insignia name specified by the race.
 		/// </summary>
-		public string InsigniaNameOverride { get; set; }
+		public string InsigniaName { get; set; }
+
+		public Image Insignia
+		{
+			get
+			{
+				return Pictures.GetIcon(this);
+			}
+		}
 
 		/// <summary>
 		/// Set this to override the shipset path specified by the race.
 		/// </summary>
-		public string ShipsetPathOverride { get; set; }
+		public string ShipsetPath { get; set; }
 
 		/// <summary>
 		/// Set this to override the leader portrait specified by the race.
 		/// </summary>
-		public string LeaderPortraitNameOverride {get; set;}
+		public string LeaderPortraitName { get; set; }
 
 		/// <summary>
 		/// Set this to override the AI specified by the race.
 		/// </summary>
-		public EmpireAI AIOverride { get; set; }
+		public string AIName { get; set; }
+
+		/// <summary>
+		/// Is this empire controlled by a human player?
+		/// </summary>
+		public bool IsPlayerEmpire { get; set; }
 
 		public Empire Instantiate()
 		{
 			var emp = new Empire();
 			emp.Name = Name;
 			emp.LeaderName = LeaderName;
-			emp.Color = ColorOverride ?? PrimaryRace.Color;
+			emp.Color = Color ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
-			emp.NativeSurface = HomeworldSurfaceOverride ?? PrimaryRace.NativeSurface;
+			emp.NativeSurface = PrimaryRace.NativeSurface;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
-			emp.InsigniaName = InsigniaNameOverride ?? PrimaryRace.Name;
-			emp.ShipsetPath = ShipsetPathOverride ?? PrimaryRace.Name;
-			emp.LeaderPortraitName = LeaderPortraitNameOverride ?? PrimaryRace.Name;
-			emp.AI = AIOverride ?? PrimaryRace.AI;
+			emp.InsigniaName = InsigniaName ?? PrimaryRace.Name;
+			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
+			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
+			// TODO - set empire AI
+			emp.IsPlayerEmpire = IsPlayerEmpire;
 
 			return emp;
+		}
+
+		public IEnumerable<string> GetWarnings(int maxPoints)
+		{
+			if (PrimaryRace == null)
+				yield return "You must specify a primary race for your empire.";
+			else
+			{
+				foreach (var w in PrimaryRace.Warnings)
+					yield return w;
+			}
+			if (string.IsNullOrWhiteSpace(Name) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.EmpireName)))
+				yield return "You must specify a name for your empire or a default empire name for your race.";
+			if (string.IsNullOrWhiteSpace(LeaderName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.LeaderName)))
+				yield return "You must specify a leader name for your empire or race.";
+			if (string.IsNullOrWhiteSpace(LeaderPortraitName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.LeaderPortraitName)))
+				yield return "You must specify a leader portrait for your empire or race.";
+			if (string.IsNullOrWhiteSpace(InsigniaName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.InsigniaName)))
+				yield return "You must specify an insignia for your empire or race.";
+			if (string.IsNullOrWhiteSpace(ShipsetPath) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.ShipsetPath)))
+				yield return "You must specify a shipset for your empire or race.";
+			// TODO - check spending on traits and attributes
+			// TODO - check presence of AI?
 		}
 	}
 }

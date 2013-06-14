@@ -37,7 +37,7 @@ namespace FrEee.WinForms.Forms
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
 			stellarObjectSizeBindingSource.DataSource = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Size).Distinct();
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs
-			
+
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
 			spnWidth_ValueChanged(spnWidth, new EventArgs());
@@ -62,14 +62,6 @@ namespace FrEee.WinForms.Forms
 
 		private void btnStart_Click(object sender, EventArgs e)
 		{
-			// TODO - don't add empires automatically, let the user specify them
-			setup.EmpireTemplates.Clear();
-			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { Name = "Jraenar", Color = Color.Red, NativeAtmosphere = "Hydrogen" }, HomeworldSurfaceOverride = "Rock" });
-			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { Name = "Eee", Color = Color.Cyan, NativeAtmosphere = "Oxygen" }, HomeworldSurfaceOverride = "Gas Giant" });
-			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Drushocka Empire", LeaderName = "Lord Fazrad", PrimaryRace = new Race { Name = "Drushocka", Color = Color.Green, NativeAtmosphere = "None" }, HomeworldSurfaceOverride = "Rock" });
-			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Norak Ascendancy", LeaderName = "High Priest Rakul", PrimaryRace = new Race { Name = "Norak", Color = Color.Blue, NativeAtmosphere = "Methane" }, HomeworldSurfaceOverride = "Ice" });
-			setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Abbidon Enclave", LeaderName = "Speaker Verath", PrimaryRace = new Race { Name = "Abbidon", Color = Color.Orange, NativeAtmosphere = "Carbon Dioxide" }, HomeworldSurfaceOverride = "Gas Giant" });
-
 			setup.GameName = txtGalaxyName.Text;
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
 			setup.OmniscientView = chkOmniscient.Checked;
@@ -125,7 +117,7 @@ namespace FrEee.WinForms.Forms
 			setup.RacialPoints = (int)spnRacialPoints.Value;
 			setup.RandomAIs = (int)spnRandomAIs.Value;
 			setup.MinorEmpires = (int)spnMinorEmpires.Value;
-			
+
 			if (setup.Warnings.Any())
 			{
 				MessageBox.Show(setup.Warnings.First(), "FrEee");
@@ -439,6 +431,51 @@ namespace FrEee.WinForms.Forms
 		private void spnResourceStorage_ValueChanged(object sender, EventArgs e)
 		{
 			spnResourceStorage.Maximum = spnResourceStorage.Value;
+		}
+
+		private void BindEmpires()
+		{
+			lstEmpires.Initialize(32, 32);
+			foreach (var et in setup.EmpireTemplates)
+				lstEmpires.AddItemWithImage(null, et.IsPlayerEmpire ? (et.Name ?? et.PrimaryRace.EmpireName) : ("(AI) " + (et.Name ?? et.PrimaryRace.EmpireName)), et, et.Insignia);
+		}
+
+		private void btnCreateEmpire_Click(object sender, EventArgs e)
+		{
+			var et = new EmpireTemplate();
+			var form = new EmpireSetupForm();
+			form.EmpireTemplate = et;
+			this.ShowChildForm(form);
+			if (form.DialogResult == DialogResult.OK)
+			{
+				setup.EmpireTemplates.Add(et);
+				BindEmpires();
+			}
+		}
+
+		private void btnLoadEmpire_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnEditEmpire_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnRemoveEmpire_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnSaveEmpire_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnToggleAI_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }

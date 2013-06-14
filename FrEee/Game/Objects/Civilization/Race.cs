@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace FrEee.Game.Objects.Civilization
 		public Race()
 		{
 			Traits = new List<ITrait<Race>>();
+			Color = Color.White;
 		}
 
 		/// <summary>
@@ -27,11 +29,36 @@ namespace FrEee.Game.Objects.Civilization
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The color used to represent empires of this race.
+		/// The default empire name for this race.
+		/// </summary>
+		public string EmpireName { get; set; }
+
+		/// <summary>
+		/// The default leader name for empires of this race.
+		/// </summary>
+		public string LeaderName { get; set; }
+
+		/// <summary>
+		/// The default leader portrait name for empires of this race.
+		/// </summary>
+		public string LeaderPortraitName { get; set; }
+
+		/// <summary>
+		/// The population icon name for this race.
+		/// </summary>
+		public string PopulationIconName { get; set; }
+
+		/// <summary>
+		/// The default insignia name for empires of this race.
+		/// </summary>
+		public string InsigniaName { get; set; }
+
+		/// <summary>
+		/// The default color used to represent empires of this race.
 		/// </summary>
 		public Color Color { get; set; }
 
-				/// <summary>
+		/// <summary>
 		/// The atmosphere which this race breathes.
 		/// </summary>
 		public string NativeAtmosphere { get; set; }
@@ -49,7 +76,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
-		public EmpireAI AI { get; set; }
+		public string AIName { get; set; }
 
 		public IList<ITrait<Race>> Traits { get; private set; }
 
@@ -98,6 +125,23 @@ namespace FrEee.Game.Objects.Civilization
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public IEnumerable<string> Warnings
+		{
+			get
+			{
+				if (string.IsNullOrWhiteSpace(Name))
+					yield return "You must specify a name for your race.";
+				if (string.IsNullOrWhiteSpace(PopulationIconName))
+					yield return "You must specify a population icon for your race.";
+				if (string.IsNullOrWhiteSpace(NativeAtmosphere))
+					yield return "You must specify a native atmosphere for your race.";
+				if (string.IsNullOrWhiteSpace(NativeSurface))
+					yield return "You must specify a native planet surface for your race.";
+				if (!Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
+					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
+			}
 		}
 	}
 }
