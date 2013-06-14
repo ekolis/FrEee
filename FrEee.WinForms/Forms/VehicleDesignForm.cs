@@ -92,8 +92,14 @@ namespace FrEee.WinForms.Forms
 				txtShields.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
 				txtArmor.Text = Design.ArmorHitpoints + " armor";
 				txtHull.Text = Design.HullHitpoints + " hull";
-				txtAccuracy.Text = Design.Accuracy.ToString("+0") + "%";
-				txtEvasion.Text = Design.Evasion.ToString("+0") + "%";
+				if (Design.Accuracy > 0)
+					txtAccuracy.Text = Design.Accuracy.ToString("+0") + "%";
+				else
+					txtAccuracy.Text = Design.Accuracy.ToString("0") + "%";
+				if (Design.Evasion > 0)
+					txtEvasion.Text = Design.Evasion.ToString("+0") + "%";
+				else
+					txtEvasion.Text = Design.Evasion.ToString("0") + "%";
 				txtCargo.Text = Design.CargoCapacity.Kilotons();
 			}
 
