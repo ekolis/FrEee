@@ -39,6 +39,7 @@ namespace FrEee.Utility
 			while (queue.Any() && !success)
 			{
 				// step 5: take lowest cost node out of queue
+				// also prefer straight line movement to diagonal
 				var minCost = queue.Min(n => n.Item2);
 				var node = queue.Where(n => n.Item2 == minCost).First();
 				queue.Remove(node);
@@ -50,9 +51,9 @@ namespace FrEee.Utility
 				// step 7: check possible moves
 				var moves = new List<Point>();
 				var p = node.Item1;
-				for (int dx = -1; dx <= 1; dx++)
+				foreach (var dx in new int[]{0, -1, 1})
 				{
-					for (int dy = -1; dy <= 1; dy++)
+					foreach (var dy in new int[] { 0, -1, 1 })
 					{
 						if (dx == 0 && dy == 0)
 							continue; // no need to sit still!
