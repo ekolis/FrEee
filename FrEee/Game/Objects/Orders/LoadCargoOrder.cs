@@ -232,12 +232,12 @@ namespace FrEee.Game.Objects.Orders
 				if (kvp.Value == null)
 					loads.Add("All " + kvp.Key);
 				else if (kvp.Value > 0)
-					loads.Add(kvp.Value.Value.ToUnitString(3, true) + " " + kvp.Key);
+					loads.Add(kvp.Value.Value.ToUnitString(true) + " " + kvp.Key);
 			}
 			if (AnyPopulationToLoad == null)
 				loads.Add("All Population");
 			else if (AnyPopulationToLoad.Value > 0)
-				loads.Add(AnyPopulationToLoad.Value.ToUnitString(3, true) + " population");
+				loads.Add(AnyPopulationToLoad.Value.ToUnitString(true) + " population");
 			foreach (var kvp in DesignUnitsToLoad)
 			{
 				if (kvp.Value == null)
