@@ -144,25 +144,25 @@ namespace FrEee.Utility.Extensions
 		/// <param name="value"></param>
 		public static string ToUnitString(this long value, int sigfigs = 4, bool bForBillions = false)
 		{
-			if (Math.Abs(value) >= 1e13)
+			if (Math.Abs(value) >= 1e12 * Math.Pow(10, sigfigs - 3))
 			{
 				var log = (int)Math.Floor(Math.Log10(value / 1e12));
 				var decimals = sigfigs - log;
 				return (value / 1e12).ToString("f" + decimals) + "T";
 			}
-			if (Math.Abs(value) >= 1e10)
+			if (Math.Abs(value) >= 1e9 * Math.Pow(10, sigfigs - 3))
 			{
 				var log = (int)Math.Floor(Math.Log10(value / 1e9));
 				var decimals = sigfigs - log;
 				return (value / 1e9).ToString("f" + decimals) + (bForBillions ? "B" : "G");
 			}
-			if (Math.Abs(value) >= 1e7)
+			if (Math.Abs(value) >= 1e6 * Math.Pow(10, sigfigs - 3))
 			{
 				var log = (int)Math.Floor(Math.Log10(value / 1e6));
 				var decimals = sigfigs - log;
 				return (value / 1e6).ToString("f" + decimals) + "M";
 			}
-			if (Math.Abs(value) >= 1e4)
+			if (Math.Abs(value) >= 1e3 * Math.Pow(10, sigfigs - 3))
 			{
 				var log = (int)Math.Floor(Math.Log10(value / 1e3));
 				var decimals = sigfigs - log;
