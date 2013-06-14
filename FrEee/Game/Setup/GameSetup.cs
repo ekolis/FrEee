@@ -11,6 +11,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Game.Enumerations;
+using System.Drawing;
 
 namespace FrEee.Game.Setup
 {
@@ -98,6 +99,28 @@ namespace FrEee.Game.Setup
 
 		public int MaxSpawnedAsteroidValue {get; set;}
 
+		public int StartingResources { get; set; }
+
+		public int ResourceStorage { get; set; }
+
+		public int StartingResearch { get; set; }
+
+		public int HomeworldsPerEmpire { get; set; }
+
+		public StellarObjectSize HomeworldSize { get; set; }
+
+		public EmpirePlacement EmpirePlacement { get; set; }
+
+		public int MaxHomeworldDispersion { get; set; }
+
+		public ScoreDisplay ScoreDisplay { get; set; }
+
+		public int RacialPoints { get; set; }
+
+		public int RandomAIs { get; set; }
+
+		public int MinorEmpires { get; set; }
+
 		/// <summary>
 		/// Are we setting up a single player game?
 		/// </summary>
@@ -132,8 +155,13 @@ namespace FrEee.Game.Setup
 					yield return "You must specify a galaxy type.";
 				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
 					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
+				if (EmpirePlacement != EmpirePlacement.CanStartInSameSystem && EmpireTemplates.Count + RandomAIs + MinorEmpires > StarSystemCount)
+					yield return "There are not enough star systems to give " + (EmpireTemplates.Count + RandomAIs + MinorEmpires > StarSystemCount) + " empires and minor races each their own home system.";
+				if (HomeworldSize == null)
+					yield return "You must specify a homeworld size.";
 				if (!EmpireTemplates.Any())
 					yield return "You must add at least one empire.";
+				// TODO - check for empires spending too many racial points
 			}
 		}
 
@@ -145,95 +173,135 @@ namespace FrEee.Game.Setup
 			foreach (var tech in ForbiddenTechnologies)
 				gal.Unregister(tech);
 
-			// add players and place homeworlds
+			// set omniscient view flag
+			gal.OmniscientView = OmniscientView;
+
+			// set up mining models and resource stuff
+			gal.StandardMiningModel = StandardMiningModel;
+			gal.RemoteMiningModel = RemoteMiningModel;
+			gal.MinPlanetValue = MinPlanetValue;
+			gal.MinSpawnedPlanetValue = MinSpawnedPlanetValue;
+			gal.MaxSpawnedPlanetValue = MaxSpawnedPlanetValue;
+			gal.MaxPlanetValue = MaxPlanetValue;
+			gal.MinAsteroidValue = MinAsteroidValue;
+			gal.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
+			gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
+
+			// set score display setting
+			gal.ScoreDisplay = ScoreDisplay;
+
+			// place player empires
 			foreach (var et in EmpireTemplates)
+				PlaceEmpire(gal, et);
+
+			// place random AI empires
+			for (int i = 1; i <= RandomAIs; i++)
 			{
-				var emp = et.Instantiate();
-				gal.Empires.Add(emp);
-				gal.Register(emp);
-
-				if (AllSystemsExplored)
+				// TODO - load saved EMP files for random AI empires
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct().PickRandom();
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var et = new EmpireTemplate
 				{
-					foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
-						sys.ExploredByEmpires.Add(emp);
-				}
-
-				if (OmniscientView)
-					gal.OmniscientView = true;
-
-				gal.StandardMiningModel = StandardMiningModel;
-				gal.RemoteMiningModel = RemoteMiningModel;
-				gal.MinPlanetValue = MinPlanetValue;
-				gal.MinSpawnedPlanetValue = MinSpawnedPlanetValue;
-				gal.MaxSpawnedPlanetValue = MaxSpawnedPlanetValue;
-				gal.MaxPlanetValue = MaxPlanetValue;
-				gal.MinAsteroidValue = MinAsteroidValue;
-				gal.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
-				gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
-
-				foreach (var tech in emp.Referrables.OfType<Technology>())
-				{
-					switch (StartingTechnologyLevel)
+					Name = "Random Empire #" + i,
+					LeaderName = "Random Leader #" + i,
+					PrimaryRace = new Race
 					{
-						case StartingTechnologyLevel.Low:
-							emp.ResearchedTechnologies[tech] = tech.StartLevel;
-							break;
-						case StartingTechnologyLevel.Medium:
-							emp.ResearchedTechnologies[tech] = tech.RaiseLevel;
-							break;
-						case StartingTechnologyLevel.High:
-							emp.ResearchedTechnologies[tech] = tech.MaximumLevel;
-							break;
-					}
+						Name = "Random Race #" + i,
+						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+						NativeAtmosphere = atmosphere,
+						NativeSurface = surface,
+					},
+				};
+				PlaceEmpire(gal, et);
+			}
+		}
+
+		private void PlaceEmpire(Galaxy gal, EmpireTemplate et)
+		{
+			var emp = et.Instantiate();
+			gal.Empires.Add(emp);
+			gal.Register(emp);
+
+			if (AllSystemsExplored)
+			{
+				// set all systems explored
+				foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
+					sys.ExploredByEmpires.Add(emp);
+			}
+
+			// give empire starting techs
+			foreach (var tech in emp.Referrables.OfType<Technology>())
+			{
+				switch (StartingTechnologyLevel)
+				{
+					case StartingTechnologyLevel.Low:
+						emp.ResearchedTechnologies[tech] = tech.StartLevel;
+						break;
+					case StartingTechnologyLevel.Medium:
+						emp.ResearchedTechnologies[tech] = tech.RaiseLevel;
+						break;
+					case StartingTechnologyLevel.High:
+						emp.ResearchedTechnologies[tech] = tech.MaximumLevel;
+						break;
 				}
+			}
 
-				// TODO - moddable colony techs?
-				string colonyTechName = null;
-				if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
-					colonyTechName = "Rock Planet Colonization";
-				else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
-					colonyTechName = "Ice Planet Colonization";
-				else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
-					colonyTechName = "Gas Giant Colonization";
-				var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
-				if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
-					emp.ResearchedTechnologies[colonyTech] = 1;
+			// give empire starting resources and storage capacity
+			foreach (var r in Resource.All.Where(r => r.IsGlobal))
+			{
+				emp.StoredResources.Add(r, StartingResources);
+				emp.IntrinsicResourceStorage.Add(r, ResourceStorage);
+			}
 
-				// find facilities to place on homeworlds
-				// TODO - don't crash if facilities not found in mod
-				var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
-				var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).Last();
-				var sp = facils.Last(facil => facil.HasAbility("Spaceport"));
-				var rd = facils.Last(facil => facil.HasAbility("Supply Generation"));
-				var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).Last();
-				var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).Last();
-				var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).Last();
-				var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).Last();
-				// TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
+			// give empire starting research
+			emp.BonusResearch = StartingResearch;
 
-				// SY rate, for colonies
-				var rate = new Resources();
-				// TODO - define mappings between SY ability numbers and resource names in a mod file
-				rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
-				rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
-				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+			// TODO - moddable colony techs?
+			string colonyTechName = null;
+			if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
+				colonyTechName = "Rock Planet Colonization";
+			else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
+				colonyTechName = "Ice Planet Colonization";
+			else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
+				colonyTechName = "Gas Giant Colonization";
+			var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
+			if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
+				emp.ResearchedTechnologies[colonyTech] = 1;
 
-				// TODO - place homeworlds fairly
-				// TODO - give empires their native homeworld types
-				// TODO - make homeworlds breathable
+			// find facilities to place on homeworlds
+			// TODO - don't crash if facilities not found in mod
+			var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
+			var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).Last();
+			var sp = facils.Last(facil => facil.HasAbility("Spaceport"));
+			var rd = facils.Last(facil => facil.HasAbility("Supply Generation"));
+			var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).Last();
+			var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).Last();
+			var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).Last();
+			var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).Last();
+			// TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
+
+			// SY rate, for colonies
+			var rate = new Resources();
+			// TODO - define mappings between SY ability numbers and resource names in a mod file
+			rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
+			rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
+			rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+
+			for (int i = 0; i < HomeworldsPerEmpire; i++)
+			{
+				// TODO - respect Empire Placement and Max Homeworld Dispersion settings
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
-				// TODO - let game setup specify a homeworld size (not just stellar size, a PlanetSize.txt entry?)
-				if (hw.Surface != emp.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != StellarSize.Large)
+				if (hw.Surface != emp.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
 				{
 					var replacementHomeworld = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
 						p.Surface == emp.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
-						p.StellarSize == StellarSize.Large).PickRandom();
+						p.Size == HomeworldSize).PickRandom();
 					if (replacementHomeworld == null)
-						throw new Exception("No planets in the mod with surface " + emp.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size Large. Such a planet is required for creating the " + emp + " homeworld.");
+						throw new Exception("No planets found in SectType.txt with surface " + emp.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
 					replacementHomeworld.CopyTo(hw);
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
@@ -265,13 +333,13 @@ namespace FrEee.Game.Setup
 							hw.Colony.Facilities.Add(res.Instantiate());
 					}
 				}
+			}
 
-				// mark home systems explored
-				foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
-				{
-					if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet == hw))
-						sys.ExploredByEmpires.Add(emp);
-				}
+			// mark home systems explored
+			foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
+			{
+				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet.Owner == emp))
+					sys.ExploredByEmpires.Add(emp);
 			}
 		}
 	}

@@ -35,6 +35,8 @@ namespace FrEee.WinForms.Forms
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
+			stellarObjectSizeBindingSource.DataSource = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Size).Distinct();
+			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs
 			
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -47,6 +49,8 @@ namespace FrEee.WinForms.Forms
 			{
 				lstTechs.SetItemChecked(i, true);
 			}
+			ddlEmpirePlacement.SelectedIndex = 2; // equidistant
+			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 		}
 
 		private GameSetup setup;
@@ -110,6 +114,17 @@ namespace FrEee.WinForms.Forms
 				if (!lstTechs.GetItemChecked(i))
 					setup.ForbiddenTechnologies.Add((Technology)lstTechs.Items[i]);
 			}
+			setup.StartingResources = (int)spnStartResources.Value;
+			setup.ResourceStorage = (int)spnResourceStorage.Value;
+			setup.StartingResearch = (int)spnStartResearch.Value;
+			setup.HomeworldsPerEmpire = (int)spnHomeworlds.Value;
+			setup.HomeworldSize = (StellarObjectSize)ddlHomeworldSize.SelectedItem;
+			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
+			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
+			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);
+			setup.RacialPoints = (int)spnRacialPoints.Value;
+			setup.RandomAIs = (int)spnRandomAIs.Value;
+			setup.MinorEmpires = (int)spnMinorEmpires.Value;
 			
 			if (setup.Warnings.Any())
 			{
@@ -419,6 +434,11 @@ namespace FrEee.WinForms.Forms
 		private void chkRemote_CheckedChanged(object sender, EventArgs e)
 		{
 			remote = chkRemote.Checked;
+		}
+
+		private void spnResourceStorage_ValueChanged(object sender, EventArgs e)
+		{
+			spnResourceStorage.Maximum = spnResourceStorage.Value;
 		}
 	}
 }

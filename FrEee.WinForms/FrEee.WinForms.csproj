@@ -355,6 +355,7 @@
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Mount.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy.datasource" />
+    <None Include="Properties\DataSources\FrEee.Modding.StellarObjectSize.datasource" />
     <None Include="Properties\DataSources\FrEee.Modding.Templates.GalaxyTemplate.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

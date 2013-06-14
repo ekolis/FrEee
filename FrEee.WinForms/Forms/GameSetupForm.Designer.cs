@@ -112,6 +112,38 @@
 			this.ddlStartTech = new System.Windows.Forms.ComboBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
+			this.label44 = new System.Windows.Forms.Label();
+			this.spnMaxDispersion = new System.Windows.Forms.NumericUpDown();
+			this.label43 = new System.Windows.Forms.Label();
+			this.ddlHomeworldSize = new System.Windows.Forms.ComboBox();
+			this.stellarObjectSizeBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.label42 = new System.Windows.Forms.Label();
+			this.btnSaveEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.btnEditEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.btnLoadEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.btnCreateEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstEmpires = new System.Windows.Forms.ListView();
+			this.label41 = new System.Windows.Forms.Label();
+			this.spnResourceStorage = new System.Windows.Forms.NumericUpDown();
+			this.label40 = new System.Windows.Forms.Label();
+			this.spnMinorEmpires = new System.Windows.Forms.NumericUpDown();
+			this.spnRandomAIs = new System.Windows.Forms.NumericUpDown();
+			this.spnRacialPoints = new System.Windows.Forms.NumericUpDown();
+			this.ddlScoreDisplay = new System.Windows.Forms.ComboBox();
+			this.ddlEmpirePlacement = new System.Windows.Forms.ComboBox();
+			this.spnHomeworlds = new System.Windows.Forms.NumericUpDown();
+			this.spnStartResearch = new System.Windows.Forms.NumericUpDown();
+			this.spnStartResources = new System.Windows.Forms.NumericUpDown();
+			this.label39 = new System.Windows.Forms.Label();
+			this.label38 = new System.Windows.Forms.Label();
+			this.label37 = new System.Windows.Forms.Label();
+			this.label36 = new System.Windows.Forms.Label();
+			this.label35 = new System.Windows.Forms.Label();
+			this.label34 = new System.Windows.Forms.Label();
+			this.label33 = new System.Windows.Forms.Label();
+			this.label32 = new System.Windows.Forms.Label();
 			this.tabVictory = new System.Windows.Forms.TabPage();
 			this.tabSettings = new System.Windows.Forms.TabPage();
 			this.tabMechanics = new System.Windows.Forms.TabPage();
@@ -150,6 +182,17 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnBonusStandard)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).BeginInit();
 			this.tabTechnology.SuspendLayout();
+			this.tabEmpires.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.stellarObjectSizeBindingSource)).BeginInit();
+			this.gamePanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRandomAIs)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRacialPoints)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -171,7 +214,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(553, 479);
+			this.tabs.Size = new System.Drawing.Size(553, 573);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -208,7 +251,7 @@
 			this.tabGalaxy.Location = new System.Drawing.Point(4, 29);
 			this.tabGalaxy.Name = "tabGalaxy";
 			this.tabGalaxy.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGalaxy.Size = new System.Drawing.Size(545, 446);
+			this.tabGalaxy.Size = new System.Drawing.Size(545, 540);
 			this.tabGalaxy.TabIndex = 0;
 			this.tabGalaxy.Text = "Galaxy";
 			// 
@@ -571,7 +614,7 @@
 			this.tabResources.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabResources.Location = new System.Drawing.Point(4, 29);
 			this.tabResources.Name = "tabResources";
-			this.tabResources.Size = new System.Drawing.Size(545, 446);
+			this.tabResources.Size = new System.Drawing.Size(545, 540);
 			this.tabResources.TabIndex = 7;
 			this.tabResources.Text = "Resources";
 			// 
@@ -1190,7 +1233,7 @@
 			this.tabTechnology.Location = new System.Drawing.Point(4, 29);
 			this.tabTechnology.Name = "tabTechnology";
 			this.tabTechnology.Padding = new System.Windows.Forms.Padding(3);
-			this.tabTechnology.Size = new System.Drawing.Size(545, 446);
+			this.tabTechnology.Size = new System.Drawing.Size(545, 540);
 			this.tabTechnology.TabIndex = 2;
 			this.tabTechnology.Text = "Technology";
 			// 
@@ -1224,6 +1267,7 @@
 			// 
 			// ddlStartTech
 			// 
+			this.ddlStartTech.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlStartTech.FormattingEnabled = true;
 			this.ddlStartTech.Items.AddRange(new object[] {
             "Low",
@@ -1248,12 +1292,432 @@
 			// tabEmpires
 			// 
 			this.tabEmpires.BackColor = System.Drawing.Color.Black;
+			this.tabEmpires.Controls.Add(this.label44);
+			this.tabEmpires.Controls.Add(this.spnMaxDispersion);
+			this.tabEmpires.Controls.Add(this.label43);
+			this.tabEmpires.Controls.Add(this.ddlHomeworldSize);
+			this.tabEmpires.Controls.Add(this.label42);
+			this.tabEmpires.Controls.Add(this.btnSaveEmpire);
+			this.tabEmpires.Controls.Add(this.btnRemoveEmpire);
+			this.tabEmpires.Controls.Add(this.btnEditEmpire);
+			this.tabEmpires.Controls.Add(this.btnLoadEmpire);
+			this.tabEmpires.Controls.Add(this.btnCreateEmpire);
+			this.tabEmpires.Controls.Add(this.gamePanel1);
+			this.tabEmpires.Controls.Add(this.label41);
+			this.tabEmpires.Controls.Add(this.spnResourceStorage);
+			this.tabEmpires.Controls.Add(this.label40);
+			this.tabEmpires.Controls.Add(this.spnMinorEmpires);
+			this.tabEmpires.Controls.Add(this.spnRandomAIs);
+			this.tabEmpires.Controls.Add(this.spnRacialPoints);
+			this.tabEmpires.Controls.Add(this.ddlScoreDisplay);
+			this.tabEmpires.Controls.Add(this.ddlEmpirePlacement);
+			this.tabEmpires.Controls.Add(this.spnHomeworlds);
+			this.tabEmpires.Controls.Add(this.spnStartResearch);
+			this.tabEmpires.Controls.Add(this.spnStartResources);
+			this.tabEmpires.Controls.Add(this.label39);
+			this.tabEmpires.Controls.Add(this.label38);
+			this.tabEmpires.Controls.Add(this.label37);
+			this.tabEmpires.Controls.Add(this.label36);
+			this.tabEmpires.Controls.Add(this.label35);
+			this.tabEmpires.Controls.Add(this.label34);
+			this.tabEmpires.Controls.Add(this.label33);
+			this.tabEmpires.Controls.Add(this.label32);
+			this.tabEmpires.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabEmpires.Location = new System.Drawing.Point(4, 29);
 			this.tabEmpires.Name = "tabEmpires";
 			this.tabEmpires.Padding = new System.Windows.Forms.Padding(3);
-			this.tabEmpires.Size = new System.Drawing.Size(545, 446);
+			this.tabEmpires.Size = new System.Drawing.Size(545, 540);
 			this.tabEmpires.TabIndex = 3;
 			this.tabEmpires.Text = "Empires";
+			// 
+			// label44
+			// 
+			this.label44.AutoSize = true;
+			this.label44.Location = new System.Drawing.Point(253, 170);
+			this.label44.Name = "label44";
+			this.label44.Size = new System.Drawing.Size(173, 15);
+			this.label44.TabIndex = 42;
+			this.label44.Text = "warps from central homeworld";
+			// 
+			// spnMaxDispersion
+			// 
+			this.spnMaxDispersion.Location = new System.Drawing.Point(126, 169);
+			this.spnMaxDispersion.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnMaxDispersion.Name = "spnMaxDispersion";
+			this.spnMaxDispersion.Size = new System.Drawing.Size(120, 21);
+			this.spnMaxDispersion.TabIndex = 41;
+			this.spnMaxDispersion.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// label43
+			// 
+			this.label43.AutoSize = true;
+			this.label43.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label43.Location = new System.Drawing.Point(9, 171);
+			this.label43.Margin = new System.Windows.Forms.Padding(3);
+			this.label43.Name = "label43";
+			this.label43.Size = new System.Drawing.Size(93, 15);
+			this.label43.TabIndex = 40;
+			this.label43.Text = "Max Dispersion";
+			// 
+			// ddlHomeworldSize
+			// 
+			this.ddlHomeworldSize.DataSource = this.stellarObjectSizeBindingSource;
+			this.ddlHomeworldSize.DisplayMember = "Name";
+			this.ddlHomeworldSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlHomeworldSize.FormattingEnabled = true;
+			this.ddlHomeworldSize.Location = new System.Drawing.Point(125, 111);
+			this.ddlHomeworldSize.Name = "ddlHomeworldSize";
+			this.ddlHomeworldSize.Size = new System.Drawing.Size(165, 23);
+			this.ddlHomeworldSize.TabIndex = 39;
+			// 
+			// stellarObjectSizeBindingSource
+			// 
+			this.stellarObjectSizeBindingSource.AllowNew = false;
+			this.stellarObjectSizeBindingSource.DataSource = typeof(FrEee.Modding.StellarObjectSize);
+			// 
+			// label42
+			// 
+			this.label42.AutoSize = true;
+			this.label42.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label42.Location = new System.Drawing.Point(8, 114);
+			this.label42.Margin = new System.Windows.Forms.Padding(3);
+			this.label42.Name = "label42";
+			this.label42.Size = new System.Drawing.Size(98, 15);
+			this.label42.TabIndex = 38;
+			this.label42.Text = "Homeworld Size";
+			// 
+			// btnSaveEmpire
+			// 
+			this.btnSaveEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnSaveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSaveEmpire.Location = new System.Drawing.Point(307, 485);
+			this.btnSaveEmpire.Name = "btnSaveEmpire";
+			this.btnSaveEmpire.Size = new System.Drawing.Size(101, 31);
+			this.btnSaveEmpire.TabIndex = 37;
+			this.btnSaveEmpire.Text = "Save";
+			this.btnSaveEmpire.UseVisualStyleBackColor = false;
+			// 
+			// btnRemoveEmpire
+			// 
+			this.btnRemoveEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnRemoveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRemoveEmpire.Location = new System.Drawing.Point(307, 448);
+			this.btnRemoveEmpire.Name = "btnRemoveEmpire";
+			this.btnRemoveEmpire.Size = new System.Drawing.Size(101, 31);
+			this.btnRemoveEmpire.TabIndex = 36;
+			this.btnRemoveEmpire.Text = "Remove";
+			this.btnRemoveEmpire.UseVisualStyleBackColor = false;
+			// 
+			// btnEditEmpire
+			// 
+			this.btnEditEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnEditEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEditEmpire.Location = new System.Drawing.Point(307, 411);
+			this.btnEditEmpire.Name = "btnEditEmpire";
+			this.btnEditEmpire.Size = new System.Drawing.Size(101, 31);
+			this.btnEditEmpire.TabIndex = 35;
+			this.btnEditEmpire.Text = "Edit";
+			this.btnEditEmpire.UseVisualStyleBackColor = false;
+			// 
+			// btnLoadEmpire
+			// 
+			this.btnLoadEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnLoadEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLoadEmpire.Location = new System.Drawing.Point(307, 374);
+			this.btnLoadEmpire.Name = "btnLoadEmpire";
+			this.btnLoadEmpire.Size = new System.Drawing.Size(101, 31);
+			this.btnLoadEmpire.TabIndex = 34;
+			this.btnLoadEmpire.Text = "Load";
+			this.btnLoadEmpire.UseVisualStyleBackColor = false;
+			// 
+			// btnCreateEmpire
+			// 
+			this.btnCreateEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnCreateEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCreateEmpire.Location = new System.Drawing.Point(307, 337);
+			this.btnCreateEmpire.Name = "btnCreateEmpire";
+			this.btnCreateEmpire.Size = new System.Drawing.Size(101, 31);
+			this.btnCreateEmpire.TabIndex = 33;
+			this.btnCreateEmpire.Text = "Create";
+			this.btnCreateEmpire.UseVisualStyleBackColor = false;
+			// 
+			// gamePanel1
+			// 
+			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.lstEmpires);
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(11, 337);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(290, 197);
+			this.gamePanel1.TabIndex = 32;
+			// 
+			// lstEmpires
+			// 
+			this.lstEmpires.BackColor = System.Drawing.Color.Black;
+			this.lstEmpires.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstEmpires.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstEmpires.ForeColor = System.Drawing.Color.White;
+			this.lstEmpires.Location = new System.Drawing.Point(3, 3);
+			this.lstEmpires.Name = "lstEmpires";
+			this.lstEmpires.Size = new System.Drawing.Size(282, 189);
+			this.lstEmpires.TabIndex = 0;
+			this.lstEmpires.UseCompatibleStateImageBehavior = false;
+			// 
+			// label41
+			// 
+			this.label41.AutoSize = true;
+			this.label41.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label41.Location = new System.Drawing.Point(12, 316);
+			this.label41.Margin = new System.Windows.Forms.Padding(3);
+			this.label41.Name = "label41";
+			this.label41.Size = new System.Drawing.Size(90, 15);
+			this.label41.TabIndex = 31;
+			this.label41.Text = "Player Empires";
+			// 
+			// spnResourceStorage
+			// 
+			this.spnResourceStorage.Location = new System.Drawing.Point(126, 32);
+			this.spnResourceStorage.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnResourceStorage.Name = "spnResourceStorage";
+			this.spnResourceStorage.Size = new System.Drawing.Size(120, 21);
+			this.spnResourceStorage.TabIndex = 30;
+			this.spnResourceStorage.Value = new decimal(new int[] {
+            50000,
+            0,
+            0,
+            0});
+			this.spnResourceStorage.ValueChanged += new System.EventHandler(this.spnResourceStorage_ValueChanged);
+			// 
+			// label40
+			// 
+			this.label40.AutoSize = true;
+			this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label40.Location = new System.Drawing.Point(6, 34);
+			this.label40.Margin = new System.Windows.Forms.Padding(3);
+			this.label40.Name = "label40";
+			this.label40.Size = new System.Drawing.Size(106, 15);
+			this.label40.TabIndex = 29;
+			this.label40.Text = "Resource Storage";
+			// 
+			// spnMinorEmpires
+			// 
+			this.spnMinorEmpires.Location = new System.Drawing.Point(125, 279);
+			this.spnMinorEmpires.Name = "spnMinorEmpires";
+			this.spnMinorEmpires.Size = new System.Drawing.Size(120, 21);
+			this.spnMinorEmpires.TabIndex = 28;
+			// 
+			// spnRandomAIs
+			// 
+			this.spnRandomAIs.Location = new System.Drawing.Point(125, 252);
+			this.spnRandomAIs.Name = "spnRandomAIs";
+			this.spnRandomAIs.Size = new System.Drawing.Size(120, 21);
+			this.spnRandomAIs.TabIndex = 27;
+			// 
+			// spnRacialPoints
+			// 
+			this.spnRacialPoints.Location = new System.Drawing.Point(125, 225);
+			this.spnRacialPoints.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnRacialPoints.Name = "spnRacialPoints";
+			this.spnRacialPoints.Size = new System.Drawing.Size(120, 21);
+			this.spnRacialPoints.TabIndex = 26;
+			this.spnRacialPoints.Value = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+			// 
+			// ddlScoreDisplay
+			// 
+			this.ddlScoreDisplay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlScoreDisplay.FormattingEnabled = true;
+			this.ddlScoreDisplay.Items.AddRange(new object[] {
+            "Own Only (No Rankings)",
+            "Own Only (Ranked)",
+            "Allies Only (No Rankings)",
+            "Allies Only (Ranked)",
+            "All"});
+			this.ddlScoreDisplay.Location = new System.Drawing.Point(125, 196);
+			this.ddlScoreDisplay.Name = "ddlScoreDisplay";
+			this.ddlScoreDisplay.Size = new System.Drawing.Size(166, 23);
+			this.ddlScoreDisplay.TabIndex = 25;
+			// 
+			// ddlEmpirePlacement
+			// 
+			this.ddlEmpirePlacement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlEmpirePlacement.FormattingEnabled = true;
+			this.ddlEmpirePlacement.Items.AddRange(new object[] {
+            "Can Start In Same System",
+            "Different Systems",
+            "Equidistant"});
+			this.ddlEmpirePlacement.Location = new System.Drawing.Point(126, 140);
+			this.ddlEmpirePlacement.Name = "ddlEmpirePlacement";
+			this.ddlEmpirePlacement.Size = new System.Drawing.Size(165, 23);
+			this.ddlEmpirePlacement.TabIndex = 24;
+			// 
+			// spnHomeworlds
+			// 
+			this.spnHomeworlds.Location = new System.Drawing.Point(125, 84);
+			this.spnHomeworlds.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnHomeworlds.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			this.spnHomeworlds.Name = "spnHomeworlds";
+			this.spnHomeworlds.Size = new System.Drawing.Size(120, 21);
+			this.spnHomeworlds.TabIndex = 23;
+			this.spnHomeworlds.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+			// 
+			// spnStartResearch
+			// 
+			this.spnStartResearch.Location = new System.Drawing.Point(126, 57);
+			this.spnStartResearch.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnStartResearch.Name = "spnStartResearch";
+			this.spnStartResearch.Size = new System.Drawing.Size(120, 21);
+			this.spnStartResearch.TabIndex = 22;
+			this.spnStartResearch.Value = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+			// 
+			// spnStartResources
+			// 
+			this.spnStartResources.Location = new System.Drawing.Point(126, 7);
+			this.spnStartResources.Maximum = new decimal(new int[] {
+            1000000,
+            0,
+            0,
+            0});
+			this.spnStartResources.Name = "spnStartResources";
+			this.spnStartResources.Size = new System.Drawing.Size(120, 21);
+			this.spnStartResources.TabIndex = 21;
+			this.spnStartResources.Value = new decimal(new int[] {
+            20000,
+            0,
+            0,
+            0});
+			// 
+			// label39
+			// 
+			this.label39.AutoSize = true;
+			this.label39.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label39.Location = new System.Drawing.Point(9, 281);
+			this.label39.Margin = new System.Windows.Forms.Padding(3);
+			this.label39.Name = "label39";
+			this.label39.Size = new System.Drawing.Size(88, 15);
+			this.label39.TabIndex = 20;
+			this.label39.Text = "Minor Empires";
+			// 
+			// label38
+			// 
+			this.label38.AutoSize = true;
+			this.label38.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label38.Location = new System.Drawing.Point(9, 254);
+			this.label38.Margin = new System.Windows.Forms.Padding(3);
+			this.label38.Name = "label38";
+			this.label38.Size = new System.Drawing.Size(74, 15);
+			this.label38.TabIndex = 19;
+			this.label38.Text = "Random AIs";
+			// 
+			// label37
+			// 
+			this.label37.AutoSize = true;
+			this.label37.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label37.Location = new System.Drawing.Point(9, 225);
+			this.label37.Margin = new System.Windows.Forms.Padding(3);
+			this.label37.Name = "label37";
+			this.label37.Size = new System.Drawing.Size(79, 15);
+			this.label37.TabIndex = 18;
+			this.label37.Text = "Racial Points";
+			// 
+			// label36
+			// 
+			this.label36.AutoSize = true;
+			this.label36.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label36.Location = new System.Drawing.Point(9, 199);
+			this.label36.Margin = new System.Windows.Forms.Padding(3);
+			this.label36.Name = "label36";
+			this.label36.Size = new System.Drawing.Size(82, 15);
+			this.label36.TabIndex = 17;
+			this.label36.Text = "Score Display";
+			// 
+			// label35
+			// 
+			this.label35.AutoSize = true;
+			this.label35.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label35.Location = new System.Drawing.Point(9, 143);
+			this.label35.Margin = new System.Windows.Forms.Padding(3);
+			this.label35.Name = "label35";
+			this.label35.Size = new System.Drawing.Size(66, 15);
+			this.label35.TabIndex = 16;
+			this.label35.Text = "Placement";
+			// 
+			// label34
+			// 
+			this.label34.AutoSize = true;
+			this.label34.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label34.Location = new System.Drawing.Point(8, 86);
+			this.label34.Margin = new System.Windows.Forms.Padding(3);
+			this.label34.Name = "label34";
+			this.label34.Size = new System.Drawing.Size(77, 15);
+			this.label34.TabIndex = 15;
+			this.label34.Text = "Homeworlds";
+			// 
+			// label33
+			// 
+			this.label33.AutoSize = true;
+			this.label33.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label33.Location = new System.Drawing.Point(6, 59);
+			this.label33.Margin = new System.Windows.Forms.Padding(3);
+			this.label33.Name = "label33";
+			this.label33.Size = new System.Drawing.Size(105, 15);
+			this.label33.TabIndex = 14;
+			this.label33.Text = "Starting Research";
+			// 
+			// label32
+			// 
+			this.label32.AutoSize = true;
+			this.label32.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label32.Location = new System.Drawing.Point(6, 9);
+			this.label32.Margin = new System.Windows.Forms.Padding(3);
+			this.label32.Name = "label32";
+			this.label32.Size = new System.Drawing.Size(111, 15);
+			this.label32.TabIndex = 13;
+			this.label32.Text = "Starting Resources";
 			// 
 			// tabVictory
 			// 
@@ -1261,7 +1725,7 @@
 			this.tabVictory.Location = new System.Drawing.Point(4, 29);
 			this.tabVictory.Name = "tabVictory";
 			this.tabVictory.Padding = new System.Windows.Forms.Padding(3);
-			this.tabVictory.Size = new System.Drawing.Size(545, 446);
+			this.tabVictory.Size = new System.Drawing.Size(545, 540);
 			this.tabVictory.TabIndex = 4;
 			this.tabVictory.Text = "Victory";
 			// 
@@ -1271,7 +1735,7 @@
 			this.tabSettings.Location = new System.Drawing.Point(4, 29);
 			this.tabSettings.Name = "tabSettings";
 			this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
-			this.tabSettings.Size = new System.Drawing.Size(545, 446);
+			this.tabSettings.Size = new System.Drawing.Size(545, 540);
 			this.tabSettings.TabIndex = 5;
 			this.tabSettings.Text = "Settings";
 			// 
@@ -1281,7 +1745,7 @@
 			this.tabMechanics.Location = new System.Drawing.Point(4, 29);
 			this.tabMechanics.Name = "tabMechanics";
 			this.tabMechanics.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMechanics.Size = new System.Drawing.Size(545, 446);
+			this.tabMechanics.Size = new System.Drawing.Size(545, 540);
 			this.tabMechanics.TabIndex = 6;
 			this.tabMechanics.Text = "Mechanics";
 			// 
@@ -1290,7 +1754,7 @@
 			this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnStart.BackColor = System.Drawing.Color.Black;
 			this.btnStart.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnStart.Location = new System.Drawing.Point(478, 485);
+			this.btnStart.Location = new System.Drawing.Point(478, 579);
 			this.btnStart.Name = "btnStart";
 			this.btnStart.Size = new System.Drawing.Size(75, 23);
 			this.btnStart.TabIndex = 0;
@@ -1303,7 +1767,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(397, 485);
+			this.btnCancel.Location = new System.Drawing.Point(397, 579);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 1;
@@ -1316,7 +1780,7 @@
 			this.btnLoadSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadSetup.BackColor = System.Drawing.Color.Black;
 			this.btnLoadSetup.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadSetup.Location = new System.Drawing.Point(6, 485);
+			this.btnLoadSetup.Location = new System.Drawing.Point(6, 579);
 			this.btnLoadSetup.Name = "btnLoadSetup";
 			this.btnLoadSetup.Size = new System.Drawing.Size(75, 23);
 			this.btnLoadSetup.TabIndex = 2;
@@ -1329,7 +1793,7 @@
 			this.btnSaveSetup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveSetup.BackColor = System.Drawing.Color.Black;
 			this.btnSaveSetup.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveSetup.Location = new System.Drawing.Point(87, 485);
+			this.btnSaveSetup.Location = new System.Drawing.Point(87, 579);
 			this.btnSaveSetup.Name = "btnSaveSetup";
 			this.btnSaveSetup.Size = new System.Drawing.Size(75, 23);
 			this.btnSaveSetup.TabIndex = 3;
@@ -1341,7 +1805,7 @@
 			// 
 			this.progressBar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar.Location = new System.Drawing.Point(168, 491);
+			this.progressBar.Location = new System.Drawing.Point(168, 585);
 			this.progressBar.Name = "progressBar";
 			this.progressBar.Size = new System.Drawing.Size(223, 14);
 			this.progressBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -1353,7 +1817,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(565, 517);
+			this.ClientSize = new System.Drawing.Size(565, 611);
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.btnSaveSetup);
 			this.Controls.Add(this.btnLoadSetup);
@@ -1396,6 +1860,18 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRateStandard)).EndInit();
 			this.tabTechnology.ResumeLayout(false);
 			this.tabTechnology.PerformLayout();
+			this.tabEmpires.ResumeLayout(false);
+			this.tabEmpires.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.stellarObjectSizeBindingSource)).EndInit();
+			this.gamePanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRandomAIs)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnRacialPoints)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1493,5 +1969,37 @@
 		private System.Windows.Forms.ComboBox ddlStartTech;
 		private System.Windows.Forms.Label label31;
 		private System.Windows.Forms.CheckedListBox lstTechs;
+		private System.Windows.Forms.Label label33;
+		private System.Windows.Forms.Label label32;
+		private System.Windows.Forms.Label label36;
+		private System.Windows.Forms.Label label35;
+		private System.Windows.Forms.Label label34;
+		private System.Windows.Forms.Label label37;
+		private System.Windows.Forms.Label label39;
+		private System.Windows.Forms.Label label38;
+		private System.Windows.Forms.ComboBox ddlEmpirePlacement;
+		private System.Windows.Forms.NumericUpDown spnHomeworlds;
+		private System.Windows.Forms.NumericUpDown spnStartResearch;
+		private System.Windows.Forms.NumericUpDown spnStartResources;
+		private System.Windows.Forms.NumericUpDown spnMinorEmpires;
+		private System.Windows.Forms.NumericUpDown spnRandomAIs;
+		private System.Windows.Forms.NumericUpDown spnRacialPoints;
+		private System.Windows.Forms.ComboBox ddlScoreDisplay;
+		private System.Windows.Forms.NumericUpDown spnResourceStorage;
+		private System.Windows.Forms.Label label40;
+		private System.Windows.Forms.Label label41;
+		private Controls.GamePanel gamePanel1;
+		private System.Windows.Forms.ListView lstEmpires;
+		private Controls.GameButton btnCreateEmpire;
+		private Controls.GameButton btnLoadEmpire;
+		private Controls.GameButton btnEditEmpire;
+		private Controls.GameButton btnRemoveEmpire;
+		private Controls.GameButton btnSaveEmpire;
+		private System.Windows.Forms.ComboBox ddlHomeworldSize;
+		private System.Windows.Forms.BindingSource stellarObjectSizeBindingSource;
+		private System.Windows.Forms.Label label42;
+		private System.Windows.Forms.Label label44;
+		private System.Windows.Forms.NumericUpDown spnMaxDispersion;
+		private System.Windows.Forms.Label label43;
 	}
 }

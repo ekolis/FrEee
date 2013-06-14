@@ -14,6 +14,7 @@ using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -88,6 +89,11 @@ namespace FrEee.Game.Objects.Space
 		public int MinSpawnedAsteroidValue {get; set;}
 
 		public int MaxSpawnedAsteroidValue {get; set;}
+
+		/// <summary>
+		/// Who can view empire scores?
+		/// </summary>
+		public ScoreDisplay ScoreDisplay { get; set; }
 
 		/// <summary>
 		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
@@ -484,6 +490,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				// give owner his income
 				p.Owner.StoredResources += p.Income;
+				p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
 				// adjust resource value
 				foreach (var kvp in p.Income)
@@ -508,6 +515,7 @@ namespace FrEee.Game.Objects.Space
 				}
 
 				// do research
+				// TODO - first turn, allow player to spend first turn bonus research from game setup
 				var Spending = emp.ResearchSpending;
 				var Queue = emp.ResearchQueue;
 				// spend research from spending % priorities

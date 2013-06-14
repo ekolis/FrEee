@@ -41,12 +41,7 @@ namespace FrEee.Game.Objects.Civilization
 		public Empire()
 		{
 			StoredResources = new Resources();
-
-			// TODO - make starting resources moddable
-			StoredResources.Add(Resource.Minerals, 50000);
-			StoredResources.Add(Resource.Organics, 50000);
-			StoredResources.Add(Resource.Radioactives, 50000);
-
+			IntrinsicResourceStorage = new Resources();
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
 			Log = new List<LogMessage>();
@@ -219,6 +214,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{
+			// TODO - first turn, allow player to spend first turn bonus research from game setup
 			var totalRP = Income[Resource.Research];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
@@ -449,7 +445,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public bool IsDefeated
 		{
-			get 
+			get
 			{
 				return !Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Any();
 			}
@@ -477,5 +473,56 @@ namespace FrEee.Game.Objects.Civilization
 				return false;
 			return true; // TODO - alliances
 		}
+
+		/// <summary>
+		/// Intrinsic resource storage capacity of this empire (without components, facilities, etc. that provide the abilities).
+		/// </summary>
+		public Resources IntrinsicResourceStorage { get; private set; }
+
+		/// <summary>
+		/// Resource storage capacity of this empire.
+		/// </summary>
+		public Resources ResourceStorage
+		{
+			get
+			{
+				var r = new Resources();
+				r += IntrinsicResourceStorage;
+				foreach (var sobj in OwnedSpaceObjects)
+				{
+					// yes, Aaron did spell it "Mineral", not "Minerals"... we can support both though!
+					var min = sobj.GetAbilityValue("Resource Storage - Mineral").ToInt() + sobj.GetAbilityValue("Resource Storage - Minerals").ToInt();
+					var org = sobj.GetAbilityValue("Resource Storage - Organics").ToInt();
+					var rad = sobj.GetAbilityValue("Resource Storage - Radioactives").ToInt();
+					r.Add(Resource.Minerals, min);
+					r.Add(Resource.Organics, org);
+					r.Add(Resource.Radioactives, rad);
+				}
+				return r;
+			}
+		}
+
+		public IEnumerable<ISpaceObject> OwnedSpaceObjects
+		{
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Flatten().Flatten();
+			}
+		}
+
+		/// <summary>
+		/// Bonus research available to spend this turn only.
+		/// </summary>
+		public int BonusResearch { get; set; }
+
+		/// <summary>
+		/// Is this a minor empire? Minor empires cannot use warp points.
+		/// </summary>
+		public bool IsMinorEmpire { get; set; }
+
+		/// <summary>
+		/// Is this empire controlled by a human player?
+		/// </summary>
+		public bool IsPlayerEmpire { get; set; }
 	}
 }

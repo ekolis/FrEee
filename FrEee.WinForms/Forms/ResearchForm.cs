@@ -24,6 +24,7 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			// show RP available
+			// TODO - first turn, allow player to spend first turn bonus research from game setup
 			resRes.Amount = Empire.Current.Income[Resource.Research];
 
 			// bind group dropdown and tech grid
