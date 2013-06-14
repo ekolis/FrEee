@@ -3,6 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Controls
 {
@@ -50,10 +51,9 @@ namespace FrEee.WinForms.Controls
 				txtAtmosphere.Text = AsteroidField.Atmosphere;
 				txtConditions.Text = ""; // TODO - load conditions
 
-				// TODO - load resource value
-				txtValueMinerals.Text = "";
-				txtValueOrganics.Text = "";
-				txtValueRadioactives.Text = "";
+				txtValueMinerals.Text = AsteroidField.ResourceValue[Resource.Minerals].ToUnitString();
+				txtValueOrganics.Text = AsteroidField.ResourceValue[Resource.Organics].ToUnitString();
+				txtValueRadioactives.Text = AsteroidField.ResourceValue[Resource.Radioactives].ToUnitString();
 
 				txtDescription.Text = AsteroidField.Description;
 
