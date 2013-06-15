@@ -14,6 +14,7 @@ using System.IO;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Civilization;
 using System.Reflection;
+using System.Collections;
 
 namespace FrEee.Utility.Extensions
 {
@@ -818,7 +819,16 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool IsClientSafe(this Type t)
 		{
-			return t.IsPrimitive || t == typeof(string) || t == typeof(Point) || t == typeof(Color) || t.GetCustomAttributes(typeof(ClientSafeAttribute), true).Any() || t.BaseType != null && t.BaseType.IsClientSafe() || t.GetInterfaces().Any(i => i.IsClientSafe());
+			return
+				t.IsPrimitive ||
+				t == typeof(string) ||
+				t == typeof(Point) ||
+				t == typeof(Color) ||
+				typeof(IEnumerable<object>).IsAssignableFrom(t) ||
+				typeof(IEnumerable).IsAssignableFrom(t) || 
+				t.GetCustomAttributes(typeof(ClientSafeAttribute),true).Any() ||
+				t.BaseType != null && t.BaseType.IsClientSafe() ||
+				t.GetInterfaces().Any(i => i.IsClientSafe());
 		}
 
 		public static int IndexOf<T>(this IEnumerable<T> haystack, T needle)
