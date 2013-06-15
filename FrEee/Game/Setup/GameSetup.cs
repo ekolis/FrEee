@@ -198,8 +198,8 @@ namespace FrEee.Game.Setup
 			for (int i = 1; i <= RandomAIs; i++)
 			{
 				// TODO - load saved EMP files for random AI empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct().PickRandom();
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom();
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
 				var et = new EmpireTemplate
 				{
 					Name = "Random Empire #" + i,
@@ -220,8 +220,8 @@ namespace FrEee.Game.Setup
 			for (int i = 1; i <= MinorEmpires; i++)
 			{
 				// TODO - load saved EMP files for minor empires
-				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct().PickRandom();
-				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed).Select(p => p.Surface).Distinct().PickRandom();
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => !p.Size.IsConstructed && p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
 				var et = new EmpireTemplate
 				{
 					Name = "Minor Empire #" + i,
