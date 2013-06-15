@@ -323,14 +323,14 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "UI", "Resources", res.PictureName)) ??
 					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
-					GetGenericImage(res.GetType());
+					GetSolidColorImage(res.Color, 20);
 			}
 			else
 			{
 				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 				return
 					GetCachedImage(Path.Combine("Pictures", "UI", "Resources", res.PictureName)) ??
-					GetGenericImage(res.GetType());
+					GetSolidColorImage(res.Color, 20);
 			}
 		}
 
@@ -543,9 +543,9 @@ namespace FrEee.Utility
 			return GetSolidColorImage(Color.Transparent);
 		}
 
-		public static Image GetSolidColorImage(Color color)
+		public static Image GetSolidColorImage(Color color, int size = 1)
 		{
-			var img = new Bitmap(1, 1);
+			var img = new Bitmap(size, size);
 			var g = Graphics.FromImage(img);
 			g.Clear(color);
 			return img;

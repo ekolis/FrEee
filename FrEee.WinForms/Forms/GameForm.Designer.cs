@@ -646,6 +646,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Location = new System.Drawing.Point(6, 6);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
+			this.starSystemView.SelectedSpaceObject = null;
 			this.starSystemView.Size = new System.Drawing.Size(702, 597);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;

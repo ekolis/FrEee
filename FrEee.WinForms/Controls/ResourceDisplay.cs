@@ -15,6 +15,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			Height = 20;
 			lblAmount.ForeColor = ResourceColor;
 			if (ResourceIcon != null)
 				picIcon.Image = ResourceIcon;
