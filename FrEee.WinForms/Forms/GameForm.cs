@@ -484,13 +484,6 @@ namespace FrEee.WinForms.Forms
 
 		private void SelectTab(FlowLayoutPanel tab)
 		{
-			foreach (var tab2 in ListTabs())
-			{
-				// de-highlight tab
-				tab2.Controls[0].BackColor = Color.Black;
-			}
-			// highlight tab
-			tab.Controls[0].BackColor = Color.Navy;
 			btnTab_Click(tab.Controls[0], new EventArgs());
 		}
 
@@ -498,13 +491,20 @@ namespace FrEee.WinForms.Forms
 		{
 			var btnTab = (GameButton)sender;
 			currentTab = (FlowLayoutPanel)btnTab.Parent;
+			foreach (var tab2 in ListTabs())
+			{
+				// de-highlight tab
+				tab2.Controls[0].BackColor = Color.Black;
+			}
+			// highlight tab
+			currentTab.Controls[0].BackColor = Color.Navy;
 			var sys = (StarSystem)btnTab.Tag;
 			if (galaxyView.SelectedStarSystem != sys)
 				galaxyView.SelectedStarSystem = sys;
 			if (starSystemView.StarSystem != sys)
 				starSystemView.StarSystem = sys;
 		}
-
+		
 		void btnX_Click(object sender, EventArgs e)
 		{
 			var btnX = (GameButton)sender;
