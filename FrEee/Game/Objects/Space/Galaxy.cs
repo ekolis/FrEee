@@ -528,8 +528,12 @@ namespace FrEee.Game.Objects.Space
 					// no queued techs, pick tech with highest % focus
 					emp.Research(Spending.Where(kvp => kvp.Value == Spending.Max(kvp2 => kvp2.Value)).First().Key, leftovers);
 				else
+				{
 					// no techs queued or prioritized, pick a random tech
-					emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
+					var tech = emp.AvailableTechnologies.PickRandom();
+					if (tech != null)
+						emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
+				}
 
 			}
 
