@@ -326,6 +326,7 @@ namespace FrEee.Game.Setup
 						p.Size == HomeworldSize).PickRandom();
 					if (replacementHomeworld == null)
 						throw new Exception("No planets found in SectType.txt with surface " + emp.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
+					replacementHomeworld.Name = hw.Name;
 					replacementHomeworld.CopyTo(hw);
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
