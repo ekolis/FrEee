@@ -13,6 +13,7 @@ using System.Text;
 using System.IO;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Civilization;
+using System.Reflection;
 
 namespace FrEee.Utility.Extensions
 {
@@ -830,6 +831,18 @@ namespace FrEee.Utility.Extensions
 				i++;
 			}
 			return -1;
+		}
+
+		/// <summary>
+		/// Checks a command to make sure it doesn't contain any objects that are not client safe.
+		/// </summary>
+		/// <param name="cmd"></param>
+		public static void CheckForClientSafety(this ICommand cmd)
+		{
+			var vals = cmd.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null).Select(prop => new { Name = prop.Name, Value = prop.GetValue(cmd, new object[0]) });
+			var badVals = vals.Where(val => val.Value != null && !val.Value.GetType().IsClientSafe());
+			if (badVals.Any())
+				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
 		}
 	}
 }
