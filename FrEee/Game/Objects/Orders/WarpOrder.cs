@@ -33,6 +33,12 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Execute(T sobj)
 		{
+			if (sobj.Owner.IsMinorEmpire)
+			{
+				sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp because minor empires cannot use warp points."));
+				return;
+			}
+
 			var here = sobj.FindSector();
 			if (here == WarpPoint.FindSector())
 			{

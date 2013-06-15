@@ -211,6 +211,30 @@ namespace FrEee.Game.Setup
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
 					},
+					IsPlayerEmpire = false,
+				};
+				PlaceEmpire(gal, et);
+			}
+
+			// place minor empires
+			for (int i = 1; i <= MinorEmpires; i++)
+			{
+				// TODO - load saved EMP files for minor empires
+				var surface = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Surface).Distinct().PickRandom();
+				var atmosphere = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Surface == surface).Select(p => p.Atmosphere).Distinct().PickRandom();
+				var et = new EmpireTemplate
+				{
+					Name = "Minor Empire #" + i,
+					LeaderName = "Minor Leader #" + i,
+					PrimaryRace = new Race
+					{
+						Name = "Minor Race #" + i,
+						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+						NativeAtmosphere = atmosphere,
+						NativeSurface = surface,
+					},
+					IsPlayerEmpire = false,
+					IsMinorEmpire = true,
 				};
 				PlaceEmpire(gal, et);
 			}

@@ -80,6 +80,11 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public bool IsPlayerEmpire { get; set; }
 
+		/// <summary>
+		/// Is this a minor empire? Minor empires cannot use warp points.
+		/// </summary>
+		public bool IsMinorEmpire { get; set; }
+
 		public Empire Instantiate()
 		{
 			var emp = new Empire();
@@ -95,6 +100,7 @@ namespace FrEee.Game.Setup
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
 			// TODO - set empire AI
 			emp.IsPlayerEmpire = IsPlayerEmpire;
+			emp.IsMinorEmpire = IsMinorEmpire;
 
 			return emp;
 		}
