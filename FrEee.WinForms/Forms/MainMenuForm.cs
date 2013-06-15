@@ -20,6 +20,7 @@ using System.Threading;
 using System.Reflection;
 using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.WinForms.Forms
 {
@@ -98,14 +99,22 @@ namespace FrEee.WinForms.Forms
 						MinAsteroidValue = 0,
 						MinSpawnedAsteroidValue = 50,
 						MaxSpawnedAsteroidValue = 150,
+						StartingTechnologyLevel = StartingTechnologyLevel.Low,
+						StartingResources = (int)20e3,
+						ResourceStorage = (int)50e3,
+						StartingResearch = (int)20e3,
+						HomeworldsPerEmpire = 1,
+						HomeworldSize = Mod.Current.StellarObjectSizes.Where(size => !size.IsConstructed).WithMax(size => size.MaxFacilities).First(),
+						EmpirePlacement = EmpirePlacement.Equidistant,
+						MaxHomeworldDispersion = 1,
+						ScoreDisplay = ScoreDisplay.OwnOnlyNoRankings,
+						RacialPoints = 2000,
+						RandomAIs = 3,
+						MinorEmpires = 5,
 					};
-					// TODO - pick random empires from a list
+					// TODO - let player pick his empire even with quickstart
 					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { Name = "Jraenar", Color = Color.Red, NativeAtmosphere = "Hydrogen", NativeSurface = "Rock" } });
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Eee Consortium", LeaderName = "General Secretary Lihun", PrimaryRace = new Race { Name = "Eee", Color = Color.Cyan, NativeAtmosphere = "Oxygen" , NativeSurface = "Gas Giant" }});
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Drushocka Empire", LeaderName = "Lord Fazrad", PrimaryRace = new Race { Name = "Drushocka", Color = Color.Green, NativeAtmosphere = "None" , NativeSurface = "Rock" }});
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Norak Ascendancy", LeaderName = "High Priest Rakul", PrimaryRace = new Race { Name = "Norak", Color = Color.Blue, NativeAtmosphere = "Methane" , NativeSurface = "Ice" }});
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Abbidon Enclave", LeaderName = "Speaker Verath", PrimaryRace = new Race { Name = "Abbidon", Color = Color.Orange, NativeAtmosphere = "Carbon Dioxide" , NativeSurface = "Gas Giant" }});
-
+					
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, status, 1.0);
 					var name = Galaxy.Current.Name;
