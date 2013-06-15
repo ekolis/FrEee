@@ -5,6 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Controls
 {
@@ -46,6 +47,7 @@ namespace FrEee.WinForms.Controls
 			else
 			{
 				Visible = true;
+				picPortrait.Image = Design.Portrait;
 				txtName.Text = Design.Name;
 				txtVehicleType.Text = Design.VehicleTypeName;
 				txtHull.Text = Design.Hull.Name + " (" + Design.Hull.Size.Kilotons() + ")";
@@ -57,6 +59,31 @@ namespace FrEee.WinForms.Controls
 				lstComponents.Initialize(32, 32);
 				foreach (var g in Design.Components.GroupBy(mct => mct))
 					lstComponents.AddItemWithImage(g.First().ComponentTemplate.Group, g.Count() + "x " + g.First().ToString(), g, g.First().Icon);
+
+				resCostMin.Amount = Design.Cost[Resource.Minerals];
+				resCostOrg.Amount = Design.Cost[Resource.Organics];
+				resCostRad.Amount = Design.Cost[Resource.Radioactives];
+				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
+				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
+				txtSupplyUsage.Text = Design.SupplyUsagePerSector.ToString();
+				if (Design.Speed == 0)
+					txtRange.Text = "0 sectors";
+				else if (Design.SupplyUsagePerSector == 0 || Design.HasAbility("Quantum Reactor"))
+					txtRange.Text = "Unlimited";
+				else
+					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsagePerSector) + " sectors";
+				txtShieldsHitpoints.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
+				txtArmorHitpoints.Text = Design.ArmorHitpoints + " armor";
+				txtHullHitpoints.Text = Design.HullHitpoints + " hull";
+				if (Design.Accuracy > 0)
+					txtAccuracy.Text = Design.Accuracy.ToString("+0") + "%";
+				else
+					txtAccuracy.Text = Design.Accuracy.ToString("0") + "%";
+				if (Design.Evasion > 0)
+					txtEvasion.Text = Design.Evasion.ToString("+0") + "%";
+				else
+					txtEvasion.Text = Design.Evasion.ToString("0") + "%";
+				txtCargo.Text = Design.CargoCapacity.Kilotons();
 			}
 		}
 

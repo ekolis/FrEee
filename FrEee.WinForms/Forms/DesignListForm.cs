@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
@@ -58,7 +59,7 @@ namespace FrEee.WinForms.Forms
 			// display it!
 			lstDesigns.Initialize(32, 32);
 			foreach (var design in designs)
-				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon);
+				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
 		}
 
 		private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)

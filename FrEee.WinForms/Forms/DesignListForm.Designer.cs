@@ -43,6 +43,8 @@
 			this.designReport = new FrEee.WinForms.Controls.DesignReport();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstDesigns = new System.Windows.Forms.ListView();
+			this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -85,11 +87,10 @@
 			// 
 			// btnClose
 			// 
-			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackColor = System.Drawing.Color.Black;
 			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(551, 405);
+			this.btnClose.Location = new System.Drawing.Point(551, 440);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(151, 29);
 			this.btnClose.TabIndex = 14;
@@ -99,8 +100,7 @@
 			// 
 			// btnGroundSimulator
 			// 
-			this.btnGroundSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGroundSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnGroundSimulator.BackColor = System.Drawing.Color.Black;
 			this.btnGroundSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnGroundSimulator.Location = new System.Drawing.Point(551, 222);
@@ -112,8 +112,7 @@
 			// 
 			// btnSpaceSimulator
 			// 
-			this.btnSpaceSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSpaceSimulator.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSpaceSimulator.BackColor = System.Drawing.Color.Black;
 			this.btnSpaceSimulator.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnSpaceSimulator.Location = new System.Drawing.Point(550, 187);
@@ -125,8 +124,7 @@
 			// 
 			// btnObsolete
 			// 
-			this.btnObsolete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnObsolete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnObsolete.BackColor = System.Drawing.Color.Black;
 			this.btnObsolete.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnObsolete.Location = new System.Drawing.Point(551, 152);
@@ -138,8 +136,7 @@
 			// 
 			// btnUpgrade
 			// 
-			this.btnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUpgrade.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnUpgrade.BackColor = System.Drawing.Color.Black;
 			this.btnUpgrade.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnUpgrade.Location = new System.Drawing.Point(551, 117);
@@ -151,8 +148,7 @@
 			// 
 			// btnEdit
 			// 
-			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnEdit.BackColor = System.Drawing.Color.Black;
 			this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnEdit.Location = new System.Drawing.Point(551, 82);
@@ -164,8 +160,7 @@
 			// 
 			// btnCopy
 			// 
-			this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCopy.BackColor = System.Drawing.Color.Black;
 			this.btnCopy.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnCopy.Location = new System.Drawing.Point(551, 47);
@@ -177,8 +172,7 @@
 			// 
 			// btnCreate
 			// 
-			this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCreate.BackColor = System.Drawing.Color.Black;
 			this.btnCreate.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnCreate.Location = new System.Drawing.Point(551, 12);
@@ -191,6 +185,9 @@
 			// 
 			// gamePanel2
 			// 
+			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.gamePanel2.BackColor = System.Drawing.Color.Black;
 			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -199,7 +196,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(219, 12);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(325, 422);
+			this.gamePanel2.Size = new System.Drawing.Size(325, 457);
 			this.gamePanel2.TabIndex = 6;
 			// 
 			// designReport
@@ -225,28 +222,43 @@
 			this.gamePanel1.Location = new System.Drawing.Point(12, 63);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(200, 371);
+			this.gamePanel1.Size = new System.Drawing.Size(200, 406);
 			this.gamePanel1.TabIndex = 1;
 			// 
 			// lstDesigns
 			// 
 			this.lstDesigns.BackColor = System.Drawing.Color.Black;
 			this.lstDesigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstDesigns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDesign,
+            this.colTotalCost});
 			this.lstDesigns.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstDesigns.ForeColor = System.Drawing.Color.White;
+			this.lstDesigns.FullRowSelect = true;
 			this.lstDesigns.Location = new System.Drawing.Point(3, 3);
 			this.lstDesigns.Name = "lstDesigns";
-			this.lstDesigns.Size = new System.Drawing.Size(192, 363);
+			this.lstDesigns.Size = new System.Drawing.Size(192, 398);
 			this.lstDesigns.TabIndex = 1;
 			this.lstDesigns.UseCompatibleStateImageBehavior = false;
+			this.lstDesigns.View = System.Windows.Forms.View.Details;
 			this.lstDesigns.SelectedIndexChanged += new System.EventHandler(this.lstDesigns_SelectedIndexChanged);
+			// 
+			// colDesign
+			// 
+			this.colDesign.Text = "Design";
+			this.colDesign.Width = 125;
+			// 
+			// colTotalCost
+			// 
+			this.colTotalCost.Text = "Cost";
+			this.colTotalCost.Width = 50;
 			// 
 			// DesignListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(714, 446);
+			this.ClientSize = new System.Drawing.Size(714, 481);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.btnGroundSimulator);
 			this.Controls.Add(this.btnSpaceSimulator);
@@ -288,5 +300,7 @@
 		private Controls.GameButton btnSpaceSimulator;
 		private Controls.GameButton btnGroundSimulator;
 		private Controls.GameButton btnClose;
+		private System.Windows.Forms.ColumnHeader colTotalCost;
+		private System.Windows.Forms.ColumnHeader colDesign;
 	}
 }
