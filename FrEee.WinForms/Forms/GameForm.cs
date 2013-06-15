@@ -778,7 +778,7 @@ namespace FrEee.WinForms.Forms
 
 		private int GetTotalSpending(Technology t)
 		{
-			var budget = Empire.Current.Income[Resource.Research];
+			var budget = Empire.Current.Income[Resource.Research] + Empire.Current.BonusResearch;
 			var forQueue = 100 - Empire.Current.ResearchSpending.Sum(kvp => kvp.Value);
 			return t.Spending.Value * budget / 100 + (Empire.Current.ResearchQueue.FirstOrDefault() == t ? forQueue : 0);
 		}

@@ -16,26 +16,32 @@ namespace FrEee.Game.Objects.Commands
 		public ResearchCommand(Empire issuer)
 			: base(issuer, issuer)
 		{
-			Spending = new Dictionary<Technology.Technology, int>();
-			Queue = new List<Technology.Technology>();
+			spending = new SafeDictionary<Reference<Technology.Technology>, int>();
+			queue = new List<Reference<Technology.Technology>>();
 		}
 
-		private Dictionary<Reference<Technology.Technology>, int> spending { get; set; }
+		private SafeDictionary<Reference<Technology.Technology>, int> spending { get; set; }
 
 		/// <summary>
 		/// Priorities for spending, expressed as percentages of total research output.
 		/// </summary>
 		[DoNotSerialize]
-		public IDictionary<Technology.Technology, int> Spending
+		public IEnumerable<KeyValuePair<Technology.Technology, int>> Spending
 		{
 			get
 			{
-				return spending.Select(kvp => new KeyValuePair<Technology.Technology, int>(kvp.Key.Value, kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+				return spending.Select(kvp => new KeyValuePair<Technology.Technology, int>(kvp.Key.Value, kvp.Value));
 			}
-			set
-			{
-				spending = value.Select(kvp => new KeyValuePair<Reference<Technology.Technology>, int>(kvp.Key.Reference(), kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-			}
+		}
+
+		public void SetSpending(Technology.Technology tech, int spendingPct)
+		{
+			spending[tech.Reference()] = spendingPct;
+		}
+
+		public void ClearSpending()
+		{
+			spending.Clear();
 		}
 
 		private List<Reference<Technology.Technology>> queue { get; set; }
@@ -44,16 +50,27 @@ namespace FrEee.Game.Objects.Commands
 		/// Queue for usage of leftover points after spending priorities are taken care of.
 		/// </summary>
 		[DoNotSerialize]
-		public IList<Technology.Technology> Queue
+		public IEnumerable<Technology.Technology> Queue
 		{
 			get
 			{
-				return queue.Select(t => t.Value).ToList();
+				return queue.Select(t => t.Value);
 			}
-			set
-			{
-				queue = value.Select(t => t.Reference()).ToList();
-			}
+		}
+
+		public void AddToQueue(Technology.Technology tech)
+		{
+			queue.Add(tech.Reference());
+		}
+
+		public void RemoveFromQueue(Technology.Technology tech)
+		{
+			queue.Remove(tech.Reference());
+		}
+
+		public void ClearQueue()
+		{
+			queue.Clear();
 		}
 
 		public override void Execute()
@@ -62,22 +79,22 @@ namespace FrEee.Game.Objects.Commands
 			var totalSpending = Spending.Sum(kvp => kvp.Value);
 			if (totalSpending > 100)
 			{
-				foreach (var tech in Spending.Keys)
+				foreach (var kvp in Spending.ToArray())
 				{
-					Spending[tech] /= totalSpending / 100;
+					SetSpending(kvp.Key, kvp.Value / totalSpending / 100);
 				}
 			}
 
 			// make sure no techs are prioritized or queued that the empire can't research
-			foreach (var tech in Spending.Keys.ToArray())
+			foreach (var kvp in Spending.ToArray())
 			{
-				if (!Target.HasUnlocked(tech))
-					Spending[tech] = 0;
+				if (!Target.HasUnlocked(kvp.Key))
+					SetSpending(kvp.Key, 0);
 			}
-			foreach (var tech in Queue.ToArray())
+			foreach (Technology.Technology tech in Queue.ToArray())
 			{
 				if (!Target.HasUnlocked(tech))
-					Queue.Remove(tech);
+					RemoveFromQueue(tech);
 			}
 
 			// save to empire

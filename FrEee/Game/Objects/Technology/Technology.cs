@@ -162,8 +162,8 @@ namespace FrEee.Game.Objects.Technology
 			foreach (var kvp in techs)
 				techs2.Add(kvp);
 			techs2[this]++;
-			var have = GetUnlockedItems(techs);
-			var willHave = GetUnlockedItems(techs2);
+			var have = GetUnlockedItems(emp, techs);
+			var willHave = GetUnlockedItems(emp, techs2);
 			return willHave.Except(have);
 		}
 
@@ -183,9 +183,9 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public static IEnumerable<IResearchable> GetUnlockedItems(IDictionary<Technology, int> levels)
+		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
-			foreach (var item in Empire.Current.Referrables.OfType<IResearchable>())
+			foreach (var item in emp.Referrables.OfType<IResearchable>())
 			{
 				bool ok = true;
 				foreach (var req in item.TechnologyRequirements)

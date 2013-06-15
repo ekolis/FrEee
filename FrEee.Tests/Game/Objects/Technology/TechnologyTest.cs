@@ -13,35 +13,38 @@ namespace FrEee.Tests.Game.Objects.Technology
 	public class TechnologyTest
 	{
 		/// <summary>
-		/// Tests the ability of an empire to research technologies.
+		/// Tests the ability of an empire to research technologies using percentage allocation.
 		/// </summary>
 		[TestMethod]
-		public void Research()
+		public void PercentageResearch()
 		{
-			// steup
+			// setup
 			var mod = new Mod();
 			var tech = new FrEee.Game.Objects.Technology.Technology
 			{
 				Name = "Test Tech",
-				LevelCost = 10000
+				LevelCost = 10000,
+				MaximumLevel = 2,
 			};
 			mod.Technologies.Add(tech);
 			var gal = new Galaxy(mod);
 			var emp = new Empire();
 			gal.Empires.Add(emp);
-			emp.Income[Resource.Research] = 30000;
+			emp.BonusResearch = 30000;
 			var cmd = new ResearchCommand(emp);
+			cmd.SetSpending(tech, 100);
+			emp.Commands.Add(cmd);
 
 			// check command client safety
 			cmd.CheckForClientSafety();
 
 			// perform research
 			emp.Commands.Add(cmd);
-			cmd.Execute();
 			gal.ProcessTurn();
 
 			// verify research was done
 			// 10K for first level, 20K for second
+			emp = gal.Empires[0];
 			Assert.AreEqual(2, emp.ResearchedTechnologies[tech]);
 		}
 	}

@@ -24,8 +24,7 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			// show RP available
-			// TODO - first turn, allow player to spend first turn bonus research from game setup
-			resRes.Amount = Empire.Current.Income[Resource.Research];
+			resRes.Amount = Empire.Current.Income[Resource.Research] + Empire.Current.BonusResearch;
 
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();
@@ -143,8 +142,12 @@ namespace FrEee.WinForms.Forms
 		private void Save()
 		{
 			var cmd = new ResearchCommand(Empire.Current);
-			cmd.Spending = Empire.Current.ResearchSpending;
-			cmd.Queue = Empire.Current.ResearchQueue;
+			cmd.ClearSpending();
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				cmd.SetSpending(kvp.Key, kvp.Value);
+			cmd.ClearQueue();
+			foreach (var tech in Empire.Current.ResearchQueue)
+				cmd.AddToQueue(tech);
 			Empire.Current.ResearchCommand = cmd;
 		}
 

@@ -512,12 +512,11 @@ namespace FrEee.Game.Objects.Space
 				}
 
 				// do research
-				// TODO - first turn, allow player to spend first turn bonus research from game setup
 				var Spending = emp.ResearchSpending;
 				var Queue = emp.ResearchQueue;
 				// spend research from spending % priorities
-				foreach (var tech in Spending.Keys)
-					emp.Research(tech, Spending[tech] * emp.Income[Resource.Research] / 100);
+				foreach (var tech in Spending.Keys.ToArray())
+					emp.Research(tech, Spending[tech] * (emp.Income[Resource.Research] + emp.BonusResearch) / 100);
 
 				// spend research from queues
 				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * emp.Income[Resource.Research] / 100;
@@ -535,6 +534,8 @@ namespace FrEee.Game.Objects.Space
 						emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
 				}
 
+				// clear bonus research for this turn
+				emp.BonusResearch = 0;
 			}
 
 			// replenish shields

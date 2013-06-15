@@ -216,8 +216,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{
-			// TODO - first turn, allow player to spend first turn bonus research from game setup
-			var totalRP = Income[Resource.Research];
+			var totalRP = Income[Resource.Research] + BonusResearch;
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetLevelCost(level),
