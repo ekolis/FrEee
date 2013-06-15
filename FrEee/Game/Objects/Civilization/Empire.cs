@@ -126,6 +126,8 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				// TODO - take into account maintenance costs
+				if (!ColonizedPlanets.Any())
+					return new Resources();
 				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
 			}
 		}
