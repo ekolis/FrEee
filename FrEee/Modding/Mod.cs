@@ -57,8 +57,8 @@ namespace FrEee.Modding
 
 			if (status != null)
 				status.Message = "Loading SystemNames.txt";
-			foreach (var line in File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt")))
-				mod.StarSystemNames.Add(line);
+			var text = File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt"));
+			new TextLoader(text, m => m.StarSystemNames).Load(mod);
 			if (status != null)
 				status.Progress += progressPerFile;
 
