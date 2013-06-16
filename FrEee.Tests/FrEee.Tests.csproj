@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
+    <Compile Include="Modding\Loaders\LoaderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -64,7 +65,6 @@
     <Folder Include="Game\Objects\Space\" />
     <Folder Include="Game\Objects\Vehicles\" />
     <Folder Include="Game\Setup\" />
-    <Folder Include="Modding\Loaders\" />
     <Folder Include="Modding\Templates\" />
     <Folder Include="Utility\Extensions\" />
   </ItemGroup>
@@ -94,6 +94,10 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
