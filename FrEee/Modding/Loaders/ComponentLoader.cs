@@ -13,11 +13,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads components from Components.txt.
 	/// </summary>
-	public class ComponentLoader : ILoader
+	public class ComponentLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public ComponentLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var c = new ComponentTemplate();
 				mod.ComponentTemplates.Add(c);

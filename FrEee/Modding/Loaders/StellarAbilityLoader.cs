@@ -11,11 +11,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads stellar abilities from StellarAbilityTypes.txt.
 	/// </summary>
-	 [Serializable] public class StellarAbilityLoader : ILoader
+	 [Serializable] public class StellarAbilityLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		 public StellarAbilityLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var sabil = new RandomAbilityTemplate();
 				string temp;

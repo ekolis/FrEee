@@ -10,11 +10,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads ability rules from AbilityRules.txt.
 	/// </summary>
-	 [Serializable] public class AbilityRuleLoader : ILoader
+	 [Serializable] public class AbilityRuleLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		 public AbilityRuleLoader(DataFile df)
+			 : base(df)
+		 {
+		 }
+
+		public override void Load(Mod mod)
 		{
-			foreach (var rec in df.Records)
+			foreach (var rec in DataFile.Records)
 			{
 				var r = new AbilityRule();
 				mod.AbilityRules.Add(r);

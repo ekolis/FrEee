@@ -10,11 +10,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads mounts from CompEnhancement.txt.
 	/// </summary>
-	public class MountLoader : ILoader
+	public class MountLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public MountLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var m = new Mount();
 				mod.Mounts.Add(m);

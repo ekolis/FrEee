@@ -10,11 +10,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads stellar object sizes from PlanetSize.txt.
 	/// </summary>
-	public class StellarObjectSizeLoader : ILoader
+	public class StellarObjectSizeLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public StellarObjectSizeLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var sos = new StellarObjectSize();
 				mod.StellarObjectSizes.Add(sos);

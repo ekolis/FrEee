@@ -11,11 +11,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads facilities from Facility.txt.
 	/// </summary>
-	 [Serializable] public class FacilityLoader : ILoader
+	 [Serializable] public class FacilityLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		 public FacilityLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var f = new FacilityTemplate();
 				mod.FacilityTemplates.Add(f);

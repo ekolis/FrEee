@@ -9,11 +9,15 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads happiness models from Happiness.txt.
 	/// </summary>
-	public class HappinessModelLoader : ILoader
+	public class HappinessModelLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public HappinessModelLoader(DataFile df) : base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var h = new HappinessModel();
 				mod.HappinessModels.Add(h);

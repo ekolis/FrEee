@@ -141,6 +141,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\DataFileLoader.cs" />
     <Compile Include="Modding\Loaders\HappinessModelLoader.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />
     <Compile Include="Modding\Loaders\MountLoader.cs" />

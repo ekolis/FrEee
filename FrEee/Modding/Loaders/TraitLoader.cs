@@ -10,13 +10,18 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads race/empire traits from RacialTraits.txt.
 	/// </summary>
-	public class TraitLoader : ILoader
+	public class TraitLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public TraitLoader(DataFile df)
+			: base(df)
+		{
+		}
+
+		public override void Load(Mod mod)
 		{
 			Trait t;
 			int index = -1;
-			foreach (var rec in df.Records)
+			foreach (var rec in DataFile.Records)
 			{
 				t = new Trait();
 				mod.Traits.Add(t);
@@ -49,7 +54,7 @@ namespace FrEee.Modding.Loaders
 			}
 
 			// second pass for required/restricted traits
-			foreach (var rec in df.Records)
+			foreach (var rec in DataFile.Records)
 			{
 				index = -1;
 

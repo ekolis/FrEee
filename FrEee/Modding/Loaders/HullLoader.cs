@@ -12,11 +12,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads hulls from VehicleSize.txt.
 	/// </summary>
-	public class HullLoader : ILoader
+	public class HullLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		public HullLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				IHull<IVehicle> hull;
 				int index = -1;

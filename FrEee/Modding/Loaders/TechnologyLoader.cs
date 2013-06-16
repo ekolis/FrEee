@@ -10,11 +10,16 @@ namespace FrEee.Modding.Loaders
 	/// <summary>
 	/// Loads technologies from TechArea.txt.
 	/// </summary>
-	 [Serializable] public class TechnologyLoader : ILoader
+	 [Serializable] public class TechnologyLoader : DataFileLoader
 	{
-		public void Load(DataFile df, Mod mod)
+		 public TechnologyLoader(DataFile df)
+			: base(df)
 		{
-			foreach (var rec in df.Records)
+		}
+
+		public override void Load(Mod mod)
+		{
+			foreach (var rec in DataFile.Records)
 			{
 				var tech = new Technology();
 				string temp;
@@ -44,7 +49,7 @@ namespace FrEee.Modding.Loaders
 			{
 				// find this tech's record
 				int index = -1;
-				var rec = df.Records.Single(r => r.GetString("Name", ref index, false, 0, true) == tech.Name);
+				var rec = DataFile.Records.Single(r => r.GetString("Name", ref index, false, 0, true) == tech.Name);
 
 				// load its tech reqs
 				// couldn't do it before because some early techs can reference later techs
