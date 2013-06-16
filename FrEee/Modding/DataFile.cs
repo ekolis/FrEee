@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -10,6 +11,19 @@ namespace FrEee.Modding
 	/// </summary>
 	 [Serializable] public class DataFile
 	{
+		 /// <summary>
+		 /// Loads a data file from disk.
+		 /// </summary>
+		 /// <param name="modpath">The mod path, relative to the FrEee/Mods folder, or null to use the stock mod.</param>
+		 /// <param name="filename">The file name relative to the mod's Data folder.</param>
+		 /// <returns></returns>
+		 public static DataFile Load(string modpath, string filename)
+		 {
+			 var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data");
+			 var filepath = Path.Combine(datapath, filename);
+			 return new DataFile(File.ReadAllText(filepath));
+		 }
+
 		/// <summary>
 		/// Creates a data file with no records
 		/// </summary>

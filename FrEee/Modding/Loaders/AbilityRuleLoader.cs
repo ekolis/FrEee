@@ -12,8 +12,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class AbilityRuleLoader : DataFileLoader
 	{
-		 public AbilityRuleLoader(DataFile df)
-			 : base(df)
+		 public const string Filename = "AbilityRules.txt";
+
+		 public AbilityRuleLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		 {
 		 }
 

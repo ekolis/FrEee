@@ -12,8 +12,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class StellarObjectSizeLoader : DataFileLoader
 	{
-		public StellarObjectSizeLoader(DataFile df)
-			: base(df)
+		public const string Filename = "PlanetSize.txt";
+
+		public StellarObjectSizeLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

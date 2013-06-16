@@ -10,12 +10,15 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public abstract class DataFileLoader : ILoader
 	{
-		public DataFileLoader(DataFile df)
+		public DataFileLoader(string filename, DataFile df)
 		{
+			FileName = filename;
 			DataFile = df;
 		}
 
 		public abstract void Load(Mod mod);
+
+		public string FileName { get; set; }
 
 		public DataFile DataFile { get; set; }
 	}

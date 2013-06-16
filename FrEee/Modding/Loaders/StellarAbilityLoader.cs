@@ -13,8 +13,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class StellarAbilityLoader : DataFileLoader
 	{
-		 public StellarAbilityLoader(DataFile df)
-			: base(df)
+		 public const string Filename = "StellarAbilityTypes.txt";
+
+		 public StellarAbilityLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

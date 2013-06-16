@@ -12,8 +12,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class TraitLoader : DataFileLoader
 	{
-		public TraitLoader(DataFile df)
-			: base(df)
+		public const string Filename = "RacialTraits.txt";
+
+		public TraitLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

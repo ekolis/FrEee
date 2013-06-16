@@ -14,8 +14,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class StellarObjectLoader : DataFileLoader
 	{
-		 public StellarObjectLoader(DataFile df)
-			: base(df)
+		 public const string Filename = "SectType.txt";
+
+		 public StellarObjectLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

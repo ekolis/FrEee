@@ -15,8 +15,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class ComponentLoader : DataFileLoader
 	{
-		public ComponentLoader(DataFile df)
-			: base(df)
+		public const string Filename = "Components.txt";
+
+		public ComponentLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

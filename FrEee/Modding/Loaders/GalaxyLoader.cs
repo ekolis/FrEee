@@ -16,8 +16,10 @@ namespace FrEee.Modding.Loaders
 	[Serializable]
 	public class GalaxyLoader : DataFileLoader
 	{
-		public GalaxyLoader(DataFile df)
-			: base(df)
+		public const string Filename = "QuadrantTypes.txt";
+
+		public GalaxyLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

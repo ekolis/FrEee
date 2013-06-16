@@ -13,8 +13,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class FacilityLoader : DataFileLoader
 	{
-		 public FacilityLoader(DataFile df)
-			: base(df)
+		 public const string Filename = "Facility.txt";
+
+		 public FacilityLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

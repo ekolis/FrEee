@@ -12,8 +12,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class MountLoader : DataFileLoader
 	{
-		public MountLoader(DataFile df)
-			: base(df)
+		public const string Filename = "CompEnhancement.txt";
+
+		public MountLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

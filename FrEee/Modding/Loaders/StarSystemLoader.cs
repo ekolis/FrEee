@@ -21,8 +21,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class StarSystemLoader : DataFileLoader
 	{
-		 public StarSystemLoader(DataFile df)
-			: base(df)
+		 public const string Filename = "SystemTypes.txt";
+
+		 public StarSystemLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

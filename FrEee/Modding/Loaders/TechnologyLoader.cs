@@ -12,8 +12,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	 [Serializable] public class TechnologyLoader : DataFileLoader
 	{
-		 public TechnologyLoader(DataFile df)
-			: base(df)
+		 public const string Filename = "TechArea.txt";
+
+		 public TechnologyLoader(string modPath)
+			 : base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

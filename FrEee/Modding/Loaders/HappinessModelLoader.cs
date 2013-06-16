@@ -11,7 +11,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class HappinessModelLoader : DataFileLoader
 	{
-		public HappinessModelLoader(DataFile df) : base(df)
+		public const string Filename = "Happiness.txt";
+
+		public HappinessModelLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

@@ -14,8 +14,10 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class HullLoader : DataFileLoader
 	{
-		public HullLoader(DataFile df)
-			: base(df)
+		public const string Filename = "VehicleSize.txt";
+
+		public HullLoader(string modPath)
+			: base(Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 
