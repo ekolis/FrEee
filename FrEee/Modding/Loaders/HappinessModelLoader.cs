@@ -6,6 +6,9 @@ using System.Text;
 
 namespace FrEee.Modding.Loaders
 {
+	/// <summary>
+	/// Loads happiness models from Happiness.txt.
+	/// </summary>
 	public class HappinessModelLoader : ILoader
 	{
 		public void Load(DataFile df, Mod mod)

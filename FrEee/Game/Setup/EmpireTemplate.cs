@@ -19,7 +19,7 @@ namespace FrEee.Game.Setup
 	{
 		public EmpireTemplate()
 		{
-			Traits = new List<ITrait<Empire>>();
+			Traits = new List<Trait>();
 			IsPlayerEmpire = true;
 		}
 
@@ -36,7 +36,7 @@ namespace FrEee.Game.Setup
 		/// <summary>
 		/// Traits of this empire.
 		/// </summary>
-		public IList<ITrait<Empire>> Traits { get; set; }
+		public IList<Trait> Traits { get; set; }
 
 		/// <summary>
 		/// The native race of this empire.

@@ -74,7 +74,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Traits of this empire.
 		/// </summary>
-		public IList<ITrait<Empire>> Traits { get; private set; }
+		public IList<Trait> Traits { get; private set; }
 
 		/// <summary>
 		/// The name of the insignia picture file, relative to Pictures/Insignia.

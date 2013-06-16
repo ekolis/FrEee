@@ -49,7 +49,7 @@ namespace FrEee.Modding
 
 			// TODO - change the number at the end to match whatever number of data files we have
 			// TODO - just have a list of ILoader objects
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 13;
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 14;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -80,6 +80,13 @@ namespace FrEee.Modding
 				status.Message = "Loading SectType.txt";
 			CurrentFileName = Path.Combine(datapath, "SectType.txt");
 			new StellarObjectLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
+			if (status != null)
+				status.Message = "Loading RacialTraits.txt";
+			CurrentFileName = Path.Combine(datapath, "RacialTraits.txt");
+			new TraitLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
 			if (status != null)
 				status.Progress += progressPerFile;
 
@@ -166,6 +173,7 @@ namespace FrEee.Modding
 			PopulationFactor = (long)1e6; // TODO - let population factor be specified by mod files
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
+			Traits = new List<Trait>();
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
 			Hulls = new List<IHull<IVehicle>>();
@@ -258,6 +266,11 @@ namespace FrEee.Modding
 		/// The happiness models in the game.
 		/// </summary>
 		public ICollection<HappinessModel> HappinessModels { get; private set; }
+
+		/// <summary>
+		/// The race/empire traits in the game.
+		/// </summary>
+		public ICollection<Trait> Traits { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.

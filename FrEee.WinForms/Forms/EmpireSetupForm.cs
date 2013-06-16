@@ -23,7 +23,7 @@ namespace FrEee.WinForms.Forms
 		public EmpireSetupForm()
 		{
 			InitializeComponent();
-			BindDropdowns();
+			BindChoices();
 		}
 
 		/// <summary>
@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		public int PointsToSpend { get; set; }
 
-		private void BindDropdowns()
+		private void BindChoices()
 		{
 			foreach (var portrait in Pictures.ListLeaderPortraits())
 			{
@@ -97,6 +97,8 @@ namespace FrEee.WinForms.Forms
 				ddlRaceHappiness.Items.Add(h);
 				ddlHappiness.Items.Add(h);
 			}
+			raceTraitPicker.Traits = Mod.Current.Traits.Where(t => t.IsRacial);
+			empireTraitPicker.Traits = Mod.Current.Traits.Where(t => !t.IsRacial);
 		}
 
 		private IEnumerable<string> ListAIs()

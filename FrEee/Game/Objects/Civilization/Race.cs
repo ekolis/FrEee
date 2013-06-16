@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Civilization
 	{
 		public Race()
 		{
-			Traits = new List<ITrait<Race>>();
+			Traits = new List<Trait>();
 			Color = Color.White;
 		}
 
@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Civilization
 			set { HappinessModelName = value.Name; }
 		}
 
-		public IList<ITrait<Race>> Traits { get; private set; }
+		public IList<Trait> Traits { get; private set; }
 
 		public IEnumerable<Ability> Abilities
 		{

@@ -150,6 +150,7 @@ namespace FrEee.WinForms.Forms
 					status.Exception = ex;
 				}
 			}));
+			t.Name = "Game Setup";
 			t.Start();
 			while (t.IsAlive)
 			{
@@ -209,7 +210,10 @@ namespace FrEee.WinForms.Forms
 		private void ddlGalaxyType_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			var gt = (GalaxyTemplate)ddlGalaxyType.SelectedItem;
-			txtGalaxyTypeDescription.Text = gt.Description;
+			if (gt == null)
+				txtGalaxyTypeDescription.Text = "Please select a galaxy type.";
+			else
+				txtGalaxyTypeDescription.Text = gt.Description;
 			setup.GalaxyTemplate = gt;
 		}
 

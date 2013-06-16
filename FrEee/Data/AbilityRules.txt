@@ -502,3 +502,33 @@ Name := Generate Points Intelligence
 Grouping Rule := DoNotGroup
 Value 1 Stacking Rule := Add
 Value 2 Stacking Rule := Add
+
+Name := Supply Cost
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := TakeLowest
+Value 2 Stacking Rule := TakeLowest
+
+Name := Luck
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := TakeLowest
+Value 2 Stacking Rule := TakeLowest
+
+Name := Vehicle Speed
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := TakeHighest
+Value 2 Stacking Rule := TakeHighest
+
+Name := Planet Storage Space
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := TakeHighest
+Value 2 Stacking Rule := TakeHighest
+
+Name := Planetary SY Rate
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := TakeHighest
+Value 2 Stacking Rule := TakeHighest
+
+Name := Tech Area
+Grouping Rule := DoNotGroup
+Value 1 Stacking Rule := DoNotStack
+Value 2 Stacking Rule := DoNotStack

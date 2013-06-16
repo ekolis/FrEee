@@ -183,6 +183,12 @@
     <Compile Include="Controls\StormReport.Designer.cs">
       <DependentUpon>StormReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TraitPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TraitPicker.Designer.cs">
+      <DependentUpon>TraitPicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataGridView\DataGridViewProgressCell.cs" />
     <Compile Include="DataGridView\DataGridViewProgressColumn.cs" />
     <Compile Include="Forms\ConstructionQueueForm.cs">
@@ -304,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\StormReport.resx">
       <DependentUpon>StormReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TraitPicker.resx">
+      <DependentUpon>TraitPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConstructionQueueForm.resx">
       <DependentUpon>ConstructionQueueForm.cs</DependentUpon>

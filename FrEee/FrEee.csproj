@@ -81,13 +81,12 @@
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
-    <Compile Include="Game\Interfaces\ITrait.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
-    <Compile Include="Game\Objects\Civilization\Traits\Trait.cs" />
+    <Compile Include="Game\Objects\Civilization\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
@@ -145,6 +144,7 @@
     <Compile Include="Modding\Loaders\HappinessModelLoader.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />
     <Compile Include="Modding\Loaders\MountLoader.cs" />
+    <Compile Include="Modding\Loaders\TraitLoader.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />

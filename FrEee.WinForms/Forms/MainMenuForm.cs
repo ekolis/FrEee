@@ -127,6 +127,7 @@ namespace FrEee.WinForms.Forms
 					status.Exception = ex;
 				}
 			}));
+			t.Name = "Game Setup";
 			t.Start();
 			while (t.IsAlive)
 			{
@@ -232,6 +233,7 @@ namespace FrEee.WinForms.Forms
 						status.Exception = ex;
 					}
 				}));
+				t.Name = "Mod Loading";
 				t.Start();
 				while (t.IsAlive)
 				{

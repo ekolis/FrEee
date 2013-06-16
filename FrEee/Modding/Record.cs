@@ -8,7 +8,8 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A record in a data file.
 	/// </summary>
-	 [Serializable] public class Record
+	[Serializable]
+	public class Record
 	{
 		/// <summary>
 		/// Creates a record with no fields.
@@ -28,7 +29,7 @@ namespace FrEee.Modding
 			foreach (var line in lines.Where(l => l.Contains(":=")))
 				Fields.Add(new Field(line, this));
 		}
-		
+
 		/// <summary>
 		/// The fields in this record.
 		/// </summary>
@@ -46,6 +47,15 @@ namespace FrEee.Modding
 			return FindField(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
 		}
 
+		/// <summary>
+		/// Finds a field in the record.
+		/// </summary>
+		/// <param name="fieldNames"></param>
+		/// <param name="index"></param>
+		/// <param name="logErrors"></param>
+		/// <param name="startIndex"></param>
+		/// <param name="allowSkip"></param>
+		/// <returns></returns>
 		public Field FindField(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
 		{
 			for (var i = startIndex; i < Fields.Count; i++)
@@ -62,7 +72,7 @@ namespace FrEee.Modding
 				Mod.Errors.Add(new DataParsingException("Could not find field: " + string.Join(", ", fieldNames.ToArray()) + ".", Mod.CurrentFileName, this));
 			return null;
 		}
-		
+
 		/// <summary>
 		/// Tries to find a field value.
 		/// </summary>
