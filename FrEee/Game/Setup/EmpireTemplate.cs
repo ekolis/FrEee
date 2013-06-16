@@ -140,7 +140,8 @@ namespace FrEee.Game.Setup
 				yield return "You must specify a shipset for your empire or race.";
 			if (HappinessModel == null && (PrimaryRace == null || PrimaryRace.HappinessModel == null))
 				yield return "You must specify a happiness model for your empire or race.";
-			// TODO - check spending on traits and attributes
+			if (PointsSpent > maxPoints)
+				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
 			// TODO - check presence of AI?
 		}
 
