@@ -32,7 +32,7 @@ namespace FrEee.Modding.Loaders
 				m.ShortName = rec.GetString("Short Name", ref index, false, 0, true) ?? m.Name; // default to long name
 				m.Description = rec.GetString("Description", ref index, false, 0, true);
 				m.Code = rec.GetString("Code", ref index, true, 0, true);
-				m.PictureName = rec.GetString("Pic", ref index, false, 0, true);
+				m.PictureName = rec.GetNullString("Pic", ref index, 0, true);
 				m.CostPercent = rec.GetNullInt("Cost Percent", ref index) ?? 100;
 				m.SizePercent = rec.GetNullInt("Tonnage Percent", ref index) ?? 100;
 				m.DurabilityPercent = rec.GetNullInt("Tonnage Structure Percent", ref index) ?? 100;
@@ -80,18 +80,17 @@ namespace FrEee.Modding.Loaders
 					m.VehicleTypes = VehicleTypes.None;
 					foreach (var s in vtstring.Split(',').Select(s => s.Trim()))
 					{
-						var vals = Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>();
 						// special cases
 						if (s == "Weapon Platform")
 							m.VehicleTypes |= VehicleTypes.WeaponPlatform;
 						else
 						{
 							bool found = false;
-							foreach (var val in vals)
+							foreach (var val in Enum.GetNames(typeof(VehicleTypes)))
 							{
-								if (val.ToString() == s)
+								if (val == s)
 								{
-									m.VehicleTypes |= val;
+									m.VehicleTypes |= (VehicleTypes)Enum.Parse(typeof(VehicleTypes), val);
 									found = true;
 									break;
 								}

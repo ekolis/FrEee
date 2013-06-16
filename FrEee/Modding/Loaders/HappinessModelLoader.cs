@@ -33,7 +33,7 @@ namespace FrEee.Modding.Loaders
 				h.MaxNegativeTurnAngerChange = rec.GetInt("Max Negative Anger Change", ref index);
 				h.OurHomeworldLost = rec.GetInt("Homeworld Lost", ref index);
 				h.OurPlanetLost = rec.GetInt("Any Planet Lost", ref index);
-				h.PlanetColonized = rec.GetInt("Any Planet Colonizer", ref index);
+				h.PlanetColonized = rec.GetInt("Any Planet Colonized", ref index);
 				h.OurPlanetCaptured = rec.GetInt("Any Our Planet Captured", ref index);
 				h.EnemyPlanetCaptured = rec.GetInt("Any Enemy Planet Captured", ref index);
 				h.OurShipLost = rec.GetInt("Any Ship Lost", ref index);
@@ -63,7 +63,7 @@ namespace FrEee.Modding.Loaders
 				h.EnemyTroopsOnPlanet = rec.GetInt("Enemy Troops on Planet", ref index);
 				h.OurTroopOnPlanet = rec.GetInt("Our Troops on Planet", ref index);
 				h.OneMillionPopulationKilled = rec.GetInt("1M Population Killed", ref index);
-				h.OurShipLostInSystem = rec.GetInt("Ship Lost In System", ref index);
+				h.OurShipLostInSystem = rec.GetInt("Ship Lost in System", ref index);
 				h.ShipConstructed = rec.GetInt("Ship Constructed", ref index);
 				h.FacilityConstructed = rec.GetInt("Facility Constructed", ref index);
 				h.OurPlanetPlagued = rec.GetInt("Planet Plagued", ref index);

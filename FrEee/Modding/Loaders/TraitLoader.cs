@@ -52,7 +52,7 @@ namespace FrEee.Modding.Loaders
 				if (t.Abilities.Count == 0)
 					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
 
-				t.IsRacial = rec.GetBool("Is Racial", ref index);
+				t.IsRacial = rec.GetNullBool("Is Racial", ref index) ?? false;
 			}
 
 			// second pass for required/restricted traits
