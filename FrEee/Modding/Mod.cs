@@ -48,7 +48,8 @@ namespace FrEee.Modding
 				Current = mod;
 
 			// TODO - change the number at the end to match whatever number of data files we have
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 12;
+			// TODO - just have a list of ILoader objects
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 13;
 
 			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
 
@@ -138,6 +139,13 @@ namespace FrEee.Modding
 			if (status != null)
 				status.Progress += progressPerFile;
 
+			if (status != null)
+				status.Message = "Loading Happiness.txt";
+			CurrentFileName = Path.Combine(datapath, "Happiness.txt");
+			new HappinessModelLoader().Load(new DataFile(File.ReadAllText(CurrentFileName)), mod);
+			if (status != null)
+				status.Progress += progressPerFile;
+
 			CurrentFileName = null;
 
 			// TODO - display errors to user
@@ -168,6 +176,7 @@ namespace FrEee.Modding
 			StellarAbilityTemplates = new List<RandomAbilityTemplate>();
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
+			HappinessModels = new List<HappinessModel>();
 		}
 
 		/// <summary>
@@ -244,6 +253,11 @@ namespace FrEee.Modding
 		/// The technologies in the game.
 		/// </summary>
 		public ICollection<Technology> Technologies { get; private set; }
+
+		/// <summary>
+		/// The happiness models in the game.
+		/// </summary>
+		public ICollection<HappinessModel> HappinessModels { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.

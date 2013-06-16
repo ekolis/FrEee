@@ -35,6 +35,9 @@
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.txtRaceHappiness = new System.Windows.Forms.Label();
+			this.ddlRaceHappiness = new System.Windows.Forms.ComboBox();
+			this.label19 = new System.Windows.Forms.Label();
 			this.picRacePopulationIcon = new FrEee.WinForms.Controls.GamePictureBox();
 			this.label18 = new System.Windows.Forms.Label();
 			this.ddlRacePopulationIcon = new System.Windows.Forms.ComboBox();
@@ -64,9 +67,13 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
-			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.txtHappiness = new System.Windows.Forms.Label();
+			this.chkHappinessFromRace = new System.Windows.Forms.CheckBox();
+			this.ddlHappiness = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
 			this.chkAIFromRace = new System.Windows.Forms.CheckBox();
 			this.ddlAI = new System.Windows.Forms.ComboBox();
 			this.picShipset = new FrEee.WinForms.Controls.GamePictureBox();
@@ -199,6 +206,9 @@
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.Black;
+			this.tabPage2.Controls.Add(this.txtRaceHappiness);
+			this.tabPage2.Controls.Add(this.ddlRaceHappiness);
+			this.tabPage2.Controls.Add(this.label19);
 			this.tabPage2.Controls.Add(this.picRacePopulationIcon);
 			this.tabPage2.Controls.Add(this.label18);
 			this.tabPage2.Controls.Add(this.ddlRacePopulationIcon);
@@ -235,6 +245,35 @@
 			this.tabPage2.Size = new System.Drawing.Size(595, 416);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Primary Race";
+			// 
+			// txtRaceHappiness
+			// 
+			this.txtRaceHappiness.Location = new System.Drawing.Point(20, 358);
+			this.txtRaceHappiness.Name = "txtRaceHappiness";
+			this.txtRaceHappiness.Size = new System.Drawing.Size(278, 45);
+			this.txtRaceHappiness.TabIndex = 87;
+			this.txtRaceHappiness.Text = "Please choose a happiness model.";
+			// 
+			// ddlRaceHappiness
+			// 
+			this.ddlRaceHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlRaceHappiness.FormattingEnabled = true;
+			this.ddlRaceHappiness.Location = new System.Drawing.Point(129, 333);
+			this.ddlRaceHappiness.Name = "ddlRaceHappiness";
+			this.ddlRaceHappiness.Size = new System.Drawing.Size(169, 23);
+			this.ddlRaceHappiness.TabIndex = 86;
+			this.ddlRaceHappiness.SelectedIndexChanged += new System.EventHandler(this.ddlRaceHappiness_SelectedIndexChanged);
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label19.Location = new System.Drawing.Point(6, 336);
+			this.label19.Margin = new System.Windows.Forms.Padding(3);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(66, 15);
+			this.label19.TabIndex = 85;
+			this.label19.Text = "Happiness";
 			// 
 			// picRacePopulationIcon
 			// 
@@ -543,6 +582,15 @@
 			this.label15.TabIndex = 44;
 			this.label15.Text = "Name";
 			// 
+			// tabPage6
+			// 
+			this.tabPage6.BackColor = System.Drawing.Color.Black;
+			this.tabPage6.Location = new System.Drawing.Point(4, 29);
+			this.tabPage6.Name = "tabPage6";
+			this.tabPage6.Size = new System.Drawing.Size(595, 416);
+			this.tabPage6.TabIndex = 5;
+			this.tabPage6.Text = "Racial Traits";
+			// 
 			// tabPage5
 			// 
 			this.tabPage5.BackColor = System.Drawing.Color.Black;
@@ -554,18 +602,13 @@
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Racial Aptitudes";
 			// 
-			// tabPage6
-			// 
-			this.tabPage6.BackColor = System.Drawing.Color.Black;
-			this.tabPage6.Location = new System.Drawing.Point(4, 29);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Size = new System.Drawing.Size(595, 416);
-			this.tabPage6.TabIndex = 5;
-			this.tabPage6.Text = "Racial Traits";
-			// 
 			// tabPage1
 			// 
 			this.tabPage1.BackColor = System.Drawing.Color.Black;
+			this.tabPage1.Controls.Add(this.txtHappiness);
+			this.tabPage1.Controls.Add(this.chkHappinessFromRace);
+			this.tabPage1.Controls.Add(this.ddlHappiness);
+			this.tabPage1.Controls.Add(this.label2);
 			this.tabPage1.Controls.Add(this.chkAIFromRace);
 			this.tabPage1.Controls.Add(this.ddlAI);
 			this.tabPage1.Controls.Add(this.picShipset);
@@ -600,6 +643,49 @@
 			this.tabPage1.Size = new System.Drawing.Size(595, 416);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "General";
+			// 
+			// txtHappiness
+			// 
+			this.txtHappiness.Location = new System.Drawing.Point(20, 269);
+			this.txtHappiness.Name = "txtHappiness";
+			this.txtHappiness.Size = new System.Drawing.Size(278, 45);
+			this.txtHappiness.TabIndex = 88;
+			this.txtHappiness.Text = "Please choose a happiness model.";
+			// 
+			// chkHappinessFromRace
+			// 
+			this.chkHappinessFromRace.AutoSize = true;
+			this.chkHappinessFromRace.Checked = true;
+			this.chkHappinessFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkHappinessFromRace.Location = new System.Drawing.Point(304, 245);
+			this.chkHappinessFromRace.Name = "chkHappinessFromRace";
+			this.chkHappinessFromRace.Size = new System.Drawing.Size(87, 19);
+			this.chkHappinessFromRace.TabIndex = 85;
+			this.chkHappinessFromRace.Text = "From Race";
+			this.chkHappinessFromRace.UseVisualStyleBackColor = true;
+			this.chkHappinessFromRace.CheckedChanged += new System.EventHandler(this.chkHappinessFromRace_CheckedChanged);
+			// 
+			// ddlHappiness
+			// 
+			this.ddlHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlHappiness.Enabled = false;
+			this.ddlHappiness.FormattingEnabled = true;
+			this.ddlHappiness.Location = new System.Drawing.Point(129, 243);
+			this.ddlHappiness.Name = "ddlHappiness";
+			this.ddlHappiness.Size = new System.Drawing.Size(169, 23);
+			this.ddlHappiness.TabIndex = 84;
+			this.ddlHappiness.SelectedIndexChanged += new System.EventHandler(this.ddlHappiness_SelectedIndexChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label2.Location = new System.Drawing.Point(6, 246);
+			this.label2.Margin = new System.Windows.Forms.Padding(3);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(66, 15);
+			this.label2.TabIndex = 83;
+			this.label2.Text = "Happiness";
 			// 
 			// chkAIFromRace
 			// 
@@ -1037,5 +1123,12 @@
 		private Controls.GamePictureBox picRacePopulationIcon;
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.ComboBox ddlRacePopulationIcon;
+		private System.Windows.Forms.ComboBox ddlHappiness;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.CheckBox chkHappinessFromRace;
+		private System.Windows.Forms.ComboBox ddlRaceHappiness;
+		private System.Windows.Forms.Label label19;
+		private System.Windows.Forms.Label txtRaceHappiness;
+		private System.Windows.Forms.Label txtHappiness;
 	}
 }

@@ -78,6 +78,17 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public string AIName { get; set; }
 
+		public string HappinessModelName { get; set; }
+
+		/// <summary>
+		/// The race's cultural happiness model.
+		/// </summary>
+		[DoNotSerialize]
+		public HappinessModel HappinessModel {
+			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
+			set { HappinessModelName = value.Name; }
+		}
+
 		public IList<ITrait<Race>> Traits { get; private set; }
 
 		public IEnumerable<Ability> Abilities

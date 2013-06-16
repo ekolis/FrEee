@@ -85,6 +85,7 @@
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
+    <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Traits\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\HappinessModelLoader.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />
     <Compile Include="Modding\Loaders\MountLoader.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />

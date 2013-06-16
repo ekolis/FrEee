@@ -92,6 +92,11 @@ namespace FrEee.WinForms.Forms
 				ddlRaceAI.Items.Add(ai);
 				ddlAI.Items.Add(ai);
 			}
+			foreach (var h in Mod.Current.HappinessModels)
+			{
+				ddlRaceHappiness.Items.Add(h);
+				ddlHappiness.Items.Add(h);
+			}
 		}
 
 		private IEnumerable<string> ListAIs()
@@ -242,6 +247,7 @@ namespace FrEee.WinForms.Forms
 			r.InsigniaName = ddlRaceInsignia.Text;
 			r.ShipsetPath = ddlRaceShipset.Text;
 			// TODO - set race AI
+			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
 			// TODO - racial traits
 			// TODO - racial aptitudes
 			if (chkNameFromRace.Checked)
@@ -425,6 +431,33 @@ namespace FrEee.WinForms.Forms
 		{
 			if (chkAIFromRace.Checked)
 				ddlAI.SelectedItem = ddlRaceAI.SelectedItem;
+		}
+
+		private void ddlRaceHappiness_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var h = (HappinessModel)ddlRaceHappiness.SelectedItem;
+			if (h != null)
+				txtRaceHappiness.Text = h.Description;
+			else
+				txtRaceHappiness.Text = "Please choose a happiness model.";
+			if (chkHappinessFromRace.Checked)
+				ddlHappiness.SelectedItem = ddlRaceHappiness.SelectedItem;
+		}
+
+		private void ddlHappiness_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var h = (HappinessModel)ddlRaceHappiness.SelectedItem;
+			if (h != null)
+				txtRaceHappiness.Text = h.Description;
+			else
+				txtRaceHappiness.Text = "Please choose a happiness model.";
+		}
+
+		private void chkHappinessFromRace_CheckedChanged(object sender, EventArgs e)
+		{
+			ddlHappiness.Enabled = !chkHappinessFromRace.Checked;
+			if (chkHappinessFromRace.Checked)
+				ddlHappiness.SelectedItem = ddlRaceHappiness.SelectedItem;
 		}
 
 

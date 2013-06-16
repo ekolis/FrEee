@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using AutoMapper;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
@@ -75,6 +76,19 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public string AIName { get; set; }
 
+		public string HappinessModelName { get; set; }
+
+		/// <summary>
+		/// The empire's cultural happiness model.
+		/// </summary>
+		[DoNotSerialize]
+		[IgnoreMap]
+		public HappinessModel HappinessModel
+		{
+			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
+			set { HappinessModelName = value.Name; }
+		}
+
 		/// <summary>
 		/// Is this empire controlled by a human player?
 		/// </summary>
@@ -124,6 +138,8 @@ namespace FrEee.Game.Setup
 				yield return "You must specify an insignia for your empire or race.";
 			if (string.IsNullOrWhiteSpace(ShipsetPath) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.ShipsetPath)))
 				yield return "You must specify a shipset for your empire or race.";
+			if (HappinessModel == null && (PrimaryRace == null || PrimaryRace.HappinessModel == null))
+				yield return "You must specify a happiness model for your empire or race.";
 			// TODO - check spending on traits and attributes
 			// TODO - check presence of AI?
 		}

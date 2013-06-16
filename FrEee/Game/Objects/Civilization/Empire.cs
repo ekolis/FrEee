@@ -525,5 +525,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// Is this empire controlled by a human player?
 		/// </summary>
 		public bool IsPlayerEmpire { get; set; }
+
+		/// <summary>
+		/// The empire's cultural happiness model.
+		/// </summary>
+		public HappinessModel HappinessModel { get; set; }
+
 	}
 }
