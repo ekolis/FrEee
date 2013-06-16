@@ -15,5 +15,9 @@ namespace FrEee.Modding.Loaders
 		/// </summary>
 		/// <param name="mod">The mod we are loading data into.</param>
 		void Load(Mod mod);
+
+		string ModPath { get; set; }
+
+		string FileName { get; set; }
 	}
 }

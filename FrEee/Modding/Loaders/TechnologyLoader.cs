@@ -15,7 +15,7 @@ namespace FrEee.Modding.Loaders
 		 public const string Filename = "TechArea.txt";
 
 		 public TechnologyLoader(string modPath)
-			 : base(Filename, DataFile.Load(modPath, Filename))
+			 : base(modPath, Filename, DataFile.Load(modPath, Filename))
 		{
 		}
 

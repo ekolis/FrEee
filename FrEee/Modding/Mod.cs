@@ -49,113 +49,34 @@ namespace FrEee.Modding
 
 			var loaders = new ILoader[]
 			{
-
+				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
+				new AbilityRuleLoader(path),
+				new StellarObjectSizeLoader(path),
+				new StellarObjectLoader(path),
+				new TraitLoader(path),
+				new TechnologyLoader(path),
+				new FacilityLoader(path),
+				new HullLoader(path),
+				new ComponentLoader(path),
+				new MountLoader(path),
+				new StellarAbilityLoader(path),
+				new StarSystemLoader(path),
+				new GalaxyLoader(path),
+				new HappinessModelLoader(path)
 			};
-			// TODO - change the number at the end to match whatever number of data files we have
-			// TODO - just have a list of ILoader objects
-			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / 14;
 
-			var datapath = path == null ? "Data" : Path.Combine("Mods", path, "Data");
+			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
 
-			// TODO - fall back on stock when mod data not found
-
-			if (status != null)
-				status.Message = "Loading SystemNames.txt";
-			var text = File.ReadAllLines(Path.Combine(datapath, "SystemNames.txt"));
-			new TextLoader(text, m => m.StarSystemNames).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading AbilityRules.txt";
-			CurrentFileName = Path.Combine(datapath, "AbilityRules.txt");
-			new AbilityRuleLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading PlanetSize.txt";
-			CurrentFileName = Path.Combine(datapath, "PlanetSize.txt");
-			new StellarObjectSizeLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading SectType.txt";
-			CurrentFileName = Path.Combine(datapath, "SectType.txt");
-			new StellarObjectLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading RacialTraits.txt";
-			CurrentFileName = Path.Combine(datapath, "RacialTraits.txt");
-			new TraitLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading TechArea.txt";
-			CurrentFileName = Path.Combine(datapath, "TechArea.txt");
-			new TechnologyLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading Facility.txt";
-			CurrentFileName = Path.Combine(datapath, "Facility.txt");
-			new FacilityLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading VehicleSize.txt";
-			CurrentFileName = Path.Combine(datapath, "VehicleSize.txt");
-			new HullLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading Components.txt";
-			CurrentFileName = Path.Combine(datapath, "Components.txt");
-			new ComponentLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading CompEnhancement.txt";
-			CurrentFileName = Path.Combine(datapath, "CompEnhancement.txt");
-			new MountLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading StellarAbilityTypes.txt";
-			CurrentFileName = Path.Combine(datapath, "StellarAbilityTypes.txt");
-			new StellarAbilityLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading SystemTypes.txt";
-			CurrentFileName = Path.Combine(datapath, "SystemTypes.txt");
-			new StarSystemLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading QuadrantTypes.txt";
-			CurrentFileName = Path.Combine(datapath, "QuadrantTypes.txt");
-			new GalaxyLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
-
-			if (status != null)
-				status.Message = "Loading Happiness.txt";
-			CurrentFileName = Path.Combine(datapath, "Happiness.txt");
-			new HappinessModelLoader(path).Load(mod);
-			if (status != null)
-				status.Progress += progressPerFile;
+			foreach (var loader in loaders)
+			{
+				if (status != null)
+					status.Message = "Loading " + loader.FileName;
+				CurrentFileName = loader.FileName;
+				loader.Load(mod);
+				if (status != null)
+					status.Progress += progressPerFile;
+			}
+			
 
 			CurrentFileName = null;
 

@@ -19,6 +19,7 @@ namespace FrEee.Modding
 		 /// <returns></returns>
 		 public static DataFile Load(string modpath, string filename)
 		 {
+			 // TODO - fall back on stock data when mod data not found
 			 var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data");
 			 var filepath = Path.Combine(datapath, filename);
 			 return new DataFile(File.ReadAllText(filepath));
