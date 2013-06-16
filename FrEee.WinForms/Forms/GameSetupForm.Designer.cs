@@ -131,7 +131,7 @@
 			this.label40 = new System.Windows.Forms.Label();
 			this.spnMinorEmpires = new System.Windows.Forms.NumericUpDown();
 			this.spnRandomAIs = new System.Windows.Forms.NumericUpDown();
-			this.spnRacialPoints = new System.Windows.Forms.NumericUpDown();
+			this.spnEmpirePoints = new System.Windows.Forms.NumericUpDown();
 			this.ddlScoreDisplay = new System.Windows.Forms.ComboBox();
 			this.ddlEmpirePlacement = new System.Windows.Forms.ComboBox();
 			this.spnHomeworlds = new System.Windows.Forms.NumericUpDown();
@@ -190,7 +190,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRandomAIs)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.spnRacialPoints)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnEmpirePoints)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).BeginInit();
@@ -1310,7 +1310,7 @@
 			this.tabEmpires.Controls.Add(this.label40);
 			this.tabEmpires.Controls.Add(this.spnMinorEmpires);
 			this.tabEmpires.Controls.Add(this.spnRandomAIs);
-			this.tabEmpires.Controls.Add(this.spnRacialPoints);
+			this.tabEmpires.Controls.Add(this.spnEmpirePoints);
 			this.tabEmpires.Controls.Add(this.ddlScoreDisplay);
 			this.tabEmpires.Controls.Add(this.ddlEmpirePlacement);
 			this.tabEmpires.Controls.Add(this.spnHomeworlds);
@@ -1552,16 +1552,16 @@
 			// 
 			// spnRacialPoints
 			// 
-			this.spnRacialPoints.Location = new System.Drawing.Point(125, 225);
-			this.spnRacialPoints.Maximum = new decimal(new int[] {
+			this.spnEmpirePoints.Location = new System.Drawing.Point(125, 225);
+			this.spnEmpirePoints.Maximum = new decimal(new int[] {
             1000000,
             0,
             0,
             0});
-			this.spnRacialPoints.Name = "spnRacialPoints";
-			this.spnRacialPoints.Size = new System.Drawing.Size(120, 21);
-			this.spnRacialPoints.TabIndex = 26;
-			this.spnRacialPoints.Value = new decimal(new int[] {
+			this.spnEmpirePoints.Name = "spnRacialPoints";
+			this.spnEmpirePoints.Size = new System.Drawing.Size(120, 21);
+			this.spnEmpirePoints.TabIndex = 26;
+			this.spnEmpirePoints.Value = new decimal(new int[] {
             2000,
             0,
             0,
@@ -1680,9 +1680,9 @@
 			this.label37.Location = new System.Drawing.Point(9, 225);
 			this.label37.Margin = new System.Windows.Forms.Padding(3);
 			this.label37.Name = "label37";
-			this.label37.Size = new System.Drawing.Size(79, 15);
+			this.label37.Size = new System.Drawing.Size(84, 15);
 			this.label37.TabIndex = 18;
-			this.label37.Text = "Racial Points";
+			this.label37.Text = "Empire Points";
 			// 
 			// label36
 			// 
@@ -1888,7 +1888,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRandomAIs)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.spnRacialPoints)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnEmpirePoints)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).EndInit();
@@ -2003,7 +2003,7 @@
 		private System.Windows.Forms.NumericUpDown spnStartResources;
 		private System.Windows.Forms.NumericUpDown spnMinorEmpires;
 		private System.Windows.Forms.NumericUpDown spnRandomAIs;
-		private System.Windows.Forms.NumericUpDown spnRacialPoints;
+		private System.Windows.Forms.NumericUpDown spnEmpirePoints;
 		private System.Windows.Forms.ComboBox ddlScoreDisplay;
 		private System.Windows.Forms.NumericUpDown spnResourceStorage;
 		private System.Windows.Forms.Label label40;

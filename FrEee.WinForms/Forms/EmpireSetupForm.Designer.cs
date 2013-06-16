@@ -68,6 +68,7 @@
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.txtHappiness = new System.Windows.Forms.Label();
@@ -102,7 +103,6 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.empireTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabs.SuspendLayout();
 			this.tabPage2.SuspendLayout();
@@ -596,6 +596,19 @@
 			this.tabPage6.TabIndex = 5;
 			this.tabPage6.Text = "Racial Traits";
 			// 
+			// raceTraitPicker
+			// 
+			this.raceTraitPicker.BackColor = System.Drawing.Color.Black;
+			this.raceTraitPicker.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.raceTraitPicker.ForeColor = System.Drawing.Color.White;
+			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
+			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.raceTraitPicker.Name = "raceTraitPicker";
+			this.raceTraitPicker.Size = new System.Drawing.Size(595, 416);
+			this.raceTraitPicker.TabIndex = 0;
+			this.raceTraitPicker.Traits = null;
+			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
+			// 
 			// tabPage5
 			// 
 			this.tabPage5.BackColor = System.Drawing.Color.Black;
@@ -1021,18 +1034,6 @@
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "Empire Traits";
 			// 
-			// raceTraitPicker
-			// 
-			this.raceTraitPicker.BackColor = System.Drawing.Color.Black;
-			this.raceTraitPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.raceTraitPicker.ForeColor = System.Drawing.Color.White;
-			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
-			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(595, 416);
-			this.raceTraitPicker.TabIndex = 0;
-			this.raceTraitPicker.Traits = null;
-			// 
 			// empireTraitPicker
 			// 
 			this.empireTraitPicker.BackColor = System.Drawing.Color.Black;
@@ -1044,6 +1045,7 @@
 			this.empireTraitPicker.Size = new System.Drawing.Size(589, 410);
 			this.empireTraitPicker.TabIndex = 1;
 			this.empireTraitPicker.Traits = null;
+			this.empireTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.empireTraitPicker_TraitToggled);
 			// 
 			// EmpireSetupForm
 			// 

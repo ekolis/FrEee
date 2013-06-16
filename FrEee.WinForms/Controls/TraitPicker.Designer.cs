@@ -40,6 +40,8 @@
 			this.pnlTraits.Name = "pnlTraits";
 			this.pnlTraits.Size = new System.Drawing.Size(361, 473);
 			this.pnlTraits.TabIndex = 0;
+			this.pnlTraits.WrapContents = false;
+			this.pnlTraits.SizeChanged += new System.EventHandler(this.pnlTraits_SizeChanged);
 			// 
 			// TraitPicker
 			// 

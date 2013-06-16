@@ -114,7 +114,7 @@ namespace FrEee.WinForms.Forms
 			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
 			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
 			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);
-			setup.RacialPoints = (int)spnRacialPoints.Value;
+			setup.EmpirePoints = (int)spnEmpirePoints.Value;
 			setup.RandomAIs = (int)spnRandomAIs.Value;
 			setup.MinorEmpires = (int)spnMinorEmpires.Value;
 
@@ -448,6 +448,7 @@ namespace FrEee.WinForms.Forms
 		{
 			var et = new EmpireTemplate();
 			var form = new EmpireSetupForm();
+			form.PointsToSpend = (int)spnEmpirePoints.Value;
 			form.EmpireTemplate = et;
 			this.ShowChildForm(form);
 			if (form.DialogResult == DialogResult.OK)

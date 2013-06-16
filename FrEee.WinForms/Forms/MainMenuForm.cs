@@ -108,7 +108,7 @@ namespace FrEee.WinForms.Forms
 						EmpirePlacement = EmpirePlacement.Equidistant,
 						MaxHomeworldDispersion = 1,
 						ScoreDisplay = ScoreDisplay.OwnOnlyNoRankings,
-						RacialPoints = 2000,
+						EmpirePoints = 2000,
 						RandomAIs = 3,
 						MinorEmpires = 5,
 					};

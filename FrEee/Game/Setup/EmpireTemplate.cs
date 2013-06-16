@@ -143,5 +143,21 @@ namespace FrEee.Game.Setup
 			// TODO - check spending on traits and attributes
 			// TODO - check presence of AI?
 		}
+
+
+		/// <summary>
+		/// Empire setup points spent.
+		/// </summary>
+		public int PointsSpent
+		{
+			get
+			{
+				int result = 0;
+				foreach (var t in PrimaryRace.Traits.Concat(Traits))
+					result += t.Cost;
+				// TODO - aptitude costs
+				return result;
+			}
+		}
 	}
 }

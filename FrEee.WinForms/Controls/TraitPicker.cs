@@ -41,6 +41,7 @@ namespace FrEee.WinForms.Controls
 					var chk = new CheckBox();
 					chk.Text = "(" + trait.Cost + " pts) " + trait.Name;
 					chk.Tag = trait;
+					chk.CheckedChanged += chk_CheckedChanged;
 					pnlTraits.Controls.Add(chk);
 
 					var lbl = new Label();
@@ -50,6 +51,17 @@ namespace FrEee.WinForms.Controls
 				}
 			}
 		}
+
+		void chk_CheckedChanged(object sender, EventArgs e)
+		{
+			var chk = (CheckBox)sender;
+			if (TraitToggled != null)
+				TraitToggled(this, (Trait)chk.Tag, chk.Checked);
+		}
+
+		public delegate void TraitToggledDelegate(TraitPicker picker, Trait trait, bool state);
+
+		public event TraitToggledDelegate TraitToggled;
 
 		public bool IsTraitChecked(Trait trait)
 		{
@@ -70,6 +82,12 @@ namespace FrEee.WinForms.Controls
 		public IEnumerable<Trait> CheckedTraits
 		{
 			get { return Traits.Where(t => IsTraitChecked(t)); }
+		}
+
+		private void pnlTraits_SizeChanged(object sender, EventArgs e)
+		{
+			foreach (Control c in pnlTraits.Controls)
+				c.Width = pnlTraits.Width - 32;
 		}
 	}
 }

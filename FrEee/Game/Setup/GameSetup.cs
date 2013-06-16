@@ -115,7 +115,7 @@ namespace FrEee.Game.Setup
 
 		public ScoreDisplay ScoreDisplay { get; set; }
 
-		public int RacialPoints { get; set; }
+		public int EmpirePoints { get; set; }
 
 		public int RandomAIs { get; set; }
 
@@ -161,7 +161,11 @@ namespace FrEee.Game.Setup
 					yield return "You must specify a homeworld size.";
 				if (!EmpireTemplates.Any() && RandomAIs == 0)
 					yield return "You must add at least one empire.";
-				// TODO - check for empires spending too many racial points
+				foreach (var et in EmpireTemplates)
+				{
+					if (et.PointsSpent > EmpirePoints)
+						yield return "The " + et + " has spent too many empire points.";
+				}
 			}
 		}
 

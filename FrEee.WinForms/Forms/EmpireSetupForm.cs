@@ -18,8 +18,6 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class EmpireSetupForm : Form
 	{
-		private EmpireTemplate modifiedEmp;
-
 		public EmpireSetupForm()
 		{
 			InitializeComponent();
@@ -99,6 +97,16 @@ namespace FrEee.WinForms.Forms
 			}
 			raceTraitPicker.Traits = Mod.Current.Traits.Where(t => t.IsRacial);
 			empireTraitPicker.Traits = Mod.Current.Traits.Where(t => !t.IsRacial);
+		}
+
+		private void BindPointsSpent()
+		{
+			int pointsAvailable = PointsToSpend - PointsSpent; // TODO - let player spend points
+			txtPointsAvailable.Text = "Points Available: " + pointsAvailable + " / " + PointsToSpend;
+			if (pointsAvailable < 0)
+				txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
+			else
+				txtPointsAvailable.ForeColor = Color.White;
 		}
 
 		private IEnumerable<string> ListAIs()
@@ -201,12 +209,7 @@ namespace FrEee.WinForms.Forms
 
 			// TODO - empire traits
 
-			int pointsAvailable = PointsToSpend; // TODO - let player spend points
-			txtPointsAvailable.Text = "Points Available: " + pointsAvailable + " / " + PointsToSpend;
-			if (pointsAvailable < 0)
-				txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
-			else
-				txtPointsAvailable.ForeColor = Color.White;
+			BindPointsSpent();
 
 			BindPictures();
 		}
@@ -250,7 +253,9 @@ namespace FrEee.WinForms.Forms
 			r.ShipsetPath = ddlRaceShipset.Text;
 			// TODO - set race AI
 			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
-			// TODO - racial traits
+			r.Traits.Clear();
+			foreach (var t in raceTraitPicker.CheckedTraits)
+				r.Traits.Add(t);
 			// TODO - racial aptitudes
 			if (chkNameFromRace.Checked)
 				et.Name = null;
@@ -278,7 +283,9 @@ namespace FrEee.WinForms.Forms
 				et.ShipsetPath = ddlShipset.Text;
 			// TODO - empire AI
 
-			// TODO - empire traits
+			et.Traits.Clear();
+			foreach (var t in empireTraitPicker.CheckedTraits)
+				et.Traits.Add(t);
 
 			// validate
 			var warnings = et.GetWarnings(PointsToSpend);
@@ -462,8 +469,32 @@ namespace FrEee.WinForms.Forms
 				ddlHappiness.SelectedItem = ddlRaceHappiness.SelectedItem;
 		}
 
+		private void raceTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
+		{
+			BindPointsSpent();
+		}
+
+		private void empireTraitPicker_TraitToggled(Controls.TraitPicker picker, Trait trait, bool state)
+		{
+			BindPointsSpent();
+		}
 
 		#endregion
+
+
+		public int PointsSpent
+		{
+			get
+			{
+				int result = 0;
+				foreach (var t in raceTraitPicker.CheckedTraits)
+					result += t.Cost;
+				// TODO - aptitude costs
+				foreach (var t in empireTraitPicker.CheckedTraits)
+					result += t.Cost;
+				return result;
+			}
+		}
 
 	}
 }
