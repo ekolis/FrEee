@@ -58,7 +58,7 @@ namespace FrEee.Modding.Loaders
 				for (int count = 1; ; count++)
 				{
 					var f = rec.FindField(new string[] { "Required Trait", "Required Trait " + count }, ref index, false, index + 1);
-					if (f == null)
+					if (f == null || f.Value == "None")
 						break;
 					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
 					if (rt == null)
@@ -73,7 +73,7 @@ namespace FrEee.Modding.Loaders
 				for (int count = 1; ; count++)
 				{
 					var f = rec.FindField(new string[] { "Restricted Trait", "Restricted Trait " + count }, ref index, false, index + 1);
-					if (f == null)
+					if (f == null || f.Value == "None")
 						break;
 					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
 					if (rt == null)
