@@ -51,6 +51,7 @@ namespace FrEee.Modding
 			{
 				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
 				new AbilityRuleLoader(path),
+				new ModSettingsLoader(path),
 				new StellarObjectSizeLoader(path),
 				new StellarObjectLoader(path),
 				new TraitLoader(path),
@@ -90,12 +91,8 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
-			DefaultColonyConstructionRate = new Resources();
-			// TODO - moddable default colony construction rate
-			DefaultColonyConstructionRate.Add(Resource.Minerals, 2000);
-			DefaultColonyConstructionRate.Add(Resource.Organics, 2000);
-			DefaultColonyConstructionRate.Add(Resource.Radioactives, 2000);
-			PopulationFactor = (long)1e6; // TODO - let population factor be specified by mod files
+
+			Settings = new ModSettings();
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
 			Traits = new List<Trait>();
@@ -113,19 +110,14 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// How many people does 1 population represent in the mod files?
+		/// General mod settings.
 		/// </summary>
-		public long PopulationFactor { get; set; }
+		public ModSettings Settings { get; set; }
 
 		/// <summary>
 		/// The path to the mod's root folder, relative to the Mods folder.
 		/// </summary>
 		public string RootPath { get; set; }
-
-		/// <summary>
-		/// The construction rate for colonies lacking a spaceyard.
-		/// </summary>
-		public Resources DefaultColonyConstructionRate { get; set; }
 
 		/// <summary>
 		/// Rules for grouping and stacking abilities.

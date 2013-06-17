@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmpireSetupForm));
 			this.txtPointsAvailable = new System.Windows.Forms.Label();
 			this.btnSaveRace = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoadRace = new FrEee.WinForms.Controls.GameButton();
@@ -35,6 +36,10 @@
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.btnRaceCompareCultures = new FrEee.WinForms.Controls.GameButton();
+			this.txtRaceCulture = new System.Windows.Forms.Label();
+			this.label20 = new System.Windows.Forms.Label();
+			this.ddlRaceCulture = new System.Windows.Forms.ComboBox();
 			this.txtRaceHappiness = new System.Windows.Forms.Label();
 			this.ddlRaceHappiness = new System.Windows.Forms.ComboBox();
 			this.label19 = new System.Windows.Forms.Label();
@@ -70,7 +75,13 @@
 			this.tabPage6 = new System.Windows.Forms.TabPage();
 			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
+			this.aptitudePicker = new FrEee.WinForms.Controls.AptitudePicker();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.chkCultureFromRace = new System.Windows.Forms.CheckBox();
+			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
+			this.txtCulture = new System.Windows.Forms.Label();
+			this.label22 = new System.Windows.Forms.Label();
+			this.ddlCulture = new System.Windows.Forms.ComboBox();
 			this.txtHappiness = new System.Windows.Forms.Label();
 			this.chkHappinessFromRace = new System.Windows.Forms.CheckBox();
 			this.ddlHappiness = new System.Windows.Forms.ComboBox();
@@ -115,6 +126,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorRed)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picRaceLeaderPortrait)).BeginInit();
 			this.tabPage6.SuspendLayout();
+			this.tabPage5.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picShipset)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picInsignia)).BeginInit();
@@ -130,7 +142,7 @@
 			// 
 			this.txtPointsAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 464);
+			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 530);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
 			this.txtPointsAvailable.Size = new System.Drawing.Size(270, 17);
 			this.txtPointsAvailable.TabIndex = 5;
@@ -142,7 +154,7 @@
 			this.btnSaveRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveRace.BackColor = System.Drawing.Color.Black;
 			this.btnSaveRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveRace.Location = new System.Drawing.Point(90, 461);
+			this.btnSaveRace.Location = new System.Drawing.Point(90, 527);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(75, 23);
 			this.btnSaveRace.TabIndex = 4;
@@ -154,7 +166,7 @@
 			this.btnLoadRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadRace.BackColor = System.Drawing.Color.Black;
 			this.btnLoadRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadRace.Location = new System.Drawing.Point(9, 461);
+			this.btnLoadRace.Location = new System.Drawing.Point(9, 527);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(75, 23);
 			this.btnLoadRace.TabIndex = 3;
@@ -166,7 +178,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(448, 461);
+			this.btnCancel.Location = new System.Drawing.Point(448, 527);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 2;
@@ -179,7 +191,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(529, 461);
+			this.btnOK.Location = new System.Drawing.Point(529, 527);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 1;
@@ -189,6 +201,9 @@
 			// 
 			// tabs
 			// 
+			this.tabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabPage2);
 			this.tabs.Controls.Add(this.tabPage6);
 			this.tabs.Controls.Add(this.tabPage5);
@@ -202,7 +217,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(603, 449);
+			this.tabs.Size = new System.Drawing.Size(603, 515);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -210,6 +225,10 @@
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.Black;
+			this.tabPage2.Controls.Add(this.btnRaceCompareCultures);
+			this.tabPage2.Controls.Add(this.txtRaceCulture);
+			this.tabPage2.Controls.Add(this.label20);
+			this.tabPage2.Controls.Add(this.ddlRaceCulture);
 			this.tabPage2.Controls.Add(this.txtRaceHappiness);
 			this.tabPage2.Controls.Add(this.ddlRaceHappiness);
 			this.tabPage2.Controls.Add(this.label19);
@@ -246,9 +265,50 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 29);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(595, 416);
+			this.tabPage2.Size = new System.Drawing.Size(595, 482);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Primary Race";
+			// 
+			// btnRaceCompareCultures
+			// 
+			this.btnRaceCompareCultures.BackColor = System.Drawing.Color.Black;
+			this.btnRaceCompareCultures.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRaceCompareCultures.Location = new System.Drawing.Point(304, 406);
+			this.btnRaceCompareCultures.Name = "btnRaceCompareCultures";
+			this.btnRaceCompareCultures.Size = new System.Drawing.Size(75, 23);
+			this.btnRaceCompareCultures.TabIndex = 91;
+			this.btnRaceCompareCultures.Text = "Compare";
+			this.btnRaceCompareCultures.UseVisualStyleBackColor = false;
+			this.btnRaceCompareCultures.Click += new System.EventHandler(this.btnRaceCompareCultures_Click);
+			// 
+			// txtRaceCulture
+			// 
+			this.txtRaceCulture.Location = new System.Drawing.Point(20, 434);
+			this.txtRaceCulture.Name = "txtRaceCulture";
+			this.txtRaceCulture.Size = new System.Drawing.Size(278, 45);
+			this.txtRaceCulture.TabIndex = 90;
+			this.txtRaceCulture.Text = "Please choose a culture.";
+			// 
+			// label20
+			// 
+			this.label20.AutoSize = true;
+			this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label20.Location = new System.Drawing.Point(8, 409);
+			this.label20.Margin = new System.Windows.Forms.Padding(3);
+			this.label20.Name = "label20";
+			this.label20.Size = new System.Drawing.Size(46, 15);
+			this.label20.TabIndex = 89;
+			this.label20.Text = "Culture";
+			// 
+			// ddlRaceCulture
+			// 
+			this.ddlRaceCulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlRaceCulture.FormattingEnabled = true;
+			this.ddlRaceCulture.Location = new System.Drawing.Point(129, 406);
+			this.ddlRaceCulture.Name = "ddlRaceCulture";
+			this.ddlRaceCulture.Size = new System.Drawing.Size(169, 23);
+			this.ddlRaceCulture.TabIndex = 88;
+			this.ddlRaceCulture.SelectedIndexChanged += new System.EventHandler(this.ddlRaceCulture_SelectedIndexChanged);
 			// 
 			// txtRaceHappiness
 			// 
@@ -592,7 +652,7 @@
 			this.tabPage6.Controls.Add(this.raceTraitPicker);
 			this.tabPage6.Location = new System.Drawing.Point(4, 29);
 			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Size = new System.Drawing.Size(595, 416);
+			this.tabPage6.Size = new System.Drawing.Size(595, 482);
 			this.tabPage6.TabIndex = 5;
 			this.tabPage6.Text = "Racial Traits";
 			// 
@@ -604,7 +664,7 @@
 			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
 			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(595, 416);
+			this.raceTraitPicker.Size = new System.Drawing.Size(595, 482);
 			this.raceTraitPicker.TabIndex = 0;
 			this.raceTraitPicker.Traits = null;
 			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
@@ -612,17 +672,35 @@
 			// tabPage5
 			// 
 			this.tabPage5.BackColor = System.Drawing.Color.Black;
+			this.tabPage5.Controls.Add(this.aptitudePicker);
 			this.tabPage5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabPage5.Location = new System.Drawing.Point(4, 29);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(595, 416);
+			this.tabPage5.Size = new System.Drawing.Size(595, 482);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Racial Aptitudes";
+			// 
+			// aptitudePicker
+			// 
+			this.aptitudePicker.BackColor = System.Drawing.Color.Black;
+			this.aptitudePicker.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.aptitudePicker.ForeColor = System.Drawing.Color.White;
+			this.aptitudePicker.Location = new System.Drawing.Point(3, 3);
+			this.aptitudePicker.Name = "aptitudePicker";
+			this.aptitudePicker.Size = new System.Drawing.Size(589, 476);
+			this.aptitudePicker.TabIndex = 0;
+			this.aptitudePicker.Values = ((System.Collections.Generic.IDictionary<FrEee.Game.Objects.Civilization.Aptitude, int>)(resources.GetObject("aptitudePicker.Values")));
+			this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
 			// 
 			// tabPage1
 			// 
 			this.tabPage1.BackColor = System.Drawing.Color.Black;
+			this.tabPage1.Controls.Add(this.chkCultureFromRace);
+			this.tabPage1.Controls.Add(this.gameButton1);
+			this.tabPage1.Controls.Add(this.txtCulture);
+			this.tabPage1.Controls.Add(this.label22);
+			this.tabPage1.Controls.Add(this.ddlCulture);
 			this.tabPage1.Controls.Add(this.txtHappiness);
 			this.tabPage1.Controls.Add(this.chkHappinessFromRace);
 			this.tabPage1.Controls.Add(this.ddlHappiness);
@@ -658,9 +736,64 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 29);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(595, 416);
+			this.tabPage1.Size = new System.Drawing.Size(595, 482);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "General";
+			// 
+			// chkCultureFromRace
+			// 
+			this.chkCultureFromRace.AutoSize = true;
+			this.chkCultureFromRace.Checked = true;
+			this.chkCultureFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkCultureFromRace.Location = new System.Drawing.Point(305, 319);
+			this.chkCultureFromRace.Name = "chkCultureFromRace";
+			this.chkCultureFromRace.Size = new System.Drawing.Size(87, 19);
+			this.chkCultureFromRace.TabIndex = 96;
+			this.chkCultureFromRace.Text = "From Race";
+			this.chkCultureFromRace.UseVisualStyleBackColor = true;
+			this.chkCultureFromRace.CheckedChanged += new System.EventHandler(this.chkCultureFromRace_CheckedChanged);
+			// 
+			// gameButton1
+			// 
+			this.gameButton1.BackColor = System.Drawing.Color.Black;
+			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.gameButton1.Location = new System.Drawing.Point(304, 341);
+			this.gameButton1.Name = "gameButton1";
+			this.gameButton1.Size = new System.Drawing.Size(75, 23);
+			this.gameButton1.TabIndex = 95;
+			this.gameButton1.Text = "Compare";
+			this.gameButton1.UseVisualStyleBackColor = false;
+			this.gameButton1.Click += new System.EventHandler(this.gameButton1_Click);
+			// 
+			// txtCulture
+			// 
+			this.txtCulture.Location = new System.Drawing.Point(20, 345);
+			this.txtCulture.Name = "txtCulture";
+			this.txtCulture.Size = new System.Drawing.Size(278, 45);
+			this.txtCulture.TabIndex = 94;
+			this.txtCulture.Text = "Please choose a culture.";
+			// 
+			// label22
+			// 
+			this.label22.AutoSize = true;
+			this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label22.Location = new System.Drawing.Point(8, 320);
+			this.label22.Margin = new System.Windows.Forms.Padding(3);
+			this.label22.Name = "label22";
+			this.label22.Size = new System.Drawing.Size(46, 15);
+			this.label22.TabIndex = 93;
+			this.label22.Text = "Culture";
+			// 
+			// ddlCulture
+			// 
+			this.ddlCulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlCulture.Enabled = false;
+			this.ddlCulture.FormattingEnabled = true;
+			this.ddlCulture.Location = new System.Drawing.Point(129, 317);
+			this.ddlCulture.Name = "ddlCulture";
+			this.ddlCulture.Size = new System.Drawing.Size(169, 23);
+			this.ddlCulture.TabIndex = 92;
+			this.ddlCulture.SelectedIndexChanged += new System.EventHandler(this.ddlCulture_SelectedIndexChanged);
 			// 
 			// txtHappiness
 			// 
@@ -1030,7 +1163,7 @@
 			this.tabPage4.Location = new System.Drawing.Point(4, 29);
 			this.tabPage4.Name = "tabPage4";
 			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(595, 416);
+			this.tabPage4.Size = new System.Drawing.Size(595, 482);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "Empire Traits";
 			// 
@@ -1042,7 +1175,7 @@
 			this.empireTraitPicker.Location = new System.Drawing.Point(3, 3);
 			this.empireTraitPicker.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.empireTraitPicker.Name = "empireTraitPicker";
-			this.empireTraitPicker.Size = new System.Drawing.Size(589, 410);
+			this.empireTraitPicker.Size = new System.Drawing.Size(589, 476);
 			this.empireTraitPicker.TabIndex = 1;
 			this.empireTraitPicker.Traits = null;
 			this.empireTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.empireTraitPicker_TraitToggled);
@@ -1052,7 +1185,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(621, 496);
+			this.ClientSize = new System.Drawing.Size(621, 562);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);
@@ -1074,6 +1207,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorRed)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picRaceLeaderPortrait)).EndInit();
 			this.tabPage6.ResumeLayout(false);
+			this.tabPage5.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picShipset)).EndInit();
@@ -1166,5 +1300,15 @@
 		private System.Windows.Forms.Label txtHappiness;
 		private Controls.TraitPicker raceTraitPicker;
 		private Controls.TraitPicker empireTraitPicker;
+		private System.Windows.Forms.Label txtRaceCulture;
+		private System.Windows.Forms.Label label20;
+		private System.Windows.Forms.ComboBox ddlRaceCulture;
+		private Controls.GameButton btnRaceCompareCultures;
+		private Controls.GameButton gameButton1;
+		private System.Windows.Forms.Label txtCulture;
+		private System.Windows.Forms.Label label22;
+		private System.Windows.Forms.ComboBox ddlCulture;
+		private System.Windows.Forms.CheckBox chkCultureFromRace;
+		private Controls.AptitudePicker aptitudePicker;
 	}
 }

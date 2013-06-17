@@ -4,6 +4,7 @@ using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -21,6 +22,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Traits = new List<Trait>();
 			Color = Color.White;
+			Aptitudes = new Dictionary<string, int>();
 		}
 
 		/// <summary>
@@ -112,6 +114,11 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Pictures.GetPortrait(this); }
 		}
 
+		/// <summary>
+		/// Aptitudes of this race.
+		/// </summary>
+		public IDictionary<string, int> Aptitudes { get; private set; }
+
 		public int ID
 		{
 			get;
@@ -152,6 +159,16 @@ namespace FrEee.Game.Objects.Civilization
 					yield return "You must specify a native planet surface for your race.";
 				if (!Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
 					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
+				foreach (var kvp in Aptitudes)
+				{
+					var apt = Aptitude.All.Find(kvp.Key);
+					if (apt == null)
+						yield return "\"" + kvp.Key + "\" is not a valid racial aptitude.";
+					else if (kvp.Value > apt.MaxPercent)
+						yield return "Aptitude value for " + kvp.Key + " is too high.";
+					else if (kvp.Value < apt.MinPercent)
+						yield return "Aptitude value for " + kvp.Key + " is too low.";
+				}
 			}
 		}
 	}

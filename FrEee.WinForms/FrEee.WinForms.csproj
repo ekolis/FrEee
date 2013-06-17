@@ -81,6 +81,12 @@
     <Compile Include="Controls\AbilityTreeView.Designer.cs">
       <DependentUpon>AbilityTreeView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\AptitudePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AptitudePicker.Designer.cs">
+      <DependentUpon>AptitudePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\AsteroidFieldReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -280,6 +286,9 @@
     <Compile Include="Utility\Extensions\GuiExtensions.cs" />
     <EmbeddedResource Include="Controls\AbilityTreeView.resx">
       <DependentUpon>AbilityTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AptitudePicker.resx">
+      <DependentUpon>AptitudePicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>

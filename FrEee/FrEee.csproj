@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
     <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
+    <Compile Include="Game\Enumerations\Mood.cs" />
     <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
     <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
     <Compile Include="Game\Enumerations\WeaponTypes.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
+    <Compile Include="Game\Objects\Civilization\Aptitude.cs" />
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
@@ -142,12 +144,15 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
     <Compile Include="Modding\Loaders\DataFileLoader.cs" />
+    <Compile Include="Modding\Loaders\ModSettingsLoader.cs" />
     <Compile Include="Modding\Loaders\TextLoader.cs" />
     <Compile Include="Modding\Loaders\HappinessModelLoader.cs" />
     <Compile Include="Modding\Loaders\HullLoader.cs" />
     <Compile Include="Modding\Loaders\MountLoader.cs" />
     <Compile Include="Modding\Loaders\TraitLoader.cs" />
     <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
+    <Compile Include="Modding\ModSettings.cs" />
+    <Compile Include="Modding\PopulationModifier.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />

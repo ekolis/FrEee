@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (Colony != null)
 				{
 					if (rate == null)
-						rate = Mod.Current.DefaultColonyConstructionRate;
+						rate = Mod.Current.Settings.DefaultColonyConstructionRate;
 					// TODO - population/happiness/etc. modifiers
 				}
 				if (rate == null)

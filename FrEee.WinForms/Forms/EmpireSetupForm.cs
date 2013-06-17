@@ -101,7 +101,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindPointsSpent()
 		{
-			int pointsAvailable = PointsToSpend - PointsSpent; // TODO - let player spend points
+			int pointsAvailable = PointsToSpend - PointsSpent;
 			txtPointsAvailable.Text = "Points Available: " + pointsAvailable + " / " + PointsToSpend;
 			if (pointsAvailable < 0)
 				txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
@@ -136,10 +136,21 @@ namespace FrEee.WinForms.Forms
 			ddlRaceInsignia.Text = EmpireTemplate.PrimaryRace.InsigniaName;
 			ddlRaceShipset.Text = EmpireTemplate.PrimaryRace.ShipsetPath;
 			// TODO - race AI
+			ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
+			// TODO - race culture
 
-			// TODO - race traits
+			// race traits
+			foreach (var trait in raceTraitPicker.Traits)
+				raceTraitPicker.SetTraitChecked(trait, EmpireTemplate.PrimaryRace.Traits.Contains(trait));
 
-			// TODO - race aptitudes
+			// race aptitudes
+			foreach (var apt in Aptitude.All)
+			{
+				int val = 100;
+				if (EmpireTemplate.PrimaryRace.Aptitudes.ContainsKey(apt.Name))
+					val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
+				aptitudePicker.SetValue(apt, val);
+			}
 			
 			// empire overrides for race stuff
 			if (EmpireTemplate.Name == null)
@@ -206,8 +217,22 @@ namespace FrEee.WinForms.Forms
 				ddlShipset.Text = EmpireTemplate.ShipsetPath;
 				chkShipsetFromRace.Checked = false;
 			}
+			// TODO - empire AI
+			if (EmpireTemplate.HappinessModel == null)
+			{
+				ddlHappiness.SelectedValue = EmpireTemplate.PrimaryRace.HappinessModel;
+				chkHappinessFromRace.Checked = true;
+			}
+			else
+			{
+				ddlHappiness.SelectedValue = EmpireTemplate.HappinessModel;
+				chkHappinessFromRace.Checked = false;
+			}
+			// TODO - empire culture
 
-			// TODO - empire traits
+			// empire traits
+			foreach (var trait in empireTraitPicker.Traits)
+				empireTraitPicker.SetTraitChecked(trait, EmpireTemplate.Traits.Contains(trait));
 
 			BindPointsSpent();
 
@@ -256,7 +281,13 @@ namespace FrEee.WinForms.Forms
 			r.Traits.Clear();
 			foreach (var t in raceTraitPicker.CheckedTraits)
 				r.Traits.Add(t);
-			// TODO - racial aptitudes
+			foreach (var kvp in aptitudePicker.Values)
+			{
+				if (r.Aptitudes.ContainsKey(kvp.Key.Name))
+					r.Aptitudes[kvp.Key.Name] = kvp.Value;
+				else
+					r.Aptitudes.Add(kvp.Key.Name, kvp.Value);
+			}
 			if (chkNameFromRace.Checked)
 				et.Name = null;
 			else
@@ -479,6 +510,36 @@ namespace FrEee.WinForms.Forms
 			BindPointsSpent();
 		}
 
+		private void ddlRaceCulture_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ddlRaceCulture.SelectedItem != null)
+				txtRaceCulture.Text = "Culture details"; // TODO - culture details
+			else
+				txtRaceCulture.Text = "Please choose a culture.";
+			if (chkCultureFromRace.Checked)
+				ddlCulture.SelectedItem = ddlRaceCulture.SelectedItem;
+		}
+
+		private void ddlCulture_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (ddlCulture.SelectedItem != null)
+				txtCulture.Text = "Culture details"; // TODO - culture details
+			else
+				txtRaceCulture.Text = "Please choose a culture.";
+		}
+
+		private void chkCultureFromRace_CheckedChanged(object sender, EventArgs e)
+		{
+			ddlRaceCulture.Enabled = !chkCultureFromRace.Checked;
+			if (chkCultureFromRace.Checked)
+				ddlCulture.SelectedItem = ddlRaceCulture.SelectedItem;
+		}
+
+		private void aptitudePicker_AptitudeValueChanged(Controls.AptitudePicker ap, Aptitude aptitude, int newValue)
+		{
+			BindPointsSpent();	
+		}
+
 		#endregion
 
 
@@ -489,12 +550,26 @@ namespace FrEee.WinForms.Forms
 				int result = 0;
 				foreach (var t in raceTraitPicker.CheckedTraits)
 					result += t.Cost;
-				// TODO - aptitude costs
+				result += aptitudePicker.Cost;
 				foreach (var t in empireTraitPicker.CheckedTraits)
 					result += t.Cost;
 				return result;
 			}
 		}
 
+		private void btnRaceCompareCultures_Click(object sender, EventArgs e)
+		{
+			CompareCultures();
+		}
+
+		private void gameButton1_Click(object sender, EventArgs e)
+		{
+			CompareCultures();
+		}
+
+		private void CompareCultures()
+		{
+			// TODO - show culture comparison form
+		}
 	}
 }
