@@ -16,6 +16,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -439,9 +440,15 @@ namespace FrEee.WinForms.Forms
 
 		private void BindEmpires()
 		{
+			var selected = lstEmpires.SelectedItems.Cast<ListViewItem>().Select(i => (EmpireTemplate)i.Tag);
 			lstEmpires.Initialize(32, 32);
 			foreach (var et in setup.EmpireTemplates)
 				lstEmpires.AddItemWithImage(null, et.IsPlayerEmpire ? (et.Name ?? et.PrimaryRace.EmpireName) : ("(AI) " + (et.Name ?? et.PrimaryRace.EmpireName)), et, et.Insignia);
+			foreach (ListViewItem item in lstEmpires.Items)
+			{
+				if (selected.Contains((EmpireTemplate)item.Tag))
+					item.Selected = true;
+			}
 		}
 
 		private void btnCreateEmpire_Click(object sender, EventArgs e)
@@ -460,27 +467,125 @@ namespace FrEee.WinForms.Forms
 
 		private void btnLoadEmpire_Click(object sender, EventArgs e)
 		{
-
+			var dlg = new OpenFileDialog();
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Empires");
+			dlg.Filter = "Empires (*.emp)|*.emp";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				var et = EmpireTemplate.Load(dlg.FileName);
+				setup.EmpireTemplates.Add(et);
+				BindEmpires();
+			}
 		}
 
 		private void btnEditEmpire_Click(object sender, EventArgs e)
 		{
-
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var et = (EmpireTemplate)lstEmpires.SelectedItems[0].Tag;
+				var form = new EmpireSetupForm();
+				form.PointsToSpend = (int)spnEmpirePoints.Value;
+				form.EmpireTemplate = et;
+				this.ShowChildForm(form);
+				if (form.DialogResult == DialogResult.OK)
+					BindEmpires();
+			}
 		}
 
 		private void btnRemoveEmpire_Click(object sender, EventArgs e)
 		{
-
+			if (lstEmpires.SelectedItems.Count > 0)
+			{
+				foreach (ListViewItem item in lstEmpires.SelectedItems)
+					setup.EmpireTemplates.Remove((EmpireTemplate)item.Tag);
+				BindEmpires();
+			}
 		}
 
 		private void btnSaveEmpire_Click(object sender, EventArgs e)
 		{
-
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var dlg = new SaveFileDialog();
+				dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Empires");
+				dlg.Filter = "Empires (*.emp)|*.emp";
+				var result = dlg.ShowDialog();
+				if (result == DialogResult.OK)
+				{
+					var et = (EmpireTemplate)lstEmpires.SelectedItems[0].Tag;
+					et.Save(dlg.FileName);
+				}
+			}
 		}
 
 		private void btnToggleAI_Click(object sender, EventArgs e)
 		{
+			if (lstEmpires.SelectedItems.Count > 0)
+			{
+				foreach (ListViewItem item in lstEmpires.SelectedItems)
+				{
+					var et = (EmpireTemplate)item.Tag;
+					et.IsPlayerEmpire = !et.IsPlayerEmpire;
+				}
+				BindEmpires();
+			}
+		}
 
+		private void btnEmpireUp_Click(object sender, EventArgs e)
+		{
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var item = lstEmpires.SelectedItems[0];
+				var et = (EmpireTemplate)item.Tag;
+				int idx = setup.EmpireTemplates.IndexOf(et);
+				if (idx > 0)
+				{
+					setup.EmpireTemplates.Remove(et);
+					setup.EmpireTemplates.Insert(idx - 1, et);
+					BindEmpires();
+				}
+			}
+		}
+
+		private void btnEmpireTop_Click(object sender, EventArgs e)
+		{
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var item = lstEmpires.SelectedItems[0];
+				var et = (EmpireTemplate)item.Tag;
+				setup.EmpireTemplates.Remove(et);
+				setup.EmpireTemplates.Insert(0, et);
+				BindEmpires();
+			}
+		}
+
+		private void btnEmpireDown_Click(object sender, EventArgs e)
+		{
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var item = lstEmpires.SelectedItems[0];
+				var et = (EmpireTemplate)item.Tag;
+				int idx = setup.EmpireTemplates.IndexOf(et);
+				if (idx < setup.EmpireTemplates.Count - 1)
+				{
+					setup.EmpireTemplates.Remove(et);
+					setup.EmpireTemplates.Insert(idx + 1, et);
+					BindEmpires();
+				}
+			}
+		}
+
+		private void btnEmpireBottom_Click(object sender, EventArgs e)
+		{
+			if (lstEmpires.SelectedItems.Count == 1)
+			{
+				var item = lstEmpires.SelectedItems[0];
+				var et = (EmpireTemplate)item.Tag;
+				setup.EmpireTemplates.Remove(et);
+				setup.EmpireTemplates.Add(et);
+				BindEmpires();
+			}
 		}
 	}
 }

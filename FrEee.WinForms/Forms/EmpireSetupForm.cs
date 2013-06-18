@@ -12,6 +12,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
@@ -616,7 +617,7 @@ namespace FrEee.WinForms.Forms
 		private void btnLoadRace_Click(object sender, EventArgs e)
 		{
 			var dlg = new OpenFileDialog();
-			dlg.InitialDirectory = "Races";
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
 			dlg.Filter = "Races (*.rac)|*.rac";
 			var result = dlg.ShowDialog();
 			if (result == DialogResult.OK)
@@ -630,7 +631,7 @@ namespace FrEee.WinForms.Forms
 		{
 			SaveChanges();
 			var dlg = new SaveFileDialog();
-			dlg.InitialDirectory = "Races";
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Races");
 			dlg.Filter = "Races (*.rac)|*.rac";
 			var result = dlg.ShowDialog();
 			if (result == DialogResult.OK)

@@ -153,6 +153,10 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.btnEmpireUp = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireBottom = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireTop = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -1293,6 +1297,10 @@
 			// tabEmpires
 			// 
 			this.tabEmpires.BackColor = System.Drawing.Color.Black;
+			this.tabEmpires.Controls.Add(this.btnEmpireBottom);
+			this.tabEmpires.Controls.Add(this.btnEmpireTop);
+			this.tabEmpires.Controls.Add(this.btnEmpireDown);
+			this.tabEmpires.Controls.Add(this.btnEmpireUp);
 			this.tabEmpires.Controls.Add(this.btnToggleAI);
 			this.tabEmpires.Controls.Add(this.label44);
 			this.tabEmpires.Controls.Add(this.spnMaxDispersion);
@@ -1336,7 +1344,7 @@
 			// 
 			this.btnToggleAI.BackColor = System.Drawing.Color.Black;
 			this.btnToggleAI.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnToggleAI.Location = new System.Drawing.Point(307, 448);
+			this.btnToggleAI.Location = new System.Drawing.Point(414, 411);
 			this.btnToggleAI.Name = "btnToggleAI";
 			this.btnToggleAI.Size = new System.Drawing.Size(101, 31);
 			this.btnToggleAI.TabIndex = 43;
@@ -1550,7 +1558,7 @@
 			this.spnRandomAIs.Size = new System.Drawing.Size(120, 21);
 			this.spnRandomAIs.TabIndex = 27;
 			// 
-			// spnRacialPoints
+			// spnEmpirePoints
 			// 
 			this.spnEmpirePoints.Location = new System.Drawing.Point(125, 225);
 			this.spnEmpirePoints.Maximum = new decimal(new int[] {
@@ -1558,7 +1566,7 @@
             0,
             0,
             0});
-			this.spnEmpirePoints.Name = "spnRacialPoints";
+			this.spnEmpirePoints.Name = "spnEmpirePoints";
 			this.spnEmpirePoints.Size = new System.Drawing.Size(120, 21);
 			this.spnEmpirePoints.TabIndex = 26;
 			this.spnEmpirePoints.Value = new decimal(new int[] {
@@ -1832,6 +1840,54 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// btnEmpireUp
+			// 
+			this.btnEmpireUp.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireUp.Location = new System.Drawing.Point(307, 448);
+			this.btnEmpireUp.Name = "btnEmpireUp";
+			this.btnEmpireUp.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireUp.TabIndex = 44;
+			this.btnEmpireUp.Text = "Move Up";
+			this.btnEmpireUp.UseVisualStyleBackColor = false;
+			this.btnEmpireUp.Click += new System.EventHandler(this.btnEmpireUp_Click);
+			// 
+			// btnEmpireDown
+			// 
+			this.btnEmpireDown.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireDown.Location = new System.Drawing.Point(307, 485);
+			this.btnEmpireDown.Name = "btnEmpireDown";
+			this.btnEmpireDown.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireDown.TabIndex = 45;
+			this.btnEmpireDown.Text = "Move Down";
+			this.btnEmpireDown.UseVisualStyleBackColor = false;
+			this.btnEmpireDown.Click += new System.EventHandler(this.btnEmpireDown_Click);
+			// 
+			// btnEmpireBottom
+			// 
+			this.btnEmpireBottom.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireBottom.Location = new System.Drawing.Point(414, 485);
+			this.btnEmpireBottom.Name = "btnEmpireBottom";
+			this.btnEmpireBottom.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireBottom.TabIndex = 47;
+			this.btnEmpireBottom.Text = "To Bottom";
+			this.btnEmpireBottom.UseVisualStyleBackColor = false;
+			this.btnEmpireBottom.Click += new System.EventHandler(this.btnEmpireBottom_Click);
+			// 
+			// btnEmpireTop
+			// 
+			this.btnEmpireTop.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireTop.Location = new System.Drawing.Point(414, 448);
+			this.btnEmpireTop.Name = "btnEmpireTop";
+			this.btnEmpireTop.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireTop.TabIndex = 46;
+			this.btnEmpireTop.Text = "To Top";
+			this.btnEmpireTop.UseVisualStyleBackColor = false;
+			this.btnEmpireTop.Click += new System.EventHandler(this.btnEmpireTop_Click);
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2022,5 +2078,9 @@
 		private System.Windows.Forms.NumericUpDown spnMaxDispersion;
 		private System.Windows.Forms.Label label43;
 		private Controls.GameButton btnToggleAI;
+		private Controls.GameButton btnEmpireBottom;
+		private Controls.GameButton btnEmpireTop;
+		private Controls.GameButton btnEmpireDown;
+		private Controls.GameButton btnEmpireUp;
 	}
 }
