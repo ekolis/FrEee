@@ -289,7 +289,7 @@ namespace FrEee.Game.Objects.Space
 		/// Saves the master view and all players' views of the galaxy, unless single player, in which case only the first player's view is saved.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
-		public static void SaveAll()
+		public static void SaveAll(Status status = null, double desiredProgress = 1d)
 		{
 			if (Current.CurrentEmpire != null)
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
@@ -300,8 +300,12 @@ namespace FrEee.Game.Objects.Space
 				Current.Referrables[i] = Current.Referrables[i].Where(r => r != null).ToList();
 			}
 
+			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
+
 			// save master view
 			var gamname = Current.Save();
+			if (status != null)
+				status.Progress += progressPerSaveLoad;
 	
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
@@ -312,9 +316,13 @@ namespace FrEee.Game.Objects.Space
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
 					Current.Save();
+					if (status != null)
+						status.Progress += progressPerSaveLoad;
 				}
 			}
 			Load(gamname);
+			if (status != null)
+				status.Progress += progressPerSaveLoad;
 		}
 
 		/// <summary>
@@ -696,7 +704,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Saving game";
 
 			// save the game
-			Galaxy.SaveAll();
+			Galaxy.SaveAll(status, desiredProgress);
 		}
 
 		/// <summary>
