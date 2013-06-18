@@ -142,7 +142,7 @@
 			// 
 			this.txtPointsAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 530);
+			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 564);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
 			this.txtPointsAvailable.Size = new System.Drawing.Size(270, 17);
 			this.txtPointsAvailable.TabIndex = 5;
@@ -154,7 +154,7 @@
 			this.btnSaveRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveRace.BackColor = System.Drawing.Color.Black;
 			this.btnSaveRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveRace.Location = new System.Drawing.Point(90, 527);
+			this.btnSaveRace.Location = new System.Drawing.Point(90, 561);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(75, 23);
 			this.btnSaveRace.TabIndex = 4;
@@ -166,7 +166,7 @@
 			this.btnLoadRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadRace.BackColor = System.Drawing.Color.Black;
 			this.btnLoadRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadRace.Location = new System.Drawing.Point(9, 527);
+			this.btnLoadRace.Location = new System.Drawing.Point(9, 561);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(75, 23);
 			this.btnLoadRace.TabIndex = 3;
@@ -178,7 +178,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(448, 527);
+			this.btnCancel.Location = new System.Drawing.Point(448, 561);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 2;
@@ -191,7 +191,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(529, 527);
+			this.btnOK.Location = new System.Drawing.Point(529, 561);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 1;
@@ -217,7 +217,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(603, 515);
+			this.tabs.Size = new System.Drawing.Size(603, 549);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -265,7 +265,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 29);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(595, 482);
+			this.tabPage2.Size = new System.Drawing.Size(595, 516);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Primary Race";
 			// 
@@ -283,9 +283,11 @@
 			// 
 			// txtRaceCulture
 			// 
+			this.txtRaceCulture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtRaceCulture.Location = new System.Drawing.Point(20, 434);
 			this.txtRaceCulture.Name = "txtRaceCulture";
-			this.txtRaceCulture.Size = new System.Drawing.Size(278, 45);
+			this.txtRaceCulture.Size = new System.Drawing.Size(278, 79);
 			this.txtRaceCulture.TabIndex = 90;
 			this.txtRaceCulture.Text = "Please choose a culture.";
 			// 
@@ -736,7 +738,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 29);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(595, 482);
+			this.tabPage1.Size = new System.Drawing.Size(595, 516);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "General";
 			// 
@@ -767,9 +769,11 @@
 			// 
 			// txtCulture
 			// 
+			this.txtCulture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtCulture.Location = new System.Drawing.Point(20, 345);
 			this.txtCulture.Name = "txtCulture";
-			this.txtCulture.Size = new System.Drawing.Size(278, 45);
+			this.txtCulture.Size = new System.Drawing.Size(278, 168);
 			this.txtCulture.TabIndex = 94;
 			this.txtCulture.Text = "Please choose a culture.";
 			// 
@@ -1185,7 +1189,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(621, 562);
+			this.ClientSize = new System.Drawing.Size(621, 596);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);

@@ -144,5 +144,27 @@ namespace FrEee.Game.Objects.Civilization
 		public int LowCost { get; set; }
 
 		public string AbilityName { get; set; }
+
+		public int GetCost(int val)
+		{
+			if (val > 100)
+			{
+				var high = 100 + Threshold;
+				if (val > high)
+					return (val - high) * HighCost + (high - 100) * Cost;
+				else
+					return (val - 100) * Cost;
+			}
+			else if (val < 100)
+			{
+				var low = 100 - Threshold;
+				if (val < low)
+					return (val - low) * LowCost + (low - 100) * Cost;
+				else
+					return (val - 100) * Cost;
+			}
+			else
+				return 0;
+		}
 	}
 }

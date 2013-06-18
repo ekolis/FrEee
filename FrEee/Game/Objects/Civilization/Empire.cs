@@ -527,9 +527,13 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsPlayerEmpire { get; set; }
 
 		/// <summary>
-		/// The empire's cultural happiness model.
+		/// The empire's happiness model.
 		/// </summary>
 		public HappinessModel HappinessModel { get; set; }
 
+		/// <summary>
+		/// The empire's culture.
+		/// </summary>
+		public Culture Culture { get; set; }
 	}
 }

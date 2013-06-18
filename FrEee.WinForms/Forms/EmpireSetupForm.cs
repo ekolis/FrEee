@@ -95,6 +95,11 @@ namespace FrEee.WinForms.Forms
 				ddlRaceHappiness.Items.Add(h);
 				ddlHappiness.Items.Add(h);
 			}
+			foreach (var c in Mod.Current.Cultures)
+			{
+				ddlRaceCulture.Items.Add(c);
+				ddlCulture.Items.Add(c);
+			}
 			raceTraitPicker.Traits = Mod.Current.Traits.Where(t => t.IsRacial);
 			empireTraitPicker.Traits = Mod.Current.Traits.Where(t => !t.IsRacial);
 		}
@@ -137,7 +142,7 @@ namespace FrEee.WinForms.Forms
 			ddlRaceShipset.Text = EmpireTemplate.PrimaryRace.ShipsetPath;
 			// TODO - race AI
 			ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
-			// TODO - race culture
+			ddlRaceCulture.SelectedItem = EmpireTemplate.PrimaryRace.Culture;
 
 			// race traits
 			foreach (var trait in raceTraitPicker.Traits)
@@ -228,7 +233,16 @@ namespace FrEee.WinForms.Forms
 				ddlHappiness.SelectedValue = EmpireTemplate.HappinessModel;
 				chkHappinessFromRace.Checked = false;
 			}
-			// TODO - empire culture
+			if (EmpireTemplate.Culture == null)
+			{
+				ddlCulture.SelectedValue = EmpireTemplate.PrimaryRace.Culture;
+				chkCultureFromRace.Checked = true;
+			}
+			else
+			{
+				ddlCulture.SelectedValue = EmpireTemplate.Culture;
+				chkCultureFromRace.Checked = false;
+			}
 
 			// empire traits
 			foreach (var trait in empireTraitPicker.Traits)
@@ -278,6 +292,7 @@ namespace FrEee.WinForms.Forms
 			r.ShipsetPath = ddlRaceShipset.Text;
 			// TODO - set race AI
 			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
+			r.Culture = (Culture)ddlRaceCulture.SelectedItem;
 			r.Traits.Clear();
 			foreach (var t in raceTraitPicker.CheckedTraits)
 				r.Traits.Add(t);
@@ -313,6 +328,14 @@ namespace FrEee.WinForms.Forms
 			else
 				et.ShipsetPath = ddlShipset.Text;
 			// TODO - empire AI
+			if (chkHappinessFromRace.Checked)
+				et.HappinessModel = null;
+			else
+				et.HappinessModel = (HappinessModel)ddlHappiness.SelectedItem;
+			if (chkCultureFromRace.Checked)
+				et.Culture = null;
+			else
+				et.Culture = (Culture)ddlCulture.SelectedItem;
 
 			et.Traits.Clear();
 			foreach (var t in empireTraitPicker.CheckedTraits)
@@ -513,7 +536,7 @@ namespace FrEee.WinForms.Forms
 		private void ddlRaceCulture_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (ddlRaceCulture.SelectedItem != null)
-				txtRaceCulture.Text = "Culture details"; // TODO - culture details
+				txtRaceCulture.Text = ((Culture)ddlRaceCulture.SelectedItem).Description;
 			else
 				txtRaceCulture.Text = "Please choose a culture.";
 			if (chkCultureFromRace.Checked)
@@ -523,14 +546,14 @@ namespace FrEee.WinForms.Forms
 		private void ddlCulture_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (ddlCulture.SelectedItem != null)
-				txtCulture.Text = "Culture details"; // TODO - culture details
+				txtCulture.Text = ((Culture)ddlCulture.SelectedItem).Description;
 			else
-				txtRaceCulture.Text = "Please choose a culture.";
+				txtCulture.Text = "Please choose a culture.";
 		}
 
 		private void chkCultureFromRace_CheckedChanged(object sender, EventArgs e)
 		{
-			ddlRaceCulture.Enabled = !chkCultureFromRace.Checked;
+			ddlCulture.Enabled = !chkCultureFromRace.Checked;
 			if (chkCultureFromRace.Checked)
 				ddlCulture.SelectedItem = ddlRaceCulture.SelectedItem;
 		}

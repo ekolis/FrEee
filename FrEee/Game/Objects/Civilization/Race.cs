@@ -83,12 +83,24 @@ namespace FrEee.Game.Objects.Civilization
 		public string HappinessModelName { get; set; }
 
 		/// <summary>
-		/// The race's cultural happiness model.
+		/// The race's happiness model.
 		/// </summary>
 		[DoNotSerialize]
 		public HappinessModel HappinessModel {
 			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
-			set { HappinessModelName = value.Name; }
+			set { HappinessModelName = value == null ? null : value.Name; }
+		}
+
+		public string CultureName { get; set; }
+
+		/// <summary>
+		/// The race's culture.
+		/// </summary>
+		[DoNotSerialize]
+		public Culture Culture
+		{
+			get { return Mod.Current.Cultures.SingleOrDefault(c => c.Name == CultureName); }
+			set { CultureName = value == null ? null : value.Name; }
 		}
 
 		public IList<Trait> Traits { get; private set; }

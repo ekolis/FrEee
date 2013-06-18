@@ -37,5 +37,10 @@ namespace FrEee.Game.Objects.Civilization
 		public int Construction { get; set; }
 
 		public int Repair { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

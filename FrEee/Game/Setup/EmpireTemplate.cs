@@ -4,6 +4,7 @@ using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -86,7 +87,20 @@ namespace FrEee.Game.Setup
 		public HappinessModel HappinessModel
 		{
 			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
-			set { HappinessModelName = value.Name; }
+			set { HappinessModelName = value == null ? null : value.Name; }
+		}
+
+		public string CultureName { get; set; }
+
+		/// <summary>
+		/// The empire's culture.
+		/// </summary>
+		[DoNotSerialize]
+		[IgnoreMap]
+		public Culture Culture
+		{
+			get { return Mod.Current.Cultures.SingleOrDefault(c => c.Name == CultureName); }
+			set { CultureName = value == null ? null : value.Name; }
 		}
 
 		/// <summary>
@@ -113,6 +127,8 @@ namespace FrEee.Game.Setup
 			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
 			// TODO - set empire AI
+			emp.HappinessModel = HappinessModel;
+			emp.Culture = Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
 
@@ -138,11 +154,13 @@ namespace FrEee.Game.Setup
 				yield return "You must specify an insignia for your empire or race.";
 			if (string.IsNullOrWhiteSpace(ShipsetPath) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.ShipsetPath)))
 				yield return "You must specify a shipset for your empire or race.";
+			// TODO - check presence of AI?
 			if (HappinessModel == null && (PrimaryRace == null || PrimaryRace.HappinessModel == null))
 				yield return "You must specify a happiness model for your empire or race.";
+			if (Culture == null && (PrimaryRace == null || PrimaryRace.Culture == null))
+				yield return "You must specify a culture for your empire or race.";
 			if (PointsSpent > maxPoints)
 				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
-			// TODO - check presence of AI?
 		}
 
 
@@ -156,7 +174,7 @@ namespace FrEee.Game.Setup
 				int result = 0;
 				foreach (var t in PrimaryRace.Traits.Concat(Traits))
 					result += t.Cost;
-				// TODO - aptitude costs
+				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.Find(kvp.Key).GetCost(kvp.Value));
 				return result;
 			}
 		}

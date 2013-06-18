@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Controls
 
 					var txtCost = new Label();
 					txtCost.Name = "txtCost_" + kvp.Key.Name.Replace(' ', '_');
-					txtCost.Text = GetCost(kvp.Key, kvp.Value) + " pts";
+					txtCost.Text = kvp.Key.GetCost(kvp.Value) + " pts";
 					txtCost.TextAlign = ContentAlignment.MiddleLeft;
 					pnl.Controls.Add(txtCost, 2, row);
 
@@ -73,7 +73,7 @@ namespace FrEee.WinForms.Controls
 			var apt = (Aptitude)spn.Tag;
 			var txtCost = pnl.Controls.OfType<Label>().Single(l => l.Name == "txtCost_" + apt.Name.Replace(' ', '_'));
 			Values[apt] = (int)spn.Value;
-			txtCost.Text = GetCost(apt, Values[apt]) + " pts";
+			txtCost.Text = apt.GetCost(Values[apt]) + " pts";
 			if (AptitudeValueChanged != null)
 				AptitudeValueChanged(this, apt, Values[apt]);
 		}
@@ -103,30 +103,8 @@ namespace FrEee.WinForms.Controls
 		{
 			get
 			{
-				return Values.Sum(kvp => GetCost(kvp.Key, kvp.Value));
+				return Values.Sum(kvp => kvp.Key.GetCost(kvp.Value));
 			}
-		}
-
-		private int GetCost(Aptitude apt, int val)
-		{
-			if (val > 100)
-			{
-				var high = 100 + apt.Threshold;
-				if (val > high)
-					return (val - high) * apt.HighCost + (high - 100) * apt.Cost;
-				else
-					return (val - 100) * apt.Cost;
-			}
-			else if (val < 100)
-			{
-				var low = 100 - apt.Threshold;
-				if (val < low)
-					return (val - low) * apt.LowCost + (low - 100) * apt.Cost;
-				else
-					return (val - 100) * apt.Cost;
-			}
-			else
-				return 0;
 		}
 
 		public int GetValue(Aptitude apt)
