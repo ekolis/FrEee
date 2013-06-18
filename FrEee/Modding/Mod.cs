@@ -63,7 +63,8 @@ namespace FrEee.Modding
 				new StellarAbilityLoader(path),
 				new StarSystemLoader(path),
 				new GalaxyLoader(path),
-				new HappinessModelLoader(path)
+				new HappinessModelLoader(path),
+				new CultureLoader(path),
 			};
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
@@ -107,6 +108,7 @@ namespace FrEee.Modding
 			GalaxyTemplates = new List<GalaxyTemplate>();
 			StellarObjectTemplates = new List<StellarObject>();
 			HappinessModels = new List<HappinessModel>();
+			Cultures = new List<Culture>();
 		}
 
 		/// <summary>
@@ -188,6 +190,11 @@ namespace FrEee.Modding
 		/// The race/empire traits in the game.
 		/// </summary>
 		public ICollection<Trait> Traits { get; private set; }
+
+		/// <summary>
+		/// The empire cultures in the game.
+		/// </summary>
+		public ICollection<Culture> Cultures { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.
