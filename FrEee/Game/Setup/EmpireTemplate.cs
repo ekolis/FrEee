@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -104,6 +105,11 @@ namespace FrEee.Game.Setup
 		}
 
 		/// <summary>
+		/// Can random AI empires use this empire template?
+		/// </summary>
+		public bool AIsCanUse { get; set; }
+
+		/// <summary>
 		/// Is this empire controlled by a human player?
 		/// </summary>
 		public bool IsPlayerEmpire { get; set; }
@@ -178,6 +184,21 @@ namespace FrEee.Game.Setup
 				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.Find(kvp.Key).GetCost(kvp.Value));
 				return result;
 			}
+		}
+
+		public static EmpireTemplate Load(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Open);
+			var race = Serializer.Deserialize<EmpireTemplate>(fs);
+			fs.Close();
+			return race;
+		}
+
+		public void Save(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Create);
+			Serializer.Serialize(this, fs);
+			fs.Close();
 		}
 	}
 }

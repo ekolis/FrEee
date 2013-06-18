@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -135,6 +136,7 @@ namespace FrEee.WinForms.Forms
 
 			// race general stuff
 			txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
+			chkRaceAIsCanUse.Checked = EmpireTemplate.PrimaryRace.AIsCanUse;
 			txtRaceDefaultEmpireName.Text = EmpireTemplate.PrimaryRace.EmpireName;
 			txtRaceLeaderName.Text = EmpireTemplate.PrimaryRace.LeaderName;
 			ddlRaceLeaderPortrait.Text = EmpireTemplate.PrimaryRace.LeaderPortraitName;
@@ -162,6 +164,9 @@ namespace FrEee.WinForms.Forms
 					val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
 				aptitudePicker.SetValue(apt, val);
 			}
+
+			// is AI empire?
+			chkAIsCanUse.Checked = EmpireTemplate.AIsCanUse;
 			
 			// empire overrides for race stuff
 			if (EmpireTemplate.Name == null)
@@ -283,10 +288,26 @@ namespace FrEee.WinForms.Forms
 
 		private void btnOK_Click(object sender, EventArgs e)
 		{
+			SaveChanges();
+
+			// validate
+			var warnings = EmpireTemplate.GetWarnings(PointsToSpend);
+			if (warnings.Any())
+				MessageBox.Show(warnings.First(), "FrEee");
+			else
+			{
+				DialogResult = DialogResult.OK;
+				Close();
+			}
+		}
+
+		private void SaveChanges()
+		{
 			// save changes
 			var et = EmpireTemplate;
 			var r = et.PrimaryRace;
 			r.Name = txtRaceName.Text;
+			r.AIsCanUse = chkRaceAIsCanUse.Checked;
 			r.EmpireName = txtRaceDefaultEmpireName.Text;
 			r.LeaderName = txtRaceLeaderName.Text;
 			r.LeaderPortraitName = ddlRaceLeaderPortrait.Text;
@@ -313,6 +334,7 @@ namespace FrEee.WinForms.Forms
 				et.Name = null;
 			else
 				et.Name = txtName.Text;
+			et.AIsCanUse = chkAIsCanUse.Checked;
 			if (chkLeaderNameFromRace.Checked)
 				et.LeaderName = null;
 			else
@@ -346,16 +368,6 @@ namespace FrEee.WinForms.Forms
 			et.Traits.Clear();
 			foreach (var t in empireTraitPicker.CheckedTraits)
 				et.Traits.Add(t);
-
-			// validate
-			var warnings = et.GetWarnings(PointsToSpend);
-			if (warnings.Any())
-				MessageBox.Show(warnings.First(), "FrEee");
-			else
-			{
-				DialogResult = DialogResult.OK;
-				Close();
-			}
 		}
 
 		#region silly internal consistency stuff
@@ -599,6 +611,30 @@ namespace FrEee.WinForms.Forms
 		private void CompareCultures()
 		{
 			// TODO - show culture comparison form
+		}
+
+		private void btnLoadRace_Click(object sender, EventArgs e)
+		{
+			var dlg = new OpenFileDialog();
+			dlg.InitialDirectory = "Races";
+			dlg.Filter = "Races (*.rac)|*.rac";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				EmpireTemplate.PrimaryRace = Race.Load(dlg.FileName);
+				Bind();
+			}
+		}
+
+		private void btnSaveRace_Click(object sender, EventArgs e)
+		{
+			SaveChanges();
+			var dlg = new SaveFileDialog();
+			dlg.InitialDirectory = "Races";
+			dlg.Filter = "Races (*.rac)|*.rac";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+				EmpireTemplate.PrimaryRace.Save(dlg.FileName);
 		}
 	}
 }

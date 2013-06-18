@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -131,11 +132,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IDictionary<string, int> Aptitudes { get; private set; }
 
-		public int ID
-		{
-			get;
-			set;
-		}
+		/// <summary>
+		/// Can random AI empires use this race?
+		/// </summary>
+		public bool AIsCanUse { get; set; }
 
 		/// <summary>
 		/// Races have no owner.
@@ -182,6 +182,21 @@ namespace FrEee.Game.Objects.Civilization
 						yield return "Aptitude value for " + kvp.Key + " is too low.";
 				}
 			}
+		}
+
+		public static Race Load(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Open);
+			var race = Serializer.Deserialize<Race>(fs);
+			fs.Close();
+			return race;
+		}
+
+		public void Save(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Create);
+			Serializer.Serialize(this, fs);
+			fs.Close();
 		}
 	}
 }

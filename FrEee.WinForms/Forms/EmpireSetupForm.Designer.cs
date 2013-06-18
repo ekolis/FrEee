@@ -115,6 +115,10 @@
 			this.label32 = new System.Windows.Forms.Label();
 			this.tabEmpireTraits = new System.Windows.Forms.TabPage();
 			this.empireTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
+			this.label21 = new System.Windows.Forms.Label();
+			this.chkRaceAIsCanUse = new System.Windows.Forms.CheckBox();
+			this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
+			this.label23 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).BeginInit();
@@ -142,7 +146,7 @@
 			// 
 			this.txtPointsAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 564);
+			this.txtPointsAvailable.Location = new System.Drawing.Point(172, 579);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
 			this.txtPointsAvailable.Size = new System.Drawing.Size(270, 17);
 			this.txtPointsAvailable.TabIndex = 5;
@@ -154,31 +158,33 @@
 			this.btnSaveRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveRace.BackColor = System.Drawing.Color.Black;
 			this.btnSaveRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveRace.Location = new System.Drawing.Point(90, 561);
+			this.btnSaveRace.Location = new System.Drawing.Point(90, 576);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(75, 23);
 			this.btnSaveRace.TabIndex = 4;
 			this.btnSaveRace.Text = "Save Race";
 			this.btnSaveRace.UseVisualStyleBackColor = false;
+			this.btnSaveRace.Click += new System.EventHandler(this.btnSaveRace_Click);
 			// 
 			// btnLoadRace
 			// 
 			this.btnLoadRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadRace.BackColor = System.Drawing.Color.Black;
 			this.btnLoadRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadRace.Location = new System.Drawing.Point(9, 561);
+			this.btnLoadRace.Location = new System.Drawing.Point(9, 576);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(75, 23);
 			this.btnLoadRace.TabIndex = 3;
 			this.btnLoadRace.Text = "Load Race";
 			this.btnLoadRace.UseVisualStyleBackColor = false;
+			this.btnLoadRace.Click += new System.EventHandler(this.btnLoadRace_Click);
 			// 
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(448, 561);
+			this.btnCancel.Location = new System.Drawing.Point(448, 576);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 2;
@@ -191,7 +197,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(529, 561);
+			this.btnOK.Location = new System.Drawing.Point(529, 576);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 1;
@@ -217,7 +223,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(603, 549);
+			this.tabs.Size = new System.Drawing.Size(603, 564);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -225,6 +231,8 @@
 			// tabPage2
 			// 
 			this.tabPage2.BackColor = System.Drawing.Color.Black;
+			this.tabPage2.Controls.Add(this.chkRaceAIsCanUse);
+			this.tabPage2.Controls.Add(this.label21);
 			this.tabPage2.Controls.Add(this.btnRaceCompareCultures);
 			this.tabPage2.Controls.Add(this.txtRaceCulture);
 			this.tabPage2.Controls.Add(this.label20);
@@ -265,7 +273,7 @@
 			this.tabPage2.Location = new System.Drawing.Point(4, 29);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(595, 516);
+			this.tabPage2.Size = new System.Drawing.Size(595, 531);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Primary Race";
 			// 
@@ -273,7 +281,7 @@
 			// 
 			this.btnRaceCompareCultures.BackColor = System.Drawing.Color.Black;
 			this.btnRaceCompareCultures.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRaceCompareCultures.Location = new System.Drawing.Point(304, 406);
+			this.btnRaceCompareCultures.Location = new System.Drawing.Point(304, 432);
 			this.btnRaceCompareCultures.Name = "btnRaceCompareCultures";
 			this.btnRaceCompareCultures.Size = new System.Drawing.Size(75, 23);
 			this.btnRaceCompareCultures.TabIndex = 91;
@@ -285,9 +293,9 @@
 			// 
 			this.txtRaceCulture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.txtRaceCulture.Location = new System.Drawing.Point(20, 434);
+			this.txtRaceCulture.Location = new System.Drawing.Point(20, 460);
 			this.txtRaceCulture.Name = "txtRaceCulture";
-			this.txtRaceCulture.Size = new System.Drawing.Size(278, 79);
+			this.txtRaceCulture.Size = new System.Drawing.Size(278, 64);
 			this.txtRaceCulture.TabIndex = 90;
 			this.txtRaceCulture.Text = "Please choose a culture.";
 			// 
@@ -295,7 +303,7 @@
 			// 
 			this.label20.AutoSize = true;
 			this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label20.Location = new System.Drawing.Point(8, 409);
+			this.label20.Location = new System.Drawing.Point(8, 435);
 			this.label20.Margin = new System.Windows.Forms.Padding(3);
 			this.label20.Name = "label20";
 			this.label20.Size = new System.Drawing.Size(46, 15);
@@ -306,7 +314,7 @@
 			// 
 			this.ddlRaceCulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlRaceCulture.FormattingEnabled = true;
-			this.ddlRaceCulture.Location = new System.Drawing.Point(129, 406);
+			this.ddlRaceCulture.Location = new System.Drawing.Point(129, 432);
 			this.ddlRaceCulture.Name = "ddlRaceCulture";
 			this.ddlRaceCulture.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceCulture.TabIndex = 88;
@@ -314,7 +322,7 @@
 			// 
 			// txtRaceHappiness
 			// 
-			this.txtRaceHappiness.Location = new System.Drawing.Point(20, 358);
+			this.txtRaceHappiness.Location = new System.Drawing.Point(20, 384);
 			this.txtRaceHappiness.Name = "txtRaceHappiness";
 			this.txtRaceHappiness.Size = new System.Drawing.Size(278, 45);
 			this.txtRaceHappiness.TabIndex = 87;
@@ -324,7 +332,7 @@
 			// 
 			this.ddlRaceHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlRaceHappiness.FormattingEnabled = true;
-			this.ddlRaceHappiness.Location = new System.Drawing.Point(129, 333);
+			this.ddlRaceHappiness.Location = new System.Drawing.Point(129, 359);
 			this.ddlRaceHappiness.Name = "ddlRaceHappiness";
 			this.ddlRaceHappiness.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceHappiness.TabIndex = 86;
@@ -334,7 +342,7 @@
 			// 
 			this.label19.AutoSize = true;
 			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label19.Location = new System.Drawing.Point(6, 336);
+			this.label19.Location = new System.Drawing.Point(6, 362);
 			this.label19.Margin = new System.Windows.Forms.Padding(3);
 			this.label19.Name = "label19";
 			this.label19.Size = new System.Drawing.Size(66, 15);
@@ -343,7 +351,7 @@
 			// 
 			// picRacePopulationIcon
 			// 
-			this.picRacePopulationIcon.Location = new System.Drawing.Point(374, 86);
+			this.picRacePopulationIcon.Location = new System.Drawing.Point(374, 112);
 			this.picRacePopulationIcon.Name = "picRacePopulationIcon";
 			this.picRacePopulationIcon.Size = new System.Drawing.Size(20, 20);
 			this.picRacePopulationIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -354,7 +362,7 @@
 			// 
 			this.label18.AutoSize = true;
 			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label18.Location = new System.Drawing.Point(6, 118);
+			this.label18.Location = new System.Drawing.Point(6, 144);
 			this.label18.Margin = new System.Windows.Forms.Padding(3);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(92, 15);
@@ -364,7 +372,7 @@
 			// ddlRacePopulationIcon
 			// 
 			this.ddlRacePopulationIcon.FormattingEnabled = true;
-			this.ddlRacePopulationIcon.Location = new System.Drawing.Point(129, 115);
+			this.ddlRacePopulationIcon.Location = new System.Drawing.Point(129, 141);
 			this.ddlRacePopulationIcon.Name = "ddlRacePopulationIcon";
 			this.ddlRacePopulationIcon.Size = new System.Drawing.Size(169, 23);
 			this.ddlRacePopulationIcon.TabIndex = 78;
@@ -374,7 +382,7 @@
 			// 
 			this.ddlRaceNativeAtmosphere.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlRaceNativeAtmosphere.FormattingEnabled = true;
-			this.ddlRaceNativeAtmosphere.Location = new System.Drawing.Point(129, 173);
+			this.ddlRaceNativeAtmosphere.Location = new System.Drawing.Point(129, 199);
 			this.ddlRaceNativeAtmosphere.Name = "ddlRaceNativeAtmosphere";
 			this.ddlRaceNativeAtmosphere.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceNativeAtmosphere.TabIndex = 77;
@@ -383,7 +391,7 @@
 			// 
 			this.label17.AutoSize = true;
 			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label17.Location = new System.Drawing.Point(6, 176);
+			this.label17.Location = new System.Drawing.Point(6, 202);
 			this.label17.Margin = new System.Windows.Forms.Padding(3);
 			this.label17.Name = "label17";
 			this.label17.Size = new System.Drawing.Size(110, 15);
@@ -394,7 +402,7 @@
 			// 
 			this.label16.AutoSize = true;
 			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label16.Location = new System.Drawing.Point(6, 33);
+			this.label16.Location = new System.Drawing.Point(6, 59);
 			this.label16.Margin = new System.Windows.Forms.Padding(3);
 			this.label16.Name = "label16";
 			this.label16.Size = new System.Drawing.Size(115, 15);
@@ -403,7 +411,7 @@
 			// 
 			// txtRaceDefaultEmpireName
 			// 
-			this.txtRaceDefaultEmpireName.Location = new System.Drawing.Point(129, 30);
+			this.txtRaceDefaultEmpireName.Location = new System.Drawing.Point(129, 56);
 			this.txtRaceDefaultEmpireName.Name = "txtRaceDefaultEmpireName";
 			this.txtRaceDefaultEmpireName.Size = new System.Drawing.Size(169, 21);
 			this.txtRaceDefaultEmpireName.TabIndex = 74;
@@ -413,7 +421,7 @@
 			// 
 			this.ddlRaceAI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlRaceAI.FormattingEnabled = true;
-			this.ddlRaceAI.Location = new System.Drawing.Point(129, 304);
+			this.ddlRaceAI.Location = new System.Drawing.Point(129, 330);
 			this.ddlRaceAI.Name = "ddlRaceAI";
 			this.ddlRaceAI.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceAI.TabIndex = 72;
@@ -421,7 +429,7 @@
 			// 
 			// picRaceShipset
 			// 
-			this.picRaceShipset.Location = new System.Drawing.Point(304, 275);
+			this.picRaceShipset.Location = new System.Drawing.Point(304, 301);
 			this.picRaceShipset.Name = "picRaceShipset";
 			this.picRaceShipset.Size = new System.Drawing.Size(128, 128);
 			this.picRaceShipset.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -431,7 +439,7 @@
 			// ddlRaceShipset
 			// 
 			this.ddlRaceShipset.FormattingEnabled = true;
-			this.ddlRaceShipset.Location = new System.Drawing.Point(129, 275);
+			this.ddlRaceShipset.Location = new System.Drawing.Point(129, 301);
 			this.ddlRaceShipset.Name = "ddlRaceShipset";
 			this.ddlRaceShipset.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceShipset.TabIndex = 69;
@@ -439,7 +447,7 @@
 			// 
 			// picRaceInsignia
 			// 
-			this.picRaceInsignia.Location = new System.Drawing.Point(304, 246);
+			this.picRaceInsignia.Location = new System.Drawing.Point(304, 272);
 			this.picRaceInsignia.Name = "picRaceInsignia";
 			this.picRaceInsignia.Size = new System.Drawing.Size(23, 23);
 			this.picRaceInsignia.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -449,7 +457,7 @@
 			// ddlRaceInsignia
 			// 
 			this.ddlRaceInsignia.FormattingEnabled = true;
-			this.ddlRaceInsignia.Location = new System.Drawing.Point(129, 246);
+			this.ddlRaceInsignia.Location = new System.Drawing.Point(129, 272);
 			this.ddlRaceInsignia.Name = "ddlRaceInsignia";
 			this.ddlRaceInsignia.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceInsignia.TabIndex = 66;
@@ -457,7 +465,7 @@
 			// 
 			// picRaceColor
 			// 
-			this.picRaceColor.Location = new System.Drawing.Point(304, 218);
+			this.picRaceColor.Location = new System.Drawing.Point(304, 244);
 			this.picRaceColor.Name = "picRaceColor";
 			this.picRaceColor.Size = new System.Drawing.Size(22, 22);
 			this.picRaceColor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -466,7 +474,7 @@
 			// 
 			// spnRaceColorBlue
 			// 
-			this.spnRaceColorBlue.Location = new System.Drawing.Point(237, 219);
+			this.spnRaceColorBlue.Location = new System.Drawing.Point(237, 245);
 			this.spnRaceColorBlue.Maximum = new decimal(new int[] {
             255,
             0,
@@ -484,7 +492,7 @@
 			// 
 			// spnRaceColorGreen
 			// 
-			this.spnRaceColorGreen.Location = new System.Drawing.Point(183, 219);
+			this.spnRaceColorGreen.Location = new System.Drawing.Point(183, 245);
 			this.spnRaceColorGreen.Maximum = new decimal(new int[] {
             255,
             0,
@@ -502,7 +510,7 @@
 			// 
 			// spnRaceColorRed
 			// 
-			this.spnRaceColorRed.Location = new System.Drawing.Point(129, 219);
+			this.spnRaceColorRed.Location = new System.Drawing.Point(129, 245);
 			this.spnRaceColorRed.Maximum = new decimal(new int[] {
             255,
             0,
@@ -522,14 +530,14 @@
 			// 
 			this.ddlRaceNativeSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlRaceNativeSurface.FormattingEnabled = true;
-			this.ddlRaceNativeSurface.Location = new System.Drawing.Point(129, 144);
+			this.ddlRaceNativeSurface.Location = new System.Drawing.Point(129, 170);
 			this.ddlRaceNativeSurface.Name = "ddlRaceNativeSurface";
 			this.ddlRaceNativeSurface.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceNativeSurface.TabIndex = 56;
 			// 
 			// picRaceLeaderPortrait
 			// 
-			this.picRaceLeaderPortrait.Location = new System.Drawing.Point(304, 86);
+			this.picRaceLeaderPortrait.Location = new System.Drawing.Point(304, 112);
 			this.picRaceLeaderPortrait.Name = "picRaceLeaderPortrait";
 			this.picRaceLeaderPortrait.Size = new System.Drawing.Size(64, 64);
 			this.picRaceLeaderPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -539,7 +547,7 @@
 			// ddlRaceLeaderPortrait
 			// 
 			this.ddlRaceLeaderPortrait.FormattingEnabled = true;
-			this.ddlRaceLeaderPortrait.Location = new System.Drawing.Point(129, 86);
+			this.ddlRaceLeaderPortrait.Location = new System.Drawing.Point(129, 112);
 			this.ddlRaceLeaderPortrait.Name = "ddlRaceLeaderPortrait";
 			this.ddlRaceLeaderPortrait.Size = new System.Drawing.Size(169, 23);
 			this.ddlRaceLeaderPortrait.TabIndex = 54;
@@ -547,7 +555,7 @@
 			// 
 			// txtRaceLeaderName
 			// 
-			this.txtRaceLeaderName.Location = new System.Drawing.Point(129, 58);
+			this.txtRaceLeaderName.Location = new System.Drawing.Point(129, 84);
 			this.txtRaceLeaderName.Name = "txtRaceLeaderName";
 			this.txtRaceLeaderName.Size = new System.Drawing.Size(169, 21);
 			this.txtRaceLeaderName.TabIndex = 53;
@@ -564,7 +572,7 @@
 			// 
 			this.label8.AutoSize = true;
 			this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label8.Location = new System.Drawing.Point(8, 307);
+			this.label8.Location = new System.Drawing.Point(8, 333);
 			this.label8.Margin = new System.Windows.Forms.Padding(3);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(17, 15);
@@ -575,7 +583,7 @@
 			// 
 			this.label9.AutoSize = true;
 			this.label9.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label9.Location = new System.Drawing.Point(6, 89);
+			this.label9.Location = new System.Drawing.Point(6, 115);
 			this.label9.Margin = new System.Windows.Forms.Padding(3);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(88, 15);
@@ -586,7 +594,7 @@
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label10.Location = new System.Drawing.Point(8, 278);
+			this.label10.Location = new System.Drawing.Point(8, 304);
 			this.label10.Margin = new System.Windows.Forms.Padding(3);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(48, 15);
@@ -597,7 +605,7 @@
 			// 
 			this.label11.AutoSize = true;
 			this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label11.Location = new System.Drawing.Point(6, 249);
+			this.label11.Location = new System.Drawing.Point(6, 275);
 			this.label11.Margin = new System.Windows.Forms.Padding(3);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(50, 15);
@@ -608,7 +616,7 @@
 			// 
 			this.label12.AutoSize = true;
 			this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label12.Location = new System.Drawing.Point(6, 221);
+			this.label12.Location = new System.Drawing.Point(6, 247);
 			this.label12.Margin = new System.Windows.Forms.Padding(3);
 			this.label12.Name = "label12";
 			this.label12.Size = new System.Drawing.Size(65, 15);
@@ -619,7 +627,7 @@
 			// 
 			this.label13.AutoSize = true;
 			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label13.Location = new System.Drawing.Point(6, 147);
+			this.label13.Location = new System.Drawing.Point(6, 173);
 			this.label13.Margin = new System.Windows.Forms.Padding(3);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(86, 15);
@@ -630,7 +638,7 @@
 			// 
 			this.label14.AutoSize = true;
 			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(6, 61);
+			this.label14.Location = new System.Drawing.Point(6, 87);
 			this.label14.Margin = new System.Windows.Forms.Padding(3);
 			this.label14.Name = "label14";
 			this.label14.Size = new System.Drawing.Size(83, 15);
@@ -698,6 +706,8 @@
 			// tabPage1
 			// 
 			this.tabPage1.BackColor = System.Drawing.Color.Black;
+			this.tabPage1.Controls.Add(this.chkAIsCanUse);
+			this.tabPage1.Controls.Add(this.label23);
 			this.tabPage1.Controls.Add(this.chkCultureFromRace);
 			this.tabPage1.Controls.Add(this.gameButton1);
 			this.tabPage1.Controls.Add(this.txtCulture);
@@ -738,7 +748,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 29);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(595, 516);
+			this.tabPage1.Size = new System.Drawing.Size(595, 531);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "General";
 			// 
@@ -747,7 +757,7 @@
 			this.chkCultureFromRace.AutoSize = true;
 			this.chkCultureFromRace.Checked = true;
 			this.chkCultureFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkCultureFromRace.Location = new System.Drawing.Point(305, 319);
+			this.chkCultureFromRace.Location = new System.Drawing.Point(305, 344);
 			this.chkCultureFromRace.Name = "chkCultureFromRace";
 			this.chkCultureFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkCultureFromRace.TabIndex = 96;
@@ -759,7 +769,7 @@
 			// 
 			this.gameButton1.BackColor = System.Drawing.Color.Black;
 			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton1.Location = new System.Drawing.Point(304, 341);
+			this.gameButton1.Location = new System.Drawing.Point(304, 366);
 			this.gameButton1.Name = "gameButton1";
 			this.gameButton1.Size = new System.Drawing.Size(75, 23);
 			this.gameButton1.TabIndex = 95;
@@ -771,9 +781,9 @@
 			// 
 			this.txtCulture.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-			this.txtCulture.Location = new System.Drawing.Point(20, 345);
+			this.txtCulture.Location = new System.Drawing.Point(20, 370);
 			this.txtCulture.Name = "txtCulture";
-			this.txtCulture.Size = new System.Drawing.Size(278, 168);
+			this.txtCulture.Size = new System.Drawing.Size(278, 158);
 			this.txtCulture.TabIndex = 94;
 			this.txtCulture.Text = "Please choose a culture.";
 			// 
@@ -781,7 +791,7 @@
 			// 
 			this.label22.AutoSize = true;
 			this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label22.Location = new System.Drawing.Point(8, 320);
+			this.label22.Location = new System.Drawing.Point(8, 345);
 			this.label22.Margin = new System.Windows.Forms.Padding(3);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(46, 15);
@@ -793,7 +803,7 @@
 			this.ddlCulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlCulture.Enabled = false;
 			this.ddlCulture.FormattingEnabled = true;
-			this.ddlCulture.Location = new System.Drawing.Point(129, 317);
+			this.ddlCulture.Location = new System.Drawing.Point(129, 342);
 			this.ddlCulture.Name = "ddlCulture";
 			this.ddlCulture.Size = new System.Drawing.Size(169, 23);
 			this.ddlCulture.TabIndex = 92;
@@ -801,7 +811,7 @@
 			// 
 			// txtHappiness
 			// 
-			this.txtHappiness.Location = new System.Drawing.Point(20, 269);
+			this.txtHappiness.Location = new System.Drawing.Point(20, 294);
 			this.txtHappiness.Name = "txtHappiness";
 			this.txtHappiness.Size = new System.Drawing.Size(278, 45);
 			this.txtHappiness.TabIndex = 88;
@@ -812,7 +822,7 @@
 			this.chkHappinessFromRace.AutoSize = true;
 			this.chkHappinessFromRace.Checked = true;
 			this.chkHappinessFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkHappinessFromRace.Location = new System.Drawing.Point(304, 245);
+			this.chkHappinessFromRace.Location = new System.Drawing.Point(304, 270);
 			this.chkHappinessFromRace.Name = "chkHappinessFromRace";
 			this.chkHappinessFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkHappinessFromRace.TabIndex = 85;
@@ -825,7 +835,7 @@
 			this.ddlHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlHappiness.Enabled = false;
 			this.ddlHappiness.FormattingEnabled = true;
-			this.ddlHappiness.Location = new System.Drawing.Point(129, 243);
+			this.ddlHappiness.Location = new System.Drawing.Point(129, 268);
 			this.ddlHappiness.Name = "ddlHappiness";
 			this.ddlHappiness.Size = new System.Drawing.Size(169, 23);
 			this.ddlHappiness.TabIndex = 84;
@@ -835,7 +845,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(6, 246);
+			this.label2.Location = new System.Drawing.Point(6, 271);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(66, 15);
@@ -847,7 +857,7 @@
 			this.chkAIFromRace.AutoSize = true;
 			this.chkAIFromRace.Checked = true;
 			this.chkAIFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkAIFromRace.Location = new System.Drawing.Point(304, 216);
+			this.chkAIFromRace.Location = new System.Drawing.Point(304, 241);
 			this.chkAIFromRace.Name = "chkAIFromRace";
 			this.chkAIFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkAIFromRace.TabIndex = 43;
@@ -860,14 +870,14 @@
 			this.ddlAI.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlAI.Enabled = false;
 			this.ddlAI.FormattingEnabled = true;
-			this.ddlAI.Location = new System.Drawing.Point(129, 214);
+			this.ddlAI.Location = new System.Drawing.Point(129, 239);
 			this.ddlAI.Name = "ddlAI";
 			this.ddlAI.Size = new System.Drawing.Size(169, 23);
 			this.ddlAI.TabIndex = 42;
 			// 
 			// picShipset
 			// 
-			this.picShipset.Location = new System.Drawing.Point(398, 185);
+			this.picShipset.Location = new System.Drawing.Point(398, 210);
 			this.picShipset.Name = "picShipset";
 			this.picShipset.Size = new System.Drawing.Size(128, 128);
 			this.picShipset.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -879,7 +889,7 @@
 			this.chkShipsetFromRace.AutoSize = true;
 			this.chkShipsetFromRace.Checked = true;
 			this.chkShipsetFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkShipsetFromRace.Location = new System.Drawing.Point(305, 187);
+			this.chkShipsetFromRace.Location = new System.Drawing.Point(305, 212);
 			this.chkShipsetFromRace.Name = "chkShipsetFromRace";
 			this.chkShipsetFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkShipsetFromRace.TabIndex = 40;
@@ -891,7 +901,7 @@
 			// 
 			this.ddlShipset.Enabled = false;
 			this.ddlShipset.FormattingEnabled = true;
-			this.ddlShipset.Location = new System.Drawing.Point(129, 185);
+			this.ddlShipset.Location = new System.Drawing.Point(129, 210);
 			this.ddlShipset.Name = "ddlShipset";
 			this.ddlShipset.Size = new System.Drawing.Size(169, 23);
 			this.ddlShipset.TabIndex = 39;
@@ -899,7 +909,7 @@
 			// 
 			// picInsignia
 			// 
-			this.picInsignia.Location = new System.Drawing.Point(397, 156);
+			this.picInsignia.Location = new System.Drawing.Point(397, 181);
 			this.picInsignia.Name = "picInsignia";
 			this.picInsignia.Size = new System.Drawing.Size(20, 20);
 			this.picInsignia.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -911,7 +921,7 @@
 			this.chkInsigniaFromRace.AutoSize = true;
 			this.chkInsigniaFromRace.Checked = true;
 			this.chkInsigniaFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkInsigniaFromRace.Location = new System.Drawing.Point(304, 158);
+			this.chkInsigniaFromRace.Location = new System.Drawing.Point(304, 183);
 			this.chkInsigniaFromRace.Name = "chkInsigniaFromRace";
 			this.chkInsigniaFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkInsigniaFromRace.TabIndex = 37;
@@ -923,7 +933,7 @@
 			// 
 			this.ddlInsignia.Enabled = false;
 			this.ddlInsignia.FormattingEnabled = true;
-			this.ddlInsignia.Location = new System.Drawing.Point(129, 156);
+			this.ddlInsignia.Location = new System.Drawing.Point(129, 181);
 			this.ddlInsignia.Name = "ddlInsignia";
 			this.ddlInsignia.Size = new System.Drawing.Size(169, 23);
 			this.ddlInsignia.TabIndex = 36;
@@ -931,7 +941,7 @@
 			// 
 			// picColor
 			// 
-			this.picColor.Location = new System.Drawing.Point(398, 129);
+			this.picColor.Location = new System.Drawing.Point(398, 154);
 			this.picColor.Name = "picColor";
 			this.picColor.Size = new System.Drawing.Size(20, 20);
 			this.picColor.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -943,7 +953,7 @@
 			this.chkColorFromRace.AutoSize = true;
 			this.chkColorFromRace.Checked = true;
 			this.chkColorFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkColorFromRace.Location = new System.Drawing.Point(305, 130);
+			this.chkColorFromRace.Location = new System.Drawing.Point(305, 155);
 			this.chkColorFromRace.Name = "chkColorFromRace";
 			this.chkColorFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkColorFromRace.TabIndex = 34;
@@ -954,7 +964,7 @@
 			// spnColorBlue
 			// 
 			this.spnColorBlue.Enabled = false;
-			this.spnColorBlue.Location = new System.Drawing.Point(237, 129);
+			this.spnColorBlue.Location = new System.Drawing.Point(237, 154);
 			this.spnColorBlue.Maximum = new decimal(new int[] {
             255,
             0,
@@ -973,7 +983,7 @@
 			// spnColorGreen
 			// 
 			this.spnColorGreen.Enabled = false;
-			this.spnColorGreen.Location = new System.Drawing.Point(183, 129);
+			this.spnColorGreen.Location = new System.Drawing.Point(183, 154);
 			this.spnColorGreen.Maximum = new decimal(new int[] {
             255,
             0,
@@ -992,7 +1002,7 @@
 			// spnColorRed
 			// 
 			this.spnColorRed.Enabled = false;
-			this.spnColorRed.Location = new System.Drawing.Point(129, 129);
+			this.spnColorRed.Location = new System.Drawing.Point(129, 154);
 			this.spnColorRed.Maximum = new decimal(new int[] {
             255,
             0,
@@ -1013,7 +1023,7 @@
 			this.chkLeaderPortraitFromRace.AutoSize = true;
 			this.chkLeaderPortraitFromRace.Checked = true;
 			this.chkLeaderPortraitFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkLeaderPortraitFromRace.Location = new System.Drawing.Point(305, 60);
+			this.chkLeaderPortraitFromRace.Location = new System.Drawing.Point(305, 85);
 			this.chkLeaderPortraitFromRace.Name = "chkLeaderPortraitFromRace";
 			this.chkLeaderPortraitFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkLeaderPortraitFromRace.TabIndex = 29;
@@ -1039,7 +1049,7 @@
 			this.chkLeaderNameFromRace.AutoSize = true;
 			this.chkLeaderNameFromRace.Checked = true;
 			this.chkLeaderNameFromRace.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkLeaderNameFromRace.Location = new System.Drawing.Point(305, 32);
+			this.chkLeaderNameFromRace.Location = new System.Drawing.Point(305, 57);
 			this.chkLeaderNameFromRace.Name = "chkLeaderNameFromRace";
 			this.chkLeaderNameFromRace.Size = new System.Drawing.Size(87, 19);
 			this.chkLeaderNameFromRace.TabIndex = 27;
@@ -1049,7 +1059,7 @@
 			// 
 			// picLeaderPortrait
 			// 
-			this.picLeaderPortrait.Location = new System.Drawing.Point(398, 58);
+			this.picLeaderPortrait.Location = new System.Drawing.Point(398, 83);
 			this.picLeaderPortrait.Name = "picLeaderPortrait";
 			this.picLeaderPortrait.Size = new System.Drawing.Size(64, 64);
 			this.picLeaderPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -1060,7 +1070,7 @@
 			// 
 			this.ddlLeaderPortrait.Enabled = false;
 			this.ddlLeaderPortrait.FormattingEnabled = true;
-			this.ddlLeaderPortrait.Location = new System.Drawing.Point(129, 58);
+			this.ddlLeaderPortrait.Location = new System.Drawing.Point(129, 83);
 			this.ddlLeaderPortrait.Name = "ddlLeaderPortrait";
 			this.ddlLeaderPortrait.Size = new System.Drawing.Size(169, 23);
 			this.ddlLeaderPortrait.TabIndex = 24;
@@ -1069,7 +1079,7 @@
 			// txtLeaderName
 			// 
 			this.txtLeaderName.Enabled = false;
-			this.txtLeaderName.Location = new System.Drawing.Point(129, 30);
+			this.txtLeaderName.Location = new System.Drawing.Point(129, 55);
 			this.txtLeaderName.Name = "txtLeaderName";
 			this.txtLeaderName.Size = new System.Drawing.Size(169, 21);
 			this.txtLeaderName.TabIndex = 23;
@@ -1086,7 +1096,7 @@
 			// 
 			this.label7.AutoSize = true;
 			this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label7.Location = new System.Drawing.Point(8, 217);
+			this.label7.Location = new System.Drawing.Point(8, 242);
 			this.label7.Margin = new System.Windows.Forms.Padding(3);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(17, 15);
@@ -1097,7 +1107,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(6, 61);
+			this.label6.Location = new System.Drawing.Point(6, 86);
 			this.label6.Margin = new System.Windows.Forms.Padding(3);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(88, 15);
@@ -1108,7 +1118,7 @@
 			// 
 			this.label5.AutoSize = true;
 			this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label5.Location = new System.Drawing.Point(8, 188);
+			this.label5.Location = new System.Drawing.Point(8, 213);
 			this.label5.Margin = new System.Windows.Forms.Padding(3);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(48, 15);
@@ -1119,7 +1129,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label4.Location = new System.Drawing.Point(6, 159);
+			this.label4.Location = new System.Drawing.Point(6, 184);
 			this.label4.Margin = new System.Windows.Forms.Padding(3);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(50, 15);
@@ -1130,7 +1140,7 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label3.Location = new System.Drawing.Point(6, 131);
+			this.label3.Location = new System.Drawing.Point(6, 156);
 			this.label3.Margin = new System.Windows.Forms.Padding(3);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(65, 15);
@@ -1141,7 +1151,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label1.Location = new System.Drawing.Point(6, 33);
+			this.label1.Location = new System.Drawing.Point(6, 58);
 			this.label1.Margin = new System.Windows.Forms.Padding(3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(83, 15);
@@ -1184,12 +1194,54 @@
 			this.empireTraitPicker.Traits = null;
 			this.empireTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.empireTraitPicker_TraitToggled);
 			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label21.Location = new System.Drawing.Point(8, 32);
+			this.label21.Margin = new System.Windows.Forms.Padding(3);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(116, 15);
+			this.label21.TabIndex = 92;
+			this.label21.Text = "AI Empires Can Use";
+			// 
+			// chkRaceAIsCanUse
+			// 
+			this.chkRaceAIsCanUse.AutoSize = true;
+			this.chkRaceAIsCanUse.Location = new System.Drawing.Point(129, 31);
+			this.chkRaceAIsCanUse.Name = "chkRaceAIsCanUse";
+			this.chkRaceAIsCanUse.Size = new System.Drawing.Size(55, 19);
+			this.chkRaceAIsCanUse.TabIndex = 93;
+			this.chkRaceAIsCanUse.Text = "Allow";
+			this.chkRaceAIsCanUse.UseVisualStyleBackColor = true;
+			// 
+			// chkAIsCanUse
+			// 
+			this.chkAIsCanUse.AutoSize = true;
+			this.chkAIsCanUse.Location = new System.Drawing.Point(129, 30);
+			this.chkAIsCanUse.Name = "chkAIsCanUse";
+			this.chkAIsCanUse.Size = new System.Drawing.Size(55, 19);
+			this.chkAIsCanUse.TabIndex = 98;
+			this.chkAIsCanUse.Text = "Allow";
+			this.chkAIsCanUse.UseVisualStyleBackColor = true;
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label23.Location = new System.Drawing.Point(8, 31);
+			this.label23.Margin = new System.Windows.Forms.Padding(3);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(116, 15);
+			this.label23.TabIndex = 97;
+			this.label23.Text = "AI Empires Can Use";
+			// 
 			// EmpireSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(621, 596);
+			this.ClientSize = new System.Drawing.Size(621, 611);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);
@@ -1314,5 +1366,9 @@
 		private System.Windows.Forms.ComboBox ddlCulture;
 		private System.Windows.Forms.CheckBox chkCultureFromRace;
 		private Controls.AptitudePicker aptitudePicker;
+		private System.Windows.Forms.CheckBox chkRaceAIsCanUse;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.CheckBox chkAIsCanUse;
+		private System.Windows.Forms.Label label23;
 	}
 }
