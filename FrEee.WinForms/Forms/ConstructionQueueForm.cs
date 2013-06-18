@@ -68,25 +68,6 @@ namespace FrEee.WinForms.Forms
 			ClearDetails();
 		}
 
-		private void lstFacilities_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (lstFacilities.SelectedItems.Count == 1)
-			{
-				var item = lstFacilities.SelectedItems[0];
-				var template = (FacilityTemplate)item.Tag;
-				var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
-				ConstructionQueue.Orders.Add(order);
-				var cmd = new AddOrderCommand<ConstructionQueue>
-				(
-					Galaxy.Current.CurrentEmpire,
-					ConstructionQueue,
-					order
-				);
-				newCommands.Add(cmd);
-				BindQueueListView();
-			}
-		}
-
 		private void BindQueueListView()
 		{
 			lstQueue.Items.Clear();
@@ -207,6 +188,8 @@ namespace FrEee.WinForms.Forms
 					var item = new ListViewItem(facil.Name, i, group);
 					item.ImageIndex = i;
 					item.Tag = facil;
+					var eta = Math.Ceiling(facil.Cost.Keys.Max(res => (double)(facil.Cost[res]) / (double)ConstructionQueue.Rate[res]));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
 					ilFacil.Images.Add(facil.Icon);
 					lstFacilities.Items.Add(item);
 					i++;
@@ -218,25 +201,9 @@ namespace FrEee.WinForms.Forms
 		{
 			lstShips.Initialize(32, 32);
 			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)))
-				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon);
-		}
-
-		private void lstShips_MouseDoubleClick(object sender, MouseEventArgs e)
-		{
-			if (lstShips.SelectedItems.Count == 1)
 			{
-				var item = lstShips.SelectedItems[0];
-				var design = (IDesign)item.Tag;
-				var order = design.CreateConstructionOrder(ConstructionQueue);
-				ConstructionQueue.Orders.Add(order);
-				var cmd = new AddOrderCommand<ConstructionQueue>
-				(
-					Galaxy.Current.CurrentEmpire,
-					ConstructionQueue,
-					order
-				);
-				newCommands.Add(cmd);
-				BindQueueListView();
+				var eta = Math.Ceiling(design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]));
+				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString());
 			}
 		}
 
@@ -246,7 +213,7 @@ namespace FrEee.WinForms.Forms
 			txtName.Text = d.Name;
 			resCostMin.Amount = d.Cost[Resource.Minerals];
 			resCostOrg.Amount = d.Cost[Resource.Organics];
-			resCostRad.Amount = d.Cost[Resource.Radioactives];			
+			resCostRad.Amount = d.Cost[Resource.Radioactives];
 		}
 
 		private void lstShips_MouseLeave(object sender, EventArgs e)
@@ -262,16 +229,75 @@ namespace FrEee.WinForms.Forms
 			resCostRad.Amount = 0;
 		}
 
-		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
+		private void lstShips_MouseClick(object sender, MouseEventArgs e)
+		{
+			var item = lstShips.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					var design = (IDesign)item.Tag;
+					var order = design.CreateConstructionOrder(ConstructionQueue);
+					ConstructionQueue.Orders.Add(order);
+					var cmd = new AddOrderCommand<ConstructionQueue>
+					(
+						Galaxy.Current.CurrentEmpire,
+						ConstructionQueue,
+						order
+					);
+					newCommands.Add(cmd);
+					BindQueueListView();
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// TODO - display detailed report on ship design
+				}
+			}
+		}
+
+		private void lstQueue_MouseClick(object sender, MouseEventArgs e)
 		{
 			var item = lstQueue.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
-				var order = (IConstructionOrder)item.Tag;
-				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
-				ConstructionQueue.Orders.Remove(order);
-				newCommands.Add(cmd);
-				BindQueueListView();
+				if (e.Button == MouseButtons.Left)
+				{
+					var order = (IConstructionOrder)item.Tag;
+					var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
+					ConstructionQueue.Orders.Remove(order);
+					newCommands.Add(cmd);
+					BindQueueListView();
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// TODO - display detailed report on construction item
+				}
+			}
+		}
+
+		private void lstFacilities_MouseClick(object sender, MouseEventArgs e)
+		{
+			var item = lstFacilities.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					var template = (FacilityTemplate)item.Tag;
+					var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
+					ConstructionQueue.Orders.Add(order);
+					var cmd = new AddOrderCommand<ConstructionQueue>
+					(
+						Galaxy.Current.CurrentEmpire,
+						ConstructionQueue,
+						order
+					);
+					newCommands.Add(cmd);
+					BindQueueListView();
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// TODO - display detailed report on facility template
+				}
 			}
 		}
 	}
