@@ -116,19 +116,20 @@ namespace FrEee.Game.Setup
 		public Empire Instantiate()
 		{
 			var emp = new Empire();
-			emp.Name = Name;
-			emp.LeaderName = LeaderName;
+			emp.Name = Name ?? PrimaryRace.EmpireName;
+			emp.LeaderName = LeaderName ?? PrimaryRace.LeaderName; ;
 			emp.Color = Color ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
 			emp.NativeSurface = PrimaryRace.NativeSurface;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
+			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.LeaderPortraitName;
 			emp.InsigniaName = InsigniaName ?? PrimaryRace.Name;
 			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
 			// TODO - set empire AI
-			emp.HappinessModel = HappinessModel;
-			emp.Culture = Culture;
+			emp.HappinessModel = HappinessModel ?? PrimaryRace.HappinessModel;
+			emp.Culture = Culture ?? PrimaryRace.Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
 
