@@ -22,6 +22,12 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			BindChoices();
+
+			// hide trait pages if none to pick
+			if (!Mod.Current.Traits.Where(t => t.IsRacial).Any())
+				tabs.TabPages.Remove(tabRaceTraits);
+			if (!Mod.Current.Traits.Where(t => !t.IsRacial).Any())
+				tabs.TabPages.Remove(tabEmpireTraits);
 		}
 
 		/// <summary>

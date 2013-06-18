@@ -72,7 +72,7 @@
 			this.label13 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
-			this.tabPage6 = new System.Windows.Forms.TabPage();
+			this.tabRaceTraits = new System.Windows.Forms.TabPage();
 			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.aptitudePicker = new FrEee.WinForms.Controls.AptitudePicker();
@@ -113,7 +113,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.tabEmpireTraits = new System.Windows.Forms.TabPage();
 			this.empireTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabs.SuspendLayout();
 			this.tabPage2.SuspendLayout();
@@ -125,7 +125,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorGreen)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorRed)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picRaceLeaderPortrait)).BeginInit();
-			this.tabPage6.SuspendLayout();
+			this.tabRaceTraits.SuspendLayout();
 			this.tabPage5.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picShipset)).BeginInit();
@@ -135,7 +135,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnColorGreen)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnColorRed)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picLeaderPortrait)).BeginInit();
-			this.tabPage4.SuspendLayout();
+			this.tabEmpireTraits.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtPointsAvailable
@@ -205,10 +205,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabPage2);
-			this.tabs.Controls.Add(this.tabPage6);
+			this.tabs.Controls.Add(this.tabRaceTraits);
 			this.tabs.Controls.Add(this.tabPage5);
 			this.tabs.Controls.Add(this.tabPage1);
-			this.tabs.Controls.Add(this.tabPage4);
+			this.tabs.Controls.Add(this.tabEmpireTraits);
 			this.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabs.Location = new System.Drawing.Point(9, 9);
@@ -648,15 +648,15 @@
 			this.label15.TabIndex = 44;
 			this.label15.Text = "Name";
 			// 
-			// tabPage6
+			// tabRaceTraits
 			// 
-			this.tabPage6.BackColor = System.Drawing.Color.Black;
-			this.tabPage6.Controls.Add(this.raceTraitPicker);
-			this.tabPage6.Location = new System.Drawing.Point(4, 29);
-			this.tabPage6.Name = "tabPage6";
-			this.tabPage6.Size = new System.Drawing.Size(595, 482);
-			this.tabPage6.TabIndex = 5;
-			this.tabPage6.Text = "Racial Traits";
+			this.tabRaceTraits.BackColor = System.Drawing.Color.Black;
+			this.tabRaceTraits.Controls.Add(this.raceTraitPicker);
+			this.tabRaceTraits.Location = new System.Drawing.Point(4, 29);
+			this.tabRaceTraits.Name = "tabRaceTraits";
+			this.tabRaceTraits.Size = new System.Drawing.Size(595, 516);
+			this.tabRaceTraits.TabIndex = 5;
+			this.tabRaceTraits.Text = "Racial Traits";
 			// 
 			// raceTraitPicker
 			// 
@@ -666,7 +666,7 @@
 			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
 			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(595, 482);
+			this.raceTraitPicker.Size = new System.Drawing.Size(595, 516);
 			this.raceTraitPicker.TabIndex = 0;
 			this.raceTraitPicker.Traits = null;
 			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
@@ -679,7 +679,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 29);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(595, 482);
+			this.tabPage5.Size = new System.Drawing.Size(595, 516);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Racial Aptitudes";
 			// 
@@ -690,7 +690,7 @@
 			this.aptitudePicker.ForeColor = System.Drawing.Color.White;
 			this.aptitudePicker.Location = new System.Drawing.Point(3, 3);
 			this.aptitudePicker.Name = "aptitudePicker";
-			this.aptitudePicker.Size = new System.Drawing.Size(589, 476);
+			this.aptitudePicker.Size = new System.Drawing.Size(589, 510);
 			this.aptitudePicker.TabIndex = 0;
 			this.aptitudePicker.Values = ((System.Collections.Generic.IDictionary<FrEee.Game.Objects.Civilization.Aptitude, int>)(resources.GetObject("aptitudePicker.Values")));
 			this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
@@ -1159,17 +1159,17 @@
 			this.label32.TabIndex = 14;
 			this.label32.Text = "Name";
 			// 
-			// tabPage4
+			// tabEmpireTraits
 			// 
-			this.tabPage4.BackColor = System.Drawing.Color.Black;
-			this.tabPage4.Controls.Add(this.empireTraitPicker);
-			this.tabPage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tabPage4.Location = new System.Drawing.Point(4, 29);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage4.Size = new System.Drawing.Size(595, 482);
-			this.tabPage4.TabIndex = 3;
-			this.tabPage4.Text = "Empire Traits";
+			this.tabEmpireTraits.BackColor = System.Drawing.Color.Black;
+			this.tabEmpireTraits.Controls.Add(this.empireTraitPicker);
+			this.tabEmpireTraits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.tabEmpireTraits.Location = new System.Drawing.Point(4, 29);
+			this.tabEmpireTraits.Name = "tabEmpireTraits";
+			this.tabEmpireTraits.Padding = new System.Windows.Forms.Padding(3);
+			this.tabEmpireTraits.Size = new System.Drawing.Size(595, 516);
+			this.tabEmpireTraits.TabIndex = 3;
+			this.tabEmpireTraits.Text = "Empire Traits";
 			// 
 			// empireTraitPicker
 			// 
@@ -1179,7 +1179,7 @@
 			this.empireTraitPicker.Location = new System.Drawing.Point(3, 3);
 			this.empireTraitPicker.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
 			this.empireTraitPicker.Name = "empireTraitPicker";
-			this.empireTraitPicker.Size = new System.Drawing.Size(589, 476);
+			this.empireTraitPicker.Size = new System.Drawing.Size(589, 510);
 			this.empireTraitPicker.TabIndex = 1;
 			this.empireTraitPicker.Traits = null;
 			this.empireTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.empireTraitPicker_TraitToggled);
@@ -1210,7 +1210,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorGreen)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnRaceColorRed)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picRaceLeaderPortrait)).EndInit();
-			this.tabPage6.ResumeLayout(false);
+			this.tabRaceTraits.ResumeLayout(false);
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage1.ResumeLayout(false);
 			this.tabPage1.PerformLayout();
@@ -1221,7 +1221,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnColorGreen)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnColorRed)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picLeaderPortrait)).EndInit();
-			this.tabPage4.ResumeLayout(false);
+			this.tabEmpireTraits.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1231,7 +1231,7 @@
 		private Controls.GameTabControl tabs;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.TabPage tabPage4;
+		private System.Windows.Forms.TabPage tabEmpireTraits;
 		private System.Windows.Forms.TabPage tabPage5;
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
@@ -1288,7 +1288,7 @@
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.ComboBox ddlRaceNativeAtmosphere;
 		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.TabPage tabPage6;
+		private System.Windows.Forms.TabPage tabRaceTraits;
 		private Controls.GameButton btnLoadRace;
 		private Controls.GameButton btnSaveRace;
 		private System.Windows.Forms.Label txtPointsAvailable;
