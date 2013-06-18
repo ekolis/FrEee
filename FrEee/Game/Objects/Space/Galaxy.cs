@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Space
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
-			TurnNumber = 24000;
+			TurnNumber = 1;
 			Referrables = new List<IList<IReferrable>>();
 		}
 

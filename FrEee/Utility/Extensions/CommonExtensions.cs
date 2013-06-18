@@ -213,7 +213,8 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static string ToStardate(this int turnNumber)
 		{
-			return (turnNumber / 10.0).ToString("0.0");
+			// TODO - moddable starting stardate?
+			return ((turnNumber + 23999) / 10.0).ToString("0.0");
 		}
 
 		/// <summary>
