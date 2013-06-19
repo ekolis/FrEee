@@ -3,6 +3,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
@@ -37,7 +38,7 @@ namespace FrEee.WinForms.Forms
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
 			stellarObjectSizeBindingSource.DataSource = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Size).Distinct();
-			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs
+			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
 
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -118,6 +119,19 @@ namespace FrEee.WinForms.Forms
 			setup.EmpirePoints = (int)spnEmpirePoints.Value;
 			setup.RandomAIs = (int)spnRandomAIs.Value;
 			setup.MinorEmpires = (int)spnMinorEmpires.Value;
+			if (chkVictoryEliminateMajorEmpires.Checked)
+				setup.VictoryConditions.Add(new MajorEmpireEliminationVictoryCondition());
+			if (chkVictoryScore.Checked)
+				setup.VictoryConditions.Add(new ScoreVictoryCondition((long)spnVictoryScore.Value));
+			if (chkVictoryScorePercent.Checked)
+				setup.VictoryConditions.Add(new ScorePercentageVictoryCondition((int)spnVictoryScorePercent.Value));
+			if (chkVictoryTurns.Checked)
+				setup.VictoryConditions.Add(new SurvivalVictoryCondition((int)spnVictoryTurns.Value));
+			if (chkVictoryTech.Checked)
+				setup.VictoryConditions.Add(new TechnologyVictoryCondition((int)spnVictoryTech.Value));
+			if (chkVictoryPeace.Checked)
+				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
+			setup.VictoryDelay = spnVictoryDelay.Value;
 
 			if (setup.Warnings.Any())
 			{

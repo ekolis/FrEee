@@ -112,6 +112,10 @@
 			this.ddlStartTech = new System.Windows.Forms.ComboBox();
 			this.label30 = new System.Windows.Forms.Label();
 			this.tabEmpires = new System.Windows.Forms.TabPage();
+			this.btnEmpireBottom = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireTop = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpireUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnToggleAI = new FrEee.WinForms.Controls.GameButton();
 			this.label44 = new System.Windows.Forms.Label();
 			this.spnMaxDispersion = new System.Windows.Forms.NumericUpDown();
@@ -146,6 +150,25 @@
 			this.label33 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
 			this.tabVictory = new System.Windows.Forms.TabPage();
+			this.label51 = new System.Windows.Forms.Label();
+			this.spnVictoryDelay = new System.Windows.Forms.NumericUpDown();
+			this.label50 = new System.Windows.Forms.Label();
+			this.label49 = new System.Windows.Forms.Label();
+			this.spnVictoryPeace = new System.Windows.Forms.NumericUpDown();
+			this.chkVictoryPeace = new System.Windows.Forms.CheckBox();
+			this.label48 = new System.Windows.Forms.Label();
+			this.spnVictoryTech = new System.Windows.Forms.NumericUpDown();
+			this.chkVictoryTech = new System.Windows.Forms.CheckBox();
+			this.label47 = new System.Windows.Forms.Label();
+			this.spnVictoryScorePercent = new System.Windows.Forms.NumericUpDown();
+			this.chkVictoryScorePercent = new System.Windows.Forms.CheckBox();
+			this.label46 = new System.Windows.Forms.Label();
+			this.spnVictoryTurns = new System.Windows.Forms.NumericUpDown();
+			this.chkVictoryTurns = new System.Windows.Forms.CheckBox();
+			this.spnVictoryScore = new System.Windows.Forms.NumericUpDown();
+			this.chkVictoryScore = new System.Windows.Forms.CheckBox();
+			this.chkVictoryEliminateMajorEmpires = new System.Windows.Forms.CheckBox();
+			this.label45 = new System.Windows.Forms.Label();
 			this.tabSettings = new System.Windows.Forms.TabPage();
 			this.tabMechanics = new System.Windows.Forms.TabPage();
 			this.btnStart = new FrEee.WinForms.Controls.GameButton();
@@ -153,10 +176,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.btnEmpireUp = new FrEee.WinForms.Controls.GameButton();
-			this.btnEmpireDown = new FrEee.WinForms.Controls.GameButton();
-			this.btnEmpireBottom = new FrEee.WinForms.Controls.GameButton();
-			this.btnEmpireTop = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -198,6 +217,13 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).BeginInit();
+			this.tabVictory.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryDelay)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryPeace)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTech)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScorePercent)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTurns)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScore)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -1340,6 +1366,54 @@
 			this.tabEmpires.TabIndex = 3;
 			this.tabEmpires.Text = "Empires";
 			// 
+			// btnEmpireBottom
+			// 
+			this.btnEmpireBottom.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireBottom.Location = new System.Drawing.Point(414, 485);
+			this.btnEmpireBottom.Name = "btnEmpireBottom";
+			this.btnEmpireBottom.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireBottom.TabIndex = 47;
+			this.btnEmpireBottom.Text = "To Bottom";
+			this.btnEmpireBottom.UseVisualStyleBackColor = false;
+			this.btnEmpireBottom.Click += new System.EventHandler(this.btnEmpireBottom_Click);
+			// 
+			// btnEmpireTop
+			// 
+			this.btnEmpireTop.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireTop.Location = new System.Drawing.Point(414, 448);
+			this.btnEmpireTop.Name = "btnEmpireTop";
+			this.btnEmpireTop.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireTop.TabIndex = 46;
+			this.btnEmpireTop.Text = "To Top";
+			this.btnEmpireTop.UseVisualStyleBackColor = false;
+			this.btnEmpireTop.Click += new System.EventHandler(this.btnEmpireTop_Click);
+			// 
+			// btnEmpireDown
+			// 
+			this.btnEmpireDown.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireDown.Location = new System.Drawing.Point(307, 485);
+			this.btnEmpireDown.Name = "btnEmpireDown";
+			this.btnEmpireDown.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireDown.TabIndex = 45;
+			this.btnEmpireDown.Text = "Move Down";
+			this.btnEmpireDown.UseVisualStyleBackColor = false;
+			this.btnEmpireDown.Click += new System.EventHandler(this.btnEmpireDown_Click);
+			// 
+			// btnEmpireUp
+			// 
+			this.btnEmpireUp.BackColor = System.Drawing.Color.Black;
+			this.btnEmpireUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpireUp.Location = new System.Drawing.Point(307, 448);
+			this.btnEmpireUp.Name = "btnEmpireUp";
+			this.btnEmpireUp.Size = new System.Drawing.Size(101, 31);
+			this.btnEmpireUp.TabIndex = 44;
+			this.btnEmpireUp.Text = "Move Up";
+			this.btnEmpireUp.UseVisualStyleBackColor = false;
+			this.btnEmpireUp.Click += new System.EventHandler(this.btnEmpireUp_Click);
+			// 
 			// btnToggleAI
 			// 
 			this.btnToggleAI.BackColor = System.Drawing.Color.Black;
@@ -1750,12 +1824,301 @@
 			// tabVictory
 			// 
 			this.tabVictory.BackColor = System.Drawing.Color.Black;
+			this.tabVictory.Controls.Add(this.label51);
+			this.tabVictory.Controls.Add(this.spnVictoryDelay);
+			this.tabVictory.Controls.Add(this.label50);
+			this.tabVictory.Controls.Add(this.label49);
+			this.tabVictory.Controls.Add(this.spnVictoryPeace);
+			this.tabVictory.Controls.Add(this.chkVictoryPeace);
+			this.tabVictory.Controls.Add(this.label48);
+			this.tabVictory.Controls.Add(this.spnVictoryTech);
+			this.tabVictory.Controls.Add(this.chkVictoryTech);
+			this.tabVictory.Controls.Add(this.label47);
+			this.tabVictory.Controls.Add(this.spnVictoryScorePercent);
+			this.tabVictory.Controls.Add(this.chkVictoryScorePercent);
+			this.tabVictory.Controls.Add(this.label46);
+			this.tabVictory.Controls.Add(this.spnVictoryTurns);
+			this.tabVictory.Controls.Add(this.chkVictoryTurns);
+			this.tabVictory.Controls.Add(this.spnVictoryScore);
+			this.tabVictory.Controls.Add(this.chkVictoryScore);
+			this.tabVictory.Controls.Add(this.chkVictoryEliminateMajorEmpires);
+			this.tabVictory.Controls.Add(this.label45);
+			this.tabVictory.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
 			this.tabVictory.Location = new System.Drawing.Point(4, 29);
 			this.tabVictory.Name = "tabVictory";
 			this.tabVictory.Padding = new System.Windows.Forms.Padding(3);
 			this.tabVictory.Size = new System.Drawing.Size(545, 540);
 			this.tabVictory.TabIndex = 4;
 			this.tabVictory.Text = "Victory";
+			// 
+			// label51
+			// 
+			this.label51.AutoSize = true;
+			this.label51.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label51.Location = new System.Drawing.Point(369, 225);
+			this.label51.Name = "label51";
+			this.label51.Size = new System.Drawing.Size(34, 15);
+			this.label51.TabIndex = 18;
+			this.label51.Text = "turns";
+			// 
+			// spnVictoryDelay
+			// 
+			this.spnVictoryDelay.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryDelay.Location = new System.Drawing.Point(243, 223);
+			this.spnVictoryDelay.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.spnVictoryDelay.Name = "spnVictoryDelay";
+			this.spnVictoryDelay.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryDelay.TabIndex = 17;
+			this.spnVictoryDelay.ThousandsSeparator = true;
+			// 
+			// label50
+			// 
+			this.label50.AutoSize = true;
+			this.label50.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label50.Location = new System.Drawing.Point(8, 225);
+			this.label50.Name = "label50";
+			this.label50.Size = new System.Drawing.Size(229, 15);
+			this.label50.TabIndex = 16;
+			this.label50.Text = "Custom victory conditions take effect after";
+			// 
+			// label49
+			// 
+			this.label49.AutoSize = true;
+			this.label49.Location = new System.Drawing.Point(315, 178);
+			this.label49.Name = "label49";
+			this.label49.Size = new System.Drawing.Size(181, 15);
+			this.label49.TabIndex = 15;
+			this.label49.Text = "turns (Non-Aggression or better)";
+			// 
+			// spnVictoryPeace
+			// 
+			this.spnVictoryPeace.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryPeace.Location = new System.Drawing.Point(189, 176);
+			this.spnVictoryPeace.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryPeace.Name = "spnVictoryPeace";
+			this.spnVictoryPeace.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryPeace.TabIndex = 14;
+			this.spnVictoryPeace.ThousandsSeparator = true;
+			this.spnVictoryPeace.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			// 
+			// chkVictoryPeace
+			// 
+			this.chkVictoryPeace.AutoSize = true;
+			this.chkVictoryPeace.Location = new System.Drawing.Point(10, 177);
+			this.chkVictoryPeace.Name = "chkVictoryPeace";
+			this.chkVictoryPeace.Size = new System.Drawing.Size(173, 19);
+			this.chkVictoryPeace.TabIndex = 13;
+			this.chkVictoryPeace.Text = "Maintain galactic peace for";
+			this.chkVictoryPeace.UseVisualStyleBackColor = true;
+			// 
+			// label48
+			// 
+			this.label48.AutoSize = true;
+			this.label48.Location = new System.Drawing.Point(221, 153);
+			this.label48.Name = "label48";
+			this.label48.Size = new System.Drawing.Size(270, 15);
+			this.label48.TabIndex = 12;
+			this.label48.Text = "% of all non-racial, non-unique technology levels";
+			// 
+			// spnVictoryTech
+			// 
+			this.spnVictoryTech.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryTech.Location = new System.Drawing.Point(95, 151);
+			this.spnVictoryTech.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryTech.Name = "spnVictoryTech";
+			this.spnVictoryTech.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryTech.TabIndex = 11;
+			this.spnVictoryTech.ThousandsSeparator = true;
+			this.spnVictoryTech.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			// 
+			// chkVictoryTech
+			// 
+			this.chkVictoryTech.AutoSize = true;
+			this.chkVictoryTech.Location = new System.Drawing.Point(10, 152);
+			this.chkVictoryTech.Name = "chkVictoryTech";
+			this.chkVictoryTech.Size = new System.Drawing.Size(79, 19);
+			this.chkVictoryTech.TabIndex = 10;
+			this.chkVictoryTech.Text = "Research";
+			this.chkVictoryTech.UseVisualStyleBackColor = true;
+			// 
+			// label47
+			// 
+			this.label47.AutoSize = true;
+			this.label47.Location = new System.Drawing.Point(247, 103);
+			this.label47.Name = "label47";
+			this.label47.Size = new System.Drawing.Size(205, 15);
+			this.label47.TabIndex = 9;
+			this.label47.Text = "% of the second place player\'s score";
+			// 
+			// spnVictoryScorePercent
+			// 
+			this.spnVictoryScorePercent.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryScorePercent.Location = new System.Drawing.Point(121, 101);
+			this.spnVictoryScorePercent.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+			this.spnVictoryScorePercent.Minimum = new decimal(new int[] {
+            150,
+            0,
+            0,
+            0});
+			this.spnVictoryScorePercent.Name = "spnVictoryScorePercent";
+			this.spnVictoryScorePercent.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryScorePercent.TabIndex = 8;
+			this.spnVictoryScorePercent.ThousandsSeparator = true;
+			this.spnVictoryScorePercent.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+			// 
+			// chkVictoryScorePercent
+			// 
+			this.chkVictoryScorePercent.AutoSize = true;
+			this.chkVictoryScorePercent.Location = new System.Drawing.Point(10, 102);
+			this.chkVictoryScorePercent.Name = "chkVictoryScorePercent";
+			this.chkVictoryScorePercent.Size = new System.Drawing.Size(105, 19);
+			this.chkVictoryScorePercent.TabIndex = 7;
+			this.chkVictoryScorePercent.Text = "Reach a score";
+			this.chkVictoryScorePercent.UseVisualStyleBackColor = true;
+			// 
+			// label46
+			// 
+			this.label46.AutoSize = true;
+			this.label46.Location = new System.Drawing.Point(224, 128);
+			this.label46.Name = "label46";
+			this.label46.Size = new System.Drawing.Size(34, 15);
+			this.label46.TabIndex = 6;
+			this.label46.Text = "turns";
+			// 
+			// spnVictoryTurns
+			// 
+			this.spnVictoryTurns.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.spnVictoryTurns.Location = new System.Drawing.Point(98, 126);
+			this.spnVictoryTurns.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.spnVictoryTurns.Name = "spnVictoryTurns";
+			this.spnVictoryTurns.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryTurns.TabIndex = 5;
+			this.spnVictoryTurns.ThousandsSeparator = true;
+			this.spnVictoryTurns.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+			// 
+			// chkVictoryTurns
+			// 
+			this.chkVictoryTurns.AutoSize = true;
+			this.chkVictoryTurns.Location = new System.Drawing.Point(10, 127);
+			this.chkVictoryTurns.Name = "chkVictoryTurns";
+			this.chkVictoryTurns.Size = new System.Drawing.Size(82, 19);
+			this.chkVictoryTurns.TabIndex = 4;
+			this.chkVictoryTurns.Text = "Survive for";
+			this.chkVictoryTurns.UseVisualStyleBackColor = true;
+			// 
+			// spnVictoryScore
+			// 
+			this.spnVictoryScore.Increment = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.spnVictoryScore.Location = new System.Drawing.Point(134, 76);
+			this.spnVictoryScore.Maximum = new decimal(new int[] {
+            1000000000,
+            0,
+            0,
+            0});
+			this.spnVictoryScore.Minimum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.spnVictoryScore.Name = "spnVictoryScore";
+			this.spnVictoryScore.Size = new System.Drawing.Size(120, 21);
+			this.spnVictoryScore.TabIndex = 3;
+			this.spnVictoryScore.ThousandsSeparator = true;
+			this.spnVictoryScore.Value = new decimal(new int[] {
+            5000000,
+            0,
+            0,
+            0});
+			// 
+			// chkVictoryScore
+			// 
+			this.chkVictoryScore.AutoSize = true;
+			this.chkVictoryScore.Location = new System.Drawing.Point(10, 77);
+			this.chkVictoryScore.Name = "chkVictoryScore";
+			this.chkVictoryScore.Size = new System.Drawing.Size(118, 19);
+			this.chkVictoryScore.TabIndex = 2;
+			this.chkVictoryScore.Text = "Reach a score of";
+			this.chkVictoryScore.UseVisualStyleBackColor = true;
+			// 
+			// chkVictoryEliminateMajorEmpires
+			// 
+			this.chkVictoryEliminateMajorEmpires.AutoSize = true;
+			this.chkVictoryEliminateMajorEmpires.Location = new System.Drawing.Point(10, 52);
+			this.chkVictoryEliminateMajorEmpires.Name = "chkVictoryEliminateMajorEmpires";
+			this.chkVictoryEliminateMajorEmpires.Size = new System.Drawing.Size(365, 19);
+			this.chkVictoryEliminateMajorEmpires.TabIndex = 1;
+			this.chkVictoryEliminateMajorEmpires.Text = "Eliminate all other major empires (minor empires may survive)";
+			this.chkVictoryEliminateMajorEmpires.UseVisualStyleBackColor = true;
+			// 
+			// label45
+			// 
+			this.label45.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label45.Location = new System.Drawing.Point(7, 7);
+			this.label45.Name = "label45";
+			this.label45.Size = new System.Drawing.Size(532, 41);
+			this.label45.TabIndex = 0;
+			this.label45.Text = "The standard victory condition is elimination of all other major and minor empire" +
+    "s. Additional optional victory conditions can be selected below.";
 			// 
 			// tabSettings
 			// 
@@ -1840,54 +2203,6 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
-			// btnEmpireUp
-			// 
-			this.btnEmpireUp.BackColor = System.Drawing.Color.Black;
-			this.btnEmpireUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpireUp.Location = new System.Drawing.Point(307, 448);
-			this.btnEmpireUp.Name = "btnEmpireUp";
-			this.btnEmpireUp.Size = new System.Drawing.Size(101, 31);
-			this.btnEmpireUp.TabIndex = 44;
-			this.btnEmpireUp.Text = "Move Up";
-			this.btnEmpireUp.UseVisualStyleBackColor = false;
-			this.btnEmpireUp.Click += new System.EventHandler(this.btnEmpireUp_Click);
-			// 
-			// btnEmpireDown
-			// 
-			this.btnEmpireDown.BackColor = System.Drawing.Color.Black;
-			this.btnEmpireDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpireDown.Location = new System.Drawing.Point(307, 485);
-			this.btnEmpireDown.Name = "btnEmpireDown";
-			this.btnEmpireDown.Size = new System.Drawing.Size(101, 31);
-			this.btnEmpireDown.TabIndex = 45;
-			this.btnEmpireDown.Text = "Move Down";
-			this.btnEmpireDown.UseVisualStyleBackColor = false;
-			this.btnEmpireDown.Click += new System.EventHandler(this.btnEmpireDown_Click);
-			// 
-			// btnEmpireBottom
-			// 
-			this.btnEmpireBottom.BackColor = System.Drawing.Color.Black;
-			this.btnEmpireBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpireBottom.Location = new System.Drawing.Point(414, 485);
-			this.btnEmpireBottom.Name = "btnEmpireBottom";
-			this.btnEmpireBottom.Size = new System.Drawing.Size(101, 31);
-			this.btnEmpireBottom.TabIndex = 47;
-			this.btnEmpireBottom.Text = "To Bottom";
-			this.btnEmpireBottom.UseVisualStyleBackColor = false;
-			this.btnEmpireBottom.Click += new System.EventHandler(this.btnEmpireBottom_Click);
-			// 
-			// btnEmpireTop
-			// 
-			this.btnEmpireTop.BackColor = System.Drawing.Color.Black;
-			this.btnEmpireTop.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpireTop.Location = new System.Drawing.Point(414, 448);
-			this.btnEmpireTop.Name = "btnEmpireTop";
-			this.btnEmpireTop.Size = new System.Drawing.Size(101, 31);
-			this.btnEmpireTop.TabIndex = 46;
-			this.btnEmpireTop.Text = "To Top";
-			this.btnEmpireTop.UseVisualStyleBackColor = false;
-			this.btnEmpireTop.Click += new System.EventHandler(this.btnEmpireTop_Click);
-			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1948,6 +2263,14 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnHomeworlds)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResearch)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnStartResources)).EndInit();
+			this.tabVictory.ResumeLayout(false);
+			this.tabVictory.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryDelay)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryPeace)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTech)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScorePercent)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTurns)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScore)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -2082,5 +2405,24 @@
 		private Controls.GameButton btnEmpireTop;
 		private Controls.GameButton btnEmpireDown;
 		private Controls.GameButton btnEmpireUp;
+		private System.Windows.Forms.Label label45;
+		private System.Windows.Forms.CheckBox chkVictoryEliminateMajorEmpires;
+		private System.Windows.Forms.Label label46;
+		private System.Windows.Forms.NumericUpDown spnVictoryTurns;
+		private System.Windows.Forms.CheckBox chkVictoryTurns;
+		private System.Windows.Forms.NumericUpDown spnVictoryScore;
+		private System.Windows.Forms.CheckBox chkVictoryScore;
+		private System.Windows.Forms.Label label47;
+		private System.Windows.Forms.NumericUpDown spnVictoryScorePercent;
+		private System.Windows.Forms.CheckBox chkVictoryScorePercent;
+		private System.Windows.Forms.Label label48;
+		private System.Windows.Forms.NumericUpDown spnVictoryTech;
+		private System.Windows.Forms.CheckBox chkVictoryTech;
+		private System.Windows.Forms.Label label49;
+		private System.Windows.Forms.NumericUpDown spnVictoryPeace;
+		private System.Windows.Forms.CheckBox chkVictoryPeace;
+		private System.Windows.Forms.Label label50;
+		private System.Windows.Forms.Label label51;
+		private System.Windows.Forms.NumericUpDown spnVictoryDelay;
 	}
 }

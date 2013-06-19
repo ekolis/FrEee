@@ -535,5 +535,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// The empire's culture.
 		/// </summary>
 		public Culture Culture { get; set; }
+
+		/// <summary>
+		/// TODO - implement empire score
+		/// </summary>
+		public long Score { get { return 0; } }
 	}
 }

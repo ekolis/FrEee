@@ -83,6 +83,7 @@
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
+    <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
     <Compile Include="Game\Objects\Civilization\Aptitude.cs" />
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
@@ -136,6 +137,12 @@
     <Compile Include="Game\Objects\Vehicles\Unit.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\ScoreVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\SurvivalVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\MajorEmpireEliminationVictoryCondition.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\TotalEliminationVictoryCondition.cs" />
     <Compile Include="Game\Setup\EmpireTemplate.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\CenterWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\PlanetWarpPointPlacementStrategy.cs" />

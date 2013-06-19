@@ -31,6 +31,7 @@ namespace FrEee.Game.Objects.Space
 			Name = "Unnamed";
 			TurnNumber = 1;
 			Referrables = new List<IList<IReferrable>>();
+			VictoryConditions = new List<IVictoryCondition>();
 		}
 
 		public Galaxy(Mod mod)
@@ -202,6 +203,28 @@ namespace FrEee.Game.Objects.Space
 				return TurnNumber.ToStardate();
 			}
 		}
+
+		/// <summary>
+		/// Number of turns of uninterrupted galactic peace (Non-Aggression or better between all surviving empires).
+		/// </summary>
+		public int TurnsOfPeace
+		{
+			get
+			{
+				// TODO - treaties
+				return 0;
+			}
+		}
+
+		/// <summary>
+		/// Game victory conditions.
+		/// </summary>
+		public IList<IVictoryCondition> VictoryConditions { get; private set; }
+
+		/// <summary>
+		/// Delay in turns before victory conditions take effect.
+		/// </summary>
+		public int VictoryDelay { get; set; }
 
 		#endregion
 
@@ -574,29 +597,6 @@ namespace FrEee.Game.Objects.Space
 						battle.Resolve();
 						foreach (var emp in battle.Empires)
 							emp.Log.Add(battle.CreateLogMessage(battle.Name));
-						
-						// check for defeated empires
-						foreach (var emp in Empires)
-						{
-							if (emp.IsDefeated)
-							{
-								foreach (var emp2 in Empires)
-								{
-									if (emp2 == emp)
-										emp2.Log.Add(emp.CreateLogMessage("You have been defeated! Your colonies and fleets are no more..."));
-									else
-										emp2.Log.Add(emp.CreateLogMessage(emp + " has been defeated!"));
-								}
-							}
-						}
-						
-						// check for victory
-						var survivors = Empires.Where(emp => !emp.IsDefeated);
-						if (survivors.Count() == 1)
-						{
-							var winner = survivors.First();
-							winner.Log.Add(winner.CreateLogMessage("You are victorious! You have eliminated all opposition and conquered the galaxy!"));
-						}
 					}
 				}
 				CurrentTick += NextTickSize;
@@ -607,6 +607,28 @@ namespace FrEee.Game.Objects.Space
 			// clear empire commands
 			foreach (var emp in Empires)
 				emp.Commands.Clear();
+
+			// check for victory/defeat
+			foreach (var vc in VictoryConditions)
+			{
+				var winners = new List<Empire>();
+				foreach (var emp in Empires)
+				{
+					if (vc.GetProgress(emp) >= 1d)
+					{
+						// empire won!
+						emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
+					}
+				}
+				if (winners.Any())
+				{
+					foreach (var emp in Empires.Where(e => !winners.Contains(e)))
+					{
+						// empire lost
+						emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
+					}
+				}
+			}
 		}
 
 		/// <summary>

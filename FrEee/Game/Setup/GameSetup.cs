@@ -12,6 +12,8 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Game.Enumerations;
 using System.Drawing;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.VictoryConditions;
 
 namespace FrEee.Game.Setup
 {
@@ -25,6 +27,8 @@ namespace FrEee.Game.Setup
 		{
 			EmpireTemplates = new List<EmpireTemplate>();
 			ForbiddenTechnologies = new List<Technology>();
+			VictoryConditions = new List<IVictoryCondition>();
+			VictoryConditions.Add(new TotalEliminationVictoryCondition());
 		}
 
 		/// <summary>
@@ -140,7 +144,18 @@ namespace FrEee.Game.Setup
 		/// <summary>
 		/// Technologies that are locked at level zero.
 		/// </summary>
+		// TODO - just save the names of the techs in the gsu file
 		public IList<Technology> ForbiddenTechnologies { get; private set; }
+
+		/// <summary>
+		/// Game victory conditions.
+		/// </summary>
+		public IList<IVictoryCondition> VictoryConditions { get; private set; }
+
+		/// <summary>
+		/// Delay in turns before victory conditions take effect.
+		/// </summary>
+		public int VictoryDelay { get; set; }
 
 		/// <summary>
 		/// Problems with this game setup.
@@ -193,6 +208,11 @@ namespace FrEee.Game.Setup
 
 			// set score display setting
 			gal.ScoreDisplay = ScoreDisplay;
+
+			// set up victory conditions
+			foreach (var vc in VictoryConditions)
+				gal.VictoryConditions.Add(vc);
+			gal.VictoryDelay = VictoryDelay;
 
 			// place player empires
 			foreach (var et in EmpireTemplates)
