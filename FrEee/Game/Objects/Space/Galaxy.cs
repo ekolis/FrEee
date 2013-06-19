@@ -332,6 +332,7 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerSaveLoad;
 	
 			// save player views
+			// TODO - save player views without requiring reloading of master view
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
 				if (i == 0 || !Current.IsSinglePlayer)

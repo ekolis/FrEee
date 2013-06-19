@@ -131,7 +131,7 @@ namespace FrEee.WinForms.Forms
 				setup.VictoryConditions.Add(new TechnologyVictoryCondition((int)spnVictoryTech.Value));
 			if (chkVictoryPeace.Checked)
 				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
-			setup.VictoryDelay = spnVictoryDelay.Value;
+			setup.VictoryDelay = (int)spnVictoryDelay.Value;
 
 			if (setup.Warnings.Any())
 			{

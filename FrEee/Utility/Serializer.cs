@@ -689,7 +689,7 @@ namespace FrEee.Utility
 				}
 				// Mono seems to place inherited properties on the derived type too so we need a consistent ordering
 				var props2 = props.Distinct().GroupBy(p => p.Key.Name).Select(g => g.Single(p2 => p2.Value == g.Max(p3 => p3.Value))).Select(kvp => kvp.Key).OrderBy(p => p.Name);
-				KnownProperties.Add(type, props2);
+				KnownProperties.Add(type, props2.ToArray());
 			}
 		}
 
