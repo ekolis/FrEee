@@ -15,6 +15,7 @@ using System.Reflection;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.VictoryConditions;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -611,21 +612,24 @@ namespace FrEee.Game.Objects.Space
 			// check for victory/defeat
 			foreach (var vc in VictoryConditions)
 			{
-				var winners = new List<Empire>();
-				foreach (var emp in Empires)
+				if (vc is TotalEliminationVictoryCondition || TurnNumber > VictoryDelay)
 				{
-					if (vc.GetProgress(emp) >= 1d)
+					var winners = new List<Empire>();
+					foreach (var emp in Empires)
 					{
-						// empire won!
-						emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
+						if (vc.GetProgress(emp) >= 1d)
+						{
+							// empire won!
+							emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
+						}
 					}
-				}
-				if (winners.Any())
-				{
-					foreach (var emp in Empires.Where(e => !winners.Contains(e)))
+					if (winners.Any())
 					{
-						// empire lost
-						emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
+						foreach (var emp in Empires.Where(e => !winners.Contains(e)))
+						{
+							// empire lost
+							emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
+						}
 					}
 				}
 			}

@@ -137,6 +137,7 @@
     <Compile Include="Game\Objects\Vehicles\Unit.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
+    <Compile Include="Game\Objects\VictoryConditions\PeaceVictoryCondition.cs" />
     <Compile Include="Game\Objects\VictoryConditions\TechnologyVictoryCondition.cs" />
     <Compile Include="Game\Objects\VictoryConditions\ScorePercentageVictoryCondition.cs" />
     <Compile Include="Game\Objects\VictoryConditions\ScoreVictoryCondition.cs" />
