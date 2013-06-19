@@ -327,16 +327,20 @@ namespace FrEee.Game.Objects.Space
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
 
 			// save master view
+			if (status != null)
+				status.Message = "Saving game (host)";
 			var gamname = Current.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 	
 			// save player views
-			// TODO - save player views without requiring reloading of master view
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
 				if (i == 0 || !Current.IsSinglePlayer)
 				{
+					if (status != null)
+						status.Message = "Saving game (player " + (i + 1) + ")";
+					// TODO - save player views without requiring reloading of master view each time (do it in memory)
 					Load(gamname);
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
@@ -345,6 +349,10 @@ namespace FrEee.Game.Objects.Space
 						status.Progress += progressPerSaveLoad;
 				}
 			}
+
+			// TODO - only reload master view if we really need to
+			if (status != null)
+				status.Message = "Saving game";
 			Load(gamname);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
@@ -721,7 +729,8 @@ namespace FrEee.Game.Objects.Space
 			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
 
 			galtemp.GameSetup = gsu;
-			Current = galtemp.Instantiate(status, desiredProgress);
+			var curProgress = status == null ? 0d : status.Progress;
+			Current = galtemp.Instantiate(status, curProgress + (desiredProgress - curProgress) / 2d);
 			gsu.PopulateGalaxy(Current);
 
 			// set single player flag
