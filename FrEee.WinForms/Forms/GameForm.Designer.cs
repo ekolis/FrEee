@@ -421,7 +421,6 @@ namespace FrEee.WinForms.Forms
 			this.btnClearOrders.Name = "btnClearOrders";
 			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
 			this.btnClearOrders.TabIndex = 11;
-			this.btnClearOrders.Text = "Clr";
 			this.toolTip.SetToolTip(this.btnClearOrders, "Clear Orders");
 			this.btnClearOrders.UseVisualStyleBackColor = false;
 			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
@@ -499,7 +498,6 @@ namespace FrEee.WinForms.Forms
 			this.btnWarp.Name = "btnWarp";
 			this.btnWarp.Size = new System.Drawing.Size(36, 36);
 			this.btnWarp.TabIndex = 5;
-			this.btnWarp.Text = "Wp";
 			this.toolTip.SetToolTip(this.btnWarp, "Warp");
 			this.btnWarp.UseVisualStyleBackColor = false;
 			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
@@ -525,7 +523,6 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.Name = "btnMove";
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
-			this.btnMove.Text = "Mv";
 			this.toolTip.SetToolTip(this.btnMove, "Move");
 			this.btnMove.UseVisualStyleBackColor = false;
 			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);

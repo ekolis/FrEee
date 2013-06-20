@@ -49,6 +49,7 @@ namespace FrEee.WinForms.Forms
 			btnPursue.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Pursue"));
 			btnEvade.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
 			btnWarp.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
+			btnClearOrders.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "ClearOrders"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();
