@@ -162,9 +162,9 @@ namespace FrEee.WinForms.Forms
 		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chkOnlyLatest.Checked)
-				BindFacilityListView(Mod.Current.FacilityTemplates.OnlyLatest(f => f.Family));
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().OnlyLatest(f => f.Family));
 			else
-				BindFacilityListView(Mod.Current.FacilityTemplates);
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>());
 		}
 
 		private void BindFacilityListView(IEnumerable<FacilityTemplate> templates)
