@@ -792,6 +792,8 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<T> WithMax<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
 		{
 			var list = src.Select(item => new { Item = item, Value = selector(item) });
+			if (!list.Any())
+				return Enumerable.Empty<T>();
 			var max = list.Max(x => x.Value);
 			return list.Where(x => x.Value.Equals(max)).Select(x => x.Item);
 		}
@@ -807,6 +809,8 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<T> WithMin<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
 		{
 			var list = src.Select(item => new { Item = item, Value = selector(item) });
+			if (!list.Any())
+				return Enumerable.Empty<T>();
 			var min = list.Min(x => x.Value);
 			return list.Where(x => x.Value.Equals(min)).Select(x => x.Item);
 		}
