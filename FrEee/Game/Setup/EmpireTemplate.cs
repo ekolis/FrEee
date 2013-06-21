@@ -126,7 +126,6 @@ namespace FrEee.Game.Setup
 			emp.LeaderName = LeaderName ?? PrimaryRace.LeaderName; ;
 			emp.Color = Color ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
-			emp.NativeSurface = PrimaryRace.NativeSurface;
 			foreach (var t in Traits)
 				emp.Traits.Add(t);
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.LeaderPortraitName;

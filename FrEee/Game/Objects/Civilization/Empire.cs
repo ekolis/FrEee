@@ -67,11 +67,6 @@ namespace FrEee.Game.Objects.Civilization
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
-		/// Empire's native planet surface type.
-		/// </summary>
-		public string NativeSurface { get; set; }
-
-		/// <summary>
 		/// Traits of this empire.
 		/// </summary>
 		public IList<Trait> Traits { get; private set; }

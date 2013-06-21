@@ -227,6 +227,26 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public int VictoryDelay { get; set; }
 
+		/// <summary>
+		/// Is this a "humans vs. AI" game?
+		/// </summary>
+		public bool IsHumansVsAI { get; set; }
+
+		/// <summary>
+		/// Allowed trades in this game.
+		/// </summary>
+		public AllowedTrades AllowedTrades { get; set; }
+
+		public bool IsSurrenderAllowed { get; set; }
+
+		public bool IsIntelligenceAllowed { get; set; }
+
+		public bool IsAnalysisAllowed { get; set; }
+
+		public bool CanColonizeOnlyBreathable { get; set; }
+
+		public bool CanColonizeOnlyHomeworldSurface { get; set; }
+
 		#endregion
 
 		#region Data Access

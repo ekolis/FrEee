@@ -14,6 +14,7 @@ using FrEee.Game.Enumerations;
 using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.VictoryConditions;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Game.Setup
 {
@@ -128,7 +129,7 @@ namespace FrEee.Game.Setup
 		/// <summary>
 		/// Are we setting up a single player game?
 		/// </summary>
-		public bool IsSinglePlayer { get; set; }
+		public bool IsSinglePlayer { get { return EmpireTemplates.Where(et => et.IsPlayerEmpire).Count() == 1; } }
 
 		/// <summary>
 		/// Empire templates in this game setup.
@@ -156,6 +157,30 @@ namespace FrEee.Game.Setup
 		/// Delay in turns before victory conditions take effect.
 		/// </summary>
 		public int VictoryDelay { get; set; }
+
+		/// <summary>
+		/// Is this a "humans vs. AI" game?
+		/// </summary>
+		public bool IsHumansVsAI { get; set; }
+
+		/// <summary>
+		/// Allowed trades in this game.
+		/// </summary>
+		public AllowedTrades AllowedTrades { get; set; }
+
+		public bool IsSurrenderAllowed { get; set; }
+
+		public bool IsIntelligenceAllowed { get; set; }
+
+		public bool IsAnalysisAllowed { get; set; }
+
+		public bool GenerateRandomRuins { get; set; }
+
+		public bool GenerateUniqueRuins { get; set; }
+
+		public bool CanColonizeOnlyBreathable { get; set; }
+
+		public bool CanColonizeOnlyHomeworldSurface { get; set; }
 
 		/// <summary>
 		/// Problems with this game setup.
@@ -214,6 +239,14 @@ namespace FrEee.Game.Setup
 				gal.VictoryConditions.Add(vc);
 			gal.VictoryDelay = VictoryDelay;
 
+			// set up misc. game options
+			gal.IsHumansVsAI = IsHumansVsAI;
+			gal.AllowedTrades = AllowedTrades;
+			gal.IsSurrenderAllowed = IsSurrenderAllowed;
+			gal.IsIntelligenceAllowed = IsIntelligenceAllowed;
+			gal.CanColonizeOnlyBreathable = CanColonizeOnlyBreathable;
+			gal.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
+
 			// place player empires
 			foreach (var et in EmpireTemplates)
 				PlaceEmpire(gal, et);
@@ -262,6 +295,30 @@ namespace FrEee.Game.Setup
 				};
 				PlaceEmpire(gal, et);
 			}
+
+			// remove ruins if they're not allowed
+			if (!GenerateRandomRuins)
+			{
+				foreach (var p in gal.FindSpaceObjects<Planet>().Flatten().Flatten())
+				{
+					foreach (var abil in p.IntrinsicAbilities.ToArray())
+					{
+						if (abil.Name == "Ancient Ruins")
+							p.IntrinsicAbilities.Remove(abil);
+					}
+				}
+			}
+			if (!GenerateUniqueRuins)
+			{
+				foreach (var p in gal.FindSpaceObjects<Planet>().Flatten().Flatten())
+				{
+					foreach (var abil in p.IntrinsicAbilities.ToArray())
+					{
+						if (abil.Name == "Ancient Ruins Unique")
+							p.IntrinsicAbilities.Remove(abil);
+					}
+				}
+			}
 		}
 
 		private void PlaceEmpire(Galaxy gal, EmpireTemplate et)
@@ -306,11 +363,11 @@ namespace FrEee.Game.Setup
 
 			// TODO - moddable colony techs?
 			string colonyTechName = null;
-			if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Rock")
+			if ((emp.PrimaryRace.NativeSurface) == "Rock")
 				colonyTechName = "Rock Planet Colonization";
-			else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Ice")
+			else if ((emp.PrimaryRace.NativeSurface) == "Ice")
 				colonyTechName = "Ice Planet Colonization";
-			else if ((emp.NativeSurface ?? emp.PrimaryRace.NativeSurface) == "Gas Giant")
+			else if ((emp.PrimaryRace.NativeSurface) == "Gas Giant")
 				colonyTechName = "Gas Giant Colonization";
 			var colonyTech = Mod.Current.Technologies.SingleOrDefault(t => t.Name == colonyTechName);
 			if (colonyTech != null && emp.ResearchedTechnologies[colonyTech] < 1)
@@ -342,14 +399,14 @@ namespace FrEee.Game.Setup
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
-				if (hw.Surface != emp.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
+				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
 				{
 					var replacementHomeworld = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
-						p.Surface == emp.NativeSurface &&
+						p.Surface == emp.PrimaryRace.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
 						p.Size == HomeworldSize).PickRandom();
 					if (replacementHomeworld == null)
-						throw new Exception("No planets found in SectType.txt with surface " + emp.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
+						throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
 					replacementHomeworld.Name = hw.Name;
 					replacementHomeworld.CopyTo(hw);
 				}

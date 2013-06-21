@@ -47,6 +47,16 @@ namespace FrEee.Game.Objects.Orders
 					// no such colony module
 					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module."));
 				}
+				else if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+				{
+					// can only colonize breathable atmosphere (due to game setup option)
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets."));
+				}
+				else if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+				{
+					// can only colonize breathable atmosphere (due to game setup option)
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets."));
+				}
 				else
 				{
 					// colonize now!!!

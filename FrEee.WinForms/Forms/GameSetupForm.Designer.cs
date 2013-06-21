@@ -34,8 +34,6 @@
 			this.label11 = new System.Windows.Forms.Label();
 			this.spnSystemGroups = new System.Windows.Forms.NumericUpDown();
 			this.txtWarpPointLocation = new System.Windows.Forms.Label();
-			this.txtGalaxyName = new System.Windows.Forms.TextBox();
-			this.labelName = new System.Windows.Forms.Label();
 			this.ddlEventSeverity = new System.Windows.Forms.ComboBox();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
@@ -170,7 +168,26 @@
 			this.chkVictoryEliminateMajorEmpires = new System.Windows.Forms.CheckBox();
 			this.label45 = new System.Windows.Forms.Label();
 			this.tabSettings = new System.Windows.Forms.TabPage();
-			this.tabMechanics = new System.Windows.Forms.TabPage();
+			this.chkAllowAnalysis = new System.Windows.Forms.CheckBox();
+			this.label60 = new System.Windows.Forms.Label();
+			this.chkColonizeOnlyHWSurface = new System.Windows.Forms.CheckBox();
+			this.label59 = new System.Windows.Forms.Label();
+			this.chkColonizeOnlyBreathable = new System.Windows.Forms.CheckBox();
+			this.label58 = new System.Windows.Forms.Label();
+			this.chkUniqueRuins = new System.Windows.Forms.CheckBox();
+			this.label57 = new System.Windows.Forms.Label();
+			this.chkRandomRuins = new System.Windows.Forms.CheckBox();
+			this.label56 = new System.Windows.Forms.Label();
+			this.chkAllowIntel = new System.Windows.Forms.CheckBox();
+			this.label55 = new System.Windows.Forms.Label();
+			this.chkAllowSurrender = new System.Windows.Forms.CheckBox();
+			this.label54 = new System.Windows.Forms.Label();
+			this.label53 = new System.Windows.Forms.Label();
+			this.label52 = new System.Windows.Forms.Label();
+			this.ddlAllowedTrades = new System.Windows.Forms.ComboBox();
+			this.chkHumansVsAI = new System.Windows.Forms.CheckBox();
+			this.txtGalaxyName = new System.Windows.Forms.TextBox();
+			this.labelName = new System.Windows.Forms.Label();
 			this.btnStart = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
@@ -224,6 +241,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScorePercent)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTurns)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScore)).BeginInit();
+			this.tabSettings.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -237,7 +255,6 @@
 			this.tabs.Controls.Add(this.tabEmpires);
 			this.tabs.Controls.Add(this.tabVictory);
 			this.tabs.Controls.Add(this.tabSettings);
-			this.tabs.Controls.Add(this.tabMechanics);
 			this.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabs.Location = new System.Drawing.Point(0, 0);
@@ -256,8 +273,6 @@
 			this.tabGalaxy.Controls.Add(this.label11);
 			this.tabGalaxy.Controls.Add(this.spnSystemGroups);
 			this.tabGalaxy.Controls.Add(this.txtWarpPointLocation);
-			this.tabGalaxy.Controls.Add(this.txtGalaxyName);
-			this.tabGalaxy.Controls.Add(this.labelName);
 			this.tabGalaxy.Controls.Add(this.ddlEventSeverity);
 			this.tabGalaxy.Controls.Add(this.label10);
 			this.tabGalaxy.Controls.Add(this.label9);
@@ -289,7 +304,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(191, 136);
+			this.label11.Location = new System.Drawing.Point(191, 111);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(287, 15);
 			this.label11.TabIndex = 27;
@@ -297,7 +312,7 @@
 			// 
 			// spnSystemGroups
 			// 
-			this.spnSystemGroups.Location = new System.Drawing.Point(114, 134);
+			this.spnSystemGroups.Location = new System.Drawing.Point(114, 109);
 			this.spnSystemGroups.Minimum = new decimal(new int[] {
             1,
             0,
@@ -315,7 +330,7 @@
 			// 
 			// txtWarpPointLocation
 			// 
-			this.txtWarpPointLocation.Location = new System.Drawing.Point(19, 188);
+			this.txtWarpPointLocation.Location = new System.Drawing.Point(19, 163);
 			this.txtWarpPointLocation.Margin = new System.Windows.Forms.Padding(3);
 			this.txtWarpPointLocation.MaximumSize = new System.Drawing.Size(467, 36);
 			this.txtWarpPointLocation.Name = "txtWarpPointLocation";
@@ -323,30 +338,12 @@
 			this.txtWarpPointLocation.TabIndex = 25;
 			this.txtWarpPointLocation.Text = "Choose a warp point placement option.";
 			// 
-			// txtGalaxyName
-			// 
-			this.txtGalaxyName.Location = new System.Drawing.Point(114, 4);
-			this.txtGalaxyName.Name = "txtGalaxyName";
-			this.txtGalaxyName.Size = new System.Drawing.Size(152, 21);
-			this.txtGalaxyName.TabIndex = 24;
-			// 
-			// labelName
-			// 
-			this.labelName.AutoSize = true;
-			this.labelName.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.labelName.Location = new System.Drawing.Point(11, 7);
-			this.labelName.Margin = new System.Windows.Forms.Padding(3);
-			this.labelName.Name = "labelName";
-			this.labelName.Size = new System.Drawing.Size(41, 15);
-			this.labelName.TabIndex = 23;
-			this.labelName.Text = "Name";
-			// 
 			// ddlEventSeverity
 			// 
 			this.ddlEventSeverity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlEventSeverity.Enabled = false;
 			this.ddlEventSeverity.FormattingEnabled = true;
-			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 330);
+			this.ddlEventSeverity.Location = new System.Drawing.Point(114, 305);
 			this.ddlEventSeverity.Name = "ddlEventSeverity";
 			this.ddlEventSeverity.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventSeverity.TabIndex = 22;
@@ -355,7 +352,7 @@
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label10.Location = new System.Drawing.Point(11, 333);
+			this.label10.Location = new System.Drawing.Point(11, 308);
 			this.label10.Margin = new System.Windows.Forms.Padding(3);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(82, 15);
@@ -366,7 +363,7 @@
 			// 
 			this.label9.AutoSize = true;
 			this.label9.ForeColor = System.Drawing.Color.White;
-			this.label9.Location = new System.Drawing.Point(241, 81);
+			this.label9.Location = new System.Drawing.Point(241, 56);
 			this.label9.Margin = new System.Windows.Forms.Padding(3);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(63, 15);
@@ -375,7 +372,7 @@
 			// 
 			// spnHeight
 			// 
-			this.spnHeight.Location = new System.Drawing.Point(187, 79);
+			this.spnHeight.Location = new System.Drawing.Point(187, 54);
 			this.spnHeight.Minimum = new decimal(new int[] {
             1,
             0,
@@ -395,7 +392,7 @@
 			// 
 			this.label8.AutoSize = true;
 			this.label8.ForeColor = System.Drawing.Color.White;
-			this.label8.Location = new System.Drawing.Point(168, 81);
+			this.label8.Location = new System.Drawing.Point(168, 56);
 			this.label8.Margin = new System.Windows.Forms.Padding(3);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(13, 15);
@@ -404,7 +401,7 @@
 			// 
 			// spnWidth
 			// 
-			this.spnWidth.Location = new System.Drawing.Point(114, 79);
+			this.spnWidth.Location = new System.Drawing.Point(114, 54);
 			this.spnWidth.Minimum = new decimal(new int[] {
             1,
             0,
@@ -424,7 +421,7 @@
 			// 
 			this.label7.AutoSize = true;
 			this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label7.Location = new System.Drawing.Point(11, 81);
+			this.label7.Location = new System.Drawing.Point(11, 56);
 			this.label7.Margin = new System.Windows.Forms.Padding(3);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(73, 15);
@@ -436,7 +433,7 @@
 			this.ddlEventFrequency.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlEventFrequency.Enabled = false;
 			this.ddlEventFrequency.FormattingEnabled = true;
-			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 301);
+			this.ddlEventFrequency.Location = new System.Drawing.Point(114, 276);
 			this.ddlEventFrequency.Name = "ddlEventFrequency";
 			this.ddlEventFrequency.Size = new System.Drawing.Size(152, 23);
 			this.ddlEventFrequency.TabIndex = 15;
@@ -445,7 +442,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(11, 304);
+			this.label6.Location = new System.Drawing.Point(11, 279);
 			this.label6.Margin = new System.Windows.Forms.Padding(3);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(97, 15);
@@ -455,7 +452,7 @@
 			// chkOmniscient
 			// 
 			this.chkOmniscient.AutoSize = true;
-			this.chkOmniscient.Location = new System.Drawing.Point(22, 276);
+			this.chkOmniscient.Location = new System.Drawing.Point(22, 251);
 			this.chkOmniscient.Name = "chkOmniscient";
 			this.chkOmniscient.Size = new System.Drawing.Size(231, 19);
 			this.chkOmniscient.TabIndex = 11;
@@ -466,7 +463,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label4.Location = new System.Drawing.Point(11, 230);
+			this.label4.Location = new System.Drawing.Point(11, 205);
 			this.label4.Margin = new System.Windows.Forms.Padding(3);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(66, 15);
@@ -476,7 +473,7 @@
 			// chkAllSystemsExplored
 			// 
 			this.chkAllSystemsExplored.AutoSize = true;
-			this.chkAllSystemsExplored.Location = new System.Drawing.Point(22, 251);
+			this.chkAllSystemsExplored.Location = new System.Drawing.Point(22, 226);
 			this.chkAllSystemsExplored.Name = "chkAllSystemsExplored";
 			this.chkAllSystemsExplored.Size = new System.Drawing.Size(140, 19);
 			this.chkAllSystemsExplored.TabIndex = 9;
@@ -489,7 +486,7 @@
 			this.ddlWarpPointLocation.DisplayMember = "Name";
 			this.ddlWarpPointLocation.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlWarpPointLocation.FormattingEnabled = true;
-			this.ddlWarpPointLocation.Location = new System.Drawing.Point(114, 162);
+			this.ddlWarpPointLocation.Location = new System.Drawing.Point(114, 137);
 			this.ddlWarpPointLocation.Name = "ddlWarpPointLocation";
 			this.ddlWarpPointLocation.Size = new System.Drawing.Size(152, 23);
 			this.ddlWarpPointLocation.TabIndex = 8;
@@ -503,7 +500,7 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label3.Location = new System.Drawing.Point(9, 165);
+			this.label3.Location = new System.Drawing.Point(9, 140);
 			this.label3.Margin = new System.Windows.Forms.Padding(3);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(88, 15);
@@ -514,7 +511,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(9, 136);
+			this.label2.Location = new System.Drawing.Point(9, 111);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(90, 15);
@@ -523,7 +520,7 @@
 			// 
 			// spnStarSystems
 			// 
-			this.spnStarSystems.Location = new System.Drawing.Point(114, 106);
+			this.spnStarSystems.Location = new System.Drawing.Point(114, 81);
 			this.spnStarSystems.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -548,7 +545,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label1.Location = new System.Drawing.Point(9, 108);
+			this.label1.Location = new System.Drawing.Point(9, 83);
 			this.label1.Margin = new System.Windows.Forms.Padding(3);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(78, 15);
@@ -558,7 +555,7 @@
 			// txtGalaxyTypeDescription
 			// 
 			this.txtGalaxyTypeDescription.AutoSize = true;
-			this.txtGalaxyTypeDescription.Location = new System.Drawing.Point(19, 57);
+			this.txtGalaxyTypeDescription.Location = new System.Drawing.Point(19, 32);
 			this.txtGalaxyTypeDescription.Name = "txtGalaxyTypeDescription";
 			this.txtGalaxyTypeDescription.Size = new System.Drawing.Size(125, 15);
 			this.txtGalaxyTypeDescription.TabIndex = 2;
@@ -570,7 +567,7 @@
 			this.ddlGalaxyType.DisplayMember = "Name";
 			this.ddlGalaxyType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlGalaxyType.FormattingEnabled = true;
-			this.ddlGalaxyType.Location = new System.Drawing.Point(114, 31);
+			this.ddlGalaxyType.Location = new System.Drawing.Point(114, 6);
 			this.ddlGalaxyType.Name = "ddlGalaxyType";
 			this.ddlGalaxyType.Size = new System.Drawing.Size(152, 23);
 			this.ddlGalaxyType.TabIndex = 1;
@@ -585,7 +582,7 @@
 			// 
 			this.lblGalaxyType.AutoSize = true;
 			this.lblGalaxyType.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblGalaxyType.Location = new System.Drawing.Point(9, 35);
+			this.lblGalaxyType.Location = new System.Drawing.Point(9, 10);
 			this.lblGalaxyType.Margin = new System.Windows.Forms.Padding(3);
 			this.lblGalaxyType.Name = "lblGalaxyType";
 			this.lblGalaxyType.Size = new System.Drawing.Size(33, 15);
@@ -2123,6 +2120,27 @@
 			// tabSettings
 			// 
 			this.tabSettings.BackColor = System.Drawing.Color.Black;
+			this.tabSettings.Controls.Add(this.chkAllowAnalysis);
+			this.tabSettings.Controls.Add(this.label60);
+			this.tabSettings.Controls.Add(this.chkColonizeOnlyHWSurface);
+			this.tabSettings.Controls.Add(this.label59);
+			this.tabSettings.Controls.Add(this.chkColonizeOnlyBreathable);
+			this.tabSettings.Controls.Add(this.label58);
+			this.tabSettings.Controls.Add(this.chkUniqueRuins);
+			this.tabSettings.Controls.Add(this.label57);
+			this.tabSettings.Controls.Add(this.chkRandomRuins);
+			this.tabSettings.Controls.Add(this.label56);
+			this.tabSettings.Controls.Add(this.chkAllowIntel);
+			this.tabSettings.Controls.Add(this.label55);
+			this.tabSettings.Controls.Add(this.chkAllowSurrender);
+			this.tabSettings.Controls.Add(this.label54);
+			this.tabSettings.Controls.Add(this.label53);
+			this.tabSettings.Controls.Add(this.label52);
+			this.tabSettings.Controls.Add(this.ddlAllowedTrades);
+			this.tabSettings.Controls.Add(this.chkHumansVsAI);
+			this.tabSettings.Controls.Add(this.txtGalaxyName);
+			this.tabSettings.Controls.Add(this.labelName);
+			this.tabSettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabSettings.Location = new System.Drawing.Point(4, 29);
 			this.tabSettings.Name = "tabSettings";
 			this.tabSettings.Padding = new System.Windows.Forms.Padding(3);
@@ -2130,15 +2148,217 @@
 			this.tabSettings.TabIndex = 5;
 			this.tabSettings.Text = "Settings";
 			// 
-			// tabMechanics
+			// chkAllowAnalysis
 			// 
-			this.tabMechanics.BackColor = System.Drawing.Color.Black;
-			this.tabMechanics.Location = new System.Drawing.Point(4, 29);
-			this.tabMechanics.Name = "tabMechanics";
-			this.tabMechanics.Padding = new System.Windows.Forms.Padding(3);
-			this.tabMechanics.Size = new System.Drawing.Size(545, 540);
-			this.tabMechanics.TabIndex = 6;
-			this.tabMechanics.Text = "Mechanics";
+			this.chkAllowAnalysis.AutoSize = true;
+			this.chkAllowAnalysis.Checked = true;
+			this.chkAllowAnalysis.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkAllowAnalysis.Location = new System.Drawing.Point(164, 122);
+			this.chkAllowAnalysis.Name = "chkAllowAnalysis";
+			this.chkAllowAnalysis.Size = new System.Drawing.Size(15, 14);
+			this.chkAllowAnalysis.TabIndex = 44;
+			this.chkAllowAnalysis.UseVisualStyleBackColor = true;
+			// 
+			// label60
+			// 
+			this.label60.AutoSize = true;
+			this.label60.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label60.Location = new System.Drawing.Point(10, 121);
+			this.label60.Margin = new System.Windows.Forms.Padding(3);
+			this.label60.Name = "label60";
+			this.label60.Size = new System.Drawing.Size(83, 15);
+			this.label60.TabIndex = 43;
+			this.label60.Text = "Allow Analysis";
+			// 
+			// chkColonizeOnlyHWSurface
+			// 
+			this.chkColonizeOnlyHWSurface.AutoSize = true;
+			this.chkColonizeOnlyHWSurface.Location = new System.Drawing.Point(164, 203);
+			this.chkColonizeOnlyHWSurface.Name = "chkColonizeOnlyHWSurface";
+			this.chkColonizeOnlyHWSurface.Size = new System.Drawing.Size(15, 14);
+			this.chkColonizeOnlyHWSurface.TabIndex = 42;
+			this.chkColonizeOnlyHWSurface.UseVisualStyleBackColor = true;
+			// 
+			// label59
+			// 
+			this.label59.AutoSize = true;
+			this.label59.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label59.Location = new System.Drawing.Point(10, 202);
+			this.label59.Margin = new System.Windows.Forms.Padding(3);
+			this.label59.Name = "label59";
+			this.label59.Size = new System.Drawing.Size(150, 15);
+			this.label59.TabIndex = 41;
+			this.label59.Text = "Colonize Only HW Surface";
+			// 
+			// chkColonizeOnlyBreathable
+			// 
+			this.chkColonizeOnlyBreathable.AutoSize = true;
+			this.chkColonizeOnlyBreathable.Location = new System.Drawing.Point(164, 183);
+			this.chkColonizeOnlyBreathable.Name = "chkColonizeOnlyBreathable";
+			this.chkColonizeOnlyBreathable.Size = new System.Drawing.Size(15, 14);
+			this.chkColonizeOnlyBreathable.TabIndex = 40;
+			this.chkColonizeOnlyBreathable.UseVisualStyleBackColor = true;
+			// 
+			// label58
+			// 
+			this.label58.AutoSize = true;
+			this.label58.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label58.Location = new System.Drawing.Point(10, 182);
+			this.label58.Margin = new System.Windows.Forms.Padding(3);
+			this.label58.Name = "label58";
+			this.label58.Size = new System.Drawing.Size(145, 15);
+			this.label58.TabIndex = 39;
+			this.label58.Text = "Colonize Only Breathable";
+			// 
+			// chkUniqueRuins
+			// 
+			this.chkUniqueRuins.AutoSize = true;
+			this.chkUniqueRuins.Checked = true;
+			this.chkUniqueRuins.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkUniqueRuins.Location = new System.Drawing.Point(164, 162);
+			this.chkUniqueRuins.Name = "chkUniqueRuins";
+			this.chkUniqueRuins.Size = new System.Drawing.Size(15, 14);
+			this.chkUniqueRuins.TabIndex = 38;
+			this.chkUniqueRuins.UseVisualStyleBackColor = true;
+			// 
+			// label57
+			// 
+			this.label57.AutoSize = true;
+			this.label57.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label57.Location = new System.Drawing.Point(10, 161);
+			this.label57.Margin = new System.Windows.Forms.Padding(3);
+			this.label57.Name = "label57";
+			this.label57.Size = new System.Drawing.Size(82, 15);
+			this.label57.TabIndex = 37;
+			this.label57.Text = "Unique Ruins";
+			// 
+			// chkRandomRuins
+			// 
+			this.chkRandomRuins.AutoSize = true;
+			this.chkRandomRuins.Checked = true;
+			this.chkRandomRuins.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkRandomRuins.Location = new System.Drawing.Point(164, 142);
+			this.chkRandomRuins.Name = "chkRandomRuins";
+			this.chkRandomRuins.Size = new System.Drawing.Size(15, 14);
+			this.chkRandomRuins.TabIndex = 36;
+			this.chkRandomRuins.UseVisualStyleBackColor = true;
+			// 
+			// label56
+			// 
+			this.label56.AutoSize = true;
+			this.label56.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label56.Location = new System.Drawing.Point(10, 141);
+			this.label56.Margin = new System.Windows.Forms.Padding(3);
+			this.label56.Name = "label56";
+			this.label56.Size = new System.Drawing.Size(90, 15);
+			this.label56.TabIndex = 35;
+			this.label56.Text = "Random Ruins";
+			// 
+			// chkAllowIntel
+			// 
+			this.chkAllowIntel.AutoSize = true;
+			this.chkAllowIntel.Checked = true;
+			this.chkAllowIntel.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkAllowIntel.Location = new System.Drawing.Point(164, 102);
+			this.chkAllowIntel.Name = "chkAllowIntel";
+			this.chkAllowIntel.Size = new System.Drawing.Size(15, 14);
+			this.chkAllowIntel.TabIndex = 34;
+			this.chkAllowIntel.UseVisualStyleBackColor = true;
+			// 
+			// label55
+			// 
+			this.label55.AutoSize = true;
+			this.label55.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label55.Location = new System.Drawing.Point(10, 101);
+			this.label55.Margin = new System.Windows.Forms.Padding(3);
+			this.label55.Name = "label55";
+			this.label55.Size = new System.Drawing.Size(102, 15);
+			this.label55.TabIndex = 33;
+			this.label55.Text = "Allow Intelligence";
+			// 
+			// chkAllowSurrender
+			// 
+			this.chkAllowSurrender.AutoSize = true;
+			this.chkAllowSurrender.Checked = true;
+			this.chkAllowSurrender.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkAllowSurrender.Location = new System.Drawing.Point(164, 82);
+			this.chkAllowSurrender.Name = "chkAllowSurrender";
+			this.chkAllowSurrender.Size = new System.Drawing.Size(15, 14);
+			this.chkAllowSurrender.TabIndex = 32;
+			this.chkAllowSurrender.UseVisualStyleBackColor = true;
+			// 
+			// label54
+			// 
+			this.label54.AutoSize = true;
+			this.label54.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label54.Location = new System.Drawing.Point(10, 81);
+			this.label54.Margin = new System.Windows.Forms.Padding(3);
+			this.label54.Name = "label54";
+			this.label54.Size = new System.Drawing.Size(94, 15);
+			this.label54.TabIndex = 31;
+			this.label54.Text = "Allow Surrender";
+			// 
+			// label53
+			// 
+			this.label53.AutoSize = true;
+			this.label53.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label53.Location = new System.Drawing.Point(8, 56);
+			this.label53.Margin = new System.Windows.Forms.Padding(3);
+			this.label53.Name = "label53";
+			this.label53.Size = new System.Drawing.Size(91, 15);
+			this.label53.TabIndex = 30;
+			this.label53.Text = "Allowed Trades";
+			// 
+			// label52
+			// 
+			this.label52.AutoSize = true;
+			this.label52.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label52.Location = new System.Drawing.Point(8, 32);
+			this.label52.Margin = new System.Windows.Forms.Padding(3);
+			this.label52.Name = "label52";
+			this.label52.Size = new System.Drawing.Size(84, 15);
+			this.label52.TabIndex = 29;
+			this.label52.Text = "Humans vs. AI";
+			// 
+			// ddlAllowedTrades
+			// 
+			this.ddlAllowedTrades.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlAllowedTrades.FormattingEnabled = true;
+			this.ddlAllowedTrades.Items.AddRange(new object[] {
+            "All",
+            "All but Technology",
+            "None"});
+			this.ddlAllowedTrades.Location = new System.Drawing.Point(164, 53);
+			this.ddlAllowedTrades.Name = "ddlAllowedTrades";
+			this.ddlAllowedTrades.Size = new System.Drawing.Size(152, 23);
+			this.ddlAllowedTrades.TabIndex = 28;
+			// 
+			// chkHumansVsAI
+			// 
+			this.chkHumansVsAI.AutoSize = true;
+			this.chkHumansVsAI.Location = new System.Drawing.Point(164, 33);
+			this.chkHumansVsAI.Name = "chkHumansVsAI";
+			this.chkHumansVsAI.Size = new System.Drawing.Size(15, 14);
+			this.chkHumansVsAI.TabIndex = 27;
+			this.chkHumansVsAI.UseVisualStyleBackColor = true;
+			// 
+			// txtGalaxyName
+			// 
+			this.txtGalaxyName.Location = new System.Drawing.Point(164, 6);
+			this.txtGalaxyName.Name = "txtGalaxyName";
+			this.txtGalaxyName.Size = new System.Drawing.Size(152, 21);
+			this.txtGalaxyName.TabIndex = 26;
+			// 
+			// labelName
+			// 
+			this.labelName.AutoSize = true;
+			this.labelName.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.labelName.Location = new System.Drawing.Point(7, 9);
+			this.labelName.Margin = new System.Windows.Forms.Padding(3);
+			this.labelName.Name = "labelName";
+			this.labelName.Size = new System.Drawing.Size(78, 15);
+			this.labelName.TabIndex = 25;
+			this.labelName.Text = "Game Name";
 			// 
 			// btnStart
 			// 
@@ -2271,6 +2491,8 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScorePercent)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryTurns)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnVictoryScore)).EndInit();
+			this.tabSettings.ResumeLayout(false);
+			this.tabSettings.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -2285,7 +2507,6 @@
 		private System.Windows.Forms.TabPage tabEmpires;
 		private System.Windows.Forms.TabPage tabVictory;
 		private System.Windows.Forms.TabPage tabSettings;
-		private System.Windows.Forms.TabPage tabMechanics;
 		private System.Windows.Forms.ComboBox ddlGalaxyType;
 		private System.Windows.Forms.Label lblGalaxyType;
 		private System.Windows.Forms.Label txtGalaxyTypeDescription;
@@ -2310,8 +2531,6 @@
 		private Controls.GameButton btnLoadSetup;
 		private Controls.GameButton btnSaveSetup;
 		private System.Windows.Forms.ProgressBar progressBar;
-		private System.Windows.Forms.TextBox txtGalaxyName;
-		private System.Windows.Forms.Label labelName;
 		private System.Windows.Forms.Label txtWarpPointLocation;
 		private System.Windows.Forms.BindingSource warpPointPlacementStrategyBindingSource;
 		private System.Windows.Forms.NumericUpDown spnSystemGroups;
@@ -2424,5 +2643,25 @@
 		private System.Windows.Forms.Label label50;
 		private System.Windows.Forms.Label label51;
 		private System.Windows.Forms.NumericUpDown spnVictoryDelay;
+		private System.Windows.Forms.TextBox txtGalaxyName;
+		private System.Windows.Forms.Label labelName;
+		private System.Windows.Forms.CheckBox chkHumansVsAI;
+		private System.Windows.Forms.Label label53;
+		private System.Windows.Forms.Label label52;
+		private System.Windows.Forms.ComboBox ddlAllowedTrades;
+		private System.Windows.Forms.CheckBox chkAllowSurrender;
+		private System.Windows.Forms.Label label54;
+		private System.Windows.Forms.CheckBox chkAllowIntel;
+		private System.Windows.Forms.Label label55;
+		private System.Windows.Forms.CheckBox chkUniqueRuins;
+		private System.Windows.Forms.Label label57;
+		private System.Windows.Forms.CheckBox chkRandomRuins;
+		private System.Windows.Forms.Label label56;
+		private System.Windows.Forms.CheckBox chkColonizeOnlyBreathable;
+		private System.Windows.Forms.Label label58;
+		private System.Windows.Forms.CheckBox chkColonizeOnlyHWSurface;
+		private System.Windows.Forms.Label label59;
+		private System.Windows.Forms.CheckBox chkAllowAnalysis;
+		private System.Windows.Forms.Label label60;
 	}
 }

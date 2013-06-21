@@ -144,6 +144,10 @@ namespace FrEee.WinForms.Forms
 					if (sector != null)
 					{
 						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.HasAbility("Colonize Planet - " + p.Surface));
+						if (Galaxy.Current.CanColonizeOnlyBreathable)
+							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
+						if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
+							suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 						if (suitablePlanets.Any())
 						{
 							// TODO - let user pick which planet to colonize

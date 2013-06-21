@@ -80,7 +80,6 @@ namespace FrEee.WinForms.Forms
 						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
 						StarSystemCount = 5,
 						GalaxySize = new System.Drawing.Size(40, 30),
-						IsSinglePlayer = true,
 						StarSystemGroups = 1,
 						WarpPointPlacementStrategy = EdgeAlignedWarpPointPlacementStrategy.Instance,
 						StandardMiningModel = new MiningModel
@@ -113,8 +112,20 @@ namespace FrEee.WinForms.Forms
 						MinorEmpires = 5,
 					};
 					// TODO - let player pick his empire even with quickstart
-					setup.EmpireTemplates.Add(new EmpireTemplate { Name = "Jraenar Imperium", LeaderName = "Master General Jar-Nolath", PrimaryRace = new Race { Name = "Jraenar", Color = Color.Red, NativeAtmosphere = "Hydrogen", NativeSurface = "Rock" } });
-					
+					setup.EmpireTemplates.Add(new EmpireTemplate
+					{
+						Name = "Jraenar Imperium",
+						LeaderName = "Master General Jar-Nolath",
+						IsPlayerEmpire = true,
+						PrimaryRace = new Race
+						{
+							Name = "Jraenar",
+							Color = Color.Red,
+							NativeAtmosphere = "Hydrogen",
+							NativeSurface = "Rock"
+						}
+					});
+
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, status, 1.0);
 					var name = Galaxy.Current.Name;

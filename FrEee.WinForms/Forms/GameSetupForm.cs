@@ -39,6 +39,9 @@ namespace FrEee.WinForms.Forms
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
 			stellarObjectSizeBindingSource.DataSource = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Size).Distinct();
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
+			foreach (AllowedTrades item in Enum.GetValues(typeof(AllowedTrades)))
+				ddlAllowedTrades.Items.Add(item);
+			ddlAllowedTrades.SelectedItem = AllowedTrades.All;
 
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -132,6 +135,15 @@ namespace FrEee.WinForms.Forms
 			if (chkVictoryPeace.Checked)
 				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
 			setup.VictoryDelay = (int)spnVictoryDelay.Value;
+			setup.IsHumansVsAI = chkHumansVsAI.Checked;
+			setup.AllowedTrades = (AllowedTrades)ddlAllowedTrades.SelectedItem;
+			setup.IsSurrenderAllowed = chkAllowSurrender.Checked;
+			setup.IsIntelligenceAllowed = chkAllowIntel.Checked;
+			setup.IsAnalysisAllowed = chkAllowAnalysis.Checked;
+			setup.GenerateRandomRuins = chkRandomRuins.Checked;
+			setup.GenerateUniqueRuins = chkUniqueRuins.Checked;
+			setup.CanColonizeOnlyBreathable = chkColonizeOnlyBreathable.Checked;
+			setup.CanColonizeOnlyHomeworldSurface = chkColonizeOnlyHWSurface.Checked;
 
 			if (setup.Warnings.Any())
 			{

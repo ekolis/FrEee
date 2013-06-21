@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\AllowedTrades.cs" />
     <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
     <Compile Include="Game\Enumerations\Mood.cs" />
     <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
