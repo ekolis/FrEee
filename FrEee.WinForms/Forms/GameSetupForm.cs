@@ -67,83 +67,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnStart_Click(object sender, EventArgs e)
 		{
-			setup.GameName = txtGalaxyName.Text;
-			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
-			setup.OmniscientView = chkOmniscient.Checked;
-			setup.StandardMiningModel = new MiningModel
-			{
-				RatePercentage = (double)spnRateStandard.Value,
-				ValuePercentageBonus = (double)spnBonusStandard.Value,
-				ValueDepletionPerResource = (double)spnDepletionResourceStandard.Value,
-				BonusAffectsDepletion = chkBonusDepletionStandard.Checked,
-				ValueDepletionPerTurn = (int)spnDepletionTurnStandard.Value,
-			};
-			setup.RemoteMiningModel = new MiningModel
-			{
-				RatePercentage = (double)spnRateRemote.Value,
-				ValuePercentageBonus = (double)spnBonusRemote.Value,
-				ValueDepletionPerResource = (double)spnDepletionResourceRemote.Value,
-				BonusAffectsDepletion = chkBonusDepletionRemote.Checked,
-				ValueDepletionPerTurn = (int)spnDepletionTurnRemote.Value,
-			};
-			setup.MinPlanetValue = (int)spnMinValuePlanet.Value;
-			setup.MinSpawnedPlanetValue = (int)spnMinSpawnValuePlanet.Value;
-			setup.HomeworldValue = (int)spnHomeworldValue.Value;
-			setup.MaxSpawnedPlanetValue = (int)spnMaxSpawnValuePlanet.Value;
-			setup.MaxPlanetValue = (int)spnMaxValuePlanet.Value;
-			setup.MinAsteroidValue = (int)spnMinValueAsteroid.Value;
-			setup.MinSpawnedAsteroidValue = (int)spnMinSpawnValueAsteroid.Value;
-			setup.MaxSpawnedAsteroidValue = (int)spnMaxSpawnValueAsteroid.Value;
-			switch (ddlStartTech.SelectedIndex)
-			{
-				case 0:
-					setup.StartingTechnologyLevel = StartingTechnologyLevel.Low;
-					break;
-				case 1:
-					setup.StartingTechnologyLevel = StartingTechnologyLevel.Medium;
-					break;
-				case 2:
-					setup.StartingTechnologyLevel = StartingTechnologyLevel.High;
-					break;
-			}
-			for (int i = 0; i < lstTechs.Items.Count; i++)
-			{
-				if (!lstTechs.GetItemChecked(i))
-					setup.ForbiddenTechnologies.Add((Technology)lstTechs.Items[i]);
-			}
-			setup.StartingResources = (int)spnStartResources.Value;
-			setup.ResourceStorage = (int)spnResourceStorage.Value;
-			setup.StartingResearch = (int)spnStartResearch.Value;
-			setup.HomeworldsPerEmpire = (int)spnHomeworlds.Value;
-			setup.HomeworldSize = (StellarObjectSize)ddlHomeworldSize.SelectedItem;
-			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
-			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
-			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);
-			setup.EmpirePoints = (int)spnEmpirePoints.Value;
-			setup.RandomAIs = (int)spnRandomAIs.Value;
-			setup.MinorEmpires = (int)spnMinorEmpires.Value;
-			if (chkVictoryEliminateMajorEmpires.Checked)
-				setup.VictoryConditions.Add(new MajorEmpireEliminationVictoryCondition());
-			if (chkVictoryScore.Checked)
-				setup.VictoryConditions.Add(new ScoreVictoryCondition((long)spnVictoryScore.Value));
-			if (chkVictoryScorePercent.Checked)
-				setup.VictoryConditions.Add(new ScorePercentageVictoryCondition((int)spnVictoryScorePercent.Value));
-			if (chkVictoryTurns.Checked)
-				setup.VictoryConditions.Add(new SurvivalVictoryCondition((int)spnVictoryTurns.Value));
-			if (chkVictoryTech.Checked)
-				setup.VictoryConditions.Add(new TechnologyVictoryCondition((int)spnVictoryTech.Value));
-			if (chkVictoryPeace.Checked)
-				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
-			setup.VictoryDelay = (int)spnVictoryDelay.Value;
-			setup.IsHumansVsAI = chkHumansVsAI.Checked;
-			setup.AllowedTrades = (AllowedTrades)ddlAllowedTrades.SelectedItem;
-			setup.IsSurrenderAllowed = chkAllowSurrender.Checked;
-			setup.IsIntelligenceAllowed = chkAllowIntel.Checked;
-			setup.IsAnalysisAllowed = chkAllowAnalysis.Checked;
-			setup.GenerateRandomRuins = chkRandomRuins.Checked;
-			setup.GenerateUniqueRuins = chkUniqueRuins.Checked;
-			setup.CanColonizeOnlyBreathable = chkColonizeOnlyBreathable.Checked;
-			setup.CanColonizeOnlyHomeworldSurface = chkColonizeOnlyHWSurface.Checked;
+			SaveChanges();
 
 			if (setup.Warnings.Any())
 			{
@@ -222,16 +146,222 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private void SaveChanges()
+		{
+			setup.GameName = txtGalaxyName.Text;
+			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
+			setup.OmniscientView = chkOmniscient.Checked;
+			setup.StandardMiningModel = new MiningModel
+			{
+				RatePercentage = (double)spnRateStandard.Value,
+				ValuePercentageBonus = (double)spnBonusStandard.Value,
+				ValueDepletionPerResource = (double)spnDepletionResourceStandard.Value,
+				BonusAffectsDepletion = chkBonusDepletionStandard.Checked,
+				ValueDepletionPerTurn = (int)spnDepletionTurnStandard.Value,
+			};
+			setup.RemoteMiningModel = new MiningModel
+			{
+				RatePercentage = (double)spnRateRemote.Value,
+				ValuePercentageBonus = (double)spnBonusRemote.Value,
+				ValueDepletionPerResource = (double)spnDepletionResourceRemote.Value,
+				BonusAffectsDepletion = chkBonusDepletionRemote.Checked,
+				ValueDepletionPerTurn = (int)spnDepletionTurnRemote.Value,
+			};
+			setup.MinPlanetValue = (int)spnMinValuePlanet.Value;
+			setup.MinSpawnedPlanetValue = (int)spnMinSpawnValuePlanet.Value;
+			setup.HomeworldValue = (int)spnHomeworldValue.Value;
+			setup.MaxSpawnedPlanetValue = (int)spnMaxSpawnValuePlanet.Value;
+			setup.MaxPlanetValue = (int)spnMaxValuePlanet.Value;
+			setup.MinAsteroidValue = (int)spnMinValueAsteroid.Value;
+			setup.MinSpawnedAsteroidValue = (int)spnMinSpawnValueAsteroid.Value;
+			setup.MaxSpawnedAsteroidValue = (int)spnMaxSpawnValueAsteroid.Value;
+			switch (ddlStartTech.SelectedIndex)
+			{
+				case 0:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.Low;
+					break;
+				case 1:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.Medium;
+					break;
+				case 2:
+					setup.StartingTechnologyLevel = StartingTechnologyLevel.High;
+					break;
+			}
+			for (int i = 0; i < lstTechs.Items.Count; i++)
+			{
+				if (!lstTechs.GetItemChecked(i))
+					setup.ForbiddenTechnologies.Add((Technology)lstTechs.Items[i]);
+			}
+			setup.StartingResources = (int)spnStartResources.Value;
+			setup.ResourceStorage = (int)spnResourceStorage.Value;
+			setup.StartingResearch = (int)spnStartResearch.Value;
+			setup.HomeworldsPerEmpire = (int)spnHomeworlds.Value;
+			setup.HomeworldSize = (StellarObjectSize)ddlHomeworldSize.SelectedItem;
+			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
+			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
+			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);
+			setup.EmpirePoints = (int)spnEmpirePoints.Value;
+			setup.RandomAIs = (int)spnRandomAIs.Value;
+			setup.MinorEmpires = (int)spnMinorEmpires.Value;
+			if (chkVictoryEliminateMajorEmpires.Checked)
+				setup.VictoryConditions.Add(new MajorEmpireEliminationVictoryCondition());
+			if (chkVictoryScore.Checked)
+				setup.VictoryConditions.Add(new ScoreVictoryCondition((long)spnVictoryScore.Value));
+			if (chkVictoryScorePercent.Checked)
+				setup.VictoryConditions.Add(new ScorePercentageVictoryCondition((int)spnVictoryScorePercent.Value));
+			if (chkVictoryTurns.Checked)
+				setup.VictoryConditions.Add(new SurvivalVictoryCondition((int)spnVictoryTurns.Value));
+			if (chkVictoryTech.Checked)
+				setup.VictoryConditions.Add(new TechnologyVictoryCondition((int)spnVictoryTech.Value));
+			if (chkVictoryPeace.Checked)
+				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
+			setup.VictoryDelay = (int)spnVictoryDelay.Value;
+			setup.IsHumansVsAI = chkHumansVsAI.Checked;
+			setup.AllowedTrades = (AllowedTrades)ddlAllowedTrades.SelectedItem;
+			setup.IsSurrenderAllowed = chkAllowSurrender.Checked;
+			setup.IsIntelligenceAllowed = chkAllowIntel.Checked;
+			setup.IsAnalysisAllowed = chkAllowAnalysis.Checked;
+			setup.GenerateRandomRuins = chkRandomRuins.Checked;
+			setup.GenerateUniqueRuins = chkUniqueRuins.Checked;
+			setup.CanColonizeOnlyBreathable = chkColonizeOnlyBreathable.Checked;
+			setup.CanColonizeOnlyHomeworldSurface = chkColonizeOnlyHWSurface.Checked;
+		}
+
+		private void Bind()
+		{
+			txtGalaxyName.Text = setup.GameName;
+			chkAllSystemsExplored.Checked = setup.AllSystemsExplored;
+			chkOmniscient.Checked = setup.OmniscientView;
+
+			spnRateStandard.Value = (decimal)setup.StandardMiningModel.RatePercentage;
+			spnBonusStandard.Value = (decimal)setup.StandardMiningModel.ValuePercentageBonus;
+			spnDepletionResourceStandard.Value = (decimal)setup.StandardMiningModel.ValueDepletionPerResource;
+			chkBonusDepletionStandard.Checked = setup.StandardMiningModel.BonusAffectsDepletion;
+			spnDepletionResourceStandard.Value = setup.StandardMiningModel.ValueDepletionPerTurn;
+
+			spnRateRemote.Value = (decimal)setup.RemoteMiningModel.RatePercentage;
+			spnBonusRemote.Value = (decimal)setup.RemoteMiningModel.ValuePercentageBonus;
+			spnDepletionResourceRemote.Value = (decimal)setup.RemoteMiningModel.ValueDepletionPerResource;
+			chkBonusDepletionRemote.Checked = setup.RemoteMiningModel.BonusAffectsDepletion;
+			spnDepletionResourceRemote.Value = setup.RemoteMiningModel.ValueDepletionPerTurn;
+
+			spnMinValuePlanet.Value = setup.MinPlanetValue;
+			spnMinSpawnValuePlanet.Value = setup.MinSpawnedPlanetValue;
+			spnHomeworldValue.Value = setup.HomeworldValue;
+			spnMaxSpawnValuePlanet.Value = setup.MaxSpawnedPlanetValue;
+			spnMaxValuePlanet.Value = setup.MaxPlanetValue;
+
+			spnMinValueAsteroid.Value = setup.MinAsteroidValue;
+			spnMinSpawnValueAsteroid.Value = setup.MinSpawnedAsteroidValue;
+			spnMaxSpawnValueAsteroid.Value = setup.MaxSpawnedAsteroidValue;
+			
+			switch (setup.StartingTechnologyLevel)
+			{
+				case StartingTechnologyLevel.Low:
+					ddlStartTech.SelectedIndex = 0;
+					break;
+				case StartingTechnologyLevel.Medium:
+					ddlStartTech.SelectedIndex = 1;
+					break;
+				case StartingTechnologyLevel.High:
+					ddlStartTech.SelectedIndex = 2;
+					break;
+			}
+			for (int i = 0; i < lstTechs.Items.Count; i++)
+				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologies.Contains((Technology)lstTechs.Items[i]));
+
+			spnStartResources.Value = setup.StartingResources;
+			spnResourceStorage.Value = setup.ResourceStorage;
+			spnStartResearch.Value = setup.StartingResearch;
+			spnHomeworlds.Value = setup.HomeworldsPerEmpire;
+			ddlHomeworldSize.SelectedItem = setup.HomeworldSize;
+			ddlEmpirePlacement.SelectedIndex = (int)setup.EmpirePlacement;
+			spnMaxDispersion.Value = setup.MaxHomeworldDispersion;
+			ddlScoreDisplay.SelectedIndex = (int)setup.ScoreDisplay;
+			spnEmpirePoints.Value = setup.EmpirePoints;
+			spnRandomAIs.Value = setup.RandomAIs;
+			spnMinorEmpires.Value = setup.MinorEmpires;
+
+			if (setup.VictoryConditions.OfType<MajorEmpireEliminationVictoryCondition>().Any())
+				chkVictoryEliminateMajorEmpires.Checked = true;
+			else
+				chkVictoryEliminateMajorEmpires.Checked = false;
+			if (setup.VictoryConditions.OfType<ScoreVictoryCondition>().Any())
+			{
+				chkVictoryScore.Checked = true;
+				var vc = setup.VictoryConditions.OfType<ScoreVictoryCondition>().First();
+				spnVictoryScore.Value = vc.Score;
+			}
+			else
+				chkVictoryScore.Checked = false;
+			if (setup.VictoryConditions.OfType<ScorePercentageVictoryCondition>().Any())
+			{
+				chkVictoryScorePercent.Checked = true;
+				var vc = setup.VictoryConditions.OfType<ScorePercentageVictoryCondition>().First();
+				spnVictoryScorePercent.Value = vc.Percentage;
+			}
+			else
+				chkVictoryScorePercent.Checked = false;
+			if (setup.VictoryConditions.OfType<SurvivalVictoryCondition>().Any())
+			{
+				chkVictoryTurns.Checked = true;
+				var vc = setup.VictoryConditions.OfType<SurvivalVictoryCondition>().First();
+				spnVictoryTurns.Value = vc.Turns;
+			}
+			else
+				chkVictoryTurns.Checked = false;
+			if (setup.VictoryConditions.OfType<TechnologyVictoryCondition>().Any())
+			{
+				chkVictoryTech.Checked = true;
+				var vc = setup.VictoryConditions.OfType<TechnologyVictoryCondition>().First();
+				spnVictoryTech.Value = vc.Percentage;
+			}
+			else
+				chkVictoryTech.Checked = false;
+			if (setup.VictoryConditions.OfType<PeaceVictoryCondition>().Any())
+			{
+				chkVictoryPeace.Checked = true;
+				var vc = setup.VictoryConditions.OfType<PeaceVictoryCondition>().First();
+				spnVictoryPeace.Value = vc.Turns;
+			}
+			else
+				chkVictoryPeace.Checked = false;
+			spnVictoryDelay.Value = setup.VictoryDelay;
+
+
+			chkHumansVsAI.Checked = setup.IsHumansVsAI;
+			ddlAllowedTrades.SelectedItem = setup.AllowedTrades;
+			chkAllowSurrender.Checked = setup.IsSurrenderAllowed;
+			chkAllowIntel.Checked = setup.IsIntelligenceAllowed;
+			chkAllowAnalysis.Checked = setup.IsAnalysisAllowed;
+			chkRandomRuins.Checked = setup.GenerateRandomRuins;
+			chkUniqueRuins.Checked = setup.GenerateUniqueRuins;
+			chkColonizeOnlyBreathable.Checked = setup.CanColonizeOnlyBreathable;
+			chkColonizeOnlyHWSurface.Checked = setup.CanColonizeOnlyHomeworldSurface;
+		}
+
 		private void btnLoadSetup_Click(object sender, EventArgs e)
 		{
-			// TODO - load setup
-			MessageBox.Show("Sorry, loading a game setup is not yet supported.");
+			var dlg = new OpenFileDialog();
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups");
+			dlg.Filter = "Game Setups (*.gsu)|*.gsu";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+			{
+				setup = GameSetup.Load(dlg.FileName);
+				Bind();
+			}
 		}
 
 		private void btnSaveSetup_Click(object sender, EventArgs e)
 		{
-			// TODO - save setup
-			MessageBox.Show("Sorry, saving a game setup is not yet supported.");
+			SaveChanges();
+			var dlg = new SaveFileDialog();
+			dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups");
+			dlg.Filter = "Game Setups (*.gsu)|*.gsu";
+			var result = dlg.ShowDialog();
+			if (result == DialogResult.OK)
+				setup.Save(dlg.FileName);
 		}
 
 		private void ddlGalaxyType_SelectedIndexChanged(object sender, EventArgs e)

@@ -15,6 +15,7 @@ using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Objects.Abilities;
+using System.IO;
 
 namespace FrEee.Game.Setup
 {
@@ -447,6 +448,21 @@ namespace FrEee.Game.Setup
 				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet.Owner == emp))
 					sys.ExploredByEmpires.Add(emp);
 			}
+		}
+
+		public static GameSetup Load(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Open);
+			var gsu = Serializer.Deserialize<GameSetup>(fs);
+			fs.Close();
+			return gsu;
+		}
+
+		public void Save(string filename)
+		{
+			var fs = new FileStream(filename, FileMode.Create);
+			Serializer.Serialize(this, fs);
+			fs.Close();
 		}
 	}
 }
