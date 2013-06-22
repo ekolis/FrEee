@@ -551,5 +551,22 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return false; }
 		}
+
+
+		public int Accuracy
+		{
+			get
+			{
+				return Mod.Current.Settings.PlanetAccuracy + this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt();
+			}
+		}
+
+		public int Evasion
+		{
+			get
+			{
+				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
+			}
+		}
 	}
 }

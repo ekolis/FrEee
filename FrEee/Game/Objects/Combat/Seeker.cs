@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -204,6 +205,23 @@ namespace FrEee.Game.Objects.Combat
 		public bool IsHostileTo(Empire emp)
 		{
 			return Owner == null ? false : Owner.IsHostileTo(emp);
+		}
+
+		/// <summary>
+		/// Seekers don't fire so it doesn't really matter...
+		/// </summary>
+		public int Accuracy
+		{
+			get { return 0; }
+		}
+
+		/// <summary>
+		/// Seeker evasion is determined by Settings.txt.
+		/// TODO - add a field to Components.txt that lets seekers have custom evasion values?
+		/// </summary>
+		public int Evasion
+		{
+			get { return Mod.Current.Settings.SeekerEvasion; }
 		}
 	}
 }

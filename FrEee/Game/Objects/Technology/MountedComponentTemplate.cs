@@ -220,5 +220,21 @@ namespace FrEee.Game.Objects.Technology
 				return dmg.ToArray();
 			}
 		}
+
+		/// <summary>
+		/// Accuracy rating of this component, if it is a weapon.
+		/// </summary>
+		public int WeaponAccuracy
+		{
+			get
+			{
+				var w = ComponentTemplate.WeaponInfo;
+				if (w == null)
+					return 0;
+				if (w is DirectFireWeaponInfo)
+					return ((DirectFireWeaponInfo)w).AccuracyModifier + (Mount == null ? 0 : Mount.WeaponAccuracyModifier);
+				return 999; // seekers/warheads
+			}
+		}
 	}
 }

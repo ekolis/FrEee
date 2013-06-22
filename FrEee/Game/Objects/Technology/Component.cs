@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -70,20 +71,30 @@ namespace FrEee.Game.Objects.Technology
 		/// If not a weapon, does nothing.
 		/// </summary>
 		/// <param name="target"></param>
-		public void Attack(ICombatObject target, Battle battle)
+		public void Attack(ICombatObject attacker, ICombatObject defender, Battle battle)
 		{
-			if (!CanTarget(target))
+			if (!CanTarget(defender))
 				return;
 
 			// TODO - check range too
-			battle.LogShot(this);
-			target.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.WeaponDamage[1], battle);
-			if (target.MaxNormalShields < target.NormalShields)
-				target.NormalShields = target.MaxNormalShields;
-			if (target.MaxPhasedShields < target.PhasedShields)
-				target.PhasedShields = target.MaxPhasedShields;
-			if (target.IsDestroyed)
-				battle.LogTargetDeath(target);
+			var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + Template.WeaponAccuracy + attacker.Accuracy - defender.Evasion;
+			// TODO - moddable min/max hit chances with per-weapon overrides
+			if (tohit > 99)
+				tohit = 99;
+			if (tohit < 1)
+				tohit = 1;
+			var hit = RandomHelper.Range(0, 99) < tohit;
+			battle.LogShot(this, hit);
+			if (hit)
+			{
+				defender.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.WeaponDamage[1], battle);
+				if (defender.MaxNormalShields < defender.NormalShields)
+					defender.NormalShields = defender.MaxNormalShields;
+				if (defender.MaxPhasedShields < defender.PhasedShields)
+					defender.PhasedShields = defender.MaxPhasedShields;
+				if (defender.IsDestroyed)
+					battle.LogTargetDeath(defender);
+			}
 		}
 
 		public System.Drawing.Image Icon

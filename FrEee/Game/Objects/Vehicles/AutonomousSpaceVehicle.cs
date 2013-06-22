@@ -290,5 +290,21 @@ namespace FrEee.Game.Objects.Vehicles
 				}
 			}
 		}
+
+		public int Accuracy
+		{
+			get
+			{
+				return this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt();
+			}
+		}
+
+		public int Evasion
+		{
+			get
+			{
+				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
+			}
+		}
 	}
 }

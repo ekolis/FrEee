@@ -10,15 +10,15 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// A space object that fire weapons and be targeted by weapons.
+	/// A space object that may fire weapons and can targeted by weapons.
 	/// </summary>
 	public interface ICombatObject : IPictorial, IOwnable, IDamageable
 	{
 		/// <summary>
-		/// Can this object fire on another space object?
+		/// Can this object fire on another combat object?
 		/// </summary>
 		/// <param name="target"></param>
-		/// <returns>true if the target is an enemy and this space object has weapons capable of targeting it</returns>
+		/// <returns>true if the target is an enemy and this combat object has weapons capable of targeting it</returns>
 		bool CanTarget(ICombatObject target);
 
 		/// <summary>
@@ -27,10 +27,20 @@ namespace FrEee.Game.Interfaces
 		WeaponTargets WeaponTargetType { get; }
 
 		/// <summary>
-		/// Any undamaged weapons this space object is armed with.
+		/// Any undamaged weapons this combat object is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }
 
 		bool IsHostileTo(Empire emp);
+
+		/// <summary>
+		/// Accuracy rating of this combat object.
+		/// </summary>
+		int Accuracy { get; }
+
+		/// <summary>
+		/// Evasion rating of this combat object.
+		/// </summary>
+		int Evasion { get; }
 	}
 }

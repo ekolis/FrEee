@@ -103,7 +103,7 @@ namespace FrEee.Game.Objects.Combat
 							else
 							{
 								// direct fire
-								weapon.Attack(defender, this); // TODO - range and accuracy and such
+								weapon.Attack(attacker, defender, this); // TODO - range and accuracy and such
 								if (defender.IsDestroyed)
 								{
 									if (defender is ISpaceObject)
@@ -140,9 +140,9 @@ namespace FrEee.Game.Objects.Combat
 			Log.Add(new PictorialLogMessage<ICombatObject>(attacker + " attacks " + defender + "!", attacker));
 		}
 
-		public void LogShot(Component weapon)
+		public void LogShot(Component weapon, bool hit)
 		{
-			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + "!", weapon));
+			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + " and " + (hit ? "hits" : "misses") + "!", weapon));
 		}
 
 		public void LogLaunch(ICombatObject craft)
