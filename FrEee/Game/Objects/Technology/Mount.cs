@@ -70,6 +70,11 @@ namespace FrEee.Game.Objects.Technology
 		public int DurabilityPercent { get; set; }
 
 		/// <summary>
+		/// Percentage of normal weapon damage.
+		/// </summary>
+		public int WeaponDamagePercent { get; set; }
+
+		/// <summary>
 		/// Percentage of normal component supply usage.
 		/// </summary>
 		public int SupplyUsagePercent { get; set; }

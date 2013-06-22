@@ -76,9 +76,8 @@ namespace FrEee.Game.Objects.Technology
 				return;
 
 			// TODO - check range too
-			// TODO - take into account weapon mounts
 			battle.LogShot(this);
-			target.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.ComponentTemplate.WeaponInfo.Damage[1], battle);
+			target.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.WeaponDamage[1], battle);
 			if (target.MaxNormalShields < target.NormalShields)
 				target.NormalShields = target.MaxNormalShields;
 			if (target.MaxPhasedShields < target.PhasedShields)

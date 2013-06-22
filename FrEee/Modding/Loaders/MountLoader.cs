@@ -36,6 +36,7 @@ namespace FrEee.Modding.Loaders
 				m.CostPercent = rec.GetNullInt("Cost Percent", ref index) ?? 100;
 				m.SizePercent = rec.GetNullInt("Tonnage Percent", ref index) ?? 100;
 				m.DurabilityPercent = rec.GetNullInt("Tonnage Structure Percent", ref index) ?? 100;
+				m.WeaponDamagePercent = rec.GetNullInt("Damage Percent", ref index) ?? 100;
 				m.SupplyUsagePercent = rec.GetNullInt("Supply Percent", ref index) ?? 100;
 				m.WeaponRangeModifier = rec.GetNullInt("Range Modifier", ref index) ?? 0;
 				m.WeaponAccuracyModifier = rec.GetNullInt("Weapon To Hit Modifier", ref index) ?? 0;

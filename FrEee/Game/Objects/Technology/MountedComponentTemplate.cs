@@ -184,5 +184,41 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return Name;
 		}
+
+		/// <summary>
+		/// Damage inflicted by this component at range, if it is a weapon.
+		/// </summary>
+		public int[] WeaponDamage
+		{
+			get
+			{
+				var w = ComponentTemplate.WeaponInfo;
+				if (w == null)
+					return null;
+				if (Mount == null)
+					return w.Damage;
+
+				var dmg = new List<int>();
+				dmg.Add(w.Damage[0] * Mount.WeaponDamagePercent / 100);
+				if (Mount.WeaponRangeModifier > 0)
+				{
+					if (w.Damage.Length > 1)
+					{
+						// extend range by applying range-1 damage out further
+						for (int i = 0; i < Mount.WeaponRangeModifier; i++)
+							dmg.Add(w.Damage[1] * Mount.WeaponDamagePercent / 100);
+					}
+					foreach (var d in w.Damage.Skip(1))
+						dmg.Add(d * Mount.WeaponDamagePercent / 100);
+				}
+				else
+				{
+					// reduce range by applying further-out damage at range 1
+					foreach (var d in w.Damage.Skip(-Mount.WeaponRangeModifier + 1))
+						dmg.Add(d * Mount.WeaponDamagePercent / 100);
+				}
+				return dmg.ToArray();
+			}
+		}
 	}
 }
