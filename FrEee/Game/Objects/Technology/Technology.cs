@@ -79,7 +79,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return RacialTechID == "0" || string.IsNullOrWhiteSpace(RacialTechID);
+				return RacialTechID != "0" && !string.IsNullOrWhiteSpace(RacialTechID);
 			}
 		}
 
@@ -93,7 +93,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return UniqueTechID == "0" || string.IsNullOrWhiteSpace(UniqueTechID);
+				return UniqueTechID != "0" && !string.IsNullOrWhiteSpace(UniqueTechID);
 			}
 		}
 

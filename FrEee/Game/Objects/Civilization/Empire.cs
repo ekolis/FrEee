@@ -49,6 +49,7 @@ namespace FrEee.Game.Objects.Civilization
 			AccumulatedResearch = new SafeDictionary<Tech, int>();
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
+			UniqueTechsFound = new List<string>();
 		}
 
 		/// <summary>
@@ -288,6 +289,15 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// Unique techs that this empire has found from ruins.
+		/// </summary>
+		public ICollection<string> UniqueTechsFound
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Determines if something has been unlocked in the tech tree.
 		/// </summary>
 		/// <param name="item"></param>
@@ -296,6 +306,10 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (item == null)
 				return true;
+			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == ((Tech)item).RacialTechID))
+				return false; // racial tech that this empire doesn't have the trait for
+			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
+				return false; // racial tech that this empire doesn't have the trait for
 			return item.TechnologyRequirements.All(r => ResearchedTechnologies[r.Technology] >= r.Level);
 		}
 
