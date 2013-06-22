@@ -50,20 +50,22 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Execute(T sobj)
 		{
-			var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
-
 			// TODO - movement logs
-			if (gotoSector != null)
-			{
-				// move
-				sobj.FindSector().SpaceObjects.Remove(sobj);
-				gotoSector.SpaceObjects.Add(sobj);
-			}
-			else if (sobj.FindSector() == Destination)
+			if (sobj.FindSector() == Destination)
 				IsComplete = true;
 			else
 			{
-				// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
+				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				if (gotoSector != null)
+				{
+					// move
+					sobj.FindSector().SpaceObjects.Remove(sobj);
+					gotoSector.SpaceObjects.Add(sobj);
+				}
+				else
+				{
+					// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
+				}
 			}
 
 			// spend time

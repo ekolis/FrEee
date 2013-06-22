@@ -25,6 +25,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies)
 		{
+			if (start == end)
+				return Enumerable.Empty<Sector>();
+
 			var map = CreateDijkstraMap(me, start, end, avoidEnemies);
 
 			if (!map.Any())
