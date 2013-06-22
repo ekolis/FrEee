@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.VictoryConditions
 		{
 			if (emp.IsDefeated)
 				return 0;
-			return (double)emp.ResearchedTechnologies.Where(t => t.Key.RacialTechID == 0 && t.Key.UniqueTechID == 0).Sum(t => t.Value) / (double)Mod.Current.Technologies.Where(t => t.RacialTechID == 0 && t.UniqueTechID == 0).Sum(t => t.MaximumLevel);
+			return (double)emp.ResearchedTechnologies.Where(t => !t.Key.IsRacial && !t.Key.IsUnique).Sum(t => t.Value) / (double)Mod.Current.Technologies.Where(t => !t.IsRacial && !t.IsUnique).Sum(t => t.MaximumLevel);
 		}
 
 		public string GetVictoryMessage(Empire emp)

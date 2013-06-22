@@ -5,6 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -56,16 +57,45 @@ namespace FrEee.Game.Objects.Technology
 		public int RaiseLevel { get; set; }
 
 		/// <summary>
-		/// If greater than zero, this tech is a "racial tech" and will not be researchable
-		/// except by empires possessing the racial trait referencing this ID.
+		/// If not null or zero, this tech is a "racial tech" and will not be researchable
+		/// except by empires possessing the trait referencing this ID.
 		/// </summary>
-		public int RacialTechID { get; set; }
+		public string RacialTechID { get; set; }
 
 		/// <summary>
-		/// If greater than zero, this tech is a "unique tech" and will not be researchable.
+		/// Traits which unlock this technology.
+		/// </summary>
+		public IEnumerable<Trait> Traits
+		{
+			get
+			{
+				if (!IsRacial)
+					return Enumerable.Empty<Trait>();
+				return Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == RacialTechID));
+			}
+		}
+
+		public bool IsRacial
+		{
+			get
+			{
+				return RacialTechID == "0" || string.IsNullOrWhiteSpace(RacialTechID);
+			}
+		}
+
+		/// <summary>
+		/// If not null or zero, this tech is a "unique tech" and will not be researchable.
 		/// Instead it will appear on ruins worlds referencing its ID.
 		/// </summary>
-		public int UniqueTechID { get; set; }
+		public string UniqueTechID { get; set; }
+
+		public bool IsUnique
+		{
+			get
+			{
+				return UniqueTechID == "0" || string.IsNullOrWhiteSpace(UniqueTechID);
+			}
+		}
 
 		/// <summary>
 		/// Should the game offer game hosts the option of removing this tech from their games?

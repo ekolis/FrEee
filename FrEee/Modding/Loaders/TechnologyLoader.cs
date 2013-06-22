@@ -41,8 +41,8 @@ namespace FrEee.Modding.Loaders
 				tech.LevelCost = rec.FindField("Level Cost", ref index, true, 0, true).IntValue(rec);
 				tech.StartLevel = rec.FindField("Start Level", ref index, true, 0, true).IntValue(rec);
 				tech.RaiseLevel = rec.FindField("Raise Level", ref index, true, 0, true).IntValue(rec);
-				tech.RacialTechID = rec.FindField("Racial Area", ref index, true, 0, true).IntValue(rec);
-				tech.UniqueTechID = rec.FindField("Unique Area", ref index, true, 0, true).IntValue(rec);
+				tech.RacialTechID = rec.FindField("Racial Area", ref index, true, 0, true).Value;
+				tech.UniqueTechID = rec.FindField("Unique Area", ref index, true, 0, true).Value;
 				tech.CanBeRemoved = rec.FindField("Can Be Removed", ref index, true, 0, true).BoolValue(rec);
 
 			}
