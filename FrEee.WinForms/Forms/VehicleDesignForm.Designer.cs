@@ -43,6 +43,8 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.picPortrait = new System.Windows.Forms.PictureBox();
+			this.chkFilterByMount = new System.Windows.Forms.CheckBox();
+			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
 			this.btnWeaponsReport = new FrEee.WinForms.Controls.GameButton();
 			this.btnMount = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
@@ -87,8 +89,6 @@
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
-			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
-			this.chkFilterByMount = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
@@ -226,6 +226,30 @@
 			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 27;
 			this.picPortrait.TabStop = false;
+			// 
+			// chkFilterByMount
+			// 
+			this.chkFilterByMount.AutoSize = true;
+			this.chkFilterByMount.Location = new System.Drawing.Point(97, 162);
+			this.chkFilterByMount.Name = "chkFilterByMount";
+			this.chkFilterByMount.Size = new System.Drawing.Size(96, 17);
+			this.chkFilterByMount.TabIndex = 28;
+			this.chkFilterByMount.Text = "Filter By Mount";
+			this.chkFilterByMount.UseVisualStyleBackColor = true;
+			this.chkFilterByMount.CheckedChanged += new System.EventHandler(this.chkFilterByMount_CheckedChanged);
+			// 
+			// btnClearMount
+			// 
+			this.btnClearMount.BackColor = System.Drawing.Color.Black;
+			this.btnClearMount.Enabled = false;
+			this.btnClearMount.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearMount.Location = new System.Drawing.Point(226, 100);
+			this.btnClearMount.Name = "btnClearMount";
+			this.btnClearMount.Size = new System.Drawing.Size(20, 23);
+			this.btnClearMount.TabIndex = 26;
+			this.btnClearMount.Text = "X";
+			this.btnClearMount.UseVisualStyleBackColor = false;
+			this.btnClearMount.Click += new System.EventHandler(this.btnClearMount_Click);
 			// 
 			// btnWeaponsReport
 			// 
@@ -672,6 +696,7 @@
 			this.picDetailIcon.Location = new System.Drawing.Point(7, 7);
 			this.picDetailIcon.Name = "picDetailIcon";
 			this.picDetailIcon.Size = new System.Drawing.Size(32, 32);
+			this.picDetailIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picDetailIcon.TabIndex = 0;
 			this.picDetailIcon.TabStop = false;
 			// 
@@ -730,7 +755,7 @@
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
-			this.lstComponentsInstalled.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseClick);
+			this.lstComponentsInstalled.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDown);
 			// 
 			// gamePanel1
 			// 
@@ -761,7 +786,7 @@
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
-			this.lstComponentsAvailable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseClick);
+			this.lstComponentsAvailable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDown);
 			// 
 			// btnHull
 			// 
@@ -774,30 +799,6 @@
 			this.btnHull.Text = "(choose)";
 			this.btnHull.UseVisualStyleBackColor = false;
 			this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
-			// 
-			// btnClearMount
-			// 
-			this.btnClearMount.BackColor = System.Drawing.Color.Black;
-			this.btnClearMount.Enabled = false;
-			this.btnClearMount.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearMount.Location = new System.Drawing.Point(226, 100);
-			this.btnClearMount.Name = "btnClearMount";
-			this.btnClearMount.Size = new System.Drawing.Size(20, 23);
-			this.btnClearMount.TabIndex = 26;
-			this.btnClearMount.Text = "X";
-			this.btnClearMount.UseVisualStyleBackColor = false;
-			this.btnClearMount.Click += new System.EventHandler(this.btnClearMount_Click);
-			// 
-			// chkFilterByMount
-			// 
-			this.chkFilterByMount.AutoSize = true;
-			this.chkFilterByMount.Location = new System.Drawing.Point(97, 162);
-			this.chkFilterByMount.Name = "chkFilterByMount";
-			this.chkFilterByMount.Size = new System.Drawing.Size(96, 17);
-			this.chkFilterByMount.TabIndex = 28;
-			this.chkFilterByMount.Text = "Filter By Mount";
-			this.chkFilterByMount.UseVisualStyleBackColor = true;
-			this.chkFilterByMount.CheckedChanged += new System.EventHandler(this.chkFilterByMount_CheckedChanged);
 			// 
 			// VehicleDesignForm
 			// 

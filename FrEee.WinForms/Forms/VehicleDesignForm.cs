@@ -16,6 +16,8 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
+using System.Threading;
+using System.Windows.Threading;
 
 namespace FrEee.WinForms.Forms
 {
@@ -341,44 +343,6 @@ namespace FrEee.WinForms.Forms
 				Design.Name = ddlName.Text;
 		}
 
-		private void lstComponentsAvailable_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
-				if (item != null)
-				{
-					var mct = (MountedComponentTemplate)item.Tag;
-					Design.Components.Add(mct);
-					BindInstalledComponents();
-					BindDesignData();
-				}
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				// TODO - show mounted component template report
-			}
-		}
-
-		private void lstComponentsInstalled_MouseClick(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
-				if (item != null)
-				{
-					var mct = (MountedComponentTemplate)item.Tag;
-					Design.Components.Remove(mct);
-					BindInstalledComponents();
-					BindDesignData();
-				}
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				// TODO - show mounted component template report
-			}
-		}
-
 		private void btnClearMount_Click(object sender, EventArgs e)
 		{
 			CurrentMount = null;
@@ -407,6 +371,44 @@ namespace FrEee.WinForms.Forms
 		private void chkFilterByMount_CheckedChanged(object sender, EventArgs e)
 		{
 			BindAvailableComponents();
+		}
+
+		private void lstComponentsAvailable_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var mct = (MountedComponentTemplate)item.Tag;
+					Design.Components.Add(mct);
+					BindInstalledComponents();
+					BindDesignData();
+				}
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				// TODO - show mounted component template report
+			}
+		}
+
+		private void lstComponentsInstalled_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var mct = (MountedComponentTemplate)item.Tag;
+					Design.Components.Remove(mct);
+					BindInstalledComponents();
+					BindDesignData();
+				}
+			}
+			else if (e.Button == MouseButtons.Right)
+			{
+				// TODO - show mounted component template report
+			}
 		}
 	}
 }
