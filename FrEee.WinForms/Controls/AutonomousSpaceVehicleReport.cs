@@ -169,7 +169,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnClearOrders_Click(object sender, System.EventArgs e)
 		{
-			foreach (var order in vehicle.Orders)
+			foreach (var order in vehicle.Orders.ToArray())
 			{
 				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(
 					Empire.Current, vehicle, order);
