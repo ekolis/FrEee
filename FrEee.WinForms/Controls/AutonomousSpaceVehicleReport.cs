@@ -125,6 +125,9 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
 		}
 
@@ -138,6 +141,9 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
 		}
 
@@ -151,7 +157,12 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
+			if (OrdersChanged != null)
+				OrdersChanged();
 		}
 
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
@@ -164,6 +175,9 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
 		}
 
@@ -176,6 +190,9 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
 		}
 
@@ -189,7 +206,14 @@ namespace FrEee.WinForms.Controls
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Invalidate();
+
+				if (OrdersChanged != null)
+					OrdersChanged();
 			}
 		}
+
+		public delegate void OrdersChangedDelegate();
+
+		public event OrdersChangedDelegate OrdersChanged;
 	}
 }

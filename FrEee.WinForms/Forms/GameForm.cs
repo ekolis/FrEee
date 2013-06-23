@@ -260,9 +260,18 @@ namespace FrEee.WinForms.Forms
 			if (sobj is Storm)
 				return new StormReport((Storm)sobj);
 			if (sobj is AutonomousSpaceVehicle)
-				return new AutonomousSpaceVehicleReport((AutonomousSpaceVehicle)sobj);
+			{
+				var r = new AutonomousSpaceVehicleReport((AutonomousSpaceVehicle)sobj);
+				r.OrdersChanged += AutonomousSpaceVehicleReport_OrdersChanged;
+				return r;
+			};
 			// TODO - warp point, fleet, unit group reports
 			return null;
+		}
+
+		void AutonomousSpaceVehicleReport_OrdersChanged()
+		{
+			starSystemView.Invalidate(); // show move lines
 		}
 
 		private void galaxyView_StarSystemClicked(GalaxyView sender, StarSystem starSystem)
