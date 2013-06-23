@@ -54,6 +54,11 @@ namespace FrEee.WinForms.Forms
 			technologyBindingSource.DataSource = allTechs.ToArray();
 		}
 
+		private void RebindTechGrid()
+		{
+			technologyBindingSource.ResetBindings(false);
+		}
+
 		private void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			BindTechGrid();
@@ -98,7 +103,7 @@ namespace FrEee.WinForms.Forms
 		private void sldSpending_Scroll(object sender, EventArgs e)
 		{
 			Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
-			BindTechGrid();
+			RebindTechGrid();
 			BindQueue();
 		}
 
