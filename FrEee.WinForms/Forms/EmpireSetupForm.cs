@@ -24,12 +24,6 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			BindChoices();
-
-			// hide trait pages if none to pick
-			if (!Mod.Current.Traits.Where(t => t.IsRacial).Any())
-				tabs.TabPages.Remove(tabRaceTraits);
-			if (!Mod.Current.Traits.Where(t => !t.IsRacial).Any())
-				tabs.TabPages.Remove(tabEmpireTraits);
 		}
 
 		/// <summary>
@@ -108,8 +102,7 @@ namespace FrEee.WinForms.Forms
 				ddlRaceCulture.Items.Add(c);
 				ddlCulture.Items.Add(c);
 			}
-			raceTraitPicker.Traits = Mod.Current.Traits.Where(t => t.IsRacial);
-			empireTraitPicker.Traits = Mod.Current.Traits.Where(t => !t.IsRacial);
+			raceTraitPicker.Traits = Mod.Current.Traits;
 		}
 
 		private void BindPointsSpent()
@@ -256,10 +249,6 @@ namespace FrEee.WinForms.Forms
 				chkCultureFromRace.Checked = false;
 			}
 
-			// empire traits
-			foreach (var trait in empireTraitPicker.Traits)
-				empireTraitPicker.SetTraitChecked(trait, EmpireTemplate.Traits.Contains(trait));
-
 			BindPointsSpent();
 
 			BindPictures();
@@ -365,10 +354,6 @@ namespace FrEee.WinForms.Forms
 				et.Culture = null;
 			else
 				et.Culture = (Culture)ddlCulture.SelectedItem;
-
-			et.Traits.Clear();
-			foreach (var t in empireTraitPicker.CheckedTraits)
-				et.Traits.Add(t);
 		}
 
 		#region silly internal consistency stuff
@@ -593,8 +578,6 @@ namespace FrEee.WinForms.Forms
 				foreach (var t in raceTraitPicker.CheckedTraits)
 					result += t.Cost;
 				result += aptitudePicker.Cost;
-				foreach (var t in empireTraitPicker.CheckedTraits)
-					result += t.Cost;
 				return result;
 			}
 		}

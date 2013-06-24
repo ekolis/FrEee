@@ -34,7 +34,7 @@ namespace FrEee.Modding.Loaders
 
 				for (int count = 1; ; count++)
 				{
-					var f = rec.FindField(new string[]{"Trait Type", "Trait Type " + count}, ref index, false, index + 1);
+					var f = rec.FindField(new string[] { "Trait Type", "Trait Type " + count }, ref index, false, index + 1);
 					if (f == null)
 						break;
 					var abil = new Ability();
@@ -51,8 +51,6 @@ namespace FrEee.Modding.Loaders
 
 				if (t.Abilities.Count == 0)
 					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
-
-				t.IsRacial = rec.GetNullBool("Is Racial", ref index) ?? false;
 			}
 
 			// second pass for required/restricted traits
@@ -70,10 +68,6 @@ namespace FrEee.Modding.Loaders
 					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
 					if (rt == null)
 						Mod.Errors.Add(new DataParsingException("Required trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
-					if (t.IsRacial && !rt.IsRacial)
-						Mod.Errors.Add(new DataParsingException("Racial trait \"" + t.Name + "\" cannot require empire trait \"" + rt.Name + ". Racial traits can only require other racial traits.", Mod.CurrentFileName, rec));
-					else if (!t.IsRacial && rt.IsRacial)
-						Mod.Errors.Add(new DataParsingException("Empire trait \"" + t.Name + "\" cannot require racial trait \"" + rt.Name + ". Empire traits can only require other empire traits.", Mod.CurrentFileName, rec));
 					t.RequiredTraits.Add(rt);
 				}
 
@@ -85,10 +79,6 @@ namespace FrEee.Modding.Loaders
 					var rt = mod.Traits.SingleOrDefault(t2 => t2.Name == f.Value);
 					if (rt == null)
 						Mod.Errors.Add(new DataParsingException("Restricted trait \"" + f.Value + "\" for trait \"" + t.Name + "\" does not exist in RacialTraits.txt.", Mod.CurrentFileName, rec));
-					if (t.IsRacial && !rt.IsRacial)
-						Mod.Errors.Add(new DataParsingException("Racial trait \"" + t.Name + "\" cannot restrict empire trait \"" + rt.Name + ". Racial traits can only restrict other racial traits.", Mod.CurrentFileName, rec));
-					else if (!t.IsRacial && rt.IsRacial)
-						Mod.Errors.Add(new DataParsingException("Empire trait \"" + t.Name + "\" cannot restrict racial trait \"" + rt.Name + ". Empire traits can only restrict other empire traits.", Mod.CurrentFileName, rec));
 					t.RestrictedTraits.Add(rt);
 				}
 			}

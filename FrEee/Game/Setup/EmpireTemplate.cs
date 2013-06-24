@@ -21,7 +21,6 @@ namespace FrEee.Game.Setup
 	{
 		public EmpireTemplate()
 		{
-			Traits = new List<Trait>();
 			IsPlayerEmpire = true;
 		}
 
@@ -34,11 +33,6 @@ namespace FrEee.Game.Setup
 		/// The name of the leader of this empire.
 		/// </summary>
 		public string LeaderName { get; set; }
-
-		/// <summary>
-		/// Traits of this empire.
-		/// </summary>
-		public IList<Trait> Traits { get; set; }
 
 		/// <summary>
 		/// The native race of this empire.
@@ -126,8 +120,6 @@ namespace FrEee.Game.Setup
 			emp.LeaderName = LeaderName ?? PrimaryRace.LeaderName; ;
 			emp.Color = Color ?? PrimaryRace.Color;
 			emp.PrimaryRace = PrimaryRace;
-			foreach (var t in Traits)
-				emp.Traits.Add(t);
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.LeaderPortraitName;
 			emp.InsigniaName = InsigniaName ?? PrimaryRace.Name;
 			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
@@ -178,7 +170,7 @@ namespace FrEee.Game.Setup
 			get
 			{
 				int result = 0;
-				foreach (var t in PrimaryRace.Traits.Concat(Traits))
+				foreach (var t in PrimaryRace.Traits)
 					result += t.Cost;
 				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.Find(kvp.Key).GetCost(kvp.Value));
 				return result;

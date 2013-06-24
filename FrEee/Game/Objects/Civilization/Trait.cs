@@ -52,11 +52,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<Trait> RestrictedTraits { get; private set; }
 
-		/// <summary>
-		/// Is this trait tied to a race? If not, it's tied to an empire.
-		/// </summary>
-		public bool IsRacial { get; set; }
-
 		public override string ToString()
 		{
 			return Name;

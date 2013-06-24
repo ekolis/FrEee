@@ -36,6 +36,8 @@
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
+			this.chkRaceAIsCanUse = new System.Windows.Forms.CheckBox();
+			this.label21 = new System.Windows.Forms.Label();
 			this.btnRaceCompareCultures = new FrEee.WinForms.Controls.GameButton();
 			this.txtRaceCulture = new System.Windows.Forms.Label();
 			this.label20 = new System.Windows.Forms.Label();
@@ -77,6 +79,8 @@
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.aptitudePicker = new FrEee.WinForms.Controls.AptitudePicker();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
+			this.label23 = new System.Windows.Forms.Label();
 			this.chkCultureFromRace = new System.Windows.Forms.CheckBox();
 			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
 			this.txtCulture = new System.Windows.Forms.Label();
@@ -113,12 +117,6 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label32 = new System.Windows.Forms.Label();
-			this.tabEmpireTraits = new System.Windows.Forms.TabPage();
-			this.empireTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
-			this.label21 = new System.Windows.Forms.Label();
-			this.chkRaceAIsCanUse = new System.Windows.Forms.CheckBox();
-			this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
-			this.label23 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).BeginInit();
@@ -139,7 +137,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnColorGreen)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnColorRed)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picLeaderPortrait)).BeginInit();
-			this.tabEmpireTraits.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// txtPointsAvailable
@@ -214,7 +211,6 @@
 			this.tabs.Controls.Add(this.tabRaceTraits);
 			this.tabs.Controls.Add(this.tabPage5);
 			this.tabs.Controls.Add(this.tabPage1);
-			this.tabs.Controls.Add(this.tabEmpireTraits);
 			this.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.tabs.Location = new System.Drawing.Point(9, 9);
@@ -276,6 +272,27 @@
 			this.tabPage2.Size = new System.Drawing.Size(595, 531);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "Primary Race";
+			// 
+			// chkRaceAIsCanUse
+			// 
+			this.chkRaceAIsCanUse.AutoSize = true;
+			this.chkRaceAIsCanUse.Location = new System.Drawing.Point(129, 31);
+			this.chkRaceAIsCanUse.Name = "chkRaceAIsCanUse";
+			this.chkRaceAIsCanUse.Size = new System.Drawing.Size(55, 19);
+			this.chkRaceAIsCanUse.TabIndex = 93;
+			this.chkRaceAIsCanUse.Text = "Allow";
+			this.chkRaceAIsCanUse.UseVisualStyleBackColor = true;
+			// 
+			// label21
+			// 
+			this.label21.AutoSize = true;
+			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label21.Location = new System.Drawing.Point(8, 32);
+			this.label21.Margin = new System.Windows.Forms.Padding(3);
+			this.label21.Name = "label21";
+			this.label21.Size = new System.Drawing.Size(116, 15);
+			this.label21.TabIndex = 92;
+			this.label21.Text = "AI Empires Can Use";
 			// 
 			// btnRaceCompareCultures
 			// 
@@ -662,7 +679,7 @@
 			this.tabRaceTraits.Controls.Add(this.raceTraitPicker);
 			this.tabRaceTraits.Location = new System.Drawing.Point(4, 29);
 			this.tabRaceTraits.Name = "tabRaceTraits";
-			this.tabRaceTraits.Size = new System.Drawing.Size(595, 516);
+			this.tabRaceTraits.Size = new System.Drawing.Size(595, 531);
 			this.tabRaceTraits.TabIndex = 5;
 			this.tabRaceTraits.Text = "Racial Traits";
 			// 
@@ -674,7 +691,7 @@
 			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
 			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(595, 516);
+			this.raceTraitPicker.Size = new System.Drawing.Size(595, 531);
 			this.raceTraitPicker.TabIndex = 0;
 			this.raceTraitPicker.Traits = null;
 			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
@@ -687,7 +704,7 @@
 			this.tabPage5.Location = new System.Drawing.Point(4, 29);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage5.Size = new System.Drawing.Size(595, 516);
+			this.tabPage5.Size = new System.Drawing.Size(595, 531);
 			this.tabPage5.TabIndex = 4;
 			this.tabPage5.Text = "Racial Aptitudes";
 			// 
@@ -698,7 +715,7 @@
 			this.aptitudePicker.ForeColor = System.Drawing.Color.White;
 			this.aptitudePicker.Location = new System.Drawing.Point(3, 3);
 			this.aptitudePicker.Name = "aptitudePicker";
-			this.aptitudePicker.Size = new System.Drawing.Size(589, 510);
+			this.aptitudePicker.Size = new System.Drawing.Size(589, 525);
 			this.aptitudePicker.TabIndex = 0;
 			this.aptitudePicker.Values = ((System.Collections.Generic.IDictionary<FrEee.Game.Objects.Civilization.Aptitude, int>)(resources.GetObject("aptitudePicker.Values")));
 			this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
@@ -751,6 +768,27 @@
 			this.tabPage1.Size = new System.Drawing.Size(595, 531);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "General";
+			// 
+			// chkAIsCanUse
+			// 
+			this.chkAIsCanUse.AutoSize = true;
+			this.chkAIsCanUse.Location = new System.Drawing.Point(129, 30);
+			this.chkAIsCanUse.Name = "chkAIsCanUse";
+			this.chkAIsCanUse.Size = new System.Drawing.Size(55, 19);
+			this.chkAIsCanUse.TabIndex = 98;
+			this.chkAIsCanUse.Text = "Allow";
+			this.chkAIsCanUse.UseVisualStyleBackColor = true;
+			// 
+			// label23
+			// 
+			this.label23.AutoSize = true;
+			this.label23.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label23.Location = new System.Drawing.Point(8, 31);
+			this.label23.Margin = new System.Windows.Forms.Padding(3);
+			this.label23.Name = "label23";
+			this.label23.Size = new System.Drawing.Size(116, 15);
+			this.label23.TabIndex = 97;
+			this.label23.Text = "AI Empires Can Use";
 			// 
 			// chkCultureFromRace
 			// 
@@ -1169,73 +1207,6 @@
 			this.label32.TabIndex = 14;
 			this.label32.Text = "Name";
 			// 
-			// tabEmpireTraits
-			// 
-			this.tabEmpireTraits.BackColor = System.Drawing.Color.Black;
-			this.tabEmpireTraits.Controls.Add(this.empireTraitPicker);
-			this.tabEmpireTraits.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.tabEmpireTraits.Location = new System.Drawing.Point(4, 29);
-			this.tabEmpireTraits.Name = "tabEmpireTraits";
-			this.tabEmpireTraits.Padding = new System.Windows.Forms.Padding(3);
-			this.tabEmpireTraits.Size = new System.Drawing.Size(595, 516);
-			this.tabEmpireTraits.TabIndex = 3;
-			this.tabEmpireTraits.Text = "Empire Traits";
-			// 
-			// empireTraitPicker
-			// 
-			this.empireTraitPicker.BackColor = System.Drawing.Color.Black;
-			this.empireTraitPicker.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.empireTraitPicker.ForeColor = System.Drawing.Color.White;
-			this.empireTraitPicker.Location = new System.Drawing.Point(3, 3);
-			this.empireTraitPicker.Margin = new System.Windows.Forms.Padding(5, 6, 5, 6);
-			this.empireTraitPicker.Name = "empireTraitPicker";
-			this.empireTraitPicker.Size = new System.Drawing.Size(589, 510);
-			this.empireTraitPicker.TabIndex = 1;
-			this.empireTraitPicker.Traits = null;
-			this.empireTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.empireTraitPicker_TraitToggled);
-			// 
-			// label21
-			// 
-			this.label21.AutoSize = true;
-			this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label21.Location = new System.Drawing.Point(8, 32);
-			this.label21.Margin = new System.Windows.Forms.Padding(3);
-			this.label21.Name = "label21";
-			this.label21.Size = new System.Drawing.Size(116, 15);
-			this.label21.TabIndex = 92;
-			this.label21.Text = "AI Empires Can Use";
-			// 
-			// chkRaceAIsCanUse
-			// 
-			this.chkRaceAIsCanUse.AutoSize = true;
-			this.chkRaceAIsCanUse.Location = new System.Drawing.Point(129, 31);
-			this.chkRaceAIsCanUse.Name = "chkRaceAIsCanUse";
-			this.chkRaceAIsCanUse.Size = new System.Drawing.Size(55, 19);
-			this.chkRaceAIsCanUse.TabIndex = 93;
-			this.chkRaceAIsCanUse.Text = "Allow";
-			this.chkRaceAIsCanUse.UseVisualStyleBackColor = true;
-			// 
-			// chkAIsCanUse
-			// 
-			this.chkAIsCanUse.AutoSize = true;
-			this.chkAIsCanUse.Location = new System.Drawing.Point(129, 30);
-			this.chkAIsCanUse.Name = "chkAIsCanUse";
-			this.chkAIsCanUse.Size = new System.Drawing.Size(55, 19);
-			this.chkAIsCanUse.TabIndex = 98;
-			this.chkAIsCanUse.Text = "Allow";
-			this.chkAIsCanUse.UseVisualStyleBackColor = true;
-			// 
-			// label23
-			// 
-			this.label23.AutoSize = true;
-			this.label23.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label23.Location = new System.Drawing.Point(8, 31);
-			this.label23.Margin = new System.Windows.Forms.Padding(3);
-			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size(116, 15);
-			this.label23.TabIndex = 97;
-			this.label23.Text = "AI Empires Can Use";
-			// 
 			// EmpireSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1273,7 +1244,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.spnColorGreen)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnColorRed)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picLeaderPortrait)).EndInit();
-			this.tabEmpireTraits.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -1283,7 +1253,6 @@
 		private Controls.GameTabControl tabs;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.TabPage tabEmpireTraits;
 		private System.Windows.Forms.TabPage tabPage5;
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
@@ -1355,7 +1324,6 @@
 		private System.Windows.Forms.Label txtRaceHappiness;
 		private System.Windows.Forms.Label txtHappiness;
 		private Controls.TraitPicker raceTraitPicker;
-		private Controls.TraitPicker empireTraitPicker;
 		private System.Windows.Forms.Label txtRaceCulture;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.ComboBox ddlRaceCulture;
