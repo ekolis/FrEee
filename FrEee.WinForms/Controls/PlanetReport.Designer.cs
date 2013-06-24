@@ -28,6 +28,11 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
+			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
 			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("1x Space Yard");
 			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("6x Mineral Miner");
 			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Organics Farm");
@@ -237,6 +242,12 @@ namespace FrEee.WinForms.Controls
 			this.resIntel.Location = new System.Drawing.Point(148, 92);
 			this.resIntel.Margin = new System.Windows.Forms.Padding(0);
 			this.resIntel.Name = "resIntel";
+			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			resource1.IsGlobal = false;
+			resource1.IsLocal = false;
+			resource1.Name = "Intelligence";
+			resource1.PictureName = "Resource5";
+			this.resIntel.Resource = resource1;
 			this.resIntel.ResourceName = "Intelligence";
 			this.resIntel.Size = new System.Drawing.Size(86, 20);
 			this.resIntel.TabIndex = 80;
@@ -252,6 +263,12 @@ namespace FrEee.WinForms.Controls
 			this.resResearch.Location = new System.Drawing.Point(65, 92);
 			this.resResearch.Margin = new System.Windows.Forms.Padding(0);
 			this.resResearch.Name = "resResearch";
+			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource2.IsGlobal = false;
+			resource2.IsLocal = false;
+			resource2.Name = "Research";
+			resource2.PictureName = "Resource4";
+			this.resResearch.Resource = resource2;
 			this.resResearch.ResourceName = "Research";
 			this.resResearch.Size = new System.Drawing.Size(81, 20);
 			this.resResearch.TabIndex = 79;
@@ -366,6 +383,12 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeMinerals.Location = new System.Drawing.Point(65, 73);
 			this.resIncomeMinerals.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeMinerals.Name = "resIncomeMinerals";
+			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource3.IsGlobal = true;
+			resource3.IsLocal = false;
+			resource3.Name = "Minerals";
+			resource3.PictureName = "Resource1";
+			this.resIncomeMinerals.Resource = resource3;
 			this.resIncomeMinerals.ResourceName = "Minerals";
 			this.resIncomeMinerals.Size = new System.Drawing.Size(81, 20);
 			this.resIncomeMinerals.TabIndex = 69;
@@ -381,6 +404,12 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeOrganics.Location = new System.Drawing.Point(146, 72);
 			this.resIncomeOrganics.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeOrganics.Name = "resIncomeOrganics";
+			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource4.IsGlobal = true;
+			resource4.IsLocal = false;
+			resource4.Name = "Organics";
+			resource4.PictureName = "Resource2";
+			this.resIncomeOrganics.Resource = resource4;
 			this.resIncomeOrganics.ResourceName = "Organics";
 			this.resIncomeOrganics.Size = new System.Drawing.Size(85, 20);
 			this.resIncomeOrganics.TabIndex = 68;
@@ -396,6 +425,12 @@ namespace FrEee.WinForms.Controls
 			this.resIncomeRadioactives.Location = new System.Drawing.Point(231, 72);
 			this.resIncomeRadioactives.Margin = new System.Windows.Forms.Padding(0);
 			this.resIncomeRadioactives.Name = "resIncomeRadioactives";
+			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource5.IsGlobal = true;
+			resource5.IsLocal = false;
+			resource5.Name = "Radioactives";
+			resource5.PictureName = "Resource3";
+			this.resIncomeRadioactives.Resource = resource5;
 			this.resIncomeRadioactives.ResourceName = "Radioactives";
 			this.resIncomeRadioactives.Size = new System.Drawing.Size(73, 20);
 			this.resIncomeRadioactives.TabIndex = 67;

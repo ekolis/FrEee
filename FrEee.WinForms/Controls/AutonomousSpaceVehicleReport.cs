@@ -86,9 +86,13 @@ namespace FrEee.WinForms.Controls
 					lstComponentsSummary.AddItemWithImage(null, text, g.First(), g.First().Template.Icon);
 				}
 
-				// TODO - cargo summary
-				txtCargoSpaceFree.Text = vehicle.Design.CargoStorage.Kilotons() + " / " + vehicle.Design.CargoStorage.Kilotons() + " free";
+				// cargo summary
+				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - (Vehicle.Cargo == null ? 0 : Vehicle.Cargo.Size)).Kilotons(), Vehicle.CargoStorage.Kilotons());
 				lstCargoSummary.Initialize(32, 32);
+				foreach (var ug in Vehicle.Cargo.Units.GroupBy(u => u.Design))
+					lstCargoSummary.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+				foreach (var pop in Vehicle.Cargo.Population)
+					lstCargoSummary.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 
 				// orders detail
 				lstOrdersDetail.Items.Clear();
@@ -105,9 +109,13 @@ namespace FrEee.WinForms.Controls
 						lstComponentsDetail.AddItemWithImage(null, g.Where(c => c.IsDestroyed).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
 				}
 
-				// TODO - cargo detail
-				txtCargoSpaceFreeDetail.Text = vehicle.Design.CargoStorage.Kilotons() + " / " + vehicle.Design.CargoStorage.Kilotons() + " free";
+				// cargo detail
+				txtCargoSpaceFreeDetail.Text = string.Format("{0} / {1} free", (Vehicle.CargoStorage - Vehicle.Cargo.Size).Kilotons(), Vehicle.CargoStorage.Kilotons());
 				lstCargoDetail.Initialize(32, 32);
+				foreach (var ug in Vehicle.Cargo.Units.GroupBy(u => u.Design))
+					lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+				foreach (var pop in Vehicle.Cargo.Population)
+					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 
 				// abilities
 				abilityTreeView.Abilities = Vehicle.Abilities.StackToTree();

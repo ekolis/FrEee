@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -122,9 +123,13 @@ namespace FrEee.WinForms.Controls
 				else
 					txtFacilitySlotsFree.Text = "";
 
-				// TODO - load cargo
-				txtCargoSpaceFree.Text = string.Format("{0} / {0} free", Planet.MaxCargo.Kilotons());
-				lstCargoDetail.Items.Clear();
+				// load cargo
+				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Planet.CargoStorage - (Planet.Cargo == null ? 0 : Planet.Cargo.Size)).Kilotons(), Planet.CargoStorage.Kilotons());
+				lstCargoDetail.Initialize(32, 32);
+				foreach (var ug in Planet.Cargo.Units.GroupBy(u => u.Design))
+					lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+				foreach (var pop in Planet.Cargo.Population)
+					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 
 				abilityTreeView.Abilities = Planet.Abilities.StackToTree();
 				if (Planet.Colony == null)
