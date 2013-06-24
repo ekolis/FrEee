@@ -85,10 +85,36 @@ namespace FrEee.Game.Objects.Civilization
 				{
 					if (rate == null)
 						rate = Mod.Current.Settings.DefaultColonyConstructionRate;
-					// TODO - population/happiness/etc. modifiers
+
+					// apply population modifier
+					var pop = Colony.Population.Sum(p => p.Value);
+					rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
+
+					// TODO - apply happiness modifier
+
+					var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
+
+					// apply racial trait planetary SY modifier
+					double traitmod = 1d;
+					foreach (var ratio in ratios)
+						traitmod += (ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d) * ratio.Ratio;
+					rate *= traitmod;
+
+					// apply aptitude modifier
+					double aptmod = 1d;
+					foreach (var ratio in ratios)
+						aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d) + 1d) * ratio.Ratio;
+					rate *= aptmod;
+
+				}
+				else
+				{
+					// apply aptitude modifier for empire's primary race
+					rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
 				}
 				if (rate == null)
 					rate = new Resources();
+
 				return rate;
 			}
 		}

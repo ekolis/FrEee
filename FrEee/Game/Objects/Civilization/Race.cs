@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Traits = new List<Trait>();
 			Color = Color.White;
-			Aptitudes = new Dictionary<string, int>();
+			Aptitudes = new SafeDictionary<string, int>();
 		}
 
 		/// <summary>

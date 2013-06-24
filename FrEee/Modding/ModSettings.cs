@@ -194,7 +194,7 @@ namespace FrEee.Modding
 		/// </summary>
 		public SortedDictionary<int, PopulationModifier> PopulationModifiers { get; private set; }
 
-		public double GetPopulationProductionFactor(int population)
+		public double GetPopulationProductionFactor(long population)
 		{
 			double result = 1d;
 			foreach (var pm in PopulationModifiers.OrderBy(pm => pm.Key))
@@ -207,7 +207,7 @@ namespace FrEee.Modding
 			return result;
 		}
 
-		public double GetPopulationConstructionFactor(int population)
+		public double GetPopulationConstructionFactor(long population)
 		{
 			double result = 1d;
 			foreach (var pm in PopulationModifiers.OrderBy(pm => pm.Key))
