@@ -16,38 +16,35 @@ namespace FrEee.Modding.Loaders
 		public static IEnumerable<Ability> Load(Record rec)
 		{
 			int count = 0;
-			int start = 0;
+			int index = -1;
 			while (true)
 			{
 				count++;
+
+				var abilname = rec.GetNullString(new string[] { "Ability " + count + " Type", "Ability Type" }, ref index, index + 1, true);
+				if (abilname == null)
+					break; // no more abilities
+
 				var abil = new Ability();
-				string temp;
+				abil.Name = abilname;
+				abil.Description = rec.GetNullString(new string[] { "Ability " + count + " Descr", "Ability Descr" }, ref index, index + 1, false);
 
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start, count == 1))
-					yield break; // couldn't load next ability
-				else
-					abil.Name = temp;
-				start++;
+				int valnum = 0;
+				while (true)
+				{
+					valnum++;
 
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Descr", "Ability Descr" }, out temp, ref start, null, start))
-					abil.Description = ""; // no description for this ability
-				else
-					abil.Description = temp;
-				start++;
-
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Val 1", "Ability " + count + " Val", "Ability Val 1", "Ability Val" }, out temp, ref start, null, start))
-					continue; // leave default values
-				else
-					abil.Values.Add(temp);
-				start++;
-
-				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Val 2", "Ability " + count + " Val", "Ability Val 2", "Ability Val" }, out temp, ref start, null, start))
-					continue; // leave default value
-				else
-					abil.Values.Add(temp);
-				start++;
-
-				// TODO - abilities with more or less than 2 values?
+					var val = rec.GetNullString(new string[]
+						{
+							"Ability " + count + " Val " + valnum,
+							"Ability " + count + " Val",
+							"Ability Val " + valnum,
+							"Ability Val"
+						}, ref index, index + 1, false);
+					if (val == null)
+						break;
+					abil.Values.Add(val);
+				}
 
 				yield return abil;
 			}
