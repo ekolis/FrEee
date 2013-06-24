@@ -95,6 +95,7 @@ namespace FrEee.Game.Objects.Civilization
 					var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
 
 					// apply racial trait planetary SY modifier
+					// TODO - should Planetary SY Rate apply only to planets that have space yards, or to all planetary construction queues?
 					double traitmod = 1d;
 					foreach (var ratio in ratios)
 						traitmod += (ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d) * ratio.Ratio;
