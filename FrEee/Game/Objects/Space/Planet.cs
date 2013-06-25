@@ -329,18 +329,21 @@ namespace FrEee.Game.Objects.Space
 			if (Colony == null)
 				return damage; // uninhabited planets can't take damage
 
-			// for now, have a 50% chance to hit population first and a 50% chance to hit cargo first
-			// TODO - base the chance to hit population vs. cargo on relative HP or something?
-			var coin = RandomHelper.Next(2);
+			// TODO - to-hit chances not just based on HP?
+			// TODO - per-race population HP?
+			// TODO - load population factor and population HP from settings.txt
+			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * 50 / 1e6);
+			var cargoHP = Colony.Cargo.Hitpoints;
+			var num = RandomHelper.Next(popHP + cargoHP);
 			int leftover;
-			if (coin == 0)
+			if (num >= popHP)
 				leftover = TakePopulationDamage(dmgType, damage, battle);
 			else
 				leftover = Cargo.TakeDamage(dmgType, damage, battle);
-			if (coin == 0)
+			if (num >= popHP)
 				return Cargo.TakeDamage(dmgType, leftover, battle);
 			else
-				return TakePopulationDamage(dmgType, damage, battle);
+				return TakePopulationDamage(dmgType, leftover, battle);
 		}
 
 		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)

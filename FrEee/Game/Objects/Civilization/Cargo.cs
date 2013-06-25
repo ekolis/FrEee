@@ -66,7 +66,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// TODO - moddable population HP
 				int popHPPerMillion = 100;
-				return Population.Sum(kvp => (int)(kvp.Value * popHPPerMillion / (int)1e6)) + Units.Sum(u => u.Hitpoints);
+				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerMillion / 1e6)) + Units.Sum(u => u.Hitpoints);
 			}
 			set
 			{
