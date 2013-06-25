@@ -303,8 +303,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool CanTarget(ICombatObject target)
 		{
-			// TODO - weapon platforms on planets
-			return false;
+			return Cargo.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target));
 		}
 
 		public WeaponTargets WeaponTargetType
@@ -319,8 +318,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				// TODO - weapon platforms on planets
-				return Enumerable.Empty<Component>();
+				return Cargo.Units.OfType<WeaponPlatform>().SelectMany(wp => wp.Weapons);
 			}
 		}
 

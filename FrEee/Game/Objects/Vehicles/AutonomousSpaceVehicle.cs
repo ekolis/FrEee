@@ -220,7 +220,7 @@ namespace FrEee.Game.Objects.Vehicles
 		public bool CanTarget(ICombatObject target)
 		{
 			// TODO - alliances
-			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(WeaponTargetType));
+			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
 		}
 
 		public abstract WeaponTargets WeaponTargetType { get; }
