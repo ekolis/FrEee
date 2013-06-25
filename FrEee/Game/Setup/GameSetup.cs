@@ -28,7 +28,7 @@ namespace FrEee.Game.Setup
 		public GameSetup()
 		{
 			EmpireTemplates = new List<EmpireTemplate>();
-			ForbiddenTechnologies = new List<Technology>();
+			ForbiddenTechnologyNames = new List<string>();
 			VictoryConditions = new List<IVictoryCondition>();
 			VictoryConditions.Add(new TotalEliminationVictoryCondition());
 		}
@@ -154,8 +154,7 @@ namespace FrEee.Game.Setup
 		/// <summary>
 		/// Technologies that are locked at level zero.
 		/// </summary>
-		// TODO - just save the names of the techs in the gsu file
-		public IList<Technology> ForbiddenTechnologies { get; private set; }
+		public IList<string> ForbiddenTechnologyNames { get; private set; }
 
 		/// <summary>
 		/// Game victory conditions.
@@ -223,8 +222,8 @@ namespace FrEee.Game.Setup
 			gal.Name = GameName;
 
 			// remove forbidden techs
-			foreach (var tech in ForbiddenTechnologies)
-				gal.Unregister(tech);
+			foreach (var tname in ForbiddenTechnologyNames)
+				gal.Unregister(gal.Referrables.OfType<Technology>().Single(t => t.Name == tname));
 
 			// set omniscient view flag
 			gal.OmniscientView = OmniscientView;

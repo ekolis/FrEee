@@ -192,7 +192,7 @@ namespace FrEee.WinForms.Forms
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))
-					setup.ForbiddenTechnologies.Add((Technology)lstTechs.Items[i]);
+					setup.ForbiddenTechnologyNames.Add(((Technology)lstTechs.Items[i]).Name);
 			}
 			setup.StartingResources = (int)spnStartResources.Value;
 			setup.ResourceStorage = (int)spnResourceStorage.Value;
@@ -271,7 +271,7 @@ namespace FrEee.WinForms.Forms
 			}
 			ddlStartTech.SelectedIndex = (int)setup.TechnologyCost;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
-				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologies.Contains((Technology)lstTechs.Items[i]));
+				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologyNames.Contains(((Technology)lstTechs.Items[i]).Name));
 
 			spnStartResources.Value = setup.StartingResources;
 			spnResourceStorage.Value = setup.ResourceStorage;
