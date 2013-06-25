@@ -552,15 +552,34 @@ namespace FrEee.Game.Objects.Space
 			TurnNumber++;
 
 			// mining
-			foreach (var p in FindSpaceObjects<Planet>(p => p.Owner != null).Flatten().Flatten())
+			foreach (var tuple in FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
 			{
-				// give owner his income
-				p.Owner.StoredResources += p.Income;
-				p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
+				var p = tuple.Item3;
+				var sys = tuple.Item1.Item;
+				if (sys.FindSpaceObjects<Planet>().Flatten().Any(p2 => p2.Owner == p.Owner && p2.HasAbility("Spaceport")))
+				{
+					// give owner his income
+					p.Owner.StoredResources += p.Income;
+					p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
-				// adjust resource value
-				foreach (var kvp in p.Income)
-					p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+					// adjust resource value
+					foreach (var kvp in p.Income)
+						p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+				}
+				else
+				{
+					// prorated income based on how much population doesn't need spaceport
+					var merchants = p.Colony.Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
+					var totalPop = p.Colony.Population.Sum(kvp => kvp.Value);
+					var ratio = (double)merchants * (double)totalPop;
+					p.Owner.StoredResources += p.Income * ratio;
+					p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
+
+					// adjust resource value
+					// pay full value decay for non-prorated income though, since the resources were extracted and wasted!
+					foreach (var kvp in p.Income)
+						p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+				}
 			}
 
 			// TODO - remote mining and raw resource generation
