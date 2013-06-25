@@ -573,9 +573,9 @@ namespace FrEee.Game.Objects.Space
 					var totalPop = p.Colony.Population.Sum(kvp => kvp.Value);
 					var ratio = (double)merchants * (double)totalPop;
 					if (ratio == 0)
-						p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport.");
+						p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
 					else if (ratio < 1)
-						p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport.");
+						p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
 					p.Owner.StoredResources += p.Income * ratio;
 					p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
