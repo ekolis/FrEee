@@ -275,9 +275,26 @@ namespace FrEee.Game.Objects.Space
 			private set;
 		}
 
+		/// <summary>
+		/// Fractional turns until the planet has saved up another move point.
+		/// </summary>
+		public double TimeToNextMove
+		{
+			get;
+			set;
+		}
+
 		public void ExecuteOrders()
 		{
-			// TODO - execute planet orders
+			TimeToNextMove -= Galaxy.Current.NextTickSize;
+			while (TimeToNextMove <= 0)
+			{
+				if (!Orders.Any())
+					break;
+				Orders.First().Execute(this);
+				if (Orders.First().IsComplete)
+					Orders.RemoveAt(0);
+			}
 		}
 
 		public ConstructionQueue ConstructionQueue
