@@ -191,7 +191,14 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center; // center align our name
 							sf.LineAlignment = StringAlignment.Far; // bottom align our name
-							pe.Graphics.DrawString(largest.Name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
+							var name = largest.Name;
+							if (largest is WarpPoint)
+							{
+								var wp = (WarpPoint)largest;
+								if (wp.TargetStarSystemLocation != null)
+									name = wp.Name + " to " + wp.TargetStarSystemLocation.Item.Name;
+							}
+							pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 						}
 
 						// draw number to indicate how many stellar objects are present if >1

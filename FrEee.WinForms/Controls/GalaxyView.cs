@@ -151,6 +151,9 @@ namespace FrEee.WinForms.Controls
 					);
 					foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
 					{
+						if (wp.TargetStarSystemLocation == null)
+							continue; // can't draw line if we don't know where warp point ends!
+
 						var endPos = new PointF
 						(
 							wp.TargetStarSystemLocation.Location.X * drawsize + Width / 2f,

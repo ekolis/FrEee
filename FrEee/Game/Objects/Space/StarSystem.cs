@@ -8,6 +8,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -227,6 +228,16 @@ namespace FrEee.Game.Objects.Space
 			// hide background image (so player can't see what kind of system it is)
 			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				BackgroundImagePath = null;
+
+			// hide warp point targets if player hasn't seen them
+			foreach (var wp in FindSpaceObjects<WarpPoint>().Flatten())
+			{
+				var sys = wp.Target.FindStarSystem();
+				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+					wp.Target = null;
+				else if (!sys.FindSpaceObjects<ISpaceObject>().Flatten().Any(sobj => sobj.Owner == galaxy.CurrentEmpire))
+					wp.Target.SpaceObjects.Clear(); // have seen the sector, but can't see the objects there
+			}
 		}
 
 		public bool Contains(Sector sector)
