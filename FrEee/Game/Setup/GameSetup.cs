@@ -144,6 +144,14 @@ namespace FrEee.Game.Setup
 		public StartingTechnologyLevel StartingTechnologyLevel { get; set; }
 
 		/// <summary>
+		/// Technology research cost formula.
+		/// Low = Level * BaseCost
+		/// Medium = BaseCost for level 1, Level ^ 2 * BaseCost / 2 otherwise
+		/// Hight = Level ^ 2 * BaseCost
+		/// </summary>
+		public TechnologyCost TechnologyCost { get; set; }
+
+		/// <summary>
 		/// Technologies that are locked at level zero.
 		/// </summary>
 		// TODO - just save the names of the techs in the gsu file
@@ -241,6 +249,7 @@ namespace FrEee.Game.Setup
 			gal.VictoryDelay = VictoryDelay;
 
 			// set up misc. game options
+			gal.TechnologyCost = TechnologyCost;
 			gal.IsHumansVsAI = IsHumansVsAI;
 			gal.AllowedTrades = AllowedTrades;
 			gal.IsSurrenderAllowed = IsSurrenderAllowed;

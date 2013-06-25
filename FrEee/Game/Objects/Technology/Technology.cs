@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -120,8 +121,18 @@ namespace FrEee.Game.Objects.Technology
 
 		public int GetLevelCost(int level)
 		{
-			// TODO - use galaxy tech cost formula
-			return LevelCost * level;
+			if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
+				return LevelCost * level;
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
+			{
+				if (Math.Abs(level) == 1)
+					return LevelCost * level;
+				else
+					return LevelCost * level * level / 2;
+			}
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
+				return LevelCost * level * level;
+			throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
 		}
 
 		public int GetNextLevelCost(Empire emp)

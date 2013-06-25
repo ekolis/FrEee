@@ -56,6 +56,7 @@ namespace FrEee.WinForms.Forms
 			}
 			ddlEmpirePlacement.SelectedIndex = 2; // equidistant
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
+			ddlTechCost.SelectedIndex = 0; // low tech cost
 		}
 
 		private GameSetup setup;
@@ -187,6 +188,7 @@ namespace FrEee.WinForms.Forms
 					setup.StartingTechnologyLevel = StartingTechnologyLevel.High;
 					break;
 			}
+			setup.TechnologyCost = (TechnologyCost)ddlTechCost.SelectedIndex;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 			{
 				if (!lstTechs.GetItemChecked(i))
@@ -267,6 +269,7 @@ namespace FrEee.WinForms.Forms
 					ddlStartTech.SelectedIndex = 2;
 					break;
 			}
+			ddlStartTech.SelectedIndex = (int)setup.TechnologyCost;
 			for (int i = 0; i < lstTechs.Items.Count; i++)
 				lstTechs.SetItemChecked(i, !setup.ForbiddenTechnologies.Contains((Technology)lstTechs.Items[i]));
 

@@ -113,6 +113,14 @@ namespace FrEee.Game.Objects.Space
 		public string Name { get; set; }
 
 		/// <summary>
+		/// Technology research cost formula.
+		/// Low = Level * BaseCost
+		/// Medium = BaseCost for level 1, Level ^ 2 * BaseCost / 2 otherwise
+		/// Hight = Level ^ 2 * BaseCost
+		/// </summary>
+		public TechnologyCost TechnologyCost { get; set; }
+
+		/// <summary>
 		/// The locations of the star systems in the galaxy.
 		/// </summary>
 		public ICollection<ObjectLocation<StarSystem>> StarSystemLocations { get; private set; }

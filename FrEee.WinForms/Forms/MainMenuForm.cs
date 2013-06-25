@@ -99,6 +99,7 @@ namespace FrEee.WinForms.Forms
 						MinSpawnedAsteroidValue = 50,
 						MaxSpawnedAsteroidValue = 300,
 						StartingTechnologyLevel = StartingTechnologyLevel.Low,
+						TechnologyCost = TechnologyCost.Low,
 						StartingResources = (int)20e3,
 						ResourceStorage = (int)50e3,
 						StartingResearch = (int)20e3,

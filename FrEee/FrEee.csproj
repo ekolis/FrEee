@@ -55,6 +55,7 @@
     <Compile Include="Game\Enumerations\Mood.cs" />
     <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
     <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
+    <Compile Include="Game\Enumerations\TechnologyCost.cs" />
     <Compile Include="Game\Enumerations\WeaponTypes.cs" />
     <Compile Include="Game\Enumerations\WeaponTargets.cs" />
     <Compile Include="Game\Enumerations\StellarSize.cs" />
@@ -190,7 +191,6 @@
     <Compile Include="Game\Objects\Technology\WarheadWeaponInfo.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfo.cs" />
     <Compile Include="Game\Interfaces\IStarSystemPlacementStrategy.cs" />
-    <Compile Include="Modding\Extensions.cs" />
     <Compile Include="Modding\Loaders\AbilityRuleLoader.cs" />
     <Compile Include="Modding\Loaders\ComponentLoader.cs" />
     <Compile Include="Modding\Loaders\FacilityLoader.cs" />

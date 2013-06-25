@@ -193,6 +193,8 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.ddlTechCost = new System.Windows.Forms.ComboBox();
+			this.label61 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -1253,6 +1255,8 @@
 			// tabTechnology
 			// 
 			this.tabTechnology.BackColor = System.Drawing.Color.Black;
+			this.tabTechnology.Controls.Add(this.ddlTechCost);
+			this.tabTechnology.Controls.Add(this.label61);
 			this.tabTechnology.Controls.Add(this.label31);
 			this.tabTechnology.Controls.Add(this.lstTechs);
 			this.tabTechnology.Controls.Add(this.ddlStartTech);
@@ -1269,7 +1273,7 @@
 			// 
 			this.label31.AutoSize = true;
 			this.label31.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label31.Location = new System.Drawing.Point(3, 42);
+			this.label31.Location = new System.Drawing.Point(3, 84);
 			this.label31.Margin = new System.Windows.Forms.Padding(3);
 			this.label31.Name = "label31";
 			this.label31.Size = new System.Drawing.Size(133, 15);
@@ -1287,10 +1291,10 @@
 			this.lstTechs.ColumnWidth = 200;
 			this.lstTechs.ForeColor = System.Drawing.Color.White;
 			this.lstTechs.FormattingEnabled = true;
-			this.lstTechs.Location = new System.Drawing.Point(9, 63);
+			this.lstTechs.Location = new System.Drawing.Point(9, 105);
 			this.lstTechs.MultiColumn = true;
 			this.lstTechs.Name = "lstTechs";
-			this.lstTechs.Size = new System.Drawing.Size(530, 368);
+			this.lstTechs.Size = new System.Drawing.Size(530, 416);
 			this.lstTechs.TabIndex = 14;
 			// 
 			// ddlStartTech
@@ -2423,6 +2427,30 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
+			// ddlTechCost
+			// 
+			this.ddlTechCost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlTechCost.FormattingEnabled = true;
+			this.ddlTechCost.Items.AddRange(new object[] {
+            "Low",
+            "Medium",
+            "High"});
+			this.ddlTechCost.Location = new System.Drawing.Point(120, 35);
+			this.ddlTechCost.Name = "ddlTechCost";
+			this.ddlTechCost.Size = new System.Drawing.Size(121, 23);
+			this.ddlTechCost.TabIndex = 17;
+			// 
+			// label61
+			// 
+			this.label61.AutoSize = true;
+			this.label61.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label61.Location = new System.Drawing.Point(3, 38);
+			this.label61.Margin = new System.Windows.Forms.Padding(3);
+			this.label61.Name = "label61";
+			this.label61.Size = new System.Drawing.Size(97, 15);
+			this.label61.TabIndex = 16;
+			this.label61.Text = "Technology Cost";
+			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2663,5 +2691,7 @@
 		private System.Windows.Forms.Label label59;
 		private System.Windows.Forms.CheckBox chkAllowAnalysis;
 		private System.Windows.Forms.Label label60;
+		private System.Windows.Forms.ComboBox ddlTechCost;
+		private System.Windows.Forms.Label label61;
 	}
 }
