@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -91,6 +92,13 @@ namespace FrEee.Game.Interfaces
 		/// The portriat image for this hull for the current empire.
 		/// </summary>
 		Image Portrait { get; }
+
+		/// <summary>
+		/// Can this hull use a mount?
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		bool CanUseMount(Mount m);
 	}
 
 	/// <summary>

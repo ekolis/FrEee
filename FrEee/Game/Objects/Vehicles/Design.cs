@@ -209,8 +209,13 @@ namespace FrEee.Game.Objects.Vehicles
 					if (!c.VehicleTypes.HasFlag(VehicleType))
 						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
 				}
-
-				// TODO - warnings for illegal mount usage
+				foreach (var mct in Components)
+				{
+					if (!Hull.CanUseMount(mct.Mount))
+						yield return "This hull cannot use the " + mct.Mount + ".";
+					if (!mct.ComponentTemplate.CanUseMount(mct.Mount))
+						yield return "The " + mct.ComponentTemplate + " cannot use the " + mct.Mount + ".";
+				}
 			}
 		}
 

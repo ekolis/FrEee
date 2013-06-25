@@ -222,5 +222,16 @@ namespace FrEee.Game.Objects.Technology
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
 		}
+
+		public bool CanUseMount(Mount m)
+		{
+			if (m.MinimumVehicleSize > Size)
+				return false;
+			if (m.MaximumVehicleSize < Size)
+				return false;
+			if (!m.VehicleTypes.HasFlag(VehicleType))
+				return false;
+			return true;
+		}
 	}
 }
