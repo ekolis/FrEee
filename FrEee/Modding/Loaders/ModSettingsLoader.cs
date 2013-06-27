@@ -35,7 +35,8 @@ namespace FrEee.Modding.Loaders
 			// TODO - load more settings
 
 			settings.Reproduction = rec.GetNullInt("Empire Starting Percent Reproduction", ref index) ?? 10;
-			settings.ReproductionMultiplier = rec.GetNullDouble("Reproduction Multiplier", ref index) ?? 0.1;			
+			settings.ReproductionMultiplier = rec.GetNullDouble("Reproduction Multiplier", ref index) ?? 0.1;
+			settings.ReproductionDelay = rec.GetNullInt("Reproduction Check Frequency", ref index) ?? 1;
 
 			// TODO - load more settings
 
