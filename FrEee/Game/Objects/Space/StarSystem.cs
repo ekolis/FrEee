@@ -16,7 +16,8 @@ namespace FrEee.Game.Objects.Space
 	/// A star system containing a grid of sectors.
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
-	 [Serializable] public class StarSystem
+	[Serializable]
+	public class StarSystem
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -56,7 +57,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public string BackgroundImagePath { get; set; }
 
-				public Image BackgroundImage
+		public Image BackgroundImage
 		{
 			get
 			{
@@ -104,7 +105,7 @@ namespace FrEee.Game.Objects.Space
 			return AreCoordsInBounds(p.X, p.Y);
 		}
 
-				private Sector[,] sectors;
+		private Sector[,] sectors;
 
 		/// <summary>
 		/// For serialization purposes mostly.
@@ -248,6 +249,35 @@ namespace FrEee.Game.Objects.Space
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		/// <summary>
+		/// Aggregates abilities across a star system for an empire's space objects.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		/// <summary>
+		/// Do any of the empire's space objects in this system have an ability?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 	}
 }

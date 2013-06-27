@@ -29,6 +29,14 @@ namespace FrEee.Modding.Loaders
 
 			int index = -1;
 
+			var settings = new ModSettings();
+			mod.Settings = settings;
+
+			// TODO - load more settings
+
+			settings.Reproduction = rec.GetNullInt("Empire Starting Percent Reproduction", ref index) ?? 10;
+			settings.ReproductionMultiplier = rec.GetNullDouble("Reproduction Multiplier", ref index) ?? 0.1;			
+
 			// TODO - load more settings
 
 			// load aptitudes

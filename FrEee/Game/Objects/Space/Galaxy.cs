@@ -551,6 +551,36 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			TurnNumber++;
 
+			// reproduction
+			if (TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
+			{
+				foreach (var p in FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
+				{
+					var pop = p.Colony.Population;
+					foreach (var race in pop.Keys.ToArray())
+					{
+						// TODO - plagued planets should not reproduce
+						var sysModifier = p.FindStarSystem().GetAbilityValue(p.Owner, "Modify Reproduction - System").ToInt();
+						var planetModifier = p.GetAbilityValue("Modify Reproduction - Planet").ToInt();
+						var reproduction = (Mod.Current.Settings.Reproduction + race.Aptitudes["Reproduction"] + sysModifier + planetModifier) / 100d * Mod.Current.Settings.ReproductionMultiplier;
+						pop[race] = (long)(pop[race] * 1.0 + reproduction);
+
+						// TODO - allow cloning of populations over the max of a 32 bit int?
+						var sysCloning = p.FindStarSystem().GetAbilityValue(p.Owner, "Change Population - System").ToInt();
+						var planetCloning = p.GetAbilityValue("Change Population - Planet").ToInt();
+						pop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / pop.Count; // split cloning across races
+					}
+
+					// deal with overpopulation
+					var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+					if (ratio > 1)
+					{
+						foreach (var race in pop.Keys.ToArray())
+							pop[race] = (long)(pop[race] / ratio);
+					}
+				}
+			}
+
 			// mining
 			foreach (var tuple in FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
 			{

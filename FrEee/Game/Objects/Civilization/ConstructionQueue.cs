@@ -108,13 +108,14 @@ namespace FrEee.Game.Objects.Civilization
 					rate *= aptmod;
 
 				}
-				else
+				if (rate == null)
+					rate = new Resources();
+				if (Colony == null)
 				{
 					// apply aptitude modifier for empire's primary race
 					rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
 				}
-				if (rate == null)
-					rate = new Resources();
+				
 
 				return rate;
 			}

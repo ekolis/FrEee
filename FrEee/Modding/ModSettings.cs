@@ -421,9 +421,9 @@ namespace FrEee.Modding
 		public double PopulationSize { get; set; }
 
 		/// <summary>
-		/// If set greater than 1, populations will reproduce that many times slower.
+		/// Number of turns between population reproduction.
 		/// </summary>
-		public int ReproductionSlowFactor { get; set; }
+		public int ReproductionDelay { get; set; }
 
 		/// <summary>
 		/// Can bases join fleets?
@@ -454,5 +454,11 @@ namespace FrEee.Modding
 		/// Evasion rating of planets.
 		/// </summary>
 		public int PlanetEvasion { get; set; }
+
+		/// <summary>
+		/// Global reproduction rate multiplier to convert mod values to per-turn values.
+		/// Defaults to 0.1 since 20%/year reproduction in SE4 really meant 2% per turn.
+		/// </summary>
+		public double ReproductionMultiplier { get; set; }
 	}
 }
