@@ -225,6 +225,8 @@ namespace FrEee.Game.Objects.Technology
 
 		public bool CanUseMount(Mount m)
 		{
+			if (m == null)
+				return true;
 			if (m.MinimumVehicleSize > Size)
 				return false;
 			if (m.MaximumVehicleSize < Size)
