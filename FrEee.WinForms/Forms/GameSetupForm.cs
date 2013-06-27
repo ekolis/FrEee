@@ -9,6 +9,7 @@ using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -113,10 +114,7 @@ namespace FrEee.WinForms.Forms
 					Enabled = true;
 					IsBusy = false;
 					progressBar.Value = 0;
-					var sw = new StreamWriter("errorlog.txt");
-					sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
-					sw.WriteLine(status.Exception.ToString());
-					sw.Close();
+					status.Exception.Log();
 					t.Abort();
 					break;
 				}

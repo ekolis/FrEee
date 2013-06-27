@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Civilization
 						{
 							order.Item.Place(SpaceObject);
 							Orders.Remove(order);
-							Owner.Log.Add(order.Item.CreateLogMessage(order.Item + " has been constructed at " + Name + ".");
+							Owner.Log.Add(order.Item.CreateLogMessage(order.Item + " has been constructed at " + Name + "."));
 						}
 					}
 				}

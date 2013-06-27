@@ -150,10 +150,7 @@ namespace FrEee.WinForms.Forms
 					Enabled = true;
 					IsBusy = false;
 					progressBar1.Value = 0;
-					var sw = new StreamWriter("errorlog.txt");
-					sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
-					sw.WriteLine(status.Exception.ToString());
-					sw.Close();
+					status.Exception.Log();
 					t.Abort();
 					break;
 				}
@@ -256,10 +253,7 @@ namespace FrEee.WinForms.Forms
 						Enabled = true;
 						IsBusy = false;
 						progressBar1.Value = 0;
-						var sw = new StreamWriter("errorlog.txt");
-						sw.WriteLine(status.Exception.GetType().Name + " occurred at " + DateTime.Now + ":");
-						sw.WriteLine(status.Exception.ToString());
-						sw.Close();
+						status.Exception.Log();
 						t.Abort();
 						break;
 					}

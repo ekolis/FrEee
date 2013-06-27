@@ -859,5 +859,17 @@ namespace FrEee.Utility.Extensions
 			if (badVals.Any())
 				throw new Exception(cmd + " contained a non-client-safe type " + badVals.First().Value.GetType() + " in property " + badVals.First().Name);
 		}
+
+		/// <summary>
+		/// Logs an exception in errorlog.txt. Overwrites the old errorlog.txt.
+		/// </summary>
+		/// <param name="ex"></param>
+		public static void Log(this Exception ex)
+		{
+			var sw = new StreamWriter("errorlog.txt");
+			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
+			sw.WriteLine(ex.ToString());
+			sw.Close();
+		}
 	}
 }
