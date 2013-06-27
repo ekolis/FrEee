@@ -78,8 +78,19 @@ namespace FrEee.WinForms.Controls
 				txtDescription.Text = Planet.Description;
 
 				txtColonyType.Text = Planet.Owner == null ? "" : Planet.Owner.Name + " Colony"; // TODO - load colony type
-				txtPopulation.Text = (Planet.Owner == null ? "0" : Planet.Colony.Population.Sum(kvp => kvp.Value).ToUnitString(true)) + " / " + Planet.MaxPopulation.ToUnitString(true);
-				txtReproduction.Text = ""; // TODO - load reproduction
+				if (Planet.Owner == null)
+					txtPopulation.Text = "0";
+				else
+				{
+					var pop = Planet.Colony.Population.Sum(kvp => kvp.Value);
+					if (Planet.PopulationChangePerTurn > 0)
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (+" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+					else if (Planet.PopulationChangePerTurn < 0)
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (" + Planet.PopulationChangePerTurn.ToUnitString(true) + ")";
+					else
+						txtPopulation.Text = pop.ToUnitString(true) + " / " + Planet.MaxPopulation.ToUnitString(true) + " (stagnant)";
+				}
+
 				txtMood.Text = ""; // TODO - load mood
 
 				// load income
@@ -126,10 +137,13 @@ namespace FrEee.WinForms.Controls
 				// load cargo
 				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Planet.CargoStorage - (Planet.Cargo == null ? 0 : Planet.Cargo.Size)).Kilotons(), Planet.CargoStorage.Kilotons());
 				lstCargoDetail.Initialize(32, 32);
-				foreach (var ug in Planet.Cargo.Units.GroupBy(u => u.Design))
-					lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
-				foreach (var pop in Planet.Cargo.Population)
-					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				if (Planet.Cargo != null)
+				{
+					foreach (var ug in Planet.Cargo.Units.GroupBy(u => u.Design))
+						lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
+					foreach (var pop in Planet.Cargo.Population)
+						lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				}
 
 				abilityTreeView.Abilities = Planet.Abilities.StackToTree();
 				if (Planet.Colony == null)

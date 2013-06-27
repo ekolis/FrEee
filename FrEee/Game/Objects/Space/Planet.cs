@@ -588,5 +588,46 @@ namespace FrEee.Game.Objects.Space
 				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
 			}
 		}
+
+		/// <summary>
+		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
+		/// </summary>
+		public long PopulationChangePerTurn
+		{
+			get
+			{
+				return PopulationChangePerTurnPerRace.Sum(kvp => kvp.Value);
+			}
+		}
+
+		/// <summary>
+		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
+		/// </summary>
+		public IDictionary<Race, long> PopulationChangePerTurnPerRace
+		{
+			get
+			{
+				var deltapop = new Dictionary<Race, long>();
+
+				if (Colony == null)
+					return deltapop;
+
+				foreach (var race in Colony.Population.Keys)
+				{
+					// TODO - plagued planets should not reproduce, and should lose population each turn
+					var sysModifier = this.FindStarSystem().GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
+					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
+					var reproduction = (Mod.Current.Settings.Reproduction + race.Aptitudes["Reproduction"] + sysModifier + planetModifier) / 100d * Mod.Current.Settings.ReproductionMultiplier;
+					deltapop[race] = (long)(Colony.Population[race] * reproduction);
+
+					// TODO - allow cloning of populations over the max of a 32 bit int?
+					var sysCloning = this.FindStarSystem().GetAbilityValue(Owner, "Change Population - System").ToInt();
+					var planetCloning = this.GetAbilityValue("Change Population - Planet").ToInt();
+					deltapop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
+				}
+
+				return deltapop;
+			}
+		}
 	}
 }
