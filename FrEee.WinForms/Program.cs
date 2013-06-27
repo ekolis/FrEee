@@ -45,7 +45,7 @@ namespace FrEee.WinForms
 					{
 						Galaxy.Current.ProcessTurn();
 						Galaxy.SaveAll();
-						Console.WriteLine("Turn processed successfully. It is now stardate " + Galaxy.Current.Stardate + ".");
+						Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 						Application.Exit();
 						return 0;
 					}

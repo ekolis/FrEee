@@ -194,7 +194,7 @@ namespace FrEee.WinForms.Forms
 						Cursor = Cursors.WaitCursor;
 						Galaxy.Current.ProcessTurn();
 						Galaxy.SaveAll();
-						MessageBox.Show("Turn successfully processed. It is now stardate " + Galaxy.Current.Stardate + ".");
+						MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 						Cursor = Cursors.Default;
 					}
 				}
