@@ -10,7 +10,7 @@ using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable
+	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable, IReferrable
 	{
 		/// <summary>
 		/// The name of this space object.
@@ -65,5 +65,10 @@ namespace FrEee.Game.Interfaces
 		/// TODO - make supply a resource?
 		/// </summary>
 		bool HasInfiniteSupplies { get; }
+
+		/// <summary>
+		/// Can this space object traverse warp points?
+		/// </summary>
+		bool CanWarp { get; }
 	}
 }

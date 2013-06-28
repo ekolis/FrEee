@@ -102,6 +102,8 @@
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
     <Compile Include="Game\Objects\Orders\ColonizeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\EvadeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\PursueOrder.cs" />
     <Compile Include="Game\Objects\Orders\LoadCargoOrder.cs" />
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />

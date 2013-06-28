@@ -629,5 +629,11 @@ namespace FrEee.Game.Objects.Space
 				return deltapop;
 			}
 		}
+
+		/// <summary>
+		/// If planets had engines, they could warp...
+		/// (Sure, why not?)
+		/// </summary>
+		public override bool CanWarp { get { return true; } }
 	}
 }

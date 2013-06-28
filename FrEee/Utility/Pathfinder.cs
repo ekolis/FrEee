@@ -49,7 +49,7 @@ namespace FrEee.Utility
 			{
 				// can't reach it; get as close as possible
 				var reverseMap = CreateDijkstraMap(null, end, start, false);
-				var target = reverseMap.Where(n => map.Any(n2 => n2.Location == n.Location)).WithMin(n => n.Cost).FirstOrDefault();
+				var target = reverseMap.Join(map, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
 				if (target == null)
 					return Enumerable.Empty<Sector>(); // can't go anywhere
 				else
@@ -96,26 +96,7 @@ namespace FrEee.Utility
 					success = true;
 
 				// step 7: check possible moves
-				var moves = new List<Sector>();
-				var s = node.Location;
-
-				// normal moves
-				foreach (var dx in new int[] { 0, -1, 1 })
-				{
-					foreach (var dy in new int[] { 0, -1, 1 })
-					{
-						if (dx == 0 && dy == 0)
-							continue; // no need to sit still!
-						var sys = s.FindStarSystem();
-						var coords = s.Coordinates;
-						if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
-							moves.Add(sys.GetSector(new Point(coords.X + dx, coords.Y + dy)));
-					}
-				}
-
-				// warp points
-				foreach (var wp in s.SpaceObjects.OfType<WarpPoint>())
-					moves.Add(wp.Target);
+				var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp);
 
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
@@ -148,6 +129,34 @@ namespace FrEee.Utility
 			}
 
 			return visited;
+		}
+
+		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
+		{
+			var moves = new List<Sector>();
+
+			// normal moves
+			foreach (var dx in new int[] { 0, -1, 1 })
+			{
+				foreach (var dy in new int[] { 0, -1, 1 })
+				{
+					if (dx == 0 && dy == 0)
+						continue; // no need to sit still!
+					var sys = s.FindStarSystem();
+					var coords = s.Coordinates;
+					if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
+						moves.Add(sys.GetSector(new Point(coords.X + dx, coords.Y + dy)));
+				}
+			}
+
+			if (canWarp)
+			{
+				// warp points
+				foreach (var wp in s.SpaceObjects.OfType<WarpPoint>())
+					moves.Add(wp.Target);
+			}
+
+			return moves;
 		}
 
 		public class DijkstraNode<T>

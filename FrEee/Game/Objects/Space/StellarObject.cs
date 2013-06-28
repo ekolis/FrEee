@@ -159,5 +159,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return null; }
 		}
+
+		/// <summary>
+		/// Stellar objects can't normally warp.
+		/// </summary>
+		public virtual bool CanWarp { get { return false; } }
 	}
 }

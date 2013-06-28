@@ -230,14 +230,12 @@ namespace FrEee.Game.Objects.Space
 			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				BackgroundImagePath = null;
 
-			// hide warp point targets if player hasn't seen them
+			// hide warp point target contents if player hasn't seen them
 			foreach (var wp in FindSpaceObjects<WarpPoint>().Flatten())
 			{
 				var sys = wp.Target.FindStarSystem();
-				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
-					wp.Target = null;
-				else if (!sys.FindSpaceObjects<ISpaceObject>().Flatten().Any(sobj => sobj.Owner == galaxy.CurrentEmpire))
-					wp.Target.SpaceObjects.Clear(); // have seen the sector, but can't see the objects there
+				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire) || !sys.FindSpaceObjects<ISpaceObject>().Flatten().Any(sobj => sobj.Owner == galaxy.CurrentEmpire))
+					wp.Target.SpaceObjects.Clear();
 			}
 		}
 

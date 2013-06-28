@@ -100,15 +100,51 @@ namespace FrEee.WinForms.Forms
 			}
 			else if (commandMode == CommandMode.Pursue)
 			{
-				// TODO - implement pursue orders
-				MessageBox.Show("Sorry, pursue orders are not yet implemented.");
-				ChangeCommandMode(CommandMode.None, null);
+				if (sector != null && sector.SpaceObjects.Any())
+				{
+					// TODO - let user pick which space object to pursue
+					var target = sector.SpaceObjects.First();
+
+					// pursue
+					if (SelectedSpaceObject is AutonomousSpaceVehicle)
+					{
+						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Invalidate();
+						starSystemView.Invalidate(); // show move lines
+					}
+					else
+					{
+						// TODO - pursue orders for unit groups
+					}
+					ChangeCommandMode(CommandMode.None, null);
+				}
 			}
 			else if (commandMode == CommandMode.Evade)
 			{
-				// TODO - implement evade orders
-				MessageBox.Show("Sorry, evade orders are not yet implemented.");
-				ChangeCommandMode(CommandMode.None, null);
+				if (sector != null && sector.SpaceObjects.Any())
+				{
+					// TODO - let user pick which space object to evade
+					var target = sector.SpaceObjects.First();
+
+					// evade
+					if (SelectedSpaceObject is AutonomousSpaceVehicle)
+					{
+						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Invalidate();
+						starSystemView.Invalidate(); // show move lines
+					}
+					else
+					{
+						// TODO - pursue orders for unit groups
+					}
+					ChangeCommandMode(CommandMode.None, null);
+				}
 			}
 			else if (commandMode == CommandMode.Warp)
 			{
@@ -121,8 +157,7 @@ namespace FrEee.WinForms.Forms
 					if (SelectedSpaceObject is AutonomousSpaceVehicle)
 					{
 						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						// TODO - issue a pursue order instead of a move order, in case warp point closes or even moves
-						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(wp.FindSector(), !aggressiveMode));
+						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
 						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
 						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 						if (report != null)
@@ -666,10 +701,10 @@ namespace FrEee.WinForms.Forms
 					Text = "Click a sector for " + sobj + " to move to. (Ctrl-click to move aggressively)";
 					break;
 				case CommandMode.Pursue:
-					Text = "Click a space object for " + sobj + " to pursue.";
+					Text = "Click a space object for " + sobj + " to pursue. (Ctrl-click to move aggressively)";
 					break;
 				case CommandMode.Evade:
-					Text = "Click a space object for " + sobj + " to evade.";
+					Text = "Click a space object for " + sobj + " to evade. (Ctrl-click to move aggressively)";
 					break;
 				case CommandMode.Warp:
 					Text = "Click a warp point for " + sobj + " to traverse. (Ctrl-click to move aggressively)";

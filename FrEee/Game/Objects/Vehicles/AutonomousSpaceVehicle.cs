@@ -287,6 +287,24 @@ namespace FrEee.Game.Objects.Vehicles
 						last = wo.WarpPoint.Target;
 						yield return last;
 					}
+					else if (order is PursueOrder<AutonomousSpaceVehicle>)
+					{
+						var po = (PursueOrder<AutonomousSpaceVehicle>)order;
+						foreach (var sector in po.Pathfind(this, last))
+						{
+							last = sector;
+							yield return last;
+						}
+					}
+					else if (order is EvadeOrder<AutonomousSpaceVehicle>)
+					{
+						var eo = (EvadeOrder<AutonomousSpaceVehicle>)order;
+						foreach (var sector in eo.Pathfind(this, last))
+						{
+							last = sector;
+							yield return last;
+						}
+					}
 				}
 			}
 		}
