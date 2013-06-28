@@ -42,7 +42,6 @@ namespace FrEee.WinForms.Controls
 			{
 				Visible = true;
 
-				picOwnerFlag.Image = null; // TODO - load owner flag
 				picPortrait.Image = Storm.Portrait;
 
 				txtName.Text = Storm.Name;

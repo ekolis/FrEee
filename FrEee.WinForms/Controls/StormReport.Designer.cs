@@ -28,156 +28,91 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
-			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.txtSize = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
-			this.pageAbility = new System.Windows.Forms.TabPage();
-			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.gameTabControl1.SuspendLayout();
-			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
-			this.pageAbility.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// gameTabControl1
+			// abilityTreeView
 			// 
-			this.gameTabControl1.Controls.Add(this.pageDetail);
-			this.gameTabControl1.Controls.Add(this.pageAbility);
-			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.gameTabControl1.Location = new System.Drawing.Point(0, 0);
-			this.gameTabControl1.Name = "gameTabControl1";
-			this.gameTabControl1.SelectedIndex = 0;
-			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.SkyBlue;
-			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(320, 459);
-			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
-			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameTabControl1.TabIndex = 1;
-			// 
-			// pageDetail
-			// 
-			this.pageDetail.AutoScroll = true;
-			this.pageDetail.BackColor = System.Drawing.Color.Black;
-			this.pageDetail.Controls.Add(this.picPortrait);
-			this.pageDetail.Controls.Add(this.txtDescription);
-			this.pageDetail.Controls.Add(this.txtSize);
-			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picOwnerFlag);
-			this.pageDetail.Location = new System.Drawing.Point(4, 29);
-			this.pageDetail.Name = "pageDetail";
-			this.pageDetail.Padding = new System.Windows.Forms.Padding(3);
-			this.pageDetail.Size = new System.Drawing.Size(312, 426);
-			this.pageDetail.TabIndex = 0;
-			this.pageDetail.Text = "Detail";
+			this.abilityTreeView.Abilities = null;
+			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
+			this.abilityTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
+			this.abilityTreeView.IntrinsicAbilities = null;
+			this.abilityTreeView.Location = new System.Drawing.Point(3, 185);
+			this.abilityTreeView.Name = "abilityTreeView";
+			this.abilityTreeView.Size = new System.Drawing.Size(314, 271);
+			this.abilityTreeView.TabIndex = 59;
 			// 
 			// picPortrait
 			// 
-			this.picPortrait.Location = new System.Drawing.Point(6, 32);
+			this.picPortrait.Location = new System.Drawing.Point(3, 29);
 			this.picPortrait.Name = "picPortrait";
 			this.picPortrait.Size = new System.Drawing.Size(128, 128);
 			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 52;
+			this.picPortrait.TabIndex = 58;
 			this.picPortrait.TabStop = false;
-			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// txtDescription
 			// 
 			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtDescription.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtDescription.Location = new System.Drawing.Point(10, 163);
+			this.txtDescription.Location = new System.Drawing.Point(7, 160);
 			this.txtDescription.Name = "txtDescription";
 			this.txtDescription.Size = new System.Drawing.Size(296, 36);
-			this.txtDescription.TabIndex = 50;
+			this.txtDescription.TabIndex = 57;
 			this.txtDescription.Text = "A storm composed of electrostatic gases.";
 			// 
 			// txtSize
 			// 
 			this.txtSize.AutoSize = true;
 			this.txtSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtSize.Location = new System.Drawing.Point(159, 26);
+			this.txtSize.Location = new System.Drawing.Point(156, 23);
 			this.txtSize.Name = "txtSize";
 			this.txtSize.Size = new System.Drawing.Size(89, 15);
-			this.txtSize.TabIndex = 11;
+			this.txtSize.TabIndex = 56;
 			this.txtSize.Text = "Medium Storm";
 			// 
 			// txtName
 			// 
 			this.txtName.AutoSize = true;
-			this.txtName.Location = new System.Drawing.Point(143, 6);
+			this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtName.Location = new System.Drawing.Point(140, 3);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(52, 20);
-			this.txtName.TabIndex = 10;
+			this.txtName.TabIndex = 55;
 			this.txtName.Text = "Storm";
-			// 
-			// picOwnerFlag
-			// 
-			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
-			this.picOwnerFlag.Name = "picOwnerFlag";
-			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
-			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picOwnerFlag.TabIndex = 8;
-			this.picOwnerFlag.TabStop = false;
-			// 
-			// pageAbility
-			// 
-			this.pageAbility.BackColor = System.Drawing.Color.Black;
-			this.pageAbility.Controls.Add(this.abilityTreeView);
-			this.pageAbility.Location = new System.Drawing.Point(4, 29);
-			this.pageAbility.Name = "pageAbility";
-			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
-			this.pageAbility.Size = new System.Drawing.Size(312, 426);
-			this.pageAbility.TabIndex = 4;
-			this.pageAbility.Text = "Ability";
-			// 
-			// abilityTreeView
-			// 
-			this.abilityTreeView.Abilities = null;
-			this.abilityTreeView.BackColor = System.Drawing.Color.Black;
-			this.abilityTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.abilityTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
-			this.abilityTreeView.IntrinsicAbilities = null;
-			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
-			this.abilityTreeView.Name = "abilityTreeView";
-			this.abilityTreeView.Size = new System.Drawing.Size(306, 420);
-			this.abilityTreeView.TabIndex = 1;
 			// 
 			// StormReport
 			// 
 			this.AutoScroll = true;
 			this.BackColor = System.Drawing.Color.Black;
-			this.Controls.Add(this.gameTabControl1);
+			this.Controls.Add(this.abilityTreeView);
+			this.Controls.Add(this.picPortrait);
+			this.Controls.Add(this.txtDescription);
+			this.Controls.Add(this.txtSize);
+			this.Controls.Add(this.txtName);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "StormReport";
 			this.Size = new System.Drawing.Size(320, 459);
-			this.gameTabControl1.ResumeLayout(false);
-			this.pageDetail.ResumeLayout(false);
-			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
-			this.pageAbility.ResumeLayout(false);
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private GameTabControl gameTabControl1;
-		private System.Windows.Forms.TabPage pageDetail;
+		private AbilityTreeView abilityTreeView;
+		private GamePictureBox picPortrait;
+		private System.Windows.Forms.Label txtDescription;
 		private System.Windows.Forms.Label txtSize;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picOwnerFlag;
-		private System.Windows.Forms.TabPage pageAbility;
-		private System.Windows.Forms.Label txtDescription;
-		private GamePictureBox picPortrait;
-		private AbilityTreeView abilityTreeView;
+
 	}
 }
