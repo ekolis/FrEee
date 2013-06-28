@@ -259,13 +259,15 @@ namespace FrEee.WinForms.Forms
 				return new AsteroidFieldReport((AsteroidField)sobj);
 			if (sobj is Storm)
 				return new StormReport((Storm)sobj);
+			if (sobj is WarpPoint)
+				return new WarpPointReport((WarpPoint)sobj);
 			if (sobj is AutonomousSpaceVehicle)
 			{
 				var r = new AutonomousSpaceVehicleReport((AutonomousSpaceVehicle)sobj);
 				r.OrdersChanged += AutonomousSpaceVehicleReport_OrdersChanged;
 				return r;
 			};
-			// TODO - warp point, fleet, unit group reports
+			// TODO - fleet, unit group reports
 			return null;
 		}
 
@@ -402,7 +404,7 @@ namespace FrEee.WinForms.Forms
 				SelectSector(lookup.First().First().First().Key);
 				pnlDetailReport.Controls.Clear();
 				var rpt = CreateSpaceObjectReport(sobj);
-				if (rpt != null) // HACK - for warp points which still lack reports
+				if (rpt != null)
 					rpt.Dock = DockStyle.Fill;
 				pnlDetailReport.Controls.Add(rpt);
 			}
@@ -563,7 +565,7 @@ namespace FrEee.WinForms.Forms
 				if (value != null)
 				{
 					var rpt = CreateSpaceObjectReport(value);
-					if (rpt != null) // HACK - for warp points which still lack reports
+					if (rpt != null)
 						rpt.Dock = DockStyle.Fill;
 					pnlDetailReport.Controls.Add(rpt);
 				}

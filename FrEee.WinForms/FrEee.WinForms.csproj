@@ -93,6 +93,12 @@
     <Compile Include="Controls\AsteroidFieldReport.Designer.cs">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\WarpPointReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WarpPointReport.Designer.cs">
+      <DependentUpon>WarpPointReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\DesignReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -292,6 +298,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WarpPointReport.resx">
+      <DependentUpon>WarpPointReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\DesignReport.resx">
       <DependentUpon>DesignReport.cs</DependentUpon>

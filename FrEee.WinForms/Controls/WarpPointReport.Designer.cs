@@ -1,6 +1,6 @@
 namespace FrEee.WinForms.Controls
 {
-	partial class StormReport
+	partial class WarpPointReport
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -69,7 +69,7 @@ namespace FrEee.WinForms.Controls
 			this.txtDescription.Name = "txtDescription";
 			this.txtDescription.Size = new System.Drawing.Size(296, 36);
 			this.txtDescription.TabIndex = 57;
-			this.txtDescription.Text = "A storm composed of electrostatic gases.";
+			this.txtDescription.Text = "A warp point connecting two distant sectors.";
 			// 
 			// txtSize
 			// 
@@ -77,9 +77,9 @@ namespace FrEee.WinForms.Controls
 			this.txtSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtSize.Location = new System.Drawing.Point(156, 23);
 			this.txtSize.Name = "txtSize";
-			this.txtSize.Size = new System.Drawing.Size(89, 15);
+			this.txtSize.Size = new System.Drawing.Size(116, 15);
 			this.txtSize.TabIndex = 56;
-			this.txtSize.Text = "Medium Storm";
+			this.txtSize.Text = "Medium Warp Point";
 			// 
 			// txtName
 			// 
@@ -87,11 +87,11 @@ namespace FrEee.WinForms.Controls
 			this.txtName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtName.Location = new System.Drawing.Point(140, 3);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(52, 20);
+			this.txtName.Size = new System.Drawing.Size(87, 20);
 			this.txtName.TabIndex = 55;
-			this.txtName.Text = "Storm";
+			this.txtName.Text = "Warp Point";
 			// 
-			// StormReport
+			// WarpPointReport
 			// 
 			this.AutoScroll = true;
 			this.BackColor = System.Drawing.Color.Black;
@@ -101,7 +101,7 @@ namespace FrEee.WinForms.Controls
 			this.Controls.Add(this.txtSize);
 			this.Controls.Add(this.txtName);
 			this.ForeColor = System.Drawing.Color.White;
-			this.Name = "StormReport";
+			this.Name = "WarpPointReport";
 			this.Size = new System.Drawing.Size(320, 459);
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
