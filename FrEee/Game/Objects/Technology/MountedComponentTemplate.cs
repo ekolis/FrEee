@@ -57,8 +57,16 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				// TODO - draw mount code on the icon
-				return ComponentTemplate.Icon;
+				var icon = (Image)ComponentTemplate.Icon.Clone();
+				var g = Graphics.FromImage(icon);
+				var font = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Regular);
+				var brush = Brushes.White;
+				var sf = new StringFormat();
+				sf.Alignment = StringAlignment.Near;
+				sf.LineAlignment = StringAlignment.Far;
+				if (Mount != null)
+					g.DrawString(Mount.Code, font, brush, new Point(0, 32), sf);
+				return icon;
 			}
 		}
 

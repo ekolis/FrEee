@@ -175,8 +175,16 @@ namespace FrEee.Utility
 			var portrait = GetPortrait(f);
 			if (portrait == null)
 				return null;
-			// TODO - draw level roman numeral on the icon
-			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			var thumb = portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			var g = Graphics.FromImage(thumb);
+			var font = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Regular);
+			var brush = Brushes.White;
+			var sf = new StringFormat();
+			sf.Alignment = StringAlignment.Far;
+			sf.LineAlignment = StringAlignment.Far;
+			if (f.RomanNumeral != 0)
+				g.DrawString(f.RomanNumeral.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
+			return thumb;
 		}
 
 		/// <summary>
@@ -212,8 +220,16 @@ namespace FrEee.Utility
 			var portrait = GetPortrait(c);
 			if (portrait == null)
 				return null;
-			// TODO - draw level roman numeral on the icon
-			return portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			var thumb = portrait.GetThumbnailImage(32, 32, () => false, IntPtr.Zero);
+			var g = Graphics.FromImage(thumb);
+			var font = new Font(FontFamily.GenericSansSerif, 9, FontStyle.Regular);
+			var brush = Brushes.White;
+			var sf = new StringFormat();
+			sf.Alignment = StringAlignment.Far;
+			sf.LineAlignment = StringAlignment.Far;
+			if (c.RomanNumeral != 0)
+				g.DrawString(c.RomanNumeral.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
+			return thumb;
 		}
 
 		/// <summary>
