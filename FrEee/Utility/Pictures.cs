@@ -344,10 +344,10 @@ namespace FrEee.Utility
 			if (Mod.Current.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
 					// fall back on portrait if icon not found
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Portrait")) ??
@@ -359,8 +359,8 @@ namespace FrEee.Utility
 			{
 				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 				return
-					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Pop_Portrait")) ??
 					// fall back on portrait if icon not found
 					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", race.PopulationIconName, race.PopulationIconName + "_Race_Portrait")) ??
@@ -383,10 +383,10 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Portrait")) ??
 					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetGenericImage(race.GetType());
 			}
 			else
@@ -396,8 +396,8 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Portrait")) ??
 					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetGenericImage(race.GetType());
 			}
 		}
@@ -443,10 +443,10 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Portrait")) ??
 					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetGenericImage(emp.GetType());
 			}
 			else
@@ -456,8 +456,8 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Race_Portrait")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Portrait")) ??
 					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Race_Icon")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Race_Icon")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, "Pop_Portrait")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", emp.LeaderPortraitName, emp.LeaderPortraitName + "_Pop_Portrait")) ??
 					GetGenericImage(emp.GetType());
 			}
 		}
@@ -604,12 +604,12 @@ namespace FrEee.Utility
 					var name = Path.GetFileNameWithoutExtension(d);
 					if (File.Exists(Path.Combine(d, "Race_Portrait.png")) ||
 						File.Exists(Path.Combine(d, "Race_Portrait.bmp")) ||
-						File.Exists(Path.Combine(d, "Race_Icon.png")) ||
-						File.Exists(Path.Combine(d, "Race_Icon.bmp")) ||
+						File.Exists(Path.Combine(d, "Pop_Portrait.png")) ||
+						File.Exists(Path.Combine(d, "Pop_Portrait.bmp")) ||
 						File.Exists(Path.Combine(d, name + "_Race_Portrait.png")) ||
 						File.Exists(Path.Combine(d, name + "_Race_Portrait.bmp")) ||
-						File.Exists(Path.Combine(d, name + "_Race_Icon.png")) ||
-						File.Exists(Path.Combine(d, name + "_Race_Icon.bmp")))
+						File.Exists(Path.Combine(d, name + "_Pop_Portrait.png")) ||
+						File.Exists(Path.Combine(d, name + "_Pop_Portrait.bmp")))
 						list.Add(name);
 				}
 			}
@@ -618,12 +618,12 @@ namespace FrEee.Utility
 				var name = Path.GetFileNameWithoutExtension(d);
 				if (File.Exists(Path.Combine(d, "Race_Portrait.png")) ||
 					File.Exists(Path.Combine(d, "Race_Portrait.bmp")) ||
-					File.Exists(Path.Combine(d, "Race_Icon.png")) ||
-					File.Exists(Path.Combine(d, "Race_Icon.bmp")) ||
+					File.Exists(Path.Combine(d, "Pop_Portrait.png")) ||
+					File.Exists(Path.Combine(d, "Pop_Portrait.bmp")) ||
 					File.Exists(Path.Combine(d, name + "_Race_Portrait.png")) ||
 					File.Exists(Path.Combine(d, name + "_Race_Portrait.bmp")) ||
-					File.Exists(Path.Combine(d, name + "_Race_Icon.png")) ||
-					File.Exists(Path.Combine(d, name + "_Race_Icon.bmp")))
+					File.Exists(Path.Combine(d, name + "_Pop_Portrait.png")) ||
+					File.Exists(Path.Combine(d, name + "_Pop_Portrait.bmp")))
 					list.Add(name);
 			}
 			return list.Distinct();
