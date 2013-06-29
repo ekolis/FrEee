@@ -1,1 +1,0 @@
-This would be like Pictures/Races in SE4, but only the hull pics go there, not the AI files (those go in AI), the flags (those go in Pictures/Insignia), or the population/leader portraits (those go in Pictures/Population and Pictures/Leaders respectively)
