@@ -71,8 +71,11 @@ namespace FrEee.WinForms.Forms
 			{
 				try
 				{
-					status.Message = "Loading mod";
-					Mod.Load(null, true, status, 0.5);
+					if (Mod.Current == null)
+					{
+						status.Message = "Loading mod";
+						Mod.Load(null, true, status, 0.5);
+					}
 					status.Message = "Setting up game";
 					var setup = new GameSetup
 					{
@@ -216,58 +219,66 @@ namespace FrEee.WinForms.Forms
 
 		private void btnMods_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, loading custom mods is not yet supported. But you can edit the stock files, if you really want to...");
+			var form = new ModPickerForm();
+			this.ShowChildForm(form);
+			if (form.DialogResult == DialogResult.OK)
+				LoadMod(form.ModPath);
+
 		}
 
 		private void btnNew_Click(object sender, EventArgs e)
 		{
 			if (Mod.Current == null)
+				LoadMod(null);
+			this.ShowChildForm(new GameSetupForm());
+		}
+
+		private void LoadMod(string modPath)
+		{
+			progressBar1.Visible = true;
+			var status = new Status
 			{
-				progressBar1.Visible = true;
-				var status = new Status
+				Progress = 0d,
+				Message = "Initializing",
+				Exception = null,
+			};
+			Thread t = new Thread(new ThreadStart(() =>
+			{
+				try
 				{
-					Progress = 0d,
-					Message = "Initializing",
-					Exception = null,
-				};
-				Thread t = new Thread(new ThreadStart(() =>
+					status.Message = "Loading mod";
+					Mod.Load(modPath, true, status, 1d);
+				}
+				catch (Exception ex)
 				{
-					try
-					{
-						status.Message = "Loading mod";
-						Mod.Load(null, true, status, 1d);
-					}
-					catch (Exception ex)
-					{
-						status.Exception = ex;
-					}
-				}));
-				t.Name = "Mod Loading";
-				t.Start();
-				while (t.IsAlive)
+					status.Exception = ex;
+				}
+			}));
+			t.Name = "Mod Loading";
+			t.Start();
+			while (t.IsAlive)
+			{
+				if (status.Exception != null)
 				{
-					if (status.Exception != null)
-					{
-						Text = "FrEee - Error";
-						MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
-						Enabled = true;
-						IsBusy = false;
-						progressBar1.Value = 0;
-						status.Exception.Log();
-						t.Abort();
-						break;
-					}
-					else
-					{
-						Text = "FrEee - " + status.Message;
-						progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
-						Application.DoEvents();
-					}
+					Text = "FrEee - Error";
+					MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
+					Enabled = true;
+					IsBusy = false;
+					progressBar1.Value = 0;
+					status.Exception.Log();
+					t.Abort();
+					break;
+				}
+				else
+				{
+					Text = "FrEee - " + status.Message;
+					progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
+					Application.DoEvents();
 				}
 			}
-			Text = "FrEee";
+
+			Text = "FrEee - " + Mod.Current.Info.Name;
 			progressBar1.Visible = false;
-			this.ShowChildForm(new GameSetupForm());
 		}
 
 		private void btnResume_Click(object sender, EventArgs e)

@@ -49,6 +49,7 @@ namespace FrEee.Modding
 
 			var loaders = new ILoader[]
 			{
+				new ModInfoLoader(path),
 				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
 				new AbilityRuleLoader(path),
 				new ModSettingsLoader(path),
@@ -93,6 +94,7 @@ namespace FrEee.Modding
 		{
 			Errors = new List<DataParsingException>();
 
+			Info = new ModInfo();
 			Settings = new ModSettings();
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
@@ -110,6 +112,11 @@ namespace FrEee.Modding
 			HappinessModels = new List<HappinessModel>();
 			Cultures = new List<Culture>();
 		}
+
+		/// <summary>
+		/// General info about the mod.
+		/// </summary>
+		public ModInfo Info { get; set; }
 
 		/// <summary>
 		/// General mod settings.

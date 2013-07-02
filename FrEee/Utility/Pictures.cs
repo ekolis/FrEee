@@ -535,6 +535,11 @@ namespace FrEee.Utility
 			return null;
 		}
 
+		public static Image GetCachedImage(params string[] paths)
+		{
+			return GetCachedImage((IEnumerable<string>)paths);
+		}
+
 		public static Image GetCachedImage(string path)
 		{
 			if (string.IsNullOrEmpty(Path.GetExtension(path)))
