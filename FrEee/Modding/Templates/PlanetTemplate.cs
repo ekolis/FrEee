@@ -44,13 +44,19 @@ namespace FrEee.Modding.Templates
 				candidates = candidates.Where(p => p.Atmosphere == Atmosphere);
 			if (Surface != null)
 				candidates = candidates.Where(p => p.Surface == Surface);
-			var size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value)).PickRandom();
-			candidates = candidates.Where(p => p.Size == size);
+			if (StellarSize != null)
+				candidates = candidates.Where(p => p.StellarSize == StellarSize);
 
 			if (!candidates.Any())
-				throw new Exception("No planets in SectType.txt match the criteria:\n\tAtmosphere: " + Atmosphere + "\n\tSurface: " + Surface + "\n\tSize: " + size.Name);
+				throw new Exception("No planets in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()));
 
 			var planet = candidates.PickRandom().Instantiate();
+
+			if (planet.Size == null)
+			{
+				var sizes = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
+				planet.Size = sizes.PickRandom();
+			}
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)

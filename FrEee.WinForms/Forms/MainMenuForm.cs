@@ -107,7 +107,7 @@ namespace FrEee.WinForms.Forms
 						ResourceStorage = (int)50e3,
 						StartingResearch = (int)20e3,
 						HomeworldsPerEmpire = 1,
-						HomeworldSize = Mod.Current.StellarObjectSizes.Where(size => !size.IsConstructed).WithMax(size => size.MaxFacilities).First(),
+						HomeworldSize = StellarSize.Large,
 						EmpirePlacement = EmpirePlacement.Equidistant,
 						MaxHomeworldDispersion = 1,
 						ScoreDisplay = ScoreDisplay.OwnOnlyNoRankings,

@@ -196,7 +196,7 @@ namespace FrEee.WinForms.Forms
 			setup.ResourceStorage = (int)spnResourceStorage.Value;
 			setup.StartingResearch = (int)spnStartResearch.Value;
 			setup.HomeworldsPerEmpire = (int)spnHomeworlds.Value;
-			setup.HomeworldSize = (StellarObjectSize)ddlHomeworldSize.SelectedItem;
+			setup.HomeworldSize = (StellarSize)ddlHomeworldSize.SelectedItem;
 			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
 			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
 			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);

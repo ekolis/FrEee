@@ -85,11 +85,17 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for planet.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					StellarObjectSize size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Planet" && sos.Name == temp).FirstOrDefault();
-					if (size != null)
-						planet.Size = size;
+					StellarSize ss;
+					StellarObjectSize sos = Mod.Current.StellarObjectSizes.Where(s => s.StellarObjectType == "Planet" && s.Name == temp).FirstOrDefault();
+					if (sos == null)
+					{
+						if (!Enum.TryParse<StellarSize>(temp, out ss))
+							Mod.Errors.Add(new DataParsingException("Invalid planet size. Must be Tiny, Small, Medium, Large, or Huge, or a planet size entry from PlanetSize.txt.", Mod.CurrentFileName, rec));
+					}
 					else
-						Mod.Errors.Add(new DataParsingException("Cannot find planet size entry " + temp + " in PlanetSize.txt.", Mod.CurrentFileName, rec));
+						ss = sos.StellarSize;
+					planet.StellarSize = ss;
+					planet.Size = sos;
 
 					rec.TryFindFieldValue(new string[] { "Physical Type", "Planet Physical Type" }, out temp, ref index, Mod.Errors, 1, true); // skip the original Physical Type field which just says it's a planet
 					if (temp == null)
@@ -118,11 +124,17 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Could not find Size field for asteroids.", Mod.CurrentFileName, rec));
 						continue;
 					}
-					StellarObjectSize size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && sos.Name == temp).FirstOrDefault();
-					if (size != null)
-						ast.Size = size;
+					StellarSize ss;
+					StellarObjectSize sos = Mod.Current.StellarObjectSizes.Where(s => s.StellarObjectType == "Planet" && s.Name == temp).FirstOrDefault();
+					if (sos == null)
+					{
+						if (!Enum.TryParse<StellarSize>(temp, out ss))
+							Mod.Errors.Add(new DataParsingException("Invalid asteroid field size. Must be Tiny, Small, Medium, Large, or Huge, or an asteroids size entry from PlanetSize.txt.", Mod.CurrentFileName, rec));
+					}
 					else
-						Mod.Errors.Add(new DataParsingException("Cannot find asteroids size entry " + temp + " in PlanetSize.txt.", Mod.CurrentFileName, rec));
+						ss = sos.StellarSize;
+					ast.StellarSize = ss;
+					ast.Size = sos;
 
 					rec.TryFindFieldValue(new string[] { "Physical Type", "Planet Physical Type" }, out temp, ref index, Mod.Errors, 1, true); // skip the original Physical Type field which just says it's asteroids
 					if (temp == null)

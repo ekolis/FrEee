@@ -58,7 +58,7 @@ namespace FrEee.Modding.Templates
 			if (Brightness != null)
 				candidates = candidates.Where(s => s.Brightness == Brightness);
 			if (!candidates.Any())
-				throw new Exception("No stars in SectType.txt match the criteria!");
+				throw new Exception("No stars in SectType.txt match the criteria:\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()) +"\n\tAge: " + (Age ?? "Any") + "\n\tColor: " + (Color ?? "Any") + "\n\tBrightness: " + (Brightness ?? "Any"));
 
 			var star = candidates.PickRandom().Instantiate();
 

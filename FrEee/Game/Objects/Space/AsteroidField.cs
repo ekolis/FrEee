@@ -51,10 +51,5 @@ namespace FrEee.Game.Objects.Space
 		{
 			return this.Copy();
 		}
-
-		public StellarSize StellarSize
-		{
-			get { return Size.StellarSize; }
-		}
 	}
 }

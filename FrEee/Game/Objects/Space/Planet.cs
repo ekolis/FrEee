@@ -545,33 +545,16 @@ namespace FrEee.Game.Objects.Space
 			get { return 1; }
 		}
 
-		public StellarSize StellarSize
-		{
-			get { return Size.StellarSize; }
-		}
-
-
-		public bool IsHostileTo(Empire emp)
+		public override bool IsHostileTo(Empire emp)
 		{
 			return Owner == null ? false : Owner.IsHostileTo(emp);
 		}
 
 
-		public bool CanBeInFleet
+		public override bool CanBeInFleet
 		{
 			get { return false; }
 		}
-
-		public int SupplyStorage
-		{
-			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
-		}
-
-		public bool HasInfiniteSupplies
-		{
-			get { return false; }
-		}
-
 
 		public int Accuracy
 		{

@@ -130,7 +130,8 @@ namespace FrEee.Game.Objects.Space
 
 		public StellarSize StellarSize
 		{
-			get { throw new NotImplementedException(); }
+			get;
+			set;
 		}
 
 

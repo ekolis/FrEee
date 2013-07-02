@@ -32,7 +32,7 @@ namespace FrEee.Modding.Templates
 			if (Size != null)
 				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (!candidates.Any())
-				throw new Exception("No storms in SectType.txt match the criteria!");
+				throw new Exception("No storms in SectType.txt of stellar size "  + Size + "!");
 
 			var storm = candidates.PickRandom().Instantiate();
 

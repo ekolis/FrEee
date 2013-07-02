@@ -43,13 +43,19 @@ namespace FrEee.Modding.Templates
 				candidates = candidates.Where(ast => ast.Atmosphere == Atmosphere);
 			if (Surface != null)
 				candidates = candidates.Where(ast => ast.Surface == Surface);
-			var size = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value)).PickRandom();
-			candidates = candidates.Where(p => p.Size == size);
+			if (StellarSize != null)
+				candidates = candidates.Where(ast => ast.StellarSize == StellarSize);
 
 			if (!candidates.Any())
-				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + Atmosphere + "\n\tSurface: " + Surface + "\n\tSize: " + size.Name);
+				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ?  "Any" : StellarSize.ToString()));
 
 			var asteroids = candidates.PickRandom().Instantiate();
+
+			if (asteroids.Size == null)
+			{
+				var sizes = Mod.Current.StellarObjectSizes.Where(sos => sos.StellarObjectType == "Asteroids" && !sos.IsConstructed && (StellarSize == null || sos.StellarSize == StellarSize.Value));
+				asteroids.Size = sizes.PickRandom();
+			}
 
 			var abil = Abilities.Instantiate();
 			if (abil != null)

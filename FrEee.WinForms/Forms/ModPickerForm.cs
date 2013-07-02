@@ -106,6 +106,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var info = (ModInfo)item.Tag;
 				ModPath = info.Folder;
+				DialogResult = DialogResult.OK;
 				Close();
 			}
 		}

@@ -113,7 +113,7 @@ namespace FrEee.Game.Setup
 
 		public int HomeworldsPerEmpire { get; set; }
 
-		public StellarObjectSize HomeworldSize { get; set; }
+		public StellarSize HomeworldSize { get; set; }
 
 		public EmpirePlacement EmpirePlacement { get; set; }
 
@@ -408,15 +408,19 @@ namespace FrEee.Game.Setup
 				if (!planets.Any())
 					throw new Exception("Not enough planets to place homeworlds for all players!");
 				var hw = planets.PickRandom();
-				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.Size != HomeworldSize)
+				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != HomeworldSize)
 				{
 					var replacementHomeworld = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
 						p.Surface == emp.PrimaryRace.NativeSurface &&
 						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
-						p.Size == HomeworldSize).PickRandom();
+						p.StellarSize == HomeworldSize).PickRandom();
 					if (replacementHomeworld == null)
 						throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
 					replacementHomeworld.Name = hw.Name;
+					replacementHomeworld.Size = Mod.Current.StellarObjectSizes.Where(s =>
+						s.StellarSize == HomeworldSize &&
+						s.StellarObjectType == "Planet" &&
+						!s.IsConstructed).PickRandom();
 					replacementHomeworld.CopyTo(hw);
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
