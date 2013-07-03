@@ -13,23 +13,6 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 		}
 
-		public void Bind()
-		{
-			Height = 20;
-			lblAmount.ForeColor = ResourceColor;
-			if (ResourceIcon != null)
-				picIcon.Image = ResourceIcon;
-			lblAmount.Text = Amount.ToUnitString();
-			if (Change != null)
-			{
-				lblAmount.Text += " (";
-				if (Change.Value >= 0)
-					lblAmount.Text += "+";
-				lblAmount.Text += Change.Value.ToUnitString();
-				lblAmount.Text += ")";
-			}
-		}
-
 		private Resource resource;
 		public Resource Resource
 		{
@@ -37,7 +20,7 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				resource = value;
-				Bind();
+				Invalidate();
 			}
 		}
 
@@ -78,15 +61,38 @@ namespace FrEee.WinForms.Controls
 		}
 
 		private int amount;
-		public int Amount { get { return amount; } set { amount = value; Bind(); } }
+		public int Amount { get { return amount; } set { amount = value; Invalidate(); } }
 
 		private int? change;
-		public int? Change { get { return change; } set { change = value; Bind(); } }
-
-		private void ResourceDisplay_SizeChanged(object sender, EventArgs e)
+		public int? Change { get { return change; } set { change = value; Invalidate(); } }
+		
+		private void ResourceDisplay_Paint(object sender, PaintEventArgs e)
 		{
-			lblAmount.MaximumSize = lblAmount.Size;
-			Invalidate();
+			var g = e.Graphics;
+			var rpos = Width;
+			if (ResourceIcon != null)
+			{
+				// draw resource icon on the right
+				g.DrawImage(ResourceIcon, Width - Height, 0, Height, Height);
+				rpos -= Height + 5;
+			}
+
+			// draw text right aligned in the remaining space
+			var text = Amount.ToUnitString();
+			if (Change != null)
+			{
+				text += " (";
+				if (Change.Value >= 0)
+					text += "+";
+				text += Change.Value.ToUnitString();
+				text += ")";
+			}
+			var brush = new SolidBrush(ResourceColor);
+			var rect = new Rectangle(0, 0, rpos, Height);
+			var sf = new StringFormat();
+			sf.Alignment = StringAlignment.Far;
+			sf.LineAlignment = StringAlignment.Center;
+			g.DrawString(text, Font, brush, rect, sf);
 		}
 	}
 }
