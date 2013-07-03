@@ -21,14 +21,29 @@ namespace FrEee.Modding.Loaders
 		public void Load(Mod mod)
 		{
 			var dest = DestinationGetter(mod);
-			// TODO - fall back to stock if mod file not found
 			string filepath;
 			if (ModPath == null)
 				filepath = Path.Combine("Data", FileName);
 			else
 				filepath = Path.Combine("Mods", ModPath, "Data", FileName);
-			foreach (var s in File.ReadAllLines(filepath))
-				dest.Add(s);
+			if (File.Exists(filepath))
+			{
+				foreach (var s in File.ReadAllLines(filepath))
+					dest.Add(s);
+			}
+			else if (ModPath != null)
+			{
+				filepath = Path.Combine("Data", FileName);
+				if (File.Exists(filepath))
+				{
+					foreach (var s in File.ReadAllLines(filepath))
+						dest.Add(s);
+				}
+				else
+					throw new FileNotFoundException("Could not find data file: " + FileName + ".", FileName);
+			}
+			else
+				throw new FileNotFoundException("Could not find data file: " + FileName + ".", FileName);
 		}
 
 		/// <summary>

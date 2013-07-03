@@ -22,7 +22,17 @@ namespace FrEee.Modding
 			 // TODO - fall back on stock data when mod data not found
 			 var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data");
 			 var filepath = Path.Combine(datapath, filename);
-			 return new DataFile(File.ReadAllText(filepath));
+			 if (File.Exists(filepath))
+				 return new DataFile(File.ReadAllText(filepath));
+			 // got here? then try the stock data file instead if we were loading a mod
+			 if (modpath != null)
+			 {
+				 filepath = Path.Combine("Data", filename);
+				 if (File.Exists(filepath))
+					 return new DataFile(File.ReadAllText(filepath));
+			 }
+			 // got here? then data file was not found even in stock
+			 throw new FileNotFoundException("Could not find data file: " + filename + ".", filename);
 		 }
 
 		/// <summary>
