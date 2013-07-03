@@ -491,6 +491,7 @@ namespace FrEee.WinForms.Forms
 				if (rpt != null)
 					rpt.Dock = DockStyle.Fill;
 				pnlDetailReport.Controls.Add(rpt);
+				SelectedSpaceObject = sobj;
 			}
 		}
 
