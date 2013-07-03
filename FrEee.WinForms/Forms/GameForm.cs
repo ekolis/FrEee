@@ -102,73 +102,109 @@ namespace FrEee.WinForms.Forms
 			{
 				if (sector != null && sector.SpaceObjects.Any())
 				{
-					// TODO - let user pick which space object to pursue
-					var target = sector.SpaceObjects.First();
-
-					// pursue
-					if (SelectedSpaceObject is AutonomousSpaceVehicle)
-					{
-						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Invalidate();
-						starSystemView.Invalidate(); // show move lines
-					}
+					ISpaceObject target = null;
+					if (sector.SpaceObjects.Count == 1)
+						target = sector.SpaceObjects.Single();
 					else
 					{
-						// TODO - pursue orders for unit groups
+						var form = new SpaceObjectPickerForm(sector.SpaceObjects);
+						form.Text = "Pursue what?";
+						this.ShowChildForm(form);
+						if (form.DialogResult == DialogResult.OK)
+							target = form.SelectedSpaceObject;
 					}
-					ChangeCommandMode(CommandMode.None, null);
+
+					if (target != null)
+					{
+						// pursue
+						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						{
+							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+							if (report != null)
+								report.Invalidate();
+							starSystemView.Invalidate(); // show move lines
+						}
+						else
+						{
+							// TODO - pursue orders for unit groups
+						}
+						ChangeCommandMode(CommandMode.None, null);
+					}
 				}
 			}
 			else if (commandMode == CommandMode.Evade)
 			{
 				if (sector != null && sector.SpaceObjects.Any())
 				{
-					// TODO - let user pick which space object to evade
-					var target = sector.SpaceObjects.First();
-
-					// evade
-					if (SelectedSpaceObject is AutonomousSpaceVehicle)
-					{
-						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Invalidate();
-						starSystemView.Invalidate(); // show move lines
-					}
+					ISpaceObject target = null;
+					if (sector.SpaceObjects.Count == 1)
+						target = sector.SpaceObjects.Single();
 					else
 					{
-						// TODO - pursue orders for unit groups
+						var form = new SpaceObjectPickerForm(sector.SpaceObjects);
+						form.Text = "Evade what?";
+						this.ShowChildForm(form);
+						if (form.DialogResult == DialogResult.OK)
+							target = form.SelectedSpaceObject;
 					}
-					ChangeCommandMode(CommandMode.None, null);
+
+					if (target != null)
+					{
+						// evade
+						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						{
+							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+							if (report != null)
+								report.Invalidate();
+							starSystemView.Invalidate(); // show move lines
+						}
+						else
+						{
+							// TODO - pursue orders for unit groups
+						}
+						ChangeCommandMode(CommandMode.None, null);
+					}
 				}
 			}
 			else if (commandMode == CommandMode.Warp)
 			{
 				if (sector != null && sector.SpaceObjects.OfType<WarpPoint>().Any())
 				{
-					// TODO - let user pick which warp point to traverse
-					var wp = sector.SpaceObjects.OfType<WarpPoint>().First();
-
-					// warp
-					if (SelectedSpaceObject is AutonomousSpaceVehicle)
-					{
-						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
-						Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
-						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Invalidate();
-						starSystemView.Invalidate(); // show move lines
-					}
+					WarpPoint wp = null;
+					if (sector.SpaceObjects.OfType<WarpPoint>().Count() == 1)
+						wp = sector.SpaceObjects.OfType<WarpPoint>().Single();
 					else
 					{
-						// TODO - warp orders for unit groups
+						var form = new SpaceObjectPickerForm(sector.SpaceObjects.OfType<WarpPoint>());
+						form.Text = "Use which warp point?";
+						this.ShowChildForm(form);
+						if (form.DialogResult == DialogResult.OK)
+							wp = (WarpPoint)form.SelectedSpaceObject;
 					}
-					ChangeCommandMode(CommandMode.None, null);
+
+					if (wp != null)
+					{
+						// warp
+						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						{
+							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
+							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
+							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+							if (report != null)
+								report.Invalidate();
+							starSystemView.Invalidate(); // show move lines
+						}
+						else
+						{
+							// TODO - warp orders for unit groups
+						}
+						ChangeCommandMode(CommandMode.None, null);
+					}
 				}
 			}
 			else if (commandMode == CommandMode.Colonize)
@@ -185,20 +221,33 @@ namespace FrEee.WinForms.Forms
 							suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 						if (suitablePlanets.Any())
 						{
-							// TODO - let user pick which planet to colonize
-							var planet = suitablePlanets.First();
-							if (!ModifierKeys.HasFlag(Keys.Shift))
+							Planet planet = null;
+							if (suitablePlanets.Count() == 1)
+								planet = suitablePlanets.Single();
+							else
 							{
-								foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
-								{
-									var loadPopOrder = new LoadCargoOrder(pHere);
-									loadPopOrder.AnyPopulationToLoad = null; // load all population
-									Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, loadPopOrder);
-								}
+								var form = new SpaceObjectPickerForm(suitablePlanets);
+								form.Text = "Colonize which planet?";
+								this.ShowChildForm(form);
+								if (form.DialogResult == DialogResult.OK)
+									planet = (Planet)form.SelectedSpaceObject;
 							}
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
-							ChangeCommandMode(CommandMode.None, null);
+
+							if (planet != null)
+							{
+								if (!ModifierKeys.HasFlag(Keys.Shift))
+								{
+									foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
+									{
+										var loadPopOrder = new LoadCargoOrder(pHere);
+										loadPopOrder.AnyPopulationToLoad = null; // load all population
+										Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, loadPopOrder);
+									}
+								}
+								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
+								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
+								ChangeCommandMode(CommandMode.None, null);
+							}
 						}
 					}
 				}

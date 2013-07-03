@@ -287,6 +287,12 @@
     <Compile Include="Forms\SearchBoxResultsForm.Designer.cs">
       <DependentUpon>SearchBoxResultsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\SpaceObjectPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpaceObjectPickerForm.Designer.cs">
+      <DependentUpon>SpaceObjectPickerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\VehicleDesignForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -380,6 +386,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\SearchBoxResultsForm.resx">
       <DependentUpon>SearchBoxResultsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpaceObjectPickerForm.resx">
+      <DependentUpon>SpaceObjectPickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
