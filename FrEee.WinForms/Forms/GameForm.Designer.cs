@@ -421,7 +421,7 @@ namespace FrEee.WinForms.Forms
 			this.btnClearOrders.Name = "btnClearOrders";
 			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
 			this.btnClearOrders.TabIndex = 11;
-			this.toolTip.SetToolTip(this.btnClearOrders, "Clear Orders");
+			this.toolTip.SetToolTip(this.btnClearOrders, "(Bksp) Clear Orders");
 			this.btnClearOrders.UseVisualStyleBackColor = false;
 			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
 			// 
@@ -434,7 +434,7 @@ namespace FrEee.WinForms.Forms
 			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
 			this.btnFleetTransfer.TabIndex = 10;
 			this.btnFleetTransfer.Text = "Flt";
-			this.toolTip.SetToolTip(this.btnFleetTransfer, "Fleet Transfer");
+			this.toolTip.SetToolTip(this.btnFleetTransfer, "(F) Fleet Transfer");
 			this.btnFleetTransfer.UseVisualStyleBackColor = false;
 			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
 			// 
@@ -447,7 +447,7 @@ namespace FrEee.WinForms.Forms
 			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
 			this.btnTransferCargo.TabIndex = 9;
 			this.btnTransferCargo.Text = "TC";
-			this.toolTip.SetToolTip(this.btnTransferCargo, "Transfer Cargo");
+			this.toolTip.SetToolTip(this.btnTransferCargo, "(T) Transfer Cargo");
 			this.btnTransferCargo.UseVisualStyleBackColor = false;
 			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
 			// 
@@ -460,7 +460,7 @@ namespace FrEee.WinForms.Forms
 			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
 			this.btnConstructionQueue.TabIndex = 8;
 			this.btnConstructionQueue.Text = "CQ";
-			this.toolTip.SetToolTip(this.btnConstructionQueue, "Construction Queue");
+			this.toolTip.SetToolTip(this.btnConstructionQueue, "(Q) Construction Queue");
 			this.btnConstructionQueue.UseVisualStyleBackColor = false;
 			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
 			// 
@@ -473,7 +473,7 @@ namespace FrEee.WinForms.Forms
 			this.btnColonize.Size = new System.Drawing.Size(36, 36);
 			this.btnColonize.TabIndex = 7;
 			this.btnColonize.Text = "Col";
-			this.toolTip.SetToolTip(this.btnColonize, "Colonize");
+			this.toolTip.SetToolTip(this.btnColonize, "(C) Colonize");
 			this.btnColonize.UseVisualStyleBackColor = false;
 			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
 			// 
@@ -486,7 +486,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEvade.Size = new System.Drawing.Size(36, 36);
 			this.btnEvade.TabIndex = 6;
 			this.btnEvade.Text = "Ev";
-			this.toolTip.SetToolTip(this.btnEvade, "Evade");
+			this.toolTip.SetToolTip(this.btnEvade, "(V) Evade");
 			this.btnEvade.UseVisualStyleBackColor = false;
 			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
 			// 
@@ -498,7 +498,7 @@ namespace FrEee.WinForms.Forms
 			this.btnWarp.Name = "btnWarp";
 			this.btnWarp.Size = new System.Drawing.Size(36, 36);
 			this.btnWarp.TabIndex = 5;
-			this.toolTip.SetToolTip(this.btnWarp, "Warp");
+			this.toolTip.SetToolTip(this.btnWarp, "(W) Warp");
 			this.btnWarp.UseVisualStyleBackColor = false;
 			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
 			// 
@@ -511,7 +511,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue.Size = new System.Drawing.Size(36, 36);
 			this.btnPursue.TabIndex = 4;
 			this.btnPursue.Text = "Pur";
-			this.toolTip.SetToolTip(this.btnPursue, "Pursue");
+			this.toolTip.SetToolTip(this.btnPursue, "(P) Pursue");
 			this.btnPursue.UseVisualStyleBackColor = false;
 			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
 			// 
@@ -523,7 +523,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.Name = "btnMove";
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
-			this.toolTip.SetToolTip(this.btnMove, "Move");
+			this.toolTip.SetToolTip(this.btnMove, "(M) Move");
 			this.btnMove.UseVisualStyleBackColor = false;
 			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
 			// 
