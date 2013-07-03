@@ -150,6 +150,9 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				if (Colony == null)
+					return new Resources(); // no colony? no income!
+
 				var income = new Resources();
 				var prefix = "Resource Generation - ";
 				foreach (var abil in Abilities.ToArray().Where(abil => abil.Name.StartsWith(prefix)))
@@ -159,7 +162,18 @@ namespace FrEee.Game.Objects.Space
 					int.TryParse(abil.Values[0], out amount);
 
 					// do modifiers to income
-					var factor = 1d; // TODO - other modifiers (population, happiness, robotoid factories, etc.)
+					var factor = 1d;
+					var totalpop = Colony.Population.Sum(kvp => kvp.Value);
+					factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+					Aptitude aptitude = null;
+					if (resource.Name == "Minerals")
+						aptitude = Aptitude.Mining;
+					if (resource.Name == "Organics")
+						aptitude = Aptitude.Farming;
+					if (resource.Name == "Radioactives")
+						aptitude = Aptitude.Refining;
+					if (aptitude != null)
+						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d + 1d) * (double)kvp.Value / (double)totalpop);
 					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
 
 					income.Add(resource, amount);
@@ -171,9 +185,18 @@ namespace FrEee.Game.Objects.Space
 					int amount;
 					int.TryParse(abil.Values[0], out amount);
 
-					// TODO - modifiers (population, happiness, central computers, etc.)
+					var factor = 1d;
+					var totalpop = Colony.Population.Sum(kvp => kvp.Value);
+					factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+					Aptitude aptitude = null;
+					if (resource.Name == "Research")
+						aptitude = Aptitude.Intelligence; // yes, Intelligence aptitude increases Research...
+					if (resource.Name == "Intelligence")
+						aptitude = Aptitude.Cunning;
+					if (aptitude != null)
+						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d + 1d) * (double)kvp.Value / (double)totalpop);
 
-					income.Add(resource, amount);
+					income.Add(resource, (int)(amount * factor));
 				}
 				return income;
 			}
