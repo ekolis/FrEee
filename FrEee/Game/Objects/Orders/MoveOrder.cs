@@ -62,9 +62,11 @@ namespace FrEee.Game.Objects.Orders
 					sobj.FindSector().SpaceObjects.Remove(sobj);
 					gotoSector.SpaceObjects.Add(sobj);
 				}
-				else
+				else if (!LoggedPathfindingError)
 				{
-					// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
+					// log pathfinding error
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because there is no available path available leading toward " + Destination + "."));
+					LoggedPathfindingError = true;
 				}
 			}
 
@@ -86,5 +88,11 @@ namespace FrEee.Game.Objects.Orders
 			else
 				return "Attack " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
 		}
+
+		/// <summary>
+		/// Did we already log a pathfinding error this turn?
+		/// </summary>
+		[DoNotSerialize]
+		public bool LoggedPathfindingError { get; private set; }
 	}
 }

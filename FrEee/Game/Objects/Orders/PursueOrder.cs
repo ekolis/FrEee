@@ -68,9 +68,11 @@ namespace FrEee.Game.Objects.Orders
 					sobj.FindSector().SpaceObjects.Remove(sobj);
 					gotoSector.SpaceObjects.Add(sobj);
 				}
-				else
+				else if (!LoggedPathfindingError)
 				{
-					// TODO - log a message for the player that pathfinding failed, but only once per space object per turn
+					// log pathfinding error
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " could not pursue " + Target + " because there is no available path available leading toward " + Target + "."));
+					LoggedPathfindingError = true;
 				}
 			}
 
@@ -91,5 +93,11 @@ namespace FrEee.Game.Objects.Orders
 			else
 				return "Pursue " + Target;
 		}
+
+		/// <summary>
+		/// Did we already log a pathfinding error this turn?
+		/// </summary>
+		[DoNotSerialize]
+		public bool LoggedPathfindingError { get; private set; }
 	}
 }
