@@ -105,6 +105,8 @@
 			this.ddlPresets = new System.Windows.Forms.ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
 			this.tabTechnology = new System.Windows.Forms.TabPage();
+			this.ddlTechCost = new System.Windows.Forms.ComboBox();
+			this.label61 = new System.Windows.Forms.Label();
 			this.label31 = new System.Windows.Forms.Label();
 			this.lstTechs = new System.Windows.Forms.CheckedListBox();
 			this.ddlStartTech = new System.Windows.Forms.ComboBox();
@@ -119,7 +121,6 @@
 			this.spnMaxDispersion = new System.Windows.Forms.NumericUpDown();
 			this.label43 = new System.Windows.Forms.Label();
 			this.ddlHomeworldSize = new System.Windows.Forms.ComboBox();
-			this.stellarObjectSizeBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.label42 = new System.Windows.Forms.Label();
 			this.btnSaveEmpire = new FrEee.WinForms.Controls.GameButton();
 			this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
@@ -193,8 +194,6 @@
 			this.btnLoadSetup = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveSetup = new FrEee.WinForms.Controls.GameButton();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
-			this.ddlTechCost = new System.Windows.Forms.ComboBox();
-			this.label61 = new System.Windows.Forms.Label();
 			this.tabs.SuspendLayout();
 			this.tabGalaxy.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnSystemGroups)).BeginInit();
@@ -227,7 +226,6 @@
 			this.tabTechnology.SuspendLayout();
 			this.tabEmpires.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.stellarObjectSizeBindingSource)).BeginInit();
 			this.gamePanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).BeginInit();
@@ -1269,6 +1267,30 @@
 			this.tabTechnology.TabIndex = 2;
 			this.tabTechnology.Text = "Technology";
 			// 
+			// ddlTechCost
+			// 
+			this.ddlTechCost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlTechCost.FormattingEnabled = true;
+			this.ddlTechCost.Items.AddRange(new object[] {
+            "Low",
+            "Medium",
+            "High"});
+			this.ddlTechCost.Location = new System.Drawing.Point(120, 35);
+			this.ddlTechCost.Name = "ddlTechCost";
+			this.ddlTechCost.Size = new System.Drawing.Size(121, 23);
+			this.ddlTechCost.TabIndex = 17;
+			// 
+			// label61
+			// 
+			this.label61.AutoSize = true;
+			this.label61.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label61.Location = new System.Drawing.Point(3, 38);
+			this.label61.Margin = new System.Windows.Forms.Padding(3);
+			this.label61.Name = "label61";
+			this.label61.Size = new System.Drawing.Size(97, 15);
+			this.label61.TabIndex = 16;
+			this.label61.Text = "Technology Cost";
+			// 
 			// label31
 			// 
 			this.label31.AutoSize = true;
@@ -1466,19 +1488,12 @@
 			// 
 			// ddlHomeworldSize
 			// 
-			this.ddlHomeworldSize.DataSource = this.stellarObjectSizeBindingSource;
-			this.ddlHomeworldSize.DisplayMember = "Name";
 			this.ddlHomeworldSize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlHomeworldSize.FormattingEnabled = true;
 			this.ddlHomeworldSize.Location = new System.Drawing.Point(125, 111);
 			this.ddlHomeworldSize.Name = "ddlHomeworldSize";
 			this.ddlHomeworldSize.Size = new System.Drawing.Size(165, 23);
 			this.ddlHomeworldSize.TabIndex = 39;
-			// 
-			// stellarObjectSizeBindingSource
-			// 
-			this.stellarObjectSizeBindingSource.AllowNew = false;
-			this.stellarObjectSizeBindingSource.DataSource = typeof(FrEee.Modding.StellarObjectSize);
 			// 
 			// label42
 			// 
@@ -2427,30 +2442,6 @@
 			this.progressBar.TabIndex = 5;
 			this.progressBar.Visible = false;
 			// 
-			// ddlTechCost
-			// 
-			this.ddlTechCost.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlTechCost.FormattingEnabled = true;
-			this.ddlTechCost.Items.AddRange(new object[] {
-            "Low",
-            "Medium",
-            "High"});
-			this.ddlTechCost.Location = new System.Drawing.Point(120, 35);
-			this.ddlTechCost.Name = "ddlTechCost";
-			this.ddlTechCost.Size = new System.Drawing.Size(121, 23);
-			this.ddlTechCost.TabIndex = 17;
-			// 
-			// label61
-			// 
-			this.label61.AutoSize = true;
-			this.label61.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label61.Location = new System.Drawing.Point(3, 38);
-			this.label61.Margin = new System.Windows.Forms.Padding(3);
-			this.label61.Name = "label61";
-			this.label61.Size = new System.Drawing.Size(97, 15);
-			this.label61.TabIndex = 16;
-			this.label61.Text = "Technology Cost";
-			// 
 			// GameSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2502,7 +2493,6 @@
 			this.tabEmpires.ResumeLayout(false);
 			this.tabEmpires.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.spnMaxDispersion)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.stellarObjectSizeBindingSource)).EndInit();
 			this.gamePanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.spnResourceStorage)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.spnMinorEmpires)).EndInit();
@@ -2642,7 +2632,6 @@
 		private Controls.GameButton btnRemoveEmpire;
 		private Controls.GameButton btnSaveEmpire;
 		private System.Windows.Forms.ComboBox ddlHomeworldSize;
-		private System.Windows.Forms.BindingSource stellarObjectSizeBindingSource;
 		private System.Windows.Forms.Label label42;
 		private System.Windows.Forms.Label label44;
 		private System.Windows.Forms.NumericUpDown spnMaxDispersion;

@@ -38,7 +38,8 @@ namespace FrEee.WinForms.Forms
 			galaxyTemplateBindingSource.DataSource = Mod.Current.GalaxyTemplates;
 			warpPointPlacementStrategyBindingSource.DataSource = WarpPointPlacementStrategy.All;
 			lstTechs.Items.AddRange(Mod.Current.Technologies.Where(t => t.CanBeRemoved).ToArray());
-			stellarObjectSizeBindingSource.DataSource = Mod.Current.StellarObjectTemplates.OfType<Planet>().Select(p => p.Size).Distinct();
+			foreach (StellarSize item in Enum.GetValues(typeof(StellarSize)))
+				ddlHomeworldSize.Items.Add(item);
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
 			foreach (AllowedTrades item in Enum.GetValues(typeof(AllowedTrades)))
 				ddlAllowedTrades.Items.Add(item);
