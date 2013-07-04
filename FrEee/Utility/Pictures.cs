@@ -485,6 +485,8 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(EmpireTemplate emp)
 		{
+			if (emp.InsigniaName == null)
+				return GetIcon(emp.PrimaryRace);
 			if (Mod.Current.RootPath != null)
 			{
 				return
