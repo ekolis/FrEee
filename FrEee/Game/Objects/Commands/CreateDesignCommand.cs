@@ -15,15 +15,17 @@ namespace FrEee.Game.Objects.Commands
 	/// A command to create a new vehicle design.
 	/// </summary>
 	[Serializable]
-	public class CreateDesignCommand<T> : Command<Empire> where T : Vehicle
+	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand where T : Vehicle
 	{
-		public CreateDesignCommand(Design<T> design)
+		public CreateDesignCommand(IDesign<T> design)
 			: base(design.Owner, design.Owner)
 		 {
 			 Design = design;
 		 }
 
-		public IDesign Design { get; set; }
+		IDesign ICreateDesignCommand.Design { get { return Design; } }
+
+		public IDesign<T> Design { get; set; }
 
 		public override void Execute()
 		{

@@ -89,6 +89,7 @@
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
+			this.txtIteration = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
@@ -148,7 +149,7 @@
 			this.ddlName.FormattingEnabled = true;
 			this.ddlName.Location = new System.Drawing.Point(80, 67);
 			this.ddlName.Name = "ddlName";
-			this.ddlName.Size = new System.Drawing.Size(167, 21);
+			this.ddlName.Size = new System.Drawing.Size(140, 21);
 			this.ddlName.TabIndex = 6;
 			this.ddlName.TextChanged += new System.EventHandler(this.ddlName_TextChanged);
 			// 
@@ -800,12 +801,22 @@
 			this.btnHull.UseVisualStyleBackColor = false;
 			this.btnHull.Click += new System.EventHandler(this.btnHull_Click);
 			// 
+			// txtIteration
+			// 
+			this.txtIteration.AutoSize = true;
+			this.txtIteration.Location = new System.Drawing.Point(223, 70);
+			this.txtIteration.Name = "txtIteration";
+			this.txtIteration.Size = new System.Drawing.Size(22, 13);
+			this.txtIteration.TabIndex = 29;
+			this.txtIteration.Text = "Iter";
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.txtIteration);
 			this.Controls.Add(this.chkFilterByMount);
 			this.Controls.Add(this.btnClearMount);
 			this.Controls.Add(this.picPortrait);
@@ -910,5 +921,6 @@
 		private System.Windows.Forms.Label txtSupplyUsage;
 		private Controls.GameButton btnClearMount;
 		private System.Windows.Forms.CheckBox chkFilterByMount;
+		private System.Windows.Forms.Label txtIteration;
 	}
 }

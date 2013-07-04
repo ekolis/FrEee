@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
@@ -175,6 +176,19 @@ namespace FrEee.Modding.Templates
 			   (m.RequiredComponentFamily == null || Family == m.RequiredComponentFamily) &&
 			   m.WeaponTypes.HasFlag(WeaponType)
 			   );
+		}
+
+		/// <summary>
+		/// The latest upgraded version of this component template.
+		/// </summary>
+		public ComponentTemplate LatestVersion
+		{
+			get
+			{
+				var ofFamily = Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(ct => ct.Family == Family);
+				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
+				return withHighestRomanNumeral.Last();
+			}
 		}
 	}
 }

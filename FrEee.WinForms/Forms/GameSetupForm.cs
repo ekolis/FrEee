@@ -56,6 +56,7 @@ namespace FrEee.WinForms.Forms
 			{
 				lstTechs.SetItemChecked(i, true);
 			}
+			ddlHomeworldSize.SelectedItem = ddlHomeworldSize.Items.Cast<object>().Last();
 			ddlEmpirePlacement.SelectedIndex = 2; // equidistant
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 			ddlTechCost.SelectedIndex = 0; // low tech cost

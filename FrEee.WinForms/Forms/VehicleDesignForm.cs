@@ -62,7 +62,10 @@ namespace FrEee.WinForms.Forms
 
 			// bind name
 			// TODO - populate name dropdown from design names text file
-			ddlName.Text = Design == null ? null : Design.Name;
+			ddlName.Text = Design == null ? null : Design.BaseName;
+
+			// bind iteration
+			txtIteration.Text = Design == null || Design.Iteration == 1 ? "" : Design.Iteration.ToRomanNumeral();
 
 			// bind portrait
 			picPortrait.Image = Design == null || Design.Hull == null ? null : Design.Hull.GetPortrait(Empire.Current.ShipsetPath);
@@ -112,6 +115,12 @@ namespace FrEee.WinForms.Forms
 				foreach (var w in Design.Warnings)
 					lstWarnings.Items.Add(w);
 			}
+
+			// show GUI
+			ddlName.Enabled = Design != null;
+			ddlRole.Enabled = Design != null;
+			btnMount.Enabled = Design != null;
+			btnClearMount.Enabled = Design != null;
 		}
 
 		private void BindAvailableComponents()
@@ -200,11 +209,6 @@ namespace FrEee.WinForms.Forms
 					Design = d;
 					BindAll();
 				}
-
-				ddlName.Enabled = true;
-				ddlRole.Enabled = true;
-				btnMount.Enabled = true;
-				btnClearMount.Enabled = true;
 			}
 		}
 
@@ -232,11 +236,15 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 			{
-				// add design here
-				Empire.Current.KnownDesigns.Add(Design);
+				// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
+				if (!Empire.Current.KnownDesigns.Contains(Design))
+				{
+					// add design here
+					Empire.Current.KnownDesigns.Add(Design);
 
-				// tell server to add design too so we can still see it next turn
-				Empire.Current.Commands.Add(Design.CreateCreationCommand());
+					// tell server to add design too so we can still see it next turn
+					Empire.Current.Commands.Add(Design.CreateCreationCommand());
+				}
 
 				// done
 				DialogResult = DialogResult.OK;
@@ -340,7 +348,11 @@ namespace FrEee.WinForms.Forms
 		private void ddlName_TextChanged(object sender, EventArgs e)
 		{
 			if (Design != null)
-				Design.Name = ddlName.Text;
+			{
+				Design.BaseName = ddlName.Text;
+				Design.Iteration = Empire.Current.KnownDesigns.Where(d => d != Design && d.Owner == Empire.Current && d.BaseName == ddlName.Text).Count() + 1;
+				txtIteration.Text = Design.Iteration == 0 ? "" : Design.Iteration.ToRomanNumeral();
+			}
 		}
 
 		private void btnClearMount_Click(object sender, EventArgs e)

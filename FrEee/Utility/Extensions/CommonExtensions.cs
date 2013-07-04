@@ -28,9 +28,11 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The copy.</returns>
 		public static T Copy<T>(this T obj) where T : new()
 		{
+			if (obj == null)
+				return default(T);
 			var dest = new T();
 			obj.CopyTo(dest);
-			return dest;
+			return (T)dest;
 		}
 
 		/// <summary>

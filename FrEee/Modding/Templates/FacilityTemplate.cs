@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
@@ -142,6 +143,19 @@ namespace FrEee.Game.Objects.Technology
 			Galaxy.Current.Unregister(this);
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
+		}
+
+		/// <summary>
+		/// The latest upgraded version of this component template.
+		/// </summary>
+		public FacilityTemplate LatestVersion
+		{
+			get
+			{
+				var ofFamily = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(ct => ct.Family == Family);
+				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
+				return withHighestRomanNumeral.Last();
+			}
 		}
 	}
 }

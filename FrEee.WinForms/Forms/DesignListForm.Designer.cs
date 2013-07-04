@@ -109,6 +109,7 @@
 			this.btnGroundSimulator.TabIndex = 13;
 			this.btnGroundSimulator.Text = "Ground Simulator";
 			this.btnGroundSimulator.UseVisualStyleBackColor = false;
+			this.btnGroundSimulator.Click += new System.EventHandler(this.btnGroundSimulator_Click);
 			// 
 			// btnSpaceSimulator
 			// 
@@ -121,6 +122,7 @@
 			this.btnSpaceSimulator.TabIndex = 12;
 			this.btnSpaceSimulator.Text = "Space Simulator";
 			this.btnSpaceSimulator.UseVisualStyleBackColor = false;
+			this.btnSpaceSimulator.Click += new System.EventHandler(this.btnSpaceSimulator_Click);
 			// 
 			// btnObsolete
 			// 
@@ -133,6 +135,7 @@
 			this.btnObsolete.TabIndex = 11;
 			this.btnObsolete.Text = "Obsolete";
 			this.btnObsolete.UseVisualStyleBackColor = false;
+			this.btnObsolete.Click += new System.EventHandler(this.btnObsolete_Click);
 			// 
 			// btnUpgrade
 			// 
@@ -145,6 +148,7 @@
 			this.btnUpgrade.TabIndex = 10;
 			this.btnUpgrade.Text = "Upgrade";
 			this.btnUpgrade.UseVisualStyleBackColor = false;
+			this.btnUpgrade.Click += new System.EventHandler(this.btnUpgrade_Click);
 			// 
 			// btnEdit
 			// 
@@ -157,6 +161,7 @@
 			this.btnEdit.TabIndex = 9;
 			this.btnEdit.Text = "Edit";
 			this.btnEdit.UseVisualStyleBackColor = false;
+			this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
 			// 
 			// btnCopy
 			// 
@@ -169,6 +174,7 @@
 			this.btnCopy.TabIndex = 8;
 			this.btnCopy.Text = "Copy";
 			this.btnCopy.UseVisualStyleBackColor = false;
+			this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
 			// 
 			// btnCreate
 			// 

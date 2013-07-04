@@ -63,9 +63,21 @@ namespace FrEee.Game.Objects.Vehicles
 		public Design()
 		{
 			Components = new List<MountedComponentTemplate>();
+			Iteration = 1;
 		}
 
-		public string Name { get; set; }
+		public string BaseName { get; set; }
+
+		public string Name
+		{
+			get
+			{
+				if (Iteration == 1)
+					return BaseName;
+				else
+					return BaseName + " " + Iteration.ToRomanNumeral();
+			}
+		}
 
 		/// <summary>
 		/// The empire which created this design.
@@ -171,6 +183,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				if (Hull == null)
 					yield return "You must select a hull for your design.";
+				if (!Owner.HasUnlocked(Hull))
+					yield return "You have not unlocked the " + Hull + ".";
 				var comps = Components.Select(comp => comp.ComponentTemplate);
 				if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")))
 					yield return "This hull requires a bridge.";
@@ -209,10 +223,20 @@ namespace FrEee.Game.Objects.Vehicles
 					if (!c.VehicleTypes.HasFlag(VehicleType))
 						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
 				}
-				foreach (var mct in Components)
+				foreach (var comp in Components.GroupBy(mct => mct.ComponentTemplate).Select(g => g.Key))
 				{
-					if (!Hull.CanUseMount(mct.Mount))
-						yield return "This hull cannot use the " + mct.Mount + ".";
+					if (!Owner.HasUnlocked(comp))
+						yield return "You have not unlocked the " + comp + ".";
+				}
+				foreach (var mount in Components.GroupBy(mct => mct.Mount).Select(g => g.Key))
+				{
+					if (!Hull.CanUseMount(mount))
+						yield return "This hull cannot use the " + mount + ".";
+					if (!Owner.HasUnlocked(mount))
+						yield return "You have not unlocked the " + mount + ".";
+				}
+				foreach (var mct in Components.GroupBy(mct => mct).Select(g => g.Key))
+				{
 					if (!mct.ComponentTemplate.CanUseMount(mct.Mount))
 						yield return "The " + mct.ComponentTemplate + " cannot use the " + mct.Mount + ".";
 				}
@@ -334,7 +358,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public ICommand<Empire> CreateCreationCommand()
+		public ICreateDesignCommand CreateCreationCommand()
 		{
 			return new CreateDesignCommand<T>(this);
 		}
@@ -392,11 +416,37 @@ namespace FrEee.Game.Objects.Vehicles
 			return emp.HasUnlocked(Hull) && Components.All(c => emp.HasUnlocked(c.ComponentTemplate) && emp.HasUnlocked(c.Mount));
 		}
 
+		public int Iteration { get; set; }
+
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
 			foreach (var emp in Galaxy.Current.Empires)
 				Galaxy.Current.Unregister(this, emp);
+		}
+
+		public Design<T> Copy()
+		{
+			var d = new Design<T>();
+			d.BaseName = BaseName;
+			d.Iteration = Iteration;
+			d.VehiclesBuilt = VehiclesBuilt;
+			d.TurnNumber = TurnNumber;
+			d.Owner = Owner;
+			d.Hull = Hull;
+			foreach (var mct in Components)
+				d.Components.Add(new MountedComponentTemplate(mct.ComponentTemplate, mct.Mount));
+			return d;
+		}
+
+		IDesign<T> IDesign<T>.Copy()
+		{
+			return Copy();
+		}
+
+		IDesign IDesign.Copy()
+		{
+			return Copy();
 		}
 	}
 }

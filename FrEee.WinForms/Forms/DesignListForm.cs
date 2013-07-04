@@ -11,6 +11,8 @@ using System.Text;
 using System.Windows.Forms;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Forms
 {
@@ -91,6 +93,100 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(form);
 			if (form.DialogResult == DialogResult.OK)
 				BindDesignList();
+		}
+
+		private void btnCopy_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count == 1)
+			{
+				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
+				var copy = old.Copy();
+				copy.TurnNumber = Galaxy.Current.TurnNumber;
+				copy.Owner = Empire.Current;
+				copy.Iteration++;
+				copy.Components.Clear();
+				foreach (var mct in old.Components)
+				{
+					copy.Components.Add(new MountedComponentTemplate(mct.ComponentTemplate, mct.Mount));
+				}
+				var form = new VehicleDesignForm();
+				form.Design = copy;
+				this.ShowChildForm(form);
+				if (form.DialogResult == DialogResult.OK)
+					BindDesignList();
+			}
+		}
+
+		private void btnEdit_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count == 1)
+			{
+				var d = (IDesign)lstDesigns.SelectedItems[0].Tag;
+				if (d.Owner != Empire.Current)
+				{
+					MessageBox.Show("You cannot edit alien designs. You can, however, copy them.");
+				}
+				else
+				{
+					if (d.TurnNumber < Galaxy.Current.TurnNumber)
+					{
+						// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
+						MessageBox.Show("You cannot edit a design that was created on a prior turn.");
+					}
+					else
+					{
+						var form = new VehicleDesignForm();
+						form.Design = d;
+						this.ShowChildForm(form);
+						if (form.DialogResult == DialogResult.OK)
+							BindDesignList();
+					}
+				}
+			}
+		}
+
+		private void btnUpgrade_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count == 1)
+			{
+				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
+				var copy = old.Copy();
+				copy.TurnNumber = Galaxy.Current.TurnNumber;
+				copy.Owner = Empire.Current;
+				copy.Iteration++;
+				copy.Components.Clear();
+				foreach (var mct in old.Components)
+				{
+					var mount = mct.Mount;
+					var ct = mct.ComponentTemplate.LatestVersion;
+					copy.Components.Add(new MountedComponentTemplate(ct, mount));
+				}
+				var form = new VehicleDesignForm();
+				form.Design = copy;
+				this.ShowChildForm(form);
+				if (form.DialogResult == DialogResult.OK)
+					BindDesignList();
+			}
+		}
+
+		private void btnObsolete_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count >= 1)
+			{
+				foreach (IDesign d in lstDesigns.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag))
+					d.IsObsolete = !d.IsObsolete;
+				BindDesignList();
+			}
+		}
+
+		private void btnSpaceSimulator_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, the space combat simulator is not yet implemented.");
+		}
+
+		private void btnGroundSimulator_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, the ground combat simulator is not yet implemented.");
 		}
 	}
 }

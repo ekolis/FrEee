@@ -18,9 +18,14 @@ namespace FrEee.Game.Interfaces
 	public interface IDesign : INamed, IPictorial, IAbilityObject, IConstructionTemplate, IOwnable
 	{
 		/// <summary>
+		/// The base name of the design, without the iteration number.
+		/// </summary>
+		string BaseName { get; set; }
+
+		/// <summary>
 		/// The name of the design.
 		/// </summary>
-		new string Name { get; set; }
+		new string Name { get; }
 
 		/// <summary>
 		/// The empire which created this design.
@@ -101,7 +106,7 @@ namespace FrEee.Game.Interfaces
 		/// Creates a command to create this design on the server.
 		/// </summary>
 		/// <returns></returns>
-		ICommand<Empire> CreateCreationCommand();
+		ICreateDesignCommand CreateCreationCommand();
 
 		/// <summary>
 		/// Creates an order to build this design.
@@ -114,9 +119,14 @@ namespace FrEee.Game.Interfaces
 		int SupplyStorage { get; }
 
 		int CargoStorage { get; }
+
+		int Iteration { get; set; }
+
+		IDesign Copy();
 	}
 
 	public interface IDesign<T> : IDesign, IPictorial, IReferrable where T : IVehicle
 	{
+		new IDesign<T> Copy();
 	}
 }
