@@ -186,20 +186,22 @@ namespace FrEee.Game.Objects.Vehicles
 				if (!Owner.HasUnlocked(Hull))
 					yield return "You have not unlocked the " + Hull + ".";
 				var comps = Components.Select(comp => comp.ComponentTemplate);
-				if (Hull.NeedsBridge && !comps.Any(comp => comp.HasAbility("Ship Bridge")))
-					yield return "This hull requires a bridge.";
+				if (Hull.NeedsBridge && (!comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer"))))
+					yield return "This hull requires a bridge or master computer.";
 				if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
-					yield return "A vehicle can have no more than one bridge.";
+					yield return "A vehicle can have no more than one bridge";
 				if (!Hull.CanUseAuxiliaryControl && comps.Any(comp => comp.HasAbility("Ship Auxiliary Control")))
 					yield return "This hull cannot use auxiliary control.";
 				if (comps.Count(comp => comp.HasAbility("Ship Auxiliary Control")) > 1)
 					yield return "A vehicle can have no more than one auxiliary control.";
+				if (comps.Count(comp => comp.HasAbility("Master Computer")) > 1)
+					yield return "A vehicle can have no more than one master computer.";
 				if (comps.Count(comp => comp.HasAbility("Standard Ship Movement")) > Hull.MaxEngines)
 					yield return "This hull can only support " + Hull.MaxEngines + " engines.";
-				if (comps.Count(comp => comp.HasAbility("Ship Life Support")) < Hull.MinLifeSupport)
-					yield return "This hull requires at least " + Hull.MinCrewQuarters + " life support modules.";
-				if (comps.Count(comp => comp.HasAbility("Ship Crew Quarters")) < Hull.MinCrewQuarters)
-					yield return "This hull requires at least " + Hull.MinCrewQuarters + " crew quarters.";
+				if (comps.Count(comp => comp.HasAbility("Ship Life Support")) < Hull.MinLifeSupport && !comps.Any(comp => comp.HasAbility("Master Computer")))
+					yield return "This hull requires at least " + Hull.MinCrewQuarters + " life support modules or a Master Computer.";
+				if (comps.Count(comp => comp.HasAbility("Ship Crew Quarters")) < Hull.MinCrewQuarters && !comps.Any(comp => comp.HasAbility("Master Computer")))
+					yield return "This hull requires at least " + Hull.MinCrewQuarters + " crew quarters or a Master Computer.";
 				if ((double)Components.Where(comp => comp.HasAbility("Cargo Storage")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentCargoBays)
 					yield return "This hull requires at least " + Hull.MinPercentCargoBays + "% of its space to be used by cargo-class components.";
 				if ((double)Components.Where(comp => comp.HasAbility("Launch/Recover Fighters")).Sum(comp => comp.Size) / (double)Hull.Size * 100d < Hull.MinPercentFighterBays)
