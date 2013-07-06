@@ -21,6 +21,8 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 			this.hull = hull;
 			Bind();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		/// <summary>

@@ -24,6 +24,8 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			BindChoices();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		/// <summary>

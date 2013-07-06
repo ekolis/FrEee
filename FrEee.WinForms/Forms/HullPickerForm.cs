@@ -28,6 +28,8 @@ namespace FrEee.WinForms.Forms
 			ddlVehicleType.Items.Add(new { Name = "Drones", VehicleType = VehicleTypes.Drone });
 			ddlVehicleType.Items.Add(new { Name = "Weapon Platforms", VehicleType = VehicleTypes.WeaponPlatform });
 			ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		/// <summary>

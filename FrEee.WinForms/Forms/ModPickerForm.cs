@@ -48,6 +48,8 @@ namespace FrEee.WinForms.Forms
 					img = Pictures.GetCachedImage(Path.Combine("Mods", info.Folder, "MODICON"));
 				lstMods.AddItemWithImage(null, info.Name, info, img);
 			}
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private IList<ModInfo> modinfos = new List<ModInfo>();

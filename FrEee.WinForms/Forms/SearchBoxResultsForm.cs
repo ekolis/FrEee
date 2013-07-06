@@ -17,6 +17,8 @@ namespace FrEee.WinForms.Forms
 		public SearchBoxResultsForm()
 		{
 			InitializeComponent();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private IEnumerable<ISpaceObject> results;

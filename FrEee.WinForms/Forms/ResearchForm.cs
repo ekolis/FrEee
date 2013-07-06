@@ -43,6 +43,8 @@ namespace FrEee.WinForms.Forms
 
 			// bind queue
 			BindQueue();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private IEnumerable<Technology> allTechs;

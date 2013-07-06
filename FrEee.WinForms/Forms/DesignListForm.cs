@@ -23,6 +23,8 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 			BindVehicleTypeList();
 			BindDesignList();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)

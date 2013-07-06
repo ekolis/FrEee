@@ -21,6 +21,8 @@ namespace FrEee.WinForms.Forms
 			foreach (var sobj in objects)
 				lstSpaceObjects.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
 			lstSpaceObjects.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private void lstSpaceObjects_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

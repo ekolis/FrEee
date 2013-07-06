@@ -27,16 +27,26 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			ShowComponentDetails(null);
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		public VehicleDesignForm(IHull<IVehicle> hull)
 		{
+			InitializeComponent();
+			ShowComponentDetails(null);
 			Design = FrEee.Game.Objects.Vehicles.Design.Create(hull);
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		public VehicleDesignForm(IDesign design)
 		{
+			InitializeComponent();
+			ShowComponentDetails(null);
 			Design = design;
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private IDesign design;

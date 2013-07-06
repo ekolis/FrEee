@@ -139,7 +139,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlHeader.Size = new System.Drawing.Size(1225, 35);
-			this.pnlHeader.TabIndex = 0;
+			this.pnlHeader.TabIndex = 3;
 			// 
 			// resInt
 			// 

@@ -60,6 +60,8 @@ namespace FrEee.WinForms.Forms
 			ddlEmpirePlacement.SelectedIndex = 2; // equidistant
 			ddlScoreDisplay.SelectedIndex = 0; // own only, no ranking
 			ddlTechCost.SelectedIndex = 0; // low tech cost
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private GameSetup setup;

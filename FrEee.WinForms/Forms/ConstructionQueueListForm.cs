@@ -17,6 +17,8 @@ namespace FrEee.WinForms.Forms
 		public ConstructionQueueListForm()
 		{
 			InitializeComponent();
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private void BindQueueList()

@@ -26,6 +26,8 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			ConstructionQueue = queue;
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		private void ConstructionQueueForm_Load(object sender, EventArgs e)

@@ -32,6 +32,8 @@ namespace FrEee.WinForms.Forms
 				messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
 			else
 				messages = battle.Log;
+
+			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
 		}
 
 		IEnumerable<LogMessage> messages;

@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 			this.components = new System.ComponentModel.Container();
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 			this.gridHulls = new System.Windows.Forms.DataGridView();
-			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.IconColumn = new System.Windows.Forms.DataGridViewImageColumn();
 			this.btnOk = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.iHullBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -70,7 +70,7 @@ namespace FrEee.WinForms.Forms
 			this.gridHulls.BackgroundColor = System.Drawing.Color.Black;
 			this.gridHulls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridHulls.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Icon,
+            this.IconColumn,
             this.nameDataGridViewTextBoxColumn,
             this.sizeDataGridViewTextBoxColumn,
             this.descriptionDataGridViewTextBoxColumn,
@@ -90,14 +90,14 @@ namespace FrEee.WinForms.Forms
 			this.gridHulls.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridHulls_CellDoubleClick);
 			this.gridHulls.SelectionChanged += new System.EventHandler(this.gridHulls_SelectionChanged);
 			// 
-			// Icon
+			// IconColumn
 			// 
-			this.Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Icon.DataPropertyName = "Icon";
-			this.Icon.HeaderText = "Icon";
-			this.Icon.Name = "Icon";
-			this.Icon.ReadOnly = true;
-			this.Icon.Width = 32;
+			this.IconColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.IconColumn.DataPropertyName = "Icon";
+			this.IconColumn.HeaderText = "Icon";
+			this.IconColumn.Name = "Icon";
+			this.IconColumn.ReadOnly = true;
+			this.IconColumn.Width = 32;
 			// 
 			// btnOk
 			// 
@@ -190,7 +190,7 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridView gridHulls;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
+		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
