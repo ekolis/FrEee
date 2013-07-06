@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Vehicles
 				damage -= dmg;
 				shieldDmg += dmg;
 			}
-			if (shieldDmg > 0)
+			if (shieldDmg > 0 && battle != null)
 				battle.LogShieldDamage(this.CombatObject, shieldDmg);
 			while (damage > 0 && !IsDestroyed)
 			{

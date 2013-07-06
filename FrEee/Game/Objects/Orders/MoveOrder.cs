@@ -61,6 +61,16 @@ namespace FrEee.Game.Objects.Orders
 					// move
 					sobj.FindSector().SpaceObjects.Remove(sobj);
 					gotoSector.SpaceObjects.Add(sobj);
+
+					// apply damage from damaging sectors
+					foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
+					{
+						var damage = damager.GetAbilityValue("Sector - Damage").ToInt();
+						// TODO - let sector damage have special damage types?
+						// TODO - use a static damage type instance for normal damage
+						sobj.TakeDamage(new Combat.DamageType { Name = "Normal" }, damage, null);
+						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
+					}
 				}
 				else if (!LoggedPathfindingError)
 				{

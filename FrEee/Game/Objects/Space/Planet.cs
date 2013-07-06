@@ -397,9 +397,12 @@ namespace FrEee.Game.Objects.Space
 				Colony.Population[race] -= popKilled;
 				killed[race] += popKilled;
 			}
-			foreach (var race in killed.Keys)
+			if (battle != null)
 			{
-				battle.LogPopulationDamage(race, killed[race]);
+				foreach (var race in killed.Keys)
+				{
+					battle.LogPopulationDamage(race, killed[race]);
+				}
 			}
 			return damage;
 		}
