@@ -70,6 +70,7 @@ namespace FrEee.Game.Objects.Orders
 						// TODO - use a static damage type instance for normal damage
 						sobj.TakeDamage(new Combat.DamageType { Name = "Normal" }, damage, null);
 						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
+						sobj.ReplenishShields();
 					}
 				}
 				else if (!LoggedPathfindingError)
