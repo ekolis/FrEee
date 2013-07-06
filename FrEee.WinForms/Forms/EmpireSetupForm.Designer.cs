@@ -158,7 +158,7 @@
 			this.btnSaveRace.Location = new System.Drawing.Point(90, 576);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(75, 23);
-			this.btnSaveRace.TabIndex = 4;
+			this.btnSaveRace.TabIndex = 2;
 			this.btnSaveRace.Text = "Save Race";
 			this.btnSaveRace.UseVisualStyleBackColor = false;
 			this.btnSaveRace.Click += new System.EventHandler(this.btnSaveRace_Click);
@@ -171,7 +171,7 @@
 			this.btnLoadRace.Location = new System.Drawing.Point(9, 576);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(75, 23);
-			this.btnLoadRace.TabIndex = 3;
+			this.btnLoadRace.TabIndex = 1;
 			this.btnLoadRace.Text = "Load Race";
 			this.btnLoadRace.UseVisualStyleBackColor = false;
 			this.btnLoadRace.Click += new System.EventHandler(this.btnLoadRace_Click);
@@ -184,7 +184,7 @@
 			this.btnCancel.Location = new System.Drawing.Point(448, 576);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
-			this.btnCancel.TabIndex = 2;
+			this.btnCancel.TabIndex = 3;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -197,7 +197,7 @@
 			this.btnOK.Location = new System.Drawing.Point(529, 576);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
-			this.btnOK.TabIndex = 1;
+			this.btnOK.TabIndex = 4;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = false;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
@@ -279,7 +279,7 @@
 			this.chkRaceAIsCanUse.Location = new System.Drawing.Point(129, 31);
 			this.chkRaceAIsCanUse.Name = "chkRaceAIsCanUse";
 			this.chkRaceAIsCanUse.Size = new System.Drawing.Size(55, 19);
-			this.chkRaceAIsCanUse.TabIndex = 93;
+			this.chkRaceAIsCanUse.TabIndex = 1;
 			this.chkRaceAIsCanUse.Text = "Allow";
 			this.chkRaceAIsCanUse.UseVisualStyleBackColor = true;
 			// 
@@ -301,7 +301,7 @@
 			this.btnRaceCompareCultures.Location = new System.Drawing.Point(304, 432);
 			this.btnRaceCompareCultures.Name = "btnRaceCompareCultures";
 			this.btnRaceCompareCultures.Size = new System.Drawing.Size(75, 23);
-			this.btnRaceCompareCultures.TabIndex = 91;
+			this.btnRaceCompareCultures.TabIndex = 16;
 			this.btnRaceCompareCultures.Text = "Compare";
 			this.btnRaceCompareCultures.UseVisualStyleBackColor = false;
 			this.btnRaceCompareCultures.Click += new System.EventHandler(this.btnRaceCompareCultures_Click);
@@ -334,7 +334,7 @@
 			this.ddlRaceCulture.Location = new System.Drawing.Point(129, 432);
 			this.ddlRaceCulture.Name = "ddlRaceCulture";
 			this.ddlRaceCulture.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceCulture.TabIndex = 88;
+			this.ddlRaceCulture.TabIndex = 15;
 			this.ddlRaceCulture.SelectedIndexChanged += new System.EventHandler(this.ddlRaceCulture_SelectedIndexChanged);
 			// 
 			// txtRaceHappiness
@@ -352,7 +352,7 @@
 			this.ddlRaceHappiness.Location = new System.Drawing.Point(129, 359);
 			this.ddlRaceHappiness.Name = "ddlRaceHappiness";
 			this.ddlRaceHappiness.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceHappiness.TabIndex = 86;
+			this.ddlRaceHappiness.TabIndex = 14;
 			this.ddlRaceHappiness.SelectedIndexChanged += new System.EventHandler(this.ddlRaceHappiness_SelectedIndexChanged);
 			// 
 			// label19
@@ -392,7 +392,7 @@
 			this.ddlRacePopulationIcon.Location = new System.Drawing.Point(129, 141);
 			this.ddlRacePopulationIcon.Name = "ddlRacePopulationIcon";
 			this.ddlRacePopulationIcon.Size = new System.Drawing.Size(169, 23);
-			this.ddlRacePopulationIcon.TabIndex = 78;
+			this.ddlRacePopulationIcon.TabIndex = 5;
 			this.ddlRacePopulationIcon.TextChanged += new System.EventHandler(this.ddlRacePopulationIcon_TextChanged);
 			// 
 			// ddlRaceNativeAtmosphere
@@ -402,7 +402,7 @@
 			this.ddlRaceNativeAtmosphere.Location = new System.Drawing.Point(129, 199);
 			this.ddlRaceNativeAtmosphere.Name = "ddlRaceNativeAtmosphere";
 			this.ddlRaceNativeAtmosphere.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceNativeAtmosphere.TabIndex = 77;
+			this.ddlRaceNativeAtmosphere.TabIndex = 7;
 			// 
 			// label17
 			// 
@@ -431,7 +431,7 @@
 			this.txtRaceDefaultEmpireName.Location = new System.Drawing.Point(129, 56);
 			this.txtRaceDefaultEmpireName.Name = "txtRaceDefaultEmpireName";
 			this.txtRaceDefaultEmpireName.Size = new System.Drawing.Size(169, 21);
-			this.txtRaceDefaultEmpireName.TabIndex = 74;
+			this.txtRaceDefaultEmpireName.TabIndex = 2;
 			this.txtRaceDefaultEmpireName.TextChanged += new System.EventHandler(this.txtRaceDefaultEmpireName_TextChanged);
 			// 
 			// ddlRaceAI
@@ -441,7 +441,7 @@
 			this.ddlRaceAI.Location = new System.Drawing.Point(129, 330);
 			this.ddlRaceAI.Name = "ddlRaceAI";
 			this.ddlRaceAI.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceAI.TabIndex = 72;
+			this.ddlRaceAI.TabIndex = 13;
 			this.ddlRaceAI.SelectedIndexChanged += new System.EventHandler(this.ddlRaceAI_SelectedIndexChanged);
 			// 
 			// picRaceShipset
@@ -459,7 +459,7 @@
 			this.ddlRaceShipset.Location = new System.Drawing.Point(129, 301);
 			this.ddlRaceShipset.Name = "ddlRaceShipset";
 			this.ddlRaceShipset.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceShipset.TabIndex = 69;
+			this.ddlRaceShipset.TabIndex = 12;
 			this.ddlRaceShipset.TextChanged += new System.EventHandler(this.ddlRaceShipset_TextChanged);
 			// 
 			// picRaceInsignia
@@ -477,7 +477,7 @@
 			this.ddlRaceInsignia.Location = new System.Drawing.Point(129, 272);
 			this.ddlRaceInsignia.Name = "ddlRaceInsignia";
 			this.ddlRaceInsignia.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceInsignia.TabIndex = 66;
+			this.ddlRaceInsignia.TabIndex = 11;
 			this.ddlRaceInsignia.TextChanged += new System.EventHandler(this.ddlRaceInsignia_TextChanged);
 			// 
 			// picRaceColor
@@ -499,7 +499,7 @@
             0});
 			this.spnRaceColorBlue.Name = "spnRaceColorBlue";
 			this.spnRaceColorBlue.Size = new System.Drawing.Size(48, 21);
-			this.spnRaceColorBlue.TabIndex = 63;
+			this.spnRaceColorBlue.TabIndex = 10;
 			this.spnRaceColorBlue.Value = new decimal(new int[] {
             255,
             0,
@@ -517,7 +517,7 @@
             0});
 			this.spnRaceColorGreen.Name = "spnRaceColorGreen";
 			this.spnRaceColorGreen.Size = new System.Drawing.Size(48, 21);
-			this.spnRaceColorGreen.TabIndex = 62;
+			this.spnRaceColorGreen.TabIndex = 9;
 			this.spnRaceColorGreen.Value = new decimal(new int[] {
             255,
             0,
@@ -535,7 +535,7 @@
             0});
 			this.spnRaceColorRed.Name = "spnRaceColorRed";
 			this.spnRaceColorRed.Size = new System.Drawing.Size(48, 21);
-			this.spnRaceColorRed.TabIndex = 61;
+			this.spnRaceColorRed.TabIndex = 8;
 			this.spnRaceColorRed.Value = new decimal(new int[] {
             255,
             0,
@@ -550,7 +550,7 @@
 			this.ddlRaceNativeSurface.Location = new System.Drawing.Point(129, 170);
 			this.ddlRaceNativeSurface.Name = "ddlRaceNativeSurface";
 			this.ddlRaceNativeSurface.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceNativeSurface.TabIndex = 56;
+			this.ddlRaceNativeSurface.TabIndex = 6;
 			// 
 			// picRaceLeaderPortrait
 			// 
@@ -567,7 +567,7 @@
 			this.ddlRaceLeaderPortrait.Location = new System.Drawing.Point(129, 112);
 			this.ddlRaceLeaderPortrait.Name = "ddlRaceLeaderPortrait";
 			this.ddlRaceLeaderPortrait.Size = new System.Drawing.Size(169, 23);
-			this.ddlRaceLeaderPortrait.TabIndex = 54;
+			this.ddlRaceLeaderPortrait.TabIndex = 4;
 			this.ddlRaceLeaderPortrait.TextChanged += new System.EventHandler(this.ddlRaceLeaderPortrait_TextChanged);
 			// 
 			// txtRaceLeaderName
@@ -575,7 +575,7 @@
 			this.txtRaceLeaderName.Location = new System.Drawing.Point(129, 84);
 			this.txtRaceLeaderName.Name = "txtRaceLeaderName";
 			this.txtRaceLeaderName.Size = new System.Drawing.Size(169, 21);
-			this.txtRaceLeaderName.TabIndex = 53;
+			this.txtRaceLeaderName.TabIndex = 3;
 			this.txtRaceLeaderName.TextChanged += new System.EventHandler(this.txtRaceLeaderName_TextChanged);
 			// 
 			// txtRaceName
@@ -583,7 +583,7 @@
 			this.txtRaceName.Location = new System.Drawing.Point(129, 3);
 			this.txtRaceName.Name = "txtRaceName";
 			this.txtRaceName.Size = new System.Drawing.Size(169, 21);
-			this.txtRaceName.TabIndex = 52;
+			this.txtRaceName.TabIndex = 0;
 			// 
 			// label8
 			// 
@@ -775,7 +775,7 @@
 			this.chkAIsCanUse.Location = new System.Drawing.Point(129, 30);
 			this.chkAIsCanUse.Name = "chkAIsCanUse";
 			this.chkAIsCanUse.Size = new System.Drawing.Size(55, 19);
-			this.chkAIsCanUse.TabIndex = 98;
+			this.chkAIsCanUse.TabIndex = 2;
 			this.chkAIsCanUse.Text = "Allow";
 			this.chkAIsCanUse.UseVisualStyleBackColor = true;
 			// 
@@ -798,7 +798,7 @@
 			this.chkCultureFromRace.Location = new System.Drawing.Point(305, 344);
 			this.chkCultureFromRace.Name = "chkCultureFromRace";
 			this.chkCultureFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkCultureFromRace.TabIndex = 96;
+			this.chkCultureFromRace.TabIndex = 20;
 			this.chkCultureFromRace.Text = "From Race";
 			this.chkCultureFromRace.UseVisualStyleBackColor = true;
 			this.chkCultureFromRace.CheckedChanged += new System.EventHandler(this.chkCultureFromRace_CheckedChanged);
@@ -810,7 +810,7 @@
 			this.gameButton1.Location = new System.Drawing.Point(304, 366);
 			this.gameButton1.Name = "gameButton1";
 			this.gameButton1.Size = new System.Drawing.Size(75, 23);
-			this.gameButton1.TabIndex = 95;
+			this.gameButton1.TabIndex = 21;
 			this.gameButton1.Text = "Compare";
 			this.gameButton1.UseVisualStyleBackColor = false;
 			this.gameButton1.Click += new System.EventHandler(this.gameButton1_Click);
@@ -844,7 +844,7 @@
 			this.ddlCulture.Location = new System.Drawing.Point(129, 342);
 			this.ddlCulture.Name = "ddlCulture";
 			this.ddlCulture.Size = new System.Drawing.Size(169, 23);
-			this.ddlCulture.TabIndex = 92;
+			this.ddlCulture.TabIndex = 19;
 			this.ddlCulture.SelectedIndexChanged += new System.EventHandler(this.ddlCulture_SelectedIndexChanged);
 			// 
 			// txtHappiness
@@ -863,7 +863,7 @@
 			this.chkHappinessFromRace.Location = new System.Drawing.Point(304, 270);
 			this.chkHappinessFromRace.Name = "chkHappinessFromRace";
 			this.chkHappinessFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkHappinessFromRace.TabIndex = 85;
+			this.chkHappinessFromRace.TabIndex = 18;
 			this.chkHappinessFromRace.Text = "From Race";
 			this.chkHappinessFromRace.UseVisualStyleBackColor = true;
 			this.chkHappinessFromRace.CheckedChanged += new System.EventHandler(this.chkHappinessFromRace_CheckedChanged);
@@ -876,7 +876,7 @@
 			this.ddlHappiness.Location = new System.Drawing.Point(129, 268);
 			this.ddlHappiness.Name = "ddlHappiness";
 			this.ddlHappiness.Size = new System.Drawing.Size(169, 23);
-			this.ddlHappiness.TabIndex = 84;
+			this.ddlHappiness.TabIndex = 17;
 			this.ddlHappiness.SelectedIndexChanged += new System.EventHandler(this.ddlHappiness_SelectedIndexChanged);
 			// 
 			// label2
@@ -898,7 +898,7 @@
 			this.chkAIFromRace.Location = new System.Drawing.Point(304, 241);
 			this.chkAIFromRace.Name = "chkAIFromRace";
 			this.chkAIFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkAIFromRace.TabIndex = 43;
+			this.chkAIFromRace.TabIndex = 16;
 			this.chkAIFromRace.Text = "From Race";
 			this.chkAIFromRace.UseVisualStyleBackColor = true;
 			this.chkAIFromRace.CheckedChanged += new System.EventHandler(this.chkAIFromRace_CheckedChanged);
@@ -911,7 +911,7 @@
 			this.ddlAI.Location = new System.Drawing.Point(129, 239);
 			this.ddlAI.Name = "ddlAI";
 			this.ddlAI.Size = new System.Drawing.Size(169, 23);
-			this.ddlAI.TabIndex = 42;
+			this.ddlAI.TabIndex = 15;
 			// 
 			// picShipset
 			// 
@@ -930,7 +930,7 @@
 			this.chkShipsetFromRace.Location = new System.Drawing.Point(305, 212);
 			this.chkShipsetFromRace.Name = "chkShipsetFromRace";
 			this.chkShipsetFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkShipsetFromRace.TabIndex = 40;
+			this.chkShipsetFromRace.TabIndex = 14;
 			this.chkShipsetFromRace.Text = "From Race";
 			this.chkShipsetFromRace.UseVisualStyleBackColor = true;
 			this.chkShipsetFromRace.CheckedChanged += new System.EventHandler(this.chkShipsetFromRace_CheckedChanged);
@@ -942,7 +942,7 @@
 			this.ddlShipset.Location = new System.Drawing.Point(129, 210);
 			this.ddlShipset.Name = "ddlShipset";
 			this.ddlShipset.Size = new System.Drawing.Size(169, 23);
-			this.ddlShipset.TabIndex = 39;
+			this.ddlShipset.TabIndex = 13;
 			this.ddlShipset.TextChanged += new System.EventHandler(this.ddlInsignia_TextChanged);
 			// 
 			// picInsignia
@@ -962,7 +962,7 @@
 			this.chkInsigniaFromRace.Location = new System.Drawing.Point(304, 183);
 			this.chkInsigniaFromRace.Name = "chkInsigniaFromRace";
 			this.chkInsigniaFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkInsigniaFromRace.TabIndex = 37;
+			this.chkInsigniaFromRace.TabIndex = 12;
 			this.chkInsigniaFromRace.Text = "From Race";
 			this.chkInsigniaFromRace.UseVisualStyleBackColor = true;
 			this.chkInsigniaFromRace.CheckedChanged += new System.EventHandler(this.chkInsigniaFromRace_CheckedChanged);
@@ -974,7 +974,7 @@
 			this.ddlInsignia.Location = new System.Drawing.Point(129, 181);
 			this.ddlInsignia.Name = "ddlInsignia";
 			this.ddlInsignia.Size = new System.Drawing.Size(169, 23);
-			this.ddlInsignia.TabIndex = 36;
+			this.ddlInsignia.TabIndex = 11;
 			this.ddlInsignia.TextChanged += new System.EventHandler(this.ddlInsignia_TextChanged);
 			// 
 			// picColor
@@ -994,7 +994,7 @@
 			this.chkColorFromRace.Location = new System.Drawing.Point(305, 155);
 			this.chkColorFromRace.Name = "chkColorFromRace";
 			this.chkColorFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkColorFromRace.TabIndex = 34;
+			this.chkColorFromRace.TabIndex = 10;
 			this.chkColorFromRace.Text = "From Race";
 			this.chkColorFromRace.UseVisualStyleBackColor = true;
 			this.chkColorFromRace.CheckedChanged += new System.EventHandler(this.chkColorFromRace_CheckedChanged);
@@ -1010,7 +1010,7 @@
             0});
 			this.spnColorBlue.Name = "spnColorBlue";
 			this.spnColorBlue.Size = new System.Drawing.Size(48, 21);
-			this.spnColorBlue.TabIndex = 33;
+			this.spnColorBlue.TabIndex = 9;
 			this.spnColorBlue.Value = new decimal(new int[] {
             255,
             0,
@@ -1029,7 +1029,7 @@
             0});
 			this.spnColorGreen.Name = "spnColorGreen";
 			this.spnColorGreen.Size = new System.Drawing.Size(48, 21);
-			this.spnColorGreen.TabIndex = 32;
+			this.spnColorGreen.TabIndex = 8;
 			this.spnColorGreen.Value = new decimal(new int[] {
             255,
             0,
@@ -1048,7 +1048,7 @@
             0});
 			this.spnColorRed.Name = "spnColorRed";
 			this.spnColorRed.Size = new System.Drawing.Size(48, 21);
-			this.spnColorRed.TabIndex = 31;
+			this.spnColorRed.TabIndex = 7;
 			this.spnColorRed.Value = new decimal(new int[] {
             255,
             0,
@@ -1064,7 +1064,7 @@
 			this.chkLeaderPortraitFromRace.Location = new System.Drawing.Point(305, 85);
 			this.chkLeaderPortraitFromRace.Name = "chkLeaderPortraitFromRace";
 			this.chkLeaderPortraitFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkLeaderPortraitFromRace.TabIndex = 29;
+			this.chkLeaderPortraitFromRace.TabIndex = 6;
 			this.chkLeaderPortraitFromRace.Text = "From Race";
 			this.chkLeaderPortraitFromRace.UseVisualStyleBackColor = true;
 			this.chkLeaderPortraitFromRace.CheckedChanged += new System.EventHandler(this.chkLeaderPortraitFromRace_CheckedChanged);
@@ -1077,7 +1077,7 @@
 			this.chkNameFromRace.Location = new System.Drawing.Point(305, 5);
 			this.chkNameFromRace.Name = "chkNameFromRace";
 			this.chkNameFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkNameFromRace.TabIndex = 28;
+			this.chkNameFromRace.TabIndex = 1;
 			this.chkNameFromRace.Text = "From Race";
 			this.chkNameFromRace.UseVisualStyleBackColor = true;
 			this.chkNameFromRace.CheckedChanged += new System.EventHandler(this.chkNameFromRace_CheckedChanged);
@@ -1090,7 +1090,7 @@
 			this.chkLeaderNameFromRace.Location = new System.Drawing.Point(305, 57);
 			this.chkLeaderNameFromRace.Name = "chkLeaderNameFromRace";
 			this.chkLeaderNameFromRace.Size = new System.Drawing.Size(87, 19);
-			this.chkLeaderNameFromRace.TabIndex = 27;
+			this.chkLeaderNameFromRace.TabIndex = 4;
 			this.chkLeaderNameFromRace.Text = "From Race";
 			this.chkLeaderNameFromRace.UseVisualStyleBackColor = true;
 			this.chkLeaderNameFromRace.CheckedChanged += new System.EventHandler(this.chkLeaderNameFromRace_CheckedChanged);
@@ -1111,7 +1111,7 @@
 			this.ddlLeaderPortrait.Location = new System.Drawing.Point(129, 83);
 			this.ddlLeaderPortrait.Name = "ddlLeaderPortrait";
 			this.ddlLeaderPortrait.Size = new System.Drawing.Size(169, 23);
-			this.ddlLeaderPortrait.TabIndex = 24;
+			this.ddlLeaderPortrait.TabIndex = 5;
 			this.ddlLeaderPortrait.TextChanged += new System.EventHandler(this.ddlLeaderPortrait_TextChanged);
 			// 
 			// txtLeaderName
@@ -1120,7 +1120,7 @@
 			this.txtLeaderName.Location = new System.Drawing.Point(129, 55);
 			this.txtLeaderName.Name = "txtLeaderName";
 			this.txtLeaderName.Size = new System.Drawing.Size(169, 21);
-			this.txtLeaderName.TabIndex = 23;
+			this.txtLeaderName.TabIndex = 3;
 			// 
 			// txtName
 			// 
@@ -1128,7 +1128,7 @@
 			this.txtName.Location = new System.Drawing.Point(129, 3);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(169, 21);
-			this.txtName.TabIndex = 22;
+			this.txtName.TabIndex = 0;
 			// 
 			// label7
 			// 
