@@ -33,7 +33,7 @@ namespace FrEee.WinForms.Forms
 			else
 				messages = battle.Log;
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		IEnumerable<LogMessage> messages;

@@ -49,7 +49,7 @@ namespace FrEee.WinForms.Forms
 				lstMods.AddItemWithImage(null, info.Name, info, img);
 			}
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private IList<ModInfo> modinfos = new List<ModInfo>();

@@ -22,7 +22,7 @@ namespace FrEee.WinForms.Forms
 			this.hull = hull;
 			Bind();
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		/// <summary>

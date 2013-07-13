@@ -24,7 +24,7 @@ namespace FrEee.WinForms.Forms
 			BindVehicleTypeList();
 			BindDesignList();
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)

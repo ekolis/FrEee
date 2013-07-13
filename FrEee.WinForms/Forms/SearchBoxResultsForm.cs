@@ -18,7 +18,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private IEnumerable<ISpaceObject> results;

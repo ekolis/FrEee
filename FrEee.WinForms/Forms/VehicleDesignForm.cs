@@ -28,7 +28,7 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 			ShowComponentDetails(null);
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		public VehicleDesignForm(IHull<IVehicle> hull)
@@ -37,7 +37,7 @@ namespace FrEee.WinForms.Forms
 			ShowComponentDetails(null);
 			Design = FrEee.Game.Objects.Vehicles.Design.Create(hull);
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		public VehicleDesignForm(IDesign design)
@@ -46,7 +46,7 @@ namespace FrEee.WinForms.Forms
 			ShowComponentDetails(null);
 			Design = design;
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private IDesign design;

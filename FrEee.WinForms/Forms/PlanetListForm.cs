@@ -14,9 +14,9 @@ namespace FrEee.WinForms.Forms
 		public PlanetListForm()
 		{
 			InitializeComponent();
-            this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+            try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private void PlanetListForm_Load(object sender, EventArgs e)

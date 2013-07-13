@@ -22,7 +22,7 @@ namespace FrEee.WinForms.Forms
 				lstSpaceObjects.AddItemWithImage(null, sobj.Name, sobj, sobj.Icon);
 			lstSpaceObjects.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
 
 		private void lstSpaceObjects_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

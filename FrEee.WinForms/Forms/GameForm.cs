@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 
 		private void GameForm_Load(object sender, EventArgs e)
 		{
-			this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);
+			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 			this.Enabled = false;
 
 			// set up GUI images
