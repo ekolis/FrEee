@@ -415,7 +415,10 @@ namespace FrEee.WinForms.Forms
 		private void ddlWarpPointLocation_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			setup.WarpPointPlacementStrategy = (WarpPointPlacementStrategy)ddlWarpPointLocation.SelectedItem;
-			txtWarpPointLocation.Text = setup.WarpPointPlacementStrategy.Description;
+			if (setup.WarpPointPlacementStrategy == null)
+				txtWarpPointLocation.Text = "Choose a warp point placement option.";
+			else
+				txtWarpPointLocation.Text = setup.WarpPointPlacementStrategy.Description;
 		}
 
 		private void spnSystemGroups_ValueChanged(object sender, EventArgs e)
