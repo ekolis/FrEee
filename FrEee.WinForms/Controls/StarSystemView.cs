@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using Resources = FrEee.Utility.Resources;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Interfaces;

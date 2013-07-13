@@ -8,7 +8,7 @@ using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
-using FrEee.Utility;
+using FrEee.Utility; using Resources = FrEee.Utility.Resources;
 
 namespace FrEee.WinForms.Controls
 {

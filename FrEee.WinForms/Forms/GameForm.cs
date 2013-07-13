@@ -10,7 +10,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using Resources = FrEee.Utility.Resources;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Utility.Extensions;
