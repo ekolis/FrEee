@@ -421,13 +421,13 @@ namespace FrEee.WinForms.Forms
 
 			// set up resource display
 			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
-			resMin.Change = Galaxy.Current.CurrentEmpire.Income[Resource.Minerals];
+			resMin.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Minerals];
 			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
-			resOrg.Change = Galaxy.Current.CurrentEmpire.Income[Resource.Organics];
+			resOrg.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Organics];
 			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
-			resRad.Change = Galaxy.Current.CurrentEmpire.Income[Resource.Radioactives];
-			resRes.Amount = Galaxy.Current.CurrentEmpire.Income[Resource.Research];
-			resInt.Amount = Galaxy.Current.CurrentEmpire.Income[Resource.Intelligence];
+			resRad.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Radioactives];
+			resRes.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Research];
+			resInt.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Intelligence];
 
 			// show research progress
 			BindResearch();
@@ -879,7 +879,7 @@ namespace FrEee.WinForms.Forms
 
 		private int GetTotalSpending(Technology t)
 		{
-			var budget = Empire.Current.Income[Resource.Research] + Empire.Current.BonusResearch;
+			var budget = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;
 			var forQueue = 100 - Empire.Current.ResearchSpending.Sum(kvp => kvp.Value);
 			return t.Spending.Value * budget / 100 + (Empire.Current.ResearchQueue.FirstOrDefault() == t ? forQueue : 0);
 		}

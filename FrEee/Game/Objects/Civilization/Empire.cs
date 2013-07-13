@@ -16,6 +16,7 @@ using AI = FrEee.Game.Objects.AI.EmpireAI;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -113,19 +114,39 @@ namespace FrEee.Game.Objects.Civilization
 		public IList<ICommand> Commands { get; private set; }
 
 		/// <summary>
-		/// The empire's resource income.
+		/// The empire's resource income, not including maintenance costs.
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
-		public Resources Income
+		public Resources GrossIncome
 		{
 			get
 			{
-				// TODO - take into account maintenance costs
 				if (!ColonizedPlanets.Any())
 					return new Resources();
-				return ColonizedPlanets.Select(p => p.Income).Aggregate((r1, r2) => r1 + r2);
+				return ColonizedPlanets.Sum(p => p.Income);
+				// TODO - remote mining and raw resource/points generation
 			}
+		}
+
+		/// <summary>
+		/// Resources the empire spends on maintenance.
+		/// </summary>
+		public Resources Maintenance
+		{
+			get
+			{
+				// TODO - facility/unit maintenance?
+				return OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Sum(v => v.MaintenanceCost);
+			}
+		}
+
+		/// <summary>
+		/// Gross income less maintenance.
+		/// </summary>
+		public Resources NetIncome
+		{
+			get { return GrossIncome - Maintenance; }
 		}
 
 		/// <summary>
@@ -212,7 +233,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{
-			var totalRP = Income[Resource.Research] + BonusResearch;
+			var totalRP = NetIncome[Resource.Research] + BonusResearch;
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetLevelCost(level),
@@ -228,7 +249,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (!ResearchQueue.Contains(tech))
 				return null;
-			var totalRP = Income[Resource.Research];
+			var totalRP = NetIncome[Resource.Research];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			var foundLevels = new Dictionary<Tech, int>(ResearchedTechnologies);

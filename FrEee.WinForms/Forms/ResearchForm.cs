@@ -24,7 +24,7 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			// show RP available
-			resRes.Amount = Empire.Current.Income[Resource.Research] + Empire.Current.BonusResearch;
+			resRes.Amount = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;
 
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();

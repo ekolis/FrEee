@@ -680,7 +680,19 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static Resources Sum(this IEnumerable<Resources> resources)
 		{
+			if (!resources.Any())
+				return new Resources();
 			return resources.Aggregate((r1, r2) => r1 + r2);
+		}
+
+		/// <summary>
+		/// Adds up a bunch of resources.
+		/// </summary>
+		/// <param name="resources"></param>
+		/// <returns></returns>
+		public static Resources Sum<T>(this IEnumerable<T> stuff, Func<T, Resources> selector)
+		{
+			return stuff.Select(item => selector(item)).Sum();
 		}
 
 		public static IEnumerable<T> OnlyLatest<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)

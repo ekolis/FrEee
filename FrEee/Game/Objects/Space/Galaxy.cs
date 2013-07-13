@@ -612,6 +612,30 @@ namespace FrEee.Game.Objects.Space
 			// empire stuff
 			foreach (var emp in Empires)
 			{
+				// pay maintenance on on ships/bases
+				// TODO - allow mod to specify maintenance on units/facilities too?
+				foreach (var v in emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>())
+					emp.StoredResources -= v.MaintenanceCost;
+				
+				// if not enough funds, lose ships/bases
+				// TODO - if mods allow unit/facility maintenance, lose those too?
+				// TODO - check if SE4 "saves up" deficits between turns to destroy ships slower than one per turn
+				var deficit = -emp.StoredResources.Values.Where(r => r < 0).Sum();
+				var lostShips = deficit / Mod.Current.Settings.MaintenanceDeficitToDestroyOneShip;
+				for (int i = 0; i < lostShips; i++)
+				{
+					var ship = emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().PickRandom();
+					if (ship != null)
+					{
+						emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance."));
+						ship.Dispose();
+					}
+				}
+
+				// don't let stored resources actually fall below zero
+				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0))
+					emp.StoredResources[r] = 0;
+
 				// execute commands
 				foreach (var cmd in emp.Commands.Where(cmd => cmd != null))
 				{
@@ -629,10 +653,10 @@ namespace FrEee.Game.Objects.Space
 				var Queue = emp.ResearchQueue;
 				// spend research from spending % priorities
 				foreach (var tech in Spending.Keys.ToArray())
-					emp.Research(tech, Spending[tech] * (emp.Income[Resource.Research] + emp.BonusResearch) / 100);
+					emp.Research(tech, Spending[tech] * (emp.NetIncome[Resource.Research] + emp.BonusResearch) / 100);
 
 				// spend research from queues
-				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * emp.Income[Resource.Research] / 100;
+				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * emp.NetIncome[Resource.Research] / 100;
 				if (Queue.Any())
 					// first tech in queue
 					emp.Research(Queue.First(), leftovers);

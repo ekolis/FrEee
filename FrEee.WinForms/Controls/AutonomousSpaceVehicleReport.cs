@@ -72,10 +72,9 @@ namespace FrEee.WinForms.Controls
 				txtFleet.Text = "None"; // TODO - fleets
 				
 				// maintenance
-				// TODO - compute maintenance modifiers and use mod files for basic rate
-				resMaintMin.Amount = vehicle.Design.Cost[Resource.Minerals] / 5;
-				resMaintOrg.Amount = vehicle.Design.Cost[Resource.Organics] / 5;
-				resMaintRad.Amount = vehicle.Design.Cost[Resource.Radioactives] / 5;
+				resMaintMin.Amount = vehicle.MaintenanceCost[Resource.Minerals];
+				resMaintOrg.Amount = vehicle.MaintenanceCost[Resource.Organics];
+				resMaintRad.Amount = vehicle.MaintenanceCost[Resource.Radioactives];
 
 				// component summary
 				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";

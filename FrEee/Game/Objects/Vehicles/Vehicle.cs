@@ -223,7 +223,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public abstract ICombatObject CombatObject {get; }
 
-		public void Dispose()
+		public virtual void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
 			foreach (var emp in Galaxy.Current.Empires)

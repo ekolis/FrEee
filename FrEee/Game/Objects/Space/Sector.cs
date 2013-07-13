@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using System.Drawing;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -68,5 +71,34 @@ namespace FrEee.Game.Objects.Space
 			var coords = Coordinates;
 			return FindStarSystem() + " (" + coords.X + ", " + coords.Y + ")";
 		}
+		/// <summary>
+		/// Aggregates abilities across a sector for an empire's space objects.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var abils = SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		/// <summary>
+		/// Do any of the empire's space objects in this sector have an ability?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			return SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+		}
+
 	}
 }

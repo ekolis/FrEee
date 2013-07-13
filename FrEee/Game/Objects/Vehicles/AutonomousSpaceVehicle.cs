@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -322,6 +323,29 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
+			}
+		}
+
+		public override void Dispose()
+		{
+			this.FindSector().SpaceObjects.Remove(this);
+			base.Dispose();
+		}
+
+		/// <summary>
+		/// Resource cost per turn to maintain this vehicle.
+		/// </summary>
+		public Resources MaintenanceCost
+		{
+			get
+			{
+				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
+				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
+				pct -= this.FindSector().GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
+					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
+				return Cost * pct / 100d;
 			}
 		}
 	}
