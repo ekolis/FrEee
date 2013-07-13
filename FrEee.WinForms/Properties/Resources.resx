@@ -121,6 +121,6 @@
     <value>FrEee.ico</value>
   </data>
   <data name="FrEeeSplash" xml:space="preserve">
-    <value>Assets\Splash.jpg</value>
+    <value>Assets/Splash.jpg</value>
   </data>
 </root>
