@@ -72,6 +72,8 @@ namespace FrEee.WinForms.Controls
 			var spn = (NumericUpDown)sender;
 			var apt = (Aptitude)spn.Tag;
 			var txtCost = pnl.Controls.OfType<Label>().Single(l => l.Name == "txtCost_" + apt.Name.Replace(' ', '_'));
+			if (Values == null)
+				Values = Aptitude.All.ToDictionary(a => a, a => 100);
 			Values[apt] = (int)spn.Value;
 			txtCost.Text = apt.GetCost(Values[apt]) + " pts";
 			if (AptitudeValueChanged != null)
@@ -87,12 +89,15 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		public void Normalize()
 		{
-			foreach (var kvp in Values.ToArray())
+			if (Values != null)
 			{
-				if (kvp.Value > kvp.Key.MaxPercent)
-					Values[kvp.Key] = kvp.Key.MaxPercent;
-				if (kvp.Value < kvp.Key.MinPercent)
-					Values[kvp.Key] = kvp.Key.MinPercent;
+				foreach (var kvp in Values.ToArray())
+				{
+					if (kvp.Value > kvp.Key.MaxPercent)
+						Values[kvp.Key] = kvp.Key.MaxPercent;
+					if (kvp.Value < kvp.Key.MinPercent)
+						Values[kvp.Key] = kvp.Key.MinPercent;
+				}
 			}
 		}
 
@@ -103,17 +108,23 @@ namespace FrEee.WinForms.Controls
 		{
 			get
 			{
+				if (Values == null)
+					return 0;
 				return Values.Sum(kvp => kvp.Key.GetCost(kvp.Value));
 			}
 		}
 
 		public int GetValue(Aptitude apt)
 		{
+			if (Values == null)
+				return 100;
 			return Values[apt];
 		}
 
 		public void SetValue(Aptitude apt, int value)
 		{
+			if (Values == null)
+				Values = Aptitude.All.ToDictionary(a => a, a => 100);
 			var spn = pnl.Controls.OfType<NumericUpDown>().Single(c => c.Tag == apt);
 			spn.Value = value;
 		}

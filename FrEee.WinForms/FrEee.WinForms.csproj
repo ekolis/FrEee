@@ -353,6 +353,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmpireSetupForm.resx">
       <DependentUpon>EmpireSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModPickerForm.resx">
       <DependentUpon>ModPickerForm.cs</DependentUpon>
