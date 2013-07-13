@@ -15,7 +15,7 @@ namespace FrEee.Modding
 	{
 		public ModSettings()
 		{
-			DefaultColonyConstructionRate = new Resources();
+			DefaultColonyConstructionRate = new ResourceQuantity();
 			// TODO - moddable default colony construction rate
 			DefaultColonyConstructionRate.Add(Resource.Minerals, 2000);
 			DefaultColonyConstructionRate.Add(Resource.Organics, 2000);
@@ -52,7 +52,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Minimum income for an empire, even if it doesn't have any normal resource income.
 		/// </summary>
-		public Resources MinimumEmpireIncome { get; set; }
+		public ResourceQuantity MinimumEmpireIncome { get; set; }
 
 		/// <summary>
 		/// Percentage of facility cost returned when scrapping.
@@ -167,7 +167,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The construction rate for colonies lacking a spaceyard.
 		/// </summary>
-		public Resources DefaultColonyConstructionRate { get; set; }
+		public ResourceQuantity DefaultColonyConstructionRate { get; set; }
 
 		/// <summary>
 		/// Maximum number of consecutive turns a queue can be on emergency build.

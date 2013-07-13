@@ -335,7 +335,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Resource cost per turn to maintain this vehicle.
 		/// </summary>
-		public Resources MaintenanceCost
+		public ResourceQuantity MaintenanceCost
 		{
 			get
 			{

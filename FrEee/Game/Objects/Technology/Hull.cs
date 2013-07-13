@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Technology
 			PictureNames = new List<string>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
 			Abilities = new List<Ability>();
-			Cost = new Resources();
+			Cost = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The cost to build this hull.
 		/// </summary>
-		public Resources Cost { get; set; }
+		public ResourceQuantity Cost { get; set; }
 
 		/// <summary>
 		/// The number of thrust points required to generate 1 movement point.

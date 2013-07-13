@@ -31,7 +31,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The cost to build it.
 		/// </summary>
-		Resources Cost { get; }
+		ResourceQuantity Cost { get; }
 
 		/// <summary>
 		/// Has the empire unlocked this construction template?

@@ -8,35 +8,35 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class Resources : SafeDictionary<Resource, int>
+	public class ResourceQuantity : SafeDictionary<Resource, int>
 	{
-		public static Resources operator +(Resources r1, Resources r2)
+		public static ResourceQuantity operator +(ResourceQuantity r1, ResourceQuantity r2)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			foreach (var key in r1.Keys.Union(r2.Keys))
 				result.Add(key, r1[key] + r2[key]);
 			return result;
 		}
 
-		public static Resources operator -(Resources r1, Resources r2)
+		public static ResourceQuantity operator -(ResourceQuantity r1, ResourceQuantity r2)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			foreach (var key in r1.Keys.Union(r2.Keys))
 				result.Add(key, r1[key] - r2[key]);
 			return result;
 		}
 
-		public static Resources operator *(Resources r, double scalar)
+		public static ResourceQuantity operator *(ResourceQuantity r, double scalar)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			foreach (var key in r.Keys)
 				result.Add(key, (int)Math.Round(r[key] * scalar));
 			return result;
 		}
 
-		public static Resources operator /(Resources r, double scalar)
+		public static ResourceQuantity operator /(ResourceQuantity r, double scalar)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			foreach (var key in r.Keys)
 				result.Add(key, (int)Math.Round(r[key] / scalar));
 			return result;
@@ -73,9 +73,9 @@ namespace FrEee.Utility
 		/// <param name="r1"></param>
 		/// <param name="r2"></param>
 		/// <returns></returns>
-		public static Resources Max(Resources r1, Resources r2)
+		public static ResourceQuantity Max(ResourceQuantity r1, ResourceQuantity r2)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			foreach (var key in r1.Keys.Union(r2.Keys))
 				result.Add(key, Math.Max(r1[key], r2[key]));
 			return result;
@@ -88,17 +88,17 @@ namespace FrEee.Utility
 		/// <param name="r1"></param>
 		/// <param name="r2"></param>
 		/// <returns></returns>
-		public static Resources Min(Resources r1, Resources r2)
+		public static ResourceQuantity Min(ResourceQuantity r1, ResourceQuantity r2)
 		{
-			var result = new Resources();
+			var result = new ResourceQuantity();
 			if (r1 == null || r2 == null)
-				return new Resources();
+				return new ResourceQuantity();
 			foreach (var key in r1.Keys.Union(r2.Keys))
 				result.Add(key, Math.Min(r1[key], r2[key]));
 			return result;
 		}
 
-		public static bool operator ==(Resources r1, Resources r2)
+		public static bool operator ==(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			if (((object)r1 == null) ^ ((object)r2 == null))
 				return false;
@@ -112,7 +112,7 @@ namespace FrEee.Utility
 			return true;
 		}
 
-		public static bool operator !=(Resources r1, Resources r2)
+		public static bool operator !=(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			return !(r1 == r2);
 		}
@@ -130,12 +130,12 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
-			if (obj is Resources)
-				return (Resources)obj == this;
+			if (obj is ResourceQuantity)
+				return (ResourceQuantity)obj == this;
 			return false;
 		}
 
-		public static bool operator >=(Resources r1, Resources r2)
+		public static bool operator >=(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
@@ -145,7 +145,7 @@ namespace FrEee.Utility
 			return true;
 		}
 
-		public static bool operator <=(Resources r1, Resources r2)
+		public static bool operator <=(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
@@ -155,7 +155,7 @@ namespace FrEee.Utility
 			return true;
 		}
 
-		public static bool operator >(Resources r1, Resources r2)
+		public static bool operator >(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
@@ -165,7 +165,7 @@ namespace FrEee.Utility
 			return true;
 		}
 
-		public static bool operator <(Resources r1, Resources r2)
+		public static bool operator <(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{

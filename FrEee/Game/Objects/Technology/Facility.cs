@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Technology
 		public Facility(FacilityTemplate template)
 		{
 			Template = template;
-			ConstructionProgress = new Resources();
+			ConstructionProgress = new ResourceQuantity();
 		}
 
 		public Empire Owner { get; set; }
@@ -39,12 +39,12 @@ namespace FrEee.Game.Objects.Technology
 			get { return Template.Abilities; }
 		}
 
-		public Resources Cost
+		public ResourceQuantity Cost
 		{
 			get { return Template.Cost; }
 		}
 
-		public Resources ConstructionProgress
+		public ResourceQuantity ConstructionProgress
 		{
 			get;
 			set;

@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 			SpaceObject = sobj;
 			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
-			UnspentRate = new Resources();
+			UnspentRate = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -76,7 +76,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The rate at which this queue can construct.
 		/// </summary>
-		public Resources Rate
+		public ResourceQuantity Rate
 		{
 			get
 			{
@@ -109,7 +109,7 @@ namespace FrEee.Game.Objects.Civilization
 
 				}
 				if (rate == null)
-					rate = new Resources();
+					rate = new ResourceQuantity();
 				if (Colony == null)
 				{
 					// apply aptitude modifier for empire's primary race
@@ -121,11 +121,11 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		private Resources ComputeSYAbilityRate()
+		private ResourceQuantity ComputeSYAbilityRate()
 		{
 			if (SpaceObject.HasAbility("Space Yard"))
 			{
-				var rate = new Resources();
+				var rate = new ResourceQuantity();
 				// TODO - moddable resources?
 				for (int i = 1; i <= 3; i++)
 				{
@@ -148,7 +148,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Unspent build rate for this turn.
 		/// </summary>
-		public Resources UnspentRate { get; set; }
+		public ResourceQuantity UnspentRate { get; set; }
 
 		IEnumerable<IOrder> IOrderable.Orders
 		{
@@ -196,7 +196,7 @@ namespace FrEee.Game.Objects.Civilization
 		public void ExecuteOrders()
 		{
 			UnspentRate = Rate;
-			var empty = new Resources();
+			var empty = new ResourceQuantity();
 			while (UnspentRate > empty && Orders.Any())
 			{
 				var numOrders = Orders.Count;
@@ -249,7 +249,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders[0].Template.Cost - (Orders[0].Item == null ? new Resources() : Orders[0].Item.ConstructionProgress);
+				var remainingCost = Orders[0].Template.Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
 				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
 			}
 		}
@@ -263,7 +263,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new Resources() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
+				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
 				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
 			}
 		}

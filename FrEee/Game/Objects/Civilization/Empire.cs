@@ -41,8 +41,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public Empire()
 		{
-			StoredResources = new Resources();
-			IntrinsicResourceStorage = new Resources();
+			StoredResources = new ResourceQuantity();
+			IntrinsicResourceStorage = new ResourceQuantity();
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
 			Log = new List<LogMessage>();
@@ -106,7 +106,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The resources stored by the empire.
 		/// </summary>
-		public Resources StoredResources { get; set; }
+		public ResourceQuantity StoredResources { get; set; }
 
 		/// <summary>
 		/// Commands issued by the player this turn.
@@ -118,12 +118,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
-		public Resources GrossIncome
+		public ResourceQuantity GrossIncome
 		{
 			get
 			{
 				if (!ColonizedPlanets.Any())
-					return new Resources();
+					return new ResourceQuantity();
 				return ColonizedPlanets.Sum(p => p.Income);
 				// TODO - remote mining and raw resource/points generation
 			}
@@ -132,7 +132,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Resources the empire spends on maintenance.
 		/// </summary>
-		public Resources Maintenance
+		public ResourceQuantity Maintenance
 		{
 			get
 			{
@@ -144,7 +144,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Gross income less maintenance.
 		/// </summary>
-		public Resources NetIncome
+		public ResourceQuantity NetIncome
 		{
 			get { return GrossIncome - Maintenance; }
 		}
@@ -508,16 +508,16 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Intrinsic resource storage capacity of this empire (without components, facilities, etc. that provide the abilities).
 		/// </summary>
-		public Resources IntrinsicResourceStorage { get; private set; }
+		public ResourceQuantity IntrinsicResourceStorage { get; private set; }
 
 		/// <summary>
 		/// Resource storage capacity of this empire.
 		/// </summary>
-		public Resources ResourceStorage
+		public ResourceQuantity ResourceStorage
 		{
 			get
 			{
-				var r = new Resources();
+				var r = new ResourceQuantity();
 				r += IntrinsicResourceStorage;
 				foreach (var sobj in OwnedSpaceObjects)
 				{

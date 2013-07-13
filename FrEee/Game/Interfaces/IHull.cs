@@ -32,7 +32,7 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		int Mass { get; set; }
 
-		Resources Cost { get; set; }
+		ResourceQuantity Cost { get; set; }
 
 		/// <summary>
 		/// Does this hull need a component with the Ship Bridge ability?

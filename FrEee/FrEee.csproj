@@ -243,7 +243,7 @@
     <Compile Include="Utility\Reference.cs" />
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\Resource.cs" />
-    <Compile Include="Utility\Resources.cs" />
+    <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Utility\Status.cs" />

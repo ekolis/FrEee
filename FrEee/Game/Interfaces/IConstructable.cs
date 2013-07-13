@@ -21,12 +21,12 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The resource cost to build this item.
 		/// </summary>
-		Resources Cost { get; }
+		ResourceQuantity Cost { get; }
 
 		/// <summary>
 		/// The progress toward constructing this item.
 		/// </summary>
-		Resources ConstructionProgress { get; set; }
+		ResourceQuantity ConstructionProgress { get; set; }
 
 		/// <summary>
 		/// An icon used to represent this item in the construction queue.

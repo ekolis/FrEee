@@ -47,8 +47,8 @@ namespace FrEee.Game.Objects.Orders
 
 			// apply build rate
 			var costLeft = Item.Cost - Item.ConstructionProgress;
-			var spending = Resources.Min(costLeft, queue.UnspentRate);
-			spending = Resources.Min(spending, queue.Owner.StoredResources);
+			var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
+			spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
 			queue.Owner.StoredResources -= spending;
 			queue.UnspentRate -= spending;
 			Item.ConstructionProgress += spending;

@@ -78,13 +78,13 @@ namespace FrEee.WinForms.Forms
 			lstQueue.SmallImageList = il;
 			lstQueue.LargeImageList = il;
 			int i = 0;
-			var prevCost = new Resources();
+			var prevCost = new ResourceQuantity();
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var item = new ListViewItem(order.Template.Name);
 				item.Tag = order;
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
-				var remainingCost = order.Template.Cost - (order.Item == null ? new Resources() : order.Item.ConstructionProgress);
+				var remainingCost = order.Template.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				double progress;
 				if (order.Item != null && order.Item.ConstructionProgress.Any())
 					progress = order.Item.ConstructionProgress.Min(kvp => (double)kvp.Value / (double)order.Item.Cost[kvp.Key]);

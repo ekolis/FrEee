@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Vehicles
 		public Vehicle()
 		{
 			Components = new List<Component>();
-			ConstructionProgress = new Resources();
+			ConstructionProgress = new ResourceQuantity();
 			if (Galaxy.Current != null)
 				Galaxy.Current.Register(this);
 		}
@@ -50,7 +50,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public abstract bool RequiresSpaceYardQueue { get; }
 
-		public Resources Cost
+		public ResourceQuantity Cost
 		{
 			get
 			{
@@ -58,7 +58,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public Resources ConstructionProgress
+		public ResourceQuantity ConstructionProgress
 		{
 			get;
 			set;

@@ -130,7 +130,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Resources Cost
+		public ResourceQuantity Cost
 		{
 			get
 			{

@@ -395,7 +395,7 @@ namespace FrEee.Game.Setup
 			// TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
 
 			// SY rate, for colonies
-			var rate = new Resources();
+			var rate = new ResourceQuantity();
 			// TODO - define mappings between SY ability numbers and resource names in a mod file
 			rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
 			rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());

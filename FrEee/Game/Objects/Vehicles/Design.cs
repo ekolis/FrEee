@@ -270,7 +270,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The resource cost to build the design.
 		/// </summary>
-		public Resources Cost
+		public ResourceQuantity Cost
 		{
 			get
 			{

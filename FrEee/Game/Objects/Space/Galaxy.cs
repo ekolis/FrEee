@@ -581,7 +581,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					// give owner his income
 					p.Owner.StoredResources += p.Income;
-					p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
+					p.Owner.StoredResources = ResourceQuantity.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
 					// adjust resource value
 					foreach (var kvp in p.Income)
@@ -598,7 +598,7 @@ namespace FrEee.Game.Objects.Space
 					else if (ratio < 1)
 						p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
 					p.Owner.StoredResources += p.Income * ratio;
-					p.Owner.StoredResources = Resources.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
+					p.Owner.StoredResources = ResourceQuantity.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
 					// adjust resource value
 					// pay full value decay for non-prorated income though, since the resources were extracted and wasted!

@@ -23,7 +23,7 @@ namespace FrEee.Modding.Templates
 		{
 			Abilities = new List<Ability>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
-			Cost = new Resources();
+			Cost = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -77,7 +77,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The cost to build the component.
 		/// </summary>
-		public Resources Cost { get; set; }
+		public ResourceQuantity Cost { get; set; }
 
 		/// <summary>
 		/// The vehicle types on which this component can be installed.

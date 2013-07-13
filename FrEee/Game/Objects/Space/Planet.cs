@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Planet()
 		{
-			ResourceValue = new Resources();
+			ResourceValue = new ResourceQuantity();
 			Orders = new List<IOrder<Planet>>();
 		}
 
@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The resource value of this planet, in %.
 		/// </summary>
-		public Resources ResourceValue { get; set; }
+		public ResourceQuantity ResourceValue { get; set; }
 
 		/// <summary>
 		/// Just copy the planet's data.
@@ -146,14 +146,14 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The resource income from this planet.
 		/// </summary>
-		public Resources Income
+		public ResourceQuantity Income
 		{
 			get
 			{
 				if (Colony == null)
-					return new Resources(); // no colony? no income!
+					return new ResourceQuantity(); // no colony? no income!
 
-				var income = new Resources();
+				var income = new ResourceQuantity();
 				var prefix = "Resource Generation - ";
 				foreach (var abil in Abilities.ToArray().Where(abil => abil.Name.StartsWith(prefix)))
 				{

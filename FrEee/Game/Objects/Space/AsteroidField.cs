@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		public AsteroidField()
 		{
-			ResourceValue = new Resources();
+			ResourceValue = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -41,7 +41,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The resource value of this asteroid field, in %.
 		/// </summary>
-		public Resources ResourceValue { get; set; }
+		public ResourceQuantity ResourceValue { get; set; }
 
 		/// <summary>
 		/// Just copy the asteroid field's data.

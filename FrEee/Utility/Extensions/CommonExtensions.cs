@@ -678,10 +678,10 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="resources"></param>
 		/// <returns></returns>
-		public static Resources Sum(this IEnumerable<Resources> resources)
+		public static ResourceQuantity Sum(this IEnumerable<ResourceQuantity> resources)
 		{
 			if (!resources.Any())
-				return new Resources();
+				return new ResourceQuantity();
 			return resources.Aggregate((r1, r2) => r1 + r2);
 		}
 
@@ -690,7 +690,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="resources"></param>
 		/// <returns></returns>
-		public static Resources Sum<T>(this IEnumerable<T> stuff, Func<T, Resources> selector)
+		public static ResourceQuantity Sum<T>(this IEnumerable<T> stuff, Func<T, ResourceQuantity> selector)
 		{
 			return stuff.Select(item => selector(item)).Sum();
 		}

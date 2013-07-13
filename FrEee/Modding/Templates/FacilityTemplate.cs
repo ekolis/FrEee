@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			Abilities = new List<Ability>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
-			Cost = new Resources();
+			Cost = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -68,7 +68,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The cost to build the facility.
 		/// </summary>
-		public Resources Cost { get; set; }
+		public ResourceQuantity Cost { get; set; }
 
 		/// <summary>
 		/// The technology requirements for this facility.
