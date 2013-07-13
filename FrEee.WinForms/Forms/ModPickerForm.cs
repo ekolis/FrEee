@@ -11,7 +11,7 @@ using FrEee.WinForms.Utility.Extensions;
 using System.IO;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
-using FrEee.Utility; using Resources = FrEee.Utility.Resources;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {

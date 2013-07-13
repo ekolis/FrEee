@@ -8,7 +8,7 @@ using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility; using Resources = FrEee.Utility.Resources;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System;

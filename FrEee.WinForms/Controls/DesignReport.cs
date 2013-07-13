@@ -5,7 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
-using FrEee.Utility; using Resources = FrEee.Utility.Resources;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Controls
 {
