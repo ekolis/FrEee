@@ -39,28 +39,10 @@ namespace FrEee.WinForms.Forms
 			Icon = new Icon(Properties.Resources.FrEeeIcon);
 		}
 
-		private bool _isBusy;
-		public bool IsBusy
-		{
-			get
-			{
-				return _isBusy;
-			}
-			set
-			{
-				_isBusy = value;
-				tblButtonPanel.Enabled = !IsBusy;
-				progressBar1.Visible = IsBusy;
-			}
-		}
-
 		#region Button click handlers
 
 		private void btnQuickStart_Click(object sender, EventArgs e)
 		{
-			IsBusy = true;
-
-			//var scheduler = TaskScheduler.FromCurrentSynchronizationContext();
 			var status = new Status
 			{
 				Progress = 0d,
@@ -143,27 +125,8 @@ namespace FrEee.WinForms.Forms
 				}
 			}));
 			t.Name = "Game Setup";
-			t.Start();
-			while (t.IsAlive)
-			{
-				if (status.Exception != null)
-				{
-					Text = "FrEee - Error";
-					MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
-					Enabled = true;
-					IsBusy = false;
-					progressBar1.Value = 0;
-					status.Exception.Log();
-					t.Abort();
-					break;
-				}
-				else
-				{
-					Text = "FrEee - " + status.Message;
-					progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
-					Application.DoEvents();
-				}
-			}
+
+			this.ShowChildForm(new StatusForm(t, status));
 
 			if (status.Exception == null)
 			{
@@ -173,7 +136,6 @@ namespace FrEee.WinForms.Forms
 				{
 					game.Dispose();
 					Show();
-					IsBusy = false;
 				};
 				Hide();
 			}
@@ -193,10 +155,16 @@ namespace FrEee.WinForms.Forms
 					// host view, prompt for turn processing
 					if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
 					{
-						// TODO - use multithreading to avoid locking the GUI when processing turns
 						Cursor = Cursors.WaitCursor;
-						Galaxy.Current.ProcessTurn();
-						Galaxy.SaveAll();
+						var status = new Status { Message = "Initializing" };
+						var t = new Thread(new ThreadStart(() =>
+							{
+								status.Message = "Processing turn";
+								Galaxy.Current.ProcessTurn();
+								status.Progress = 0.5;
+								Galaxy.SaveAll(status);
+							}));
+						this.ShowChildForm(new StatusForm(t, status));
 						MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 						Cursor = Cursors.Default;
 					}
@@ -235,7 +203,6 @@ namespace FrEee.WinForms.Forms
 
 		private void LoadMod(string modPath)
 		{
-			progressBar1.Visible = true;
 			var status = new Status
 			{
 				Progress = 0d,
@@ -255,30 +222,10 @@ namespace FrEee.WinForms.Forms
 				}
 			}));
 			t.Name = "Mod Loading";
-			t.Start();
-			while (t.IsAlive)
-			{
-				if (status.Exception != null)
-				{
-					Text = "FrEee - Error";
-					MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
-					Enabled = true;
-					IsBusy = false;
-					progressBar1.Value = 0;
-					status.Exception.Log();
-					t.Abort();
-					break;
-				}
-				else
-				{
-					Text = "FrEee - " + status.Message;
-					progressBar1.Value = (int)(progressBar1.Maximum * status.Progress);
-					Application.DoEvents();
-				}
-			}
+
+			this.ShowChildForm(new StatusForm(t, status));
 
 			Text = "FrEee - " + Mod.Current.Info.Name;
-			progressBar1.Visible = false;
 		}
 
 		private void btnResume_Click(object sender, EventArgs e)

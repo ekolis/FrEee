@@ -108,27 +108,8 @@ namespace FrEee.WinForms.Forms
 				}
 			}));
 			t.Name = "Game Setup";
-			t.Start();
-			while (t.IsAlive)
-			{
-				if (status.Exception != null)
-				{
-					Text = "FrEee - Error";
-					MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
-					Enabled = true;
-					IsBusy = false;
-					progressBar.Value = 0;
-					status.Exception.Log();
-					t.Abort();
-					break;
-				}
-				else
-				{
-					Text = "Game Setup - " + status.Message;
-					progressBar.Value = (int)(progressBar.Maximum * status.Progress);
-					Application.DoEvents();
-				}
-			}
+
+			this.ShowChildForm(new StatusForm(t, status));
 
 			if (status.Exception == null)
 			{

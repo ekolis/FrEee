@@ -19,6 +19,7 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
+using System.Threading;
 
 namespace FrEee.WinForms.Forms
 {
@@ -461,14 +462,25 @@ namespace FrEee.WinForms.Forms
 			Galaxy.Current.SaveCommands();
 			if (Galaxy.Current.IsSinglePlayer)
 			{
-				// TODO - use multithreading to prevent locking the GUI when processing turns
 				Cursor = Cursors.WaitCursor;
 				Enabled = false;
 				var plrnum = Galaxy.Current.PlayerNumber;
-				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
-				Galaxy.Current.ProcessTurn();
-				Galaxy.SaveAll();
-				Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+				var status = new Status { Message = "Initializing" };
+				var t = new Thread(new ThreadStart(() =>
+				{
+					status.Message = "Loading game";
+					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+					status.Progress = 0.25;
+					status.Message = "Processing turn";
+					Galaxy.Current.ProcessTurn();
+					status.Progress = 0.5;
+					status.Message = "Saving game";
+					Galaxy.SaveAll();
+					status.Progress = 0.75;
+					status.Message = "Loading game";
+					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+				}));
+				this.ShowChildForm(new StatusForm(t, status));
 				SetUpGui();
 				Enabled = true;
 				Cursor = Cursors.Default;

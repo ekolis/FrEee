@@ -39,7 +39,6 @@
 			this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoad = new FrEee.WinForms.Controls.GameButton();
 			this.btnResume = new FrEee.WinForms.Controls.GameButton();
-			this.progressBar1 = new System.Windows.Forms.ProgressBar();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tblButtonPanel.SuspendLayout();
@@ -55,7 +54,6 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.Controls.Add(this.pictureBox1, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.tblButtonPanel, 1, 0);
-			this.tableLayoutPanel1.Controls.Add(this.progressBar1, 0, 1);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -236,18 +234,6 @@
 			this.btnResume.UseVisualStyleBackColor = false;
 			this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
 			// 
-			// progressBar1
-			// 
-			this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.tableLayoutPanel1.SetColumnSpan(this.progressBar1, 2);
-			this.progressBar1.Location = new System.Drawing.Point(184, 378);
-			this.progressBar1.Margin = new System.Windows.Forms.Padding(0);
-			this.progressBar1.Name = "progressBar1";
-			this.progressBar1.Size = new System.Drawing.Size(208, 14);
-			this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-			this.progressBar1.TabIndex = 4;
-			this.progressBar1.Visible = false;
-			// 
 			// MainMenuForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -283,7 +269,6 @@
         private Controls.GameButton btnResume;
         private Controls.GameButton btnNew;
 		private Controls.GameButton btnQuickStart;
-		private System.Windows.Forms.ProgressBar progressBar1;
 
     }
 }
