@@ -841,6 +841,11 @@ namespace FrEee.WinForms.Forms
 				if (SelectedSpaceObject is AutonomousSpaceVehicle)
 				{
 					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+					foreach (var order in v.Orders)
+					{
+						var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
+						Empire.Current.Commands.Add(cmd);
+					}
 					v.Orders.Clear();
 					var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 					if (report != null)
@@ -849,6 +854,11 @@ namespace FrEee.WinForms.Forms
 				else if (SelectedSpaceObject is Planet)
 				{
 					var p = (Planet)SelectedSpaceObject;
+					foreach (var order in p.Orders)
+					{
+						var cmd = new RemoveOrderCommand<Planet>(Empire.Current, p, order);
+						Empire.Current.Commands.Add(cmd);
+					}
 					p.Orders.Clear();
 					var report = pnlDetailReport.Controls.OfType<PlanetReport>().FirstOrDefault();
 					if (report != null)
