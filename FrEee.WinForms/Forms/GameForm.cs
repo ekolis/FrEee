@@ -843,8 +843,18 @@ namespace FrEee.WinForms.Forms
 					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
 					foreach (var order in v.Orders)
 					{
-						var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
-						Empire.Current.Commands.Add(cmd);
+						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+						if (addCmd == null)
+						{
+							// not a newly added order, so create a remove command to take it off the server
+							var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
+							Empire.Current.Commands.Add(remCmd);
+						}
+						else
+						{
+							// a newly added order, so just get rid of the add command
+							Empire.Current.Commands.Remove(addCmd);
+						}
 					}
 					v.Orders.Clear();
 					var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
@@ -856,8 +866,18 @@ namespace FrEee.WinForms.Forms
 					var p = (Planet)SelectedSpaceObject;
 					foreach (var order in p.Orders)
 					{
-						var cmd = new RemoveOrderCommand<Planet>(Empire.Current, p, order);
-						Empire.Current.Commands.Add(cmd);
+						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<Planet>>().SingleOrDefault(c => c.Order == order);
+						if (addCmd == null)
+						{
+							// not a newly added order, so create a remove command to take it off the server
+							var remCmd = new RemoveOrderCommand<Planet>(Empire.Current, p, order);
+							Empire.Current.Commands.Add(remCmd);
+						}
+						else
+						{
+							// a newly added order, so just get rid of the add command
+							Empire.Current.Commands.Remove(addCmd);
+						}
 					}
 					p.Orders.Clear();
 					var report = pnlDetailReport.Controls.OfType<PlanetReport>().FirstOrDefault();

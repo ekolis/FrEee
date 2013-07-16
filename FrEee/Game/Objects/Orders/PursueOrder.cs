@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
 using System.Drawing;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -99,5 +100,17 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		[DoNotSerialize]
 		public bool LoggedPathfindingError { get; private set; }
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
+		}
 	}
 }

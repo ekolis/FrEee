@@ -141,6 +141,9 @@ namespace FrEee.Game.Objects.Space
 					// TODO - memory sight
 				}
 			}
+
+			if (Owner != galaxy.CurrentEmpire)
+				Orders.Clear();
 		}
 
 		/// <summary>

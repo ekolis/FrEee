@@ -24,22 +24,18 @@ namespace FrEee.Game.Objects.Commands
 			Order = order;
 		}
 
-		public int OrderID
-		{
-			get;
-			set;
-		}
+		private IReference<IOrder<T>> order { get; set; }
 
 		[DoNotSerialize]
 		public virtual IOrder<T> Order
 		{
 			get
 			{
-				return (IOrder<T>)Target.Orders.ElementAt(OrderID - 1);
+				return order.Value;
 			}
 			set
 			{
-				OrderID = Target.Orders.Cast<IOrder<T>>().IndexOf(value) + 1;
+				order = value.Reference();
 			}
 		}
 	}

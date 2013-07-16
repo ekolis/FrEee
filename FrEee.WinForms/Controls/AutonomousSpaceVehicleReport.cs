@@ -192,10 +192,21 @@ namespace FrEee.WinForms.Controls
 		{
 			foreach (var order in vehicle.Orders.ToArray())
 			{
-				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(
-					Empire.Current, vehicle, order);
-				Empire.Current.Commands.Add(cmd);
-				cmd.Execute(); // show change locally
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				if (addCmd == null)
+				{
+					// not a newly added order, so create a remove command to take it off the server
+					var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, Vehicle, order);
+					Empire.Current.Commands.Add(remCmd);
+					remCmd.Execute(); // show change locally
+				}
+				else
+				{
+					// a newly added order, so just get rid of the add command
+					Empire.Current.Commands.Remove(addCmd);
+					addCmd.Execute(); // show change locally
+				}
+				
 				Invalidate();
 
 				if (OrdersChanged != null)
@@ -208,10 +219,21 @@ namespace FrEee.WinForms.Controls
 			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(
-					Empire.Current, vehicle, order);
-				Empire.Current.Commands.Add(cmd);
-				cmd.Execute(); // show change locally
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				if (addCmd == null)
+				{
+					// not a newly added order, so create a remove command to take it off the server
+					var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, Vehicle, order);
+					Empire.Current.Commands.Add(remCmd);
+					remCmd.Execute(); // show change locally
+				}
+				else
+				{
+					// a newly added order, so just get rid of the add command
+					Empire.Current.Commands.Remove(addCmd);
+					addCmd.Execute(); // show change locally
+				}
+
 				Invalidate();
 
 				if (OrdersChanged != null)

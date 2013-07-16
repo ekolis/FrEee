@@ -72,5 +72,17 @@ namespace FrEee.Game.Objects.Orders
 		{
 			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
 		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.Unregister(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				Galaxy.Current.Unregister(this, emp);
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
+		}
 	}
 }

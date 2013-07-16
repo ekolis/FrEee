@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// An order issued by a player to an object to do something.
 	/// </summary>
 	[ClientSafe]
-	public interface IOrder
+	public interface IOrder : IReferrable
 	{
 		/// <summary>
 		/// Is this order done executing?

@@ -95,6 +95,9 @@ namespace FrEee.Game.Objects.Vehicles
 				d.Owner = Design.Owner;
 				Design = d;
 			}
+
+			if (Owner != galaxy.CurrentEmpire)
+				Orders.Clear();
 		}
 
 		public IEnumerable<Ability> Abilities
