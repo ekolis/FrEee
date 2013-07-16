@@ -259,7 +259,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -275,7 +275,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 	}
 }
