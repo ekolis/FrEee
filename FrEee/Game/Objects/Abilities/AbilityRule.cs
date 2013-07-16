@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Abilities
 			if (GroupingRule == AbilityGroupingRule.GroupByValue1)
 				grouped = ours.GroupBy(a => a.Value1);
 			else if (GroupingRule == AbilityGroupingRule.GroupByValue2)
-				grouped = ours.GroupBy(a => a.Value1);
+				grouped = ours.GroupBy(a => a.Value2);
 			else
 				grouped = ours.GroupBy(a => "");
 
