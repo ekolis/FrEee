@@ -74,6 +74,11 @@ namespace FrEee.Game.Objects.Space
 			get { return IntrinsicAbilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>

@@ -39,7 +39,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <returns></returns>
 		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities)
 		{
-			var ours = abilities.Where(a => a.Name == Name);
+			var ours = abilities.Where(a => a.Name == Name).ToArray();
 
 			// group abilities
 			IEnumerable<IGrouping<string, Ability>> grouped;

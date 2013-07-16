@@ -12,5 +12,10 @@ namespace FrEee.Game.Interfaces
 		/// The abilities possessed by this object.
 		/// </summary>
 		IEnumerable<Ability> Abilities { get; }
+
+		/// <summary>
+		/// The abilities possessed by this object, before stacking.
+		/// </summary>
+		IEnumerable<Ability> UnstackedAbilities { get; }
 	}
 }

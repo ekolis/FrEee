@@ -87,7 +87,15 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities).Stack()).Concat(Owner.Abilities);
+				return UnstackedAbilities.Stack();
+			}
+		}
+
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get
+			{
+				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities)).Concat(Owner.Abilities);
 			}
 		}
 

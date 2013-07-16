@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -97,7 +97,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			return SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 
 	}

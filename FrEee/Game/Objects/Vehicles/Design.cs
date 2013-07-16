@@ -14,6 +14,7 @@ using System.Drawing;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -293,9 +294,14 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public IEnumerable<Abilities.Ability> Abilities
+		public IEnumerable<Ability> Abilities
 		{
-			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.Abilities)).Stack(); }
+			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)).Stack(); }
+		}
+
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)); }
 		}
 
 		public int SupplyUsagePerSector

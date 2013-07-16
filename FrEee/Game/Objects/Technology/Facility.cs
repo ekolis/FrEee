@@ -39,6 +39,11 @@ namespace FrEee.Game.Objects.Technology
 			get { return Template.Abilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		public ResourceQuantity Cost
 		{
 			get { return Template.Cost; }

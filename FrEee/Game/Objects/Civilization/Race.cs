@@ -111,6 +111,11 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Traits.SelectMany(t => t.Abilities); }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// The population icon.
 		/// </summary>

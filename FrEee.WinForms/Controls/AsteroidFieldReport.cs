@@ -57,7 +57,7 @@ namespace FrEee.WinForms.Controls
 
 				txtDescription.Text = AsteroidField.Description;
 
-				abilityTreeView.Abilities = AsteroidField.Abilities.StackToTree();
+				abilityTreeView.Abilities = AsteroidField.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = AsteroidField.IntrinsicAbilities;
 			}
 

@@ -48,7 +48,7 @@ namespace FrEee.WinForms.Controls
 				txtSize.Text = Storm.StellarSize + " Storm";
 				txtDescription.Text = Storm.Description;
 
-				abilityTreeView.Abilities = Storm.Abilities.StackToTree();
+				abilityTreeView.Abilities = Storm.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
 			}
 

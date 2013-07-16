@@ -85,6 +85,11 @@ namespace FrEee.Game.Objects.Technology
 			get { return Abilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// Creates a facility from the template.
 		/// </summary>

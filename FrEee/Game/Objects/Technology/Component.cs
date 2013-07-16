@@ -39,6 +39,11 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		public string Name { get { return Template.Name; } }
 
 		/// <summary>

@@ -37,6 +37,11 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Abilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// Abilities granted by this trait.
 		/// </summary>

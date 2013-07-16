@@ -419,6 +419,11 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Traits == null ? Enumerable.Empty<Ability>() : Traits.SelectMany(t => t.Abilities); }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// The insignia icon for this empire.
 		/// </summary>

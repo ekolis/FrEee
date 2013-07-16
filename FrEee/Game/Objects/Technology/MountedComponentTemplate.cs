@@ -120,6 +120,11 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		public int Size
 		{
 			get

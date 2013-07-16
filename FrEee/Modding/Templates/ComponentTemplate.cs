@@ -129,6 +129,11 @@ namespace FrEee.Modding.Templates
 			get { return Abilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		/// <summary>
 		/// If this component is a weapon, info about it will be stored here.
 		/// </summary>

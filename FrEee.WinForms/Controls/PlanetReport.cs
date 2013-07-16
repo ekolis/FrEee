@@ -145,7 +145,7 @@ namespace FrEee.WinForms.Controls
 						lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 				}
 
-				abilityTreeView.Abilities = Planet.Abilities.StackToTree();
+				abilityTreeView.Abilities = Planet.UnstackedAbilities.StackToTree();
 				if (Planet.Colony == null)
 					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
 				else

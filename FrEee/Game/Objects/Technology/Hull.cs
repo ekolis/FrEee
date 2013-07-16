@@ -103,6 +103,11 @@ namespace FrEee.Game.Objects.Technology
 			get { return Abilities; }
 		}
 
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
+		}
+
 		public ICollection<Ability> Abilities { get; private set; }
 
 		/// <summary>
