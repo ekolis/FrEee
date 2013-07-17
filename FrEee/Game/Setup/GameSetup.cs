@@ -223,7 +223,7 @@ namespace FrEee.Game.Setup
 
 			// remove forbidden techs
 			foreach (var tname in ForbiddenTechnologyNames)
-				gal.Unregister(gal.Referrables.OfType<Technology>().Single(t => t.Name == tname));
+				gal.Referrables.OfType<Technology>().Single(t => t.Name == tname).Dispose();
 
 			// set omniscient view flag
 			gal.OmniscientView = OmniscientView;
