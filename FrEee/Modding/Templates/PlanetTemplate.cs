@@ -37,6 +37,11 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public string Surface { get; set; }
 
+		/// <summary>
+		/// Do we want a constructed world (such as a ringworld or sphereworld)?
+		/// </summary>
+		public bool IsConstructed { get; set; }
+
 		public Planet Instantiate()
 		{
 			var candidates = Mod.Current.StellarObjectTemplates.OfType<Planet>();
@@ -46,6 +51,7 @@ namespace FrEee.Modding.Templates
 				candidates = candidates.Where(p => p.Surface == Surface);
 			if (StellarSize != null)
 				candidates = candidates.Where(p => p.StellarSize == StellarSize);
+			candidates = candidates.Where(p => p.Size.IsConstructed == IsConstructed);
 
 			if (!candidates.Any())
 				throw new Exception("No planets in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()));
