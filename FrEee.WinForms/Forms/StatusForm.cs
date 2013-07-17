@@ -40,6 +40,7 @@ namespace FrEee.WinForms.Forms
 				progressBar.Value = 0;
 				status.Exception.Log();
 				thread.Abort();
+				timer1.Stop();
 				Close();
 			}
 			else
