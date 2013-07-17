@@ -89,21 +89,21 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public MiningModel RemoteMiningModel { get; set; }
 
-		public int MinPlanetValue {get; set;}
+		public int MinPlanetValue { get; set; }
 
-		public int MinSpawnedPlanetValue {get; set;}
+		public int MinSpawnedPlanetValue { get; set; }
 
-		public int HomeworldValue {get; set;}
+		public int HomeworldValue { get; set; }
 
-		public int MaxSpawnedPlanetValue {get; set;}
+		public int MaxSpawnedPlanetValue { get; set; }
 
-		public int MaxPlanetValue {get; set;}
+		public int MaxPlanetValue { get; set; }
 
-		public int MinAsteroidValue {get; set;}
+		public int MinAsteroidValue { get; set; }
 
-		public int MinSpawnedAsteroidValue {get; set;}
+		public int MinSpawnedAsteroidValue { get; set; }
 
-		public int MaxSpawnedAsteroidValue {get; set;}
+		public int MaxSpawnedAsteroidValue { get; set; }
 
 		public int StartingResources { get; set; }
 
@@ -383,23 +383,25 @@ namespace FrEee.Game.Setup
 				emp.ResearchedTechnologies[colonyTech] = 1;
 
 			// find facilities to place on homeworlds
-			// TODO - don't crash if facilities not found in mod
 			var facils = emp.UnlockedItems.OfType<FacilityTemplate>();
-			var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).Last();
-			var sp = facils.Last(facil => facil.HasAbility("Spaceport"));
-			var rd = facils.Last(facil => facil.HasAbility("Supply Generation"));
-			var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).Last();
-			var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).Last();
-			var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).Last();
-			var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).Last();
+			var sy = facils.WithMax(facil => facil.GetAbilityValue("Space Yard", 2).ToInt()).LastOrDefault();
+			var sp = facils.LastOrDefault(facil => facil.HasAbility("Spaceport"));
+			var rd = facils.LastOrDefault(facil => facil.HasAbility("Supply Generation"));
+			var min = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Minerals").ToInt()).LastOrDefault();
+			var org = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Organics").ToInt()).LastOrDefault();
+			var rad = facils.WithMax(facil => facil.GetAbilityValue("Resource Generation - Radioactives").ToInt()).LastOrDefault();
+			var res = facils.WithMax(facil => facil.GetAbilityValue("Point Generation - Research").ToInt()).LastOrDefault();
 			// TODO - game setup option for intel facilities on homeworlds? HomeworldStartingFacilities.txt ala se5?
 
 			// SY rate, for colonies
 			var rate = new ResourceQuantity();
-			// TODO - define mappings between SY ability numbers and resource names in a mod file
-			rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
-			rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
-			rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+			if (sy != null)
+			{
+				// TODO - define mappings between SY ability numbers and resource names in a mod file
+				rate.Add(Resource.Minerals, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "1").ToInt());
+				rate.Add(Resource.Organics, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "2").ToInt());
+				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
+			}
 
 			for (int i = 0; i < HomeworldsPerEmpire; i++)
 			{
@@ -430,27 +432,30 @@ namespace FrEee.Game.Setup
 					ConstructionQueue = new ConstructionQueue(hw),
 				};
 				hw.Colony.Population.Add(emp.PrimaryRace, hw.Size.MaxPopulation);
-				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+				if (sy != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sy.Instantiate());
-				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+				if (sp != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sp.Instantiate()); // TODO - don't add spaceport for Natural Merchants
-				if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+				if (rd != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(rd.Instantiate());
-				while (hw.Colony.Facilities.Count < hw.MaxFacilities)
+				var lastCount = 0;
+				while (hw.Colony.Facilities.Count < hw.MaxFacilities && hw.Colony.Facilities.Count > lastCount)
 				{
-					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					if (min != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 						hw.Colony.Facilities.Add(min.Instantiate());
-					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					if (org != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 						hw.Colony.Facilities.Add(org.Instantiate());
-					if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+					if (rad != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 						hw.Colony.Facilities.Add(rad.Instantiate());
 
 					// no research facilities needed at max tech!
 					if (StartingTechnologyLevel != StartingTechnologyLevel.High)
 					{
-						if (hw.Colony.Facilities.Count < hw.MaxFacilities)
+						if (res != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 							hw.Colony.Facilities.Add(res.Instantiate());
 					}
+
+					lastCount = hw.Colony.Facilities.Count;
 				}
 			}
 
