@@ -35,12 +35,12 @@ namespace FrEee.WinForms.Forms
 			if (status.Exception != null)
 			{
 				Text = "Error";
+				timer1.Stop();
 				MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
 				Enabled = true;
 				progressBar.Value = 0;
 				status.Exception.Log();
 				thread.Abort();
-				timer1.Stop();
 				Close();
 			}
 			else
