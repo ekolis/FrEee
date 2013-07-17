@@ -449,6 +449,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(TargetDir)GameSetups\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Docs" "$(TargetDir)Docs\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
