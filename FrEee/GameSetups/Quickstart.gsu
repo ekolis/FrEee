@@ -240,6 +240,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 								7:"Normal Planet";
 							;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -250,6 +251,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -260,6 +262,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -270,6 +273,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -280,6 +284,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -290,6 +295,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;
@@ -300,6 +306,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						30:p4:
 							26:i1;
 							7:n;
+							2:False;
 							29:n;
 							7:n;
 						;

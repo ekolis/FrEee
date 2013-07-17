@@ -41,7 +41,18 @@ namespace FrEee.Game.Setup
 		/// <summary>
 		/// The galaxy template to use.
 		/// </summary>
-		public GalaxyTemplate GalaxyTemplate { get; set; }
+		[DoNotSerialize]
+		public GalaxyTemplate GalaxyTemplate
+		{
+			get { return Mod.Current.GalaxyTemplates.Find(GalaxyTemplateName); }
+			set { GalaxyTemplateName = value.Name; }
+		}
+
+		public string GalaxyTemplateName
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// The size of the galaxy.
