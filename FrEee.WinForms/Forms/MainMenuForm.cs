@@ -59,59 +59,9 @@ namespace FrEee.WinForms.Forms
 						Mod.Load(null, true, status, 0.5);
 					}
 					status.Message = "Setting up game";
-					var setup = new GameSetup
-					{
-						GameName = "Quickstart",
-						GalaxyTemplate = Mod.Current.GalaxyTemplates.PickRandom(),
-						StarSystemCount = 5,
-						GalaxySize = new System.Drawing.Size(40, 30),
-						StarSystemGroups = 1,
-						WarpPointPlacementStrategy = EdgeAlignedWarpPointPlacementStrategy.Instance,
-						StandardMiningModel = new MiningModel
-						{
-							ValuePercentageBonus = 1,
-						},
-						RemoteMiningModel = new MiningModel
-						{
-							ValuePercentageBonus = 1,
-						},
-						MinPlanetValue = 0,
-						MinSpawnedPlanetValue = 0,
-						HomeworldValue = 120,
-						MaxSpawnedPlanetValue = 150,
-						MaxPlanetValue = 250,
-						MinAsteroidValue = 0,
-						MinSpawnedAsteroidValue = 50,
-						MaxSpawnedAsteroidValue = 300,
-						StartingTechnologyLevel = StartingTechnologyLevel.Low,
-						TechnologyCost = TechnologyCost.Low,
-						StartingResources = (int)20e3,
-						ResourceStorage = (int)50e3,
-						StartingResearch = (int)20e3,
-						HomeworldsPerEmpire = 1,
-						HomeworldSize = StellarSize.Large,
-						EmpirePlacement = EmpirePlacement.Equidistant,
-						MaxHomeworldDispersion = 1,
-						ScoreDisplay = ScoreDisplay.OwnOnlyNoRankings,
-						EmpirePoints = 2000,
-						RandomAIs = 3,
-						MinorEmpires = 5,
-					};
-					// TODO - let player pick his empire even with quickstart
-					setup.EmpireTemplates.Add(new EmpireTemplate
-					{
-						Name = "Jraenar Imperium",
-						LeaderName = "Master General Jar-Nolath",
-						IsPlayerEmpire = true,
-						PrimaryRace = new Race
-						{
-							Name = "Jraenar",
-							Color = Color.Red,
-							NativeAtmosphere = "Hydrogen",
-							NativeSurface = "Rock"
-						}
-					});
-
+					var setup = GameSetup.Load(Path.Combine("GameSetups", "Quickstart.gsu"));
+					// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
+					
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, status, 1.0);
 					var name = Galaxy.Current.Name;
