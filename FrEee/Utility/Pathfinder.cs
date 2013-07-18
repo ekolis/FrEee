@@ -159,6 +159,232 @@ namespace FrEee.Utility
 			return moves;
 		}
 
+		/// <summary>
+		/// Navigation via warp points with each jump counting as 1 move.
+		/// </summary>
+		/// <param name="me"></param>
+		/// <param name="start"></param>
+		/// <param name="end"></param>
+		/// <param name="avoidEnemies"></param>
+		/// <returns></returns>
+		public static IEnumerable<StarSystem> Pathfind(StarSystem start, StarSystem end)
+		{
+			if (start == end)
+				return Enumerable.Empty<StarSystem>();
+
+			var map = CreateDijkstraMap(start, end);
+
+			if (!map.Any())
+				return Enumerable.Empty<StarSystem>(); // can't go there
+
+			if (map.Any(n => n.Location == end))
+			{
+				// can reach it
+				var nodes = new List<DijkstraNode<StarSystem>>();
+				var node = map.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
+				while (node != null)
+				{
+					nodes.Add(node);
+					node = node.PreviousNode;
+				}
+				return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
+			}
+			else
+			{
+				// can't reach it; get as close as possible
+				var reverseMap = CreateDijkstraMap(end, start);
+				var target = reverseMap.Join(map, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
+				if (target == null)
+					return Enumerable.Empty<StarSystem>(); // can't go there
+				else
+				{
+					// go to the closest point
+					var nodes = new List<DijkstraNode<StarSystem>>();
+					var node = map.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
+					while (node != null)
+					{
+						nodes.Add(node);
+						node = node.PreviousNode;
+					}
+					return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
+				}
+			}
+		}
+
+		public static IEnumerable<DijkstraNode<StarSystem>> CreateDijkstraMap(StarSystem start, StarSystem end)
+		{
+			// pathfind!
+			// step 1: empty priority queue with cost to reach each node
+			var queue = new List<DijkstraNode<StarSystem>>();
+
+			// step 2: empty set of previously visited nodes, along with costs and previous-node references
+			var visited = new List<DijkstraNode<StarSystem>>();
+
+			// step 3: add start node and cost
+			queue.Add(new DijkstraNode<StarSystem>(start, 0, null));
+
+			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
+			bool success = false;
+			while (queue.Any() && !success)
+			{
+				// step 5: take lowest cost node out of queue
+				// also prefer straight line movement to diagonal
+				var minCost = queue.Min(n => n.Cost);
+				var node = queue.Where(n => n.Cost == minCost).First();
+				queue.Remove(node);
+
+				// step 6: if node is the goal, stop - success!
+				if (node.Location == end)
+					success = true;
+
+				// step 7: check possible moves
+				var moves = node.Location.FindSpaceObjects<WarpPoint>().Flatten().Select(wp => wp.TargetStarSystemLocation.Item);
+
+				// step 7a: remove blocked points (aka calculate cost)
+				// nothing to do here
+
+				// step 7b: update priority queue
+				foreach (var move in moves)
+				{
+					if (!visited.Any(n => n.Location == move))
+					{
+						// didn't visit yet
+						var newnode = new DijkstraNode<StarSystem>(move, node.Cost + 1, node);
+						queue.Add(newnode);
+						visited.Add(newnode);
+					}
+					else
+					{
+						// already visited - but is it by a longer path?
+						var items = queue.Where(n => n.Location == move && n.Cost > node.Cost + 1);
+						if (items.Any())
+						{
+							foreach (var old in items.ToArray())
+								queue.Remove(old);
+							var newnode = new DijkstraNode<StarSystem>(move, node.Cost + 1, node);
+							queue.Add(newnode);
+							visited.Add(newnode);
+						}
+					}
+				}
+			}
+
+			return visited;
+		}
+
+		/// <summary>
+		/// Navigation on an arbitrary connectivity graph.
+		/// </summary>
+		/// <param name="me"></param>
+		/// <param name="start"></param>
+		/// <param name="end"></param>
+		/// <param name="avoidEnemies"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> Pathfind<T>(T start, T end, ConnectivityGraph<T> graph)
+		{
+			if (start.Equals(end))
+				return Enumerable.Empty<T>();
+
+			var map = CreateDijkstraMap(start, end, graph);
+
+			if (!map.Any())
+				return Enumerable.Empty<T>(); // can't go there
+
+			if (map.Any(n => n.Location.Equals(end)))
+			{
+				// can reach it
+				var nodes = new List<DijkstraNode<T>>();
+				var node = map.Where(n => n.Location.Equals(end)).OrderBy(n => n.Cost).First();
+				while (node != null)
+				{
+					nodes.Add(node);
+					node = node.PreviousNode;
+				}
+				return nodes.Select(n => n.Location).Where(s => !s.Equals(start)).Reverse();
+			}
+			else
+			{
+				// can't reach it; get as close as possible
+				var reverseMap = CreateDijkstraMap(end, start, graph);
+				var target = reverseMap.Join(map, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
+				if (target == null)
+					return Enumerable.Empty<T>(); // can't go there
+				else
+				{
+					// go to the closest point
+					var nodes = new List<DijkstraNode<T>>();
+					var node = map.Where(n => n.Location.Equals(target.Location)).OrderBy(n => n.Cost).First();
+					while (node != null)
+					{
+						nodes.Add(node);
+						node = node.PreviousNode;
+					}
+					return nodes.Select(n => n.Location).Where(s => !s.Equals(start)).Reverse();
+				}
+			}
+		}
+
+		public static IEnumerable<DijkstraNode<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
+		{
+			// pathfind!
+			// step 1: empty priority queue with cost to reach each node
+			var queue = new List<DijkstraNode<T>>();
+
+			// step 2: empty set of previously visited nodes, along with costs and previous-node references
+			var visited = new List<DijkstraNode<T>>();
+
+			// step 3: add start node and cost
+			queue.Add(new DijkstraNode<T>(start, 0, null));
+
+			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
+			bool success = false;
+			while (queue.Any() && !success)
+			{
+				// step 5: take lowest cost node out of queue
+				// also prefer straight line movement to diagonal
+				var minCost = queue.Min(n => n.Cost);
+				var node = queue.Where(n => n.Cost == minCost).First();
+				queue.Remove(node);
+
+				// step 6: if node is the goal, stop - success!
+				if (node.Location.Equals(end))
+					success = true;
+
+				// step 7: check possible moves
+				var moves = graph.GetExits(node.Location);
+
+				// step 7a: remove blocked points (aka calculate cost)
+				// nothing to do here
+
+				// step 7b: update priority queue
+				foreach (var move in moves)
+				{
+					if (!visited.Any(n => n.Location.Equals(move)))
+					{
+						// didn't visit yet
+						var newnode = new DijkstraNode<T>(move, node.Cost + 1, node);
+						queue.Add(newnode);
+						visited.Add(newnode);
+					}
+					else
+					{
+						// already visited - but is it by a longer path?
+						var items = queue.Where(n => n.Location.Equals(move) && n.Cost > node.Cost + 1);
+						if (items.Any())
+						{
+							foreach (var old in items.ToArray())
+								queue.Remove(old);
+							var newnode = new DijkstraNode<T>(move, node.Cost + 1, node);
+							queue.Add(newnode);
+							visited.Add(newnode);
+						}
+					}
+				}
+			}
+
+			return visited;
+		}
+
 		public class DijkstraNode<T>
 		{
 			public DijkstraNode(T location, int cost, DijkstraNode<T> previousNode)

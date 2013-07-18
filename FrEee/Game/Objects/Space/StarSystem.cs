@@ -108,9 +108,9 @@ namespace FrEee.Game.Objects.Space
 		private Sector[,] sectors;
 
 		/// <summary>
-		/// For serialization purposes mostly.
+		/// The sectors in the system.
 		/// </summary>
-		private ICollection<ObjectLocation<Sector>> Sectors
+		public ICollection<ObjectLocation<Sector>> Sectors
 		{
 			get
 			{

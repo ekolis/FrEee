@@ -1,6 +1,6 @@
 FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p44:
 	FrEee.Game.Enumerations.AllowedTrades, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:All;
-	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
 	2:False;
 	2:False;
 	FrEee.Game.Enumerations.EmpirePlacement, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Equidistant;
@@ -70,15 +70,15 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 						System.Collections.Generic.List`1[[FrEee.Game.Objects.Abilities.Ability, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
 							FrEee.Game.Objects.Abilities.Ability, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p3:
 								7:n;
-								7:"Supply Cost";
+								7:"Galaxy Seen";
 								System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-									7:"-25";
+									7:"";
 								;
 							;
 						;
 						4:1000;
-						7:"Supply usage by all space vehicles is reduced by 25%.";
-						7:"Advanced Power Conservation";
+						7:"Empire has seen the entire galaxy at the start of the game.";
+						7:"Ancient Race";
 						12:c0:
 						;
 						12:c0:
@@ -100,7 +100,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 	2:True;
 	2:True;
 	FrEee.Game.Enumerations.StellarSize, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Huge;
-	4:1;
+	4:3;
 	4:120;
 	2:True;
 	2:False;
@@ -115,7 +115,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 	4:0;
 	4:50;
 	4:0;
-	2:False;
+	2:True;
 	4:4;
 	FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p8:
 		2:False;
@@ -123,7 +123,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
 		20:0;
 		20:0.01;
-		20:0;
+		20:1;
 		4:1;
 		20:1;
 	;

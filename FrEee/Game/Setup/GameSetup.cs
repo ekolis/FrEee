@@ -228,6 +228,7 @@ namespace FrEee.Game.Setup
 			}
 		}
 
+		// TODO - status messages for the GUI
 		public void PopulateGalaxy(Galaxy gal)
 		{
 			gal.Name = GameName;
@@ -268,7 +269,8 @@ namespace FrEee.Game.Setup
 			gal.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
 
 			// place player empires
-			foreach (var et in EmpireTemplates)
+			// don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
+			foreach (var et in EmpireTemplates.Shuffle())
 				PlaceEmpire(gal, et);
 
 			// place random AI empires
@@ -341,6 +343,7 @@ namespace FrEee.Game.Setup
 			}
 		}
 
+		// TODO - status messages for the GUI
 		private void PlaceEmpire(Galaxy gal, EmpireTemplate et)
 		{
 			var emp = et.Instantiate();
@@ -414,26 +417,66 @@ namespace FrEee.Game.Setup
 				rate.Add(Resource.Radioactives, sy.GetAbilityValue("Space Yard", 2, a => a.Value1 == "3").ToInt());
 			}
 
+			// build connectivity graph for computing warp distance
+			var graph = new ConnectivityGraph<StarSystem>();
+			foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
+				graph.Add(s);
+			foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
+			{
+				foreach (var wp in s.FindSpaceObjects<WarpPoint>().Flatten())
+					graph.Connect(s, wp.TargetStarSystemLocation.Item, true);
+			}
+
 			for (int i = 0; i < HomeworldsPerEmpire; i++)
 			{
 				// TODO - respect Empire Placement and Max Homeworld Dispersion settings
 				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
+				var okSystems = gal.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.EmpiresCanStartIn);
+				if (i > 0)
+				{
+					// make sure subsequent homeworlds are placed within a limited number of warps from the first homeworld
+					okSystems = okSystems.Where(sys => graph.ComputeDistance(sys, emp.OwnedSpaceObjects.OfType<Planet>().First().FindStarSystem()) <= MaxHomeworldDispersion);
+				}
+				switch (EmpirePlacement)
+				{
+					case EmpirePlacement.CanStartInSameSystem:
+						// no further filtering
+						break;
+					case EmpirePlacement.DifferentSystems:
+						// filter to systems containing no other empires' homeworlds
+						okSystems = okSystems.Where(sys => !sys.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).Any());
+						break;
+					case EmpirePlacement.Equidistant:
+						// filter to systems containing no other empires' homeworlds
+						okSystems = okSystems.Where(sys => !sys.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).Any());
+						// filter to systems that are the maximum distance away from any other empire's homeworlds
+						var otherEmpireHomeSystems = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).SelectMany(g => g).Select(p => p.FindStarSystem()).Distinct()).ToArray();
+						okSystems = okSystems.WithMax(sys => otherEmpireHomeSystems.Min(o => graph.ComputeDistance(sys, o)));
+						break;
+				}
+				okSystems = okSystems.ToArray();
+				Planet hw;
+				planets = planets.Where(p => okSystems.Contains(p.FindStarSystem()));
 				if (!planets.Any())
-					throw new Exception("Not enough planets to place homeworlds for all players!");
-				var hw = planets.PickRandom();
+				{
+					// make sure we're placing the homeworld in a system with at least one empty sector
+					okSystems = okSystems.Where(s => s.Sectors.Any(loc => !loc.Item.SpaceObjects.Any()));
+
+					if (!okSystems.Any())
+						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ".");
+
+					// make brand new planet in an OK system
+					var sys = okSystems.PickRandom();
+					var nextNum = sys.FindSpaceObjects<Planet>(p => p.MoonOf == null).Count + 1;
+					hw = MakeHomeworld(emp, sys.Name + " " + nextNum.ToRomanNumeral());
+					var okSectors = sys.Sectors.Select(loc => loc.Item).Where(sector => !sector.SpaceObjects.Any());
+					okSectors.PickRandom().SpaceObjects.Add(hw);
+				}
+				else
+					hw = planets.PickRandom();
 				if (hw.Surface != emp.PrimaryRace.NativeSurface || hw.Atmosphere != emp.PrimaryRace.NativeAtmosphere || hw.StellarSize != HomeworldSize)
 				{
-					var replacementHomeworld = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
-						p.Surface == emp.PrimaryRace.NativeSurface &&
-						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
-						p.StellarSize == HomeworldSize).PickRandom();
-					if (replacementHomeworld == null)
-						throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
-					replacementHomeworld.Name = hw.Name;
-					replacementHomeworld.Size = Mod.Current.StellarObjectSizes.Where(s =>
-						s.StellarSize == HomeworldSize &&
-						s.StellarObjectType == "Planet" &&
-						!s.IsConstructed).PickRandom();
+					var replacementHomeworld = MakeHomeworld(emp, hw.Name);
 					replacementHomeworld.CopyTo(hw);
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
@@ -476,6 +519,26 @@ namespace FrEee.Game.Setup
 				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet.Owner == emp))
 					sys.ExploredByEmpires.Add(emp);
 			}
+		}
+
+		/// <summary>
+		/// Makes a suitable homeworld for an empire.
+		/// </summary>
+		/// <param name="emp"></param>
+		private Planet MakeHomeworld(Empire emp, string hwName)
+		{
+			var hw = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p =>
+						p.Surface == emp.PrimaryRace.NativeSurface &&
+						p.Atmosphere == emp.PrimaryRace.NativeAtmosphere &&
+						p.StellarSize == HomeworldSize).PickRandom();
+			if (hw == null)
+				throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
+			hw.Name = hwName;
+			hw.Size = Mod.Current.StellarObjectSizes.Where(s =>
+				s.StellarSize == HomeworldSize &&
+				s.StellarObjectType == "Planet" &&
+				!s.IsConstructed).PickRandom();
+			return hw;
 		}
 
 		public static GameSetup Load(string filename)

@@ -49,6 +49,8 @@ namespace FrEee.Utility
 					subgraphs.Add(sub3);
 				}
 				connections.Add(link);
+				singletons.Remove(start);
+				singletons.Remove(end);
 			}
 			if (twoWay)
 				Connect(end, start, false);
@@ -70,6 +72,10 @@ namespace FrEee.Utility
 				subgraphs.Remove(sub);
 				subgraphs.AddRange(subs);
 				connections.Remove(link);
+				if (!GetExits(start).Any() && !GetEntrances(start).Any())
+					singletons.Add(start);
+				if (!GetEntrances(end).Any() && !GetExits(end).Any())
+					singletons.Add(end);
 			}
 			if (twoWay)
 				Disconnect(end, start, false);
@@ -102,13 +108,12 @@ namespace FrEee.Utility
 			if (!exits.Any())
 				return null; // can't get anywhere from here!
 
-			// yay recursion?
-			var distances = exits.Select(exit => ComputeDistance(exit, end, traversed)).Where(dist => dist != null).ToArray();
+			var path = Pathfinder.Pathfind(start, end, this);
 
-			if (!distances.Any())
+			if (path == null || !path.Any())
 				return null; // can't get there from here!
 
-			return distances.Min(dist => dist.Value) + 1;
+			return path.Count();
 		}
 
 		/// <summary>
@@ -250,6 +255,8 @@ namespace FrEee.Utility
 
 		private List<ConnectivityGraph<T>> subgraphs = new List<ConnectivityGraph<T>>();
 
+		private List<T> singletons = new List<T>();
+
 		/// <summary>
 		/// Any discrete connected subgraphs of this graph.
 		/// </summary>
@@ -257,13 +264,12 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				var singletons = this.Where(node => !GetEntrances(node).Any() && !GetExits(node).Any()).Select(n =>
-				{
-					var sub = new ConnectivityGraph<T>();
-					sub.Add(n);
-					return sub;
-				});
-				return subgraphs.Concat(singletons).Where(sg => sg != null); // HACK - null subgraphs?!
+				return subgraphs.Concat(singletons.Select(item =>
+					{
+						var sub = new ConnectivityGraph<T>();
+						sub.Add(item);
+						return sub;
+					})).Where(sg => sg != null); // HACK - null subgraphs?!
 			}
 		}
 
@@ -281,11 +287,13 @@ namespace FrEee.Utility
 
 		public bool Add(T item)
 		{
+			singletons.Add(item);
 			return items.Add(item);
 		}
 
 		public void ExceptWith(IEnumerable<T> other)
 		{
+			singletons.RemoveAll(item => other.Contains(item));
 			items.ExceptWith(other);
 			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
 			foreach (var link in toRemove)
@@ -294,6 +302,7 @@ namespace FrEee.Utility
 
 		public void IntersectWith(IEnumerable<T> other)
 		{
+			singletons.RemoveAll(item => !other.Contains(item));
 			items.IntersectWith(other);
 			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
 			foreach (var link in toRemove)
@@ -332,6 +341,7 @@ namespace FrEee.Utility
 
 		public void SymmetricExceptWith(IEnumerable<T> other)
 		{
+			singletons.RemoveAll(item => other.Contains(item));	
 			items.SymmetricExceptWith(other);
 			var toRemove = connections.Where(link => !(items.Contains(link.Item1) || items.Contains(link.Item2)));
 			foreach (var link in toRemove)
@@ -340,16 +350,19 @@ namespace FrEee.Utility
 
 		public void UnionWith(IEnumerable<T> other)
 		{
+			singletons.AddRange(other);
 			items.UnionWith(other);
 		}
 
 		void ICollection<T>.Add(T item)
 		{
+			singletons.Add(item);
 			items.Add(item);
 		}
 
 		public void Clear()
 		{
+			singletons.Clear();
 			items.Clear();
 			connections.Clear();
 		}
@@ -376,6 +389,7 @@ namespace FrEee.Utility
 
 		public bool Remove(T item)
 		{
+			singletons.Remove(item);
 			var result = items.Remove(item);
 			var toRemove = connections.Where(link => (object)link.Item1 == (object)item || (object)link.Item2 == (object)item);
 			foreach (var link in toRemove)
