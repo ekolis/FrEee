@@ -33,7 +33,7 @@ namespace FrEee.Modding.Templates
 
 		public Ability Instantiate()
 		{
-			var num = RandomHelper.Next(AbilityChances.Sum(ac => ac.Chance));
+			var num = RandomHelper.Next(Math.Max(1000, AbilityChances.Sum(ac => ac.Chance)));
 			var howFar = 0;
 			foreach (var ac in AbilityChances)
 			{
