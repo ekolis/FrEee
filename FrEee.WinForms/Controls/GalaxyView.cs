@@ -163,14 +163,14 @@ namespace FrEee.WinForms.Controls
 					// do SE3-style split circles for contested systems because they are AWESOME!
 					var owners = sys.FindSpaceObjects<ISpaceObject>().SelectMany(g => g).Select(g => g.Owner).Distinct().Where(o => o != null);
 					if (owners.Count() == 0)
-						pe.Graphics.DrawEllipse(new Pen(Color.Gray), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+						pe.Graphics.FillEllipse(Brushes.Gray, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 					else
 					{
 						var arcSize = 360f / owners.Count();
 						int i = 0;
 						foreach (var owner in owners)
 						{
-							pe.Graphics.DrawArc(new Pen(owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize, i * arcSize, arcSize);
+							pe.Graphics.FillPie(new SolidBrush(owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize, i * arcSize, arcSize);
 							i++;
 						}
 					}
