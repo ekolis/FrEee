@@ -152,8 +152,8 @@ namespace FrEee.Modding.Loaders
 						// sanity check
 						if (wdisptype == "Seeker" && !(w is SeekingWeaponInfo))
 							Mod.Errors.Add(new DataParsingException("A direct fire or warhead weapon cannot use a seeking display effect.", Mod.CurrentFileName, rec));
-						else if (wdisptype != "Seeker" && w is SeekingWeaponInfo)
-							Mod.Errors.Add(new DataParsingException("A seeking weapon cannot use a beam or projectile display effect.", Mod.CurrentFileName, rec));
+						else if (wdisptype == "Beam" && w is SeekingWeaponInfo)
+							Mod.Errors.Add(new DataParsingException("A seeking weapon cannot use a beam display effect.", Mod.CurrentFileName, rec));
 
 						w.Sound = rec.GetString("Weapon Sound", ref index, true, 0, true);
 						w.Family = rec.GetString("Weapon Family", ref index, true, 0, true);
