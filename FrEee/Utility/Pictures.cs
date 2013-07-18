@@ -573,6 +573,17 @@ namespace FrEee.Utility
 			return fileCache[path];
 		}
 
+		public static Image GetModImage(string path)
+		{
+			if (Mod.Current.RootPath == null)
+				return GetCachedImage(path);
+			return GetCachedImage(new string[]
+			{
+				Path.Combine("Mods", Mod.Current.RootPath, path),
+				path
+			});
+		}
+
 		public static Image GetGenericImage(Type type)
 		{
 			if (genericPictures.ContainsKey(type))

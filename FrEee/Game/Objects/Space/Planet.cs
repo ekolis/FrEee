@@ -13,6 +13,7 @@ using System.Drawing;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
+using System.IO;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -507,7 +508,10 @@ namespace FrEee.Game.Objects.Space
 			var sizeFactor = 1f / 4f;
 			var leftovers = 1f - sizeFactor;
 			if (IntrinsicAbilities.Any())
-				g.FillRectangle(Brushes.White, pic.Width * leftovers - 1, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
+			{
+				// draw ruins icon
+				g.DrawImage(Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "ruins")), 0, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
+			}
 			if (Colony == null && Empire.Current != null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
 			{
 				Brush brush;
