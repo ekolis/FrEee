@@ -38,20 +38,21 @@ namespace FrEee.WinForms.Forms
 
 			// set up GUI images
 			// TODO - get GUI images from mod too
-			btnMenu.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
-			btnDesigns.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));
-			btnPlanets.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Planets"));
-			btnEmpires.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Empires"));
-			btnShips.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Ships"));
-			btnQueues.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
-			btnLog.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
-			btnEndTurn.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
-			btnMove.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Move"));
-			btnPursue.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Pursue"));
-			btnEvade.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
-			btnWarp.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
-			btnClearOrders.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "ClearOrders"));
-			galaxyView.BackgroundImage = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
+			btnMenu.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
+			btnDesigns.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));
+			btnPlanets.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Planets"));
+			btnEmpires.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Empires"));
+			btnShips.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Ships"));
+			btnQueues.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
+			btnLog.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
+			btnEndTurn.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
+			btnMove.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Move"));
+			btnPursue.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Pursue"));
+			btnEvade.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
+			btnWarp.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
+			btnClearOrders.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "ClearOrders"));
+			// TODO - galaxy view background image can depend on galaxy template?
+			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();
