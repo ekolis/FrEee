@@ -37,7 +37,7 @@ namespace FrEee.WinForms.Forms
 			this.Enabled = false;
 
 			// set up GUI images
-			// TODO - get GUI icons from mod too
+			// TODO - get GUI images from mod too
 			btnMenu.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
 			btnDesigns.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));
 			btnPlanets.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Planets"));
@@ -51,6 +51,7 @@ namespace FrEee.WinForms.Forms
 			btnEvade.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
 			btnWarp.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
 			btnClearOrders.Image = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Buttons", "ClearOrders"));
+			galaxyView.BackgroundImage = Pictures.GetCachedImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();

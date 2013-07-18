@@ -21,6 +21,24 @@ namespace FrEee.WinForms.Controls
 			this.MouseClick += GalaxyView_MouseClick;
 		}
 
+		private Image backgroundImage;
+
+		/// <summary>
+		/// An image to display as the background for this galaxy view.
+		/// </summary>
+		public Image BackgroundImage
+		{
+			get
+			{
+				return backgroundImage;
+			}
+			set
+			{
+				backgroundImage = value;
+				Invalidate();
+			}
+		}
+
 		/// <summary>
 		/// Delegate for events related to star system selection.
 		/// </summary>
@@ -99,9 +117,30 @@ namespace FrEee.WinForms.Controls
 		{
 			base.OnPaint(pe);
 
+			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
 			pe.Graphics.Clear(BackColor);
 
-			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+			{
+				var desiredAspect = (double)Width / (double)Height;
+				var actualAspect = (double)BackgroundImage.Width / (double)BackgroundImage.Height;
+				int x, y, w, h;
+				if (actualAspect > desiredAspect)
+				{
+					x = 0;
+					w = Width;
+					h = (int)(Width / actualAspect);
+					y = (Height - h) / 2;
+				}
+				else
+				{
+					y = 0;
+					h = Height;
+					w = (int)(Height * actualAspect);
+					x = (Width - w) / 2;
+				}
+				pe.Graphics.DrawImage(backgroundImage, x, y, w, h);
+			}
 
 			if (Galaxy.Current != null)
 			{
@@ -174,7 +213,7 @@ namespace FrEee.WinForms.Controls
 						var realEndPos = new PointF(endPos.X - ndx, endPos.Y - ndy);
 
 						// draw line
-						pe.Graphics.DrawLine(whitePen, realStartPos, realEndPos); 
+						pe.Graphics.DrawLine(whitePen, realStartPos, realEndPos);
 
 						// draw arrow
 						var angle = startPos.AngleTo(endPos);
