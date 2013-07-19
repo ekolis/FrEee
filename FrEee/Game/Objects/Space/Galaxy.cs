@@ -190,6 +190,32 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Horizontal space occuped by star systems.
+		/// </summary>
+		public int UsedWidth
+		{
+			get
+			{
+				if (!StarSystemLocations.Any())
+					return 0;
+				return StarSystemLocations.Max(ssl => ssl.Location.X) - StarSystemLocations.Min(ssl => ssl.Location.X) + 1;
+			}
+		}
+
+		/// <summary>
+		/// Vertical space occupied by star systems.
+		/// </summary>
+		public int UsedHeight
+		{
+			get
+			{
+				if (!StarSystemLocations.Any())
+					return 0;
+				return StarSystemLocations.Max(ssl => ssl.Location.Y) - StarSystemLocations.Min(ssl => ssl.Location.Y) + 1;
+			}
+		}
+
+		/// <summary>
 		/// The current turn number.
 		/// </summary>
 		public int TurnNumber { get; set; }

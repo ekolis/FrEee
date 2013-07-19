@@ -72,8 +72,10 @@ namespace FrEee.WinForms.Controls
 			if (Galaxy.Current == null)
 				return null; // no such sector
 			var drawsize = StarSystemDrawSize;
-			var x = (int)Math.Round((p.X - Width / 2f) / drawsize);
-			var y = (int)Math.Round((p.Y - Height / 2f) / drawsize);
+			var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+			var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+			var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize + avgx);
+			var y = (int)Math.Round(((float)p.Y - Height / 2f - drawsize / 2f) / drawsize + avgy);
 			var p2 = new Point(x, y);
 			var ssloc = Galaxy.Current.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
 			if (ssloc == null)
@@ -84,13 +86,13 @@ namespace FrEee.WinForms.Controls
 		/// <summary>
 		/// The size at which each star system will be drawn, in pixels.
 		/// </summary>
-		public float StarSystemDrawSize
+		public int StarSystemDrawSize
 		{
 			get
 			{
 				if (Galaxy.Current == null)
 					return 0;
-				return (float)Math.Min(Width, Height) / ((float)Math.Max(Galaxy.Current.Width, Galaxy.Current.Height));
+				return (int)Math.Min((float)Width / (float)Galaxy.Current.UsedWidth, (float)Height / Galaxy.Current.UsedHeight);
 			}
 		}
 
@@ -148,13 +150,16 @@ namespace FrEee.WinForms.Controls
 				var whitePen = new Pen(Color.White);
 
 				// draw star systems
+				var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
+				var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
 				foreach (var ssl in Galaxy.Current.StarSystemLocations)
 				{
 					// where will we draw the star system?
-					var x = ssl.Location.X;
-					var y = ssl.Location.Y;
-					var drawx = x * drawsize + Width / 2f;
-					var drawy = y * drawsize + Height / 2f;
+					var x = ssl.Location.X;// - minx;
+					var y = ssl.Location.Y;// - miny;
+					//var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize);
+					var drawx = (x - avgx) * drawsize + drawsize / 2f + Width / 2f;
+					var drawy = (y - avgy) * drawsize + drawsize / 2f + Height / 2f;
 
 					// find star system
 					var sys = ssl.Item;
@@ -185,8 +190,8 @@ namespace FrEee.WinForms.Controls
 				{
 					var startPos = new PointF
 					(
-						ssl.Location.X * drawsize + Width / 2f,
-						ssl.Location.Y * drawsize + Height / 2f
+						(ssl.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
+						(ssl.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
 					);
 					foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
 					{
@@ -195,8 +200,8 @@ namespace FrEee.WinForms.Controls
 
 						var endPos = new PointF
 						(
-							wp.TargetStarSystemLocation.Location.X * drawsize + Width / 2f,
-							wp.TargetStarSystemLocation.Location.Y * drawsize + Height / 2f
+							(wp.TargetStarSystemLocation.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
+							(wp.TargetStarSystemLocation.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
 						);
 
 						// overlapping systems or same system
@@ -213,7 +218,7 @@ namespace FrEee.WinForms.Controls
 						var realEndPos = new PointF(endPos.X - ndx, endPos.Y - ndy);
 
 						// draw line
-						pe.Graphics.DrawLine(whitePen, realStartPos, realEndPos);
+						pe.Graphics.DrawLine(Pens.Gray, realStartPos, realEndPos);
 
 						// draw arrow
 						var angle = startPos.AngleTo(endPos);
