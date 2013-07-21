@@ -31,11 +31,11 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource11 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource12 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource13 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource14 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource15 = new FrEee.Utility.Resource();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -150,12 +150,12 @@ namespace FrEee.WinForms.Forms
 			this.resInt.Location = new System.Drawing.Point(777, 6);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
-			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			resource1.IsGlobal = false;
-			resource1.IsLocal = false;
-			resource1.Name = "Intelligence";
-			resource1.PictureName = "Resource5";
-			this.resInt.Resource = resource1;
+			resource11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			resource11.IsGlobal = false;
+			resource11.IsLocal = false;
+			resource11.Name = "Intelligence";
+			resource11.PictureName = "Resource5";
+			this.resInt.Resource = resource11;
 			this.resInt.ResourceName = "Intelligence";
 			this.resInt.Size = new System.Drawing.Size(88, 20);
 			this.resInt.TabIndex = 14;
@@ -169,12 +169,12 @@ namespace FrEee.WinForms.Forms
 			this.resRes.Location = new System.Drawing.Point(689, 6);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
-			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			resource2.IsGlobal = false;
-			resource2.IsLocal = false;
-			resource2.Name = "Research";
-			resource2.PictureName = "Resource4";
-			this.resRes.Resource = resource2;
+			resource12.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource12.IsGlobal = false;
+			resource12.IsLocal = false;
+			resource12.Name = "Research";
+			resource12.PictureName = "Resource4";
+			this.resRes.Resource = resource12;
 			this.resRes.ResourceName = "Research";
 			this.resRes.Size = new System.Drawing.Size(88, 20);
 			this.resRes.TabIndex = 13;
@@ -188,12 +188,12 @@ namespace FrEee.WinForms.Forms
 			this.resRad.Location = new System.Drawing.Point(415, 6);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
-			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource3.IsGlobal = true;
-			resource3.IsLocal = false;
-			resource3.Name = "Radioactives";
-			resource3.PictureName = "Resource3";
-			this.resRad.Resource = resource3;
+			resource13.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource13.IsGlobal = true;
+			resource13.IsLocal = false;
+			resource13.Name = "Radioactives";
+			resource13.PictureName = "Resource3";
+			this.resRad.Resource = resource13;
 			this.resRad.ResourceName = "Radioactives";
 			this.resRad.Size = new System.Drawing.Size(184, 20);
 			this.resRad.TabIndex = 12;
@@ -207,12 +207,12 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.Location = new System.Drawing.Point(231, 6);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
-			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource4.IsGlobal = true;
-			resource4.IsLocal = false;
-			resource4.Name = "Organics";
-			resource4.PictureName = "Resource2";
-			this.resOrg.Resource = resource4;
+			resource14.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource14.IsGlobal = true;
+			resource14.IsLocal = false;
+			resource14.Name = "Organics";
+			resource14.PictureName = "Resource2";
+			this.resOrg.Resource = resource14;
 			this.resOrg.ResourceName = "Organics";
 			this.resOrg.Size = new System.Drawing.Size(184, 20);
 			this.resOrg.TabIndex = 11;
@@ -226,12 +226,12 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Location = new System.Drawing.Point(47, 6);
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
-			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource5.IsGlobal = true;
-			resource5.IsLocal = false;
-			resource5.Name = "Minerals";
-			resource5.PictureName = "Resource1";
-			this.resMin.Resource = resource5;
+			resource15.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource15.IsGlobal = true;
+			resource15.IsLocal = false;
+			resource15.Name = "Minerals";
+			resource15.PictureName = "Resource1";
+			this.resMin.Resource = resource15;
 			this.resMin.ResourceName = "Minerals";
 			this.resMin.Size = new System.Drawing.Size(184, 20);
 			this.resMin.TabIndex = 10;
@@ -299,7 +299,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEndTurn.Name = "btnEndTurn";
 			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
 			this.btnEndTurn.TabIndex = 7;
-			this.toolTip.SetToolTip(this.btnEndTurn, "End Turn");
+			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) End Turn");
 			this.btnEndTurn.UseVisualStyleBackColor = false;
 			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
 			// 
@@ -311,7 +311,7 @@ namespace FrEee.WinForms.Forms
 			this.btnLog.Name = "btnLog";
 			this.btnLog.Size = new System.Drawing.Size(36, 36);
 			this.btnLog.TabIndex = 6;
-			this.toolTip.SetToolTip(this.btnLog, "Log");
+			this.toolTip.SetToolTip(this.btnLog, "(F10 / Shift-L) Log");
 			this.btnLog.UseVisualStyleBackColor = false;
 			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
 			// 
@@ -323,7 +323,7 @@ namespace FrEee.WinForms.Forms
 			this.btnQueues.Name = "btnQueues";
 			this.btnQueues.Size = new System.Drawing.Size(36, 36);
 			this.btnQueues.TabIndex = 5;
-			this.toolTip.SetToolTip(this.btnQueues, "Construction Queues");
+			this.toolTip.SetToolTip(this.btnQueues, "(F7 / Shift-Q) Construction Queues");
 			this.btnQueues.UseVisualStyleBackColor = false;
 			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
 			// 
@@ -335,7 +335,7 @@ namespace FrEee.WinForms.Forms
 			this.btnShips.Name = "btnShips";
 			this.btnShips.Size = new System.Drawing.Size(36, 36);
 			this.btnShips.TabIndex = 4;
-			this.toolTip.SetToolTip(this.btnShips, "Ships");
+			this.toolTip.SetToolTip(this.btnShips, "(F6 / Shift-S) Ships");
 			this.btnShips.UseVisualStyleBackColor = false;
 			this.btnShips.Click += new System.EventHandler(this.btnShips_Click);
 			// 
@@ -347,7 +347,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEmpires.Name = "btnEmpires";
 			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
 			this.btnEmpires.TabIndex = 3;
-			this.toolTip.SetToolTip(this.btnEmpires, "Empires");
+			this.toolTip.SetToolTip(this.btnEmpires, "(F9 / Shift-E) Empires");
 			this.btnEmpires.UseVisualStyleBackColor = false;
 			this.btnEmpires.Click += new System.EventHandler(this.btnEmpires_Click);
 			// 
@@ -359,7 +359,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets.Name = "btnPlanets";
 			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
 			this.btnPlanets.TabIndex = 0;
-			this.toolTip.SetToolTip(this.btnPlanets, "Planets");
+			this.toolTip.SetToolTip(this.btnPlanets, "(F4 / F5 / Shift-P / Shift-C) Planets/Colonies");
 			this.btnPlanets.UseVisualStyleBackColor = false;
 			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
 			// 
@@ -371,7 +371,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns.Name = "btnDesigns";
 			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
 			this.btnDesigns.TabIndex = 2;
-			this.toolTip.SetToolTip(this.btnDesigns, "Designs");
+			this.toolTip.SetToolTip(this.btnDesigns, "(F3 / Shift-D) Designs");
 			this.btnDesigns.UseVisualStyleBackColor = false;
 			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
 			// 
@@ -383,7 +383,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.Name = "btnMenu";
 			this.btnMenu.Size = new System.Drawing.Size(36, 36);
 			this.btnMenu.TabIndex = 1;
-			this.toolTip.SetToolTip(this.btnMenu, "Menu");
+			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
 			this.btnMenu.Click += new System.EventHandler(this.btnMenu_Click);
 			// 

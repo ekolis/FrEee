@@ -33,7 +33,8 @@ namespace FrEee.WinForms.Forms
 
 		private void GameForm_Load(object sender, EventArgs e)
 		{
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 			this.Enabled = false;
 
 			// set up GUI images
@@ -619,7 +620,7 @@ namespace FrEee.WinForms.Forms
 			if (starSystemView.StarSystem != sys)
 				starSystemView.StarSystem = sys;
 		}
-		
+
 		void btnX_Click(object sender, EventArgs e)
 		{
 			var btnX = (GameButton)sender;
@@ -647,7 +648,7 @@ namespace FrEee.WinForms.Forms
 				if (value != null)
 				{
 					var sys = value.FindStarSystem();
-					if (galaxyView.SelectedStarSystem  != sys)
+					if (galaxyView.SelectedStarSystem != sys)
 						galaxyView.SelectedStarSystem = sys;
 					if (starSystemView.StarSystem != sys)
 						starSystemView.StarSystem = galaxyView.SelectedStarSystem;
@@ -694,16 +695,55 @@ namespace FrEee.WinForms.Forms
 
 		private void GameForm_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.KeyCode == Keys.M && btnMove.Visible)
-				ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
-			if (e.KeyCode == Keys.P && btnPursue.Visible)
-				ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
-			if (e.KeyCode == Keys.V && btnEvade.Visible)
-				ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
-			if (e.KeyCode == Keys.W && btnWarp.Visible)
-				ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
-			if (e.KeyCode == Keys.C && btnWarp.Visible)
-				ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+			if (e.Shift)
+			{
+				if (e.KeyCode == Keys.D)
+					this.ShowChildForm(new DesignListForm());
+				else if (e.KeyCode == Keys.P || e.KeyCode == Keys.C) // planets and colonies screens are combined
+					this.ShowChildForm(new PlanetListForm());
+				else if (e.KeyCode == Keys.E)
+					; // TODO - empires screen
+				else if (e.KeyCode == Keys.O)
+					; // TODO - empire status screen
+				else if (e.KeyCode == Keys.S)
+					; // TODO - ships screen
+				else if (e.KeyCode == Keys.Q)
+					this.ShowChildForm(new ConstructionQueueListForm());
+				else if (e.KeyCode == Keys.L)
+					this.ShowChildForm(new LogForm(this));
+			}
+			else
+			{
+				if (e.KeyCode == Keys.M && btnMove.Visible)
+					ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.P && btnPursue.Visible)
+					ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.V && btnEvade.Visible)
+					ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.W && btnWarp.Visible)
+					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.C && btnWarp.Visible)
+					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+			}
+
+			if (e.KeyCode == Keys.F2)
+				; // TODO - game menu
+			else if (e.KeyCode == Keys.F3)
+				this.ShowChildForm(new DesignListForm());
+			else if (e.KeyCode == Keys.F4 || e.KeyCode == Keys.F5) // planets and colonies screens are combined
+				this.ShowChildForm(new PlanetListForm());
+			else if (e.KeyCode == Keys.F9)
+				; // TODO - empires screen
+			else if (e.KeyCode == Keys.F11)
+				; // TODO - empire status screen
+			else if (e.KeyCode == Keys.F6)
+				; // TODO - ships screen
+			else if (e.KeyCode == Keys.F7)
+				this.ShowChildForm(new ConstructionQueueListForm());
+			else if (e.KeyCode == Keys.F10)
+				this.ShowChildForm(new LogForm(this));
+			else if (e.KeyCode == Keys.F12)
+				btnEndTurn_Click(btnEndTurn, new EventArgs());
 			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
 				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
