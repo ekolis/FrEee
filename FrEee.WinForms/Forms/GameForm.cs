@@ -711,6 +711,8 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new ConstructionQueueListForm());
 				else if (e.KeyCode == Keys.L)
 					this.ShowChildForm(new LogForm(this));
+				else if (e.KeyCode == Keys.R)
+					this.ShowChildForm(new ResearchForm());
 			}
 			else
 			{
@@ -744,6 +746,8 @@ namespace FrEee.WinForms.Forms
 				this.ShowChildForm(new LogForm(this));
 			else if (e.KeyCode == Keys.F12)
 				btnEndTurn_Click(btnEndTurn, new EventArgs());
+			else if (e.KeyCode == Keys.F8)
+				this.ShowChildForm(new ResearchForm());
 			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
 				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
