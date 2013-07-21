@@ -123,6 +123,7 @@ namespace FrEee.WinForms.Controls
 
 			pe.Graphics.Clear(BackColor);
 
+			if (BackgroundImage != null)
 			{
 				var desiredAspect = (double)Width / (double)Height;
 				var actualAspect = (double)BackgroundImage.Width / (double)BackgroundImage.Height;
