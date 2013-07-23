@@ -485,24 +485,25 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(EmpireTemplate emp)
 		{
-			if (emp.InsigniaName == null)
-				return GetIcon(emp.PrimaryRace);
+			var insigniaName = emp.InsigniaName ?? emp.PrimaryRace.InsigniaName;
+			if (insigniaName == null)
+				GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
 			if (Mod.Current.RootPath != null)
 			{
 				return
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, "Insignia")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.InsigniaName, "Insignia")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
-					GetSolidColorImage(emp.Color ?? Color.White);
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, "Insignia")) ??
+					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, "Insignia")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
 			}
 			else
 			{
 				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 				return
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.InsigniaName, "Insignia")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", emp.InsigniaName, emp.InsigniaName + "_Insignia")) ??
-					GetSolidColorImage(emp.Color ?? Color.White);
+					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, "Insignia")) ??
+					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
+					GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
 			}
 		}
 
@@ -616,7 +617,7 @@ namespace FrEee.Utility
 			return GetSolidColorImage(Color.Transparent);
 		}
 
-		public static Image GetSolidColorImage(Color color, int size = 1)
+		public static Image GetSolidColorImage(Color color, int size = 32)
 		{
 			var img = new Bitmap(size, size);
 			var g = Graphics.FromImage(img);
