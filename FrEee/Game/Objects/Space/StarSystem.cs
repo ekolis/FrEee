@@ -234,7 +234,7 @@ namespace FrEee.Game.Objects.Space
 			foreach (var wp in FindSpaceObjects<WarpPoint>().Flatten())
 			{
 				var sys = wp.Target.FindStarSystem();
-				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire) || !sys.FindSpaceObjects<ISpaceObject>().Flatten().Any(sobj => sobj.Owner == galaxy.CurrentEmpire))
+				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 					wp.Target.SpaceObjects.Clear();
 			}
 		}

@@ -719,6 +719,11 @@ namespace FrEee.Game.Objects.Space
 				foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
 				{
 					v.ExecuteOrders();
+
+					// mark system explored if not already
+					var sys = v.FindStarSystem();
+					if (!sys.ExploredByEmpires.Contains(v.Owner))
+						sys.ExploredByEmpires.Add(v.Owner);
 					
 					// check for battles
 					// TODO - alliances
