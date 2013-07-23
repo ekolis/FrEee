@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Controls
 {
@@ -19,6 +20,7 @@ namespace FrEee.WinForms.Controls
 			BackColor = Color.Black;
 			this.SizeChanged += GalaxyView_SizeChanged;
 			this.MouseClick += GalaxyView_MouseClick;
+			DoubleBuffered = true;
 		}
 
 		private Image backgroundImage;
@@ -187,22 +189,24 @@ namespace FrEee.WinForms.Controls
 				}
 
 				// draw warp points
-				foreach (var ssl in Galaxy.Current.StarSystemLocations)
+				if (warpGraph == null)
+					ComputeWarpPointConnectivity();
+				foreach (var ssl in warpGraph)
 				{
 					var startPos = new PointF
 					(
 						(ssl.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
 						(ssl.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
 					);
-					foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
+					foreach (var target in warpGraph.GetExits(ssl))
 					{
-						if (wp.TargetStarSystemLocation == null)
+						if (target == null)
 							continue; // can't draw line if we don't know where warp point ends!
 
 						var endPos = new PointF
 						(
-							(wp.TargetStarSystemLocation.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
-							(wp.TargetStarSystemLocation.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
+							(target.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
+							(target.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
 						);
 
 						// overlapping systems or same system
@@ -233,6 +237,24 @@ namespace FrEee.WinForms.Controls
 						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos1);
 						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos2);
 					}
+				}
+			}
+		}
+
+		private ConnectivityGraph<ObjectLocation<StarSystem>> warpGraph;
+
+		public void ComputeWarpPointConnectivity()
+		{
+			warpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.Current.StarSystemLocations);
+
+			foreach (var ssl in warpGraph)
+			{
+				foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
+				{
+					if (wp.TargetStarSystemLocation == null)
+						continue; // can't make connection if we don't know where warp point ends!
+
+					warpGraph.Connect(ssl, wp.TargetStarSystemLocation);
 				}
 			}
 		}
