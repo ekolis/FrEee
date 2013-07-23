@@ -49,10 +49,10 @@ namespace FrEee.Game.Objects.Orders
 			if (AvoidEnemies && Target.IsHostileTo(me.Owner))
 			{
 				// don't avoid the target!
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies).Concat(new Sector[]{Target.FindSector()});
+				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true).Concat(new Sector[]{Target.FindSector()});
 			}
 			else
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies);
+				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true);
 		}
 
 		public void Execute(T sobj)

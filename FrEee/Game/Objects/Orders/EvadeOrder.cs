@@ -55,7 +55,7 @@ namespace FrEee.Game.Objects.Orders
 					var sys = me.FindStarSystem();
 					var paths = sys.FindSpaceObjects<WarpPoint>().Flatten()
 						.Where(wp => wp.TargetStarSystemLocation.Item != sys)
-						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies) });
+						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies, true) });
 					if (paths.Any())
 					{
 						// found a warp point to flee to!
@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 
 				// see how he can reach us, and go somewhere away from him (that would take longer for him to get to than 
-				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false);
+				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false, true);
 				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp);
 				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Any(n => n.Location == s));
 

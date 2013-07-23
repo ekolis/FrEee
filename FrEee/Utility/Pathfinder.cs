@@ -23,12 +23,12 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies)
+		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			if (start == end)
 				return Enumerable.Empty<Sector>();
 
-			var map = CreateDijkstraMap(me, start, end, avoidEnemies);
+			var map = CreateDijkstraMap(me, start, end, avoidEnemies, avoidDamagingSectors);
 
 			if (!map.Any())
 				return Enumerable.Empty<Sector>(); // nowhere to go!
@@ -48,7 +48,7 @@ namespace FrEee.Utility
 			else
 			{
 				// can't reach it; get as close as possible
-				var reverseMap = CreateDijkstraMap(null, end, start, false);
+				var reverseMap = CreateDijkstraMap(null, end, start, false, avoidDamagingSectors);
 				var target = reverseMap.Join(map, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
 				if (target == null)
 					return Enumerable.Empty<Sector>(); // can't go anywhere
@@ -67,7 +67,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<DijkstraNode<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies)
+		public static IEnumerable<DijkstraNode<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			var startSys = start.FindStarSystem();
 
@@ -100,7 +100,11 @@ namespace FrEee.Utility
 
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
+					// avoid enemies, even if they are at the destination; wait for them to leave before entering (unlike SE4)
 					moves = moves.Where(m => !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me.Owner))).ToList();
+				if (avoidDamagingSectors)
+					// don't avoid the destination, even if it is a damaging sector
+					moves = moves.Where(m => m != end && !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
 
 				// step 7b: update priority queue
 				foreach (var move in moves)

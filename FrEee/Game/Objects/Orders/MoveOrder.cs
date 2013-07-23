@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <returns></returns>
 		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
 		{
-			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies);
+			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true);
 		}
 
 		public void Execute(T sobj)
