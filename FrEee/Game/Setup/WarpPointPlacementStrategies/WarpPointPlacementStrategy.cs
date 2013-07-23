@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 {
@@ -47,9 +48,10 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 
 		public void PlaceWarpPoints(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
 		{
-			var abils = here.Item.WarpPointAbilities.Concat(there.Item.WarpPointAbilities);
+			var abil1 = here.Item.WarpPointAbilities.Instantiate();
+			var abil2 = there.Item.WarpPointAbilities.Instantiate();
 			ITemplate<WarpPoint> wpTemplate;
-			if (abils.Any())
+			if (abil1 != null || abil2 == null)
 			{
 				// use unusual warp point templates
 				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
@@ -73,7 +75,17 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			wp2.Name = "Warp Point";
 			wp2.Target = sector1;
 			sector2.SpaceObjects.Add(wp2);
-			foreach (var abil in abils)
+			Ability abil = null;
+			if (abil1 != null && abil2 != null)
+			{
+				var abils = new Ability[] { abil1, abil2 };
+				abil = abils.PickRandom();
+			}
+			else if (abil1 != null)
+				abil = abil1;
+			else if (abil2 != null)
+				abil = abil2;
+			if (abil != null)
 			{
 				wp1.IntrinsicAbilities.Add(abil);
 				wp2.IntrinsicAbilities.Add(abil);

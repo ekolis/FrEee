@@ -9,6 +9,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Templates;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -33,7 +34,6 @@ namespace FrEee.Game.Objects.Space
 					SetSector(x, y, new Sector());
 			}
 			Abilities = new List<Ability>();
-			WarpPointAbilities = new List<Ability>();
 			ExploredByEmpires = new HashSet<Empire>();
 		}
 
@@ -85,7 +85,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Abilities for random warp points that appear in this system.
 		/// </summary>
-		public IList<Ability> WarpPointAbilities { get; set; }
+		public RandomAbilityTemplate WarpPointAbilities { get; set; }
 
 		/// <summary>
 		/// The number of sectors across the star system.

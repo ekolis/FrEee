@@ -24,7 +24,6 @@ namespace FrEee.Modding.Templates
 		public StarSystemTemplate()
 		{
 			Abilities = new List<Ability>();
-			WarpPointAbilities = new List<Ability>();
 			StellarObjectLocations = new List<IStellarObjectLocation>();
 			Radius = 8;
 		}
@@ -67,7 +66,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// Abilities for random warp points in systems generated from this template.
 		/// </summary>
-		public IList<Ability> WarpPointAbilities { get; private set; }
+		public RandomAbilityTemplate WarpPointAbilities { get; set; }
 
 		/// <summary>
 		/// Stellar objects (such as stars and planets) and their locations in systems generated from this template.

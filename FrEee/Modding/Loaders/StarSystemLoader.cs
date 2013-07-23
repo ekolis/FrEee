@@ -55,7 +55,7 @@ namespace FrEee.Modding.Loaders
 				foreach (var abil in AbilityLoader.Load(rec))
 					sst.Abilities.Add(abil);
 
-				// TODO - load warp point stellar ability type
+				sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.Find(rec.GetString("WP Stellar Abil Type", ref index));
 
 				int count = 0;
 				int start = 0;
