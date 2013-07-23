@@ -268,6 +268,8 @@ namespace FrEee.WinForms.Forms
 			spnRandomAIs.Value = setup.RandomAIs;
 			spnMinorEmpires.Value = setup.MinorEmpires;
 
+			BindEmpires();
+
 			if (setup.VictoryConditions.OfType<MajorEmpireEliminationVictoryCondition>().Any())
 				chkVictoryEliminateMajorEmpires.Checked = true;
 			else
