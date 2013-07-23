@@ -430,7 +430,7 @@ namespace FrEee.Game.Setup
 			for (int i = 0; i < HomeworldsPerEmpire; i++)
 			{
 				// TODO - respect Empire Placement and Max Homeworld Dispersion settings
-				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null).SelectMany(g => g));
+				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null && p.MoonOf == null).SelectMany(g => g));
 				var okSystems = gal.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.EmpiresCanStartIn);
 				if (i > 0)
 				{
