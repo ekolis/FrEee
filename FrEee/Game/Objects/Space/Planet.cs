@@ -114,6 +114,7 @@ namespace FrEee.Game.Objects.Space
 		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
 		{
 			base.Redact(galaxy, starSystem, visibility);
+			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
 			if (Colony != null)
 			{
 				if (visibility < Visibility.Owned)
