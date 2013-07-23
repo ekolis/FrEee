@@ -51,7 +51,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			var abil1 = here.Item.WarpPointAbilities.Instantiate();
 			var abil2 = there.Item.WarpPointAbilities.Instantiate();
 			ITemplate<WarpPoint> wpTemplate;
-			if (abil1 != null || abil2 == null)
+			if (abil1 != null || abil2 != null)
 			{
 				// use unusual warp point templates
 				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => wp.IsUnusual).PickRandom();
