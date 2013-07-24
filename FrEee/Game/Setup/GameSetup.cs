@@ -488,8 +488,10 @@ namespace FrEee.Game.Setup
 				hw.Colony.Population.Add(emp.PrimaryRace, hw.Size.MaxPopulation);
 				if (sy != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(sy.Instantiate());
-				if (sp != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
-					hw.Colony.Facilities.Add(sp.Instantiate()); // TODO - don't add spaceport for Natural Merchants
+				if (sp != null && hw.Colony.Facilities.Count < hw.MaxFacilities && (!emp.HasAbility("No Spaceports") || sp.Abilities.Count > 1))
+					// natural merchants get spaceports only if spaceports have more than one ability
+					// of course, if the other abilities are *penalties*... oh well, they can scrap them!
+					hw.Colony.Facilities.Add(sp.Instantiate());
 				if (rd != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 					hw.Colony.Facilities.Add(rd.Instantiate());
 				var lastCount = 0;
