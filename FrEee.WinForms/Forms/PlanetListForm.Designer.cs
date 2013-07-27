@@ -32,8 +32,31 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+			this.txtPopulation = new System.Windows.Forms.Label();
+			this.resStorageRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resStorageOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resStorageMin = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.label16 = new System.Windows.Forms.Label();
+			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resMin = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.label15 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.txtUs = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.txtSystemsWithColonies = new System.Windows.Forms.Label();
+			this.label12 = new System.Windows.Forms.Label();
+			this.txtBreathableOther = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.txtAvailable = new System.Windows.Forms.Label();
 			this.txtShips = new System.Windows.Forms.Label();
@@ -65,8 +88,6 @@ namespace FrEee.WinForms.Forms
 			this.ownerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.planetBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.label11 = new System.Windows.Forms.Label();
-			this.txtBreathableOther = new System.Windows.Forms.Label();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).BeginInit();
@@ -75,10 +96,25 @@ namespace FrEee.WinForms.Forms
 			// 
 			// pnlHeader
 			// 
-			this.pnlHeader.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.pnlHeader.BackColor = System.Drawing.Color.Black;
 			this.pnlHeader.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlHeader.Controls.Add(this.txtPopulation);
+			this.pnlHeader.Controls.Add(this.resStorageRad);
+			this.pnlHeader.Controls.Add(this.resStorageOrg);
+			this.pnlHeader.Controls.Add(this.resStorageMin);
+			this.pnlHeader.Controls.Add(this.label16);
+			this.pnlHeader.Controls.Add(this.resInt);
+			this.pnlHeader.Controls.Add(this.resRes);
+			this.pnlHeader.Controls.Add(this.resRad);
+			this.pnlHeader.Controls.Add(this.resOrg);
+			this.pnlHeader.Controls.Add(this.resMin);
+			this.pnlHeader.Controls.Add(this.label15);
+			this.pnlHeader.Controls.Add(this.label13);
+			this.pnlHeader.Controls.Add(this.txtUs);
+			this.pnlHeader.Controls.Add(this.label14);
+			this.pnlHeader.Controls.Add(this.txtSystemsWithColonies);
+			this.pnlHeader.Controls.Add(this.label12);
 			this.pnlHeader.Controls.Add(this.txtBreathableOther);
 			this.pnlHeader.Controls.Add(this.label11);
 			this.pnlHeader.Controls.Add(this.galaxyView);
@@ -102,30 +138,274 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Controls.Add(this.label3);
 			this.pnlHeader.Controls.Add(this.label2);
 			this.pnlHeader.Controls.Add(this.label1);
+			this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlHeader.ForeColor = System.Drawing.Color.White;
 			this.pnlHeader.Location = new System.Drawing.Point(3, 3);
-			this.pnlHeader.MaximumSize = new System.Drawing.Size(800, 200);
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlHeader.Size = new System.Drawing.Size(754, 165);
+			this.pnlHeader.Size = new System.Drawing.Size(754, 194);
 			this.pnlHeader.TabIndex = 0;
+			// 
+			// txtPopulation
+			// 
+			this.txtPopulation.AutoSize = true;
+			this.txtPopulation.Location = new System.Drawing.Point(348, 4);
+			this.txtPopulation.MinimumSize = new System.Drawing.Size(30, 0);
+			this.txtPopulation.Name = "txtPopulation";
+			this.txtPopulation.Size = new System.Drawing.Size(30, 13);
+			this.txtPopulation.TabIndex = 38;
+			this.txtPopulation.Text = "0";
+			this.txtPopulation.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// resStorageRad
+			// 
+			this.resStorageRad.Amount = 0;
+			this.resStorageRad.BackColor = System.Drawing.Color.Black;
+			this.resStorageRad.Change = null;
+			this.resStorageRad.ForeColor = System.Drawing.Color.White;
+			this.resStorageRad.Location = new System.Drawing.Point(271, 136);
+			this.resStorageRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resStorageRad.Name = "resStorageRad";
+			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource1.IsGlobal = true;
+			resource1.IsLocal = false;
+			resource1.Name = "Radioactives";
+			resource1.PictureName = "Resource3";
+			this.resStorageRad.Resource = resource1;
+			this.resStorageRad.ResourceName = "Radioactives";
+			this.resStorageRad.Size = new System.Drawing.Size(107, 12);
+			this.resStorageRad.TabIndex = 37;
+			// 
+			// resStorageOrg
+			// 
+			this.resStorageOrg.Amount = 0;
+			this.resStorageOrg.BackColor = System.Drawing.Color.Black;
+			this.resStorageOrg.Change = null;
+			this.resStorageOrg.ForeColor = System.Drawing.Color.White;
+			this.resStorageOrg.Location = new System.Drawing.Point(271, 123);
+			this.resStorageOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resStorageOrg.Name = "resStorageOrg";
+			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource2.IsGlobal = true;
+			resource2.IsLocal = false;
+			resource2.Name = "Organics";
+			resource2.PictureName = "Resource2";
+			this.resStorageOrg.Resource = resource2;
+			this.resStorageOrg.ResourceName = "Organics";
+			this.resStorageOrg.Size = new System.Drawing.Size(107, 12);
+			this.resStorageOrg.TabIndex = 36;
+			// 
+			// resStorageMin
+			// 
+			this.resStorageMin.Amount = 0;
+			this.resStorageMin.BackColor = System.Drawing.Color.Black;
+			this.resStorageMin.Change = null;
+			this.resStorageMin.ForeColor = System.Drawing.Color.White;
+			this.resStorageMin.Location = new System.Drawing.Point(271, 110);
+			this.resStorageMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resStorageMin.Name = "resStorageMin";
+			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource3.IsGlobal = true;
+			resource3.IsLocal = false;
+			resource3.Name = "Minerals";
+			resource3.PictureName = "Resource1";
+			this.resStorageMin.Resource = resource3;
+			this.resStorageMin.ResourceName = "Minerals";
+			this.resStorageMin.Size = new System.Drawing.Size(107, 12);
+			this.resStorageMin.TabIndex = 35;
+			// 
+			// label16
+			// 
+			this.label16.AutoSize = true;
+			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label16.Location = new System.Drawing.Point(254, 96);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(88, 13);
+			this.label16.TabIndex = 34;
+			this.label16.Text = "Storage Capacity";
+			// 
+			// resInt
+			// 
+			this.resInt.Amount = 0;
+			this.resInt.BackColor = System.Drawing.Color.Black;
+			this.resInt.Change = null;
+			this.resInt.ForeColor = System.Drawing.Color.White;
+			this.resInt.Location = new System.Drawing.Point(274, 84);
+			this.resInt.Margin = new System.Windows.Forms.Padding(0);
+			this.resInt.Name = "resInt";
+			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			resource4.IsGlobal = false;
+			resource4.IsLocal = false;
+			resource4.Name = "Intelligence";
+			resource4.PictureName = "Resource5";
+			this.resInt.Resource = resource4;
+			this.resInt.ResourceName = "Intelligence";
+			this.resInt.Size = new System.Drawing.Size(107, 12);
+			this.resInt.TabIndex = 33;
+			// 
+			// resRes
+			// 
+			this.resRes.Amount = 0;
+			this.resRes.BackColor = System.Drawing.Color.Black;
+			this.resRes.Change = null;
+			this.resRes.ForeColor = System.Drawing.Color.White;
+			this.resRes.Location = new System.Drawing.Point(274, 71);
+			this.resRes.Margin = new System.Windows.Forms.Padding(0);
+			this.resRes.Name = "resRes";
+			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource5.IsGlobal = false;
+			resource5.IsLocal = false;
+			resource5.Name = "Research";
+			resource5.PictureName = "Resource4";
+			this.resRes.Resource = resource5;
+			this.resRes.ResourceName = "Research";
+			this.resRes.Size = new System.Drawing.Size(107, 12);
+			this.resRes.TabIndex = 32;
+			// 
+			// resRad
+			// 
+			this.resRad.Amount = 0;
+			this.resRad.BackColor = System.Drawing.Color.Black;
+			this.resRad.Change = null;
+			this.resRad.ForeColor = System.Drawing.Color.White;
+			this.resRad.Location = new System.Drawing.Point(274, 59);
+			this.resRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resRad.Name = "resRad";
+			this.resRad.Resource = resource1;
+			this.resRad.ResourceName = "Radioactives";
+			this.resRad.Size = new System.Drawing.Size(107, 12);
+			this.resRad.TabIndex = 31;
+			// 
+			// resOrg
+			// 
+			this.resOrg.Amount = 0;
+			this.resOrg.BackColor = System.Drawing.Color.Black;
+			this.resOrg.Change = null;
+			this.resOrg.ForeColor = System.Drawing.Color.White;
+			this.resOrg.Location = new System.Drawing.Point(274, 47);
+			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resOrg.Name = "resOrg";
+			this.resOrg.Resource = resource2;
+			this.resOrg.ResourceName = "Organics";
+			this.resOrg.Size = new System.Drawing.Size(107, 12);
+			this.resOrg.TabIndex = 30;
+			// 
+			// resMin
+			// 
+			this.resMin.Amount = 0;
+			this.resMin.BackColor = System.Drawing.Color.Black;
+			this.resMin.Change = null;
+			this.resMin.ForeColor = System.Drawing.Color.White;
+			this.resMin.Location = new System.Drawing.Point(274, 34);
+			this.resMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resMin.Name = "resMin";
+			this.resMin.Resource = resource3;
+			this.resMin.ResourceName = "Minerals";
+			this.resMin.Size = new System.Drawing.Size(107, 12);
+			this.resMin.TabIndex = 29;
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label15.Location = new System.Drawing.Point(254, 17);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(58, 13);
+			this.label15.TabIndex = 28;
+			this.label15.Text = "Resources";
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label13.Location = new System.Drawing.Point(254, 4);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(57, 13);
+			this.label13.TabIndex = 27;
+			this.label13.Text = "Population";
+			// 
+			// txtUs
+			// 
+			this.txtUs.AutoSize = true;
+			this.txtUs.Location = new System.Drawing.Point(185, 43);
+			this.txtUs.MaximumSize = new System.Drawing.Size(30, 30);
+			this.txtUs.MinimumSize = new System.Drawing.Size(30, 0);
+			this.txtUs.Name = "txtUs";
+			this.txtUs.Size = new System.Drawing.Size(30, 13);
+			this.txtUs.TabIndex = 26;
+			this.txtUs.Text = "0";
+			this.txtUs.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(17, 43);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(69, 13);
+			this.label14.TabIndex = 25;
+			this.label14.Text = "owned by Us";
+			// 
+			// txtSystemsWithColonies
+			// 
+			this.txtSystemsWithColonies.AutoSize = true;
+			this.txtSystemsWithColonies.Location = new System.Drawing.Point(185, 17);
+			this.txtSystemsWithColonies.MaximumSize = new System.Drawing.Size(30, 30);
+			this.txtSystemsWithColonies.MinimumSize = new System.Drawing.Size(30, 0);
+			this.txtSystemsWithColonies.Name = "txtSystemsWithColonies";
+			this.txtSystemsWithColonies.Size = new System.Drawing.Size(30, 13);
+			this.txtSystemsWithColonies.TabIndex = 24;
+			this.txtSystemsWithColonies.Text = "0";
+			this.txtSystemsWithColonies.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label12
+			// 
+			this.label12.AutoSize = true;
+			this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label12.Location = new System.Drawing.Point(17, 17);
+			this.label12.Name = "label12";
+			this.label12.Size = new System.Drawing.Size(69, 13);
+			this.label12.TabIndex = 23;
+			this.label12.Text = "with Colonies";
+			// 
+			// txtBreathableOther
+			// 
+			this.txtBreathableOther.AutoSize = true;
+			this.txtBreathableOther.Location = new System.Drawing.Point(185, 135);
+			this.txtBreathableOther.MaximumSize = new System.Drawing.Size(30, 30);
+			this.txtBreathableOther.MinimumSize = new System.Drawing.Size(30, 0);
+			this.txtBreathableOther.Name = "txtBreathableOther";
+			this.txtBreathableOther.Size = new System.Drawing.Size(30, 13);
+			this.txtBreathableOther.TabIndex = 22;
+			this.txtBreathableOther.Text = "0";
+			this.txtBreathableOther.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label11.Location = new System.Drawing.Point(32, 135);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(87, 13);
+			this.label11.TabIndex = 21;
+			this.label11.Text = "Other Breathable";
 			// 
 			// galaxyView
 			// 
 			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
-			this.galaxyView.Location = new System.Drawing.Point(215, 4);
+			this.galaxyView.Location = new System.Drawing.Point(530, 4);
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(534, 156);
+			this.galaxyView.Size = new System.Drawing.Size(216, 185);
 			this.galaxyView.TabIndex = 20;
 			this.galaxyView.Text = "galaxyView1";
 			// 
 			// txtAvailable
 			// 
 			this.txtAvailable.AutoSize = true;
-			this.txtAvailable.Location = new System.Drawing.Point(183, 141);
+			this.txtAvailable.Location = new System.Drawing.Point(185, 168);
 			this.txtAvailable.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtAvailable.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtAvailable.Name = "txtAvailable";
@@ -137,7 +417,7 @@ namespace FrEee.WinForms.Forms
 			// txtShips
 			// 
 			this.txtShips.AutoSize = true;
-			this.txtShips.Location = new System.Drawing.Point(183, 128);
+			this.txtShips.Location = new System.Drawing.Point(185, 155);
 			this.txtShips.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtShips.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtShips.Name = "txtShips";
@@ -149,7 +429,7 @@ namespace FrEee.WinForms.Forms
 			// txtBreathableUs
 			// 
 			this.txtBreathableUs.AutoSize = true;
-			this.txtBreathableUs.Location = new System.Drawing.Point(183, 95);
+			this.txtBreathableUs.Location = new System.Drawing.Point(185, 122);
 			this.txtBreathableUs.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtBreathableUs.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtBreathableUs.Name = "txtBreathableUs";
@@ -161,7 +441,7 @@ namespace FrEee.WinForms.Forms
 			// txtUncolonized
 			// 
 			this.txtUncolonized.AutoSize = true;
-			this.txtUncolonized.Location = new System.Drawing.Point(183, 82);
+			this.txtUncolonized.Location = new System.Drawing.Point(185, 109);
 			this.txtUncolonized.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtUncolonized.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtUncolonized.Name = "txtUncolonized";
@@ -173,7 +453,7 @@ namespace FrEee.WinForms.Forms
 			// txtNonAligned
 			// 
 			this.txtNonAligned.AutoSize = true;
-			this.txtNonAligned.Location = new System.Drawing.Point(183, 69);
+			this.txtNonAligned.Location = new System.Drawing.Point(185, 96);
 			this.txtNonAligned.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtNonAligned.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtNonAligned.Name = "txtNonAligned";
@@ -185,7 +465,7 @@ namespace FrEee.WinForms.Forms
 			// txtAllies
 			// 
 			this.txtAllies.AutoSize = true;
-			this.txtAllies.Location = new System.Drawing.Point(183, 56);
+			this.txtAllies.Location = new System.Drawing.Point(185, 83);
 			this.txtAllies.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtAllies.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtAllies.Name = "txtAllies";
@@ -197,7 +477,7 @@ namespace FrEee.WinForms.Forms
 			// txtEnemies
 			// 
 			this.txtEnemies.AutoSize = true;
-			this.txtEnemies.Location = new System.Drawing.Point(183, 43);
+			this.txtEnemies.Location = new System.Drawing.Point(185, 70);
 			this.txtEnemies.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtEnemies.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtEnemies.Name = "txtEnemies";
@@ -209,7 +489,7 @@ namespace FrEee.WinForms.Forms
 			// txtColonizable
 			// 
 			this.txtColonizable.AutoSize = true;
-			this.txtColonizable.Location = new System.Drawing.Point(183, 30);
+			this.txtColonizable.Location = new System.Drawing.Point(185, 56);
 			this.txtColonizable.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtColonizable.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtColonizable.Name = "txtColonizable";
@@ -221,7 +501,7 @@ namespace FrEee.WinForms.Forms
 			// txtPlanets
 			// 
 			this.txtPlanets.AutoSize = true;
-			this.txtPlanets.Location = new System.Drawing.Point(183, 17);
+			this.txtPlanets.Location = new System.Drawing.Point(185, 30);
 			this.txtPlanets.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtPlanets.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtPlanets.Name = "txtPlanets";
@@ -233,7 +513,7 @@ namespace FrEee.WinForms.Forms
 			// txtSystems
 			// 
 			this.txtSystems.AutoSize = true;
-			this.txtSystems.Location = new System.Drawing.Point(183, 4);
+			this.txtSystems.Location = new System.Drawing.Point(185, 4);
 			this.txtSystems.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtSystems.MinimumSize = new System.Drawing.Size(30, 0);
 			this.txtSystems.Name = "txtSystems";
@@ -246,7 +526,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label10.AutoSize = true;
 			this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label10.Location = new System.Drawing.Point(15, 141);
+			this.label10.Location = new System.Drawing.Point(17, 168);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(50, 13);
 			this.label10.TabIndex = 9;
@@ -256,7 +536,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label9.AutoSize = true;
 			this.label9.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label9.Location = new System.Drawing.Point(4, 128);
+			this.label9.Location = new System.Drawing.Point(6, 155);
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(84, 13);
 			this.label9.TabIndex = 8;
@@ -266,7 +546,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label8.AutoSize = true;
 			this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label8.Location = new System.Drawing.Point(30, 95);
+			this.label8.Location = new System.Drawing.Point(32, 122);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(121, 13);
 			this.label8.TabIndex = 7;
@@ -276,7 +556,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label7.AutoSize = true;
 			this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label7.Location = new System.Drawing.Point(15, 82);
+			this.label7.Location = new System.Drawing.Point(17, 109);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(66, 13);
 			this.label7.TabIndex = 6;
@@ -286,7 +566,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(15, 69);
+			this.label6.Location = new System.Drawing.Point(17, 96);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(114, 13);
 			this.label6.TabIndex = 5;
@@ -296,7 +576,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label5.AutoSize = true;
 			this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label5.Location = new System.Drawing.Point(15, 56);
+			this.label5.Location = new System.Drawing.Point(17, 83);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(80, 13);
 			this.label5.TabIndex = 4;
@@ -306,7 +586,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label4.AutoSize = true;
 			this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label4.Location = new System.Drawing.Point(15, 43);
+			this.label4.Location = new System.Drawing.Point(17, 70);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(96, 13);
 			this.label4.TabIndex = 3;
@@ -316,7 +596,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label3.AutoSize = true;
 			this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label3.Location = new System.Drawing.Point(4, 30);
+			this.label3.Location = new System.Drawing.Point(6, 56);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(99, 13);
 			this.label3.TabIndex = 2;
@@ -326,7 +606,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(4, 17);
+			this.label2.Location = new System.Drawing.Point(6, 30);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(78, 13);
 			this.label2.TabIndex = 1;
@@ -364,16 +644,16 @@ namespace FrEee.WinForms.Forms
             this.resourceValueDataGridViewTextBoxColumn,
             this.ownerDataGridViewTextBoxColumn});
 			this.gridPlanets.DataSource = this.planetBindingSource;
-			this.gridPlanets.Location = new System.Drawing.Point(3, 174);
+			this.gridPlanets.Location = new System.Drawing.Point(3, 203);
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
 			this.gridPlanets.RowHeadersVisible = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
-			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridPlanets.RowTemplate.Height = 32;
 			this.gridPlanets.RowTemplate.ReadOnly = true;
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridPlanets.Size = new System.Drawing.Size(754, 360);
+			this.gridPlanets.Size = new System.Drawing.Size(754, 331);
 			this.gridPlanets.TabIndex = 1;
 			this.gridPlanets.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridPlanets_DataError);
 			this.gridPlanets.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowEnter);
@@ -440,38 +720,15 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tableLayoutPanel1.ColumnCount = 1;
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.gridPlanets, 0, 1);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 171F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(760, 537);
 			this.tableLayoutPanel1.TabIndex = 2;
-			// 
-			// label11
-			// 
-			this.label11.AutoSize = true;
-			this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label11.Location = new System.Drawing.Point(30, 108);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(87, 13);
-			this.label11.TabIndex = 21;
-			this.label11.Text = "Other Breathable";
-			// 
-			// txtBreathableOther
-			// 
-			this.txtBreathableOther.AutoSize = true;
-			this.txtBreathableOther.Location = new System.Drawing.Point(183, 108);
-			this.txtBreathableOther.MaximumSize = new System.Drawing.Size(30, 30);
-			this.txtBreathableOther.MinimumSize = new System.Drawing.Size(30, 0);
-			this.txtBreathableOther.Name = "txtBreathableOther";
-			this.txtBreathableOther.Size = new System.Drawing.Size(30, 13);
-			this.txtBreathableOther.TabIndex = 22;
-			this.txtBreathableOther.Text = "0";
-			this.txtBreathableOther.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// PlanetListForm
 			// 
@@ -531,5 +788,21 @@ namespace FrEee.WinForms.Forms
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label txtBreathableOther;
+		private System.Windows.Forms.Label txtSystemsWithColonies;
+		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.Label txtUs;
+		private System.Windows.Forms.Label label14;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.Label label15;
+		private ResourceDisplay resRad;
+		private ResourceDisplay resOrg;
+		private ResourceDisplay resMin;
+		private ResourceDisplay resInt;
+		private ResourceDisplay resRes;
+		private System.Windows.Forms.Label label16;
+		private ResourceDisplay resStorageRad;
+		private ResourceDisplay resStorageOrg;
+		private ResourceDisplay resStorageMin;
+		private System.Windows.Forms.Label txtPopulation;
 	}
 }
