@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -8,7 +9,7 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class ResourceQuantity : SafeDictionary<Resource, int>
+	public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
 	{
 		public static ResourceQuantity operator +(ResourceQuantity r1, ResourceQuantity r2)
 		{
@@ -173,6 +174,18 @@ namespace FrEee.Utility
 					return false;
 			}
 			return true;
+		}
+
+		public int CompareTo(ResourceQuantity other)
+		{
+			return this.Sum(kvp => kvp.Value).CompareTo(other.Sum(kvp => kvp.Value));
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj is ResourceQuantity)
+				return CompareTo((ResourceQuantity)obj);
+			return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
 		}
 	}
 }

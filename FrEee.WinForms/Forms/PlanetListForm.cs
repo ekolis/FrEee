@@ -9,6 +9,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System.IO;
+using System.Collections.Generic;
 
 namespace FrEee.WinForms.Forms
 {
@@ -18,9 +19,9 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
             try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
-
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
+
+		private IEnumerable<Planet> planets;
 
 		private void PlanetListForm_Load(object sender, EventArgs e)
 		{
@@ -32,7 +33,7 @@ namespace FrEee.WinForms.Forms
 			txtSystems.Text = systems.Count().ToString();
 			txtSystemsWithColonies.Text = systems.Where(s => s.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Flatten().Any()).Count().ToString();
 			// HACK - why are there null explored star systems?
-			var planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
+			planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
 			txtPlanets.Text = planets.Count().ToString();
 			txtUs.Text = Empire.Current.ColonizedPlanets.Count().ToString();
 			var colonizable = planets.Where(p => p.Owner != Empire.Current && Empire.Current.CanColonize(p));
@@ -75,7 +76,7 @@ namespace FrEee.WinForms.Forms
 			resStorageRad.Amount = storage[Resource.Radioactives];
 			
 			// show planet data
-			planetBindingSource.DataSource = planets.ToList();
+			planetBindingSource.DataSource = planets;
 
 			// show galaxy view background
 			// TODO - galaxy view background image can depend on galaxy template?
@@ -104,6 +105,13 @@ namespace FrEee.WinForms.Forms
 		private void gridPlanets_RowLeave(object sender, DataGridViewCellEventArgs e)
 		{
 			galaxyView.SelectedStarSystem = null;
+		}
+
+		private void gridPlanets_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			var prop = typeof(Planet).GetProperty(gridPlanets.Columns[e.ColumnIndex].DataPropertyName);
+			if (typeof(IComparable).IsAssignableFrom(prop.PropertyType))
+				planetBindingSource.DataSource = planets.OrderBy(p => prop.GetValue(p, new object[0]));
 		}
 	}
 }

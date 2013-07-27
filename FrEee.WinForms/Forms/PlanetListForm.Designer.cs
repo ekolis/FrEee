@@ -655,6 +655,7 @@ namespace FrEee.WinForms.Forms
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridPlanets.Size = new System.Drawing.Size(754, 331);
 			this.gridPlanets.TabIndex = 1;
+			this.gridPlanets.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPlanets_ColumnHeaderMouseClick);
 			this.gridPlanets.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridPlanets_DataError);
 			this.gridPlanets.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowEnter);
 			this.gridPlanets.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridPlanets_RowLeave);
@@ -712,6 +713,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.planetBindingSource.AllowNew = false;
 			this.planetBindingSource.DataSource = typeof(FrEee.Game.Objects.Space.Planet);
+			this.planetBindingSource.Sort = "";
 			// 
 			// tableLayoutPanel1
 			// 

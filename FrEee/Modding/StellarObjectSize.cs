@@ -13,7 +13,7 @@ namespace FrEee.Modding
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class StellarObjectSize : INamed
+	public class StellarObjectSize : INamed, IComparable<StellarObjectSize>, IComparable
 	{
 		/// <summary>
 		/// The name of this size.
@@ -74,6 +74,20 @@ namespace FrEee.Modding
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj is StellarSize)
+				return StellarSize.CompareTo(obj);
+			else if (obj is StellarObjectSize)
+				return this.CompareTo((StellarObjectSize)obj);
+			return StellarSize.CompareTo(obj);
+		}
+
+		public int CompareTo(StellarObjectSize obj)
+		{
+			return StellarSize.CompareTo(obj.StellarSize);
 		}
 	}
 }

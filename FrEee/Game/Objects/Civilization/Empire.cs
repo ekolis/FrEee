@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, ICommandable, IAbilityObject, IPictorial
+	public class Empire : INamed, ICommandable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -575,5 +575,20 @@ namespace FrEee.Game.Objects.Civilization
 		/// TODO - implement empire score
 		/// </summary>
 		public long Score { get { return 0; } }
+
+		public int CompareTo(Empire other)
+		{
+			throw new NotImplementedException();
+		}
+
+		int IComparable<Empire>.CompareTo(Empire other)
+		{
+			return Name.CompareTo(other.Name);
+		}
+
+		public int CompareTo(object obj)
+		{
+			return Name.CompareTo(obj.ToString());
+		}
 	}
 }
