@@ -235,7 +235,10 @@ namespace FrEee.Game.Objects.Space
 			{
 				var sys = wp.Target.FindStarSystem();
 				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+				{
+					sys.Name = null;
 					wp.Target.SpaceObjects.Clear();
+				}
 			}
 		}
 

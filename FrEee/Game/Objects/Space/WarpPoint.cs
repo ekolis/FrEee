@@ -57,5 +57,14 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public StellarSize StellarSize { get; set; }
+
+		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
+		{
+			base.Redact(galaxy, starSystem, visibility);
+
+			// Don't let players see the target star system name if it's not explored yet
+			if (!Target.FindStarSystem().ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+				Name = "Warp Point";
+		}
 	}
 }
