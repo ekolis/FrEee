@@ -65,25 +65,8 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 				7:"Rock";
 				7:"Jraenar";
 				7:"Jraenar";
-				System.Collections.Generic.List`1[[FrEee.Game.Objects.Civilization.Trait, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-					FrEee.Game.Objects.Civilization.Trait, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p6:
-						System.Collections.Generic.List`1[[FrEee.Game.Objects.Abilities.Ability, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-							FrEee.Game.Objects.Abilities.Ability, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p3:
-								7:n;
-								7:"Galaxy Seen";
-								System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-									7:"";
-								;
-							;
-						;
-						4:1000;
-						7:"Empire has seen the entire galaxy at the start of the game.";
-						7:"Ancient Race";
-						12:c0:
-						;
-						12:c0:
-						;
-					;
+				System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
+					7:"Ancient Race";
 				;
 			;
 			7:n;

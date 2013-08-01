@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 	{
 		public Race()
 		{
-			Traits = new List<Trait>();
+			TraitNames = new List<string>();
 			Color = Color.White;
 			Aptitudes = new SafeDictionary<string, int>();
 		}
@@ -104,7 +104,15 @@ namespace FrEee.Game.Objects.Civilization
 			set { CultureName = value == null ? null : value.Name; }
 		}
 
-		public IList<Trait> Traits { get; private set; }
+		/// <summary>
+		/// The names of the race's traits.
+		/// </summary>
+		public IList<string> TraitNames { get; private set; }
+
+		/// <summary>
+		/// The traits of the race.
+		/// </summary>
+		public IEnumerable<Trait> Traits { get { return Mod.Current.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t); } }
 
 		public IEnumerable<Ability> Abilities
 		{

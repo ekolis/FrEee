@@ -312,9 +312,9 @@ namespace FrEee.WinForms.Forms
 			// TODO - set race AI
 			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
 			r.Culture = (Culture)ddlRaceCulture.SelectedItem;
-			r.Traits.Clear();
+			r.TraitNames.Clear();
 			foreach (var t in raceTraitPicker.CheckedTraits)
-				r.Traits.Add(t);
+				r.TraitNames.Add(t.Name);
 			foreach (var kvp in aptitudePicker.Values)
 			{
 				if (r.Aptitudes.ContainsKey(kvp.Key.Name))
