@@ -718,10 +718,12 @@ namespace FrEee.Game.Objects.Space
 				ComputeNextTickSize();
 				foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
 				{
-					v.ExecuteOrders();
-
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
+					if (sys == null)
+						continue; // space object is dead, or not done being built
+
+					v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
 					
