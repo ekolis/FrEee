@@ -29,7 +29,10 @@ namespace FrEee.Game.Objects.Commands
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
 				else
+				{
 					Target.AddOrder(Order);
+					Galaxy.Current.Register(Order, Issuer);
+				}
 			}
 			else
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
