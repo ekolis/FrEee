@@ -678,11 +678,12 @@ namespace FrEee.Game.Objects.Space
 				var Spending = emp.ResearchSpending;
 				var Queue = emp.ResearchQueue;
 				// spend research from spending % priorities
+				var spendable = emp.NetIncome[Resource.Research] + emp.BonusResearch;
 				foreach (var tech in Spending.Keys.ToArray())
-					emp.Research(tech, Spending[tech] * (emp.NetIncome[Resource.Research] + emp.BonusResearch) / 100);
+					emp.Research(tech, Spending[tech] * spendable / 100);
 
 				// spend research from queues
-				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * emp.NetIncome[Resource.Research] / 100;
+				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * spendable / 100;
 				if (Queue.Any())
 					// first tech in queue
 					emp.Research(Queue.First(), leftovers);
