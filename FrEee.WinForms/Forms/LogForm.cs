@@ -66,22 +66,26 @@ namespace FrEee.WinForms.Forms
 					{
 						// go to research screen
 						gameForm.ShowResearchForm(new ResearchForm());
+						Close();
 					}
 					else if (context is IHull<IVehicle>)
 					{
 						// go to design screen and create a new design using this hull 
 						var hull = (IHull<IVehicle>)context;
 						gameForm.ShowVehicleDesignForm(new VehicleDesignForm(hull));
+						Close();
 					}
 					else if (context is ComponentTemplate || context is Mount)
 					{
 						// go to design screen
 						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
+						Close();
 					}
 					else if (context is Battle)
 					{
 						// show battle log
 						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
+						Close();
 					}
 
 					// TODO - more types of goto-messages
