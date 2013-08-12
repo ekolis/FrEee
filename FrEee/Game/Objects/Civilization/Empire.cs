@@ -344,9 +344,11 @@ namespace FrEee.Game.Objects.Civilization
 			var oldlvl = ResearchedTechnologies[tech];
 			AccumulatedResearch[tech] += points;
 			var newStuff = new List<IResearchable>();
+			int advanced = 0;
 			while (AccumulatedResearch[tech] >= tech.GetNextLevelCost(this) && ResearchedTechnologies[tech] < tech.MaximumLevel)
 			{
 				// advanced a level!
+				advanced++;
 				AccumulatedResearch[tech] -= tech.GetNextLevelCost(this);
 				newStuff.AddRange(tech.GetExpectedResults(this));
 				ResearchedTechnologies[tech]++;
@@ -356,8 +358,9 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var item in newStuff)
 				Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
 
-			// if it was in the queue, remove the first instance
-			ResearchQueue.Remove(tech);
+			// if it was in the queue and we advanced a level, remove the first instance (for each level advanced)
+			for (int i = 0; i < advanced; i++)
+				ResearchQueue.Remove(tech);
 
 			// if tech is maxed out, remove all instances from queue and clear spending on it
 			if (ResearchedTechnologies[tech] == tech.MaximumLevel)

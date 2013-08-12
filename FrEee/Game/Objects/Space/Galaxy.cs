@@ -684,18 +684,30 @@ namespace FrEee.Game.Objects.Space
 
 				// spend research from queues
 				var leftovers = (100 - Spending.Sum(kvp => kvp.Value)) * spendable / 100;
-				if (Queue.Any())
-					// first tech in queue
-					emp.Research(Queue.First(), leftovers);
-				else if (Spending.Any(kvp => kvp.Value > 0))
-					// no queued techs, pick tech with highest % focus
-					emp.Research(Spending.Where(kvp => kvp.Value == Spending.Max(kvp2 => kvp2.Value)).First().Key, leftovers);
-				else
+				while (Queue.Any() && leftovers > 0)
 				{
-					// no techs queued or prioritized, pick a random tech
-					var tech = emp.AvailableTechnologies.PickRandom();
-					if (tech != null)
-						emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
+					// first tech in queue
+					var tech = Queue.First();
+					var toSpend = Math.Min(leftovers, tech.GetNextLevelCost(emp));
+					emp.Research(tech, toSpend);
+					leftovers -= toSpend;
+				}
+
+				// no items queued?
+				if (!Queue.Any() && leftovers > 0)
+				{
+					if (Spending.Any(kvp => kvp.Value > 0))
+					{
+						// pick tech with highest % focus
+						emp.Research(Spending.Where(kvp => kvp.Value == Spending.Max(kvp2 => kvp2.Value)).First().Key, leftovers);
+					}
+					else
+					{
+						// no techs queued or prioritized, pick a random tech
+						var tech = emp.AvailableTechnologies.PickRandom();
+						if (tech != null)
+							emp.Research(emp.AvailableTechnologies.PickRandom(), leftovers);
+					}
 				}
 
 				// clear bonus research for this turn
