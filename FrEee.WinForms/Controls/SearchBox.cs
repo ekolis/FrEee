@@ -140,7 +140,9 @@ namespace FrEee.WinForms.Controls
 			if (e.KeyCode == Keys.Enter)
 			{
 				// select first item
-				SelectedObject = resultsForm.Results.First();
+				SelectedObject = resultsForm.Results.FirstOrDefault();
+				if (ObjectSelected != null)
+					ObjectSelected(this, SelectedObject);
 			}
 			else if (e.KeyCode == Keys.Escape)
 			{
@@ -209,6 +211,27 @@ namespace FrEee.WinForms.Controls
 			{
 				alreadyFocused = true;
 				this.textBox.SelectAll();
+			}
+		}
+
+		private void textBox_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				// select first item
+				SelectedObject = resultsForm.Results.FirstOrDefault();
+				if (ObjectSelected != null)
+					ObjectSelected(this, SelectedObject);
+			}
+			else if (e.KeyCode == Keys.Escape)
+			{
+				// hide results
+				HideResults();
+			}
+			else
+			{
+				// update results
+				ShowResults();
 			}
 		}
 	}

@@ -40,6 +40,7 @@
 			this.textBox.TabIndex = 0;
 			this.textBox.SizeChanged += new System.EventHandler(this.textBox_SizeChanged);
 			this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+			this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
 			this.textBox.Leave += new System.EventHandler(this.textBox_Leave);
 			// 
 			// SearchBox
