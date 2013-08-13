@@ -726,6 +726,15 @@ namespace FrEee.WinForms.Forms
 					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.C && btnColonize.Visible)
 					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
+				{
+					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
+						this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
+				}
+				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
+					; // TODO - show cargo transfer window for selected space object
+				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
+					; // TODO - show fleet transfer window for selected space object
 			}
 
 			if (e.KeyCode == Keys.F2)
