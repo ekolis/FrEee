@@ -724,7 +724,7 @@ namespace FrEee.WinForms.Forms
 					ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.W && btnWarp.Visible)
 					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
-				else if (e.KeyCode == Keys.C && btnWarp.Visible)
+				else if (e.KeyCode == Keys.C && btnColonize.Visible)
 					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
 			}
 
