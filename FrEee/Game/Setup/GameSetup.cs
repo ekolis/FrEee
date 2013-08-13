@@ -497,6 +497,8 @@ namespace FrEee.Game.Setup
 				var lastCount = 0;
 				while (hw.Colony.Facilities.Count < hw.MaxFacilities && hw.Colony.Facilities.Count > lastCount)
 				{
+					lastCount = hw.Colony.Facilities.Count;
+
 					if (min != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 						hw.Colony.Facilities.Add(min.Instantiate());
 					if (org != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
@@ -510,8 +512,6 @@ namespace FrEee.Game.Setup
 						if (res != null && hw.Colony.Facilities.Count < hw.MaxFacilities)
 							hw.Colony.Facilities.Add(res.Instantiate());
 					}
-
-					lastCount = hw.Colony.Facilities.Count;
 				}
 			}
 
