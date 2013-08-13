@@ -104,7 +104,7 @@ namespace FrEee.Utility
 					moves = moves.Where(m => !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me.Owner))).ToList();
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
-					moves = moves.Where(m => m != end && !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
+					moves = moves.Where(m => m == end || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
 
 				// step 7b: update priority queue
 				foreach (var move in moves)
