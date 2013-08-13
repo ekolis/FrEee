@@ -381,7 +381,8 @@ namespace FrEee.Game.Objects.Civilization
 				var empnum = Galaxy.Current.Empires.IndexOf(this) + 1;
 				var list = new List<IReferrable>();
 				list.AddRange(Galaxy.Current.Referrables[0]);
-				list.AddRange(Galaxy.Current.Referrables[empnum]);
+				if (empnum < Galaxy.Current.Referrables.Count)
+					list.AddRange(Galaxy.Current.Referrables[empnum]);
 				return list.Distinct();
 			}
 		}
