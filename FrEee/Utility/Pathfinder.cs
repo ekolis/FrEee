@@ -138,18 +138,21 @@ namespace FrEee.Utility
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
 		{
 			var moves = new List<Sector>();
+			var sys = s.FindStarSystem();
 
 			// normal moves
-			foreach (var dx in new int[] { 0, -1, 1 })
+			if (sys != null)
 			{
-				foreach (var dy in new int[] { 0, -1, 1 })
+				foreach (var dx in new int[] { 0, -1, 1 })
 				{
-					if (dx == 0 && dy == 0)
-						continue; // no need to sit still!
-					var sys = s.FindStarSystem();
-					var coords = s.Coordinates;
-					if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
-						moves.Add(sys.GetSector(new Point(coords.X + dx, coords.Y + dy)));
+					foreach (var dy in new int[] { 0, -1, 1 })
+					{
+						if (dx == 0 && dy == 0)
+							continue; // no need to sit still!
+						var coords = s.Coordinates;
+						if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
+							moves.Add(sys.GetSector(new Point(coords.X + dx, coords.Y + dy)));
+					}
 				}
 			}
 
