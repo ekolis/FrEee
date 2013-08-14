@@ -251,6 +251,7 @@ namespace FrEee.WinForms.Forms
 								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
 								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
 								ChangeCommandMode(CommandMode.None, null);
+								starSystemView.Invalidate(); // refresh move lines
 							}
 						}
 					}
