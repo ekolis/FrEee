@@ -268,12 +268,15 @@ namespace FrEee.Game.Setup
 			gal.CanColonizeOnlyBreathable = CanColonizeOnlyBreathable;
 			gal.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
 
-			// place player empires
-			// don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
-			foreach (var et in EmpireTemplates.Shuffle())
-				PlaceEmpire(gal, et);
+			// create player empires
+			foreach (var et in EmpireTemplates)
+			{
+				var emp = et.Instantiate();
+				gal.Empires.Add(emp);
+				gal.Register(emp);
+			}
 
-			// place random AI empires
+			// create random AI empires
 			for (int i = 1; i <= RandomAIs; i++)
 			{
 				// TODO - load saved EMP files for random AI empires
@@ -292,10 +295,12 @@ namespace FrEee.Game.Setup
 					},
 					IsPlayerEmpire = false,
 				};
-				PlaceEmpire(gal, et);
+				var emp = et.Instantiate();
+				gal.Empires.Add(emp);
+				gal.Register(emp);
 			}
 
-			// place minor empires
+			// create minor empires
 			for (int i = 1; i <= MinorEmpires; i++)
 			{
 				// TODO - load saved EMP files for minor empires
@@ -315,8 +320,15 @@ namespace FrEee.Game.Setup
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
 				};
-				PlaceEmpire(gal, et);
+				var emp = et.Instantiate();
+				gal.Empires.Add(emp);
+				gal.Register(emp);
 			}
+
+			// place empires
+			// don't do them in any particular order, so P1 and P2 don't always wind up on opposite sides of the galaxy when using equidistant placement
+			foreach (var emp in gal.Empires.Shuffle())
+				PlaceEmpire(gal, emp);
 
 			// remove ruins if they're not allowed
 			if (!GenerateRandomRuins)
@@ -344,12 +356,8 @@ namespace FrEee.Game.Setup
 		}
 
 		// TODO - status messages for the GUI
-		private void PlaceEmpire(Galaxy gal, EmpireTemplate et)
+		private void PlaceEmpire(Galaxy gal, Empire emp)
 		{
-			var emp = et.Instantiate();
-			gal.Empires.Add(emp);
-			gal.Register(emp);
-
 			if (AllSystemsExplored)
 			{
 				// set all systems explored
