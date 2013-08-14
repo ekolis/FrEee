@@ -49,6 +49,8 @@ namespace FrEee.WinForms.Forms
 				Message = "Initializing",
 				Exception = null,
 			};
+
+			string[] warnings = new string[0];
 			Thread t = new Thread(new ThreadStart(() =>
 			{
 				try
@@ -60,14 +62,20 @@ namespace FrEee.WinForms.Forms
 					}
 					status.Message = "Setting up game";
 					var setup = GameSetup.Load(Path.Combine("GameSetups", "Quickstart.gsu"));
-					// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
-					
-					status.Message = "Setting up galaxy";
-					Galaxy.Initialize(setup, status, 1.0);
-					var name = Galaxy.Current.Name;
-					var turn = Galaxy.Current.TurnNumber;
-					status.Message = "Loading game";
-					Galaxy.Load(name + "_" + turn + "_1.gam");
+					warnings = setup.Warnings.ToArray();
+					if (warnings.Any())
+						MessageBox.Show(warnings.First(), "Game Setup Error");
+					else
+					{
+						// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
+
+						status.Message = "Setting up galaxy";
+						Galaxy.Initialize(setup, status, 1.0);
+						var name = Galaxy.Current.Name;
+						var turn = Galaxy.Current.TurnNumber;
+						status.Message = "Loading game";
+						Galaxy.Load(name + "_" + turn + "_1.gam");
+					}
 				}
 				catch (Exception ex)
 				{
@@ -78,7 +86,7 @@ namespace FrEee.WinForms.Forms
 
 			this.ShowChildForm(new StatusForm(t, status));
 
-			if (status.Exception == null)
+			if (status.Exception == null && !warnings.Any())
 			{
 				var game = new GameForm(Galaxy.Current);
 				game.Show();
