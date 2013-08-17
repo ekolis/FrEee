@@ -18,6 +18,12 @@ namespace FrEee.Game.Objects.Orders
 		where T : IConstructable
 		where TTemplate : ITemplate<T>, IReferrable, IConstructionTemplate
 	{
+		public ConstructionOrder()
+		{
+			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
+				Galaxy.Current.Register(this, Empire.Current);
+		}
+
 		/// <summary>
 		/// The construction template.
 		/// </summary>

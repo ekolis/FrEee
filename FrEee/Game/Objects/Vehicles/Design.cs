@@ -65,6 +65,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Components = new List<MountedComponentTemplate>();
 			Iteration = 1;
+			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
+				Galaxy.Current.Register(this, Empire.Current);
 		}
 
 		public string BaseName { get; set; }

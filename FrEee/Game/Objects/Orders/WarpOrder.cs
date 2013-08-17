@@ -21,6 +21,8 @@ namespace FrEee.Game.Objects.Orders
 		public WarpOrder(WarpPoint warpPoint)
 		{
 			WarpPoint = warpPoint;
+			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
+				Galaxy.Current.Register(this, Empire.Current);
 		}
 
 		/// <summary>

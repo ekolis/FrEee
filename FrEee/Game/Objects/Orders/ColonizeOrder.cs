@@ -21,6 +21,8 @@ namespace FrEee.Game.Objects.Orders
 		public ColonizeOrder(Planet planet)
 		{
 			Planet = planet;
+			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
+				Galaxy.Current.Register(this, Empire.Current);
 		}
 
 		/// <summary>

@@ -20,10 +20,13 @@ namespace FrEee.Game.Objects.Orders
 	public class EvadeOrder<T> : IMobileSpaceObjectOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable
 	{
+
 		public EvadeOrder(ISpaceObject target, bool avoidEnemies)
 		{
 			Target = target;
 			AvoidEnemies = avoidEnemies;
+			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
+				Galaxy.Current.Register(this, Empire.Current);
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
 
