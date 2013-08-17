@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,19 +20,30 @@ namespace FrEee.Game.Objects.Commands
 	{
 		public RemoveOrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target, order)
-		 {
-		 }
+		{
+		}
 
 		public override void Execute()
 		{
-			if (Issuer == Target.Owner)
+			try
 			{
-				Target.RemoveOrder(Order);
-				Galaxy.Current.Unregister(Order, Issuer);
+				if (Order.IsNew())
+				{
+					Issuer.Log.Add(new GenericLogMessage("The server attempted to remove an order from " + Target + " that was not actually on the server; it was just added and removed this past turn. This is probably a game bug."));
+				}
+				else if (Issuer == Target.Owner)
+				{
+					Target.RemoveOrder(Order);
+					Galaxy.Current.Unregister(Order, Issuer);
+				}
+				else
+				{
+					Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
+				}
 			}
-			else
+			catch (InvalidCastException ex)
 			{
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
+				Issuer.Log.Add(new GenericLogMessage("The server attempted to remove an order from " + Target + " that was not actually on the server; it was just added and removed this past turn. This is probably a game bug."));
 			}
 		}
 	}

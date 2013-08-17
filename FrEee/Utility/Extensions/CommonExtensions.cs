@@ -15,6 +15,7 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Civilization;
 using System.Reflection;
 using System.Collections;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.Utility.Extensions
 {
@@ -884,6 +885,16 @@ namespace FrEee.Utility.Extensions
 			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
 			sw.WriteLine(ex.ToString());
 			sw.Close();
+		}
+
+		/// <summary>
+		/// Is this order a new order added this turn, or one the server already knows about?
+		/// </summary>
+		/// <param name="order"></param>
+		/// <returns></returns>
+		public static bool IsNew<T>(this IOrder<T> order) where T : IOrderable
+		{
+			return Galaxy.Current.Referrables[Galaxy.Current.PlayerNumber].OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
 		}
 	}
 }
