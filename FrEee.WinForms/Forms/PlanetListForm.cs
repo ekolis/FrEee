@@ -51,9 +51,7 @@ namespace FrEee.WinForms.Forms
 			var colonizers = Galaxy.Current.FindSpaceObjects<AutonomousSpaceVehicle>(v =>
 				v.Owner == Empire.Current &&
 				(
-					v.HasAbility("Colonize Planet - Rock") || 
-					v.HasAbility("Colonize Planet - Ice") || 
-					v.HasAbility("Colonize Planet - Gas Giant") 
+					v.Abilities.Any(a => a.Name.StartsWith("Colonize Planet - ")) 
 				)).Flatten().Flatten();
 			txtShips.Text = colonizers.Count().ToString();
 			txtAvailable.Text = colonizers.Where(v => v.Orders.Count == 0 && v.Speed > 0).Count().ToString();

@@ -218,7 +218,9 @@ namespace FrEee.WinForms.Forms
 					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
 					if (sector != null)
 					{
-						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.HasAbility("Colonize Planet - " + p.Surface));
+						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && 
+							// HACK - the colonize ability is Gas, the planets are Gas Giant
+							v.Abilities.Any(a => a.Name == "Colonize Planet - " + p.Surface || a.Name + " Giant" == "Colonize Planet - " + p.Surface));
 						if (Galaxy.Current.CanColonizeOnlyBreathable)
 							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
 						if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
