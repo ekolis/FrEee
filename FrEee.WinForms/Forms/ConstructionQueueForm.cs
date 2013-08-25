@@ -87,7 +87,7 @@ namespace FrEee.WinForms.Forms
 				var remainingCost = order.Template.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				double progress;
 				if (order.Item != null && order.Item.ConstructionProgress.Any())
-					progress = order.Item.ConstructionProgress.Keys.Where(k => order.Item.Cost.ContainsKey(k)).Min(k => (double)order.Item.ConstructionProgress[k] / (double)order.Item.Cost[k]);
+					progress = order.Item.ConstructionProgress.Keys.Where(k => order.Item.Cost[k] > 0).Min(k => (double)order.Item.ConstructionProgress[k] / (double)order.Item.Cost[k]);
 				else
 					progress = 0d;
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, (int)Math.Round(progress * 100) + "%"));
