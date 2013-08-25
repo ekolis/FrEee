@@ -122,12 +122,20 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				if (!ColonizedPlanets.Any())
-					return new ResourceQuantity();
-				return ColonizedPlanets.Sum(p => p.Income);
-				// TODO - remote mining and raw resource/points generation
+				// shouldn't change except at turn processing...
+				if (grossIncome == null)
+				{
+					if (!ColonizedPlanets.Any())
+						grossIncome = new ResourceQuantity();
+					else
+						grossIncome = ColonizedPlanets.Sum(p => p.Income);
+					// TODO - remote mining and raw resource/points generation
+				}
+				return grossIncome;
 			}
 		}
+
+		private ResourceQuantity grossIncome;
 
 		/// <summary>
 		/// Resources the empire spends on maintenance.
@@ -136,10 +144,15 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
+				// shouldn't change except at turn processing...
 				// TODO - facility/unit maintenance?
-				return OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Sum(v => v.MaintenanceCost);
+				if (maintenance == null)
+					maintenance = OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Sum(v => v.MaintenanceCost);
+				return maintenance;
 			}
 		}
+
+		private ResourceQuantity maintenance;
 
 		/// <summary>
 		/// Gross income less maintenance.
