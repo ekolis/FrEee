@@ -86,13 +86,14 @@ namespace FrEee.WinForms.Forms
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
 				var remainingCost = order.Template.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				double progress;
-				if (order.Item != null && order.Item.ConstructionProgress.Any())
-					progress = order.Item.ConstructionProgress.Keys.Where(k => order.Item.Cost[k] > 0).Min(k => (double)order.Item.ConstructionProgress[k] / (double)order.Item.Cost[k]);
-				else
-					progress = 0d;
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, (int)Math.Round(progress * 100) + "%"));
+				var minprogress = (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
+				var orgprogress = (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
+				var radprogress = (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
 				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]));
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta + " turns"));
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
 				item.ImageIndex = i;
 				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);

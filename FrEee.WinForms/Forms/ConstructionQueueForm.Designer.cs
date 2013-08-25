@@ -47,7 +47,9 @@
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstQueue = new System.Windows.Forms.ListView();
 			this.Item = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.Progress = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.txtName = new System.Windows.Forms.Label();
@@ -258,7 +260,9 @@
 			this.lstQueue.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstQueue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Item,
-            this.Progress,
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
             this.ETA});
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
 			this.lstQueue.FullRowSelect = true;
@@ -276,11 +280,22 @@
 			// Item
 			// 
 			this.Item.Text = "Item";
-			this.Item.Width = 200;
+			this.Item.Width = 140;
 			// 
-			// Progress
+			// columnHeader1
 			// 
-			this.Progress.Text = "Progress";
+			this.columnHeader1.Text = "Min";
+			this.columnHeader1.Width = 55;
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Text = "Org";
+			this.columnHeader2.Width = 55;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Text = "Rad";
+			this.columnHeader3.Width = 55;
 			// 
 			// ETA
 			// 
@@ -619,7 +634,6 @@
 		private Controls.GameButton btnClear;
 		private Controls.GameButton btnReorder;
 		private System.Windows.Forms.ColumnHeader Item;
-		private System.Windows.Forms.ColumnHeader Progress;
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
 		private System.Windows.Forms.ColumnHeader ETA;
@@ -633,5 +647,8 @@
 		private System.Windows.Forms.ColumnHeader colShipETA;
 		private System.Windows.Forms.ColumnHeader colFacilityItem;
 		private System.Windows.Forms.ColumnHeader colFacilityETA;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
 	}
 }
