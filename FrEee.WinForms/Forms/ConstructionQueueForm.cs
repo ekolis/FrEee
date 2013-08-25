@@ -83,6 +83,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var item = new ListViewItem(order.Template.Name);
 				item.Tag = order;
+				item.UseItemStyleForSubItems = false;
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
 				var remainingCost = order.Template.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				double progress;
