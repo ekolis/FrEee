@@ -106,6 +106,7 @@ namespace FrEee.WinForms.Forms
 				copy.TurnNumber = Galaxy.Current.TurnNumber;
 				copy.Owner = Empire.Current;
 				copy.Iteration++;
+				copy.VehiclesBuilt = 0;
 				copy.Components.Clear();
 				foreach (var mct in old.Components)
 				{
@@ -156,6 +157,7 @@ namespace FrEee.WinForms.Forms
 				copy.TurnNumber = Galaxy.Current.TurnNumber;
 				copy.Owner = Empire.Current;
 				copy.Iteration++;
+				copy.VehiclesBuilt = 0;			
 				copy.Components.Clear();
 				foreach (var mct in old.Components)
 				{
