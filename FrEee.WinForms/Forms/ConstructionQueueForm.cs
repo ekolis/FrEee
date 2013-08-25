@@ -97,7 +97,7 @@ namespace FrEee.WinForms.Forms
 				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);
 				i++;
-				prevCost += order.Template.Cost;
+				prevCost += remainingCost;
 			}
 		}
 
