@@ -373,10 +373,10 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
 
 			// recycle ID's
-			for (int i = 0; i < Current.Referrables.Count; i++)
+			/*for (int i = 0; i < Current.Referrables.Count; i++)
 			{
 				Current.Referrables[i] = Current.Referrables[i].Where(r => r != null).ToList();
-			}
+			}*/
 
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
 
@@ -524,7 +524,8 @@ namespace FrEee.Game.Objects.Space
 
 				for (int i = 0; i < Referrables[0].Count; i++)
 				{
-					if (Referrables[0][i].Owner != CurrentEmpire && Referrables[0][i].Owner != null)
+					var r = Referrables[0][i];
+					if (r != null && r.Owner != CurrentEmpire && r.Owner != null)
 						Referrables[0][i] = null; // keep stuff with the same indices so PLR files can find it
 				}
 				for (int i = 1; i < Referrables.Count; i++)
@@ -536,7 +537,8 @@ namespace FrEee.Game.Objects.Space
 				{
 					for (int i = 0; i < Referrables[Empires.IndexOf(CurrentEmpire) + 1].Count; i++)
 					{
-						if (Referrables[Empires.IndexOf(CurrentEmpire) + 1][i].Owner != CurrentEmpire && Referrables[Empires.IndexOf(CurrentEmpire) + 1][i].Owner != null)
+						var r = Referrables[Empires.IndexOf(CurrentEmpire) + 1][i];
+						if (r != null && r.Owner != CurrentEmpire && r.Owner != null)
 							Referrables[Empires.IndexOf(CurrentEmpire) + 1][i] = null; // keep stuff with the same indices so PLR files can find it
 					}
 				}
