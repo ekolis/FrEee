@@ -102,9 +102,9 @@ namespace FrEee.Game.Objects.Civilization
 					rate *= traitmod;
 
 					// apply aptitude modifier
-					double aptmod = 1d;
+					double aptmod = 0d;
 					foreach (var ratio in ratios)
-						aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d) + 1d) * ratio.Ratio;
+						aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d)) * ratio.Ratio;
 					rate *= aptmod;
 
 				}
