@@ -634,7 +634,7 @@ namespace FrEee.Game.Objects.Space
 					// TODO - plagued planets should not reproduce, and should lose population each turn
 					var sysModifier = this.FindStarSystem().GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
-					var reproduction = (Mod.Current.Settings.Reproduction + race.Aptitudes["Reproduction"] + sysModifier + planetModifier) / 100d * Mod.Current.Settings.ReproductionMultiplier;
+					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?
