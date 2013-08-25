@@ -407,9 +407,12 @@ namespace FrEee.WinForms.Forms
 					turnEnded = true;
 					Close();
 				}
-				// show empire log if there's anything new there
-				if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
-					this.ShowChildForm(new LogForm(this));
+				else
+				{
+					// show empire log if there's anything new there
+					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+						this.ShowChildForm(new LogForm(this));
+				}
 			}
 		}
 
