@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -43,11 +44,13 @@ namespace FrEee.Utility
 					ID = Galaxy.Current.Register(t);
 					IsGlobal = true;
 				}
-				else
+				else if (t.GetType().IsClientSafe())
 				{
 					ID = Galaxy.Current.Register(t, Empire.Current);
 					IsGlobal = false;
 				}
+				else
+					throw new ReferenceException("Tried to create a new reference to a non-client-safe object " + t + " on the client side.", -1, t.GetType());
 			}
 		}
 
