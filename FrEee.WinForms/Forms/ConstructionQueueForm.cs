@@ -37,11 +37,8 @@ namespace FrEee.WinForms.Forms
 			resOrganicsRate.Amount = ConstructionQueue.Rate[Resource.Organics];
 			resRadioactivesRate.Amount = ConstructionQueue.Rate[Resource.Radioactives];
 
-			// add ships/bases to constructable items
-			BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
-
-			// add facilities to constructable items
-			BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>());
+			// bind constructable lists
+			chkOnlyLatest_CheckedChanged(this, new EventArgs());
 
 			// show existing queued items
 			BindQueueListView();
@@ -166,9 +163,15 @@ namespace FrEee.WinForms.Forms
 		private void chkOnlyLatest_CheckedChanged(object sender, EventArgs e)
 		{
 			if (chkOnlyLatest.Checked)
+			{
 				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().OnlyLatest(f => f.Family));
+				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current) && !d.IsObsolete));
+			}
 			else
+			{
 				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>());
+				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
+			}
 		}
 
 		private void BindFacilityListView(IEnumerable<FacilityTemplate> templates)
