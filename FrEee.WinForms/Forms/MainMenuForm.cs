@@ -1,4 +1,6 @@
-﻿using System.Windows.Threading;
+﻿using System.Runtime.Remoting.Messaging;
+using System.Text.RegularExpressions;
+using System.Windows.Threading;
 using FrEee.Game;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
@@ -106,37 +108,40 @@ namespace FrEee.WinForms.Forms
 			dlg.InitialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Savegame");
 			var result = dlg.ShowDialog();
 			if (result == DialogResult.OK)
-			{
-				Galaxy.Load(dlg.FileName);
-				if (Galaxy.Current.CurrentEmpire == null)
-				{
-					// host view, prompt for turn processing
-					if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
-					{
-						Cursor = Cursors.WaitCursor;
-						var status = new Status { Message = "Initializing" };
-						var t = new Thread(new ThreadStart(() =>
-							{
-								status.Message = "Processing turn";
-								Galaxy.Current.ProcessTurn();
-								status.Progress = 0.5;
-								Galaxy.SaveAll(status);
-							}));
-						this.ShowChildForm(new StatusForm(t, status));
-						MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
-						Cursor = Cursors.Default;
-					}
-				}
-				else
-				{
-					// player view, load up the game
-					var form = new GameForm(Galaxy.Current);
-					Hide();
-					form.ShowDialog();
-					Show();
-				}
-			}
+				LoadGalaxyFromFile(dlg.FileName);
 		}
+
+	    private void LoadGalaxyFromFile(string filename)
+	    {
+            Galaxy.Load(filename);
+            if (Galaxy.Current.CurrentEmpire == null)
+            {
+                // host view, prompt for turn processing
+                if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " stardate " + Galaxy.Current.Stardate + "?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Cursor = Cursors.WaitCursor;
+                    var status = new Status { Message = "Initializing" };
+                    var t = new Thread(new ThreadStart(() =>
+                    {
+                        status.Message = "Processing turn";
+                        Galaxy.Current.ProcessTurn();
+                        status.Progress = 0.5;
+                        Galaxy.SaveAll(status);
+                    }));
+                    this.ShowChildForm(new StatusForm(t, status));
+                    MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+                    Cursor = Cursors.Default;
+                }
+            }
+            else
+            {
+                // player view, load up the game
+                var form = new GameForm(Galaxy.Current);
+                Hide();
+                form.ShowDialog();
+                Show();
+            }
+	    }
 
 		private void btnQuit_Click(object sender, EventArgs e)
 		{
@@ -188,7 +193,15 @@ namespace FrEee.WinForms.Forms
 
 		private void btnResume_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, resuming your latest game is not yet supported. But you can load a game of your choosing using Load.");
+		    var mostRecent = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Savegame"))
+		        .Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
+		        .OrderByDescending(kvp => kvp.Value)
+		        .Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
+                .ToList();
+		    if (mostRecent.Any())
+		        LoadGalaxyFromFile(mostRecent.First().Key);
+		    else
+		        MessageBox.Show("No games to resume; please create a new game.");
 		}
 
 		private void btnScenario_Click(object sender, EventArgs e)
