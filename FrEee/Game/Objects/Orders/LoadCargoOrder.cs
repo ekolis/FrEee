@@ -19,13 +19,14 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public LoadCargoOrder(ICargoContainer origin)
 		{
+			Owner = Empire.Current;
 			Origin = origin;
 			racePopulationToLoad = new SafeDictionary<Reference<Race>, long?>();
 			AnyPopulationToLoad = 0;
 			designUnitsToLoad = new SafeDictionary<Reference<IDesign<Unit>>, int?>();
 			anyUnitsToLoad = new SafeDictionary<VehicleTypes, int?>();
 			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
-				Galaxy.Current.Register(this, Empire.Current);
+				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
@@ -264,13 +265,32 @@ namespace FrEee.Game.Objects.Orders
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
+		/// <summary>
+		/// The empire which issued the order.
+		/// </summary>
 		public Empire Owner
 		{
-			get { return null; }
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Orders are visible only to their owners.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Visible;
+			return Visibility.Unknown;
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			// This type does not use client objects, so nothing to do here.
 		}
 	}
 }

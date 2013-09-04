@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Commands
 			Order = order;
 		}
 
-		private IReference<IOrder<T>> order { get; set; }
+		private Reference<IOrder<T>> order { get; set; }
 
 		[DoNotSerialize]
 		public virtual IOrder<T> Order
@@ -37,6 +37,12 @@ namespace FrEee.Game.Objects.Commands
 			{
 				order = value.Reference();
 			}
+		}
+
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			base.ReplaceClientIDs(idmap);
+			order.ReplaceClientIDs(idmap);
 		}
 	}
 }

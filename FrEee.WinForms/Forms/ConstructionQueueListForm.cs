@@ -23,7 +23,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindQueueList()
 		{
-			constructionQueueBindingSource.DataSource = Empire.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Rate.Any(r => r.Value > 0));
+			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Rate.Any(r => r.Value > 0));
 		}
 
 		private void ConstructionQueueListForm_Load(object sender, EventArgs e)

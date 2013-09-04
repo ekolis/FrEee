@@ -784,7 +784,7 @@ namespace FrEee.Utility.Extensions
 
 		public static Reference<T> Reference<T>(this T t) where T : IReferrable
 		{
-			return new Reference<T>(Empire.Current, t);
+			return new Reference<T>(t);
 		}
 
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
@@ -833,7 +833,7 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Is this type safe to pass from the client to the server?
 		/// Primitives, strings, points and colors are client safe.
-		/// So are types marked with ClientSafeAttribute.
+		/// So are types implementing IPromotable.
 		/// </summary>
 		/// <param name="t"></param>
 		/// <returns></returns>
@@ -846,7 +846,7 @@ namespace FrEee.Utility.Extensions
 				t == typeof(Color) ||
 				typeof(IEnumerable<object>).IsAssignableFrom(t) ||
 				typeof(IEnumerable).IsAssignableFrom(t) || 
-				t.GetCustomAttributes(typeof(ClientSafeAttribute),true).Any() ||
+				typeof(IPromotable).IsAssignableFrom(t) ||
 				t.BaseType != null && t.BaseType.IsClientSafe() ||
 				t.GetInterfaces().Any(i => i.IsClientSafe());
 		}
@@ -894,7 +894,19 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool IsNew<T>(this IOrder<T> order) where T : IOrderable
 		{
-			return Galaxy.Current.Referrables[Galaxy.Current.PlayerNumber].OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
+			return Galaxy.Current.Referrables.OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
+		}
+
+		/// <summary>
+		/// Gets the ID of an object in the current galaxy.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static long ID(this IReferrable obj)
+		{
+			if (!Galaxy.Current.IDs.ContainsKey(obj))
+				throw new Exception("Current galaxy does not contain " + obj + " as a referrable object.");
+			return Galaxy.Current.IDs[obj];
 		}
 	}
 }

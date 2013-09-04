@@ -8,6 +8,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -146,8 +147,6 @@ namespace FrEee.Game.Objects.Technology
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		/// <summary>
@@ -161,6 +160,16 @@ namespace FrEee.Game.Objects.Technology
 				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
 				return withHighestRomanNumeral.Last();
 			}
+		}
+
+		/// <summary>
+		/// Mod objects are fully known to everyone.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return Visibility.Scanned;
 		}
 	}
 }

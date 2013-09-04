@@ -14,8 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	[ClientSafe]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable
 	{
 		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null)
 		{
@@ -248,6 +247,11 @@ namespace FrEee.Game.Objects.Technology
 					return ((DirectFireWeaponInfo)w).AccuracyModifier + (Mount == null ? 0 : Mount.WeaponAccuracyModifier);
 				return 999; // seekers/warheads
 			}
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			// This type does not use client objects, so nothing to do here.
 		}
 	}
 }

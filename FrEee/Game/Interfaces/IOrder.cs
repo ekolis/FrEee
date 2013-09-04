@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An order issued by a player to an object to do something.
 	/// </summary>
-	[ClientSafe]
-	public interface IOrder : IReferrable
+	public interface IOrder : IReferrable, IPromotable
 	{
 		/// <summary>
 		/// Is this order done executing?

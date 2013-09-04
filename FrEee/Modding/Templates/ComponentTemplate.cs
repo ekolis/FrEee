@@ -161,8 +161,6 @@ namespace FrEee.Modding.Templates
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		public WeaponTypes WeaponType
@@ -194,6 +192,16 @@ namespace FrEee.Modding.Templates
 				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
 				return withHighestRomanNumeral.Last();
 			}
+		}
+
+		/// <summary>
+		/// Mod objects are fully known to everyone.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return Visibility.Scanned;
 		}
 	}
 }

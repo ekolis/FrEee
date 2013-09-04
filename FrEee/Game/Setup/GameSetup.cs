@@ -366,7 +366,7 @@ namespace FrEee.Game.Setup
 			}
 
 			// give empire starting techs
-			foreach (var tech in emp.Referrables.OfType<Technology>())
+			foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
 			{
 				switch (StartingTechnologyLevel)
 				{

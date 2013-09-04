@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace FrEee.Game.Objects.Commands
 		public AddOrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target, order)
 		{
+			NewReferrables.Add(Order.ID(), Order);
 		}
 
 		public override void Execute()
@@ -31,17 +33,30 @@ namespace FrEee.Game.Objects.Commands
 				else
 				{
 					Target.AddOrder(Order);
-					Galaxy.Current.Register(Order, Issuer);
+					Galaxy.Current.Register(Order);
 				}
 			}
 			else
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 
-		public override IOrder<T> Order
+		private IOrder<T> order
 		{
 			get;
 			set;
+		}
+
+		public override IOrder<T> Order
+		{
+			get
+			{
+				return order;
+			}
+			set
+			{
+				base.Order = value;
+				order = value;
+			}
 		}
 	}
 }

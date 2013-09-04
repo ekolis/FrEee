@@ -351,5 +351,21 @@ namespace FrEee.Game.Objects.Vehicles
 				return Cost * pct / 100d;
 			}
 		}
+
+		public override Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Owned;
+			if (this.FindStarSystem() == null)
+				return Visibility.Unknown;
+			// TODO - cloaking
+			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			if (!seers.Any())
+				return Visibility.Unknown; // TODO - memory sight
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
+			if (scanners.Any())
+				return Visibility.Scanned;
+			return Visibility.Visible;
+		}
 	}
 }

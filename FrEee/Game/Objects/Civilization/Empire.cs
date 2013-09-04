@@ -17,6 +17,7 @@ using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -385,29 +386,13 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Objects which can be referenced from the client side by this empire.
-		/// </summary>
-		public IEnumerable<IReferrable> Referrables
-		{
-			get
-			{
-				var empnum = Galaxy.Current.Empires.IndexOf(this) + 1;
-				var list = new List<IReferrable>();
-				list.AddRange(Galaxy.Current.Referrables[0]);
-				if (empnum < Galaxy.Current.Referrables.Count)
-					list.AddRange(Galaxy.Current.Referrables[empnum]);
-				return list.Distinct();
-			}
-		}
-
-		/// <summary>
 		/// Technologies which are available for research.
 		/// </summary>
 		public IEnumerable<Technology.Technology> AvailableTechnologies
 		{
 			get
 			{
-				return Referrables.OfType<Technology.Technology>().Where(
+				return Galaxy.Current.Referrables.OfType<Technology.Technology>().Where(
 					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 			}
 		}
@@ -419,7 +404,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
+				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
 			}
 		}
 
@@ -480,8 +465,6 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		/// <summary>
@@ -598,6 +581,17 @@ namespace FrEee.Game.Objects.Civilization
 		public int CompareTo(object obj)
 		{
 			return Name.CompareTo(obj.ToString());
+		}
+
+		/// <summary>
+		/// Empires are known to everyone, though they really should be hidden until first contact...
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// TODO - hide empires until first contact
+			return Visibility.Scanned;
 		}
 	}
 }

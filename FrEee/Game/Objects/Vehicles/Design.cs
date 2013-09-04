@@ -66,7 +66,7 @@ namespace FrEee.Game.Objects.Vehicles
 			Components = new List<MountedComponentTemplate>();
 			Iteration = 1;
 			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
-				Galaxy.Current.Register(this, Empire.Current);
+				Galaxy.Current.Register(this);
 		}
 
 		public string BaseName { get; set; }
@@ -110,7 +110,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The hull used in this design.
 		/// </summary>
 		[DoNotSerialize]
-		public IHull<T> Hull { get { return hull.Value; } set { hull = new Reference<IHull<T>>(Empire.Current, value); } }
+		public IHull<T> Hull { get { return hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
 
 		private Reference<IHull<T>> hull { get; set; }
 
@@ -431,8 +431,6 @@ namespace FrEee.Game.Objects.Vehicles
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		public Design<T> Copy()
@@ -457,6 +455,21 @@ namespace FrEee.Game.Objects.Vehicles
 		IDesign IDesign.Copy()
 		{
 			return Copy();
+		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (Owner == emp)
+				return Visibility.Owned;
+			else if (emp.KnownDesigns.Contains(this))
+				return Visibility.Scanned;
+			return Visibility.Unknown;
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			foreach (var mct in Components)
+				mct.ReplaceClientIDs(idmap);
 		}
 	}
 }

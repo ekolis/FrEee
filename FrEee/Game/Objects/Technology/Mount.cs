@@ -159,8 +159,16 @@ namespace FrEee.Game.Objects.Technology
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
+		}
+
+		/// <summary>
+		/// Mod objects are fully known to everyone.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return Visibility.Scanned;
 		}
 	}
 }

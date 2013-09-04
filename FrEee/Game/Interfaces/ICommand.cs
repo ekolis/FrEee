@@ -10,8 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to some object.
 	/// </summary>
-	[ClientSafe]
-	public interface ICommand
+	public interface ICommand : IPromotable
 	{
 		/// <summary>
 		/// The empire issuing the command.
@@ -22,6 +21,11 @@ namespace FrEee.Game.Interfaces
 		/// Executes the command.
 		/// </summary>
 		void Execute();
+
+		/// <summary>
+		/// Any new (from the client) objects referred to by this command.
+		/// </summary>
+		IDictionary<long, IReferrable> NewReferrables { get; }
 	}
 
 	/// <summary>

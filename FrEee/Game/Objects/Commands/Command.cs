@@ -21,6 +21,7 @@ namespace FrEee.Game.Objects.Commands
 		{
 			Issuer = issuer;
 			Target = target;
+			NewReferrables = new Dictionary<long, IReferrable>();
 		}
 
 		[DoNotSerialize]
@@ -34,5 +35,17 @@ namespace FrEee.Game.Objects.Commands
 		private Reference<T> target { get; set; }
 
 		public abstract void Execute();
+
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			issuer.ReplaceClientIDs(idmap);
+			target.ReplaceClientIDs(idmap);
+		}
+
+		public IDictionary<long, IReferrable> NewReferrables
+		{
+			get;
+			private set;
+		}
 	}
 }

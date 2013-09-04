@@ -42,8 +42,6 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		string PictureName { get; set; }
 
-		Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem);
-
 		void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility);
 	}
 }

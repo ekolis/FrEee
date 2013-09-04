@@ -8,10 +8,13 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// Something that can be referred to from the client side using an ID.
+	/// Something that can be obscured by fog of war.
 	/// </summary>
-	public interface IReferrable : IDisposable, IOwnable, IFoggable
+	public interface IFoggable
 	{
-		
+		/// <summary>
+		/// The visibility of this object to an empire.
+		/// </summary>
+		Visibility CheckVisibility(Empire emp);
 	}
 }

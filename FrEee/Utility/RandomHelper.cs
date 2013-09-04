@@ -26,7 +26,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static long Next(long upper)
 		{
-			return Next((int)(upper / int.MaxValue / 2)) * int.MaxValue * 2 + Next((int)(upper % ((long)int.MaxValue))) * 2 + Next(2);
+			return Next((int)(upper / (long)int.MaxValue / 4L)) * (long)int.MaxValue * 4L + Next((int)(upper % ((long)int.MaxValue))) * 2 + Next(2);
 		}
 
 		/// <summary>
@@ -38,6 +38,17 @@ namespace FrEee.Utility
 		public static int Range(int min, int max)
 		{
 			return rng.Next(min, max + 1);
+		}
+
+		/// <summary>
+		/// Generates a random number within a range (inclusive).
+		/// </summary>
+		/// <param name="min">The minimum.</param>
+		/// <param name="max">The maximum.</param>
+		/// <returns></returns>
+		public static long Range(long min, long max)
+		{
+			return Next(max - min + 1) + min;
 		}
 
 		/// <summary>

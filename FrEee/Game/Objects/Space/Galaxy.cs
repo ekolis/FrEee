@@ -31,7 +31,8 @@ namespace FrEee.Game.Objects.Space
 			Empires = new List<Empire>();
 			Name = "Unnamed";
 			TurnNumber = 1;
-			Referrables = new List<IList<IReferrable>>();
+			referrables = new Dictionary<long, IReferrable>();
+			IDs = new Dictionary<IReferrable, long>();
 			VictoryConditions = new List<IVictoryCondition>();
 		}
 
@@ -78,19 +79,19 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public MiningModel RemoteMiningModel { get; set; }
 
-		public int MinPlanetValue {get; set;}
+		public int MinPlanetValue { get; set; }
 
-		public int MinSpawnedPlanetValue {get; set;}
+		public int MinSpawnedPlanetValue { get; set; }
 
-		public int MaxSpawnedPlanetValue {get; set;}
+		public int MaxSpawnedPlanetValue { get; set; }
 
-		public int MaxPlanetValue {get; set;}
+		public int MaxPlanetValue { get; set; }
 
-		public int MinAsteroidValue {get; set;}
+		public int MinAsteroidValue { get; set; }
 
-		public int MinSpawnedAsteroidValue {get; set;}
+		public int MinSpawnedAsteroidValue { get; set; }
 
-		public int MaxSpawnedAsteroidValue {get; set;}
+		public int MaxSpawnedAsteroidValue { get; set; }
 
 		/// <summary>
 		/// Who can view empire scores?
@@ -386,7 +387,7 @@ namespace FrEee.Game.Objects.Space
 			var gamname = Current.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
-	
+
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
@@ -486,10 +487,24 @@ namespace FrEee.Game.Objects.Space
 				{
 					var fs = new FileStream(plrfile, FileMode.Open);
 					var cmds = DeserializeCommands(fs);
+					cmds = cmds.Where(cmd => cmd != null).ToList(); // HACK - why would we have null commands in a plr file?!
 					fs.Close();
 					emp.Commands.Clear();
+					var idmap = new Dictionary<long, long>();
 					foreach (var cmd in cmds)
+					{
 						emp.Commands.Add(cmd);
+						foreach (var kvp in cmd.NewReferrables)
+						{
+							var clientid = kvp.Key;
+							var obj = kvp.Value;
+							var serverid = Galaxy.Current.Register(obj);
+							idmap.Add(clientid, serverid);
+						}
+
+					}
+					foreach (var cmd in cmds)
+						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
 				}
 				else
 					Console.WriteLine(emp.Name + " did not submit a PLR file.");
@@ -522,24 +537,16 @@ namespace FrEee.Game.Objects.Space
 				foreach (var ssl in StarSystemLocations)
 					ssl.Item.Redact(this);
 
-				for (int i = 0; i < Referrables[0].Count; i++)
+				foreach (var kvp in referrables.ToArray())
 				{
-					var r = Referrables[0][i];
-					if (r != null && r.Owner != CurrentEmpire && r.Owner != null)
-						Referrables[0][i] = null; // keep stuff with the same indices so PLR files can find it
-				}
-				for (int i = 1; i < Referrables.Count; i++)
-				{
-					if (i != Empires.IndexOf(CurrentEmpire) + 1)
-						Referrables[i] = null;
-				}
-				if (Referrables.Count > Empires.IndexOf(CurrentEmpire) + 1)
-				{
-					for (int i = 0; i < Referrables[Empires.IndexOf(CurrentEmpire) + 1].Count; i++)
+					var id = kvp.Key;
+					var obj = kvp.Value;
+					// TODO - memory sight
+					var vis = obj.CheckVisibility(CurrentEmpire);
+					if (vis == Visibility.Unknown || vis == Visibility.Fogged)
 					{
-						var r = Referrables[Empires.IndexOf(CurrentEmpire) + 1][i];
-						if (r != null && r.Owner != CurrentEmpire && r.Owner != null)
-							Referrables[Empires.IndexOf(CurrentEmpire) + 1][i] = null; // keep stuff with the same indices so PLR files can find it
+						referrables.Remove(id);
+						IDs.Remove(obj);
 					}
 				}
 
@@ -644,7 +651,7 @@ namespace FrEee.Game.Objects.Space
 				// TODO - allow mod to specify maintenance on units/facilities too?
 				foreach (var v in emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>())
 					emp.StoredResources -= v.MaintenanceCost;
-				
+
 				// if not enough funds, lose ships/bases
 				// TODO - if mods allow unit/facility maintenance, lose those too?
 				// TODO - check if SE4 "saves up" deficits between turns to destroy ships slower than one per turn
@@ -721,17 +728,17 @@ namespace FrEee.Game.Objects.Space
 				sobj.ReplenishShields();
 
 			// construction queues
-			foreach (var q in Referrables.SelectMany(g => g).OfType<ConstructionQueue>().ToArray())
+			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
 
 			// ship movement
 			CurrentTick = 0;
-			foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
+			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
 			while (CurrentTick < 1)
 			{
 				ComputeNextTickSize();
-				foreach (var v in Referrables.SelectMany(g => g).OfType<IMobileSpaceObject>().Shuffle())
+				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
@@ -741,7 +748,7 @@ namespace FrEee.Game.Objects.Space
 					v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
-					
+
 					// check for battles
 					// TODO - alliances
 					var sector = v.FindSector();
@@ -793,46 +800,47 @@ namespace FrEee.Game.Objects.Space
 		/// using a Reference object instead of passing whole objects around.
 		/// Stuff needs to be registered to be found though!
 		/// </summary>
-		public IList<IList<IReferrable>> Referrables { get; private set; }
+		internal IDictionary<long, IReferrable> referrables { get; private set; }
+
+		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
 		/// <summary>
-		/// Registers something so it can be referenced from the client side by a specific player.
+		/// IDs for referrables.
 		/// </summary>
-		/// <param name="orderable"></param>
-		public int Register(IReferrable r, Empire emp)
-		{
-			var empnum = Empires.IndexOf(emp) + 1;
-			while (Referrables.Count <= empnum)
-				Referrables.Add(new List<IReferrable>());
-			if (!Referrables[empnum].Contains(r))
-			{
-				Referrables[empnum].Add(r); // add to player list
-				int id = Referrables[empnum].Count - 1;
-				return id;
-			}
-			else
-				return Referrables[empnum].IndexOf(r);
-		}
+		internal IDictionary<IReferrable, long> IDs { get; private set; }
 
 		/// <summary>
-		/// Registers something so it can be referenced from the client side by all players.
+		/// Registers something so it can be referenced from the client side.
 		/// </summary>
 		/// <param name="r"></param>
-		public int Register(IReferrable r)
+		public long Register(IReferrable r)
 		{
-			if (!Referrables.Any())
-				Referrables.Add(new List<IReferrable>());
-			if (!Referrables[0].Contains(r))
+			if (!IDs.ContainsKey(r))
 			{
-				Referrables[0].Add(r); // add to global list
-				int id = Referrables[0].Count - 1;
+				// register the object
+				var id = GenerateID();
+				referrables.Add(id, r);
+				IDs.Add(r, id);
 				return id;
 			}
 			else
 			{
-				int id = Referrables[0].IndexOf(r);
-				return id;
+				// just return the existing ID
+				return IDs[r];
 			}
+		}
+
+		private long GenerateID()
+		{
+			if (IDs.LongCount() == long.MaxValue)
+				throw new Exception("No more IDs are available to assign for objects.");
+
+			long id;
+			do
+			{
+				id = RandomHelper.Range(1L, long.MaxValue);
+			} while (referrables.ContainsKey(id));
+			return id;
 		}
 
 		/// <summary>
@@ -841,21 +849,9 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="r"></param>
 		public void Unregister(IReferrable r)
 		{
-			var id = Referrables[0].IndexOf(r);
-			if (id >= 0)
-				Referrables[0][id] = null;
-		}
-
-		/// <summary>
-		/// Unregisters something so it can no longer be referenced from the client side by a specific player.
-		/// </summary>
-		/// <param name="r"></param>
-		public void Unregister(IReferrable r, Empire emp)
-		{
-			var empnum = Empires.IndexOf(emp) + 1;
-			var id = Referrables[empnum].IndexOf(r);
-			if (id >= 0)
-				Referrables[empnum][id] = null;
+			var id = IDs[r];
+			IDs.Remove(r);
+			referrables.Remove(id);
 		}
 
 		/// <summary>

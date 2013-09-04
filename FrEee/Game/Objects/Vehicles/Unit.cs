@@ -1,4 +1,6 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ namespace FrEee.Game.Objects.Vehicles
 {
 	/// <summary>
 	/// A vehicle which operates in groups.
+	/// TODO - Do we even need a unit class? Just a unit group class with a design and a count should be enough...
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
@@ -50,6 +53,14 @@ namespace FrEee.Game.Objects.Vehicles
 				// TODO - unit groups
 				throw new NotImplementedException("Units only particpate in combat in groups. Except maybe in ground combat. But anyway, we need unit groups for units to have combat objects.");
 			}
+		}
+
+		public override Visibility CheckVisibility(Empire emp)
+		{
+			if (Owner == emp)
+				return Visibility.Owned;
+			// HACK - units aren't in space, how do we know what can see them?
+			return Visibility.Unknown;
 		}
 	}
 }

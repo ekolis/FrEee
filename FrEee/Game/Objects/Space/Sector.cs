@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Civilization;
 using System.Drawing;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -62,8 +63,6 @@ namespace FrEee.Game.Objects.Space
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		public override string ToString()
@@ -100,5 +99,10 @@ namespace FrEee.Game.Objects.Space
 			return SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return this.FindStarSystem().CheckVisibility(emp);
+		}
 	}
 }

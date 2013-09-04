@@ -16,76 +16,29 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	[ClientSafe]
-	public class Reference<T> : IReference<T> where T : IReferrable
+	public class Reference<T> : IReference<T>, IPromotable where T : IReferrable
 	{
-		public Reference(Empire empire, T t)
+		public Reference(T t)
 		{
-			EmpireNumber = Galaxy.Current.Empires.IndexOf(empire) + 1;
 			if (t == null)
-			{
-				ID = -1;
-				IsGlobal = false;
-			}
-			else if (Galaxy.Current.Referrables[0].Contains(t))
-			{
-				ID = Galaxy.Current.Referrables[0].IndexOf(t);
-				IsGlobal = true;
-			}
-			else if (Galaxy.Current.Referrables.Count - 1 >= EmpireNumber && Galaxy.Current.Referrables[EmpireNumber].Contains(t))
-			{
-				ID = Galaxy.Current.Referrables[EmpireNumber].IndexOf(t);
-				IsGlobal = false;
-			}
+				ID = 0;
+			else if (Galaxy.Current.IDs.ContainsKey(t))
+				ID = Galaxy.Current.IDs[t];
+			else if (Empire.Current == null || t.GetType().IsClientSafe())
+				ID = Galaxy.Current.Register(t);
 			else
-			{
-				if (Empire.Current == null)
-				{
-					ID = Galaxy.Current.Register(t);
-					IsGlobal = true;
-				}
-				else if (t.GetType().IsClientSafe())
-				{
-					ID = Galaxy.Current.Register(t, Empire.Current);
-					IsGlobal = false;
-				}
-				else
-					throw new ReferenceException("Tried to create a new reference to a non-client-safe object " + t + " on the client side.", -1, t.GetType());
-			}
+				throw new ReferenceException("Tried to create a new reference to a non-client-safe object " + t + " on the client side.", -1, t.GetType());
 		}
 
-		public Reference(bool isGlobal, int id)
+		public Reference(long id)
 		{
-			if (isGlobal)
-			{
-				EmpireNumber = 0;
-				IsGlobal = true;
-				if (Galaxy.Current.Referrables[EmpireNumber][id] is T)
-					ID = id;
-				else
-					throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
-				IsGlobal = false;
-			}
+			if (Galaxy.Current.referrables[id] is T)
+				ID = id;
 			else
-			{
-				EmpireNumber = Galaxy.Current.Empires.IndexOf(Empire.Current);
-				IsGlobal = false;
-				if (Galaxy.Current.Referrables[EmpireNumber][id] is T)
-					ID = id;
-				else
-					throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
-				IsGlobal = false;
-			}
+				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
 		}
 
-		public int EmpireNumber { get; private set; }
-
-		public int ID { get; private set; }
-
-		/// <summary>
-		/// Referencing a global referrable? Or one that's only accessible to this player?
-		/// </summary>
-		public bool IsGlobal { get; private set; }
+		public long ID { get; internal set; }
 
 		/// <summary>
 		/// Resolves the reference.
@@ -95,20 +48,11 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (ID < 0)
+				if (ID <= 0)
 					return default(T);
-				if (IsGlobal)
-				{
-					if (ID >= Galaxy.Current.Referrables[0].Count)
-						throw new ReferenceException("ID " + ID + " is too high for global reference to " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
-					return (T)Galaxy.Current.Referrables[0][ID];
-				}
-				else
-				{
-					if (ID >= Galaxy.Current.Referrables[EmpireNumber].Count)
-						throw new ReferenceException("ID " + ID + " is too high for empire reference to " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
-					return (T)Galaxy.Current.Referrables[EmpireNumber][ID];
-				}
+				if (!Galaxy.Current.referrables.ContainsKey(ID))
+					throw new ReferenceException("ID " + ID + " does not exist in the current galaxy. " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
+				return (T)Galaxy.Current.referrables[ID];
 			}
 		}
 
@@ -119,28 +63,33 @@ namespace FrEee.Utility
 
 		public static implicit operator Reference<T>(T t)
 		{
-			return new Reference<T>(Empire.Current, t);
+			return new Reference<T>(t);
 		}
 
 		public override string ToString()
 		{
-			if (IsGlobal)
-				return "Global ID=" + ID + ", Value=" + Value;
-			else
-				return "ID=" + ID + ", Value=" + Value;
+			return "ID=" + ID + ", Value=" + Value;
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			if (idmap.ContainsKey(ID))
+				ID = idmap[ID];
+			if (Value is IPromotable)
+				((IPromotable)Value).ReplaceClientIDs(idmap);
 		}
 	}
 
 	public class ReferenceException : Exception
 	{
-		public ReferenceException(string message, int id, Type type)
+		public ReferenceException(string message, long id, Type type)
 			: base(message)
 		{
 			ID = id;
 			Type = type;
 		}
 
-		public int ID { get; private set; }
+		public long ID { get; private set; }
 
 		public Type Type { get; private set; }
 	}

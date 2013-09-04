@@ -7,8 +7,7 @@ namespace FrEee.Game.Interfaces
 {
 	public interface IReference<out T> where T : IReferrable
 	{
-		int ID { get; }
+		long ID { get; }
 		T Value { get; }
-		bool IsGlobal { get; }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Space;
@@ -161,8 +162,6 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		public override string ToString()
@@ -210,6 +209,17 @@ namespace FrEee.Game.Objects.Civilization
 			var fs = new FileStream(filename, FileMode.Create);
 			Serializer.Serialize(this, fs);
 			fs.Close();
+		}
+
+		/// <summary>
+		/// Races are known to everyone, though they really should be hidden until first contact...
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// TODO - hide races until first contact
+			return Visibility.Scanned;
 		}
 	}
 }

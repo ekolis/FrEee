@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
@@ -234,8 +235,6 @@ namespace FrEee.Game.Objects.Vehicles
 		public virtual void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		[DoNotSerialize]
@@ -284,5 +283,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return 1; }
 		}
+
+		public abstract Visibility CheckVisibility(Empire emp);
 	}
 }

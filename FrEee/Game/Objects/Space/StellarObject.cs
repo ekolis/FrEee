@@ -129,8 +129,6 @@ namespace FrEee.Game.Objects.Space
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
 		}
 
 		public StellarSize StellarSize
@@ -170,5 +168,21 @@ namespace FrEee.Game.Objects.Space
 		/// Stellar objects can't normally warp.
 		/// </summary>
 		public virtual bool CanWarp { get { return false; } }
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Owned;
+			// TODO - cloaking
+			if (this.FindStarSystem() == null)
+				return Visibility.Unknown;
+			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			if (!seers.Any())
+				return Visibility.Unknown; // TODO - memory sight
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
+			if (scanners.Any())
+				return Visibility.Scanned;
+			return Visibility.Visible;
+		}
 	}
 }

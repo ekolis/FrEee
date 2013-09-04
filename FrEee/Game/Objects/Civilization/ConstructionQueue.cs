@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
@@ -296,8 +297,19 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
+		}
+
+		/// <summary>
+		/// Only the owner of a space object can see its construction queue.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			var vis = SpaceObject.CheckVisibility(emp);
+			if (vis == Visibility.Owned)
+				return vis;
+			return Visibility.Unknown;
 		}
 	}
 }

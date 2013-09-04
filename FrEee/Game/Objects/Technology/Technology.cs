@@ -226,7 +226,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
-			foreach (var item in emp.Referrables.OfType<IResearchable>())
+			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
 			{
 				bool ok = true;
 				foreach (var req in item.TechnologyRequirements)
@@ -273,8 +273,16 @@ namespace FrEee.Game.Objects.Technology
 		public void Dispose()
 		{
 			Galaxy.Current.Unregister(this);
-			foreach (var emp in Galaxy.Current.Empires)
-				Galaxy.Current.Unregister(this, emp);
+		}
+
+		/// <summary>
+		/// Mod objects are fully known to everyone.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return Visibility.Scanned;
 		}
 	}
 }

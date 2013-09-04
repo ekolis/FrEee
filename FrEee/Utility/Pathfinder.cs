@@ -101,7 +101,7 @@ namespace FrEee.Utility
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
 					// avoid enemies, even if they are at the destination; wait for them to leave before entering (unlike SE4)
-					moves = moves.Where(m => !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me.Owner))).ToList();
+					moves = moves.Where(m => !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner))).ToList();
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
 					moves = moves.Where(m => m == end || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();

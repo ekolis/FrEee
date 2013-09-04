@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem
+	public class StarSystem : IFoggable
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -206,13 +206,14 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="galaxy">The galaxy, for context.</param>
 		public void Redact(Galaxy galaxy)
 		{
+			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
 			// hide space objects
 			var toRemove = new List<Tuple<Point, ISpaceObject>>();
 			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
 			{
 				foreach (var sobj in group)
 				{
-					var vis = sobj.CheckVisibility(galaxy, this);
+					var vis = sobj.CheckVisibility(galaxy.CurrentEmpire);
 					if (vis != Visibility.Unknown)
 						sobj.Redact(galaxy, this, vis);
 					else
@@ -279,6 +280,15 @@ namespace FrEee.Game.Objects.Space
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Any())
+				return Visibility.Visible;
+			else if (emp.ExploredStarSystems.Contains(this))
+				return Visibility.Fogged;
+			return Visibility.Unknown;
 		}
 	}
 }

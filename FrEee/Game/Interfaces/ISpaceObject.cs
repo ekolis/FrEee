@@ -23,14 +23,6 @@ namespace FrEee.Game.Interfaces
 		IList<Ability> IntrinsicAbilities { get; }
 
 		/// <summary>
-		/// Checks visibility of this space object for the current player.
-		/// </summary>
-		/// <param name="galaxy">The galaxy, for context.</param>
-		/// <param name="starSystem">The star system containing the space object.</param>
-		/// <returns>The visibility rating.</returns>
-		Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem);
-
-		/// <summary>
 		/// Removes any data from this space object that the current player cannot see.
 		/// </summary>
 		/// <param name="galaxy">The galaxy, for context.</param>
