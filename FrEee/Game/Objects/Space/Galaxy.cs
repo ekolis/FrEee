@@ -27,6 +27,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Galaxy()
 		{
+			Galaxy.Current = this;
 			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
 			Empires = new List<Empire>();
 			Name = "Unnamed";
@@ -40,7 +41,6 @@ namespace FrEee.Game.Objects.Space
 			: this()
 		{
 			Mod = mod;
-			Galaxy.Current = this;
 
 			// register objects that need shared client/server ID's
 			foreach (var componentTemplate in Mod.ComponentTemplates)

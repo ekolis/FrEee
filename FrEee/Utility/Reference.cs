@@ -20,7 +20,9 @@ namespace FrEee.Utility
 	{
 		public Reference(T t)
 		{
-			if (t == null)
+			if (Galaxy.Current == null)
+				throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
+			else if (t == null)
 				ID = 0;
 			else if (Galaxy.Current.IDs.ContainsKey(t))
 				ID = Galaxy.Current.IDs[t];
@@ -32,7 +34,9 @@ namespace FrEee.Utility
 
 		public Reference(long id)
 		{
-			if (Galaxy.Current.referrables[id] is T)
+			if (Galaxy.Current == null)
+				throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
+			else if (Galaxy.Current.referrables[id] is T)
 				ID = id;
 			else
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
