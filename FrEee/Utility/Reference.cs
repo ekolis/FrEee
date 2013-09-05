@@ -60,6 +60,17 @@ namespace FrEee.Utility
 			}
 		}
 
+		/// <summary>
+		/// Does the reference have a valid value?
+		/// </summary>
+		public bool HasValue
+		{
+			get
+			{
+				return Galaxy.Current.referrables.ContainsKey(ID);
+			}
+		}
+
 		public static implicit operator T(Reference<T> r)
 		{
 			return r.Value;
@@ -79,7 +90,7 @@ namespace FrEee.Utility
 		{
 			if (idmap.ContainsKey(ID))
 				ID = idmap[ID];
-			if (Value is IPromotable)
+			if (HasValue && Value is IPromotable)
 				((IPromotable)Value).ReplaceClientIDs(idmap);
 		}
 	}

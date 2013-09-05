@@ -505,6 +505,25 @@ namespace FrEee.Game.Objects.Space
 					}
 					foreach (var cmd in cmds)
 						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
+					idmap = new Dictionary<long, long>();
+					foreach (var cmd in cmds)
+					{
+						// promote promotable objects
+						foreach (var p in cmd.NewReferrables.Values)
+						{
+							if (p is IPromotable)
+							{
+								idmap.Add(p.ID(), Register(p));
+							}
+							else
+							{
+								// TODO - constrain objects to be both promotable and referrable using a derived interface
+								// do nothing
+							}
+						}
+					}
+					foreach (var cmd in cmds)
+						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
 				}
 				else
 					Console.WriteLine(emp.Name + " did not submit a PLR file.");

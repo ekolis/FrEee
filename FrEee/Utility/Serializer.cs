@@ -10,6 +10,8 @@ using System.Collections;
 using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Drawing;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Utility
 {
