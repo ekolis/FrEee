@@ -103,9 +103,9 @@ namespace FrEee.Utility
 			else if (typeof(Array).IsAssignableFrom(type))
 				ParseArray((Array)o, context);
 			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any())
-				ParseCollection((IEnumerable)o, w, context, tabLevel);
+				ParseCollection((IEnumerable)o, context);
 			else
-				ParseObject(o, w, context, tabLevel);
+				ParseObject(o, context);
 
 			// done parsing object
 			if (EndObject != null)
