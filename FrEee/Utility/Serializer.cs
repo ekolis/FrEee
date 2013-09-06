@@ -20,14 +20,14 @@ namespace FrEee.Utility
 	/// </summary>
 	public static class Serializer
 	{
-		public static void Serialize<T>(T o, Stream s, SerializationContext context = null, int tabLevel = 0)
+		public static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
 		{
 			var sw = new StreamWriter(s);
 			Serialize(o, sw, context);
 			sw.Close();
 		}
 
-		public static void Serialize<T>(T o, TextWriter w, SerializationContext context = null, int tabLevel = 0)
+		public static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)
 		{
 			if (o == null)
 				Serialize(o, w, typeof(T), context, tabLevel);
@@ -35,7 +35,7 @@ namespace FrEee.Utility
 				Serialize(o, w, o.GetType(), context, tabLevel);
 		}
 
-		private static void Serialize(object o, TextWriter w, Type desiredType, SerializationContext context = null, int tabLevel = 0)
+		private static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
 		{
 			// type checking!
 			if (o != null && !desiredType.IsAssignableFrom(o.GetType()))
@@ -43,7 +43,7 @@ namespace FrEee.Utility
 
 			// set up our serialization context if we haven't already
 			if (context == null)
-				context = new SerializationContext();
+				context = new ObjectGraphContext();
 
 			// write some tabs to improve readability
 			for (int i = 0; i < tabLevel; i++)
@@ -155,7 +155,7 @@ namespace FrEee.Utility
 			w.WriteLine(";");
 		}
 
-		private static void WriteArray(Array array, TextWriter w, SerializationContext context, int tabLevel)
+		private static void WriteArray(Array array, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
 			// arrays get size and elements listed out
 			var bounds = new List<string>();
@@ -186,7 +186,7 @@ namespace FrEee.Utility
 			w.WriteLine(";");
 		}
 
-		private static void WriteCollection(IEnumerable list, TextWriter w, SerializationContext context, int tabLevel)
+		private static void WriteCollection(IEnumerable list, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
 			// collections get size and elements listed out
 			Type itemType;
@@ -246,7 +246,7 @@ namespace FrEee.Utility
 			w.WriteLine(";");
 		}
 
-		private static void WriteObject(object o, TextWriter w, SerializationContext context, int tabLevel)
+		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
 			// serialize object type and field count
 			var type = o.GetType();
@@ -275,7 +275,7 @@ namespace FrEee.Utility
 			w.WriteLine(";");
 		}
 
-		public static T Deserialize<T>(Stream s, SerializationContext context = null)
+		public static T Deserialize<T>(Stream s, ObjectGraphContext context = null)
 		{
 			var sr = new StreamReader(s);
 			var result = Deserialize<T>(sr, context);
@@ -283,12 +283,12 @@ namespace FrEee.Utility
 			return result;
 		}
 
-		public static T Deserialize<T>(TextReader r, SerializationContext context = null)
+		public static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
 		{
 			return (T)Deserialize(r, typeof(T), context);
 		}
 
-		public static object Deserialize(Stream s, Type desiredType, SerializationContext context = null, StringBuilder log = null)
+		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			var sr = new StreamReader(s);
 			var result = Deserialize(sr, desiredType, context, log);
@@ -296,11 +296,11 @@ namespace FrEee.Utility
 			return result;
 		}
 
-		public static object Deserialize(TextReader r, Type desiredType, SerializationContext context = null, StringBuilder log = null)
+		public static object Deserialize(TextReader r, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			// set up our serialization context if we haven't already
 			if (context == null)
-				context = new SerializationContext();
+				context = new ObjectGraphContext();
 			if (log == null)
 				log = new StringBuilder();
 
@@ -622,116 +622,6 @@ namespace FrEee.Utility
 				if (ender == 0 || ender != ';' && !char.IsWhiteSpace((char)ender))
 					throw new SerializationException("Expected ';', got '" + (char)ender + "' at the end of " + type + ".");
 			} while (ender != ';');
-		}
-	}
-
-	/// <summary>
-	/// Context for serialization operations.
-	/// </summary>
-	public class SerializationContext
-	{
-		public SerializationContext()
-		{
-			KnownTypes = new List<Type>();
-			KnownProperties = new Dictionary<Type, IEnumerable<PropertyInfo>>();
-			KnownObjects = new Dictionary<Type, IList<object>>();
-		}
-
-		/// <summary>
-		/// Known data types.
-		/// </summary>
-		public IList<Type> KnownTypes { get; private set; }
-
-		/// <summary>
-		/// Known properties for each object type.
-		/// </summary>
-		public IDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; private set; }
-
-		/// <summary>
-		/// The known objects, grouped by type. Their IDs are their indices in the lists.
-		/// </summary>
-		public IDictionary<Type, IList<object>> KnownObjects { get; private set; }
-
-		/// <summary>
-		/// Adds an object.
-		/// </summary>
-		/// <param name="o"></param>
-		/// <returns>The object's ID. IDs are unique within any any given object type but not across types.</returns>
-		public int Add(object o)
-		{
-			var type = o.GetType();
-			if (!KnownTypes.Contains(type))
-				KnownTypes.Add(type);
-			if (!KnownObjects.ContainsKey(type))
-				KnownObjects.Add(type, new List<object>());
-			KnownObjects[type].Add(o);
-			AddProperties(type);
-			return KnownObjects[type].Count - 1;
-		}
-
-		/// <summary>
-		/// Adds the fields for a type.
-		/// </summary>
-		/// <param name="type"></param>
-		public void AddProperties(Type type)
-		{
-			if (!KnownProperties.ContainsKey(type))
-			{
-				// list out the object's properties that aren't marked nonserializable
-				var props = new Dictionary<PropertyInfo, int>();
-				var t = type;
-				int i = 0; // how far removed in the type hierarchy?
-				while (t != null)
-				{
-					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
-					foreach (var prop in newprops)
-						props.Add(prop, i);
-					t = t.BaseType;
-					i++;
-				}
-				// Mono seems to place inherited properties on the derived type too so we need a consistent ordering
-				var props2 = props.Distinct().GroupBy(p => p.Key.Name).Select(g => g.Single(p2 => p2.Value == g.Max(p3 => p3.Value))).Select(kvp => kvp.Key).OrderBy(p => p.Name);
-				KnownProperties.Add(type, props2.ToArray());
-			}
-		}
-
-		/// <summary>
-		/// Gets the ID for an object, or null if the object is unknown.
-		/// </summary>
-		/// <param name="o"></param>
-		/// <returns></returns>
-		public int? GetID(object o)
-		{
-			if (o == null)
-				return null;
-			var type = o.GetType();
-			if (KnownObjects.ContainsKey(type) && KnownObjects[type].Contains(o, ReferenceEqualityComparer.Instance))
-				return KnownObjects[type].IndexOf(o);
-			return null;
-		}
-
-		private class ReferenceEqualityComparer : IEqualityComparer<object>
-		{
-			static ReferenceEqualityComparer()
-			{
-				Instance = new ReferenceEqualityComparer();
-			}
-
-			private ReferenceEqualityComparer()
-			{
-			}
-
-			public static ReferenceEqualityComparer Instance { get; private set; }
-
-			public bool Equals(object x, object y)
-			{
-				return object.ReferenceEquals(x, y);
-			}
-
-			public int GetHashCode(object obj)
-			{
-				return obj.GetHashCode();
-			}
 		}
 	}
 
