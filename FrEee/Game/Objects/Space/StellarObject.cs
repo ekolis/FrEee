@@ -21,8 +21,6 @@ namespace FrEee.Game.Objects.Space
 		public StellarObject()
 		{
 			IntrinsicAbilities = new List<Ability>();
-			if (Galaxy.Current != null)
-				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>

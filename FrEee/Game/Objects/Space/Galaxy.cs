@@ -513,7 +513,9 @@ namespace FrEee.Game.Objects.Space
 						{
 							if (p is IPromotable)
 							{
-								idmap.Add(p.ID(), Register(p));
+								var oldid = p.ID();
+								var newid = Register(p);
+								idmap.Add(oldid, newid);
 							}
 							else
 							{

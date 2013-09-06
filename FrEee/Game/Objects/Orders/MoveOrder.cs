@@ -25,8 +25,6 @@ namespace FrEee.Game.Objects.Orders
 			Owner = Empire.Current;
 			Destination = destination;
 			AvoidEnemies = avoidEnemies;
-			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
-				Galaxy.Current.Register(this);
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
 

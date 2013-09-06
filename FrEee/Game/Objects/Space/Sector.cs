@@ -19,8 +19,6 @@ namespace FrEee.Game.Objects.Space
 		public Sector()
 		{
 			SpaceObjects = new HashSet<ISpaceObject>();
-			if (Galaxy.Current != null) 
-				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>

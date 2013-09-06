@@ -25,8 +25,6 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			Components = new List<Component>();
 			ConstructionProgress = new ResourceQuantity();
-			if (Galaxy.Current != null)
-				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>

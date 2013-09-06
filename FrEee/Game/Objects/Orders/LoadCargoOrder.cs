@@ -25,8 +25,6 @@ namespace FrEee.Game.Objects.Orders
 			AnyPopulationToLoad = 0;
 			designUnitsToLoad = new SafeDictionary<Reference<IDesign<Unit>>, int?>();
 			anyUnitsToLoad = new SafeDictionary<VehicleTypes, int?>();
-			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
-				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>

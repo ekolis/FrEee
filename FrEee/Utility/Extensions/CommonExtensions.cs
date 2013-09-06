@@ -905,7 +905,7 @@ namespace FrEee.Utility.Extensions
 		public static long ID(this IReferrable obj)
 		{
 			if (!Galaxy.Current.IDs.ContainsKey(obj))
-				throw new Exception("Current galaxy does not contain " + obj + " as a referrable object.");
+				return Galaxy.Current.Register(obj);
 			return Galaxy.Current.IDs[obj];
 		}
 	}

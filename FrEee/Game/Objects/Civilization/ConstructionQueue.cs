@@ -20,8 +20,6 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Orders = new List<IConstructionOrder>();
 			SpaceObject = sobj;
-			if (Galaxy.Current != null)
-				Galaxy.Current.Register(this);
 			UnspentRate = new ResourceQuantity();
 		}
 

@@ -22,8 +22,6 @@ namespace FrEee.Game.Objects.Orders
 		public ConstructionOrder()
 		{
 			Owner = Empire.Current;
-			if (Galaxy.Current != null && Galaxy.Current.PlayerNumber > 0)
-				Galaxy.Current.Register(this);
 		}
 
 		/// <summary>
