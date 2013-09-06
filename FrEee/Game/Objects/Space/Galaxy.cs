@@ -344,6 +344,20 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Assigns IDs to referrable objects so they don't get random IDs when the galaxy is deserialized.
+		/// </summary>
+		private void AssignIDs()
+		{
+			var parser = new ObjectGraphParser();
+			parser.EndObject += o =>
+			{
+				if (o is IReferrable)
+					Register((IReferrable)o);
+			};
+			parser.Parse(this);
+		}
+
+		/// <summary>
 		/// Saves the game to an appropriately named file in the Savegame folder.
 		/// Files are named GameName_TurnNumber_PlayerNumber.gam for players (PlayerNumber is 1-indexed)
 		/// and GameName_TurnNumber.gam for the host.
@@ -351,6 +365,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
 		public string Save()
 		{
+			AssignIDs();
 			string filename;
 			if (CurrentEmpire == null)
 				filename = Name + "_" + TurnNumber + ".gam";
