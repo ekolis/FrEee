@@ -391,6 +391,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetPortrait(Race race)
 		{
+			if (race.LeaderPortraitName == null)
+				return null;
+
 			if (Mod.Current.RootPath != null)
 			{
 				return
