@@ -273,7 +273,6 @@ namespace FrEee.Game.Setup
 			{
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
-				gal.Register(emp);
 			}
 
 			// create random AI empires
@@ -297,7 +296,6 @@ namespace FrEee.Game.Setup
 				};
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
-				gal.Register(emp);
 			}
 
 			// create minor empires
@@ -322,7 +320,6 @@ namespace FrEee.Game.Setup
 				};
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
-				gal.Register(emp);
 			}
 
 			// place empires
@@ -366,6 +363,7 @@ namespace FrEee.Game.Setup
 			}
 
 			// give empire starting techs
+			Galaxy.Current.AssignIDs(); // need to know what the techs in the game are!
 			foreach (var tech in Galaxy.Current.Referrables.OfType<Technology>())
 			{
 				switch (StartingTechnologyLevel)

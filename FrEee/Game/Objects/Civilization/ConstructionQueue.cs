@@ -163,7 +163,7 @@ namespace FrEee.Game.Objects.Civilization
 			private set;
 		}
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -294,7 +294,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		/// <summary>

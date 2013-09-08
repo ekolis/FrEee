@@ -161,7 +161,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public override string ToString()
@@ -221,5 +221,7 @@ namespace FrEee.Game.Objects.Civilization
 			// TODO - hide races until first contact
 			return Visibility.Scanned;
 		}
+
+		public long ID { get; set; }
 	}
 }

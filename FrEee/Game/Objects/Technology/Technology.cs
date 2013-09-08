@@ -108,7 +108,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public IList<TechnologyRequirement> TechnologyRequirements { get; private set; }
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -272,7 +272,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		/// <summary>

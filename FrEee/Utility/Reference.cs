@@ -24,10 +24,10 @@ namespace FrEee.Utility
 				throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
 			else if (t == null)
 				ID = 0;
-			else if (Galaxy.Current.IDs.ContainsKey(t))
-				ID = Galaxy.Current.IDs[t];
+			else if (t.ID > 0)
+				ID = t.ID;
 			else if (Empire.Current == null || t.GetType().IsClientSafe())
-				ID = Galaxy.Current.Register(t);
+				ID = Galaxy.Current.AssignID(t);
 			else
 				throw new ReferenceException("Tried to create a new reference to a non-client-safe object " + t + " on the client side.", -1, t.GetType());
 		}

@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -223,7 +223,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public bool CanUseMount(Mount m)

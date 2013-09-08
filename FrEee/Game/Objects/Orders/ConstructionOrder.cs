@@ -73,17 +73,16 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
+
+		private Reference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.
 		/// </summary>
-		public Empire Owner
-		{
-			get;
-			private set;
-		}
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
 		/// <summary>
 		/// Orders are visible only to their owners.
@@ -101,5 +100,7 @@ namespace FrEee.Game.Objects.Orders
 		{
 			template.ReplaceClientIDs(idmap);
 		}
+
+		public long ID { get; set; }
 	}
 }

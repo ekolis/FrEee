@@ -158,7 +158,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		/// <summary>
@@ -170,5 +170,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return Visibility.Scanned;
 		}
+
+		public long ID { get; set; }
 	}
 }

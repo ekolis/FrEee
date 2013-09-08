@@ -381,7 +381,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return VehicleType == VehicleTypes.Ship || VehicleType == VehicleTypes.Base; }
 		}
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -428,7 +428,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public Design<T> Copy()

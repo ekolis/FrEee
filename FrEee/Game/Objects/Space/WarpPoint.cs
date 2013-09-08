@@ -51,7 +51,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public StellarSize StellarSize { get; set; }

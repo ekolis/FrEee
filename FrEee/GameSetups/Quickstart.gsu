@@ -18,7 +18,7 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 			7:n;
 			7:n;
 			7:n;
-			FrEee.Game.Objects.Civilization.Race, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p16:
+			FrEee.Game.Objects.Civilization.Race, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p17:
 				7:n;
 				2:True;
 				FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:d15:
@@ -29,9 +29,9 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 					7:"Cunning";
 					4:100;
 					7:"Environmental Resistance";
-					4:110;
-					7:"Reproduction";
 					4:100;
+					7:"Reproduction";
+					4:110;
 					7:"Happiness";
 					4:100;
 					7:"Aggressiveness";
@@ -53,10 +53,11 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 					7:"Maintenance Aptitude";
 					4:100;
 				;
-				System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:255,192,32,0;
+				System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:255,192,64,32;
 				7:"Warriors";
 				7:"Jraenar Empire";
 				7:"Bloodthirsty";
+				System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
 				7:"Jraenar";
 				7:"Master General Jar-Nolath";
 				7:"Jraenar";
@@ -66,13 +67,13 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 				7:"Jraenar";
 				7:"Jraenar";
 				System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-					7:"Ancient Race";
+					7:"Advanced Storage Techniques";
 				;
 			;
 			7:n;
 		;
 	;
-	12:c0:
+	13:c0:
 	;
 	System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:p2:
 		4:30;
@@ -99,30 +100,30 @@ FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, Public
 	4:50;
 	4:0;
 	2:False;
-	4:0;
+	4:3;
 	FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p8:
 		2:False;
 		2:False;
 		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
-		16:0;
-		16:0.01;
-		16:0;
+		17:0;
+		17:0.01;
+		17:0;
 		4:1;
-		16:1;
+		17:1;
 	;
 	4:50000;
 	FrEee.Game.Enumerations.ScoreDisplay, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:OwnOnlyNoRankings;
-	15:p8:
+	16:p8:
 		2:False;
 		2:False;
-		16:0;
-		16:0;
-		16:0.01;
-		16:0;
+		17:0;
+		17:0;
+		17:0.01;
+		17:0;
 		4:0;
-		16:1;
+		17:1;
 	;
-	4:30;
+	4:10;
 	4:0;
 	4:20000;
 	4:20000;

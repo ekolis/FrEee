@@ -116,7 +116,7 @@ namespace FrEee.Game.Objects.Vehicles
 			return Name;
 		}
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -232,7 +232,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public virtual void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		[DoNotSerialize]

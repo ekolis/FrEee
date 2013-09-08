@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Commands
 		public AddOrderCommand(Empire issuer, T target, IOrder<T> order)
 			: base(issuer, target, order)
 		{
-			NewReferrables.Add(Order.ID(), Order);
+			
 		}
 
 		public override void Execute()
@@ -32,10 +32,7 @@ namespace FrEee.Game.Objects.Commands
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
 				else
-				{
 					Target.AddOrder(Order);
-					Galaxy.Current.Register(Order);
-				}
 			}
 			else
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
@@ -57,6 +54,20 @@ namespace FrEee.Game.Objects.Commands
 			{
 				base.Order = value;
 				order = value;
+			}
+		}
+
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			base.ReplaceClientIDs(idmap);
+			Order.ReplaceClientIDs(idmap);
+		}
+
+		public virtual IEnumerable<IReferrable> NewReferrables
+		{
+			get
+			{
+				yield return Order;
 			}
 		}
 	}

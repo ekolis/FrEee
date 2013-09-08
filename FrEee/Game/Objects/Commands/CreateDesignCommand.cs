@@ -21,7 +21,6 @@ namespace FrEee.Game.Objects.Commands
 			: base(design.Owner, design.Owner)
 		 {
 			 Design = design;
-			 NewReferrables.Add(Design.ID(), Design);
 		 }
 
 		IDesign ICreateDesignCommand.Design { get { return Design; } }
@@ -33,7 +32,20 @@ namespace FrEee.Game.Objects.Commands
 			if (Design.Warnings.Any())
 				Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings."));
 			Issuer.KnownDesigns.Add(Design);
-			Galaxy.Current.Register(Design);
+		}
+
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			base.ReplaceClientIDs(idmap);
+			Design.ReplaceClientIDs(idmap);
+		}
+
+		public virtual IEnumerable<IReferrable> NewReferrables
+		{
+			get
+			{
+				yield return Design;
+			}
 		}
 	}
 }

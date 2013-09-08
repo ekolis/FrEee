@@ -26,10 +26,7 @@ namespace FrEee.Modding.Templates
 			Cost = new ResourceQuantity();
 		}
 
-		/// <summary>
-		/// For reference tracking.
-		/// </summary>
-		public int ID { get; set; }
+		public long ID { get; set; }
 
 		/// <summary>
 		/// No one owns component templates; they are shared.
@@ -160,7 +157,7 @@ namespace FrEee.Modding.Templates
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public WeaponTypes WeaponType

@@ -33,7 +33,6 @@ namespace FrEee.Game.Objects.Space
 			Name = "Unnamed";
 			TurnNumber = 1;
 			referrables = new Dictionary<long, IReferrable>();
-			IDs = new Dictionary<IReferrable, long>();
 			VictoryConditions = new List<IVictoryCondition>();
 		}
 
@@ -41,18 +40,6 @@ namespace FrEee.Game.Objects.Space
 			: this()
 		{
 			Mod = mod;
-
-			// register objects that need shared client/server ID's
-			foreach (var componentTemplate in Mod.ComponentTemplates)
-				Register(componentTemplate);
-			foreach (var mount in Mod.Mounts)
-				Register(mount);
-			foreach (var facilityTemplate in Mod.FacilityTemplates)
-				Register(facilityTemplate);
-			foreach (var hull in Mod.Hulls)
-				Register(hull);
-			foreach (var tech in Mod.Technologies)
-				Register(tech);
 		}
 
 		#region Properties
@@ -344,15 +331,18 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Assigns IDs to referrable objects so they don't get random IDs when the galaxy is deserialized.
+		/// Assigns IDs to referrable objects in the galaxy.
 		/// </summary>
-		private void AssignIDs()
+		internal void AssignIDs()
 		{
 			var parser = new ObjectGraphParser();
 			parser.EndObject += o =>
 			{
 				if (o is IReferrable)
-					Register((IReferrable)o);
+				{
+					var r = (IReferrable)o;
+					AssignID(r);
+				}
 			};
 			parser.Parse(this);
 		}
@@ -471,6 +461,7 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if there is no current empire.</exception>
 		public string SaveCommands()
 		{
+			AssignIDs();
 			if (CurrentEmpire == null)
 				throw new InvalidOperationException("Can't save commands without a current empire.");
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
@@ -509,18 +500,17 @@ namespace FrEee.Game.Objects.Space
 					foreach (var cmd in cmds)
 					{
 						emp.Commands.Add(cmd);
-						foreach (var kvp in cmd.NewReferrables)
+						foreach (var r in cmd.NewReferrables)
 						{
-							var clientid = kvp.Key;
-							var obj = kvp.Value;
-							var serverid = Galaxy.Current.Register(obj);
+							var clientid = r.ID;
+							var serverid = AssignID(r);
 							idmap.Add(clientid, serverid);
 						}
 
 					}
 					foreach (var cmd in cmds)
 						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
-					idmap = new Dictionary<long, long>();
+					/*idmap = new Dictionary<long, long>();
 					foreach (var cmd in cmds)
 					{
 						// promote promotable objects
@@ -528,8 +518,8 @@ namespace FrEee.Game.Objects.Space
 						{
 							if (p is IPromotable)
 							{
-								var oldid = p.ID();
-								var newid = Register(p);
+								var oldid = p.ID;
+								var newid = AssignID(p);
 								idmap.Add(oldid, newid);
 							}
 							else
@@ -540,7 +530,7 @@ namespace FrEee.Game.Objects.Space
 						}
 					}
 					foreach (var cmd in cmds)
-						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
+						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs*/
 				}
 				else
 					Console.WriteLine(emp.Name + " did not submit a PLR file.");
@@ -580,10 +570,7 @@ namespace FrEee.Game.Objects.Space
 					// TODO - memory sight
 					var vis = obj.CheckVisibility(CurrentEmpire);
 					if (vis == Visibility.Unknown || vis == Visibility.Fogged)
-					{
 						referrables.Remove(id);
-						IDs.Remove(obj);
-					}
 				}
 
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
@@ -840,35 +827,14 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
-		/// <summary>
-		/// IDs for referrables.
-		/// </summary>
-		internal IDictionary<IReferrable, long> IDs { get; private set; }
-
-		/// <summary>
-		/// Registers something so it can be referenced from the client side.
-		/// </summary>
-		/// <param name="r"></param>
-		public long Register(IReferrable r)
+		internal long AssignID(IReferrable r)
 		{
-			if (!IDs.ContainsKey(r))
-			{
-				// register the object
-				var id = GenerateID();
-				referrables.Add(id, r);
-				IDs.Add(r, id);
-				return id;
-			}
-			else
-			{
-				// just return the existing ID
-				return IDs[r];
-			}
-		}
+			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
+				return r.ID; // no need to reassign ID
 
-		private long GenerateID()
-		{
-			if (IDs.LongCount() == long.MaxValue)
+			var oldid = r.ID;				
+
+			if (Referrables.LongCount() == long.MaxValue)
 				throw new Exception("No more IDs are available to assign for objects.");
 
 			long id;
@@ -876,18 +842,38 @@ namespace FrEee.Game.Objects.Space
 			{
 				id = RandomHelper.Range(1L, long.MaxValue);
 			} while (referrables.ContainsKey(id));
+			r.ID = id;
+			referrables.Add(id, r);
+
+			// clean up old IDs
+			if (oldid > 0 && referrables.ContainsKey(oldid))
+				referrables.Remove(oldid);
+
 			return id;
 		}
 
-		/// <summary>
-		/// Unregisters something so it can no longer be referenced from the client side by all players.
-		/// </summary>
-		/// <param name="r"></param>
-		public void Unregister(IReferrable r)
+		public void UnassignID(long id)
 		{
-			var id = IDs[r];
-			IDs.Remove(r);
-			referrables.Remove(id);
+			if (referrables.ContainsKey(id))
+			{
+				var r = referrables[id];
+				r.ID = 0;
+				referrables.Remove(id);
+			}
+		}
+
+		public void UnassignID(IReferrable r)
+		{
+			if (referrables.ContainsKey(r.ID))
+			{
+				if (referrables[r.ID] == r)
+				{
+					r.ID = 0;
+					referrables.Remove(r.ID);
+				}
+				else
+					throw new Exception("Can't unassign ID for " + r + " because it says it has ID=" + r.ID + " but the galaxy says that ID belongs to " + referrables[r.ID] + "!");
+			}
 		}
 
 		/// <summary>

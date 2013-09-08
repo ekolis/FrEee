@@ -26,7 +26,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public ISet<ISpaceObject> SpaceObjects { get; private set; }
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -60,7 +60,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public override string ToString()

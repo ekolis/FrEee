@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Commands
 				else if (Issuer == Target.Owner)
 				{
 					Target.RemoveOrder(Order);
-					Galaxy.Current.Unregister(Order);
+					Galaxy.Current.UnassignID(Order);
 				}
 				else
 				{

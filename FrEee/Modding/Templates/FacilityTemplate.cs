@@ -100,7 +100,7 @@ namespace FrEee.Game.Objects.Technology
 			return new Facility(this);
 		}
 
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -146,7 +146,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		/// <summary>

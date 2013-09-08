@@ -25,7 +25,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Any new (from the client) objects referred to by this command.
 		/// </summary>
-		IDictionary<long, IReferrable> NewReferrables { get; }
+		IEnumerable<IReferrable> NewReferrables { get; }
 	}
 
 	/// <summary>

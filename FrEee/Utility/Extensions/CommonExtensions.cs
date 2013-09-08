@@ -896,17 +896,5 @@ namespace FrEee.Utility.Extensions
 		{
 			return Galaxy.Current.Referrables.OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
 		}
-
-		/// <summary>
-		/// Gets the ID of an object in the current galaxy.
-		/// </summary>
-		/// <param name="obj"></param>
-		/// <returns></returns>
-		public static long ID(this IReferrable obj)
-		{
-			if (!Galaxy.Current.IDs.ContainsKey(obj))
-				return Galaxy.Current.Register(obj);
-			return Galaxy.Current.IDs[obj];
-		}
 	}
 }

@@ -187,10 +187,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ICollection<IDesign> KnownDesigns { get; private set; }
 
-		/// <summary>
-		/// Not the empire index (1 for player 1, etc.), just the index in the list of orderable objects.
-		/// </summary>
-		public int ID
+		public long ID
 		{
 			get;
 			set;
@@ -464,7 +461,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		/// <summary>

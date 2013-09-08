@@ -126,7 +126,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			Galaxy.Current.Unregister(this);
+			Galaxy.Current.UnassignID(this);
 		}
 
 		public StellarSize StellarSize
@@ -182,5 +182,7 @@ namespace FrEee.Game.Objects.Space
 				return Visibility.Scanned;
 			return Visibility.Visible;
 		}
+
+		public long ID { get; set; }
 	}
 }
