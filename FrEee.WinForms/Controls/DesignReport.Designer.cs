@@ -446,6 +446,7 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
 			this.picPortrait.TabIndex = 66;
 			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// txtRole
 			// 

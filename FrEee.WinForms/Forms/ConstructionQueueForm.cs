@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Controls;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -240,9 +241,10 @@ namespace FrEee.WinForms.Forms
 			var item = lstShips.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
+				var design = (IDesign)item.Tag;
 				if (e.Button == MouseButtons.Left)
 				{
-					var design = (IDesign)item.Tag;
+					// add to queue
 					var order = design.CreateConstructionOrder(ConstructionQueue);
 					ConstructionQueue.Orders.Add(order);
 					var cmd = new AddOrderCommand<ConstructionQueue>
@@ -256,7 +258,9 @@ namespace FrEee.WinForms.Forms
 				}
 				else if (e.Button == MouseButtons.Right)
 				{
-					// TODO - display detailed report on ship design
+					// display detailed report
+					var report = new DesignReport(design);
+					this.ShowChildForm(report.CreatePopupForm(design.Name));
 				}
 			}
 		}

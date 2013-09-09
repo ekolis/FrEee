@@ -26,23 +26,12 @@ namespace FrEee.WinForms.Controls
 		{
 			if (Image != null)
 			{
-				var form = new Form();
-				form.Text = text;
-				form.MaximizeBox = false;
-				form.FormBorderStyle = FormBorderStyle.FixedDialog;
-				form.ClientSize = Image.Size;
-				if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
-					form.Width = Screen.PrimaryScreen.WorkingArea.Width;
-				if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
-					form.Height = Screen.PrimaryScreen.WorkingArea.Height;
-				form.StartPosition = FormStartPosition.CenterParent;
 				var pic = new PictureBox();
 				pic.Image = Image;
-				pic.Size = form.ClientSize;
+				pic.Size = Image.Size;
 				pic.BackColor = Color.Black;
 				pic.SizeMode = PictureBoxSizeMode.Zoom;
-				form.Controls.Add(pic);
-				this.FindForm().ShowChildForm(form);
+				this.FindForm().ShowChildForm(pic.CreatePopupForm());
 			}
 		}
 	}

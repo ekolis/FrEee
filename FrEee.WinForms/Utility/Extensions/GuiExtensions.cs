@@ -80,5 +80,28 @@ namespace FrEee.WinForms.Utility.Extensions
 				return (Form)control;
 			return control.Parent.FindForm();
 		}
+
+		/// <summary>
+		/// Creates a "popup form" containing a control, which can be dismissed using Escape.
+		/// </summary>
+		/// <param name="control">The control to embed.</param>
+		/// <param name="text">The text for the form's title bar.</param>
+		/// <returns></returns>
+		public static Form CreatePopupForm(this Control control, string text = "")
+		{
+			var form = new Form();
+			form.Text = text;
+			form.MaximizeBox = false;
+			form.FormBorderStyle = FormBorderStyle.FixedDialog;
+			form.ClientSize = control.Size;
+			// TODO - deal with multiple screens
+			if (form.Width > Screen.PrimaryScreen.WorkingArea.Width)
+				form.Width = Screen.PrimaryScreen.WorkingArea.Width;
+			if (form.Height > Screen.PrimaryScreen.WorkingArea.Height)
+				form.Height = Screen.PrimaryScreen.WorkingArea.Height;
+			form.StartPosition = FormStartPosition.CenterParent;
+			form.Controls.Add(control);
+			return form;
+		}
 	}
 }
