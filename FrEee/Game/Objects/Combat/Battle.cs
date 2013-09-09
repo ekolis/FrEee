@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Combat
 			Location = location;
 			Log = new List<LogMessage>();
 			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = Location.SpaceObjects.OfType<ICombatObject>().ToArray();
+			Combatants = Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).ToArray();
 		}
 
 		/// <summary>
