@@ -447,6 +447,9 @@ namespace FrEee.WinForms.Forms
 
 			// load space objects for search box
 			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
+
+			// compute warp point connectivity
+			galaxyView.ComputeWarpPointConnectivity();
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
