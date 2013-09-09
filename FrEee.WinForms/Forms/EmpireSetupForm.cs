@@ -130,40 +130,6 @@ namespace FrEee.WinForms.Forms
 			if (EmpireTemplate.PrimaryRace == null)
 				EmpireTemplate.PrimaryRace = new Race();
 
-			// race general stuff
-			txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
-			chkRaceAIsCanUse.Checked = EmpireTemplate.PrimaryRace.AIsCanUse;
-			txtRaceDefaultEmpireName.Text = EmpireTemplate.PrimaryRace.EmpireName;
-			txtRaceLeaderName.Text = EmpireTemplate.PrimaryRace.LeaderName;
-			ddlRaceLeaderPortrait.Text = EmpireTemplate.PrimaryRace.LeaderPortraitName;
-			ddlRacePopulationIcon.Text = EmpireTemplate.PrimaryRace.PopulationIconName;
-			ddlRaceNativeSurface.SelectedItem = EmpireTemplate.PrimaryRace.NativeSurface;
-			ddlRaceNativeAtmosphere.SelectedItem = EmpireTemplate.PrimaryRace.NativeAtmosphere;
-			spnRaceColorRed.Value = EmpireTemplate.PrimaryRace.Color.R;
-			spnRaceColorGreen.Value = EmpireTemplate.PrimaryRace.Color.G;
-			spnRaceColorBlue.Value = EmpireTemplate.PrimaryRace.Color.B;
-			ddlRaceInsignia.Text = EmpireTemplate.PrimaryRace.InsigniaName;
-			ddlRaceShipset.Text = EmpireTemplate.PrimaryRace.ShipsetPath;
-			// TODO - race AI
-			ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
-			ddlRaceCulture.SelectedItem = EmpireTemplate.PrimaryRace.Culture;
-
-			// race traits
-			foreach (var trait in raceTraitPicker.Traits)
-				raceTraitPicker.SetTraitChecked(trait, EmpireTemplate.PrimaryRace.Traits.Contains(trait));
-
-			// race aptitudes
-			foreach (var apt in Aptitude.All)
-			{
-				int val = 100;
-				if (EmpireTemplate.PrimaryRace.Aptitudes.ContainsKey(apt.Name))
-					val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
-				aptitudePicker.SetValue(apt, val);
-			}
-
-			// is AI empire?
-			chkAIsCanUse.Checked = EmpireTemplate.AIsCanUse;
-			
 			// empire overrides for race stuff
 			if (EmpireTemplate.Name == null)
 			{
@@ -250,6 +216,40 @@ namespace FrEee.WinForms.Forms
 				ddlCulture.SelectedValue = EmpireTemplate.Culture;
 				chkCultureFromRace.Checked = false;
 			}
+
+			// race general stuff
+			txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
+			chkRaceAIsCanUse.Checked = EmpireTemplate.PrimaryRace.AIsCanUse;
+			txtRaceDefaultEmpireName.Text = EmpireTemplate.PrimaryRace.EmpireName;
+			txtRaceLeaderName.Text = EmpireTemplate.PrimaryRace.LeaderName;
+			ddlRaceLeaderPortrait.Text = EmpireTemplate.PrimaryRace.LeaderPortraitName;
+			ddlRacePopulationIcon.Text = EmpireTemplate.PrimaryRace.PopulationIconName;
+			ddlRaceNativeSurface.SelectedItem = EmpireTemplate.PrimaryRace.NativeSurface;
+			ddlRaceNativeAtmosphere.SelectedItem = EmpireTemplate.PrimaryRace.NativeAtmosphere;
+			spnRaceColorRed.Value = EmpireTemplate.PrimaryRace.Color.R;
+			spnRaceColorGreen.Value = EmpireTemplate.PrimaryRace.Color.G;
+			spnRaceColorBlue.Value = EmpireTemplate.PrimaryRace.Color.B;
+			ddlRaceInsignia.Text = EmpireTemplate.PrimaryRace.InsigniaName;
+			ddlRaceShipset.Text = EmpireTemplate.PrimaryRace.ShipsetPath;
+			// TODO - race AI
+			ddlRaceHappiness.SelectedItem = EmpireTemplate.PrimaryRace.HappinessModel;
+			ddlRaceCulture.SelectedItem = EmpireTemplate.PrimaryRace.Culture;
+
+			// race traits
+			foreach (var trait in raceTraitPicker.Traits)
+				raceTraitPicker.SetTraitChecked(trait, EmpireTemplate.PrimaryRace.Traits.Contains(trait));
+
+			// race aptitudes
+			foreach (var apt in Aptitude.All)
+			{
+				int val = 100;
+				if (EmpireTemplate.PrimaryRace.Aptitudes.ContainsKey(apt.Name))
+					val = EmpireTemplate.PrimaryRace.Aptitudes[apt.Name];
+				aptitudePicker.SetValue(apt, val);
+			}
+
+			// is AI empire?
+			chkAIsCanUse.Checked = EmpireTemplate.AIsCanUse;
 
 			BindPointsSpent();
 

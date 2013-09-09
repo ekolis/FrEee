@@ -99,7 +99,7 @@ namespace FrEee.Utility
 			g.FillEllipse(new SolidBrush(Color.Silver), 40, 0, 68, 68);
 			g.FillRectangle(new SolidBrush(Color.Silver), 50, 50, 10, 50);
 			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
-			genericPictures.Add(typeof(IHull<IVehicle>), img);
+			genericPictures.Add(typeof(IHull), img);
 
 			// TODO - mount, race, empire generic pics
 		}
@@ -292,7 +292,9 @@ namespace FrEee.Utility
 		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath, int size = 32)
 		{
 			if (shipsetPath == null)
-				return null;
+				return GetGenericImage(hull.GetType()).Resize(size);
+			if (!hull.PictureNames.Any())
+				return GetGenericImage(hull.GetType()).Resize(size);
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
@@ -310,7 +312,7 @@ namespace FrEee.Utility
 		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
 		{
 			if (shipsetPath == null)
-				return null;
+				return GetGenericImage(hull.GetType());
 			if (!hull.PictureNames.Any())
 				return GetGenericImage(hull.GetType());
 			var paths = new List<string>();
