@@ -440,6 +440,7 @@ namespace FrEee.Game.Objects.Vehicles
 			d.TurnNumber = TurnNumber;
 			d.Owner = Owner;
 			d.Hull = Hull;
+			d.Role = Role;
 			foreach (var mct in Components)
 				d.Components.Add(new MountedComponentTemplate(mct.ComponentTemplate, mct.Mount));
 			return d;
