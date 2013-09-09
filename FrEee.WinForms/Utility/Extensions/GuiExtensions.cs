@@ -29,7 +29,7 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// <param name="group"></param>
 		/// <param name="text"></param>
 		/// <param name="image"></param>
-		public static void AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, params string[] subitems)
+		public static ListViewItem AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, params string[] subitems)
 		{
 			int imageNum = lv.Items.Count;
 			lv.LargeImageList.Images.Add(image ?? new Bitmap(lv.LargeImageList.ImageSize.Width, lv.LargeImageList.ImageSize.Height));
@@ -55,6 +55,7 @@ namespace FrEee.WinForms.Utility.Extensions
 			item.Tag = tag;
 			item.ImageIndex = imageNum;
 			lv.Items.Add(item);
+			return item;
 		}
 
 		/// <summary>

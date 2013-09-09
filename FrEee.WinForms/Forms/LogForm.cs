@@ -14,6 +14,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.WinForms.Forms
 {
@@ -44,7 +45,11 @@ namespace FrEee.WinForms.Forms
 		{
 			lstLog.Initialize(32, 32);
 			foreach (var message in messages)
-				lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
+			{
+				var item = lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
+				if (message.TurnNumber < Galaxy.Current.TurnNumber)
+					item.ForeColor = Color.Gray;
+			}
 		}
 
 		private void lstLog_MouseDoubleClick(object sender, MouseEventArgs e)
