@@ -185,7 +185,7 @@
     <Compile Include="Game\Objects\Technology\TechnologyRequirement.cs" />
     <Compile Include="Game\Objects\Space\AsteroidField.cs" />
     <Compile Include="Game\Objects\Space\Galaxy.cs" />
-    <Compile Include="Game\Objects\Space\Location.cs" />
+    <Compile Include="Game\Objects\Space\ObjectLocation.cs" />
     <Compile Include="Game\Objects\Space\Planet.cs" />
     <Compile Include="Game\Objects\Space\Sector.cs" />
     <Compile Include="Game\Objects\Space\Star.cs" />

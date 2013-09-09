@@ -69,12 +69,12 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			wp1.IsOneWay = false;
 			wp1.Name = "Warp Point to " + there.Item;
 			wp1.Target = sector2;
-			sector1.SpaceObjects.Add(wp1);
+			sector1.Place(wp1);
 			var wp2 = wpTemplate.Instantiate();
 			wp2.IsOneWay = false;
 			wp2.Name = "Warp Point to " + here.Item;
 			wp2.Target = sector1;
-			sector2.SpaceObjects.Add(wp2);
+			sector2.Place(wp2);
 			Ability abil = null;
 			if (abil1 != null && abil2 != null)
 			{

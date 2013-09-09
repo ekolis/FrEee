@@ -753,6 +753,16 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Finds the coordinates of a space object within its star system.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Point FindCoordinates(this ISpaceObject sobj)
+		{
+			return sobj.FindStarSystem().FindCoordinates(sobj);
+		}
+
+		/// <summary>
 		/// Reads characters until the specified character is found or end of stream.
 		/// Returns all characters read except the specified character.
 		/// </summary>

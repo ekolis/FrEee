@@ -83,30 +83,6 @@ namespace FrEee.Game.Objects.Space
 		public virtual Empire Owner { get { return null; } }
 
 		/// <summary>
-		/// Stellar objects are visible so long as the empire has explored the star system containing them.
-		/// </summary>
-		public Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem)
-		{
-			if (galaxy.CurrentEmpire == null)
-				return Visibility.Owned; // host can see everything
-
-			if (galaxy.CurrentEmpire == Owner)
-				return Visibility.Owned; // owner can see this
-
-			// TODO - check for cloaking vs. sensors
-
-			// TODO - check for long range scanners
-
-			if (galaxy.OmniscientView || starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
-				return Visibility.Visible; // player can see all stellar objects in systems he owns stuff in, or if he has omniscient view
-
-			if (starSystem.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
-				return Visibility.Fogged; // player gets fogged data for stellar objects in systems he has explored
-
-			return Visibility.Unknown;
-		}
-
-		/// <summary>
 		/// Most stellar objects don't need to have any data redacted.
 		/// </summary>
 		/// <param name="galaxy"></param>
@@ -176,7 +152,11 @@ namespace FrEee.Game.Objects.Space
 				return Visibility.Unknown;
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
 			if (!seers.Any())
+			{
+				if (Galaxy.Current.OmniscientView)
+					return Visibility.Visible;
 				return Visibility.Unknown; // TODO - memory sight
+			}
 			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
 			if (scanners.Any())
 				return Visibility.Scanned;

@@ -75,7 +75,7 @@ namespace FrEee.Game.Objects.Orders
 					}
 
 					// bye bye colony ship
-					sobj.FindSector().SpaceObjects.Remove(sobj);
+					sobj.FindStarSystem().Remove(sobj);
 
 					// done colonizing
 					IsComplete = true;

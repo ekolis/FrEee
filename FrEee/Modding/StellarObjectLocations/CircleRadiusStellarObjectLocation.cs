@@ -33,7 +33,7 @@ namespace FrEee.Modding.StellarObjectLocations
 				for (int y = -Math.Min(Radius, sys.Radius); y <= Math.Min(Radius, sys.Radius); y++)
 				{
 					// Don't let stellar objects overlap
-					if (Math.Round(Math.Sqrt(x * x + y * y)) == Radius && sys.GetSector(x, y).SpaceObjects.Count == 0)
+					if (Math.Round(Math.Sqrt(x * x + y * y)) == Radius && sys.GetSector(x, y).SpaceObjects.Count() == 0)
 						pts.Add(new Point(x, y));
 				}
 			}

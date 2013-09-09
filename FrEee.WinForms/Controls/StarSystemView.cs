@@ -209,7 +209,7 @@ namespace FrEee.WinForms.Controls
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 12);
 						var cornerx = drawx - drawsize / 2;
 						var cornery = drawy - drawsize / 2;
-						if (sector.SpaceObjects.Count > 1)
+						if (sector.SpaceObjects.Count() > 1)
 						{
 							int top = 0;
 							int insigniaSize = availForFlagsAndNums / 2;
@@ -253,7 +253,7 @@ namespace FrEee.WinForms.Controls
 					var sobj = (IMobileSpaceObject)SelectedSpaceObject;
 					Sector last = SelectedSpaceObject.FindSector();
 					PointF? lastPoint = null;
-					if (last.FindStarSystem() == StarSystem)
+					if (last.StarSystem == StarSystem)
 					{
 						var lastCoords = last.Coordinates;
 						lastPoint = GetDrawPoint(lastCoords.X, lastCoords.Y);
@@ -270,7 +270,7 @@ namespace FrEee.WinForms.Controls
 						}
 
 						PointF? curPoint = null;
-						if (cur.FindStarSystem() == StarSystem)
+						if (cur.StarSystem == StarSystem)
 						{
 							var curCoords = cur.Coordinates;
 							curPoint = GetDrawPoint(curCoords.X, curCoords.Y);

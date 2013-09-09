@@ -107,7 +107,7 @@ namespace FrEee.WinForms.Forms
 				if (sector != null && sector.SpaceObjects.Any())
 				{
 					ISpaceObject target = null;
-					if (sector.SpaceObjects.Count == 1)
+					if (sector.SpaceObjects.Count() == 1)
 						target = sector.SpaceObjects.Single();
 					else
 					{
@@ -143,7 +143,7 @@ namespace FrEee.WinForms.Forms
 				if (sector != null && sector.SpaceObjects.Any())
 				{
 					ISpaceObject target = null;
-					if (sector.SpaceObjects.Count == 1)
+					if (sector.SpaceObjects.Count() == 1)
 						target = sector.SpaceObjects.Single();
 					else
 					{
@@ -280,11 +280,11 @@ namespace FrEee.WinForms.Forms
 				return;
 			}
 
-			if (sector.SpaceObjects.Count > 0)
+			if (sector.SpaceObjects.Any())
 			{
 				// add new report
 				Control newReport = null;
-				if (sector.SpaceObjects.Count == 1)
+				if (sector.SpaceObjects.Count() == 1)
 				{
 					SelectedSpaceObject = sector.SpaceObjects.Single();
 				}

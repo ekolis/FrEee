@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem : IFoggable
+	public class StarSystem : IFoggable, IReferrable
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -27,13 +27,8 @@ namespace FrEee.Game.Objects.Space
 		public StarSystem(int radius)
 		{
 			Radius = radius;
-			sectors = new Sector[Diameter, Diameter];
-			for (int x = -radius; x <= radius; x++)
-			{
-				for (int y = -radius; y <= radius; y++)
-					SetSector(x, y, new Sector());
-			}
 			Abilities = new List<Ability>();
+			SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
 			ExploredByEmpires = new HashSet<Empire>();
 		}
 
@@ -105,70 +100,10 @@ namespace FrEee.Game.Objects.Space
 			return AreCoordsInBounds(p.X, p.Y);
 		}
 
-		private Sector[,] sectors;
-
 		/// <summary>
-		/// The sectors in the system.
+		/// The space objects contained in this star system.
 		/// </summary>
-		public ICollection<ObjectLocation<Sector>> Sectors
-		{
-			get
-			{
-				var list = new List<ObjectLocation<Sector>>();
-				for (int x = -Radius; x <= Radius; x++)
-				{
-					for (int y = -Radius; y <= Radius; y++)
-						list.Add(new ObjectLocation<Sector> { Location = new Point(x, y), Item = GetSector(x, y) });
-				}
-				return list;
-			}
-			set
-			{
-				sectors = new Sector[Diameter, Diameter];
-				foreach (var loc in value)
-					SetSector(loc.Location, loc.Item);
-			}
-		}
-
-		public Sector GetSector(int x, int y)
-		{
-			return sectors[x + Radius, y + Radius];
-		}
-
-		public Sector GetSector(Point p)
-		{
-			return GetSector(p.X, p.Y);
-		}
-
-		public void SetSector(int x, int y, Sector sector)
-		{
-			sectors[x + Radius, y + Radius] = sector;
-		}
-
-		public void SetSector(Point p, Sector sector)
-		{
-			SetSector(p.X, p.Y, sector);
-		}
-
-		/// <summary>
-		/// Finds the coordinates of a sector.
-		/// </summary>
-		/// <param name="sector">The sector to search for.</param>
-		/// <exception cref="ArgumentException">if the specified sector is not present in this star system.</exception>
-		/// <returns>The coordinates of the sector.</returns>
-		public Point FindSector(Sector sector)
-		{
-			for (int x = -Radius; x <= Radius; x++)
-			{
-				for (int y = -Radius; y <= Radius; y++)
-				{
-					if (GetSector(x, y) == sector)
-						return new Point(x, y);
-				}
-			}
-
-			throw new ArgumentException("The specified sector was not found in this star system.");
-		}
+		public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
 
 		/// <summary>
 		/// Searches for space objects matching criteria.
@@ -178,21 +113,32 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>The matching space objects, grouped by location.</returns>
 		public ILookup<Point, T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			var list = new List<Tuple<Point, T>>();
-			for (int x = -Radius; x <= Radius; x++)
+			return SpaceObjectLocations.Where(l => l.Item is T && (criteria == null || criteria((T)l.Item))).ToLookup(l => l.Location, l => (T)l.Item);
+		}
+
+		public IEnumerable<T> FindSpaceObjectsInSector<T>(Point coords, Func<T, bool> criteria = null) where T : ISpaceObject
+		{
+			var lookup = FindSpaceObjects<T>(criteria);
+			if (lookup.Contains(coords))
+				return lookup[coords];
+			return Enumerable.Empty<T>();
+		}
+
+		public bool Contains(ISpaceObject sobj)
+		{
+			return SpaceObjectLocations.Any(l => l.Item == sobj);
+		}
+
+		public Point FindCoordinates(ISpaceObject sobj)
+		{
+			try
 			{
-				for (int y = -Radius; y <= Radius; y++)
-				{
-					var sector = GetSector(x, y);
-					var coords = new Point(x, y);
-					foreach (var sobj in sector.SpaceObjects)
-					{
-						if (sobj is T && (criteria == null || criteria((T)sobj)))
-							list.Add(Tuple.Create(coords, (T)sobj));
-					}
-				}
+				return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
 			}
-			return list.ToLookup(t => t.Item1, t => t.Item2);
+			catch (Exception ex)
+			{
+				throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
+			}
 		}
 
 		/// <summary>
@@ -221,7 +167,7 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 			foreach (var t in toRemove)
-				GetSector(t.Item1).SpaceObjects.Remove(t.Item2);
+				Remove(t.Item2);
 
 			// hide explored-by empires
 			foreach (var emp in ExploredByEmpires.Where(emp => emp != galaxy.CurrentEmpire).ToArray())
@@ -231,21 +177,13 @@ namespace FrEee.Game.Objects.Space
 			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				BackgroundImagePath = null;
 
-			// hide warp point target contents if player hasn't seen them
+			// hide warp point target system name if player hasn't seen the system yet
 			foreach (var wp in FindSpaceObjects<WarpPoint>().Flatten())
 			{
-				var sys = wp.Target.FindStarSystem();
+				var sys = wp.Target.StarSystem;
 				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
-				{
 					sys.Name = null;
-					wp.Target.SpaceObjects.Clear();
-				}
 			}
-		}
-
-		public bool Contains(Sector sector)
-		{
-			return sectors.Cast<Sector>().Contains(sector);
 		}
 
 		public override string ToString()
@@ -270,6 +208,23 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Aggregates abilities across a sector for an empire's space objects.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public string GetSectorAbilityValue(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
+			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		/// <summary>
 		/// Do any of the empire's space objects in this system have an ability?
 		/// </summary>
 		/// <param name="emp"></param>
@@ -282,6 +237,20 @@ namespace FrEee.Game.Objects.Space
 			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 
+		/// <summary>
+		/// Do any of the empire's space objects in a sector have an ability?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
+			return sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+		}
+
 		public Visibility CheckVisibility(Empire emp)
 		{
 			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Any())
@@ -289,6 +258,68 @@ namespace FrEee.Game.Objects.Space
 			else if (emp.ExploredStarSystems.Contains(this))
 				return Visibility.Fogged;
 			return Visibility.Unknown;
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.UnassignID(this);
+		}
+
+		/// <summary>
+		/// Star systems are not owned, per se.
+		/// </summary>
+		public Empire Owner
+		{
+			get { return null; }
+		}
+
+		public void Place(ISpaceObject sobj, Point coords)
+		{
+			var sys = sobj.FindStarSystem();
+			if (sys != null)
+				sys.Remove(sobj);
+			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+		}
+
+		public void Remove(ISpaceObject sobj)
+		{
+			foreach (var l in SpaceObjectLocations.ToArray())
+			{
+				if (l.Item == sobj)
+					SpaceObjectLocations.Remove(l);
+			}
+		}
+
+		public Sector GetSector(int x, int y)
+		{
+			return GetSector(new Point(x, y));
+		}
+
+		public Sector GetSector(Point p)
+		{
+			if (!AreCoordsInBounds(p))
+				throw new Exception("Sector coordinates (" + p.X + ", " + p.Y + ") are out of bounds for star system of radius " + Radius + ".");
+			return new Sector(this, p);
+		}
+
+		public IEnumerable<Sector> Sectors
+		{
+			get
+			{
+				for (var x = -Radius; x <= Radius; x++)
+				{
+					for (var y = -Radius; y <= Radius; y++)
+					{
+						yield return new Sector(this, new Point(x, y));
+					}
+				}
+			}
 		}
 	}
 }

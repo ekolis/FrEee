@@ -466,7 +466,7 @@ namespace FrEee.Game.Setup
 				if (!planets.Any())
 				{
 					// make sure we're placing the homeworld in a system with at least one empty sector
-					okSystems = okSystems.Where(s => s.Sectors.Any(loc => !loc.Item.SpaceObjects.Any()));
+					okSystems = okSystems.Where(sys2 => sys2.Sectors.Any(sec => !sec.SpaceObjects.Any()));
 
 					if (!okSystems.Any())
 						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ".");
@@ -475,8 +475,8 @@ namespace FrEee.Game.Setup
 					var sys = okSystems.PickRandom();
 					var nextNum = sys.FindSpaceObjects<Planet>(p => p.MoonOf == null).Count + 1;
 					hw = MakeHomeworld(emp, sys.Name + " " + nextNum.ToRomanNumeral());
-					var okSectors = sys.Sectors.Select(loc => loc.Item).Where(sector => !sector.SpaceObjects.Any());
-					okSectors.PickRandom().SpaceObjects.Add(hw);
+					var okSectors = sys.Sectors.Where(sector => !sector.SpaceObjects.Any());
+					okSectors.PickRandom().Place(hw);
 				}
 				else
 					hw = planets.PickRandom();

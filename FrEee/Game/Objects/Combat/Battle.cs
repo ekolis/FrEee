@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Combat
 				if (Location.SpaceObjects.OfType<StellarObject>().Any())
 					return "Battle at " + Location.SpaceObjects.OfType<StellarObject>().Largest();
 				var coords = Location.Coordinates;
-				return "Battle at " + Location.FindStarSystem() + " sector (" + coords.X + ", " + coords.Y + ")";
+				return "Battle at " + Location.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
 			}
 		}
 
@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Combat
 								if (defender.IsDestroyed)
 								{
 									if (defender is ISpaceObject)
-										Location.SpaceObjects.Remove((ISpaceObject)defender);
+										Location.StarSystem.Remove((ISpaceObject)defender);
 									break;
 								}
 							}

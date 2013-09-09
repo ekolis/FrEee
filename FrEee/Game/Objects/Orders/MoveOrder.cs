@@ -31,10 +31,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The sector we are moving to.
 		/// </summary>
-		[DoNotSerialize]
-		public Sector Destination { get { return destination; } set { destination = value; } }
-
-		private Reference<Sector> destination {get; set;}
+		public Sector Destination { get; set; }
 
 		/// <summary>
 		/// Should pathfinding avoid enemies?
@@ -62,8 +59,8 @@ namespace FrEee.Game.Objects.Orders
 				if (gotoSector != null)
 				{
 					// move
-					sobj.FindSector().SpaceObjects.Remove(sobj);
-					gotoSector.SpaceObjects.Add(sobj);
+					sobj.FindStarSystem().Remove(sobj);
+					gotoSector.Place(sobj);
 
 					// apply damage from damaging sectors
 					foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
@@ -98,9 +95,9 @@ namespace FrEee.Game.Objects.Orders
 		{
 			var coords = Destination.Coordinates;
 			if (AvoidEnemies)
-				return "Move to " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
+				return "Move to " + Destination.StarSystem.Name + " (" + coords.X + ", " + coords.Y + ")";
 			else
-				return "Attack " + Destination.FindStarSystem().Name + " (" + coords.X + ", " + coords.Y + ")";
+				return "Attack " + Destination.StarSystem.Name + " (" + coords.X + ", " + coords.Y + ")";
 		}
 
 		/// <summary>

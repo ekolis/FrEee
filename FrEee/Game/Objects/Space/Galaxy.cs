@@ -558,6 +558,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Redact()
 		{
+			AssignIDs();
 			if (CurrentEmpire != null)
 			{
 				foreach (var ssl in StarSystemLocations)

@@ -7,100 +7,82 @@ using System.Drawing;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
-	/// A sector in a star system. Can contain space objects.
+	/// A sector in a star system.
 	/// </summary>
 	[Serializable]
-	public class Sector : IReferrable
+	public class Sector : IPromotable
 	{
-		public Sector()
+		public Sector(StarSystem starSystem, Point coordinates)
 		{
-			SpaceObjects = new HashSet<ISpaceObject>();
+			StarSystem = starSystem;
+			Coordinates = coordinates;
 		}
 
-		/// <summary>
-		/// The space objects contained in this sector.
-		/// </summary>
-		public ISet<ISpaceObject> SpaceObjects { get; private set; }
+		private Reference<StarSystem> starSystem {get; set;}
 
-		public long ID
-		{
-			get;
-			set;
-		}
+		[DoNotSerialize]
+		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
 
-		public Empire Owner
-		{
-			get { return null; }
-		}
-
-		public StarSystem FindStarSystem()
-		{
-			foreach (var ssl in Galaxy.Current.StarSystemLocations)
-			{
-				if (ssl.Item.Contains(this))
-					return ssl.Item;
-			}
-			return null;
-		}
-
-		public Point Coordinates
-		{
-			get
-			{
-				var sys = FindStarSystem();
-				if (sys == null)
-					throw new Exception("Can't find sector coordinates because it does not belong to a known star system.");
-				return sys.FindSector(this);
-			}
-		}
-
-		public void Dispose()
-		{
-			Galaxy.Current.UnassignID(this);
-		}
+		public Point Coordinates { get; set; }
 
 		public override string ToString()
 		{
 			var coords = Coordinates;
-			return FindStarSystem() + " (" + coords.X + ", " + coords.Y + ")";
-		}
-		/// <summary>
-		/// Aggregates abilities across a sector for an empire's space objects.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-		{
-			var abils = SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
-			if (!abils.Any())
-				return null;
-			return abils.First().Values[index - 1];
+			return StarSystem + " (" + coords.X + ", " + coords.Y + ")";
 		}
 
-		/// <summary>
-		/// Do any of the empire's space objects in this sector have an ability?
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public IEnumerable<ISpaceObject> SpaceObjects
 		{
-			return SpaceObjects.Where(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			get
+			{
+				if (StarSystem == null)
+					return Enumerable.Empty<ISpaceObject>();
+				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item);
+			}
 		}
 
-
-		public Visibility CheckVisibility(Empire emp)
+		public void Place(ISpaceObject sobj)
 		{
-			return this.FindStarSystem().CheckVisibility(emp);
+			StarSystem.Place(sobj, Coordinates);
+		}
+
+		public void Remove(ISpaceObject sobj)
+		{
+			if (SpaceObjects.Contains(sobj))
+				StarSystem.Remove(sobj);
+		}
+		
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			starSystem.ReplaceClientIDs(idmap);
+		}
+
+		public static bool operator ==(Sector s1, Sector s2)
+		{
+			if ((object)s1 == null && (object)s2 == null)
+				return true;
+			if ((object)s1 == null || (object)s2 == null)
+				return false;
+			if (s1.StarSystem == null && s2.StarSystem == null)
+				return s1.Coordinates == s2.Coordinates;
+			if (s1.StarSystem == null || s2.StarSystem == null)
+				return false;
+			return s1.StarSystem == s2.StarSystem && s1.Coordinates == s2.Coordinates;
+		}
+
+		public static bool operator !=(Sector s1, Sector s2)
+		{
+			return !(s1 == s2);
+		}
+
+		public override int GetHashCode()
+		{
+			return StarSystem.GetHashCode() ^ Coordinates.GetHashCode();
 		}
 	}
 }

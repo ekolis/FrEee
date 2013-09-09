@@ -36,7 +36,7 @@ namespace FrEee.Modding.StellarObjectLocations
 				for (int y = -dist; y <= dist; y++)
 				{
 					// Don't let stellar objects overlap
-					if (Math.Abs(x) == dist || Math.Abs(y) == dist && sys.GetSector(x, y).SpaceObjects.Count == 0)
+					if (Math.Abs(x) == dist || Math.Abs(y) == dist && !sys.GetSector(x, y).SpaceObjects.Any())
 						pts.Add(new Point(x, y));
 				}
 			}

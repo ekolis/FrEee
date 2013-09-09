@@ -105,7 +105,7 @@ namespace FrEee.Modding.Templates
 				var sobj = loc.StellarObjectTemplate.Instantiate();
 				
 				// place object
-				sys.GetSector(pos).SpaceObjects.Add(sobj);
+				sys.Place(sobj, pos);
 
 				// for planets with moons
 				if (sobj is Planet)

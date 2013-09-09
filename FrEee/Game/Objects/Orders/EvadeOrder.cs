@@ -107,8 +107,8 @@ namespace FrEee.Game.Objects.Orders
 				if (gotoSector != null)
 				{
 					// move
-					sobj.FindSector().SpaceObjects.Remove(sobj);
-					gotoSector.SpaceObjects.Add(sobj);
+					sobj.FindSector().Remove(sobj);
+					gotoSector.Place(sobj);
 				}
 				else if (!LoggedPathfindingError)
 				{

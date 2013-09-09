@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item.Contains(Target));
+				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
 			}
 		}
 
@@ -61,7 +61,7 @@ namespace FrEee.Game.Objects.Space
 			base.Redact(galaxy, starSystem, visibility);
 
 			// Don't let players see the target star system name if it's not explored yet
-			if (!Target.FindStarSystem().ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+			if (!Target.StarSystem.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
 				Name = "Warp Point";
 		}
 	}

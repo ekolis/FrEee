@@ -44,8 +44,7 @@ namespace FrEee.Game.Objects.Vehicles
 				throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
 			var sys = search.First().Key.Item;
 			var coords = search.First().First().First().Key;
-			var sector = sys.GetSector(coords);
-			sector.SpaceObjects.Add(this);
+			sys.SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(this, coords));
 		}
 
 
@@ -331,7 +330,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override void Dispose()
 		{
-			this.FindSector().SpaceObjects.Remove(this);
+			this.FindStarSystem().Remove(this);
 			base.Dispose();
 		}
 
@@ -344,7 +343,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.FindSector().GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.FindStarSystem().GetSectorAbilityValue(this.FindCoordinates(), Owner, "Reduced Maintenance Cost - Sector").ToInt();
 				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;

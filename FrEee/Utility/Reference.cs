@@ -52,10 +52,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (ID <= 0)
+				if (ID <= 0 || !Galaxy.Current.referrables.ContainsKey(ID))
 					return default(T);
-				if (!Galaxy.Current.referrables.ContainsKey(ID))
-					throw new ReferenceException("ID " + ID + " does not exist in the current galaxy. " + typeof(T) + ". Trying to reference a newly created object, or one that was not assigned an ID by the server?", ID, typeof(T));
 				return (T)Galaxy.Current.referrables[ID];
 			}
 		}

@@ -69,7 +69,7 @@ namespace FrEee.Utility
 
 		public static IEnumerable<DijkstraNode<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
-			var startSys = start.FindStarSystem();
+			var startSys = start.StarSystem;
 
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
@@ -138,7 +138,7 @@ namespace FrEee.Utility
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
 		{
 			var moves = new List<Sector>();
-			var sys = s.FindStarSystem();
+			var sys = s.StarSystem;
 
 			// normal moves
 			if (sys != null)

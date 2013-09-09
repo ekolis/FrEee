@@ -45,8 +45,8 @@ namespace FrEee.Game.Objects.Orders
 			if (here == WarpPoint.FindSector())
 			{
 				// warp now!!!
-				here.SpaceObjects.Remove(sobj);
-				WarpPoint.Target.SpaceObjects.Add(sobj);
+				here.Remove(sobj);
+				WarpPoint.Target.Place(sobj);
 				// mark system explored
 				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
 					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
