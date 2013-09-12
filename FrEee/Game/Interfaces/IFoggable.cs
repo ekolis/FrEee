@@ -16,5 +16,10 @@ namespace FrEee.Game.Interfaces
 		/// The visibility of this object to an empire.
 		/// </summary>
 		Visibility CheckVisibility(Empire emp);
+
+		/// <summary>
+		/// Removes any data from this object that the specified empire cannot see.
+		/// </summary>
+		void Redact(Empire emp);
 	}
 }

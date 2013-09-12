@@ -4,6 +4,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -36,15 +37,15 @@ namespace FrEee.Game.Objects.Space
 		/// Just copy the star's data.
 		/// </summary>
 		/// <returns>A copy of the star.</returns>
-		public new Star Instantiate()
+		public Star Instantiate()
 		{
 			return this.Copy();
 		}
 
-		public StellarSize StellarSize
+		public override void Redact(Empire emp)
 		{
-			get;
-			set;
+			if (CheckVisibility(emp) < Visibility.Visible)
+				Dispose(); // TODO - memory sight
 		}
 	}
 }

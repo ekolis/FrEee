@@ -562,15 +562,15 @@ namespace FrEee.Game.Objects.Space
 			if (CurrentEmpire != null)
 			{
 				foreach (var ssl in StarSystemLocations)
-					ssl.Item.Redact(this);
+					ssl.Item.Redact(CurrentEmpire);
 
-				foreach (var kvp in referrables.ToArray())
+				foreach (var kvp in referrables.Where(kvp => kvp.Value is IFoggable).ToArray())
 				{
 					var id = kvp.Key;
-					var obj = kvp.Value;
+					var obj = (IFoggable)kvp.Value;
 					// TODO - memory sight
 					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis == Visibility.Unknown || vis == Visibility.Fogged)
+					if (vis < Visibility.Visible)
 						referrables.Remove(id);
 				}
 

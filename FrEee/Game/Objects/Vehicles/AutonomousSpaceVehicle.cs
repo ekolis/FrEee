@@ -54,51 +54,6 @@ namespace FrEee.Game.Objects.Vehicles
 			private set;
 		}
 
-		public Visibility CheckVisibility(Galaxy galaxy, StarSystem starSystem)
-		{
-			if (galaxy.CurrentEmpire == null)
-				return Visibility.Owned; // host can see everything
-
-			if (galaxy.CurrentEmpire == Owner)
-				return Visibility.Owned;
-
-			// TODO - check for cloaking vs. sensors
-
-			// TODO - check for long range scanners
-
-			if (galaxy.OmniscientView || starSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == galaxy.CurrentEmpire).SelectMany(g => g).Any())
-				return Visibility.Visible; // player can see vehicles in systems he owns stuff in, or if he has an omniscient view
-
-			// no fog of war for space vehicles...
-			
-			return Visibility.Unknown;
-		}
-
-		public void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
-		{
-			if (visibility == Visibility.Unknown)
-				throw new ArgumentException("If a space vehicle is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
-
-			if (visibility < Visibility.Owned)
-			{
-				// can only see space used by cargo, not actual cargo
-				Cargo.SetFakeSize();
-			}
-
-			// Can't see the ship's components if it's not scanned
-			if (visibility < Visibility.Scanned)
-			{
-				// create fake design
-				var d = new Design<AutonomousSpaceVehicle>();
-				d.Hull = (IHull<AutonomousSpaceVehicle>)Design.Hull;
-				d.Owner = Design.Owner;
-				Design = d;
-			}
-
-			if (Owner != galaxy.CurrentEmpire)
-				Orders.Clear();
-		}
-
 		public IEnumerable<Ability> Abilities
 		{
 			get { return IntrinsicAbilities.Concat(Design.Abilities).Stack(); }
@@ -365,6 +320,35 @@ namespace FrEee.Game.Objects.Vehicles
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
+		}
+
+
+		public void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+
+			if (visibility < Visibility.Owned)
+			{
+				// can't see orders unless it's your vehicle
+				Orders.Clear();
+
+				// can only see space used by cargo, not actual cargo
+				Cargo.SetFakeSize();
+			}
+
+			// Can't see the ship's components if it's not scanned
+			// TODO - let player see design of previously scanned ship
+			if (visibility < Visibility.Scanned)
+			{
+				// create fake design
+				var d = new Design<AutonomousSpaceVehicle>();
+				d.Hull = (IHull<AutonomousSpaceVehicle>)Design.Hull;
+				d.Owner = Design.Owner;
+				Design = d;
+			}
+
+			if (visibility < Visibility.Visible)
+				Dispose(); // TODO - memory sight
 		}
 	}
 }

@@ -102,6 +102,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
+			this.FindStarSystem().Remove(this);
 			Galaxy.Current.UnassignID(this);
 		}
 
@@ -164,5 +165,8 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public long ID { get; set; }
+
+
+		public abstract void Redact(Empire emp);
 	}
 }

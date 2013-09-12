@@ -106,49 +106,6 @@ namespace FrEee.Game.Objects.Space
 		public Colony Colony { get; set; }
 
 		/// <summary>
-		/// Planets need to have their colony redacted if the empire can't see them anymore.
-		/// </summary>
-		/// <param name="galaxy"></param>
-		/// <param name="starSystem"></param>
-		/// <param name="visibility"></param>
-		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
-		{
-			base.Redact(galaxy, starSystem, visibility);
-			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
-			if (Colony != null)
-			{
-				if (visibility < Visibility.Owned)
-				{
-					if (Colony.ConstructionQueue != null)
-					{
-						Colony.ConstructionQueue.Orders.Clear();
-						Colony.ConstructionQueue.Rate.Clear();
-						Colony.ConstructionQueue.UnspentRate.Clear();
-					}
-
-					// can only see space used by cargo, not actual cargo
-					Colony.Cargo.SetFakeSize();
-				}
-				if (visibility < Visibility.Scanned)
-				{
-					var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
-					var facilCount = Colony.Facilities.Count;
-					Colony.Facilities.Clear();
-					for (int i = 0; i < facilCount; i++)
-						Colony.Facilities.Add(new Facility(unknownFacilityTemplate));
-				}
-				if (visibility < Visibility.Visible)
-				{
-					Colony = null;
-					// TODO - memory sight
-				}
-			}
-
-			if (Owner != galaxy.CurrentEmpire)
-				Orders.Clear();
-		}
-
-		/// <summary>
 		/// The resource income from this planet.
 		/// </summary>
 		public ResourceQuantity Income
@@ -489,11 +446,6 @@ namespace FrEee.Game.Objects.Space
 			Orders.Insert(newpos, o);
 		}
 
-		public void Dispose()
-		{
-			Galaxy.Current.UnassignID(this);
-		}
-
 		/// <summary>
 		/// Draws this planet's status icons on a picture.
 		/// If the planet has special abilities (such as ruins), a white square will be drawn.
@@ -652,5 +604,26 @@ namespace FrEee.Game.Objects.Space
 		/// (Sure, why not?)
 		/// </summary>
 		public override bool CanWarp { get { return true; } }
+
+		public override void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+
+			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
+
+			if (Colony != null)
+			{
+				if (Colony.CheckVisibility(emp) < Visibility.Visible)
+					Colony = null;
+				else
+					Colony.Redact(emp);
+			}
+
+			if (vis < Visibility.Owned)
+				Orders.Clear();
+
+			if (vis < Visibility.Visible)
+				Dispose(); // TODO - memory sight
+		}
 	}
 }

@@ -5,6 +5,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
 using FrEee.Modding;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -50,6 +51,12 @@ namespace FrEee.Game.Objects.Space
 		public new AsteroidField Instantiate()
 		{
 			return this.Copy();
+		}
+
+		public override void Redact(Empire emp)
+		{
+			if (CheckVisibility(emp) < Visibility.Visible)
+				Dispose(); // TODO - memory sight
 		}
 	}
 }

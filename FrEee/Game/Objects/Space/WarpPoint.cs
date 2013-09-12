@@ -4,6 +4,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -49,20 +50,18 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public void Dispose()
+		public override void Redact(Empire emp)
 		{
-			Galaxy.Current.UnassignID(this);
-		}
-
-		public StellarSize StellarSize { get; set; }
-
-		public override void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
-		{
-			base.Redact(galaxy, starSystem, visibility);
-
 			// Don't let players see the target star system name if it's not explored yet
-			if (!Target.StarSystem.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+			var sys = Target.StarSystem;
+			if (!sys.ExploredByEmpires.Contains(emp))
+			{
 				Name = "Warp Point";
+				sys.Name = null;
+			}
+
+			if (CheckVisibility(emp) < Visibility.Visible)
+				Dispose(); // TODO - memory sight
 		}
 	}
 }

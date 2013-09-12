@@ -10,7 +10,7 @@ using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable, IReferrable
+	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable, IReferrable, IFoggable
 	{
 		/// <summary>
 		/// The name of this space object.
@@ -21,15 +21,6 @@ namespace FrEee.Game.Interfaces
 		/// Abilities intrinsically possessed by this space object.
 		/// </summary>
 		IList<Ability> IntrinsicAbilities { get; }
-
-		/// <summary>
-		/// Removes any data from this space object that the current player cannot see.
-		/// </summary>
-		/// <param name="galaxy">The galaxy, for context.</param>
-		/// <param name="starSystem">The star system containing the space object.</param>
-		/// <param name="visibility">The visibility rating of this object.</param>
-		/// <exception cref="ArgumentException">if the visibility parameter is Visibility.Unknown. (The object should be removed instead of redacted!)</exception>
-		void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility);
 
 		/// <summary>
 		/// Is this space object hostile to an empire?

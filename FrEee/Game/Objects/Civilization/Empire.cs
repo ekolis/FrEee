@@ -567,11 +567,6 @@ namespace FrEee.Game.Objects.Civilization
 
 		public int CompareTo(Empire other)
 		{
-			throw new NotImplementedException();
-		}
-
-		int IComparable<Empire>.CompareTo(Empire other)
-		{
 			return Name.CompareTo(other.Name);
 		}
 

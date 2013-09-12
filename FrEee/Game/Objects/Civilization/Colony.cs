@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -13,7 +14,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A colony on a planet.
 	/// </summary>
 	[Serializable]
-	public class Colony : IAbilityObject, IOwnable
+	public class Colony : IAbilityObject, IOwnable, IFoggable
 	{
 		public Colony()
 		{
@@ -61,5 +62,42 @@ namespace FrEee.Game.Objects.Civilization
 		/// The cargo stored on this colony.
 		/// </summary>
 		public Cargo Cargo { get; set; }
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// should be visible, assuming the planet is visible - we don't have colony cloaking at the moment...
+			if (emp == Owner)
+				return Visibility.Owned;
+			else
+				return Visibility.Visible;
+		}
+
+		public void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+			if (visibility < Visibility.Owned)
+			{
+				if (ConstructionQueue != null)
+				{
+					ConstructionQueue.Orders.Clear();
+					ConstructionQueue.Rate.Clear();
+					ConstructionQueue.UnspentRate.Clear();
+				}
+
+				// can only see space used by cargo, not actual cargo
+				Cargo.SetFakeSize();
+			}
+			if (visibility < Visibility.Scanned)
+			{
+				var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
+				var facilCount = Facilities.Count;
+				Facilities.Clear();
+				for (int i = 0; i < facilCount; i++)
+					Facilities.Add(new Facility(unknownFacilityTemplate));
+			}
+
+			if (visibility < Visibility.Visible)
+				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
+		}
 	}
 }

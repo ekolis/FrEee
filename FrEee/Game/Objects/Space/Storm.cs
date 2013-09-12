@@ -3,6 +3,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -21,11 +22,15 @@ namespace FrEee.Game.Objects.Space
 		/// Just copy the storm's data.
 		/// </summary>
 		/// <returns>A copy of the storm.</returns>
-		public new Storm Instantiate()
+		public Storm Instantiate()
 		{
 			return this.Copy();
 		}
 
-		public StellarSize StellarSize { get; set; }
+		public override void Redact(Empire emp)
+		{
+			if (CheckVisibility(emp) < Visibility.Visible)
+				Dispose(); // TODO - memory sight
+		}
 	}
 }

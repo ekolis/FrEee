@@ -150,7 +150,7 @@ namespace FrEee.Game.Objects.Space
 		/// Removes any space objects, etc. that the current empire cannot see.
 		/// </summary>
 		/// <param name="galaxy">The galaxy, for context.</param>
-		public void Redact(Galaxy galaxy)
+		public void Redact(Empire emp)
 		{
 			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
 			// hide space objects
@@ -159,9 +159,9 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var sobj in group)
 				{
-					var vis = sobj.CheckVisibility(galaxy.CurrentEmpire);
+					var vis = sobj.CheckVisibility(emp);
 					if (vis != Visibility.Unknown)
-						sobj.Redact(galaxy, this, vis);
+						sobj.Redact(emp);
 					else
 						toRemove.Add(Tuple.Create(group.Key, sobj));
 				}
@@ -170,20 +170,12 @@ namespace FrEee.Game.Objects.Space
 				Remove(t.Item2);
 
 			// hide explored-by empires
-			foreach (var emp in ExploredByEmpires.Where(emp => emp != galaxy.CurrentEmpire).ToArray())
-				ExploredByEmpires.Remove(emp);
+			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
+				ExploredByEmpires.Remove(e);
 
 			// hide background image (so player can't see what kind of system it is)
-			if (!ExploredByEmpires.Contains(galaxy.CurrentEmpire))
+			if (!ExploredByEmpires.Contains(emp))
 				BackgroundImagePath = null;
-
-			// hide warp point target system name if player hasn't seen the system yet
-			foreach (var wp in FindSpaceObjects<WarpPoint>().Flatten())
-			{
-				var sys = wp.Target.StarSystem;
-				if (!sys.ExploredByEmpires.Contains(galaxy.CurrentEmpire))
-					sys.Name = null;
-			}
 		}
 
 		public override string ToString()
