@@ -454,7 +454,7 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Saves the player's commands to an appropriately named file in the Savegame folder.
-		/// Files are named GameName_TurnNumber_PlayerNumber.plr. (PlayerNumber is 1-indexed)
+		/// Files are named GameName_TurnNumber_PlayerNumber.plr. (PlayerNumber is 1-indexed and padded to 4 digits with zeroes)
 		/// This doesn't make sense for the host view, so an exception will be thrown if there is no current empire.
 		/// </summary>
 		/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
@@ -539,7 +539,7 @@ namespace FrEee.Game.Objects.Space
 
 		private string GetEmpireCommandsSavePath(Empire emp)
 		{
-			return Path.Combine("Savegame", String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(emp) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension));
+			return Path.Combine("Savegame", String.Format("{0}_{1}_{2:d4}{3}", Name, TurnNumber, Empires.IndexOf(emp) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension));
 		}
 
 		private string GetEmpireSavePath()
