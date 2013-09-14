@@ -406,9 +406,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var dx = Math.Abs(target.X - p.X);
 			var dy = Math.Abs(target.Y - p.Y);
-			var min = Math.Min(dx, dy);
-			var diff = Math.Abs(dx - dy);
-			return min + diff;
+			return Math.Max(dx, dy);
 		}
 
 		/// <summary>
