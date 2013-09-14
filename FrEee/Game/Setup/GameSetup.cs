@@ -469,7 +469,7 @@ namespace FrEee.Game.Setup
 					okSystems = okSystems.Where(sys2 => sys2.Sectors.Any(sec => !sec.SpaceObjects.Any()));
 
 					if (!okSystems.Any())
-						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ".");
+						throw new Exception("No suitable system found to place " + emp + "'s homeworld #" + (i + 1) + ". (Try regenerating the map or increasing the number of star systems.)");
 
 					// make brand new planet in an OK system
 					var sys = okSystems.PickRandom();
