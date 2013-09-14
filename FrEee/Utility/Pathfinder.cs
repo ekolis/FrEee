@@ -85,10 +85,10 @@ namespace FrEee.Utility
 			bool success = false;
 			while (queue.Any() && !success)
 			{
-				// step 5: take lowest min-estimate node out of queue
+				// step 5: take lowest cost node out of queue
 				// also prefer straight line movement to diagonal
-				var minEstimate = queue.Min(n => n.MinimumCostRemaining);
-				var node = queue.Where(n => n.MinimumCostRemaining == minEstimate).First();
+				var minCost = queue.Min(n => n.Cost);
+				var node = queue.Where(n => n.Cost == minCost).First();
 				queue.Remove(node);
 
 				// step 6: if node is the goal, stop - success!
@@ -113,8 +113,7 @@ namespace FrEee.Utility
 					{
 						// didn't visit yet
 						var newnode = new Node<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end));
-						if (newnode.MinimumCostRemaining < node.MinimumCostRemaining)
-							queue.Add(newnode);
+						queue.Add(newnode);
 						visited.Add(newnode);
 					}
 					else
