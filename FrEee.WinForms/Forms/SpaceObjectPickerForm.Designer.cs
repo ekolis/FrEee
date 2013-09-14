@@ -96,6 +96,7 @@
 			this.Controls.Add(this.btnOk);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "SpaceObjectPickerForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Select a space object";
 			this.ResumeLayout(false);
 

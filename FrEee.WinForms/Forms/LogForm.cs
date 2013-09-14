@@ -35,6 +35,8 @@ namespace FrEee.WinForms.Forms
 				messages = battle.Log;
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+
+			ShowInTaskbar = !gameForm.Visible;
 		}
 
 		IEnumerable<LogMessage> messages;

@@ -594,6 +594,7 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.MaximumSize = new System.Drawing.Size(850, 99999);
 			this.Name = "ConstructionQueueForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Construction Queue";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConstructionQueueForm_FormClosing);
 			this.Load += new System.EventHandler(this.ConstructionQueueForm_Load);

@@ -281,6 +281,7 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.MaximumSize = new System.Drawing.Size(730, 9999);
 			this.Name = "DesignListForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Designs";
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);

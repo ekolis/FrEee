@@ -444,6 +444,7 @@
 			this.MaximumSize = new System.Drawing.Size(775, 9999);
 			this.MinimumSize = new System.Drawing.Size(775, 600);
 			this.Name = "ResearchForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Research";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResearchForm_FormClosing);
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).EndInit();

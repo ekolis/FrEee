@@ -743,6 +743,7 @@ namespace FrEee.WinForms.Forms
 			this.ForeColor = System.Drawing.Color.White;
 			this.MinimumSize = new System.Drawing.Size(800, 600);
 			this.Name = "PlanetListForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Planets";
 			this.Load += new System.EventHandler(this.PlanetListForm_Load);
 			this.pnlHeader.ResumeLayout(false);

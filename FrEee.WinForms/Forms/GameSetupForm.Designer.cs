@@ -2456,6 +2456,7 @@
 			this.Controls.Add(this.tabs);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "GameSetupForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Game Setup";
 			this.tabs.ResumeLayout(false);
 			this.tabGalaxy.ResumeLayout(false);

@@ -281,6 +281,7 @@
 			this.Controls.Add(this.gamePanel1);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "ModPickerForm";
+			this.ShowInTaskbar = false;
 			this.Text = "FrEee";
 			this.gamePanel1.ResumeLayout(false);
 			this.ResumeLayout(false);

@@ -31,12 +31,12 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.gridMounts = new System.Windows.Forms.DataGridView();
-			this.btnOk = new FrEee.WinForms.Controls.GameButton();
-			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-			this.mountBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.IconColumn = new System.Windows.Forms.DataGridViewImageColumn();
+			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
 			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.mountBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.btnOk = new FrEee.WinForms.Controls.GameButton();
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridMounts)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.mountBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -53,7 +53,7 @@ namespace FrEee.WinForms.Forms
 			this.gridMounts.BackgroundColor = System.Drawing.Color.Black;
 			this.gridMounts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridMounts.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IconColumn,
+            this.Icon,
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2});
 			this.gridMounts.DataSource = this.mountBindingSource;
@@ -70,6 +70,36 @@ namespace FrEee.WinForms.Forms
 			this.gridMounts.TabIndex = 1;
 			this.gridMounts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridMounts_CellDoubleClick);
 			this.gridMounts.SelectionChanged += new System.EventHandler(this.gridMounts_SelectionChanged);
+			// 
+			// Icon
+			// 
+			this.Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.Icon.DataPropertyName = "Icon";
+			this.Icon.HeaderText = "Icon";
+			this.Icon.Name = "Icon";
+			this.Icon.ReadOnly = true;
+			this.Icon.Width = 32;
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
+			this.dataGridViewTextBoxColumn1.HeaderText = "Name";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			this.dataGridViewTextBoxColumn1.ReadOnly = true;
+			this.dataGridViewTextBoxColumn1.Width = 150;
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.DataPropertyName = "Description";
+			this.dataGridViewTextBoxColumn2.HeaderText = "Description";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.dataGridViewTextBoxColumn2.Width = 250;
+			// 
+			// mountBindingSource
+			// 
+			this.mountBindingSource.AllowNew = false;
+			this.mountBindingSource.DataSource = typeof(FrEee.Game.Objects.Technology.Mount);
 			// 
 			// btnOk
 			// 
@@ -97,36 +127,6 @@ namespace FrEee.WinForms.Forms
 			this.btnCancel.UseVisualStyleBackColor = false;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
 			// 
-			// mountBindingSource
-			// 
-			this.mountBindingSource.AllowNew = false;
-			this.mountBindingSource.DataSource = typeof(FrEee.Game.Objects.Technology.Mount);
-			// 
-			// IconColumn
-			// 
-			this.IconColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.IconColumn.DataPropertyName = "Icon";
-			this.IconColumn.HeaderText = "Icon";
-			this.IconColumn.Name = "Icon";
-			this.IconColumn.ReadOnly = true;
-			this.IconColumn.Width = 32;
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Name";
-			this.dataGridViewTextBoxColumn1.HeaderText = "Name";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			this.dataGridViewTextBoxColumn1.ReadOnly = true;
-			this.dataGridViewTextBoxColumn1.Width = 150;
-			// 
-			// dataGridViewTextBoxColumn2
-			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Description";
-			this.dataGridViewTextBoxColumn2.HeaderText = "Description";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
-			this.dataGridViewTextBoxColumn2.Width = 250;
-			// 
 			// MountPickerForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -138,6 +138,7 @@ namespace FrEee.WinForms.Forms
 			this.Controls.Add(this.gridMounts);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "MountPickerForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Select a mount";
 			((System.ComponentModel.ISupportInitialize)(this.gridMounts)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.mountBindingSource)).EndInit();
@@ -158,5 +159,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.BindingSource mountBindingSource;
+		private System.Windows.Forms.DataGridViewImageColumn Icon;
 	}
 }

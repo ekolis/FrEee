@@ -67,6 +67,7 @@
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "StatusForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Progress";
 			this.Load += new System.EventHandler(this.ProgressForm_Load);
 			this.ResumeLayout(false);

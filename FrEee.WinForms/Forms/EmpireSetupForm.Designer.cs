@@ -28,7 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmpireSetupForm));
 			this.txtPointsAvailable = new System.Windows.Forms.Label();
 			this.btnSaveRace = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoadRace = new FrEee.WinForms.Controls.GameButton();
@@ -717,7 +716,7 @@
 			this.aptitudePicker.Name = "aptitudePicker";
 			this.aptitudePicker.Size = new System.Drawing.Size(589, 525);
 			this.aptitudePicker.TabIndex = 0;
-			this.aptitudePicker.Values = ((System.Collections.Generic.IDictionary<FrEee.Game.Objects.Civilization.Aptitude, int>)(resources.GetObject("aptitudePicker.Values")));
+			this.aptitudePicker.Values = null;
 			this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
 			// 
 			// tabPage1
@@ -1221,6 +1220,7 @@
 			this.Controls.Add(this.tabs);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "EmpireSetupForm";
+			this.ShowInTaskbar = false;
 			this.Text = "Empire Setup";
 			this.tabs.ResumeLayout(false);
 			this.tabPage2.ResumeLayout(false);
