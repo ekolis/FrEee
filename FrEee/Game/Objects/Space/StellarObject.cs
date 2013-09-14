@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Space
 					return Visibility.Fogged; // TODO - set as unknown if the object was created after the empire last explored the system
 				return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
