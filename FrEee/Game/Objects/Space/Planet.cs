@@ -622,8 +622,8 @@ namespace FrEee.Game.Objects.Space
 			if (vis < Visibility.Owned)
 				Orders.Clear();
 
-			if (vis < Visibility.Visible)
-				Dispose(); // TODO - memory sight
+			if (vis < Visibility.Fogged)
+				Dispose(); // TODO - dispose here if fogged; replace with memory sight cache if present
 		}
 	}
 }

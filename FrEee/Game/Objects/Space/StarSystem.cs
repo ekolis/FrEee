@@ -154,6 +154,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
 			// hide space objects
+			// TODO - don't use tuples, we don't use the point value anymore...
 			var toRemove = new List<Tuple<Point, ISpaceObject>>();
 			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
 			{

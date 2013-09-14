@@ -156,7 +156,9 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Galaxy.Current.OmniscientView)
 					return Visibility.Visible;
-				return Visibility.Unknown; // TODO - memory sight
+				if (this.FindStarSystem().ExploredByEmpires.Contains(emp))
+					return Visibility.Fogged; // TODO - set as unknown if the object was created after the empire last explored the system
+				return Visibility.Unknown;
 			}
 			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
 			if (scanners.Any())

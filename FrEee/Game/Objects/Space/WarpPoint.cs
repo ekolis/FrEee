@@ -60,8 +60,8 @@ namespace FrEee.Game.Objects.Space
 				sys.Name = null;
 			}
 
-			if (CheckVisibility(emp) < Visibility.Visible)
-				Dispose(); // TODO - memory sight
+			if (CheckVisibility(emp) < Visibility.Fogged)
+				Dispose(); // TODO - dispose here if fogged; replace with memory sight cache if present
 		}
 	}
 }
