@@ -36,7 +36,7 @@ namespace FrEee.Utility
 			if (map.Any(n => n.Location == end))
 			{
 				// can reach it
-				var nodes = new List<DijkstraNode<Sector>>();
+				var nodes = new List<Node<Sector>>();
 				var node = map.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
@@ -55,7 +55,7 @@ namespace FrEee.Utility
 				else
 				{
 					// go to the closest point
-					var nodes = new List<DijkstraNode<Sector>>();
+					var nodes = new List<Node<Sector>>();
 					var node = map.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
@@ -67,19 +67,19 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<DijkstraNode<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
+		public static IEnumerable<Node<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			var startSys = start.StarSystem;
 
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<DijkstraNode<Sector>>();
+			var queue = new List<Node<Sector>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<DijkstraNode<Sector>>();
+			var visited = new List<Node<Sector>>();
 
 			// step 3: add start node and cost
-			queue.Add(new DijkstraNode<Sector>(start, 0, null));
+			queue.Add(new Node<Sector>(start, 0, null, EstimateDistance(start, end)));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -112,7 +112,7 @@ namespace FrEee.Utility
 					if (!visited.Any(n => n.Location == move))
 					{
 						// didn't visit yet
-						var newnode = new DijkstraNode<Sector>(move, node.Cost + 1, node);
+						var newnode = new Node<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end));
 						queue.Add(newnode);
 						visited.Add(newnode);
 					}
@@ -124,7 +124,7 @@ namespace FrEee.Utility
 						{
 							foreach (var old in items.ToArray())
 								queue.Remove(old);
-							var newnode = new DijkstraNode<Sector>(move, node.Cost + 1, node);
+							var newnode = new Node<Sector>(move, node.Cost + 1, node);
 							queue.Add(newnode);
 							visited.Add(newnode);
 						}
@@ -133,6 +133,37 @@ namespace FrEee.Utility
 			}
 
 			return visited;
+		}
+
+		/// <summary>
+		/// Makes a minimum estimate of the distance to reach a sector.
+		/// </summary>
+		/// <param name="start"></param>
+		/// <param name="end"></param>
+		/// <returns></returns>
+		public static int EstimateDistance(Sector start, Sector end)
+		{
+			int sublightDistance = int.MaxValue;
+			int ftlDistance = int.MaxValue;
+
+			// same system? just go along grid, ignoring obstacles
+			if (start.StarSystem == end.StarSystem)
+				sublightDistance = start.Coordinates.EightWayDistance(end.Coordinates);
+
+			// different system? find nearest warp point in each system, and assume they are connected to each other ("warp nexus")
+			var wps1 = FindNearestWarpPointSectorInSystem(start);
+			var wps2 = FindNearestWarpPointSectorInSystem(end);
+			if (wps1 != null && wps2 != null)
+				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates);
+
+			return Math.Min(sublightDistance, ftlDistance);
+		}
+
+		public static Sector FindNearestWarpPointSectorInSystem(Sector sector)
+		{
+			if (sector.StarSystem == null)
+				return null;
+			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Flatten().Select(wp => wp.FindSector()).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).PickRandom();
 		}
 
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
@@ -187,7 +218,7 @@ namespace FrEee.Utility
 			if (map.Any(n => n.Location == end))
 			{
 				// can reach it
-				var nodes = new List<DijkstraNode<StarSystem>>();
+				var nodes = new List<Node<StarSystem>>();
 				var node = map.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
@@ -206,7 +237,7 @@ namespace FrEee.Utility
 				else
 				{
 					// go to the closest point
-					var nodes = new List<DijkstraNode<StarSystem>>();
+					var nodes = new List<Node<StarSystem>>();
 					var node = map.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
@@ -218,17 +249,17 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<DijkstraNode<StarSystem>> CreateDijkstraMap(StarSystem start, StarSystem end)
+		public static IEnumerable<Node<StarSystem>> CreateDijkstraMap(StarSystem start, StarSystem end)
 		{
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<DijkstraNode<StarSystem>>();
+			var queue = new List<Node<StarSystem>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<DijkstraNode<StarSystem>>();
+			var visited = new List<Node<StarSystem>>();
 
 			// step 3: add start node and cost
-			queue.Add(new DijkstraNode<StarSystem>(start, 0, null));
+			queue.Add(new Node<StarSystem>(start, 0, null));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -256,7 +287,7 @@ namespace FrEee.Utility
 					if (!visited.Any(n => n.Location == move))
 					{
 						// didn't visit yet
-						var newnode = new DijkstraNode<StarSystem>(move, node.Cost + 1, node);
+						var newnode = new Node<StarSystem>(move, node.Cost + 1, node);
 						queue.Add(newnode);
 						visited.Add(newnode);
 					}
@@ -268,7 +299,7 @@ namespace FrEee.Utility
 						{
 							foreach (var old in items.ToArray())
 								queue.Remove(old);
-							var newnode = new DijkstraNode<StarSystem>(move, node.Cost + 1, node);
+							var newnode = new Node<StarSystem>(move, node.Cost + 1, node);
 							queue.Add(newnode);
 							visited.Add(newnode);
 						}
@@ -300,7 +331,7 @@ namespace FrEee.Utility
 			if (map.Any(n => n.Location.Equals(end)))
 			{
 				// can reach it
-				var nodes = new List<DijkstraNode<T>>();
+				var nodes = new List<Node<T>>();
 				var node = map.Where(n => n.Location.Equals(end)).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
@@ -319,7 +350,7 @@ namespace FrEee.Utility
 				else
 				{
 					// go to the closest point
-					var nodes = new List<DijkstraNode<T>>();
+					var nodes = new List<Node<T>>();
 					var node = map.Where(n => n.Location.Equals(target.Location)).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
@@ -331,17 +362,17 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<DijkstraNode<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
+		public static IEnumerable<Node<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
 		{
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<DijkstraNode<T>>();
+			var queue = new List<Node<T>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<DijkstraNode<T>>();
+			var visited = new List<Node<T>>();
 
 			// step 3: add start node and cost
-			queue.Add(new DijkstraNode<T>(start, 0, null));
+			queue.Add(new Node<T>(start, 0, null));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -369,7 +400,7 @@ namespace FrEee.Utility
 					if (!visited.Any(n => n.Location.Equals(move)))
 					{
 						// didn't visit yet
-						var newnode = new DijkstraNode<T>(move, node.Cost + 1, node);
+						var newnode = new Node<T>(move, node.Cost + 1, node);
 						queue.Add(newnode);
 						visited.Add(newnode);
 					}
@@ -381,7 +412,7 @@ namespace FrEee.Utility
 						{
 							foreach (var old in items.ToArray())
 								queue.Remove(old);
-							var newnode = new DijkstraNode<T>(move, node.Cost + 1, node);
+							var newnode = new Node<T>(move, node.Cost + 1, node);
 							queue.Add(newnode);
 							visited.Add(newnode);
 						}
@@ -392,24 +423,40 @@ namespace FrEee.Utility
 			return visited;
 		}
 
-		public class DijkstraNode<T>
+		public class Node<T>
 		{
-			public DijkstraNode(T location, int cost, DijkstraNode<T> previousNode)
+			public Node(T location, int cost, Node<T> previousNode, int minRemaining = 0)
 			{
 				Location = location;
 				Cost = cost;
 				PreviousNode = previousNode;
+				MinimumCostRemaining = minRemaining;
 			}
 
+			/// <summary>
+			/// The current location.
+			/// </summary>
 			public T Location { get; set; }
 
+			/// <summary>
+			/// The cost to reach this node from the start node.
+			/// </summary>
 			public int Cost { get; set; }
 
-			public DijkstraNode<T> PreviousNode { get; set; }
+			/// <summary>
+			/// A minimum estimate on the remaining cost to reach the destination.
+			/// This must never be an overestimate, or the pathfinding might fail even when it is possible to reach the destination!
+			/// </summary>
+			public int MinimumCostRemaining { get; set; }
+
+			/// <summary>
+			/// The previous node in the current path.
+			/// </summary>
+			public Node<T> PreviousNode { get; set; }
 
 			public override string ToString()
 			{
-				return "From " + PreviousNode.Location + " to " + Location + " (cost=" + Cost + ")";
+				return "From " + PreviousNode.Location + " to " + Location + " (cost=" + Cost + ", minRemaining=" + MinimumCostRemaining + ")";
 			}
 		}
 	}

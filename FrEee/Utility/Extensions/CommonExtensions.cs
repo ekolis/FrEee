@@ -386,7 +386,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Computes the Manhattan (grid) distance between two points.
+		/// Computes the Manhattan (4-way grid) distance between two points.
 		/// </summary>
 		/// <param name="p"></param>
 		/// <param name="target"></param>
@@ -394,6 +394,21 @@ namespace FrEee.Utility.Extensions
 		public static int ManhattanDistance(this Point p, Point target)
 		{
 			return Math.Abs(target.X - p.X) + Math.Abs(target.Y - p.Y);
+		}
+
+		/// <summary>
+		/// Computes the distance between two points along a grid with eight-way movement.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public static int EightWayDistance(this Point p, Point target)
+		{
+			var dx = Math.Abs(target.X - p.X);
+			var dy = Math.Abs(target.Y - p.Y);
+			var min = Math.Min(dx, dy);
+			var diff = Math.Abs(dx - dy);
+			return min + diff;
 		}
 
 		/// <summary>
