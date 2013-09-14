@@ -568,9 +568,9 @@ namespace FrEee.Game.Objects.Space
 				{
 					var id = kvp.Key;
 					var obj = (IFoggable)kvp.Value;
-					// TODO - memory sight
 					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis < Visibility.Visible)
+					// TODO - memory sight - show only visible objects here, but also show memory caches of fogged objects
+					if (vis < Visibility.Fogged)
 						referrables.Remove(id);
 				}
 

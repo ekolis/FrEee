@@ -25,6 +25,11 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
+			if (end == null)
+				throw new Exception("Cannot pathfind to a null sector.");
+			if (end.StarSystem == null)
+				throw new Exception("Cannot pathfind to a sector without a star system.");
+
 			if (start == end)
 				return Enumerable.Empty<Sector>();
 
@@ -276,7 +281,7 @@ namespace FrEee.Utility
 				// step 5: take lowest cost node out of queue
 				// also prefer straight line movement to diagonal
 				var minCost = queue.Min(n => n.Cost);
-				var node = queue.Where(n => n.Cost == minCost).First();
+				var node = queue.Where(n => n.Cost == minCost).OrderBy(n => n.MinimumCostRemaining).First();
 				queue.Remove(node);
 
 				// step 6: if node is the goal, stop - success!
