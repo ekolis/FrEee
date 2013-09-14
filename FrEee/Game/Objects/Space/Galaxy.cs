@@ -865,7 +865,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void UnassignID(IReferrable r)
 		{
-			if (referrables.ContainsKey(r.ID))
+			if (r != null && referrables.ContainsKey(r.ID))
 			{
 				if (referrables[r.ID] == r)
 				{

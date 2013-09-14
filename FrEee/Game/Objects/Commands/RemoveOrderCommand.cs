@@ -25,26 +25,17 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			try
-			{
-				if (Order.IsNew())
-				{
-					Issuer.Log.Add(new GenericLogMessage("The server attempted to remove an order from " + Target + " that was not actually on the server; it was just added and removed this past turn. This is probably a game bug."));
-				}
-				else if (Issuer == Target.Owner)
-				{
-					Target.RemoveOrder(Order);
-					Galaxy.Current.UnassignID(Order);
-				}
-				else
-				{
-					Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
-				}
-			}
-			catch (InvalidCastException ex)
-			{
+			if (Order == null)
+				Issuer.Log.Add(new GenericLogMessage("The server attempted to remove a null order from " + Target + ". Perhaps this order was not actually on the server yet; it was just added and removed this past turn. This is probably a game bug."));
+			if (Order.IsNew())
 				Issuer.Log.Add(new GenericLogMessage("The server attempted to remove an order from " + Target + " that was not actually on the server; it was just added and removed this past turn. This is probably a game bug."));
+			else if (Issuer == Target.Owner)
+			{
+				Target.RemoveOrder(Order);
+				Galaxy.Current.UnassignID(Order);
 			}
+			else
+				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 	}
 }

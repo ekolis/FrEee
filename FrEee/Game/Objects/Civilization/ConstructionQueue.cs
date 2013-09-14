@@ -277,7 +277,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (!(order is IConstructionOrder))
+			if (order != null && !(order is IConstructionOrder))
 				throw new Exception("Can't remove a " + order.GetType() + " from a construction queue's orders.");
 			Orders.Remove((IConstructionOrder)order);
 		}
