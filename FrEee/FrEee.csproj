@@ -99,6 +99,7 @@
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetObsoleteFlagCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
