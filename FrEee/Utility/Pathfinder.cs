@@ -147,21 +147,29 @@ namespace FrEee.Utility
 			int ftlDistance = int.MaxValue;
 
 			// same system? just go along grid, ignoring obstacles
-			if (start.StarSystem == end.StarSystem)
+			if (start != null && end != null && start.StarSystem == end.StarSystem)
 				sublightDistance = start.Coordinates.EightWayDistance(end.Coordinates);
 
 			// different system? find nearest warp point in each system, and assume they are connected to each other ("warp nexus")
 			var wps1 = FindNearestWarpPointSectorInSystem(start);
 			var wps2 = FindNearestWarpPointSectorInSystem(end);
 			if (wps1 != null && wps2 != null)
-				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates);
+				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
+
+			// sector is null? then it must be the target of an unexplored warp point
+			if (wps1 != null && end == null)
+				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + 1;
+			if (start == null && wps2 != null)
+				ftlDistance = end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
+			if (start == null && end == null)
+				ftlDistance = 0;
 
 			return Math.Min(sublightDistance, ftlDistance);
 		}
 
 		public static Sector FindNearestWarpPointSectorInSystem(Sector sector)
 		{
-			if (sector.StarSystem == null)
+			if (sector == null || sector.StarSystem == null)
 				return null;
 			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Flatten().Select(wp => wp.FindSector()).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).PickRandom();
 		}

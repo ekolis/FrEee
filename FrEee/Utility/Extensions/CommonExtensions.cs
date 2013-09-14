@@ -835,7 +835,7 @@ namespace FrEee.Utility.Extensions
 			if (!list.Any())
 				return Enumerable.Empty<T>();
 			var max = list.Max(x => x.Value);
-			return list.Where(x => x.Value.Equals(max)).Select(x => x.Item);
+			return list.Where(x => x.Value.SafeEquals(max)).Select(x => x.Item);
 		}
 
 		/// <summary>
@@ -852,7 +852,7 @@ namespace FrEee.Utility.Extensions
 			if (!list.Any())
 				return Enumerable.Empty<T>();
 			var min = list.Min(x => x.Value);
-			return list.Where(x => x.Value.Equals(min)).Select(x => x.Item);
+			return list.Where(x => x.Value.SafeEquals(min)).Select(x => x.Item);
 		}
 
 		/// <summary>
@@ -920,6 +920,22 @@ namespace FrEee.Utility.Extensions
 		public static bool IsNew<T>(this IOrder<T> order) where T : IOrderable
 		{
 			return Galaxy.Current.Referrables.OfType<AddOrderCommand<T>>().Where(cmd => cmd.Order == order).Any();
+		}
+
+		/// <summary>
+		/// Equals method that doesn't throw an exception when objects are null.
+		/// Null is not equal to anything else, except other nulls.
+		/// </summary>
+		/// <param name="o1"></param>
+		/// <param name="o2"></param>
+		/// <returns></returns>
+		public static bool SafeEquals(this object o1, object o2)
+		{
+			if (o1 == null && o2 == null)
+				return true;
+			if (o1 == null || o2 == null)
+				return false;
+			return o1.Equals(o2);
 		}
 	}
 }

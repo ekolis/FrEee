@@ -82,6 +82,8 @@ namespace FrEee.Game.Objects.Space
 
 		public override int GetHashCode()
 		{
+			if (StarSystem == null)
+				return Coordinates.GetHashCode();
 			return StarSystem.GetHashCode() ^ Coordinates.GetHashCode();
 		}
 	}
