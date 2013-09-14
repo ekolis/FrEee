@@ -31,7 +31,10 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
-			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.IconCol = new System.Windows.Forms.DataGridViewImageColumn();
 			this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -39,9 +42,6 @@
 			this.FirstItemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.FirstItemEta = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.Eta = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.constructionQueueBindingSource)).BeginInit();
 			this.SuspendLayout();
@@ -59,7 +59,7 @@
 			this.gridQueues.BackgroundColor = System.Drawing.Color.Black;
 			this.gridQueues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridQueues.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Icon,
+            this.IconCol,
             this.NameColumn,
             this.isSpaceYardQueueDataGridViewCheckBoxColumn,
             this.isColonyQueueDataGridViewCheckBoxColumn,
@@ -87,13 +87,31 @@
 			this.gridQueues.TabIndex = 0;
 			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
 			// 
-			// Icon
+			// constructionQueueBindingSource
 			// 
-			this.Icon.DataPropertyName = "Icon";
-			this.Icon.HeaderText = "Icon";
-			this.Icon.Name = "Icon";
-			this.Icon.ReadOnly = true;
-			this.Icon.Width = 32;
+			this.constructionQueueBindingSource.AllowNew = false;
+			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			// 
+			// IconCol
+			// 
+			this.IconCol.DataPropertyName = "Icon";
+			this.IconCol.HeaderText = "Icon";
+			this.IconCol.Name = "IconCol";
+			this.IconCol.ReadOnly = true;
+			this.IconCol.Width = 32;
 			// 
 			// NameColumn
 			// 
@@ -147,24 +165,6 @@
 			this.Eta.Name = "Eta";
 			this.Eta.ReadOnly = true;
 			// 
-			// constructionQueueBindingSource
-			// 
-			this.constructionQueueBindingSource.AllowNew = false;
-			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
-			// 
-			// dataGridViewTextBoxColumn1
-			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			// 
-			// dataGridViewTextBoxColumn2
-			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
-			// 
 			// ConstructionQueueListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,6 +190,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
+		private System.Windows.Forms.DataGridViewImageColumn IconCol;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isSpaceYardQueueDataGridViewCheckBoxColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isColonyQueueDataGridViewCheckBoxColumn;
@@ -197,6 +198,5 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn FirstItemName;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FirstItemEta;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Eta;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
 	}
 }

@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 			this.components = new System.ComponentModel.Container();
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 			this.gridHulls = new System.Windows.Forms.DataGridView();
-			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.IconCol = new System.Windows.Forms.DataGridViewImageColumn();
 			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.sizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,7 +70,7 @@ namespace FrEee.WinForms.Forms
 			this.gridHulls.BackgroundColor = System.Drawing.Color.Black;
 			this.gridHulls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridHulls.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Icon,
+            this.IconCol,
             this.nameDataGridViewTextBoxColumn,
             this.sizeDataGridViewTextBoxColumn,
             this.descriptionDataGridViewTextBoxColumn,
@@ -92,12 +92,12 @@ namespace FrEee.WinForms.Forms
 			// 
 			// Icon
 			// 
-			this.Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Icon.DataPropertyName = "Icon";
-			this.Icon.HeaderText = "Icon";
-			this.Icon.Name = "Icon";
-			this.Icon.ReadOnly = true;
-			this.Icon.Width = 32;
+			this.IconCol.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.IconCol.DataPropertyName = "Icon";
+			this.IconCol.HeaderText = "Icon";
+			this.IconCol.Name = "Icon";
+			this.IconCol.ReadOnly = true;
+			this.IconCol.Width = 32;
 			// 
 			// nameDataGridViewTextBoxColumn
 			// 
@@ -197,6 +197,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn costDataGridViewTextBoxColumn;
 		private System.Windows.Forms.BindingSource iHullBindingSource;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
+		private System.Windows.Forms.DataGridViewImageColumn IconCol;
 	}
 }
