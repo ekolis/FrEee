@@ -14,7 +14,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Civilization
 {
 	[Serializable]
-	public class ConstructionQueue : IOrderable, IOwnable
+	public class ConstructionQueue : IOrderable, IOwnable, IFoggable
 	{
 		public ConstructionQueue(ISpaceObject sobj)
 		{
@@ -308,6 +308,12 @@ namespace FrEee.Game.Objects.Civilization
 			if (vis == Visibility.Owned)
 				return vis;
 			return Visibility.Unknown;
+		}
+
+		public void Redact(Empire emp)
+		{
+			if (CheckVisibility(emp) < Visibility.Visible)
+				Dispose();
 		}
 	}
 }
