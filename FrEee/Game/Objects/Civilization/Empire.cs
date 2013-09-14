@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, ICommandable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
+	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.

@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something which can accept orders from an empire and queue them for execution over time.
 	/// </summary>
-	public interface IOrderable : ICommandable
+	public interface IOrderable : IReferrable
 	{
 		/// <summary>
 		/// The queued orders.

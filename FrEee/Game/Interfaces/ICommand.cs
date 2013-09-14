@@ -31,7 +31,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A command to some object.
 	/// </summary>
-	public interface ICommand<T> : ICommand where T : ICommandable
+	public interface ICommand<T> : ICommand where T : IReferrable
 	{
 		/// <summary>
 		/// The object whose queue is being manipulated.
