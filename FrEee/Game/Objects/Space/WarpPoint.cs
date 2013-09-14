@@ -59,7 +59,8 @@ namespace FrEee.Game.Objects.Space
 			if (!sys.ExploredByEmpires.Contains(emp))
 			{
 				Name = "Warp Point";
-				Target = null;
+				Target.StarSystem = null;
+				Target.Coordinates = new System.Drawing.Point();
 			}
 
 			if (CheckVisibility(emp) < Visibility.Fogged)
