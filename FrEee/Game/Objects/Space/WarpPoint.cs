@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Space
 			if (!sys.ExploredByEmpires.Contains(emp))
 			{
 				Name = "Warp Point";
-				sys.Name = null;
+				Target = null;
 			}
 
 			if (CheckVisibility(emp) < Visibility.Fogged)
