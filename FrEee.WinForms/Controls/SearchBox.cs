@@ -131,8 +131,10 @@ namespace FrEee.WinForms.Controls
 
 		private void SearchBox_SizeChanged(object sender, EventArgs e)
 		{
-			textBox.Width = Width;
-			resultsForm.Width = Width;
+			if (textBox != null)
+				textBox.Width = Width;
+			if (resultsForm != null)
+				resultsForm.Width = Width;
 		}
 
 		private void SearchBox_KeyDown(object sender, KeyEventArgs e)
