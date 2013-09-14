@@ -85,10 +85,10 @@ namespace FrEee.Utility
 			bool success = false;
 			while (queue.Any() && !success)
 			{
-				// step 5: take lowest cost node out of queue
+				// step 5: take lowest min-estimate node out of queue
 				// also prefer straight line movement to diagonal
-				var minCost = queue.Min(n => n.Cost);
-				var node = queue.Where(n => n.Cost == minCost).First();
+				var minEstimate = queue.Min(n => n.MinimumCostRemaining);
+				var node = queue.Where(n => n.MinimumCostRemaining == minEstimate).First();
 				queue.Remove(node);
 
 				// step 6: if node is the goal, stop - success!
@@ -101,10 +101,10 @@ namespace FrEee.Utility
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
 					// avoid enemies, even if they are at the destination; wait for them to leave before entering (unlike SE4)
-					moves = moves.Where(m => !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner))).ToList();
+					moves = moves.Where(m => m == null || !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner))).ToList();
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
-					moves = moves.Where(m => m == end || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
+					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
 
 				// step 7b: update priority queue
 				foreach (var move in moves)
@@ -113,7 +113,8 @@ namespace FrEee.Utility
 					{
 						// didn't visit yet
 						var newnode = new Node<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end));
-						queue.Add(newnode);
+						if (newnode.MinimumCostRemaining < node.MinimumCostRemaining)
+							queue.Add(newnode);
 						visited.Add(newnode);
 					}
 					else

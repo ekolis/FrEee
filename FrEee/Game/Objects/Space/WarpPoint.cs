@@ -46,6 +46,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				if (Target == null)
+					return null;
 				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
 			}
 		}

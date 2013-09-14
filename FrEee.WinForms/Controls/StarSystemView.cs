@@ -270,7 +270,7 @@ namespace FrEee.WinForms.Controls
 						}
 
 						PointF? curPoint = null;
-						if (cur.StarSystem == StarSystem)
+						if (cur != null && cur.StarSystem == StarSystem)
 						{
 							var curCoords = cur.Coordinates;
 							curPoint = GetDrawPoint(curCoords.X, curCoords.Y);
