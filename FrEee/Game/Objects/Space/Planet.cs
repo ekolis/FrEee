@@ -271,8 +271,11 @@ namespace FrEee.Game.Objects.Space
 
 		public void ExecuteOrders()
 		{
-			TimeToNextMove -= Galaxy.Current.NextTickSize;
-			while (TimeToNextMove <= 0)
+			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
+				TimeToNextMove = 0;
+			else
+				TimeToNextMove -= Galaxy.Current.NextTickSize;
+			while (TimeToNextMove <= 0 && Orders.Any())
 			{
 				if (!Orders.Any())
 					break;

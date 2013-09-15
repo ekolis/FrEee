@@ -759,7 +759,7 @@ namespace FrEee.Game.Objects.Space
 			CurrentTick = 0;
 			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
-			while (CurrentTick < 1)
+			while (CurrentTick <= 1)
 			{
 				ComputeNextTickSize();
 				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
@@ -937,10 +937,10 @@ namespace FrEee.Game.Objects.Space
 		public void ComputeNextTickSize()
 		{
 			var objs = Referrables.OfType<AutonomousSpaceVehicle>().Where(obj => obj.Orders.Any());
-			if (objs.Any())
+			if (objs.Any() && CurrentTick < 1.0)
 				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
 			else
-				NextTickSize = 1.0 - CurrentTick;
+				NextTickSize = double.PositiveInfinity;
 		}
 
 		#endregion

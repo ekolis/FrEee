@@ -62,6 +62,10 @@ namespace FrEee.Game.Objects.Orders
 					sobj.FindStarSystem().Remove(sobj);
 					gotoSector.Place(sobj);
 
+					// is it done?
+					if (gotoSector == Destination)
+						IsComplete = true;
+
 					// apply damage from damaging sectors
 					foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
 					{
