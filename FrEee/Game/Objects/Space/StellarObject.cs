@@ -146,8 +146,12 @@ namespace FrEee.Game.Objects.Space
 
 		public Visibility CheckVisibility(Empire emp)
 		{
+			if (this.FindStarSystem() == null)
+				return Visibility.Scanned;  // probably a mod definition
+
 			if (emp == Owner)
 				return Visibility.Owned;
+
 			// TODO - cloaking
 			if (this.FindStarSystem() == null)
 				return Visibility.Unknown;

@@ -833,7 +833,13 @@ namespace FrEee.Game.Objects.Space
 			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
 
-			var oldid = r.ID;				
+			if (CurrentEmpire != null)
+			{
+				// doesn't have an ID yet, and we're in a player GAM? then the player probably shouldn't see this object anyway...
+				r.Dispose();
+			}
+
+			var oldid = r.ID;
 
 			if (Referrables.LongCount() == long.MaxValue)
 				throw new Exception("No more IDs are available to assign for objects.");
