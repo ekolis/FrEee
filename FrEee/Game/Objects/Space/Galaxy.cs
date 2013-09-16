@@ -640,7 +640,6 @@ namespace FrEee.Game.Objects.Space
 				{
 					// give owner his income
 					p.Owner.StoredResources += p.Income;
-					p.Owner.StoredResources = ResourceQuantity.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
 
 					// adjust resource value
 					foreach (var kvp in p.Income)
@@ -788,6 +787,10 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// TODO - more turn stuff
+
+			// resource spoilage
+			foreach (var emp in Empires)
+				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
 
 			// clear empire commands
 			foreach (var emp in Empires)
