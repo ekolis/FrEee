@@ -80,7 +80,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (commandMode == CommandMode.Move)
 			{
-				if (sector != null)
+				if (sector != null && sector.StarSystem.ExploredByEmpires.Contains(Empire.Current))
 				{
 					// move ship to sector clicked
 					if (SelectedSpaceObject is AutonomousSpaceVehicle)
