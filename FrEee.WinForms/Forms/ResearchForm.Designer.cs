@@ -102,6 +102,7 @@
 			this.gridQueues.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridQueues.Size = new System.Drawing.Size(508, 509);
 			this.gridQueues.TabIndex = 1;
+			this.gridQueues.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridQueues_CellMouseDoubleClick);
 			this.gridQueues.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_RowEnter);
 			// 
 			// nameDataGridViewTextBoxColumn

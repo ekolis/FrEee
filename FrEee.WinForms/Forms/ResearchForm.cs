@@ -259,5 +259,15 @@ namespace FrEee.WinForms.Forms
 				BindQueue();
 			}
 		}
+
+		private void gridQueues_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
+			if (tech != null)
+			{
+				Empire.Current.ResearchQueue.Add(tech);
+				BindQueue();
+			}
+		}
 	}
 }
