@@ -43,6 +43,11 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.PopulationFactor = rec.GetNullInt("Population Factor", ref index) ?? (int)1e6; // specifies unit of population for other settings
+			settings.PopulationHitpoints = (rec.GetNullDouble("Damage Points To Kill One Population", ref index) ?? 10) / settings.PopulationFactor;
+
+			// TODO - load more settings
+
 			// load aptitudes
 			foreach (var a in Aptitude.All)
 			{

@@ -358,9 +358,8 @@ namespace FrEee.Game.Objects.Space
 			{
 				// pick a race and kill some population
 				var race = Colony.Population.PickWeighted();
-				// TODO - moddable population HP
-				int popHPPerMillion = 100;
-				int popKilled = (int)1e6 / popHPPerMillion;
+				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
 				killed[race] += popKilled;
 			}

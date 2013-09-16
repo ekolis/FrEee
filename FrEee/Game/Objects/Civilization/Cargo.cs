@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -64,9 +65,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				// TODO - moddable population HP
-				int popHPPerMillion = 100;
-				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerMillion / 1e6)) + Units.Sum(u => u.Hitpoints);
+				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerPerson)) + Units.Sum(u => u.Hitpoints);
 			}
 			set
 			{
@@ -103,10 +103,9 @@ namespace FrEee.Game.Objects.Civilization
 		public int MaxHitpoints
 		{
 			get
-			{ 
-				// TODO - moddable population HP
-				int popHPPerMillion = 100;
-				return Population.Sum(kvp => (int)(kvp.Value * popHPPerMillion / (int)1e6)) + Units.Sum(u => u.MaxHitpoints);
+			{
+				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				return Population.Sum(kvp => (int)Math.Ceiling(kvp.Value * popHPPerPerson)) + Units.Sum(u => u.MaxHitpoints);
 			}
 		}
 
@@ -158,9 +157,8 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// pick a race and kill some population
 				var race = Population.PickWeighted();
-				// TODO - moddable population HP
-				int popHPPerMillion = 100;
-				int popKilled = (int)1e6 / popHPPerMillion;
+				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
+				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Population[race] -= popKilled;
 				killed[race] += popKilled;
 			}
