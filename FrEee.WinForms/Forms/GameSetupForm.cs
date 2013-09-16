@@ -133,6 +133,8 @@ namespace FrEee.WinForms.Forms
 		private void SaveChanges()
 		{
 			setup.GameName = txtGalaxyName.Text;
+			setup.StarSystemCount = (int)spnStarSystems.Value;
+			setup.GalaxySize = new Size((int)spnWidth.Value, (int)spnHeight.Value);
 			setup.AllSystemsExplored = chkAllSystemsExplored.Checked;
 			setup.OmniscientView = chkOmniscient.Checked;
 			setup.StandardMiningModel = new MiningModel
@@ -215,6 +217,9 @@ namespace FrEee.WinForms.Forms
 		private void Bind()
 		{
 			txtGalaxyName.Text = setup.GameName;
+			spnStarSystems.Value = setup.StarSystemCount;
+			spnWidth.Value = setup.GalaxySize.Width;
+			spnHeight.Value = setup.GalaxySize.Height;
 			chkAllSystemsExplored.Checked = setup.AllSystemsExplored;
 			chkOmniscient.Checked = setup.OmniscientView;
 
