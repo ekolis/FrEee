@@ -898,7 +898,7 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
 
 			// create the game
-			var galtemp = Mod.Current.GalaxyTemplates.PickRandom();
+			var galtemp = gsu.GalaxyTemplate;
 
 			galtemp.GameSetup = gsu;
 			var curProgress = status == null ? 0d : status.Progress;
