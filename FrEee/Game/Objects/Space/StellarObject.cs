@@ -102,7 +102,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			this.FindStarSystem().Remove(this);
+			var sys = this.FindStarSystem();
+			if (sys != null)
+				sys.Remove(this);
 			Galaxy.Current.UnassignID(this);
 		}
 

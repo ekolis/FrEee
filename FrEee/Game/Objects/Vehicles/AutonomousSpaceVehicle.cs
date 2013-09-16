@@ -286,7 +286,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override void Dispose()
 		{
-			this.FindStarSystem().Remove(this);
+			var sys = this.FindStarSystem();
+			if (sys != null)
+				sys.Remove(this);
 			base.Dispose();
 		}
 
