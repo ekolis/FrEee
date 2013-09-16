@@ -76,7 +76,7 @@ namespace FrEee.WinForms.Forms
 						var name = Galaxy.Current.Name;
 						var turn = Galaxy.Current.TurnNumber;
 						status.Message = "Loading game";
-						Galaxy.Load(name + "_" + turn + "_1.gam");
+						Galaxy.Load(name + "_" + turn + "_0001.gam");
 					}
 				}
 				catch (Exception ex)
