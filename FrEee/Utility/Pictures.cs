@@ -639,6 +639,8 @@ namespace FrEee.Utility
 			var list = new List<string>();
 			if (Mod.Current.RootPath != null)
 			{
+				if (!Directory.Exists(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races"))
+					return list;
 				foreach (var d in Directory.GetDirectories(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races")))
 				{
 					var name = Path.GetFileNameWithoutExtension(d);
@@ -655,6 +657,8 @@ namespace FrEee.Utility
 			}
 			foreach (var d in Directory.GetDirectories(Path.Combine("Pictures", "Races")))
 			{
+				if (!Directory.Exists(Path.Combine("Pictures", "Races"))
+					return list;
 				var name = Path.GetFileNameWithoutExtension(d);
 				if (File.Exists(Path.Combine(d, "Race_Portrait.png")) ||
 					File.Exists(Path.Combine(d, "Race_Portrait.bmp")) ||
@@ -688,6 +692,8 @@ namespace FrEee.Utility
 			var list = new List<string>();
 			if (Mod.Current.RootPath != null)
 			{
+				if (!Directory.Exists(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races"))
+					return list;
 				foreach (var d in Directory.GetDirectories(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races")))
 				{
 					var name = Path.GetFileNameWithoutExtension(d);
@@ -698,15 +704,17 @@ namespace FrEee.Utility
 						list.Add(name);
 				}
 			}
+			if (!Directory.Exists(Path.Combine("Pictures", "Races"))
+				return list.Distinct();
 			foreach (var d in Directory.GetDirectories(Path.Combine("Pictures", "Races")))
-				{
-					var name = Path.GetFileNameWithoutExtension(d);
-					if (File.Exists(Path.Combine(d, "Insignia.png")) ||
-						File.Exists(Path.Combine(d, "Insignia.bmp")) ||
-						File.Exists(Path.Combine(d, name + "_Insignia.png")) ||
-						File.Exists(Path.Combine(d, name + "_Insignia.bmp")))
-						list.Add(name);
-				}
+			{
+				var name = Path.GetFileNameWithoutExtension(d);
+				if (File.Exists(Path.Combine(d, "Insignia.png")) ||
+					File.Exists(Path.Combine(d, "Insignia.bmp")) ||
+					File.Exists(Path.Combine(d, name + "_Insignia.png")) ||
+					File.Exists(Path.Combine(d, name + "_Insignia.bmp")))
+					list.Add(name);
+			}
 			return list.Distinct();
 		}
 
@@ -719,9 +727,13 @@ namespace FrEee.Utility
 			var list = new List<string>();
 			if (Mod.Current.RootPath != null)
 			{
+				if (!Directory.Exists(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races"))
+					return list;
 				foreach (var d in Directory.GetDirectories(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races")))
 					list.Add(Path.GetFileNameWithoutExtension(d));
 			}
+			if (!Directory.Exists(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races"))
+				return list.Distinct();
 			foreach (var d in Directory.GetDirectories(Path.Combine("Pictures", "Races")))
 				list.Add(Path.GetFileNameWithoutExtension(d));
 			return list.Distinct();
