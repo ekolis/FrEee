@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Space
 					if (resource.Name == "Radioactives")
 						aptitude = Aptitude.Refining;
 					if (aptitude != null)
-						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d + 1d) * (double)kvp.Value / (double)totalpop);
+						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
 
 					income.Add(resource, amount);
@@ -156,7 +156,7 @@ namespace FrEee.Game.Objects.Space
 					if (resource.Name == "Intelligence")
 						aptitude = Aptitude.Cunning;
 					if (aptitude != null)
-						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d + 1d) * (double)kvp.Value / (double)totalpop);
+						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 
 					income.Add(resource, (int)(amount * factor));
 				}
