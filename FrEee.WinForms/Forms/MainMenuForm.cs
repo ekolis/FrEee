@@ -117,7 +117,7 @@ namespace FrEee.WinForms.Forms
             if (Galaxy.Current.CurrentEmpire == null)
             {
                 // host view, prompt for turn processing
-                if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber + "(stardate " + Galaxy.Current.Stardate + ")?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ")?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
                     Cursor = Cursors.WaitCursor;
                     var status = new Status { Message = "Initializing" };
