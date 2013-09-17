@@ -31,9 +31,6 @@ namespace FrEee.Game.Objects.Civilization
 
 		public int MaintenanceReduction { get; set; }
 
-		/// <summary>
-		/// TODO - the data file says SY Rate but I think it's construction even on colonies with no SY. Need to verify...
-		/// </summary>
 		public int Construction { get; set; }
 
 		public int Repair { get; set; }
