@@ -272,7 +272,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt();
+				return this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + Owner.Culture.SpaceCombat;
 			}
 		}
 
@@ -280,7 +280,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
+				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + Owner.Culture.SpaceCombat;
 			}
 		}
 
@@ -303,6 +303,7 @@ namespace FrEee.Game.Objects.Vehicles
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
 				pct -= this.FindStarSystem().GetSectorAbilityValue(this.FindCoordinates(), Owner, "Reduced Maintenance Cost - Sector").ToInt();
 				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+				pct -= Owner.Culture.MaintenanceReduction;
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
 				return Cost * pct / 100d;

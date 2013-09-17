@@ -136,6 +136,7 @@ namespace FrEee.Game.Objects.Space
 						aptitude = Aptitude.Refining;
 					if (aptitude != null)
 						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
+					factor *= (100 + Owner.Culture.Production) / 100d;
 					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
 
 					income.Add(resource, amount);
@@ -152,9 +153,15 @@ namespace FrEee.Game.Objects.Space
 					factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
 					Aptitude aptitude = null;
 					if (resource.Name == "Research")
+					{
 						aptitude = Aptitude.Intelligence; // yes, Intelligence aptitude increases Research...
+						factor *= (100 + Owner.Culture.Research) / 100d;
+					}
 					if (resource.Name == "Intelligence")
+					{
 						aptitude = Aptitude.Cunning;
+						factor *= (100 + Owner.Culture.Intelligence) / 100d;
+					}
 					if (aptitude != null)
 						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 
@@ -548,7 +555,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Mod.Current.Settings.PlanetAccuracy + this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt();
+				return Mod.Current.Settings.PlanetAccuracy + this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + Owner.Culture.SpaceCombat;
 			}
 		}
 
@@ -556,7 +563,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt();
+				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + Owner.Culture.SpaceCombat;
 			}
 		}
 
