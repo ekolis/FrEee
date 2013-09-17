@@ -732,7 +732,7 @@ namespace FrEee.Utility
 				foreach (var d in Directory.GetDirectories(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races")))
 					list.Add(Path.GetFileNameWithoutExtension(d));
 			}
-			if (!Directory.Exists(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races")))
+			if (!Directory.Exists(Path.Combine("Pictures", "Races")))
 				return list.Distinct();
 			foreach (var d in Directory.GetDirectories(Path.Combine("Pictures", "Races")))
 				list.Add(Path.GetFileNameWithoutExtension(d));
