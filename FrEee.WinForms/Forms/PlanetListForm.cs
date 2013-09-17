@@ -156,10 +156,21 @@ namespace FrEee.WinForms.Forms
 			var sortedPlanets = planets.OrderBy(p => "");
 			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.OrderBy(c => c.SortPriority))
 			{
+				var gridCol = gridPlanets.Columns.Cast<DataGridViewColumn>().Single(c => c.DataPropertyName == col.PropertyName);
 				if (col.Sort == Sort.Ascending)
+				{
 					sortedPlanets = sortedPlanets.ThenBy(p => p.GetPropertyValue(col.PropertyName));
+					gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+				}
 				else if (col.Sort == Sort.Descending)
+				{
 					sortedPlanets = sortedPlanets.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
+					gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+				}
+				else
+				{
+					gridCol.HeaderCell.SortGlyphDirection = SortOrder.None;
+				}
 			}
 
 			planetBindingSource.DataSource = sortedPlanets;
@@ -193,7 +204,34 @@ namespace FrEee.WinForms.Forms
 		{
 			var prop = typeof(Planet).GetProperty(gridPlanets.Columns[e.ColumnIndex].DataPropertyName);
 			if (typeof(IComparable).IsAssignableFrom(prop.PropertyType))
-				planetBindingSource.DataSource = planets.OrderBy(p => prop.GetValue(p, new object[0]));
+			{
+				var col = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Single(c => c.PropertyName == prop.Name);
+
+				// cycle sort options
+				var minPriority = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Min(c => c.SortPriority);
+				if (col.Sort == Sort.None)
+				{
+					col.Sort = Sort.Ascending;
+					col.SortPriority = minPriority - 1;
+				}
+				else if (col.Sort == Sort.Ascending)
+				{
+					col.Sort = Sort.Descending;
+					col.SortPriority = minPriority - 1;
+				}
+				else if (col.Sort == Sort.Descending)
+				{
+					col.Sort = Sort.None;
+					col.SortPriority = 0;
+				}
+
+				// normalize priorities so we don't get ridiculous negative numbers and cause an overflow when the player clicks 2 billion times
+				minPriority = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Min(c => c.SortPriority);
+				foreach (var c in ClientSettings.Instance.CurrentPlanetListConfig.Columns.Where(c => c.Sort != Sort.None))
+					c.SortPriority -= minPriority;
+
+				BindGrid(false);
+			}
 		}
 
 		private void btnDeleteConfig_Click(object sender, EventArgs e)

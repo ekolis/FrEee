@@ -14,6 +14,7 @@ namespace FrEee.WinForms.DataGridView
 	[Serializable]
 	public class GridColumnConfig
 	{
+		// TODO - filtering
 		public GridColumnConfig(string propertyName, string headerText, Type columnType, Color foreColor, Sort sort = Sort.None, int sortPriority = 0)
 		{
 			PropertyName = propertyName;
