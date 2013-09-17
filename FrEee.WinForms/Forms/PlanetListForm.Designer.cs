@@ -1,4 +1,5 @@
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.Forms
@@ -57,7 +58,6 @@ namespace FrEee.WinForms.Forms
 			this.label12 = new System.Windows.Forms.Label();
 			this.txtBreathableOther = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
-			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.txtAvailable = new System.Windows.Forms.Label();
 			this.txtShips = new System.Windows.Forms.Label();
 			this.txtBreathableUs = new System.Windows.Forms.Label();
@@ -88,10 +88,20 @@ namespace FrEee.WinForms.Forms
 			this.ownerDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.planetBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.btnNewConfig = new FrEee.WinForms.Controls.GameButton();
+			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+			this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
+			this.btnSaveConfig = new FrEee.WinForms.Controls.GameButton();
+			this.label17 = new System.Windows.Forms.Label();
+			this.txtConfigName = new System.Windows.Forms.TextBox();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
+			this.gamePanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// pnlHeader
@@ -99,6 +109,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.BackColor = System.Drawing.Color.Black;
 			this.pnlHeader.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlHeader.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tableLayoutPanel1.SetColumnSpan(this.pnlHeader, 2);
 			this.pnlHeader.Controls.Add(this.txtPopulation);
 			this.pnlHeader.Controls.Add(this.resStorageRad);
 			this.pnlHeader.Controls.Add(this.resStorageOrg);
@@ -117,7 +128,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Controls.Add(this.label12);
 			this.pnlHeader.Controls.Add(this.txtBreathableOther);
 			this.pnlHeader.Controls.Add(this.label11);
-			this.pnlHeader.Controls.Add(this.galaxyView);
 			this.pnlHeader.Controls.Add(this.txtAvailable);
 			this.pnlHeader.Controls.Add(this.txtShips);
 			this.pnlHeader.Controls.Add(this.txtBreathableUs);
@@ -143,7 +153,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Location = new System.Drawing.Point(3, 3);
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlHeader.Size = new System.Drawing.Size(754, 194);
+			this.pnlHeader.Size = new System.Drawing.Size(394, 194);
 			this.pnlHeader.TabIndex = 0;
 			// 
 			// txtPopulation
@@ -390,18 +400,6 @@ namespace FrEee.WinForms.Forms
 			this.label11.TabIndex = 21;
 			this.label11.Text = "Other Breathable";
 			// 
-			// galaxyView
-			// 
-			this.galaxyView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.galaxyView.BackColor = System.Drawing.Color.Black;
-			this.galaxyView.Location = new System.Drawing.Point(530, 4);
-			this.galaxyView.Name = "galaxyView";
-			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(216, 185);
-			this.galaxyView.TabIndex = 20;
-			this.galaxyView.Text = "galaxyView1";
-			// 
 			// txtAvailable
 			// 
 			this.txtAvailable.AutoSize = true;
@@ -632,7 +630,7 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.gridPlanets.AutoGenerateColumns = false;
-			this.gridPlanets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+			this.gridPlanets.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
 			this.gridPlanets.BackgroundColor = System.Drawing.Color.Black;
 			this.gridPlanets.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.gridPlanets.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -643,8 +641,9 @@ namespace FrEee.WinForms.Forms
             this.atmosphereDataGridViewTextBoxColumn,
             this.resourceValueDataGridViewTextBoxColumn,
             this.ownerDataGridViewTextBoxColumn});
+			this.tableLayoutPanel1.SetColumnSpan(this.gridPlanets, 2);
 			this.gridPlanets.DataSource = this.planetBindingSource;
-			this.gridPlanets.Location = new System.Drawing.Point(3, 203);
+			this.gridPlanets.Location = new System.Drawing.Point(103, 243);
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
 			this.gridPlanets.RowHeadersVisible = false;
@@ -653,7 +652,7 @@ namespace FrEee.WinForms.Forms
 			this.gridPlanets.RowTemplate.Height = 32;
 			this.gridPlanets.RowTemplate.ReadOnly = true;
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridPlanets.Size = new System.Drawing.Size(754, 331);
+			this.gridPlanets.Size = new System.Drawing.Size(654, 291);
 			this.gridPlanets.TabIndex = 1;
 			this.gridPlanets.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPlanets_ColumnHeaderMouseClick);
 			this.gridPlanets.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridPlanets_DataError);
@@ -663,51 +662,65 @@ namespace FrEee.WinForms.Forms
 			// iconDataGridViewImageColumn
 			// 
 			this.iconDataGridViewImageColumn.DataPropertyName = "Icon";
+			this.iconDataGridViewImageColumn.FillWeight = 7.252303F;
 			this.iconDataGridViewImageColumn.HeaderText = "Icon";
 			this.iconDataGridViewImageColumn.Name = "iconDataGridViewImageColumn";
 			this.iconDataGridViewImageColumn.ReadOnly = true;
+			this.iconDataGridViewImageColumn.Width = 34;
 			// 
 			// nameDataGridViewTextBoxColumn
 			// 
 			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+			this.nameDataGridViewTextBoxColumn.FillWeight = 16.82389F;
 			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
 			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
 			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+			this.nameDataGridViewTextBoxColumn.Width = 60;
 			// 
 			// sizeDataGridViewTextBoxColumn
 			// 
 			this.sizeDataGridViewTextBoxColumn.DataPropertyName = "Size";
+			this.sizeDataGridViewTextBoxColumn.FillWeight = 21.46247F;
 			this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
 			this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
 			this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
+			this.sizeDataGridViewTextBoxColumn.Width = 52;
 			// 
 			// surfaceDataGridViewTextBoxColumn
 			// 
 			this.surfaceDataGridViewTextBoxColumn.DataPropertyName = "Surface";
+			this.surfaceDataGridViewTextBoxColumn.FillWeight = 28.13256F;
 			this.surfaceDataGridViewTextBoxColumn.HeaderText = "Surface";
 			this.surfaceDataGridViewTextBoxColumn.Name = "surfaceDataGridViewTextBoxColumn";
 			this.surfaceDataGridViewTextBoxColumn.ReadOnly = true;
+			this.surfaceDataGridViewTextBoxColumn.Width = 69;
 			// 
 			// atmosphereDataGridViewTextBoxColumn
 			// 
 			this.atmosphereDataGridViewTextBoxColumn.DataPropertyName = "Atmosphere";
+			this.atmosphereDataGridViewTextBoxColumn.FillWeight = 37.72384F;
 			this.atmosphereDataGridViewTextBoxColumn.HeaderText = "Atmosphere";
 			this.atmosphereDataGridViewTextBoxColumn.Name = "atmosphereDataGridViewTextBoxColumn";
 			this.atmosphereDataGridViewTextBoxColumn.ReadOnly = true;
+			this.atmosphereDataGridViewTextBoxColumn.Width = 88;
 			// 
 			// resourceValueDataGridViewTextBoxColumn
 			// 
 			this.resourceValueDataGridViewTextBoxColumn.DataPropertyName = "ResourceValue";
+			this.resourceValueDataGridViewTextBoxColumn.FillWeight = 375.407F;
 			this.resourceValueDataGridViewTextBoxColumn.HeaderText = "ResourceValue";
 			this.resourceValueDataGridViewTextBoxColumn.Name = "resourceValueDataGridViewTextBoxColumn";
 			this.resourceValueDataGridViewTextBoxColumn.ReadOnly = true;
+			this.resourceValueDataGridViewTextBoxColumn.Width = 105;
 			// 
 			// ownerDataGridViewTextBoxColumn
 			// 
 			this.ownerDataGridViewTextBoxColumn.DataPropertyName = "Owner";
+			this.ownerDataGridViewTextBoxColumn.FillWeight = 213.198F;
 			this.ownerDataGridViewTextBoxColumn.HeaderText = "Owner";
 			this.ownerDataGridViewTextBoxColumn.Name = "ownerDataGridViewTextBoxColumn";
 			this.ownerDataGridViewTextBoxColumn.ReadOnly = true;
+			this.ownerDataGridViewTextBoxColumn.Width = 63;
 			// 
 			// planetBindingSource
 			// 
@@ -720,17 +733,118 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tableLayoutPanel1.ColumnCount = 1;
+			this.tableLayoutPanel1.ColumnCount = 3;
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tableLayoutPanel1.Controls.Add(this.galaxyView, 2, 0);
 			this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.gridPlanets, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.gridPlanets, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.gamePanel1, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.gamePanel2, 1, 1);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 2;
+			this.tableLayoutPanel1.RowCount = 3;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(760, 537);
 			this.tableLayoutPanel1.TabIndex = 2;
+			// 
+			// galaxyView
+			// 
+			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.galaxyView.Location = new System.Drawing.Point(403, 3);
+			this.galaxyView.Name = "galaxyView";
+			this.galaxyView.SelectedStarSystem = null;
+			this.galaxyView.Size = new System.Drawing.Size(354, 194);
+			this.galaxyView.TabIndex = 22;
+			this.galaxyView.Text = "galaxyView1";
+			// 
+			// gamePanel1
+			// 
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.btnNewConfig);
+			this.gamePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(3, 243);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(94, 291);
+			this.gamePanel1.TabIndex = 23;
+			// 
+			// btnNewConfig
+			// 
+			this.btnNewConfig.BackColor = System.Drawing.Color.Black;
+			this.btnNewConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNewConfig.Location = new System.Drawing.Point(6, 6);
+			this.btnNewConfig.Name = "btnNewConfig";
+			this.btnNewConfig.Size = new System.Drawing.Size(80, 23);
+			this.btnNewConfig.TabIndex = 1;
+			this.btnNewConfig.Text = "(New Config)";
+			this.btnNewConfig.UseVisualStyleBackColor = false;
+			// 
+			// gamePanel2
+			// 
+			this.gamePanel2.BackColor = System.Drawing.Color.Black;
+			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tableLayoutPanel1.SetColumnSpan(this.gamePanel2, 2);
+			this.gamePanel2.Controls.Add(this.btnDeleteConfig);
+			this.gamePanel2.Controls.Add(this.btnSaveConfig);
+			this.gamePanel2.Controls.Add(this.label17);
+			this.gamePanel2.Controls.Add(this.txtConfigName);
+			this.gamePanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gamePanel2.ForeColor = System.Drawing.Color.White;
+			this.gamePanel2.Location = new System.Drawing.Point(103, 203);
+			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel2.Size = new System.Drawing.Size(654, 34);
+			this.gamePanel2.TabIndex = 25;
+			// 
+			// btnDeleteConfig
+			// 
+			this.btnDeleteConfig.BackColor = System.Drawing.Color.Black;
+			this.btnDeleteConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDeleteConfig.Location = new System.Drawing.Point(268, 7);
+			this.btnDeleteConfig.Name = "btnDeleteConfig";
+			this.btnDeleteConfig.Size = new System.Drawing.Size(75, 19);
+			this.btnDeleteConfig.TabIndex = 28;
+			this.btnDeleteConfig.Text = "Delete";
+			this.btnDeleteConfig.UseVisualStyleBackColor = false;
+			this.btnDeleteConfig.Click += new System.EventHandler(this.btnDeleteConfig_Click);
+			// 
+			// btnSaveConfig
+			// 
+			this.btnSaveConfig.BackColor = System.Drawing.Color.Black;
+			this.btnSaveConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSaveConfig.Location = new System.Drawing.Point(187, 7);
+			this.btnSaveConfig.Name = "btnSaveConfig";
+			this.btnSaveConfig.Size = new System.Drawing.Size(75, 19);
+			this.btnSaveConfig.TabIndex = 27;
+			this.btnSaveConfig.Text = "Save";
+			this.btnSaveConfig.UseVisualStyleBackColor = false;
+			this.btnSaveConfig.Click += new System.EventHandler(this.btnSaveConfig_Click);
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label17.Location = new System.Drawing.Point(6, 9);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(68, 13);
+			this.label17.TabIndex = 26;
+			this.label17.Text = "Config Name";
+			// 
+			// txtConfigName
+			// 
+			this.txtConfigName.Location = new System.Drawing.Point(80, 6);
+			this.txtConfigName.Name = "txtConfigName";
+			this.txtConfigName.Size = new System.Drawing.Size(100, 20);
+			this.txtConfigName.TabIndex = 25;
 			// 
 			// PlanetListForm
 			// 
@@ -751,6 +865,9 @@ namespace FrEee.WinForms.Forms
 			((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
+			this.gamePanel1.ResumeLayout(false);
+			this.gamePanel2.ResumeLayout(false);
+			this.gamePanel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -778,16 +895,8 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.Label txtSystems;
 		private System.Windows.Forms.Label txtAvailable;
 		private System.Windows.Forms.Label txtShips;
-		private GalaxyView galaxyView;
 		private System.Windows.Forms.DataGridView gridPlanets;
 		private System.Windows.Forms.BindingSource planetBindingSource;
-		private System.Windows.Forms.DataGridViewImageColumn iconDataGridViewImageColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn surfaceDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn atmosphereDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn resourceValueDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ownerDataGridViewTextBoxColumn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.Label txtBreathableOther;
@@ -807,5 +916,20 @@ namespace FrEee.WinForms.Forms
 		private ResourceDisplay resStorageOrg;
 		private ResourceDisplay resStorageMin;
 		private System.Windows.Forms.Label txtPopulation;
+		private GalaxyView galaxyView;
+		private GamePanel gamePanel1;
+		private GameButton btnNewConfig;
+		private GamePanel gamePanel2;
+		private System.Windows.Forms.Label label17;
+		private System.Windows.Forms.TextBox txtConfigName;
+		private GameButton btnDeleteConfig;
+		private GameButton btnSaveConfig;
+		private System.Windows.Forms.DataGridViewImageColumn iconDataGridViewImageColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn surfaceDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn atmosphereDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn resourceValueDataGridViewTextBoxColumn;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ownerDataGridViewTextBoxColumn;
 	}
 }

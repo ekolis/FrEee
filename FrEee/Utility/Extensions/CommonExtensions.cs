@@ -935,5 +935,27 @@ namespace FrEee.Utility.Extensions
 				return false;
 			return o1.Equals(o2);
 		}
+
+		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static object GetPropertyValue(this object o, string propertyName)
+		{
+			return o.GetType().GetProperty(propertyName).GetValue(o, new object[0]);
+		}
+
+		/// <summary>
+		/// Sets a property value on an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static void SetPropertyValue(this object o, string propertyName, object value)
+		{
+			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
+		}
 	}
 }

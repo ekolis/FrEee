@@ -627,5 +627,9 @@ namespace FrEee.Game.Objects.Space
 			if (vis < Visibility.Fogged)
 				Dispose(); // TODO - dispose here if fogged; replace with memory sight cache if present
 		}
+
+		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
+		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
+		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
 	}
 }

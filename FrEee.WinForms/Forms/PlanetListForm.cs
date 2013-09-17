@@ -10,6 +10,8 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using System.IO;
 using System.Collections.Generic;
+using FrEee.WinForms.DataGridView;
+using FrEee.WinForms.Properties;
 
 namespace FrEee.WinForms.Forms
 {
@@ -74,11 +76,34 @@ namespace FrEee.WinForms.Forms
 			resStorageRad.Amount = storage[Resource.Radioactives];
 			
 			// show planet data
-			planetBindingSource.DataSource = planets;
+			BindGrid(planets);
 
 			// show galaxy view background
 			// TODO - galaxy view background image can depend on galaxy template?
 			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
+		}
+
+		private void BindGrid(IEnumerable<Planet> planets)
+		{
+			gridPlanets.Columns.Clear();
+			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+			{
+				var gridcol = (DataGridViewColumn)Activator.CreateInstance(col.ColumnType);
+				gridcol.DataPropertyName = col.PropertyName;
+				gridcol.HeaderText = col.HeaderText;
+				gridcol.DefaultCellStyle.ForeColor = col.ForeColor;
+				gridPlanets.Columns.Add(gridcol);
+			}
+			var sortedPlanets = planets.OrderBy(p => "");
+			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.OrderBy(c => c.SortPriority))
+			{
+				if (col.Sort == Sort.Ascending)
+					sortedPlanets = sortedPlanets.ThenBy(p => p.GetPropertyValue(col.PropertyName));
+				else if (col.Sort == Sort.Descending)
+					sortedPlanets = sortedPlanets.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
+			}
+
+			planetBindingSource.DataSource = sortedPlanets;
 		}
 
 		private void gridPlanets_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -110,6 +135,16 @@ namespace FrEee.WinForms.Forms
 			var prop = typeof(Planet).GetProperty(gridPlanets.Columns[e.ColumnIndex].DataPropertyName);
 			if (typeof(IComparable).IsAssignableFrom(prop.PropertyType))
 				planetBindingSource.DataSource = planets.OrderBy(p => prop.GetValue(p, new object[0]));
+		}
+
+		private void btnSaveConfig_Click(object sender, EventArgs e)
+		{
+
+		}
+
+		private void btnDeleteConfig_Click(object sender, EventArgs e)
+		{
+		
 		}
 	}
 }
