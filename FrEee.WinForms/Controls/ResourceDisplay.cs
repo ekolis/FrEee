@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using System.ComponentModel;
 
 namespace FrEee.WinForms.Controls
 {
@@ -14,6 +15,7 @@ namespace FrEee.WinForms.Controls
 		}
 
 		private Resource resource;
+		[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
 		public Resource Resource
 		{
 			get { return resource; }

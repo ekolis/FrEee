@@ -33,12 +33,12 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			FrEee.Utility.Resource resource6 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource7 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource8 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource9 = new FrEee.Utility.Resource();
+			FrEee.Utility.Resource resource10 = new FrEee.Utility.Resource();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.txtPopulation = new System.Windows.Forms.Label();
 			this.resStorageRad = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -89,18 +89,17 @@ namespace FrEee.WinForms.Forms
 			this.planetBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.btnNewConfig = new FrEee.WinForms.Controls.GameButton();
+			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
+			this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
-			this.btnSaveConfig = new FrEee.WinForms.Controls.GameButton();
 			this.label17 = new System.Windows.Forms.Label();
 			this.txtConfigName = new System.Windows.Forms.TextBox();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
-			this.gamePanel1.SuspendLayout();
+			this.pnlConfigsBorder.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -176,12 +175,12 @@ namespace FrEee.WinForms.Forms
 			this.resStorageRad.Location = new System.Drawing.Point(271, 136);
 			this.resStorageRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageRad.Name = "resStorageRad";
-			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource1.IsGlobal = true;
-			resource1.IsLocal = false;
-			resource1.Name = "Radioactives";
-			resource1.PictureName = "Resource3";
-			this.resStorageRad.Resource = resource1;
+			resource6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			resource6.IsGlobal = true;
+			resource6.IsLocal = false;
+			resource6.Name = "Radioactives";
+			resource6.PictureName = "Resource3";
+			this.resStorageRad.Resource = resource6;
 			this.resStorageRad.ResourceName = "Radioactives";
 			this.resStorageRad.Size = new System.Drawing.Size(107, 12);
 			this.resStorageRad.TabIndex = 37;
@@ -195,12 +194,12 @@ namespace FrEee.WinForms.Forms
 			this.resStorageOrg.Location = new System.Drawing.Point(271, 123);
 			this.resStorageOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageOrg.Name = "resStorageOrg";
-			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource2.IsGlobal = true;
-			resource2.IsLocal = false;
-			resource2.Name = "Organics";
-			resource2.PictureName = "Resource2";
-			this.resStorageOrg.Resource = resource2;
+			resource7.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			resource7.IsGlobal = true;
+			resource7.IsLocal = false;
+			resource7.Name = "Organics";
+			resource7.PictureName = "Resource2";
+			this.resStorageOrg.Resource = resource7;
 			this.resStorageOrg.ResourceName = "Organics";
 			this.resStorageOrg.Size = new System.Drawing.Size(107, 12);
 			this.resStorageOrg.TabIndex = 36;
@@ -214,12 +213,12 @@ namespace FrEee.WinForms.Forms
 			this.resStorageMin.Location = new System.Drawing.Point(271, 110);
 			this.resStorageMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageMin.Name = "resStorageMin";
-			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource3.IsGlobal = true;
-			resource3.IsLocal = false;
-			resource3.Name = "Minerals";
-			resource3.PictureName = "Resource1";
-			this.resStorageMin.Resource = resource3;
+			resource8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			resource8.IsGlobal = true;
+			resource8.IsLocal = false;
+			resource8.Name = "Minerals";
+			resource8.PictureName = "Resource1";
+			this.resStorageMin.Resource = resource8;
 			this.resStorageMin.ResourceName = "Minerals";
 			this.resStorageMin.Size = new System.Drawing.Size(107, 12);
 			this.resStorageMin.TabIndex = 35;
@@ -243,12 +242,12 @@ namespace FrEee.WinForms.Forms
 			this.resInt.Location = new System.Drawing.Point(274, 84);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
-			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			resource4.IsGlobal = false;
-			resource4.IsLocal = false;
-			resource4.Name = "Intelligence";
-			resource4.PictureName = "Resource5";
-			this.resInt.Resource = resource4;
+			resource9.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			resource9.IsGlobal = false;
+			resource9.IsLocal = false;
+			resource9.Name = "Intelligence";
+			resource9.PictureName = "Resource5";
+			this.resInt.Resource = resource9;
 			this.resInt.ResourceName = "Intelligence";
 			this.resInt.Size = new System.Drawing.Size(107, 12);
 			this.resInt.TabIndex = 33;
@@ -262,12 +261,12 @@ namespace FrEee.WinForms.Forms
 			this.resRes.Location = new System.Drawing.Point(274, 71);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
-			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			resource5.IsGlobal = false;
-			resource5.IsLocal = false;
-			resource5.Name = "Research";
-			resource5.PictureName = "Resource4";
-			this.resRes.Resource = resource5;
+			resource10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+			resource10.IsGlobal = false;
+			resource10.IsLocal = false;
+			resource10.Name = "Research";
+			resource10.PictureName = "Resource4";
+			this.resRes.Resource = resource10;
 			this.resRes.ResourceName = "Research";
 			this.resRes.Size = new System.Drawing.Size(107, 12);
 			this.resRes.TabIndex = 32;
@@ -281,7 +280,6 @@ namespace FrEee.WinForms.Forms
 			this.resRad.Location = new System.Drawing.Point(274, 59);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
-			this.resRad.Resource = resource1;
 			this.resRad.ResourceName = "Radioactives";
 			this.resRad.Size = new System.Drawing.Size(107, 12);
 			this.resRad.TabIndex = 31;
@@ -295,7 +293,6 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.Location = new System.Drawing.Point(274, 47);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
-			this.resOrg.Resource = resource2;
 			this.resOrg.ResourceName = "Organics";
 			this.resOrg.Size = new System.Drawing.Size(107, 12);
 			this.resOrg.TabIndex = 30;
@@ -309,7 +306,6 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Location = new System.Drawing.Point(274, 34);
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
-			this.resMin.Resource = resource3;
 			this.resMin.ResourceName = "Minerals";
 			this.resMin.Size = new System.Drawing.Size(107, 12);
 			this.resMin.TabIndex = 29;
@@ -647,8 +643,8 @@ namespace FrEee.WinForms.Forms
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
 			this.gridPlanets.RowHeadersVisible = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle2;
 			this.gridPlanets.RowTemplate.Height = 32;
 			this.gridPlanets.RowTemplate.ReadOnly = true;
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -740,7 +736,7 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.Controls.Add(this.galaxyView, 2, 0);
 			this.tableLayoutPanel1.Controls.Add(this.pnlHeader, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.gridPlanets, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.gamePanel1, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.pnlConfigsBorder, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.gamePanel2, 1, 1);
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -762,30 +758,28 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.TabIndex = 22;
 			this.galaxyView.Text = "galaxyView1";
 			// 
-			// gamePanel1
+			// pnlConfigsBorder
 			// 
-			this.gamePanel1.BackColor = System.Drawing.Color.Black;
-			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel1.Controls.Add(this.btnNewConfig);
-			this.gamePanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(3, 243);
-			this.gamePanel1.Name = "gamePanel1";
-			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(94, 291);
-			this.gamePanel1.TabIndex = 23;
+			this.pnlConfigsBorder.BackColor = System.Drawing.Color.Black;
+			this.pnlConfigsBorder.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.pnlConfigsBorder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlConfigsBorder.Controls.Add(this.pnlConfigs);
+			this.pnlConfigsBorder.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlConfigsBorder.ForeColor = System.Drawing.Color.White;
+			this.pnlConfigsBorder.Location = new System.Drawing.Point(3, 243);
+			this.pnlConfigsBorder.Name = "pnlConfigsBorder";
+			this.pnlConfigsBorder.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlConfigsBorder.Size = new System.Drawing.Size(94, 291);
+			this.pnlConfigsBorder.TabIndex = 23;
 			// 
-			// btnNewConfig
+			// pnlConfigs
 			// 
-			this.btnNewConfig.BackColor = System.Drawing.Color.Black;
-			this.btnNewConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnNewConfig.Location = new System.Drawing.Point(6, 6);
-			this.btnNewConfig.Name = "btnNewConfig";
-			this.btnNewConfig.Size = new System.Drawing.Size(80, 23);
-			this.btnNewConfig.TabIndex = 1;
-			this.btnNewConfig.Text = "(New Config)";
-			this.btnNewConfig.UseVisualStyleBackColor = false;
+			this.pnlConfigs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlConfigs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.pnlConfigs.Location = new System.Drawing.Point(3, 3);
+			this.pnlConfigs.Name = "pnlConfigs";
+			this.pnlConfigs.Size = new System.Drawing.Size(86, 283);
+			this.pnlConfigs.TabIndex = 2;
 			// 
 			// gamePanel2
 			// 
@@ -794,7 +788,6 @@ namespace FrEee.WinForms.Forms
 			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.gamePanel2, 2);
 			this.gamePanel2.Controls.Add(this.btnDeleteConfig);
-			this.gamePanel2.Controls.Add(this.btnSaveConfig);
 			this.gamePanel2.Controls.Add(this.label17);
 			this.gamePanel2.Controls.Add(this.txtConfigName);
 			this.gamePanel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -809,25 +802,13 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnDeleteConfig.BackColor = System.Drawing.Color.Black;
 			this.btnDeleteConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDeleteConfig.Location = new System.Drawing.Point(268, 7);
+			this.btnDeleteConfig.Location = new System.Drawing.Point(186, 7);
 			this.btnDeleteConfig.Name = "btnDeleteConfig";
 			this.btnDeleteConfig.Size = new System.Drawing.Size(75, 19);
 			this.btnDeleteConfig.TabIndex = 28;
 			this.btnDeleteConfig.Text = "Delete";
 			this.btnDeleteConfig.UseVisualStyleBackColor = false;
 			this.btnDeleteConfig.Click += new System.EventHandler(this.btnDeleteConfig_Click);
-			// 
-			// btnSaveConfig
-			// 
-			this.btnSaveConfig.BackColor = System.Drawing.Color.Black;
-			this.btnSaveConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveConfig.Location = new System.Drawing.Point(187, 7);
-			this.btnSaveConfig.Name = "btnSaveConfig";
-			this.btnSaveConfig.Size = new System.Drawing.Size(75, 19);
-			this.btnSaveConfig.TabIndex = 27;
-			this.btnSaveConfig.Text = "Save";
-			this.btnSaveConfig.UseVisualStyleBackColor = false;
-			this.btnSaveConfig.Click += new System.EventHandler(this.btnSaveConfig_Click);
 			// 
 			// label17
 			// 
@@ -845,6 +826,7 @@ namespace FrEee.WinForms.Forms
 			this.txtConfigName.Name = "txtConfigName";
 			this.txtConfigName.Size = new System.Drawing.Size(100, 20);
 			this.txtConfigName.TabIndex = 25;
+			this.txtConfigName.TextChanged += new System.EventHandler(this.txtConfigName_TextChanged);
 			// 
 			// PlanetListForm
 			// 
@@ -859,13 +841,14 @@ namespace FrEee.WinForms.Forms
 			this.Name = "PlanetListForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Planets";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PlanetListForm_FormClosed);
 			this.Load += new System.EventHandler(this.PlanetListForm_Load);
 			this.pnlHeader.ResumeLayout(false);
 			this.pnlHeader.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridPlanets)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.planetBindingSource)).EndInit();
 			this.tableLayoutPanel1.ResumeLayout(false);
-			this.gamePanel1.ResumeLayout(false);
+			this.pnlConfigsBorder.ResumeLayout(false);
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel2.PerformLayout();
 			this.ResumeLayout(false);
@@ -917,13 +900,11 @@ namespace FrEee.WinForms.Forms
 		private ResourceDisplay resStorageMin;
 		private System.Windows.Forms.Label txtPopulation;
 		private GalaxyView galaxyView;
-		private GamePanel gamePanel1;
-		private GameButton btnNewConfig;
+		private GamePanel pnlConfigsBorder;
 		private GamePanel gamePanel2;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TextBox txtConfigName;
 		private GameButton btnDeleteConfig;
-		private GameButton btnSaveConfig;
 		private System.Windows.Forms.DataGridViewImageColumn iconDataGridViewImageColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
@@ -931,5 +912,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridViewTextBoxColumn atmosphereDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn resourceValueDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ownerDataGridViewTextBoxColumn;
+		private System.Windows.Forms.FlowLayoutPanel pnlConfigs;
 	}
 }

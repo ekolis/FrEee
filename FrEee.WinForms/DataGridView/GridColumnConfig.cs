@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.DataGridView
 {
@@ -33,19 +34,20 @@ namespace FrEee.WinForms.DataGridView
 		/// </summary>
 		public string HeaderText { get; set; }
 
-		private Type columnType;
+		private string columnTypeName { get; set; }
 
 		/// <summary>
 		/// The type of data grid view column to use.
 		/// </summary>
+		[DoNotSerialize]
 		public Type ColumnType
 		{
-			get { return columnType; }
+			get { return Type.GetType(columnTypeName); }
 			set
 			{
 				if (!typeof(DataGridViewColumn).IsAssignableFrom(value))
 					throw new Exception("Grid column config's column type must be a DataGridViewColumn type.");
-				columnType = value;
+				columnTypeName = value.AssemblyQualifiedName;
 			}
 		}
 

@@ -29,7 +29,7 @@ namespace FrEee.WinForms
 		/// <summary>
 		/// Current planet list config.
 		/// </summary>
-		public GridConfig CurrentPlanetListConfig { get; private set; }
+		public GridConfig CurrentPlanetListConfig { get; set; }
 
 		public static ClientSettings Instance { get; private set; }
 
@@ -43,12 +43,8 @@ namespace FrEee.WinForms
 			}
 		}
 
-		public static void Initialize()
+		public static GridConfig CreateDefaultPlanetListConfig()
 		{
-			// create instance
-			Instance = new ClientSettings();
-
-			// create default planet list config
 			var cfg = new GridConfig();
 			cfg.Name = "All";
 			cfg.AddColumn("Icon", "Icon", typeof(DataGridViewImageColumn), Color.White);
@@ -60,8 +56,16 @@ namespace FrEee.WinForms
 			cfg.AddColumn("OrganicsValue", "Org", typeof(DataGridViewTextBoxColumn), Resource.Organics.Color);
 			cfg.AddColumn("RadioactivesValue", "Rad", typeof(DataGridViewTextBoxColumn), Resource.Radioactives.Color);
 			cfg.AddColumn("Owner", "Owner", typeof(DataGridViewTextBoxColumn), Color.White);
+			return cfg;
+		}
 
-			// add it to the config list
+		public static void Initialize()
+		{
+			// create instance
+			Instance = new ClientSettings();
+
+			// create default planet list config
+			var cfg = CreateDefaultPlanetListConfig();
 			Instance.CurrentPlanetListConfig = cfg;
 			Instance.PlanetListConfigs = new List<GridConfig>();
 			Instance.PlanetListConfigs.Add(cfg);
@@ -94,6 +98,9 @@ namespace FrEee.WinForms
 
 		public static void Save()
 		{
+			var path = Path.GetDirectoryName(ConfigFile);
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
 			var fs = new FileStream(ConfigFile, FileMode.Create);
 			Serializer.Serialize(Instance, fs);
 			fs.Close();

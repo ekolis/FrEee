@@ -12,6 +12,7 @@ using System.IO;
 using System.Collections.Generic;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Properties;
+using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.Forms
 {
@@ -21,6 +22,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
             try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			BindTabs();
 		}
 
 		private IEnumerable<Planet> planets;
@@ -76,24 +78,81 @@ namespace FrEee.WinForms.Forms
 			resStorageRad.Amount = storage[Resource.Radioactives];
 			
 			// show planet data
-			BindGrid(planets);
+			BindGrid(true);
 
 			// show galaxy view background
 			// TODO - galaxy view background image can depend on galaxy template?
 			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
 		}
 
-		private void BindGrid(IEnumerable<Planet> planets)
+		private void BindTabs()
 		{
-			gridPlanets.Columns.Clear();
-			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+			pnlConfigs.Controls.Clear();
+
+			// add buttons for each existing config
+			foreach (var cfg in ClientSettings.Instance.PlanetListConfigs)
 			{
-				var gridcol = (DataGridViewColumn)Activator.CreateInstance(col.ColumnType);
-				gridcol.DataPropertyName = col.PropertyName;
-				gridcol.HeaderText = col.HeaderText;
-				gridcol.DefaultCellStyle.ForeColor = col.ForeColor;
-				gridPlanets.Columns.Add(gridcol);
+				var btn = new GameButton();
+				btn.Text = cfg.Name;
+				btn.Tag = cfg;
+				btn.Click += btnConfig_Click;
+				pnlConfigs.Controls.Add(btn);
 			}
+
+			// add button for a new config
+			{
+				var btn = new GameButton();
+				btn.Text = "(New Config)";
+				btn.Click += btnConfig_Click;
+				pnlConfigs.Controls.Add(btn);
+			}
+
+			// highlight the current config
+			foreach (var b in pnlConfigs.Controls.OfType<GameButton>())
+				b.BackColor = b.Tag == ClientSettings.Instance.CurrentPlanetListConfig ? Color.Navy : Color.Black;
+		}
+
+		void btnConfig_Click(object sender, EventArgs e)
+		{
+			var btn = (GameButton)sender;
+			if (btn.Tag == null)
+			{
+				// create a new config based on the default and activate it
+				var cfg = ClientSettings.CreateDefaultPlanetListConfig();
+				ClientSettings.Instance.PlanetListConfigs.Add(cfg);
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				btn.Tag = cfg;
+				BindTabs();
+				BindGrid(true);
+				txtConfigName.Text = cfg.Name;
+			}
+			else
+			{
+				// activate the selected config
+				var cfg = (GridConfig)btn.Tag;
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				BindGrid(true);
+				txtConfigName.Text = cfg.Name;
+			}
+			foreach (var b in pnlConfigs.Controls.OfType<GameButton>())
+				b.BackColor = b.Tag == ClientSettings.Instance.CurrentPlanetListConfig ? Color.Navy : Color.Black;
+		}
+
+		private void BindGrid(bool refreshColumns)
+		{
+			if (refreshColumns)
+			{
+				gridPlanets.Columns.Clear();
+				foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+				{
+					var gridcol = (DataGridViewColumn)Activator.CreateInstance(col.ColumnType);
+					gridcol.DataPropertyName = col.PropertyName;
+					gridcol.HeaderText = col.HeaderText;
+					gridcol.DefaultCellStyle.ForeColor = col.ForeColor;
+					gridPlanets.Columns.Add(gridcol);
+				}
+			}
+
 			var sortedPlanets = planets.OrderBy(p => "");
 			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.OrderBy(c => c.SortPriority))
 			{
@@ -137,14 +196,30 @@ namespace FrEee.WinForms.Forms
 				planetBindingSource.DataSource = planets.OrderBy(p => prop.GetValue(p, new object[0]));
 		}
 
-		private void btnSaveConfig_Click(object sender, EventArgs e)
-		{
-
-		}
-
 		private void btnDeleteConfig_Click(object sender, EventArgs e)
 		{
-		
+			ClientSettings.Instance.PlanetListConfigs.Remove(ClientSettings.Instance.CurrentPlanetListConfig);
+			ClientSettings.Instance.CurrentPlanetListConfig = ClientSettings.Instance.PlanetListConfigs.FirstOrDefault();
+			// don't let the player have no configs
+			if (ClientSettings.Instance.CurrentPlanetListConfig == null)
+			{
+				var cfg = ClientSettings.CreateDefaultPlanetListConfig();
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				ClientSettings.Instance.PlanetListConfigs.Add(cfg);
+			}
+			BindTabs();
+		}
+
+		private void PlanetListForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			// save client settings
+			ClientSettings.Save();
+		}
+
+		private void txtConfigName_TextChanged(object sender, EventArgs e)
+		{
+			ClientSettings.Instance.CurrentPlanetListConfig.Name = txtConfigName.Text;
+			BindTabs();
 		}
 	}
 }
