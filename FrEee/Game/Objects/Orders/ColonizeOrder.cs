@@ -74,6 +74,9 @@ namespace FrEee.Game.Objects.Orders
 						Planet.Colony.Cargo.Units.Add(unit);
 					}
 
+					// log it!
+					sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + "."));
+
 					// bye bye colony ship
 					sobj.Dispose();
 
