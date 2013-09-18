@@ -796,6 +796,10 @@ namespace FrEee.Game.Objects.Space
 			foreach (var emp in Empires)
 				emp.Commands.Clear();
 
+			// clear completed orders
+			foreach (var order in Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
+				order.Dispose();
+
 			// check for victory/defeat
 			foreach (var vc in VictoryConditions)
 			{
