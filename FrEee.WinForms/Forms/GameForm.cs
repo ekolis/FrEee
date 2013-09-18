@@ -743,9 +743,12 @@ namespace FrEee.WinForms.Forms
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
 					{
 						this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
-						var ctl = pnlDetailReport.Controls[0];
-						if (ctl is PlanetReport)
-							((PlanetReport)ctl).Invalidate();
+						if (pnlDetailReport.Controls.Count > 0)
+						{
+							var ctl = pnlDetailReport.Controls[0];
+							if (ctl is PlanetReport)
+								((PlanetReport)ctl).Invalidate();
+						}
 					}
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
