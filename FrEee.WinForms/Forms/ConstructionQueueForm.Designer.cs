@@ -28,17 +28,17 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
 			this.label1 = new System.Windows.Forms.Label();
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.chkEmergency = new System.Windows.Forms.CheckBox();
 			this.chkRepeat = new System.Windows.Forms.CheckBox();
 			this.chkOnHold = new System.Windows.Forms.CheckBox();
+			this.btnBottom = new FrEee.WinForms.Controls.GameButton();
+			this.btnTop = new FrEee.WinForms.Controls.GameButton();
+			this.btnDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
-			this.btnReorder = new FrEee.WinForms.Controls.GameButton();
 			this.btnClear = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoadQueue = new FrEee.WinForms.Controls.GameButton();
 			this.btnSaveQueue = new FrEee.WinForms.Controls.GameButton();
@@ -71,6 +71,7 @@
 			this.resRadioactivesRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resOrganicsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMineralsRate = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -130,13 +131,69 @@
 			this.chkOnHold.Text = "On Hold";
 			this.chkOnHold.UseVisualStyleBackColor = true;
 			// 
+			// btnBottom
+			// 
+			this.btnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBottom.BackColor = System.Drawing.Color.Black;
+			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnBottom.Location = new System.Drawing.Point(743, 375);
+			this.btnBottom.Name = "btnBottom";
+			this.btnBottom.Size = new System.Drawing.Size(87, 29);
+			this.btnBottom.TabIndex = 23;
+			this.btnBottom.Text = "Bottom";
+			this.btnBottom.UseVisualStyleBackColor = false;
+			this.btnBottom.Click += new System.EventHandler(this.btnBottom_Click);
+			// 
+			// btnTop
+			// 
+			this.btnTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTop.BackColor = System.Drawing.Color.Black;
+			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTop.Location = new System.Drawing.Point(743, 339);
+			this.btnTop.Name = "btnTop";
+			this.btnTop.Size = new System.Drawing.Size(87, 29);
+			this.btnTop.TabIndex = 22;
+			this.btnTop.Text = "Top";
+			this.btnTop.UseVisualStyleBackColor = false;
+			this.btnTop.Click += new System.EventHandler(this.btnTop_Click);
+			// 
+			// btnDown
+			// 
+			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDown.BackColor = System.Drawing.Color.Black;
+			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDown.Location = new System.Drawing.Point(656, 375);
+			this.btnDown.Name = "btnDown";
+			this.btnDown.Size = new System.Drawing.Size(87, 29);
+			this.btnDown.TabIndex = 21;
+			this.btnDown.Text = "Down";
+			this.btnDown.UseVisualStyleBackColor = false;
+			this.btnDown.Click += new System.EventHandler(this.btnDown_Click);
+			// 
+			// btnUp
+			// 
+			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUp.BackColor = System.Drawing.Color.Black;
+			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnUp.Location = new System.Drawing.Point(656, 339);
+			this.btnUp.Name = "btnUp";
+			this.btnUp.Size = new System.Drawing.Size(87, 29);
+			this.btnUp.TabIndex = 20;
+			this.btnUp.Text = "Up";
+			this.btnUp.UseVisualStyleBackColor = false;
+			this.btnUp.Click += new System.EventHandler(this.btnUp_Click);
+			// 
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(656, 398);
+			this.btnCancel.Location = new System.Drawing.Point(656, 410);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(174, 29);
 			this.btnCancel.TabIndex = 19;
@@ -150,7 +207,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(656, 433);
+			this.btnOK.Location = new System.Drawing.Point(656, 445);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(174, 29);
 			this.btnOK.TabIndex = 18;
@@ -158,26 +215,13 @@
 			this.btnOK.UseVisualStyleBackColor = false;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
-			// btnReorder
-			// 
-			this.btnReorder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnReorder.BackColor = System.Drawing.Color.Black;
-			this.btnReorder.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnReorder.Location = new System.Drawing.Point(656, 304);
-			this.btnReorder.Name = "btnReorder";
-			this.btnReorder.Size = new System.Drawing.Size(174, 29);
-			this.btnReorder.TabIndex = 17;
-			this.btnReorder.Text = "Reorder Queue";
-			this.btnReorder.UseVisualStyleBackColor = false;
-			// 
 			// btnClear
 			// 
 			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.BackColor = System.Drawing.Color.Black;
 			this.btnClear.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClear.Location = new System.Drawing.Point(656, 269);
+			this.btnClear.Location = new System.Drawing.Point(656, 304);
 			this.btnClear.Name = "btnClear";
 			this.btnClear.Size = new System.Drawing.Size(174, 29);
 			this.btnClear.TabIndex = 16;
@@ -248,7 +292,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(301, 36);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(349, 426);
+			this.gamePanel2.Size = new System.Drawing.Size(349, 438);
 			this.gamePanel2.TabIndex = 7;
 			// 
 			// lstQueue
@@ -270,12 +314,13 @@
 			this.lstQueue.HoverSelection = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
-			this.lstQueue.Size = new System.Drawing.Size(341, 418);
+			this.lstQueue.Size = new System.Drawing.Size(341, 430);
 			this.lstQueue.TabIndex = 6;
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
 			this.lstQueue.View = System.Windows.Forms.View.Details;
 			this.lstQueue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseClick);
+			this.lstQueue.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseDoubleClick);
 			// 
 			// Item
 			// 
@@ -318,14 +363,14 @@
 			this.gamePanel1.Location = new System.Drawing.Point(10, 13);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(282, 449);
+			this.gamePanel1.Size = new System.Drawing.Size(282, 461);
 			this.gamePanel1.TabIndex = 6;
 			// 
 			// txtName
 			// 
 			this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtName.AutoSize = true;
-			this.txtName.Location = new System.Drawing.Point(3, 393);
+			this.txtName.Location = new System.Drawing.Point(3, 405);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(50, 13);
 			this.txtName.TabIndex = 17;
@@ -338,15 +383,9 @@
 			this.resCostRad.BackColor = System.Drawing.Color.Black;
 			this.resCostRad.Change = null;
 			this.resCostRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resCostRad.Location = new System.Drawing.Point(178, 419);
+			this.resCostRad.Location = new System.Drawing.Point(178, 431);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
-			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource1.IsGlobal = true;
-			resource1.IsLocal = false;
-			resource1.Name = "Radioactives";
-			resource1.PictureName = "Resource3";
-			this.resCostRad.Resource = resource1;
 			this.resCostRad.ResourceName = "Radioactives";
 			this.resCostRad.Size = new System.Drawing.Size(86, 20);
 			this.resCostRad.TabIndex = 16;
@@ -358,15 +397,9 @@
 			this.resCostOrg.BackColor = System.Drawing.Color.Black;
 			this.resCostOrg.Change = null;
 			this.resCostOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resCostOrg.Location = new System.Drawing.Point(92, 419);
+			this.resCostOrg.Location = new System.Drawing.Point(92, 431);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
-			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource2.IsGlobal = true;
-			resource2.IsLocal = false;
-			resource2.Name = "Organics";
-			resource2.PictureName = "Resource2";
-			this.resCostOrg.Resource = resource2;
 			this.resCostOrg.ResourceName = "Organics";
 			this.resCostOrg.Size = new System.Drawing.Size(86, 20);
 			this.resCostOrg.TabIndex = 15;
@@ -378,15 +411,9 @@
 			this.resCostMin.BackColor = System.Drawing.Color.Black;
 			this.resCostMin.Change = null;
 			this.resCostMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resCostMin.Location = new System.Drawing.Point(6, 419);
+			this.resCostMin.Location = new System.Drawing.Point(6, 431);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
-			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource3.IsGlobal = true;
-			resource3.IsLocal = false;
-			resource3.Name = "Minerals";
-			resource3.PictureName = "Resource1";
-			this.resCostMin.Resource = resource3;
 			this.resCostMin.ResourceName = "Minerals";
 			this.resCostMin.Size = new System.Drawing.Size(86, 20);
 			this.resCostMin.TabIndex = 14;
@@ -395,7 +422,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 406);
+			this.label2.Location = new System.Drawing.Point(3, 418);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(31, 13);
 			this.label2.TabIndex = 13;
@@ -416,7 +443,7 @@
 			this.gameTabControl1.SelectedIndex = 0;
 			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(274, 387);
+			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
@@ -428,7 +455,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(266, 361);
+			this.tabPage1.Size = new System.Drawing.Size(266, 373);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Ships";
 			// 
@@ -445,7 +472,7 @@
 			this.lstShips.HoverSelection = true;
 			this.lstShips.Location = new System.Drawing.Point(3, 3);
 			this.lstShips.Name = "lstShips";
-			this.lstShips.Size = new System.Drawing.Size(260, 355);
+			this.lstShips.Size = new System.Drawing.Size(260, 367);
 			this.lstShips.TabIndex = 13;
 			this.lstShips.TileSize = new System.Drawing.Size(32, 32);
 			this.lstShips.UseCompatibleStateImageBehavior = false;
@@ -534,7 +561,6 @@
 			this.resRadioactivesRate.Location = new System.Drawing.Point(544, 13);
 			this.resRadioactivesRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resRadioactivesRate.Name = "resRadioactivesRate";
-			this.resRadioactivesRate.Resource = resource1;
 			this.resRadioactivesRate.ResourceName = "Radioactives";
 			this.resRadioactivesRate.Size = new System.Drawing.Size(72, 20);
 			this.resRadioactivesRate.TabIndex = 4;
@@ -548,7 +574,6 @@
 			this.resOrganicsRate.Location = new System.Drawing.Point(472, 13);
 			this.resOrganicsRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrganicsRate.Name = "resOrganicsRate";
-			this.resOrganicsRate.Resource = resource2;
 			this.resOrganicsRate.ResourceName = "Organics";
 			this.resOrganicsRate.Size = new System.Drawing.Size(72, 20);
 			this.resOrganicsRate.TabIndex = 3;
@@ -562,20 +587,37 @@
 			this.resMineralsRate.Location = new System.Drawing.Point(400, 13);
 			this.resMineralsRate.Margin = new System.Windows.Forms.Padding(0);
 			this.resMineralsRate.Name = "resMineralsRate";
-			this.resMineralsRate.Resource = resource3;
 			this.resMineralsRate.ResourceName = "Minerals";
 			this.resMineralsRate.Size = new System.Drawing.Size(72, 20);
 			this.resMineralsRate.TabIndex = 2;
+			// 
+			// btnDelete
+			// 
+			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDelete.BackColor = System.Drawing.Color.Black;
+			this.btnDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDelete.Location = new System.Drawing.Point(656, 269);
+			this.btnDelete.Name = "btnDelete";
+			this.btnDelete.Size = new System.Drawing.Size(174, 29);
+			this.btnDelete.TabIndex = 24;
+			this.btnDelete.Text = "Delete";
+			this.btnDelete.UseVisualStyleBackColor = false;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(834, 474);
+			this.ClientSize = new System.Drawing.Size(834, 486);
+			this.Controls.Add(this.btnDelete);
+			this.Controls.Add(this.btnBottom);
+			this.Controls.Add(this.btnTop);
+			this.Controls.Add(this.btnDown);
+			this.Controls.Add(this.btnUp);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
-			this.Controls.Add(this.btnReorder);
 			this.Controls.Add(this.btnClear);
 			this.Controls.Add(this.btnLoadQueue);
 			this.Controls.Add(this.btnSaveQueue);
@@ -633,7 +675,6 @@
 		private Controls.GameButton btnSaveQueue;
 		private Controls.GameButton btnLoadQueue;
 		private Controls.GameButton btnClear;
-		private Controls.GameButton btnReorder;
 		private System.Windows.Forms.ColumnHeader Item;
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
@@ -651,5 +692,10 @@
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private Controls.GameButton btnUp;
+		private Controls.GameButton btnDown;
+		private Controls.GameButton btnTop;
+		private Controls.GameButton btnBottom;
+		private Controls.GameButton btnDelete;
 	}
 }

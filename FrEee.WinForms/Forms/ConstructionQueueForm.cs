@@ -267,21 +267,9 @@ namespace FrEee.WinForms.Forms
 
 		private void lstQueue_MouseClick(object sender, MouseEventArgs e)
 		{
-			var item = lstQueue.GetItemAt(e.X, e.Y);
-			if (item != null)
+			if (e.Button == MouseButtons.Right)
 			{
-				if (e.Button == MouseButtons.Left)
-				{
-					var order = (IConstructionOrder)item.Tag;
-					var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
-					ConstructionQueue.Orders.Remove(order);
-					newCommands.Add(cmd);
-					BindQueueListView();
-				}
-				else if (e.Button == MouseButtons.Right)
-				{
-					// TODO - display detailed report on construction item
-				}
+				// TODO - display detailed report on construction item
 			}
 		}
 
@@ -307,6 +295,102 @@ namespace FrEee.WinForms.Forms
 				else if (e.Button == MouseButtons.Right)
 				{
 					// TODO - display detailed report on facility template
+				}
+			}
+		}
+
+		private void btnUp_Click(object sender, EventArgs e)
+		{
+			if (SelectedOrderIndex > 0)
+			{
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, -1);
+				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
+				cmd.Execute();
+				BindQueueListView();
+			}
+		}
+
+		private void btnTop_Click(object sender, EventArgs e)
+		{
+			if (SelectedOrderIndex > 0)
+			{
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, -SelectedOrderIndex);
+				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
+				cmd.Execute();
+				BindQueueListView();
+			}
+		}
+
+		private void btnDown_Click(object sender, EventArgs e)
+		{
+			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
+			{
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, 1);
+				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
+				cmd.Execute();
+				BindQueueListView();
+			}
+		}
+
+		private void btnBottom_Click(object sender, EventArgs e)
+		{
+			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
+			{
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, ConstructionQueue.Orders.Count - SelectedOrderIndex - 1);
+				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
+				cmd.Execute();
+				BindQueueListView();
+			}
+		}
+
+		public IConstructionOrder SelectedOrder
+		{
+			get
+			{
+				if (lstQueue.SelectedItems.Count == 1)
+					return (IConstructionOrder)lstQueue.SelectedItems[0].Tag;
+				return null;
+			}
+		}
+
+		public int SelectedOrderIndex
+		{
+			get
+			{
+				if (lstQueue.SelectedIndices.Count == 1)
+					return lstQueue.SelectedIndices[0];
+				return -1;
+			}
+		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			if (SelectedOrder != null)
+			{
+				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder);
+				ConstructionQueue.Orders.Remove(SelectedOrder);
+				newCommands.Add(cmd);
+				BindQueueListView();
+			}
+		}
+
+		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			var item = lstQueue.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					// delete order
+					var order = (IConstructionOrder)item.Tag;
+					var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
+					ConstructionQueue.Orders.Remove(order);
+					newCommands.Add(cmd);
+					BindQueueListView();
 				}
 			}
 		}
