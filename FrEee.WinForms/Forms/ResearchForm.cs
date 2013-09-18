@@ -19,6 +19,7 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class ResearchForm : Form
 	{
+        
 		public ResearchForm()
 		{
 			InitializeComponent();
@@ -107,9 +108,11 @@ namespace FrEee.WinForms.Forms
 			Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
 			RebindTechGrid();
 			BindQueue();
+            hasChanged = true;
 		}
 
 		private bool abort;
+        private bool hasChanged = false;
 		private Dictionary<Technology, int> oldPcts;
 		private List<Technology> oldQueue;
 
@@ -129,7 +132,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ResearchForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (!abort)
+			if (!abort && hasChanged)
 			{
 				switch (MessageBox.Show("Save your changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
@@ -169,7 +172,7 @@ namespace FrEee.WinForms.Forms
 		}
 
 		private void BindQueue()
-		{
+		{           
 			lstQueue.Items.Clear();
 			var idx = 0;
 			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
@@ -192,6 +195,7 @@ namespace FrEee.WinForms.Forms
 			{
 				Empire.Current.ResearchQueue.Add(curTech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -204,6 +208,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(0, selTech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -216,6 +221,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Add(selTech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -228,6 +234,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(Math.Max(0, selIdx - 1), selTech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -240,6 +247,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(Math.Min(Empire.Current.ResearchQueue.Count, selIdx + 1), selTech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -247,6 +255,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Empire.Current.ResearchQueue.Clear();
 			BindQueue();
+            hasChanged = true;
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
@@ -257,6 +266,7 @@ namespace FrEee.WinForms.Forms
 				var selTech = Empire.Current.ResearchQueue[selIdx];
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 
@@ -267,6 +277,7 @@ namespace FrEee.WinForms.Forms
 			{
 				Empire.Current.ResearchQueue.Add(tech);
 				BindQueue();
+                hasChanged = true;
 			}
 		}
 	}

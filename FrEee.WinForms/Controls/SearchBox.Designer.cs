@@ -28,36 +28,36 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.textBox = new System.Windows.Forms.TextBox();
-			this.SuspendLayout();
-			// 
-			// textBox
-			// 
-			this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.textBox.Location = new System.Drawing.Point(0, 0);
-			this.textBox.Name = "textBox";
-			this.textBox.Size = new System.Drawing.Size(591, 20);
-			this.textBox.TabIndex = 0;
-			this.textBox.SizeChanged += new System.EventHandler(this.textBox_SizeChanged);
-			this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
-			this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
-			this.textBox.Leave += new System.EventHandler(this.textBox_Leave);
-			// 
-			// SearchBox
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
-			this.Controls.Add(this.textBox);
-			this.ForeColor = System.Drawing.Color.White;
-			this.Name = "SearchBox";
-			this.Size = new System.Drawing.Size(591, 22);
-			this.Load += new System.EventHandler(this.SearchBox_Load);
-			this.SizeChanged += new System.EventHandler(this.SearchBox_SizeChanged);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchBox_KeyDown);
-			this.Leave += new System.EventHandler(this.SearchBox_Leave);
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.textBox = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // textBox
+            // 
+            this.textBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox.Location = new System.Drawing.Point(0, 0);
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(591, 20);
+            this.textBox.TabIndex = 0;
+            this.textBox.SizeChanged += new System.EventHandler(this.textBox_SizeChanged);
+            this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
+            this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
+            this.textBox.Leave += new System.EventHandler(this.textBox_Leave);
+            // 
+            // SearchBox
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.textBox);
+            this.ForeColor = System.Drawing.Color.White;
+            this.Name = "SearchBox";
+            this.Size = new System.Drawing.Size(591, 22);
+            this.Load += new System.EventHandler(this.SearchBox_Load);
+            this.SizeChanged += new System.EventHandler(this.SearchBox_SizeChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SearchBox_KeyDown);
+            this.Leave += new System.EventHandler(this.SearchBox_Leave);
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
 		}
 
