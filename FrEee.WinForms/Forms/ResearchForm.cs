@@ -78,6 +78,7 @@ namespace FrEee.WinForms.Forms
 			if (curTech == null)
 			{
 				txtTechName.Text = "(No Technology)";
+                txtTechDiscription.Text = "(No Technology)";                
 				lblSpending.Text = "Spending";
 				sldSpending.Maximum = 100;
 				sldSpending.Value = 0;
@@ -88,6 +89,7 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				txtTechName.Text = curTech.Name;
+                txtTechDiscription.Text = curTech.Description; 
 				var spent = allTechs.Sum(t => t.Spending.Value);
 				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
 				sldSpending.Maximum = 100 - spent + curTech.Spending.Value;
