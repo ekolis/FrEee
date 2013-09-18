@@ -158,6 +158,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
     <Compile Include="Modding\Loaders\CultureLoader.cs" />
     <Compile Include="Modding\Loaders\DataFileLoader.cs" />
     <Compile Include="Modding\Loaders\ModInfoLoader.cs" />

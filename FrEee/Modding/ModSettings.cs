@@ -192,7 +192,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Modifiers to production and construction rates from population amounts.
 		/// </summary>
-		public SortedDictionary<int, PopulationModifier> PopulationModifiers { get; private set; }
+		public SortedDictionary<int, PopulationModifier> PopulationModifiers { get; set; }
 
 		public double GetPopulationProductionFactor(long population)
 		{

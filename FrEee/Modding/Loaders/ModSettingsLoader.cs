@@ -48,6 +48,10 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.PopulationModifiers = new SortedDictionary<int,PopulationModifier>(PopulationModifierLoader.Load(rec).ToDictionary(pm => pm.PopulationAmount));
+
+			// TODO - load more settings
+
 			// load aptitudes
 			foreach (var a in Aptitude.All)
 			{
