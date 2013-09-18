@@ -32,8 +32,10 @@ namespace FrEee.WinForms.Utility.Extensions
 		public static ListViewItem AddItemWithImage(this ListView lv, string groupName, string text, object tag, Image image, params string[] subitems)
 		{
 			int imageNum = lv.Items.Count;
-			lv.LargeImageList.Images.Add(image ?? new Bitmap(lv.LargeImageList.ImageSize.Width, lv.LargeImageList.ImageSize.Height));
-			lv.SmallImageList.Images.Add(image ?? new Bitmap(lv.SmallImageList.ImageSize.Width, lv.SmallImageList.ImageSize.Height));
+			if (lv.LargeImageList != null)
+				lv.LargeImageList.Images.Add(image ?? new Bitmap(lv.LargeImageList.ImageSize.Width, lv.LargeImageList.ImageSize.Height));
+			if (lv.SmallImageList != null)
+				lv.SmallImageList.Images.Add(image ?? new Bitmap(lv.SmallImageList.ImageSize.Width, lv.SmallImageList.ImageSize.Height));
 			ListViewItem item;
 			if (groupName != null)
 			{

@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
@@ -29,13 +30,28 @@ namespace FrEee.WinForms.Forms
 			ddlVehicleType.Items.Add(new { Name = "Weapon Platforms", VehicleType = VehicleTypes.WeaponPlatform });
 			ddlVehicleType.SelectedItem = ddlVehicleType.Items[0];
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try {base.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 		}
+
+		private IHull hull;
 
 		/// <summary>
 		/// The hull that the user selected.
 		/// </summary>
-		public IHull Hull { get; private set; }
+		public IHull Hull
+		{
+			get
+			{
+				return hull;
+			}
+			private set
+			{
+				hull = value;
+				lstAbilities.Initialize(20, 20);
+				foreach (var abil in hull.Abilities)
+					lstAbilities.AddItemWithImage(null, abil.Description, abil, null);
+			}
+		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
 		{
