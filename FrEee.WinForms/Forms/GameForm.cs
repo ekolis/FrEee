@@ -741,7 +741,12 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
+					{
 						this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
+						var ctl = pnlDetailReport.Controls[0];
+						if (ctl is PlanetReport)
+							((PlanetReport)ctl).Invalidate();
+					}
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
 					; // TODO - show cargo transfer window for selected space object
