@@ -276,6 +276,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void AddOrder(IOrder order)
 		{
+			if (order == null)
+				throw new Exception("Can't add a null order to a construction queue's orders.");
 			if (!(order is IConstructionOrder))
 				throw new Exception("Can't add a " + order.GetType() + " to a construction queue's orders.");
 			Orders.Add((IConstructionOrder)order);
@@ -290,7 +292,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (!(order is IConstructionOrder))
+			if (order != null && !(order is IConstructionOrder))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
 			var o = (IConstructionOrder)order;
 			var newpos = Orders.IndexOf(o) + delta;
