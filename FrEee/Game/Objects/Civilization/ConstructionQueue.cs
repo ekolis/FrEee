@@ -296,8 +296,11 @@ namespace FrEee.Game.Objects.Civilization
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a construction queue's orders.");
 			var o = (IConstructionOrder)order;
 			var newpos = Orders.IndexOf(o) + delta;
-			Orders.Remove(o);
-			Orders.Insert(newpos, o);
+			if (newpos >= 0)
+			{
+				Orders.Remove(o);
+				Orders.Insert(newpos, o);
+			}
 		}
 
 		public void Dispose()
