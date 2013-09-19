@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -166,9 +167,9 @@ namespace FrEee.Game.Objects.Technology
 
 		public static bool operator ==(MountedComponentTemplate t1, MountedComponentTemplate t2)
 		{
-			if ((object)t1 == null && (object)t2 == null)
+			if (t1.IsNull() && t2.IsNull())
 				return true;
-			if ((object)t1 == null || (object)t2 == null)
+			if (t1.IsNull() || t2.IsNull())
 				return false;
 			return t1.ComponentTemplate == t2.ComponentTemplate && t1.Mount == t2.Mount;
 		}

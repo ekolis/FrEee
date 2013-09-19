@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to move a mobile space object toward another space object.
 	/// </summary>
 	[Serializable]
-	public class PursueOrder<T> : IMobileSpaceObjectOrder<T>
+	public class PursueOrder<T> : IMovementOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable
 	{
 		public PursueOrder(ISpaceObject target, bool avoidEnemies)
@@ -51,10 +51,10 @@ namespace FrEee.Game.Objects.Orders
 			if (AvoidEnemies && Target.IsHostileTo(me.Owner))
 			{
 				// don't avoid the target!
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true).Concat(new Sector[]{Target.FindSector()});
+				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true, me.DijkstraMap).Concat(new Sector[]{Target.FindSector()});
 			}
 			else
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true);
+				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true, me.DijkstraMap);
 		}
 
 		public void Execute(T sobj)
@@ -70,6 +70,7 @@ namespace FrEee.Game.Objects.Orders
 					// move
 					sobj.FindStarSystem().Remove(sobj);
 					gotoSector.Place(sobj);
+					sobj.RefreshDijkstraMap();
 				}
 				else if (!LoggedPathfindingError)
 				{
@@ -134,5 +135,15 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+		public Sector Destination
+		{
+			get { return Target.FindSector(); }
+		}
+
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
+		}
 	}
 }

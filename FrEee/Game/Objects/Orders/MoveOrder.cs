@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to move a mobile space object to a new location.
 	/// </summary>
 	[Serializable]
-	public class MoveOrder<T> : IMobileSpaceObjectOrder<T>
+	public class MoveOrder<T> : IMovementOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable
 	{
 		public MoveOrder(Sector destination, bool avoidEnemies)
@@ -45,7 +45,18 @@ namespace FrEee.Game.Objects.Orders
 		/// <returns></returns>
 		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
 		{
-			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true);
+			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
+		}
+
+		/// <summary>
+		/// Creates a Dijkstra map for this order's movement.
+		/// </summary>
+		/// <param name="me"></param>
+		/// <param name="start"></param>
+		/// <returns></returns>
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
 
 		public void Execute(T sobj)
@@ -61,6 +72,7 @@ namespace FrEee.Game.Objects.Orders
 					// move
 					sobj.FindStarSystem().Remove(sobj);
 					gotoSector.Place(sobj);
+					sobj.RefreshDijkstraMap();
 
 					// is it done?
 					if (gotoSector == Destination)

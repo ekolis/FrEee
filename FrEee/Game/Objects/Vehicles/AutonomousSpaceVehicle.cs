@@ -222,7 +222,6 @@ namespace FrEee.Game.Objects.Vehicles
 			Orders.Insert(newpos, o);
 		}
 
-
 		public IEnumerable<Sector> Path
 		{
 			get
@@ -230,40 +229,63 @@ namespace FrEee.Game.Objects.Vehicles
 				var last = this.FindSector();
 				foreach (var order in Orders)
 				{
-					// TODO - figure out which orders should take a move to execute and which shouldn't - assuming only move and warp orders do now
-					if (order is MoveOrder<AutonomousSpaceVehicle>)
+					if (order is IMovementOrder<AutonomousSpaceVehicle>)
 					{
-						var mo = (MoveOrder<AutonomousSpaceVehicle>)order;
-						foreach (var sector in mo.Pathfind(this, last))
-						{
-							last = sector;
-							yield return last;
-						}
+						var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
+						foreach (var s in o.Pathfind(this, last))
+							yield return s;
+						last = o.Destination;
 					}
-					else if (order is WarpOrder<AutonomousSpaceVehicle>)
+				}
+			}
+		}
+
+		[DoNotSerialize]
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
+		{
+			get;
+			private set;
+		}
+
+		public void RefreshDijkstraMap()
+		{
+			// create new map if necessary
+			if (DijkstraMap == null)
+				DijkstraMap = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+
+			// prune old nodes
+			var start = this.FindSector();
+			foreach (var n in DijkstraMap.Keys.OrderBy(n => n.Cost).ToArray())
+			{
+				if ((n.PreviousNode == null || !DijkstraMap.ContainsKey(n.PreviousNode)) && n.Location != start)
+				{
+					// already went here or it was an aborted path
+					// delete the node (and this will mark for deletion all its children that we're not at)
+					DijkstraMap.Remove(n);
+					if (n.Location == start)
 					{
-						var wo = (WarpOrder<AutonomousSpaceVehicle>)order;
-						last = wo.WarpPoint.Target;
-						yield return last;
+						foreach (var n2 in DijkstraMap.Keys)
+							n2.Cost -= 1;
 					}
-					else if (order is PursueOrder<AutonomousSpaceVehicle>)
+				}
+			}
+
+			// add new nodes
+			int minCost = 0;
+			foreach (var order in Orders)
+			{
+				var last = start;
+				if (order is IMovementOrder<AutonomousSpaceVehicle>)
+				{
+					var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
+					foreach (var kvp in o.CreateDijkstraMap(this, last))
 					{
-						var po = (PursueOrder<AutonomousSpaceVehicle>)order;
-						foreach (var sector in po.Pathfind(this, last))
-						{
-							last = sector;
-							yield return last;
-						}
+						kvp.Key.Cost += minCost;
+						DijkstraMap.Add(kvp);
 					}
-					else if (order is EvadeOrder<AutonomousSpaceVehicle>)
-					{
-						var eo = (EvadeOrder<AutonomousSpaceVehicle>)order;
-						foreach (var sector in eo.Pathfind(this, last))
-						{
-							last = sector;
-							yield return last;
-						}
-					}
+					// account for cost of previous orders
+					minCost = DijkstraMap.Keys.Max(n => n.MinimumCostRemaining);
+					last = o.Destination;
 				}
 			}
 		}
@@ -320,7 +342,7 @@ namespace FrEee.Game.Objects.Vehicles
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
 			if (!seers.Any())
 				return Visibility.Unknown; // TODO - memory sight
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false).Count());
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;

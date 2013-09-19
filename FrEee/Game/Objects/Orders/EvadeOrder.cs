@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Orders
 	/// The direction will be chosen at random
 	/// </summary>
 	[Serializable]
-	public class EvadeOrder<T> : IMobileSpaceObjectOrder<T>
+	public class EvadeOrder<T> : IMovementOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable
 	{
 
@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Orders
 					var sys = me.FindStarSystem();
 					var paths = sys.FindSpaceObjects<WarpPoint>().Flatten()
 						.Where(wp => wp.TargetStarSystemLocation.Item != sys)
-						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies, true) });
+						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies, true, me.DijkstraMap) });
 					if (paths.Any())
 					{
 						// found a warp point to flee to!
@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Orders
 				// see how he can reach us, and go somewhere away from him (that would take longer for him to get to than 
 				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false, true);
 				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp);
-				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Any(n => n.Location == s));
+				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Values.SelectMany(set => set).Any(n => n.Location == s));
 
 				if (goodMoves.Any())
 				{
@@ -109,6 +109,7 @@ namespace FrEee.Game.Objects.Orders
 					// move
 					sobj.FindSector().Remove(sobj);
 					gotoSector.Place(sobj);
+					sobj.RefreshDijkstraMap();
 				}
 				else if (!LoggedPathfindingError)
 				{
@@ -170,5 +171,15 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+		public Sector Destination
+		{
+			get { return Target.FindSector(); }
+		}
+
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
+		}
 	}
 }

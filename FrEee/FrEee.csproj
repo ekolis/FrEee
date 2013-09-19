@@ -75,6 +75,7 @@
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObjectOrder.cs" />
+    <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IOwnable.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />

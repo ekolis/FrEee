@@ -957,5 +957,16 @@ namespace FrEee.Utility.Extensions
 		{
 			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
 		}
+
+		/// <summary>
+		/// Tests if an object is null.
+		/// Useful for writing == operators that don't infinitely recurse.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static bool IsNull(this object o)
+		{
+			return o == null;
+		}
 	}
 }

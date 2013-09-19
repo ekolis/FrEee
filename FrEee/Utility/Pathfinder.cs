@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
@@ -23,26 +24,27 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
+		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 		{
 			if (end == null)
-				throw new Exception("Cannot pathfind to a null sector.");
+				return Enumerable.Empty<Sector>();
 			if (end.StarSystem == null)
-				throw new Exception("Cannot pathfind to a sector without a star system.");
+				return Enumerable.Empty<Sector>();
 
 			if (start == end)
 				return Enumerable.Empty<Sector>();
 
-			var map = CreateDijkstraMap(me, start, end, avoidEnemies, avoidDamagingSectors);
+			if (map == null)
+				map = CreateDijkstraMap(me, start, end, avoidEnemies, avoidDamagingSectors);
 
 			if (!map.Any())
 				return Enumerable.Empty<Sector>(); // nowhere to go!
 
-			if (map.Any(n => n.Location == end))
+			if (map.Keys.Any(n => n.Location == end))
 			{
 				// can reach it
-				var nodes = new List<Node<Sector>>();
-				var node = map.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
+				var nodes = new List<PathfinderNode<Sector>>();
+				var node = map.Keys.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
 					nodes.Add(node);
@@ -54,14 +56,14 @@ namespace FrEee.Utility
 			{
 				// can't reach it; get as close as possible
 				var reverseMap = CreateDijkstraMap(null, end, start, false, avoidDamagingSectors);
-				var target = reverseMap.Join(map, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
+				var target = reverseMap.Keys.Join(map.Keys, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
 				if (target == null)
 					return Enumerable.Empty<Sector>(); // can't go anywhere
 				else
 				{
 					// go to the closest point
-					var nodes = new List<Node<Sector>>();
-					var node = map.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
+					var nodes = new List<PathfinderNode<Sector>>();
+					var node = map.Keys.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
 						nodes.Add(node);
@@ -72,31 +74,38 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<Node<Sector>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
+		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			var startSys = start.StarSystem;
 
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<Node<Sector>>();
+			var queue = new Dictionary<int, ISet<PathfinderNode<Sector>>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<Node<Sector>>();
+			var map = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+			var visited = new HashSet<Sector>();
 
 			// step 3: add start node and cost
-			queue.Add(new Node<Sector>(start, 0, null, EstimateDistance(start, end)));
+			queue.Add(0, new HashSet<PathfinderNode<Sector>>());
+			queue[0].Add(new PathfinderNode<Sector>(start, 0, null, EstimateDistance(start, end, me == null ? null : me.Owner)));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
-			while (queue.Any() && !success)
+			while (queue.SelectMany(kvp => kvp.Value).Any() && !success)
 			{
 				// step 5: take lowest cost node out of queue
-				// also prefer straight line movement to diagonal
-				var minCost = queue.Min(n => n.Cost);
-				var node = queue.Where(n => n.Cost == minCost).First();
-				queue.Remove(node);
+				// TODO - also prefer straight line movement to diagonal?
+				var minCost = queue.Keys.Min();
+				while (!queue[minCost].Any())
+				{
+					queue.Remove(minCost);
+					minCost = queue.Keys.Min();
+				}
+				var node = queue[minCost].First();
+				queue[minCost].Remove(node);
 
-				// step 6: if node is the goal, stop - success!
+				// step 6: if node is the goal, stop after it's done - success!
 				if (node.Location == end)
 					success = true;
 
@@ -106,38 +115,49 @@ namespace FrEee.Utility
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
 					// avoid enemies, except at the destination
-					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner))).ToList();
+					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner)));
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
-					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0)).ToList();
+					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
 
 				// step 7b: update priority queue
 				foreach (var move in moves)
 				{
-					if (!visited.Any(n => n.Location == move))
+					if (!visited.Contains(move))
 					{
 						// didn't visit yet
-						var newnode = new Node<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end));
-						queue.Add(newnode);
-						visited.Add(newnode);
+						var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end, me == null ? null : me.Owner));
+						if (!queue.ContainsKey(newnode.Cost))
+							queue.Add(newnode.Cost, new HashSet<PathfinderNode<Sector>>());
+						queue[newnode.Cost].Add(newnode);
+						if (!map.ContainsKey(node))
+							map.Add(node, new HashSet<PathfinderNode<Sector>>());
+						map[node].Add(newnode);
+						visited.Add(move);
 					}
 					else
 					{
 						// already visited - but is it by a longer path?
-						var items = queue.Where(n => n.Location == move && n.Cost > node.Cost + 1);
+						var moreCost = queue.Where(kvp => kvp.Key > node.Cost + 1).SelectMany(kvp => kvp.Value);
+						var items = moreCost.Where(n => n.Location == move && n.Cost > node.Cost + 1);
 						if (items.Any())
 						{
 							foreach (var old in items.ToArray())
-								queue.Remove(old);
-							var newnode = new Node<Sector>(move, node.Cost + 1, node);
-							queue.Add(newnode);
-							visited.Add(newnode);
+							{
+								queue[old.Cost].Remove(old);
+								map.Remove(old);
+							}
+							var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node);
+							queue[newnode.Cost].Add(newnode);
+							if (!map.ContainsKey(node))
+								map.Add(node, new HashSet<PathfinderNode<Sector>>());
+							map[node].Add(newnode);
 						}
 					}
 				}
 			}
 
-			return visited;
+			return map;
 		}
 
 		/// <summary>
@@ -146,7 +166,7 @@ namespace FrEee.Utility
 		/// <param name="start"></param>
 		/// <param name="end"></param>
 		/// <returns></returns>
-		public static int EstimateDistance(Sector start, Sector end)
+		public static int EstimateDistance(Sector start, Sector end, Empire emp)
 		{
 			int sublightDistance = int.MaxValue;
 			int ftlDistance = int.MaxValue;
@@ -161,12 +181,12 @@ namespace FrEee.Utility
 			if (wps1 != null && wps2 != null)
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
 
-			// sector is null? then it must be the target of an unexplored warp point
-			if (wps1 != null && end == null)
+			// check for unexplored warp points
+			if (wps1 != null && !wps1.StarSystem.ExploredByEmpires.Contains(emp) && !end.StarSystem.ExploredByEmpires.Contains(emp))
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + 1;
-			if (start == null && wps2 != null)
+			if (!start.StarSystem.ExploredByEmpires.Contains(emp) && wps2 != null && !wps2.StarSystem.ExploredByEmpires.Contains(emp))
 				ftlDistance = end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
-			if (start == null && end == null)
+			if (!start.StarSystem.ExploredByEmpires.Contains(emp) && !end.StarSystem.ExploredByEmpires.Contains(emp))
 				ftlDistance = 0;
 
 			return Math.Min(sublightDistance, ftlDistance);
@@ -174,9 +194,7 @@ namespace FrEee.Utility
 
 		public static Sector FindNearestWarpPointSectorInSystem(Sector sector)
 		{
-			if (sector == null || sector.StarSystem == null)
-				return null;
-			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Flatten().Select(wp => wp.FindSector()).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).PickRandom();
+			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(g =>new Sector(sector.StarSystem, g.Key)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
@@ -212,6 +230,7 @@ namespace FrEee.Utility
 
 		/// <summary>
 		/// Navigation via warp points with each jump counting as 1 move.
+		/// TODO - optimize this algorithm just like the sector algorithm
 		/// </summary>
 		/// <param name="me"></param>
 		/// <param name="start"></param>
@@ -231,7 +250,7 @@ namespace FrEee.Utility
 			if (map.Any(n => n.Location == end))
 			{
 				// can reach it
-				var nodes = new List<Node<StarSystem>>();
+				var nodes = new List<PathfinderNode<StarSystem>>();
 				var node = map.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
@@ -250,7 +269,7 @@ namespace FrEee.Utility
 				else
 				{
 					// go to the closest point
-					var nodes = new List<Node<StarSystem>>();
+					var nodes = new List<PathfinderNode<StarSystem>>();
 					var node = map.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
@@ -262,17 +281,17 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<Node<StarSystem>> CreateDijkstraMap(StarSystem start, StarSystem end)
+		public static IEnumerable<PathfinderNode<StarSystem>> CreateDijkstraMap(StarSystem start, StarSystem end)
 		{
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<Node<StarSystem>>();
+			var queue = new List<PathfinderNode<StarSystem>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<Node<StarSystem>>();
+			var visited = new List<PathfinderNode<StarSystem>>();
 
 			// step 3: add start node and cost
-			queue.Add(new Node<StarSystem>(start, 0, null));
+			queue.Add(new PathfinderNode<StarSystem>(start, 0, null));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -300,7 +319,7 @@ namespace FrEee.Utility
 					if (!visited.Any(n => n.Location == move))
 					{
 						// didn't visit yet
-						var newnode = new Node<StarSystem>(move, node.Cost + 1, node);
+						var newnode = new PathfinderNode<StarSystem>(move, node.Cost + 1, node);
 						queue.Add(newnode);
 						visited.Add(newnode);
 					}
@@ -312,7 +331,7 @@ namespace FrEee.Utility
 						{
 							foreach (var old in items.ToArray())
 								queue.Remove(old);
-							var newnode = new Node<StarSystem>(move, node.Cost + 1, node);
+							var newnode = new PathfinderNode<StarSystem>(move, node.Cost + 1, node);
 							queue.Add(newnode);
 							visited.Add(newnode);
 						}
@@ -325,6 +344,7 @@ namespace FrEee.Utility
 
 		/// <summary>
 		/// Navigation on an arbitrary connectivity graph.
+		/// TODO - optimize this algorithm just like the sector algorithm
 		/// </summary>
 		/// <param name="me"></param>
 		/// <param name="start"></param>
@@ -344,7 +364,7 @@ namespace FrEee.Utility
 			if (map.Any(n => n.Location.Equals(end)))
 			{
 				// can reach it
-				var nodes = new List<Node<T>>();
+				var nodes = new List<PathfinderNode<T>>();
 				var node = map.Where(n => n.Location.Equals(end)).OrderBy(n => n.Cost).First();
 				while (node != null)
 				{
@@ -363,7 +383,7 @@ namespace FrEee.Utility
 				else
 				{
 					// go to the closest point
-					var nodes = new List<Node<T>>();
+					var nodes = new List<PathfinderNode<T>>();
 					var node = map.Where(n => n.Location.Equals(target.Location)).OrderBy(n => n.Cost).First();
 					while (node != null)
 					{
@@ -375,17 +395,17 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IEnumerable<Node<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
+		public static IEnumerable<PathfinderNode<T>> CreateDijkstraMap<T>(T start, T end, ConnectivityGraph<T> graph)
 		{
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
-			var queue = new List<Node<T>>();
+			var queue = new List<PathfinderNode<T>>();
 
 			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var visited = new List<Node<T>>();
+			var visited = new List<PathfinderNode<T>>();
 
 			// step 3: add start node and cost
-			queue.Add(new Node<T>(start, 0, null));
+			queue.Add(new PathfinderNode<T>(start, 0, null));
 
 			// step 4: quit if there are no nodes (all paths exhausted without finding goal)
 			bool success = false;
@@ -413,7 +433,7 @@ namespace FrEee.Utility
 					if (!visited.Any(n => n.Location.Equals(move)))
 					{
 						// didn't visit yet
-						var newnode = new Node<T>(move, node.Cost + 1, node);
+						var newnode = new PathfinderNode<T>(move, node.Cost + 1, node);
 						queue.Add(newnode);
 						visited.Add(newnode);
 					}
@@ -425,7 +445,7 @@ namespace FrEee.Utility
 						{
 							foreach (var old in items.ToArray())
 								queue.Remove(old);
-							var newnode = new Node<T>(move, node.Cost + 1, node);
+							var newnode = new PathfinderNode<T>(move, node.Cost + 1, node);
 							queue.Add(newnode);
 							visited.Add(newnode);
 						}
@@ -435,42 +455,42 @@ namespace FrEee.Utility
 
 			return visited;
 		}
+	}
 
-		public class Node<T>
+	public class PathfinderNode<T>
+	{
+		public PathfinderNode(T location, int cost, PathfinderNode<T> previousNode, int minRemaining = 0)
 		{
-			public Node(T location, int cost, Node<T> previousNode, int minRemaining = 0)
-			{
-				Location = location;
-				Cost = cost;
-				PreviousNode = previousNode;
-				MinimumCostRemaining = minRemaining;
-			}
+			Location = location;
+			Cost = cost;
+			PreviousNode = previousNode;
+			MinimumCostRemaining = minRemaining;
+		}
 
-			/// <summary>
-			/// The current location.
-			/// </summary>
-			public T Location { get; set; }
+		/// <summary>
+		/// The current location.
+		/// </summary>
+		public T Location { get; set; }
 
-			/// <summary>
-			/// The cost to reach this node from the start node.
-			/// </summary>
-			public int Cost { get; set; }
+		/// <summary>
+		/// The cost to reach this node from the start node.
+		/// </summary>
+		public int Cost { get; set; }
 
-			/// <summary>
-			/// A minimum estimate on the remaining cost to reach the destination.
-			/// This must never be an overestimate, or the pathfinding might fail even when it is possible to reach the destination!
-			/// </summary>
-			public int MinimumCostRemaining { get; set; }
+		/// <summary>
+		/// A minimum estimate on the remaining cost to reach the destination.
+		/// This must never be an overestimate, or the pathfinding might fail even when it is possible to reach the destination!
+		/// </summary>
+		public int MinimumCostRemaining { get; set; }
 
-			/// <summary>
-			/// The previous node in the current path.
-			/// </summary>
-			public Node<T> PreviousNode { get; set; }
+		/// <summary>
+		/// The previous node in the current path.
+		/// </summary>
+		public PathfinderNode<T> PreviousNode { get; set; }
 
-			public override string ToString()
-			{
-				return "From " + PreviousNode.Location + " to " + Location + " (cost=" + Cost + ", minRemaining=" + MinimumCostRemaining + ")";
-			}
+		public override string ToString()
+		{
+			return "From " + PreviousNode.Location + " to " + Location + " (cost=" + Cost + ", minRemaining=" + MinimumCostRemaining + ")";
 		}
 	}
 }

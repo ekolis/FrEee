@@ -40,9 +40,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				if (StarSystem == null)
-					return Enumerable.Empty<ISpaceObject>();
-				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item);
+				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).ToList();
 			}
 		}
 
@@ -64,15 +62,11 @@ namespace FrEee.Game.Objects.Space
 
 		public static bool operator ==(Sector s1, Sector s2)
 		{
-			if ((object)s1 == null && (object)s2 == null)
+			if (s1.IsNull() && s2.IsNull())
 				return true;
-			if ((object)s1 == null || (object)s2 == null)
+			if (s1.IsNull() || s2.IsNull())
 				return false;
-			if (s1.StarSystem == null && s2.StarSystem == null)
-				return s1.Coordinates == s2.Coordinates;
-			if (s1.StarSystem == null || s2.StarSystem == null)
-				return false;
-			return s1.StarSystem == s2.StarSystem && s1.Coordinates == s2.Coordinates;
+			return s1.starSystem == s2.starSystem && s1.Coordinates == s2.Coordinates;
 		}
 
 		public static bool operator !=(Sector s1, Sector s2)
@@ -82,9 +76,16 @@ namespace FrEee.Game.Objects.Space
 
 		public override int GetHashCode()
 		{
-			if (StarSystem == null)
+			if (starSystem == null)
 				return Coordinates.GetHashCode();
-			return StarSystem.GetHashCode() ^ Coordinates.GetHashCode();
+			return starSystem.GetHashCode() ^ Coordinates.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Sector)
+				return this == (Sector)obj;
+			return false; 
 		}
 	}
 }

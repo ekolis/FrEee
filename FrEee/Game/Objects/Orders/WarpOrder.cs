@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to warp a mobile space object via a warp point.
 	/// </summary>
 	[Serializable]
-	public class WarpOrder<T> : IMobileSpaceObjectOrder<T>
+	public class WarpOrder<T> : IMovementOrder<T>
 		where T : IMobileSpaceObject<T>, IReferrable
 	{
 		public WarpOrder(WarpPoint warpPoint)
@@ -47,6 +47,8 @@ namespace FrEee.Game.Objects.Orders
 				// warp now!!!
 				here.Remove(sobj);
 				WarpPoint.Target.Place(sobj);
+				sobj.RefreshDijkstraMap();
+
 				// mark system explored
 				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
 					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
@@ -106,5 +108,27 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+		public Sector Destination
+		{
+			get { return WarpPoint.Target; }
+		}
+
+		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.Pathfind(me, start, Destination, false, true, me.DijkstraMap);
+		}
+
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		{
+			return Pathfinder.CreateDijkstraMap(me, start, Destination, false, true);
+		}
+
+		[DoNotSerialize]
+		public bool LoggedPathfindingError
+		{
+			get;
+			private set;
+		}
 	}
 }

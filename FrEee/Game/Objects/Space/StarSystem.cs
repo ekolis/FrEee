@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem : IFoggable, IReferrable
+	public class StarSystem : IReferrable
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -174,9 +174,13 @@ namespace FrEee.Game.Objects.Space
 			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
 				ExploredByEmpires.Remove(e);
 
-			// hide background image (so player can't see what kind of system it is)
+			// hide background image (so player can't see what kind of system it is) and name and abilities
 			if (!ExploredByEmpires.Contains(emp))
+			{
 				BackgroundImagePath = null;
+				Name = "(Unexplored)";
+				Abilities.Clear();
+			}
 		}
 
 		public override string ToString()

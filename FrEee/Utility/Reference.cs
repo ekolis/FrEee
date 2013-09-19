@@ -91,6 +91,32 @@ namespace FrEee.Utility
 			if (HasValue && Value is IPromotable)
 				((IPromotable)Value).ReplaceClientIDs(idmap);
 		}
+
+		public static bool operator ==(Reference<T> r1, Reference<T> r2)
+		{
+			if (r1.IsNull() && r2.IsNull())
+				return true;
+			if (r1.IsNull() || r2.IsNull())
+				return false;
+			return r1.ID == r2.ID;
+		}
+
+		public static bool operator !=(Reference<T> r1, Reference<T> r2)
+		{
+			return !(r1 == r2);
+		}
+
+		public override int GetHashCode()
+		{
+			return ID.GetHashCode();
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Reference<T>)
+				return this == (Reference<T>)obj;
+			return false;
+		}
 	}
 
 	public class ReferenceException : Exception

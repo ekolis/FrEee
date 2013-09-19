@@ -101,10 +101,10 @@ namespace FrEee.Utility
 
 		public static bool operator ==(ResourceQuantity r1, ResourceQuantity r2)
 		{
-			if (((object)r1 == null) ^ ((object)r2 == null))
-				return false;
-			if (((object)r1 == null) && ((object)r2 == null))
+			if (r1.IsNull() && r2.IsNull())
 				return true;
+			if (r1.IsNull() || r2.IsNull())
+				return false;
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
 				if (r1[key] != r2[key])

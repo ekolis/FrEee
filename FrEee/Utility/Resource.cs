@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -144,9 +145,9 @@ namespace FrEee.Utility
 
 		public static bool operator ==(Resource r1, Resource r2)
 		{
-			if ((object)r1 == null && (object)r2 == null)
+			if (r1.IsNull() && r2.IsNull())
 				return true;
-			if ((object)r1 == null || (object)r2 == null)
+			if (r1.IsNull() || r2.IsNull())
 				return false;
 			return r1.Name == r2.Name && r1.Color == r2.Color && r1.IsGlobal == r2.IsGlobal && r1.IsLocal == r2.IsLocal && r1.PictureName == r2.PictureName;
 		}
