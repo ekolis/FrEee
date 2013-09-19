@@ -326,5 +326,10 @@ namespace FrEee.Game.Objects.Civilization
 			if (CheckVisibility(emp) < Visibility.Visible)
 				Dispose();
 		}
+
+		public override string ToString()
+		{
+			return SpaceObject + "'s construction queue";
+		}
 	}
 }
