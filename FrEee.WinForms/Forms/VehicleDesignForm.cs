@@ -239,6 +239,8 @@ namespace FrEee.WinForms.Forms
 
 		private bool TrySaveDesign()
 		{
+			if (Design == null)
+				return true; // allow player to cancel the dialog by pressing save if he hasn't started on a design yet
 			if (Design.Warnings.Any())
 			{
 				MessageBox.Show("You cannot save your design while there are warnings.");
