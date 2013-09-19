@@ -596,7 +596,7 @@ namespace FrEee.Game.Objects.Space
 		/// Processes the turn.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
-		public void ProcessTurn()
+		public void ProcessTurn(Status status = null, double desiredProgress = 1d)
 		{
 			if (CurrentEmpire != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
@@ -604,13 +604,25 @@ namespace FrEee.Game.Objects.Space
 			if (Galaxy.Current != this)
 				throw new InvalidOperationException("Can't process the turn on a galaxy that is not the current galaxy. Set Galaxy.Current = this first.");
 
+			double progressPerOperation;
+			if (status == null)
+				progressPerOperation = 0d;
+			else
+				progressPerOperation = (desiredProgress - status.Progress) / (7 + Empires.Count);
+
 			// load commands
+			if (status != null)
+				status.Message = "Loading player commands";
 			LoadCommands();
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// advance turn number
 			TurnNumber++;
 
 			// reproduction
+			if (status != null)
+				status.Message = "Growing population";
 			if (TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
 			{
 				foreach (var p in FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
@@ -630,8 +642,12 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
+			if (status != null)
+				status.Progress += progressPerOperation;
 
-			// mining
+			// resource generation
+			if (status != null)
+				status.Message = "Generating resources";
 			foreach (var tuple in FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
 			{
 				var p = tuple.Item3;
@@ -664,12 +680,16 @@ namespace FrEee.Game.Objects.Space
 						p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 			}
-
 			// TODO - remote mining and raw resource generation
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// empire stuff
 			foreach (var emp in Empires)
 			{
+				if (status != null)
+					status.Message = "Maintaining empires (" + (Empires.IndexOf(emp) + 1) + " of " + Empires.Count + ")";
+
 				// pay maintenance on on ships/bases
 				// TODO - allow mod to specify maintenance on units/facilities too?
 				foreach (var v in emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>())
@@ -744,17 +764,30 @@ namespace FrEee.Game.Objects.Space
 
 				// clear bonus research for this turn
 				emp.BonusResearch = 0;
+
+				if (status != null)
+					status.Progress += progressPerOperation;
 			}
 
 			// replenish shields
+			if (status != null)
+				status.Message = "Replenishing shields";
 			foreach (var sobj in FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
 				sobj.ReplenishShields();
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// construction queues
+			if (status != null)
+				status.Message += "Constructing objects";
 			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// ship movement
+			if (status != null)
+				status.Message += "Moving ships";
 			CurrentTick = 0;
 			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
@@ -784,9 +817,16 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 				CurrentTick += NextTickSize;
+				if (status != null)
+					status.Progress += progressPerOperation * NextTickSize;
 			}
 
 			// TODO - more turn stuff
+
+
+
+			if (status != null)
+				status.Message = "Cleaning up";
 
 			// resource spoilage
 			foreach (var emp in Empires)
@@ -824,6 +864,9 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
+
+			if (status != null)
+				status.Progress += progressPerOperation;
 		}
 
 		/// <summary>

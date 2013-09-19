@@ -487,13 +487,12 @@ namespace FrEee.WinForms.Forms
 					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					Galaxy.Current.ProcessTurn();
-					status.Progress = 0.5;
+					Galaxy.Current.ProcessTurn(status, 0.5);
 					status.Message = "Saving game";
-					Galaxy.SaveAll();
-					status.Progress = 0.75;
+					Galaxy.SaveAll(status, 0.75);
 					status.Message = "Loading game";
 					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+					status.Progress = 1.00;
 				}));
 				this.ShowChildForm(new StatusForm(t, status));
 				SetUpGui();
