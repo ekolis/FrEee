@@ -291,6 +291,7 @@ namespace FrEee.Game.Setup
 						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
+						Culture = Mod.Current.Cultures.PickRandom(),
 					},
 					IsPlayerEmpire = false,
 				};
@@ -314,6 +315,7 @@ namespace FrEee.Game.Setup
 						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
+						Culture = Mod.Current.Cultures.PickRandom(),
 					},
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
