@@ -608,7 +608,7 @@ namespace FrEee.Game.Objects.Space
 			if (status == null)
 				progressPerOperation = 0d;
 			else
-				progressPerOperation = (desiredProgress - status.Progress) / (7 + Empires.Count);
+				progressPerOperation = (desiredProgress - status.Progress) / (6 + Empires.Count);
 
 			// load commands
 			if (status != null)
@@ -779,7 +779,7 @@ namespace FrEee.Game.Objects.Space
 
 			// construction queues
 			if (status != null)
-				status.Message += "Constructing objects";
+				status.Message = "Constructing objects";
 			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
 			if (status != null)
@@ -787,7 +787,7 @@ namespace FrEee.Game.Objects.Space
 
 			// ship movement
 			if (status != null)
-				status.Message += "Moving ships";
+				status.Message = "Moving ships";
 			CurrentTick = 0;
 			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
@@ -817,7 +817,7 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 				CurrentTick += NextTickSize;
-				if (status != null)
+				if (status != null && NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * NextTickSize;
 			}
 
