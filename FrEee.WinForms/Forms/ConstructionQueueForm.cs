@@ -164,12 +164,12 @@ namespace FrEee.WinForms.Forms
 		{
 			if (chkOnlyLatest.Checked)
 			{
-				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().OnlyLatest(f => f.Family));
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current) && !d.IsObsolete));
 			}
 			else
 			{
-				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>());
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
 			}
 		}
