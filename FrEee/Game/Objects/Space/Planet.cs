@@ -654,5 +654,15 @@ namespace FrEee.Game.Objects.Space
 		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
 		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
 		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
+		
+		public override bool IsIdle
+		{
+			get
+			{
+				if (Colony == null)
+					return false;
+				return ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d;
+			}
+		}
 	}
 }

@@ -39,19 +39,22 @@ namespace FrEee.WinForms.Forms
 
 			// set up GUI images
 			// TODO - get GUI images from mod too
-			btnMenu.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Menu"));
-			btnDesigns.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Designs"));
-			btnPlanets.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Planets"));
-			btnEmpires.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Empires"));
-			btnShips.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Ships"));
-			btnQueues.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Queues"));
-			btnLog.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Log"));
-			btnEndTurn.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "EndTurn"));
-			btnMove.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Move"));
-			btnPursue.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Pursue"));
-			btnEvade.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Evade"));
-			btnWarp.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "Warp"));
-			btnClearOrders.Image = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", "ClearOrders"));
+			LoadButtonImage(btnMenu, "Menu");
+			LoadButtonImage(btnDesigns, "Designs");
+			LoadButtonImage(btnPlanets, "Planets");
+			LoadButtonImage(btnEmpires, "Empires");
+			LoadButtonImage(btnShips, "Ships");
+			LoadButtonImage(btnQueues, "Queues");
+			LoadButtonImage(btnLog, "Log");
+			LoadButtonImage(btnEndTurn, "EndTurn");
+			LoadButtonImage(btnMove, "Move");
+			LoadButtonImage(btnPursue, "Pursue");
+			LoadButtonImage(btnEvade, "Evade");
+			LoadButtonImage(btnWarp, "Warp");
+			LoadButtonImage(btnClearOrders, "ClearOrders");
+			LoadButtonImage(btnPrevIdle, "Previous");
+			LoadButtonImage(btnNextIdle, "Next");
+
 			// TODO - galaxy view background image can depend on galaxy template?
 			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
 
@@ -549,8 +552,10 @@ namespace FrEee.WinForms.Forms
 			pnlTab.Margin = new Padding(0);
 			pnlTab.Height = 24;
 			var btnTab = new GameButton();
+			btnTab.TabStop = false;
 			btnTab.Width = 98;
 			var btnX = new GameButton();
+			btnX.TabStop = false;
 			btnX.Width = 25;
 			btnX.Text = "X";
 			btnTab.Click += btnTab_Click;
@@ -724,6 +729,8 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new LogForm(this));
 				else if (e.KeyCode == Keys.R)
 					this.ShowChildForm(new ResearchForm());
+				else if (e.KeyCode == Keys.Space)
+					btnPrevIdle_Click(this, new EventArgs());
 			}
 			else
 			{
@@ -754,6 +761,8 @@ namespace FrEee.WinForms.Forms
 					; // TODO - show cargo transfer window for selected space object
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
 					; // TODO - show fleet transfer window for selected space object
+				else if (e.KeyCode == Keys.Space)
+					btnNextIdle_Click(this, new EventArgs());
 			}
 
 			if (e.KeyCode == Keys.F2)
@@ -1038,6 +1047,34 @@ namespace FrEee.WinForms.Forms
 		{
 			// TODO - ships screen
 			MessageBox.Show("Sorry, the ships screen is not yet implemented.");
+		}
+
+		private void btnPrevIdle_Click(object sender, EventArgs e)
+		{
+			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
+			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.First())
+				SelectSpaceObject(idle.Last());
+			else
+				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) - 1));
+		}
+
+		private void btnNextIdle_Click(object sender, EventArgs e)
+		{
+			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
+			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
+				SelectSpaceObject(idle.First());
+			else
+				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) + 1));
+		}
+
+		private void LoadButtonImage(Button btn, string picName)
+		{
+			var pic = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", picName));
+			if (pic != null)
+			{
+				btn.Text = "";
+				btn.Image = pic;
+			}
 		}
 	}
 }

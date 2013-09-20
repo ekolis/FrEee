@@ -356,5 +356,13 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Visible)
 				Dispose(); // TODO - memory sight
 		}
+
+		public bool IsIdle
+		{
+			get
+			{
+				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d);
+			}
+		}
 	}
 }

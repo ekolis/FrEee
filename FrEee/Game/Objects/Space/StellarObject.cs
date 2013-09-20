@@ -176,5 +176,13 @@ namespace FrEee.Game.Objects.Space
 
 
 		public abstract void Redact(Empire emp);
+
+		/// <summary>
+		/// Stellar objects by default can't be idle, because they can't take orders or build stuff to begin with.
+		/// </summary>
+		public virtual bool IsIdle
+		{
+			get { return false; }
+		}
 	}
 }
