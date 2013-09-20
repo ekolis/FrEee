@@ -188,7 +188,8 @@ namespace FrEee.Game.Objects.Technology
 
 		public int HitChance
 		{
-			get { return 1; }
+			// TODO - moddable facility hit chance
+			get { return 1000; }
 		}
 	}
 }
