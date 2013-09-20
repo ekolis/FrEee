@@ -596,7 +596,7 @@ namespace FrEee.WinForms.Forms
 
 		private FlowLayoutPanel FindTab(StarSystem sys)
 		{
-			foreach (FlowLayoutPanel tab in pnlTabs.Controls)
+			foreach (var tab in pnlTabs.Controls.OfType<FlowLayoutPanel>())
 			{
 				if (tab.Controls[0].Tag == sys)
 					return tab;

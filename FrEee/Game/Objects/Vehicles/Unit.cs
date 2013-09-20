@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace FrEee.Game.Objects.Vehicles
 {
 	/// <summary>
 	/// A vehicle which operates in groups.
-	/// TODO - Do we even need a unit class? Just a unit group class with a design and a count should be enough...
+	/// TODO - Do we even need a unit class? Just a unit group class with a design and a count should be enough... though if we want units to take individual damage...
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
@@ -61,6 +62,15 @@ namespace FrEee.Game.Objects.Vehicles
 				return Visibility.Owned;
 			// HACK - units aren't in space, how do we know what can see them?
 			return Visibility.Unknown;
+		}
+
+		/// <summary>
+		/// Finds the space object (if any) which contains this unit.
+		/// </summary>
+		/// <returns></returns>
+		public ISpaceObject FindContainer()
+		{
+			return Galaxy.Current.FindSpaceObjects<ICargoContainer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(this));
 		}
 	}
 }

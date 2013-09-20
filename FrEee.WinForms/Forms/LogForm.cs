@@ -15,6 +15,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.WinForms.Forms
 {
@@ -68,6 +69,17 @@ namespace FrEee.WinForms.Forms
 						// go to space object
 						gameForm.SelectSpaceObject((ISpaceObject)context);
 						Close();
+					}
+					else if (context is Unit)
+					{
+						// go to whatever contains the unit
+						var unit = (Unit)context;
+						var container = unit.FindContainer();
+						if (container != null)
+						{
+							gameForm.SelectSpaceObject(container);
+							Close();
+						}
 					}
 					else if (context is Technology)
 					{
