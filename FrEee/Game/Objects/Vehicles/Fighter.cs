@@ -12,5 +12,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return false; }
 		}
+
+		public override Enumerations.WeaponTargets WeaponTargetType
+		{
+			get { return Enumerations.WeaponTargets.Fighter; }
+		}
 	}
 }

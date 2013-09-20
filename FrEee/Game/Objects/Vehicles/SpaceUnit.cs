@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class SpaceUnit : Unit
+	public abstract class SpaceUnit : Unit
 	{
 		public SpaceUnit()
 		{

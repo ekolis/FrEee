@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class Unit : Vehicle
+	public abstract class Unit : Vehicle
 	{
 		public override bool RequiresSpaceYardQueue
 		{

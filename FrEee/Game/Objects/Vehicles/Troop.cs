@@ -12,5 +12,11 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return false; }
 		}
+
+		public override Enumerations.WeaponTargets WeaponTargetType
+		{
+			// troops cannot be targeted in space combat
+			get { return Enumerations.WeaponTargets.Invalid; }
+		}
 	}
 }

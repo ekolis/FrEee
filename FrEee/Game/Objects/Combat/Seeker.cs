@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public bool CanTarget(ICombatObject target)
 		{
-			return Launcher.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
+			return target != null && Launcher.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
 		}
 
 		public WeaponTargets WeaponTargetType
@@ -97,8 +97,11 @@ namespace FrEee.Game.Objects.Combat
 			battle.LogSeekerDamage(this, realDamage);
 			Hitpoints -= realDamage;
 			return damage - realDamage;
-			if (Hitpoints <= 0)
+			if (IsDestroyed)
+			{
 				battle.LogTargetDeath(this);
+				Dispose();
+			}
 		}
 
 		public bool IsDestroyed
@@ -222,6 +225,12 @@ namespace FrEee.Game.Objects.Combat
 		public int Evasion
 		{
 			get { return Mod.Current.Settings.SeekerEvasion; }
+		}
+
+		public void Dispose()
+		{
+			Target = null;
+			Owner = null;
 		}
 	}
 }

@@ -104,12 +104,6 @@ namespace FrEee.Game.Objects.Combat
 							{
 								// direct fire
 								weapon.Attack(attacker, defender, this); // TODO - range and accuracy and such
-								if (defender.IsDestroyed)
-								{
-									if (defender is ISpaceObject)
-										Location.StarSystem.Remove((ISpaceObject)defender);
-									break;
-								}
 							}
 							// TODO - mounts that affect reload rate?
 							reloads[weapon] += weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;

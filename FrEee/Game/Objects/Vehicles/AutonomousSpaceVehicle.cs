@@ -176,15 +176,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
-		public bool CanTarget(ICombatObject target)
-		{
-			// TODO - alliances
-			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
-		}
-
-		public abstract WeaponTargets WeaponTargetType { get; }
-
-
 		public void ReplenishShields()
 		{
 			NormalShields = MaxNormalShields;
@@ -291,22 +282,6 @@ namespace FrEee.Game.Objects.Vehicles
 					minCost = DijkstraMap.Keys.Max(n => n.MinimumCostRemaining);
 					last = o.Destination;
 				}
-			}
-		}
-
-		public int Accuracy
-		{
-			get
-			{
-				return this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + Owner.Culture.SpaceCombat;
-			}
-		}
-
-		public int Evasion
-		{
-			get
-			{
-				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + Owner.Culture.SpaceCombat;
 			}
 		}
 

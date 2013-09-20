@@ -10,9 +10,9 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// A space object that may fire weapons and can targeted by weapons.
+	/// An object that may fire weapons and can targeted by weapons.
 	/// </summary>
-	public interface ICombatObject : IPictorial, IOwnable, IDamageable
+	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable
 	{
 		/// <summary>
 		/// Can this object fire on another combat object?

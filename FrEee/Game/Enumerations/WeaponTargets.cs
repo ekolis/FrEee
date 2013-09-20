@@ -28,5 +28,6 @@ namespace FrEee.Game.Enumerations
 		Planets = Planet,
 		Seeker = 0x200,
 		Seekers = Seeker,
+		Invalid = 0x400,
 	}
 }

@@ -10,7 +10,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class GroundUnit : Unit
+	public abstract  class GroundUnit : Unit
 	{
 	}
 }

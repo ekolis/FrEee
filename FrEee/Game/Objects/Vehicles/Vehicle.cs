@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle : INamed, IConstructable, IVehicle
+	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject
 	{
 		public Vehicle()
 		{
@@ -169,6 +169,12 @@ namespace FrEee.Game.Objects.Vehicles
 				damage = comp.TakeDamage(damageType, damage, battle);
 			}
 
+			if (IsDestroyed)
+			{
+				battle.LogTargetDeath(this);
+				Dispose();
+			}
+
 			return damage;
 		}
 
@@ -176,7 +182,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Is this vehicle destroyed?
 		/// Vehicles are destroyed when all components are destroyed.
 		/// </summary>
-		public bool IsDestroyed { get { return Components.All(c => c.Hitpoints <= 0); } }
+		public bool IsDestroyed { get { return Components.All(c => c.IsDestroyed ); } }
 
 		/// <summary>
 		/// The current amount of shields.
@@ -283,5 +289,30 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public abstract Visibility CheckVisibility(Empire emp);
+
+		public bool CanTarget(ICombatObject target)
+		{
+			// TODO - alliances
+			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
+		}
+
+		public abstract WeaponTargets WeaponTargetType { get; }
+
+		public int Accuracy
+		{
+			get
+			{
+				return this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + Owner.Culture.SpaceCombat;
+			}
+		}
+
+		public int Evasion
+		{
+			get
+			{
+				return this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + Owner.Culture.SpaceCombat;
+			}
+		}
+
 	}
 }

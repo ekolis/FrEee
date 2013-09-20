@@ -19,5 +19,11 @@ namespace FrEee.Game.Objects.Vehicles
 			// TODO - alliances
 			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
 		}
+
+		public override Enumerations.WeaponTargets WeaponTargetType
+		{
+			// weapon platforms cannot be targeted in space combat
+			get { return Enumerations.WeaponTargets.Invalid; }
+		}
 	}
 }
