@@ -198,9 +198,31 @@ namespace FrEee.Game.Objects.Vehicles
 		public int PhasedShields { get; set; }
 
 		/// <summary>
-		/// Total shields.
+		/// Total current shield HP.
 		/// </summary>
-		public int Shields { get { return NormalShields + PhasedShields; } }
+		public int ShieldHitpoints { get { return NormalShields + PhasedShields; } }
+
+		/// <summary>
+		/// Current HP of all armor components.
+		/// </summary>
+		public int ArmorHitpoints
+		{
+			get
+			{
+				return Components.Where(c => c.HasAbility("Armor")).Sum(c => c.Hitpoints);
+			}
+		}
+
+		/// <summary>
+		/// Current HP of all non-armor components.
+		/// </summary>
+		public int HullHitpoints
+		{
+			get
+			{
+				return Components.Where(c => !c.HasAbility("Armor")).Sum(c => c.Hitpoints);
+			}
+		}
 
 		/// <summary>
 		/// The maximum shields.

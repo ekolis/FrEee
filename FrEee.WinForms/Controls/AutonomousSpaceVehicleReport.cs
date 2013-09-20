@@ -59,11 +59,11 @@ namespace FrEee.WinForms.Controls
 
 				// damage
 				// TODO - let ships take damage
-				progShields.Maximum = vehicle.Design.ShieldHitpoints;
+				progShields.Maximum = vehicle.ShieldHitpoints;
 				progShields.Value = progShields.Maximum;
-				progArmor.Maximum = vehicle.Design.ArmorHitpoints;
+				progArmor.Maximum = vehicle.ArmorHitpoints;
 				progArmor.Value = progArmor.Maximum;
-				progHull.Maximum = vehicle.Design.HullHitpoints;
+				progHull.Maximum = vehicle.HullHitpoints;
 				progHull.Value = progHull.Maximum;
 
 				// orders and stuff
