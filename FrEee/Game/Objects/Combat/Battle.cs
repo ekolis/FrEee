@@ -80,7 +80,7 @@ namespace FrEee.Game.Objects.Combat
 					if (attacker.IsDestroyed)
 						continue;
 
-					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj));
+					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj) && !sobj.IsDestroyed);
 					if (!defenders.Any())
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom();
