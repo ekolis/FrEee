@@ -164,10 +164,11 @@ namespace FrEee.Game.Objects.Vehicles
 				battle.LogShieldDamage(this.CombatObject, shieldDmg);
 			while (damage > 0 && !IsDestroyed)
 			{
-				// TODO - make armor get hit first
 				var comps = Components.Where(c => c.Hitpoints > 0);
-				// TODO - pick component weighted by hit chance
-				var comp = comps.PickRandom();
+				var armor = comps.Where(c => c.HasAbility("Armor"));
+				var internals = comps.Where(c => !c.HasAbility("Armor"));
+				var canBeHit = armor.Any() ? armor : internals;
+				var comp = comps.ToDictionary(c => c, c => c.HitChance).PickWeighted();
 				damage = comp.TakeDamage(damageType, damage, battle);
 			}
 
