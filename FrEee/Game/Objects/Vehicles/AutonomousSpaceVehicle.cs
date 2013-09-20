@@ -207,18 +207,22 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (!(order is IOrder<AutonomousSpaceVehicle>))
+			if (order != null && !(order is IOrder<AutonomousSpaceVehicle>))
 				throw new Exception("Can't remove a " + order.GetType() + " from an autonomous space vehicle's orders.");
 			Orders.Remove((IOrder<AutonomousSpaceVehicle>)order);
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (!(order is IOrder<AutonomousSpaceVehicle>))
+			if (order != null && !(order is IOrder<AutonomousSpaceVehicle>))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in an autonomous space vehicle's orders.");
 			var o = (IOrder<AutonomousSpaceVehicle>)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
+			if (newpos < 0)
+				newpos = 0;
+			if (newpos > Orders.Count)
+				newpos = Orders.Count;
 			Orders.Insert(newpos, o);
 		}
 

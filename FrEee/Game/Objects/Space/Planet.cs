@@ -440,7 +440,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (!(order is IOrder<Planet>))
+			if (order != null && !(order is IOrder<Planet>))
 				throw new Exception("Can't remove a " + order.GetType() + " from a planet's orders.");
 			Orders.Remove((IOrder<Planet>)order);
 		}
@@ -451,6 +451,10 @@ namespace FrEee.Game.Objects.Space
 				throw new Exception("Can't rearrange a " + order.GetType() + " in a planet's orders.");
 			var o = (IOrder<Planet>)order;
 			var newpos = Orders.IndexOf(o) + delta;
+			if (newpos < 0)
+				newpos = 0;
+			if (newpos > Orders.Count)
+				newpos = Orders.Count;
 			Orders.Remove(o);
 			Orders.Insert(newpos, o);
 		}
