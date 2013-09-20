@@ -208,6 +208,12 @@ namespace FrEee.Game.Objects.Civilization
 
 				foreach (var order in Orders.Cast<IConstructionOrder>().ToArray())
 				{
+					if (order == null)
+					{
+						// WTF
+						Orders.Remove(order);
+						continue;
+					}
 					var reasonForNotBuilding = GetReasonForBeingUnableToConstruct(order.Template);
 					if (reasonForNotBuilding != null)
 					{

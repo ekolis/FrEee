@@ -31,6 +31,8 @@ namespace FrEee.Game.Objects.Commands
 			{
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
+				else if (Order == null)
+					Issuer.Log.Add(new GenericLogMessage("Attempted to add a null order to " + Target + ". This is probably a game bug."));
 				else
 					Target.AddOrder(Order);
 			}
