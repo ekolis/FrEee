@@ -103,9 +103,12 @@ namespace FrEee.WinForms.Controls
 				lstComponentsDetail.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
-					lstComponentsDetail.AddItemWithImage(null, g.Where(c => !c.IsDestroyed).Count() + "x " + g.First().Name, g.First(), g.First().Template.Icon);
-					if (g.Where(c => c.IsDestroyed).Any())
-						lstComponentsDetail.AddItemWithImage(null, g.Where(c => c.IsDestroyed).Count() + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
+					var alive = g.Where(c => !c.IsDestroyed).Count();
+					var dead = g.Where(c => c.IsDestroyed).Count();
+					if (alive > 0)
+						lstComponentsDetail.AddItemWithImage(null, alive + "x " + g.First().Name, g.First(), g.First().Template.Icon);
+					if (dead > 0)
+						lstComponentsDetail.AddItemWithImage(null, dead + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
 				}
 
 				// cargo detail
