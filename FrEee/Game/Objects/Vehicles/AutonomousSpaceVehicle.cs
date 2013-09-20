@@ -345,11 +345,12 @@ namespace FrEee.Game.Objects.Vehicles
 			// TODO - let player see design of previously scanned ship
 			if (visibility < Visibility.Scanned)
 			{
-				// create fake design
+				// create fake design and clear component list
 				var d = new Design<AutonomousSpaceVehicle>();
 				d.Hull = (IHull<AutonomousSpaceVehicle>)Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;
+				Components.Clear();
 			}
 
 			if (visibility < Visibility.Visible)
