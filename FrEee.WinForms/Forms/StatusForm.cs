@@ -23,6 +23,7 @@ namespace FrEee.WinForms.Forms
 
 		private Thread thread;
 		private Status status;
+		private string lastMessage;
 
 		private void ProgressForm_Load(object sender, EventArgs e)
 		{
@@ -37,6 +38,7 @@ namespace FrEee.WinForms.Forms
 				Text = "Error";
 				timer1.Stop();
 				MessageBox.Show(status.Exception.Message + "\n\nPlease check errorlog.txt for more details.");
+				Console.Error.WriteLine(status.Exception.ToString());
 				Enabled = true;
 				progressBar.Value = 0;
 				status.Exception.Log();
@@ -46,6 +48,11 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				Text = status.Message;
+				if (status.Message != lastMessage)
+				{
+					Console.WriteLine(status.Message);
+					lastMessage = status.Message;
+				}
 				progressBar.Value = (int)(progressBar.Maximum * status.Progress);
 				Application.DoEvents();
 				if (thread.ThreadState == ThreadState.Stopped)
