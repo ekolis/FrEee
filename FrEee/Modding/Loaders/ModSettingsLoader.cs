@@ -65,6 +65,16 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.WeaponAccuracyPointBlank = rec.GetNullInt("Combat Base To Hit Value", ref index) ?? 100;
+			settings.WeaponAccuracyLossPerSquare = rec.GetNullInt("Combat To Hit Modifier Per Square Distance", ref index) ?? 10;
+
+			// TODO - load more settings
+
+			settings.SpaceCombatTurns = rec.GetNullInt("Number Of Space Combat Turns", ref index) ?? 30;
+			settings.GroundCombatTurns = rec.GetNullInt("Number Of Ground Combat Turns", ref index) ?? 10;
+
+			// TODO - load more settings
+
 			settings.ReproductionDelay = rec.GetNullInt("Reproduction Check Frequency", ref index) ?? 1;
 
 			// TODO - load more settings

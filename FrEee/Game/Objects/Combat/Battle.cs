@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -58,8 +59,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			var reloads = new SafeDictionary<Component, double>();
 			var seekers = new Dictionary<Seeker, int>();
-			// fight for 100 rounds, just because
-			for (int i = 0; i < 100; i++)
+			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
 			{
 				LogRound(i + 1);
 				// TODO - real 2D combat mechanics
