@@ -269,12 +269,14 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				foundLevels[queuedTech]++;
 				if (queuedTech == tech && foundLevels[queuedTech] == level)
-					break; // found the tech and level we ant
-				costBefore += tech.GetLevelCost(foundLevels[queuedTech]);
+					break; // found the tech and level we want
+				costBefore += queuedTech.GetLevelCost(foundLevels[queuedTech]);
+				if (queuedTech.CurrentLevel == foundLevels[queuedTech] - 1)
+					costBefore -= AccumulatedResearch[queuedTech];
 			}
 			if (queueSpending == 0)
 				return double.PositiveInfinity;
-			return costBefore / (queueSpending * totalRP / 100);
+			return (double)costBefore / (queueSpending * totalRP / 100d);
 		}
 
 		/// <summary>
