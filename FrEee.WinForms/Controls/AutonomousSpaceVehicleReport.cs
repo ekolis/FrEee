@@ -103,12 +103,20 @@ namespace FrEee.WinForms.Controls
 				lstComponentsDetail.Initialize(32, 32);
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
-					var alive = g.Where(c => !c.IsDestroyed).Count();
-					var dead = g.Where(c => c.IsDestroyed).Count();
-					if (alive > 0)
-						lstComponentsDetail.AddItemWithImage(null, alive + "x " + g.First().Name, g.First(), g.First().Template.Icon);
-					if (dead > 0)
-						lstComponentsDetail.AddItemWithImage(null, dead + "x Damaged " + g.First().Name, g.First(), g.First().Template.Icon);
+					var alive = g.Where(c => !c.IsDestroyed);
+					var dead = g.Where(c => c.IsDestroyed);
+					if (alive.Count() > 0)
+					{
+						var leasthp = alive.Min(c => c.Hitpoints);
+						var mosthp = alive.Max(c => c.Hitpoints);
+						var maxhp = g.Key.Durability;
+						if (leasthp == mosthp)
+							lstComponentsDetail.AddItemWithImage(null, alive.Count() + "x " + g.First().Name + " (" + leasthp + " HP each)", g.First(), g.First().Template.Icon);
+						else
+							lstComponentsDetail.AddItemWithImage(null, alive.Count() + "x " + g.First().Name + " (" + leasthp + "-" + mosthp + " HP each)", g.First(), g.First().Template.Icon);
+					}
+					if (dead.Count() > 0)
+						lstComponentsDetail.AddItemWithImage(null, dead.Count() + "x Destroyed " + g.First().Name, g.First(), g.First().Template.Icon);
 				}
 
 				// cargo detail
