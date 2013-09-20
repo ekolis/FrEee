@@ -344,17 +344,19 @@ namespace FrEee.Game.Objects.Space
 			// TODO - to-hit chances not just based on HP?
 			// TODO - per-race population HP?
 			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
-			var cargoHP = Colony.Cargo.Hitpoints;
-			var num = RandomHelper.Next(popHP + cargoHP);
-			int leftover;
-			if (num >= popHP)
-				leftover = TakePopulationDamage(dmgType, damage, battle);
-			else
-				leftover = Cargo.TakeDamage(dmgType, damage, battle);
-			if (num >= popHP)
-				return Cargo.TakeDamage(dmgType, leftover, battle);
-			else
-				return TakePopulationDamage(dmgType, leftover, battle);
+			var cargoHP = Colony.Cargo.MaxHitpoints;
+			var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
+			var order = new int[] { 0, 1, 2 }.Shuffle();
+			foreach (var num in order)
+			{
+				if (num == 0)
+					damage = TakePopulationDamage(dmgType, damage, battle);
+				else if (num == 1)
+					damage = Cargo.TakeDamage(dmgType, damage, battle);
+				else if (num == 2)
+					damage = TakeFacilityDamage(dmgType, damage, battle);
+			}
+			return damage;
 		}
 
 		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
@@ -375,6 +377,17 @@ namespace FrEee.Game.Objects.Space
 				{
 					battle.LogPopulationDamage(race, killed[race]);
 				}
+			}
+			return damage;
+		}
+
+		private int TakeFacilityDamage(DamageType dmgType, int damage, Battle battle)
+		{
+			// TODO - take into account damage types, and make sure we have facilities that are not immune to the damage type so we don't get stuck in an infinite loop
+			while (damage > 0 && Colony.Facilities.Any())
+			{
+				var facility = Colony.Facilities.ToDictionary(f => f, f => f.MaxHitpoints).PickWeighted();
+				damage = facility.TakeDamage(dmgType, damage, battle);
 			}
 			return damage;
 		}

@@ -144,7 +144,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (IsDestroyed)
 				return damage; // she canna take any more!
 
-			// TODO - worry about damage types
+			// TODO - worry about damage types, and make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
 			int shieldDmg = 0;
 			if (NormalShields > 0)
 			{
@@ -164,7 +164,9 @@ namespace FrEee.Game.Objects.Vehicles
 				battle.LogShieldDamage(this.CombatObject, shieldDmg);
 			while (damage > 0 && !IsDestroyed)
 			{
+				// TODO - make armor get hit first
 				var comps = Components.Where(c => c.Hitpoints > 0);
+				// TODO - pick component weighted by hit chance
 				var comp = comps.PickRandom();
 				damage = comp.TakeDamage(damageType, damage, battle);
 			}
