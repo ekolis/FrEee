@@ -828,6 +828,14 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Cleaning up";
 
+			// replenish shields again, so the players see the full shield amounts in the GUI
+			foreach (var sobj in FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
+				sobj.ReplenishShields();
+
+			// repair facilities
+			foreach (var facility in FindSpaceObjects<Planet>().Flatten().Flatten().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
+				facility.Hitpoints = facility.MaxHitpoints;
+
 			// resource spoilage
 			foreach (var emp in Empires)
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
