@@ -343,8 +343,7 @@ namespace FrEee.Game.Objects.Space
 
 			// TODO - to-hit chances not just based on HP?
 			// TODO - per-race population HP?
-			// TODO - load population factor and population HP from settings.txt
-			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * 50 / 1e6);
+			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 			var cargoHP = Colony.Cargo.Hitpoints;
 			var num = RandomHelper.Next(popHP + cargoHP);
 			int leftover;
