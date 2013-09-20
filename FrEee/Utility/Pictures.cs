@@ -738,5 +738,21 @@ namespace FrEee.Utility
 				list.Add(Path.GetFileNameWithoutExtension(d));
 			return list.Distinct();
 		}
+
+		/// <summary>
+		/// Draws a red X across an image.
+		/// </summary>
+		/// <param name="img"></param>
+		/// <returns></returns>
+		public static Image CrossOut(Image img)
+		{
+			var img2 = (Image)img.Clone();
+			var thickness = (img2.Width + img2.Height) / 16f;
+			var g = Graphics.FromImage(img2);
+			var pen = new Pen(Color.Red, thickness);
+			g.DrawLine(pen, 0, 0, img2.Width, img2.Height);
+			g.DrawLine(pen, 0, img2.Height, img2.Width, 0);
+			return img2;
+		}
 	}
 }
