@@ -46,7 +46,7 @@ namespace FrEee.WinForms.Controls
 				txtRole.Text = vehicle.Design.Role;
 				txtClass.Text = vehicle.Design.Name;
 				txtSize.Text = vehicle.Design.Hull.Name + " (" + vehicle.Design.Hull.Size.Kilotons() + ")";
-				txtMovement.Text = vehicle.MovementRemaining + " / " + vehicle.Design.Speed;
+				txtMovement.Text = vehicle.MovementRemaining + " / " + vehicle.Speed;
 				progMovement.Maximum = vehicle.Design.Speed;
 				progMovement.Value = vehicle.MovementRemaining;
 
