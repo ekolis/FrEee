@@ -81,6 +81,14 @@ namespace FrEee.WinForms.Forms
 							Close();
 						}
 					}
+					else if (context is Facility)
+					{
+						// go to the planet
+						var facility = (Facility)context;
+						var container = facility.FindContainer();
+						gameForm.SelectSpaceObject(container);
+						Close();
+					}
 					else if (context is Technology)
 					{
 						// go to research screen

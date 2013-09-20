@@ -191,5 +191,14 @@ namespace FrEee.Game.Objects.Technology
 			// TODO - moddable facility hit chance
 			get { return 1000; }
 		}
+
+		/// <summary>
+		/// Finds the planet which contains this facility.
+		/// </summary>
+		/// <returns></returns>
+		public ISpaceObject FindContainer()
+		{
+			return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
+		}
 	}
 }
