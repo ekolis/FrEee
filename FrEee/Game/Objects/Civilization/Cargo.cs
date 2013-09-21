@@ -152,15 +152,19 @@ namespace FrEee.Game.Objects.Civilization
 
 		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
 		{
-			var killed = new SafeDictionary<Race, int>();
+			var killed = new SafeDictionary<Race, long>();
+			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
 			{
 				// pick a race and kill some population
 				var race = Population.PickWeighted();
+				if (race == null)
+					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Population[race] -= popKilled;
 				killed[race] += popKilled;
+				inflicted += 1;
 			}
 			if (battle != null)
 			{
@@ -169,7 +173,7 @@ namespace FrEee.Game.Objects.Civilization
 					battle.LogPopulationDamage(race, killed[race]);
 				}
 			}
-			return damage;
+			return damage - inflicted;
 		}
 
 		private int TakeUnitDamage(DamageType dmgType, int damage, Battle battle)

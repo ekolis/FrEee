@@ -24,6 +24,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			Template = template;
 			ConstructionProgress = new ResourceQuantity();
+			Hitpoints = MaxHitpoints;
 		}
 
 		public Empire Owner { get; set; }
@@ -159,10 +160,16 @@ namespace FrEee.Game.Objects.Technology
 			// TODO - take into account damage types
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
-			battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage!"));
 			Hitpoints -= realDamage;
-			if (Hitpoints <= 0)
+			if (IsDestroyed)
+			{
+				battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage and is destroyed!"));
 				Dispose();
+			}
+			else
+			{
+				battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage!"));
+			}
 			return damage - realDamage;
 		}
 

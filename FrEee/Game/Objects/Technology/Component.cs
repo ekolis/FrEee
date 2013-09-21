@@ -175,9 +175,9 @@ namespace FrEee.Game.Objects.Technology
 			// TODO - take into account damage types
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
-			if (battle != null)
-				battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage!"));
 			Hitpoints -= realDamage;
+			if (battle != null)
+				battle.LogComponentDamage(this, realDamage);
 			return damage - realDamage;
 		}
 
