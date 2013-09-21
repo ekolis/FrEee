@@ -16,6 +16,7 @@ using FrEee.Game.Objects.Civilization;
 using System.Reflection;
 using System.Collections;
 using FrEee.Game.Objects.Commands;
+using System.Drawing.Imaging;
 
 namespace FrEee.Utility.Extensions
 {
@@ -680,7 +681,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (image == null)
 				return null;
-			var result = new Bitmap(size, size);
+			var result = new Bitmap(size, size, PixelFormat.Format32bppArgb);
 			var g = Graphics.FromImage(result);
 			g.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
 			g.DrawImage(image, 0, 0, size, size);
