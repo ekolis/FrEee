@@ -434,5 +434,11 @@ namespace FrEee.WinForms.Forms
 				// TODO - show mounted component template report
 			}
 		}
+
+		private void picPortrait_MouseDown(object sender, MouseEventArgs e)
+		{
+			if (Design != null && Design.Hull != null)
+				picPortrait.ShowFullSize(Design.Hull.Name);
+		}
 	}
 }

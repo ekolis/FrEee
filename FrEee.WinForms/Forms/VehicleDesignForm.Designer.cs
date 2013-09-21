@@ -28,9 +28,6 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			FrEee.Utility.Resource resource1 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource2 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource3 = new FrEee.Utility.Resource();
 			this.label1 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
 			this.ddlRole = new System.Windows.Forms.ComboBox();
@@ -42,7 +39,6 @@
 			this.label7 = new System.Windows.Forms.Label();
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.chkFilterByMount = new System.Windows.Forms.CheckBox();
 			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
 			this.btnWeaponsReport = new FrEee.WinForms.Controls.GameButton();
@@ -90,13 +86,14 @@
 			this.lstComponentsAvailable = new System.Windows.Forms.ListView();
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
 			this.txtIteration = new System.Windows.Forms.Label();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
 			this.gamePanel3.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -217,16 +214,6 @@
 			this.chkOnlyLatest.Text = "Only Latest";
 			this.chkOnlyLatest.UseVisualStyleBackColor = true;
 			this.chkOnlyLatest.CheckedChanged += new System.EventHandler(this.chkOnlyLatest_CheckedChanged);
-			// 
-			// picPortrait
-			// 
-			this.picPortrait.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.picPortrait.Location = new System.Drawing.Point(551, 195);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(146, 146);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 27;
-			this.picPortrait.TabStop = false;
 			// 
 			// chkFilterByMount
 			// 
@@ -532,12 +519,6 @@
 			this.resCostRad.Location = new System.Drawing.Point(78, 47);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
-			resource1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource1.IsGlobal = true;
-			resource1.IsLocal = false;
-			resource1.Name = "Radioactives";
-			resource1.PictureName = "Resource3";
-			this.resCostRad.Resource = resource1;
 			this.resCostRad.ResourceName = "Radioactives";
 			this.resCostRad.Size = new System.Drawing.Size(79, 15);
 			this.resCostRad.TabIndex = 8;
@@ -551,12 +532,6 @@
 			this.resCostOrg.Location = new System.Drawing.Point(78, 32);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
-			resource2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource2.IsGlobal = true;
-			resource2.IsLocal = false;
-			resource2.Name = "Organics";
-			resource2.PictureName = "Resource2";
-			this.resCostOrg.Resource = resource2;
 			this.resCostOrg.ResourceName = "Organics";
 			this.resCostOrg.Size = new System.Drawing.Size(79, 15);
 			this.resCostOrg.TabIndex = 7;
@@ -570,12 +545,6 @@
 			this.resCostMin.Location = new System.Drawing.Point(78, 17);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
-			resource3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource3.IsGlobal = true;
-			resource3.IsLocal = false;
-			resource3.Name = "Minerals";
-			resource3.PictureName = "Resource1";
-			this.resCostMin.Resource = resource3;
 			this.resCostMin.ResourceName = "Minerals";
 			this.resCostMin.Size = new System.Drawing.Size(79, 15);
 			this.resCostMin.TabIndex = 6;
@@ -638,7 +607,6 @@
 			this.resDetailRad.Location = new System.Drawing.Point(206, 61);
 			this.resDetailRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailRad.Name = "resDetailRad";
-			this.resDetailRad.Resource = resource1;
 			this.resDetailRad.ResourceName = "Radioactives";
 			this.resDetailRad.Size = new System.Drawing.Size(81, 15);
 			this.resDetailRad.TabIndex = 5;
@@ -653,7 +621,6 @@
 			this.resDetailOrg.Location = new System.Drawing.Point(206, 45);
 			this.resDetailOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailOrg.Name = "resDetailOrg";
-			this.resDetailOrg.Resource = resource2;
 			this.resDetailOrg.ResourceName = "Organics";
 			this.resDetailOrg.Size = new System.Drawing.Size(81, 15);
 			this.resDetailOrg.TabIndex = 4;
@@ -668,7 +635,6 @@
 			this.resDetailMin.Location = new System.Drawing.Point(206, 24);
 			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailMin.Name = "resDetailMin";
-			this.resDetailMin.Resource = resource3;
 			this.resDetailMin.ResourceName = "Minerals";
 			this.resDetailMin.Size = new System.Drawing.Size(81, 21);
 			this.resDetailMin.TabIndex = 3;
@@ -810,16 +776,26 @@
 			this.txtIteration.TabIndex = 29;
 			this.txtIteration.Text = "Iter";
 			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(551, 191);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(146, 146);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picPortrait.TabIndex = 30;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseDown);
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtIteration);
 			this.Controls.Add(this.chkFilterByMount);
 			this.Controls.Add(this.btnClearMount);
-			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.btnWeaponsReport);
 			this.Controls.Add(this.btnMount);
 			this.Controls.Add(this.btnCancel);
@@ -848,7 +824,6 @@
 			this.ShowInTaskbar = false;
 			this.Text = "Vehicle Designer";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.VehicleDesignForm_FormClosing);
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.pnlStats.ResumeLayout(false);
 			this.pnlStats.PerformLayout();
 			this.gamePanel4.ResumeLayout(false);
@@ -857,6 +832,7 @@
 			this.gamePanel3.ResumeLayout(false);
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -917,11 +893,11 @@
 		private Controls.GameButton btnCancel;
 		private Controls.GameButton btnMount;
 		private Controls.GameButton btnWeaponsReport;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label txtSupplyUsage;
 		private Controls.GameButton btnClearMount;
 		private System.Windows.Forms.CheckBox chkFilterByMount;
 		private System.Windows.Forms.Label txtIteration;
+		private Controls.GamePictureBox picPortrait;
 	}
 }
