@@ -38,7 +38,6 @@ namespace FrEee.WinForms.Forms
 			this.Enabled = false;
 
 			// set up GUI images
-			// TODO - get GUI images from mod too
 			LoadButtonImage(btnMenu, "Menu");
 			LoadButtonImage(btnDesigns, "Designs");
 			LoadButtonImage(btnPlanets, "Planets");
@@ -51,6 +50,8 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnPursue, "Pursue");
 			LoadButtonImage(btnEvade, "Evade");
 			LoadButtonImage(btnWarp, "Warp");
+			LoadButtonImage(btnColonize, "Colonize");
+			LoadButtonImage(btnConstructionQueue, "ConstructionQueue");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
 			LoadButtonImage(btnPrevIdle, "Previous");
 			LoadButtonImage(btnNextIdle, "Next");
