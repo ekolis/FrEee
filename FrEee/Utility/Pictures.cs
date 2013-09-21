@@ -138,9 +138,6 @@ namespace FrEee.Utility
 		{
 			if (!objectPortraits.ContainsKey(sobj))
 			{
-				if (sobj.PictureName == null)
-					return GetGenericImage(sobj.GetType());
-
 				Image portrait;
 				double scale = 1d;
 				if (sobj.StellarSize == StellarSize.Huge)
@@ -153,6 +150,10 @@ namespace FrEee.Utility
 					scale = 0.625d;
 				else if (sobj.StellarSize == StellarSize.Tiny)
 					scale = 0.5d;
+
+				if (sobj.PictureName == null)
+					return GetGenericImage(sobj.GetType(), scale);
+
 				if (Mod.Current.RootPath != null)
 				{
 					portrait =
