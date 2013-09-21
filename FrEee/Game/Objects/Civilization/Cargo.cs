@@ -157,10 +157,13 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// pick a race and kill some population
 				var race = Population.PickWeighted();
+				if (race == null)
+					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Population[race] -= popKilled;
 				killed[race] += popKilled;
+				damage -= 1;
 			}
 			if (battle != null)
 			{
