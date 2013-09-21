@@ -329,6 +329,17 @@ namespace FrEee.Utility
 			if (!hull.PictureNames.Any())
 				return GetGenericImage(hull.GetType());
 			var paths = new List<string>();
+
+			// allow for infinite variation in hull sizes within a confined range of image sizes using an asymptotic function
+			var minSize = (double)Mod.Current.Hulls.Min(h => h.Size);
+			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
+			var geometricMean = Math.Sqrt(minSize * maxSize);
+			var ratio = hull.Size / geometricMean;
+			var scale = Math.Atan(ratio - 1d) / Math.PI + 0.5;
+			var minScale = 0.5;
+			var maxScale = 1d;
+			scale = scale * (maxScale - minScale) + minScale;
+			
 			foreach (var s in hull.PictureNames)
 			{
 				if (Mod.Current.RootPath != null)
@@ -339,7 +350,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
 			}
-			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType());
+			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale);
 		}
 
 		/// <summary>
