@@ -97,9 +97,11 @@ namespace FrEee.Utility
 			// hull
 			img = new Bitmap(128, 128);
 			g = Graphics.FromImage(img);
-			g.FillEllipse(new SolidBrush(Color.Silver), 40, 0, 68, 68);
-			g.FillRectangle(new SolidBrush(Color.Silver), 50, 50, 10, 50);
-			g.FillRectangle(new SolidBrush(Color.Silver), 88, 50, 10, 50);
+			var top = new Point(64, 0);
+			var bottomLeft = new Point(0, 128);
+			var bottomRight = new Point(128, 128);
+			var pts = new Point[] { top, bottomLeft, bottomRight };
+			g.FillPolygon(Brushes.Gray, pts);
 			genericPictures.Add(typeof(IHull), img);
 
 			// TODO - mount, race, empire generic pics
@@ -304,10 +306,15 @@ namespace FrEee.Utility
 
 		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath, int size = 32)
 		{
+			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
+			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
+			var ratio = maxSize / hull.Size;
+			var scale = 1d / (1d + Math.Log10(ratio));
+
 			if (shipsetPath == null)
-				return GetGenericImage(hull.GetType()).Resize(size);
+				return GetGenericImage(hull.GetType()).Frame(scale).Resize(size);
 			if (!hull.PictureNames.Any())
-				return GetGenericImage(hull.GetType()).Resize(size);
+				return GetGenericImage(hull.GetType()).Frame(scale).Resize(size);
 			var paths = new List<string>();
 			foreach (var s in hull.PictureNames)
 			{
@@ -319,7 +326,7 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + s));
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + s)); // for SE4 shipset compatibility
 			}
-			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType())).Resize(size);
+			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale)).Resize(size);
 		}
 
 		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
@@ -330,15 +337,10 @@ namespace FrEee.Utility
 				return GetGenericImage(hull.GetType());
 			var paths = new List<string>();
 
-			// allow for infinite variation in hull sizes within a confined range of image sizes using an asymptotic function
-			var minSize = (double)Mod.Current.Hulls.Min(h => h.Size);
+			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
 			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
-			var geometricMean = Math.Sqrt(minSize * maxSize);
-			var ratio = hull.Size / geometricMean;
-			var scale = Math.Atan(ratio - 1d) / Math.PI + 0.5;
-			var minScale = 0.5;
-			var maxScale = 1d;
-			scale = scale * (maxScale - minScale) + minScale;
+			var ratio = maxSize / hull.Size;
+			var scale = 1d / (1d + Math.Log10(ratio));
 			
 			foreach (var s in hull.PictureNames)
 			{
