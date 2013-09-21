@@ -24,6 +24,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			Template = template;
 			ConstructionProgress = new ResourceQuantity();
+			Hitpoints = MaxHitpoints;
 		}
 
 		public Empire Owner { get; set; }
