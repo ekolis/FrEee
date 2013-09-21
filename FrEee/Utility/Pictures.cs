@@ -12,6 +12,7 @@ using System.Linq;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Utility
 {
@@ -141,19 +142,30 @@ namespace FrEee.Utility
 					return GetGenericImage(sobj.GetType());
 
 				Image portrait;
+				double scale = 1d;
+				if (sobj.StellarSize == StellarSize.Huge)
+					scale = 1d;
+				else if (sobj.StellarSize == StellarSize.Large)
+					scale = 0.875d;
+				else if (sobj.StellarSize == StellarSize.Medium)
+					scale = 0.75d;
+				else if (sobj.StellarSize == StellarSize.Small)
+					scale = 0.625d;
+				else if (sobj.StellarSize == StellarSize.Tiny)
+					scale = 0.5d;
 				if (Mod.Current.RootPath != null)
 				{
 					portrait =
 						GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName)) ??
 						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName)) ??
-						GetGenericImage(sobj.GetType());
+						GetGenericImage(sobj.GetType(), scale);
 				}
 				else
 				{
 					// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 					portrait =
 						GetCachedImage(Path.Combine("Pictures", "Planets", sobj.PictureName)) ??
-						GetGenericImage(sobj.GetType());
+						GetGenericImage(sobj.GetType(), scale);
 				}
 
 				// clone the image so we don't mess up the original cached version
@@ -590,31 +602,37 @@ namespace FrEee.Utility
 			});
 		}
 
-		public static Image GetGenericImage(Type type)
+		/// <summary>
+		/// Gets a generic image for a type of object.
+		/// </summary>
+		/// <param name="type">The type of object.</param>
+		/// <param name="scale">The scale factor. If less than 1, the image will be shrunk and "framed" with blank space.</param>
+		/// <returns></returns>
+		public static Image GetGenericImage(Type type, double scale = 1d)
 		{
 			if (genericPictures.ContainsKey(type))
-				return genericPictures[type];
+				return genericPictures[type].Frame(scale);
 			else
 			{
 				// check base type and interfaces
 				if (type.BaseType != null && genericPictures.ContainsKey(type.BaseType))
-					return genericPictures[type.BaseType];
+					return genericPictures[type.BaseType].Frame(scale);
 
 				foreach (var i in type.GetInterfaces())
 				{
 					if (genericPictures.ContainsKey(i))
-						return genericPictures[i];
+						return genericPictures[i].Frame(scale);
 				}
 
 				// yay recursion
 				Image img = null;
 				if (type.BaseType != null)
-					img = GetGenericImage(type.BaseType);
+					img = GetGenericImage(type.BaseType, scale);
 				if (img != null)
 					return img;
 				foreach (var i in type.GetInterfaces())
 				{
-					img = GetGenericImage(i);
+					img = GetGenericImage(i, scale);
 					if (img != null)
 						return img;
 				}
@@ -753,6 +771,22 @@ namespace FrEee.Utility
 			g.DrawLine(pen, 0, 0, img2.Width, img2.Height);
 			g.DrawLine(pen, 0, img2.Height, img2.Width, 0);
 			return img2;
+		}
+
+		/// <summary>
+		/// Scales an image and frames it in blank space.
+		/// The image should be square.
+		/// </summary>
+		/// <param name="src">The source image.</param>
+		/// <param name="scale">The scale factor.</param>
+		/// <returns></returns>
+		public static Image Frame(this Image src, double scale)
+		{
+			var scaled = src.Resize((int)Math.Ceiling(Math.Max(src.Width, src.Height) * scale));
+			var result = new Bitmap(src.Width, src.Height);
+			var g = Graphics.FromImage(result);
+			g.DrawImage(scaled, (result.Width - scaled.Width) / 2, (result.Height - scaled.Height) / 2);
+			return result;
 		}
 	}
 }
