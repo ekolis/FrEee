@@ -158,7 +158,7 @@ namespace FrEee.Game.Objects.Combat
 
 		}
 
-		public void LogPopulationDamage(Race race, int casualties)
+		public void LogPopulationDamage(Race race, long casualties)
 		{
 			Log.Add(race.CreateLogMessage(casualties.ToUnitString(true) + " " + race + " are killed!"));
 		}

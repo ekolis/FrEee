@@ -361,7 +361,8 @@ namespace FrEee.Game.Objects.Space
 
 		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
 		{
-			var killed = new SafeDictionary<Race, int>();
+			var killed = new SafeDictionary<Race, long>();
+			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
 			{
 				// pick a race and kill some population
@@ -372,7 +373,7 @@ namespace FrEee.Game.Objects.Space
 				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
 				killed[race] += popKilled;
-				damage -= 1;
+				inflicted++;
 			}
 			if (battle != null)
 			{
@@ -381,7 +382,7 @@ namespace FrEee.Game.Objects.Space
 					battle.LogPopulationDamage(race, killed[race]);
 				}
 			}
-			return damage;
+			return damage - inflicted;
 		}
 
 		private int TakeFacilityDamage(DamageType dmgType, int damage, Battle battle)
