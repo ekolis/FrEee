@@ -53,6 +53,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (!Components.Any())
+					return new ResourceQuantity();
 				return Design.Hull.Cost + Components.Select(c => c.Template.Cost).Aggregate((c1, c2) => c1 + c2);
 			}
 		}
