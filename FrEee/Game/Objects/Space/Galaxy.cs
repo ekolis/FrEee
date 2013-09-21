@@ -711,7 +711,7 @@ namespace FrEee.Game.Objects.Space
 				}
 
 				// don't let stored resources actually fall below zero
-				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0))
+				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0).ToArray())
 					emp.StoredResources[r] = 0;
 
 				// execute commands
