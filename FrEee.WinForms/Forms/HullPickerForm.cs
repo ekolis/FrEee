@@ -48,8 +48,11 @@ namespace FrEee.WinForms.Forms
 			{
 				hull = value;
 				lstAbilities.Initialize(20, 20);
-				foreach (var abil in hull.Abilities)
-					lstAbilities.AddItemWithImage(null, abil.Description, abil, null);
+				if (hull != null)
+				{
+					foreach (var abil in hull.Abilities)
+						lstAbilities.AddItemWithImage(null, abil.Description, abil, null);
+				}
 			}
 		}
 
