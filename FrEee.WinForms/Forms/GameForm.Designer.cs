@@ -545,7 +545,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNextIdle.TabIndex = 4;
 			this.btnNextIdle.TabStop = false;
 			this.btnNextIdle.Text = "Next";
-			this.toolTip.SetToolTip(this.btnNextIdle, "(Space) Next Idle Space Object");
+			this.toolTip.SetToolTip(this.btnNextIdle, "(`) Next Idle Space Object");
 			this.btnNextIdle.UseVisualStyleBackColor = false;
 			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
 			// 
@@ -559,7 +559,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPrevIdle.TabIndex = 3;
 			this.btnPrevIdle.TabStop = false;
 			this.btnPrevIdle.Text = "Prev";
-			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Space) Previous Idle Space Object");
+			this.toolTip.SetToolTip(this.btnPrevIdle, "(~) Previous Idle Space Object");
 			this.btnPrevIdle.UseVisualStyleBackColor = false;
 			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
 			// 

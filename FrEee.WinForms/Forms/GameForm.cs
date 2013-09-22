@@ -730,7 +730,7 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new LogForm(this));
 				else if (e.KeyCode == Keys.R)
 					this.ShowChildForm(new ResearchForm());
-				else if (e.KeyCode == Keys.Space)
+				else if (e.KeyCode == Keys.Oemtilde)
 					btnPrevIdle_Click(this, new EventArgs());
 			}
 			else
@@ -762,7 +762,7 @@ namespace FrEee.WinForms.Forms
 					; // TODO - show cargo transfer window for selected space object
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
 					; // TODO - show fleet transfer window for selected space object
-				else if (e.KeyCode == Keys.Space)
+				else if (e.KeyCode == Keys.Oemtilde)
 					btnNextIdle_Click(this, new EventArgs());
 			}
 
