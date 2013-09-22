@@ -64,6 +64,11 @@ namespace FrEee.Utility
 				return (int)Math.Ceiling(RawEta.Value);
 			}
 		}
+
+		public override string ToString()
+		{
+			return string.Format("{0} / {1} ({2:+#;-#;0} per turn, {3:+#;-#;0} more per turn after {4} turns)", Value, Maximum, IncrementalProgressBeforeDelay, ExtraIncrementalProgressAfterDelay, Delay);
+		}
 	}
 
 	/// <summary>
@@ -82,5 +87,10 @@ namespace FrEee.Utility
 		/// The item being worked towards.
 		/// </summary>
 		public T Item { get; set; }
+
+		public override string ToString()
+		{
+			return string.Format("{0}: {1}", Item, base.ToString());
+		}
 	}
 }
