@@ -370,12 +370,7 @@ namespace FrEee.WinForms.Forms
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			if (SelectedOrder != null)
-			{
-				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder);
-				ConstructionQueue.Orders.Remove(SelectedOrder);
-				newCommands.Add(cmd);
-				BindQueueListView();
-			}
+				RemoveOrder(SelectedOrder);
 		}
 
 		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -387,12 +382,29 @@ namespace FrEee.WinForms.Forms
 				{
 					// delete order
 					var order = (IConstructionOrder)item.Tag;
-					var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
-					ConstructionQueue.Orders.Remove(order);
-					newCommands.Add(cmd);
-					BindQueueListView();
+					RemoveOrder(order);
 				}
 			}
+		}
+
+		private void RemoveOrder(IConstructionOrder order)
+		{
+			var cmds = Empire.Current.Commands.OfType<AddOrderCommand<ConstructionQueue>>().Where(o => o.Order == order).ToArray();
+			if (cmds.Any())
+			{
+				// remove add-order command since the order is new this turn
+				foreach (var cmd in cmds)
+					Empire.Current.Commands.Remove(cmd);
+			}
+			else
+			{
+				// add remove-order command
+				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
+				Empire.Current.Commands.Add(cmd);
+				newCommands.Add(cmd);
+			}
+			ConstructionQueue.Orders.Remove(order);
+			BindQueueListView();
 		}
 	}
 }
