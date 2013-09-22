@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Windows.Forms;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -75,6 +76,8 @@ namespace FrEee.WinForms.Controls
 				TabPage tab = TabPages[i];
 				// Get the text area of the current tab
 				RectangleF tabTextArea = (RectangleF)GetTabRect(i);
+				tabTextArea.Width *= e.Graphics.DpiX / 96f;
+				tabTextArea.Height *= e.Graphics.DpiY / 96f;
 				
 				// draw the background
 				var tabColor = SelectedTab == tab ? SelectedTabBackColor : TabBackColor;

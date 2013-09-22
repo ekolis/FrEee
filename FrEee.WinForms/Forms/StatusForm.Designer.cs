@@ -38,16 +38,17 @@
 			this.progressBar.BackColor = System.Drawing.Color.Black;
 			this.progressBar.BarColor = System.Drawing.Color.Blue;
 			this.progressBar.BorderColor = System.Drawing.Color.Empty;
+			this.progressBar.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.progressBar.ForeColor = System.Drawing.Color.White;
 			this.progressBar.IncrementalProgress = 0;
 			this.progressBar.LeftText = null;
-			this.progressBar.Location = new System.Drawing.Point(13, 13);
-			this.progressBar.Margin = new System.Windows.Forms.Padding(0);
+			this.progressBar.Location = new System.Drawing.Point(0, 0);
+			this.progressBar.Margin = new System.Windows.Forms.Padding(10);
 			this.progressBar.Maximum = 100;
 			this.progressBar.Name = "progressBar";
-			this.progressBar.Padding = new System.Windows.Forms.Padding(5);
+			this.progressBar.Padding = new System.Windows.Forms.Padding(7, 6, 7, 6);
 			this.progressBar.RightText = null;
-			this.progressBar.Size = new System.Drawing.Size(516, 28);
+			this.progressBar.Size = new System.Drawing.Size(717, 62);
 			this.progressBar.TabIndex = 0;
 			this.progressBar.Value = 0;
 			// 
@@ -57,15 +58,19 @@
 			// 
 			// StatusForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.AutoSize = true;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(538, 50);
+			this.ClientSize = new System.Drawing.Size(717, 62);
 			this.ControlBox = false;
 			this.Controls.Add(this.progressBar);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
+			this.MinimumSize = new System.Drawing.Size(600, 100);
 			this.Name = "StatusForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Progress";

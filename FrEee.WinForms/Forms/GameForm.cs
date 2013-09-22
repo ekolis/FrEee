@@ -28,6 +28,10 @@ namespace FrEee.WinForms.Forms
 		public GameForm(Galaxy galaxy)
 		{
 			InitializeComponent();
+
+			// scale to DPI settings
+			var g = this.CreateGraphics();
+			tableLayoutPanel1.ColumnStyles[4].Width *= g.DpiX / 96f;
 		}
 
 
