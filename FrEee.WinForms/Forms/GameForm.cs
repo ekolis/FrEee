@@ -1053,6 +1053,8 @@ namespace FrEee.WinForms.Forms
 		private void btnPrevIdle_Click(object sender, EventArgs e)
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
+			if (!idle.Any())
+				return;
 			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.First())
 				SelectSpaceObject(idle.Last());
 			else
@@ -1062,6 +1064,8 @@ namespace FrEee.WinForms.Forms
 		private void btnNextIdle_Click(object sender, EventArgs e)
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
+			if (!idle.Any())
+				return;
 			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
 				SelectSpaceObject(idle.First());
 			else
