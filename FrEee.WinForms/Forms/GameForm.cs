@@ -402,7 +402,21 @@ namespace FrEee.WinForms.Forms
 
 		private void btnEndTurn_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Really end your turn now?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+			var todos = new List<string>();
+			var ships = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
+			if (ships == 1)
+				todos.Add("1 idle ship");
+			else if (ships > 1)
+				todos.Add(ships + " idle ships");
+			// TODO - idle fleets
+			var queues = Empire.Current.ConstructionQueues.Where(q => q.FractionalETA < 1d).Count();
+			if (queues == 1)
+				todos.Add("1 idle construction queue");
+			else if (ships > 1)
+				todos.Add(queues + " idle construction queues");
+			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
+			var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
+			if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 			{
 				EndTurn();
 				if (!Galaxy.Current.IsSinglePlayer)

@@ -164,13 +164,24 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// All construction queues owned by this empire.
+		/// </summary>
+		public IEnumerable<ConstructionQueue> ConstructionQueues
+		{
+			get
+			{
+				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this);
+			}
+		}
+
+		/// <summary>
 		/// Spending on construction this turn.
 		/// </summary>
 		public ResourceQuantity ConstructionSpending
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this).Sum(q => q.UpcomingSpending);
+				return ConstructionQueues.Sum(q => q.UpcomingSpending);
 			}
 		}
 
