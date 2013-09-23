@@ -6,13 +6,14 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
 using FrEee.Utility;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
 	/// <summary>
 	/// Displays a report on a vehicle design.
 	/// </summary>
-	public partial class DesignReport : UserControl
+	public partial class DesignReport : UserControl, IBindable<IDesign>
 	{
 		public DesignReport()
 		{
@@ -90,6 +91,12 @@ namespace FrEee.WinForms.Controls
 		private void picPortrait_Click(object sender, System.EventArgs e)
 		{
 			picPortrait.ShowFullSize(Design.Name);
+		}
+
+		public void Bind(IDesign data)
+		{
+			Design = data;
+			Bind();
 		}
 	}
 }

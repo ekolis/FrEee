@@ -164,6 +164,39 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// All construction queues owned by this empire.
+		/// </summary>
+		public IEnumerable<ConstructionQueue> ConstructionQueues
+		{
+			get
+			{
+				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this);
+			}
+		}
+
+		/// <summary>
+		/// Spending on construction this turn.
+		/// </summary>
+		public ResourceQuantity ConstructionSpending
+		{
+			get
+			{
+				return ConstructionQueues.Sum(q => q.UpcomingSpending);
+			}
+		}
+
+		/// <summary>
+		/// Net income less construction spending.
+		/// </summary>
+		public ResourceQuantity NetIncomeLessConstruction
+		{
+			get
+			{
+				return NetIncome - ConstructionSpending;
+			}
+		}
+
+		/// <summary>
 		/// Finds star systems explored by the empire.
 		/// </summary>
 		public IEnumerable<StarSystem> ExploredStarSystems

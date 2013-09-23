@@ -5,10 +5,11 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class PlanetReport : UserControl
+	public partial class PlanetReport : UserControl, IBindable<Planet>
 	{
 		public PlanetReport()
 		{
@@ -32,11 +33,11 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				planet = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
 			if (Planet == null)
 				Visible = false;
@@ -152,8 +153,12 @@ namespace FrEee.WinForms.Controls
 					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities);
 
 			}
+		}
 
-			base.OnPaint(e);
+		public void Bind(Planet data)
+		{
+			Planet = data;
+			Bind();
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)

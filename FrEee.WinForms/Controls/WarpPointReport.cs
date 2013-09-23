@@ -3,10 +3,11 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class WarpPointReport : UserControl
+	public partial class WarpPointReport : UserControl, IBindable<WarpPoint>
 	{
 		public WarpPointReport()
 		{
@@ -30,11 +31,11 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				warpPoint = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
 			if (WarpPoint == null)
 				Visible = false;
@@ -51,8 +52,12 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = WarpPoint.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = WarpPoint.IntrinsicAbilities;
 			}
+		}
 
-			base.OnPaint(e);
+		public void Bind(WarpPoint data)
+		{
+			WarpPoint = data;
+			Bind();
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)

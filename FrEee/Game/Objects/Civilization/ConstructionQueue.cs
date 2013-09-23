@@ -152,6 +152,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		/// <summary>
 		/// Unspent build rate for this turn.
+		/// Does not update as orders are changed on the client; only during turn processing!
 		/// </summary>
 		public ResourceQuantity UnspentRate { get; set; }
 
@@ -202,7 +203,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			UnspentRate = Rate;
 			var empty = new ResourceQuantity();
-			while (UnspentRate > empty && Orders.Any())
+			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
 			{
 				var numOrders = Orders.Count;
 
@@ -352,6 +353,17 @@ namespace FrEee.Game.Objects.Civilization
 		public override string ToString()
 		{
 			return SpaceObject + "'s construction queue";
+		}
+
+		/// <summary>
+		/// Upcoming spending on construction this turn.
+		/// </summary>
+		public ResourceQuantity UpcomingSpending
+		{
+			get
+			{
+				return ResourceQuantity.Min(Orders.Sum(o => o.Template.Cost - o.Item.ConstructionProgress), UnspentRate);
+			}
 		}
 	}
 }

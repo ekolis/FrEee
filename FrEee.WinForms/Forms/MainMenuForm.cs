@@ -210,23 +210,16 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCredits_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show(
-@"Project Lead:
-	James Phillips (Combat Wombat)
-
-Programming:
-	Ed Kolis (ekolis)
-	Kevin Seitz (guttsy)
-
-Art:
-	James Phillips (Combat Wombat)
-
-Special Thanks:
-	Aaron Hall - For creating Space Empires!
-	Nick Dumas (Suicide Junkie) - For suggesting the title!
-	All the denizens of #spaceempires and spaceempires.net
-
-FrEee is licensed under a Creative Commons Attribution License.", "FrEee v" + Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
+			string credits;
+			try
+			{
+				credits = File.ReadAllText("licenses/credits.txt");
+			}
+			catch
+			{
+				credits = "Could not open licenses/credits.txt.";
+			}
+			MessageBox.Show(credits, "FrEee v" + Assembly.GetExecutingAssembly().GetName().Version.ToString(3));
 		}
 
 		#endregion

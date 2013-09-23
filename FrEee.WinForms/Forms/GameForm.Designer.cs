@@ -50,6 +50,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
 			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
 			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
 			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
@@ -365,6 +366,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.tableLayoutPanel1.SetColumnSpan(this.pnlSubCommands, 2);
+			this.pnlSubCommands.Controls.Add(this.btnSentry);
 			this.pnlSubCommands.Controls.Add(this.btnClearOrders);
 			this.pnlSubCommands.Controls.Add(this.btnFleetTransfer);
 			this.pnlSubCommands.Controls.Add(this.btnTransferCargo);
@@ -382,6 +384,20 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
 			this.pnlSubCommands.Size = new System.Drawing.Size(522, 50);
 			this.pnlSubCommands.TabIndex = 2;
+			// 
+			// btnSentry
+			// 
+			this.btnSentry.BackColor = System.Drawing.Color.Black;
+			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSentry.Location = new System.Drawing.Point(211, 4);
+			this.btnSentry.Name = "btnSentry";
+			this.btnSentry.Size = new System.Drawing.Size(36, 36);
+			this.btnSentry.TabIndex = 12;
+			this.btnSentry.TabStop = false;
+			this.btnSentry.Text = "Stry";
+			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
+			this.btnSentry.UseVisualStyleBackColor = false;
+			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
 			// 
 			// btnClearOrders
 			// 
@@ -401,7 +417,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
 			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnFleetTransfer.Location = new System.Drawing.Point(295, 4);
+			this.btnFleetTransfer.Location = new System.Drawing.Point(336, 4);
 			this.btnFleetTransfer.Name = "btnFleetTransfer";
 			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
 			this.btnFleetTransfer.TabIndex = 10;
@@ -415,7 +431,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
 			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTransferCargo.Location = new System.Drawing.Point(253, 4);
+			this.btnTransferCargo.Location = new System.Drawing.Point(294, 4);
 			this.btnTransferCargo.Name = "btnTransferCargo";
 			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
 			this.btnTransferCargo.TabIndex = 9;
@@ -429,7 +445,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
 			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnConstructionQueue.Location = new System.Drawing.Point(211, 4);
+			this.btnConstructionQueue.Location = new System.Drawing.Point(252, 4);
 			this.btnConstructionQueue.Name = "btnConstructionQueue";
 			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
 			this.btnConstructionQueue.TabIndex = 8;
@@ -463,7 +479,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEvade.TabIndex = 6;
 			this.btnEvade.TabStop = false;
 			this.btnEvade.Text = "Ev";
-			this.toolTip.SetToolTip(this.btnEvade, "(V) Evade");
+			this.toolTip.SetToolTip(this.btnEvade, "(E) Evade");
 			this.btnEvade.UseVisualStyleBackColor = false;
 			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
 			// 
@@ -491,7 +507,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue.TabIndex = 4;
 			this.btnPursue.TabStop = false;
 			this.btnPursue.Text = "Pur";
-			this.toolTip.SetToolTip(this.btnPursue, "(P) Pursue");
+			this.toolTip.SetToolTip(this.btnPursue, "(A) Attack / Pursue");
 			this.btnPursue.UseVisualStyleBackColor = false;
 			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
 			// 
@@ -537,7 +553,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNextIdle.TabIndex = 4;
 			this.btnNextIdle.TabStop = false;
 			this.btnNextIdle.Text = "Next";
-			this.toolTip.SetToolTip(this.btnNextIdle, "(`) Next Idle Space Object");
+			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
 			this.btnNextIdle.UseVisualStyleBackColor = false;
 			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
 			// 
@@ -551,7 +567,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPrevIdle.TabIndex = 3;
 			this.btnPrevIdle.TabStop = false;
 			this.btnPrevIdle.Text = "Prev";
-			this.toolTip.SetToolTip(this.btnPrevIdle, "(~) Previous Idle Space Object");
+			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
 			this.btnPrevIdle.UseVisualStyleBackColor = false;
 			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
 			// 
@@ -560,11 +576,11 @@ namespace FrEee.WinForms.Forms
 			this.searchBox.BackColor = System.Drawing.Color.Black;
 			this.searchBox.ForeColor = System.Drawing.Color.White;
 			this.searchBox.Location = new System.Drawing.Point(9, 6);
-			this.searchBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.searchBox.Margin = new System.Windows.Forms.Padding(4);
 			this.searchBox.Name = "searchBox";
 			this.searchBox.ObjectsToSearch = null;
 			this.searchBox.ResultsPopupHeight = 128;
-			this.searchBox.Size = new System.Drawing.Size(332, 24);
+			this.searchBox.Size = new System.Drawing.Size(332, 21);
 			this.searchBox.StarSystem = null;
 			this.searchBox.TabIndex = 0;
 			this.searchBox.TabStop = false;
@@ -691,7 +707,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			// GameForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(1229, 779);
@@ -765,6 +781,7 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnNextIdle;
 		private GameButton btnPrevIdle;
 		private GameProgressBar progResearch;
+		private GameButton btnSentry;
 	}
 }
 

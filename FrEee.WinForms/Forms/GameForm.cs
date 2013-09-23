@@ -20,6 +20,7 @@ using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using System.Threading;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Forms
 {
@@ -55,6 +56,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnEvade, "Evade");
 			LoadButtonImage(btnWarp, "Warp");
 			LoadButtonImage(btnColonize, "Colonize");
+			LoadButtonImage(btnSentry, "Sentry");
 			LoadButtonImage(btnConstructionQueue, "ConstructionQueue");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
 			LoadButtonImage(btnPrevIdle, "Previous");
@@ -131,11 +133,7 @@ namespace FrEee.WinForms.Forms
 						// pursue
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-							if (report != null)
-								report.Invalidate();
+							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -167,11 +165,7 @@ namespace FrEee.WinForms.Forms
 						// evade
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-							if (report != null)
-								report.Invalidate();
+							IssueSpaceObjectOrder(new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -203,9 +197,8 @@ namespace FrEee.WinForms.Forms
 						// warp
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
+							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
+							IssueSpaceObjectOrder(new WarpOrder<AutonomousSpaceVehicle>(wp));
 							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 							if (report != null)
 								report.Invalidate();
@@ -253,13 +246,14 @@ namespace FrEee.WinForms.Forms
 								{
 									foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
 									{
+										// TODO - prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
 										var loadPopOrder = new LoadCargoOrder(pHere);
 										loadPopOrder.AnyPopulationToLoad = null; // load all population
-										Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, loadPopOrder);
+										IssueSpaceObjectOrder(loadPopOrder);
 									}
 								}
-								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
-								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
+								IssueSpaceObjectOrder(new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
+								IssueSpaceObjectOrder(new ColonizeOrder(planet));
 								var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 								if (report != null)
 									report.Invalidate();
@@ -403,11 +397,51 @@ namespace FrEee.WinForms.Forms
 		private void btnQueues_Click(object sender, EventArgs e)
 		{
 			this.ShowChildForm(new ConstructionQueueListForm());
+			SetUpResourceDisplay();
 		}
 
 		private void btnEndTurn_Click(object sender, EventArgs e)
 		{
-			if (MessageBox.Show("Really end your turn now?", "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+			var todos = new List<string>();
+
+			var ships = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
+			if (ships == 1)
+				todos.Add("1 idle ship");
+			else if (ships > 1)
+				todos.Add(ships + " idle ships");
+
+			// TODO - idle fleets
+
+			var queues = Empire.Current.ConstructionQueues.Where(q => q.FractionalETA < 1d).Count();
+			if (queues == 1)
+				todos.Add("1 idle construction queue");
+			else if (ships > 1)
+				todos.Add(queues + " idle construction queues");
+
+			var idx = 0;
+			var queueSpending = 0;
+			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			Empire.Current.ComputeResearchProgress();
+			foreach (var tech in Empire.Current.ResearchQueue)
+			{
+				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
+				queueSpending += tech.GetLevelCost(levels[tech]);
+				idx++;
+			}
+			var totalRP = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;
+			var leftover = totalRP - queueSpending;
+			var pctSpending = 0;
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				pctSpending += leftover * kvp.Value;
+			var totalSpending = queueSpending + pctSpending;
+			var unallocatedPct = 1d - ((double)totalSpending / (double)totalRP);
+			if (unallocatedPct > 0)
+				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
+			
+			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
+
+			var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
+			if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 			{
 				EndTurn();
 				if (!Galaxy.Current.IsSinglePlayer)
@@ -441,23 +475,30 @@ namespace FrEee.WinForms.Forms
 			SelectTab(AddTab(Galaxy.Current.CurrentEmpire.ExploredStarSystems.First()));
 
 			// set up resource display
-			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
-			resMin.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Minerals];
-			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
-			resOrg.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Organics];
-			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
-			resRad.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Radioactives];
-			resRes.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Research];
-			resInt.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Intelligence];
+			SetUpResourceDisplay();
 
 			// show research progress
 			BindResearch();
 
 			// load space objects for search box
-			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
+			if (!searchBox.IsDisposed)
+				searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
 
 			// compute warp point connectivity
 			galaxyView.ComputeWarpPointConnectivity();
+		}
+
+		private void SetUpResourceDisplay()
+		{
+			var income = Empire.Current.NetIncomeLessConstruction;
+			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
+			resMin.Change = income[Resource.Minerals];
+			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
+			resOrg.Change = income[Resource.Organics];
+			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
+			resRad.Change = income[Resource.Radioactives];
+			resRes.Amount = income[Resource.Research];
+			resInt.Amount = income[Resource.Intelligence];
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -706,6 +747,7 @@ namespace FrEee.WinForms.Forms
 					btnEvade.Visible = value is IMobileSpaceObject;
 					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
 					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
@@ -734,21 +776,23 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new LogForm(this));
 				else if (e.KeyCode == Keys.R)
 					this.ShowChildForm(new ResearchForm());
-				else if (e.KeyCode == Keys.Oemtilde)
+				else if (e.KeyCode == Keys.Tab)
 					btnPrevIdle_Click(this, new EventArgs());
 			}
 			else
 			{
 				if (e.KeyCode == Keys.M && btnMove.Visible)
 					ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
-				else if (e.KeyCode == Keys.P && btnPursue.Visible)
+				else if (e.KeyCode == Keys.A && btnPursue.Visible)
 					ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
-				else if (e.KeyCode == Keys.V && btnEvade.Visible)
+				else if (e.KeyCode == Keys.E && btnEvade.Visible)
 					ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.W && btnWarp.Visible)
 					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.C && btnColonize.Visible)
 					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.Y && btnSentry.Visible)
+					IssueSpaceObjectOrder(new SentryOrder());
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
@@ -760,13 +804,14 @@ namespace FrEee.WinForms.Forms
 							if (ctl is PlanetReport)
 								((PlanetReport)ctl).Invalidate();
 						}
+						SetUpResourceDisplay();
 					}
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
 					; // TODO - show cargo transfer window for selected space object
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
 					; // TODO - show fleet transfer window for selected space object
-				else if (e.KeyCode == Keys.Oemtilde)
+				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
 			}
 
@@ -783,7 +828,10 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F6)
 				; // TODO - ships screen
 			else if (e.KeyCode == Keys.F7)
+			{
 				this.ShowChildForm(new ConstructionQueueListForm());
+				SetUpResourceDisplay();
+			}
 			else if (e.KeyCode == Keys.F10)
 				this.ShowChildForm(new LogForm(this));
 			else if (e.KeyCode == Keys.F12)
@@ -895,12 +943,19 @@ namespace FrEee.WinForms.Forms
 				ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
 		}
 
+		private void btnSentry_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				IssueSpaceObjectOrder(new SentryOrder());
+		}
+
 		private void btnConstructionQueue_Click(object sender, EventArgs e)
 		{
 			if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
 			{
 				var form = new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue);
 				this.ShowChildForm(form);
+				SetUpResourceDisplay();
 			}
 		}
 
@@ -1084,6 +1139,25 @@ namespace FrEee.WinForms.Forms
 				btn.Text = "";
 				btn.Image = pic;
 			}
+		}
+
+		private void IssueSpaceObjectOrder<T>(IOrder<T> order) where T : IOrderable, ISpaceObject
+		{
+			if (SelectedSpaceObject == null)
+				throw new Exception("No space object is selected to issue order \"" + order + "\" to.");
+			if (!(SelectedSpaceObject is T))
+				throw new Exception("Order \"" + order + "\" cannot be issued to objects of type " + SelectedSpaceObject.GetType() + ". It can only be issued to objects of type " + typeof(T) + ".");
+			((T)SelectedSpaceObject).IssueOrder(order);
+			if (pnlDetailReport.Controls.Count > 0 && pnlDetailReport.Controls[0] is IBindable)
+				((IBindable)pnlDetailReport.Controls[0]).Bind();
+		}
+
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			// trap tab key
+			if (keyData == Keys.Tab || keyData == (Keys.Tab | Keys.Shift))
+				GameForm_KeyDown(this, new KeyEventArgs(keyData));
+			return base.ProcessCmdKey(ref msg, keyData);
 		}
 	}
 }

@@ -308,6 +308,7 @@
     <Compile Include="Forms\VehicleDesignForm.Designer.cs">
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBindable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions\GuiExtensions.cs" />
