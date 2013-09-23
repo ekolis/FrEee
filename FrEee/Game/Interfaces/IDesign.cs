@@ -124,7 +124,7 @@ namespace FrEee.Game.Interfaces
 		IDesign Copy();
 	}
 
-	public interface IDesign<T> : IDesign, IPictorial, IReferrable where T : IVehicle
+	public interface IDesign<out T> : IDesign, IPictorial, IReferrable where T : IVehicle
 	{
 		new IDesign<T> Copy();
 	}

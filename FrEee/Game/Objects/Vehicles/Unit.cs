@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Vehicles
 					return;
 				}
 			}
-			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoContainer>().Where(cc => cc.Owner == Owner))
+			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == Owner))
 			{
 				var cargo = container.Cargo;
 				if (cargo.Size + Design.Hull.Size <= container.CargoStorage)
@@ -70,7 +70,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <returns></returns>
 		public ISpaceObject FindContainer()
 		{
-			return Galaxy.Current.FindSpaceObjects<ICargoContainer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(this));
+			return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(this));
 		}
 	}
 }

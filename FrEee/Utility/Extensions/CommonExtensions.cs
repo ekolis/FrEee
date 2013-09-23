@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Collections;
 using FrEee.Game.Objects.Commands;
 using System.Drawing.Imaging;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Utility.Extensions
 {
@@ -123,7 +124,7 @@ namespace FrEee.Utility.Extensions
 						stacked.Add(Tuple.Create(group.Key, abil));
 				}
 			}
-			foreach (var abil in abilities.Where(a =>!Mod.Current.AbilityRules.Any(r => r.Name == a.Name)))
+			foreach (var abil in abilities.Where(a => !Mod.Current.AbilityRules.Any(r => r.Name == a.Name)))
 				stacked.Add(Tuple.Create(abil, abil));
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
@@ -141,6 +142,18 @@ namespace FrEee.Utility.Extensions
 		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs)
 		{
 			return objs.SelectMany(obj => obj.Abilities).StackToTree();
+		}
+
+		/// <summary>
+		/// Adds SI prefixes to a value and rounds it off.
+		/// e.g. 25000 becomes 25.00k
+		/// </summary>
+		/// <param name="value"></param>
+		public static string ToUnitString(this long? value, bool bForBillions = false, int sigfigs = 4)
+		{
+			if (value == null)
+				return "Undefined";
+			return value.Value.ToUnitString(bForBillions, sigfigs);
 		}
 
 		/// <summary>
@@ -182,9 +195,31 @@ namespace FrEee.Utility.Extensions
 		/// e.g. 25000 becomes 25.00k
 		/// </summary>
 		/// <param name="value"></param>
+		public static string ToUnitString(this int? value, bool bForBillions = false, int sigfigs = 4)
+		{
+			return ((long?)value).ToUnitString(bForBillions, sigfigs);
+		}
+
+		/// <summary>
+		/// Adds SI prefixes to a value and rounds it off.
+		/// e.g. 25000 becomes 25.00k
+		/// </summary>
+		/// <param name="value"></param>
 		public static string ToUnitString(this int value, bool bForBillions = false, int sigfigs = 4)
 		{
 			return ((long)value).ToUnitString(bForBillions, sigfigs);
+		}
+
+		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Kilotons(this long? value)
+		{
+			if (value == null)
+				return "Undefined";
+			return value.Value.Kilotons();
 		}
 
 		/// <summary>
@@ -204,11 +239,20 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
+		public static string Kilotons(this int? value)
+		{
+			return ((long?)value).Kilotons();
+		}
+
+		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
 		public static string Kilotons(this int value)
 		{
 			return ((long)value).Kilotons();
 		}
-
 
 		/// <summary>
 		/// Converts a turn number to a stardate.
@@ -293,7 +337,7 @@ namespace FrEee.Utility.Extensions
 			}
 			return default(T); // nothing to pick...
 		}
-		
+
 		/// <summary>
 		/// Orders elements randomly.
 		/// </summary>
@@ -869,7 +913,7 @@ namespace FrEee.Utility.Extensions
 				t == typeof(Point) ||
 				t == typeof(Color) ||
 				typeof(IEnumerable<object>).IsAssignableFrom(t) ||
-				typeof(IEnumerable).IsAssignableFrom(t) || 
+				typeof(IEnumerable).IsAssignableFrom(t) ||
 				typeof(IPromotable).IsAssignableFrom(t) ||
 				t.BaseType != null && t.BaseType.IsClientSafe() ||
 				t.GetInterfaces().Any(i => i.IsClientSafe());
@@ -975,6 +1019,215 @@ namespace FrEee.Utility.Extensions
 			if (obj.Owner != Empire.Current)
 				throw new Exception("Cannot issue orders to another empire's objects.");
 			Empire.Current.IssueOrder(obj, order);
+		}
+
+		public static int CargoStorageFree(this ICargoContainer cc)
+		{
+			return cc.CargoStorage - cc.Cargo.Size;
+		}
+
+		/// <summary>
+		/// Transfers items from this cargo container to another cargo container.
+		/// </summary>
+		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
+		{
+			// transfer per-race population
+			foreach (var kvp in delta.RacePopulation)
+			{
+				var amount = long.MaxValue;
+
+				// limit by desired amount to transfer
+				if (kvp.Value != null)
+					amount = Math.Min(amount, kvp.Value.Value);
+				// limit by amount available
+				amount = Math.Min(amount, src.Cargo.Population[kvp.Key]);
+				// limit by amount of free space
+				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+
+				src.RemovePopulation(kvp.Key, amount);
+				dest.AddPopulation(kvp.Key, amount);
+
+				if (amount < kvp.Value)
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " " + kvp.Key + " population to " + dest + " due to lack of population available or lack of storage space."));
+			}
+
+			// transfer any-population
+			var anyPopLeft = delta.AnyPopulation;
+			while (anyPopLeft > 0)
+			{
+				foreach (var kvp in src.Cargo.Population)
+				{
+					var amount = long.MaxValue;
+
+					// limit by desired amount to transfer
+					if (anyPopLeft != null)
+						amount = Math.Min(amount, anyPopLeft.Value);
+					// limit by amount available
+					amount = Math.Min(amount, kvp.Value);
+					// limit by amount of free space
+					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+
+					src.RemovePopulation(kvp.Key, amount);
+					dest.AddPopulation(kvp.Key, amount);
+
+					if (amount < anyPopLeft)
+						emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
+				}
+			}
+
+			// transfer specific units
+			foreach (var unit in delta.Units)
+			{
+				if (src.Cargo.Units.Contains(unit))
+					TryTransferUnit(unit, src, dest, emp);
+				else
+					LogUnitTransferFailedNotPresent(unit, src, dest, emp);
+			}
+
+			// transfer unit tonnage by design
+			foreach (var kvp in delta.UnitDesignTonnage)
+			{
+				int transferred = 0;
+				while (kvp.Value == null || transferred <= kvp.Value - kvp.Key.Hull.Size)
+				{
+					var unit = src.Cargo.Units.FirstOrDefault(u => u.Design == kvp.Key);
+					if (unit == null && kvp.Value != null)
+					{
+						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						break;
+					}
+					if (src.CargoStorageFree() < kvp.Key.Hull.Size)
+					{
+						LogUnitTransferFailedNoStorage(unit, src, dest, emp);
+						break;
+					}
+					if (transferred + kvp.Key.Hull.Size > kvp.Value)
+						break; // next unit would be too much
+					src.RemoveUnit(unit);
+					dest.AddUnit(unit);
+					transferred += kvp.Key.Hull.Size;
+				}
+			}
+
+			// transfer unit tonnage by role
+			foreach (var kvp in delta.UnitRoleTonnage)
+			{
+				int transferred = 0;
+				var available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
+				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
+				{
+					if (!available.Any())
+					{
+						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						break;
+					}
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && u.Design.Hull.Size <= kvp.Value - transferred);
+					src.RemoveUnit(unit);
+					dest.AddUnit(unit);
+					available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
+					transferred += unit.Design.Hull.Size;
+				}
+			}
+
+			// transfer unit tonnage by hull type
+			foreach (var kvp in delta.UnitTypeTonnage)
+			{
+				int transferred = 0;
+				var available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
+				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
+				{
+					if (!available.Any())
+					{
+						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						break;
+					}
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && u.Design.Hull.Size <= kvp.Value - transferred);
+					src.RemoveUnit(unit);
+					dest.AddUnit(unit);
+					available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
+					transferred += unit.Design.Hull.Size;
+				}
+			}
+		}
+
+		private static void LogUnitTransferFailedNotPresent(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo."));
+		}
+
+		private static void LogUnitTransferFailedNoStorage(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailed(IDesign<Unit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailed(string role, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + role + " units could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void LogUnitTransferFailed(VehicleTypes vt, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		{
+			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
+		}
+
+		private static void TryTransferUnit(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		{
+			if (dest.CargoStorageFree() >= unit.Design.Hull.Size)
+			{
+				src.RemoveUnit(unit);
+				dest.AddUnit(unit);
+			}
+			else
+				LogUnitTransferFailedNoStorage(unit, src, dest, emp);
+		}
+
+		/// <summary>
+		/// Converts an object to a string with spaces between camelCased words.
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
+		public static string ToSpacedString(this object o)
+		{
+			var sb = new StringBuilder();
+			bool wasSpace = true;
+			foreach (var c in o.ToString())
+			{
+				if (!wasSpace && (char.IsUpper(c) || char.IsNumber(c)))
+					sb.Append(" ");
+				sb.Append(c);
+				wasSpace = char.IsWhiteSpace(c);
+			}
+			return sb.ToString();
+		}
+
+		public static Type GetVehicleType(this VehicleTypes vt)
+		{
+			switch (vt)
+			{
+				case VehicleTypes.Ship:
+					return typeof(Ship);
+				case VehicleTypes.Base:
+					return typeof(Base);
+				case VehicleTypes.Fighter:
+					return typeof(Fighter);
+				case VehicleTypes.Troop:
+					return typeof(Troop);
+				case VehicleTypes.Mine:
+					return typeof(Mine);
+				case VehicleTypes.Satellite:
+					return typeof(Satellite);
+				case VehicleTypes.Drone:
+					return typeof(Drone);
+				case VehicleTypes.WeaponPlatform:
+					return typeof(WeaponPlatform);
+				default:
+					throw new Exception("No type is available for vehicle type " + vt);
+			}
 		}
 	}
 }

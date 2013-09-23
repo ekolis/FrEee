@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoContainer, IReferrable
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable
 	{
 		public Planet()
 		{
@@ -667,6 +667,57 @@ namespace FrEee.Game.Objects.Space
 					return false;
 				return ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d;
 			}
+		}
+
+		public long PopulationStorageFree
+		{
+			get { return MaxPopulation - (Colony == null ? 0L : Colony.Population.Sum(kvp => kvp.Value)); }
+		}
+
+		public long AddPopulation(Race race, long amount)
+		{
+			if (Colony != null)
+				return amount; // can't add population with no colony
+			var canPop = Math.Min(amount, PopulationStorageFree);
+			amount -= canPop;
+			Colony.Population[race] += canPop;
+			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
+			amount -= canCargo;
+			Colony.Cargo.Population[race] += canCargo;
+			return amount;
+		}
+
+		public long RemovePopulation(Race race, long amount)
+		{
+			if (Colony != null)
+				return amount; // can't remove population with no colony
+			var canCargo = Math.Min(amount, Colony.Cargo.Population[race]);
+			amount -= canCargo;
+			Colony.Cargo.Population[race] -= canCargo;
+			var canPop = Math.Min(amount, Colony.Population[race]);
+			amount -= canPop;
+			Colony.Population[race] -= canPop;
+			return amount;
+		}
+
+		public bool AddUnit(Unit unit)
+		{
+			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
+			{
+				Colony.Cargo.Units.Add(unit);
+				return true;
+			}
+			return false;
+		}
+
+		public bool RemoveUnit(Unit unit)
+		{
+			if (Colony.Cargo.Units.Contains(unit))
+			{
+				Colony.Cargo.Units.Remove(unit);
+				return true;
+			}
+			return false;
 		}
 	}
 }

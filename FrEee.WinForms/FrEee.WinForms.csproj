@@ -94,6 +94,12 @@
     <Compile Include="Controls\AsteroidFieldReport.Designer.cs">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Cargolist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Cargolist.Designer.cs">
+      <DependentUpon>Cargolist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WarpPointReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -206,6 +212,12 @@
     <Compile Include="DataGridView\DataGridViewProgressColumn.cs" />
     <Compile Include="DataGridView\GridColumnConfig.cs" />
     <Compile Include="DataGridView\Sort.cs" />
+    <Compile Include="Forms\CargoTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CargoTransferForm.Designer.cs">
+      <DependentUpon>CargoTransferForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ConstructionQueueForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,6 +334,9 @@
     <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
       <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Cargolist.resx">
+      <DependentUpon>Cargolist.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\WarpPointReport.resx">
       <DependentUpon>WarpPointReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -354,6 +369,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\TraitPicker.resx">
       <DependentUpon>TraitPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CargoTransferForm.resx">
+      <DependentUpon>CargoTransferForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ConstructionQueueForm.resx">
       <DependentUpon>ConstructionQueueForm.cs</DependentUpon>

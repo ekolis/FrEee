@@ -808,25 +808,25 @@ namespace FrEee.WinForms.Forms
 					}
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
-					; // TODO - show cargo transfer window for selected space object
+					ShowCargoTransferForm();
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
-					; // TODO - show fleet transfer window for selected space object
+					MessageBox.Show("Sorry, fleets are not yet implemented."); // TODO - show fleet transfer window for selected space object
 				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
 			}
 
 			if (e.KeyCode == Keys.F2)
-				; // TODO - game menu
+				MessageBox.Show("Sorry, the game menu is not yet implemented."); // TODO - game menu
 			else if (e.KeyCode == Keys.F3)
 				this.ShowChildForm(new DesignListForm());
 			else if (e.KeyCode == Keys.F4 || e.KeyCode == Keys.F5) // planets and colonies screens are combined
 				this.ShowChildForm(new PlanetListForm());
 			else if (e.KeyCode == Keys.F9)
-				; // TODO - empires screen
+				MessageBox.Show("Sorry, the empires screen is not yet implemented."); // TODO - empires screen
 			else if (e.KeyCode == Keys.F11)
-				; // TODO - empire status screen
+				MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
 			else if (e.KeyCode == Keys.F6)
-				; // TODO - ships screen
+				MessageBox.Show("Sorry, the ship list screen is not yet implemented."); // TODO - ships screen
 			else if (e.KeyCode == Keys.F7)
 			{
 				this.ShowChildForm(new ConstructionQueueListForm());
@@ -961,7 +961,24 @@ namespace FrEee.WinForms.Forms
 
 		private void btnTransferCargo_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, transfer cargo orders are not yet implemented.");
+			ShowCargoTransferForm();
+		}
+
+		private void ShowCargoTransferForm()
+		{
+			if (SelectedSpaceObject is ICargoContainer && SelectedSpaceObject.Owner == Empire.Current)
+			{
+				Sector lastSector;
+				if (SelectedSpaceObject is IMobileSpaceObject)
+					lastSector = ((IMobileSpaceObject)SelectedSpaceObject).Path.Last();
+				else
+					lastSector = SelectedSpaceObject.FindSector();
+				var form = new CargoTransferForm((ICargoContainer)SelectedSpaceObject, lastSector);
+				this.ShowChildForm(form);
+				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
+				if (report != null)
+					report.Bind();
+			}
 		}
 
 		private void btnFleetTransfer_Click(object sender, EventArgs e)
@@ -1002,7 +1019,7 @@ namespace FrEee.WinForms.Forms
 					v.Orders.Clear();
 					var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 					if (report != null)
-						report.Invalidate();
+						report.Bind();
 				}
 				else if (SelectedSpaceObject is Planet)
 				{

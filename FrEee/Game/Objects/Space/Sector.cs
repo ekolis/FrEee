@@ -8,6 +8,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
 using FrEee.Utility;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	/// A sector in a star system.
 	/// </summary>
 	[Serializable]
-	public class Sector : IPromotable
+	public class Sector : IPromotable, ICargoContainer
 	{
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
@@ -23,18 +24,12 @@ namespace FrEee.Game.Objects.Space
 			Coordinates = coordinates;
 		}
 
-		private Reference<StarSystem> starSystem {get; set;}
+		private Reference<StarSystem> starSystem { get; set; }
 
 		[DoNotSerialize]
 		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
 
 		public Point Coordinates { get; set; }
-
-		public override string ToString()
-		{
-			var coords = Coordinates;
-			return StarSystem + " (" + coords.X + ", " + coords.Y + ")";
-		}
 
 		public IEnumerable<ISpaceObject> SpaceObjects
 		{
@@ -54,7 +49,7 @@ namespace FrEee.Game.Objects.Space
 			if (SpaceObjects.Contains(sobj))
 				StarSystem.Remove(sobj);
 		}
-		
+
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
 			starSystem.ReplaceClientIDs(idmap);
@@ -85,7 +80,73 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (obj is Sector)
 				return this == (Sector)obj;
-			return false; 
+			return false;
+		}
+
+		public Cargo Cargo
+		{
+			get
+			{
+				// TODO - implement sector cargo once we have unit groups
+				return new Cargo();
+			}
+		}
+
+		/// <summary>
+		/// Sectors can contain practically infinite cargo.
+		/// </summary>
+		public int CargoStorage
+		{
+			get { return int.MaxValue; }
+		}
+
+		public long PopulationStorageFree
+		{
+			get { return 0; }
+		}
+
+		public long AddPopulation(Race race, long amount)
+		{
+			// population jettisoned into space just disappears without a trace...
+			return 0;
+		}
+
+		public long RemovePopulation(Race race, long amount)
+		{
+			// population cannot be recovered from space!
+			return amount;
+		}
+
+		public bool AddUnit(Unit unit)
+		{
+			// TODO - allow launching of units
+			return false;
+		}
+
+		public bool RemoveUnit(Unit unit)
+		{
+			// TODO - allow recovery of units
+			return false;
+		}
+
+		public Image Icon
+		{
+			get { return StarSystem.Icon; }
+		}
+
+		public Image Portrait
+		{
+			get { return StarSystem.Portrait; }
+		}
+
+		public string Name
+		{
+			get { return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")"; }
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }

@@ -364,5 +364,49 @@ namespace FrEee.Game.Objects.Vehicles
 				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d);
 			}
 		}
+
+		/// <summary>
+		/// Vehicles cannot have population per se.
+		/// </summary>
+		public long PopulationStorageFree
+		{
+			get { return 0; }
+		}
+
+		public long AddPopulation(Race race, long amount)
+		{
+			var canCargo = Math.Min(amount, (long)(this.CargoStorageFree() / Mod.Current.Settings.PopulationSize));
+			amount -= canCargo;
+			Cargo.Population[race] += canCargo;
+			return amount;
+		}
+
+		public long RemovePopulation(Race race, long amount)
+		{
+			var canCargo = Math.Min(amount, Cargo.Population[race]);
+			amount -= canCargo;
+			Cargo.Population[race] -= canCargo;
+			return amount;
+		}
+
+		public bool AddUnit(Unit unit)
+		{
+			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
+			{
+				Cargo.Units.Add(unit);
+				return true;
+			}
+			return false;
+		}
+
+		public bool RemoveUnit(Unit unit)
+		{
+			if (Cargo.Units.Contains(unit))
+			{
+				Cargo.Units.Remove(unit);
+				return true;
+			}
+			return false;
+		}
 	}
 }

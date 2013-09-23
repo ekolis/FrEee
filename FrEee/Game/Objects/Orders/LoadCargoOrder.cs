@@ -15,9 +15,9 @@ namespace FrEee.Game.Objects.Orders
 	/// <summary>
 	/// An order to load cargo.
 	/// </summary>
-	public class LoadCargoOrder : IOrder<ICargoContainer>
+	public class LoadCargoOrder : IOrder<ICargoTransferrer>
 	{
-		public LoadCargoOrder(ICargoContainer origin)
+		public LoadCargoOrder(ICargoTransferrer origin)
 		{
 			Owner = Empire.Current;
 			Origin = origin;
@@ -31,9 +31,9 @@ namespace FrEee.Game.Objects.Orders
 		/// The cargo container from which cargo is being loaded.
 		/// </summary>
 		[DoNotSerialize]
-		public ICargoContainer Origin { get { return origin.Value; } set { origin = value.Reference(); } }
+		public ICargoTransferrer Origin { get { return origin.Value; } set { origin = value.Reference(); } }
 
-		private Reference<ICargoContainer> origin { get; set; }
+		private Reference<ICargoTransferrer> origin { get; set; }
 
 		#region Race specific population loading
 		public IEnumerable<KeyValuePair<Race, long?>> RacePopulationToLoad
@@ -119,7 +119,7 @@ namespace FrEee.Game.Objects.Orders
 		private SafeDictionary<VehicleTypes, int?> anyUnitsToLoad { get; set; }
 		#endregion
 
-		public void Execute(ICargoContainer src)
+		public void Execute(ICargoTransferrer src)
 		{
 			if (IsComplete)
 				return; // already loaded!

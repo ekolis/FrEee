@@ -10,7 +10,7 @@ using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable, IReferrable, IFoggable
+	public interface ISpaceObject : IAbilityObject, IPictorial, IOwnable, IReferrable, IFoggable, INamed
 	{
 		/// <summary>
 		/// The name of this space object.

@@ -60,9 +60,9 @@
     <Compile Include="Game\Enumerations\StellarSize.cs" />
     <Compile Include="Game\Enumerations\VehicleTypes.cs" />
     <Compile Include="Game\Enumerations\Visibility.cs" />
+    <Compile Include="Game\Interfaces\ICargoTransferrer.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICargoContainer.cs" />
-    <Compile Include="Game\Interfaces\ICargoContainerOrder.cs" />
     <Compile Include="Game\Interfaces\ICombatSpaceObject.cs" />
     <Compile Include="Game\Interfaces\ICommand.cs" />
     <Compile Include="Game\Interfaces\IConstructable.cs" />
@@ -91,6 +91,7 @@
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
     <Compile Include="Game\Objects\Civilization\Aptitude.cs" />
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
+    <Compile Include="Game\Objects\Civilization\CargoDelta.cs" />
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Utility\RandomHelper.cs" />
     <Compile Include="Utility\Reference.cs" />
     <Compile Include="Utility\MiningModel.cs" />
+    <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />

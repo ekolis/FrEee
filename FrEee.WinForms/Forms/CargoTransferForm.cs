@@ -1,4 +1,7 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,27 +15,21 @@ namespace FrEee.WinForms.Forms
 {
     public partial class CargoTransferForm : Form
     {
-        public CargoTransferForm(FrEee.Game.Objects.Vehicles.AutonomousSpaceVehicle selected_Vehicle = null, FrEee.Game.Objects.Space.Planet selected_Planet = null)
+        public CargoTransferForm(ICargoContainer fromContainer, Sector targetSector)
         {
             InitializeComponent();
-            FrEee.WinForms.Controls.Cargolist clistFrom = new FrEee.WinForms.Controls.Cargolist(selected_Vehicle, selected_Planet);
 
-            tableLayoutPanel1.Controls.Add(clistFrom, 1, 2);
-            /* sudocode
-             * foreach (var obj in sector)
-             * { 
-             *      if (obj is type planet)
-             *      {
-             *          FrEee.Winforms.Controls.Cargolist clistTo = new FrEee.WinForms.Controls.Cargolist(null, obj);
-             *      }
-             *      else if (obj is type Vehicle)
-             *      {
-             *          FrEee.Winforms.Controls.Cargolist clistTo = new FrEee.WinForms.Controls.Cargolist(obj, null);
-             *      }
-             *      tableLayoutPanel1.Controls.Add(clistTo, 2, 2);
-             * }     
-             *      
-             */
+			clFrom.CargoContainer = fromContainer;
+			txtFromContainer.Text = fromContainer.Name;
+			ddlToContainer.Items.Add(targetSector);
+			foreach (var cc in targetSector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc != fromContainer && cc.Owner == Empire.Current).OrderBy(cc => cc.Name))
+				ddlToContainer.Items.Add(cc);
+			ddlToContainer.SelectedIndex = 0;
         }
+
+		private void ddlToContainer_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			clTo.CargoContainer = (ICargoContainer)ddlToContainer.SelectedItem;
+		}
     }
 }

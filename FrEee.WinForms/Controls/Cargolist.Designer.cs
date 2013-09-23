@@ -1,6 +1,6 @@
 ﻿namespace FrEee.WinForms.Controls
 {
-    partial class Cargolist
+    partial class CargoList
     {
         /// <summary> 
         /// Required designer variable.
