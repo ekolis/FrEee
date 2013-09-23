@@ -170,7 +170,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this).Sum(q => q.Spending);
+				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this).Sum(q => q.UpcomingSpending);
 			}
 		}
 

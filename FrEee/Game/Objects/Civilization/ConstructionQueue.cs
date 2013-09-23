@@ -203,7 +203,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			UnspentRate = Rate;
 			var empty = new ResourceQuantity();
-			while (UnspentRate > empty && Orders.Any())
+			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
 			{
 				var numOrders = Orders.Count;
 
@@ -356,13 +356,13 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Spending this turn on construction.
+		/// Upcoming spending on construction this turn.
 		/// </summary>
-		public ResourceQuantity Spending
+		public ResourceQuantity UpcomingSpending
 		{
 			get
 			{
-				return ResourceQuantity.Min(Orders.Sum(o => o.Template.Cost - o.Item.ConstructionProgress), Rate);
+				return ResourceQuantity.Min(Orders.Sum(o => o.Template.Cost - o.Item.ConstructionProgress), UnspentRate);
 			}
 		}
 	}
