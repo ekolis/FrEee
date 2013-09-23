@@ -32,7 +32,6 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -73,6 +72,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -553,7 +553,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNextIdle.TabIndex = 4;
 			this.btnNextIdle.TabStop = false;
 			this.btnNextIdle.Text = "Next";
-			this.toolTip.SetToolTip(this.btnNextIdle, "(`) Next Idle Space Object");
+			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
 			this.btnNextIdle.UseVisualStyleBackColor = false;
 			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
 			// 
@@ -567,7 +567,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPrevIdle.TabIndex = 3;
 			this.btnPrevIdle.TabStop = false;
 			this.btnPrevIdle.Text = "Prev";
-			this.toolTip.SetToolTip(this.btnPrevIdle, "(~) Previous Idle Space Object");
+			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
 			this.btnPrevIdle.UseVisualStyleBackColor = false;
 			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
 			// 

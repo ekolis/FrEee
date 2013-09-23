@@ -737,7 +737,7 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new LogForm(this));
 				else if (e.KeyCode == Keys.R)
 					this.ShowChildForm(new ResearchForm());
-				else if (e.KeyCode == Keys.Oemtilde)
+				else if (e.KeyCode == Keys.Tab)
 					btnPrevIdle_Click(this, new EventArgs());
 			}
 			else
@@ -772,7 +772,7 @@ namespace FrEee.WinForms.Forms
 					; // TODO - show cargo transfer window for selected space object
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
 					; // TODO - show fleet transfer window for selected space object
-				else if (e.KeyCode == Keys.Oemtilde)
+				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
 			}
 
@@ -1111,6 +1111,14 @@ namespace FrEee.WinForms.Forms
 			((T)SelectedSpaceObject).IssueOrder(order);
 			if (pnlDetailReport.Controls.Count > 0 && pnlDetailReport.Controls[0] is IBindable)
 				((IBindable)pnlDetailReport.Controls[0]).Bind();
+		}
+
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			// trap tab key
+			if (keyData == Keys.Tab || keyData == (Keys.Tab | Keys.Shift))
+				GameForm_KeyDown(this, new KeyEventArgs(keyData));
+			return base.ProcessCmdKey(ref msg, keyData);
 		}
 	}
 }
