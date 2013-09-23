@@ -448,7 +448,8 @@ namespace FrEee.WinForms.Forms
 			BindResearch();
 
 			// load space objects for search box
-			searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
+			if (!searchBox.IsDisposed)
+				searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
 
 			// compute warp point connectivity
 			galaxyView.ComputeWarpPointConnectivity();
