@@ -32,6 +32,7 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -50,6 +51,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
 			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
 			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
 			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
@@ -71,8 +73,6 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picEmpireFlag)).BeginInit();
@@ -385,6 +385,20 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Size = new System.Drawing.Size(522, 50);
 			this.pnlSubCommands.TabIndex = 2;
 			// 
+			// btnSentry
+			// 
+			this.btnSentry.BackColor = System.Drawing.Color.Black;
+			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSentry.Location = new System.Drawing.Point(211, 4);
+			this.btnSentry.Name = "btnSentry";
+			this.btnSentry.Size = new System.Drawing.Size(36, 36);
+			this.btnSentry.TabIndex = 12;
+			this.btnSentry.TabStop = false;
+			this.btnSentry.Text = "Stry";
+			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
+			this.btnSentry.UseVisualStyleBackColor = false;
+			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
+			// 
 			// btnClearOrders
 			// 
 			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
@@ -465,7 +479,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEvade.TabIndex = 6;
 			this.btnEvade.TabStop = false;
 			this.btnEvade.Text = "Ev";
-			this.toolTip.SetToolTip(this.btnEvade, "(V) Evade");
+			this.toolTip.SetToolTip(this.btnEvade, "(E) Evade");
 			this.btnEvade.UseVisualStyleBackColor = false;
 			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
 			// 
@@ -493,7 +507,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue.TabIndex = 4;
 			this.btnPursue.TabStop = false;
 			this.btnPursue.Text = "Pur";
-			this.toolTip.SetToolTip(this.btnPursue, "(P) Pursue");
+			this.toolTip.SetToolTip(this.btnPursue, "(A) Attack / Pursue");
 			this.btnPursue.UseVisualStyleBackColor = false;
 			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
 			// 
@@ -690,20 +704,6 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.Text = "galaxyView1";
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
 			this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
-			// 
-			// btnSentry
-			// 
-			this.btnSentry.BackColor = System.Drawing.Color.Black;
-			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSentry.Location = new System.Drawing.Point(211, 4);
-			this.btnSentry.Name = "btnSentry";
-			this.btnSentry.Size = new System.Drawing.Size(36, 36);
-			this.btnSentry.TabIndex = 12;
-			this.btnSentry.TabStop = false;
-			this.btnSentry.Text = "Stry";
-			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
-			this.btnSentry.UseVisualStyleBackColor = false;
-			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
 			// 
 			// GameForm
 			// 

@@ -736,9 +736,9 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.KeyCode == Keys.M && btnMove.Visible)
 					ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
-				else if (e.KeyCode == Keys.P && btnPursue.Visible)
+				else if (e.KeyCode == Keys.A && btnPursue.Visible)
 					ChangeCommandMode(CommandMode.Pursue, SelectedSpaceObject);
-				else if (e.KeyCode == Keys.V && btnEvade.Visible)
+				else if (e.KeyCode == Keys.E && btnEvade.Visible)
 					ChangeCommandMode(CommandMode.Evade, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.W && btnWarp.Visible)
 					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
