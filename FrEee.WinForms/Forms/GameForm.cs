@@ -403,18 +403,43 @@ namespace FrEee.WinForms.Forms
 		private void btnEndTurn_Click(object sender, EventArgs e)
 		{
 			var todos = new List<string>();
+
 			var ships = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
 			if (ships == 1)
 				todos.Add("1 idle ship");
 			else if (ships > 1)
 				todos.Add(ships + " idle ships");
+
 			// TODO - idle fleets
+
 			var queues = Empire.Current.ConstructionQueues.Where(q => q.FractionalETA < 1d).Count();
 			if (queues == 1)
 				todos.Add("1 idle construction queue");
 			else if (ships > 1)
 				todos.Add(queues + " idle construction queues");
+
+			var idx = 0;
+			var queueSpending = 0;
+			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			Empire.Current.ComputeResearchProgress();
+			foreach (var tech in Empire.Current.ResearchQueue)
+			{
+				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
+				queueSpending += tech.GetLevelCost(levels[tech]);
+				idx++;
+			}
+			var totalRP = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;
+			var leftover = totalRP - queueSpending;
+			var pctSpending = 0;
+			foreach (var kvp in Empire.Current.ResearchSpending)
+				pctSpending += leftover * kvp.Value;
+			var totalSpending = queueSpending + pctSpending;
+			var unallocatedPct = 1d - ((double)totalSpending / (double)totalRP);
+			if (unallocatedPct > 0)
+				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
+			
 			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
+
 			var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
 			if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
 			{
