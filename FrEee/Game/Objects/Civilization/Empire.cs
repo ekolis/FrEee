@@ -164,6 +164,28 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// Spending on construction this turn.
+		/// </summary>
+		public ResourceQuantity ConstructionSpending
+		{
+			get
+			{
+				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this).Sum(q => q.Spending);
+			}
+		}
+
+		/// <summary>
+		/// Net income less construction spending.
+		/// </summary>
+		public ResourceQuantity NetIncomeLessConstruction
+		{
+			get
+			{
+				return NetIncome - ConstructionSpending;
+			}
+		}
+
+		/// <summary>
 		/// Finds star systems explored by the empire.
 		/// </summary>
 		public IEnumerable<StarSystem> ExploredStarSystems

@@ -397,6 +397,7 @@ namespace FrEee.WinForms.Forms
 		private void btnQueues_Click(object sender, EventArgs e)
 		{
 			this.ShowChildForm(new ConstructionQueueListForm());
+			SetUpResourceDisplay();
 		}
 
 		private void btnEndTurn_Click(object sender, EventArgs e)
@@ -435,14 +436,7 @@ namespace FrEee.WinForms.Forms
 			SelectTab(AddTab(Galaxy.Current.CurrentEmpire.ExploredStarSystems.First()));
 
 			// set up resource display
-			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
-			resMin.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Minerals];
-			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
-			resOrg.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Organics];
-			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
-			resRad.Change = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Radioactives];
-			resRes.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Research];
-			resInt.Amount = Galaxy.Current.CurrentEmpire.NetIncome[Resource.Intelligence];
+			SetUpResourceDisplay();
 
 			// show research progress
 			BindResearch();
@@ -453,6 +447,19 @@ namespace FrEee.WinForms.Forms
 
 			// compute warp point connectivity
 			galaxyView.ComputeWarpPointConnectivity();
+		}
+
+		private void SetUpResourceDisplay()
+		{
+			var income = Empire.Current.NetIncomeLessConstruction;
+			resMin.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Minerals];
+			resMin.Change = income[Resource.Minerals];
+			resOrg.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Organics];
+			resOrg.Change = income[Resource.Organics];
+			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
+			resRad.Change = income[Resource.Radioactives];
+			resRes.Amount = income[Resource.Research];
+			resInt.Amount = income[Resource.Intelligence];
 		}
 
 		private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -758,6 +765,7 @@ namespace FrEee.WinForms.Forms
 							if (ctl is PlanetReport)
 								((PlanetReport)ctl).Invalidate();
 						}
+						SetUpResourceDisplay();
 					}
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
@@ -781,7 +789,10 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F6)
 				; // TODO - ships screen
 			else if (e.KeyCode == Keys.F7)
+			{
 				this.ShowChildForm(new ConstructionQueueListForm());
+				SetUpResourceDisplay();
+			}
 			else if (e.KeyCode == Keys.F10)
 				this.ShowChildForm(new LogForm(this));
 			else if (e.KeyCode == Keys.F12)
@@ -905,6 +916,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var form = new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue);
 				this.ShowChildForm(form);
+				SetUpResourceDisplay();
 			}
 		}
 
