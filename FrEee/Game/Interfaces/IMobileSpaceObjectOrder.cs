@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	/// <typeparam name="T">The type of mobile space object.</typeparam>
 	public interface IMobileSpaceObjectOrder<T> : IOrder<T>
-		where T : IMobileSpaceObject<T>
+		where T : IMobileSpaceObject
 	{
 	}
 }

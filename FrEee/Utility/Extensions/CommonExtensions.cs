@@ -969,5 +969,12 @@ namespace FrEee.Utility.Extensions
 		{
 			return o == null;
 		}
+
+		public static void IssueOrder<T>(this T obj, IOrder<T> order) where T : IOrderable
+		{
+			if (obj.Owner != Empire.Current)
+				throw new Exception("Cannot issue orders to another empire's objects.");
+			Empire.Current.IssueOrder(obj, order);
+		}
 	}
 }

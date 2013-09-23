@@ -55,6 +55,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnEvade, "Evade");
 			LoadButtonImage(btnWarp, "Warp");
 			LoadButtonImage(btnColonize, "Colonize");
+			LoadButtonImage(btnSentry, "Sentry");
 			LoadButtonImage(btnConstructionQueue, "ConstructionQueue");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
 			LoadButtonImage(btnPrevIdle, "Previous");
@@ -706,6 +707,7 @@ namespace FrEee.WinForms.Forms
 					btnEvade.Visible = value is IMobileSpaceObject;
 					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
 					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
@@ -749,6 +751,8 @@ namespace FrEee.WinForms.Forms
 					ChangeCommandMode(CommandMode.Warp, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.C && btnColonize.Visible)
 					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+				else if (e.KeyCode == Keys.Y && btnSentry.Visible)
+					((IMobileSpaceObject)SelectedSpaceObject).IssueOrder(new SentryOrder());
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
@@ -893,6 +897,12 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedSpaceObject != null)
 				ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
+		}
+
+		private void btnSentry_Click(object sender, EventArgs e)
+		{
+			if (SelectedSpaceObject != null)
+				((IMobileSpaceObject)SelectedSpaceObject).IssueOrder(new SentryOrder());
 		}
 
 		private void btnConstructionQueue_Click(object sender, EventArgs e)

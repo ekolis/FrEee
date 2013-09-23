@@ -11,9 +11,7 @@ namespace FrEee.Game.Interfaces
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }
-		void ExecuteOrders();
 		void RefillMovement();
-		bool CanWarp { get; }
 		int Speed { get; }
 
 		/// <summary>
@@ -36,7 +34,7 @@ namespace FrEee.Game.Interfaces
 	/// A space object which can be ordered to move.
 	/// </summary>
 	/// <typeparam name="T">The type of mobile space object.</typeparam>
-	public interface IMobileSpaceObject<T> : IMobileSpaceObject, IOrderable
+	public interface IMobileSpaceObject<out T> : IMobileSpaceObject, IOrderable
 		where T : IMobileSpaceObject<T>
 	{
 		
