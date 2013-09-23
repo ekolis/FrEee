@@ -1,4 +1,18 @@
-All images unless specified otherwise are the work of James "Combat Wombat" Phillips
-All code unless specified otherwise is the work of Edward "ekolis" Kolis
+Project Lead:
+	James Phillips (Combat Wombat)
 
-Quadrant map background "Hmm, thank you, NASA."
+Programming:
+	Ed Kolis (ekolis)
+	Kevin Seitz (guttsy)
+	Jon Sorensen (se5a)
+
+Art:
+	James Phillips (Combat Wombat)
+
+Special Thanks:
+	Aaron Hall - For creating Space Empires
+	Nick Dumas (Suicide Junkie) - For suggesting the title
+	NASA - For a nifty galaxy map background
+	All the denizens of #spaceempires and spaceempires.net - For their continued support
+
+FrEee is licensed under a Creative Commons Attribution Noncommercial License.
