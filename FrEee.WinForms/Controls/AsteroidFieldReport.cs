@@ -4,10 +4,11 @@ using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class AsteroidFieldReport : UserControl
+	public partial class AsteroidFieldReport : UserControl, IBindable<AsteroidField>
 	{
 		public AsteroidFieldReport()
 		{
@@ -31,11 +32,21 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				asteroidField = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		private void picPortrait_Click(object sender, System.EventArgs e)
+		{
+			picPortrait.ShowFullSize(AsteroidField.Name);
+		}
+
+		public void Bind(AsteroidField data)
+		{
+			AsteroidField = data;
+		}
+
+		public void Bind()
 		{
 			if (AsteroidField == null)
 				Visible = false;
@@ -60,13 +71,6 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = AsteroidField.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = AsteroidField.IntrinsicAbilities;
 			}
-
-			base.OnPaint(e);
-		}
-
-		private void picPortrait_Click(object sender, System.EventArgs e)
-		{
-			picPortrait.ShowFullSize(AsteroidField.Name);
 		}
 	}
 }

@@ -3,10 +3,11 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
-	public partial class StormReport : UserControl
+	public partial class StormReport : UserControl, IBindable<Storm>
 	{
 		public StormReport()
 		{
@@ -30,11 +31,11 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				storm = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
 			if (Storm == null)
 				Visible = false;
@@ -51,8 +52,12 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = Storm.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
 			}
+		}
 
-			base.OnPaint(e);
+		public void Bind(Storm data)
+		{
+			Storm = data;
+			Bind();
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)

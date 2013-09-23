@@ -20,6 +20,7 @@ using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using System.Threading;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Forms
 {
@@ -132,11 +133,7 @@ namespace FrEee.WinForms.Forms
 						// pursue
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-							if (report != null)
-								report.Invalidate();
+							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -168,11 +165,7 @@ namespace FrEee.WinForms.Forms
 						// evade
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
-							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
-							if (report != null)
-								report.Invalidate();
+							IssueSpaceObjectOrder(new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -204,9 +197,8 @@ namespace FrEee.WinForms.Forms
 						// warp
 						if (SelectedSpaceObject is AutonomousSpaceVehicle)
 						{
-							var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
-							Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new WarpOrder<AutonomousSpaceVehicle>(wp));
+							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
+							IssueSpaceObjectOrder(new WarpOrder<AutonomousSpaceVehicle>(wp));
 							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 							if (report != null)
 								report.Invalidate();
@@ -254,13 +246,14 @@ namespace FrEee.WinForms.Forms
 								{
 									foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
 									{
+										// TODO - prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
 										var loadPopOrder = new LoadCargoOrder(pHere);
 										loadPopOrder.AnyPopulationToLoad = null; // load all population
-										Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, loadPopOrder);
+										IssueSpaceObjectOrder(loadPopOrder);
 									}
 								}
-								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
-								Empire.Current.IssueOrder<AutonomousSpaceVehicle>(v, new ColonizeOrder(planet));
+								IssueSpaceObjectOrder(new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
+								IssueSpaceObjectOrder(new ColonizeOrder(planet));
 								var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
 								if (report != null)
 									report.Invalidate();
@@ -752,7 +745,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.C && btnColonize.Visible)
 					ChangeCommandMode(CommandMode.Colonize, SelectedSpaceObject);
 				else if (e.KeyCode == Keys.Y && btnSentry.Visible)
-					((IMobileSpaceObject)SelectedSpaceObject).IssueOrder(new SentryOrder());
+					IssueSpaceObjectOrder(new SentryOrder());
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
@@ -902,7 +895,7 @@ namespace FrEee.WinForms.Forms
 		private void btnSentry_Click(object sender, EventArgs e)
 		{
 			if (SelectedSpaceObject != null)
-				((IMobileSpaceObject)SelectedSpaceObject).IssueOrder(new SentryOrder());
+				IssueSpaceObjectOrder(new SentryOrder());
 		}
 
 		private void btnConstructionQueue_Click(object sender, EventArgs e)
@@ -1094,6 +1087,17 @@ namespace FrEee.WinForms.Forms
 				btn.Text = "";
 				btn.Image = pic;
 			}
+		}
+
+		private void IssueSpaceObjectOrder<T>(IOrder<T> order) where T : IOrderable, ISpaceObject
+		{
+			if (SelectedSpaceObject == null)
+				throw new Exception("No space object is selected to issue order \"" + order + "\" to.");
+			if (!(SelectedSpaceObject is T))
+				throw new Exception("Order \"" + order + "\" cannot be issued to objects of type " + SelectedSpaceObject.GetType() + ". It can only be issued to objects of type " + typeof(T) + ".");
+			((T)SelectedSpaceObject).IssueOrder(order);
+			if (pnlDetailReport.Controls.Count > 0 && pnlDetailReport.Controls[0] is IBindable)
+				((IBindable)pnlDetailReport.Controls[0]).Bind();
 		}
 	}
 }

@@ -1092,7 +1092,6 @@ namespace FrEee.WinForms.Controls
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "AutonomousSpaceVehicleReport";
 			this.Size = new System.Drawing.Size(300, 647);
-			this.Paint += new System.Windows.Forms.PaintEventHandler(this.AutonomousSpaceVehicleReport_Paint);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			this.gamePanel2.ResumeLayout(false);

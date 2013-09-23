@@ -1,12 +1,13 @@
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
+using FrEee.WinForms.Interfaces;
 
 namespace FrEee.WinForms.Controls
 {
 	/// <summary>
 	/// Displays a report on a star.
 	/// </summary>
-	public partial class StarReport : UserControl
+	public partial class StarReport : UserControl, IBindable<Star>
 	{
 		public StarReport()
 		{
@@ -30,11 +31,11 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				star = value;
-				Invalidate();
+				Bind();
 			}
 		}
 
-		protected override void OnPaint(PaintEventArgs e)
+		public void Bind()
 		{
 			if (Star == null)
 				Visible = false;
@@ -51,8 +52,12 @@ namespace FrEee.WinForms.Controls
 				foreach (var abil in Star.Abilities)
 					lstAbilities.Items.Add(abil.Description);
 			}
+		}
 
-			base.OnPaint(e);
+		public void Bind(Star data)
+		{
+			Star = data;
+			Bind();
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)
