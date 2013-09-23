@@ -387,7 +387,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void RemoveOrder(IConstructionOrder order)
+		private void RemoveOrder(IConstructionOrder order, bool rebindGui = true)
 		{
 			var cmds = Empire.Current.Commands.OfType<AddOrderCommand<ConstructionQueue>>().Where(o => o.Order == order).ToArray();
 			if (cmds.Any())
@@ -404,6 +404,14 @@ namespace FrEee.WinForms.Forms
 				newCommands.Add(cmd);
 			}
 			ConstructionQueue.Orders.Remove(order);
+			if (rebindGui)
+				BindQueueListView();
+		}
+
+		private void btnClear_Click(object sender, EventArgs e)
+		{
+			foreach (var order in ConstructionQueue.Orders.ToArray())
+				RemoveOrder(order);
 			BindQueueListView();
 		}
 	}
