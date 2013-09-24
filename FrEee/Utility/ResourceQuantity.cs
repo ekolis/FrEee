@@ -160,20 +160,30 @@ namespace FrEee.Utility
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
-				if (r1[key] <= r2[key])
+				if (r1[key] < r2[key])
 					return false;
 			}
-			return true;
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] > r2[key])
+					return true;
+			}
+			return false;
 		}
 
 		public static bool operator <(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			foreach (var key in r1.Keys.Union(r2.Keys))
 			{
-				if (r1[key] >= r2[key])
+				if (r1[key] > r2[key])
 					return false;
 			}
-			return true;
+			foreach (var key in r1.Keys.Union(r2.Keys))
+			{
+				if (r1[key] < r2[key])
+					return true;
+			}
+			return false;
 		}
 
 		public int CompareTo(ResourceQuantity other)
