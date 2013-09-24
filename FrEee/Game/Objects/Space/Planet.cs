@@ -729,5 +729,22 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return this.FindStarSystem(); }
 		}
+
+
+		public IDictionary<Race, long> AllPopulation
+		{
+			get
+			{
+				var dict = new SafeDictionary<Race, long>();
+				if (Colony != null)
+				{
+					foreach (var kvp in Colony.Population)
+						dict[kvp.Key] += kvp.Value;
+					foreach (var kvp in Colony.Cargo.Population)
+						dict[kvp.Key] += kvp.Value;
+				}
+				return dict;
+			}
+		}
 	}
 }

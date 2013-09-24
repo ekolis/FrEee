@@ -1053,9 +1053,9 @@ namespace FrEee.Utility.Extensions
 
 			// transfer any-population
 			var anyPopLeft = delta.AnyPopulation;
-			while (anyPopLeft > 0)
+			while (anyPopLeft == null || anyPopLeft > 0)
 			{
-				foreach (var kvp in src.Cargo.Population)
+				foreach (var kvp in src.AllPopulation)
 				{
 					var amount = long.MaxValue;
 

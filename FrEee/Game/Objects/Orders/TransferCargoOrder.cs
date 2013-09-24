@@ -17,7 +17,8 @@ namespace FrEee.Game.Objects.Orders
 	{
 		public TransferCargoOrder(bool isLoadOrder, CargoDelta cargoDelta, ICargoTransferrer target)
 		{
-			IsLoadOrder = IsLoadOrder;
+			Owner = Empire.Current;
+			IsLoadOrder = isLoadOrder;
 			CargoDelta = cargoDelta;
 			Target = target;
 		}
@@ -43,7 +44,12 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(ICargoTransferrer executor)
 		{
 			if (executor.FindSector() == Target.Sector)
-				executor.TransferCargo(CargoDelta, Target, executor.Owner);
+			{
+				if (IsLoadOrder)
+					Target.TransferCargo(CargoDelta, executor, executor.Owner);
+				else
+					executor.TransferCargo(CargoDelta, Target, executor.Owner);
+			}
 			else
 				executor.Owner.Log.Add(executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector."));
 			IsComplete = true;

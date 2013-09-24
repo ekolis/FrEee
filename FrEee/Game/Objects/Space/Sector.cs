@@ -153,5 +153,13 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return this; }
 		}
+
+		/// <summary>
+		/// Sectors don't contain population. (They kind of die in space...)
+		/// </summary>
+		public IDictionary<Race, long> AllPopulation
+		{
+			get { return new Dictionary<Race, long>(); }
+		}
 	}
 }

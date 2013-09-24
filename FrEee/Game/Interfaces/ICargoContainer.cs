@@ -54,5 +54,10 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="unit"></param>
 		bool RemoveUnit(Unit unit);
+
+		/// <summary>
+		/// All population stored by this cargo container, whether in a colony or in cargo.
+		/// </summary>
+		IDictionary<Race, long> AllPopulation { get; }
 	}
 }

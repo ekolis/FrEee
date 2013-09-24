@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>, ICargoContainer
+	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>, ICargoTransferrer
 	{
 		public AutonomousSpaceVehicle()
 		{
@@ -417,6 +417,12 @@ namespace FrEee.Game.Objects.Vehicles
 		public StarSystem StarSystem
 		{
 			get { return this.FindStarSystem(); }
+		}
+
+
+		public IDictionary<Race, long> AllPopulation
+		{
+			get { return Cargo.Population; }
 		}
 	}
 }
