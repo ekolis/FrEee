@@ -148,5 +148,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			return Name;
 		}
+
+		Sector ILocated.Sector
+		{
+			get { return this; }
+		}
 	}
 }

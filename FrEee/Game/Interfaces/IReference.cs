@@ -9,5 +9,6 @@ namespace FrEee.Game.Interfaces
 	{
 		long ID { get; }
 		T Value { get; }
+		void ReplaceClientIDs(IDictionary<long, long> idmap);
 	}
 }

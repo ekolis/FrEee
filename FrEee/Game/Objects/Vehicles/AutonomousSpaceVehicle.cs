@@ -408,5 +408,15 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			return false;
 		}
+
+		public Sector Sector
+		{
+			get { return this.FindSector(); }
+		}
+
+		public StarSystem StarSystem
+		{
+			get { return this.FindStarSystem(); }
+		}
 	}
 }

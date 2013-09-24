@@ -247,8 +247,9 @@ namespace FrEee.WinForms.Forms
 									foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
 									{
 										// TODO - prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
-										var loadPopOrder = new LoadCargoOrder(pHere);
-										loadPopOrder.AnyPopulationToLoad = null; // load all population
+										var delta = new CargoDelta();
+										delta.AnyPopulation = null; // load any and all population avaialble
+										var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
 										IssueSpaceObjectOrder(loadPopOrder);
 									}
 								}

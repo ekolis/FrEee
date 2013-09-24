@@ -719,5 +719,15 @@ namespace FrEee.Game.Objects.Space
 			}
 			return false;
 		}
+
+		public Sector Sector
+		{
+			get { return this.FindSector(); }
+		}
+
+		public StarSystem StarSystem
+		{
+			get { return this.FindStarSystem(); }
+		}
 	}
 }

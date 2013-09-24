@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Dispose()
 		{
-			// TODO - should really remove it from its space object's queue...
+			// TODO - remove from queue, but we don't know which object we're on...
 			Galaxy.Current.UnassignID(this);
 		}
 

@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object which can contain cargo.
 	/// </summary>
-	public interface ICargoContainer : IPictorial, INamed
+	public interface ICargoContainer : IPictorial, INamed, ILocated
 	{
 		/// <summary>
 		/// The cargo contained by this object.

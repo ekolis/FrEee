@@ -9,10 +9,15 @@ namespace FrEee.Utility
 	/// <summary>
 	/// A safe dictionary keyed with transparent refrences.
 	/// </summary>
-	public class ReferenceKeyedDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	public class ReferenceKeyedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IPromotable
 		where TKey : IReferrable
 	{
-		private SafeDictionary<Reference<TKey>, TValue> dict = new SafeDictionary<Reference<TKey>,TValue>();
+		public ReferenceKeyedDictionary()
+		{
+			dict = new SafeDictionary<Reference<TKey>, TValue>();
+		}
+
+		private SafeDictionary<Reference<TKey>, TValue> dict { get; set; }
 
 		public void Add(TKey key, TValue value)
 		{
@@ -100,6 +105,12 @@ namespace FrEee.Utility
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
 		{
 			return GetEnumerator();
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			foreach (var r in dict.Keys)
+				r.ReplaceClientIDs(idmap);
 		}
 	}
 }

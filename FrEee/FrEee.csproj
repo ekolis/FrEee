@@ -73,6 +73,7 @@
     <Compile Include="Game\Interfaces\IDesign.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObjectOrder.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Game\Objects\Orders\SentryOrder.cs" />
     <Compile Include="Game\Objects\Orders\EvadeOrder.cs" />
     <Compile Include="Game\Objects\Orders\PursueOrder.cs" />
-    <Compile Include="Game\Objects\Orders\LoadCargoOrder.cs" />
+    <Compile Include="Game\Objects\Orders\TransferCargoOrder.cs" />
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
@@ -249,6 +250,7 @@
     <Compile Include="Utility\Reference.cs" />
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
+    <Compile Include="Utility\ReferenceSet.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
