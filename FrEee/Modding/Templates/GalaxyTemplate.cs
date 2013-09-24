@@ -123,31 +123,33 @@ namespace FrEee.Modding.Templates
 			while (graph.Subgraphs.Count() > GameSetup.StarSystemGroups)
 			{
 				// pick 2 systems
-				ObjectLocation<StarSystem> startLocation, endLocation = null;
+				ObjectLocation<StarSystem> startLocation = null, endLocation = null;
 				var ssls = gal.StarSystemLocations;
 				var fewest = ssls.Min(ssl => GetWarpPointCount(ssl.Item));
 				if (fewest < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem && !triedEverything)
 				{
 					// place warp points where there aren't many to begin with
 					var candidates = ssls.Where(ssl => GetWarpPointCount(ssl.Item) == fewest);
-					startLocation = candidates.PickRandom();
-
-					// pick a nearby star system to create a warp point to
-					for (int dist = 1; dist < gal.Width + gal.Height; dist++)
+					foreach (var candidate in candidates.Shuffle())
 					{
-						var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(startLocation.Location) == dist);
-						nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
-						nearby = nearby.Where(ssl => AreWarpPointAnglesOk(startLocation, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
-						nearby = nearby.Where(ssl => !graph.GetExits(startLocation).Contains(ssl));
-						if (nearby.Any())
+						// pick a nearby star system to create a warp point to
+						for (int dist = 1; dist < gal.Width + gal.Height; dist++)
 						{
-							endLocation = nearby.PickRandom();
-							break;
+							var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(candidate.Location) == dist);
+							nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);
+							nearby = nearby.Where(ssl => AreWarpPointAnglesOk(candidate, ssl, gal, GameSetup.GalaxyTemplate.MinWarpPointAngle));
+							nearby = nearby.Where(ssl => !graph.GetExits(candidate).Contains(ssl));
+							if (nearby.Any())
+							{
+								startLocation = candidate;
+								endLocation = nearby.PickRandom();
+								break;
+							}
 						}
 					}
 
 					// time to give up and place warp points willy nilly (or give up for disconnected maps)?
-					if (endLocation == null)
+					if (startLocation == null || endLocation == null)
 					{
 						triedEverything = true;
 						continue;

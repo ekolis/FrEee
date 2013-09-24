@@ -456,14 +456,14 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Computes the angle from one point to the other.
-		/// Zero degrees is north, and positive is clockwise.
+		/// Zero degrees is east, and positive is counterclockwise.
 		/// </summary>
 		/// <param name="p"></param>
 		/// <param name="target"></param>
 		/// <returns></returns>
 		public static double AngleTo(this Point p, Point target)
 		{
-			return Math.Atan2(target.X - p.X, target.Y - p.Y) * 180d / Math.PI;
+			return Math.Atan2(target.Y - p.Y, target.X - p.X) * 180d / Math.PI;
 		}
 
 		/// <summary>
@@ -475,7 +475,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static double AngleTo(this PointF p, PointF target)
 		{
-			return Math.Atan2(target.X - p.X, p.Y - target.Y) * 180d / Math.PI;
+			return Math.Atan2(target.Y - p.Y, target.X - p.X) * 180d / Math.PI;
 		}
 
 		/// <summary>

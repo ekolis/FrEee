@@ -28,8 +28,8 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 		public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
 		{
 			var angle = here.Location.AngleTo(there.Location);
-			var x = Math.Sin(angle / 180d * Math.PI) * here.Item.Radius;
-			var y = Math.Cos(angle / 180d * Math.PI) * here.Item.Radius;
+			var y = Math.Sin(angle / 180d * Math.PI) * here.Item.Radius;
+			var x = Math.Cos(angle / 180d * Math.PI) * here.Item.Radius;
 			var multiplier = here.Item.Radius / Math.Max(Math.Abs(x), Math.Abs(y));
 			x *= multiplier;
 			y *= multiplier;
