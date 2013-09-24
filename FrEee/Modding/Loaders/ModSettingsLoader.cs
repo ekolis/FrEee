@@ -75,6 +75,7 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.PopulationSize = (double)(rec.GetNullInt("Population Mass", ref index) ?? 5) / settings.PopulationFactor;
 			settings.ReproductionDelay = rec.GetNullInt("Reproduction Check Frequency", ref index) ?? 1;
 
 			// TODO - load more settings
