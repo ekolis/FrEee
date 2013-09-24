@@ -1053,26 +1053,26 @@ namespace FrEee.Utility.Extensions
 
 			// transfer any-population
 			var anyPopLeft = delta.AnyPopulation;
-			while (anyPopLeft == null || anyPopLeft > 0)
+			foreach (var kvp in src.AllPopulation)
 			{
-				foreach (var kvp in src.AllPopulation)
-				{
-					var amount = long.MaxValue;
+				var amount = long.MaxValue;
 
-					// limit by desired amount to transfer
-					if (anyPopLeft != null)
-						amount = Math.Min(amount, anyPopLeft.Value);
-					// limit by amount available
-					amount = Math.Min(amount, kvp.Value);
-					// limit by amount of free space
-					amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
+				// limit by desired amount to transfer
+				if (anyPopLeft != null)
+					amount = Math.Min(amount, anyPopLeft.Value);
+				// limit by amount available
+				amount = Math.Min(amount, kvp.Value);
+				// limit by amount of free space
+				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
 
-					src.RemovePopulation(kvp.Key, amount);
-					dest.AddPopulation(kvp.Key, amount);
+				src.RemovePopulation(kvp.Key, amount);
+				dest.AddPopulation(kvp.Key, amount);
 
-					if (amount < anyPopLeft)
-						emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
-				}
+				if (amount < anyPopLeft)
+					emp.Log.Add(src.CreateLogMessage(src + " could transfer only " + amount.ToUnitString(true) + " of the desired " + kvp.Value.ToUnitString(true) + " general population to " + dest + " due to lack of population available or lack of storage space."));
+
+				if (amount == 0)
+					continue;
 			}
 
 			// transfer specific units
