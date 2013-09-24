@@ -44,5 +44,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			return Item.GetHashCode() ^ Location.GetHashCode();
 		}
+
+		public override string ToString()
+		{
+			return "(" + Location.X + ", " + Location.Y + ")" + ": " + Item;
+		}
 	}
 }
