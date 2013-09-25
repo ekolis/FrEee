@@ -489,7 +489,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public string ResearchGroup
 		{
-			get { throw new NotImplementedException(); }
+			get { return VehicleTypeName; }
 		}
 	}
 }
