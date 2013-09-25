@@ -722,7 +722,6 @@
 			this.lstComponentsInstalled.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsInstalled.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsInstalled.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsInstalled_ItemMouseHover);
-			this.lstComponentsInstalled.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseClick);
 			this.lstComponentsInstalled.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsInstalled_MouseDown);
 			// 
 			// gamePanel1
@@ -754,7 +753,7 @@
 			this.lstComponentsAvailable.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsAvailable.View = System.Windows.Forms.View.Tile;
 			this.lstComponentsAvailable.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstComponentsAvailable_ItemMouseHover);
-			this.lstComponentsAvailable.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseClick);
+			this.lstComponentsAvailable.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsAvailable_MouseDown);
 			// 
 			// btnHull
 			// 

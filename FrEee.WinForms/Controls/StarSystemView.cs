@@ -20,7 +20,7 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 			BackColor = Color.Black;
 			this.SizeChanged += StarSystemView_SizeChanged;
-			this.MouseClick += StarSystemView_MouseClicked;
+			this.MouseDown += StarSystemView_MouseDowned;
 			DoubleBuffered = true;
 		}
 
@@ -41,7 +41,7 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		public event SectorSelectionDelegate SectorSelected;
 
-		void StarSystemView_MouseClicked(object sender, MouseEventArgs e)
+		void StarSystemView_MouseDowned(object sender, MouseEventArgs e)
 		{
 			if (SectorClicked != null)
 				SectorClicked(this, GetSectorAtPoint(e.Location));

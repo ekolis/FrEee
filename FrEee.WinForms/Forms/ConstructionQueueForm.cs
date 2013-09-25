@@ -236,7 +236,7 @@ namespace FrEee.WinForms.Forms
 			resCostRad.Amount = 0;
 		}
 
-		private void lstShips_MouseClick(object sender, MouseEventArgs e)
+		private void lstShips_MouseDown(object sender, MouseEventArgs e)
 		{
 			var item = lstShips.GetItemAt(e.X, e.Y);
 			if (item != null)
@@ -265,7 +265,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void lstQueue_MouseClick(object sender, MouseEventArgs e)
+		private void lstQueue_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{
@@ -273,7 +273,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void lstFacilities_MouseClick(object sender, MouseEventArgs e)
+		private void lstFacilities_MouseDown(object sender, MouseEventArgs e)
 		{
 			var item = lstFacilities.GetItemAt(e.X, e.Y);
 			if (item != null)

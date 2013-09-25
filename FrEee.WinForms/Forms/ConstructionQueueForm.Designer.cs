@@ -320,7 +320,7 @@
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
 			this.lstQueue.View = System.Windows.Forms.View.Details;
-			this.lstQueue.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseClick);
+			this.lstQueue.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseDown);
 			this.lstQueue.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstQueue_MouseDoubleClick);
 			// 
 			// Item
@@ -479,7 +479,7 @@
 			this.lstShips.UseCompatibleStateImageBehavior = false;
 			this.lstShips.View = System.Windows.Forms.View.Details;
 			this.lstShips.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstShips_ItemMouseHover);
-			this.lstShips.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstShips_MouseClick);
+			this.lstShips.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstShips_MouseDown);
 			this.lstShips.MouseLeave += new System.EventHandler(this.lstShips_MouseLeave);
 			// 
 			// colShipItem
@@ -521,7 +521,7 @@
 			this.lstFacilities.UseCompatibleStateImageBehavior = false;
 			this.lstFacilities.View = System.Windows.Forms.View.Details;
 			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
-			this.lstFacilities.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseClick);
+			this.lstFacilities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDown);
 			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
 			// 
 			// colFacilityItem

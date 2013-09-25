@@ -518,7 +518,7 @@ namespace FrEee.WinForms.Controls
 			this.lstComponents.TabIndex = 24;
 			this.lstComponents.UseCompatibleStateImageBehavior = false;
 			this.lstComponents.View = System.Windows.Forms.View.Tile;
-			this.lstComponents.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponents_MouseClick);
+			this.lstComponents.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponents_MouseDown);
 			// 
 			// DesignReport
 			// 

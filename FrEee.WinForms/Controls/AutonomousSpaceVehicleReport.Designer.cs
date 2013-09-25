@@ -409,7 +409,7 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsSummary.TileSize = new System.Drawing.Size(64, 64);
 			this.lstComponentsSummary.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsSummary.View = System.Windows.Forms.View.Tile;
-			this.lstComponentsSummary.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsSummary_MouseClick);
+			this.lstComponentsSummary.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsSummary_MouseDown);
 			// 
 			// columnHeader2
 			// 
@@ -839,7 +839,7 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.TabIndex = 24;
 			this.lstComponentsDetail.UseCompatibleStateImageBehavior = false;
 			this.lstComponentsDetail.View = System.Windows.Forms.View.Details;
-			this.lstComponentsDetail.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsDetail_MouseClick);
+			this.lstComponentsDetail.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsDetail_MouseDown);
 			// 
 			// columnHeader1
 			// 

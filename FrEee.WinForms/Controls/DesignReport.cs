@@ -100,7 +100,7 @@ namespace FrEee.WinForms.Controls
 			Bind();
 		}
 
-		private void lstComponents_MouseClick(object sender, MouseEventArgs e)
+		private void lstComponents_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{

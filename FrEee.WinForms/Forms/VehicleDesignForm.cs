@@ -403,25 +403,14 @@ namespace FrEee.WinForms.Forms
 
 		private void lstComponentsInstalled_MouseDown(object sender, MouseEventArgs e)
 		{
-
-		}
-
-		private void picPortrait_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (Design != null && Design.Hull != null)
-				picPortrait.ShowFullSize(Design.Hull.Name);
-		}
-
-		private void lstComponentsAvailable_MouseClick(object sender, MouseEventArgs e)
-		{
 			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
 				var mct = (MountedComponentTemplate)item.Tag;
 				if (e.Button == MouseButtons.Left)
 				{
-					// add to design
-					Design.Components.Add(mct);
+					// remove from design
+					Design.Components.Remove(mct);
 					BindInstalledComponents();
 					BindDesignData();
 				}
@@ -435,17 +424,22 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void lstComponentsInstalled_MouseClick(object sender, MouseEventArgs e)
+		private void picPortrait_MouseDown(object sender, MouseEventArgs e)
 		{
+			if (Design != null && Design.Hull != null)
+				picPortrait.ShowFullSize(Design.Hull.Name);
+		}
 
+		private void lstComponentsAvailable_MouseDown(object sender, MouseEventArgs e)
+		{
 			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
 				var mct = (MountedComponentTemplate)item.Tag;
 				if (e.Button == MouseButtons.Left)
 				{
-					// remove from design
-					Design.Components.Remove(mct);
+					// add to design
+					Design.Components.Add(mct);
 					BindInstalledComponents();
 					BindDesignData();
 				}

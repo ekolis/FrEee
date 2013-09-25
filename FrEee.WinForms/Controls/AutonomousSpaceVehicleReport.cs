@@ -254,7 +254,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private void lstComponentsSummary_MouseClick(object sender, MouseEventArgs e)
+		private void lstComponentsSummary_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{
@@ -269,7 +269,7 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private void lstComponentsDetail_MouseClick(object sender, MouseEventArgs e)
+		private void lstComponentsDetail_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == MouseButtons.Right)
 			{

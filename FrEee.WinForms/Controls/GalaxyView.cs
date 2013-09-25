@@ -19,7 +19,7 @@ namespace FrEee.WinForms.Controls
 			InitializeComponent();
 			BackColor = Color.Black;
 			this.SizeChanged += GalaxyView_SizeChanged;
-			this.MouseClick += GalaxyView_MouseClick;
+			this.MouseDown += GalaxyView_MouseDown;
 			DoubleBuffered = true;
 		}
 
@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		public event StarSystemSelectionDelegate StarSystemSelected;
 
-		void GalaxyView_MouseClick(object sender, MouseEventArgs e)
+		void GalaxyView_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (StarSystemClicked != null)
 				StarSystemClicked(this, GetStarSystemAtPoint(e.Location));
