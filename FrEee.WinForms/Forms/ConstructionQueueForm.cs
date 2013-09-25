@@ -28,7 +28,8 @@ namespace FrEee.WinForms.Forms
 
 			ConstructionQueue = queue;
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		private void ConstructionQueueForm_Load(object sender, EventArgs e)
@@ -166,11 +167,13 @@ namespace FrEee.WinForms.Forms
 			{
 				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current) && !d.IsObsolete));
+				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family));
 			}
 			else
 			{
 				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current)));
+				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
 			}
 		}
 
@@ -202,6 +205,67 @@ namespace FrEee.WinForms.Forms
 					i++;
 				}
 			}
+		}
+
+		private void BindUpgradeListView(IEnumerable<FacilityTemplate> templates)
+		{
+			int i = 0;
+			var ilFacil = new ImageList();
+			ilFacil.ImageSize = new Size(32, 32);
+			lstFacilities.LargeImageList = ilFacil;
+			lstFacilities.SmallImageList = ilFacil;
+			lstFacilities.Items.Clear();
+			if (ConstructionQueue.Colony != null)
+			{
+				foreach (var g in ConstructionQueue.Colony.Facilities.GroupBy(f => f.Template))
+				{
+					var oldf = g.Key;
+
+					// facilites which are not yet upgraded
+					var count = g.Count() - ConstructionQueue.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.OldTemplate == oldf).Count();
+
+					if (count > 0)
+					{
+						foreach (var newf in templates)
+						{
+							if (ConstructionQueue.CanConstruct(newf))
+							{
+								var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g2 => g2.Header == newf.Group);
+								if (group == null)
+								{
+									group = new ListViewGroup(newf.Group);
+									lstFacilities.Groups.Add(group);
+								}
+								string name;
+								if (count == 1)
+									name = oldf.Name;
+								else
+									name = count + "x " + oldf.Name;
+								var item = new ListViewItem(name + " to " + newf.Name, i, group);
+								item.ImageIndex = i;
+								item.Tag = new FacilityUpgrade(oldf, newf);
+								var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+								var eta = Math.Ceiling(cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]));
+								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
+								ilFacil.Images.Add(newf.Icon);
+								lstFacilities.Items.Add(item);
+								i++;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		private class FacilityUpgrade
+		{
+			public FacilityUpgrade(FacilityTemplate old, FacilityTemplate nu)
+			{
+				Old = old;
+				New = nu;
+			}
+			public FacilityTemplate Old { get; set; }
+			public FacilityTemplate New { get; set; }
 		}
 
 		private void BindShipListView(IEnumerable<IDesign> designs)
@@ -413,6 +477,48 @@ namespace FrEee.WinForms.Forms
 			foreach (var order in ConstructionQueue.Orders.ToArray())
 				RemoveOrder(order);
 			BindQueueListView();
+		}
+
+		private void lstUpgrades_MouseLeave(object sender, EventArgs e)
+		{
+			ClearDetails();
+		}
+
+		private void lstUpgrades_MouseDown(object sender, MouseEventArgs e)
+		{
+			var item = lstFacilities.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				if (e.Button == MouseButtons.Left)
+				{
+					var upgrade = (FacilityUpgrade)item.Tag;
+					var order = new UpgradeFacilityOrder(upgrade.Old, upgrade.New);
+					ConstructionQueue.Orders.Add(order);
+					var cmd = new AddOrderCommand<ConstructionQueue>
+					(
+						Galaxy.Current.CurrentEmpire,
+						ConstructionQueue,
+						order
+					);
+					newCommands.Add(cmd);
+					BindQueueListView();
+					IEnumerable<FacilityTemplate> templates;
+					if (chkOnlyLatest.Checked)
+						templates = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family);
+					else
+						templates = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any());
+					BindUpgradeListView(templates);
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// TODO - display detailed report on new facility template
+				}
+			}
+		}
+
+		private void lstUpgrades_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+		{
+
 		}
 	}
 }

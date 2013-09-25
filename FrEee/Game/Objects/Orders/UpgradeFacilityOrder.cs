@@ -20,9 +20,11 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class UpgradeFacilityOrder : IConstructionOrder
 	{
-		public UpgradeFacilityOrder()
+		public UpgradeFacilityOrder(FacilityTemplate old, FacilityTemplate nu)
 		{
 			Owner = Empire.Current;
+			OldTemplate = old;
+			NewTemplate = nu;
 		}
 
 		/// <summary>
