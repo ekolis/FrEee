@@ -34,7 +34,11 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
-			settings.MaintenanceDeficitToDestroyOneShip = rec.GetInt("Maintenance Cost Amt Per Dead", ref index);
+			settings.UpgradeFacilityPercentCost = rec.GetNullInt("Upgrade Facility Percent Cost", ref index) ?? 50;
+
+			// TODO - load more settings
+
+			settings.MaintenanceDeficitToDestroyOneShip = rec.GetNullInt("Maintenance Cost Amt Per Dead", ref index) ?? 20000;
 			settings.ShipBaseMaintenanceRate = rec.GetNullInt("Empire Ship And Base Percent Maint Cost", ref index) ?? rec.GetInt("Empire Starting Percent Maint Cost", ref index);
 			settings.UnitMaintenanceRate = rec.GetNullInt("Empire Unit Percent Maint Cost", ref index) ?? 0;
 			settings.UnitMaintenanceRate = rec.GetNullInt("Empire Facility Percent Maint Cost", ref index) ?? 0;

@@ -82,8 +82,8 @@ namespace FrEee.WinForms.Forms
 				var item = new ListViewItem(order.Template.Name);
 				item.Tag = order;
 				item.UseItemStyleForSubItems = false;
-				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Template.Cost[res] / (double)ConstructionQueue.Rate[res]));
-				var remainingCost = order.Template.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
+				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)ConstructionQueue.Rate[res]));
+				var remainingCost = order.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
 				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
 				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];

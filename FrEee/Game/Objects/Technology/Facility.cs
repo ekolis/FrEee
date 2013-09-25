@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IReferrable, IContainable<Planet>
+	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -217,9 +217,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (Container != null)
 				Container.Colony.Facilities.Remove(this);
-			Galaxy.Current.UnassignID(this);	
 		}
-
-		public long ID { get; set; }
 	}
 }

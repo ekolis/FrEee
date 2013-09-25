@@ -141,5 +141,11 @@ namespace FrEee.Game.Objects.Orders
 				return isComplete.Value;
 			}
 		}
+
+
+		public ResourceQuantity Cost
+		{
+			get { return Template.Cost; }
+		}
 	}
 }

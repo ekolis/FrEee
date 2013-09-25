@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -28,16 +29,19 @@ namespace FrEee.Game.Objects.Orders
 		/// The template of the facility being upgraded to.
 		/// </summary>
 		[DoNotSerialize]
-		public FacilityTemplate Template { get { return template; } set { template = value; } }
+		public FacilityTemplate NewTemplate { get { return newTemplate; } set { newTemplate = value; } }
 
-		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
+		IConstructionTemplate IConstructionOrder.Template { get { return newTemplate.Value; } }
 
-		private Reference<FacilityTemplate> template { get; set; }
+		private Reference<FacilityTemplate> newTemplate { get; set; }
 
+		/// <summary>
+		/// The template of the old facility being upgraded.
+		/// </summary>
 		[DoNotSerialize]
-		public Facility OldFacility { get { return oldFacility; } set { oldFacility = value; } }
+		public FacilityTemplate OldTemplate { get { return oldTemplate; } set { oldTemplate = value; } }
 
-		private Reference<Facility> oldFacility;
+		private Reference<FacilityTemplate> oldTemplate { get; set; }
 
 		/// <summary>
 		/// The facility being built.
@@ -59,17 +63,17 @@ namespace FrEee.Game.Objects.Orders
 				// create item if needed
 				if (NewFacility == null)
 				{
-					NewFacility = Template.Instantiate();
+					NewFacility = NewTemplate.Instantiate();
 					NewFacility.Owner = queue.Owner;
 				}
 
 				// apply build rate
-				var costLeft = NewFacility.Cost - NewFacility.ConstructionProgress;
+				var costLeft = Cost - NewFacility.ConstructionProgress;
 				var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
 				if (spending < queue.Owner.StoredResources)
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					queue.SpaceObject.CreateLogMessage("Construction of " + Template + " at " + queue.SpaceObject + " was delayed due to lack of resources.");
+					queue.SpaceObject.CreateLogMessage("Construction of " + NewTemplate + " at " + queue.SpaceObject + " was delayed due to lack of resources.");
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
@@ -78,8 +82,8 @@ namespace FrEee.Game.Objects.Orders
 				// if we're done, delete the old facility and replace it with this one
 				if (IsComplete)
 				{
-					var planet = OldFacility.Container;
-					OldFacility.Dispose();
+					var planet = (Planet)queue.SpaceObject;
+					planet.Colony.Facilities.Where(f => f.Template == OldTemplate).First().Dispose();
 					planet.Colony.Facilities.Add(NewFacility);
 				}
 			}
@@ -118,18 +122,26 @@ namespace FrEee.Game.Objects.Orders
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
-			template.ReplaceClientIDs(idmap);
+			newTemplate.ReplaceClientIDs(idmap);
 		}
 
 		public long ID { get; set; }
 
 		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
 		{
-			// validate that new facility is unlocked and is in the same family as the old facility
-			if (!queue.Owner.HasUnlocked(Template))
-				yield return OldFacility.CreateLogMessage(OldFacility + " on " + OldFacility.Container + " could not be upgraded to a " + Template + " because we have not yet researched the " + Template + ".");
-			if (Template.Family != OldFacility.Template.Family)
-				yield return OldFacility.CreateLogMessage(OldFacility + " on " + OldFacility.Container + " could not be upgraded to a " + Template + " because facilities cannot be upgraded to facilities of a different family.");
+			// validate that new facility is unlocked
+			if (!queue.Owner.HasUnlocked(NewTemplate))
+				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.SpaceObject + " could not be upgraded to a " + NewTemplate + " because we have not yet researched the " + NewTemplate + ".");
+
+			// validate that new and old facilities are in the same family
+			if (NewTemplate.Family != OldTemplate.Family)
+				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.SpaceObject + " could not be upgraded to a " + NewTemplate + " because facilities cannot be upgraded to facilities of a different family.");
+
+			// validate that there is a facility to upgrade
+			var planet = (Planet)queue.SpaceObject;
+			var colony = planet.Colony;
+			if (!colony.Facilities.Any(f => f.Template == OldTemplate))
+				yield return planet.CreateLogMessage("There are no " + OldTemplate + "s on " + planet + " to upgrade.");
 		}
 
 		public bool CheckCompletion(ConstructionQueue queue)
@@ -153,6 +165,12 @@ namespace FrEee.Game.Objects.Orders
 					throw new InvalidOperationException("Cannot call IsComplete on a ConstructionOrder without first calling CheckCompletion with a construction queue.");
 				return isComplete.Value;
 			}
+		}
+
+
+		public ResourceQuantity Cost
+		{
+			get { return NewTemplate.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100; }
 		}
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Objects.Civilization;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,5 +18,10 @@ namespace FrEee.Game.Interfaces
 		/// The item being constructed.
 		/// </summary>
 		IConstructable Item { get; }
+
+		/// <summary>
+		/// The cost of the construction.
+		/// </summary>
+		ResourceQuantity Cost { get; }
 	}
 }
