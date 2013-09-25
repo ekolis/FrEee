@@ -18,6 +18,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using System.Threading;
 using System.Windows.Threading;
+using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.Forms
 {
@@ -28,7 +29,8 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 			ShowComponentDetails(null);
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		public VehicleDesignForm(IHull<IVehicle> hull)
@@ -37,7 +39,8 @@ namespace FrEee.WinForms.Forms
 			ShowComponentDetails(null);
 			Design = FrEee.Game.Objects.Vehicles.Design.Create(hull);
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		public VehicleDesignForm(IDesign design)
@@ -46,7 +49,8 @@ namespace FrEee.WinForms.Forms
 			ShowComponentDetails(null);
 			Design = design;
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		private IDesign design;
@@ -397,48 +401,62 @@ namespace FrEee.WinForms.Forms
 			BindAvailableComponents();
 		}
 
-		private void lstComponentsAvailable_MouseDown(object sender, MouseEventArgs e)
-		{
-			if (e.Button == MouseButtons.Left)
-			{
-				var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
-				if (item != null)
-				{
-					var mct = (MountedComponentTemplate)item.Tag;
-					Design.Components.Add(mct);
-					BindInstalledComponents();
-					BindDesignData();
-				}
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				// TODO - show mounted component template report
-			}
-		}
-
 		private void lstComponentsInstalled_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Left)
-			{
-				var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
-				if (item != null)
-				{
-					var mct = (MountedComponentTemplate)item.Tag;
-					Design.Components.Remove(mct);
-					BindInstalledComponents();
-					BindDesignData();
-				}
-			}
-			else if (e.Button == MouseButtons.Right)
-			{
-				// TODO - show mounted component template report
-			}
+
 		}
 
 		private void picPortrait_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (Design != null && Design.Hull != null)
 				picPortrait.ShowFullSize(Design.Hull.Name);
+		}
+
+		private void lstComponentsAvailable_MouseClick(object sender, MouseEventArgs e)
+		{
+			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var mct = (MountedComponentTemplate)item.Tag;
+				if (e.Button == MouseButtons.Left)
+				{
+					// add to design
+					Design.Components.Add(mct);
+					BindInstalledComponents();
+					BindDesignData();
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// show report
+					var report = new ComponentReport(mct);
+					var form = report.CreatePopupForm(mct.Name);
+					form.ShowDialog();
+				}
+			}
+		}
+
+		private void lstComponentsInstalled_MouseClick(object sender, MouseEventArgs e)
+		{
+
+			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var mct = (MountedComponentTemplate)item.Tag;
+				if (e.Button == MouseButtons.Left)
+				{
+					// remove from design
+					Design.Components.Remove(mct);
+					BindInstalledComponents();
+					BindDesignData();
+				}
+				else if (e.Button == MouseButtons.Right)
+				{
+					// show report
+					var report = new ComponentReport(mct);
+					var form = report.CreatePopupForm(mct.Name);
+					form.ShowDialog();
+				}
+			}
 		}
 	}
 }

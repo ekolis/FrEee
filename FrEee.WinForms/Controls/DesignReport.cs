@@ -7,6 +7,7 @@ using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
 using FrEee.Utility;
 using FrEee.WinForms.Interfaces;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Controls
 {
@@ -97,6 +98,21 @@ namespace FrEee.WinForms.Controls
 		{
 			Design = data;
 			Bind();
+		}
+
+		private void lstComponents_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var item = lstComponents.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var g = (IGrouping<MountedComponentTemplate, MountedComponentTemplate>)item.Tag;
+					var mct = g.Key;
+					var form = new ComponentReport(mct).CreatePopupForm(mct.Name);
+					form.ShowDialog();
+				}
+			}
 		}
 	}
 }

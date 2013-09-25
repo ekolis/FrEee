@@ -42,6 +42,7 @@
 			this.treeAbilities.Name = "treeAbilities";
 			this.treeAbilities.Size = new System.Drawing.Size(150, 150);
 			this.treeAbilities.TabIndex = 0;
+			this.treeAbilities.BeforeSelect += new System.Windows.Forms.TreeViewCancelEventHandler(this.treeAbilities_BeforeSelect);
 			// 
 			// AbilityTreeView
 			// 

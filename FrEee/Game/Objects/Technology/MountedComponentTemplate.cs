@@ -230,7 +230,7 @@ namespace FrEee.Game.Objects.Technology
 					foreach (var d in w.Damage.Skip(-Mount.WeaponRangeModifier + 1))
 						dmg.Add(d * Mount.WeaponDamagePercent / 100);
 				}
-				return dmg.ToArray();
+				return dmg.Take(Math.Min(dmg.Count, 21)).ToArray();
 			}
 		}
 

@@ -55,5 +55,11 @@ namespace FrEee.WinForms.Controls
 				}
 			}
 		}
+
+		private void treeAbilities_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+		{
+			// don't allow selection
+			e.Cancel = true;
+		}
 	}
 }

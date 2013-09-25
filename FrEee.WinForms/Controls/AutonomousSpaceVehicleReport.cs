@@ -10,6 +10,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Utility;
 using FrEee.WinForms.Interfaces;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Controls
 {
@@ -212,7 +213,7 @@ namespace FrEee.WinForms.Controls
 				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
 				{
 					var text = g.Any(c => c.IsDestroyed) ? g.Where(c => !c.IsDestroyed).Count() + " / " + g.Count() : g.Count().ToString();
-					lstComponentsSummary.AddItemWithImage(null, text, g.First(), g.First().Template.Icon);
+					lstComponentsSummary.AddItemWithImage(g.Key.ComponentTemplate.Group, text, g, g.First().Template.Icon);
 				}
 
 				// cargo summary
@@ -231,22 +232,12 @@ namespace FrEee.WinForms.Controls
 				// component detail
 				txtComponentsFunctionalDetail.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsDetail.Initialize(32, 32);
-				foreach (var g in vehicle.Components.GroupBy(c => c.Template))
+				foreach (var g in vehicle.Components.GroupBy(c => new ComponentGroup(c.Template, c.Hitpoints)))
 				{
-					var alive = g.Where(c => !c.IsDestroyed);
-					var dead = g.Where(c => c.IsDestroyed);
-					if (alive.Count() > 0)
-					{
-						var leasthp = alive.Min(c => c.Hitpoints);
-						var mosthp = alive.Max(c => c.Hitpoints);
-						var maxhp = g.Key.Durability;
-						if (leasthp == mosthp)
-							lstComponentsDetail.AddItemWithImage(null, alive.Count() + "x " + g.First().Name + " (" + leasthp + " HP each)", g.First(), g.First().Template.Icon);
-						else
-							lstComponentsDetail.AddItemWithImage(null, alive.Count() + "x " + g.First().Name + " (" + leasthp + "-" + mosthp + " HP each)", g.First(), g.First().Template.Icon);
-					}
-					if (dead.Count() > 0)
-						lstComponentsDetail.AddItemWithImage(null, dead.Count() + "x Destroyed " + g.First().Name, g.First(), g.First().Template.Icon);
+					if (g.Count() > 1)
+						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Count() + "x " + g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon);
+					else
+						lstComponentsDetail.AddItemWithImage(g.Key.Template.ComponentTemplate.Group, g.Key.Template.Name + " (" + g.Key.Hitpoints + " / " + g.Key.Template.Durability + " HP)", g.Key, g.First().Icon);
 				}
 
 				// cargo detail
@@ -260,6 +251,91 @@ namespace FrEee.WinForms.Controls
 				// abilities
 				abilityTreeView.Abilities = Vehicle.UnstackedAbilities.StackToTree();
 				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities));
+			}
+		}
+
+		private void lstComponentsSummary_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var item = lstComponentsSummary.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var g = (IGrouping<MountedComponentTemplate, Component>)item.Tag;
+					var mct = g.Key;
+					var form = new ComponentReport(mct).CreatePopupForm(mct.Name);
+					form.ShowDialog();
+				}
+			}
+		}
+
+		private void lstComponentsDetail_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var item = lstComponentsDetail.GetItemAt(e.X, e.Y);
+				if (item != null)
+				{
+					var g = (ComponentGroup)item.Tag;
+					var form = new ComponentReport(g.SampleComponent).CreatePopupForm(g.Template.Name);
+					form.ShowDialog();
+				}
+			}
+		}
+
+		private class ComponentGroup
+		{
+			public ComponentGroup(MountedComponentTemplate mct, int hitpoints)
+			{
+				Template = mct;
+				Hitpoints = hitpoints;
+			}
+
+			public MountedComponentTemplate Template
+			{
+				get;
+				private set;
+			}
+
+			public int Hitpoints
+			{
+				get;
+				private set;
+			}
+
+			public static bool operator ==(ComponentGroup g1, ComponentGroup g2)
+			{
+				return g1.Template == g2.Template && g1.Hitpoints == g2.Hitpoints;
+			}
+
+			public static bool operator !=(ComponentGroup g1, ComponentGroup g2)
+			{
+				return !(g1 == g2);
+			}
+
+			public override bool Equals(object obj)
+			{
+				if (obj is ComponentGroup)
+				{
+					var g = (ComponentGroup)obj;
+					return this == g;
+				}
+				return false;
+			}
+
+			public override int GetHashCode()
+			{
+				return Template.GetHashCode() ^ Hitpoints.GetHashCode();
+			}
+
+			public Component SampleComponent
+			{
+				get
+				{
+					var c = new Component(Template);
+					c.Hitpoints = Hitpoints;
+					return c;
+				}
 			}
 		}
 	}

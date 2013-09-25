@@ -1229,5 +1229,25 @@ namespace FrEee.Utility.Extensions
 					throw new Exception("No type is available for vehicle type " + vt);
 			}
 		}
+
+		public static bool IsDirectFire(this WeaponTypes wt)
+		{
+			return wt == WeaponTypes.DirectFire || wt == WeaponTypes.DirectFirePointDefense;
+		}
+
+		public static bool IsSeeking(this WeaponTypes wt)
+		{
+			return wt == WeaponTypes.Seeking || wt == WeaponTypes.SeekingPointDefense;
+		}
+
+		public static bool IsWarhead(this WeaponTypes wt)
+		{
+			return wt == WeaponTypes.Warhead || wt == WeaponTypes.WarheadPointDefense;
+		}
+
+		public static bool IsPointDefense(this WeaponTypes wt)
+		{
+			return wt == WeaponTypes.DirectFirePointDefense || wt == WeaponTypes.SeekingPointDefense || wt == WeaponTypes.WarheadPointDefense;
+		}
 	}
 }

@@ -28,18 +28,18 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem25 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem26 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem27 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem28 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem29 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem30 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem34 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem35 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem36 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
 			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -56,9 +56,11 @@ namespace FrEee.WinForms.Controls
 			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstCargoSummary = new System.Windows.Forms.ListView();
+			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.lblCargo = new System.Windows.Forms.Label();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstComponentsSummary = new System.Windows.Forms.ListView();
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.pnlStats = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.lblSupplies = new System.Windows.Forms.Label();
@@ -88,6 +90,7 @@ namespace FrEee.WinForms.Controls
 			this.pageComps = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctionalDetail = new System.Windows.Forms.Label();
 			this.lstComponentsDetail = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.pageCargo = new System.Windows.Forms.TabPage();
 			this.txtCargoSpaceFreeDetail = new System.Windows.Forms.Label();
 			this.lstCargoDetail = new System.Windows.Forms.ListView();
@@ -337,17 +340,26 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstCargoSummary.BackColor = System.Drawing.Color.Black;
 			this.lstCargoSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstCargoSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3});
 			this.lstCargoSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
+			this.lstCargoSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem25,
-            listViewItem26,
-            listViewItem27});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
-			this.lstCargoSummary.Size = new System.Drawing.Size(271, 92);
+			this.lstCargoSummary.Size = new System.Drawing.Size(264, 92);
 			this.lstCargoSummary.TabIndex = 23;
+			this.lstCargoSummary.TileSize = new System.Drawing.Size(64, 64);
 			this.lstCargoSummary.UseCompatibleStateImageBehavior = false;
+			this.lstCargoSummary.View = System.Windows.Forms.View.Tile;
+			// 
+			// columnHeader3
+			// 
+			this.columnHeader3.Width = 198;
 			// 
 			// lblCargo
 			// 
@@ -381,17 +393,27 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstComponentsSummary.BackColor = System.Drawing.Color.Black;
 			this.lstComponentsSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstComponentsSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
 			this.lstComponentsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem28,
-            listViewItem29,
-            listViewItem30});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
-			this.lstComponentsSummary.Size = new System.Drawing.Size(271, 92);
+			this.lstComponentsSummary.Size = new System.Drawing.Size(264, 92);
 			this.lstComponentsSummary.TabIndex = 23;
+			this.lstComponentsSummary.TileSize = new System.Drawing.Size(64, 64);
 			this.lstComponentsSummary.UseCompatibleStateImageBehavior = false;
+			this.lstComponentsSummary.View = System.Windows.Forms.View.Tile;
+			this.lstComponentsSummary.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsSummary_MouseClick);
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Width = 164;
 			// 
 			// pnlStats
 			// 
@@ -786,6 +808,7 @@ namespace FrEee.WinForms.Controls
 			// txtComponentsFunctionalDetail
 			// 
 			this.txtComponentsFunctionalDetail.AutoSize = true;
+			this.txtComponentsFunctionalDetail.Dock = System.Windows.Forms.DockStyle.Top;
 			this.txtComponentsFunctionalDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtComponentsFunctionalDetail.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.txtComponentsFunctionalDetail.Location = new System.Drawing.Point(3, 3);
@@ -801,18 +824,26 @@ namespace FrEee.WinForms.Controls
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstComponentsDetail.BackColor = System.Drawing.Color.Black;
 			this.lstComponentsDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstComponentsDetail.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
 			this.lstComponentsDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
+			this.lstComponentsDetail.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem31,
-            listViewItem32,
-            listViewItem33});
-			this.lstComponentsDetail.Location = new System.Drawing.Point(0, 22);
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
+			this.lstComponentsDetail.Location = new System.Drawing.Point(3, 21);
 			this.lstComponentsDetail.Name = "lstComponentsDetail";
-			this.lstComponentsDetail.Size = new System.Drawing.Size(292, 646);
+			this.lstComponentsDetail.Size = new System.Drawing.Size(286, 590);
 			this.lstComponentsDetail.TabIndex = 24;
 			this.lstComponentsDetail.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsDetail.View = System.Windows.Forms.View.List;
+			this.lstComponentsDetail.View = System.Windows.Forms.View.Details;
+			this.lstComponentsDetail.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponentsDetail_MouseClick);
+			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Width = 288;
 			// 
 			// pageCargo
 			// 
@@ -847,9 +878,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem34,
-            listViewItem35,
-            listViewItem36});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
@@ -1182,5 +1213,8 @@ namespace FrEee.WinForms.Controls
 		private GameButton btnOrderUp;
 		private System.Windows.Forms.ListBox lstOrdersDetail;
 		private AbilityTreeView abilityTreeView;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
 	}
 }

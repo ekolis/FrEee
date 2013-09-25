@@ -28,12 +28,9 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			FrEee.Utility.Resource resource4 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource5 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource6 = new FrEee.Utility.Resource();
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
@@ -334,12 +331,6 @@ namespace FrEee.WinForms.Controls
 			this.resCostRad.Location = new System.Drawing.Point(100, 33);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
-			resource4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource4.IsGlobal = true;
-			resource4.IsLocal = false;
-			resource4.Name = "Radioactives";
-			resource4.PictureName = "Resource3";
-			this.resCostRad.Resource = resource4;
 			this.resCostRad.ResourceName = "Radioactives";
 			this.resCostRad.Size = new System.Drawing.Size(79, 15);
 			this.resCostRad.TabIndex = 8;
@@ -353,12 +344,6 @@ namespace FrEee.WinForms.Controls
 			this.resCostOrg.Location = new System.Drawing.Point(100, 18);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
-			resource5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource5.IsGlobal = true;
-			resource5.IsLocal = false;
-			resource5.Name = "Organics";
-			resource5.PictureName = "Resource2";
-			this.resCostOrg.Resource = resource5;
 			this.resCostOrg.ResourceName = "Organics";
 			this.resCostOrg.Size = new System.Drawing.Size(79, 15);
 			this.resCostOrg.TabIndex = 7;
@@ -372,12 +357,6 @@ namespace FrEee.WinForms.Controls
 			this.resCostMin.Location = new System.Drawing.Point(100, 3);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
-			resource6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource6.IsGlobal = true;
-			resource6.IsLocal = false;
-			resource6.Name = "Minerals";
-			resource6.PictureName = "Resource1";
-			this.resCostMin.Resource = resource6;
 			this.resCostMin.ResourceName = "Minerals";
 			this.resCostMin.Size = new System.Drawing.Size(79, 15);
 			this.resCostMin.TabIndex = 6;
@@ -530,15 +509,16 @@ namespace FrEee.WinForms.Controls
 			this.lstComponents.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstComponents.ForeColor = System.Drawing.Color.White;
 			this.lstComponents.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.lstComponents.Location = new System.Drawing.Point(3, 3);
 			this.lstComponents.Name = "lstComponents";
 			this.lstComponents.Size = new System.Drawing.Size(308, 462);
 			this.lstComponents.TabIndex = 24;
 			this.lstComponents.UseCompatibleStateImageBehavior = false;
 			this.lstComponents.View = System.Windows.Forms.View.Tile;
+			this.lstComponents.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstComponents_MouseClick);
 			// 
 			// DesignReport
 			// 

@@ -106,10 +106,13 @@ namespace FrEee.WinForms.Forms
 
 		private void gridHulls_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			// pick the hull and close the form
-			Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
-			DialogResult = DialogResult.OK;
-			Close();
+			if (e.RowIndex >= 0)
+			{
+				// pick the hull and close the form
+				Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
+				DialogResult = DialogResult.OK;
+				Close();
+			}
 		}
 	}
 }

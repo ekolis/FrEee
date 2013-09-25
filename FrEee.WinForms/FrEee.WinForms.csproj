@@ -100,6 +100,18 @@
     <Compile Include="Controls\Cargolist.Designer.cs">
       <DependentUpon>Cargolist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ComponentReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ComponentReport.Designer.cs">
+      <DependentUpon>ComponentReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LineGraph.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LineGraph.Designer.cs">
+      <DependentUpon>LineGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\WarpPointReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -336,6 +348,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\Cargolist.resx">
       <DependentUpon>Cargolist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ComponentReport.resx">
+      <DependentUpon>ComponentReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WarpPointReport.resx">
       <DependentUpon>WarpPointReport.cs</DependentUpon>
