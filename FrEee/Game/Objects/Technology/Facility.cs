@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable
+	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IReferrable, IContainable<Planet>
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -205,15 +205,21 @@ namespace FrEee.Game.Objects.Technology
 		/// Finds the planet which contains this facility.
 		/// </summary>
 		/// <returns></returns>
-		public Planet FindContainer()
+		public Planet Container
 		{
-			return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
+			}
 		}
 
 		public void Dispose()
 		{
-			FindContainer().Colony.Facilities.Remove(this);
-			// TODO - unassign ID, once facilities have ID's (they will need to have them so they can be scrapped/upgraded)
+			if (Container != null)
+				Container.Colony.Facilities.Remove(this);
+			Galaxy.Current.UnassignID(this);	
 		}
+
+		public long ID { get; set; }
 	}
 }

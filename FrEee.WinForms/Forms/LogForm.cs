@@ -86,7 +86,7 @@ namespace FrEee.WinForms.Forms
 					{
 						// go to the planet
 						var facility = (Facility)context;
-						var container = facility.FindContainer();
+						var container = facility.Container;
 						gameForm.SelectSpaceObject(container);
 						Close();
 					}

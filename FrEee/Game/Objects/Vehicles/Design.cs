@@ -15,6 +15,7 @@ using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Abilities;
+using Tech = FrEee.Game.Objects.Technology.Technology;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -469,6 +470,26 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			foreach (var mct in Components)
 				mct.ReplaceClientIDs(idmap);
+		}
+
+		public IList<TechnologyRequirement> TechnologyRequirements
+		{
+			get
+			{
+				var reqs = new SafeDictionary<Tech, int>();
+				foreach (var req in Hull.TechnologyRequirements)
+					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
+				foreach (var req in Components.SelectMany(c => c.ComponentTemplate.TechnologyRequirements))
+					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
+				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<TechnologyRequirement>() : c.Mount.TechnologyRequirements))
+					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
+				return reqs.Select(kvp => new TechnologyRequirement(kvp.Key, kvp.Value)).ToList();
+			}
+		}
+
+		public string ResearchGroup
+		{
+			get { throw new NotImplementedException(); }
 		}
 	}
 }

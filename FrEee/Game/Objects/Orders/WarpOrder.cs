@@ -9,6 +9,7 @@ using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -35,31 +36,32 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Execute(T sobj)
 		{
-			if (sobj.Owner.IsMinorEmpire)
-			{
-				sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp because minor empires cannot use warp points."));
-				return;
-			}
+			var errors = GetErrors(sobj);
+			foreach (var error in errors)
+				Owner.Log.Add(error);
 
-			var here = sobj.FindSector();
-			if (here == WarpPoint.FindSector())
+			if (!errors.Any())
 			{
-				// warp now!!!
-				here.Remove(sobj);
-				WarpPoint.Target.Place(sobj);
-				sobj.RefreshDijkstraMap();
+				var here = sobj.FindSector();
+				if (here == WarpPoint.FindSector())
+				{
+					// warp now!!!
+					here.Remove(sobj);
+					WarpPoint.Target.Place(sobj);
+					sobj.RefreshDijkstraMap();
 
-				// mark system explored
-				if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
-					WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
+					// mark system explored
+					if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
+						WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
 
-				// done warping
-				IsComplete = true;
-			}
-			else
-			{
-				// can't warp here, maybe the GUI should have issued a move order?
-				((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point."));
+					// done warping
+					IsComplete = true;
+				}
+				else
+				{
+					// can't warp here, maybe the GUI should have issued a move order?
+					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point."));
+				}
 			}
 
 			// spend time
@@ -130,6 +132,17 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get;
 			private set;
+		}
+
+		public bool CheckCompletion(T v)
+		{
+			return IsComplete;
+		}
+
+		public IEnumerable<LogMessage> GetErrors(T executor)
+		{
+			// this order doesn't error
+			yield break;
 		}
 	}
 }

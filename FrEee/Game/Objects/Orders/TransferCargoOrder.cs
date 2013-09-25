@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -43,15 +44,17 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Execute(ICargoTransferrer executor)
 		{
-			if (executor.FindSector() == Target.Sector)
+			var errors = GetErrors(executor);
+			foreach (var error in errors)
+				executor.Owner.Log.Add(error);
+
+			if (!errors.Any())
 			{
 				if (IsLoadOrder)
 					Target.TransferCargo(CargoDelta, executor, executor.Owner);
 				else
 					executor.TransferCargo(CargoDelta, Target, executor.Owner);
 			}
-			else
-				executor.Owner.Log.Add(executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector."));
 			IsComplete = true;
 		}
 
@@ -89,6 +92,17 @@ namespace FrEee.Game.Objects.Orders
 				return "Load " + CargoDelta + " from " + Target;
 			else
 				return "Drop " + CargoDelta + " at " + Target;
+		}
+
+		public bool CheckCompletion(ICargoTransferrer v)
+		{
+			return IsComplete;
+		}
+
+		public IEnumerable<LogMessage> GetErrors(ICargoTransferrer executor)
+		{
+			if (executor.FindSector() != Target.Sector)
+				yield return executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
 		}
 	}
 }

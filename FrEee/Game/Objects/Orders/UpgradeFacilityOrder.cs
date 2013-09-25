@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -13,32 +14,35 @@ using System.Text;
 namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
-	/// An order for a construction queue to build something.
+	/// An order for a construction queue to upgrade a facility.
 	/// </summary>
 	[Serializable]
-	public class ConstructionOrder<T, TTemplate> : IConstructionOrder
-		where T : IConstructable
-		where TTemplate : ITemplate<T>, IReferrable, IConstructionTemplate
+	public class UpgradeFacilityOrder : IConstructionOrder
 	{
-		public ConstructionOrder()
+		public UpgradeFacilityOrder()
 		{
 			Owner = Empire.Current;
 		}
 
 		/// <summary>
-		/// The construction template.
+		/// The template of the facility being upgraded to.
 		/// </summary>
 		[DoNotSerialize]
-		public TTemplate Template { get { return template; } set { template = value; } }
+		public FacilityTemplate Template { get { return template; } set { template = value; } }
 
 		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
 
-		private Reference<TTemplate> template { get; set; }
+		private Reference<FacilityTemplate> template { get; set; }
+
+		[DoNotSerialize]
+		public Facility OldFacility { get { return oldFacility; } set { oldFacility = value; } }
+
+		private Reference<Facility> oldFacility;
 
 		/// <summary>
-		/// The item being built.
+		/// The facility being built.
 		/// </summary>
-		public T Item { get; set; }
+		public Facility NewFacility { get; set; }
 
 		/// <summary>
 		/// Does 1 turn's worth of building.
@@ -51,15 +55,16 @@ namespace FrEee.Game.Objects.Orders
 
 			if (!errors.Any())
 			{
+
 				// create item if needed
-				if (Item == null)
+				if (NewFacility == null)
 				{
-					Item = Template.Instantiate();
-					Item.Owner = queue.Owner;
+					NewFacility = Template.Instantiate();
+					NewFacility.Owner = queue.Owner;
 				}
 
 				// apply build rate
-				var costLeft = Item.Cost - Item.ConstructionProgress;
+				var costLeft = NewFacility.Cost - NewFacility.ConstructionProgress;
 				var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
 				if (spending < queue.Owner.StoredResources)
 				{
@@ -68,13 +73,21 @@ namespace FrEee.Game.Objects.Orders
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
-				Item.ConstructionProgress += spending;
+				NewFacility.ConstructionProgress += spending;
+
+				// if we're done, delete the old facility and replace it with this one
+				if (IsComplete)
+				{
+					var planet = OldFacility.Container;
+					OldFacility.Dispose();
+					planet.Colony.Facilities.Add(NewFacility);
+				}
 			}
 		}
 		
 		IConstructable IConstructionOrder.Item
 		{
-			get { return Item; }
+			get { return NewFacility; }
 		}
 
 		public void Dispose()
@@ -110,18 +123,18 @@ namespace FrEee.Game.Objects.Orders
 
 		public long ID { get; set; }
 
-
 		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
 		{
-			// validate that what's being built is unlocked
+			// validate that new facility is unlocked and is in the same family as the old facility
 			if (!queue.Owner.HasUnlocked(Template))
-				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.SpaceObject + " because we have not yet researched it.");
-
+				yield return OldFacility.CreateLogMessage(OldFacility + " on " + OldFacility.Container + " could not be upgraded to a " + Template + " because we have not yet researched the " + Template + ".");
+			if (Template.Family != OldFacility.Template.Family)
+				yield return OldFacility.CreateLogMessage(OldFacility + " on " + OldFacility.Container + " could not be upgraded to a " + Template + " because facilities cannot be upgraded to facilities of a different family.");
 		}
 
 		public bool CheckCompletion(ConstructionQueue queue)
 		{
-			isComplete = Item.ConstructionProgress >= Item.Cost || GetErrors(queue).Any();
+			isComplete = NewFacility.ConstructionProgress >= NewFacility.Cost || GetErrors(queue).Any();
 			return IsComplete;
 		}
 

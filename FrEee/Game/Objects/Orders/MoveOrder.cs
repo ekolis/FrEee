@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -92,7 +93,8 @@ namespace FrEee.Game.Objects.Orders
 				else if (!LoggedPathfindingError)
 				{
 					// log pathfinding error
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because there is no available path available leading toward " + Destination + "."));
+					PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because there is no available path available leading toward " + Destination + ".");
+					sobj.Owner.Log.Add(PathfindingError);
 					LoggedPathfindingError = true;
 				}
 			}
@@ -121,6 +123,12 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		[DoNotSerialize]
 		public bool LoggedPathfindingError { get; private set; }
+
+		/// <summary>
+		/// Any pathfinding error that we might have found.
+		/// </summary>
+		[DoNotSerialize]
+		public LogMessage PathfindingError { get; private set; }
 
 		public void Dispose()
 		{
@@ -154,5 +162,16 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+		public bool CheckCompletion(T v)
+		{
+			return IsComplete;
+		}
+
+		public IEnumerable<LogMessage> GetErrors(T v)
+		{
+			if (PathfindingError != null)
+				yield return PathfindingError;
+		}
 	}
 }

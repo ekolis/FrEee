@@ -225,7 +225,7 @@ namespace FrEee.Game.Objects.Civilization
 					else
 					{
 						order.Execute(this);
-						if (order.IsComplete)
+						if (order.CheckCompletion(this))
 						{
 							order.Item.Place(SpaceObject);
 							Orders.Remove(order);

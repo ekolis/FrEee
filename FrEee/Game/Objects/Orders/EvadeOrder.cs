@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -181,6 +182,17 @@ namespace FrEee.Game.Objects.Orders
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
+		}
+
+		public bool CheckCompletion(T v)
+		{
+			return IsComplete;
+		}
+
+		public IEnumerable<LogMessage> GetErrors(T v)
+		{
+			// this order doesn't error
+			yield break;
 		}
 	}
 }

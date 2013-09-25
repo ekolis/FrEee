@@ -68,6 +68,7 @@
     <Compile Include="Game\Interfaces\IConstructable.cs" />
     <Compile Include="Game\Interfaces\IConstructionTemplate.cs" />
     <Compile Include="Game\Interfaces\IConstructionOrder.cs" />
+    <Compile Include="Game\Interfaces\IContainable.cs" />
     <Compile Include="Game\Interfaces\ICreateDesignCommand.cs" />
     <Compile Include="Game\Interfaces\IDamageable.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
     <Compile Include="Game\Objects\Orders\ColonizeOrder.cs" />
+    <Compile Include="Game\Objects\Orders\UpgradeFacilityOrder.cs" />
     <Compile Include="Game\Objects\Orders\SentryOrder.cs" />
     <Compile Include="Game\Objects\Orders\EvadeOrder.cs" />
     <Compile Include="Game\Objects\Orders\PursueOrder.cs" />

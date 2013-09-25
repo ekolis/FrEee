@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -30,65 +31,40 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public Planet Planet { get { return planet; } set { planet = value; } }
 
-		private Reference<Planet> planet {get; set;}
+		private Reference<Planet> planet { get; set; }
 
 		public void Execute(AutonomousSpaceVehicle sobj)
 		{
-			var here = sobj.FindSector();
-			if (here == Planet.FindSector())
+			// error checking
+			var errors = GetErrors(sobj);
+			foreach (var error in errors)
+				sobj.Owner.Log.Add(error);
+
+			if (!errors.Any())
 			{
-				// make sure we can still colonize
-				if (Planet.Colony != null)
+				// colonize now!!!
+				Planet.Colony = new Colony { Owner = sobj.Owner };
+				Planet.Colony.ConstructionQueue = new ConstructionQueue(Planet);
+				foreach (var kvp in sobj.Cargo.Population)
 				{
-					// planet is already colonized!
-					((ISpaceObject)sobj).Owner.Log.Add(Planet.CreateLogMessage(Planet + " cannot be colonized by " + sobj + " because there is already a colony there belonging to the " + Planet.Colony.Owner + "."));
+					// place population on planet
+					Planet.AddPopulation(kvp.Key, kvp.Value);
 				}
-				else if (!sobj.HasAbility(Planet.ColonizationAbilityName))
+				foreach (var unit in sobj.Cargo.Units)
 				{
-					// no such colony module
-					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module."));
+					// planet unit on planet
+					Planet.AddUnit(unit);
 				}
-				else if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
-				{
-					// can only colonize breathable atmosphere (due to game setup option)
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets."));
-				}
-				else if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
-				{
-					// can only colonize breathable atmosphere (due to game setup option)
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets."));
-				}
-				else
-				{
-					// colonize now!!!
-					Planet.Colony = new Colony { Owner = sobj.Owner };
-					Planet.Colony.ConstructionQueue = new ConstructionQueue(Planet);
-					foreach (var kvp in sobj.Cargo.Population)
-					{
-						// place population on planet
-						Planet.Colony.Population.Add(kvp);
-					}
-					foreach (var unit in sobj.Cargo.Units)
-					{
-						// planet unit on planet
-						Planet.Colony.Cargo.Units.Add(unit);
-					}
 
-					// log it!
-					sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + "."));
+				// log it!
+				sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + "."));
 
-					// bye bye colony ship
-					sobj.Dispose();
-
-					// done colonizing
-					IsComplete = true;
-				}
+				// bye bye colony ship
+				sobj.Dispose();
 			}
-			else
-			{
-				// can't colonize here, maybe the GUI should have issued a move order?
-				((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it is not currently located at the planet."));
-			}
+
+			// either done colonizing, or we failed
+			IsComplete = true;
 
 			// spend time
 			sobj.TimeToNextMove += sobj.TimePerMove;
@@ -137,5 +113,40 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+
+		public IEnumerable<LogMessage> GetErrors(AutonomousSpaceVehicle sobj)
+		{
+			if (sobj.Sector != Planet.Sector)
+			{
+				// can't colonize here, maybe the GUI should have issued a move order?
+				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it is not currently located at the planet.");
+			}
+			if (Planet.Colony != null)
+			{
+				// planet is already colonized!
+				yield return Planet.CreateLogMessage(Planet + " cannot be colonized by " + sobj + " because there is already a colony there belonging to the " + Planet.Colony.Owner + ".");
+			}
+			if (!sobj.HasAbility(Planet.ColonizationAbilityName))
+			{
+				// no such colony module
+				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.");
+			}
+			if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+			{
+				// can only colonize breathable atmosphere (due to game setup option)
+				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.");
+			}
+			if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+			{
+				// can only colonize breathable atmosphere (due to game setup option)
+				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.");
+			}
+		}
+
+		public bool CheckCompletion(AutonomousSpaceVehicle v)
+		{
+			return IsComplete;
+		}
 	}
 }

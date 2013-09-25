@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.LogMessages;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -77,5 +78,16 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public long ID { get; set; }
+
+		public bool CheckCompletion(IMobileSpaceObject v)
+		{
+			return IsComplete;
+		}
+
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		{
+			// this order doesn't error
+			yield break;
+		}
 	}
 }
