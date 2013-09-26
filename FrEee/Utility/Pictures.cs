@@ -94,7 +94,7 @@ namespace FrEee.Utility
 			g.FillEllipse(new SolidBrush(Color.Silver), 10, 10, 108, 108);
 			genericPictures.Add(typeof(ComponentTemplate), img);
 
-			// hull
+			// hull/design/vehicle
 			img = new Bitmap(128, 128);
 			g = Graphics.FromImage(img);
 			var top = new Point(64, 0);
@@ -103,6 +103,8 @@ namespace FrEee.Utility
 			var pts = new Point[] { top, bottomLeft, bottomRight };
 			g.FillPolygon(Brushes.Gray, pts);
 			genericPictures.Add(typeof(IHull), img);
+			genericPictures.Add(typeof(IDesign), img);
+			genericPictures.Add(typeof(IVehicle), img);
 
 			// TODO - mount, race, empire generic pics
 		}
