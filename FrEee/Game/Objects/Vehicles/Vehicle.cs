@@ -74,7 +74,7 @@ namespace FrEee.Game.Objects.Vehicles
 		[DoNotSerialize]
 		public Image Portrait
 		{
-			get { return return Design.Portrait; }
+			get { return Design.Portrait; }
 		}
 
 		public abstract void Place(ISpaceObject target);
