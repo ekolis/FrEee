@@ -403,7 +403,7 @@ namespace FrEee.WinForms.Forms
 
 		private void lstComponentsInstalled_MouseDown(object sender, MouseEventArgs e)
 		{
-			var item = lstComponentsAvailable.GetItemAt(e.X, e.Y);
+			var item = lstComponentsInstalled.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
 				var mct = (MountedComponentTemplate)item.Tag;
