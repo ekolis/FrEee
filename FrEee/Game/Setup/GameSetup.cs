@@ -295,6 +295,8 @@ namespace FrEee.Game.Setup
 					},
 					IsPlayerEmpire = false,
 				};
+				foreach (var apt in Aptitude.All)
+					et.PrimaryRace.Aptitudes[apt.Name] = 100;
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
 			}
@@ -320,6 +322,8 @@ namespace FrEee.Game.Setup
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
 				};
+				foreach (var apt in Aptitude.All)
+					et.PrimaryRace.Aptitudes[apt.Name] = 100;
 				var emp = et.Instantiate();
 				gal.Empires.Add(emp);
 			}
