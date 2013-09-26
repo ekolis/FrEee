@@ -164,7 +164,7 @@ namespace FrEee.Game.Objects.Orders
 			get
 			{
 				if (isComplete == null)
-					throw new InvalidOperationException("Cannot call IsComplete on a ConstructionOrder without first calling CheckCompletion with a construction queue.");
+					return false; // haven't checked completion yet, so it's probably safe to say it's incomplete
 				return isComplete.Value;
 			}
 		}
