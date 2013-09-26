@@ -68,13 +68,13 @@ namespace FrEee.Game.Objects.Vehicles
 		[DoNotSerialize]
 		public Image Icon
 		{
-			get { return Design.Hull.GetIcon(Design.Owner.ShipsetPath); }
+			get { return Design.Icon; }
 		}
 
 		[DoNotSerialize]
 		public Image Portrait
 		{
-			get { return Design.Hull.GetPortrait(Design.Owner.ShipsetPath); }
+			get { return return Design.Portrait; }
 		}
 
 		public abstract void Place(ISpaceObject target);

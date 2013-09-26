@@ -354,6 +354,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (Hull == null || Owner == null)
+					return Pictures.GetGenericImage(GetType());
 				return Hull.GetIcon(Owner.ShipsetPath);
 			}
 		}
@@ -363,6 +365,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (Hull == null || Owner == null)
+					return Pictures.GetGenericImage(GetType());
 				return Hull.GetPortrait(Owner.ShipsetPath);
 			}
 		}
