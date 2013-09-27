@@ -22,7 +22,13 @@ namespace FrEee.WinForms.Controls
 			this.SizeChanged += StarSystemView_SizeChanged;
 			this.MouseDown += StarSystemView_MouseDowned;
 			DoubleBuffered = true;
+			DrawText = true;
 		}
+
+		/// <summary>
+		/// Should we draw text for space object names and counts on the map?
+		/// </summary>
+		public bool DrawText { get; set; }
 
 		/// <summary>
 		/// Delegate for events related to sector selection.
@@ -127,6 +133,8 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				selectedSpaceObject = value;
+				if (value != null)
+					SelectedSector = value.Sector;
 				Invalidate();
 			}
 		}
@@ -187,16 +195,19 @@ namespace FrEee.WinForms.Controls
 							// TODO - draw owner flag
 
 							// TODO - cache font and brush assets
-							var font = new Font("Sans Serif", 8);
-							var sf = new StringFormat();
-							sf.Alignment = StringAlignment.Center; // center align our name
-							sf.LineAlignment = StringAlignment.Far; // bottom align our name
-							var name = largest.Name;
-							pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
+							if (DrawText)
+							{
+								var font = new Font("Sans Serif", 8);
+								var sf = new StringFormat();
+								sf.Alignment = StringAlignment.Center; // center align our name
+								sf.LineAlignment = StringAlignment.Far; // bottom align our name
+								var name = largest.Name;
+								pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
+							}
 						}
 
 						// draw number to indicate how many stellar objects are present if >1
-						if (sector.SpaceObjects.OfType<StellarObject>().Count() > 1)
+						if (DrawText && sector.SpaceObjects.OfType<StellarObject>().Count() > 1)
 						{
 							// TODO - cache font and brush assets
 							var font = new Font("Sans Serif", 8);
@@ -207,34 +218,38 @@ namespace FrEee.WinForms.Controls
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 12);
-						var cornerx = drawx - drawsize / 2;
-						var cornery = drawy - drawsize / 2;
-						if (sector.SpaceObjects.Count() > 1)
+						if (availForFlagsAndNums > 0)
 						{
-							int top = 0;
-							int insigniaSize = availForFlagsAndNums / 2;
-							foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).GroupBy(sobj => sobj.Owner))
+							var cornerx = drawx - drawsize / 2;
+							var cornery = drawy - drawsize / 2;
+							if (sector.SpaceObjects.Count() > 1)
 							{
-								// draw empire insignia and space object count
-								var owner = g.Key;
-								var count = g.Count();
-								var aspect = owner.Icon;
-								if (owner.Icon != null)
+								int top = 0;
+								int insigniaSize = availForFlagsAndNums / 2;
+								foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).GroupBy(sobj => sobj.Owner))
 								{
-									var mode = pe.Graphics.InterpolationMode;
-									if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
+									// draw empire insignia and space object count
+									var owner = g.Key;
+									var count = g.Count();
+									var aspect = owner.Icon;
+									if (owner.Icon != null)
 									{
-										pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+										var mode = pe.Graphics.InterpolationMode;
+										if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
+										{
+											pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize * 2, insigniaSize * 2);
-										pe.Graphics.InterpolationMode = mode;
+											pe.Graphics.InterpolationMode = mode;
+										}
+										else
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
+
 									}
-									else
-										pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
-			
+									// TODO - cache font and brush assets
+									if (DrawText)
+										pe.Graphics.DrawString(count.ToString(), new Font("Sans Serif", insigniaSize), new SolidBrush(owner.Color), cornerx + insigniaSize, cornery + top);
+									top += insigniaSize;
 								}
-								// TODO - cache font and brush assets
-								pe.Graphics.DrawString(count.ToString(), new Font("Sans Serif", insigniaSize), new SolidBrush(owner.Color), cornerx + insigniaSize, cornery + top);
-								top += insigniaSize;
 							}
 						}
 

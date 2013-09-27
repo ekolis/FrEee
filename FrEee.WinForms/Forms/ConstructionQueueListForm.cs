@@ -60,6 +60,8 @@ namespace FrEee.WinForms.Forms
 				var queue = (ConstructionQueue)e.Row.DataBoundItem;
 				var sys = queue.SpaceObject.StarSystem;
 				galaxyView.SelectedStarSystem = sys;
+				starSystemView.StarSystem = sys;
+				starSystemView.SelectedSpaceObject = queue.SpaceObject;
 			}
 		}
 

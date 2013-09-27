@@ -31,9 +31,10 @@
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridQueues = new System.Windows.Forms.DataGridView();
-			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.IconCol = new System.Windows.Forms.DataGridViewImageColumn();
 			this.NameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.RateMinerals = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.RateOrganics = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.RateRadioactives = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,13 +45,17 @@
 			this.CargoStorageFree = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CargoStorageFreeInSector = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.FacilitySlotsFree = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
-			this.IconCol = new System.Windows.Forms.DataGridViewImageColumn();
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-			this.isColonyQueueDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.constructionQueueBindingSource = new System.Windows.Forms.BindingSource(this.components);
+			this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
+			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
+			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.constructionQueueBindingSource)).BeginInit();
+			this.gamePanel1.SuspendLayout();
+			this.gamePanel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gridQueues
@@ -90,31 +95,26 @@
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle1;
-			this.gridQueues.Location = new System.Drawing.Point(13, 126);
+			this.gridQueues.Location = new System.Drawing.Point(13, 198);
 			this.gridQueues.Name = "gridQueues";
 			this.gridQueues.ReadOnly = true;
 			this.gridQueues.RowHeadersVisible = false;
 			this.gridQueues.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
 			this.gridQueues.RowTemplate.Height = 32;
 			this.gridQueues.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridQueues.Size = new System.Drawing.Size(822, 356);
+			this.gridQueues.Size = new System.Drawing.Size(809, 351);
 			this.gridQueues.TabIndex = 0;
 			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
 			this.gridQueues.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridQueues_CellFormatting);
 			this.gridQueues.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridQueues_RowStateChanged);
 			// 
-			// dataGridViewTextBoxColumn1
+			// IconCol
 			// 
-			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-			// 
-			// dataGridViewTextBoxColumn2
-			// 
-			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
-			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
-			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			this.IconCol.DataPropertyName = "Icon";
+			this.IconCol.HeaderText = "Icon";
+			this.IconCol.Name = "IconCol";
+			this.IconCol.ReadOnly = true;
+			this.IconCol.Width = 34;
 			// 
 			// NameColumn
 			// 
@@ -123,6 +123,22 @@
 			this.NameColumn.Name = "NameColumn";
 			this.NameColumn.ReadOnly = true;
 			this.NameColumn.Width = 60;
+			// 
+			// isSpaceYardQueueDataGridViewCheckBoxColumn
+			// 
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn.DataPropertyName = "IsSpaceYardQueue";
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn.HeaderText = "SY";
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn.Name = "isSpaceYardQueueDataGridViewCheckBoxColumn";
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn.ReadOnly = true;
+			this.isSpaceYardQueueDataGridViewCheckBoxColumn.Width = 27;
+			// 
+			// isColonyQueueDataGridViewCheckBoxColumn
+			// 
+			this.isColonyQueueDataGridViewCheckBoxColumn.DataPropertyName = "IsColonyQueue";
+			this.isColonyQueueDataGridViewCheckBoxColumn.HeaderText = "Col";
+			this.isColonyQueueDataGridViewCheckBoxColumn.Name = "isColonyQueueDataGridViewCheckBoxColumn";
+			this.isColonyQueueDataGridViewCheckBoxColumn.ReadOnly = true;
+			this.isColonyQueueDataGridViewCheckBoxColumn.Width = 28;
 			// 
 			// RateMinerals
 			// 
@@ -205,44 +221,74 @@
 			this.FacilitySlotsFree.ReadOnly = true;
 			this.FacilitySlotsFree.Width = 78;
 			// 
-			// galaxyView
-			// 
-			this.galaxyView.BackColor = System.Drawing.Color.Black;
-			this.galaxyView.Location = new System.Drawing.Point(13, 13);
-			this.galaxyView.Name = "galaxyView";
-			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(212, 107);
-			this.galaxyView.TabIndex = 1;
-			this.galaxyView.Text = "galaxyView1";
-			// 
-			// IconCol
-			// 
-			this.IconCol.DataPropertyName = "Icon";
-			this.IconCol.HeaderText = "Icon";
-			this.IconCol.Name = "IconCol";
-			this.IconCol.ReadOnly = true;
-			this.IconCol.Width = 34;
-			// 
-			// isSpaceYardQueueDataGridViewCheckBoxColumn
-			// 
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn.DataPropertyName = "IsSpaceYardQueue";
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn.HeaderText = "SY";
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn.Name = "isSpaceYardQueueDataGridViewCheckBoxColumn";
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn.ReadOnly = true;
-			this.isSpaceYardQueueDataGridViewCheckBoxColumn.Width = 27;
-			// 
-			// isColonyQueueDataGridViewCheckBoxColumn
-			// 
-			this.isColonyQueueDataGridViewCheckBoxColumn.DataPropertyName = "IsColonyQueue";
-			this.isColonyQueueDataGridViewCheckBoxColumn.HeaderText = "Col";
-			this.isColonyQueueDataGridViewCheckBoxColumn.Name = "isColonyQueueDataGridViewCheckBoxColumn";
-			this.isColonyQueueDataGridViewCheckBoxColumn.ReadOnly = true;
-			this.isColonyQueueDataGridViewCheckBoxColumn.Width = 28;
-			// 
 			// constructionQueueBindingSource
 			// 
 			this.constructionQueueBindingSource.AllowNew = false;
 			this.constructionQueueBindingSource.DataSource = typeof(FrEee.Game.Objects.Civilization.ConstructionQueue);
+			// 
+			// dataGridViewTextBoxColumn1
+			// 
+			this.dataGridViewTextBoxColumn1.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn1.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+			// 
+			// dataGridViewTextBoxColumn2
+			// 
+			this.dataGridViewTextBoxColumn2.DataPropertyName = "Rate";
+			this.dataGridViewTextBoxColumn2.HeaderText = "Rate";
+			this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+			this.dataGridViewTextBoxColumn2.ReadOnly = true;
+			// 
+			// gamePanel1
+			// 
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.galaxyView);
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(13, 12);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(240, 180);
+			this.gamePanel1.TabIndex = 3;
+			// 
+			// galaxyView
+			// 
+			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.galaxyView.Location = new System.Drawing.Point(3, 3);
+			this.galaxyView.Name = "galaxyView";
+			this.galaxyView.SelectedStarSystem = null;
+			this.galaxyView.Size = new System.Drawing.Size(232, 172);
+			this.galaxyView.TabIndex = 2;
+			this.galaxyView.Text = "galaxyView1";
+			// 
+			// gamePanel2
+			// 
+			this.gamePanel2.BackColor = System.Drawing.Color.Black;
+			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel2.Controls.Add(this.starSystemView);
+			this.gamePanel2.ForeColor = System.Drawing.Color.White;
+			this.gamePanel2.Location = new System.Drawing.Point(259, 12);
+			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel2.Size = new System.Drawing.Size(180, 180);
+			this.gamePanel2.TabIndex = 4;
+			// 
+			// starSystemView
+			// 
+			this.starSystemView.BackColor = System.Drawing.Color.Black;
+			this.starSystemView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.starSystemView.DrawText = false;
+			this.starSystemView.Location = new System.Drawing.Point(3, 3);
+			this.starSystemView.Name = "starSystemView";
+			this.starSystemView.SelectedSector = null;
+			this.starSystemView.SelectedSpaceObject = null;
+			this.starSystemView.Size = new System.Drawing.Size(172, 172);
+			this.starSystemView.StarSystem = null;
+			this.starSystemView.TabIndex = 3;
+			this.starSystemView.Text = "starSystemView1";
 			// 
 			// ConstructionQueueListForm
 			// 
@@ -250,8 +296,9 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSize = true;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(847, 494);
-			this.Controls.Add(this.galaxyView);
+			this.ClientSize = new System.Drawing.Size(834, 561);
+			this.Controls.Add(this.gamePanel2);
+			this.Controls.Add(this.gamePanel1);
 			this.Controls.Add(this.gridQueues);
 			this.DoubleBuffered = true;
 			this.Name = "ConstructionQueueListForm";
@@ -260,6 +307,8 @@
 			this.Load += new System.EventHandler(this.ConstructionQueueListForm_Load);
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.constructionQueueBindingSource)).EndInit();
+			this.gamePanel1.ResumeLayout(false);
+			this.gamePanel2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -271,7 +320,6 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
-		private Controls.GalaxyView galaxyView;
 		private System.Windows.Forms.DataGridViewImageColumn IconCol;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isSpaceYardQueueDataGridViewCheckBoxColumn;
@@ -286,5 +334,9 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn CargoStorageFree;
 		private System.Windows.Forms.DataGridViewTextBoxColumn CargoStorageFreeInSector;
 		private System.Windows.Forms.DataGridViewTextBoxColumn FacilitySlotsFree;
+		private Controls.GamePanel gamePanel1;
+		private Controls.GalaxyView galaxyView;
+		private Controls.GamePanel gamePanel2;
+		private Controls.StarSystemView starSystemView;
 	}
 }
