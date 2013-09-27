@@ -52,7 +52,7 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
-			settings.PopulationModifiers = new SortedDictionary<int,PopulationModifier>(PopulationModifierLoader.Load(rec).ToDictionary(pm => pm.PopulationAmount));
+			settings.PopulationModifiers = new SortedDictionary<long,PopulationModifier>(PopulationModifierLoader.Load(rec).ToDictionary(pm => pm.PopulationAmount));
 
 			// TODO - load more settings
 

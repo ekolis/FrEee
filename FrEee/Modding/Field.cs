@@ -74,6 +74,20 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
+		/// Parses a field as a long and logs any error in the mod loading error log.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public long LongValue(Record rec)
+		{
+			long l;
+			if (!long.TryParse(Value, out l))
+				Mod.Errors.Add(new DataParsingException("Cannot parse \"" + Value + "\" as a long.", Mod.CurrentFileName, rec, this));
+			return l;
+		}
+
+		/// <summary>
 		/// Parses a field as a boolean and logs any error in the mod loading error log.
 		/// </summary>
 		/// <param name="f"></param>
@@ -127,6 +141,20 @@ namespace FrEee.Modding
 			if (!int.TryParse(Value, out i))
 				return null;
 			return i;
+		}
+
+		/// <summary>
+		/// Parses a field as a nullable long.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="rec"></param>
+		/// <returns></returns>
+		public long? NullLongValue()
+		{
+			long l;
+			if (!long.TryParse(Value, out l))
+				return null;
+			return l;
 		}
 
 		/// <summary>

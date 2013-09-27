@@ -27,7 +27,7 @@ namespace FrEee.Modding.Loaders
 				if (pfield == null)
 					break; // no more pop modifiers
 				var popmod = new PopulationModifier();
-				popmod.PopulationAmount = pfield.IntValue(rec);
+				popmod.PopulationAmount = pfield.LongValue(rec) * Mod.Current.Settings.PopulationFactor;
 				popmod.ProductionRate = rec.GetInt(new string[] { "Pop Modifier " + count + " Production Modifier Percent", "Pop Modifier Production Modifier Percent" }, ref start, true, start);
 				popmod.ConstructionRate = rec.GetInt(new string[] { "Pop Modifier " + count + " SY Rate Modifier Percent", "Pop Modifier SY Rate Modifier Percent" }, ref start, true, start); // this actually affects all queues, not just SY queues
 				yield return popmod;

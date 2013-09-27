@@ -21,9 +21,7 @@ namespace FrEee.Modding
 			DefaultColonyConstructionRate.Add(Resource.Organics, 2000);
 			DefaultColonyConstructionRate.Add(Resource.Radioactives, 2000);
 
-			PopulationFactor = (long)1e6; // TODO - let population factor be specified by mod files
-
-			PopulationModifiers = new SortedDictionary<int, PopulationModifier>();
+			PopulationModifiers = new SortedDictionary<long, PopulationModifier>();
 
 			MoodModifiers = new Dictionary<Mood, int>();
 
@@ -192,7 +190,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Modifiers to production and construction rates from population amounts.
 		/// </summary>
-		public SortedDictionary<int, PopulationModifier> PopulationModifiers { get; set; }
+		public SortedDictionary<long, PopulationModifier> PopulationModifiers { get; set; }
 
 		public double GetPopulationProductionFactor(long population)
 		{

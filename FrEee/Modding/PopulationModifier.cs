@@ -13,7 +13,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Maximum amount of population for this modifier; if more population is present, the next better modifier (if present) will be used instead.
 		/// </summary>
-		public int PopulationAmount { get; set; }
+		public long PopulationAmount { get; set; }
 
 		/// <summary>
 		/// Rate of resource/research/intel production as percentage of normal rate.
