@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>
 	{
 		public Planet()
 		{
@@ -745,6 +745,61 @@ namespace FrEee.Game.Objects.Space
 				}
 				return dict;
 			}
+		}
+
+		/// <summary>
+		/// Planets can't currently move.
+		/// </summary>
+		public double TimePerMove
+		{
+			get { return double.PositiveInfinity; }
+		}
+
+		public int MovementRemaining
+		{
+			get;
+			set;
+		}
+
+		public int Speed
+		{
+			get { return 0; }
+		}
+
+		public int SupplyRemaining
+		{
+			get
+			{
+				return 0;
+			}
+			set
+			{
+				throw new NotSupportedException("Cannot set supplies of planets; they have infinite supplies.");
+			}
+		}
+
+		/// <summary>
+		/// When a planet spends time, all its space units in cargo spend time too.
+		/// TODO - It should also perform construction here...
+		/// </summary>
+		/// <param name="timeElapsed"></param>
+		public void SpendTime(double timeElapsed)
+		{
+			TimeToNextMove += timeElapsed;
+			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
+				u.SpendTime(timeElapsed);
+		}
+
+		[DoNotSerialize]
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
+		{
+			get;
+			set;
+		}
+
+		public Fleet Container
+		{
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
 	}
 }

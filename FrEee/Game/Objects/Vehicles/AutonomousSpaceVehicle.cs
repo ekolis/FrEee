@@ -161,9 +161,9 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomouse space vehicles do not have infinite supplies unless they have a quantum reactor.
+		/// Autonomous space vehicles do not have infinite supplies unless they have a quantum reactor or they are bases.
 		/// </summary>
-		public bool HasInfiniteSupplies
+		public virtual bool HasInfiniteSupplies
 		{
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
@@ -363,6 +363,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		/// <summary>
 		/// When a ship or base spends time, all of its units in cargo that can fly in space should spend time too.
+		/// TODO - It should also perform construction here...
 		/// </summary>
 		/// <param name="timeElapsed"></param>
 		public void SpendTime(double timeElapsed)
