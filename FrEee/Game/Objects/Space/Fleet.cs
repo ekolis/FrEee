@@ -32,6 +32,7 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
+		/// If there are no valid objects left, the fleet is disbanded.
 		/// Objects that are invalid:
 		/// * Ships, etc. not owned by the owner of the fleet
 		/// * This fleet (fleets may not contain themselves)
@@ -50,6 +51,8 @@ namespace FrEee.Game.Objects.Space
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);
 			}
+			if (!SpaceObjects.Any())
+				Dispose();
 		}
 
 		[DoNotSerialize]
@@ -352,7 +355,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Any construction queues of ships in this fleet.
+		/// Any construction queues of ships in this fleet and its subfleets.
 		/// </summary>
 		public IEnumerable<ConstructionQueue> ConstructionQueues
 		{
@@ -546,6 +549,25 @@ namespace FrEee.Game.Objects.Space
 			TimeToNextMove += timeElapsed;
 			foreach (var sobj in SpaceObjects)
 				sobj.SpendTime(timeElapsed);
+		}
+
+		/// <summary>
+		/// Any combat objects contained in this fleet and any subfleets.
+		/// </summary>
+		public IEnumerable<ICombatObject> CombatObjects
+		{
+			get
+			{
+				return SpaceObjects.SelectMany(sobj =>
+				{
+					var list = new List<ICombatObject>();
+					if (sobj is ICombatObject)
+						list.Add((ICombatObject)sobj);
+					if (sobj is Fleet)
+						list.AddRange(((Fleet)sobj).CombatObjects);
+					return list;
+				});
+			}
 		}
 	}
 }

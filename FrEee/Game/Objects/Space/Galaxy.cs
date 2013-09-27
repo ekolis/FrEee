@@ -769,6 +769,10 @@ namespace FrEee.Game.Objects.Space
 					status.Progress += progressPerOperation;
 			}
 
+			// validate fleets
+			foreach (var f in Referrables.OfType<Fleet>())
+				f.Validate();
+
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";

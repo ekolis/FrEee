@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Combat
 			Location = location;
 			Log = new List<LogMessage>();
 			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).ToArray();
+			Combatants = Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)).ToArray();
 		}
 
 		/// <summary>
@@ -117,9 +117,11 @@ namespace FrEee.Game.Objects.Combat
 
 			// replenish combatants' shields
 			foreach (var combatant in Location.SpaceObjects.OfType<ICombatObject>())
-			{
 				combatant.ReplenishShields();
-			}
+
+			// validate fleets
+			foreach (var fleet in Location.SpaceObjects.OfType<Fleet>())
+				fleet.Validate();
 		}
 
 		public IList<LogMessage> Log { get; private set; }
