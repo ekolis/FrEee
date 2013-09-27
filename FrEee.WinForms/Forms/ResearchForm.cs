@@ -274,12 +274,25 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
-			if (tech != null)
+			if (e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
-				Empire.Current.ResearchQueue.Add(tech);
+				var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
+				if (tech != null)
+				{
+					Empire.Current.ResearchQueue.Add(tech);
+					BindQueue();
+					hasChanged = true;
+				}
+			}
+		}
+
+		private void lstQueue_DoubleClick(object sender, EventArgs e)
+		{
+			if (lstQueue.SelectedIndex >= 0)
+			{
+				Empire.Current.ResearchQueue.RemoveAt(lstQueue.SelectedIndex);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 	}
