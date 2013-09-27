@@ -495,7 +495,17 @@ namespace FrEee.WinForms.Forms
 			// create homesystem tab
 			foreach (var tab in ListTabs().ToArray())
 				RemoveTab(tab);
-			SelectTab(AddTab(Galaxy.Current.CurrentEmpire.ExploredStarSystems.First()));
+			var highlyPopulated = Empire.Current.ExploredStarSystems.WithMax(sys => sys.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Flatten().Sum(p => p.Colony.Population.Sum(kvp => kvp.Value)));
+			if (highlyPopulated.Any())
+				SelectTab(AddTab(highlyPopulated.First()));
+			else
+			{
+				var withManyShips = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().GroupBy(g => g.StarSystem).WithMax(g => g.Count());
+				if (withManyShips.Any())
+					SelectTab(AddTab(withManyShips.First().Key));
+				else
+					SelectTab(AddTab(Empire.Current.ExploredStarSystems.First()));
+			}
 
 			// set up resource display
 			SetUpResourceDisplay();
