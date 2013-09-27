@@ -763,7 +763,7 @@ namespace FrEee.Game.Objects.Space
 			}
 			set
 			{
-				throw new NotSupportedException("Cannot set supplies of planets; they have infinite supplies.");
+				// HACK - can't throw an exception, it breaks cloning objects, so just do nothing
 			}
 		}
 
