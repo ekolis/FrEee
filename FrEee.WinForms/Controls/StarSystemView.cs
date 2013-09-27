@@ -133,8 +133,6 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				selectedSpaceObject = value;
-				if (value != null)
-					SelectedSector = value.Sector;
 				Invalidate();
 			}
 		}

@@ -110,7 +110,7 @@ namespace FrEee.Utility
 					success = true;
 
 				// step 7: check possible moves
-				var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp);
+				var moves = GetPossibleMoves(node.Location, me == null ? true : me.CanWarp, me == null ? null : me.Owner);
 
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
@@ -197,10 +197,14 @@ namespace FrEee.Utility
 			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(g =>new Sector(sector.StarSystem, g.Key)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
-		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp)
+		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)
 		{
 			var moves = new List<Sector>();
 			var sys = s.StarSystem;
+
+			// no moving in an unexplored system until we've explored it
+			if (emp != null && !sys.ExploredByEmpires.Contains(emp))
+				yield break;
 
 			// normal moves
 			if (sys != null)
@@ -213,7 +217,7 @@ namespace FrEee.Utility
 							continue; // no need to sit still!
 						var coords = s.Coordinates;
 						if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
-							moves.Add(sys.GetSector(new Point(coords.X + dx, coords.Y + dy)));
+							yield return sys.GetSector(new Point(coords.X + dx, coords.Y + dy));
 					}
 				}
 			}
@@ -222,10 +226,8 @@ namespace FrEee.Utility
 			{
 				// warp points
 				foreach (var wp in s.SpaceObjects.OfType<WarpPoint>())
-					moves.Add(wp.Target);
+					yield return wp.Target;
 			}
-
-			return moves;
 		}
 
 		/// <summary>

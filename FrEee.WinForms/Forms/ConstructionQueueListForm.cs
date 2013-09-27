@@ -62,6 +62,7 @@ namespace FrEee.WinForms.Forms
 				galaxyView.SelectedStarSystem = sys;
 				starSystemView.StarSystem = sys;
 				starSystemView.SelectedSpaceObject = queue.SpaceObject;
+				starSystemView.SelectedSector = queue.SpaceObject.Sector;
 			}
 		}
 

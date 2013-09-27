@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Orders
 
 				// see how he can reach us, and go somewhere away from him (that would take longer for him to get to than 
 				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false, true);
-				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp);
+				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp, me.Owner);
 				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Values.SelectMany(set => set).Any(n => n.Location == s));
 
 				if (goodMoves.Any())
@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Orders
 				if (Target.FindSector() == me.FindSector())
 				{
 					// don't need to go through warp points to evade it, the warp points might be one way!
-					var moves = Pathfinder.GetPossibleMoves(me.FindSector(), false);
+					var moves = Pathfinder.GetPossibleMoves(me.FindSector(), false, me.Owner);
 					return new Sector[] { moves.PickRandom() };
 				}
 				else
