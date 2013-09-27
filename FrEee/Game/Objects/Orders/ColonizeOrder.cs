@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to colonize an uninhabited planet.
 	/// </summary>
 	[Serializable]
-	public class ColonizeOrder : IMobileSpaceObjectOrder<AutonomousSpaceVehicle>
+	public class ColonizeOrder : IOrder<AutonomousSpaceVehicle>
 	{
 		public ColonizeOrder(Planet planet)
 		{

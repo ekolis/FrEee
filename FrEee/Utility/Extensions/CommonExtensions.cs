@@ -754,6 +754,28 @@ namespace FrEee.Utility.Extensions
 			return stuff.Select(item => selector(item)).Sum();
 		}
 
+		/// <summary>
+		/// Adds up a bunch of cargo.
+		/// </summary>
+		/// <param name="resources"></param>
+		/// <returns></returns>
+		public static Cargo Sum(this IEnumerable<Cargo> cargo)
+		{
+			if (!cargo.Any())
+				return new Cargo();
+			return cargo.Aggregate((r1, r2) => r1 + r2);
+		}
+
+		/// <summary>
+		/// Adds up a bunch of cargo.
+		/// </summary>
+		/// <param name="resources"></param>
+		/// <returns></returns>
+		public static Cargo Sum<T>(this IEnumerable<T> stuff, Func<T, Cargo> selector)
+		{
+			return stuff.Select(item => selector(item)).Sum();
+		}
+
 		public static IEnumerable<T> OnlyLatest<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
 			where T : class
 		{
@@ -1255,11 +1277,13 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Sector FinalSector(this IMobileSpaceObject sobj)
+		public static Sector FinalSector<T>(this T sobj)
+			where T : IMobileSpaceObject<T>
 		{
-			if (sobj.Path == null || !sobj.Path.Any())
+			var path = sobj.Path();
+			if (path == null || !path.Any())
 				return sobj.Sector;
-			return sobj.Path.Last();
+			return path.Last();
 		}
 
 		public static string ToString(this double? d, string fmt)
@@ -1267,6 +1291,79 @@ namespace FrEee.Utility.Extensions
 			if (d == null)
 				return "";
 			return d.Value.ToString(fmt);
+		}
+
+		/// <summary>
+		/// Refills the space object's movement points.
+		/// </summary>
+		public static void RefillMovement(this IMobileSpaceObject sobj)
+		{
+			sobj.MovementRemaining = sobj.Speed;
+			sobj.TimeToNextMove = sobj.TimePerMove;
+		}
+
+		/// <summary>
+		/// Computes the path that this space object is ordered to follow.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
+		{
+			var last = sobj.Sector;
+			foreach (var order in sobj.Orders)
+			{
+				if (order is IMovementOrder)
+				{
+					var o = (IMovementOrder)order;
+					foreach (var s in o.Pathfind(sobj, last))
+						yield return s;
+					last = o.Destination;
+				}
+			}
+		}
+
+		public static void RefreshDijkstraMap(this IMobileSpaceObject sobj)
+		{
+			// create new map if necessary
+			if (sobj.DijkstraMap == null)
+				sobj.DijkstraMap = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+
+			// prune old nodes
+			var start = sobj.Sector;
+			foreach (var n in sobj.DijkstraMap.Keys.OrderBy(n => n.Cost).ToArray())
+			{
+				if ((n.PreviousNode == null || !sobj.DijkstraMap.ContainsKey(n.PreviousNode)) && n.Location != start)
+				{
+					// already went here or it was an aborted path
+					// delete the node (and this will mark for deletion all its children that we're not at)
+					sobj.DijkstraMap.Remove(n);
+					if (n.Location == start)
+					{
+						foreach (var n2 in sobj.DijkstraMap.Keys)
+							n2.Cost -= 1;
+					}
+				}
+			}
+
+			// add new nodes
+			int minCost = 0;
+			foreach (var order in sobj.Orders)
+			{
+				var last = start;
+				if (order is IMovementOrder<AutonomousSpaceVehicle>)
+				{
+					var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
+					foreach (var kvp in o.CreateDijkstraMap(sobj, last))
+					{
+						kvp.Key.Cost += minCost;
+						sobj.DijkstraMap.Add(kvp);
+					}
+					// account for cost of previous orders
+					minCost = sobj.DijkstraMap.Keys.Max(n => n.MinimumCostRemaining);
+					last = o.Destination;
+				}
+			}
 		}
 	}
 }

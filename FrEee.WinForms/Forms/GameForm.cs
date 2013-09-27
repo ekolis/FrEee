@@ -1003,14 +1003,13 @@ namespace FrEee.WinForms.Forms
 			{
 				Sector lastSector;
 				if (SelectedSpaceObject is IMobileSpaceObject)
-                    if (((IMobileSpaceObject)SelectedSpaceObject).Path.Any())
-                    {
-                        lastSector = ((IMobileSpaceObject)SelectedSpaceObject).Path.Last();
-                    }
-                    else
-                    {
-                        lastSector = SelectedSpaceObject.FindSector(); 
-                    }
+				{
+					var path = ((IMobileSpaceObject)SelectedSpaceObject).Path();
+					if (path != null && path.Any())
+						lastSector = path.Last();
+					else
+						lastSector = SelectedSpaceObject.Sector;
+				}
 				else
 					lastSector = SelectedSpaceObject.FindSector();
 				var form = new CargoTransferForm((ICargoContainer)SelectedSpaceObject, lastSector);

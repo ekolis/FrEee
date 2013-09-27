@@ -291,13 +291,12 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		public int Repair(int? amount = null)
+		public int? Repair(int? amount = null)
 		{
 			if (amount == null)
 			{
 				foreach (var comp in Components)
 					comp.Repair();
-				return 0;
 			}
 			else
 			{
@@ -305,8 +304,8 @@ namespace FrEee.Game.Objects.Vehicles
 				// TODO - other repair priorities
 				foreach (var comp in Components.OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
 					amount = comp.Repair(amount);
-				return amount.Value;
 			}
+			return amount;
 		}
 
 

@@ -183,12 +183,12 @@ namespace FrEee.Game.Objects.Combat
 			}
 		}
 
-		public int Repair(int? amount = null)
+		public int? Repair(int? amount = null)
 		{
 			if (amount == null)
 			{
 				Hitpoints = MaxHitpoints;
-				return 0;
+				return amount;
 			}
 			else
 			{

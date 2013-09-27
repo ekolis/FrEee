@@ -106,6 +106,26 @@ namespace FrEee.Utility
 			genericPictures.Add(typeof(IDesign), img);
 			genericPictures.Add(typeof(IVehicle), img);
 
+			// fleet
+			img = new Bitmap(128, 128);
+			g = Graphics.FromImage(img);
+			top = new Point(64, 0);
+			bottomLeft = new Point(32, 64);
+			bottomRight = new Point(96, 64);
+			pts = new Point[] { top, bottomLeft, bottomRight };
+			g.FillPolygon(Brushes.Gray, pts);
+			top = new Point(32, 128);
+			bottomLeft = new Point(0, 192);
+			bottomRight = new Point(64, 192);
+			pts = new Point[] { top, bottomLeft, bottomRight };
+			g.FillPolygon(Brushes.Gray, pts);
+			top = new Point(96, 128);
+			bottomLeft = new Point(64, 192);
+			bottomRight = new Point(128, 192);
+			pts = new Point[] { top, bottomLeft, bottomRight };
+			g.FillPolygon(Brushes.Gray, pts);
+			genericPictures.Add(typeof(Fleet), img);
+
 			// TODO - mount, race, empire generic pics
 		}
 
@@ -343,7 +363,7 @@ namespace FrEee.Utility
 			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
 			var ratio = maxSize / hull.Size;
 			var scale = 1d / (1d + Math.Log10(ratio));
-			
+
 			foreach (var s in hull.PictureNames)
 			{
 				if (Mod.Current.RootPath != null)
@@ -355,6 +375,52 @@ namespace FrEee.Utility
 				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + s)); // for SE4 shipset compatibility
 			}
 			return GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale);
+		}
+
+		/// <summary>
+		/// Gets the icon image for a fleet.
+		/// </summary>
+		/// <param name="fleet"></param>
+		/// <param name="shipsetPath"></param>
+		/// <returns></returns>
+		public static Image GetIcon(Fleet fleet, string shipsetPath, int size = 32)
+		{
+			if (shipsetPath == null)
+				return GetGenericImage(fleet.GetType());
+			var paths = new List<string>();
+
+			if (Mod.Current.RootPath != null)
+			{
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_Fleet"));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_Fleet")); // for SE4 shipset compatibility
+			}
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_Fleet"));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_Fleet")); // for SE4 shipset compatibility
+
+			return (GetCachedImage(paths) ?? GetGenericImage(fleet.GetType())).Resize(size);
+		}
+
+		/// <summary>
+		/// Gets the portrait image for a fleet.
+		/// </summary>
+		/// <param name="fleet"></param>
+		/// <param name="shipsetPath"></param>
+		/// <returns></returns>
+		public static Image GetPortrait(Fleet fleet, string shipsetPath)
+		{
+			if (shipsetPath == null)
+				return GetGenericImage(fleet.GetType());
+			var paths = new List<string>();
+			
+			if (Mod.Current.RootPath != null)
+			{
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_Fleet"));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_Fleet")); // for SE4 shipset compatibility
+			}
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_Fleet"));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_Fleet")); // for SE4 shipset compatibility
+
+			return GetCachedImage(paths) ?? GetGenericImage(fleet.GetType());
 		}
 
 		/// <summary>

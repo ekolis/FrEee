@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a mobile space object to hold position until enemies are sighted in the system.
 	/// </summary>
 	[Serializable]
-	public class SentryOrder : IMobileSpaceObjectOrder<IMobileSpaceObject>
+	public class SentryOrder : IOrder<IMobileSpaceObject>
 	{
 		public SentryOrder()
 		{

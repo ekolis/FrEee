@@ -423,5 +423,10 @@ namespace FrEee.Game.Objects.Civilization
 				return Orders.First().Template.Icon;
 			}
 		}
+
+		public bool IsIdle
+		{
+			get { return Eta == null || Eta < 1; }
+		}
 	}
 }

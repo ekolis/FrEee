@@ -76,7 +76,6 @@
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
-    <Compile Include="Game\Interfaces\IMobileSpaceObjectOrder.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IOwnable.cs" />
@@ -115,6 +114,7 @@
     <Compile Include="Game\Objects\Orders\TransferCargoOrder.cs" />
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
+    <Compile Include="Game\Objects\Space\Fleet.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
     <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />

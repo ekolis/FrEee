@@ -103,6 +103,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Fractional turns until the vehicle has saved up another move point.
 		/// </summary>
+		[DoNotSerialize]
 		public double TimeToNextMove
 		{
 			get;
@@ -115,15 +116,6 @@ namespace FrEee.Game.Objects.Vehicles
 		public double TimePerMove
 		{
 			get { return 1.0 / (double)Speed; }
-		}
-
-		/// <summary>
-		/// Refills the vehicle's movement points.
-		/// </summary>
-		public void RefillMovement()
-		{
-			MovementRemaining = Speed;
-			TimeToNextMove = TimePerMove;
 		}
 
 		/// <summary>
@@ -217,72 +209,11 @@ namespace FrEee.Game.Objects.Vehicles
 			Orders.Insert(newpos, o);
 		}
 
-		public IEnumerable<Sector> Path
-		{
-			get
-			{
-				var last = this.FindSector();
-				foreach (var order in Orders)
-				{
-					if (order is IMovementOrder<AutonomousSpaceVehicle>)
-					{
-						var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
-						foreach (var s in o.Pathfind(this, last))
-							yield return s;
-						last = o.Destination;
-					}
-				}
-			}
-		}
-
 		[DoNotSerialize]
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
 		{
 			get;
-			private set;
-		}
-
-		public void RefreshDijkstraMap()
-		{
-			// create new map if necessary
-			if (DijkstraMap == null)
-				DijkstraMap = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
-
-			// prune old nodes
-			var start = this.FindSector();
-			foreach (var n in DijkstraMap.Keys.OrderBy(n => n.Cost).ToArray())
-			{
-				if ((n.PreviousNode == null || !DijkstraMap.ContainsKey(n.PreviousNode)) && n.Location != start)
-				{
-					// already went here or it was an aborted path
-					// delete the node (and this will mark for deletion all its children that we're not at)
-					DijkstraMap.Remove(n);
-					if (n.Location == start)
-					{
-						foreach (var n2 in DijkstraMap.Keys)
-							n2.Cost -= 1;
-					}
-				}
-			}
-
-			// add new nodes
-			int minCost = 0;
-			foreach (var order in Orders)
-			{
-				var last = start;
-				if (order is IMovementOrder<AutonomousSpaceVehicle>)
-				{
-					var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
-					foreach (var kvp in o.CreateDijkstraMap(this, last))
-					{
-						kvp.Key.Cost += minCost;
-						DijkstraMap.Add(kvp);
-					}
-					// account for cost of previous orders
-					minCost = DijkstraMap.Keys.Max(n => n.MinimumCostRemaining);
-					last = o.Destination;
-				}
-			}
+			set;
 		}
 
 		public override void Dispose()
@@ -361,7 +292,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.Eta < 1d);
+				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.IsIdle);
 			}
 		}
 

@@ -11,23 +11,14 @@ namespace FrEee.Game.Interfaces
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }
-		void RefillMovement();
+		int MovementRemaining { get; set; }
 		int Speed { get; }
-
-		/// <summary>
-		/// The path that this space object is ordered to follow.
-		/// </summary>
-		IEnumerable<Sector> Path { get; }
+		int SupplyRemaining { get; set; }
 
 		/// <summary>
 		/// The Dijkstra map used for pathfinding.
 		/// </summary>
-		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; }
-
-		/// <summary>
-		/// Refreshes the Dijkstra map according to this object's movement orders.
-		/// </summary>
-		void RefreshDijkstraMap();
+		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
 	}
 
 	/// <summary>

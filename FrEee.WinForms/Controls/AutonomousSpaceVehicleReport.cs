@@ -35,7 +35,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToTop_Click(object sender, System.EventArgs e)
 		{
-			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
@@ -51,7 +51,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToBottom_Click(object sender, System.EventArgs e)
 		{
-			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
@@ -67,7 +67,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesUp_Click(object sender, System.EventArgs e)
 		{
-			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) > 0)
 			{
 				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
@@ -85,7 +85,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
 		{
-			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
 			{
 				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
@@ -127,7 +127,7 @@ namespace FrEee.WinForms.Controls
 
 		private void btnDeleteOrder_Click(object sender, System.EventArgs e)
 		{
-			var order = (IMobileSpaceObjectOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
 				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);

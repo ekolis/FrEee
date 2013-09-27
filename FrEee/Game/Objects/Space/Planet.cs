@@ -541,7 +541,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		public int Repair(int? amount = null)
+		public int? Repair(int? amount = null)
 		{
 			if (Cargo != null)
 			{
@@ -550,7 +550,7 @@ namespace FrEee.Game.Objects.Space
 
 			// nothing to repair
 			if (amount == null)
-				return 0;
+				return amount;
 			return amount.Value;
 		}
 
@@ -665,7 +665,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return false;
-				return ConstructionQueue != null && ConstructionQueue.Eta < 1d;
+				return ConstructionQueue != null && ConstructionQueue.IsIdle;
 			}
 		}
 

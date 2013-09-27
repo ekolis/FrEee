@@ -43,7 +43,8 @@ namespace FrEee.Game.Interfaces
 		/// Otherwise repair points have a different effect on different objects.
 		/// E.g. on a ship a repair point repairs 1 component while on a component a repair point replenishes 1 HP.
 		/// </summary>
-		int Repair(int? amount = null);
+		/// <returns>The amount of unused repair points left over, or null for infinite.</returns>
+		int? Repair(int? amount = null);
 
 		/// <summary>
 		/// Takes damage.

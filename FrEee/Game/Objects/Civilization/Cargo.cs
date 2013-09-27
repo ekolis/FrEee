@@ -196,29 +196,41 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Passes repair on to units.
 		/// Tries to repair more-damaged units first.
+		/// TODO - repair priorities
 		/// </summary>
 		/// <param name="amount"></param>
 		/// <returns></returns>
-		public int Repair(int? amount = null)
+		public int? Repair(int? amount = null)
 		{
 			if (amount == null)
 			{
 				foreach (var u in Units.OrderBy(u => (double)u.Hitpoints / (double)u.MaxHitpoints))
 					u.Repair(amount);
-				return 0;
 			}
 			else
 			{
 				foreach (var u in Units.OrderBy(u => (double)u.Hitpoints / (double)u.MaxHitpoints))
 					amount = u.Repair(amount);
-				return amount.Value;
-			}			
+			}
+			return amount;
 		}
 
 
 		public int HitChance
 		{
 			get { return 1; }
+		}
+
+		public static Cargo operator +(Cargo c1, Cargo c2)
+		{
+			var result = new Cargo();
+			foreach (var kvp in c1.Population)
+				result.Population[kvp.Key] += kvp.Value;
+			foreach (var kvp in c2.Population)
+				result.Population[kvp.Key] += kvp.Value;
+			foreach (var unit in c1.Units.Union(c2.Units))
+				result.Units.Add(unit);
+			return result;
 		}
 	}
 }

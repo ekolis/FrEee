@@ -8,11 +8,9 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// An order which consumes movement points.
+	/// An order which moves a space object.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	interface IMovementOrder<T> : IMobileSpaceObjectOrder<T>
-		where T : IMobileSpaceObject<T>
+	public interface IMovementOrder : IOrder
 	{
 		/// <summary>
 		/// The sector we are moving to.
@@ -39,5 +37,15 @@ namespace FrEee.Game.Interfaces
 		/// Did we already log a pathfinding error this turn?
 		/// </summary>
 		bool LoggedPathfindingError { get; }
+	}
+
+	/// <summary>
+	/// An order which moves a space object.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public interface IMovementOrder<in T> : IMovementOrder, IOrder<T>
+		where T : IMobileSpaceObject<T>
+	{
+		
 	}
 }
