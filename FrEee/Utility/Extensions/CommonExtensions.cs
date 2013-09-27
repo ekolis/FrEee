@@ -1249,5 +1249,17 @@ namespace FrEee.Utility.Extensions
 		{
 			return wt == WeaponTypes.DirectFirePointDefense || wt == WeaponTypes.SeekingPointDefense || wt == WeaponTypes.WarheadPointDefense;
 		}
+
+		/// <summary>
+		/// Finds the last sector in a space object's path, or if it has no movement-type orders, its current sector.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Sector FinalSector(this IMobileSpaceObject sobj)
+		{
+			if (sobj.Path == null || !sobj.Path.Any())
+				return sobj.Sector;
+			return sobj.Path.Last();
+		}
 	}
 }

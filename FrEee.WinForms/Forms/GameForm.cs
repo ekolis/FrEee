@@ -244,13 +244,32 @@ namespace FrEee.WinForms.Forms
 							{
 								if (!ModifierKeys.HasFlag(Keys.Shift))
 								{
-									foreach (var pHere in v.FindSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current))
+									// prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
+									bool foundBreathers = false;
+									var planets = v.FinalSector().SpaceObjects.OfType<Planet>().Where(p => p.Owner == Empire.Current);
+									foreach (var pHere in planets)
 									{
-										// TODO - prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
 										var delta = new CargoDelta();
-										delta.AnyPopulation = null; // load any and all population avaialble
+										foreach (var kvp in pHere.AllPopulation)
+										{
+											if (kvp.Key.NativeAtmosphere == planet.Atmosphere)
+											{
+												delta.RacePopulation[kvp.Key] = null; // load all population of this race
+												foundBreathers = false;
+											}
+										}
 										var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
 										IssueSpaceObjectOrder(loadPopOrder);
+									}
+									if (!foundBreathers)
+									{
+										foreach (var pHere in planets)
+										{
+											var delta = new CargoDelta();
+											delta.AnyPopulation = null;
+											var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
+											IssueSpaceObjectOrder(loadPopOrder);
+										}
 									}
 								}
 								IssueSpaceObjectOrder(new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
