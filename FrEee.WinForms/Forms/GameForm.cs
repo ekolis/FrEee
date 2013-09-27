@@ -256,9 +256,12 @@ namespace FrEee.WinForms.Forms
 											{
 												delta.RacePopulation[kvp.Key] = null; // load all population of this race
 												foundBreathers = true;
-												var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
-												IssueSpaceObjectOrder(loadPopOrder);
 											}
+										}
+										if (foundBreathers)
+										{
+											var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
+											IssueSpaceObjectOrder(loadPopOrder);
 										}
 									}
 									if (!foundBreathers)
