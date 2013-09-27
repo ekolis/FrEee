@@ -9,6 +9,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
+using System.IO;
 
 namespace FrEee.WinForms.Forms
 {
@@ -19,6 +22,13 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+
+			RateMinerals.DefaultCellStyle.ForeColor = Resource.Minerals.Color;
+			RateOrganics.DefaultCellStyle.ForeColor = Resource.Organics.Color;
+			RateRadioactives.DefaultCellStyle.ForeColor = Resource.Radioactives.Color;
+
+			// TODO - galaxy view background image can depend on galaxy template?
+			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
 		}
 
 		private void BindQueueList()
@@ -40,6 +50,25 @@ namespace FrEee.WinForms.Forms
 				this.ShowChildForm(form);
 				if (form.DialogResult == DialogResult.OK)
 					BindQueueList();
+			}
+		}
+
+		private void gridQueues_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+		{
+			if (e.StateChanged == DataGridViewElementStates.Selected)
+			{
+				var queue = (ConstructionQueue)e.Row.DataBoundItem;
+				var sys = queue.SpaceObject.StarSystem;
+				galaxyView.SelectedStarSystem = sys;
+			}
+		}
+
+		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			if (e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFree) || 
+				e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFreeInSector))
+			{
+				e.Value = ((int)e.Value).Kilotons();
 			}
 		}
 	}

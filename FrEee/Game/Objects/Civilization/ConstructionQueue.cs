@@ -2,6 +2,8 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -125,6 +127,12 @@ namespace FrEee.Game.Objects.Civilization
 				return rate;
 			}
 		}
+
+		public int RateMinerals { get { return Rate[Resource.Minerals]; } }
+
+		public int RateOrganics { get { return Rate[Resource.Organics]; } }
+
+		public int RateRadioactives { get { return Rate[Resource.Radioactives]; } }
 
 		private ResourceQuantity ComputeSYAbilityRate()
 		{
@@ -368,6 +376,62 @@ namespace FrEee.Game.Objects.Civilization
 							return o.Template.Cost;
 						return o.Template.Cost - o.Item.ConstructionProgress;
 					}), UnspentRate);
+			}
+		}
+
+		/// <summary>
+		/// Cargo space free, counting queued items as already constructed and in cargo.
+		/// </summary>
+		public int CargoStorageFree
+		{
+			get
+			{
+				if (!(SpaceObject is ICargoContainer))
+					return 0;
+				return ((ICargoContainer)SpaceObject).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<Unit>>().Sum(t => t.Hull.Size);
+			}
+		}
+
+		/// <summary>
+		/// Cargo space free in the entire sector, counting queued items as already constructed and in cargo.
+		/// </summary>
+		public int CargoStorageFreeInSector
+		{
+			get
+			{
+				var storage = SpaceObject.Sector.SpaceObjects.Where(sobj => sobj.Owner == Owner)
+					.OfType<ICargoContainer>().Sum(cc => cc.CargoStorageFree());
+				var queues = SpaceObject.Sector.SpaceObjects.Where
+					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
+					.Select(sobj => sobj.ConstructionQueue);
+				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<Unit>>().Sum(t => t.Hull.Size));
+			}
+		}
+
+		/// <summary>
+		/// Facility slots free, counting queued items as already constructed and on the colony.
+		/// </summary>
+		public int FacilitySlotsFree
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				// TODO - storage racial trait
+				return ((Planet)SpaceObject).MaxFacilities - Colony.Facilities.Count - Orders.Select(o => o.Template).OfType<FacilityTemplate>().Count();
+			}
+		}
+
+		/// <summary>
+		/// The icon for the item being constructed.
+		/// </summary>
+		public Image FirstItemIcon
+		{
+			get
+			{
+				if (!Orders.Any())
+					return Pictures.GetSolidColorImage(Color.Transparent);
+				return Orders.First().Template.Icon;
 			}
 		}
 	}
