@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Orders
 		private IReference<ICargoTransferrer> destination { get; set; }
 
 		/// <summary>
-		/// The cargo transferrer to which the cargo will be transferred.
+		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
 		/// </summary>
 		[DoNotSerialize]
 		public ICargoTransferrer Target { get { return destination.Value; } set { destination = value.Reference(); } }
@@ -88,10 +88,20 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
-			if (IsLoadOrder)
-				return "Load " + CargoDelta + " from " + Target;
+			if (Target == null)
+			{
+				if (IsLoadOrder)
+					return "Recover " + CargoDelta;
+				else
+					return "Launch " + CargoDelta;
+			}
 			else
-				return "Drop " + CargoDelta + " at " + Target;
+			{
+				if (IsLoadOrder)
+					return "Load " + CargoDelta + " from " + Target;
+				else
+					return "Drop " + CargoDelta + " at " + Target;
+			}
 		}
 
 		public bool CheckCompletion(ICargoTransferrer v)
@@ -101,7 +111,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public IEnumerable<LogMessage> GetErrors(ICargoTransferrer executor)
 		{
-			if (executor.FindSector() != Target.Sector)
+			if (Target != null && executor.FindSector() != Target.Sector)
 				yield return executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
 		}
 	}

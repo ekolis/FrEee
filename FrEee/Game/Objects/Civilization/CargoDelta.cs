@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (AnyPopulation == null)
 				items.Add("All Population");
 			else if (AnyPopulation != 0)
-				items.Add(AnyPopulation.ToUnitString() + " Population");
+				items.Add(AnyPopulation.ToUnitString() + " Population of Any Race");
 			foreach (var unit in Units)
 				items.Add(unit.ToString());
 			foreach (var kvp in UnitDesignTonnage)

@@ -999,7 +999,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ShowCargoTransferForm()
 		{
-			if (SelectedSpaceObject is ICargoContainer && SelectedSpaceObject.Owner == Empire.Current)
+			if (SelectedSpaceObject is ICargoTransferrer && SelectedSpaceObject.Owner == Empire.Current)
 			{
 				Sector lastSector;
 				if (SelectedSpaceObject is IMobileSpaceObject)
@@ -1012,7 +1012,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 					lastSector = SelectedSpaceObject.FindSector();
-				var form = new CargoTransferForm((ICargoContainer)SelectedSpaceObject, lastSector);
+				var form = new CargoTransferForm((ICargoTransferrer)SelectedSpaceObject, lastSector);
 				this.ShowChildForm(form);
 				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
 				if (report != null)

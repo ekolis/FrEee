@@ -149,10 +149,10 @@ namespace FrEee.Utility.Extensions
 		/// e.g. 25000 becomes 25.00k
 		/// </summary>
 		/// <param name="value"></param>
-		public static string ToUnitString(this long? value, bool bForBillions = false, int sigfigs = 4)
+		public static string ToUnitString(this long? value, bool bForBillions = false, int sigfigs = 4, string undefinedValue = "Undefined")
 		{
 			if (value == null)
-				return "Undefined";
+				return undefinedValue;
 			return value.Value.ToUnitString(bForBillions, sigfigs);
 		}
 
@@ -1051,8 +1051,12 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Transfers items from this cargo container to another cargo container.
 		/// </summary>
-		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
+		public static void TransferCargo(this ICargoTransferrer src, CargoDelta delta, ICargoContainer dest, Empire emp)
 		{
+			// if destination is null, we are transferring to/from space
+			if (dest == null)
+				dest = src.Sector;
+
 			// transfer per-race population
 			foreach (var kvp in delta.RacePopulation)
 			{
@@ -1062,7 +1066,7 @@ namespace FrEee.Utility.Extensions
 				if (kvp.Value != null)
 					amount = Math.Min(amount, kvp.Value.Value);
 				// limit by amount available
-				amount = Math.Min(amount, src.Cargo.Population[kvp.Key]);
+				amount = Math.Min(amount, src.AllPopulation[kvp.Key]);
 				// limit by amount of free space
 				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
 

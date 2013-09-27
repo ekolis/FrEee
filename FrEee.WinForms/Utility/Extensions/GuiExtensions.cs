@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Utility;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -61,6 +62,43 @@ namespace FrEee.WinForms.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Creates image lists for a tree view and clears the items.
+		/// </summary>
+		public static void Initialize(this TreeView tv, int imageSize)
+		{
+			tv.Nodes.Clear();
+			tv.ImageList = new ImageList { ImageSize = new Size(imageSize, imageSize), ColorDepth = ColorDepth.Depth32Bit };
+		}
+
+		/// <summary>
+		/// Adds an item with an image to a tree view.
+		/// </summary>
+		public static TreeNode AddItemWithImage(this TreeView tv, string text, object tag, Image image)
+		{
+			int imageNum = tv.GetNodeCount(true);
+			if (tv.ImageList != null)
+				tv.ImageList.Images.Add(image ?? Pictures.GetSolidColorImage(Color.Transparent, Math.Min(tv.ImageList.ImageSize.Width, tv.ImageList.ImageSize.Height)));
+			var node = new TreeNode(text, imageNum, imageNum);
+			node.Tag = tag;
+			tv.Nodes.Add(node);
+			return node;
+		}
+
+		/// <summary>
+		/// Adds an item with an image to a tree view as a child of another node.
+		/// </summary>
+		public static TreeNode AddItemWithImage(this TreeNode n, string text, object tag, Image image)
+		{
+			int imageNum = n.TreeView.GetNodeCount(true);
+			if (n.TreeView.ImageList != null)
+				n.TreeView.ImageList.Images.Add(image ?? Pictures.GetSolidColorImage(Color.Transparent, Math.Min(n.TreeView.ImageList.ImageSize.Width, n.TreeView.ImageList.ImageSize.Height)));
+			var node = new TreeNode(text, imageNum, imageNum);
+			node.Tag = tag;
+			n.Nodes.Add(node);
+			return node;
+		}
+
+		/// <summary>
 		/// Shows a form as a dialog in the center of its parent form with a wait cursor while the form loads.
 		/// </summary>
 		/// <param name="parent"></param>
@@ -104,6 +142,22 @@ namespace FrEee.WinForms.Utility.Extensions
 			form.StartPosition = FormStartPosition.CenterParent;
 			form.Controls.Add(control);
 			return form;
+		}
+
+		/// <summary>
+		/// http://stackoverflow.com/questions/435433/what-is-the-preferred-way-to-find-focused-control-in-winforms-app
+		/// </summary>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		public static Control FindFocusedControl(this Control control)
+		{
+			var container = control as ContainerControl;
+			while (container != null)
+			{
+				control = container.ActiveControl;
+				container = control as ContainerControl;
+			}
+			return control;
 		}
 	}
 }

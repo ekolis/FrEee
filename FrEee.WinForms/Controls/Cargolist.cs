@@ -84,33 +84,123 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
-			lstCargoDetail.Initialize(32, 32);
+			tree.Initialize(32);
 			if (CargoContainer != null)
 			{
 				var cargo = CargoContainer.Cargo;
 				var used = cargo.Size;
 				var total = CargoContainer.CargoStorage;
 				var free = used - total;
-				foreach (var ug in cargo.Units.GroupBy(u => u.Design))
-					lstCargoDetail.AddItemWithImage(ug.Key.VehicleTypeName, ug.Count() + "x " + ug.Key.Name, ug, ug.First().Icon);
-				foreach (var pop in cargo.Population)
-					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
+				if (cargo.Units.Any())
+				{
+					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var ug in cargo.Units.GroupBy(u => u.Design.Role))
+						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
+					rolesNode.Expand();
+					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var ug in cargo.Units.GroupBy(u => u.Design))
+						designsNode.AddItemWithImage(ug.Count() + "x " + ug.Key.Name, ug.Key, ug.First().Icon);
+					designsNode.Expand();
+					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var u in cargo.Units)
+						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
+					// don't expand the units node, there's probably tons of stuff there!
+				}
+				if (CargoContainer.AllPopulation.Any())
+				{
+					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population", "Population", Pictures.GetGenericImage(typeof(Race)));
+					foreach (var pop in CargoContainer.AllPopulation)
+						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
+					popNode.Expand();
+				}
 			}
 			else if (CargoDelta != null)
 			{
-				foreach (var u in CargoDelta.Units)
-					lstCargoDetail.AddItemWithImage(u.Design.VehicleTypeName, u.Name, u, u.Icon);
-				foreach (var dt in CargoDelta.UnitDesignTonnage)
-					lstCargoDetail.AddItemWithImage(dt.Key.VehicleTypeName, dt.Key.Name, dt.Key, dt.Key.Icon);
-				foreach (var dt in CargoDelta.UnitRoleTonnage)
-					lstCargoDetail.AddItemWithImage(dt.Key, dt.Key, dt.Key, Mod.Current.Hulls.OfType<Unit>().First().Icon);
-				foreach (var dt in CargoDelta.UnitTypeTonnage)
-					lstCargoDetail.AddItemWithImage(dt.Key.ToSpacedString(), dt.Key.ToSpacedString(), dt.Key, Mod.Current.Hulls.Where(h => h.VehicleType == dt.Key).First().Icon);
-				foreach (var pop in CargoDelta.RacePopulation)
-					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
-				if (CargoDelta.AnyPopulation > 0)
-					lstCargoDetail.AddItemWithImage("Population", CargoDelta.AnyPopulation + " population", null, Pictures.GetGenericImage(typeof(Race)));
+				if (CargoDelta.UnitRoleTonnage.Any())
+				{
+					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var ug in CargoDelta.Units.GroupBy(u => u.Design.Role))
+						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
+					rolesNode.Expand();
+				}
+				if (CargoDelta.UnitDesignTonnage.Any())
+				{
+					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var ug in CargoDelta.Units.GroupBy(u => u.Design))
+						designsNode.AddItemWithImage(ug.Count() + "x " + ug.Key.Name, ug.Key, ug.First().Icon);
+					designsNode.Expand();
+				}
+				if (CargoDelta.Units.Any())
+				{
+					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var u in CargoDelta.Units)
+						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
+					// don't expand the units node, there's probably tons of stuff there!
+				}
+				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
+				{
+					var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					foreach (var pop in CargoDelta.RacePopulation)
+						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
+					if (CargoDelta.AnyPopulation != 0)
+						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4, "All") + " Population of Any Race", "Total", Pictures.GetGenericImage(typeof(Race)));
+					popNode.Expand();
+				}
 			}
+		}
+
+		public enum SelectionType
+		{
+			None,
+			UnitRole,
+			UnitDesign,
+			Unit,
+			Population
+		}
+
+		public SelectionType CurrentSelectionType { get; private set; }
+
+		public string SelectedUnitRole { get; private set; }
+
+		public IDesign<Unit> SelectedUnitDesign { get; private set; }
+
+		public Unit SelectedUnit { get; private set; }
+
+		public Race SelectedRace { get; private set; }
+
+		private void tree_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			CurrentSelectionType = SelectionType.None;
+			SelectedUnitRole = null;
+			SelectedUnitDesign = null;
+			SelectedUnit = null;
+			SelectedRace = null;
+
+			if (e.Node.Parent != null)
+			{
+				if ((string)e.Node.Parent.Tag == "Roles")
+				{
+					CurrentSelectionType = SelectionType.UnitRole;
+					SelectedUnitRole = (string)e.Node.Tag;
+				}
+				else if ((string)e.Node.Parent.Tag == "Designs")
+				{
+					CurrentSelectionType = SelectionType.UnitDesign;
+					SelectedUnitDesign = (IDesign<Unit>)e.Node.Tag;
+				}
+				else if ((string)e.Node.Parent.Tag == "Units")
+				{
+					CurrentSelectionType = SelectionType.Unit;
+					SelectedUnit = (Unit)e.Node.Tag;
+				}
+				else if ((string)e.Node.Parent.Tag == "Population")
+				{
+					CurrentSelectionType = SelectionType.Population;
+					SelectedRace = (Race)e.Node.Tag;
+				}
+			}
+			else if (e.Node.Tag is string && (string)e.Node.Tag == "Population")
+				CurrentSelectionType = SelectionType.Population;
 		}
 	}
 }

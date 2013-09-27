@@ -105,7 +105,7 @@ namespace FrEee.Utility
 			}
 
 			// serialize the object
-			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type))
+			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
 				WritePrimitiveOrEnum(o, w);
 			else if (type == typeof(string))
 				WriteString((string)o, w);
@@ -113,7 +113,9 @@ namespace FrEee.Utility
 				WriteColor((Color)o, w, tabLevel);
 			else if (typeof(Array).IsAssignableFrom(type))
 				WriteArray((Array)o, w, context, tabLevel);
-			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any())
+			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any()
+				// HACK - these types should not be serialized as normal dictionaries/sets!
+				&& type.Name != "ReferenceKeyedDictionary`2" && type.Name != "ReferenceSet`1")
 				WriteCollection((IEnumerable)o, w, context, tabLevel);
 			else
 				WriteObject(o, w, context, tabLevel);
@@ -233,8 +235,8 @@ namespace FrEee.Utility
 					}
 					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
 					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
-					Serialize(keyprop.GetValue(item, new object[]{}), w, context, tabLevel + 1);
-					Serialize(valprop.GetValue(item, new object[] { }), w, context, tabLevel + 1);
+					Serialize(keyprop.GetValue(item, new object[]{}), w, keyprop.PropertyType, context, tabLevel + 1);
+					Serialize(valprop.GetValue(item, new object[] { }), w, valprop.PropertyType, context, tabLevel + 1);
 				}
 				else
 					Serialize(item, w, itemType, context, tabLevel + 1);
@@ -256,15 +258,13 @@ namespace FrEee.Utility
 			foreach (var p in props)
 			{
 				// serialize field value
-				var val = p.GetValue(o, new object[]{});
 				try
 				{
+					var val = p.GetValue(o, new object[]{});
 					Serialize(val, w, p.PropertyType, context, tabLevel + 1);
 				}
 				catch (Exception ex)
 				{
-					while (ex.InnerException != null)
-						ex = ex.InnerException;
 					throw new SerializationException("Could not serialize property " + p.Name + " of " + o + " because the property accessor threw an exception: " + ex.Message, ex);
 				}
 			}
@@ -448,7 +448,9 @@ namespace FrEee.Utility
 				else
 					throw new SerializationException("Expected 'a'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
 			}
-			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any())
+			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any()
+				// HACK - reference keyed dictionaries and reference sets should not be serialized as normal collections!
+				&& type.Name != "ReferenceKeyedDictionary`2" && type.Name != "ReferenceSet`1" )
 			{
 				// collections
 				// read size or id number

@@ -13,6 +13,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Utility
 {
@@ -728,6 +729,29 @@ namespace FrEee.Utility
 			var g = Graphics.FromImage(img);
 			g.Clear(color);
 			return img;
+		}
+
+		/// <summary>
+		/// Gets a generic unit image suitable for representing one or more units of a shipset.
+		/// Right now this just gets the fighter group image.
+		/// </summary>
+		/// <param name="shipsetPath"></param>
+		/// <returns></returns>
+		public static Image GetUnitImage(string shipsetPath)
+		{
+			if (shipsetPath == null)
+				return GetGenericImage(typeof(Unit));
+			var paths = new List<string>();
+
+			if (Mod.Current.RootPath != null)
+			{
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_FighterGroup"));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_FighterGroup")); // for SE4 shipset compatibility
+			}
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_FighterGroup"));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_FighterGroup")); // for SE4 shipset compatibility
+
+			return GetCachedImage(paths) ?? GetGenericImage(typeof(Unit));
 		}
 
 		/// <summary>

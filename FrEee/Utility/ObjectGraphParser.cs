@@ -229,7 +229,7 @@ namespace FrEee.Utility
 				while (t != null)
 				{
 					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
-					foreach (var prop in newprops)
+					foreach (var prop in newprops.Where(prop => prop.GetIndexParameters().Length == 0))
 						props.Add(prop, i);
 					t = t.BaseType;
 					i++;

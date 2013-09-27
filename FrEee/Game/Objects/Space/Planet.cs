@@ -737,11 +737,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Planets can't currently move.
+		/// Planets can't currently move, but they can execute orders immediately.
 		/// </summary>
 		public double TimePerMove
 		{
-			get { return double.PositiveInfinity; }
+			get { return 0; }
 		}
 
 		public int MovementRemaining
