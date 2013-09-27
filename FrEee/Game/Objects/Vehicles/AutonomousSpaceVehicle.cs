@@ -361,7 +361,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d);
+				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.Eta < 1d);
 			}
 		}
 

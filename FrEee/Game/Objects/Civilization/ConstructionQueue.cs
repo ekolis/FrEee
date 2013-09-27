@@ -263,14 +263,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The ETA for completion of the first item, in turns.
 		/// </summary>
-		public int? FirstItemEta
+		public double? FirstItemEta
 		{
 			get
 			{
 				if (!Orders.Any())
 					return null;
 				var remainingCost = Orders[0].Template.Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
-				return (int)Math.Ceiling(remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]));
+				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
 
@@ -278,29 +278,18 @@ namespace FrEee.Game.Objects.Civilization
 		/// The ETA for completion of the whole queue, in turns.
 		/// Null if there is nothing being built.
 		/// </summary>
-		public int? Eta
+		public double? Eta
 		{
 			get
 			{
 				if (!Orders.Any())
 					return null;
-				return (int)Math.Ceiling(FractionalETA);
-			}
-		}
-
-		/// <summary>
-		/// The ETA for completion of the whole queue, in turns, allowing for fractional turns.
-		/// </summary>
-		public double FractionalETA
-		{
-			get
-			{
 				if (!Rate.Any(kvp => kvp.Value > 0))
 					return double.PositiveInfinity;
 				if (!Orders.Any())
 					return 0d;
 				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
-				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
+					return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
 

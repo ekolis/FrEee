@@ -73,6 +73,12 @@ namespace FrEee.WinForms.Forms
 			{
 				e.Value = ((int)e.Value).Kilotons();
 			}
+			else if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta) ||
+				e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta))
+			{
+				if (e.Value != null)
+					e.Value = ((double)e.Value).ToString("f1");
+			}
 		}
 	}
 }

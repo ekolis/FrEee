@@ -104,7 +104,7 @@ namespace FrEee.WinForms.Controls
 
 				// load construction data
 				txtConstructionItem.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemName ?? "(None)");
-				txtConstructionTime.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemEta == null ? "" : Planet.Colony.ConstructionQueue.FirstItemEta.ToString() + (Planet.Colony.ConstructionQueue.Eta != Planet.Colony.ConstructionQueue.FirstItemEta ? " (" + Planet.Colony.ConstructionQueue.Eta + ")" : ""));
+				txtConstructionTime.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemEta == null ? "" : Planet.Colony.ConstructionQueue.FirstItemEta.ToString("f1") + (Planet.Colony.ConstructionQueue.Eta != Planet.Colony.ConstructionQueue.FirstItemEta ? " (" + Planet.Colony.ConstructionQueue.Eta.Value.ToString("f1") + ")" : ""));
 
 				// load orders
 				// TODO - let player adjust orders here

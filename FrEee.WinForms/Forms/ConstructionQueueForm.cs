@@ -91,8 +91,8 @@ namespace FrEee.WinForms.Forms
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
-				var eta = Math.Ceiling(remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]));
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
+				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]);
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 				item.ImageIndex = i;
 				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);
@@ -198,8 +198,8 @@ namespace FrEee.WinForms.Forms
 					var item = new ListViewItem(facil.Name, i, group);
 					item.ImageIndex = i;
 					item.Tag = facil;
-					var eta = Math.Ceiling(facil.Cost.Keys.Max(res => (double)(facil.Cost[res]) / (double)ConstructionQueue.Rate[res]));
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
+					var eta = facil.Cost.Keys.Max(res => (double)(facil.Cost[res]) / (double)ConstructionQueue.Rate[res]);
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 					ilFacil.Images.Add(facil.Icon);
 					lstFacilities.Items.Add(item);
 					i++;
@@ -245,8 +245,8 @@ namespace FrEee.WinForms.Forms
 								item.ImageIndex = i;
 								item.Tag = new FacilityUpgrade(oldf, newf);
 								var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
-								var eta = Math.Ceiling(cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]));
-								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString()));
+								var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
+								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 								ilFacil.Images.Add(newf.Icon);
 								lstFacilities.Items.Add(item);
 								i++;
@@ -273,8 +273,8 @@ namespace FrEee.WinForms.Forms
 			lstShips.Initialize(32, 32);
 			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)))
 			{
-				var eta = Math.Ceiling(design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]));
-				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString());
+				var eta = design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]);
+				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString("f1"));
 			}
 		}
 

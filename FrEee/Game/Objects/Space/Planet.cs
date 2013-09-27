@@ -665,7 +665,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return false;
-				return ConstructionQueue != null && ConstructionQueue.FractionalETA < 1d;
+				return ConstructionQueue != null && ConstructionQueue.Eta < 1d;
 			}
 		}
 

@@ -1261,5 +1261,12 @@ namespace FrEee.Utility.Extensions
 				return sobj.Sector;
 			return sobj.Path.Last();
 		}
+
+		public static string ToString(this double? d, string fmt)
+		{
+			if (d == null)
+				return "";
+			return d.Value.ToString(fmt);
+		}
 	}
 }
