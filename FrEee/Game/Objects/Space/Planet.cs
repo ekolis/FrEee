@@ -676,7 +676,7 @@ namespace FrEee.Game.Objects.Space
 
 		public long AddPopulation(Race race, long amount)
 		{
-			if (Colony != null)
+			if (Colony == null)
 				return amount; // can't add population with no colony
 			var canPop = Math.Min(amount, PopulationStorageFree);
 			amount -= canPop;
@@ -689,7 +689,7 @@ namespace FrEee.Game.Objects.Space
 
 		public long RemovePopulation(Race race, long amount)
 		{
-			if (Colony != null)
+			if (Colony == null)
 				return amount; // can't remove population with no colony
 			var canCargo = Math.Min(amount, Colony.Cargo.Population[race]);
 			amount -= canCargo;

@@ -1044,7 +1044,7 @@ namespace FrEee.Utility.Extensions
 				// limit by amount of free space
 				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
 
-				src.RemovePopulation(kvp.Key, amount);
+				amount -= src.RemovePopulation(kvp.Key, amount);
 				dest.AddPopulation(kvp.Key, amount);
 
 				if (amount < kvp.Value)
@@ -1065,7 +1065,7 @@ namespace FrEee.Utility.Extensions
 				// limit by amount of free space
 				amount = Math.Min(amount, dest.PopulationStorageFree + (long)((dest.CargoStorage - dest.Cargo.Size) / Mod.Current.Settings.PopulationSize));
 
-				src.RemovePopulation(kvp.Key, amount);
+				amount -= src.RemovePopulation(kvp.Key, amount);
 				dest.AddPopulation(kvp.Key, amount);
 
 				if (amount < anyPopLeft)
