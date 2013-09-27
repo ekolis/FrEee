@@ -255,11 +255,11 @@ namespace FrEee.WinForms.Forms
 											if (kvp.Key.NativeAtmosphere == planet.Atmosphere)
 											{
 												delta.RacePopulation[kvp.Key] = null; // load all population of this race
-												foundBreathers = false;
+												foundBreathers = true;
+												var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
+												IssueSpaceObjectOrder(loadPopOrder);
 											}
 										}
-										var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
-										IssueSpaceObjectOrder(loadPopOrder);
 									}
 									if (!foundBreathers)
 									{
