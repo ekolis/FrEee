@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Space
 		/// Just copy the asteroid field's data.
 		/// </summary>
 		/// <returns>A copy of the asteroid field.</returns>
-		public new AsteroidField Instantiate()
+		public AsteroidField Instantiate()
 		{
 			return this.Copy();
 		}

@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Space
 		/// Just copy the planet's data.
 		/// </summary>
 		/// <returns>A copy of the planet.</returns>
-		public new Planet Instantiate()
+		public Planet Instantiate()
 		{
 			return this.Copy();
 		}

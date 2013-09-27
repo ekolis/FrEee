@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Space
 		/// Just copy the warp point's data.
 		/// </summary>
 		/// <returns>A copy of the warp point.</returns>
-		public new WarpPoint Instantiate()
+		public WarpPoint Instantiate()
 		{
 			return this.Copy();
 		}
