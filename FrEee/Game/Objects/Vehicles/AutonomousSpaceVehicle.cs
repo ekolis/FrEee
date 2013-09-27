@@ -355,5 +355,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Cargo.Population; }
 		}
+
+		public Fleet Container
+		{
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+		}
 	}
 }

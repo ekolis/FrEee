@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable
+	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }

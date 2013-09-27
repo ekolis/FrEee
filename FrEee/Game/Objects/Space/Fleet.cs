@@ -128,7 +128,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Pictures.GetIcon(this);
+				return Pictures.GetIcon(this, Owner.ShipsetPath);
 			}
 		}
 
@@ -136,7 +136,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Pictures.GetPortrait(this);
+				return Pictures.GetPortrait(this, Owner.ShipsetPath);
 			}
 		}
 
@@ -358,7 +358,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.SelectMany(sobj => 
+				return SpaceObjects.SelectMany(sobj =>
 					{
 						var list = new List<ConstructionQueue>();
 						if (sobj.ConstructionQueue != null)
@@ -400,7 +400,7 @@ namespace FrEee.Game.Objects.Space
 		public void Redact(Empire emp)
 		{
 			var vis = CheckVisibility(emp);
-			
+
 			// Can't see names of alien fleets
 			if (vis < Visibility.Owned)
 				Name = Owner + " Fleet";
@@ -520,7 +520,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IDictionary<Civilization.Race, long> AllPopulation
 		{
-			get 
+			get
 			{
 				var dict = new SafeDictionary<Race, long>();
 				foreach (var cc in SpaceObjects.OfType<ICargoContainer>())
@@ -530,6 +530,11 @@ namespace FrEee.Game.Objects.Space
 				}
 				return dict;
 			}
+		}
+
+		public Fleet Container
+		{
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
 	}
 }

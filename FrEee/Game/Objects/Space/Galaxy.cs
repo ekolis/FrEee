@@ -794,7 +794,8 @@ namespace FrEee.Game.Objects.Space
 			while (CurrentTick <= 1)
 			{
 				ComputeNextTickSize();
-				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+				// Don't let ships in fleets move separate from their fleets!
+				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container != null).Shuffle())
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
