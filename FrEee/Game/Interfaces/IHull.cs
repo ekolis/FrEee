@@ -84,16 +84,6 @@ namespace FrEee.Game.Interfaces
 		new ICollection<Ability> Abilities { get; }
 
 		/// <summary>
-		/// The icon image for this hull for the current empire.
-		/// </summary>
-		Image Icon { get; }
-
-		/// <summary>
-		/// The portriat image for this hull for the current empire.
-		/// </summary>
-		Image Portrait { get; }
-
-		/// <summary>
 		/// Can this hull use a mount?
 		/// </summary>
 		/// <param name="m"></param>

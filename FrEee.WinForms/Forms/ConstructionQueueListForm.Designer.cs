@@ -319,7 +319,6 @@
 		private System.Windows.Forms.BindingSource constructionQueueBindingSource;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
 		private System.Windows.Forms.DataGridViewImageColumn IconCol;
 		private System.Windows.Forms.DataGridViewTextBoxColumn NameColumn;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn isSpaceYardQueueDataGridViewCheckBoxColumn;

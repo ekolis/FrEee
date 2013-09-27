@@ -29,7 +29,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The name of this stellar object.
 		/// </summary>
-		string Name { get; set; }
+		new string Name { get; set; }
 
 		/// <summary>
 		/// A description of this stellar object.

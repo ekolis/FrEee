@@ -28,7 +28,7 @@ namespace FrEee.WinForms.Controls
 		/// <summary>
 		/// An image to display as the background for this galaxy view.
 		/// </summary>
-		public Image BackgroundImage
+		public override Image BackgroundImage
 		{
 			get
 			{

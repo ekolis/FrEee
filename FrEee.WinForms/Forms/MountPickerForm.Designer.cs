@@ -151,10 +151,6 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridView gridMounts;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn costDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
 		private System.Windows.Forms.BindingSource mountBindingSource;

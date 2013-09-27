@@ -54,11 +54,6 @@ namespace FrEee.Game.Objects.Vehicles
 			private set;
 		}
 
-		public IEnumerable<Ability> Abilities
-		{
-			get { return IntrinsicAbilities.Concat(Design.Abilities).Stack(); }
-		}
-
 		/// <summary>
 		/// Amount of movement remaining for this turn.
 		/// </summary>
@@ -92,12 +87,6 @@ namespace FrEee.Game.Objects.Vehicles
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
 			}
-		}
-
-		public int ID
-		{
-			get;
-			set;
 		}
 
 		/// <summary>
@@ -166,12 +155,6 @@ namespace FrEee.Game.Objects.Vehicles
 		public virtual bool HasInfiniteSupplies
 		{
 			get { return this.HasAbility("Quantum Reactor"); }
-		}
-
-		public void ReplenishShields()
-		{
-			NormalShields = MaxNormalShields;
-			PhasedShields = MaxPhasedShields;
 		}
 
 		public override ICombatObject CombatObject

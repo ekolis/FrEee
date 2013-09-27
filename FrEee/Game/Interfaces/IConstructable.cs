@@ -16,7 +16,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The empire which owns this item.
 		/// </summary>
-		Empire Owner { get; set; }
+		new Empire Owner { get; set; }
 
 		/// <summary>
 		/// The resource cost to build this item.
@@ -27,11 +27,6 @@ namespace FrEee.Game.Interfaces
 		/// The progress toward constructing this item.
 		/// </summary>
 		ResourceQuantity ConstructionProgress { get; set; }
-
-		/// <summary>
-		/// An icon used to represent this item in the construction queue.
-		/// </summary>
-		Image Icon { get; }
 
 		/// <summary>
 		/// Places the newly constructed item at a location.

@@ -136,7 +136,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 
-		public ConstructionQueue ConstructionQueue
+		public virtual ConstructionQueue ConstructionQueue
 		{
 			get { return null; }
 		}

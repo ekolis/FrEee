@@ -482,7 +482,6 @@ namespace FrEee.WinForms.Forms
 		private int startValue = 120;
 		private int miningRate = 1000;
 		private bool remote = false;
-		private bool limit = false;
 
 		private void btnRefreshGraphs_Click(object sender, EventArgs e)
 		{

@@ -24,11 +24,6 @@ namespace FrEee.Game.Interfaces
 		bool RequiresSpaceYardQueue { get; }
 
 		/// <summary>
-		/// The nam of the template.
-		/// </summary>
-		string Name { get; }
-
-		/// <summary>
 		/// The cost to build it.
 		/// </summary>
 		ResourceQuantity Cost { get; }

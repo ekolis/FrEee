@@ -268,7 +268,7 @@ namespace FrEee.Utility
 
 			public static ReferenceEqualityComparer Instance { get; private set; }
 
-			public bool Equals(object x, object y)
+			public new bool Equals(object x, object y)
 			{
 				return object.ReferenceEquals(x, y);
 			}

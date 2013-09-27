@@ -49,5 +49,12 @@ namespace FrEee.Game.Objects.Space
 		{
 			return "(" + Location.X + ", " + Location.Y + ")" + ": " + Item;
 		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is ObjectLocation<T>)
+				return this == (ObjectLocation<T>)obj;
+			return false;
+		}
 	}
 }

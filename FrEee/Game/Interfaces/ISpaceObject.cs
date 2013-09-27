@@ -15,7 +15,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The name of this space object.
 		/// </summary>
-		string Name { get; set; }
+		new string Name { get; set; }
 
 		/// <summary>
 		/// Abilities intrinsically possessed by this space object.

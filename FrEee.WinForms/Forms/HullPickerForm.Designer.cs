@@ -216,13 +216,11 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.DataGridView gridHulls;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.DataGridViewImageColumn IconColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn costDataGridViewTextBoxColumn;
 		private System.Windows.Forms.BindingSource iHullBindingSource;
-		private System.Windows.Forms.DataGridViewImageColumn IconCol;
 		private System.Windows.Forms.DataGridViewImageColumn Icon;
 		private System.Windows.Forms.ListView lstAbilities;
 		private System.Windows.Forms.ColumnHeader columnHeader1;

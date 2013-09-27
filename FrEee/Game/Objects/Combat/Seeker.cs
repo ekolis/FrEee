@@ -96,12 +96,12 @@ namespace FrEee.Game.Objects.Combat
 			realDamage = Math.Min(Hitpoints, damage);
 			battle.LogSeekerDamage(this, realDamage);
 			Hitpoints -= realDamage;
-			return damage - realDamage;
 			if (IsDestroyed)
 			{
 				battle.LogTargetDeath(this);
 				Dispose();
 			}
+			return damage - realDamage;
 		}
 
 		public bool IsDestroyed

@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Commands
 			Order.ReplaceClientIDs(idmap);
 		}
 
-		public virtual IEnumerable<IReferrable> NewReferrables
+		public override IEnumerable<IReferrable> NewReferrables
 		{
 			get
 			{
