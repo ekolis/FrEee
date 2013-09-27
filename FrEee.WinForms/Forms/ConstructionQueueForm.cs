@@ -214,9 +214,9 @@ namespace FrEee.WinForms.Forms
 			int i = 0;
 			var ilFacil = new ImageList();
 			ilFacil.ImageSize = new Size(32, 32);
-			lstFacilities.LargeImageList = ilFacil;
-			lstFacilities.SmallImageList = ilFacil;
-			lstFacilities.Items.Clear();
+			lstUpgrades.LargeImageList = ilFacil;
+			lstUpgrades.SmallImageList = ilFacil;
+			lstUpgrades.Items.Clear();
 			if (ConstructionQueue.Colony != null)
 			{
 				foreach (var g in ConstructionQueue.Colony.Facilities.GroupBy(f => f.Template))
@@ -236,7 +236,7 @@ namespace FrEee.WinForms.Forms
 								if (group == null)
 								{
 									group = new ListViewGroup(newf.Group);
-									lstFacilities.Groups.Add(group);
+									lstUpgrades.Groups.Add(group);
 								}
 								string name;
 								if (count == 1)
@@ -250,7 +250,7 @@ namespace FrEee.WinForms.Forms
 								var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
 								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 								ilFacil.Images.Add(newf.Icon);
-								lstFacilities.Items.Add(item);
+								lstUpgrades.Items.Add(item);
 								i++;
 							}
 						}
