@@ -536,5 +536,16 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
+
+		/// <summary>
+		/// When a fleet spends time, all its ships and subfleets do, too.
+		/// </summary>
+		/// <param name="timeElapsed"></param>
+		public void SpendTime(double timeElapsed)
+		{
+			TimeToNextMove += timeElapsed;
+			foreach (var sobj in SpaceObjects)
+				sobj.SpendTime(timeElapsed);
+		}
 	}
 }

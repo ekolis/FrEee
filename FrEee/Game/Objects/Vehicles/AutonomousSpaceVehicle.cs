@@ -360,5 +360,16 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
+
+		/// <summary>
+		/// When a ship or base spends time, all of its units in cargo that can fly in space should spend time too.
+		/// </summary>
+		/// <param name="timeElapsed"></param>
+		public void SpendTime(double timeElapsed)
+		{
+			TimeToNextMove += timeElapsed;
+			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
+				u.SpendTime(timeElapsed);
+		}
 	}
 }

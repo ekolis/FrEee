@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Orders
 			IsComplete = true;
 
 			// spend time
-			sobj.TimeToNextMove += sobj.TimePerMove;
+			sobj.SpendTime(sobj.TimePerMove);
 		}
 
 		public bool IsComplete

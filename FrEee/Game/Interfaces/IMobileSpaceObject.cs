@@ -14,6 +14,7 @@ namespace FrEee.Game.Interfaces
 		int MovementRemaining { get; set; }
 		int Speed { get; }
 		int SupplyRemaining { get; set; }
+		void SpendTime(double timeElapsed);
 
 		/// <summary>
 		/// The Dijkstra map used for pathfinding.
