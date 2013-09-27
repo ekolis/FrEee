@@ -193,12 +193,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnAddToQueue_Click(object sender, EventArgs e)
 		{
-			if (curTech != null)
-			{
-				Empire.Current.ResearchQueue.Add(curTech);
-				BindQueue();
-                hasChanged = true;
-			}
+			TryAddTechToQueue(curTech);
 		}
 
 		private void btnTop_Click(object sender, EventArgs e)
@@ -277,7 +272,17 @@ namespace FrEee.WinForms.Forms
 			if (e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
 				var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
-				if (tech != null)
+				TryAddTechToQueue(tech);
+			}
+		}
+
+		private void TryAddTechToQueue(Technology tech)
+		{
+			if (tech != null)
+			{
+				if (Empire.Current.ResearchedTechnologies[tech] + Empire.Current.ResearchQueue.Where(t => t == tech).Count() >= tech.MaximumLevel)
+					MessageBox.Show("The maximum level for " + tech + " is " + tech.MaximumLevel + ".", "Cannot Research Further");
+				else
 				{
 					Empire.Current.ResearchQueue.Add(tech);
 					BindQueue();
