@@ -99,6 +99,8 @@ namespace FrEee.WinForms.Forms
 				i++;
 				prevCost += remainingCost;
 			}
+			txtCargoStorageFree.Text = string.Format("Cargo Storage Free: {0} ({1} total in sector)", ConstructionQueue.CargoStorageFree.Kilotons(), ConstructionQueue.CargoStorageFreeInSector.Kilotons());
+			txtFacilitySlotsFree.Text = string.Format("Facility Slots Free: {0}", ConstructionQueue.FacilitySlotsFree);
 		}
 
 		/// <summary>

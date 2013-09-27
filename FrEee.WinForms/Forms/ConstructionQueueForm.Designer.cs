@@ -68,13 +68,15 @@
 			this.colFacilityETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.lstUpgrades = new System.Windows.Forms.ListView();
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.resRadioactivesRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resOrganicsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMineralsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
-			this.lstUpgrades = new System.Windows.Forms.ListView();
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.txtCargoStorageFree = new System.Windows.Forms.Label();
+			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -294,17 +296,14 @@
 			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gamePanel2.Controls.Add(this.lstQueue);
 			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(301, 36);
+			this.gamePanel2.Location = new System.Drawing.Point(301, 86);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(349, 438);
+			this.gamePanel2.Size = new System.Drawing.Size(349, 388);
 			this.gamePanel2.TabIndex = 7;
 			// 
 			// lstQueue
 			// 
-			this.lstQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstQueue.BackColor = System.Drawing.Color.Black;
 			this.lstQueue.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstQueue.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -313,13 +312,14 @@
             this.columnHeader2,
             this.columnHeader3,
             this.ETA});
+			this.lstQueue.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
 			this.lstQueue.FullRowSelect = true;
 			this.lstQueue.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstQueue.HoverSelection = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
-			this.lstQueue.Size = new System.Drawing.Size(341, 430);
+			this.lstQueue.Size = new System.Drawing.Size(341, 380);
 			this.lstQueue.TabIndex = 6;
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
@@ -558,6 +558,38 @@
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "Upgrades";
 			// 
+			// lstUpgrades
+			// 
+			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
+			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
+            this.columnHeader5});
+			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
+			this.lstUpgrades.FullRowSelect = true;
+			this.lstUpgrades.HoverSelection = true;
+			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
+			this.lstUpgrades.Name = "lstUpgrades";
+			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
+			this.lstUpgrades.TabIndex = 8;
+			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
+			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
+			this.lstUpgrades.View = System.Windows.Forms.View.Details;
+			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
+			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
+			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Item";
+			this.columnHeader4.Width = 200;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "ETA";
+			this.columnHeader5.Width = 40;
+			// 
 			// resRadioactivesRate
 			// 
 			this.resRadioactivesRate.Amount = 0;
@@ -611,37 +643,23 @@
 			this.btnDelete.UseVisualStyleBackColor = false;
 			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
-			// lstUpgrades
+			// txtCargoStorageFree
 			// 
-			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
-			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5});
-			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
-			this.lstUpgrades.FullRowSelect = true;
-			this.lstUpgrades.HoverSelection = true;
-			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
-			this.lstUpgrades.Name = "lstUpgrades";
-			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
-			this.lstUpgrades.TabIndex = 8;
-			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
-			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
-			this.lstUpgrades.View = System.Windows.Forms.View.Details;
-			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
-			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
-			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
+			this.txtCargoStorageFree.AutoSize = true;
+			this.txtCargoStorageFree.Location = new System.Drawing.Point(298, 39);
+			this.txtCargoStorageFree.Name = "txtCargoStorageFree";
+			this.txtCargoStorageFree.Size = new System.Drawing.Size(102, 13);
+			this.txtCargoStorageFree.TabIndex = 25;
+			this.txtCargoStorageFree.Text = "Cargo Storage Free:";
 			// 
-			// columnHeader4
+			// txtFacilitySlotsFree
 			// 
-			this.columnHeader4.Text = "Item";
-			this.columnHeader4.Width = 200;
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "ETA";
-			this.columnHeader5.Width = 40;
+			this.txtFacilitySlotsFree.AutoSize = true;
+			this.txtFacilitySlotsFree.Location = new System.Drawing.Point(298, 63);
+			this.txtFacilitySlotsFree.Name = "txtFacilitySlotsFree";
+			this.txtFacilitySlotsFree.Size = new System.Drawing.Size(92, 13);
+			this.txtFacilitySlotsFree.TabIndex = 26;
+			this.txtFacilitySlotsFree.Text = "Facility Slots Free:";
 			// 
 			// ConstructionQueueForm
 			// 
@@ -649,6 +667,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(832, 486);
+			this.Controls.Add(this.txtFacilitySlotsFree);
+			this.Controls.Add(this.txtCargoStorageFree);
 			this.Controls.Add(this.btnDelete);
 			this.Controls.Add(this.btnBottom);
 			this.Controls.Add(this.btnTop);
@@ -739,5 +759,7 @@
 		private System.Windows.Forms.ListView lstUpgrades;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.Label txtCargoStorageFree;
+		private System.Windows.Forms.Label txtFacilitySlotsFree;
 	}
 }
