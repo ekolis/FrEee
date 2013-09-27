@@ -225,17 +225,21 @@ namespace FrEee.WinForms.Controls
 						// draw line
 						pe.Graphics.DrawLine(Pens.Gray, realStartPos, realEndPos);
 
-						// draw arrow
-						var angle = startPos.AngleTo(endPos);
-						var radians = Math.PI * angle / 180d;
-						var adx1 = -(float)Math.Cos(radians + Math.PI / 6d) * drawsize / 2f;
-						var ady1 = -(float)Math.Sin(radians + Math.PI / 6d) * drawsize / 2f;
-						var arrowEndPos1 = new PointF(realEndPos.X + adx1, realEndPos.Y + ady1);
-						var adx2 = -(float)Math.Cos(radians - Math.PI / 6d) * drawsize / 2f;
-						var ady2 = -(float)Math.Sin(radians - Math.PI / 6d) * drawsize / 2f;
-						var arrowEndPos2 = new PointF(realEndPos.X + adx2, realEndPos.Y + ady2);
-						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos1);
-						pe.Graphics.DrawLine(whitePen, realEndPos, arrowEndPos2);
+						if (!warpGraph.GetExits(target).Contains(ssl))
+						{
+							// one way warp point, so draw an arrow
+							var angle = startPos.AngleTo(endPos);
+							var radians = Math.PI * angle / 180d;
+							var realMidPos = new PointF((realStartPos.X + realEndPos.X) / 2f, (realStartPos.Y + realEndPos.Y) / 2f);
+							var adx1 = -(float)Math.Cos(radians + Math.PI / 6d) * drawsize / 2f;
+							var ady1 = -(float)Math.Sin(radians + Math.PI / 6d) * drawsize / 2f;
+							var arrowEndPos1 = new PointF(realMidPos.X + adx1, realMidPos.Y + ady1);
+							var adx2 = -(float)Math.Cos(radians - Math.PI / 6d) * drawsize / 2f;
+							var ady2 = -(float)Math.Sin(radians - Math.PI / 6d) * drawsize / 2f;
+							var arrowEndPos2 = new PointF(realMidPos.X + adx2, realMidPos.Y + ady2);
+							pe.Graphics.DrawLine(whitePen, realMidPos, arrowEndPos1);
+							pe.Graphics.DrawLine(whitePen, realMidPos, arrowEndPos2);
+						}
 					}
 				}
 			}
