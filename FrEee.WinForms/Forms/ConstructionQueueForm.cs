@@ -233,25 +233,28 @@ namespace FrEee.WinForms.Forms
 							if (ConstructionQueue.CanConstruct(newf))
 							{
 								var group = lstFacilities.Groups.Cast<ListViewGroup>().SingleOrDefault(g2 => g2.Header == newf.Group);
-								if (group == null)
+								if (newf.Family == oldf.Family && newf != oldf)
 								{
-									group = new ListViewGroup(newf.Group);
-									lstUpgrades.Groups.Add(group);
+									if (group == null)
+									{
+										group = new ListViewGroup(newf.Group);
+										lstUpgrades.Groups.Add(group);
+									}
+									string name;
+									if (count == 1)
+										name = oldf.Name;
+									else
+										name = count + "x " + oldf.Name;
+									var item = new ListViewItem(name + " to " + newf.Name, i, group);
+									item.ImageIndex = i;
+									item.Tag = new FacilityUpgrade(oldf, newf);
+									var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+									var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
+									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
+									ilFacil.Images.Add(newf.Icon);
+									lstUpgrades.Items.Add(item);
+									i++;
 								}
-								string name;
-								if (count == 1)
-									name = oldf.Name;
-								else
-									name = count + "x " + oldf.Name;
-								var item = new ListViewItem(name + " to " + newf.Name, i, group);
-								item.ImageIndex = i;
-								item.Tag = new FacilityUpgrade(oldf, newf);
-								var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
-								var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
-								item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
-								ilFacil.Images.Add(newf.Icon);
-								lstUpgrades.Items.Add(item);
-								i++;
 							}
 						}
 					}
