@@ -18,6 +18,8 @@ using System.Collections;
 using FrEee.Game.Objects.Commands;
 using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
+using FrEee.Utility.Serialization;
+using System.Text.RegularExpressions;
 
 namespace FrEee.Utility.Extensions
 {
@@ -1011,7 +1013,18 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static object GetPropertyValue(this object o, string propertyName)
 		{
-			return o.GetType().GetProperty(propertyName).GetValue(o, new object[0]);
+			return o.GetPropertyValue(o.GetType().GetProperty(propertyName, BindingFlags.Public | BindingFlags.NonPublic));
+		}
+
+		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="property"></param>
+		/// <returns></returns>
+		public static object GetPropertyValue(this object o, PropertyInfo property)
+		{
+			return property.GetValue(o, new object[0]);
 		}
 
 		/// <summary>
@@ -1368,6 +1381,47 @@ namespace FrEee.Utility.Extensions
 					last = o.Destination;
 				}
 			}
+		}
+
+		public static string EscapeDoubleQuotes(this string s)
+		{
+			return s.Replace("\"", "\\\"");
+		}
+		public static string UnescapeDoubleQuotes(this string s)
+		{
+			return s.Replace("\\\"", "\"");
+		}
+		public static string DoubleQuote(this string s)
+		{
+			return '"' + s.EscapeDoubleQuotes() + '"';
+		}
+		public static string UnDoubleQuote(this string s)
+		{
+			if (s.StartsWith("\"") && s.EndsWith("\""))
+				return s.Substring(1, s.Length - 2);
+			return s;
+		}
+
+		/// <summary>
+		/// Same as GetType, but returns null if the object is null.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static Type SafeGetType(this object o)
+		{
+			if (o == null)
+				return null;
+			return o.GetType();
+		}
+
+		public static string Serialize<T>(this T obj, int indent = 0, IList<object> known = null)
+		{
+			return Serializer.Serialize(obj, indent, known);
+		}
+
+		public static object Deserialize(this string s, IList<object> known = null)
+		{
+			return Serializer.Deserialize(s, known);		
 		}
 	}
 }

@@ -15,7 +15,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using System.Threading;
 using System.Windows.Threading;
 using FrEee.WinForms.Controls;

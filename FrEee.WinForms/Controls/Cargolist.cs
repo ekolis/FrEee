@@ -13,7 +13,7 @@ using FrEee.Game.Interfaces;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 

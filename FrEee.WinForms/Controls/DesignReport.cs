@@ -5,7 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Technology;
 

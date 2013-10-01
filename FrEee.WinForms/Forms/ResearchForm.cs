@@ -2,7 +2,7 @@
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Utility.Extensions;

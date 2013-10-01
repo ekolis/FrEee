@@ -11,7 +11,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Game.Interfaces;
 
 namespace FrEee.Modding

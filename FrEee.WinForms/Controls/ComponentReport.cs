@@ -10,7 +10,7 @@ using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
 using Component = FrEee.Game.Objects.Technology.Component;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls

@@ -4,7 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;

@@ -8,7 +8,7 @@ using FrEee.WinForms.Utility.Extensions;
 using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Technology;
 

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 
 namespace FrEee.WinForms.Controls
 {

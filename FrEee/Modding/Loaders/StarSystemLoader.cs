@@ -8,7 +8,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using Size = FrEee.Game.Enumerations.StellarSize;
 using FrEee.Game.Enumerations;

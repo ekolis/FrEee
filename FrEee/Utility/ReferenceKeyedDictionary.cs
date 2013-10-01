@@ -7,9 +7,9 @@ using System.Text;
 namespace FrEee.Utility
 {
 	/// <summary>
-	/// A safe dictionary keyed with transparent refrences.
+	/// A safe dictionary keyed with transparent references.
 	/// </summary>
-	public class ReferenceKeyedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IPromotable
+	public class ReferenceKeyedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
 		where TKey : IReferrable
 	{
 		public ReferenceKeyedDictionary()

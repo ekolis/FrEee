@@ -7,7 +7,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using System.IO;
 using System.Collections.Generic;
 using FrEee.WinForms.DataGridView;

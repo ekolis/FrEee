@@ -8,7 +8,7 @@ using FrEee.Utility.Extensions;
 using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
@@ -289,14 +289,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static Galaxy DeserializeGameState(Stream stream)
 		{
-			var gal = Serializer.Deserialize<Galaxy>(stream);
-			// HACK - why isn't the deserializer setting the ID's?
-			/*for (int id = 0; id < gal.Referrables.Count; id++)
-			{
-				if (gal.Referrables[id] != null)
-					gal.Referrables[id].ID = id;
-			}*/
-			return gal;
+			return (Galaxy)Serializer.Deserialize(stream);
 		}
 
 		/// <summary>
@@ -319,7 +312,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static IList<ICommand> DeserializeCommands(Stream stream)
 		{
-			var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
+			var cmds = (IList<ICommand>)Serializer.Deserialize(stream);
 
 			// check for client safety
 			foreach (var cmd in cmds.Where(cmd => cmd != null))

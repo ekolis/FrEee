@@ -3,7 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -180,9 +180,9 @@ namespace FrEee.Game.Setup
 		public static EmpireTemplate Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var race = Serializer.Deserialize<EmpireTemplate>(fs);
+			var et = (EmpireTemplate)Serializer.Deserialize(fs);
 			fs.Close();
-			return race;
+			return et;
 		}
 
 		public void Save(string filename)

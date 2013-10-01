@@ -9,7 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using System.Drawing;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Orders;

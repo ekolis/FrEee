@@ -1,6 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 

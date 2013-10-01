@@ -4,7 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;

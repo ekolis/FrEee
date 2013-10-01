@@ -1,4 +1,4 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.WinForms.DataGridView;
 using System;
 using System.Collections.Generic;
@@ -79,7 +79,7 @@ namespace FrEee.WinForms
 				try
 				{
 					fs = new FileStream(ConfigFile, FileMode.Open);
-					Instance = Serializer.Deserialize<ClientSettings>(fs);
+					Instance = (ClientSettings)Serializer.Deserialize(fs);
 				}
 				catch (Exception ex)
 				{

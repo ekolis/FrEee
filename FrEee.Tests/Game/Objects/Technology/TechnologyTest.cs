@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Utility.Extensions;
 

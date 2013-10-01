@@ -13,12 +13,12 @@ using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 
-namespace FrEee.Utility
+namespace FrEee.Utility.Serialization
 {
 	/// <summary>
 	/// Serializes and deserializes objects.
 	/// </summary>
-	public static class Serializer
+	public static class __Serializer
 	{
 		public static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
 		{
@@ -625,11 +625,5 @@ namespace FrEee.Utility
 					throw new SerializationException("Expected ';', got '" + (char)ender + "' at the end of " + type + ".");
 			} while (ender != ';');
 		}
-	}
-
-	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-	public sealed class DoNotSerializeAttribute : Attribute
-	{
-
 	}
 }

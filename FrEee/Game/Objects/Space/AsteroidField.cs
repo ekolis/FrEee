@@ -1,7 +1,7 @@
 using System;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
 using FrEee.Modding;

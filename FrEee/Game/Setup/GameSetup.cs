@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
@@ -559,7 +559,7 @@ namespace FrEee.Game.Setup
 		public static GameSetup Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var gsu = Serializer.Deserialize<GameSetup>(fs);
+			var gsu = (GameSetup)Serializer.Deserialize(fs);
 			fs.Close();
 			return gsu;
 		}

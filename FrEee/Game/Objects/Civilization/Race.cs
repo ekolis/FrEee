@@ -4,7 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Civilization
 		public static Race Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var race = Serializer.Deserialize<Race>(fs);
+			var race = (Race)Serializer.Deserialize(fs);
 			fs.Close();
 			return race;
 		}

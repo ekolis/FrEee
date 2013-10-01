@@ -16,7 +16,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrEee.Utility.Extensions;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.WinForms.Utility.Extensions;
 using System.Threading;
 using System.Reflection;

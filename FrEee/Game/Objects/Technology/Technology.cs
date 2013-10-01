@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Game.Enumerations;

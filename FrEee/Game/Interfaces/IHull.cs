@@ -1,7 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Technology;
-using FrEee.Utility;
+using FrEee.Utility; using FrEee.Utility.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
