@@ -28,14 +28,12 @@ namespace FrEee.Utility.Serialization
 			}
 			else if (array.Rank == 2)
 			{
-				var mostIndent = moreIndent + 1;
-				var mostTabs = new string('\t', mostIndent);
 				for (int x = 0; x < array.GetLength(0); x++)
 				{
 					sb.Append(moreTabs);
 					sb.AppendLine("[");
 					for (int y = 0; y < array.GetLength(1); y++)
-						sb.AppendLine(array.GetValue(x, y).Serialize(mostIndent, known) + ",");
+						sb.AppendLine(array.GetValue(x, y).Serialize(moreIndent, known) + ",");
 					sb.Append(moreTabs);
 					sb.AppendLine("]");
 				}
@@ -43,7 +41,7 @@ namespace FrEee.Utility.Serialization
 			else
 				throw new Exception("Only 1D and 2D arrays can be serialized at this time.");
 			sb.Append(tabs);
-			sb.Append("]");
+			sb.Append("],");
 			return sb.ToString();
 		}
 
@@ -52,29 +50,35 @@ namespace FrEee.Utility.Serialization
 			if (text.Trim() == "null")
 				return null;
 
-			string anyWhitespaceRE = "( *)";
-			string openBraceRE = "\\[)";
-			string valuesRE = "((<?value>.*),)?";
-			string closeBraceRE = "(\\])";
-			string values2DRE = "((?<values>" + anyWhitespaceRE + openBraceRE + anyWhitespaceRE + valuesRE + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE + ")," + anyWhitespaceRE + ")*";
-			// try as 2D array
-			var re2D = new Regex(anyWhitespaceRE + openBraceRE + anyWhitespaceRE + values2DRE + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE);
-			var re1D = new Regex(anyWhitespaceRE + openBraceRE + anyWhitespaceRE + valuesRE + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE);
-			var match2D = re2D.Match(text);
-			if (match2D.Success)
+			if (known == null)
+				known = new List<object>();
+
+			var inside = text.BetweenBraces('[', ']');
+			if (!inside.Any())
+				throw new Exception("Arrays are delimited with square braces. No square braces were found in " + text + ".");
+			if (inside.Count() > 1)
+				throw new Exception("Arrays cannot contain more than one set of square braces.");
+			var arrayText = inside.First();
+			
+			// see if we have a 2D array
+			var inside2 = arrayText.BetweenBraces('[', ']');
+			if (inside2.Any())
 			{
 				// 2D array, contains 1D arrays
 				var biglist = new List<List<TItem>>();
-				foreach (var sublistCapture in match2D.Groups["values"].Captures.Cast<Capture>())
+				foreach (var arrayText2 in inside2)
 				{
 					// sub array is 1D
 					var sublist = new List<TItem>();
 					biglist.Add(sublist);
-					var match1D = re1D.Match(sublistCapture.Value);
-					if (!match1D.Success)
-						throw new Exception("Could not parse " + text + " using the 1D array deserialization regular expression.");
-					var valueCaptures = match1D.Groups["value"].Captures;
-					var values = valueCaptures.Cast<Capture>().Select(c => (TItem)c.Value.Deserialize());
+					var inside21 = arrayText2.BetweenBraces('[', ']');
+					if (!inside21.Any())
+						throw new Exception("Arrays are delimited with square braces. No square braces were found in " + text + ".");
+					if (inside21.Count() > 1)
+						throw new Exception("Arrays cannot contain more than one set of square braces.");
+					var arrayText21 = inside21.First();
+					var split = arrayText21.SplitCsv();
+					var values = split.Select(s => (TItem)s.Deserialize(known));
 					foreach (var item in values)
 						sublist.Add(item);
 				}
@@ -94,15 +98,12 @@ namespace FrEee.Utility.Serialization
 			else
 			{
 				// 1D array
-				var match1D = re1D.Match(text);
-				if (!match1D.Success)
-					throw new Exception("Could not parse " + text + " using the 1D or 2D array deserialization regular expressions.");
-				var valueCaptures = match1D.Groups["value"].Captures;
-				var values = valueCaptures.Cast<Capture>().Select(c => (TItem)c.Value.Deserialize());
 				var list = new List<TItem>();
+				var split = arrayText.SplitCsv();
+				var values = split.Select(s => (TItem)s.Deserialize(known));
 				foreach (var item in values)
 					list.Add(item);
-				return (TItem[])list.ToArray();
+				return list.ToArray();
 			}
 		}
 	}

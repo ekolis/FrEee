@@ -28,12 +28,11 @@ namespace FrEee.Utility.Serialization
 			sb.AppendLine("{");
 			var moreIndent = indent + 1;
 			var moreTabs = new string('\t', moreIndent);
-			var mostIndent = moreIndent + 1;
 			foreach (var prop in properties[t])
 			{
 				sb.Append(moreTabs);
 				sb.AppendLine("\"" + prop.Name + "\":");
-				var s = obj.GetPropertyValue(prop).Serialize(mostIndent, known).TrimEnd();
+				var s = obj.GetPropertyValue(prop).Serialize(moreIndent, known).TrimEnd();
 				sb.AppendLine(s + ",");
 			}
 			sb.Append(tabs);
@@ -41,33 +40,40 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public override object Parse(IList<object> known, string s, Type type)
+		public override object Parse(IList<object> known, string text, Type type)
 		{
-			if (s.Trim() == "null")
-				return default(T);
+			if (text.Trim() == "null")
+				return null;
 
-			string anyWhitespaceRE = "(\\s*)";
-			string openBraceRE = "\\{";
-			string propNameRE = "\"(?<propName>.*?)\"";
-			string colonRE = ":";
-			string valueRE = "(?<value>.*?)";
-			string propRE = "(?<prop>" + propNameRE + anyWhitespaceRE + colonRE + anyWhitespaceRE + valueRE + "),?";
-			string closeBraceRE = "\\}";
-			var re = new Regex(anyWhitespaceRE + openBraceRE + anyWhitespaceRE + "(" + propRE + ")*?" + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE, RegexOptions.Singleline);
-			var match = re.Match(s);
-			if (!match.Success)
-				throw new Exception("Could not parse " + s + " using the object deserialization regular expression.");
+			if (known == null)
+				known = new List<object>();
 
-			var obj = Activator.CreateInstance<T>();
-			foreach (var c in match.Groups["prop"].Captures.Cast<Capture>())
+			var inside = text.BetweenBraces('{', '}');
+			if (!inside.Any())
+				throw new Exception("Objects are delimited with curly braces. No curly braces were found in " + text + ".");
+			if (inside.Count() > 1)
+				throw new Exception("Objects cannot contain more than one set of curly braces.");
+			var arrayText = inside.First();
+
+			// use object not var for manual boxing
+			// http://stackoverflow.com/questions/6280506/is-there-a-way-to-set-properties-on-struct-instances-using-reflection
+			object obj = (T)typeof(T).Instantiate();
+			var split = arrayText.SplitCsv();
+			foreach (var s in split)
 			{
-				var name = Regex.Match(c.Value, propNameRE, RegexOptions.Singleline).Value.Trim().UnDoubleQuote();
-				var val = c.Value.Substring(c.Value.IndexOf(":") + 1);
-				var prop = type.GetProperty(name);
-				if (prop != null)
-					obj.SetPropertyValue(name, val.Deserialize(known));
+				if (s.Trim().Length > 0)
+				{
+					var split2 = s.SplitCsv(':');
+					if (split2.Count() != 2)
+						throw new Exception("Object property/value pairs must be in the format PropertyName: Value.");
+					var prop = typeof(T).GetProperty(split2.First().Trim().UnDoubleQuote());
+					if (prop != null)
+					{
+						var val = split2.Last().Trim().Deserialize(known);
+						obj.SetPropertyValue(prop, val);
+					}
+				}
 			}
-			
 			return obj;
 		}
 
@@ -97,7 +103,7 @@ namespace FrEee.Utility.Serialization
 			}
 		}
 
-		public override string Serialize(T obj, int indent = 0, IList<object> known = null)
+		public override string SerializeTyped(T obj, int indent = 0, IList<object> known = null)
 		{
 			var tabs = new string('\t', indent);
 			if (obj == null)
@@ -116,13 +122,13 @@ namespace FrEee.Utility.Serialization
 			else if (obj == null)
 			{
 				// write a null
+				sb.Append(tabs);
 				sb.AppendLine("null");
 			}
 			else
 			{
 				// write the ID, the data type, and the value
 				var id = known.Count;
-				known.Add(obj); // also add object to known list for future reference
 				sb.Append(tabs);
 				sb.AppendLine("[");
 				var moreIndent = indent + 1;
@@ -133,7 +139,7 @@ namespace FrEee.Utility.Serialization
 				sb.AppendLine("\"" + obj.GetType().AssemblyQualifiedName + "\",");
 				sb.AppendLine(Stringify(known, obj, moreIndent));
 				sb.Append(tabs);
-				sb.AppendLine("]");
+				sb.Append("]");
 			}
 			return sb.ToString();
 		}

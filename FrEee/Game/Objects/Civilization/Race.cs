@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Civilization
 		public static Race Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var race = (Race)Serializer.Deserialize(fs);
+			var race = Serializer.Deserialize<Race>(fs);
 			fs.Close();
 			return race;
 		}

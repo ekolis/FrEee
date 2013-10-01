@@ -26,7 +26,7 @@ namespace FrEee.Utility.Serialization
 			return tabs + s.DoubleQuote();
 		}
 
-		public override string Serialize(string obj, int indent = 0, IList<object> known = null)
+		public override string SerializeTyped(string obj, int indent = 0, IList<object> known = null)
 		{
 			var tabs = new string('\t', indent);
 			if (obj == null)

@@ -8,20 +8,68 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility.Serialization
 {
-	public class PrimitiveSerializer<T> : Serializer<T>
+	public class PrimitiveSerializer : Serializer<object>
 	{
 		public override object Parse(IList<object> known, string s, Type t)
 		{
-			if (!typeof(T).IsAssignableFrom(t))
-				throw new Exception("This primitive serializer is configured to handle " + typeof(T) + "s, not " + t + "s.");
 			if (!t.IsPrimitive && !t.IsEnum)
 				throw new Exception("Primitive serializer can only handle primitive types and enums. " + t + " is not a primitive type.");
-			return (T)Convert.ChangeType(s, typeof(T), CultureInfo.InvariantCulture);
+			return Convert.ChangeType(s, t, CultureInfo.InvariantCulture);
 		}
 
-		public override string Stringify(IList<object> known, object o, int indent = 0)
+		public object Parse(string text)
 		{
-			var obj = (T)o;
+			// try some primitive types
+			bool b;
+			byte by;
+			short sh;
+			int i;
+			long l;
+			float f;
+			double d;
+			decimal de;
+
+			text = text.Trim().TrimEnd(',');
+
+			if (bool.TryParse(text, out b))
+				return b;
+			if (byte.TryParse(text, out by))
+				return by;
+			if (short.TryParse(text, out sh))
+				return sh;
+			if (int.TryParse(text, out i))
+				return i;
+			if (long.TryParse(text, out l))
+				return l;
+			if (float.TryParse(text, out f))
+				return f;
+			if (double.TryParse(text, out d))
+				return d;
+			if (decimal.TryParse(text, out de))
+				return de;
+			if (text.StartsWith("'") && text.EndsWith("'"))
+				return text.Trim('\'')[0];
+			if (text.StartsWith("\"") && text.EndsWith("\""))
+				return text.Trim('"');
+
+			foreach (var name in Assembly.GetEntryAssembly().GetReferencedAssemblies())
+			{
+				var assembly = Assembly.Load(name);
+				foreach (var type in assembly.GetTypes())
+				{
+					if (type.IsEnum)
+					{
+						if (Enum.IsDefined(type, text))
+							return Enum.Parse(type, text);
+					}
+				}
+			}
+
+			throw new Exception("Could not parse " + text + " as a primitive type or enum.");
+		}
+
+		public override string Stringify(IList<object> known, object obj, int indent = 0)
+		{
 			var t = obj.SafeGetType();
 			if (t == null)
 				throw new Exception("Primitive serializer can only handle primitive types and enums. Nulls are never primitive types.");
@@ -31,8 +79,14 @@ namespace FrEee.Utility.Serialization
 			return tabs + (string)Convert.ChangeType(obj, typeof(string), CultureInfo.InvariantCulture);
 		}
 
-		public override string Serialize(T obj, int indent = 0, IList<object> known = null)
+		public override string SerializeTyped(object obj, int indent = 0, IList<object> known = null)
 		{
+			var t = obj.SafeGetType();
+			if (t == null)
+				throw new Exception("Primitive serializer can only handle primitive types and enums. Nulls are never primitive types.");
+			if (!t.IsPrimitive && !t.IsEnum)
+				throw new Exception("Primitive serializer can only handle primitive types and enums. " + t + " is not a primitive type.");
+
 			var tabs = new string('\t', indent);
 			if (obj == null)
 				return tabs + "null";
@@ -46,12 +100,12 @@ namespace FrEee.Utility.Serialization
 			if (obj == null)
 			{
 				// write a null
-				sb.AppendLine("null");
+				sb.Append("null");
 			}
 			else
 			{
 				// just write the value; primitives don't have interfaces or abstract types
-				sb.AppendLine(Stringify(known, obj, indent + 1));
+				sb.Append(Stringify(known, obj, indent + 1));
 			}
 			return sb.ToString();
 		}

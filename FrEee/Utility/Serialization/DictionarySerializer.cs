@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using FrEee.Utility.Extensions;
+using System.Globalization;
 
 namespace FrEee.Utility.Serialization
 {
@@ -20,12 +21,10 @@ namespace FrEee.Utility.Serialization
 			sb.AppendLine("{");
 			var moreIndent = indent + 1;
 			var moreTabs = new string('\t', moreIndent);
-			var mostIndent = moreIndent + 1;
-			var mostTabs = new string('\t', mostIndent);
 			foreach (var kvp in dict)
 			{
-				sb.AppendLine(kvp.Key.Serialize(moreIndent, known) + ":");
-				sb.AppendLine(kvp.Value.Serialize(mostIndent, known) + ",");
+				sb.AppendLine(kvp.Key.Serialize(indent, known) + ":");
+				sb.AppendLine(kvp.Value.Serialize(moreIndent, known) + ",");
 			}
 			sb.Append(tabs);
 			sb.Append("}");
@@ -35,23 +34,30 @@ namespace FrEee.Utility.Serialization
 		public override object Parse(IList<object> known, string text, Type t)
 		{
 			if (text.Trim() == "null")
-				return default(TDictionary);
+				return null;
 
-			string anyWhitespaceRE = "( *)";
-			string openBraceRE = "\\{)";
-			string keyRE = "(<?key>.*)" + anyWhitespaceRE + ":";
-			string valueRE = "(<?value>.*)" + anyWhitespaceRE + ",?";
-			string kvpsRE = "(<?kvps>(" + keyRE + valueRE + ")*,?)";
-			string closeBraceRE = "(\\})";
-			var re = new Regex(anyWhitespaceRE + openBraceRE + anyWhitespaceRE + kvpsRE + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE);
-			var match = re.Match(text);
-			if (!match.Success)
-				throw new Exception("Could not parse " + text + " using the dictionary deserialization regular expression.");
-			var keys = match.Groups["key"].Captures.Cast<Capture>().Select(c => c.Value.Deserialize(known)).ToArray();
-			var values = match.Groups["value"].Captures.Cast<Capture>().Select(c => c.Value.Deserialize(known)).ToArray();
-			var dict = Activator.CreateInstance<TDictionary>();
-			for (int i = 0; i < keys.Count(); i++)
-				dict.Add((TKey)keys[i], (TValue)values[i]);
+			if (known == null)
+				known = new List<object>();
+
+			var inside = text.BetweenBraces('{', '}');
+			if (!inside.Any())
+				throw new Exception("Dictionaries are delimited with curly braces. No curly braces were found in " + text + ".");
+			if (inside.Count() > 1)
+				throw new Exception("Dictionaries cannot contain more than one set of curly braces.");
+			var arrayText = inside.First();
+
+			var dict = (TDictionary)typeof(TDictionary).Instantiate();
+			var split = arrayText.SplitCsv();
+			foreach (var s in split)
+			{
+				if (s.Trim().Length > 0)
+				{
+					var split2 = s.SplitCsv(':');
+					if (split2.Count() != 2)
+						throw new Exception("Dictionary key/value pairs must be in the format Key: Value.");
+					dict.Add((TKey)Convert.ChangeType(split2.First().Deserialize(known), typeof(TKey), CultureInfo.InvariantCulture), (TValue)Convert.ChangeType(split2.Last().Deserialize(known), typeof(TValue), CultureInfo.InvariantCulture));
+				}
+			}
 			return dict;
 		}
 	}

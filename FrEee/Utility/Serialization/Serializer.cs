@@ -13,7 +13,7 @@ namespace FrEee.Utility.Serialization
 	{
 		public abstract string Stringify(IList<object> known, object obj, int indent = 0);
 
-		public virtual string Serialize(T obj, int indent = 0, IList<object> known = null)
+		public virtual string SerializeTyped(T obj, int indent = 0, IList<object> known = null)
 		{
 			var tabs = new string('\t', indent);
 			if (obj == null)
@@ -49,7 +49,7 @@ namespace FrEee.Utility.Serialization
 				sb.AppendLine("\"" + obj.GetType().AssemblyQualifiedName + "\",");
 				sb.AppendLine(Stringify(known, obj, moreIndent));
 				sb.Append(tabs);
-				sb.AppendLine("]");
+				sb.Append("]");
 			}
 			return sb.ToString();
 		}
@@ -60,7 +60,7 @@ namespace FrEee.Utility.Serialization
 		{
 			if (!(obj is T))
 				throw new Exception(this + " is not capable of serializing a " + obj.GetType() + ".");
-			return Serialize((T)obj, indent, known);
+			return SerializeTyped((T)obj, indent, known);
 		}
 	}
 
@@ -79,17 +79,13 @@ namespace FrEee.Utility.Serialization
 
 			var t = obj.GetType();
 			if (t.IsPrimitive || t.IsEnum)
-			{
-				var serType = typeof(PrimitiveSerializer<>).MakeGenericType(t);
-				var ser = (ISerializer)Activator.CreateInstance(serType);
-				return ser.Serialize(obj, indent, known);
-			}
+				return new PrimitiveSerializer().Serialize(obj, indent, known);
 			if (t == typeof(string))
-				return new StringSerializer().Serialize(obj.ToString(), indent, known);
+				return new StringSerializer().SerializeTyped(obj.ToString(), indent, known);
 			if (typeof(Array).IsAssignableFrom(t))
 			{
 				var serType = typeof(ArraySerializer<>).MakeGenericType(t.GetElementType());
-				var ser = (ISerializer)Activator.CreateInstance(serType);
+				var ser = (ISerializer)serType.Instantiate();
 				return ser.Serialize(obj, indent, known);
 			}
 			if (t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>)) && !typeof(IReferenceEnumerable).IsAssignableFrom(t))
@@ -98,19 +94,19 @@ namespace FrEee.Utility.Serialization
 				var keyType = dictType.GetGenericArguments()[0];
 				var valType = dictType.GetGenericArguments()[1];
 				var serType = typeof(DictionarySerializer<,,>).MakeGenericType(dictType, keyType, valType);
-				var ser = (ISerializer)Activator.CreateInstance(serType);
+				var ser = (ISerializer)serType.Instantiate();
 				return ser.Serialize(obj, indent, known);
 			}
-			if (t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>))&& !typeof(IReferenceEnumerable).IsAssignableFrom(t))
+			if (t.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)) && !typeof(IReferenceEnumerable).IsAssignableFrom(t))
 			{
 				var collType = t.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>));
 				var itemType = collType.GetGenericArguments()[0];
 				var serType = typeof(CollectionSerializer<,>).MakeGenericType(collType, itemType);
-				var ser = (ISerializer)Activator.CreateInstance(serType);
+				var ser = (ISerializer)serType.Instantiate();
 				return ser.Serialize(obj, indent, known);
 			}
 			var objSerType = typeof(ObjectSerializer<>).MakeGenericType(t);
-			var objSer = (ISerializer)Activator.CreateInstance(objSerType);
+			var objSer = (ISerializer)objSerType.Instantiate();
 			return objSer.Serialize(obj, indent, known);
 		}
 
@@ -123,118 +119,97 @@ namespace FrEee.Utility.Serialization
 
 		public static object Deserialize(string text, IList<object> known = null)
 		{
+			text = text.Trim();
+
 			if (text == "null")
 				return null;
 
 			if (known == null)
 				known = new List<object>();
 
-			// build some regular expressions - thanks txt2re.com!
-			string anyWhitespaceRE = "(\\s*?)";
-			string openBraceRE = @"[{|\[]";
-			string idRE = "(?<id>#[0-9]+)";
-			string dataTypeRE = "(?<dataType>\".*?\")";
-			string commaRE = "(,)";
-			string valueRE = "(?<val>.*)";
-			string closeBraceRE = @"[}|\]]";
-
-			var re = new Regex(anyWhitespaceRE + openBraceRE + anyWhitespaceRE + idRE + anyWhitespaceRE + commaRE + anyWhitespaceRE + dataTypeRE + anyWhitespaceRE + commaRE + anyWhitespaceRE + valueRE + anyWhitespaceRE + closeBraceRE + anyWhitespaceRE, RegexOptions.Singleline);
-			var match = re.Match(text);
-			if (match.Success)
+			if (text.StartsWith("#"))
 			{
-				// new object
-				var dataTypeString = match.Groups["dataType"].Value.UnDoubleQuote();
-				var dataType = Type.GetType(dataTypeString);
-				if (dataType == null)
-					throw new Exception("Cannot find data type " + dataType + ".");
-				var valueString = match.Groups["val"].Value;
-				Type serType;
-				if (dataType.IsPrimitive || dataType.IsEnum)
-					serType = typeof(PrimitiveSerializer<>).MakeGenericType(dataType);
-				else if (dataType == typeof(string))
-					serType = typeof(StringSerializer);
-				else if (typeof(Array).IsAssignableFrom(dataType))
+				// id ref
+				var id = int.Parse(text.Substring(1));
+				return known[id];
+			}
+
+			if (text.StartsWith("["))
+			{
+				var split = text.BetweenBraces('[', ']');
+				if (split.Count() != 1)
+					throw new Exception("Reference objects must contain exactly one set of outer square braces.");
+				var csv = split.First().SplitCsv();
+				if (csv.Count() != 3)
+					throw new Exception("Reference objects must contain exactly 3 comma delimited items: an ID, a type, and a value.");
+				var id = int.Parse(csv.ElementAt(0).Trim().TrimStart('#'));
+				var type = Type.GetType(csv.ElementAt(1).Trim().UnDoubleQuote());
+				var valtext = csv.ElementAt(2).Trim();
+
+				object result = null;
+				if (valtext.StartsWith("["))
 				{
-					serType = typeof(ArraySerializer<>).MakeGenericType(dataType.GetElementType());
+					// array or collection
+					var inside = text.BetweenBraces('[', ']');
+					if (inside.Count() == 1)
+					{
+						if (typeof(Array).IsAssignableFrom(type))
+						{
+							var serType = typeof(ArraySerializer<>).MakeGenericType(type.GetElementType());
+							var ser = (ISerializer)serType.Instantiate();
+							result = ser.Parse(known, valtext, type);
+						}
+						else if (type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)) && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
+						{
+							var collType = type.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>));
+							var itemType = collType.GetGenericArguments()[0];
+							var serType = typeof(CollectionSerializer<,>).MakeGenericType(type, itemType);
+							var ser = (ISerializer)serType.Instantiate();
+							result = ser.Parse(known, valtext, type);
+						}
+					}
+					else
+						throw new Exception("Arrays must contain exactly one set of outer square braces.");
 				}
-				else if (dataType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>)))
+				else if (valtext.StartsWith("{"))
 				{
-					var dictType = dataType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>));
-					var keyType = dictType.GetGenericArguments()[0];
-					var valType = dictType.GetGenericArguments()[1];
-					serType = typeof(DictionarySerializer<,,>).MakeGenericType(dictType, keyType, valType);
-				}
-				else if (dataType.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)))
-				{
-					var collType = dataType.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>));
-					var itemType = collType.GetGenericArguments()[0];
-					serType = typeof(CollectionSerializer<,>).MakeGenericType(collType, itemType);
+					// dictionary or object
+					if (type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>)) && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
+					{
+						var dictType = type.GetInterfaces().First(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IDictionary<,>));
+						var keyType = dictType.GetGenericArguments()[0];
+						var valType = dictType.GetGenericArguments()[1];
+						var serType = typeof(DictionarySerializer<,,>).MakeGenericType(type, keyType, valType);
+						var ser = (ISerializer)serType.Instantiate();
+						result = ser.Parse(known, valtext, type);
+					}
+					else
+					{
+						var serType = typeof(ObjectSerializer<>).MakeGenericType(type);
+						var ser = (ISerializer)Activator.CreateInstance(serType);
+						result = ser.Parse(known, valtext, type);
+					}
 				}
 				else
-					serType = typeof(ObjectSerializer<>).MakeGenericType(dataType);
-				var ser = (ISerializer)Activator.CreateInstance(serType);
-				var val = match.Groups["val"].Value;
-				return ser.Parse(known, val, dataType);
-			}
-			else
-			{
-				re = new Regex(anyWhitespaceRE + idRE + anyWhitespaceRE);
-				match = re.Match(text);
-				if (match.Success)
-				{
-					// object reference by ID
-					var id = int.Parse(match.Groups["id"].Value.TrimStart('#'));
-					if (id < 0)
-						throw new Exception("Negative serialization IDs are not allowed.");
-					if (id >= known.Count)
-						throw new Exception("Reference to unknown serialization ID " + id + " found.");
-					return known[id];
-				}
-				else
-				{
-					// try some primitive types
-					bool b;
-					byte by;
-					short sh;
-					int i;
-					long l;
-					float f;
-					double d;
-					decimal de;
+					throw new Exception("Reference values must start with { (for dictionaries or objects) or [ (for collections or arrays).");
 
-					text = text.TrimEnd().TrimEnd(',');
-
-					if (bool.TryParse(text, out b))
-						return b;
-					if (byte.TryParse(text, out by))
-						return by;
-					if (short.TryParse(text, out sh))
-						return sh;
-					if (int.TryParse(text, out i))
-						return i;
-					if (long.TryParse(text, out l))
-						return l;
-					if (float.TryParse(text, out f))
-						return f;
-					if (double.TryParse(text, out d))
-						return d;
-					if (decimal.TryParse(text, out de))
-						return de;
-					if (text.StartsWith("'") && text.EndsWith("'"))
-						return text.Trim('\'')[0];
-					if (text.StartsWith("\"") && text.EndsWith("\""))
-						return text.Trim('"');
-					throw new Exception("Could not parse " + text + " as an object or object reference.");
-				}
+				known.Add(result);
+				return result;
 			}
+
+			if (text.IsDoubleQuoted())
+				return new StringSerializer().Parse(known, text, typeof(string));
+			
+			var ps = new PrimitiveSerializer();
+			return ps.Parse(text);
 		}
 
-		public static object Deserialize(Stream s)
+		public static T Deserialize<T>(Stream s)
 		{
 			var sr = new StreamReader(s);
 			var text = sr.ReadToEnd();
 			sr.Close();
-			return Deserialize(text);
+			return (T)Deserialize(text, null);
 		}
 	}
 }

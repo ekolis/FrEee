@@ -180,7 +180,7 @@ namespace FrEee.Game.Setup
 		public static EmpireTemplate Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var et = (EmpireTemplate)Serializer.Deserialize(fs);
+			var et = Serializer.Deserialize<EmpireTemplate>(fs);
 			fs.Close();
 			return et;
 		}

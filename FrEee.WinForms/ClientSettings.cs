@@ -79,7 +79,7 @@ namespace FrEee.WinForms
 				try
 				{
 					fs = new FileStream(ConfigFile, FileMode.Open);
-					Instance = (ClientSettings)Serializer.Deserialize(fs);
+					Instance = Serializer.Deserialize<ClientSettings>(fs);
 				}
 				catch (Exception ex)
 				{

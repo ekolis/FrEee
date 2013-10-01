@@ -289,7 +289,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static Galaxy DeserializeGameState(Stream stream)
 		{
-			return (Galaxy)Serializer.Deserialize(stream);
+			return Serializer.Deserialize<Galaxy>(stream);
 		}
 
 		/// <summary>
@@ -312,7 +312,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		private static IList<ICommand> DeserializeCommands(Stream stream)
 		{
-			var cmds = (IList<ICommand>)Serializer.Deserialize(stream);
+			var cmds = Serializer.Deserialize<IList<ICommand>>(stream);
 
 			// check for client safety
 			foreach (var cmd in cmds.Where(cmd => cmd != null))

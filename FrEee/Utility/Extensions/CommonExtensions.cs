@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
 using FrEee.Utility.Serialization;
 using System.Text.RegularExpressions;
+using System.Runtime.Serialization;
 
 namespace FrEee.Utility.Extensions
 {
@@ -1039,6 +1040,17 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Sets a property value on an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static void SetPropertyValue(this object o, PropertyInfo property, object value)
+		{
+			property.SetValue(o, value, new object[0]);
+		}
+
+		/// <summary>
 		/// Tests if an object is null.
 		/// Useful for writing == operators that don't infinitely recurse.
 		/// </summary>
@@ -1395,10 +1407,16 @@ namespace FrEee.Utility.Extensions
 		{
 			return '"' + s.EscapeDoubleQuotes() + '"';
 		}
+
+		public static bool IsDoubleQuoted(this string s)
+		{
+			return s.StartsWith("\"") && s.EndsWith("\"");
+		}
+
 		public static string UnDoubleQuote(this string s)
 		{
-			if (s.StartsWith("\"") && s.EndsWith("\""))
-				return s.Substring(1, s.Length - 2);
+			if (s.IsDoubleQuoted())
+				return s.Substring(1, s.Length - 2).UnescapeDoubleQuotes();
 			return s;
 		}
 
@@ -1422,6 +1440,259 @@ namespace FrEee.Utility.Extensions
 		public static object Deserialize(this string s, IList<object> known = null)
 		{
 			return Serializer.Deserialize(s, known);		
+		}
+
+		/// <summary>
+		/// Same as string.IndexOf, but ignores matches in unescaped quotes.
+		/// </summary>
+		/// <param name="haystack"></param>
+		/// <param name="needle"></param>
+		/// <returns></returns>
+		public static int Find(this string haystack, string needle)
+		{
+			char? quote = null;
+			var curSubstring = new StringBuilder();
+			int index = -1;
+			bool escaped = false;
+			foreach (char c in haystack)
+			{
+				index++;
+				if (c == '\\' && !escaped)
+				{
+					escaped = true;
+					continue;
+				}
+				if (c == '\'' && quote == null && !escaped)
+				{
+					quote = c;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '\'' && quote == c && !escaped)
+				{
+					quote = null;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '"' && quote == null && !escaped)
+				{
+					quote = c;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '"' && quote == c && !escaped)
+				{
+					quote = null;
+					curSubstring.Clear();
+					continue;
+				}
+				curSubstring.Append(c);
+				if (curSubstring.ToString().Contains(needle))
+				{
+					// found substring not in quotes
+					var relPos = curSubstring.ToString().IndexOf(needle);
+					return index + relPos;
+				}
+				escaped = false;
+			}
+			return -1;
+		}
+
+		/// <summary>
+		/// Same as string.LastIndexOf, but ignores matches in unescaped quotes.
+		/// </summary>
+		/// <param name="haystack"></param>
+		/// <param name="needle"></param>
+		/// <returns></returns>
+		public static int FindLast(this string haystack, string needle)
+		{
+			char? quote = null;
+			var curSubstring = new StringBuilder();
+			int last = -1;
+			int index = -1;
+			bool escaped = false;
+			foreach (char c in haystack)
+			{
+				index++;
+				if (c == '\\' && !escaped)
+				{
+					escaped = true;
+					continue;
+				}
+				if (c == '\'' && quote == null && !escaped)
+				{
+					quote = c;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '\'' && quote == c && !escaped)
+				{
+					quote = null;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '"' && quote == null && !escaped)
+				{
+					quote = c;
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == '"' && quote == c && !escaped)
+				{
+					quote = null;
+					curSubstring.Clear();
+					continue;
+				}
+				curSubstring.Append(c);
+				if (curSubstring.ToString().Contains(needle))
+				{
+					// found substring not in quotes
+					var relPos = curSubstring.ToString().IndexOf(needle);
+					last = index + relPos;
+				}
+				escaped = false;
+			}
+			return last;
+		}
+
+		/// <summary>
+		/// Finds text between braces.
+		/// Can find multiple matches.
+		/// Throws an exception if close braces are missing.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="openBrace"></param>
+		/// <param name="closeBrace"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> BetweenBraces(this string s, char openBrace, char closeBrace)
+		{
+			char? quote = null;
+			var curSubstring = new StringBuilder();
+			int index = -1;
+			bool escaped = false;
+			int braceLevel = 0;
+			bool enteredBraces = false;
+			foreach (char c in s)
+			{
+				index++;
+				if (c == '\\' && !escaped)
+				{
+					escaped = true;
+					continue;
+				}
+				if (c == '\'' && quote == null && !escaped)
+				{
+					quote = c;
+				}
+				else if (c == '\'' && quote == c && !escaped)
+				{
+					quote = null;
+				}
+				else if (c == '"' && quote == null && !escaped)
+				{
+					quote = c;
+				}
+				else if (c == '"' && quote == c && !escaped)
+				{
+					quote = null;
+				}
+				else if (c == openBrace && quote == null && !escaped)
+				{
+					braceLevel++;
+					enteredBraces = true;
+					if (braceLevel == 1)
+					{
+						escaped = false;
+						continue;
+					}
+				}
+				else if (c == closeBrace && quote == null && !escaped)
+				{
+					braceLevel--;
+					if (braceLevel == 0 && enteredBraces)
+					{
+						yield return curSubstring.ToString();
+						escaped = false;
+						continue;
+					}
+				}
+				curSubstring.Append(c);
+				escaped = false;
+			}
+		}
+
+		/// <summary>
+		/// Splits a comma separated list.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="openBrace"></param>
+		/// <param name="closeBrace"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> SplitCsv(this string s, char comma = ',', char openBrace1 = '[', char openBrace2 = '{', char closeBrace1 = ']', char closeBrace2 = '}')
+		{
+			char? quote = null;
+			var curSubstring = new StringBuilder();
+			int index = -1;
+			bool escaped = false;
+			int brace1Level = 0, brace2Level = 0;
+			foreach (char c in s)
+			{
+				index++;
+				if (c == '\\' && !escaped)
+				{
+					escaped = true;
+					continue;
+				}
+				if (c == '\'' && quote == null && !escaped)
+				{
+					quote = c;
+				}
+				else if (c == '\'' && quote == c && !escaped)
+				{
+					quote = null;
+				}
+				if (c == '"' && quote == null && !escaped)
+				{
+					quote = c;
+				}
+				else if (c == '"' && quote == c && !escaped)
+				{
+					quote = null;
+				}
+				if (c == comma && quote == null && !escaped && brace1Level == 0 && brace2Level == 0)
+				{
+					yield return curSubstring.ToString();
+					curSubstring.Clear();
+					continue;
+				}
+				if (c == openBrace1 && quote == null && !escaped)
+				{
+					brace1Level++;
+				}
+				if (c == closeBrace1 && quote == null && !escaped)
+				{
+					brace1Level--;
+				}
+				if (c == openBrace2 && quote == null && !escaped)
+				{
+					brace2Level++;
+				}
+				if (c == closeBrace2 && quote == null && !escaped)
+				{
+					brace2Level--;
+				}
+				curSubstring.Append(c);
+				escaped = false;
+			}
+			if (curSubstring.Length > 0 && s.EndsWith(curSubstring.ToString()) || s.Last() == comma && quote == null && !escaped)
+				yield return curSubstring.ToString();
+		}
+
+		public static object Instantiate(this Type t)
+		{
+			if (t.GetConstructor(new Type[0]) != null)
+				return Activator.CreateInstance(t);
+			return FormatterServices.GetSafeUninitializedObject(t);
 		}
 	}
 }

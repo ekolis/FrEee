@@ -55,8 +55,8 @@ namespace FrEee.WinForms.Forms
 			string[] warnings = new string[0];
 			Thread t = new Thread(new ThreadStart(() =>
 			{
-				try
-				{
+				/*try
+				{*/
 					if (Mod.Current == null)
 					{
 						status.Message = "Loading mod";
@@ -78,11 +78,11 @@ namespace FrEee.WinForms.Forms
 						status.Message = "Loading game";
 						Galaxy.Load(name + "_" + turn + "_0001.gam");
 					}
-				}
+				/*}
 				catch (Exception ex)
 				{
 					status.Exception = ex;
-				}
+				}*/
 			}));
 			t.Name = "Game Setup";
 
@@ -173,15 +173,15 @@ namespace FrEee.WinForms.Forms
 			};
 			Thread t = new Thread(new ThreadStart(() =>
 			{
-				try
-				{
+				/*try
+				{*/
 					status.Message = "Loading mod";
 					Mod.Load(modPath, true, status, 1d);
-				}
+				/*}
 				catch (Exception ex)
 				{
 					status.Exception = ex;
-				}
+				}*/
 			}));
 			t.Name = "Mod Loading";
 

@@ -559,7 +559,7 @@ namespace FrEee.Game.Setup
 		public static GameSetup Load(string filename)
 		{
 			var fs = new FileStream(filename, FileMode.Open);
-			var gsu = (GameSetup)Serializer.Deserialize(fs);
+			var gsu = Serializer.Deserialize<GameSetup>(fs);
 			fs.Close();
 			return gsu;
 		}
