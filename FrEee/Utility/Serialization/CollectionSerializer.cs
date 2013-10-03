@@ -28,13 +28,15 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public override object Parse(IList<object> known, string text, Type t)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
 			if (text.Trim() == "null")
 				return null;
 
 			if (known == null)
-				known = new List<object>();
+				known = new Dictionary<int, object>();
+			if (references == null)
+				references = new SafeDictionary<object, SafeDictionary<object, int>>(true);
 
 			var inside = text.BetweenBraces('[', ']');
 			if (!inside.Any())
@@ -45,9 +47,17 @@ namespace FrEee.Utility.Serialization
 
 			var coll = (TCollection)typeof(TCollection).Instantiate();
 			var split = arrayText.SplitCsv().Where(s => s.Trim().Length > 0);
-			var values = split.Select(s => (TItem)s.Deserialize(known));
-			foreach (var item in values)
-				coll.Add(item);
+			int idx = 0;
+			foreach (var s in split)
+			{
+				object item;
+				if (typeof(TItem).IsEnumOrNullableEnum())
+					item = Parser.NullableEnum(typeof(TItem), s.Deserialize(coll, idx, known, references, typeof(TItem).GetNonNullableType()).ToString().UnDoubleQuote());
+				else
+					item = s.Deserialize(coll, idx, known, references, typeof(TItem));
+				coll.Add((TItem)item);
+				idx++;
+			}
 			return coll;
 		}
 	}

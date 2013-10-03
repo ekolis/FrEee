@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -9,9 +10,21 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	 [Serializable] public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	[Serializable]
+	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
-		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+		private Dictionary<TKey, TValue> dict;
+
+		public SafeDictionary(bool autoInit = false)
+		{
+			AutoInit = autoInit;
+			dict = new Dictionary<TKey, TValue>();
+		}
+
+		/// <summary>
+		/// Should new values automatically be created when referencing nonexistent keys, or should the values be null?
+		/// </summary>
+		public bool AutoInit { get; set; }
 
 		public virtual void Add(TKey key, TValue value)
 		{
@@ -54,6 +67,16 @@ namespace FrEee.Utility
 			{
 				if (ContainsKey(key))
 					return dict[key];
+				else if (AutoInit)
+				{
+					if (typeof(TValue).Is(typeof(SafeDictionary<,>), false))
+					{
+						// instantiate nested SafeDictionaries with the AutoInit flag set
+						return (TValue)typeof(TValue).Instantiate(true);
+					}
+					else
+						return (TValue)typeof(TValue).Instantiate();
+				}
 				else
 					return default(TValue);
 			}

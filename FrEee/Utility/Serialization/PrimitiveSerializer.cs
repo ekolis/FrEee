@@ -10,15 +10,25 @@ namespace FrEee.Utility.Serialization
 {
 	public class PrimitiveSerializer : Serializer<object>
 	{
-		public override object Parse(IList<object> known, string s, Type t)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
-			if (!t.IsPrimitive && !t.IsEnum)
-				throw new Exception("Primitive serializer can only handle primitive types and enums. " + t + " is not a primitive type.");
-			return Convert.ChangeType(s, t, CultureInfo.InvariantCulture);
+			if (text.Trim() == "null")
+				return null;
+			return Convert.ChangeType(text, t.GetNonNullableType(), CultureInfo.InvariantCulture);
 		}
 
-		public object Parse(string text)
+		public object Parse(string text, Type desiredType = null)
 		{
+			if (desiredType != null)
+			{
+				if (text.Trim() == "null")
+					return null;
+				else if (desiredType.IsEnumOrNullableEnum())
+					return Parser.NullableEnum(desiredType.GetNonNullableType(), text);
+				else
+					return Convert.ChangeType(text, desiredType.GetNonNullableType(), CultureInfo.InvariantCulture);
+			}
+
 			// try some primitive types
 			bool b;
 			byte by;
@@ -57,10 +67,10 @@ namespace FrEee.Utility.Serialization
 				var assembly = Assembly.Load(name);
 				foreach (var type in assembly.GetTypes())
 				{
-					if (type.IsEnum)
+					if (type.IsEnumOrNullableEnum())
 					{
 						if (Enum.IsDefined(type, text))
-							return Enum.Parse(type, text);
+							return Parser.NullableEnum(type, text.UnDoubleQuote());
 					}
 				}
 			}
@@ -73,9 +83,11 @@ namespace FrEee.Utility.Serialization
 			var t = obj.SafeGetType();
 			if (t == null)
 				throw new Exception("Primitive serializer can only handle primitive types and enums. Nulls are never primitive types.");
-			if (!t.IsPrimitive && !t.IsEnum)
+			if (!t.IsPrimitive && !t.IsEnumOrNullableEnum())
 				throw new Exception("Primitive serializer can only handle primitive types and enums. " + t + " is not a primitive type.");
 			var tabs = new string('\t', indent);
+			if (obj is Enum)
+				return tabs + obj.ToString().DoubleQuote(); // don't break parsing with unquoted commas in flags enums
 			return tabs + (string)Convert.ChangeType(obj, typeof(string), CultureInfo.InvariantCulture);
 		}
 
@@ -84,7 +96,7 @@ namespace FrEee.Utility.Serialization
 			var t = obj.SafeGetType();
 			if (t == null)
 				throw new Exception("Primitive serializer can only handle primitive types and enums. Nulls are never primitive types.");
-			if (!t.IsPrimitive && !t.IsEnum)
+			if (!t.IsPrimitive && !t.IsEnumOrNullableEnum())
 				throw new Exception("Primitive serializer can only handle primitive types and enums. " + t + " is not a primitive type.");
 
 			var tabs = new string('\t', indent);

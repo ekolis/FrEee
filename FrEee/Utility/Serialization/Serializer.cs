@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using System.IO;
+using System.Reflection;
 
 namespace FrEee.Utility.Serialization
 {
@@ -54,7 +55,7 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public abstract object Parse(IList<object> known, string text, Type t);
+		public abstract object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references);
 
 		public string Serialize(object obj, int indent = 0, IList<object> known = null)
 		{
@@ -78,7 +79,7 @@ namespace FrEee.Utility.Serialization
 				known = new List<object>();
 
 			var t = obj.GetType();
-			if (t.IsPrimitive || t.IsEnum)
+			if (t.IsPrimitive || t.IsEnumOrNullableEnum())
 				return new PrimitiveSerializer().Serialize(obj, indent, known);
 			if (t == typeof(string))
 				return new StringSerializer().SerializeTyped(obj.ToString(), indent, known);
@@ -117,7 +118,7 @@ namespace FrEee.Utility.Serialization
 			sw.Close();
 		}
 
-		public static object Deserialize(string text, IList<object> known = null)
+		public static object Deserialize(string text, object parent, object propertyOrIndex, IDictionary<int, object> known = null, SafeDictionary<object, SafeDictionary<object, int>> references = null, Type desiredType = null)
 		{
 			text = text.Trim();
 
@@ -125,13 +126,23 @@ namespace FrEee.Utility.Serialization
 				return null;
 
 			if (known == null)
-				known = new List<object>();
+				known = new Dictionary<int, object>();
+
+			if (references == null)
+				references = new SafeDictionary<object, SafeDictionary<object, int>>(true);
 
 			if (text.StartsWith("#"))
 			{
 				// id ref
 				var id = int.Parse(text.Substring(1));
-				return known[id];
+				if (known.ContainsKey(id))
+					return known[id];
+				else
+				{
+					// reference to as yet unknown object
+					references[parent][propertyOrIndex] = id;
+					return null;
+				}
 			}
 
 			if (text.StartsWith("["))
@@ -139,7 +150,7 @@ namespace FrEee.Utility.Serialization
 				var split = text.BetweenBraces('[', ']');
 				if (split.Count() != 1)
 					throw new Exception("Reference objects must contain exactly one set of outer square braces.");
-				var csv = split.First().SplitCsv();
+				var csv = split.First().SplitCsv().Where(s => !string.IsNullOrWhiteSpace(s));
 				if (csv.Count() != 3)
 					throw new Exception("Reference objects must contain exactly 3 comma delimited items: an ID, a type, and a value.");
 				var id = int.Parse(csv.ElementAt(0).Trim().TrimStart('#'));
@@ -157,7 +168,7 @@ namespace FrEee.Utility.Serialization
 						{
 							var serType = typeof(ArraySerializer<>).MakeGenericType(type.GetElementType());
 							var ser = (ISerializer)serType.Instantiate();
-							result = ser.Parse(known, valtext, type);
+							result = ser.Parse(known, valtext, type, references);
 						}
 						else if (type.GetInterfaces().Any(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICollection<>)) && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
 						{
@@ -165,7 +176,7 @@ namespace FrEee.Utility.Serialization
 							var itemType = collType.GetGenericArguments()[0];
 							var serType = typeof(CollectionSerializer<,>).MakeGenericType(type, itemType);
 							var ser = (ISerializer)serType.Instantiate();
-							result = ser.Parse(known, valtext, type);
+							result = ser.Parse(known, valtext, type, references);
 						}
 					}
 					else
@@ -181,27 +192,38 @@ namespace FrEee.Utility.Serialization
 						var valType = dictType.GetGenericArguments()[1];
 						var serType = typeof(DictionarySerializer<,,>).MakeGenericType(type, keyType, valType);
 						var ser = (ISerializer)serType.Instantiate();
-						result = ser.Parse(known, valtext, type);
+						result = ser.Parse(known, valtext, type, references);
 					}
 					else
 					{
 						var serType = typeof(ObjectSerializer<>).MakeGenericType(type);
 						var ser = (ISerializer)Activator.CreateInstance(serType);
-						result = ser.Parse(known, valtext, type);
+						result = ser.Parse(known, valtext, type, references);
 					}
 				}
 				else
 					throw new Exception("Reference values must start with { (for dictionaries or objects) or [ (for collections or arrays).");
 
-				known.Add(result);
+				known.Add(id, result);
+
+				// resolve references
+				foreach (var group in references.ToArray())
+				{
+					foreach (var r in group.Value.ToArray())
+					{
+						group.Key.SetPropertyOrIndexValue(r.Key, r.Value);
+						group.Value.Remove(r);
+					}
+				}
+
 				return result;
 			}
 
 			if (text.IsDoubleQuoted())
-				return new StringSerializer().Parse(known, text, typeof(string));
-			
+				return new StringSerializer().Parse(known, text, typeof(string), references);
+
 			var ps = new PrimitiveSerializer();
-			return ps.Parse(text);
+			return ps.Parse(text, desiredType);
 		}
 
 		public static T Deserialize<T>(Stream s)
@@ -209,7 +231,7 @@ namespace FrEee.Utility.Serialization
 			var sr = new StreamReader(s);
 			var text = sr.ReadToEnd();
 			sr.Close();
-			return (T)Deserialize(text, null);
+			return (T)Deserialize(text, null, null);
 		}
 	}
 }

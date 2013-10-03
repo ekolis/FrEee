@@ -37,5 +37,12 @@ namespace FrEee.Utility
 				return num * (allowMilli ? 1e-3 : 1e6); // treat as mega if milli isn't allowed
 			return null; // can't parse the units
 		}
+
+		public static object NullableEnum(Type t, string s)
+		{
+			if (string.IsNullOrWhiteSpace(s))
+				return null;
+			return Enum.Parse(t, s);
+		}
 	}
 }

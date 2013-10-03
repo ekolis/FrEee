@@ -1036,7 +1036,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static void SetPropertyValue(this object o, string propertyName, object value)
 		{
-			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
+			o.GetType().GetProperty(propertyName).GetSetMethodOnDeclaringType().Invoke(o, new object[]{value});
 		}
 
 		/// <summary>
@@ -1047,7 +1047,44 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static void SetPropertyValue(this object o, PropertyInfo property, object value)
 		{
-			property.SetValue(o, value, new object[0]);
+			property.GetSetMethodOnDeclaringType().Invoke(o, new object[] { value });
+		}
+
+		/// <summary>
+		/// Sets a property or indexer value on an object using reflection.
+		/// </summary>
+		public static void SetPropertyOrIndexValue(this object o, object propertyOrIndex, object value)
+		{
+			if (o.GetType().Is(typeof(IDictionary<,>)))
+			{
+				// if property/index is null, we are adding a new entry, otherwise we are setting a value for a key
+				if (propertyOrIndex == null)
+					o.GetType().GetMethod("Add").Invoke(o, new object[] { value, o.GetType().GetGenericArguments(typeof(IDictionary<,>))[1].DefaultValue() });
+				o.GetType().GetProperty("Item").SetValue(o, value, new object[] { propertyOrIndex });
+			}
+			else if (o.GetType().Is(typeof(IList<>)))
+			{
+				var idx = (int)propertyOrIndex;
+				while (((int)o.GetType().GetPropertyValue("Count")) < idx + 1)
+				{
+					o.GetType().GetMethod("Add").Invoke(o, new object[] { o.GetType().GetGenericArguments(typeof(IList<>))[0].DefaultValue() });
+				}
+				o.GetType().GetProperty("Item").SetValue(o, value, new object[] { idx });
+			}
+			else if (o.GetType().Is(typeof(Array)))
+			{
+				var indices = (IEnumerable<int>)propertyOrIndex;
+				if (indices.Count() == 1)
+					o.GetType().GetProperty("Item").SetValue(o, value, new object[] { indices.First() });
+				else if (indices.Count() == 2)
+					o.GetType().GetProperty("Item").SetValue(o, value, new object[] { indices.First(), indices.Last() });
+				else
+					throw new Exception("Arrays with " + indices.Count() + " dimensions are not supported. Only arrays with 1 or 2 dimensions are supported.");
+			}
+			else if (o.GetType().Is(typeof(ICollection<>)))
+				o.GetType().GetMethod("Add").Invoke(o, new object[] { value }); // property/index is irrelevant
+			else
+				o.SetPropertyValue((string)propertyOrIndex, value);
 		}
 
 		/// <summary>
@@ -1437,9 +1474,9 @@ namespace FrEee.Utility.Extensions
 			return Serializer.Serialize(obj, indent, known);
 		}
 
-		public static object Deserialize(this string s, IList<object> known = null)
+		public static object Deserialize(this string s, object parent, object propertyOrIndex, IDictionary<int, object> known = null, SafeDictionary<object, SafeDictionary<object, int>> references = null, Type desiredType = null)
 		{
-			return Serializer.Deserialize(s, known);		
+			return Serializer.Deserialize(s, parent, propertyOrIndex, known, references, desiredType);		
 		}
 
 		/// <summary>
@@ -1688,11 +1725,101 @@ namespace FrEee.Utility.Extensions
 				yield return curSubstring.ToString();
 		}
 
-		public static object Instantiate(this Type t)
+		public static object Instantiate(this Type t, params object[] args)
 		{
-			if (t.GetConstructor(new Type[0]) != null)
-				return Activator.CreateInstance(t);
-			return FormatterServices.GetSafeUninitializedObject(t);
+			try
+			{
+				return Activator.CreateInstance(t, args);
+			}
+			catch
+			{
+				return FormatterServices.GetSafeUninitializedObject(t);
+			}
+		}
+
+		/// <summary>
+		/// Determines if one type is derived from another.
+		/// Includes generic type definitions, not just concrete types and interfaces.
+		/// </summary>
+		/// <param name="derivedType"></param>
+		/// <param name="baseType"></param>
+		/// <param name="crawlHierarchy">Crawl the type hierarchy recursively?</param>
+		/// <returns></returns>
+		public static bool Is(this Type derivedType, Type baseType, bool crawlHierarchy = true)
+		{
+			if (baseType.IsAssignableFrom(derivedType))
+				return true;
+			if (baseType.IsGenericTypeDefinition)
+			{
+				if (derivedType.IsGenericType && derivedType.GetGenericTypeDefinition() == baseType)
+					return true;
+				if (crawlHierarchy && derivedType.BaseType != null && derivedType.BaseType.Is(baseType))
+					return true;
+				if (baseType.IsInterface)
+				{
+					foreach (var iface in derivedType.GetInterfaces())
+					{
+						if (iface.IsGenericType && iface.GetGenericTypeDefinition() == baseType)
+							return true;
+						if (crawlHierarchy && iface.Is(baseType))
+							return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Gets the generic arguments of a type's implmenentation of a generic type definition.
+		/// </summary>
+		/// <param name="derivedType"></param>
+		/// <param name="genericTypeDef"></param>
+		/// <returns></returns>
+		public static Type[] GetGenericArguments(this Type derivedType, Type genericTypeDef)
+		{
+			if (derivedType.IsGenericTypeDefinition)
+				throw new ArgumentException("Cannot find the generic arguments of a generic type definition (" + derivedType + ").");
+			var baseType = derivedType;
+			while (baseType != null)
+			{
+				if (baseType.IsGenericType && baseType.GetGenericTypeDefinition() == genericTypeDef)
+					return baseType.GetGenericArguments();
+			}
+			foreach (var iface in derivedType.GetInterfaces())
+			{
+				if (iface.IsGenericType && iface.GetGenericTypeDefinition() == genericTypeDef)
+					return iface.GetGenericArguments();
+			}
+			throw new Exception(derivedType + " does not implement " + genericTypeDef + ".");
+		}
+
+		public static object DefaultValue(this Type type)
+		{
+			if (type.IsValueType)
+				return type.Instantiate();
+			return null;
+		}
+
+		public static bool IsEnumOrNullableEnum(this Type type)
+		{
+			return type.IsEnum || type.Is(typeof(Nullable<>)) && type.GetGenericArguments(typeof(Nullable<>))[0].IsEnum;
+		}
+
+		public static Type GetNonNullableType(this Type type)
+		{
+			if (type.Is(typeof(Nullable<>)))
+				return type.GetGenericArguments(typeof(Nullable<>))[0];
+			return type;
+		}
+
+		// http://stackoverflow.com/questions/6557517/propertyinfo-getsetmethodtrue-not-returning-method-for-properties-from-base-cl
+		public static MethodInfo GetSetMethodOnDeclaringType(this PropertyInfo propertyInfo)
+		{
+			var methodInfo = propertyInfo.GetSetMethod(true);
+			return methodInfo ?? propertyInfo
+									.DeclaringType
+									.GetProperty(propertyInfo.Name)
+									.GetSetMethod(true);
 		}
 	}
 }

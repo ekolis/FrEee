@@ -45,13 +45,15 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public override object Parse(IList<object> known, string text, Type t)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
 			if (text.Trim() == "null")
 				return null;
 
 			if (known == null)
-				known = new List<object>();
+				known = new Dictionary<int, object>();
+			if (references == null)
+				references = new SafeDictionary<object, SafeDictionary<object, int>>(true);
 
 			var inside = text.BetweenBraces('[', ']');
 			if (!inside.Any())
@@ -59,13 +61,15 @@ namespace FrEee.Utility.Serialization
 			if (inside.Count() > 1)
 				throw new Exception("Arrays cannot contain more than one set of square braces.");
 			var arrayText = inside.First();
-			
+
 			// see if we have a 2D array
 			var inside2 = arrayText.BetweenBraces('[', ']');
 			if (inside2.Any())
 			{
 				// 2D array, contains 1D arrays
+				var tempArray = new TItem[0,0];
 				var biglist = new List<List<TItem>>();
+				int x = 0, y = 0;
 				foreach (var arrayText2 in inside2)
 				{
 					// sub array is 1D
@@ -78,31 +82,63 @@ namespace FrEee.Utility.Serialization
 						throw new Exception("Arrays cannot contain more than one set of square braces.");
 					var arrayText21 = inside21.First();
 					var split = arrayText21.SplitCsv();
-					var values = split.Select(s => (TItem)s.Deserialize(known));
-					foreach (var item in values)
-						sublist.Add(item);
+					foreach (var s in split)
+					{
+						object item;
+						if (typeof(TItem).IsEnumOrNullableEnum())
+							item = Parser.NullableEnum(typeof(TItem), s.Deserialize(tempArray, new int[] { x, y }, known, references, typeof(TItem).GetNonNullableType()).ToString().UnDoubleQuote());
+						else
+							item = s.Deserialize(tempArray, new int[]{x, y}, known, references, typeof(TItem));
+						sublist.Add((TItem)item);
+						y++;
+					}
+					x++;
 				}
 				var width = biglist.Count;
 				var height = biglist.MaxOrDefault(l => l.Count);
 				var array = new TItem[width, height];
-				for (var x = 0; x < width; x++)
+
+				for (x = 0; x < width; x++)
 				{
-					for (var y = 0; y < height; y++)
+					for (y = 0; y < height; y++)
 					{
 						if (biglist[x].Count > y)
 							array[x, y] = biglist[x][y];
 					}
 				}
+
+				// replace references with references to the real array now that we know its size
+				var rs = references[tempArray];
+				references.Remove(tempArray);
+				references.Add(array, rs);
+
 				return array;
 			}
 			else
 			{
 				// 1D array
+				var tempArray = new TItem[0];
 				var list = new List<TItem>();
 				var split = arrayText.SplitCsv();
-				var values = split.Select(s => (TItem)s.Deserialize(known));
-				foreach (var item in values)
-					list.Add(item);
+				int x = 0;
+				foreach (var s in split.Where(s => !string.IsNullOrWhiteSpace(s)))
+				{
+					object item;
+					if (typeof(TItem).IsEnumOrNullableEnum())
+						item = Parser.NullableEnum(typeof(TItem), s.Deserialize(tempArray, new int[] { x }, known, references, typeof(TItem).GetNonNullableType()).ToString().UnDoubleQuote());
+					else
+						item = s.Deserialize(tempArray, new int[] { x }, known, references, typeof(TItem));
+					list.Add((TItem)item);
+					x++;
+				}
+
+				var array = list.ToArray();
+
+				// replace references with references to the real array now that we know its size
+				var rs = references[tempArray];
+				references.Remove(tempArray);
+				references.Add(array, rs);
+
 				return list.ToArray();
 			}
 		}

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using FrEee.Utility.Extensions;
 using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace FrEee.Utility.Serialization
 {
@@ -18,11 +19,11 @@ namespace FrEee.Utility.Serialization
 		public override string Stringify(IList<object> known, object o, int indent = 0)
 		{
 			var obj = (T)o;
+			var tabs = new string('\t', indent);
 			if (obj == null)
-				return "null";
+				return tabs + "null";
 			var t = obj.GetType();
 			AddProperties(t);
-			var tabs = new string('\t', indent);
 			var sb = new StringBuilder();
 			sb.Append(tabs);
 			sb.AppendLine("{");
@@ -40,13 +41,15 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public override object Parse(IList<object> known, string text, Type type)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
 			if (text.Trim() == "null")
 				return null;
 
 			if (known == null)
-				known = new List<object>();
+				known = new Dictionary<int, object>();
+			if (references == null)
+				references = new SafeDictionary<object, SafeDictionary<object, int>>(true);
 
 			var inside = text.BetweenBraces('{', '}');
 			if (!inside.Any())
@@ -69,8 +72,11 @@ namespace FrEee.Utility.Serialization
 					var prop = typeof(T).GetProperty(split2.First().Trim().UnDoubleQuote());
 					if (prop != null)
 					{
-						var val = split2.Last().Trim().Deserialize(known);
-						obj.SetPropertyValue(prop, val);
+						var val = split2.Last().Trim().Deserialize(obj, prop.Name, known, references, prop.PropertyType);
+						if (val is string && prop.PropertyType.IsEnumOrNullableEnum())
+							obj.SetPropertyValue(prop, Parser.NullableEnum(prop.PropertyType.GetNonNullableType(), (string)val));
+						else
+							obj.SetPropertyValue(prop, val);
 					}
 				}
 			}
@@ -127,8 +133,11 @@ namespace FrEee.Utility.Serialization
 			}
 			else
 			{
-				// write the ID, the data type, and the value
+				// add to known list
 				var id = known.Count;
+				known.Add(obj);
+
+				// write the ID, the data type, and the value
 				sb.Append(tabs);
 				sb.AppendLine("[");
 				var moreIndent = indent + 1;

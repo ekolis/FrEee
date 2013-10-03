@@ -31,13 +31,15 @@ namespace FrEee.Utility.Serialization
 			return sb.ToString();
 		}
 
-		public override object Parse(IList<object> known, string text, Type t)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
 			if (text.Trim() == "null")
 				return null;
 
 			if (known == null)
-				known = new List<object>();
+				known = new Dictionary<int, object>();
+			if (references == null)
+				references = new SafeDictionary<object, SafeDictionary<object, int>>(true);
 
 			var inside = text.BetweenBraces('{', '}');
 			if (!inside.Any())
@@ -55,7 +57,16 @@ namespace FrEee.Utility.Serialization
 					var split2 = s.SplitCsv(':');
 					if (split2.Count() != 2)
 						throw new Exception("Dictionary key/value pairs must be in the format Key: Value.");
-					dict.Add((TKey)Convert.ChangeType(split2.First().Deserialize(known), typeof(TKey), CultureInfo.InvariantCulture), (TValue)Convert.ChangeType(split2.Last().Deserialize(known), typeof(TValue), CultureInfo.InvariantCulture));
+					object key, val;
+					if (typeof(TKey).IsEnumOrNullableEnum())
+						key = Parser.NullableEnum(typeof(TKey), split2.First().Deserialize(dict, null, known, references, typeof(TKey).GetNonNullableType()).ToString().UnDoubleQuote());
+					else
+						key = split2.First().Deserialize(dict, null, known, references, typeof(TKey));
+					if (typeof(TValue).IsEnumOrNullableEnum())
+						val = Parser.NullableEnum(typeof(TValue), split2.Last().Deserialize(dict, key, known, references, typeof(TValue).GetNonNullableType()).ToString().UnDoubleQuote());
+					else
+						val = split2.Last().Deserialize(dict, key, known, references, typeof(TValue));
+					dict.Add((TKey)key, (TValue)val);
 				}
 			}
 			return dict;

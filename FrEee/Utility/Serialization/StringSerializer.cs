@@ -10,11 +10,11 @@ namespace FrEee.Utility.Serialization
 {
 	public class StringSerializer : Serializer<string>
 	{
-		public override object Parse(IList<object> known, string s, Type t)
+		public override object Parse(IDictionary<int, object> known, string text, Type t, SafeDictionary<object, SafeDictionary<object, int>> references)
 		{
-			if (s.Trim() == "null")
+			if (text.Trim() == "null")
 				return null;
-			return s.UnDoubleQuote();
+			return text.UnDoubleQuote();
 		}
 
 		public override string Stringify(IList<object> known, object o, int indent = 0)
