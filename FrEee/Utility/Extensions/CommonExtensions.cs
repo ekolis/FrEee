@@ -1119,7 +1119,8 @@ namespace FrEee.Utility.Extensions
 					var unit = src.Cargo.Units.FirstOrDefault(u => u.Design == kvp.Key);
 					if (unit == null && kvp.Value != null)
 					{
-						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
 						break;
 					}
 					if (src.CargoStorageFree() < kvp.Key.Hull.Size)
@@ -1144,14 +1145,20 @@ namespace FrEee.Utility.Extensions
 				{
 					if (!available.Any())
 					{
-						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
 						break;
 					}
-					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && u.Design.Hull.Size <= kvp.Value - transferred);
-					src.RemoveUnit(unit);
-					dest.AddUnit(unit);
-					available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
-					transferred += unit.Design.Hull.Size;
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
+						transferred += unit.Design.Hull.Size;
+					}
+					else
+						break;
 				}
 			}
 
@@ -1167,11 +1174,16 @@ namespace FrEee.Utility.Extensions
 						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
 						break;
 					}
-					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && u.Design.Hull.Size <= kvp.Value - transferred);
-					src.RemoveUnit(unit);
-					dest.AddUnit(unit);
-					available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
-					transferred += unit.Design.Hull.Size;
+					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
+						transferred += unit.Design.Hull.Size;
+					}
+					else
+						break;
 				}
 			}
 		}

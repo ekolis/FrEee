@@ -32,17 +32,6 @@ namespace FrEee.Game.Objects.Vehicles
 			Cargo = new Cargo();
 		}
 
-		public override void Place(ISpaceObject target)
-		{
-			var search = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj == target);
-			if (!search.Any() || !search.First().Any() || !search.First().First().Any())
-				throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
-			var sys = search.First().Key.Item;
-			var coords = search.First().First().First().Key;
-			sys.SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(this, coords));
-		}
-
-
 		public IList<Ability> IntrinsicAbilities
 		{
 			get;

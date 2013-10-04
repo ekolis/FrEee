@@ -152,6 +152,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The hitpoints of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
+		[DoNotSerialize]
 		public int Hitpoints
 		{
 			get
@@ -167,6 +168,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The normal shields of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
+		[DoNotSerialize]
 		public int NormalShields
 		{
 			get
@@ -182,6 +184,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The phased shields of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
+		[DoNotSerialize]
 		public int PhasedShields
 		{
 			get
@@ -212,7 +215,7 @@ namespace FrEee.Game.Objects.Space
 		public void ReplenishShields()
 		{
 			foreach (var sobj in SpaceObjects)
-				ReplenishShields();
+				sobj.ReplenishShields();
 		}
 
 		public int? Repair(int? amount = null)
@@ -288,6 +291,7 @@ namespace FrEee.Game.Objects.Space
 			get { return SpaceObjects.Sum(sobj => sobj.SupplyStorage); }
 		}
 
+		[DoNotSerialize]
 		public int SupplyRemaining
 		{
 			get
