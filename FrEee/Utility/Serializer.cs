@@ -37,6 +37,8 @@ namespace FrEee.Utility
 
 		private static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
 		{
+			var tabs = new string('\t', tabLevel);
+
 			// type checking!
 			if (o != null && !desiredType.IsAssignableFrom(o.GetType()))
 				throw new SerializationException("Attempting to serialize " + o.GetType() + " as " + desiredType + ".");
@@ -54,11 +56,11 @@ namespace FrEee.Utility
 			{
 				if (!context.KnownTypes.Contains(desiredType))
 				{
-					w.WriteLine(desiredType.AssemblyQualifiedName + ":n;");
 					context.KnownTypes.Add(desiredType);
+					context.AddProperties(desiredType);
 				}
-				else
-					w.WriteLine(context.KnownTypes.IndexOf(desiredType) + ":n;");
+				w.Write(desiredType.AssemblyQualifiedName);
+				w.WriteLine(":n;");
 				return;
 			}
 
@@ -76,7 +78,7 @@ namespace FrEee.Utility
 			}
 
 			// write the type name
-			w.Write(type.AssemblyQualifiedName + ":");
+			w.WriteLine(type.AssemblyQualifiedName + ":");
 
 			if (id == null && !type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
 			{
@@ -88,7 +90,9 @@ namespace FrEee.Utility
 			if (id != null)
 			{
 				// already seen this object, just write an ID
-				w.Write("i" + id);
+				w.Write(tabs);
+				w.Write("i");
+				w.Write(id);
 
 				// write end object
 				w.WriteLine(";");
@@ -96,6 +100,9 @@ namespace FrEee.Utility
 				// done
 				return;
 			}
+
+			// write some tabs
+			w.Write(tabs);
 
 			// serialize the object
 			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type.Name == "Nullable`1")
@@ -152,11 +159,13 @@ namespace FrEee.Utility
 
 		private static void WriteArray(Array array, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
+			var tabs = new string('\t', tabLevel);
+
 			// arrays get size and elements listed out
 			var bounds = new List<string>();
 			for (var rank = 0; rank < array.Rank; rank++)
 				bounds.Add(array.GetLowerBound(rank) + "_" + array.GetUpperBound(rank));
-			w.WriteLine("a" + string.Join(",", bounds.ToArray()) + ":");
+			w.WriteLine("a" + string.Join(",", bounds.ToArray()) + ":" + tabs);
 			var type = array.GetType();
 			var itemtype = type.GetElementType();
 			if (array.Rank == 1)
@@ -183,6 +192,8 @@ namespace FrEee.Utility
 
 		private static void WriteCollection(IEnumerable list, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
+			var tabs = new string('\t', tabLevel);
+
 			// collections get size and elements listed out
 			Type itemType;
 			var type = list.GetType();
@@ -191,27 +202,27 @@ namespace FrEee.Utility
 			{
 				// HACK - assume it's a dictionary, no real way to test
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
-				w.WriteLine("d" + list.Cast<object>().Count() + ":");
+				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
 			else if (type.BaseType.GetGenericArguments().Length == 2)
 			{
 				// HACK - Resources inherits from a dictionary type
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
-				w.WriteLine("d" + list.Cast<object>().Count() + ":");
+				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
 			else if (type.GetGenericArguments().Length == 1)
 			{
 				// HACK - assume it's a collection, no real way to test
 				itemType = type.GetGenericArguments()[0];
-				w.WriteLine("c" + list.Cast<object>().Count() + ":");
+				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
 			}
 			else
 			{
 				// no generic type? probably a list of objects?
 				itemType = typeof(object);
-				w.WriteLine("c" + list.Cast<object>().Count() + ":");
+				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
 			}
 			foreach (var item in list)
 			{
@@ -243,6 +254,9 @@ namespace FrEee.Utility
 
 		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
+			var tabs = new string('\t', tabLevel);
+			var moreTabs = new string('\t', tabLevel + 1);
+
 			// serialize object type and field count
 			var type = o.GetType();
 			var props = context.KnownProperties[type];
@@ -253,11 +267,11 @@ namespace FrEee.Utility
 				// serialize property name and value
 				try
 				{
-					w.Write(new string('\t', tabLevel));
+					w.Write(moreTabs);
 					w.Write(p.Name);
-					w.Write(":");
+					w.Write(":\n");
 					var val = p.GetValue(o, new object[]{});
-					Serialize(val, w, p.PropertyType, context, tabLevel + 1);
+					Serialize(val, w, p.PropertyType, context, tabLevel + 2);
 				}
 				catch (Exception ex)
 				{
@@ -344,7 +358,7 @@ namespace FrEee.Utility
 				if (s == "n")
 					o = null;
 				else
-					o = s.Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
+					o = s.Trim().Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
 			}
 			else if (type == typeof(Color))
 			{
@@ -368,7 +382,13 @@ namespace FrEee.Utility
 				// arrays
 				// read bounds or id number
 				var fin = r.Read();
-				log.Append(fin);
+				while (fin != 0 && char.IsWhiteSpace((char)fin))
+				{
+					log.Append((char)fin);
+					fin = r.Read();
+				}
+				if (fin != 0)
+					log.Append((char)fin);
 				if (fin == 'a')
 				{
 					var boundsStrs = r.ReadTo(':', log).Split(',');
@@ -444,14 +464,18 @@ namespace FrEee.Utility
 				else
 					throw new SerializationException("Expected 'a'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
 			}
-			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any()
-				// HACK - reference keyed dictionaries and reference sets should not be serialized as normal collections!
-				&& type.Name != "ReferenceKeyedDictionary`2" && type.Name != "ReferenceSet`1" )
+			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any() && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
 			{
 				// collections
 				// read size or id number
 				var fin = r.Read();
-				log.Append(fin);
+				while (fin != 0 && char.IsWhiteSpace((char)fin))
+				{
+					log.Append((char)fin);
+					fin = r.Read();
+				}
+				if (fin != 0)
+					log.Append((char)fin);
 				if (fin == 'c')
 				{
 					int size;
@@ -554,7 +578,13 @@ namespace FrEee.Utility
 			{
 				// read field count or id number
 				var fin = r.Read();
-				log.Append(fin);
+				while (fin != 0 && char.IsWhiteSpace((char)fin))
+				{
+					log.Append((char)fin);
+					fin = r.Read();
+				}
+				if (fin != 0)
+					log.Append((char)fin);
 				if (fin == 'p')
 				{
 					// create object and add it to our context

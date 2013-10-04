@@ -11,7 +11,7 @@ namespace FrEee.Utility
 	/// A set of references.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ReferenceSet<T> : ISet<T>, IPromotable where T : IReferrable
+	public class ReferenceSet<T> : ISet<T>, IPromotable, IReferenceEnumerable where T : IReferrable
 	{
 		public ReferenceSet()
 		{

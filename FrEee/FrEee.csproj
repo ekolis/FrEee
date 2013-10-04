@@ -84,6 +84,7 @@
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IPromotable.cs" />
     <Compile Include="Game\Interfaces\IReference.cs" />
+    <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
