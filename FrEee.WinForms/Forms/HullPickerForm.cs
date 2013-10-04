@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
@@ -87,8 +89,15 @@ namespace FrEee.WinForms.Forms
 		{
 			var vt = (VehicleTypes)((dynamic)ddlVehicleType.SelectedItem).VehicleType;
 			var hulls = Empire.Current.UnlockedItems.OfType<IHull>().Where(h => vt.HasFlag(h.VehicleType));
-			iHullBindingSource.DataSource = hulls.ToArray();
-			gridHulls.Visible = hulls.Any();
+			lstHulls.Initialize(32, 32);
+			foreach (var hull in hulls)
+			{
+				var item = lstHulls.AddItemWithImage(ddlVehicleType.SelectedIndex > 0 ? hull.VehicleTypeName : null, hull.Name, hull, hull.Icon, hull.Size.Kilotons(), hull.Cost[Resource.Minerals].ToUnitString(), hull.Cost[Resource.Organics].ToUnitString(), hull.Cost[Resource.Radioactives].ToUnitString(), hull.Description);
+				item.UseItemStyleForSubItems = false;
+				item.SubItems[2].ForeColor = Resource.Minerals.Color;
+				item.SubItems[3].ForeColor = Resource.Organics.Color;
+				item.SubItems[4].ForeColor = Resource.Radioactives.Color;
+			}
 		}
 
 		private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,20 +105,21 @@ namespace FrEee.WinForms.Forms
 			Bind();
 		}
 
-		private void gridHulls_SelectionChanged(object sender, EventArgs e)
+		private void lstHulls_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			if (gridHulls.SelectedRows.Count > 0)
-				Hull = (IHull<IVehicle>)gridHulls.SelectedRows[0].DataBoundItem;
-			else
-				Hull = null;
+			if (lstHulls.SelectedItems.Count == 1)
+			{
+				var item = lstHulls.SelectedItems[0];
+				Hull = (IHull)item.Tag;
+			}
 		}
 
-		private void gridHulls_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+		private void lstHulls_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
-			if (e.RowIndex >= 0)
+			var item = lstHulls.GetItemAt(e.X, e.Y);
+			if (item != null)
 			{
-				// pick the hull and close the form
-				Hull = (IHull)gridHulls.Rows[e.RowIndex].DataBoundItem;
+				Hull = (IHull)item.Tag;
 				DialogResult = DialogResult.OK;
 				Close();
 			}

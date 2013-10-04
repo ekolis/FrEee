@@ -161,9 +161,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				if (VehicleType == VehicleTypes.WeaponPlatform)
-					return "Weapon Platform"; // add the space
-				return VehicleType.ToString();
+				return VehicleType.ToSpacedString();
 			}
 		}
 

@@ -29,21 +29,18 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
-			this.gridHulls = new System.Windows.Forms.DataGridView();
 			this.lstAbilities = new System.Windows.Forms.ListView();
-			this.Icon = new System.Windows.Forms.DataGridViewImageColumn();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.sizeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.costDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.iHullBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lstHulls = new System.Windows.Forms.ListView();
+			this.colHull = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colSize = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colMin = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colOrg = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colRad = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOk = new FrEee.WinForms.Controls.GameButton();
-			((System.ComponentModel.ISupportInitialize)(this.gridHulls)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.iHullBindingSource)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// ddlVehicleType
@@ -59,38 +56,6 @@ namespace FrEee.WinForms.Forms
 			this.ddlVehicleType.TabIndex = 0;
 			this.ddlVehicleType.ValueMember = "VehicleType";
 			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
-			// 
-			// gridHulls
-			// 
-			this.gridHulls.AllowUserToAddRows = false;
-			this.gridHulls.AllowUserToDeleteRows = false;
-			this.gridHulls.AllowUserToResizeRows = false;
-			this.gridHulls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridHulls.AutoGenerateColumns = false;
-			this.gridHulls.BackgroundColor = System.Drawing.Color.Black;
-			this.gridHulls.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridHulls.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Icon,
-            this.nameDataGridViewTextBoxColumn,
-            this.sizeDataGridViewTextBoxColumn,
-            this.descriptionDataGridViewTextBoxColumn,
-            this.costDataGridViewTextBoxColumn});
-			this.gridHulls.DataSource = this.iHullBindingSource;
-			this.gridHulls.Location = new System.Drawing.Point(13, 41);
-			this.gridHulls.MultiSelect = false;
-			this.gridHulls.Name = "gridHulls";
-			this.gridHulls.ReadOnly = true;
-			this.gridHulls.RowHeadersVisible = false;
-			this.gridHulls.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
-			this.gridHulls.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
-			this.gridHulls.RowTemplate.Height = 32;
-			this.gridHulls.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridHulls.Size = new System.Drawing.Size(457, 319);
-			this.gridHulls.TabIndex = 1;
-			this.gridHulls.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridHulls_CellDoubleClick);
-			this.gridHulls.SelectionChanged += new System.EventHandler(this.gridHulls_SelectionChanged);
 			// 
 			// lstAbilities
 			// 
@@ -110,58 +75,63 @@ namespace FrEee.WinForms.Forms
 			this.lstAbilities.UseCompatibleStateImageBehavior = false;
 			this.lstAbilities.View = System.Windows.Forms.View.List;
 			// 
-			// Icon
-			// 
-			this.Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.Icon.DataPropertyName = "Icon";
-			this.Icon.HeaderText = "Icon";
-			this.Icon.Name = "Icon";
-			this.Icon.ReadOnly = true;
-			this.Icon.Width = 32;
-			// 
-			// nameDataGridViewTextBoxColumn
-			// 
-			this.nameDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			this.nameDataGridViewTextBoxColumn.Width = 60;
-			// 
-			// sizeDataGridViewTextBoxColumn
-			// 
-			this.sizeDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.sizeDataGridViewTextBoxColumn.DataPropertyName = "Size";
-			this.sizeDataGridViewTextBoxColumn.HeaderText = "Size";
-			this.sizeDataGridViewTextBoxColumn.Name = "sizeDataGridViewTextBoxColumn";
-			this.sizeDataGridViewTextBoxColumn.ReadOnly = true;
-			this.sizeDataGridViewTextBoxColumn.Width = 52;
-			// 
-			// descriptionDataGridViewTextBoxColumn
-			// 
-			this.descriptionDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.descriptionDataGridViewTextBoxColumn.DataPropertyName = "Description";
-			this.descriptionDataGridViewTextBoxColumn.HeaderText = "Description";
-			this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
-			this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
-			this.descriptionDataGridViewTextBoxColumn.Width = 85;
-			// 
-			// costDataGridViewTextBoxColumn
-			// 
-			this.costDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.costDataGridViewTextBoxColumn.DataPropertyName = "Cost";
-			this.costDataGridViewTextBoxColumn.HeaderText = "Cost";
-			this.costDataGridViewTextBoxColumn.Name = "costDataGridViewTextBoxColumn";
-			this.costDataGridViewTextBoxColumn.ReadOnly = true;
-			this.costDataGridViewTextBoxColumn.Width = 53;
-			// 
-			// iHullBindingSource
-			// 
-			this.iHullBindingSource.DataSource = typeof(FrEee.Game.Interfaces.IHull);
-			// 
 			// columnHeader1
 			// 
 			this.columnHeader1.Width = 0;
+			// 
+			// lstHulls
+			// 
+			this.lstHulls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.lstHulls.BackColor = System.Drawing.Color.Black;
+			this.lstHulls.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstHulls.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colHull,
+            this.colSize,
+            this.colMin,
+            this.colOrg,
+            this.colRad,
+            this.colDescription});
+			this.lstHulls.ForeColor = System.Drawing.Color.White;
+			this.lstHulls.FullRowSelect = true;
+			this.lstHulls.Location = new System.Drawing.Point(13, 41);
+			this.lstHulls.Name = "lstHulls";
+			this.lstHulls.Size = new System.Drawing.Size(457, 320);
+			this.lstHulls.TabIndex = 27;
+			this.lstHulls.UseCompatibleStateImageBehavior = false;
+			this.lstHulls.View = System.Windows.Forms.View.Details;
+			this.lstHulls.SelectedIndexChanged += new System.EventHandler(this.lstHulls_SelectedIndexChanged);
+			this.lstHulls.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstHulls_MouseDoubleClick);
+			// 
+			// colHull
+			// 
+			this.colHull.Text = "Hull";
+			this.colHull.Width = 120;
+			// 
+			// colSize
+			// 
+			this.colSize.Text = "Size";
+			// 
+			// colMin
+			// 
+			this.colMin.Text = "Min";
+			this.colMin.Width = 40;
+			// 
+			// colOrg
+			// 
+			this.colOrg.Text = "Org";
+			this.colOrg.Width = 40;
+			// 
+			// colRad
+			// 
+			this.colRad.Text = "Rad";
+			this.colRad.Width = 40;
+			// 
+			// colDescription
+			// 
+			this.colDescription.Text = "Description";
+			this.colDescription.Width = 150;
 			// 
 			// btnCancel
 			// 
@@ -195,17 +165,15 @@ namespace FrEee.WinForms.Forms
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(482, 520);
+			this.Controls.Add(this.lstHulls);
 			this.Controls.Add(this.lstAbilities);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOk);
-			this.Controls.Add(this.gridHulls);
 			this.Controls.Add(this.ddlVehicleType);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "HullPickerForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Select a hull";
-			((System.ComponentModel.ISupportInitialize)(this.gridHulls)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.iHullBindingSource)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -213,16 +181,17 @@ namespace FrEee.WinForms.Forms
 		#endregion
 
 		private System.Windows.Forms.ComboBox ddlVehicleType;
-		private System.Windows.Forms.DataGridView gridHulls;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn sizeDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn descriptionDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn costDataGridViewTextBoxColumn;
-		private System.Windows.Forms.BindingSource iHullBindingSource;
 		private System.Windows.Forms.DataGridViewImageColumn Icon;
 		private System.Windows.Forms.ListView lstAbilities;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ListView lstHulls;
+		private System.Windows.Forms.ColumnHeader colHull;
+		private System.Windows.Forms.ColumnHeader colSize;
+		private System.Windows.Forms.ColumnHeader colMin;
+		private System.Windows.Forms.ColumnHeader colOrg;
+		private System.Windows.Forms.ColumnHeader colRad;
+		private System.Windows.Forms.ColumnHeader colDescription;
 	}
 }

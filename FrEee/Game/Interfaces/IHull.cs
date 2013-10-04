@@ -89,6 +89,8 @@ namespace FrEee.Game.Interfaces
 		/// <param name="m"></param>
 		/// <returns></returns>
 		bool CanUseMount(Mount m);
+
+		string VehicleTypeName { get; }
 	}
 
 	/// <summary>
