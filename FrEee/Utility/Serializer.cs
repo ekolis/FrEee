@@ -73,17 +73,10 @@ namespace FrEee.Utility
 				// register type
 				context.KnownTypes.Add(type);
 				context.AddProperties(type);
-
-				// write the full type name
-				// TODO - might want to save off a list of properties in case the data structures get new properties throwing off our indices
-				w.Write(type.AssemblyQualifiedName + ":");
-
 			}
-			else
-			{
-				// just write the type ID
-				w.Write(context.KnownTypes.IndexOf(type) + ":");
-			}
+
+			// write the type name
+			w.Write(type.AssemblyQualifiedName + ":");
 
 			if (id == null && !type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
 			{
@@ -257,9 +250,12 @@ namespace FrEee.Utility
 
 			foreach (var p in props)
 			{
-				// serialize field value
+				// serialize property name and value
 				try
 				{
+					w.Write(new string('\t', tabLevel));
+					w.Write(p.Name);
+					w.Write(":");
 					var val = p.GetValue(o, new object[]{});
 					Serialize(val, w, p.PropertyType, context, tabLevel + 1);
 				}
@@ -342,7 +338,7 @@ namespace FrEee.Utility
 				while (!foundRealSemicolon)
 				{
 					s += r.ReadTo(';', log);
-					if (!s.EndsWith("\\"))
+					if (!s.EndsWith("\\") && s.Count(c => c == '"') % 2 == 0)
 						foundRealSemicolon = true;
 				}
 				if (s == "n")
@@ -576,8 +572,16 @@ namespace FrEee.Utility
 						throw new SerializationException("Expected integer, got \"" + s + "\" when parsing field count.");
 
 					// deserialize the fields
-					foreach (var p in context.KnownProperties[type])
-						p.SetValue(o, Deserialize(r, p.PropertyType, context, log), new object[] { });
+					for (int i = 0; i < count; i++)
+					{
+						var pname = r.ReadTo(':', log).Trim();
+						var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+						if (prop != null)
+							prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[] { });
+						else
+							r.ReadTo(';', log);
+						// if p is null, it must be data from an old version with different property names, so don't crash
+					}
 
 					// clean up
 					ReadSemicolon(r, type, log);

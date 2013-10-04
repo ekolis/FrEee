@@ -1,141 +1,141 @@
-FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p44:
-	FrEee.Game.Enumerations.AllowedTrades, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:All;
-	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
-	2:False;
-	2:False;
-	FrEee.Game.Enumerations.EmpirePlacement, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Equidistant;
-	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:2000;
-	System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-		FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p13:
-			System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
-			2:False;
-			System.Nullable`1[[System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
-			7:n;
-			7:n;
-			7:n;
-			2:False;
-			2:True;
-			7:n;
-			7:n;
-			7:n;
-			FrEee.Game.Objects.Civilization.Race, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p17:
-				7:n;
-				2:True;
-				FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:d15:
-					7:"Physical Strength";
-					4:110;
-					7:"Intelligence";
-					4:100;
-					7:"Cunning";
-					4:100;
-					7:"Environmental Resistance";
-					4:100;
-					7:"Reproduction";
-					4:110;
-					7:"Happiness";
-					4:100;
-					7:"Aggressiveness";
-					4:110;
-					7:"Defensiveness";
-					4:100;
-					7:"Political Savvy";
-					4:100;
-					7:"Mining Aptitude";
-					4:100;
-					7:"Farming Aptitude";
-					4:100;
-					7:"Refining Aptitude";
-					4:100;
-					7:"Construction Aptitude";
-					4:100;
-					7:"Repair Aptitude";
-					4:100;
-					7:"Maintenance Aptitude";
-					4:100;
+FrEee.Game.Setup.GameSetup, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p44:
+AllowedTrades:	FrEee.Game.Enumerations.AllowedTrades, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:All;
+AllSystemsExplored:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+CanColonizeOnlyBreathable:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+CanColonizeOnlyHomeworldSurface:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+EmpirePlacement:	FrEee.Game.Enumerations.EmpirePlacement, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:Equidistant;
+EmpirePoints:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:2000;
+EmpireTemplates:	System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
+		FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p13:
+AIName:			System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+AIsCanUse:			System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+Color:			System.Nullable`1[[System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+CultureName:			7:n;
+HappinessModelName:			7:n;
+InsigniaName:			7:n;
+IsMinorEmpire:			System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+IsPlayerEmpire:			System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+LeaderName:			7:n;
+LeaderPortraitName:			7:n;
+Name:			7:n;
+PrimaryRace:			FrEee.Game.Objects.Civilization.Race, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p17:
+AIName:				7:n;
+AIsCanUse:				System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+Aptitudes:				FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:d15:
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Physical Strength";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Intelligence";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:120;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Cunning";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Environmental Resistance";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Reproduction";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Happiness";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Aggressiveness";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Defensiveness";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Political Savvy";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Mining Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Farming Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Refining Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Construction Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Repair Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Maintenance Aptitude";
+					System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:100;
 				;
-				System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:255,192,64,32;
-				7:"Warriors";
-				7:"Jraenar Empire";
-				7:"Bloodthirsty";
-				System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
-				7:"Jraenar";
-				7:"Master General Jar-Nolath";
-				7:"Jraenar";
-				7:"Jraenar";
-				7:"Hydrogen";
-				7:"Rock";
-				7:"Jraenar";
-				7:"Jraenar";
-				System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-					7:"Advanced Storage Techniques";
+Color:				System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:255,255,192,192;
+CultureName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Scientists";
+EmpireName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian Empire";
+HappinessModelName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Peaceful";
+ID:				System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+InsigniaName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian";
+LeaderName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Emperor Fictus";
+LeaderPortraitName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian";
+Name:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian";
+NativeAtmosphere:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Methane";
+NativeSurface:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Ice";
+PopulationIconName:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian";
+ShipsetPath:				System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Fractalian";
+TraitNames:				System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Crystallurgy";
 				;
 			;
-			7:n;
+ShipsetPath:			7:n;
 		;
 	;
-	13:c0:
+ForbiddenTechnologyNames:	System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c0:
 	;
-	System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:p2:
-		4:30;
-		4:40;
+GalaxySize:	System.Drawing.Size, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:p2:
+Height:		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:15;
+Width:		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:20;
 	;
-	7:"Mid-Life";
-	7:"Quickstart";
-	2:True;
-	2:True;
-	FrEee.Game.Enumerations.StellarSize, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Huge;
-	4:1;
-	4:120;
-	2:True;
-	2:False;
-	2:True;
-	2:True;
-	4:1;
-	4:250;
-	4:300;
-	4:150;
-	4:0;
-	4:0;
-	4:0;
-	4:50;
-	4:0;
-	2:False;
-	4:3;
-	FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p8:
-		2:False;
-		2:False;
-		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
-		17:0;
-		17:0.01;
-		17:0;
-		4:1;
-		17:1;
+GalaxyTemplateName:	System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Mid-Life";
+GameName:	System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Quickstart";
+GenerateRandomRuins:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+GenerateUniqueRuins:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+HomeworldSize:	FrEee.Game.Enumerations.StellarSize, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:Huge;
+HomeworldsPerEmpire:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
+HomeworldValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:120;
+IsAnalysisAllowed:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+IsHumansVsAI:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+IsIntelligenceAllowed:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+IsSurrenderAllowed:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:True;
+MaxHomeworldDispersion:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
+MaxPlanetValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:250;
+MaxSpawnedAsteroidValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:300;
+MaxSpawnedPlanetValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:150;
+MinAsteroidValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+MinorEmpires:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+MinPlanetValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+MinSpawnedAsteroidValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:50;
+MinSpawnedPlanetValue:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+OmniscientView:	System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+RandomAIs:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+RemoteMiningModel:	FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p8:
+BonusAffectsDepletion:		System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+LimitRateToValue:		System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+Rate:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+RatePercentage:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+ValueBonus:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0.01;
+ValueDepletionPerResource:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+ValueDepletionPerTurn:		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
+ValuePercentageBonus:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
 	;
-	4:50000;
-	FrEee.Game.Enumerations.ScoreDisplay, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:OwnOnlyNoRankings;
-	16:p8:
-		2:False;
-		2:False;
-		17:0;
-		17:0;
-		17:0.01;
-		17:0;
-		4:0;
-		17:1;
+ResourceStorage:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:50000;
+ScoreDisplay:	FrEee.Game.Enumerations.ScoreDisplay, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:OwnOnlyNoRankings;
+StandardMiningModel:	FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p8:
+BonusAffectsDepletion:		System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+LimitRateToValue:		System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:False;
+Rate:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+RatePercentage:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+ValueBonus:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0.01;
+ValueDepletionPerResource:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+ValueDepletionPerTurn:		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+ValuePercentageBonus:		System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
 	;
-	4:10;
-	4:0;
-	4:20000;
-	4:20000;
-	FrEee.Game.Enumerations.StartingTechnologyLevel, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Low;
-	FrEee.Game.Enumerations.TechnologyCost, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:Low;
-	System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
-		FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p0:
+StarSystemCount:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:10;
+StarSystemGroups:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:1;
+StartingResearch:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:20000;
+StartingResources:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:20000;
+StartingTechnologyLevel:	FrEee.Game.Enumerations.StartingTechnologyLevel, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:Low;
+TechnologyCost:	FrEee.Game.Enumerations.TechnologyCost, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:Low;
+VictoryConditions:	System.Collections.Generic.List`1[[FrEee.Game.Interfaces.IVictoryCondition, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:c1:
+		FrEee.Game.Objects.VictoryConditions.TotalEliminationVictoryCondition, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p0:
 		;
 	;
-	4:0;
-	FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core, Version=0.0.2.0, Culture=neutral, PublicKeyToken=null:p2:
-		7:"Places warp points along the edge of the system, aligned with the star systems they lead to.";
-		7:"Edge Aligned";
+VictoryDelay:	System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:0;
+WarpPointPlacementStrategy:	FrEee.Game.Setup.WarpPointPlacementStrategies.EdgeAlignedWarpPointPlacementStrategy, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=null:p2:
+Description:		System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Places warp points along the edge of the system, aligned with the star systems they lead to.";
+Name:		System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:"Edge Aligned";
 	;
 ;
