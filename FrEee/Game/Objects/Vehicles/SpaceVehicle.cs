@@ -18,23 +18,18 @@ using System.Text;
 namespace FrEee.Game.Objects.Vehicles
 {
 	/// <summary>
-	/// An autonomous space vehicle which does not operate in groups.
+	/// A vehicle which operates in space.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class AutonomousSpaceVehicle : Vehicle, IMobileSpaceObject<AutonomousSpaceVehicle>, ICargoTransferrer
+	public abstract class SpaceVehicle : Vehicle, ISpaceVehicle<SpaceVehicle>, ICargoTransferrer
 	{
-		public AutonomousSpaceVehicle()
+		public SpaceVehicle()
 		{
 			IntrinsicAbilities = new List<Ability>();
-			Orders = new List<IOrder<AutonomousSpaceVehicle>>();
+			Orders = new List<IOrder<SpaceVehicle>>();
 			constructionQueue = new ConstructionQueue(this);
 			Cargo = new Cargo();
-		}
-
-		public override bool RequiresSpaceYardQueue
-		{
-			get { return true; }
 		}
 
 		public override void Place(ISpaceObject target)
@@ -69,7 +64,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Orders; }
 		}
 
-		public IList<IOrder<AutonomousSpaceVehicle>> Orders
+		public IList<IOrder<SpaceVehicle>> Orders
 		{
 			get;
 			private set;
@@ -108,11 +103,11 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomous space vehicles can warp.
+		/// Can this space vehicle warp?
 		/// </summary>
-		public bool CanWarp { get { return true; } }
+		public abstract bool CanWarp { get; }
 
-		private ConstructionQueue constructionQueue;
+		private ConstructionQueue constructionQueue { get; set; }
 
 		public ConstructionQueue ConstructionQueue
 		{
@@ -126,7 +121,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomous space vehicles can be placed in fleets.
+		/// Space vehicles can be placed in fleets.
 		/// </summary>
 		public bool CanBeInFleet
 		{
@@ -134,7 +129,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomous space vehicles' cargo storage depends on their abilities.
+		/// Space vehicles' cargo storage depends on their abilities.
 		/// </summary>
 		public int CargoStorage
 		{
@@ -142,7 +137,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomous space vehicles' supply storage depends on their abilities.
+		/// Space vehicles' supply storage depends on their abilities.
 		/// </summary>
 		public int SupplyStorage
 		{
@@ -150,39 +145,34 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// Autonomous space vehicles do not have infinite supplies unless they have a quantum reactor or they are bases.
+		/// Space vehicles do not have infinite supplies unless they have a quantum reactor or they are bases.
 		/// </summary>
 		public virtual bool HasInfiniteSupplies
 		{
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
-		public override ICombatObject CombatObject
-		{
-			get { return this; }
-		}
-
 		public Cargo Cargo { get; set; }
 
 		public void AddOrder(IOrder order)
 		{
-			if (!(order is IOrder<AutonomousSpaceVehicle>))
+			if (!(order is IOrder<SpaceVehicle>))
 				throw new Exception("Can't add a " + order.GetType() + " to an autonomous space vehicle's orders.");
-			Orders.Add((IOrder<AutonomousSpaceVehicle>)order);
+			Orders.Add((IOrder<SpaceVehicle>)order);
 		}
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (order != null && !(order is IOrder<AutonomousSpaceVehicle>))
+			if (order != null && !(order is IOrder<SpaceVehicle>))
 				throw new Exception("Can't remove a " + order.GetType() + " from an autonomous space vehicle's orders.");
-			Orders.Remove((IOrder<AutonomousSpaceVehicle>)order);
+			Orders.Remove((IOrder<SpaceVehicle>)order);
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)
 		{
-			if (order != null && !(order is IOrder<AutonomousSpaceVehicle>))
+			if (order != null && !(order is IOrder<SpaceVehicle>))
 				throw new Exception("Can't rearrange a " + order.GetType() + " in an autonomous space vehicle's orders.");
-			var o = (IOrder<AutonomousSpaceVehicle>)order;
+			var o = (IOrder<SpaceVehicle>)order;
 			var newpos = Orders.IndexOf(o) + delta;
 			Orders.Remove(o);
 			if (newpos < 0)
@@ -260,8 +250,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design and clear component list
-				var d = new Design<AutonomousSpaceVehicle>();
-				d.Hull = (IHull<AutonomousSpaceVehicle>)Design.Hull;
+				var d = new Design<SpaceVehicle>();
+				d.Hull = (IHull<SpaceVehicle>)Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;
 				Components.Clear();
@@ -303,7 +293,7 @@ namespace FrEee.Game.Objects.Vehicles
 			return amount;
 		}
 
-		public bool AddUnit(Unit unit)
+		public bool AddUnit(IUnit unit)
 		{
 			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
 			{
@@ -313,7 +303,7 @@ namespace FrEee.Game.Objects.Vehicles
 			return false;
 		}
 
-		public bool RemoveUnit(Unit unit)
+		public bool RemoveUnit(IUnit unit)
 		{
 			if (Cargo.Units.Contains(unit))
 			{
@@ -345,14 +335,14 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// When a ship or base spends time, all of its units in cargo that can fly in space should spend time too.
+		/// When a space vehicle spends time, all of its units in cargo that can fly in space should spend time too.
 		/// TODO - It should also perform construction here...
 		/// </summary>
 		/// <param name="timeElapsed"></param>
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
+			foreach (var u in Cargo.Units.OfType<ISpaceVehicle>())
 				u.SpendTime(timeElapsed);
 		}
 	}

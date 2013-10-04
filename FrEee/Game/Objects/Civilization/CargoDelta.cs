@@ -19,16 +19,16 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			RacePopulation = new ReferenceKeyedDictionary<Race, long?>();
 			AnyPopulation = 0L;
-			Units = new ReferenceSet<Unit>();
-			UnitDesignTonnage = new ReferenceKeyedDictionary<IDesign<Unit>, int?>();
+			Units = new ReferenceSet<IUnit>();
+			UnitDesignTonnage = new ReferenceKeyedDictionary<IDesign<IUnit>, int?>();
 			UnitRoleTonnage = new SafeDictionary<string, int?>();
 			UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
 		}
 
 		public ReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
 		public long? AnyPopulation { get; set; }
-		public ReferenceSet<Unit> Units { get; private set; }
-		public ReferenceKeyedDictionary<IDesign<Unit>, int?> UnitDesignTonnage { get; private set; }
+		public ReferenceSet<IUnit> Units { get; private set; }
+		public ReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 

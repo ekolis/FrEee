@@ -7,7 +7,10 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>
+	/// <summary>
+	/// A vehicle that can exist in space.
+	/// </summary>
+	public interface ISpaceVehicle : ICombatSpaceObject, IOrderable, IContainable<Fleet>
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }
@@ -23,11 +26,11 @@ namespace FrEee.Game.Interfaces
 	}
 
 	/// <summary>
-	/// A space object which can be ordered to move.
+	/// A vehicle that can exist in space.
 	/// </summary>
 	/// <typeparam name="T">The type of mobile space object.</typeparam>
-	public interface IMobileSpaceObject<out T> : IMobileSpaceObject, IOrderable
-		where T : IMobileSpaceObject<T>
+	public interface ISpaceVehicle<out T> : ISpaceVehicle, IOrderable
+		where T : ISpaceVehicle<T>
 	{
 		
 	}

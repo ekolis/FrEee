@@ -740,7 +740,7 @@ namespace FrEee.Utility
 		public static Image GetUnitImage(string shipsetPath)
 		{
 			if (shipsetPath == null)
-				return GetGenericImage(typeof(Unit));
+				return GetGenericImage(typeof(IUnit));
 			var paths = new List<string>();
 
 			if (Mod.Current.RootPath != null)
@@ -751,7 +751,7 @@ namespace FrEee.Utility
 			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_FighterGroup"));
 			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_FighterGroup")); // for SE4 shipset compatibility
 
-			return GetCachedImage(paths) ?? GetGenericImage(typeof(Unit));
+			return GetCachedImage(paths) ?? GetGenericImage(typeof(IUnit));
 		}
 
 		/// <summary>

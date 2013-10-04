@@ -16,11 +16,11 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A collection of ships, units, etc. that move synchronously.
 	/// </summary>
-	public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer
+	public class Fleet : ISpaceVehicle<Fleet>, ICargoTransferrer
 	{
 		public Fleet()
 		{
-			SpaceObjects = new HashSet<IMobileSpaceObject>();
+			SpaceObjects = new HashSet<ISpaceVehicle>();
 			Orders = new List<IOrder<Fleet>>();
 		}
 
@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public ISet<IMobileSpaceObject> SpaceObjects { get; private set; }
+		public ISet<ISpaceVehicle> SpaceObjects { get; private set; }
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
@@ -501,7 +501,7 @@ namespace FrEee.Game.Objects.Space
 			return amount;
 		}
 
-		public bool AddUnit(Vehicles.Unit unit)
+		public bool AddUnit(IUnit unit)
 		{
 			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
 			{
@@ -511,7 +511,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public bool RemoveUnit(Vehicles.Unit unit)
+		public bool RemoveUnit(IUnit unit)
 		{
 			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
 			{

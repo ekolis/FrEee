@@ -17,28 +17,28 @@ namespace FrEee.WinForms.Controls
 	/// <summary>
 	/// A report on a ship or base.
 	/// </summary>
-	public partial class AutonomousSpaceVehicleReport : UserControl, IBindable<AutonomousSpaceVehicle>
+	public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 	{
-		public AutonomousSpaceVehicleReport()
+		public SpaceVehicleReport()
 		{
 			InitializeComponent();
 		}
 
-		public AutonomousSpaceVehicleReport(AutonomousSpaceVehicle vehicle)
+		public SpaceVehicleReport(SpaceVehicle vehicle)
 		{
 			InitializeComponent();
 			Vehicle = vehicle;
 		}
 
-		private AutonomousSpaceVehicle vehicle;
-		public AutonomousSpaceVehicle Vehicle { get { return vehicle; } set { vehicle = value; Bind(); } }
+		private SpaceVehicle vehicle;
+		public SpaceVehicle Vehicle { get { return vehicle; } set { vehicle = value; Bind(); } }
 
 		private void btnOrderToTop_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
+				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
 					Empire.Current, vehicle, order, -vehicle.Orders.IndexOf(order));
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -51,10 +51,10 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderToBottom_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
+				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
 					Empire.Current, vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -67,10 +67,10 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesUp_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) > 0)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
+				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
 					Empire.Current, vehicle, order, -1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -85,10 +85,10 @@ namespace FrEee.WinForms.Controls
 
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
 			{
-				var cmd = new RearrangeOrdersCommand<AutonomousSpaceVehicle>(
+				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
 					Empire.Current, vehicle, order, 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
@@ -103,11 +103,11 @@ namespace FrEee.WinForms.Controls
 		{
 			foreach (var order in vehicle.Orders.ToArray())
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, Vehicle, order);
+					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -127,14 +127,14 @@ namespace FrEee.WinForms.Controls
 
 		private void btnDeleteOrder_Click(object sender, System.EventArgs e)
 		{
-			var order = (IOrder<AutonomousSpaceVehicle>)lstOrdersDetail.SelectedItem;
+			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
 			if (order != null)
 			{
-				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+				var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, Vehicle, order);
+					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -156,7 +156,7 @@ namespace FrEee.WinForms.Controls
 
 		public event OrdersChangedDelegate OrdersChanged;
 
-		public void Bind(AutonomousSpaceVehicle data)
+		public void Bind(SpaceVehicle data)
 		{
 			Vehicle = data;
 			Bind();

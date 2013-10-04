@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class MoveOrder<T> : IMovementOrder<T>
-		where T : IMobileSpaceObject<T>, IReferrable
+		where T : ISpaceVehicle<T>, IReferrable
 	{
 		public MoveOrder(Sector destination, bool avoidEnemies)
 		{
@@ -44,7 +44,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
+		public IEnumerable<Sector> Pathfind(ISpaceVehicle me, Sector start)
 		{
 			return Pathfinder.Pathfind(me, start, Destination, AvoidEnemies, true, me.DijkstraMap);
 		}
@@ -55,7 +55,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <param name="me"></param>
 		/// <param name="start"></param>
 		/// <returns></returns>
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(ISpaceVehicle me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}

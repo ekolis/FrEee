@@ -6,7 +6,7 @@ using System.Text;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Drone : SpaceUnit
+	public class Drone : SpaceVehicle
 	{
 		public override bool RequiresSpaceYardQueue
 		{
@@ -16,6 +16,16 @@ namespace FrEee.Game.Objects.Vehicles
 		public override Enumerations.WeaponTargets WeaponTargetType
 		{
 			get { return Enumerations.WeaponTargets.Drone; }
+		}
+
+		public override bool CanWarp
+		{
+			get { return true; }
+		}
+
+		public override bool ParticipatesInGroundCombat
+		{
+			get { return false; }
 		}
 	}
 }

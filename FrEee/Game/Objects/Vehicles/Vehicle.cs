@@ -163,7 +163,7 @@ namespace FrEee.Game.Objects.Vehicles
 				shieldDmg += dmg;
 			}
 			if (shieldDmg > 0 && battle != null)
-				battle.LogShieldDamage(this.CombatObject, shieldDmg);
+				battle.LogShieldDamage(this, shieldDmg);
 			while (damage > 0 && !IsDestroyed)
 			{
 				var comps = Components.Where(c => c.Hitpoints > 0);
@@ -256,13 +256,6 @@ namespace FrEee.Game.Objects.Vehicles
 			PhasedShields = MaxPhasedShields;
 		}
 
-		/// <summary>
-		/// The combat object associated with this vehicle.
-		/// For autonomous vehicles, this would be the vehicle itself.
-		/// For grouped vehicles, this would be the group.
-		/// </summary>
-		public abstract ICombatObject CombatObject {get; }
-
 		public virtual void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
@@ -340,5 +333,12 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		/// <summary>
+		/// Does this vehicle participate in ground combat?
+		/// </summary>
+		public abstract bool ParticipatesInGroundCombat
+		{
+			get;
+		}
 	}
 }

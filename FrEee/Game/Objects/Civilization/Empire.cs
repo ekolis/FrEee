@@ -148,7 +148,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				// TODO - facility/unit maintenance?
 				if (maintenance == null)
-					maintenance = OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Sum(v => v.MaintenanceCost);
+					maintenance = OwnedSpaceObjects.OfType<SpaceVehicle>().Sum(v => v.MaintenanceCost);
 				return maintenance;
 			}
 		}

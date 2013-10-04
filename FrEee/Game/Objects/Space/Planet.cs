@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, ISpaceVehicle<Planet>
 	{
 		public Planet()
 		{
@@ -700,7 +700,7 @@ namespace FrEee.Game.Objects.Space
 			return amount;
 		}
 
-		public bool AddUnit(Unit unit)
+		public bool AddUnit(IUnit unit)
 		{
 			if (this.CargoStorageFree() >= unit.Design.Hull.Size)
 			{
@@ -710,7 +710,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public bool RemoveUnit(Unit unit)
+		public bool RemoveUnit(IUnit unit)
 		{
 			if (Colony.Cargo.Units.Contains(unit))
 			{
@@ -775,7 +775,7 @@ namespace FrEee.Game.Objects.Space
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
+			foreach (var u in Cargo.Units.OfType<ISpaceVehicle>())
 				u.SpendTime(timeElapsed);
 		}
 

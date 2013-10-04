@@ -7,8 +7,13 @@ using System.Text;
 namespace FrEee.Game.Objects.Vehicles
 {
 	[Serializable]
-	public class Base : AutonomousSpaceVehicle
+	public class Base : SpaceVehicle
 	{
+		public override bool RequiresSpaceYardQueue
+		{
+			get { return true; }
+		}
+
 		public override WeaponTargets WeaponTargetType
 		{
 			get { return WeaponTargets.Base; }
@@ -23,6 +28,16 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				return true;
 			}
+		}
+
+		public override bool CanWarp
+		{
+			get { return false; }
+		}
+
+		public override bool ParticipatesInGroundCombat
+		{
+			get { return false; }
 		}
 	}
 }

@@ -162,9 +162,9 @@ namespace FrEee.WinForms.Controls
 
 		public string SelectedUnitRole { get; private set; }
 
-		public IDesign<Unit> SelectedUnitDesign { get; private set; }
+		public IDesign<IUnit> SelectedUnitDesign { get; private set; }
 
-		public Unit SelectedUnit { get; private set; }
+		public IUnit SelectedUnit { get; private set; }
 
 		public Race SelectedRace { get; private set; }
 
@@ -186,12 +186,12 @@ namespace FrEee.WinForms.Controls
 				else if ((string)e.Node.Parent.Tag == "Designs")
 				{
 					CurrentSelectionType = SelectionType.UnitDesign;
-					SelectedUnitDesign = (IDesign<Unit>)e.Node.Tag;
+					SelectedUnitDesign = (IDesign<IUnit>)e.Node.Tag;
 				}
 				else if ((string)e.Node.Parent.Tag == "Units")
 				{
 					CurrentSelectionType = SelectionType.Unit;
-					SelectedUnit = (Unit)e.Node.Tag;
+					SelectedUnit = (IUnit)e.Node.Tag;
 				}
 				else if ((string)e.Node.Parent.Tag == "Population")
 				{

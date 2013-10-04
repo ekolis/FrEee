@@ -71,14 +71,17 @@ namespace FrEee.WinForms.Forms
 						gameForm.SelectSpaceObject((ISpaceObject)context);
 						Close();
 					}
-					else if (context is Unit)
+					else if (context is IUnit)
 					{
 						// go to whatever contains the unit
-						var unit = (Unit)context;
+						var unit = (IUnit)context;
 						var container = unit.FindContainer();
 						if (container != null)
 						{
-							gameForm.SelectSpaceObject(container);
+							if (container is Sector)
+								gameForm.SelectSpaceObject((ISpaceObject)unit);
+							else
+								gameForm.SelectSpaceObject((ISpaceObject)container);
 							Close();
 						}
 					}

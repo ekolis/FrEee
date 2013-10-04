@@ -86,9 +86,9 @@ namespace FrEee.Utility.Extensions
 				return objects.OfType<WarpPoint>().OrderByDescending(obj => obj.StellarSize).First();
 			}
 			// TODO - fleets
-			if (objects.OfType<AutonomousSpaceVehicle>().Any())
+			if (objects.OfType<SpaceVehicle>().Any())
 			{
-				return objects.OfType<AutonomousSpaceVehicle>().OrderByDescending(obj => obj.Design.Hull.Size).First();
+				return objects.OfType<SpaceVehicle>().OrderByDescending(obj => obj.Design.Hull.Size).First();
 			}
 			// TODO - unit groups
 			return null;
@@ -1176,17 +1176,17 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		private static void LogUnitTransferFailedNotPresent(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		private static void LogUnitTransferFailedNotPresent(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
 			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because it is not in " + src + "'s cargo."));
 		}
 
-		private static void LogUnitTransferFailedNoStorage(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		private static void LogUnitTransferFailedNoStorage(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
 			emp.Log.Add(src.CreateLogMessage(unit + " could not be transferred from " + src + " to " + dest + " because " + dest + "'s cargo is full."));
 		}
 
-		private static void LogUnitTransferFailed(IDesign<Unit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
+		private static void LogUnitTransferFailed(IDesign<IUnit> design, ICargoContainer src, ICargoContainer dest, int actualTonnage, int desiredTonnage, Empire emp)
 		{
 			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + design + " class " + design.VehicleTypeName + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
 		}
@@ -1201,7 +1201,7 @@ namespace FrEee.Utility.Extensions
 			emp.Log.Add(src.CreateLogMessage("Only " + actualTonnage.Kilotons() + " of " + desiredTonnage.Kilotons() + " worth of " + vt.ToSpacedString().ToLower() + "s could be transferred from " + src + " to " + dest + " because there are not enough in " + src + "'s cargo or " + dest + "'s cargo is full."));
 		}
 
-		private static void TryTransferUnit(Unit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
+		private static void TryTransferUnit(IUnit unit, ICargoContainer src, ICargoContainer dest, Empire emp)
 		{
 			if (dest.CargoStorageFree() >= unit.Design.Hull.Size)
 			{
@@ -1282,7 +1282,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="sobj"></param>
 		/// <returns></returns>
 		public static Sector FinalSector<T>(this T sobj)
-			where T : IMobileSpaceObject<T>
+			where T : ISpaceVehicle<T>
 		{
 			var path = sobj.Path();
 			if (path == null || !path.Any())
@@ -1300,7 +1300,7 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Refills the space object's movement points.
 		/// </summary>
-		public static void RefillMovement(this IMobileSpaceObject sobj)
+		public static void RefillMovement(this ISpaceVehicle sobj)
 		{
 			sobj.MovementRemaining = sobj.Speed;
 			sobj.TimeToNextMove = sobj.TimePerMove;
@@ -1312,7 +1312,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
+		public static IEnumerable<Sector> Path(this ISpaceVehicle sobj)
 		{
 			var last = sobj.Sector;
 			foreach (var order in sobj.Orders)
@@ -1327,7 +1327,7 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		public static void RefreshDijkstraMap(this IMobileSpaceObject sobj)
+		public static void RefreshDijkstraMap(this ISpaceVehicle sobj)
 		{
 			// create new map if necessary
 			if (sobj.DijkstraMap == null)
@@ -1355,9 +1355,9 @@ namespace FrEee.Utility.Extensions
 			foreach (var order in sobj.Orders)
 			{
 				var last = start;
-				if (order is IMovementOrder<AutonomousSpaceVehicle>)
+				if (order is IMovementOrder<SpaceVehicle>)
 				{
-					var o = (IMovementOrder<AutonomousSpaceVehicle>)order;
+					var o = (IMovementOrder<SpaceVehicle>)order;
 					foreach (var kvp in o.CreateDijkstraMap(sobj, last))
 					{
 						kvp.Key.Cost += minCost;
@@ -1368,6 +1368,63 @@ namespace FrEee.Utility.Extensions
 					last = o.Destination;
 				}
 			}
+		}
+
+		/// <summary>
+		/// Finds all subfleets (recursively, including this fleet) that have any child space objects that are not fleets.
+		/// </summary>
+		/// <param name="rootFleet"></param>
+		/// <returns></returns>
+		public static IEnumerable<Fleet> SubfleetsWithNonFleetChildren(this Fleet rootFleet)
+		{
+			if (rootFleet.SpaceObjects.Any(sobj => !(sobj is Fleet)))
+				yield return rootFleet;
+			foreach (var subfleet in rootFleet.SpaceObjects.OfType<Fleet>())
+			{
+				foreach (var subsub in subfleet.SubfleetsWithNonFleetChildren())
+					yield return subsub;
+			}
+		}
+
+		public static void Place(this IUnit unit, ISpaceObject target)
+		{
+			if (target is ICargoContainer)
+			{
+				var container = (ICargoContainer)target;
+				var cargo = container.Cargo;
+				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(unit);
+					return;
+				}
+			}
+			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
+			{
+				var cargo = container.Cargo;
+				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
+				{
+					cargo.Units.Add(unit);
+					return;
+				}
+			}
+			unit.Owner.Log.Add(unit.CreateLogMessage(unit + " was lost due to insufficient cargo space at " + target + "."));
+		}
+
+		/// <summary>
+		/// Finds the cargo container which contains this unit.
+		/// </summary>
+		/// <returns></returns>
+		public static ICargoContainer FindContainer(this IUnit unit)
+		{
+			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			if (container != null)
+				return container;
+			if (unit is ISpaceVehicle)
+			{
+				var v = (ISpaceVehicle)unit;
+				return v.Sector;
+			}
+			return null; // unit is in limbo...
 		}
 	}
 }

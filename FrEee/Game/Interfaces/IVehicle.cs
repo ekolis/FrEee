@@ -10,5 +10,9 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IVehicle : IConstructable, IAbilityObject, IReferrable, IDamageable
 	{
+		/// <summary>
+		/// The design of this vehicle.
+		/// </summary>
+		IDesign Design { get; }
 	}
 }

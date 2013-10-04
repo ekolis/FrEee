@@ -47,13 +47,13 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="unit"></param>
 		/// <returns>true if there was space left to add the unit, otherwise false.</returns>
-		bool AddUnit(Unit unit);
+		bool AddUnit(IUnit unit);
 
 		/// <summary>
 		/// Removes a unit.
 		/// </summary>
 		/// <param name="unit"></param>
-		bool RemoveUnit(Unit unit);
+		bool RemoveUnit(IUnit unit);
 
 		/// <summary>
 		/// All population stored by this cargo container, whether in a colony or in cargo.

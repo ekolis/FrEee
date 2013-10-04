@@ -176,7 +176,7 @@ namespace FrEee.WinForms.Controls
 						if (largest != null)
 						{
 							Image pic;
-							if (largest is AutonomousSpaceVehicle)
+							if (largest is SpaceVehicle)
 								pic = largest.Icon.Resize((int)drawsize); // spacecraft get the icon, not the portrait, drawn, since the icon is topdown
 							else
 								pic = largest.Portrait.Resize((int)drawsize);
@@ -260,10 +260,10 @@ namespace FrEee.WinForms.Controls
 					}
 				}
 
-				if (SelectedSpaceObject is IMobileSpaceObject)
+				if (SelectedSpaceObject is ISpaceVehicle)
 				{
 					// draw path lines
-					var sobj = (IMobileSpaceObject)SelectedSpaceObject;
+					var sobj = (ISpaceVehicle)SelectedSpaceObject;
 					Sector last = SelectedSpaceObject.FindSector();
 					PointF? lastPoint = null;
 					if (last.StarSystem == StarSystem)

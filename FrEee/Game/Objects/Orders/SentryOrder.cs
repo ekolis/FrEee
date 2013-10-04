@@ -18,14 +18,14 @@ namespace FrEee.Game.Objects.Orders
 	/// An order for a mobile space object to hold position until enemies are sighted in the system.
 	/// </summary>
 	[Serializable]
-	public class SentryOrder : IOrder<IMobileSpaceObject>
+	public class SentryOrder : IOrder<ISpaceVehicle>
 	{
 		public SentryOrder()
 		{
 			Owner = Empire.Current;
 		}
 
-		public void Execute(IMobileSpaceObject sobj)
+		public void Execute(ISpaceVehicle sobj)
 		{
 			// if hostiles in system, we are done sentrying
 			if (sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
@@ -79,12 +79,12 @@ namespace FrEee.Game.Objects.Orders
 
 		public long ID { get; set; }
 
-		public bool CheckCompletion(IMobileSpaceObject v)
+		public bool CheckCompletion(ISpaceVehicle v)
 		{
 			return IsComplete;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
+		public IEnumerable<LogMessage> GetErrors(ISpaceVehicle executor)
 		{
 			// this order doesn't error
 			yield break;

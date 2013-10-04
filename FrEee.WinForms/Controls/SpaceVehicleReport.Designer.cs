@@ -1,6 +1,6 @@
 namespace FrEee.WinForms.Controls
 {
-	partial class AutonomousSpaceVehicleReport
+	partial class SpaceVehicleReport
 	{
 		/// <summary> 
 		/// Required designer variable.

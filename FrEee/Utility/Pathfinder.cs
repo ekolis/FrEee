@@ -24,7 +24,7 @@ namespace FrEee.Utility
 		/// <param name="end"></param>
 		/// <param name="avoidEnemies"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
+		public static IEnumerable<Sector> Pathfind(ISpaceVehicle me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors, IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> map)
 		{
 			if (end == null)
 				return Enumerable.Empty<Sector>();
@@ -74,7 +74,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
+		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(ISpaceVehicle me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
 			var startSys = start.StarSystem;
 

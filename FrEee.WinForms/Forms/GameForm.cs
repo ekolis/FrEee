@@ -93,15 +93,15 @@ namespace FrEee.WinForms.Forms
 				if (sector != null && sector.StarSystem.ExploredByEmpires.Contains(Empire.Current))
 				{
 					// move ship to sector clicked
-					if (SelectedSpaceObject is AutonomousSpaceVehicle)
+					if (SelectedSpaceObject is SpaceVehicle)
 					{
-						var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
-						var order = new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode);
+						var v = (SpaceVehicle)SelectedSpaceObject;
+						var order = new MoveOrder<SpaceVehicle>(sector, !aggressiveMode);
 						v.Orders.Add(order);
-						var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
 						if (report != null)
 							report.Invalidate();
-						var cmd = new AddOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
+						var cmd = new AddOrderCommand<SpaceVehicle>(Empire.Current, v, order);
 						Empire.Current.Commands.Add(cmd);
 						starSystemView.Invalidate(); // show move lines
 					}
@@ -131,9 +131,9 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// pursue
-						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						if (SelectedSpaceObject is SpaceVehicle)
 						{
-							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+							IssueSpaceObjectOrder(new PursueOrder<SpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -163,9 +163,9 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// evade
-						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						if (SelectedSpaceObject is SpaceVehicle)
 						{
-							IssueSpaceObjectOrder(new EvadeOrder<AutonomousSpaceVehicle>(target, !aggressiveMode));
+							IssueSpaceObjectOrder(new EvadeOrder<SpaceVehicle>(target, !aggressiveMode));
 							starSystemView.Invalidate(); // show move lines
 						}
 						else
@@ -195,11 +195,11 @@ namespace FrEee.WinForms.Forms
 					if (wp != null)
 					{
 						// warp
-						if (SelectedSpaceObject is AutonomousSpaceVehicle)
+						if (SelectedSpaceObject is SpaceVehicle)
 						{
-							IssueSpaceObjectOrder(new PursueOrder<AutonomousSpaceVehicle>(wp, !aggressiveMode));
-							IssueSpaceObjectOrder(new WarpOrder<AutonomousSpaceVehicle>(wp));
-							var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+							IssueSpaceObjectOrder(new PursueOrder<SpaceVehicle>(wp, !aggressiveMode));
+							IssueSpaceObjectOrder(new WarpOrder<SpaceVehicle>(wp));
+							var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
 							if (report != null)
 								report.Invalidate();
 							starSystemView.Invalidate(); // show move lines
@@ -214,9 +214,9 @@ namespace FrEee.WinForms.Forms
 			}
 			else if (commandMode == CommandMode.Colonize)
 			{
-				if (SelectedSpaceObject is AutonomousSpaceVehicle)
+				if (SelectedSpaceObject is SpaceVehicle)
 				{
-					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+					var v = (SpaceVehicle)SelectedSpaceObject;
 					if (sector != null)
 					{
 						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && 
@@ -275,9 +275,9 @@ namespace FrEee.WinForms.Forms
 										}
 									}
 								}
-								IssueSpaceObjectOrder(new MoveOrder<AutonomousSpaceVehicle>(sector, !aggressiveMode));
+								IssueSpaceObjectOrder(new MoveOrder<SpaceVehicle>(sector, !aggressiveMode));
 								IssueSpaceObjectOrder(new ColonizeOrder(planet));
-								var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+								var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
 								if (report != null)
 									report.Invalidate();
 								ChangeCommandMode(CommandMode.None, null);
@@ -380,9 +380,9 @@ namespace FrEee.WinForms.Forms
 				return new StormReport((Storm)sobj);
 			if (sobj is WarpPoint)
 				return new WarpPointReport((WarpPoint)sobj);
-			if (sobj is AutonomousSpaceVehicle)
+			if (sobj is SpaceVehicle)
 			{
-				var r = new AutonomousSpaceVehicleReport((AutonomousSpaceVehicle)sobj);
+				var r = new SpaceVehicleReport((SpaceVehicle)sobj);
 				r.OrdersChanged += AutonomousSpaceVehicleReport_OrdersChanged;
 				return r;
 			};
@@ -427,7 +427,7 @@ namespace FrEee.WinForms.Forms
 		{
 			var todos = new List<string>();
 
-			var ships = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
+			var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
 			if (ships == 1)
 				todos.Add("1 idle ship");
 			else if (ships > 1)
@@ -500,7 +500,7 @@ namespace FrEee.WinForms.Forms
 				SelectTab(AddTab(highlyPopulated.First()));
 			else
 			{
-				var withManyShips = Empire.Current.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().GroupBy(g => g.StarSystem).WithMax(g => g.Count());
+				var withManyShips = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().GroupBy(g => g.StarSystem).WithMax(g => g.Count());
 				if (withManyShips.Any())
 					SelectTab(AddTab(withManyShips.First().Key));
 				else
@@ -775,16 +775,16 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					// determine what commands are appropriate
-					btnMove.Visible = value is IMobileSpaceObject;
-					btnPursue.Visible = value is IMobileSpaceObject;
-					btnEvade.Visible = value is IMobileSpaceObject;
-					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
-					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
-					btnSentry.Visible = value is IMobileSpaceObject;
+					btnMove.Visible = value is ISpaceVehicle;
+					btnPursue.Visible = value is ISpaceVehicle;
+					btnEvade.Visible = value is ISpaceVehicle;
+					btnWarp.Visible = value is ISpaceVehicle && ((ISpaceVehicle)value).CanWarp;
+					btnColonize.Visible = value is ISpaceVehicle && ((ISpaceVehicle)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnSentry.Visible = value is ISpaceVehicle;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
-					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
+					btnClearOrders.Visible = value is ISpaceVehicle || value is Planet;
 				}
 			}
 		}
@@ -1002,9 +1002,9 @@ namespace FrEee.WinForms.Forms
 			if (SelectedSpaceObject is ICargoTransferrer && SelectedSpaceObject.Owner == Empire.Current)
 			{
 				Sector lastSector;
-				if (SelectedSpaceObject is IMobileSpaceObject)
+				if (SelectedSpaceObject is ISpaceVehicle)
 				{
-					var path = ((IMobileSpaceObject)SelectedSpaceObject).Path();
+					var path = ((ISpaceVehicle)SelectedSpaceObject).Path();
 					if (path != null && path.Any())
 						lastSector = path.Last();
 					else
@@ -1037,16 +1037,16 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedSpaceObject.Owner == Empire.Current)
 			{
-				if (SelectedSpaceObject is AutonomousSpaceVehicle)
+				if (SelectedSpaceObject is SpaceVehicle)
 				{
-					var v = (AutonomousSpaceVehicle)SelectedSpaceObject;
+					var v = (SpaceVehicle)SelectedSpaceObject;
 					foreach (var order in v.Orders)
 					{
-						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<AutonomousSpaceVehicle>>().SingleOrDefault(c => c.Order == order);
+						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
 						if (addCmd == null)
 						{
 							// not a newly added order, so create a remove command to take it off the server
-							var remCmd = new RemoveOrderCommand<AutonomousSpaceVehicle>(Empire.Current, v, order);
+							var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, v, order);
 							Empire.Current.Commands.Add(remCmd);
 						}
 						else
@@ -1056,7 +1056,7 @@ namespace FrEee.WinForms.Forms
 						}
 					}
 					v.Orders.Clear();
-					var report = pnlDetailReport.Controls.OfType<AutonomousSpaceVehicleReport>().FirstOrDefault();
+					var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
 					if (report != null)
 						report.Bind();
 				}

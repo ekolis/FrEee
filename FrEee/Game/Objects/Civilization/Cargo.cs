@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Civilization
 		public Cargo()
 		{
 			Population = new SafeDictionary<Race, long>();
-			Units = new HashSet<Unit>();
+			Units = new HashSet<IUnit>();
 		}
 
 		/// <summary>
@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The units stored in cargo.
 		/// </summary>
-		public ICollection<Unit> Units { get; set; }
+		public ICollection<IUnit> Units { get; set; }
 
 		private int? fakeSize { get; set; }
 

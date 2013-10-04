@@ -377,7 +377,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!(SpaceObject is ICargoContainer))
 					return 0;
-				return ((ICargoContainer)SpaceObject).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<Unit>>().Sum(t => t.Hull.Size);
+				return ((ICargoContainer)SpaceObject).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
 			}
 		}
 
@@ -393,7 +393,7 @@ namespace FrEee.Game.Objects.Civilization
 				var queues = SpaceObject.Sector.SpaceObjects.Where
 					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 					.Select(sobj => sobj.ConstructionQueue);
-				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<Unit>>().Sum(t => t.Hull.Size));
+				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
 			}
 		}
 

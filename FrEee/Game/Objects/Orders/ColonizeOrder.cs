@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to colonize an uninhabited planet.
 	/// </summary>
 	[Serializable]
-	public class ColonizeOrder : IOrder<AutonomousSpaceVehicle>
+	public class ColonizeOrder : IOrder<SpaceVehicle>
 	{
 		public ColonizeOrder(Planet planet)
 		{
@@ -33,7 +33,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private Reference<Planet> planet { get; set; }
 
-		public void Execute(AutonomousSpaceVehicle sobj)
+		public void Execute(SpaceVehicle sobj)
 		{
 			// error checking
 			var errors = GetErrors(sobj);
@@ -115,7 +115,7 @@ namespace FrEee.Game.Objects.Orders
 		public long ID { get; set; }
 
 
-		public IEnumerable<LogMessage> GetErrors(AutonomousSpaceVehicle sobj)
+		public IEnumerable<LogMessage> GetErrors(SpaceVehicle sobj)
 		{
 			if (sobj.Sector != Planet.Sector)
 			{
@@ -144,7 +144,7 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		public bool CheckCompletion(AutonomousSpaceVehicle v)
+		public bool CheckCompletion(SpaceVehicle v)
 		{
 			return IsComplete;
 		}

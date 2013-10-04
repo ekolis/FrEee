@@ -117,15 +117,36 @@ namespace FrEee.Game.Objects.Space
 			return amount;
 		}
 
-		public bool AddUnit(Unit unit)
+		public bool AddUnit(IUnit unit)
 		{
-			// TODO - allow launching of units
-			return false;
+			// can't place a unit that can't move about in space, in space!
+			if (!(unit is ISpaceVehicle))
+				return false;
+
+			// TODO - limit number of units in space per empire as specified in Settings.txt
+
+			// place this unit in a fleet with other similar units
+			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
+				f => f.SpaceObjects.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
+			if (fleet == null)
+			{
+				// create a new fleet, there's no fleet with similar units
+				fleet = new Fleet();
+				fleet.Owner = unit.Owner;
+				fleet.Name = unit.Design.Name + " Group";
+				Place(fleet);
+			}
+			fleet.SpaceObjects.Add((ISpaceVehicle)unit);
+			return true;
 		}
 
-		public bool RemoveUnit(Unit unit)
+		public bool RemoveUnit(IUnit unit)
 		{
-			// TODO - allow recovery of units
+			if (unit is ISpaceVehicle && SpaceObjects.Contains((ISpaceVehicle)unit))
+			{
+				this.Remove((ISpaceVehicle)unit);
+				return true;
+			}
 			return false;
 		}
 

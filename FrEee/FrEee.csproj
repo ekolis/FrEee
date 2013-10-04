@@ -75,7 +75,7 @@
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
-    <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
+    <Compile Include="Game\Interfaces\ISpaceVehicle.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IOwnable.cs" />
@@ -88,6 +88,7 @@
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
+    <Compile Include="Game\Interfaces\IUnit.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
     <Compile Include="Game\Objects\AI\EmpireAI.cs" />
@@ -119,7 +120,7 @@
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
     <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />
-    <Compile Include="Game\Objects\Vehicles\AutonomousSpaceVehicle.cs" />
+    <Compile Include="Game\Objects\Vehicles\SpaceVehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\Base.cs" />
     <Compile Include="Game\Objects\Vehicles\Design.cs" />
     <Compile Include="Game\Interfaces\INamed.cs" />
@@ -141,13 +142,10 @@
     <Compile Include="Game\Objects\Technology\Facility.cs" />
     <Compile Include="Game\Objects\Vehicles\Drone.cs" />
     <Compile Include="Game\Objects\Vehicles\Fighter.cs" />
-    <Compile Include="Game\Objects\Vehicles\GroundUnit.cs" />
-    <Compile Include="Game\Objects\Vehicles\SpaceUnit.cs" />
     <Compile Include="Game\Objects\Vehicles\Mine.cs" />
     <Compile Include="Game\Objects\Vehicles\Satellite.cs" />
     <Compile Include="Game\Objects\Vehicles\Ship.cs" />
     <Compile Include="Game\Objects\Vehicles\Troop.cs" />
-    <Compile Include="Game\Objects\Vehicles\Unit.cs" />
     <Compile Include="Game\Objects\Vehicles\Vehicle.cs" />
     <Compile Include="Game\Objects\Vehicles\WeaponPlatform.cs" />
     <Compile Include="Game\Objects\VictoryConditions\PeaceVictoryCondition.cs" />

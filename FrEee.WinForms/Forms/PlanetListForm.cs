@@ -52,7 +52,7 @@ namespace FrEee.WinForms.Forms
 			txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 			// show colony ship counts
-			var colonizers = Galaxy.Current.FindSpaceObjects<AutonomousSpaceVehicle>(v =>
+			var colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
 				v.Owner == Empire.Current &&
 				(
 					v.Abilities.Any(a => a.Name.StartsWith("Colonize Planet - ")) 

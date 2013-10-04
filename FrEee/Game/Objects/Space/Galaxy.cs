@@ -692,7 +692,7 @@ namespace FrEee.Game.Objects.Space
 
 				// pay maintenance on on ships/bases
 				// TODO - allow mod to specify maintenance on units/facilities too?
-				foreach (var v in emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>())
+				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>())
 					emp.StoredResources -= v.MaintenanceCost;
 
 				// if not enough funds, lose ships/bases
@@ -702,7 +702,7 @@ namespace FrEee.Game.Objects.Space
 				var lostShips = deficit / Mod.Current.Settings.MaintenanceDeficitToDestroyOneShip;
 				for (int i = 0; i < lostShips; i++)
 				{
-					var ship = emp.OwnedSpaceObjects.OfType<AutonomousSpaceVehicle>().PickRandom();
+					var ship = emp.OwnedSpaceObjects.OfType<SpaceVehicle>().PickRandom();
 					if (ship != null)
 					{
 						emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance."));
@@ -793,13 +793,13 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			CurrentTick = 0;
-			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+			foreach (var v in Referrables.OfType<ISpaceVehicle>().Shuffle())
 				v.RefillMovement();
 			while (CurrentTick <= 1)
 			{
 				ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
+				foreach (var v in Referrables.OfType<ISpaceVehicle>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
@@ -1005,7 +1005,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void ComputeNextTickSize()
 		{
-			var objs = Referrables.OfType<AutonomousSpaceVehicle>().Where(obj => obj.Orders.Any());
+			var objs = Referrables.OfType<SpaceVehicle>().Where(obj => obj.Orders.Any());
 			if (objs.Any() && CurrentTick < 1.0)
 				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
 			else

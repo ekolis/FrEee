@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class EvadeOrder<T> : IMovementOrder<T>
-		where T : IMobileSpaceObject<T>, IReferrable
+		where T : ISpaceVehicle<T>, IReferrable
 	{
 
 		public EvadeOrder(ISpaceObject target, bool avoidEnemies)
@@ -48,9 +48,9 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <returns></returns>
-		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
+		public IEnumerable<Sector> Pathfind(ISpaceVehicle me, Sector start)
 		{
-			if (Target is IMobileSpaceObject)
+			if (Target is ISpaceVehicle)
 			{
 				if (me.CanWarp && !Target.CanWarp)
 				{
@@ -68,7 +68,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 
 				// see how he can reach us, and go somewhere away from him (that would take longer for him to get to than 
-				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false, true);
+				var dijkstraMap = Pathfinder.CreateDijkstraMap((ISpaceVehicle)Target, Target.FindSector(), me.FindSector(), false, true);
 				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp, me.Owner);
 				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Values.SelectMany(set => set).Any(n => n.Location == s));
 
@@ -179,7 +179,7 @@ namespace FrEee.Game.Objects.Orders
 			get { return Target.FindSector(); }
 		}
 
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(ISpaceVehicle me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
