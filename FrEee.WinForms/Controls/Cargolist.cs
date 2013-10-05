@@ -99,7 +99,7 @@ namespace FrEee.WinForms.Controls
 					rolesNode.Expand();
 					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design))
-						designsNode.AddItemWithImage(ug.Count() + "x " + ug.Key.Name, ug.Key, ug.First().Icon);
+						designsNode.AddItemWithImage(ug.Count() + "x \"" + ug.Key.Name + "\" " + ug.Key.VehicleTypeName, ug.Key, ug.First().Icon);
 					designsNode.Expand();
 					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
 					foreach (var u in CargoContainer.AllUnits)
@@ -119,15 +119,15 @@ namespace FrEee.WinForms.Controls
 				if (CargoDelta.UnitRoleTonnage.Any())
 				{
 					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
-					foreach (var ug in CargoDelta.Units.GroupBy(u => u.Design.Role))
-						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
+					foreach (var ug in CargoDelta.UnitRoleTonnage)
+						rolesNode.AddItemWithImage(ug.Value.Kilotons("All") + " " + ug.Key + "s", ug.Key, Pictures.GetUnitImage(Empire.Current.ShipsetPath));
 					rolesNode.Expand();
 				}
 				if (CargoDelta.UnitDesignTonnage.Any())
 				{
 					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
-					foreach (var ug in CargoDelta.Units.GroupBy(u => u.Design))
-						designsNode.AddItemWithImage(ug.Count() + "x " + ug.Key.Name, ug.Key, ug.First().Icon);
+					foreach (var ug in CargoDelta.UnitDesignTonnage)
+						designsNode.AddItemWithImage(ug.Value.Kilotons("All") + " \"" + ug.Key.Name + "\" " + ug.Key.VehicleType + "s", ug.Key, ug.Key.Icon);
 					designsNode.Expand();
 				}
 				if (CargoDelta.Units.Any())

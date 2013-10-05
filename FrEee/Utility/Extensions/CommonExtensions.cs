@@ -239,8 +239,10 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static string Kilotons(this int? value)
+		public static string Kilotons(this int? value, string nullText = "Undefined")
 		{
+			if (value == null)
+				return nullText;
 			return ((long?)value).Kilotons();
 		}
 
