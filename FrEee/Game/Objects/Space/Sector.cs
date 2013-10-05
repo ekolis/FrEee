@@ -124,10 +124,10 @@ namespace FrEee.Game.Objects.Space
 				return false;
 
 			// TODO - limit number of units in space per empire as specified in Settings.txt
-
+			
 			// place this unit in a fleet with other similar units
 			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
-				f => f.SpaceObjects.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
+				f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
 			if (fleet == null)
 			{
 				// create a new fleet, there's no fleet with similar units
@@ -136,7 +136,7 @@ namespace FrEee.Game.Objects.Space
 				fleet.Name = unit.Design.Name + " Group";
 				Place(fleet);
 			}
-			fleet.SpaceObjects.Add((ISpaceVehicle)unit);
+			fleet.Vehicles.Add((ISpaceVehicle)unit);
 			return true;
 		}
 

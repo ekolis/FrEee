@@ -320,7 +320,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
 
 		/// <summary>

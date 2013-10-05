@@ -390,13 +390,23 @@ namespace FrEee.Utility
 				return GetGenericImage(fleet.GetType());
 			var paths = new List<string>();
 
+			string imageName = "Fleet";
+			if (fleet.LeafVehicles.All(v => v is Fighter))
+				imageName = "FighterGroup";
+			else if (fleet.LeafVehicles.All(v => v is Satellite))
+				imageName = "SatelliteGroup";
+			else if (fleet.LeafVehicles.All(v => v is Drone))
+				imageName = "DroneGroup";
+			else if (fleet.LeafVehicles.All(v => v is Mine))
+				imageName = "MineGroup";
+
 			if (Mod.Current.RootPath != null)
 			{
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_Fleet"));
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_Fleet")); // for SE4 shipset compatibility
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Mini_" + imageName));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + imageName)); // for SE4 shipset compatibility
 			}
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_Fleet"));
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_Fleet")); // for SE4 shipset compatibility
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Mini_" + imageName));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Mini_" + imageName)); // for SE4 shipset compatibility
 
 			return (GetCachedImage(paths) ?? GetGenericImage(fleet.GetType())).Resize(size);
 		}
@@ -412,14 +422,24 @@ namespace FrEee.Utility
 			if (shipsetPath == null)
 				return GetGenericImage(fleet.GetType());
 			var paths = new List<string>();
+
+			string imageName = "Fleet";
+			if (fleet.LeafVehicles.All(v => v is Fighter))
+				imageName = "FighterGroup";
+			else if (fleet.LeafVehicles.All(v => v is Satellite))
+				imageName = "SatelliteGroup";
+			else if (fleet.LeafVehicles.All(v => v is Drone))
+				imageName = "DroneGroup";
+			else if (fleet.LeafVehicles.All(v => v is Mine))
+				imageName = "MineGroup";
 			
 			if (Mod.Current.RootPath != null)
 			{
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_Fleet"));
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_Fleet")); // for SE4 shipset compatibility
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + imageName));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
 			}
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_Fleet"));
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_Fleet")); // for SE4 shipset compatibility
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + imageName));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + imageName)); // for SE4 shipset compatibility
 
 			return GetCachedImage(paths) ?? GetGenericImage(fleet.GetType());
 		}

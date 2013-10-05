@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Fleet()
 		{
-			SpaceObjects = new HashSet<ISpaceVehicle>();
+			Vehicles = new HashSet<ISpaceVehicle>();
 			Orders = new List<IOrder<Fleet>>();
 		}
 
@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public ISet<ISpaceVehicle> SpaceObjects { get; private set; }
+		public ISet<ISpaceVehicle> Vehicles { get; private set; }
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
@@ -44,14 +44,14 @@ namespace FrEee.Game.Objects.Space
 			if (ancestors == null)
 				ancestors = new List<Fleet>();
 			ancestors.Add(this);
-			foreach (var sobj in SpaceObjects.ToArray())
+			foreach (var sobj in Vehicles.ToArray())
 			{
 				if (sobj.Owner != Owner || ancestors.Contains(sobj) || sobj.Sector != Sector || sobj.IsDestroyed)
-					SpaceObjects.Remove(sobj);
+					Vehicles.Remove(sobj);
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);
 			}
-			if (!SpaceObjects.Any())
+			if (!Vehicles.Any())
 				Dispose();
 		}
 
@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Space
 
 		public double TimePerMove
 		{
-			get { return SpaceObjects.Max(sobj => sobj.TimePerMove); }
+			get { return Vehicles.Max(sobj => sobj.TimePerMove); }
 		}
 
 		public void RefillMovement()
@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int Speed
 		{
-			get { return SpaceObjects.Min(sobj => sobj.Speed); }
+			get { return Vehicles.Min(sobj => sobj.Speed); }
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
@@ -88,7 +88,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool CanTarget(ICombatObject target)
 		{
-			return SpaceObjects.Any(sobj => sobj.CanTarget(target));
+			return Vehicles.Any(sobj => sobj.CanTarget(target));
 		}
 
 		/// <summary>
@@ -101,7 +101,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<Component> Weapons
 		{
-			get { return SpaceObjects.SelectMany(sobj => sobj.Weapons); }
+			get { return Vehicles.SelectMany(sobj => sobj.Weapons); }
 		}
 
 		public bool IsHostileTo(Empire emp)
@@ -157,7 +157,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.Sum(sobj => sobj.Hitpoints);
+				return Vehicles.Sum(sobj => sobj.Hitpoints);
 			}
 			set
 			{
@@ -173,7 +173,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.Sum(sobj => sobj.NormalShields);
+				return Vehicles.Sum(sobj => sobj.NormalShields);
 			}
 			set
 			{
@@ -189,7 +189,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.Sum(sobj => sobj.PhasedShields);
+				return Vehicles.Sum(sobj => sobj.PhasedShields);
 			}
 			set
 			{
@@ -199,29 +199,29 @@ namespace FrEee.Game.Objects.Space
 
 		public int MaxHitpoints
 		{
-			get { return SpaceObjects.Sum(sobj => sobj.MaxHitpoints); }
+			get { return Vehicles.Sum(sobj => sobj.MaxHitpoints); }
 		}
 
 		public int MaxNormalShields
 		{
-			get { return SpaceObjects.Sum(sobj => sobj.MaxNormalShields); }
+			get { return Vehicles.Sum(sobj => sobj.MaxNormalShields); }
 		}
 
 		public int MaxPhasedShields
 		{
-			get { return SpaceObjects.Sum(sobj => sobj.MaxPhasedShields); }
+			get { return Vehicles.Sum(sobj => sobj.MaxPhasedShields); }
 		}
 
 		public void ReplenishShields()
 		{
-			foreach (var sobj in SpaceObjects)
+			foreach (var sobj in Vehicles)
 				sobj.ReplenishShields();
 		}
 
 		public int? Repair(int? amount = null)
 		{
 			// TODO - repair priority
-			foreach (var sobj in SpaceObjects)
+			foreach (var sobj in Vehicles)
 				amount = sobj.Repair(amount);
 			return amount;
 		}
@@ -236,7 +236,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsDestroyed
 		{
-			get { return SpaceObjects.All(sobj => sobj.IsDestroyed); }
+			get { return Vehicles.All(sobj => sobj.IsDestroyed); }
 		}
 
 		/// <summary>
@@ -252,7 +252,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Dispose()
 		{
-			SpaceObjects.Clear();
+			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 		}
 
@@ -288,7 +288,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int SupplyStorage
 		{
-			get { return SpaceObjects.Sum(sobj => sobj.SupplyStorage); }
+			get { return Vehicles.Sum(sobj => sobj.SupplyStorage); }
 		}
 
 		[DoNotSerialize]
@@ -296,14 +296,14 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.Sum(sobj => sobj.SupplyRemaining);
+				return Vehicles.Sum(sobj => sobj.SupplyRemaining);
 			}
 			set
 			{
 				var available = SupplyRemaining;
 				var storage = SupplyStorage;
 				int spent = 0;
-				foreach (var sobj in SpaceObjects)
+				foreach (var sobj in Vehicles)
 				{
 					var amount = (int)Math.Floor((double)sobj.SupplyStorage / (double)storage * available);
 					sobj.SupplyRemaining = amount;
@@ -312,7 +312,7 @@ namespace FrEee.Game.Objects.Space
 				var roundingError = available - spent;
 				while (roundingError > 0)
 				{
-					var sobj2 = SpaceObjects.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
+					var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
 					sobj2.SupplyRemaining += 1;
 					roundingError += 1;
 				}
@@ -324,7 +324,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool HasInfiniteSupplies
 		{
-			get { return SpaceObjects.Any(sobj => sobj.HasInfiniteSupplies); }
+			get { return Vehicles.Any(sobj => sobj.HasInfiniteSupplies); }
 		}
 
 		/// <summary>
@@ -335,7 +335,7 @@ namespace FrEee.Game.Objects.Space
 			if (HasInfiniteSupplies)
 			{
 				// full refill
-				foreach (var sobj in SpaceObjects)
+				foreach (var sobj in Vehicles)
 					sobj.SupplyRemaining = sobj.SupplyStorage;
 			}
 			else
@@ -347,7 +347,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool CanWarp
 		{
-			get { return SpaceObjects.All(sobj => sobj.CanWarp); }
+			get { return Vehicles.All(sobj => sobj.CanWarp); }
 		}
 
 		public bool IsIdle
@@ -365,7 +365,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.SelectMany(sobj =>
+				return Vehicles.SelectMany(sobj =>
 					{
 						var list = new List<ConstructionQueue>();
 						if (sobj.ConstructionQueue != null)
@@ -385,7 +385,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<Ability> UnstackedAbilities
 		{
-			get { return SpaceObjects.SelectMany(sobj => sobj.Abilities); }
+			get { return Vehicles.SelectMany(sobj => sobj.Abilities); }
 		}
 
 		public long ID
@@ -401,7 +401,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			return SpaceObjects.Max(sobj => sobj.CheckVisibility(emp));
+			return Vehicles.Max(sobj => sobj.CheckVisibility(emp));
 		}
 
 		public void Redact(Empire emp)
@@ -474,12 +474,12 @@ namespace FrEee.Game.Objects.Space
 
 		public Cargo Cargo
 		{
-			get { return SpaceObjects.OfType<ICargoContainer>().Sum(cc => cc.Cargo); }
+			get { return Vehicles.OfType<ICargoContainer>().Sum(cc => cc.Cargo); }
 		}
 
 		public int CargoStorage
 		{
-			get { return SpaceObjects.OfType<ICargoContainer>().Sum(cc => cc.CargoStorage); }
+			get { return Vehicles.OfType<ICargoContainer>().Sum(cc => cc.CargoStorage); }
 		}
 
 		public long PopulationStorageFree
@@ -489,7 +489,7 @@ namespace FrEee.Game.Objects.Space
 
 		public long AddPopulation(Civilization.Race race, long amount)
 		{
-			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
+			foreach (var ct in Vehicles.OfType<ICargoTransferrer>())
 			{
 				amount = ct.AddPopulation(race, amount);
 			}
@@ -498,7 +498,7 @@ namespace FrEee.Game.Objects.Space
 
 		public long RemovePopulation(Civilization.Race race, long amount)
 		{
-			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
+			foreach (var ct in Vehicles.OfType<ICargoTransferrer>())
 			{
 				amount = ct.RemovePopulation(race, amount);
 			}
@@ -507,7 +507,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool AddUnit(IUnit unit)
 		{
-			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
+			foreach (var ct in Vehicles.OfType<ICargoTransferrer>())
 			{
 				if (ct.AddUnit(unit))
 					return true;
@@ -517,7 +517,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool RemoveUnit(IUnit unit)
 		{
-			foreach (var ct in SpaceObjects.OfType<ICargoTransferrer>())
+			foreach (var ct in Vehicles.OfType<ICargoTransferrer>())
 			{
 				if (ct.RemoveUnit(unit))
 					return true;
@@ -530,7 +530,7 @@ namespace FrEee.Game.Objects.Space
 			get
 			{
 				var dict = new SafeDictionary<Race, long>();
-				foreach (var cc in SpaceObjects.OfType<ICargoContainer>())
+				foreach (var cc in Vehicles.OfType<ICargoContainer>())
 				{
 					foreach (var kvp in cc.Cargo.Population)
 						dict[kvp.Key] += kvp.Value;
@@ -541,7 +541,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
 
 		/// <summary>
@@ -551,7 +551,7 @@ namespace FrEee.Game.Objects.Space
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var sobj in SpaceObjects)
+			foreach (var sobj in Vehicles)
 				sobj.SpendTime(timeElapsed);
 		}
 
@@ -562,7 +562,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.SelectMany(sobj =>
+				return Vehicles.SelectMany(sobj =>
 				{
 					var list = new List<ICombatObject>();
 					if (sobj is ICombatObject)
@@ -574,12 +574,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-
 		public IEnumerable<IUnit> AllUnits
 		{
 			get
 			{
-				return SpaceObjects.SelectMany(sobj =>
+				return Vehicles.SelectMany(sobj =>
 					{
 						var list = new List<IUnit>();
 						if (sobj is IUnit)
@@ -588,6 +587,28 @@ namespace FrEee.Game.Objects.Space
 							list.AddRange(((ICargoContainer)sobj).AllUnits);
 						return list.Distinct();
 					});
+			}
+		}
+
+		/// <summary>
+		/// All space vehicles in this fleet and subfleets, but not counting the subfleets themselves.
+		/// </summary>
+		public IEnumerable<ISpaceVehicle> LeafVehicles
+		{
+			get
+			{
+				return Vehicles.SelectMany(v =>
+				{
+					var list = new List<ISpaceVehicle>();
+					if (v is Fleet)
+					{
+						foreach (var v2 in ((Fleet)v).LeafVehicles)
+							list.Add(v2);
+					}
+					else
+						list.Add(v);
+					return list;
+				});
 			}
 		}
 	}

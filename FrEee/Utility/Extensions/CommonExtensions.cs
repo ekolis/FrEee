@@ -1391,9 +1391,9 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Fleet> SubfleetsWithNonFleetChildren(this Fleet rootFleet)
 		{
-			if (rootFleet.SpaceObjects.Any(sobj => !(sobj is Fleet)))
+			if (rootFleet.Vehicles.Any(sobj => !(sobj is Fleet)))
 				yield return rootFleet;
-			foreach (var subfleet in rootFleet.SpaceObjects.OfType<Fleet>())
+			foreach (var subfleet in rootFleet.Vehicles.OfType<Fleet>())
 			{
 				foreach (var subsub in subfleet.SubfleetsWithNonFleetChildren())
 					yield return subsub;
