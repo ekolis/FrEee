@@ -586,7 +586,7 @@ namespace FrEee.Game.Objects.Space
 							list.Add((IUnit)sobj);
 						if (sobj is ICargoContainer)
 							list.AddRange(((ICargoContainer)sobj).AllUnits);
-						return list;
+						return list.Distinct();
 					});
 			}
 		}
