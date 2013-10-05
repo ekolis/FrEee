@@ -91,18 +91,18 @@ namespace FrEee.WinForms.Controls
 				var used = cargo.Size;
 				var total = CargoContainer.CargoStorage;
 				var free = used - total;
-				if (cargo.Units.Any())
+				if (CargoContainer.AllUnits.Any())
 				{
 					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
-					foreach (var ug in cargo.Units.GroupBy(u => u.Design.Role))
+					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.Role))
 						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
 					rolesNode.Expand();
 					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
-					foreach (var ug in cargo.Units.GroupBy(u => u.Design))
+					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design))
 						designsNode.AddItemWithImage(ug.Count() + "x " + ug.Key.Name, ug.Key, ug.First().Icon);
 					designsNode.Expand();
 					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
-					foreach (var u in cargo.Units)
+					foreach (var u in CargoContainer.AllUnits)
 						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
 					// don't expand the units node, there's probably tons of stuff there!
 				}

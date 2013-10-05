@@ -59,5 +59,10 @@ namespace FrEee.Game.Interfaces
 		/// All population stored by this cargo container, whether in a colony or in cargo.
 		/// </summary>
 		IDictionary<Race, long> AllPopulation { get; }
+
+		/// <summary>
+		/// All units that are in or part of this cargo container.
+		/// </summary>
+		IEnumerable<IUnit> AllUnits { get; }
 	}
 }

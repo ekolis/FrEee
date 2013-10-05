@@ -573,5 +573,22 @@ namespace FrEee.Game.Objects.Space
 				});
 			}
 		}
+
+
+		public IEnumerable<IUnit> AllUnits
+		{
+			get
+			{
+				return SpaceObjects.SelectMany(sobj =>
+					{
+						var list = new List<IUnit>();
+						if (sobj is IUnit)
+							list.Add((IUnit)sobj);
+						if (sobj is ICargoContainer)
+							list.AddRange(((ICargoContainer)sobj).AllUnits);
+						return list;
+					});
+			}
+		}
 	}
 }

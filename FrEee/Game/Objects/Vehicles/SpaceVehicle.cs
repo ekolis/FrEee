@@ -334,5 +334,20 @@ namespace FrEee.Game.Objects.Vehicles
 			foreach (var u in Cargo.Units.OfType<ISpaceVehicle>())
 				u.SpendTime(timeElapsed);
 		}
+
+
+		public IEnumerable<IUnit> AllUnits
+		{
+			get
+			{
+				if (this is IUnit)
+					yield return (IUnit)this;
+				if (Cargo != null)
+				{
+					foreach (var u in Cargo.Units)
+						yield return u;
+				}
+			}
+		}
 	}
 }

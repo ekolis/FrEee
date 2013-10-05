@@ -790,5 +790,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.SpaceObjects.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
 		}
+
+
+		public IEnumerable<IUnit> AllUnits
+		{
+			get { return Cargo.Units; }
+		}
 	}
 }

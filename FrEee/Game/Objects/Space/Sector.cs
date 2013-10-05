@@ -182,5 +182,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return new Dictionary<Race, long>(); }
 		}
+
+
+		public IEnumerable<IUnit> AllUnits
+		{
+			get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
+		}
 	}
 }
