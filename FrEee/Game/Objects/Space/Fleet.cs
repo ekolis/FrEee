@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Enumerations;
+﻿using AutoMapper;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -64,7 +65,12 @@ namespace FrEee.Game.Objects.Space
 
 		public double TimePerMove
 		{
-			get { return Vehicles.Max(sobj => sobj.TimePerMove); }
+			get
+			{
+				if (!Vehicles.Any())
+					return double.PositiveInfinity;
+				return Vehicles.Max(sobj => sobj.TimePerMove);
+			}
 		}
 
 		public void RefillMovement()
@@ -77,7 +83,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int Speed
 		{
-			get { return Vehicles.Min(sobj => sobj.Speed); }
+			get { return Vehicles.MinOrDefault(sobj => sobj.Speed); }
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
@@ -401,6 +407,8 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
+			if (!Vehicles.Any())
+				return Visibility.Unknown;
 			return Vehicles.Max(sobj => sobj.CheckVisibility(emp));
 		}
 
@@ -413,9 +421,9 @@ namespace FrEee.Game.Objects.Space
 				Name = Owner + " Fleet";
 		}
 
-		public Sector Sector
+		Sector ILocated.Sector
 		{
-			get { return this.FindSector(); }
+			get { return Sector; }
 		}
 
 		public StarSystem StarSystem
@@ -609,6 +617,33 @@ namespace FrEee.Game.Objects.Space
 						list.Add(v);
 					return list;
 				});
+			}
+		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
+
+		[DoNotSerialize]
+		[IgnoreMap]
+		public Sector Sector
+		{
+			get
+			{
+				return this.FindSector();
+			}
+			set
+			{
+				if (value == null)
+				{
+					if (Sector == null)
+						Sector.Remove(this);
+				}
+				else
+					value.Place(this);
+				foreach (var v in Vehicles)
+					v.Sector = value;
 			}
 		}
 	}

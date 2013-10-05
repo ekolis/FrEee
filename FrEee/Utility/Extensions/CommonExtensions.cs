@@ -1053,11 +1053,13 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Transfers items from this cargo container to another cargo container.
 		/// </summary>
-		public static void TransferCargo(this ICargoTransferrer src, CargoDelta delta, ICargoContainer dest, Empire emp)
+		public static void TransferCargo(this ICargoContainer src, CargoDelta delta, ICargoContainer dest, Empire emp)
 		{
 			// if destination is null, we are transferring to/from space
 			if (dest == null)
 				dest = src.Sector;
+			if (src == null)
+				src = dest.Sector;
 
 			// transfer per-race population
 			foreach (var kvp in delta.RacePopulation)
@@ -1118,23 +1120,28 @@ namespace FrEee.Utility.Extensions
 				int transferred = 0;
 				while (kvp.Value == null || transferred <= kvp.Value - kvp.Key.Hull.Size)
 				{
-					var unit = src.Cargo.Units.FirstOrDefault(u => u.Design == kvp.Key);
+					var unit = src.AllUnits.FirstOrDefault(u => u.Design == kvp.Key);
 					if (unit == null && kvp.Value != null)
 					{
 						if (kvp.Value != null)
 							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
 						break;
 					}
-					if (src.CargoStorageFree() < kvp.Key.Hull.Size)
+					if (dest.CargoStorageFree() < kvp.Key.Hull.Size)
 					{
 						LogUnitTransferFailedNoStorage(unit, src, dest, emp);
 						break;
 					}
 					if (transferred + kvp.Key.Hull.Size > kvp.Value)
 						break; // next unit would be too much
-					src.RemoveUnit(unit);
-					dest.AddUnit(unit);
-					transferred += kvp.Key.Hull.Size;
+					if (unit != null)
+					{
+						src.RemoveUnit(unit);
+						dest.AddUnit(unit);
+						transferred += kvp.Key.Hull.Size;
+					}
+					else
+						break;
 				}
 			}
 
@@ -1142,7 +1149,7 @@ namespace FrEee.Utility.Extensions
 			foreach (var kvp in delta.UnitRoleTonnage)
 			{
 				int transferred = 0;
-				var available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
+				var available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
 				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
 				{
 					if (!available.Any())
@@ -1156,7 +1163,7 @@ namespace FrEee.Utility.Extensions
 					{
 						src.RemoveUnit(unit);
 						dest.AddUnit(unit);
-						available = src.Cargo.Units.Where(u => u.Design.Role == kvp.Key);
+						available = src.AllUnits.Where(u => u.Design.Role == kvp.Key);
 						transferred += unit.Design.Hull.Size;
 					}
 					else
@@ -1168,7 +1175,7 @@ namespace FrEee.Utility.Extensions
 			foreach (var kvp in delta.UnitTypeTonnage)
 			{
 				int transferred = 0;
-				var available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
+				var available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
 				while (kvp.Value == null || transferred <= kvp.Value - available.MinOrDefault(u => u.Design.Hull.Size))
 				{
 					if (!available.Any())
@@ -1181,7 +1188,7 @@ namespace FrEee.Utility.Extensions
 					{
 						src.RemoveUnit(unit);
 						dest.AddUnit(unit);
-						available = src.Cargo.Units.Where(u => u.Design.VehicleType == kvp.Key);
+						available = src.AllUnits.Where(u => u.Design.VehicleType == kvp.Key);
 						transferred += unit.Design.Hull.Size;
 					}
 					else

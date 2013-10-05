@@ -29,13 +29,13 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public CargoDelta CargoDelta { get; set; }
 
-		private IReference<ICargoTransferrer> destination { get; set; }
+		private IReference<ICargoTransferrer> target { get; set; }
 
 		/// <summary>
 		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
 		/// </summary>
 		[DoNotSerialize]
-		public ICargoTransferrer Target { get { return destination.Value; } set { destination = value.Reference(); } }
+		public ICargoTransferrer Target { get { return target.Value; } set { target = value.Reference(); } }
 
 		/// <summary>
 		/// True if this is a load order, false if it is a drop order.
@@ -82,7 +82,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
-			destination.ReplaceClientIDs(idmap);
+			target.ReplaceClientIDs(idmap);
 			owner.ReplaceClientIDs(idmap);
 		}
 

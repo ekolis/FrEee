@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Enumerations;
+﻿using AutoMapper;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -302,9 +303,9 @@ namespace FrEee.Game.Objects.Vehicles
 			return false;
 		}
 
-		public Sector Sector
+		Sector ILocated.Sector
 		{
-			get { return this.FindSector(); }
+			get { return Sector; }
 		}
 
 		public StarSystem StarSystem
@@ -347,6 +348,28 @@ namespace FrEee.Game.Objects.Vehicles
 					foreach (var u in Cargo.Units)
 						yield return u;
 				}
+			}
+		}
+
+		[DoNotSerialize]
+		[IgnoreMap]
+		public Sector Sector
+		{
+			get
+			{
+				return this.FindSector();
+			}
+			set
+			{
+				if (value == null)
+				{
+					if (Sector == null)
+						Sector.Remove(this);
+				}
+				else
+					value.Place(this);
+				foreach (var v in Cargo.Units.OfType<ISpaceVehicle>())
+					v.Sector = value;
 			}
 		}
 	}

@@ -35,17 +35,49 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).ToList();
+				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null).ToList();
 			}
 		}
 
 		public void Place(ISpaceObject sobj)
 		{
+			// remove from fleet
+			if (sobj is ISpaceVehicle)
+			{
+				var v = (ISpaceVehicle)sobj;
+				if (v.Container != null)
+					v.Container.Vehicles.Remove(v);
+			}
+
+			// remove from cargo
+			if (sobj is IUnit)
+			{
+				var u = (IUnit)sobj;
+				u.Container.RemoveUnit(u);
+			}
+
+			// place in space
 			StarSystem.Place(sobj, Coordinates);
 		}
 
 		public void Remove(ISpaceObject sobj)
 		{
+			// remove from fleet
+			if (sobj is ISpaceVehicle)
+			{
+				var v = (ISpaceVehicle)sobj;
+				if (v.Container != null)
+					v.Container.Vehicles.Remove(v);
+			}
+
+			// remove from cargo
+			if (sobj is IUnit)
+			{
+				var u = (IUnit)sobj;
+				if (!u.Container.Equals(this))
+					u.Container.RemoveUnit(u);
+			}
+
 			if (SpaceObjects.Contains(sobj))
 				StarSystem.Remove(sobj);
 		}
@@ -128,6 +160,7 @@ namespace FrEee.Game.Objects.Space
 			// place this unit in a fleet with other similar units
 			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
 				f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
+			var v = (ISpaceVehicle)unit;
 			if (fleet == null)
 			{
 				// create a new fleet, there's no fleet with similar units
@@ -136,20 +169,20 @@ namespace FrEee.Game.Objects.Space
 				fleet.Name = unit.Design.Name + " Group";
 				Place(fleet);
 			}
-			fleet.Vehicles.Add((ISpaceVehicle)unit);
+			Place(v);
+			fleet.Vehicles.Add(v);
 			return true;
 		}
 
 		public bool RemoveUnit(IUnit unit)
 		{
-			if (unit is ISpaceVehicle && SpaceObjects.Contains((ISpaceVehicle)unit))
+			if (unit is ISpaceVehicle)
 			{
-				this.Remove((ISpaceVehicle)unit);
-				return true;
+				Remove((ISpaceVehicle)unit);
 			}
 			return false;
 		}
-
+		
 		public Image Icon
 		{
 			get { return StarSystem.Icon; }

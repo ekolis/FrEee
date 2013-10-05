@@ -14,6 +14,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
 using System.IO;
+using AutoMapper;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -795,6 +796,28 @@ namespace FrEee.Game.Objects.Space
 		public IEnumerable<IUnit> AllUnits
 		{
 			get { return Cargo.Units; }
+		}
+
+		[DoNotSerialize]
+		[IgnoreMap]
+		public new Sector Sector
+		{
+			get
+			{
+				return this.FindSector();
+			}
+			set
+			{
+				if (value == null)
+				{
+					if (Sector == null)
+						Sector.Remove(this);
+				}
+				else
+					value.Place(this);
+				foreach (var v in Cargo.Units.OfType<ISpaceVehicle>())
+					v.Sector = value;
+			}
 		}
 	}
 }
