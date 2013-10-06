@@ -42,9 +42,9 @@ namespace FrEee.Game.Objects.Space
 		public void Place(ISpaceObject sobj)
 		{
 			// remove from fleet
-			if (sobj is ISpaceVehicle)
+			if (sobj is IMobileSpaceObject)
 			{
-				var v = (ISpaceVehicle)sobj;
+				var v = (IMobileSpaceObject)sobj;
 				if (v.Container != null)
 					v.Container.Vehicles.Remove(v);
 			}
@@ -63,9 +63,9 @@ namespace FrEee.Game.Objects.Space
 		public void Remove(ISpaceObject sobj)
 		{
 			// remove from fleet
-			if (sobj is ISpaceVehicle)
+			if (sobj is IMobileSpaceObject)
 			{
-				var v = (ISpaceVehicle)sobj;
+				var v = (IMobileSpaceObject)sobj;
 				if (v.Container != null)
 					v.Container.Vehicles.Remove(v);
 			}
@@ -152,7 +152,7 @@ namespace FrEee.Game.Objects.Space
 		public bool AddUnit(IUnit unit)
 		{
 			// can't place a unit that can't move about in space, in space!
-			if (!(unit is ISpaceVehicle))
+			if (!(unit is IMobileSpaceObject))
 				return false;
 
 			// TODO - limit number of units in space per empire as specified in Settings.txt
@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Space
 			// place this unit in a fleet with other similar units
 			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
 				f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
-			var v = (ISpaceVehicle)unit;
+			var v = (IMobileSpaceObject)unit;
 			if (fleet == null)
 			{
 				// create a new fleet, there's no fleet with similar units
@@ -176,9 +176,9 @@ namespace FrEee.Game.Objects.Space
 
 		public bool RemoveUnit(IUnit unit)
 		{
-			if (unit is ISpaceVehicle)
+			if (unit is IMobileSpaceObject)
 			{
-				Remove((ISpaceVehicle)unit);
+				Remove((IMobileSpaceObject)unit);
 			}
 			return false;
 		}

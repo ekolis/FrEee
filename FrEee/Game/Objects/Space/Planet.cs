@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, ISpaceVehicle<Planet>
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject
 	{
 		public Planet()
 		{
@@ -776,7 +776,7 @@ namespace FrEee.Game.Objects.Space
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<ISpaceVehicle>())
+			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
 				u.SpendTime(timeElapsed);
 		}
 
@@ -815,7 +815,7 @@ namespace FrEee.Game.Objects.Space
 				}
 				else
 					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<ISpaceVehicle>())
+				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
 					v.Sector = value;
 			}
 		}

@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	[Serializable]
 	public class WarpOrder<T> : IMovementOrder<T>
-		where T : ISpaceVehicle<T>, IReferrable
+		where T : IMobileSpaceObject, IReferrable
 	{
 		public WarpOrder(WarpPoint warpPoint)
 		{
@@ -117,12 +117,12 @@ namespace FrEee.Game.Objects.Orders
 			get { return WarpPoint.Target; }
 		}
 
-		public IEnumerable<Sector> Pathfind(ISpaceVehicle me, Sector start)
+		public IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start)
 		{
 			return Pathfinder.Pathfind(me, start, Destination, false, true, me.DijkstraMap);
 		}
 
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(ISpaceVehicle me, Sector start)
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, false, true);
 		}

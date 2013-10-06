@@ -793,13 +793,13 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			CurrentTick = 0;
-			foreach (var v in Referrables.OfType<ISpaceVehicle>().Shuffle())
+			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
 			while (CurrentTick <= 1)
 			{
 				ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-				foreach (var v in Referrables.OfType<ISpaceVehicle>().Where(sobj => sobj.Container == null).Shuffle())
+				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();

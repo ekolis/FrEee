@@ -302,8 +302,11 @@ namespace FrEee.WinForms.Forms
 			if (sector == null)
 			{
 				SelectedSpaceObject = null;
+				btnFleetTransfer.Visible = false;
 				return;
 			}
+
+			btnFleetTransfer.Visible = sector.SpaceObjects.OfType<IMobileSpaceObject>().Any(v => v.Owner == Empire.Current);
 
 			if (sector.SpaceObjects.Any())
 			{
@@ -775,16 +778,16 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					// determine what commands are appropriate
-					btnMove.Visible = value is ISpaceVehicle;
-					btnPursue.Visible = value is ISpaceVehicle;
-					btnEvade.Visible = value is ISpaceVehicle;
-					btnWarp.Visible = value is ISpaceVehicle && ((ISpaceVehicle)value).CanWarp;
-					btnColonize.Visible = value is ISpaceVehicle && ((ISpaceVehicle)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
-					btnSentry.Visible = value is ISpaceVehicle;
+					btnMove.Visible = value is IMobileSpaceObject;
+					btnPursue.Visible = value is IMobileSpaceObject;
+					btnEvade.Visible = value is IMobileSpaceObject;
+					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
+					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
-					btnFleetTransfer.Visible = value != null && value.CanBeInFleet;
-					btnClearOrders.Visible = value is ISpaceVehicle || value is Planet;
+					btnFleetTransfer.Visible = starSystemView.SelectedSector != null;
+					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
 			}
 		}
@@ -843,7 +846,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
 					ShowCargoTransferForm();
 				else if (e.KeyCode == Keys.F && btnFleetTransfer.Visible)
-					MessageBox.Show("Sorry, fleets are not yet implemented."); // TODO - show fleet transfer window for selected space object
+					ShowFleetTransferForm();
 				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
 			}
@@ -1002,9 +1005,9 @@ namespace FrEee.WinForms.Forms
 			if (SelectedSpaceObject is ICargoTransferrer && SelectedSpaceObject.Owner == Empire.Current)
 			{
 				Sector lastSector;
-				if (SelectedSpaceObject is ISpaceVehicle)
+				if (SelectedSpaceObject is IMobileSpaceObject)
 				{
-					var path = ((ISpaceVehicle)SelectedSpaceObject).Path();
+					var path = ((IMobileSpaceObject)SelectedSpaceObject).Path();
 					if (path != null && path.Any())
 						lastSector = path.Last();
 					else
@@ -1020,9 +1023,21 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private void ShowFleetTransferForm()
+		{
+			if (starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<ISpaceVehicle>().Any(v => v.Owner == Empire.Current))
+			{
+				var form = new FleetTransferForm(starSystemView.SelectedSector);
+				this.ShowChildForm(form);
+				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
+				if (report != null)
+					report.Bind();
+			}
+		}
+
 		private void btnFleetTransfer_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, fleet transfer orders are not yet implemented.");
+			ShowFleetTransferForm();
 		}
 
 		private void btnClearOrders_Click(object sender, EventArgs e)

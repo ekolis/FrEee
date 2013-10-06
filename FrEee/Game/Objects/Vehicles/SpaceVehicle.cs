@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class SpaceVehicle : Vehicle, ISpaceVehicle<SpaceVehicle>, ICargoTransferrer
+	public abstract class SpaceVehicle : Vehicle, IMobileSpaceObject, ICargoTransferrer
 	{
 		public SpaceVehicle()
 		{
@@ -332,7 +332,7 @@ namespace FrEee.Game.Objects.Vehicles
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<ISpaceVehicle>())
+			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
 				u.SpendTime(timeElapsed);
 		}
 
@@ -368,7 +368,7 @@ namespace FrEee.Game.Objects.Vehicles
 				}
 				else
 					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<ISpaceVehicle>())
+				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
 					v.Sector = value;
 			}
 		}

@@ -17,11 +17,11 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A collection of ships, units, etc. that move synchronously.
 	/// </summary>
-	public class Fleet : ISpaceVehicle<Fleet>, ICargoTransferrer
+	public class Fleet : IMobileSpaceObject, ICargoTransferrer
 	{
 		public Fleet()
 		{
-			Vehicles = new HashSet<ISpaceVehicle>();
+			Vehicles = new HashSet<IMobileSpaceObject>();
 			Orders = new List<IOrder<Fleet>>();
 		}
 
@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public ISet<ISpaceVehicle> Vehicles { get; private set; }
+		public ISet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
@@ -601,13 +601,13 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// All space vehicles in this fleet and subfleets, but not counting the subfleets themselves.
 		/// </summary>
-		public IEnumerable<ISpaceVehicle> LeafVehicles
+		public IEnumerable<IMobileSpaceObject> LeafVehicles
 		{
 			get
 			{
 				return Vehicles.SelectMany(v =>
 				{
-					var list = new List<ISpaceVehicle>();
+					var list = new List<IMobileSpaceObject>();
 					if (v is Fleet)
 					{
 						foreach (var v2 in ((Fleet)v).LeafVehicles)

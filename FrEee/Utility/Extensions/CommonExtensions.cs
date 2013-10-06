@@ -1303,7 +1303,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="sobj"></param>
 		/// <returns></returns>
 		public static Sector FinalSector<T>(this T sobj)
-			where T : ISpaceVehicle<T>
+			where T : IMobileSpaceObject
 		{
 			var path = sobj.Path();
 			if (path == null || !path.Any())
@@ -1321,7 +1321,7 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Refills the space object's movement points.
 		/// </summary>
-		public static void RefillMovement(this ISpaceVehicle sobj)
+		public static void RefillMovement(this IMobileSpaceObject sobj)
 		{
 			sobj.MovementRemaining = sobj.Speed;
 			sobj.TimeToNextMove = sobj.TimePerMove;
@@ -1333,7 +1333,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Sector> Path(this ISpaceVehicle sobj)
+		public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
 		{
 			var last = sobj.Sector;
 			foreach (var order in sobj.Orders)
@@ -1348,7 +1348,7 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		public static void RefreshDijkstraMap(this ISpaceVehicle sobj)
+		public static void RefreshDijkstraMap(this IMobileSpaceObject sobj)
 		{
 			// create new map if necessary
 			if (sobj.DijkstraMap == null)
@@ -1440,9 +1440,9 @@ namespace FrEee.Utility.Extensions
 			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (container != null)
 				return container;
-			if (unit is ISpaceVehicle)
+			if (unit is IMobileSpaceObject)
 			{
-				var v = (ISpaceVehicle)unit;
+				var v = (IMobileSpaceObject)unit;
 				return v.Sector;
 			}
 			return null; // unit is in limbo...

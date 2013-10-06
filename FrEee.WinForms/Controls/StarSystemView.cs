@@ -260,10 +260,10 @@ namespace FrEee.WinForms.Controls
 					}
 				}
 
-				if (SelectedSpaceObject is ISpaceVehicle)
+				if (SelectedSpaceObject is IMobileSpaceObject)
 				{
 					// draw path lines
-					var sobj = (ISpaceVehicle)SelectedSpaceObject;
+					var sobj = (IMobileSpaceObject)SelectedSpaceObject;
 					Sector last = SelectedSpaceObject.FindSector();
 					PointF? lastPoint = null;
 					if (last.StarSystem == StarSystem)

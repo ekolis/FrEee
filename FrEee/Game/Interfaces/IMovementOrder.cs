@@ -23,7 +23,7 @@ namespace FrEee.Game.Interfaces
 		/// <param name="sobj">The space object executing the order.</param>
 		/// <param name="start">The starting sector.</param>
 		/// <returns></returns>
-		IEnumerable<Sector> Pathfind(ISpaceVehicle me, Sector start);
+		IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start);
 
 		/// <summary>
 		/// Creates a Dijkstra map for this order's movement.
@@ -31,7 +31,7 @@ namespace FrEee.Game.Interfaces
 		/// <param name="me"></param>
 		/// <param name="start"></param>
 		/// <returns></returns>
-		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(ISpaceVehicle me, Sector start);
+		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start);
 
 		/// <summary>
 		/// Did we already log a pathfinding error this turn?
@@ -44,7 +44,7 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public interface IMovementOrder<in T> : IMovementOrder, IOrder<T>
-		where T : ISpaceVehicle<T>
+		where T : IMobileSpaceObject
 	{
 		
 	}
