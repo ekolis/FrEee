@@ -161,6 +161,9 @@ namespace FrEee.WinForms.Forms
 				case CargoList.SelectionType.UnitRole:
 					clLoad.CargoDelta.UnitRoleTonnage.Add(clTo.SelectedUnitRole, null);
 					break;
+				case CargoList.SelectionType.UnitType:
+					clLoad.CargoDelta.UnitTypeTonnage.Add(clTo.SelectedUnitType, null);
+					break;
 			}
 			if (clTo.CurrentSelectionType != CargoList.SelectionType.None)
 			{
@@ -190,6 +193,9 @@ namespace FrEee.WinForms.Forms
 				case CargoList.SelectionType.UnitRole:
 					clDrop.CargoDelta.UnitRoleTonnage.Add(clFrom.SelectedUnitRole, null);
 					break;
+				case CargoList.SelectionType.UnitType:
+					clDrop.CargoDelta.UnitTypeTonnage.Add(clFrom.SelectedUnitType, null);
+					break;
 			}
 			if (clFrom.CurrentSelectionType != CargoList.SelectionType.None)
 			{
@@ -218,6 +224,9 @@ namespace FrEee.WinForms.Forms
 				case CargoList.SelectionType.UnitRole:
 					clLoad.CargoDelta.UnitRoleTonnage.Remove(clLoad.SelectedUnitRole);
 					break;
+				case CargoList.SelectionType.UnitType:
+					clLoad.CargoDelta.UnitTypeTonnage.Remove(clTo.SelectedUnitType);
+					break;
 			}
 			if (clLoad.CurrentSelectionType != CargoList.SelectionType.None)
 				clLoad.Bind();
@@ -243,6 +252,9 @@ namespace FrEee.WinForms.Forms
 				case CargoList.SelectionType.UnitRole:
 					clDrop.CargoDelta.UnitRoleTonnage.Remove(clDrop.SelectedUnitRole);
 					break;
+				case CargoList.SelectionType.UnitType:
+					clDrop.CargoDelta.UnitTypeTonnage.Remove(clTo.SelectedUnitType);
+					break;
 			}
 			if (clDrop.CurrentSelectionType != CargoList.SelectionType.None)
 				clDrop.Bind();
@@ -254,11 +266,6 @@ namespace FrEee.WinForms.Forms
 		private void cl_Enter(object sender, EventArgs e)
 		{
 			lastFocusedCargoList = (CargoList)sender;
-		}
-
-		private void clFrom_Enter(object sender, EventArgs e)
-		{
-
 		}
     }
 }

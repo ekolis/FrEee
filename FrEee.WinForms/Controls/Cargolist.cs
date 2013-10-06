@@ -16,6 +16,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Game.Enumerations;
 
 
 namespace FrEee.WinForms.Controls
@@ -93,15 +94,18 @@ namespace FrEee.WinForms.Controls
 				var free = used - total;
 				if (CargoContainer.AllUnits.Any())
 				{
-					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
+					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.VehicleType))
+						typesNode.AddItemWithImage(ug.Count() + "x " + ug.Key.ToSpacedString(), ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
+					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.Role))
 						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
 					rolesNode.Expand();
-					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design))
 						designsNode.AddItemWithImage(ug.Count() + "x \"" + ug.Key.Name + "\" " + ug.Key.VehicleTypeName, ug.Key, ug.First().Icon);
 					designsNode.Expand();
-					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var u in CargoContainer.AllUnits)
 						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
 					// don't expand the units node, there's probably tons of stuff there!
@@ -116,30 +120,37 @@ namespace FrEee.WinForms.Controls
 			}
 			else if (CargoDelta != null)
 			{
+				if (CargoDelta.UnitTypeTonnage.Any())
+				{
+					var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
+					foreach (var ug in CargoDelta.UnitTypeTonnage)
+						typesNode.AddItemWithImage(ug.Value.Kilotons("All") + " " + ug.Key.ToSpacedString() + "s", ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
+					typesNode.Expand();
+				}
 				if (CargoDelta.UnitRoleTonnage.Any())
 				{
-					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoDelta.UnitRoleTonnage)
-						rolesNode.AddItemWithImage(ug.Value.Kilotons("All") + " " + ug.Key + "s", ug.Key, Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+						rolesNode.AddItemWithImage(ug.Value.Kilotons("All") + " " + ug.Key + "s", ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					rolesNode.Expand();
 				}
 				if (CargoDelta.UnitDesignTonnage.Any())
 				{
-					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoDelta.UnitDesignTonnage)
 						designsNode.AddItemWithImage(ug.Value.Kilotons("All") + " \"" + ug.Key.Name + "\" " + ug.Key.VehicleType + "s", ug.Key, ug.Key.Icon);
 					designsNode.Expand();
 				}
 				if (CargoDelta.Units.Any())
 				{
-					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var unitsNode = tree.AddItemWithImage("Units - Individual (" + CargoDelta.Units.Count + ")", "Units", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var u in CargoDelta.Units)
 						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
 					// don't expand the units node, there's probably tons of stuff there!
 				}
 				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
 				{
-					var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetUnitImage(Empire.Current.ShipsetPath));
+					var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var pop in CargoDelta.RacePopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
@@ -152,6 +163,7 @@ namespace FrEee.WinForms.Controls
 		public enum SelectionType
 		{
 			None,
+			UnitType,
 			UnitRole,
 			UnitDesign,
 			Unit,
@@ -159,6 +171,8 @@ namespace FrEee.WinForms.Controls
 		}
 
 		public SelectionType CurrentSelectionType { get; private set; }
+
+		public VehicleTypes SelectedUnitType { get; private set; }
 
 		public string SelectedUnitRole { get; private set; }
 
@@ -171,6 +185,7 @@ namespace FrEee.WinForms.Controls
 		private void tree_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			CurrentSelectionType = SelectionType.None;
+			SelectedUnitType = VehicleTypes.None;
 			SelectedUnitRole = null;
 			SelectedUnitDesign = null;
 			SelectedUnit = null;
@@ -178,6 +193,11 @@ namespace FrEee.WinForms.Controls
 
 			if (e.Node.Parent != null)
 			{
+				if ((string)e.Node.Parent.Tag == "Types")
+				{
+					CurrentSelectionType = SelectionType.UnitType;
+					SelectedUnitType = (VehicleTypes)e.Node.Tag;
+				}
 				if ((string)e.Node.Parent.Tag == "Roles")
 				{
 					CurrentSelectionType = SelectionType.UnitRole;

@@ -752,26 +752,67 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Gets a generic unit image suitable for representing one or more units of a shipset.
-		/// Right now this just gets the fighter group image.
+		/// Gets a generic vehicle type image for a shipset.
 		/// </summary>
 		/// <param name="shipsetPath"></param>
 		/// <returns></returns>
-		public static Image GetUnitImage(string shipsetPath)
+		public static Image GetVehicleTypeImage(string shipsetPath, VehicleTypes vt = VehicleTypes.Fighter)
 		{
 			if (shipsetPath == null)
 				return GetGenericImage(typeof(IUnit));
 			var paths = new List<string>();
 
+			string hullname;
+			Type hulltype;
+			switch (vt)
+			{
+				case VehicleTypes.Base:
+					hullname = "BattleStation";
+					hulltype = typeof(Base);
+					break;
+				case VehicleTypes.Drone:
+					hullname = "Drone";
+					hulltype = typeof(Drone);
+					break;
+				case VehicleTypes.Fighter:
+					hullname = "FighterMedium";
+					hulltype = typeof(Fighter);
+					break;
+				case VehicleTypes.Mine:
+					hullname = "Mine";
+					hulltype = typeof(Mine);
+					break;
+				case VehicleTypes.Satellite:
+					hullname = "Satellite";
+					hulltype = typeof(Satellite);
+					break;
+				case VehicleTypes.Ship:
+					hullname = "Cruiser";
+					hulltype = typeof(Ship);
+					break;
+				case VehicleTypes.Troop:
+					hullname = "TroopMedium";
+					hulltype = typeof(Troop);
+					break;
+				case VehicleTypes.WeaponPlatform:
+					hullname = "WeapPlatformMedium";
+					hulltype = typeof(WeaponPlatform);
+					break;
+				default:
+					hullname = "Fighter";
+					hulltype = typeof(Fighter);
+					break;
+			}
+
 			if (Mod.Current.RootPath != null)
 			{
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_FighterGroup"));
-				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_FighterGroup")); // for SE4 shipset compatibility
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Portrait_" + hullname));
+				paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
 			}
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_FighterGroup"));
-			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_FighterGroup")); // for SE4 shipset compatibility
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Portrait_" + hullname));
+			paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_Portrait_" + hullname)); // for SE4 shipset compatibility
 
-			return GetCachedImage(paths) ?? GetGenericImage(typeof(IUnit));
+			return GetCachedImage(paths) ?? GetGenericImage(hulltype);
 		}
 
 		/// <summary>
