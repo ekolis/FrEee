@@ -17,11 +17,11 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A collection of ships, units, etc. that move synchronously.
 	/// </summary>
-	public class Fleet : IMobileSpaceObject, ICargoTransferrer
+	public class Fleet : IMobileSpaceObject, ICargoTransferrer, IPromotable
 	{
 		public Fleet()
 		{
-			Vehicles = new HashSet<IMobileSpaceObject>();
+			Vehicles = new ReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder<Fleet>>();
 		}
 
@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public ISet<IMobileSpaceObject> Vehicles { get; private set; }
+		public ReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.
@@ -86,6 +86,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.MinOrDefault(sobj => sobj.Speed); }
 		}
 
+		[DoNotSerialize]
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap
 		{
 			get;
@@ -151,8 +152,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Empire Owner
 		{
-			get;
-			set;
+			get { return Vehicles.Select(v => v.Owner).SingleOrDefault() ?? Empire.Current; }
 		}
 
 		/// <summary>
@@ -645,6 +645,11 @@ namespace FrEee.Game.Objects.Space
 				foreach (var v in Vehicles)
 					v.Sector = value;
 			}
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			Vehicles.ReplaceClientIDs(idmap);
 		}
 	}
 }

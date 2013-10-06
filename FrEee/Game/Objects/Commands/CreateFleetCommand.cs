@@ -15,36 +15,40 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class CreateFleetCommand : Command<Empire>
 	{
-		public CreateFleetCommand(Empire issuer, string fleetName, Sector sector)
+		public CreateFleetCommand(Empire issuer, Fleet fleet, Sector sector)
 			: base(issuer, issuer)
 		{
-			FleetName = fleetName;
+			Fleet = fleet;
 			Sector = sector;
 		}
 
-		/// <summary>
-		/// The name to assign to the new fleet.
-		/// </summary>
-		public string FleetName { get; set; }
-
-		/// <summary>
-		/// The sector to create the fleet in.
-		/// </summary>
-		public Sector Sector { get; set; }
-		
 		public override void Execute()
 		{
-			// create fleet
-			Fleet = new Fleet();
-			Fleet.Name = FleetName;
-			Fleet.Owner = Issuer;
+			Fleet.Vehicles.Clear(); // no cheating by spawning new vehicles!
 			Sector.Place(Fleet);
 		}
 
 		/// <summary>
-		/// The newly created fleet, or null if it's not yet been created.
+		/// The fleet to create.
 		/// </summary>
-		[DoNotSerialize]
-		public Fleet Fleet { get; private set; }
+		public Fleet Fleet { get; set; }
+
+		/// <summary>
+		/// The sector to place the fleet in.
+		/// </summary>
+		public Sector Sector { get; private set; }
+
+		public override IEnumerable<IReferrable> NewReferrables
+		{
+			get
+			{
+				yield return Fleet;
+			}
+		}
+
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			Fleet.ReplaceClientIDs(idmap);
+		}
 	}
 }

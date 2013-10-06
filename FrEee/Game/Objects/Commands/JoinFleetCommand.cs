@@ -30,7 +30,18 @@ namespace FrEee.Game.Objects.Commands
 		private Reference<Fleet> fleet { get; set; }
 
 		[DoNotSerialize]
-		public Fleet Fleet { get { return fleet ?? CreateFleetCommand.Fleet; } set { fleet = value; } }
+		public Fleet Fleet
+		{
+			get
+			{
+				return fleet ?? CreateFleetCommand.Fleet;
+			}
+			set
+			{
+				Galaxy.Current.AssignID(value);
+				fleet = value;
+			}
+		}
 
 		public CreateFleetCommand CreateFleetCommand { get; set; }
 
@@ -52,6 +63,11 @@ namespace FrEee.Game.Objects.Commands
 				// add to new fleet
 				Fleet.Vehicles.Add(Target);
 			}
+		}
+
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			fleet.ReplaceClientIDs(idmap);
 		}
 	}
 }

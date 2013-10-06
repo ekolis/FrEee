@@ -26,8 +26,10 @@ namespace FrEee.Utility
 				ID = 0;
 			else if (t.ID > 0)
 				ID = t.ID;
-			else
+			else if (Empire.Current == null || t.GetType().IsClientSafe())
 				ID = Galaxy.Current.AssignID(t);
+			else
+				throw new ReferenceException("Tried to create a new reference to a non-client-safe object " + t + " on the client side.", -1, t.GetType());
 		}
 
 		public Reference(long id)

@@ -165,7 +165,6 @@ namespace FrEee.Game.Objects.Space
 			{
 				// create a new fleet, there's no fleet with similar units
 				fleet = new Fleet();
-				fleet.Owner = unit.Owner;
 				fleet.Name = unit.Design.Name + " Group";
 				Place(fleet);
 			}

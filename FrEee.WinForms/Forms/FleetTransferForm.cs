@@ -83,6 +83,10 @@ namespace FrEee.WinForms.Forms
 			foreach (var f in sector.SpaceObjects.OfType<Fleet>())
 				CreateNode(treeFleets, f);
 
+			// create any new fleets
+			foreach (var cmd in newCommands.OfType<CreateFleetCommand>())
+				CreateNode(treeFleets, cmd.Fleet);
+
 			// remove vehicles that are being removed from fleets
 			foreach (var cmd in newCommands.OfType<LeaveFleetCommand>())
 			{
@@ -171,11 +175,8 @@ namespace FrEee.WinForms.Forms
 		{
 			foreach (var cmd in newCommands)
 				Empire.Current.Commands.Add(cmd);
-			foreach (var cmd in newCommands.Where(c => !(c is CreateFleetCommand)))
-			{
-				// the create fleet commands have been executed already
+			foreach (var cmd in newCommands)
 				cmd.Execute();
-			}
 		}
 
 		private void Reset()
@@ -203,12 +204,11 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCreate_Click(object sender, EventArgs e)
 		{
-			var cmd = new CreateFleetCommand(Empire.Current, txtFleetName.Text, sector);
-			newCommands.Add(cmd);
+			var fleet = new Fleet();
+			fleet.Name = txtFleetName.Text;
 
-			// we need the fleet so we can add to it
-			cmd.Execute();
-			newFleets.Add(cmd.Fleet);
+			var cmd = new CreateFleetCommand(Empire.Current, fleet, sector);
+			newCommands.Add(cmd);
 
 			BindFleets();
 

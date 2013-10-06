@@ -1035,6 +1035,7 @@ namespace FrEee.WinForms.Forms
 				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
 				if (report != null)
 					report.Bind();
+				starSystemView.Invalidate();
 			}
 		}
 
