@@ -235,7 +235,7 @@ namespace FrEee.WinForms.Forms
 					clLoad.CargoDelta.UnitRoleTonnage.Remove(clLoad.SelectedUnitRole);
 					break;
 				case CargoList.SelectionType.UnitType:
-					clLoad.CargoDelta.UnitTypeTonnage.Remove(clTo.SelectedUnitType);
+					clLoad.CargoDelta.UnitTypeTonnage.Remove(clLoad.SelectedUnitType);
 					break;
 			}
 			if (clLoad.CurrentSelectionType != CargoList.SelectionType.None)
@@ -263,7 +263,7 @@ namespace FrEee.WinForms.Forms
 					clDrop.CargoDelta.UnitRoleTonnage.Remove(clDrop.SelectedUnitRole);
 					break;
 				case CargoList.SelectionType.UnitType:
-					clDrop.CargoDelta.UnitTypeTonnage.Remove(clTo.SelectedUnitType);
+					clDrop.CargoDelta.UnitTypeTonnage.Remove(clDrop.SelectedUnitType);
 					break;
 			}
 			if (clDrop.CurrentSelectionType != CargoList.SelectionType.None)

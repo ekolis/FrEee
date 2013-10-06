@@ -39,12 +39,12 @@
 			this.ddlToContainer = new System.Windows.Forms.ComboBox();
 			this.clFrom = new FrEee.WinForms.Controls.CargoList();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.lblQuantityUnit = new System.Windows.Forms.Label();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.btnDrop = new FrEee.WinForms.Controls.GameButton();
 			this.chkAll = new System.Windows.Forms.CheckBox();
 			this.txtQuantity = new System.Windows.Forms.TextBox();
-			this.lblQuantityUnit = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -94,6 +94,7 @@
 			this.btnLoad.TabIndex = 13;
 			this.btnLoad.Text = "<";
 			this.btnLoad.UseVisualStyleBackColor = false;
+			this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
 			// 
 			// clDrop
 			// 
@@ -210,6 +211,14 @@
 			this.panel1.Size = new System.Drawing.Size(292, 25);
 			this.panel1.TabIndex = 11;
 			// 
+			// lblQuantityUnit
+			// 
+			this.lblQuantityUnit.AutoSize = true;
+			this.lblQuantityUnit.Location = new System.Drawing.Point(3, 6);
+			this.lblQuantityUnit.Name = "lblQuantityUnit";
+			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
+			this.lblQuantityUnit.TabIndex = 2;
+			// 
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -273,14 +282,6 @@
 			this.txtQuantity.Name = "txtQuantity";
 			this.txtQuantity.Size = new System.Drawing.Size(94, 20);
 			this.txtQuantity.TabIndex = 15;
-			// 
-			// lblQuantityUnit
-			// 
-			this.lblQuantityUnit.AutoSize = true;
-			this.lblQuantityUnit.Location = new System.Drawing.Point(3, 6);
-			this.lblQuantityUnit.Name = "lblQuantityUnit";
-			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
-			this.lblQuantityUnit.TabIndex = 2;
 			// 
 			// CargoTransferForm
 			// 
