@@ -24,6 +24,9 @@ namespace FrEee.WinForms.Forms
         {
             InitializeComponent();
 
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
+
 			clFrom.CargoContainer = fromContainer;
 			txtFromContainer.Text = fromContainer.Name;
 			ddlToContainer.Items.Add(targetSector);
