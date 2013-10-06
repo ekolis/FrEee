@@ -42,8 +42,9 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.btnDrop = new FrEee.WinForms.Controls.GameButton();
-			this.chkQuantity = new System.Windows.Forms.CheckBox();
+			this.chkAll = new System.Windows.Forms.CheckBox();
 			this.txtQuantity = new System.Windows.Forms.TextBox();
+			this.lblQuantityUnit = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.SuspendLayout();
@@ -66,7 +67,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.clFrom, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.panel1, 3, 4);
 			this.tableLayoutPanel1.Controls.Add(this.btnDrop, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.chkQuantity, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.chkAll, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.txtQuantity, 2, 4);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -199,6 +200,7 @@
 			// 
 			// panel1
 			// 
+			this.panel1.Controls.Add(this.lblQuantityUnit);
 			this.panel1.Controls.Add(this.btnCancel);
 			this.panel1.Controls.Add(this.btnOK);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -251,16 +253,18 @@
 			this.btnDrop.UseVisualStyleBackColor = false;
 			this.btnDrop.Click += new System.EventHandler(this.btnDrop_Click);
 			// 
-			// chkQuantity
+			// chkAll
 			// 
-			this.chkQuantity.AutoSize = true;
-			this.chkQuantity.Location = new System.Drawing.Point(295, 539);
-			this.chkQuantity.Name = "chkQuantity";
-			this.chkQuantity.Size = new System.Drawing.Size(65, 17);
-			this.chkQuantity.TabIndex = 14;
-			this.chkQuantity.Text = "Quantity";
-			this.chkQuantity.UseVisualStyleBackColor = true;
-			this.chkQuantity.CheckedChanged += new System.EventHandler(this.chkQuantity_CheckedChanged);
+			this.chkAll.AutoSize = true;
+			this.chkAll.Checked = true;
+			this.chkAll.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkAll.Location = new System.Drawing.Point(295, 539);
+			this.chkAll.Name = "chkAll";
+			this.chkAll.Size = new System.Drawing.Size(92, 17);
+			this.chkAll.TabIndex = 14;
+			this.chkAll.Text = "Load/Drop All";
+			this.chkAll.UseVisualStyleBackColor = true;
+			this.chkAll.CheckedChanged += new System.EventHandler(this.chkQuantity_CheckedChanged);
 			// 
 			// txtQuantity
 			// 
@@ -269,6 +273,14 @@
 			this.txtQuantity.Name = "txtQuantity";
 			this.txtQuantity.Size = new System.Drawing.Size(94, 20);
 			this.txtQuantity.TabIndex = 15;
+			// 
+			// lblQuantityUnit
+			// 
+			this.lblQuantityUnit.AutoSize = true;
+			this.lblQuantityUnit.Location = new System.Drawing.Point(3, 6);
+			this.lblQuantityUnit.Name = "lblQuantityUnit";
+			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
+			this.lblQuantityUnit.TabIndex = 2;
 			// 
 			// CargoTransferForm
 			// 
@@ -284,6 +296,7 @@
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
 			this.panel1.ResumeLayout(false);
+			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 
         }
@@ -304,7 +317,8 @@
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnDrop;
 		private Controls.GameButton btnLoad;
-		private System.Windows.Forms.CheckBox chkQuantity;
+		private System.Windows.Forms.CheckBox chkAll;
 		private System.Windows.Forms.TextBox txtQuantity;
+		private System.Windows.Forms.Label lblQuantityUnit;
     }
 }

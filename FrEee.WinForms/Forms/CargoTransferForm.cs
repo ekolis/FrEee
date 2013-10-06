@@ -276,18 +276,24 @@ namespace FrEee.WinForms.Forms
 		private void cl_Enter(object sender, EventArgs e)
 		{
 			lastFocusedCargoList = (CargoList)sender;
+			if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.None)
+				lblQuantityUnit.Text = "";
+			else if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.Population)
+				lblQuantityUnit.Text = "people";
+			else
+				lblQuantityUnit.Text = "kT";
 		}
 
 		private void chkQuantity_CheckedChanged(object sender, EventArgs e)
 		{
-			txtQuantity.Enabled = chkQuantity.Checked;
+			txtQuantity.Enabled = !chkAll.Checked;
 		}
 
 		private bool IsQuantityValid
 		{
 			get
 			{
-				return !chkQuantity.Checked || Quantity != null;
+				return chkAll.Checked || Quantity != null;
 			}
 		}
 
@@ -295,7 +301,7 @@ namespace FrEee.WinForms.Forms
 		{
 			get
 			{
-				if (chkQuantity.Checked)
+				if (!chkAll.Checked)
 					return (long)Parser.Units(txtQuantity.Text);
 				return null;
 			}
