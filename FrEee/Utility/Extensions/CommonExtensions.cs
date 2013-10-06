@@ -1447,5 +1447,19 @@ namespace FrEee.Utility.Extensions
 			}
 			return null; // unit is in limbo...
 		}
+
+		public static int? ToNullableInt(this long? l)
+		{
+			if (l == null)
+				return null;
+			return (int)l.Value;
+		}
+
+		public static long? ToNullableLong(this int? i)
+		{
+			if (i == null)
+				return null;
+			return (long)i.Value;
+		}
 	}
 }

@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Utility.Extensions;
@@ -143,26 +144,30 @@ namespace FrEee.WinForms.Forms
 
 		private void AddToLoadList()
 		{
+			if (!IsQuantityValid)
+			{
+				MessageBox.Show(InvalidQuantityMessage);
+				return;
+			}
 			switch (clTo.CurrentSelectionType)
 			{
-				// TODO - let user specify quantity
 				case CargoList.SelectionType.Population:
 					if (clTo.SelectedRace == null)
-						clLoad.CargoDelta.AnyPopulation = null;
+						clLoad.CargoDelta.AnyPopulation = Quantity;
 					else
-						clLoad.CargoDelta.RacePopulation[clTo.SelectedRace] = null;
+						clLoad.CargoDelta.RacePopulation[clTo.SelectedRace] = Quantity;
 					break;
 				case CargoList.SelectionType.Unit:
 					clLoad.CargoDelta.Units.Add(clTo.SelectedUnit);
 					break;
 				case CargoList.SelectionType.UnitDesign:
-					clLoad.CargoDelta.UnitDesignTonnage.Add(clTo.SelectedUnitDesign, null);
+					clLoad.CargoDelta.UnitDesignTonnage.Add(clTo.SelectedUnitDesign, Quantity.ToNullableInt());
 					break;
 				case CargoList.SelectionType.UnitRole:
-					clLoad.CargoDelta.UnitRoleTonnage.Add(clTo.SelectedUnitRole, null);
+					clLoad.CargoDelta.UnitRoleTonnage.Add(clTo.SelectedUnitRole, Quantity.ToNullableInt());
 					break;
 				case CargoList.SelectionType.UnitType:
-					clLoad.CargoDelta.UnitTypeTonnage.Add(clTo.SelectedUnitType, null);
+					clLoad.CargoDelta.UnitTypeTonnage.Add(clTo.SelectedUnitType, Quantity.ToNullableInt());
 					break;
 			}
 			if (clTo.CurrentSelectionType != CargoList.SelectionType.None)
@@ -175,26 +180,31 @@ namespace FrEee.WinForms.Forms
 
 		private void AddToDropList()
 		{
+			if (!IsQuantityValid)
+			{
+				MessageBox.Show(InvalidQuantityMessage);
+				return;
+			}
 			switch (clFrom.CurrentSelectionType)
 			{
 				// TODO - let user specify quantity
 				case CargoList.SelectionType.Population:
 					if (clFrom.SelectedRace == null)
-						clDrop.CargoDelta.AnyPopulation = null;
+						clDrop.CargoDelta.AnyPopulation = Quantity;
 					else
-						clDrop.CargoDelta.RacePopulation[clFrom.SelectedRace] = null;
+						clDrop.CargoDelta.RacePopulation[clFrom.SelectedRace] = Quantity;
 					break;
 				case CargoList.SelectionType.Unit:
 					clDrop.CargoDelta.Units.Add(clFrom.SelectedUnit);
 					break;
 				case CargoList.SelectionType.UnitDesign:
-					clDrop.CargoDelta.UnitDesignTonnage.Add(clFrom.SelectedUnitDesign, null);
+					clDrop.CargoDelta.UnitDesignTonnage.Add(clFrom.SelectedUnitDesign, Quantity.ToNullableInt());
 					break;
 				case CargoList.SelectionType.UnitRole:
-					clDrop.CargoDelta.UnitRoleTonnage.Add(clFrom.SelectedUnitRole, null);
+					clDrop.CargoDelta.UnitRoleTonnage.Add(clFrom.SelectedUnitRole, Quantity.ToNullableInt());
 					break;
 				case CargoList.SelectionType.UnitType:
-					clDrop.CargoDelta.UnitTypeTonnage.Add(clFrom.SelectedUnitType, null);
+					clDrop.CargoDelta.UnitTypeTonnage.Add(clFrom.SelectedUnitType, Quantity.ToNullableInt());
 					break;
 			}
 			if (clFrom.CurrentSelectionType != CargoList.SelectionType.None)
@@ -267,5 +277,30 @@ namespace FrEee.WinForms.Forms
 		{
 			lastFocusedCargoList = (CargoList)sender;
 		}
+
+		private void chkQuantity_CheckedChanged(object sender, EventArgs e)
+		{
+			txtQuantity.Enabled = chkQuantity.Checked;
+		}
+
+		private bool IsQuantityValid
+		{
+			get
+			{
+				return !chkQuantity.Checked || Quantity != null;
+			}
+		}
+
+		private long? Quantity
+		{
+			get
+			{
+				if (chkQuantity.Checked)
+					return (long)Parser.Units(txtQuantity.Text);
+				return null;
+			}
+		}
+
+		private static readonly string InvalidQuantityMessage = "Invalid quantity specified. Please specify a numeric quantity, or uncheck the Quantity check box to load/drop all units/population. You may optionally use metric suffixes in the quantity.";
     }
 }
