@@ -276,12 +276,6 @@ namespace FrEee.WinForms.Forms
 		private void cl_Enter(object sender, EventArgs e)
 		{
 			lastFocusedCargoList = (CargoList)sender;
-			if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.None)
-				lblQuantityUnit.Text = "";
-			else if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.Population)
-				lblQuantityUnit.Text = "people";
-			else
-				lblQuantityUnit.Text = "kT";
 		}
 
 		private void chkQuantity_CheckedChanged(object sender, EventArgs e)
@@ -308,5 +302,25 @@ namespace FrEee.WinForms.Forms
 		}
 
 		private static readonly string InvalidQuantityMessage = "Invalid quantity specified. Please specify a numeric quantity, or uncheck the Quantity check box to load/drop all units/population. You may optionally use metric suffixes in the quantity.";
+
+		private void clFrom_Click(object sender, EventArgs e)
+		{
+			if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.None)
+				lblQuantityUnit.Text = "";
+			else if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.Population)
+				lblQuantityUnit.Text = "people";
+			else
+				lblQuantityUnit.Text = "kT";
+		}
+
+		private void clFrom_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.None)
+				lblQuantityUnit.Text = "";
+			else if (lastFocusedCargoList.CurrentSelectionType == CargoList.SelectionType.Population)
+				lblQuantityUnit.Text = "people";
+			else
+				lblQuantityUnit.Text = "kT";
+		}
     }
 }

@@ -107,7 +107,9 @@
 			this.clDrop.Name = "clDrop";
 			this.clDrop.Size = new System.Drawing.Size(286, 238);
 			this.clDrop.TabIndex = 10;
+			this.clDrop.Click += new System.EventHandler(this.clFrom_Click);
 			this.clDrop.Enter += new System.EventHandler(this.cl_Enter);
+			this.clDrop.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.clFrom_KeyPress);
 			this.clDrop.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.cargoList_MouseDoubleClick);
 			// 
 			// clLoad
@@ -121,7 +123,9 @@
 			this.clLoad.Name = "clLoad";
 			this.clLoad.Size = new System.Drawing.Size(286, 238);
 			this.clLoad.TabIndex = 9;
+			this.clLoad.Click += new System.EventHandler(this.clFrom_Click);
 			this.clLoad.Enter += new System.EventHandler(this.cl_Enter);
+			this.clLoad.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.clFrom_KeyPress);
 			this.clLoad.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.cargoList_MouseDoubleClick);
 			// 
 			// clTo
@@ -135,7 +139,9 @@
 			this.clTo.Name = "clTo";
 			this.clTo.Size = new System.Drawing.Size(286, 238);
 			this.clTo.TabIndex = 7;
+			this.clTo.Click += new System.EventHandler(this.clFrom_Click);
 			this.clTo.Enter += new System.EventHandler(this.cl_Enter);
+			this.clTo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.clFrom_KeyPress);
 			// 
 			// label2
 			// 
@@ -196,7 +202,9 @@
 			this.clFrom.Name = "clFrom";
 			this.clFrom.Size = new System.Drawing.Size(286, 238);
 			this.clFrom.TabIndex = 6;
+			this.clFrom.Click += new System.EventHandler(this.clFrom_Click);
 			this.clFrom.Enter += new System.EventHandler(this.cl_Enter);
+			this.clFrom.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.clFrom_KeyPress);
 			this.clFrom.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.cargoList_MouseDoubleClick);
 			// 
 			// panel1
