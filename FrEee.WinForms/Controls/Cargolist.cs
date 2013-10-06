@@ -96,23 +96,24 @@ namespace FrEee.WinForms.Controls
 				{
 					var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.VehicleType))
-						typesNode.AddItemWithImage(ug.Count() + "x " + ug.Key.ToSpacedString(), ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
+					{
+						var typeNode = typesNode.AddItemWithImage(ug.Count() + "x " + ug.Key.ToSpacedString(), ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
+						foreach (var ug2 in ug.GroupBy(u => u.Design))
+						{
+							var designNode = typeNode.AddItemWithImage(ug.Count() + "x \"" + ug2.Key.Name + "\" " + ug2.Key.VehicleTypeName, ug.Key, ug.First().Icon);
+							foreach (var u in ug2)
+								designNode.AddItemWithImage(u.Name, u, u.Icon);
+						}
+					}
+					typesNode.Expand();
 					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.Role))
 						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
 					rolesNode.Expand();
-					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
-					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design))
-						designsNode.AddItemWithImage(ug.Count() + "x \"" + ug.Key.Name + "\" " + ug.Key.VehicleTypeName, ug.Key, ug.First().Icon);
-					designsNode.Expand();
-					var unitsNode = tree.AddItemWithImage("Units - Individual", "Units", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
-					foreach (var u in CargoContainer.AllUnits)
-						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
-					// don't expand the units node, there's probably tons of stuff there!
 				}
 				if (CargoContainer.AllPopulation.Any())
 				{
-					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population", "Population", Pictures.GetGenericImage(typeof(Race)));
+					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoContainer.AllPopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					popNode.Expand();
@@ -193,27 +194,50 @@ namespace FrEee.WinForms.Controls
 
 			if (e.Node.Parent != null)
 			{
-				if ((string)e.Node.Parent.Tag == "Types")
+				if (e.Node.Parent.Tag is string)
+				{
+					if ((string)e.Node.Parent.Tag == "Types")
+					{
+						CurrentSelectionType = SelectionType.UnitType;
+						SelectedUnitType = (VehicleTypes)e.Node.Tag;
+					}
+					else if ((string)e.Node.Parent.Tag == "Roles")
+					{
+						CurrentSelectionType = SelectionType.UnitRole;
+						SelectedUnitRole = (string)e.Node.Tag;
+					}
+					else if ((string)e.Node.Parent.Tag == "Designs")
+					{
+						CurrentSelectionType = SelectionType.UnitDesign;
+						SelectedUnitDesign = (IDesign<IUnit>)e.Node.Tag;
+					}
+					else if ((string)e.Node.Parent.Tag == "Units")
+					{
+						CurrentSelectionType = SelectionType.Unit;
+						SelectedUnit = (IUnit)e.Node.Tag;
+					}
+					else if ((string)e.Node.Parent.Tag == "Population")
+					{
+						CurrentSelectionType = SelectionType.Population;
+						SelectedRace = (Race)e.Node.Tag;
+					}
+				}
+				else if (e.Node.Tag is VehicleTypes)
 				{
 					CurrentSelectionType = SelectionType.UnitType;
 					SelectedUnitType = (VehicleTypes)e.Node.Tag;
 				}
-				if ((string)e.Node.Parent.Tag == "Roles")
-				{
-					CurrentSelectionType = SelectionType.UnitRole;
-					SelectedUnitRole = (string)e.Node.Tag;
-				}
-				else if ((string)e.Node.Parent.Tag == "Designs")
+				else if (e.Node.Tag is IDesign<IUnit>)
 				{
 					CurrentSelectionType = SelectionType.UnitDesign;
 					SelectedUnitDesign = (IDesign<IUnit>)e.Node.Tag;
 				}
-				else if ((string)e.Node.Parent.Tag == "Units")
+				else if (e.Node.Tag is IUnit)
 				{
 					CurrentSelectionType = SelectionType.Unit;
 					SelectedUnit = (IUnit)e.Node.Tag;
 				}
-				else if ((string)e.Node.Parent.Tag == "Population")
+				else if (e.Node.Tag is Race)
 				{
 					CurrentSelectionType = SelectionType.Population;
 					SelectedRace = (Race)e.Node.Tag;
