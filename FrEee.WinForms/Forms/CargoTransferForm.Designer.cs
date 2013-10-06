@@ -78,7 +78,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 561);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1008, 561);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// btnLoad
@@ -87,7 +87,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoad.BackColor = System.Drawing.Color.Black;
 			this.btnLoad.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoad.Location = new System.Drawing.Point(295, 51);
+			this.btnLoad.Location = new System.Drawing.Point(407, 51);
 			this.btnLoad.Name = "btnLoad";
 			this.tableLayoutPanel1.SetRowSpan(this.btnLoad, 2);
 			this.btnLoad.Size = new System.Drawing.Size(94, 482);
@@ -103,9 +103,9 @@
 			this.clDrop.CargoDelta = null;
 			this.clDrop.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.clDrop.ForeColor = System.Drawing.Color.White;
-			this.clDrop.Location = new System.Drawing.Point(495, 295);
+			this.clDrop.Location = new System.Drawing.Point(607, 295);
 			this.clDrop.Name = "clDrop";
-			this.clDrop.Size = new System.Drawing.Size(286, 238);
+			this.clDrop.Size = new System.Drawing.Size(398, 238);
 			this.clDrop.TabIndex = 10;
 			this.clDrop.Click += new System.EventHandler(this.clFrom_Click);
 			this.clDrop.Enter += new System.EventHandler(this.cl_Enter);
@@ -121,7 +121,7 @@
 			this.clLoad.ForeColor = System.Drawing.Color.White;
 			this.clLoad.Location = new System.Drawing.Point(3, 295);
 			this.clLoad.Name = "clLoad";
-			this.clLoad.Size = new System.Drawing.Size(286, 238);
+			this.clLoad.Size = new System.Drawing.Size(398, 238);
 			this.clLoad.TabIndex = 9;
 			this.clLoad.Click += new System.EventHandler(this.clFrom_Click);
 			this.clLoad.Enter += new System.EventHandler(this.cl_Enter);
@@ -135,9 +135,9 @@
 			this.clTo.CargoDelta = null;
 			this.clTo.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.clTo.ForeColor = System.Drawing.Color.White;
-			this.clTo.Location = new System.Drawing.Point(495, 51);
+			this.clTo.Location = new System.Drawing.Point(607, 51);
 			this.clTo.Name = "clTo";
-			this.clTo.Size = new System.Drawing.Size(286, 238);
+			this.clTo.Size = new System.Drawing.Size(398, 238);
 			this.clTo.TabIndex = 7;
 			this.clTo.Click += new System.EventHandler(this.clFrom_Click);
 			this.clTo.Enter += new System.EventHandler(this.cl_Enter);
@@ -149,7 +149,7 @@
 			this.label2.AutoSize = true;
 			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(495, 8);
+			this.label2.Location = new System.Drawing.Point(607, 8);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(68, 16);
 			this.label2.TabIndex = 3;
@@ -185,9 +185,9 @@
 			this.ddlToContainer.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ddlToContainer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlToContainer.FormattingEnabled = true;
-			this.ddlToContainer.Location = new System.Drawing.Point(495, 27);
+			this.ddlToContainer.Location = new System.Drawing.Point(607, 27);
 			this.ddlToContainer.Name = "ddlToContainer";
-			this.ddlToContainer.Size = new System.Drawing.Size(286, 21);
+			this.ddlToContainer.Size = new System.Drawing.Size(398, 21);
 			this.ddlToContainer.TabIndex = 5;
 			this.ddlToContainer.SelectedIndexChanged += new System.EventHandler(this.ddlToContainer_SelectedIndexChanged);
 			// 
@@ -200,7 +200,7 @@
 			this.clFrom.ForeColor = System.Drawing.Color.White;
 			this.clFrom.Location = new System.Drawing.Point(3, 51);
 			this.clFrom.Name = "clFrom";
-			this.clFrom.Size = new System.Drawing.Size(286, 238);
+			this.clFrom.Size = new System.Drawing.Size(398, 238);
 			this.clFrom.TabIndex = 6;
 			this.clFrom.Click += new System.EventHandler(this.clFrom_Click);
 			this.clFrom.Enter += new System.EventHandler(this.cl_Enter);
@@ -213,10 +213,10 @@
 			this.panel1.Controls.Add(this.btnCancel);
 			this.panel1.Controls.Add(this.btnOK);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(492, 536);
+			this.panel1.Location = new System.Drawing.Point(604, 536);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(292, 25);
+			this.panel1.Size = new System.Drawing.Size(404, 25);
 			this.panel1.TabIndex = 11;
 			// 
 			// lblQuantityUnit
@@ -233,7 +233,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(83, 3);
+			this.btnCancel.Location = new System.Drawing.Point(195, 3);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 19);
 			this.btnCancel.TabIndex = 1;
@@ -247,7 +247,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(189, 3);
+			this.btnOK.Location = new System.Drawing.Point(301, 3);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 19);
 			this.btnOK.TabIndex = 0;
@@ -261,7 +261,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDrop.BackColor = System.Drawing.Color.Black;
 			this.btnDrop.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDrop.Location = new System.Drawing.Point(395, 51);
+			this.btnDrop.Location = new System.Drawing.Point(507, 51);
 			this.btnDrop.Name = "btnDrop";
 			this.tableLayoutPanel1.SetRowSpan(this.btnDrop, 2);
 			this.btnDrop.Size = new System.Drawing.Size(94, 482);
@@ -275,7 +275,7 @@
 			this.chkAll.AutoSize = true;
 			this.chkAll.Checked = true;
 			this.chkAll.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkAll.Location = new System.Drawing.Point(295, 539);
+			this.chkAll.Location = new System.Drawing.Point(407, 539);
 			this.chkAll.Name = "chkAll";
 			this.chkAll.Size = new System.Drawing.Size(92, 17);
 			this.chkAll.TabIndex = 14;
@@ -286,7 +286,7 @@
 			// txtQuantity
 			// 
 			this.txtQuantity.Enabled = false;
-			this.txtQuantity.Location = new System.Drawing.Point(395, 539);
+			this.txtQuantity.Location = new System.Drawing.Point(507, 539);
 			this.txtQuantity.Name = "txtQuantity";
 			this.txtQuantity.Size = new System.Drawing.Size(94, 20);
 			this.txtQuantity.TabIndex = 15;
@@ -296,7 +296,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.ClientSize = new System.Drawing.Size(1008, 561);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "CargoTransferForm";

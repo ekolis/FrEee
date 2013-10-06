@@ -100,7 +100,7 @@ namespace FrEee.WinForms.Controls
 						var typeNode = typesNode.AddItemWithImage(ug.Count() + "x " + ug.Key.ToSpacedString(), ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
 						foreach (var ug2 in ug.GroupBy(u => u.Design))
 						{
-							var designNode = typeNode.AddItemWithImage(ug.Count() + "x \"" + ug2.Key.Name + "\" " + ug2.Key.VehicleTypeName, ug.Key, ug.First().Icon);
+							var designNode = typeNode.AddItemWithImage(ug.Count() + "x \"" + ug2.Key.Name + "\" " + ug2.Key.VehicleTypeName + " (" + ug2.Key.Hull.Size.Kilotons() + " each)", ug.Key, ug.First().Icon);
 							foreach (var u in ug2)
 								designNode.AddItemWithImage(u.Name, u, u.Icon);
 						}
@@ -113,7 +113,7 @@ namespace FrEee.WinForms.Controls
 				}
 				if (CargoContainer.AllPopulation.Any())
 				{
-					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population", "Population", Empire.Current.PrimaryRace.Icon);
+					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoContainer.AllPopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					popNode.Expand();
@@ -141,7 +141,7 @@ namespace FrEee.WinForms.Controls
 				{
 					var designsNode = tree.AddItemWithImage("Units - Designs", "Designs", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoDelta.UnitDesignTonnage)
-						designsNode.AddItemWithImage(ug.Value.Kilotons("All") + " \"" + ug.Key.Name + "\" " + ug.Key.VehicleType + "s", ug.Key, ug.Key.Icon);
+						designsNode.AddItemWithImage(ug.Value.Kilotons("All") + " \"" + ug.Key.Name + "\" " + ug.Key.VehicleType + "s + (" + ug.Key.Hull.Size.Kilotons() + " each)", ug.Key, ug.Key.Icon);
 					designsNode.Expand();
 				}
 				if (CargoDelta.Units.Any())
@@ -155,9 +155,9 @@ namespace FrEee.WinForms.Controls
 				{
 					var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var pop in CargoDelta.RacePopulation)
-						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
+						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
-						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4, "All") + " Population of Any Race", "Total", Pictures.GetGenericImage(typeof(Race)));
+						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4, "All") + " Population of Any Race (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Total", Pictures.GetGenericImage(typeof(Race)));
 					popNode.Expand();
 				}
 
