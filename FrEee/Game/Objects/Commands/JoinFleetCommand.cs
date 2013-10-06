@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Commands
 		private Reference<Fleet> fleet { get; set; }
 
 		[DoNotSerialize]
-		public Fleet Fleet { get { return fleet; } set { fleet = value; } }
+		public Fleet Fleet { get { return fleet ?? CreateFleetCommand.Fleet; } set { fleet = value; } }
 
 		public CreateFleetCommand CreateFleetCommand { get; set; }
 

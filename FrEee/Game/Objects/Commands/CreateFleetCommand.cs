@@ -18,6 +18,7 @@ namespace FrEee.Game.Objects.Commands
 		public CreateFleetCommand(Empire issuer, string fleetName, Sector sector)
 			: base(issuer, issuer)
 		{
+			FleetName = fleetName;
 			Sector = sector;
 		}
 
@@ -36,6 +37,7 @@ namespace FrEee.Game.Objects.Commands
 			// create fleet
 			Fleet = new Fleet();
 			Fleet.Name = FleetName;
+			Fleet.Owner = Issuer;
 			Sector.Place(Fleet);
 		}
 

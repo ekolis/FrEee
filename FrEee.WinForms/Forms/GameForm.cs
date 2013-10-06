@@ -306,7 +306,7 @@ namespace FrEee.WinForms.Forms
 				return;
 			}
 
-			btnFleetTransfer.Visible = sector.SpaceObjects.OfType<IMobileSpaceObject>().Any(v => v.Owner == Empire.Current);
+			btnFleetTransfer.Visible = sector.SpaceObjects.OfType<ISpaceVehicle>().Any(v => v.Owner == Empire.Current);
 
 			if (sector.SpaceObjects.Any())
 			{
@@ -774,6 +774,9 @@ namespace FrEee.WinForms.Forms
 					// can't issue commands to objects we don't own
 					foreach (GameButton btn in pnlSubCommands.Controls)
 						btn.Visible = false;
+
+					// fleet transfer button is special, it can be selected even with no space object selected
+					btnFleetTransfer.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<ISpaceVehicle>().Any(v => v.Owner == Empire.Current);
 				}
 				else
 				{
@@ -786,7 +789,7 @@ namespace FrEee.WinForms.Forms
 					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
-					btnFleetTransfer.Visible = starSystemView.SelectedSector != null;
+					btnFleetTransfer.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<ISpaceVehicle>().Any(v => v.Owner == Empire.Current);
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
 			}

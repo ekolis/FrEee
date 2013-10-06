@@ -55,12 +55,12 @@ namespace FrEee.WinForms.Forms
 
 			// make a tree of vehicles
 			treeVehicles.Initialize(32);
-			foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
+			foreach (var vtGroup in vehicles.GroupBy(v => v.Design.VehicleType))
 			{
-				var vtNode = treeVehicles.AddItemWithImage(vt.ToSpacedString(), vt, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vt));
-				foreach (var roleGroup in vehicles.GroupBy(v => v.Design.Role))
+				var vtNode = treeVehicles.AddItemWithImage(vtGroup.Key.ToSpacedString(), vtGroup.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vtGroup.Key));
+				foreach (var roleGroup in vtGroup.GroupBy(v => v.Design.Role))
 				{
-					var roleNode = vtNode.AddItemWithImage(roleGroup.Key, roleGroup.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vt));
+					var roleNode = vtNode.AddItemWithImage(roleGroup.Key, roleGroup.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vtGroup.Key));
 					foreach (var designGroup in roleGroup.GroupBy(v => v.Design))
 					{
 						var designNode = roleNode.AddItemWithImage(designGroup.Key.Name, designGroup.Key, designGroup.Key.Icon);
@@ -68,6 +68,8 @@ namespace FrEee.WinForms.Forms
 							designNode.AddItemWithImage(vehicle.Name, vehicle, vehicle.Icon);
 					}
 				}
+				if (vtNode.Nodes.Count == 0)
+					vtNode.Remove();
 			}
 
 			// expand the treeeee!
@@ -169,6 +171,11 @@ namespace FrEee.WinForms.Forms
 		{
 			foreach (var cmd in newCommands)
 				Empire.Current.Commands.Add(cmd);
+			foreach (var cmd in newCommands.Where(c => !(c is CreateFleetCommand)))
+			{
+				// the create fleet commands have been executed already
+				cmd.Execute();
+			}
 		}
 
 		private void Reset()
@@ -204,6 +211,8 @@ namespace FrEee.WinForms.Forms
 			newFleets.Add(cmd.Fleet);
 
 			BindFleets();
+
+			changed = true;
 		}
 
 		private void btnDisband_Click(object sender, EventArgs e)
@@ -230,6 +239,8 @@ namespace FrEee.WinForms.Forms
 
 				BindVehicles();
 				BindFleets();
+
+				changed = true;
 			}
 		}
 
@@ -242,6 +253,7 @@ namespace FrEee.WinForms.Forms
 				newCommands.Add(cmd);
 				BindVehicles();
 				BindFleets();
+				changed = true;
 			}
 		}
 
@@ -265,6 +277,7 @@ namespace FrEee.WinForms.Forms
 				newCommands.Add(cmd);
 				BindVehicles();
 				BindFleets();
+				changed = true;
 			}
 		}
 	}
