@@ -118,6 +118,8 @@ namespace FrEee.WinForms.Controls
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					popNode.Expand();
 				}
+
+				lblTonnage.Text = "Cargo Storage Free: " + CargoContainer.CargoStorageFree().Kilotons() + "\n" + "Population Storage Free: " + CargoContainer.PopulationStorageFree.ToUnitString(true);
 			}
 			else if (CargoDelta != null)
 			{
@@ -158,6 +160,9 @@ namespace FrEee.WinForms.Controls
 						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4, "All") + " Population of Any Race", "Total", Pictures.GetGenericImage(typeof(Race)));
 					popNode.Expand();
 				}
+
+				// TODO - estimate tonnage based on available cargo, but we'd need the cargo transfer target for that...
+				lblTonnage.Text = "Estimated Tonnage: " + CargoDelta.EstimatedTonnage.Kilotons("Unknown");
 			}
 		}
 

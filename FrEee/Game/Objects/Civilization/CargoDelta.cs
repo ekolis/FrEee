@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -76,6 +77,36 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			RacePopulation.ReplaceClientIDs(idmap);
 			UnitDesignTonnage.ReplaceClientIDs(idmap);
+		}
+
+		/// <summary>
+		/// Estimated tonnage of the cargo delta.
+		/// Will return null if there is any "All" quantity specified.
+		/// </summary>
+		public int? EstimatedTonnage
+		{
+			get
+			{
+				int? tonnage = 0;
+				foreach (var kvp in RacePopulation)
+				{
+					if (kvp.Value == null)
+						return null;
+					tonnage += (int)Math.Ceiling(kvp.Value.Value * Mod.Current.Settings.PopulationSize);
+				}
+				if (AnyPopulation == null)
+					return null;
+				tonnage += (int)Math.Ceiling(AnyPopulation.Value * Mod.Current.Settings.PopulationSize);
+				foreach (var u in Units)
+					tonnage += u.Design.Hull.Size;
+				foreach (var d in UnitDesignTonnage)
+					tonnage += d.Value;
+				foreach (var r in UnitRoleTonnage)
+					tonnage += r.Value;
+				foreach (var t in UnitTypeTonnage)
+					tonnage += t.Value;
+				return tonnage;
+			}
 		}
 	}
 }
