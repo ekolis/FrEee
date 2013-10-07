@@ -1103,6 +1103,19 @@ namespace FrEee.Utility.Extensions
 					continue;
 			}
 
+			// clear population that was emptied out
+			foreach (var race in src.Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+				src.Cargo.Population.Remove(race);
+			if (src is Planet)
+			{
+				var p = (Planet)src;
+				if (p.Colony != null)
+				{
+					foreach (var race in p.Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+						p.Colony.Population.Remove(race);
+				}
+			}
+
 			// transfer specific units
 			foreach (var unit in delta.Units)
 			{

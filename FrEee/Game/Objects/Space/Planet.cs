@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Space
 						aptitude = Aptitude.Farming;
 					if (resource.Name == "Radioactives")
 						aptitude = Aptitude.Refining;
-					if (aptitude != null)
+					if (aptitude != null && Colony.Population.Any())
 						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 					factor *= (100 + Owner.Culture.Production) / 100d;
 					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
@@ -163,7 +163,7 @@ namespace FrEee.Game.Objects.Space
 						aptitude = Aptitude.Cunning;
 						factor *= (100 + Owner.Culture.Intelligence) / 100d;
 					}
-					if (aptitude != null)
+					if (aptitude != null && Colony.Population.Any())
 						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 
 					income.Add(resource, (int)(amount * factor));
@@ -381,12 +381,13 @@ namespace FrEee.Game.Objects.Space
 				killed[race] += popKilled;
 				inflicted++;
 			}
-			if (battle != null)
+			// clear population that was emptied out
+			foreach (var race in Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+				Cargo.Population.Remove(race);
+			if (p.Colony != null)
 			{
-				foreach (var race in killed.Keys)
-				{
-					battle.LogPopulationDamage(race, killed[race]);
-				}
+				foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+					Colony.Population.Remove(race);
 			}
 			return damage - inflicted;
 		}

@@ -166,6 +166,9 @@ namespace FrEee.Game.Objects.Civilization
 				killed[race] += popKilled;
 				inflicted += 1;
 			}
+			// clear population that was emptied out
+			foreach (var race in Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+				Population.Remove(race);
 			if (battle != null)
 			{
 				foreach (var race in killed.Keys)
