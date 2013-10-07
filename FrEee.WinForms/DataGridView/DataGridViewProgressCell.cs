@@ -24,7 +24,7 @@ namespace FrEee.WinForms.DataGridView
 			base.Paint(graphics, clipBounds, cellBounds, rowIndex, cellState, value, formattedValue, errorText, cellStyle, advancedBorderStyle, paintParts);
 
 			var color = Selected ? cellStyle.SelectionBackColor : cellStyle.BackColor;
-			graphics.FillRectangle(new SolidBrush(color), cellBounds.X, cellBounds.Y, cellBounds.Width - 1, cellBounds.Height - 1);
+			graphics.FillRectangle(new SolidBrush(color), cellBounds);
 
 			var progress = (Progress)value;			
 			if (progress.Maximum != 0)
@@ -64,6 +64,7 @@ namespace FrEee.WinForms.DataGridView
 					break;
 			}
 			graphics.DrawString(text, cellStyle.Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+			PaintBorder(graphics, clipBounds, cellBounds, cellStyle, advancedBorderStyle);
 		}
 
 		public Color BarColor { get; set; }
