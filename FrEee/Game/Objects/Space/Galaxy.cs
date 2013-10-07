@@ -347,6 +347,19 @@ namespace FrEee.Game.Objects.Space
 			parser.Parse(this);
 		}
 
+		public void Save(Stream stream)
+		{
+			AssignIDs();
+			string filename;
+			if (CurrentEmpire == null)
+				filename = Name + "_" + TurnNumber + ".gam";
+			else
+				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
+			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
+				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
+			SerializeGameState(stream);
+		}
+
 		/// <summary>
 		/// Saves the game to an appropriately named file in the Savegame folder.
 		/// Files are named GameName_TurnNumber_PlayerNumber.gam for players (PlayerNumber is 1-indexed)
@@ -378,18 +391,15 @@ namespace FrEee.Game.Objects.Space
 			if (Current.CurrentEmpire != null)
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
 
-			// recycle ID's
-			/*for (int i = 0; i < Current.Referrables.Count; i++)
-			{
-				Current.Referrables[i] = Current.Referrables[i].Where(r => r != null).ToList();
-			}*/
-
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
 
 			// save master view
 			if (status != null)
 				status.Message = "Saving game (host)";
-			var gamname = Current.Save();
+			var gamname = Galaxy.Current.Save();
+			var outStream = new MemoryStream();
+			Galaxy.Current.Save(outStream);
+			var inStream = new MemoryStream(outStream.GetBuffer());
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
@@ -400,8 +410,8 @@ namespace FrEee.Game.Objects.Space
 				{
 					if (status != null)
 						status.Message = "Saving game (player " + (i + 1) + ")";
-					// TODO - save player views without requiring reloading of master view each time (do it in memory)
-					Load(gamname);
+					inStream.Seek(0, SeekOrigin.Begin);
+					Load(inStream);
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
 					Current.Save();
@@ -419,6 +429,16 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
+		/// Loads a savegame from a stream.
+		/// </summary>
+		/// <param name="stream"></param>
+		public static void Load(Stream stream)
+		{
+			Galaxy.Current = DeserializeGameState(stream);
+			Mod.Current = Galaxy.Current.Mod;
+		}
+
+		/// <summary>
 		/// Loads a savegame from the Savegame folder.
 		/// Note that if it was renamed, it might have different game name, turn number, player number, etc. than the filename indicates.
 		/// </summary>
@@ -426,8 +446,7 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(string filename)
 		{
 			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-			Galaxy.Current = DeserializeGameState(fs);
-			Mod.Current = Galaxy.Current.Mod;
+			Load(fs);
 			fs.Close();
 		}
 

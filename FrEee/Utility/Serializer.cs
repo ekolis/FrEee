@@ -289,7 +289,6 @@ namespace FrEee.Utility
 		{
 			var sr = new StreamReader(s);
 			var result = Deserialize<T>(sr, context);
-			sr.Close();
 			return result;
 		}
 
