@@ -68,6 +68,12 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
+			if (e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta) || e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
+			{
+				if (e.Value != null && (double)e.Value <= 1.0)
+					e.CellStyle.BackColor = Color.DarkGreen;
+			}
+
 			if (e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFree) || 
 				e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFreeInSector))
 			{
@@ -79,6 +85,11 @@ namespace FrEee.WinForms.Forms
 				if (e.Value != null)
 					e.Value = ((double)e.Value).ToString("f1");
 			}
+		}
+
+		private void gridQueues_SelectionChanged(object sender, EventArgs e)
+		{
+			gridQueues.ClearSelection();
 		}
 	}
 }

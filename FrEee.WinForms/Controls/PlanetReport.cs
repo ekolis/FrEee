@@ -103,8 +103,23 @@ namespace FrEee.WinForms.Controls
 				resIntel.Amount = income[Resource.Intelligence];
 
 				// load construction data
-				txtConstructionItem.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemName ?? "(None)");
-				txtConstructionTime.Text = Planet.Colony == null ? "" : (Planet.Colony.ConstructionQueue.FirstItemEta == null ? "" : Planet.Colony.ConstructionQueue.FirstItemEta.ToString("f1") + (Planet.Colony.ConstructionQueue.Eta != Planet.Colony.ConstructionQueue.FirstItemEta ? " (" + Planet.Colony.ConstructionQueue.Eta.Value.ToString("f1") + ")" : ""));
+				if (Planet.Colony == null || Planet.ConstructionQueue.FirstItemEta == null)
+				{
+					txtConstructionItem.Text = "(None)";
+					txtConstructionItem.BackColor = Color.Transparent;
+					txtConstructionTime.Text = "";
+					txtConstructionTime.BackColor = Color.Transparent;
+				}
+				else
+				{
+					txtConstructionItem.Text = Planet.ConstructionQueue.FirstItemName;
+					txtConstructionItem.BackColor = Planet.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
+					if (Planet.ConstructionQueue.Eta != Planet.ConstructionQueue.FirstItemEta)
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns (" + Planet.ConstructionQueue.Eta.ToString("f1") + " turns for all)";
+					else
+						txtConstructionTime.Text = Planet.ConstructionQueue.FirstItemEta.ToString("f1") + " turns";
+					txtConstructionTime.BackColor = Planet.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
+				}
 
 				// load orders
 				// TODO - let player adjust orders here

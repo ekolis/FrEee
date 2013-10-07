@@ -107,6 +107,7 @@
 			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
 			this.gridQueues.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridQueues_CellFormatting);
 			this.gridQueues.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridQueues_RowStateChanged);
+			this.gridQueues.SelectionChanged += new System.EventHandler(this.gridQueues_SelectionChanged);
 			// 
 			// IconCol
 			// 

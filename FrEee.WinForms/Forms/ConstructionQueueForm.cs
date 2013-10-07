@@ -92,7 +92,7 @@ namespace FrEee.WinForms.Forms
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
 				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
 				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]);
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
+				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1"), lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : lstQueue.BackColor, lstQueue.Font));
 				item.ImageIndex = i;
 				il.Images.Add(order.Template.Icon);
 				lstQueue.Items.Add(item);
