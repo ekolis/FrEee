@@ -163,25 +163,25 @@ namespace FrEee.Utility.Extensions
 		{
 			if (Math.Abs(value) >= 1e12 * Math.Pow(10, sigfigs - 3))
 			{
-				var log = (int)Math.Floor(Math.Log10(value / 1e12));
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e12));
 				var decimals = sigfigs - 1 - log;
 				return (value / 1e12).ToString("f" + decimals) + "T";
 			}
 			if (Math.Abs(value) >= 1e9 * Math.Pow(10, sigfigs - 3))
 			{
-				var log = (int)Math.Floor(Math.Log10(value / 1e9));
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e9));
 				var decimals = sigfigs - 1 - log;
 				return (value / 1e9).ToString("f" + decimals) + (bForBillions ? "B" : "G");
 			}
 			if (Math.Abs(value) >= 1e6 * Math.Pow(10, sigfigs - 3))
 			{
-				var log = (int)Math.Floor(Math.Log10(value / 1e6));
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e6));
 				var decimals = sigfigs - 1 - log;
 				return (value / 1e6).ToString("f" + decimals) + "M";
 			}
 			if (Math.Abs(value) >= 1e3 * Math.Pow(10, sigfigs - 3))
 			{
-				var log = (int)Math.Floor(Math.Log10(value / 1e3));
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e3));
 				var decimals = sigfigs - 1 - log;
 				return (value / 1e3).ToString("f" + decimals) + "k";
 			}
