@@ -189,13 +189,12 @@ namespace FrEee.WinForms.Controls
 				progFuel.Visible = false;
 
 				// damage
-				// TODO - let ships take damage
 				progShields.Maximum = vehicle.ShieldHitpoints;
-				progShields.Value = progShields.Maximum;
+				progShields.Value = vehicle.Design.ShieldHitpoints;
 				progArmor.Maximum = vehicle.ArmorHitpoints;
-				progArmor.Value = progArmor.Maximum;
+				progArmor.Value = vehicle.Design.ArmorHitpoints;
 				progHull.Maximum = vehicle.HullHitpoints;
-				progHull.Value = progHull.Maximum;
+				progHull.Value = vehicle.Design.HullHitpoints;
 
 				// orders and stuff
 				txtOrder.Text = vehicle.Orders.Any() ? vehicle.Orders.First().ToString() : "None";
