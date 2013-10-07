@@ -665,6 +665,7 @@ namespace FrEee.WinForms.Forms
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.starSystemView.BackColor = System.Drawing.Color.Black;
+			this.starSystemView.DrawText = true;
 			this.starSystemView.Location = new System.Drawing.Point(6, 6);
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
@@ -720,6 +721,7 @@ namespace FrEee.WinForms.Forms
 			this.MinimumSize = new System.Drawing.Size(900, 700);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
+			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
 			this.Load += new System.EventHandler(this.GameForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);
