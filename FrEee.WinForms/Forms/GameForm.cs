@@ -72,7 +72,11 @@ namespace FrEee.WinForms.Forms
 
 			// show empire log if there's anything new there
 			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
-				this.ShowChildForm(new LogForm(this));
+			{
+				var form = new LogForm(this);
+				form.StartPosition = FormStartPosition.CenterScreen;
+				this.ShowChildForm(form);
+			}
 
 			// so the search box can lose focus...
 			foreach (Control ctl in tableLayoutPanel1.Controls)

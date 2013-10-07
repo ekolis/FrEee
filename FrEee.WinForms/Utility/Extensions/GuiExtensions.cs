@@ -105,7 +105,8 @@ namespace FrEee.WinForms.Utility.Extensions
 		public static void ShowChildForm(this Form parent, Form form)
 		{
 			parent.Cursor = Cursors.WaitCursor;
-			form.StartPosition = FormStartPosition.CenterParent;
+			if (form.StartPosition != FormStartPosition.CenterScreen)
+				form.StartPosition = FormStartPosition.CenterParent;
 			form.ShowDialog();
 			parent.Cursor = Cursors.Default;
 		}
