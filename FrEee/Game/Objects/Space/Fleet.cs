@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A collection of ships, units, etc. that move synchronously.
 	/// </summary>
-	public class Fleet : IMobileSpaceObject, ICargoTransferrer, IPromotable
+	public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable
 	{
 		public Fleet()
 		{
@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Space
 			ancestors.Add(this);
 			foreach (var sobj in Vehicles.ToArray())
 			{
-				if (sobj.Owner != Owner || ancestors.Contains(sobj) || sobj.Sector != Sector || sobj.IsDestroyed)
+				if (sobj.Owner != Owner || (sobj is Fleet && ancestors.Contains((Fleet)sobj)) || sobj.Sector != Sector || sobj.IsDestroyed)
 					Vehicles.Remove(sobj);
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);

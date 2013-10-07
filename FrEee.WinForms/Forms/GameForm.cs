@@ -90,31 +90,25 @@ namespace FrEee.WinForms.Forms
 		{
 			if (commandMode == CommandMode.Move)
 			{
-				if (sector != null && sector.StarSystem.ExploredByEmpires.Contains(Empire.Current))
+				if (sector != null && sector.StarSystem.ExploredByEmpires.Contains(Empire.Current) && SelectedSpaceObject is IMobileSpaceObject)
 				{
 					// move ship to sector clicked
-					if (SelectedSpaceObject is SpaceVehicle)
-					{
-						var v = (SpaceVehicle)SelectedSpaceObject;
-						var order = new MoveOrder<SpaceVehicle>(sector, !aggressiveMode);
-						v.Orders.Add(order);
-						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Invalidate();
-						var cmd = new AddOrderCommand<SpaceVehicle>(Empire.Current, v, order);
-						Empire.Current.Commands.Add(cmd);
-						starSystemView.Invalidate(); // show move lines
-					}
-					else
-					{
-						// TODO - move orders for unit groups
-					}
+					var v = (IMobileSpaceObject)SelectedSpaceObject;
+					var order = new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode);
+					v.AddOrder(order);
+					// TODO - fleet report
+					var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
+					if (report != null)
+						report.Bind();
+					var cmd = new AddOrderCommand<IMobileSpaceObject>(Empire.Current, v, order);
+					Empire.Current.Commands.Add(cmd);
+					starSystemView.Invalidate(); // show move lines
 					ChangeCommandMode(CommandMode.None, null);
 				}
 			}
 			else if (commandMode == CommandMode.Pursue)
 			{
-				if (sector != null && sector.SpaceObjects.Any())
+				if (sector != null && sector.SpaceObjects.Any() && SelectedSpaceObject is IMobileSpaceObject)
 				{
 					ISpaceObject target = null;
 					if (sector.SpaceObjects.Count() == 1)
@@ -131,22 +125,20 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// pursue
-						if (SelectedSpaceObject is SpaceVehicle)
-						{
-							IssueSpaceObjectOrder(new PursueOrder<SpaceVehicle>(target, !aggressiveMode));
-							starSystemView.Invalidate(); // show move lines
-						}
-						else
-						{
-							// TODO - pursue orders for unit groups
-						}
+						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(target, !aggressiveMode));
+						starSystemView.Invalidate(); // show move lines
+						// TODO - fleet report
+						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Bind();
+						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
 				}
 			}
 			else if (commandMode == CommandMode.Evade)
 			{
-				if (sector != null && sector.SpaceObjects.Any())
+				if (sector != null && sector.SpaceObjects.Any() && SelectedSpaceObject is IMobileSpaceObject)
 				{
 					ISpaceObject target = null;
 					if (sector.SpaceObjects.Count() == 1)
@@ -163,22 +155,20 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// evade
-						if (SelectedSpaceObject is SpaceVehicle)
-						{
-							IssueSpaceObjectOrder(new EvadeOrder<SpaceVehicle>(target, !aggressiveMode));
-							starSystemView.Invalidate(); // show move lines
-						}
-						else
-						{
-							// TODO - pursue orders for unit groups
-						}
+						IssueSpaceObjectOrder(new EvadeOrder<IMobileSpaceObject>(target, !aggressiveMode));
+						starSystemView.Invalidate(); // show move lines
+						// TODO - fleet report
+						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Bind();
+						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
 				}
 			}
 			else if (commandMode == CommandMode.Warp)
 			{
-				if (sector != null && sector.SpaceObjects.OfType<WarpPoint>().Any())
+				if (sector != null && sector.SpaceObjects.OfType<WarpPoint>().Any() && SelectedSpaceObject is IMobileSpaceObject)
 				{
 					WarpPoint wp = null;
 					if (sector.SpaceObjects.OfType<WarpPoint>().Count() == 1)
@@ -194,32 +184,24 @@ namespace FrEee.WinForms.Forms
 
 					if (wp != null)
 					{
-						// warp
-						if (SelectedSpaceObject is SpaceVehicle)
-						{
-							IssueSpaceObjectOrder(new PursueOrder<SpaceVehicle>(wp, !aggressiveMode));
-							IssueSpaceObjectOrder(new WarpOrder<SpaceVehicle>(wp));
-							var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-							if (report != null)
-								report.Invalidate();
-							starSystemView.Invalidate(); // show move lines
-						}
-						else
-						{
-							// TODO - warp orders for unit groups
-						}
+						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(wp, !aggressiveMode));
+						IssueSpaceObjectOrder(new WarpOrder<IMobileSpaceObject>(wp));
+						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
+						if (report != null)
+							report.Invalidate();
+						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
 				}
 			}
 			else if (commandMode == CommandMode.Colonize)
 			{
-				if (SelectedSpaceObject is SpaceVehicle)
+				if (SelectedSpaceObject is IMobileSpaceObject)
 				{
-					var v = (SpaceVehicle)SelectedSpaceObject;
+					var v = (IMobileSpaceObject)SelectedSpaceObject;
 					if (sector != null)
 					{
-						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && 
+						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null &&
 							// HACK - the colonize ability is Gas, the planets are Gas Giant
 							v.Abilities.Any(a => a.Name == "Colonize Planet - " + p.Surface || a.Name + " Giant" == "Colonize Planet - " + p.Surface));
 						if (Galaxy.Current.CanColonizeOnlyBreathable)
@@ -275,7 +257,7 @@ namespace FrEee.WinForms.Forms
 										}
 									}
 								}
-								IssueSpaceObjectOrder(new MoveOrder<SpaceVehicle>(sector, !aggressiveMode));
+								IssueSpaceObjectOrder(new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode));
 								IssueSpaceObjectOrder(new ColonizeOrder(planet));
 								var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
 								if (report != null)
@@ -360,7 +342,10 @@ namespace FrEee.WinForms.Forms
 				}
 			}
 			else
+			{
 				SelectedSpaceObject = null;
+				// TODO - show star system report
+			}
 		}
 
 		void SpaceObjectListReport_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -463,7 +448,7 @@ namespace FrEee.WinForms.Forms
 			var unallocatedPct = 1d - ((double)totalSpending / (double)totalRP);
 			if (unallocatedPct > 0)
 				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
-			
+
 			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
 
 			var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());

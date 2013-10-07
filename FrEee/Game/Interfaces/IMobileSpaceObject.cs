@@ -18,11 +18,18 @@ namespace FrEee.Game.Interfaces
 		int Speed { get; }
 		int SupplyRemaining { get; set; }
 		void SpendTime(double timeElapsed);
-		Sector Sector { get; set; }
+		new Sector Sector { get; set; }
+
+		void AddOrder(IOrder order);
 
 		/// <summary>
 		/// The Dijkstra map used for pathfinding.
 		/// </summary>
 		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
+	}
+
+	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
+	{
+		IList<IOrder<T>> Orders { get; }
 	}
 }
