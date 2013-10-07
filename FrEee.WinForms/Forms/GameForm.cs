@@ -29,10 +29,6 @@ namespace FrEee.WinForms.Forms
 		public GameForm(Galaxy galaxy)
 		{
 			InitializeComponent();
-
-			// scale to DPI settings
-			var g = this.CreateGraphics();
-			tableLayoutPanel1.ColumnStyles[4].Width *= g.DpiX / 96f;
 		}
 
 
@@ -79,9 +75,17 @@ namespace FrEee.WinForms.Forms
 			}
 
 			// so the search box can lose focus...
-			foreach (Control ctl in tableLayoutPanel1.Controls)
+			foreach (Control ctl in pnlLayout.Controls)
+				AssignClickHandler(ctl);
+		}
+
+		private void AssignClickHandler(Control ctl)
+		{
+			ctl.Click += ctl_Click;
+			if (ctl is ContainerControl)
 			{
-				ctl.Click += ctl_Click;
+				foreach (Control c2 in ((ContainerControl)ctl).Controls)
+					AssignClickHandler(c2);
 			}
 		}
 

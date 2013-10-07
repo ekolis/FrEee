@@ -44,5 +44,23 @@ namespace FrEee.WinForms.Controls
 				Invalidate();
 			}
 		}
+
+		// http://support.microsoft.com/kb/953934
+		protected override void OnSizeChanged(EventArgs e)
+		{
+
+			if (this.Handle != null)
+			{
+
+				this.BeginInvoke((MethodInvoker)delegate
+				{
+
+					base.OnSizeChanged(e);
+
+				});
+
+			}
+
+		} 
 	}
 }
