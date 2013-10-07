@@ -23,6 +23,11 @@ namespace FrEee.Game.Interfaces
 		void AddOrder(IOrder order);
 
 		/// <summary>
+		/// The tonnage of the object, in kT, or null if it's a planet.
+		/// </summary>
+		int? Size { get; }
+
+		/// <summary>
 		/// The Dijkstra map used for pathfinding.
 		/// </summary>
 		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }

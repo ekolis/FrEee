@@ -85,12 +85,10 @@ namespace FrEee.Utility.Extensions
 			{
 				return objects.OfType<WarpPoint>().OrderByDescending(obj => obj.StellarSize).First();
 			}
-			// TODO - fleets
-			if (objects.OfType<SpaceVehicle>().Any())
+			if (objects.OfType<IMobileSpaceObject>().Any())
 			{
-				return objects.OfType<SpaceVehicle>().OrderByDescending(obj => obj.Design.Hull.Size).First();
+				return objects.OfType<IMobileSpaceObject>().OrderByDescending(obj => obj.Size).First();
 			}
-			// TODO - unit groups
 			return null;
 		}
 

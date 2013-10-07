@@ -819,5 +819,10 @@ namespace FrEee.Game.Objects.Space
 					v.Sector = value;
 			}
 		}
+
+		int? IMobileSpaceObject.Size
+		{
+			get { return null; }
+		}
 	}
 }

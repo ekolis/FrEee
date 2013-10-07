@@ -372,5 +372,10 @@ namespace FrEee.Game.Objects.Vehicles
 					v.Sector = value;
 			}
 		}
+
+		public int? Size
+		{
+			get { return Design.Hull.Size; }
+		}
 	}
 }

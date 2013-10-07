@@ -651,5 +651,10 @@ namespace FrEee.Game.Objects.Space
 		{
 			Vehicles.ReplaceClientIDs(idmap);
 		}
+
+		public int? Size
+		{
+			get { return Vehicles.Sum(v => v.Size); }
+		}
 	}
 }
