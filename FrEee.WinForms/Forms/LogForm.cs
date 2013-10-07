@@ -96,7 +96,7 @@ namespace FrEee.WinForms.Forms
 					else if (context is Technology)
 					{
 						// go to research screen
-						gameForm.ShowResearchForm(new ResearchForm());
+						gameForm.ShowResearchForm();
 						Close();
 					}
 					else if (context is IHull<IVehicle>)

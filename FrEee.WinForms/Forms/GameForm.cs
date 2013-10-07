@@ -100,10 +100,7 @@ namespace FrEee.WinForms.Forms
 					var v = (IMobileSpaceObject)SelectedSpaceObject;
 					var order = new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode);
 					v.AddOrder(order);
-					// TODO - fleet report
-					var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-					if (report != null)
-						report.Bind();
+					BindReport();
 					var cmd = new AddOrderCommand<IMobileSpaceObject>(Empire.Current, v, order);
 					Empire.Current.Commands.Add(cmd);
 					starSystemView.Invalidate(); // show move lines
@@ -131,10 +128,7 @@ namespace FrEee.WinForms.Forms
 						// pursue
 						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(target, !aggressiveMode));
 						starSystemView.Invalidate(); // show move lines
-						// TODO - fleet report
-						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Bind();
+						BindReport();
 						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
@@ -161,10 +155,7 @@ namespace FrEee.WinForms.Forms
 						// evade
 						IssueSpaceObjectOrder(new EvadeOrder<IMobileSpaceObject>(target, !aggressiveMode));
 						starSystemView.Invalidate(); // show move lines
-						// TODO - fleet report
-						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Bind();
+						BindReport();
 						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
@@ -190,9 +181,7 @@ namespace FrEee.WinForms.Forms
 					{
 						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(wp, !aggressiveMode));
 						IssueSpaceObjectOrder(new WarpOrder<IMobileSpaceObject>(wp));
-						var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-						if (report != null)
-							report.Invalidate();
+						BindReport();
 						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
 					}
@@ -263,9 +252,7 @@ namespace FrEee.WinForms.Forms
 								}
 								IssueSpaceObjectOrder(new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode));
 								IssueSpaceObjectOrder(new ColonizeOrder(planet));
-								var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-								if (report != null)
-									report.Invalidate();
+								BindReport();
 								ChangeCommandMode(CommandMode.None, null);
 								starSystemView.Invalidate(); // refresh move lines
 							}
@@ -411,8 +398,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnQueues_Click(object sender, EventArgs e)
 		{
-			this.ShowChildForm(new ConstructionQueueListForm());
-			SetUpResourceDisplay();
+			ShowConstructionQueueListForm();
 		}
 
 		private void btnEndTurn_Click(object sender, EventArgs e)
@@ -799,11 +785,11 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.S)
 					; // TODO - ships screen
 				else if (e.KeyCode == Keys.Q)
-					this.ShowChildForm(new ConstructionQueueListForm());
+					ShowConstructionQueueListForm();
 				else if (e.KeyCode == Keys.L)
 					this.ShowChildForm(new LogForm(this));
 				else if (e.KeyCode == Keys.R)
-					this.ShowChildForm(new ResearchForm());
+					ShowResearchForm();
 				else if (e.KeyCode == Keys.Tab)
 					btnPrevIdle_Click(this, new EventArgs());
 			}
@@ -824,16 +810,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.Q && btnConstructionQueue.Visible)
 				{
 					if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
-					{
-						this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
-						if (pnlDetailReport.Controls.Count > 0)
-						{
-							var ctl = pnlDetailReport.Controls[0];
-							if (ctl is PlanetReport)
-								((PlanetReport)ctl).Invalidate();
-						}
-						SetUpResourceDisplay();
-					}
+						ShowConstructionQueueForm(SelectedSpaceObject);
 				}
 				else if (e.KeyCode == Keys.T && btnTransferCargo.Visible)
 					ShowCargoTransferForm();
@@ -856,16 +833,13 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F6)
 				MessageBox.Show("Sorry, the ship list screen is not yet implemented."); // TODO - ships screen
 			else if (e.KeyCode == Keys.F7)
-			{
-				this.ShowChildForm(new ConstructionQueueListForm());
-				SetUpResourceDisplay();
-			}
+				ShowConstructionQueueListForm();
 			else if (e.KeyCode == Keys.F10)
 				this.ShowChildForm(new LogForm(this));
 			else if (e.KeyCode == Keys.F12)
 				btnEndTurn_Click(btnEndTurn, new EventArgs());
 			else if (e.KeyCode == Keys.F8)
-				this.ShowChildForm(new ResearchForm());
+				ShowResearchForm();
 			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
 				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
@@ -980,11 +954,7 @@ namespace FrEee.WinForms.Forms
 		private void btnConstructionQueue_Click(object sender, EventArgs e)
 		{
 			if (SelectedSpaceObject != null && SelectedSpaceObject.Owner == Empire.Current && SelectedSpaceObject.ConstructionQueue != null)
-			{
-				var form = new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue);
-				this.ShowChildForm(form);
-				SetUpResourceDisplay();
-			}
+				ShowConstructionQueueForm(SelectedSpaceObject);
 		}
 
 		private void btnTransferCargo_Click(object sender, EventArgs e)
@@ -1009,9 +979,7 @@ namespace FrEee.WinForms.Forms
 					lastSector = SelectedSpaceObject.FindSector();
 				var form = new CargoTransferForm((ICargoTransferrer)SelectedSpaceObject, lastSector);
 				this.ShowChildForm(form);
-				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
-				if (report != null)
-					report.Bind();
+				BindReport();
 			}
 		}
 
@@ -1021,9 +989,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var form = new FleetTransferForm(starSystemView.SelectedSector);
 				this.ShowChildForm(form);
-				var report = pnlDetailReport.Controls.OfType<IBindable>().FirstOrDefault();
-				if (report != null)
-					report.Bind();
+				BindReport();
 				starSystemView.Invalidate();
 			}
 		}
@@ -1064,9 +1030,7 @@ namespace FrEee.WinForms.Forms
 						}
 					}
 					v.Orders.Clear();
-					var report = pnlDetailReport.Controls.OfType<SpaceVehicleReport>().FirstOrDefault();
-					if (report != null)
-						report.Bind();
+					BindReport();
 				}
 				else if (SelectedSpaceObject is Planet)
 				{
@@ -1087,9 +1051,7 @@ namespace FrEee.WinForms.Forms
 						}
 					}
 					p.Orders.Clear();
-					var report = pnlDetailReport.Controls.OfType<PlanetReport>().FirstOrDefault();
-					if (report != null)
-						report.Invalidate();
+					BindReport();
 				}
 
 				starSystemView.Invalidate(); // show move lines
@@ -1098,8 +1060,7 @@ namespace FrEee.WinForms.Forms
 
 		private void progResearch_Click(object sender, EventArgs e)
 		{
-			this.ShowChildForm(new ResearchForm());
-			BindResearch();
+			ShowResearchForm();
 		}
 
 		private void BindResearch()
@@ -1133,19 +1094,23 @@ namespace FrEee.WinForms.Forms
 			return t.Spending.Value * budget / 100 + (Empire.Current.ResearchQueue.FirstOrDefault() == t ? forQueue : 0);
 		}
 
-		public void ShowResearchForm(ResearchForm f)
+		public void ShowResearchForm()
 		{
-			this.ShowChildForm(f);
+			this.ShowChildForm(new ResearchForm());
 			BindResearch();
 		}
 
-		public void ShowVehicleDesignForm(VehicleDesignForm f)
+		public void ShowVehicleDesignForm(VehicleDesignForm f = null)
 		{
+			if (f == null)
+				f = new VehicleDesignForm();
 			this.ShowChildForm(f);
 		}
 
-		public void ShowLogForm(LogForm f)
+		public void ShowLogForm(LogForm f = null)
 		{
+			if (f == null)
+				f = new LogForm(this);
 			this.ShowChildForm(f);
 		}
 
@@ -1212,8 +1177,7 @@ namespace FrEee.WinForms.Forms
 			if (!(SelectedSpaceObject is T))
 				throw new Exception("Order \"" + order + "\" cannot be issued to objects of type " + SelectedSpaceObject.GetType() + ". It can only be issued to objects of type " + typeof(T) + ".");
 			((T)SelectedSpaceObject).IssueOrder(order);
-			if (pnlDetailReport.Controls.Count > 0 && pnlDetailReport.Controls[0] is IBindable)
-				((IBindable)pnlDetailReport.Controls[0]).Bind();
+			BindReport();
 		}
 
 		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
@@ -1222,6 +1186,26 @@ namespace FrEee.WinForms.Forms
 			if (keyData == Keys.Tab || keyData == (Keys.Tab | Keys.Shift))
 				GameForm_KeyDown(this, new KeyEventArgs(keyData));
 			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		private void BindReport()
+		{
+			foreach (var report in pnlDetailReport.Controls.Cast<Control>().OfType<IBindable>())
+				report.Bind();
+		}
+
+		private void ShowConstructionQueueListForm()
+		{
+			this.ShowChildForm(new ConstructionQueueListForm());
+			BindReport();
+			SetUpResourceDisplay();
+		}
+
+		private void ShowConstructionQueueForm(ISpaceObject sobj)
+		{
+			this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
+			BindReport();
+			SetUpResourceDisplay();
 		}
 	}
 }
