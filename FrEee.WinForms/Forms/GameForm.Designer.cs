@@ -110,6 +110,7 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.TabIndex = 11;
 			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
 			this.progResearch.Value = 350000;
+			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
 			// 
 			// btnNextIdle
 			// 
@@ -123,6 +124,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNextIdle.Text = "Next";
 			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
 			this.btnNextIdle.UseVisualStyleBackColor = false;
+			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
 			// 
 			// btnPrevIdle
 			// 
@@ -136,6 +138,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPrevIdle.Text = "Prev";
 			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
 			this.btnPrevIdle.UseVisualStyleBackColor = false;
+			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
 			// 
 			// btnSentry
 			// 
@@ -149,6 +152,7 @@ namespace FrEee.WinForms.Forms
 			this.btnSentry.Text = "Stry";
 			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
 			this.btnSentry.UseVisualStyleBackColor = false;
+			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
 			// 
 			// btnClearOrders
 			// 
@@ -162,6 +166,7 @@ namespace FrEee.WinForms.Forms
 			this.btnClearOrders.Text = "Clr";
 			this.toolTip.SetToolTip(this.btnClearOrders, "(Bksp) Clear Orders");
 			this.btnClearOrders.UseVisualStyleBackColor = false;
+			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
 			// 
 			// btnFleetTransfer
 			// 
@@ -175,6 +180,7 @@ namespace FrEee.WinForms.Forms
 			this.btnFleetTransfer.Text = "Flt";
 			this.toolTip.SetToolTip(this.btnFleetTransfer, "(F) Fleet Transfer");
 			this.btnFleetTransfer.UseVisualStyleBackColor = false;
+			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
 			// 
 			// btnTransferCargo
 			// 
@@ -188,6 +194,7 @@ namespace FrEee.WinForms.Forms
 			this.btnTransferCargo.Text = "TC";
 			this.toolTip.SetToolTip(this.btnTransferCargo, "(T) Transfer Cargo");
 			this.btnTransferCargo.UseVisualStyleBackColor = false;
+			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
 			// 
 			// btnConstructionQueue
 			// 
@@ -201,6 +208,7 @@ namespace FrEee.WinForms.Forms
 			this.btnConstructionQueue.Text = "CQ";
 			this.toolTip.SetToolTip(this.btnConstructionQueue, "(Q) Construction Queue");
 			this.btnConstructionQueue.UseVisualStyleBackColor = false;
+			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
 			// 
 			// btnColonize
 			// 
@@ -214,6 +222,7 @@ namespace FrEee.WinForms.Forms
 			this.btnColonize.Text = "Col";
 			this.toolTip.SetToolTip(this.btnColonize, "(C) Colonize");
 			this.btnColonize.UseVisualStyleBackColor = false;
+			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
 			// 
 			// btnEvade
 			// 
@@ -227,6 +236,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEvade.Text = "Ev";
 			this.toolTip.SetToolTip(this.btnEvade, "(E) Evade");
 			this.btnEvade.UseVisualStyleBackColor = false;
+			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
 			// 
 			// btnWarp
 			// 
@@ -240,6 +250,7 @@ namespace FrEee.WinForms.Forms
 			this.btnWarp.Text = "Wp";
 			this.toolTip.SetToolTip(this.btnWarp, "(W) Warp");
 			this.btnWarp.UseVisualStyleBackColor = false;
+			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
 			// 
 			// btnPursue
 			// 
@@ -253,6 +264,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPursue.Text = "Pur";
 			this.toolTip.SetToolTip(this.btnPursue, "(A) Attack / Pursue");
 			this.btnPursue.UseVisualStyleBackColor = false;
+			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
 			// 
 			// btnMove
 			// 
@@ -266,6 +278,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.Text = "Mov";
 			this.toolTip.SetToolTip(this.btnMove, "(M) Move");
 			this.btnMove.UseVisualStyleBackColor = false;
+			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
 			// 
 			// btnEndTurn
 			// 
@@ -278,6 +291,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEndTurn.TabStop = false;
 			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) End Turn");
 			this.btnEndTurn.UseVisualStyleBackColor = false;
+			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
 			// 
 			// btnLog
 			// 
@@ -290,6 +304,7 @@ namespace FrEee.WinForms.Forms
 			this.btnLog.TabStop = false;
 			this.toolTip.SetToolTip(this.btnLog, "(F10 / Shift-L) Log");
 			this.btnLog.UseVisualStyleBackColor = false;
+			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
 			// 
 			// btnQueues
 			// 
@@ -302,6 +317,7 @@ namespace FrEee.WinForms.Forms
 			this.btnQueues.TabStop = false;
 			this.toolTip.SetToolTip(this.btnQueues, "(F7 / Shift-Q) Construction Queues");
 			this.btnQueues.UseVisualStyleBackColor = false;
+			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
 			// 
 			// btnShips
 			// 
@@ -338,6 +354,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets.TabStop = false;
 			this.toolTip.SetToolTip(this.btnPlanets, "(F4 / F5 / Shift-P / Shift-C) Planets/Colonies");
 			this.btnPlanets.UseVisualStyleBackColor = false;
+			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
 			// 
 			// btnDesigns
 			// 
@@ -350,6 +367,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns.TabStop = false;
 			this.toolTip.SetToolTip(this.btnDesigns, "(F3 / Shift-D) Designs");
 			this.btnDesigns.UseVisualStyleBackColor = false;
+			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
 			// 
 			// btnMenu
 			// 
@@ -426,6 +444,8 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Size = new System.Drawing.Size(715, 634);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
+			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
+			this.starSystemView.SectorSelected += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
 			// 
 			// pnlSearch
 			// 
@@ -680,6 +700,8 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.Size = new System.Drawing.Size(354, 272);
 			this.galaxyView.TabIndex = 0;
 			this.galaxyView.Text = "galaxyView1";
+			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
+			this.galaxyView.StarSystemSelected += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemSelected);
 			// 
 			// pnlDetailReport
 			// 
