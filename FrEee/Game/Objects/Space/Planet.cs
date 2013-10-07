@@ -384,7 +384,7 @@ namespace FrEee.Game.Objects.Space
 			// clear population that was emptied out
 			foreach (var race in Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
 				Cargo.Population.Remove(race);
-			if (p.Colony != null)
+			if (Colony != null)
 			{
 				foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
 					Colony.Population.Remove(race);
