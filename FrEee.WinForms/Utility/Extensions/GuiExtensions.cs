@@ -102,13 +102,14 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// Shows a form as a dialog in the center of its parent form with a wait cursor while the form loads.
 		/// </summary>
 		/// <param name="parent"></param>
-		public static void ShowChildForm(this Form parent, Form form)
+		public static DialogResult ShowChildForm(this Form parent, Form form)
 		{
 			parent.Cursor = Cursors.WaitCursor;
 			if (form.StartPosition != FormStartPosition.CenterScreen)
 				form.StartPosition = FormStartPosition.CenterParent;
-			form.ShowDialog();
+			var result = form.ShowDialog();
 			parent.Cursor = Cursors.Default;
+			return result;
 		}
 
 		/// <summary>
