@@ -382,11 +382,11 @@ namespace FrEee.Game.Objects.Space
 				inflicted++;
 			}
 			// clear population that was emptied out
-			foreach (var race in Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+			foreach (var race in Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
 				Cargo.Population.Remove(race);
 			if (Colony != null)
 			{
-				foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key))
+				foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
 					Colony.Population.Remove(race);
 			}
 			return damage - inflicted;
