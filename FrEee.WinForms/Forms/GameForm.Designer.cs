@@ -32,7 +32,6 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
 			this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
 			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
@@ -53,6 +52,7 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
+			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlLeft = new System.Windows.Forms.Panel();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
@@ -88,29 +88,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// progResearch
-			// 
-			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progResearch.BackColor = System.Drawing.Color.Black;
-			this.progResearch.BarColor = System.Drawing.Color.Magenta;
-			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.progResearch.ForeColor = System.Drawing.Color.White;
-			this.progResearch.IncrementalProgress = 0;
-			this.progResearch.LeftText = "Ice Planet Colonization";
-			this.progResearch.Location = new System.Drawing.Point(4, -3);
-			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
-			this.progResearch.Maximum = 500000;
-			this.progResearch.Name = "progResearch";
-			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-			this.progResearch.RightText = "0.2 years";
-			this.progResearch.Size = new System.Drawing.Size(358, 38);
-			this.progResearch.TabIndex = 11;
-			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
-			this.progResearch.Value = 350000;
-			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
 			// 
 			// btnNextIdle
 			// 
@@ -381,14 +358,39 @@ namespace FrEee.WinForms.Forms
 			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
 			// 
+			// progResearch
+			// 
+			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progResearch.BackColor = System.Drawing.Color.Black;
+			this.progResearch.BarColor = System.Drawing.Color.Magenta;
+			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.progResearch.ForeColor = System.Drawing.Color.White;
+			this.progResearch.IncrementalProgress = 0;
+			this.progResearch.LeftText = "Ice Planet Colonization";
+			this.progResearch.Location = new System.Drawing.Point(3, -3);
+			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
+			this.progResearch.Maximum = 500000;
+			this.progResearch.Name = "progResearch";
+			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
+			this.progResearch.RightText = "0.2 years";
+			this.progResearch.Size = new System.Drawing.Size(358, 38);
+			this.progResearch.TabIndex = 11;
+			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
+			this.progResearch.Value = 350000;
+			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
+			// 
 			// pnlLayout
 			// 
+			this.pnlLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlLayout.BackColor = System.Drawing.Color.Black;
 			this.pnlLayout.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlLayout.Controls.Add(this.pnlLeft);
 			this.pnlLayout.Controls.Add(this.pnlRight);
-			this.pnlLayout.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pnlLayout.ForeColor = System.Drawing.Color.White;
 			this.pnlLayout.Location = new System.Drawing.Point(0, 0);
 			this.pnlLayout.Margin = new System.Windows.Forms.Padding(0);
@@ -402,7 +404,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlLeft.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.pnlLeft.Controls.Add(this.pnlSystemMap);
 			this.pnlLeft.Controls.Add(this.pnlSearch);
 			this.pnlLeft.Controls.Add(this.pnlSystemTabs);
@@ -661,8 +662,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			// pnlRight
 			// 
-			this.pnlRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+			this.pnlRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlRight.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.pnlRight.Controls.Add(this.pnlGalaxyMap);
@@ -734,7 +734,6 @@ namespace FrEee.WinForms.Forms
 			this.MinimumSize = new System.Drawing.Size(900, 700);
 			this.Name = "GameForm";
 			this.Text = "FrEee";
-			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
 			this.Load += new System.EventHandler(this.GameForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);

@@ -1211,5 +1211,10 @@ namespace FrEee.WinForms.Forms
 			BindReport();
 			SetUpResourceDisplay();
 		}
+
+		private void GameForm_Resize(object sender, EventArgs e)
+		{
+
+		}
 	}
 }
