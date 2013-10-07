@@ -33,7 +33,7 @@ namespace FrEee.WinForms.Forms
 
 		private void BindQueueList()
 		{
-			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == Empire.Current && q.Rate.Any(r => r.Value > 0));
+			constructionQueueBindingSource.DataSource = Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == Empire.Current && q.Rate.Any(r => r.Value > 0)).ToArray();
 		}
 
 		private void ConstructionQueueListForm_Load(object sender, EventArgs e)
