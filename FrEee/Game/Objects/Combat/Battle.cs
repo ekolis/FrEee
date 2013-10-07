@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
@@ -20,7 +21,7 @@ namespace FrEee.Game.Objects.Combat
 			Location = location;
 			Log = new List<LogMessage>();
 			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)).ToArray();
+			Combatants = new HashSet<ICombatObject>(Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
 		}
 
 		/// <summary>
@@ -36,7 +37,7 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
-		public IEnumerable<ICombatObject> Combatants { get; private set; }
+		public ISet<ICombatObject> Combatants { get; private set; }
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -74,6 +75,31 @@ namespace FrEee.Game.Objects.Combat
 					}
 					else
 						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));
+				}
+				foreach (var launcher in Combatants.ToArray())
+				{
+					// find launchable units
+					var unitsToLaunch = new List<ISpaceVehicle>();
+					if (launcher is Planet)
+					{
+						// planets can launch infinite units per turn
+						var p = (Planet)launcher;
+						unitsToLaunch.AddRange(p.Cargo.Units.OfType<ISpaceVehicle>());
+					}
+					else if (launcher is ICargoTransferrer)
+					{
+						// ships, etc. can launch units based on abilities
+						var ct = (ICargoTransferrer)launcher;
+						foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
+						{
+							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString()).ToInt();
+							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<ISpaceVehicle>().Take(rate));
+						}
+					}
+
+					// launch them temporarily for combat
+					foreach (var unit in unitsToLaunch)
+						Combatants.Add(unit);
 				}
 				foreach (var attacker in Combatants.Shuffle().Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
