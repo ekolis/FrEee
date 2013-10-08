@@ -124,7 +124,7 @@ namespace FrEee.WinForms.Forms
                     var t = new Thread(new ThreadStart(() =>
                     {
                         status.Message = "Processing turn";
-                        Galaxy.Current.ProcessTurn(status, 0.5);
+                        Galaxy.ProcessTurn(status, 0.5);
                         Galaxy.SaveAll(status, 1.0);
                     }));
                     this.ShowChildForm(new StatusForm(t, status));

@@ -553,7 +553,7 @@ namespace FrEee.WinForms.Forms
 					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					Galaxy.Current.ProcessTurn(status, 0.5);
+					Galaxy.ProcessTurn(status, 0.5);
 					status.Message = "Saving game";
 					Galaxy.SaveAll(status, 0.75);
 					status.Message = "Loading game";

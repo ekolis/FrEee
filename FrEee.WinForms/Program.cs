@@ -43,7 +43,7 @@ namespace FrEee.WinForms
 					// TODO - plrstop option like in SE4/SE5
 					try
 					{
-						Galaxy.Current.ProcessTurn();
+						Galaxy.ProcessTurn();
 						Galaxy.SaveAll();
 						Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 						Application.Exit();

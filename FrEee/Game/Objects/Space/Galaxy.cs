@@ -512,48 +512,32 @@ namespace FrEee.Game.Objects.Space
 				{
 					var fs = new FileStream(plrfile, FileMode.Open);
 					var cmds = DeserializeCommands(fs);
-					cmds = cmds.Where(cmd => cmd != null).ToList(); // HACK - why would we have null commands in a plr file?!
+					LoadCommands(emp, cmds);
 					fs.Close();
-					emp.Commands.Clear();
-					var idmap = new Dictionary<long, long>();
-					foreach (var cmd in cmds)
-					{
-						emp.Commands.Add(cmd);
-						foreach (var r in cmd.NewReferrables)
-						{
-							var clientid = r.ID;
-							var serverid = AssignID(r);
-							idmap.Add(clientid, serverid);
-						}
-
-					}
-					foreach (var cmd in cmds)
-						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
-					/*idmap = new Dictionary<long, long>();
-					foreach (var cmd in cmds)
-					{
-						// promote promotable objects
-						foreach (var p in cmd.NewReferrables.Values)
-						{
-							if (p is IPromotable)
-							{
-								var oldid = p.ID;
-								var newid = AssignID(p);
-								idmap.Add(oldid, newid);
-							}
-							else
-							{
-								// TODO - constrain objects to be both promotable and referrable using a derived interface
-								// do nothing
-							}
-						}
-					}
-					foreach (var cmd in cmds)
-						cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs*/
 				}
 				else
 					Console.WriteLine(emp.Name + " did not submit a PLR file.");
 			}
+		}
+
+		private void LoadCommands(Empire emp, IList<ICommand> cmds)
+		{
+			cmds = cmds.Where(cmd => cmd != null).ToList(); // HACK - why would we have null commands in a plr file?!
+			emp.Commands.Clear();
+			var idmap = new Dictionary<long, long>();
+			foreach (var cmd in cmds)
+			{
+				emp.Commands.Add(cmd);
+				foreach (var r in cmd.NewReferrables)
+				{
+					var clientid = r.ID;
+					var serverid = AssignID(r);
+					idmap.Add(clientid, serverid);
+				}
+
+			}
+			foreach (var cmd in cmds)
+				cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
 		}
 
 		private string GetEmpireCommandsSavePath(Empire emp)
@@ -615,36 +599,55 @@ namespace FrEee.Game.Objects.Space
 		/// Processes the turn.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
-		public void ProcessTurn(Status status = null, double desiredProgress = 1d)
+		public static void ProcessTurn(Status status = null, double desiredProgress = 1d)
 		{
-			if (CurrentEmpire != null)
+			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
-
-			if (Galaxy.Current != this)
-				throw new InvalidOperationException("Can't process the turn on a galaxy that is not the current galaxy. Set Galaxy.Current = this first.");
 
 			double progressPerOperation;
 			if (status == null)
 				progressPerOperation = 0d;
 			else
-				progressPerOperation = (desiredProgress - status.Progress) / (6 + Empires.Count);
+				progressPerOperation = (desiredProgress - status.Progress) / (7 + Current.Empires.Count);
+
+			// AI commands
+			if (status != null)
+				status.Message = "Playing AI turns";
+			var outStream = new MemoryStream();
+			Current.Save(outStream);
+			var inStream = new MemoryStream(outStream.GetBuffer());
+			var cmds = new Dictionary<int, IList<ICommand>>();
+			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire).Select(e => Current.Empires.IndexOf(e)).ToArray())
+			{
+				inStream.Seek(0, SeekOrigin.Begin);
+				Load(inStream);
+				Current.CurrentEmpire = Current.Empires[i];
+				Current.Redact();
+				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current);
+				cmds.Add(i, Current.CurrentEmpire.Commands);
+			}
+			Load(inStream);
+			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire).Select(e => Current.Empires.IndexOf(e)).ToArray())
+				Current.LoadCommands(Current.Empires[i], cmds[i]);
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// load commands
 			if (status != null)
 				status.Message = "Loading player commands";
-			LoadCommands();
+			Current.LoadCommands();
 			if (status != null)
 				status.Progress += progressPerOperation;
 
 			// advance turn number
-			TurnNumber++;
+			Current.TurnNumber++;
 
 			// reproduction
 			if (status != null)
 				status.Message = "Growing population";
-			if (TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
+			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
 			{
-				foreach (var p in FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
+				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
 				{
 					var pop = p.Colony.Population;
 					foreach (var race in pop.Keys.ToArray())
@@ -667,7 +670,7 @@ namespace FrEee.Game.Objects.Space
 			// resource generation
 			if (status != null)
 				status.Message = "Generating resources";
-			foreach (var tuple in FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
+			foreach (var tuple in Current.FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
 			{
 				var p = tuple.Item3;
 				var sys = tuple.Item1.Item;
@@ -678,7 +681,7 @@ namespace FrEee.Game.Objects.Space
 
 					// adjust resource value
 					foreach (var kvp in p.Income)
-						p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 				else
 				{
@@ -696,7 +699,7 @@ namespace FrEee.Game.Objects.Space
 					// adjust resource value
 					// pay full value decay for non-prorated income though, since the resources were extracted and wasted!
 					foreach (var kvp in p.Income)
-						p.ResourceValue[kvp.Key] -= StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 			}
 			// TODO - remote mining and raw resource generation
@@ -704,10 +707,10 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			// empire stuff
-			foreach (var emp in Empires)
+			foreach (var emp in Current.Empires)
 			{
 				if (status != null)
-					status.Message = "Maintaining empires (" + (Empires.IndexOf(emp) + 1) + " of " + Empires.Count + ")";
+					status.Message = "Maintaining empires (" + (Current.Empires.IndexOf(emp) + 1) + " of " + Current.Empires.Count + ")";
 
 				// pay maintenance on on ships/bases
 				// TODO - allow mod to specify maintenance on units/facilities too?
@@ -789,13 +792,13 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// validate fleets
-			foreach (var f in Referrables.OfType<Fleet>())
+			foreach (var f in Current.Referrables.OfType<Fleet>())
 				f.Validate();
 
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			foreach (var sobj in FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
+			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
 				sobj.ReplenishShields();
 			if (status != null)
 				status.Progress += progressPerOperation;
@@ -803,7 +806,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			if (status != null)
 				status.Message = "Constructing objects";
-			foreach (var q in Referrables.OfType<ConstructionQueue>().ToArray())
+			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().ToArray())
 				q.ExecuteOrders();
 			if (status != null)
 				status.Progress += progressPerOperation;
@@ -811,14 +814,14 @@ namespace FrEee.Game.Objects.Space
 			// ship movement
 			if (status != null)
 				status.Message = "Moving ships";
-			CurrentTick = 0;
-			foreach (var v in Referrables.OfType<IMobileSpaceObject>().Shuffle())
+			Current.CurrentTick = 0;
+			foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
-			while (CurrentTick <= 1)
+			while (Current.CurrentTick <= 1)
 			{
-				ComputeNextTickSize();
+				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-				foreach (var v in Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
+				foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
@@ -840,9 +843,9 @@ namespace FrEee.Game.Objects.Space
 							emp.Log.Add(battle.CreateLogMessage(battle.Name));
 					}
 				}
-				CurrentTick += NextTickSize;
-				if (status != null && NextTickSize != double.PositiveInfinity)
-					status.Progress += progressPerOperation * NextTickSize;
+				Current.CurrentTick += Current.NextTickSize;
+				if (status != null && Current.NextTickSize != double.PositiveInfinity)
+					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
 
 			// TODO - more turn stuff
@@ -853,32 +856,32 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Cleaning up";
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
-			foreach (var sobj in FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
+			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
 				sobj.ReplenishShields();
 
 			// repair facilities
-			foreach (var facility in FindSpaceObjects<Planet>().Flatten().Flatten().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
+			foreach (var facility in Current.FindSpaceObjects<Planet>().Flatten().Flatten().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
 				facility.Hitpoints = facility.MaxHitpoints;
 
 			// resource spoilage
-			foreach (var emp in Empires)
+			foreach (var emp in Current.Empires)
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
 
 			// clear empire commands
-			foreach (var emp in Empires)
+			foreach (var emp in Current.Empires)
 				emp.Commands.Clear();
 
 			// clear completed orders
-			foreach (var order in Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
+			foreach (var order in Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
 				order.Dispose();
 
 			// check for victory/defeat
-			foreach (var vc in VictoryConditions)
+			foreach (var vc in Current.VictoryConditions)
 			{
-				if (vc is TotalEliminationVictoryCondition || TurnNumber > VictoryDelay)
+				if (vc is TotalEliminationVictoryCondition || Current.TurnNumber > Current.VictoryDelay)
 				{
 					var winners = new List<Empire>();
-					foreach (var emp in Empires)
+					foreach (var emp in Current.Empires)
 					{
 						if (vc.GetProgress(emp) >= 1d)
 						{
@@ -888,7 +891,7 @@ namespace FrEee.Game.Objects.Space
 					}
 					if (winners.Any())
 					{
-						foreach (var emp in Empires.Where(e => !winners.Contains(e)))
+						foreach (var emp in Current.Empires.Where(e => !winners.Contains(e)))
 						{
 							// empire lost
 							emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
