@@ -19,7 +19,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 		public void PercentageResearch()
 		{
 			// setup
-			var mod = new Mod();
+			var mod = Mod.Load(null);
 			var tech = new FrEee.Game.Objects.Technology.Technology
 			{
 				Name = "Test Tech",
@@ -33,13 +33,12 @@ namespace FrEee.Tests.Game.Objects.Technology
 			emp.BonusResearch = 30000;
 			var cmd = new ResearchCommand(emp);
 			cmd.SetSpending(tech, 100);
-			emp.Commands.Add(cmd);
 
 			// check command client safety
 			cmd.CheckForClientSafety();
 
 			// perform research
-			emp.Commands.Add(cmd);
+			emp.ResearchCommand = cmd;
 			Galaxy.ProcessTurn();
 
 			// verify research was done

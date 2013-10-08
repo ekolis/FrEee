@@ -617,7 +617,7 @@ namespace FrEee.Game.Objects.Space
 			Current.Save(outStream);
 			var inStream = new MemoryStream(outStream.GetBuffer());
 			var cmds = new Dictionary<int, IList<ICommand>>();
-			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire).Select(e => Current.Empires.IndexOf(e)).ToArray())
+			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 			{
 				inStream.Seek(0, SeekOrigin.Begin);
 				Load(inStream);
@@ -627,7 +627,7 @@ namespace FrEee.Game.Objects.Space
 				cmds.Add(i, Current.CurrentEmpire.Commands);
 			}
 			Load(inStream);
-			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire).Select(e => Current.Empires.IndexOf(e)).ToArray())
+			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 				Current.LoadCommands(Current.Empires[i], cmds[i]);
 			if (status != null)
 				status.Progress += progressPerOperation;
