@@ -122,6 +122,7 @@
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
     <Compile Include="Game\Objects\Space\Fleet.cs" />
+    <Compile Include="Game\Objects\Technology\FacilityUpgrade.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
     <Compile Include="Game\Objects\Technology\MountedComponentTemplate.cs" />

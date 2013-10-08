@@ -106,6 +106,12 @@
     <Compile Include="Controls\ComponentReport.Designer.cs">
       <DependentUpon>ComponentReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FacilityReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FacilityReport.Designer.cs">
+      <DependentUpon>FacilityReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\LineGraph.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -357,6 +363,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ComponentReport.resx">
       <DependentUpon>ComponentReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FacilityReport.resx">
+      <DependentUpon>FacilityReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WarpPointReport.resx">
       <DependentUpon>WarpPointReport.cs</DependentUpon>

@@ -262,17 +262,6 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private class FacilityUpgrade
-		{
-			public FacilityUpgrade(FacilityTemplate old, FacilityTemplate nu)
-			{
-				Old = old;
-				New = nu;
-			}
-			public FacilityTemplate Old { get; set; }
-			public FacilityTemplate New { get; set; }
-		}
-
 		private void BindShipListView(IEnumerable<IDesign> designs)
 		{
 			lstShips.Initialize(32, 32);
@@ -336,9 +325,33 @@ namespace FrEee.WinForms.Forms
 
 		private void lstQueue_MouseDown(object sender, MouseEventArgs e)
 		{
-			if (e.Button == MouseButtons.Right)
+			var item = lstQueue.GetItemAt(e.X, e.Y);
+			if (item != null)
 			{
-				// TODO - display detailed report on construction item
+				if (e.Button == MouseButtons.Right)
+				{
+					var order = (IConstructionOrder)item.Tag;
+					Control report = null;
+					string title = null;
+					if (order.Template is IDesign)
+					{
+						var design = (IDesign)order.Template;
+						report = new DesignReport(design);
+						title = design.Name;
+					}
+					else if (order.Template is FacilityTemplate)
+					{
+						var ft = (FacilityTemplate)order.Template;
+						report = new FacilityReport(ft);
+						title = ft.Name;
+					}
+
+					if (report != null)
+					{
+						var form = report.CreatePopupForm(title);
+						this.ShowChildForm(form);
+					}
+				}
 			}
 		}
 
@@ -363,7 +376,10 @@ namespace FrEee.WinForms.Forms
 				}
 				else if (e.Button == MouseButtons.Right)
 				{
-					// TODO - display detailed report on facility template
+					var facil = (FacilityTemplate)item.Tag;
+					var report = new FacilityReport(facil);
+					var form = report.CreatePopupForm(facil.Name);
+					FindForm().ShowChildForm(form);
 				}
 			}
 		}
@@ -516,7 +532,10 @@ namespace FrEee.WinForms.Forms
 				}
 				else if (e.Button == MouseButtons.Right)
 				{
-					// TODO - display detailed report on new facility template
+					var facil = (FacilityUpgrade)item.Tag;
+					var report = new FacilityReport(facil);
+					var form = report.CreatePopupForm(facil.New.Name);
+					FindForm().ShowChildForm(form);
 				}
 			}
 		}

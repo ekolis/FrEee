@@ -6,6 +6,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.WinForms.Controls
 {
@@ -128,24 +129,13 @@ namespace FrEee.WinForms.Controls
 					lstOrdersDetail.Items.Add(order);
 
 				// load facilities
-				lstFacilitiesDetail.Items.Clear();
+				lstFacilitiesDetail.Initialize(32, 32);
 				if (Planet.Colony != null)
 				{
 					txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
 
-					var il = new ImageList();
-					il.ImageSize = new System.Drawing.Size(32, 32);
-					lstFacilitiesDetail.LargeImageList = il;
-					lstFacilitiesDetail.SmallImageList = il;
-					int i = 0;
 					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
-					{
-						var item = new ListViewItem(fg.Count() + "x " + fg.Key.Name);
-						item.ImageIndex = i;
-						il.Images.Add((Image)fg.Key.Icon);
-						lstFacilitiesDetail.Items.Add(item);
-						i++;
-					}
+						lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name, fg.Key, fg.Key.Icon);
 				}
 				else
 					txtFacilitySlotsFree.Text = "";
@@ -179,6 +169,18 @@ namespace FrEee.WinForms.Controls
 		private void picPortrait_Click(object sender, System.EventArgs e)
 		{
 			picPortrait.ShowFullSize(Planet.Name);
+		}
+
+		private void lstFacilitiesDetail_MouseDown(object sender, MouseEventArgs e)
+		{
+			var item = lstFacilitiesDetail.GetItemAt(e.X, e.Y);
+			if (item != null)
+			{
+				var facil = (FacilityTemplate)item.Tag;
+				var report = new FacilityReport(facil);
+				var form = report.CreatePopupForm(facil.Name);
+				FindForm().ShowChildForm(form);
+			}
 		}
 	}
 }

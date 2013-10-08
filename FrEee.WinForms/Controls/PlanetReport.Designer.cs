@@ -551,6 +551,7 @@ namespace FrEee.WinForms.Controls
 			this.lstFacilitiesDetail.TabIndex = 24;
 			this.lstFacilitiesDetail.UseCompatibleStateImageBehavior = false;
 			this.lstFacilitiesDetail.View = System.Windows.Forms.View.Tile;
+			this.lstFacilitiesDetail.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilitiesDetail_MouseDown);
 			// 
 			// pageCargo
 			// 
