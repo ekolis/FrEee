@@ -24,18 +24,17 @@ namespace FrEee.Modding
 			//Setting the AppDomainSetup. It is very important to set the ApplicationBase to a folder 
 			//other than the one in which the sandboxer resides.
 			AppDomainSetup adSetup = new AppDomainSetup();
-			adSetup.ApplicationBase = null;
+			adSetup.ApplicationBase = AppDomain.CurrentDomain.BaseDirectory;
+			adSetup.ApplicationName = "FrEee";
+			adSetup.DynamicBase = "ScriptEngine";
 
 			//Setting the permissions for the AppDomain. We give the permission to execute and to 
 			//read/discover the location where the untrusted code is loaded.
 			PermissionSet permSet = new PermissionSet(PermissionState.None);
 			permSet.AddPermission(new SecurityPermission(SecurityPermissionFlag.Execution));
 
-			//We want the script engine assembly's strong name, so that we can add it to the full trust list.
-			StrongName fullTrustAssembly = typeof(ScriptEngine).Assembly.Evidence.GetHostEvidence<StrongName>();
-
 			//Now we have everything we need to create the AppDomain, so let's create it.
-			AppDomain newDomain = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permSet, fullTrustAssembly);
+			AppDomain newDomain = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permSet);
 
 			engine = Python.CreateEngine(newDomain);
 		}
@@ -68,19 +67,31 @@ namespace FrEee.Modding
 		}
 
 		/// <summary>
-		/// Runs a script in a sandboxed environment.
+		/// Evaluates a script expression in a sandboxed environment.
 		/// Note that the return value of the script may still contain insecure code, so be careful!
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
 		/// <param name="variables">Variables to inject into the script.</param>
-		/// <returns></returns>
-		public static dynamic RunScript(string script, IDictionary<string, object> variables = null)
+		/// <returns>Any .</returns>
+		public static T EvaluateExpression<T>(string script, IDictionary<string, object> variables = null)
+		{
+			if (script.IndexOf("\n") >= 0)
+				throw new ScriptException("Cannot evaluate a script containing newlines. Consider using CallFunction instead.");
+			var compiledScript = CompileScript(script);
+			var scope = InjectVariables(variables);
+			return compiledScript.Execute<T>(scope);
+		}
+
+		/// <summary>
+		/// Runs a script in a sandboxed environment.
+		/// </summary>
+		/// <param name="script">The script code to run.</param>
+		/// <param name="variables">Variables to inject into the script.</param>
+		public static void RunScript(string script, IDictionary<string, object> variables = null)
 		{
 			var compiledScript = CompileScript(script);
 			var scope = InjectVariables(variables);
-			
-			// run it and return the result
-			return compiledScript.Execute(scope);
+			compiledScript.Execute();
 		}
 
 		/// <summary>
@@ -90,16 +101,43 @@ namespace FrEee.Modding
 		/// <param name="script">The script containing the function.</param>
 		/// <param name="function">The name of the function.</param>
 		/// <param name="args">Arguments to pass to the function.</param>
-		/// <returns></returns>
-		public static dynamic CallFunction(string script, string function, params object[] args)
+		/// <returns>The return value.</returns>
+		public static T CallFunction<T>(string script, string function, params object[] args)
 		{
+			var fullScript = script + "\n\nresult = " + function + "(" + string.Join(", ", args) + ")";
+			var compiledScript = CompileScript(fullScript);
+			var scope = engine.CreateScope();
+			compiledScript.Execute(scope);
+			return scope.GetVariable<T>("result");
+		}
+
+		/// <summary>
+		/// Calls a script subroutine in a sandboxed environment.
+		/// Note that the return value of the script may still contain insecure code, so be careful!
+		/// </summary>
+		/// <param name="script">The script containing the function.</param>
+		/// <param name="function">The name of the function.</param>
+		/// <param name="args">Arguments to pass to the function.</param>
+		/// <returns>The return value.</returns>
+		public static void CallSubroutine(string script, string function, params object[] args)
+		{
+			var fullScript = script + "\n\n" + function + "(" + string.Join(", ", args) + ");";
 			var compiledScript = CompileScript(script);
-			var scope = InjectVariables(null);
-			
-			// run the specified function
-			return engine.Operations.Invoke(scope.GetVariable(function), args);
+			var handle = compiledScript.ExecuteAndWrap();
+			var eo = engine.GetService<ExceptionOperations>();
+			var obj = handle.Unwrap();
+			if (obj is Exception)
+				throw (Exception)obj;
 		}
 
 		private static Microsoft.Scripting.Hosting.ScriptEngine engine;
+	}
+
+	public class ScriptException : Exception
+	{
+		public ScriptException(string message)
+			: base(message)
+		{
+		}
 	}
 }

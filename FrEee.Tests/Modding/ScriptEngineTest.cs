@@ -9,24 +9,20 @@ namespace FrEee.Tests.Modding
 	public class ScriptEngineTest
 	{
 		[TestMethod]
-		public void RunScript()
+		public void EvaluateExpression()
 		{
-			var script = "return x * y;";
+			var script = "x * y";
 			var variables = new Dictionary<string, object>();
 			variables.Add("x", 6);
 			variables.Add("y", 7);
-			Assert.AreEqual(42, (int)ScriptEngine.RunScript(script, variables));
+			Assert.AreEqual(42, ScriptEngine.EvaluateExpression<int>(script, variables));
 		}
 
 		[TestMethod]
 		public void CallFunction()
 		{
-			var script =
-				@"
-					def square(x):
-						return x ^ 2;
-				";
-			Assert.AreEqual(64, (int)ScriptEngine.CallFunction(script, "square", 8));
+			var script = "def square(x):\n\treturn x ** 2;";
+			Assert.AreEqual(64, ScriptEngine.CallFunction<int>(script, "square", 8));
 		}
 	}
 }
