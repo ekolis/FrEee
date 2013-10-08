@@ -605,11 +605,11 @@ namespace FrEee.WinForms.Forms
 			this.resRes.BackColor = System.Drawing.Color.Black;
 			this.resRes.Change = null;
 			this.resRes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			this.resRes.Location = new System.Drawing.Point(688, 6);
+			this.resRes.Location = new System.Drawing.Point(599, 6);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
 			this.resRes.ResourceName = "Research";
-			this.resRes.Size = new System.Drawing.Size(87, 20);
+			this.resRes.Size = new System.Drawing.Size(176, 20);
 			this.resRes.TabIndex = 13;
 			// 
 			// resRad

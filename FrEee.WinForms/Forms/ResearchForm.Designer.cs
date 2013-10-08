@@ -399,7 +399,7 @@
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
 			this.resRes.ResourceName = "Research";
-			this.resRes.Size = new System.Drawing.Size(88, 20);
+			this.resRes.Size = new System.Drawing.Size(152, 20);
 			this.resRes.TabIndex = 26;
 			// 
 			// tableLayoutPanel1
@@ -412,7 +412,6 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 42F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 99F));
-			this.tableLayoutPanel1.Controls.Add(this.lblPoints, 0, 0);
 			this.tableLayoutPanel1.Controls.Add(this.ddlGroup, 2, 0);
 			this.tableLayoutPanel1.Controls.Add(this.btnBottom, 3, 9);
 			this.tableLayoutPanel1.Controls.Add(this.btnDown, 4, 9);
@@ -432,6 +431,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.gridQueues, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.lblSpending, 3, 2);
 			this.tableLayoutPanel1.Controls.Add(this.txtTechDiscription, 3, 1);
+			this.tableLayoutPanel1.Controls.Add(this.lblPoints, 0, 0);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";

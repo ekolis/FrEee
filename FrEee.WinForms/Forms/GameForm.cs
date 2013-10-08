@@ -513,6 +513,8 @@ namespace FrEee.WinForms.Forms
 			resRad.Amount = Galaxy.Current.CurrentEmpire.StoredResources[Resource.Radioactives];
 			resRad.Change = income[Resource.Radioactives];
 			resRes.Amount = income[Resource.Research];
+			if (Empire.Current.BonusResearch != 0)
+				resRes.Change = Empire.Current.BonusResearch;
 			resInt.Amount = income[Resource.Intelligence];
 		}
 
