@@ -57,32 +57,31 @@
 			this.resCostOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resCostMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.label2 = new System.Windows.Forms.Label();
-			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.lstShips = new System.Windows.Forms.ListView();
-			this.colShipItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colShipETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.lstFacilities = new System.Windows.Forms.ListView();
-			this.colFacilityItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colFacilityETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabPage2 = new System.Windows.Forms.TabPage();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.lstUpgrades = new System.Windows.Forms.ListView();
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.resRadioactivesRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resOrganicsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMineralsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.lstUpgrades = new System.Windows.Forms.ListView();
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.lstFacilities = new System.Windows.Forms.ListView();
+			this.colFacilityItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colFacilityETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.lstShips = new System.Windows.Forms.ListView();
+			this.colShipItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colShipETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
-			this.gameTabControl1.SuspendLayout();
-			this.tabPage1.SuspendLayout();
-			this.tabPage3.SuspendLayout();
 			this.tabPage4.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.gameTabControl1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -433,163 +432,6 @@
 			this.label2.TabIndex = 13;
 			this.label2.Text = "Cost:";
 			// 
-			// gameTabControl1
-			// 
-			this.gameTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameTabControl1.Controls.Add(this.tabPage1);
-			this.gameTabControl1.Controls.Add(this.tabPage3);
-			this.gameTabControl1.Controls.Add(this.tabPage2);
-			this.gameTabControl1.Controls.Add(this.tabPage4);
-			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.gameTabControl1.Location = new System.Drawing.Point(3, 3);
-			this.gameTabControl1.Name = "gameTabControl1";
-			this.gameTabControl1.SelectedIndex = 0;
-			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
-			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
-			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
-			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameTabControl1.TabIndex = 1;
-			// 
-			// tabPage1
-			// 
-			this.tabPage1.BackColor = System.Drawing.Color.Black;
-			this.tabPage1.Controls.Add(this.lstShips);
-			this.tabPage1.Location = new System.Drawing.Point(4, 22);
-			this.tabPage1.Name = "tabPage1";
-			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(266, 373);
-			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "Ships";
-			// 
-			// lstShips
-			// 
-			this.lstShips.BackColor = System.Drawing.Color.Black;
-			this.lstShips.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstShips.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colShipItem,
-            this.colShipETA});
-			this.lstShips.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstShips.ForeColor = System.Drawing.Color.White;
-			this.lstShips.FullRowSelect = true;
-			this.lstShips.HoverSelection = true;
-			this.lstShips.Location = new System.Drawing.Point(3, 3);
-			this.lstShips.Name = "lstShips";
-			this.lstShips.Size = new System.Drawing.Size(260, 367);
-			this.lstShips.TabIndex = 13;
-			this.lstShips.TileSize = new System.Drawing.Size(32, 32);
-			this.lstShips.UseCompatibleStateImageBehavior = false;
-			this.lstShips.View = System.Windows.Forms.View.Details;
-			this.lstShips.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstShips_ItemMouseHover);
-			this.lstShips.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstShips_MouseDown);
-			this.lstShips.MouseLeave += new System.EventHandler(this.lstShips_MouseLeave);
-			// 
-			// colShipItem
-			// 
-			this.colShipItem.Text = "Item";
-			this.colShipItem.Width = 200;
-			// 
-			// colShipETA
-			// 
-			this.colShipETA.Text = "ETA";
-			this.colShipETA.Width = 40;
-			// 
-			// tabPage3
-			// 
-			this.tabPage3.BackColor = System.Drawing.Color.Black;
-			this.tabPage3.Controls.Add(this.lstFacilities);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(266, 373);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Facilities";
-			// 
-			// lstFacilities
-			// 
-			this.lstFacilities.BackColor = System.Drawing.Color.Black;
-			this.lstFacilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstFacilities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colFacilityItem,
-            this.colFacilityETA});
-			this.lstFacilities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstFacilities.ForeColor = System.Drawing.Color.White;
-			this.lstFacilities.FullRowSelect = true;
-			this.lstFacilities.HoverSelection = true;
-			this.lstFacilities.Location = new System.Drawing.Point(0, 0);
-			this.lstFacilities.Name = "lstFacilities";
-			this.lstFacilities.Size = new System.Drawing.Size(266, 373);
-			this.lstFacilities.TabIndex = 7;
-			this.lstFacilities.TileSize = new System.Drawing.Size(32, 32);
-			this.lstFacilities.UseCompatibleStateImageBehavior = false;
-			this.lstFacilities.View = System.Windows.Forms.View.Details;
-			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
-			this.lstFacilities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDown);
-			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
-			// 
-			// colFacilityItem
-			// 
-			this.colFacilityItem.Text = "Item";
-			this.colFacilityItem.Width = 200;
-			// 
-			// colFacilityETA
-			// 
-			this.colFacilityETA.Text = "ETA";
-			this.colFacilityETA.Width = 40;
-			// 
-			// tabPage2
-			// 
-			this.tabPage2.BackColor = System.Drawing.Color.Black;
-			this.tabPage2.Location = new System.Drawing.Point(4, 22);
-			this.tabPage2.Name = "tabPage2";
-			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(266, 373);
-			this.tabPage2.TabIndex = 1;
-			this.tabPage2.Text = "Units";
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.BackColor = System.Drawing.Color.Black;
-			this.tabPage4.Controls.Add(this.lstUpgrades);
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(266, 373);
-			this.tabPage4.TabIndex = 3;
-			this.tabPage4.Text = "Upgrades";
-			// 
-			// lstUpgrades
-			// 
-			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
-			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5});
-			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
-			this.lstUpgrades.FullRowSelect = true;
-			this.lstUpgrades.HoverSelection = true;
-			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
-			this.lstUpgrades.Name = "lstUpgrades";
-			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
-			this.lstUpgrades.TabIndex = 8;
-			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
-			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
-			this.lstUpgrades.View = System.Windows.Forms.View.Details;
-			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
-			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
-			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "Item";
-			this.columnHeader4.Width = 200;
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "ETA";
-			this.columnHeader5.Width = 40;
-			// 
 			// resRadioactivesRate
 			// 
 			this.resRadioactivesRate.Amount = 0;
@@ -661,6 +503,152 @@
 			this.txtFacilitySlotsFree.TabIndex = 26;
 			this.txtFacilitySlotsFree.Text = "Facility Slots Free:";
 			// 
+			// tabPage4
+			// 
+			this.tabPage4.BackColor = System.Drawing.Color.Black;
+			this.tabPage4.Controls.Add(this.lstUpgrades);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Size = new System.Drawing.Size(266, 373);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "Upgrades";
+			// 
+			// lstUpgrades
+			// 
+			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
+			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
+            this.columnHeader5});
+			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
+			this.lstUpgrades.FullRowSelect = true;
+			this.lstUpgrades.HoverSelection = true;
+			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
+			this.lstUpgrades.Name = "lstUpgrades";
+			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
+			this.lstUpgrades.TabIndex = 8;
+			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
+			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
+			this.lstUpgrades.View = System.Windows.Forms.View.Details;
+			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
+			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
+			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Item";
+			this.columnHeader4.Width = 200;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "ETA";
+			this.columnHeader5.Width = 40;
+			// 
+			// tabPage3
+			// 
+			this.tabPage3.BackColor = System.Drawing.Color.Black;
+			this.tabPage3.Controls.Add(this.lstFacilities);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Size = new System.Drawing.Size(266, 373);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Facilities";
+			// 
+			// lstFacilities
+			// 
+			this.lstFacilities.BackColor = System.Drawing.Color.Black;
+			this.lstFacilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstFacilities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colFacilityItem,
+            this.colFacilityETA});
+			this.lstFacilities.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstFacilities.ForeColor = System.Drawing.Color.White;
+			this.lstFacilities.FullRowSelect = true;
+			this.lstFacilities.HoverSelection = true;
+			this.lstFacilities.Location = new System.Drawing.Point(0, 0);
+			this.lstFacilities.Name = "lstFacilities";
+			this.lstFacilities.Size = new System.Drawing.Size(266, 373);
+			this.lstFacilities.TabIndex = 7;
+			this.lstFacilities.TileSize = new System.Drawing.Size(32, 32);
+			this.lstFacilities.UseCompatibleStateImageBehavior = false;
+			this.lstFacilities.View = System.Windows.Forms.View.Details;
+			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
+			this.lstFacilities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDown);
+			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
+			// 
+			// colFacilityItem
+			// 
+			this.colFacilityItem.Text = "Item";
+			this.colFacilityItem.Width = 200;
+			// 
+			// colFacilityETA
+			// 
+			this.colFacilityETA.Text = "ETA";
+			this.colFacilityETA.Width = 40;
+			// 
+			// tabPage1
+			// 
+			this.tabPage1.BackColor = System.Drawing.Color.Black;
+			this.tabPage1.Controls.Add(this.lstShips);
+			this.tabPage1.Location = new System.Drawing.Point(4, 22);
+			this.tabPage1.Name = "tabPage1";
+			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+			this.tabPage1.Size = new System.Drawing.Size(266, 373);
+			this.tabPage1.TabIndex = 0;
+			this.tabPage1.Text = "Vehicles";
+			// 
+			// lstShips
+			// 
+			this.lstShips.BackColor = System.Drawing.Color.Black;
+			this.lstShips.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstShips.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colShipItem,
+            this.colShipETA});
+			this.lstShips.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstShips.ForeColor = System.Drawing.Color.White;
+			this.lstShips.FullRowSelect = true;
+			this.lstShips.HoverSelection = true;
+			this.lstShips.Location = new System.Drawing.Point(3, 3);
+			this.lstShips.Name = "lstShips";
+			this.lstShips.Size = new System.Drawing.Size(260, 367);
+			this.lstShips.TabIndex = 13;
+			this.lstShips.TileSize = new System.Drawing.Size(32, 32);
+			this.lstShips.UseCompatibleStateImageBehavior = false;
+			this.lstShips.View = System.Windows.Forms.View.Details;
+			this.lstShips.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstShips_ItemMouseHover);
+			this.lstShips.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstShips_MouseDown);
+			this.lstShips.MouseLeave += new System.EventHandler(this.lstShips_MouseLeave);
+			// 
+			// colShipItem
+			// 
+			this.colShipItem.Text = "Item";
+			this.colShipItem.Width = 200;
+			// 
+			// colShipETA
+			// 
+			this.colShipETA.Text = "ETA";
+			this.colShipETA.Width = 40;
+			// 
+			// gameTabControl1
+			// 
+			this.gameTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gameTabControl1.Controls.Add(this.tabPage1);
+			this.gameTabControl1.Controls.Add(this.tabPage3);
+			this.gameTabControl1.Controls.Add(this.tabPage4);
+			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+			this.gameTabControl1.Location = new System.Drawing.Point(3, 3);
+			this.gameTabControl1.Name = "gameTabControl1";
+			this.gameTabControl1.SelectedIndex = 0;
+			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
+			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
+			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
+			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
+			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
+			this.gameTabControl1.TabIndex = 1;
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -701,10 +689,10 @@
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel1.PerformLayout();
-			this.gameTabControl1.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
-			this.tabPage3.ResumeLayout(false);
 			this.tabPage4.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.gameTabControl1.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -717,14 +705,8 @@
 		private Controls.ResourceDisplay resOrganicsRate;
 		private Controls.ResourceDisplay resRadioactivesRate;
 		private Controls.GamePanel gamePanel1;
-		private Controls.GameTabControl gameTabControl1;
-		private System.Windows.Forms.TabPage tabPage1;
-		private System.Windows.Forms.TabPage tabPage3;
-		private System.Windows.Forms.TabPage tabPage2;
-		private System.Windows.Forms.TabPage tabPage4;
 		private Controls.GamePanel gamePanel2;
 		private System.Windows.Forms.ListView lstQueue;
-		private System.Windows.Forms.ListView lstFacilities;
 		private System.Windows.Forms.CheckBox chkOnlyLatest;
 		private System.Windows.Forms.CheckBox chkEmergency;
 		private System.Windows.Forms.CheckBox chkRepeat;
@@ -738,16 +720,11 @@
 		private Controls.GameButton btnOK;
 		private Controls.GameButton btnCancel;
 		private System.Windows.Forms.ColumnHeader ETA;
-		private System.Windows.Forms.ListView lstShips;
 		private System.Windows.Forms.Label txtName;
 		private Controls.ResourceDisplay resCostRad;
 		private Controls.ResourceDisplay resCostOrg;
 		private Controls.ResourceDisplay resCostMin;
 		private System.Windows.Forms.Label label2;
-		private System.Windows.Forms.ColumnHeader colShipItem;
-		private System.Windows.Forms.ColumnHeader colShipETA;
-		private System.Windows.Forms.ColumnHeader colFacilityItem;
-		private System.Windows.Forms.ColumnHeader colFacilityETA;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
@@ -756,10 +733,20 @@
 		private Controls.GameButton btnTop;
 		private Controls.GameButton btnBottom;
 		private Controls.GameButton btnDelete;
+		private System.Windows.Forms.Label txtCargoStorageFree;
+		private System.Windows.Forms.Label txtFacilitySlotsFree;
+		private Controls.GameTabControl gameTabControl1;
+		private System.Windows.Forms.TabPage tabPage1;
+		private System.Windows.Forms.ListView lstShips;
+		private System.Windows.Forms.ColumnHeader colShipItem;
+		private System.Windows.Forms.ColumnHeader colShipETA;
+		private System.Windows.Forms.TabPage tabPage3;
+		private System.Windows.Forms.ListView lstFacilities;
+		private System.Windows.Forms.ColumnHeader colFacilityItem;
+		private System.Windows.Forms.ColumnHeader colFacilityETA;
+		private System.Windows.Forms.TabPage tabPage4;
 		private System.Windows.Forms.ListView lstUpgrades;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
-		private System.Windows.Forms.Label txtCargoStorageFree;
-		private System.Windows.Forms.Label txtFacilitySlotsFree;
 	}
 }
