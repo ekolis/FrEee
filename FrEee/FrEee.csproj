@@ -32,6 +32,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>FrEeeStrongName.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
@@ -195,6 +201,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\GlobalScriptLoader.cs" />
     <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
     <Compile Include="Modding\Loaders\CultureLoader.cs" />
     <Compile Include="Modding\Loaders\DataFileLoader.cs" />
@@ -209,6 +216,7 @@
     <Compile Include="Modding\ModInfo.cs" />
     <Compile Include="Modding\ModSettings.cs" />
     <Compile Include="Modding\PopulationModifier.cs" />
+    <Compile Include="Modding\Script.cs" />
     <Compile Include="Modding\ScriptEngine.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
@@ -301,6 +309,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="FrEeeStrongName.snk" />
     <None Include="GameSetups\Quickstart.gsu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

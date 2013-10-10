@@ -1472,5 +1472,20 @@ namespace FrEee.Utility.Extensions
 				return null;
 			return (long)i.Value;
 		}
+
+		public static string EscapeBackslashes(this string s)
+		{
+			return s.Replace("\\", "\\\\");
+		}
+
+		public static string EscapeQuotes(this string s)
+		{
+			return s.Replace("'", "\\'").Replace("\"", "\\\"");
+		}
+
+		public static string EscapeNewlines(this string s)
+		{
+			return s.Replace("\r", "\\r").Replace("\n", "\\n");
+		}
 	}
 }

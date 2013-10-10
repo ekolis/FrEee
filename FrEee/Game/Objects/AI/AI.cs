@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.AI
 		/// <summary>
 		/// The script to run.
 		/// </summary>
-		public string Script { get; set; }
+		public Script Script { get; set; }
 
 		/// <summary>
 		/// Allows the AI to act on its domain using information from its context.

@@ -66,6 +66,7 @@ namespace FrEee.Modding
 				new GalaxyLoader(path),
 				new HappinessModelLoader(path),
 				new CultureLoader(path),
+				new GlobalScriptLoader(path),
 			};
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
@@ -202,6 +203,11 @@ namespace FrEee.Modding
 		/// The empire cultures in the game.
 		/// </summary>
 		public ICollection<Culture> Cultures { get; private set; }
+
+		/// <summary>
+		/// The global Python script module which is available to all scripts in the mod.
+		/// </summary>
+		public Script GlobalScript { get; set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.
