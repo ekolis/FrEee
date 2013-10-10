@@ -38,7 +38,8 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			pictureBox1.Image = Image.FromFile(Properties.Resources.FrEeeSplash);
-			Icon = new Icon(Properties.Resources.FrEeeIcon);
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		#region Button click handlers
@@ -90,7 +91,7 @@ namespace FrEee.WinForms.Forms
 
 			if (status.Exception == null && !warnings.Any())
 			{
-				var game = new GameForm(Galaxy.Current);
+				var game = new GameForm(false);
 				game.Show();
 				game.FormClosed += (s, args) =>
 				{
@@ -111,36 +112,27 @@ namespace FrEee.WinForms.Forms
 				LoadGalaxyFromFile(dlg.FileName);
 		}
 
-	    private void LoadGalaxyFromFile(string filename)
-	    {
-            Galaxy.Load(filename);
-            if (Galaxy.Current.CurrentEmpire == null)
-            {
-                // host view, prompt for turn processing
-                if (MessageBox.Show("Process the turn for " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ")?", "FrEee", MessageBoxButtons.YesNo) == DialogResult.Yes)
-                {
-                    Cursor = Cursors.WaitCursor;
-                    var status = new Status { Message = "Initializing" };
-                    var t = new Thread(new ThreadStart(() =>
-                    {
-                        status.Message = "Processing turn";
-                        Galaxy.ProcessTurn(status, 0.5);
-                        Galaxy.SaveAll(status, 1.0);
-                    }));
-                    this.ShowChildForm(new StatusForm(t, status));
-                    MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
-                    Cursor = Cursors.Default;
-                }
-            }
-            else
-            {
-                // player view, load up the game
-                var form = new GameForm(Galaxy.Current);
-                Hide();
-                form.ShowDialog();
-                Show();
-            }
-	    }
+		private void LoadGalaxyFromFile(string filename)
+		{
+			Galaxy.Load(filename);
+			if (Galaxy.Current.CurrentEmpire == null)
+			{
+				// host view, load host console
+				Cursor = Cursors.WaitCursor;
+				var form = new HostConsoleForm();
+				Hide();
+				this.ShowChildForm(form);
+				Show();
+			}
+			else
+			{
+				// player view, load up the game
+				var form = new GameForm(false);
+				Hide();
+				form.ShowDialog();
+				Show();
+			}
+		}
 
 		private void btnQuit_Click(object sender, EventArgs e)
 		{
@@ -192,15 +184,15 @@ namespace FrEee.WinForms.Forms
 
 		private void btnResume_Click(object sender, EventArgs e)
 		{
-		    var mostRecent = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Savegame"))
-		        .Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
-		        .OrderByDescending(kvp => kvp.Value)
-		        .Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
-                .ToList();
-		    if (mostRecent.Any())
-		        LoadGalaxyFromFile(mostRecent.First().Key);
-		    else
-		        MessageBox.Show("No games to resume; please create a new game.");
+			var mostRecent = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Savegame"))
+				.Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
+				.OrderByDescending(kvp => kvp.Value)
+				.Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
+				.ToList();
+			if (mostRecent.Any())
+				LoadGalaxyFromFile(mostRecent.First().Key);
+			else
+				MessageBox.Show("No games to resume; please create a new game.");
 		}
 
 		private void btnScenario_Click(object sender, EventArgs e)

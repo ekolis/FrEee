@@ -60,7 +60,7 @@ namespace FrEee.WinForms
 				else
 				{
 					// play turn
-					Application.Run(new GameForm(Galaxy.Current));
+					Application.Run(new GameForm(false));
 					return 0;
 				}
 			}

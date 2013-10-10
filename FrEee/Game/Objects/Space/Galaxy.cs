@@ -540,16 +540,28 @@ namespace FrEee.Game.Objects.Space
 				cmd.ReplaceClientIDs(idmap); // convert client IDs to server IDs
 		}
 
-		private string GetEmpireCommandsSavePath(Empire emp)
+		public string GetEmpireCommandsSavePath(Empire emp)
 		{
-			return Path.Combine("Savegame", String.Format("{0}_{1}_{2:d4}{3}", Name, TurnNumber, Empires.IndexOf(emp) + 1, FrEeeConstants.PlayerCommandsSaveGameExtension));
+			return GetEmpireCommandsSavePath(Name, TurnNumber, Empires.IndexOf(emp) + 1);
 		}
 
-		private string GetEmpireSavePath()
+		public string GetGameSavePath(Empire emp = null)
 		{
-			return Path.Combine("Savegame", CurrentEmpire == null ?
-				String.Format("{0}_{1}{2}", Name, TurnNumber, FrEeeConstants.SaveGameExtension) :
-				String.Format("{0}_{1}_{2}{3}", Name, TurnNumber, Empires.IndexOf(CurrentEmpire) + 1, FrEeeConstants.SaveGameExtension));
+			if (emp == null)
+				emp = CurrentEmpire;
+			return GetGameSavePath(Name, TurnNumber, emp == null ? 0 : (Empires.IndexOf(emp) + 1));
+		}
+
+		public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
+		{
+			return Path.Combine("Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
+		}
+
+		public static string GetGameSavePath(string gameName, int turnNumber, int empireNumber)
+		{
+			return Path.Combine("Savegame", empireNumber < 1 ?
+				String.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
+				String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
 		}
 
 		#endregion

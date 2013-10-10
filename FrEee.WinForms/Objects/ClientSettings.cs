@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms
+namespace FrEee.WinForms.Objects
 {
 	/// <summary>
 	/// Client settings that don't need to be persisted to the server.

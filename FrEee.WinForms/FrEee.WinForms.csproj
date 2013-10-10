@@ -75,7 +75,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClientSettings.cs" />
+    <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -260,6 +260,12 @@
     <Compile Include="Forms\FleetTransferForm.Designer.cs">
       <DependentUpon>FleetTransferForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\HostConsoleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HostConsoleForm.Designer.cs">
+      <DependentUpon>HostConsoleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ModPickerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -417,6 +423,9 @@
     <EmbeddedResource Include="Forms\FleetTransferForm.resx">
       <DependentUpon>FleetTransferForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HostConsoleForm.resx">
+      <DependentUpon>HostConsoleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModPickerForm.resx">
       <DependentUpon>ModPickerForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -472,6 +481,7 @@
     <None Include="app.config" />
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.EmpireStatus.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Mount.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy.datasource" />

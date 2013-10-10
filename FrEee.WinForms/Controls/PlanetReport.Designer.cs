@@ -81,7 +81,6 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlColony.SuspendLayout();
@@ -94,11 +93,6 @@ namespace FrEee.WinForms.Controls
 			// 
 			// gameTabControl1
 			// 
-			this.gameTabControl1.Controls.Add(this.pageDetail);
-			this.gameTabControl1.Controls.Add(this.pageFacil);
-			this.gameTabControl1.Controls.Add(this.pageCargo);
-			this.gameTabControl1.Controls.Add(this.pageOrders);
-			this.gameTabControl1.Controls.Add(this.pageAbility);
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.gameTabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -495,7 +489,7 @@ namespace FrEee.WinForms.Controls
 			this.txtName.AutoSize = true;
 			this.txtName.Location = new System.Drawing.Point(143, 6);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(79, 20);
+			this.txtName.Size = new System.Drawing.Size(54, 13);
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Tudran IV";
 			// 
@@ -667,12 +661,11 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstOrdersDetail.ForeColor = System.Drawing.Color.White;
 			this.lstOrdersDetail.FormattingEnabled = true;
-			this.lstOrdersDetail.ItemHeight = 20;
 			this.lstOrdersDetail.Items.AddRange(new object[] {
             "Launch All Fighters"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 4);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 360);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(299, 351);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// pageAbility
@@ -707,7 +700,6 @@ namespace FrEee.WinForms.Controls
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "PlanetReport";
 			this.Size = new System.Drawing.Size(320, 459);
-			this.gameTabControl1.ResumeLayout(false);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();

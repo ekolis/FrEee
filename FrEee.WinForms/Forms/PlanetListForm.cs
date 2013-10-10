@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Properties;
 using FrEee.WinForms.Controls;
+using FrEee.WinForms.Objects;
 
 namespace FrEee.WinForms.Forms
 {

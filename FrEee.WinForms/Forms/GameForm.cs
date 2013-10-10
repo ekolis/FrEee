@@ -26,11 +26,17 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class GameForm : Form
 	{
-		public GameForm(Galaxy galaxy)
+		/// <summary>
+		/// Creates a game form.
+		/// </summary>
+		/// <param name="hostView">Is this the host viewing a player's view? If so, we shouldn't attempt to process the turn after he clicks End Turn, even if the game is single player.</param>
+		public GameForm(bool hostView)
 		{
 			InitializeComponent();
+			this.hostView = hostView;
 		}
 
+		private bool hostView;
 
 		private void GameForm_Load(object sender, EventArgs e)
 		{
@@ -407,6 +413,34 @@ namespace FrEee.WinForms.Forms
 
 		private void btnEndTurn_Click(object sender, EventArgs e)
 		{
+			var todos = FindTodos();
+
+			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			{
+				var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
+				if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				{
+					EndTurn();
+
+					// show empire log if there's anything new there
+					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+						this.ShowChildForm(new LogForm(this));
+				}
+			}
+			else
+			{
+				var msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
+				if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				{
+					EndTurn();
+					turnEnded = true;
+					Close();
+				}
+			}
+		}
+
+		private IEnumerable<string> FindTodos()
+		{
 			var todos = new List<string>();
 
 			var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
@@ -445,22 +479,7 @@ namespace FrEee.WinForms.Forms
 
 			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
 
-			var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
-			if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-			{
-				EndTurn();
-				if (!Galaxy.Current.IsSinglePlayer)
-				{
-					turnEnded = true;
-					Close();
-				}
-				else
-				{
-					// show empire log if there's anything new there
-					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
-						this.ShowChildForm(new LogForm(this));
-				}
-			}
+			return todos;
 		}
 
 		private void SetUpGui()
@@ -522,7 +541,15 @@ namespace FrEee.WinForms.Forms
 		{
 			if (!turnEnded)
 			{
-				switch (MessageBox.Show("Save your commands before quitting?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
+				var todos = FindTodos();
+
+				string msg;
+				if (Galaxy.Current.IsSinglePlayer && !hostView)
+					msg = !todos.Any() ? "Save your commands and process the turn before quitting?" : "Save your commands and process the turn before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
+				else
+					msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
+				
+				switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
 					case DialogResult.Yes:
 						EndTurn();
@@ -541,7 +568,7 @@ namespace FrEee.WinForms.Forms
 		private void EndTurn()
 		{
 			Galaxy.Current.SaveCommands();
-			if (Galaxy.Current.IsSinglePlayer)
+			if (Galaxy.Current.IsSinglePlayer && !hostView)
 			{
 				Cursor = Cursors.WaitCursor;
 				Enabled = false;

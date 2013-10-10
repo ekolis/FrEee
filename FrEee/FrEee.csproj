@@ -122,6 +122,7 @@
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\CargoDelta.cs" />
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
+    <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
