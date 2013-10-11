@@ -14,6 +14,7 @@ using Microsoft.Scripting.Hosting;
 using System.Reflection;
 using System.Data;
 using FrEee.Utility;
+using Microsoft.Scripting.Runtime;
 
 namespace FrEee.Modding
 {
@@ -127,23 +128,17 @@ namespace FrEee.Modding
 			}
 			var compiledScript = Compile(script);
 			var scope = CreateScope(variables);
-			object result;
 			try
 			{
-				var handle = compiledScript.ExecuteAndWrap(scope);
-				result = handle.Unwrap();
-				if (result is T)
-					return (T)result;
-				else
-					throw new ScriptException("Expected " + typeof(T) + " return value from " + expression + ", got " + result.GetType() + ".");
+				return compiledScript.Execute<T>(scope);
 			}
-			catch (Microsoft.Scripting.SyntaxErrorException ex)
+			catch (Exception ex)
 			{
-				throw new ScriptException(
-@"Syntax error in script on line " + ex.Line + @" column " + ex.Column + @":
-" + ex.Message + @"
-Source code in question:
-" + ex.SourceCode);
+				dynamic info = ex.Data.Values.Cast<dynamic>().First();
+				var debugInfo = info[0].DebugInfo;
+				int startLine = debugInfo.StartLine;
+				int endLine = debugInfo.StartLine;
+				throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
 			}
 		}
 
@@ -166,11 +161,17 @@ Source code in question:
 			}
 			var runner = new Script("runner", string.Join("\n", deserializers.ToArray()) + "\n" + script.Text, script.ExternalScripts.ToArray());
 			var compiledScript = Compile(runner);
-			var handle = compiledScript.ExecuteAndWrap(scope);
-			if (handle.Unwrap() is Exception)
+			try
 			{
-				var error = engine.GetService<ExceptionOperations>().FormatException(handle);
-				throw new ScriptException(error);
+				compiledScript.Execute(scope);
+			}
+			catch (Exception ex)
+			{
+				dynamic info = ex.Data.Values.Cast<dynamic>().First();
+				var debugInfo = info[0].DebugInfo;
+				int startLine = debugInfo.StartLine;
+				int endLine = debugInfo.StartLine;
+				throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
 			}
 		}
 
@@ -199,23 +200,17 @@ Source code in question:
 			var functionCall = new Script("functionCall", string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")", script);
 			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
 			var compiledScript = Compile(functionCall);
-			object result;
 			try
 			{
-				var handle = compiledScript.ExecuteAndWrap(scope);
-				result = handle.Unwrap();
-				if (result is T)
-					return (T)result;
-				else
-					throw new ScriptException("Expected " + typeof(T) + " return value from calling " + function + " in module " + script.ModuleName + ", got " + result.GetType() + ".");
+				return compiledScript.Execute<T>(scope);
 			}
-			catch (Microsoft.Scripting.SyntaxErrorException ex)
+			catch (Exception ex)
 			{
-				throw new ScriptException(
-@"Syntax error in script on line " + ex.Line + @" column " + ex.Column + @":
-" + ex.Message + @"
-Source code in question:
-" + ex.SourceCode);
+				dynamic info = ex.Data.Values.Cast<dynamic>().First();
+				var debugInfo = info[0].DebugInfo;
+				int startLine = debugInfo.StartLine;
+				int endLine = debugInfo.StartLine;
+				throw new ScriptException(ex, string.Join("\n", functionCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
 			}
 		}
 
@@ -244,20 +239,19 @@ Source code in question:
 			var subCall = new Script("subCall", string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")", script);
 			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
 			var compiledScript = Compile(subCall);
-			string error = null;
-			sandbox.DoCallBack(() =>
+			
+			try
 			{
-				try
-				{
-					compiledScript.ExecuteAndWrap(scope);
-				}
-				catch (Exception ex)
-				{
-					error = ex.Message;
-				}
-			});
-			if (error != null)
-				throw new ScriptException(error);
+				compiledScript.Execute(scope);
+			}
+			catch (Exception ex)
+			{
+				dynamic info = ex.Data.Values.Cast<dynamic>().First();
+				var debugInfo = info[0].DebugInfo;
+				int startLine = debugInfo.StartLine;
+				int endLine = debugInfo.StartLine;
+				throw new ScriptException(ex, string.Join("\n", subCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+			}
 		}
 
 		private static AppDomain sandbox;
@@ -268,6 +262,11 @@ Source code in question:
 	{
 		public ScriptException(string message)
 			: base(message)
+		{
+		}
+
+		public ScriptException(Exception ex, string code)
+			: base("In this code:\n" + code + "\n" + ex.Message)
 		{
 		}
 	}
