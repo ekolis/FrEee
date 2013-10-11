@@ -10,6 +10,7 @@ namespace FrEee.Modding
 	/// <summary>
 	/// Encapsulates a game script and any references to external scripts and global variables.
 	/// </summary>
+	[Serializable]
 	public class Script
 	{
 		/// <summary>
@@ -42,7 +43,12 @@ namespace FrEee.Modding
 			if (File.Exists(scriptFilename))
 			{
 				foreach (var externalScriptPath in File.ReadAllLines(scriptFilename))
-					externalScripts.Add(Script.Load(externalScriptPath));
+				{
+					var externalScript = Script.Load(externalScriptPath);
+					if (externalScript == null)
+						throw new ScriptException("Cannot find script file: " + Path.Combine(Directory.GetCurrentDirectory(), externalScriptPath + ".py"));
+					externalScripts.Add(externalScript);
+				}
 			}
 			return new Script(moduleName, text, externalScripts.ToArray());
 		}

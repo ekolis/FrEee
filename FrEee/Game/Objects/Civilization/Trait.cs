@@ -10,6 +10,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A trait that grants abilities to an empire or race.
 	/// </summary>
+	[Serializable]
 	public class Trait : INamed, IAbilityObject
 	{
 		public Trait()

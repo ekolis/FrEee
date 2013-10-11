@@ -15,6 +15,9 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Civilization
 {
+	/// <summary>
+	/// Something which can construct objects.
+	/// </summary>
 	[Serializable]
 	public class ConstructionQueue : IOrderable, IOwnable, IFoggable
 	{

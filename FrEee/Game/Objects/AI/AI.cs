@@ -12,6 +12,7 @@ namespace FrEee.Game.Objects.AI
 	/// </summary>
 	/// <typeparam name="TDomain">The type of domain.</typeparam>
 	/// <typeparam name="TContext">The type of contextual data that the AI needs to be aware of.</typeparam>
+	[Serializable]
 	public class AI<TDomain, TContext> : INamed
 	{
 		public AI(string name, Script script, IDictionary<string, ICollection<string>> ministerNames)

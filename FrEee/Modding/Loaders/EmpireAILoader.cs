@@ -30,12 +30,12 @@ namespace FrEee.Modding.Loaders
 				empsFolder = Path.Combine(ModPath, "Pictures", "Races");
 			foreach (var empFolder in Directory.GetDirectories(empsFolder))
 			{
-				var script = Script.Load(Path.Combine(empsFolder, empFolder, "AI"));
+				var script = Script.Load(Path.Combine(empFolder, "AI"));
 				if (script == null)
 					continue; // script does not exist for this shipset
 				var ministers = new SafeDictionary<string, ICollection<string>>();
 				string curCategory = "Uncategorized";
-				var ministersFile = Path.Combine(empsFolder, empFolder, "AI.ministers");
+				var ministersFile = Path.Combine(empFolder, "AI.ministers");
 				if (File.Exists(ministersFile))
 				{
 					foreach (var line in File.ReadAllLines(ministersFile))
@@ -55,7 +55,7 @@ namespace FrEee.Modding.Loaders
 						}
 					}
 				}
-				var ai = new AI<Empire, Galaxy>(empFolder, script, ministers);
+				var ai = new AI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
 				mod.EmpireAIs.Add(ai);
 			}
 		}

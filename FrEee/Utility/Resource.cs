@@ -11,6 +11,7 @@ namespace FrEee.Utility
 	/// <summary>
 	/// A resource in the game.
 	/// </summary>
+	[Serializable]
 	public class Resource : INamed, IPictorial
 	{
 		static Resource()

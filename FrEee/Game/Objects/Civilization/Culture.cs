@@ -9,6 +9,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// An empire's culture. Provides percentage modifiers to various abilities.
 	/// </summary>
+	[Serializable]
 	public class Culture : INamed
 	{
 		public string Name { get; set; }

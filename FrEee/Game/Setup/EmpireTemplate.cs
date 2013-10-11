@@ -129,7 +129,7 @@ namespace FrEee.Game.Setup
 			emp.Culture = Culture ?? PrimaryRace.Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
-			emp.AI = Mod.Current.EmpireAIs.Find(AIName);
+			emp.AI = Mod.Current.EmpireAIs.Find(AIName ?? PrimaryRace.AIName);
 
 			return emp;
 		}

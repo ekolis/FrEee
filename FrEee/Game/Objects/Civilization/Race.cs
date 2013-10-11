@@ -18,6 +18,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A race of beings.
 	/// </summary>
+	[Serializable]
 	public class Race : INamed, IAbilityObject, IPictorial, IReferrable
 	{
 		public Race()
