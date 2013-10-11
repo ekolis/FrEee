@@ -66,13 +66,18 @@ namespace FrEee.Modding
 		/// </summary>
 		/// <param name="variables">The variables to set, or null to set no variables.</param>
 		/// <returns></returns>
-		public static ScriptScope CreateScope(IDictionary<string, object> variables = null)
+		public static ScriptScope CreateScope(IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
 			// Set injected variables
 			var scope = engine.CreateScope();
 			if (variables != null)
 			{
 				foreach (var kvp in SerializeScriptVariables(variables))
+					scope.SetVariable("_" + kvp.Key, kvp.Value);
+			}
+			if (readOnlyVariables != null)
+			{
+				foreach (var kvp in SerializeScriptVariables(readOnlyVariables))
 					scope.SetVariable("_" + kvp.Key, kvp.Value);
 			}
 			return scope;
@@ -159,10 +164,11 @@ namespace FrEee.Modding
 		/// Runs a script in a sandboxed environment.
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
-		/// <param name="variables">Variables to inject into the script.</param>
-		public static void RunScript(Script script, IDictionary<string, object> variables = null)
+		/// <param name="variables">Read/write variables to inject into the script.</param>
+		/// /// <param name="variables">Read-only variables to inject into the script.</param>
+		public static void RunScript(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
-			var scope = CreateScope(variables);
+			var scope = CreateScope(variables, readOnlyVariables);
 			var deserializers = new List<string>();
 			var serializers = new List<string>();
 			if (variables != null)
@@ -175,6 +181,8 @@ namespace FrEee.Modding
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					serializers.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
 				}
+				foreach (var variable in readOnlyVariables.Keys)
+					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 			}
 			var runner = new Script("runner",
 				string.Join("\n", deserializers.ToArray()) + "\n" +
@@ -224,6 +232,7 @@ namespace FrEee.Modding
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
+				// TODO - serializers so the objects can be modified by the script
 			}
 			var arglist = new List<string>();
 			for (var i = 0; i < args.Length; i++)
@@ -268,6 +277,7 @@ namespace FrEee.Modding
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
+				// TODO - serializers so the objects can be modified by the script
 			}
 			var arglist = new List<string>();
 			for (var i = 0; i < args.Length; i++)

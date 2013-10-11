@@ -40,11 +40,12 @@ namespace FrEee.Game.Objects.AI
 		/// <param name="enabledMinisters">The names of any ministers that the player has enabled, keyed by category.</param>
 		public void Act(TDomain domain, TContext context, IDictionary<string, ICollection<string>> enabledMinisters)
 		{
-			var dict = new Dictionary<string, object>();
-			dict.Add("domain", domain);
-			dict.Add("context", context);
-			dict.Add("enabledMinisters", enabledMinisters);
-			ScriptEngine.RunScript(Script, dict);
+			var variables = new Dictionary<string, object>();
+			variables.Add("domain", domain);
+			var readOnlyVariables = new Dictionary<string, object>();
+			readOnlyVariables.Add("context", context);
+			readOnlyVariables.Add("enabledMinisters", enabledMinisters);
+			ScriptEngine.RunScript(Script, variables, readOnlyVariables);
 		}
 
 		public string Name
