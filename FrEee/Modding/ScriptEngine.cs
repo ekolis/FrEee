@@ -164,12 +164,14 @@ Source code in question:
 				foreach (var variable in variables.Keys)
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 			}
-			var runner = new Script("runner", string.Join("\n", deserializers.ToArray()) + "\n" + script.Text);
+			var runner = new Script("runner", string.Join("\n", deserializers.ToArray()) + "\n" + script.Text, script.ExternalScripts.ToArray());
 			var compiledScript = Compile(runner);
 			var handle = compiledScript.ExecuteAndWrap(scope);
-			var error = engine.GetService<ExceptionOperations>().FormatException(handle);
-			if (error != null)
+			if (handle.Unwrap() is Exception)
+			{
+				var error = engine.GetService<ExceptionOperations>().FormatException(handle);
 				throw new ScriptException(error);
+			}
 		}
 
 		/// <summary>

@@ -123,11 +123,13 @@ namespace FrEee.Modding
 			get
 			{
 				// http://stackoverflow.com/questions/5362771/load-module-from-string-in-python
+				// http://stackoverflow.com/questions/3799545/dynamically-importing-python-module/3799609#3799609
 				return
 @"import sys, imp;
-" + ModuleName + "_code = '" + Text.EscapeBackslashes().EscapeQuotes().EscapeNewlines() + @"';
-" + ModuleName + @" = imp.new_module('" + ModuleName + @"');
+" + ModuleName + "_code = \"\"\"" + Text + "\"\"\";\n" +
+ModuleName + @" = imp.new_module('" + ModuleName + @"');
 exec " + ModuleName + @"_code in " + ModuleName + @".__dict__;
+sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 ";
 			}
 		}

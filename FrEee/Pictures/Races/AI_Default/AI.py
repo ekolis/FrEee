@@ -1,3 +1,4 @@
-from System.Windows import Forms;
-
-MessageBox.Show("The answer is " + ComputeTheAnswer());
+import TestInclude;
+from TestInclude import ComputeTheAnswer;
+from System import Console;
+Console.WriteLine("The answer is " + str(ComputeTheAnswer()));

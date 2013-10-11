@@ -274,32 +274,6 @@ namespace FrEee.Game.Objects.Space
 		#region Data Access
 
 		/// <summary>
-		/// Serializes the game state.
-		/// </summary>
-		/// <returns></returns>
-		private void SerializeGameState(Stream stream)
-		{
-			Serializer.Serialize(this, stream);
-		}
-
-		/// <summary>
-		/// Deserializes the game state.
-		/// </summary>
-		/// <param name="stream"></param>
-		/// <returns></returns>
-		private static Galaxy DeserializeGameState(Stream stream)
-		{
-			var gal = Serializer.Deserialize<Galaxy>(stream);
-			// HACK - why isn't the deserializer setting the ID's?
-			/*for (int id = 0; id < gal.Referrables.Count; id++)
-			{
-				if (gal.Referrables[id] != null)
-					gal.Referrables[id].ID = id;
-			}*/
-			return gal;
-		}
-
-		/// <summary>
 		/// Serializes the player's commands.
 		/// </summary>
 		/// <exception cref="InvalidOperationException">if no current empire</exception>
@@ -357,7 +331,13 @@ namespace FrEee.Game.Objects.Space
 				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			SerializeGameState(stream);
+			Serializer.Serialize(this, stream);
+		}
+
+		public string SaveToString()
+		{
+			AssignIDs();
+			return Serializer.SerializeToString(this);
 		}
 
 		/// <summary>
@@ -377,7 +357,7 @@ namespace FrEee.Game.Objects.Space
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
-			SerializeGameState(fs);
+			Serializer.Serialize(this, fs);
 			fs.Close();
 			return filename;
 		}
@@ -434,7 +414,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="stream"></param>
 		public static void Load(Stream stream)
 		{
-			Galaxy.Current = DeserializeGameState(stream);
+			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
 			Mod.Current = Galaxy.Current.Mod;
 		}
 
@@ -469,6 +449,16 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(string gameName, int turnNumber, int playerNumber)
 		{
 			Load(gameName + "_" + turnNumber + "_" + playerNumber.ToString("d4") + FrEeeConstants.SaveGameExtension);
+		}
+
+		/// <summary>
+		/// Loads from a string in memory.
+		/// </summary>
+		/// <param name="serializedData"></param>
+		public static void LoadFromString(string serializedData)
+		{
+			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
+			Mod.Current = Galaxy.Current.Mod;
 		}
 
 		/// <summary>
@@ -625,20 +615,17 @@ namespace FrEee.Game.Objects.Space
 			// AI commands
 			if (status != null)
 				status.Message = "Playing AI turns";
-			var outStream = new MemoryStream();
-			Current.Save(outStream);
-			var inStream = new MemoryStream(outStream.GetBuffer());
+			var serializedGalaxy = Galaxy.Current.SaveToString();
 			var cmds = new Dictionary<int, IList<ICommand>>();
 			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 			{
-				inStream.Seek(0, SeekOrigin.Begin);
-				Load(inStream);
+				LoadFromString(serializedGalaxy);
 				Current.CurrentEmpire = Current.Empires[i];
 				Current.Redact();
 				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
 				cmds.Add(i, Current.CurrentEmpire.Commands);
 			}
-			Load(inStream);
+			LoadFromString(serializedGalaxy);
 			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 				Current.LoadCommands(Current.Empires[i], cmds[i]);
 			if (status != null)
