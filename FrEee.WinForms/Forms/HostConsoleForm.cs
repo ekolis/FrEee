@@ -38,9 +38,7 @@ namespace FrEee.WinForms.Forms
 
 		private void CacheGalaxy()
 		{
-			var ms = new MemoryStream();
-			Galaxy.Current.Save(ms);
-			serializedGalaxy = Encoding.Unicode.GetString(ms.GetBuffer());
+			serializedGalaxy = Serializer.SerializeToString(Galaxy.Current);
 		}
 
 		private void ReloadGalaxy()

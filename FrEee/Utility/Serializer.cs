@@ -24,7 +24,6 @@ namespace FrEee.Utility
 		{
 			var sw = new StreamWriter(s);
 			Serialize(o, sw, context);
-			sw.Close();
 		}
 
 		public static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)
@@ -33,6 +32,13 @@ namespace FrEee.Utility
 				Serialize(o, w, typeof(T), context, tabLevel);
 			else
 				Serialize(o, w, o.GetType(), context, tabLevel);
+		}
+
+		public static string SerializeToString<T>(T o)
+		{
+			var sw = new StringWriter();
+			Serialize(o, sw);
+			return sw.ToString();
 		}
 
 		private static void Serialize(object o, TextWriter w, Type desiredType, ObjectGraphContext context = null, int tabLevel = 0)
@@ -119,6 +125,9 @@ namespace FrEee.Utility
 				WriteCollection((IEnumerable)o, w, context, tabLevel);
 			else
 				WriteObject(o, w, context, tabLevel);
+
+			// flush the stream
+			w.Flush();
 		}
 
 		private static void WritePrimitiveOrEnum(object o, TextWriter w)
@@ -295,6 +304,18 @@ namespace FrEee.Utility
 		public static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
 		{
 			return (T)Deserialize(r, typeof(T), context);
+		}
+
+		public static T DeserializeFromString<T>(string s)
+		{
+			var sr = new StringReader(s);
+			return Deserialize<T>(sr);
+		}
+
+		public static object DeserializeFromString(string s)
+		{
+			var sr = new StringReader(s);
+			return Deserialize<object>(sr);
 		}
 
 		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)

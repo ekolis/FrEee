@@ -13,6 +13,7 @@ using IronPython.Compiler;
 using Microsoft.Scripting.Hosting;
 using System.Reflection;
 using System.Data;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
@@ -70,10 +71,15 @@ namespace FrEee.Modding
 			var scope = engine.CreateScope();
 			if (variables != null)
 			{
-				foreach (var kvp in variables)
-					scope.SetVariable(kvp.Key, kvp.Value);
+				foreach (var kvp in SerializeScriptVariables(variables))
+					scope.SetVariable("_" + kvp.Key, kvp.Value);
 			}
 			return scope;
+		}
+
+		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
+		{
+			return variables.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Serializer.SerializeToString(kvp.Value))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
 		/// <summary>
@@ -103,9 +109,17 @@ namespace FrEee.Modding
 			imports.Add("clr.ImportExtensions(Extensions);");
 			imports.Add("from System import Math;");
 
+			var deserializers = new List<string>();
+			if (variables != null)
+			{
+				deserializers.Add("from FrEee.Utility import Serializer;");
+				foreach (var variable in variables.Keys)
+					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+			}
+
 			Script script;
 			if (Mod.Current == null || Mod.Current.GlobalScript == null)
-				script = new Script("expression", string.Join("\n", imports.ToArray()) + "\n" + expression);
+				script = new Script("expression", string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression);
 			else
 			{
 				imports.Add("import " + Mod.Current.GlobalScript.ModuleName + ";");
@@ -140,8 +154,18 @@ Source code in question:
 		/// <param name="variables">Variables to inject into the script.</param>
 		public static void RunScript(Script script, IDictionary<string, object> variables = null)
 		{
-			var compiledScript = Compile(script);
 			var scope = CreateScope(variables);
+			var deserializers = new List<string>();
+			if (variables != null)
+			{
+				deserializers.Add("import clr;");
+				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
+				deserializers.Add("from FrEee.Utility import Serializer;");
+				foreach (var variable in variables.Keys)
+					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+			}
+			var runner = new Script("runner", string.Join("\n", deserializers.ToArray()) + "\n" + script.Text);
+			var compiledScript = Compile(runner);
 			var handle = compiledScript.ExecuteAndWrap(scope);
 			var error = engine.GetService<ExceptionOperations>().FormatException(handle);
 			if (error != null)
@@ -158,12 +182,25 @@ Source code in question:
 		/// <returns>The return value.</returns>
 		public static T CallFunction<T>(Script script, string function, params object[] args)
 		{
-			var functionCall = new Script("functionCall", script.ModuleName + "." + function + "(" + string.Join(", ", args) + ")", script);
+			var deserializers = new List<string>();
+			if (args != null)
+			{
+				deserializers.Add("import clr;");
+				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
+				deserializers.Add("from FrEee.Utility import Serializer;");
+				for (int i = 0; i < args.Length; i++)
+					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
+			}
+			var arglist = new List<string>();
+			for (var i = 0; i < args.Length; i++)
+				arglist.Add("arg" + i);
+			var functionCall = new Script("functionCall", string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")", script);
+			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
 			var compiledScript = Compile(functionCall);
 			object result;
 			try
 			{
-				var handle = compiledScript.ExecuteAndWrap();
+				var handle = compiledScript.ExecuteAndWrap(scope);
 				result = handle.Unwrap();
 				if (result is T)
 					return (T)result;
@@ -190,14 +227,27 @@ Source code in question:
 		/// <returns>The return value.</returns>
 		public static void CallSubroutine(Script script, string function, params object[] args)
 		{
-			var subCall = new Script("subCall", function + "(" + string.Join(", ", args) + ");", script);
+			var deserializers = new List<string>();
+			if (args != null)
+			{
+				deserializers.Add("import clr;");
+				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
+				deserializers.Add("from FrEee.Utility import Serializer;");
+				for (int i = 0; i < args.Length; i++)
+					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
+			}
+			var arglist = new List<string>();
+			for (var i = 0; i < args.Length; i++)
+				arglist.Add("arg" + i);
+			var subCall = new Script("subCall", string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")", script);
+			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
 			var compiledScript = Compile(subCall);
 			string error = null;
 			sandbox.DoCallBack(() =>
 			{
 				try
 				{
-					compiledScript.ExecuteAndWrap();
+					compiledScript.ExecuteAndWrap(scope);
 				}
 				catch (Exception ex)
 				{
