@@ -83,6 +83,14 @@ namespace FrEee.Modding
 			return variables.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Serializer.SerializeToString(kvp.Value))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
+		public static IDictionary<string, object> RetrieveVariablesFromScope(ScriptScope scope, IEnumerable<string> variableNames)
+		{
+			var dict = new Dictionary<string, object>();
+			foreach (var varName in variableNames)
+				dict.Add(varName, Serializer.DeserializeFromString(scope.GetVariable<string>("_" + varName)));
+			return dict;
+		}
+
 		/// <summary>
 		/// Evaluates a script expression in a sandboxed environment.
 		/// Note that the return value of the script may still contain insecure code, so be careful!
@@ -134,11 +142,16 @@ namespace FrEee.Modding
 			}
 			catch (Exception ex)
 			{
-				dynamic info = ex.Data.Values.Cast<dynamic>().First();
-				var debugInfo = info[0].DebugInfo;
-				int startLine = debugInfo.StartLine;
-				int endLine = debugInfo.StartLine;
-				throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				if (ex.Data.Values.Count > 0)
+				{
+					dynamic info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info[0].DebugInfo;
+					int startLine = debugInfo.StartLine;
+					int endLine = debugInfo.StartLine;
+					throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				}
+				else
+					throw new ScriptException(ex, null);
 			}
 		}
 
@@ -151,27 +164,45 @@ namespace FrEee.Modding
 		{
 			var scope = CreateScope(variables);
 			var deserializers = new List<string>();
+			var serializers = new List<string>();
 			if (variables != null)
 			{
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				foreach (var variable in variables.Keys)
+				{
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					serializers.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
+				}
 			}
-			var runner = new Script("runner", string.Join("\n", deserializers.ToArray()) + "\n" + script.Text, script.ExternalScripts.ToArray());
+			var runner = new Script("runner",
+				string.Join("\n", deserializers.ToArray()) + "\n" +
+				script.Text + "\n" +
+				string.Join("\n", serializers.ToArray()), script.ExternalScripts.ToArray());
 			var compiledScript = Compile(runner);
 			try
 			{
 				compiledScript.Execute(scope);
+				if (variables != null)
+				{
+					var newvals = RetrieveVariablesFromScope(scope, variables.Keys);
+					foreach (var kvp in variables)
+						newvals[kvp.Key].CopyTo(kvp.Value);
+				}
 			}
 			catch (Exception ex)
 			{
-				dynamic info = ex.Data.Values.Cast<dynamic>().First();
-				var debugInfo = info[0].DebugInfo;
-				int startLine = debugInfo.StartLine;
-				int endLine = debugInfo.StartLine;
-				throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				if (ex.Data.Values.Count > 0)
+				{
+					dynamic info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info[0].DebugInfo;
+					int startLine = debugInfo.StartLine;
+					int endLine = debugInfo.StartLine;
+					throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				}
+				else
+					throw new ScriptException(ex, null);
 			}
 		}
 
@@ -206,11 +237,16 @@ namespace FrEee.Modding
 			}
 			catch (Exception ex)
 			{
-				dynamic info = ex.Data.Values.Cast<dynamic>().First();
-				var debugInfo = info[0].DebugInfo;
-				int startLine = debugInfo.StartLine;
-				int endLine = debugInfo.StartLine;
-				throw new ScriptException(ex, string.Join("\n", functionCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				if (ex.Data.Values.Count > 0)
+				{
+					dynamic info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info[0].DebugInfo;
+					int startLine = debugInfo.StartLine;
+					int endLine = debugInfo.StartLine;
+					throw new ScriptException(ex, string.Join("\n", functionCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				}
+				else
+					throw new ScriptException(ex, null);
 			}
 		}
 
@@ -239,18 +275,23 @@ namespace FrEee.Modding
 			var subCall = new Script("subCall", string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")", script);
 			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
 			var compiledScript = Compile(subCall);
-			
+
 			try
 			{
 				compiledScript.Execute(scope);
 			}
 			catch (Exception ex)
 			{
-				dynamic info = ex.Data.Values.Cast<dynamic>().First();
-				var debugInfo = info[0].DebugInfo;
-				int startLine = debugInfo.StartLine;
-				int endLine = debugInfo.StartLine;
-				throw new ScriptException(ex, string.Join("\n", subCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				if (ex.Data.Values.Count > 0)
+				{
+					dynamic info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info[0].DebugInfo;
+					int startLine = debugInfo.StartLine;
+					int endLine = debugInfo.StartLine;
+					throw new ScriptException(ex, string.Join("\n", subCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+				}
+				else
+					throw new ScriptException(ex, null);
 			}
 		}
 

@@ -18,12 +18,13 @@ galaxy = context;
 if (enabledMinisters.ContainsKey("Empire Management")):
 	category = enabledMinisters["Empire Management"];
 	if (category.Contains("Research")):
+		;
 		# choose what to research
 		# TODO - actually choose sensibly, don't always research Propulsion
-		cmd = ResearchCommand(empire);
-		techs = galaxy.Mod.Technologies;
-		tech = techs.Single(lambda t: t.Name == "Propulsion");
-		cmd.SetSpending(tech, 100);
-		empire.ResearchCommand = cmd;
+		#cmd = ResearchCommand(empire);
+		#techs = galaxy.Mod.Technologies;
+		#tech = techs.Single(lambda t: t.Name == "Propulsion");
+		#cmd.SetSpending(tech, 100);
+		#empire.ResearchCommand = cmd;
 	# TODO - check for more ministers and execute their code
 # TODO - Vehicle Managment ministers

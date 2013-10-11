@@ -34,7 +34,7 @@ namespace FrEee.Utility
 				Serialize(o, w, o.GetType(), context, tabLevel);
 		}
 
-		public static string SerializeToString<T>(T o)
+		public static string SerializeToString(object o)
 		{
 			var sw = new StringWriter();
 			Serialize(o, sw);

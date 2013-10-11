@@ -17,6 +17,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Enumerations;
+using AutoMapper;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -341,6 +342,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The empire's research priorities for this turn.
 		/// </summary>
+		[IgnoreMap]
 		public ResearchCommand ResearchCommand
 		{
 			get

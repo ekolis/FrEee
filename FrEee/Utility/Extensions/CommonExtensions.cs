@@ -49,7 +49,13 @@ namespace FrEee.Utility.Extensions
 			if (!mappedTypes.Contains(typeof(T)))
 			{
 				mappedTypes.Add(typeof(T));
-				Mapper.CreateMap<T, T>();
+				var map = Mapper.CreateMap<T, T>();
+				map.AfterMap((s, d) =>
+					{
+						// map enumerable properties, automapper seems to miss them
+						foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
+							prop.SetValue(d, prop.GetValue(s, null), null);
+					});
 			}
 			Mapper.Map(src, dest);
 		}
