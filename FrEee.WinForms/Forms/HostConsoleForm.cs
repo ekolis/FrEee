@@ -43,8 +43,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ReloadGalaxy()
 		{
-			var ms = new MemoryStream(Encoding.Unicode.GetBytes(serializedGalaxy));
-			Galaxy.Load(ms);
+			Galaxy.LoadFromString(serializedGalaxy);
 		}
 
 		private void Bind()
