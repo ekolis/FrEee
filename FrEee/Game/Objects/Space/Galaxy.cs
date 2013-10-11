@@ -505,7 +505,7 @@ namespace FrEee.Game.Objects.Space
 					LoadCommands(emp, cmds);
 					fs.Close();
 				}
-				else
+				else if (emp.IsPlayerEmpire)
 					Console.WriteLine(emp.Name + " did not submit a PLR file.");
 			}
 		}
