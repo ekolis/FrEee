@@ -20,14 +20,12 @@ namespace FrEee.Modding.Loaders
 		public void Load(Mod mod)
 		{
 			string filename;
+			string stockFilename = filename = Path.Combine("Scripts", Path.GetFileNameWithoutExtension(FileName));
 			if (ModPath == null)
-				filename = Path.Combine("Data", FileName);
+				filename = stockFilename;
 			else
-				filename = Path.Combine(ModPath, "Data", FileName);
-			var scriptText = "";
-			if (File.Exists(filename))
-				scriptText = File.ReadAllText(filename);
-			mod.GlobalScript = new Script("globalScript", scriptText);
+				filename = Path.Combine(ModPath, "Scripts", Path.GetFileNameWithoutExtension(FileName));
+			mod.GlobalScript = Script.Load(filename) ?? Script.Load(stockFilename);
 		}
 
 		public string ModPath

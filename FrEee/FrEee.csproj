@@ -90,7 +90,6 @@
     <Compile Include="Game\Enumerations\StellarSize.cs" />
     <Compile Include="Game\Enumerations\VehicleTypes.cs" />
     <Compile Include="Game\Enumerations\Visibility.cs" />
-    <Compile Include="Game\Interfaces\IAI.cs" />
     <Compile Include="Game\Interfaces\ICargoTransferrer.cs" />
     <Compile Include="Game\Interfaces\IAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ICargoContainer.cs" />
@@ -201,6 +200,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
     <Compile Include="Modding\Loaders\GlobalScriptLoader.cs" />
     <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
     <Compile Include="Modding\Loaders\CultureLoader.cs" />

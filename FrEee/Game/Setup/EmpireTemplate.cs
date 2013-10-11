@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -124,11 +125,11 @@ namespace FrEee.Game.Setup
 			emp.InsigniaName = InsigniaName ?? PrimaryRace.Name;
 			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
-			// TODO - set empire AI
 			emp.HappinessModel = HappinessModel ?? PrimaryRace.HappinessModel;
 			emp.Culture = Culture ?? PrimaryRace.Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
+			emp.AI = Mod.Current.EmpireAIs.Find(AIName);
 
 			return emp;
 		}
@@ -152,13 +153,15 @@ namespace FrEee.Game.Setup
 				yield return "You must specify an insignia for your empire or race.";
 			if (string.IsNullOrWhiteSpace(ShipsetPath) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.ShipsetPath)))
 				yield return "You must specify a shipset for your empire or race.";
-			// TODO - check presence of AI?
 			if (HappinessModel == null && (PrimaryRace == null || PrimaryRace.HappinessModel == null))
 				yield return "You must specify a happiness model for your empire or race.";
 			if (Culture == null && (PrimaryRace == null || PrimaryRace.Culture == null))
 				yield return "You must specify a culture for your empire or race.";
+			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.Find(AIName) == null)
+				yield return "AI empires require an AI script.";
 			if (PointsSpent > maxPoints)
 				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
+
 		}
 
 

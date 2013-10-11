@@ -12,7 +12,6 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Commands;
 using Tech = FrEee.Game.Objects.Technology.Technology;
-using AI = FrEee.Game.Objects.AI.AI<FrEee.Game.Objects.Civilization.Empire, FrEee.Game.Objects.Space.Galaxy>;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;

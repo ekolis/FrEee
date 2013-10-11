@@ -635,7 +635,7 @@ namespace FrEee.Game.Objects.Space
 				Load(inStream);
 				Current.CurrentEmpire = Current.Empires[i];
 				Current.Redact();
-				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current);
+				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
 				cmds.Add(i, Current.CurrentEmpire.Commands);
 			}
 			Load(inStream);

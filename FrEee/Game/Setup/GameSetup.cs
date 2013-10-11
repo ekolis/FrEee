@@ -292,6 +292,7 @@ namespace FrEee.Game.Setup
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
 						Culture = Mod.Current.Cultures.PickRandom(),
+						AIName = "AI_Default",
 					},
 					IsPlayerEmpire = false,
 				};
@@ -318,6 +319,7 @@ namespace FrEee.Game.Setup
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
 						Culture = Mod.Current.Cultures.PickRandom(),
+						AIName = "AI_Default",
 					},
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,

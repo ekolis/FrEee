@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using System.IO;
 
 namespace FrEee.Modding
 {
@@ -21,6 +22,29 @@ namespace FrEee.Modding
 			Text = text;
 			ExternalScripts = externalScripts.ToList();
 			GlobalVariables = new Dictionary<string, object>();
+		}
+
+		/// <summary>
+		/// Loads a script from disk.
+		/// Returns null if the script does not exist.
+		/// </summary>
+		/// <param name="path">The path to the script, including the filename but not the extension.</param>
+		/// <returns></returns>
+		public static Script Load(string path)
+		{
+			var scriptFilename = Path.Combine(path + ".script");
+			var pythonFilename = Path.Combine(path + ".py");
+			var moduleName = Path.GetFileName(path);
+			if (!File.Exists(pythonFilename))
+				return null;
+			var text = File.ReadAllText(pythonFilename);
+			var externalScripts = new List<Script>();
+			if (File.Exists(scriptFilename))
+			{
+				foreach (var externalScriptPath in File.ReadAllLines(scriptFilename))
+					externalScripts.Add(Script.Load(externalScriptPath));
+			}
+			return new Script(moduleName, text, externalScripts.ToArray());
 		}
 
 		/// <summary>

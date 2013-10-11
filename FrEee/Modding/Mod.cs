@@ -13,6 +13,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.AI;
 
 namespace FrEee.Modding
 {
@@ -67,6 +68,7 @@ namespace FrEee.Modding
 				new HappinessModelLoader(path),
 				new CultureLoader(path),
 				new GlobalScriptLoader(path),
+				new EmpireAILoader(path),
 			};
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
@@ -112,6 +114,7 @@ namespace FrEee.Modding
 			StellarObjectTemplates = new List<StellarObject>();
 			HappinessModels = new List<HappinessModel>();
 			Cultures = new List<Culture>();
+			EmpireAIs = new List<AI<Empire, Galaxy>>();
 		}
 
 		/// <summary>
@@ -208,6 +211,11 @@ namespace FrEee.Modding
 		/// The global Python script module which is available to all scripts in the mod.
 		/// </summary>
 		public Script GlobalScript { get; set; }
+
+		/// <summary>
+		/// The empire AIs in the game.
+		/// </summary>
+		public ICollection<AI<Empire, Galaxy>> EmpireAIs { get; private set; }
 
 		/// <summary>
 		/// Errors encountered when loading the mod.

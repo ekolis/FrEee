@@ -520,7 +520,7 @@ xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(TargetDir)GameSetups\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Docs" "$(TargetDir)Docs\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\AI" "$(TargetDir)AI\" /y /e /s</PostBuildEvent>
+xcopy "$(ProjectDir)..\FrEee\Scripts" "$(TargetDir)Scripts\" /y /e /s</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
