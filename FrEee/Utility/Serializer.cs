@@ -374,6 +374,8 @@ namespace FrEee.Utility
 					s += r.ReadTo(';', log);
 					if (!s.EndsWith("\\") && s.Count(c => c == '"') % 2 == 0)
 						foundRealSemicolon = true;
+					else
+						s += ";";
 				}
 				if (s == "n")
 					o = null;
