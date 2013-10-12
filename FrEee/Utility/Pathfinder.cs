@@ -30,7 +30,7 @@ namespace FrEee.Utility
 				return Enumerable.Empty<Sector>();
 			if (end.StarSystem == null)
 				return Enumerable.Empty<Sector>();
-			if (me.Speed < 1)
+			if (me != null && me.Speed < 1)
 				return Enumerable.Empty<Sector>();
 
 			if (start == end)
