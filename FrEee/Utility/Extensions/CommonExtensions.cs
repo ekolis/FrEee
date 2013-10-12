@@ -56,6 +56,8 @@ namespace FrEee.Utility.Extensions
 				mappedTypes.Add(type);
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
+				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
+				map = ignorer.Invoke(null, new object[]{map});
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -63,6 +65,17 @@ namespace FrEee.Utility.Extensions
 				});
 			}
 			Mapper.Map(src, dest, type, type);
+		}
+
+		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
+		private static IMappingExpression<T, T> IgnoreReadOnlyProperties<T>(this IMappingExpression<T, T> expression)
+		{
+			var type = typeof(T);
+			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
+				&& x.DestinationType.Equals(type));
+			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).GetSetMethod() == null))
+				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
+			return expression;
 		}
 
 		private static void CopyEnumerableProperties(object s, object d)
