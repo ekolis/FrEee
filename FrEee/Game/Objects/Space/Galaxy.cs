@@ -802,14 +802,6 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			// construction queues
-			if (status != null)
-				status.Message = "Constructing objects";
-			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().ToArray())
-				q.ExecuteOrders();
-			if (status != null)
-				status.Progress += progressPerOperation;
-
 			// ship movement
 			if (status != null)
 				status.Message = "Moving ships";
@@ -847,9 +839,15 @@ namespace FrEee.Game.Objects.Space
 					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
 
-			// TODO - more turn stuff
+			// construction queues
+			if (status != null)
+				status.Message = "Constructing objects";
+			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().ToArray())
+				q.ExecuteOrders();
+			if (status != null)
+				status.Progress += progressPerOperation;
 
-
+			// TODO - more turn stuff? or do we have everything?
 
 			if (status != null)
 				status.Message = "Cleaning up";
