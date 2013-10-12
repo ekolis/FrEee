@@ -348,5 +348,11 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public abstract void Redact(Empire emp);
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

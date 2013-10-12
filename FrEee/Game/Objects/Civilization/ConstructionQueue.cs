@@ -432,5 +432,11 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Eta == null || Eta < 1; }
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

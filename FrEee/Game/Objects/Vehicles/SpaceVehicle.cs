@@ -391,5 +391,11 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Design.Hull.Size; }
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

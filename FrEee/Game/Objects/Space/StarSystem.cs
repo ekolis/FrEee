@@ -329,5 +329,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return BackgroundImage; }
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

@@ -50,7 +50,7 @@ namespace FrEee.Game.Objects.Space
 			else if (vis == Visibility.Fogged)
 			{
 				if (emp.Memory[ID] != null)
-					emp.Memory[ID].RememberTo(this);
+					emp.Memory[ID].CopyTo(this);
 			}
 		}
 	}

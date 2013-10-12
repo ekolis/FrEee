@@ -577,7 +577,7 @@ namespace FrEee.Game.Objects.Space
 					if (vis < Visibility.Visible)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						referrables.Add(id, (IReferrable)CurrentEmpire.Memory[id].Remember());
+						referrables.Add(id, CurrentEmpire.Memory[id]);
 					if (vis > Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 						CurrentEmpire.Memory.Remove(id); // no need to remember it if you can see it now!
 				}

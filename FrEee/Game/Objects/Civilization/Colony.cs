@@ -122,5 +122,11 @@ namespace FrEee.Game.Objects.Civilization
 				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony == this);
 			}
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

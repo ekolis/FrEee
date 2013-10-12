@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
-			Memory = new SafeDictionary<long, Memory>();
+			Memory = new SafeDictionary<long, IFoggable>();
 		}
 
 		/// <summary>
@@ -626,7 +626,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Information about any foggable objects that this empire has previously seen but cannot currently see.
 		/// </summary>
-		public SafeDictionary<long, Memory> Memory { get; private set; }
+		public SafeDictionary<long, IFoggable> Memory { get; private set; }
 
 		/// <summary>
 		/// Updates the memory sight cache for an object.
@@ -639,7 +639,8 @@ namespace FrEee.Game.Objects.Civilization
 			if (obj.ID > 0)
 			{
 				// object exists, update cache with the data
-				Memory[obj.ID] = new Memory(obj);
+				Memory[obj.ID] = obj.Copy();
+				Memory[obj.ID].IsMemory = true;
 			}
 			else
 			{

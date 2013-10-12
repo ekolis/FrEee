@@ -657,5 +657,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return Vehicles.Sum(v => v.Size); }
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }

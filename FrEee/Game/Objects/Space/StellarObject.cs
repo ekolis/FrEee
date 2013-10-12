@@ -197,5 +197,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return this.FindStarSystem(); }
 		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
 	}
 }
