@@ -966,7 +966,13 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
-		internal long AssignID(IReferrable r)
+		/// <summary>
+		/// Assigns an ID to an object.
+		/// </summary>
+		/// <param name="r">The object.</param>
+		/// <param name="id">The ID, or 0 to generate a new ID.</param>
+		/// <returns>The new ID.</returns>
+		internal long AssignID(IReferrable r, long id = 0)
 		{
 			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
@@ -982,11 +988,10 @@ namespace FrEee.Game.Objects.Space
 			if (Referrables.LongCount() == long.MaxValue)
 				throw new Exception("No more IDs are available to assign for objects.");
 
-			long id;
-			do
+			while (id <= 0 || referrables.ContainsKey(id))
 			{
 				id = RandomHelper.Range(1L, long.MaxValue);
-			} while (referrables.ContainsKey(id));
+			}
 			r.ID = id;
 			referrables.Add(id, r);
 
@@ -1017,7 +1022,11 @@ namespace FrEee.Game.Objects.Space
 					referrables.Remove(r.ID);
 				}
 				else
-					throw new Exception("Can't unassign ID for " + r + " because it says it has ID=" + r.ID + " but the galaxy says that ID belongs to " + referrables[r.ID] + "!");
+				{
+					r.ID = 0;
+					var galaxyThinksTheIDIs = referrables.SingleOrDefault(kvp => kvp.Value == r);
+					referrables.Remove(galaxyThinksTheIDIs);
+				}
 			}
 		}
 

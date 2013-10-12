@@ -41,6 +41,24 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Shallow copies an object and assigns the copy a new ID.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static T CopyAndAssignNewID<T>(this T obj)
+			where T : IReferrable
+		{
+			var id = obj.ID;
+			var copy = obj.Copy();
+			Galaxy.Current.UnassignID(obj);
+			copy.ID = 0;
+			Galaxy.Current.AssignID(obj, id);
+			Galaxy.Current.AssignID(copy);
+			return copy;
+		}
+
+		/// <summary>
 		/// Shallow copies an object's data to another object.
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
@@ -1673,15 +1691,19 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Updates the memory sight cache of any empires that can see this object.
+		/// Only makes sense on the host view, so if this is called elsewhere, nothing happens.
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <param name="stillExists"></param>
 		public static void UpdateEmpireMemories(this IFoggable obj)
 		{
-			foreach (var emp in Galaxy.Current.Empires)
+			if (Empire.Current == null)
 			{
-				if (obj.CheckVisibility(emp) >= Visibility.Visible)
-					emp.UpdateMemory(obj);
+				foreach (var emp in Galaxy.Current.Empires)
+				{
+					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+						emp.UpdateMemory(obj);
+				}
 			}
 		}
 

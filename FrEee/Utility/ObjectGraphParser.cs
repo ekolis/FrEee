@@ -147,7 +147,7 @@ namespace FrEee.Utility
 
 		private void ParseCollection(IEnumerable list, ObjectGraphContext context)
 		{
-			foreach (var item in list)
+			foreach (var item in list.Cast<object>().ToArray())
 			{
 				if (Item != null)
 					Item(item);
