@@ -138,5 +138,37 @@ sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 		{
 			return ModuleName;
 		}
+
+		public static bool operator ==(Script s1, Script s2)
+		{
+			if (s1.IsNull() && s2.IsNull())
+				return true;
+			if (s1.IsNull() || s1.IsNull())
+				return false;
+			return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SequenceEqual(s2.ExternalScripts);
+		}
+
+		public static bool operator !=(Script s1, Script s2)
+		{
+			return !(s1 == s2);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (obj is Script)
+			{
+				var s = (Script)obj;
+				return s == this;
+			}
+			return false;
+		}
+
+		public override int GetHashCode()
+		{
+			var hash = ModuleName.GetHashCode() ^ Text.GetHashCode();
+			foreach (var xs in ExternalScripts)
+				hash ^= xs.GetHashCode();
+			return hash;
+		}
 	}
 }
