@@ -574,10 +574,10 @@ namespace FrEee.Game.Objects.Space
 					var id = kvp.Key;
 					var obj = (IFoggable)kvp.Value;
 					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis < Visibility.Visible)
+					if (vis < Visibility.Fogged)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						referrables.Add(id, CurrentEmpire.Memory[id]);
+						CurrentEmpire.Memory[id].CopyTo(kvp.Value); // memory sight!
 					if (vis > Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 						CurrentEmpire.Memory.Remove(id); // no need to remember it if you can see it now!
 				}
