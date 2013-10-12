@@ -641,7 +641,7 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			Current.TurnNumber++;
 
-			// reproduction
+			// reproduction and population replacement from cargo
 			if (status != null)
 				status.Message = "Growing population";
 			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
@@ -659,7 +659,32 @@ namespace FrEee.Game.Objects.Space
 					if (ratio > 1)
 					{
 						foreach (var race in pop.Keys.ToArray())
-							pop[race] = (long)(pop[race] / ratio);
+						{
+							// TODO - should planetary population spill over into cargo?
+							// this might be annoying for homeworlds, as their cargo space would fill up quickly...
+							// especially in Proportions Mod with its 1000kT/1M population!
+							var spillover = (long)(pop[race] * (ratio - 1d));
+							p.RemovePopulation(race, spillover);
+						}
+					}
+
+					// deal with population in cargo
+					ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+					if (ratio < 1)
+					{
+						var cargo = p.Cargo;
+						if (cargo != null)
+						{
+							// bring population out of cold storage
+							// do this by removing and adding the population
+							// this will work since population is removed from cargo storage first but added to population storage first
+							foreach (var kvp in cargo.Population)
+							{
+								var amount = kvp.Value;
+								amount -= p.RemovePopulation(kvp.Key, kvp.Value);
+								p.AddPopulation(kvp.Key, kvp.Value);
+							}
+						}
 					}
 				}
 			}
@@ -851,6 +876,29 @@ namespace FrEee.Game.Objects.Space
 
 			if (status != null)
 				status.Message = "Cleaning up";
+
+			// deal with population in cargo again, in case colonies took damage and lost some population
+			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().Where(p => p.Colony != null))
+			{
+				var pop = p.Colony.Population;
+				var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+				if (ratio < 1)
+				{
+					var cargo = p.Cargo;
+					if (cargo != null)
+					{
+						// bring population out of cold storage
+						// do this by removing and adding the population
+						// this will work since population is removed from cargo storage first but added to population storage first
+						foreach (var kvp in cargo.Population)
+						{
+							var amount = kvp.Value;
+							amount -= p.RemovePopulation(kvp.Key, kvp.Value);
+							p.AddPopulation(kvp.Key, kvp.Value);
+						}
+					}
+				}
+			}
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
 			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
