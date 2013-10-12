@@ -678,7 +678,7 @@ namespace FrEee.Game.Objects.Space
 							// bring population out of cold storage
 							// do this by removing and adding the population
 							// this will work since population is removed from cargo storage first but added to population storage first
-							foreach (var kvp in cargo.Population)
+							foreach (var kvp in cargo.Population.ToArray())
 							{
 								var amount = kvp.Value;
 								amount -= p.RemovePopulation(kvp.Key, kvp.Value);
@@ -890,7 +890,7 @@ namespace FrEee.Game.Objects.Space
 						// bring population out of cold storage
 						// do this by removing and adding the population
 						// this will work since population is removed from cargo storage first but added to population storage first
-						foreach (var kvp in cargo.Population)
+						foreach (var kvp in cargo.Population.ToArray())
 						{
 							var amount = kvp.Value;
 							amount -= p.RemovePopulation(kvp.Key, kvp.Value);
