@@ -62,8 +62,16 @@ namespace FrEee.Game.Objects.Space
 				Target.Coordinates = new System.Drawing.Point();
 			}
 
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose(); // TODO - dispose here if fogged; replace with memory sight cache if present
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null && emp.Memory[ID] is WarpPoint)
+				{
+					((WarpPoint)emp.Memory[ID]).CopyTo(this);
+				}
+			}
 		}
 	}
 }

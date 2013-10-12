@@ -7,6 +7,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -14,7 +15,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A colony on a planet.
 	/// </summary>
 	[Serializable]
-	public class Colony : IAbilityObject, IOwnable, IFoggable
+	public class Colony : IAbilityObject, IOwnable, IFoggable, IContainable<Planet>
 	{
 		public Colony()
 		{
@@ -98,6 +99,27 @@ namespace FrEee.Game.Objects.Civilization
 
 			if (visibility < Visibility.Visible)
 				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			if (Container != null)
+				Container.Colony = null;
+			Galaxy.Current.UnassignID(this);
+		}
+
+		public Planet Container
+		{
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony == this);
+			}
 		}
 	}
 }

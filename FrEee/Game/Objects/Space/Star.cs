@@ -44,8 +44,16 @@ namespace FrEee.Game.Objects.Space
 
 		public override void Redact(Empire emp)
 		{
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose(); // TODO - dispose here if fogged; replace with memory sight cache if present
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null && emp.Memory[ID] is Star)
+				{
+					((Star)emp.Memory[ID]).CopyTo(this);
+				}
+			}
 		}
 	}
 }

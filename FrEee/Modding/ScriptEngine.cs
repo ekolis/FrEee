@@ -181,12 +181,17 @@ namespace FrEee.Modding
 				{
 					dynamic info = ex.Data.Values.Cast<dynamic>().First();
 					var debugInfo = info[0].DebugInfo;
-					int startLine = debugInfo.StartLine;
-					int endLine = debugInfo.StartLine;
-					throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					if (debugInfo != null)
+					{
+						int startLine = debugInfo.StartLine;
+						int endLine = debugInfo.StartLine;
+						throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					}
+					else
+						throw new ScriptException(ex, "(unknown code)");
 				}
 				else
-					throw new ScriptException(ex, null);
+					throw new ScriptException(ex, "(unknown code)");
 			}
 		}
 
@@ -237,12 +242,17 @@ namespace FrEee.Modding
 				{
 					dynamic info = ex.Data.Values.Cast<dynamic>().First();
 					var debugInfo = info[0].DebugInfo;
-					int startLine = debugInfo.StartLine;
-					int endLine = debugInfo.StartLine;
-					throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					if (debugInfo != null)
+					{
+						int startLine = debugInfo.StartLine;
+						int endLine = debugInfo.StartLine;
+						throw new ScriptException(ex, string.Join("\n", runner.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					}
+					else
+						throw new ScriptException(ex, "(unknown code)");
 				}
 				else
-					throw new ScriptException(ex, null);
+					throw new ScriptException(ex, "(unknown code)");
 			}
 		}
 
@@ -284,12 +294,17 @@ namespace FrEee.Modding
 				{
 					dynamic info = ex.Data.Values.Cast<dynamic>().First();
 					var debugInfo = info[0].DebugInfo;
-					int startLine = debugInfo.StartLine;
-					int endLine = debugInfo.StartLine;
-					throw new ScriptException(ex, string.Join("\n", functionCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					if (debugInfo != null)
+					{
+						int startLine = debugInfo.StartLine;
+						int endLine = debugInfo.StartLine;
+						throw new ScriptException(ex, string.Join("\n", functionCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					}
+					else
+						throw new ScriptException(ex, "(unknown code)");
 				}
 				else
-					throw new ScriptException(ex, null);
+					throw new ScriptException(ex, "(unknown code)");
 			}
 		}
 
@@ -332,12 +347,17 @@ namespace FrEee.Modding
 				{
 					dynamic info = ex.Data.Values.Cast<dynamic>().First();
 					var debugInfo = info[0].DebugInfo;
-					int startLine = debugInfo.StartLine;
-					int endLine = debugInfo.StartLine;
-					throw new ScriptException(ex, string.Join("\n", subCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					if (debugInfo != null)
+					{
+						int startLine = debugInfo.StartLine;
+						int endLine = debugInfo.StartLine;
+						throw new ScriptException(ex, string.Join("\n", subCall.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
+					}
+					else
+						throw new ScriptException(ex, "(unknown code)");
 				}
 				else
-					throw new ScriptException(ex, null);
+					throw new ScriptException(ex, "(unknown code)");
 			}
 		}
 
@@ -397,13 +417,26 @@ namespace FrEee.Modding
 	public class ScriptException : Exception
 	{
 		public ScriptException(string message)
-			: base(message)
 		{
+			this.message = message;
 		}
 
 		public ScriptException(Exception ex, string code)
-			: base("In this code:\n" + code + "\n" + ex.Message)
 		{
+			if (ex is TargetInvocationException)
+				message = "In this code:\n" + code + "\n" + ex.InnerException.Message;
+			else
+				message = "In this code:\n" + code + "\n" + ex.Message;
+		}
+
+		private string message;
+
+		public override string Message
+		{
+			get
+			{
+				return message;
+			}
 		}
 	}
 }

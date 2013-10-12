@@ -214,7 +214,13 @@ namespace FrEee.Game.Objects.Vehicles
 			// TODO - cloaking
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
 			if (!seers.Any())
-				return Visibility.Unknown; // TODO - memory sight
+			{
+				var known = emp.Memory[ID];
+				if (known != null && this.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
 			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
 			if (scanners.Any())
 				return Visibility.Scanned;
@@ -236,7 +242,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			// Can't see the ship's components if it's not scanned
-			// TODO - let player see design of previously scanned ship
+			// TODO - let player see design of previously scanned ship if the ship has not been refit
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design and clear component list
@@ -247,8 +253,14 @@ namespace FrEee.Game.Objects.Vehicles
 				Components.Clear();
 			}
 
-			if (visibility < Visibility.Visible)
+			if (visibility < Visibility.Fogged)
 				Dispose(); // TODO - memory sight
+			else if (visibility == Visibility.Fogged)
+			{
+				var known = emp.Memory[ID];
+				if (known != null && known.GetType() == GetType())
+					known.CopyTo(this);
+			}
 		}
 
 		public bool IsIdle

@@ -52,6 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
+			Memory = new SafeDictionary<long, IFoggable>();
 		}
 
 		/// <summary>
@@ -621,5 +622,10 @@ namespace FrEee.Game.Objects.Civilization
 			// TODO - hide empires until first contact
 			return Visibility.Scanned;
 		}
+
+		/// <summary>
+		/// Information about any foggable objects that this empire has previously seen but cannot currently see.
+		/// </summary>
+		public SafeDictionary<long, IFoggable> Memory { get; private set; }
 	}
 }

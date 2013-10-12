@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be obscured by fog of war.
 	/// </summary>
-	public interface IFoggable
+	public interface IFoggable : IReferrable
 	{
 		/// <summary>
 		/// The visibility of this object to an empire.

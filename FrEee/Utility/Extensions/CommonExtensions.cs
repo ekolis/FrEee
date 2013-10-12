@@ -18,6 +18,7 @@ using System.Collections;
 using FrEee.Game.Objects.Commands;
 using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
+using System.Linq.Expressions;
 
 namespace FrEee.Utility.Extensions
 {
@@ -44,20 +45,30 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
 		/// <param name="dest">The object to copy the source object's data to.</param>
-		public static void CopyTo<T>(this T src, T dest)
+		public static void CopyTo(this object src, object dest)
 		{
-			if (!mappedTypes.Contains(typeof(T)))
+			if (src.GetType() != dest.GetType())
+				throw new Exception("Can only copy objects onto objects of the same type.");
+			var type = src.GetType();
+			if (!mappedTypes.Contains(type))
 			{
-				mappedTypes.Add(typeof(T));
-				var map = Mapper.CreateMap<T, T>();
-				map.AfterMap((s, d) =>
-					{
-						// map enumerable properties, automapper seems to miss them
-						foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
-							prop.SetValue(d, prop.GetValue(s, null), null);
-					});
+				mappedTypes.Add(type);
+				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
+				var map = creator.Invoke(null, new object[0]);
+				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
+				var actionType = typeof(Action<,>).MakeGenericType(type, type);
+				afterMap.Invoke(map, new object[]{
+					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
+				});
 			}
-			Mapper.Map(src, dest);
+			Mapper.Map(src, dest, type, type);
+		}
+
+		private static void CopyEnumerableProperties(object s, object d)
+		{
+			// map enumerable properties, automapper seems to miss them
+			foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
+				prop.SetValue(d, prop.GetValue(s, null), null);
 		}
 
 		private static List<Type> mappedTypes = new List<Type>();
@@ -1402,7 +1413,7 @@ namespace FrEee.Utility.Extensions
 						sobj.DijkstraMap.Add(kvp);
 					}
 					// account for cost of previous orders
-					minCost = sobj.DijkstraMap.Keys.Max(n => n.MinimumCostRemaining);
+					minCost = sobj.DijkstraMap.Keys.MaxOrDefault(n => n.MinimumCostRemaining);
 					last = o.Destination;
 				}
 			}
@@ -1492,6 +1503,153 @@ namespace FrEee.Utility.Extensions
 		public static string EscapeNewlines(this string s)
 		{
 			return s.Replace("\r", "\\r").Replace("\n", "\\n");
+		}
+
+		/// <summary>
+		/// Casts an object to a type. Throws an exception if  the type is wrong.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static T CastTo<T>(this object o)
+		{
+			return (T)o;
+		}
+
+		/// <summary>
+		/// Casts an object to a type. Returns null if the type is wrong.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static T As<T>(this object o, bool throwExceptionIfWrongType = false)
+			where T : class
+		{
+			return o as T;
+		}
+
+		/// <summary>
+		/// Builds a delegate to wrap a MethodInfo.
+		/// http://stackoverflow.com/questions/13041674/create-func-or-action-for-any-method-using-reflection-in-c
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="method"></param>
+		/// <param name="missingParamValues"></param>
+		/// <returns></returns>
+		public static T BuildDelegate<T>(this MethodInfo method, params object[] missingParamValues)
+		{
+			var queueMissingParams = new Queue<object>(missingParamValues);
+
+			var dgtMi = typeof(T).GetMethod("Invoke");
+			var dgtRet = dgtMi.ReturnType;
+			var dgtParams = dgtMi.GetParameters();
+
+			var paramsOfDelegate = dgtParams
+				.Select(tp => Expression.Parameter(tp.ParameterType, tp.Name))
+				.ToArray();
+
+			var methodParams = method.GetParameters();
+
+			if (method.IsStatic)
+			{
+				var paramsToPass = methodParams
+					.Select((p, i) => CreateParam(paramsOfDelegate, i, p, queueMissingParams))
+					.ToArray();
+
+				var expr = Expression.Lambda<T>(
+					Expression.Call(method, paramsToPass),
+					paramsOfDelegate);
+
+				return expr.Compile();
+			}
+			else
+			{
+				var paramThis = Expression.Convert(paramsOfDelegate[0], method.DeclaringType);
+
+				var paramsToPass = methodParams
+					.Select((p, i) => CreateParam(paramsOfDelegate, i + 1, p, queueMissingParams))
+					.ToArray();
+
+				var expr = Expression.Lambda<T>(
+					Expression.Call(paramThis, method, paramsToPass),
+					paramsOfDelegate);
+
+				return expr.Compile();
+			}
+		}
+
+		public static Delegate BuildDelegate(this MethodInfo method, params object[] missingParamValues)
+		{
+			var parms = method.GetParameters();
+			var parmTypes = parms.Select(p => p.ParameterType).ToArray();
+			var delegateType = method.ReturnType == typeof(void) ? MakeActionType(parmTypes) : MakeFuncType(parmTypes, method.ReturnType);
+			var builder = typeof(CommonExtensions).GetMethods().Single(m => m.Name == "BuildDelegate" && m.GetGenericArguments().Length == 1).MakeGenericMethod(delegateType);
+			return (Delegate)builder.Invoke(null, new object[] { method, missingParamValues });
+		}
+
+		public static Type MakeActionType(this IEnumerable<Type> parmTypes)
+		{
+			if (parmTypes.Count() == 0)
+				return typeof(Action);
+			if (parmTypes.Count() == 1)
+				return typeof(Action<>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 2)
+				return typeof(Action<,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 3)
+				return typeof(Action<,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 4)
+				return typeof(Action<,,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 5)
+				return typeof(Action<,,,,>).MakeGenericType(parmTypes.ToArray());
+			if (parmTypes.Count() == 6)
+				return typeof(Action<,,,,,>).MakeGenericType(parmTypes.ToArray());
+			// TODO - more parms
+			throw new Exception("MakeActionType currently supports only 0-6 parameters.");
+		}
+
+		public static Type MakeFuncType(this IEnumerable<Type> parmTypes, Type returnType)
+		{
+			var types = parmTypes.Concat(returnType.SingleItem());
+			if (parmTypes.Count() == 0)
+				return typeof(Func<>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 1)
+				return typeof(Func<,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 2)
+				return typeof(Func<,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 3)
+				return typeof(Func<,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 4)
+				return typeof(Func<,,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 5)
+				return typeof(Func<,,,,,>).MakeGenericType(types.ToArray());
+			if (parmTypes.Count() == 6)
+				return typeof(Func<,,,,,,>).MakeGenericType(types.ToArray());
+			// TODO - more parms
+			throw new Exception("MakeFuncType currently supports only -16 parameters.");
+		}
+
+		private static Expression CreateParam(ParameterExpression[] paramsOfDelegate, int i, ParameterInfo callParamType, Queue<object> queueMissingParams)
+		{
+			if (i < paramsOfDelegate.Length)
+				return Expression.Convert(paramsOfDelegate[i], callParamType.ParameterType);
+
+			if (queueMissingParams.Count > 0)
+				return Expression.Constant(queueMissingParams.Dequeue());
+
+			if (callParamType.ParameterType.IsValueType)
+				return Expression.Constant(Activator.CreateInstance(callParamType.ParameterType));
+
+			return Expression.Constant(null);
+		}
+
+		/// <summary>
+		/// Creates an enumerable containing a single item.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		private static IEnumerable<T> SingleItem<T>(this T obj)
+		{
+			return new T[] { obj };
 		}
 	}
 }

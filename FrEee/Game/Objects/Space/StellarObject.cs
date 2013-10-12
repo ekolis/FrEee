@@ -162,9 +162,11 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Galaxy.Current.OmniscientView)
 					return Visibility.Visible;
-				if (this.FindStarSystem().ExploredByEmpires.Contains(emp))
-					return Visibility.Fogged; // TODO - set as unknown if the object was created after the empire last explored the system
-				return Visibility.Unknown;
+				var known = emp.Memory[ID];
+				if (known != null && this.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
 			}
 			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
 			if (scanners.Any())

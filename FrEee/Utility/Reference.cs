@@ -119,8 +119,16 @@ namespace FrEee.Utility
 		}
 	}
 
-	public class ReferenceException : Exception
+	[Serializable]
+	public class ReferenceException : Exception, ISerializable
 	{
+		protected ReferenceException(SerializationInfo info, StreamingContext ctx)
+			: base(info, ctx)
+		{
+			ID = info.GetInt64("ID");
+			Type = (Type)info.GetValue("Type", typeof(Type));
+		}
+
 		public ReferenceException(string message, long id, Type type)
 			: base(message)
 		{
@@ -131,5 +139,12 @@ namespace FrEee.Utility
 		public long ID { get; private set; }
 
 		public Type Type { get; private set; }
+
+		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			base.GetObjectData(info, context);
+			info.AddValue("ID", ID);
+			info.AddValue("Type", Type);
+		}
 	}
 }

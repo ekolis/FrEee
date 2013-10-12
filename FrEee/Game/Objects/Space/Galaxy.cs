@@ -574,9 +574,12 @@ namespace FrEee.Game.Objects.Space
 					var id = kvp.Key;
 					var obj = (IFoggable)kvp.Value;
 					var vis = obj.CheckVisibility(CurrentEmpire);
-					// TODO - memory sight - show only visible objects here, but also show memory caches of fogged objects
-					if (vis < Visibility.Fogged)
+					if (vis >= Visibility.Visible)
+						CurrentEmpire.Memory[id] = obj;
+					else
 						referrables.Remove(id);
+					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+						referrables.Add(id, CurrentEmpire.Memory[id]);
 				}
 
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
