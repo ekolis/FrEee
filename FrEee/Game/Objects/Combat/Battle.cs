@@ -18,6 +18,8 @@ namespace FrEee.Game.Objects.Combat
 	{
 		public Battle(Sector location)
 		{
+			if (location == null)
+				throw new Exception("Battles require a sector location.");
 			Location = location;
 			Log = new List<LogMessage>();
 			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
