@@ -206,6 +206,25 @@ namespace FrEee.WinForms.Controls
 				resMaintOrg.Amount = vehicle.MaintenanceCost[Resource.Organics];
 				resMaintRad.Amount = vehicle.MaintenanceCost[Resource.Radioactives];
 
+				// construction data
+				if (Vehicle.ConstructionQueue == null || Vehicle.ConstructionQueue.FirstItemEta == null)
+				{
+					txtConstructionItem.Text = "(None)";
+					txtConstructionItem.BackColor = Color.Transparent;
+					txtConstructionTime.Text = "";
+					txtConstructionTime.BackColor = Color.Transparent;
+				}
+				else
+				{
+					txtConstructionItem.Text = Vehicle.ConstructionQueue.FirstItemName;
+					txtConstructionItem.BackColor = Vehicle.ConstructionQueue.FirstItemEta <= 1d ? Color.DarkGreen : Color.Transparent;
+					if (Vehicle.ConstructionQueue.Eta != Vehicle.ConstructionQueue.FirstItemEta)
+						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.ToString("f1") + " turns (" + Vehicle.ConstructionQueue.Eta.ToString("f1") + " turns for all)";
+					else
+						txtConstructionTime.Text = Vehicle.ConstructionQueue.FirstItemEta.ToString("f1") + " turns";
+					txtConstructionTime.BackColor = Vehicle.ConstructionQueue.Eta <= 1d ? Color.DarkGreen : Color.Transparent;
+				}
+
 				// component summary
 				txtComponentsFunctional.Text = vehicle.Components.Where(c => !c.IsDestroyed).Count() + " / " + vehicle.Components.Count + " functional";
 				lstComponentsSummary.Initialize(32, 32);

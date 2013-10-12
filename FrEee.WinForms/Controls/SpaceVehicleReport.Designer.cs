@@ -41,6 +41,10 @@ namespace FrEee.WinForms.Controls
 			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
 			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.txtConstructionTime = new System.Windows.Forms.Label();
+			this.lblConstructionTime = new System.Windows.Forms.Label();
+			this.txtConstructionItem = new System.Windows.Forms.Label();
+			this.lblConstructionItem = new System.Windows.Forms.Label();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
 			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblComponents = new System.Windows.Forms.Label();
@@ -128,6 +132,10 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.txtConstructionTime);
+			this.pageDetail.Controls.Add(this.lblConstructionTime);
+			this.pageDetail.Controls.Add(this.txtConstructionItem);
+			this.pageDetail.Controls.Add(this.lblConstructionItem);
 			this.pageDetail.Controls.Add(this.txtComponentsFunctional);
 			this.pageDetail.Controls.Add(this.resMaintMin);
 			this.pageDetail.Controls.Add(this.lblComponents);
@@ -159,15 +167,59 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
 			this.pageDetail.Padding = new System.Windows.Forms.Padding(3);
-			this.pageDetail.Size = new System.Drawing.Size(292, 614);
+			this.pageDetail.Size = new System.Drawing.Size(292, 642);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// txtConstructionTime
+			// 
+			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtConstructionTime.Location = new System.Drawing.Point(128, 349);
+			this.txtConstructionTime.Name = "txtConstructionTime";
+			this.txtConstructionTime.Size = new System.Drawing.Size(153, 15);
+			this.txtConstructionTime.TabIndex = 88;
+			this.txtConstructionTime.Text = "0.3 years";
+			this.txtConstructionTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// lblConstructionTime
+			// 
+			this.lblConstructionTime.AutoSize = true;
+			this.lblConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblConstructionTime.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblConstructionTime.Location = new System.Drawing.Point(7, 349);
+			this.lblConstructionTime.Name = "lblConstructionTime";
+			this.lblConstructionTime.Size = new System.Drawing.Size(99, 15);
+			this.lblConstructionTime.TabIndex = 87;
+			this.lblConstructionTime.Text = "Time Remaining";
+			// 
+			// txtConstructionItem
+			// 
+			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtConstructionItem.Location = new System.Drawing.Point(128, 334);
+			this.txtConstructionItem.Name = "txtConstructionItem";
+			this.txtConstructionItem.Size = new System.Drawing.Size(153, 15);
+			this.txtConstructionItem.TabIndex = 86;
+			this.txtConstructionItem.Text = "Barracuda IV";
+			this.txtConstructionItem.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// lblConstructionItem
+			// 
+			this.lblConstructionItem.AutoSize = true;
+			this.lblConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblConstructionItem.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblConstructionItem.Location = new System.Drawing.Point(6, 334);
+			this.lblConstructionItem.Name = "lblConstructionItem";
+			this.lblConstructionItem.Size = new System.Drawing.Size(112, 15);
+			this.lblConstructionItem.TabIndex = 85;
+			this.lblConstructionItem.Text = "Under Construction";
 			// 
 			// txtComponentsFunctional
 			// 
 			this.txtComponentsFunctional.AutoSize = true;
 			this.txtComponentsFunctional.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtComponentsFunctional.Location = new System.Drawing.Point(189, 366);
+			this.txtComponentsFunctional.Location = new System.Drawing.Point(188, 384);
 			this.txtComponentsFunctional.Name = "txtComponentsFunctional";
 			this.txtComponentsFunctional.Size = new System.Drawing.Size(94, 15);
 			this.txtComponentsFunctional.TabIndex = 35;
@@ -181,7 +233,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintMin.Change = null;
 			this.resMaintMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resMaintMin.Location = new System.Drawing.Point(64, 346);
+			this.resMaintMin.Location = new System.Drawing.Point(63, 364);
 			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintMin.Name = "resMaintMin";
 			this.resMaintMin.ResourceName = "Minerals";
@@ -193,7 +245,7 @@ namespace FrEee.WinForms.Controls
 			this.lblComponents.AutoSize = true;
 			this.lblComponents.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblComponents.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblComponents.Location = new System.Drawing.Point(11, 366);
+			this.lblComponents.Location = new System.Drawing.Point(10, 384);
 			this.lblComponents.Name = "lblComponents";
 			this.lblComponents.Size = new System.Drawing.Size(77, 15);
 			this.lblComponents.TabIndex = 21;
@@ -207,7 +259,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintOrg.Change = null;
 			this.resMaintOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resMaintOrg.Location = new System.Drawing.Point(139, 346);
+			this.resMaintOrg.Location = new System.Drawing.Point(138, 364);
 			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintOrg.Name = "resMaintOrg";
 			this.resMaintOrg.ResourceName = "Organics";
@@ -222,7 +274,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintRad.Change = null;
 			this.resMaintRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resMaintRad.Location = new System.Drawing.Point(214, 346);
+			this.resMaintRad.Location = new System.Drawing.Point(213, 364);
 			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintRad.Name = "resMaintRad";
 			this.resMaintRad.ResourceName = "Radioactives";
@@ -234,7 +286,7 @@ namespace FrEee.WinForms.Controls
 			this.lblMaint.AutoSize = true;
 			this.lblMaint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblMaint.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblMaint.Location = new System.Drawing.Point(10, 346);
+			this.lblMaint.Location = new System.Drawing.Point(9, 364);
 			this.lblMaint.Name = "lblMaint";
 			this.lblMaint.Size = new System.Drawing.Size(41, 15);
 			this.lblMaint.TabIndex = 43;
@@ -245,7 +297,7 @@ namespace FrEee.WinForms.Controls
 			this.txtFleet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFleet.AutoSize = true;
 			this.txtFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFleet.Location = new System.Drawing.Point(210, 331);
+			this.txtFleet.Location = new System.Drawing.Point(206, 320);
 			this.txtFleet.Name = "txtFleet";
 			this.txtFleet.Size = new System.Drawing.Size(68, 15);
 			this.txtFleet.TabIndex = 42;
@@ -257,7 +309,7 @@ namespace FrEee.WinForms.Controls
 			this.lblFleet.AutoSize = true;
 			this.lblFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblFleet.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblFleet.Location = new System.Drawing.Point(10, 331);
+			this.lblFleet.Location = new System.Drawing.Point(6, 320);
 			this.lblFleet.Name = "lblFleet";
 			this.lblFleet.Size = new System.Drawing.Size(34, 15);
 			this.lblFleet.TabIndex = 41;
@@ -268,7 +320,7 @@ namespace FrEee.WinForms.Controls
 			this.txtExperience.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtExperience.AutoSize = true;
 			this.txtExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtExperience.Location = new System.Drawing.Point(209, 316);
+			this.txtExperience.Location = new System.Drawing.Point(205, 305);
 			this.txtExperience.Name = "txtExperience";
 			this.txtExperience.Size = new System.Drawing.Size(73, 15);
 			this.txtExperience.TabIndex = 40;
@@ -280,7 +332,7 @@ namespace FrEee.WinForms.Controls
 			this.lblExperience.AutoSize = true;
 			this.lblExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblExperience.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblExperience.Location = new System.Drawing.Point(10, 316);
+			this.lblExperience.Location = new System.Drawing.Point(6, 305);
 			this.lblExperience.Name = "lblExperience";
 			this.lblExperience.Size = new System.Drawing.Size(100, 15);
 			this.lblExperience.TabIndex = 39;
@@ -291,7 +343,7 @@ namespace FrEee.WinForms.Controls
 			this.txtOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOrder.AutoSize = true;
 			this.txtOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtOrder.Location = new System.Drawing.Point(152, 301);
+			this.txtOrder.Location = new System.Drawing.Point(148, 290);
 			this.txtOrder.Name = "txtOrder";
 			this.txtOrder.Size = new System.Drawing.Size(130, 15);
 			this.txtOrder.TabIndex = 38;
@@ -303,7 +355,7 @@ namespace FrEee.WinForms.Controls
 			this.lblOrder.AutoSize = true;
 			this.lblOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblOrder.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblOrder.Location = new System.Drawing.Point(10, 301);
+			this.lblOrder.Location = new System.Drawing.Point(6, 290);
 			this.lblOrder.Name = "lblOrder";
 			this.lblOrder.Size = new System.Drawing.Size(81, 15);
 			this.lblOrder.TabIndex = 37;
@@ -313,7 +365,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtCargoSpaceFree.AutoSize = true;
 			this.txtCargoSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCargoSpaceFree.Location = new System.Drawing.Point(190, 487);
+			this.txtCargoSpaceFree.Location = new System.Drawing.Point(185, 517);
 			this.txtCargoSpaceFree.Name = "txtCargoSpaceFree";
 			this.txtCargoSpaceFree.Size = new System.Drawing.Size(92, 15);
 			this.txtCargoSpaceFree.TabIndex = 36;
@@ -328,7 +380,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gamePanel2.Controls.Add(this.lstCargoSummary);
 			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(11, 505);
+			this.gamePanel2.Location = new System.Drawing.Point(6, 535);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel2.Size = new System.Drawing.Size(272, 100);
@@ -366,7 +418,7 @@ namespace FrEee.WinForms.Controls
 			this.lblCargo.AutoSize = true;
 			this.lblCargo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblCargo.Location = new System.Drawing.Point(13, 487);
+			this.lblCargo.Location = new System.Drawing.Point(8, 517);
 			this.lblCargo.Name = "lblCargo";
 			this.lblCargo.Size = new System.Drawing.Size(40, 15);
 			this.lblCargo.TabIndex = 24;
@@ -381,7 +433,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.gamePanel1.Controls.Add(this.lstComponentsSummary);
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(13, 384);
+			this.gamePanel1.Location = new System.Drawing.Point(8, 414);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel1.Size = new System.Drawing.Size(272, 100);
@@ -424,7 +476,8 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
 			this.pnlStats.Controls.Add(this.tableLayoutPanel1, 0, 0);
 			this.pnlStats.Controls.Add(this.tableLayoutPanel2, 1, 0);
-			this.pnlStats.Location = new System.Drawing.Point(8, 167);
+			this.pnlStats.Location = new System.Drawing.Point(8, 163);
+			this.pnlStats.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlStats.Name = "pnlStats";
 			this.pnlStats.RowCount = 1;
 			this.pnlStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -801,7 +854,7 @@ namespace FrEee.WinForms.Controls
 			this.pageComps.Location = new System.Drawing.Point(4, 29);
 			this.pageComps.Name = "pageComps";
 			this.pageComps.Padding = new System.Windows.Forms.Padding(3);
-			this.pageComps.Size = new System.Drawing.Size(292, 614);
+			this.pageComps.Size = new System.Drawing.Size(292, 642);
 			this.pageComps.TabIndex = 2;
 			this.pageComps.Text = "Comps";
 			// 
@@ -853,7 +906,7 @@ namespace FrEee.WinForms.Controls
 			this.pageCargo.Location = new System.Drawing.Point(4, 29);
 			this.pageCargo.Name = "pageCargo";
 			this.pageCargo.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCargo.Size = new System.Drawing.Size(292, 614);
+			this.pageCargo.Size = new System.Drawing.Size(292, 642);
 			this.pageCargo.TabIndex = 3;
 			this.pageCargo.Text = "Cargo";
 			// 
@@ -895,7 +948,7 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.Location = new System.Drawing.Point(4, 29);
 			this.pageAbility.Name = "pageAbility";
 			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
-			this.pageAbility.Size = new System.Drawing.Size(292, 614);
+			this.pageAbility.Size = new System.Drawing.Size(292, 642);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
 			// 
@@ -910,7 +963,7 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
 			this.abilityTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.abilityTreeView.Name = "abilityTreeView";
-			this.abilityTreeView.Size = new System.Drawing.Size(286, 608);
+			this.abilityTreeView.Size = new System.Drawing.Size(286, 636);
 			this.abilityTreeView.TabIndex = 0;
 			// 
 			// gameTabControl1
@@ -928,7 +981,7 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.SelectedIndex = 0;
 			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.SkyBlue;
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(300, 647);
+			this.gameTabControl1.Size = new System.Drawing.Size(300, 675);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
@@ -951,7 +1004,7 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Location = new System.Drawing.Point(4, 29);
 			this.pageOrders.Name = "pageOrders";
 			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
-			this.pageOrders.Size = new System.Drawing.Size(292, 614);
+			this.pageOrders.Size = new System.Drawing.Size(292, 642);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
 			// 
@@ -1114,15 +1167,15 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 525);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
-			// AutonomousSpaceVehicleReport
+			// SpaceVehicleReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.gameTabControl1);
 			this.ForeColor = System.Drawing.Color.White;
-			this.Name = "AutonomousSpaceVehicleReport";
-			this.Size = new System.Drawing.Size(300, 647);
+			this.Name = "SpaceVehicleReport";
+			this.Size = new System.Drawing.Size(300, 675);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			this.gamePanel2.ResumeLayout(false);
@@ -1216,5 +1269,9 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.Label txtConstructionTime;
+		private System.Windows.Forms.Label lblConstructionTime;
+		private System.Windows.Forms.Label txtConstructionItem;
+		private System.Windows.Forms.Label lblConstructionItem;
 	}
 }
