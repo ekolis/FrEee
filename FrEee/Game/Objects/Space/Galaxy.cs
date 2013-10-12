@@ -663,8 +663,7 @@ namespace FrEee.Game.Objects.Space
 							// TODO - should planetary population spill over into cargo?
 							// this might be annoying for homeworlds, as their cargo space would fill up quickly...
 							// especially in Proportions Mod with its 1000kT/1M population!
-							var spillover = (long)(pop[race] * (ratio - 1d));
-							p.RemovePopulation(race, spillover);
+							pop[race] = (long)(pop[race] / ratio);
 						}
 					}
 
