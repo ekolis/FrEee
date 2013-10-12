@@ -143,7 +143,7 @@ sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 		{
 			if (s1.IsNull() && s2.IsNull())
 				return true;
-			if (s1.IsNull() || s1.IsNull())
+			if (s1.IsNull() || s2.IsNull())
 				return false;
 			return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SequenceEqual(s2.ExternalScripts);
 		}
