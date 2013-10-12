@@ -76,7 +76,7 @@ namespace FrEee.Game.Objects.Orders
 				else if (!LoggedPathfindingError)
 				{
 					// log pathfinding error
-					PathfindingError = sobj.CreateLogMessage(sobj + " could not pursue " + Target + " because there is no available path available leading toward " + Target + ".");
+					PathfindingError = sobj.CreateLogMessage(sobj + " could not pursue " + Target + " because there is no available path available leading toward " + Target + " or " + sobj + " is immobile.");
 					sobj.Owner.Log.Add(PathfindingError);
 					LoggedPathfindingError = true;
 				}

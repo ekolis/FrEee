@@ -115,7 +115,7 @@ namespace FrEee.Game.Objects.Orders
 				else if (!LoggedPathfindingError)
 				{
 					// log pathfinding error
-					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " could not evade " + Target + " because there is no available path available leading away from " + Target + "."));
+					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " could not evade " + Target + " because there is no available path leading away from " + Target + " or " + sobj + " is immobile."));
 					LoggedPathfindingError = true;
 				}
 			}
