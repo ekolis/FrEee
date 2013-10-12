@@ -328,6 +328,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
 		}
 

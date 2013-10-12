@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Enumerations;
+﻿using AutoMapper;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -19,7 +20,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject
+	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject, IFoggable
 	{
 		public Vehicle()
 		{
@@ -92,6 +93,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		[IgnoreMap]
 		public IEnumerable<Ability> UnstackedAbilities
 		{
 			get
@@ -180,6 +182,9 @@ namespace FrEee.Game.Objects.Vehicles
 				Dispose();
 			}
 
+			// update memory sight
+			this.UpdateEmpireMemories();
+
 			return damage;
 		}
 
@@ -262,6 +267,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		[DoNotSerialize]
+		[IgnoreMap]
 		public int Hitpoints
 		{
 			get
@@ -340,5 +346,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get;
 		}
+
+		public abstract void Redact(Empire emp);
 	}
 }

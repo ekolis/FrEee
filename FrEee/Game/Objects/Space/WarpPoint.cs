@@ -67,10 +67,8 @@ namespace FrEee.Game.Objects.Space
 				Dispose();
 			else if (vis == Visibility.Fogged)
 			{
-				if (emp.Memory[ID] != null && emp.Memory[ID] is WarpPoint)
-				{
-					((WarpPoint)emp.Memory[ID]).CopyTo(this);
-				}
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].RememberTo(this);
 			}
 		}
 	}

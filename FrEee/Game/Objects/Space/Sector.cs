@@ -35,6 +35,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				if (StarSystem == null)
+					return Enumerable.Empty<ISpaceObject>();
 				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null).ToList();
 			}
 		}
@@ -156,7 +158,7 @@ namespace FrEee.Game.Objects.Space
 				return false;
 
 			// TODO - limit number of units in space per empire as specified in Settings.txt
-			
+
 			// place this unit in a fleet with other similar units
 			var fleet = this.SpaceObjects.OfType<Fleet>().SelectMany(f => f.SubfleetsWithNonFleetChildren()).Where(
 				f => f.Vehicles.OfType<IUnit>().Where(u => u.Design == unit.Design).Any()).FirstOrDefault();
@@ -181,20 +183,35 @@ namespace FrEee.Game.Objects.Space
 			}
 			return false;
 		}
-		
+
 		public Image Icon
 		{
-			get { return StarSystem.Icon; }
+			get
+			{
+				if (StarSystem == null)
+					return null;
+				return StarSystem.Icon;
+			}
 		}
 
 		public Image Portrait
 		{
-			get { return StarSystem.Portrait; }
+			get
+			{
+				if (StarSystem == null)
+					return null;
+				return StarSystem.Portrait;
+			}
 		}
 
 		public string Name
 		{
-			get { return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")"; }
+			get
+			{
+				if (StarSystem == null)
+					return "(Unexplored)";
+				return StarSystem + " (" + Coordinates.X + ", " + Coordinates.Y + ")";
+			}
 		}
 
 		public override string ToString()
@@ -219,6 +236,18 @@ namespace FrEee.Game.Objects.Space
 		public IEnumerable<IUnit> AllUnits
 		{
 			get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
+		}
+
+		/// <summary>
+		/// Has this sector's star system been explored by an empire?
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public bool IsExploredBy(Empire emp)
+		{
+			if (StarSystem == null)
+				return false;
+			return StarSystem.ExploredByEmpires.Contains(emp);
 		}
 	}
 }

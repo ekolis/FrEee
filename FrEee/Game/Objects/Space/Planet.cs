@@ -362,6 +362,9 @@ namespace FrEee.Game.Objects.Space
 			if (!Colony.Population.Any(p => p.Value > 0) && !Cargo.Units.Any() && !Cargo.Population.Any(p => p.Value > 0) && !Colony.Facilities.Any())
 				Colony = null;
 
+			// update memory sight
+			this.UpdateEmpireMemories();
+
 			return damage;
 		}
 
@@ -608,6 +611,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
 		/// </summary>
+		[IgnoreMap]
 		public IDictionary<Race, long> PopulationChangePerTurnPerRace
 		{
 			get
@@ -620,13 +624,14 @@ namespace FrEee.Game.Objects.Space
 				foreach (var race in Colony.Population.Keys)
 				{
 					// TODO - plagued planets should not reproduce, and should lose population each turn
-					var sysModifier = this.FindStarSystem().GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
+					var sys = this.FindStarSystem();
+					var sysModifier = sys == null ? 0 : sys.GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
 					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?
-					var sysCloning = this.FindStarSystem().GetAbilityValue(Owner, "Change Population - System").ToInt();
+					var sysCloning = sys == null ? 0 : sys.GetAbilityValue(Owner, "Change Population - System").ToInt();
 					var planetCloning = this.GetAbilityValue("Change Population - Planet").ToInt();
 					deltapop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
 				}
@@ -662,10 +667,8 @@ namespace FrEee.Game.Objects.Space
 				Dispose();
 			else if (vis == Visibility.Fogged)
 			{
-				if (emp.Memory[ID] != null && emp.Memory[ID] is Planet)
-				{
-					((Planet)emp.Memory[ID]).CopyTo(this);
-				}
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].RememberTo(this);
 			}
 		}
 

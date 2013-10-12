@@ -184,11 +184,11 @@ namespace FrEee.Utility
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
 
 			// check for unexplored warp points
-			if (wps1 != null && !wps1.StarSystem.ExploredByEmpires.Contains(emp) && !end.StarSystem.ExploredByEmpires.Contains(emp))
+			if (wps1 != null && !wps1.IsExploredBy(emp) && !end.IsExploredBy(emp))
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + 1;
-			if (!start.StarSystem.ExploredByEmpires.Contains(emp) && wps2 != null && !wps2.StarSystem.ExploredByEmpires.Contains(emp))
+			if (!start.IsExploredBy(emp) && wps2 != null && !wps2.IsExploredBy(emp))
 				ftlDistance = end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
-			if (!start.StarSystem.ExploredByEmpires.Contains(emp) && !end.StarSystem.ExploredByEmpires.Contains(emp))
+			if (!start.IsExploredBy(emp) && !end.IsExploredBy(emp))
 				ftlDistance = 0;
 
 			return Math.Min(sublightDistance, ftlDistance);
@@ -196,31 +196,31 @@ namespace FrEee.Utility
 
 		public static Sector FindNearestWarpPointSectorInSystem(Sector sector)
 		{
-			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(g =>new Sector(sector.StarSystem, g.Key)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+			if (sector.StarSystem == null)
+				return null; // no guarantee that the warp point to the unexplored system is two-way!
+			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(g => new Sector(sector.StarSystem, g.Key)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)
 		{
 			var moves = new List<Sector>();
-			var sys = s.StarSystem;
 
 			// no moving in an unexplored system until we've explored it
-			if (emp != null && !sys.ExploredByEmpires.Contains(emp))
+			if (emp != null && !s.IsExploredBy(emp))
 				yield break;
 
+			var sys = s.StarSystem;
+
 			// normal moves
-			if (sys != null)
+			foreach (var dx in new int[] { 0, -1, 1 })
 			{
-				foreach (var dx in new int[] { 0, -1, 1 })
+				foreach (var dy in new int[] { 0, -1, 1 })
 				{
-					foreach (var dy in new int[] { 0, -1, 1 })
-					{
-						if (dx == 0 && dy == 0)
-							continue; // no need to sit still!
-						var coords = s.Coordinates;
-						if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
-							yield return sys.GetSector(new Point(coords.X + dx, coords.Y + dy));
-					}
+					if (dx == 0 && dy == 0)
+						continue; // no need to sit still!
+					var coords = s.Coordinates;
+					if (Math.Abs(coords.X + dx) <= sys.Radius && Math.Abs(coords.Y + dy) <= sys.Radius)
+						yield return sys.GetSector(new Point(coords.X + dx, coords.Y + dy));
 				}
 			}
 

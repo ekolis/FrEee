@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem : IReferrable, IPictorial
+	public class StarSystem : IReferrable, IPictorial, IFoggable
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -266,6 +266,7 @@ namespace FrEee.Game.Objects.Space
 		public void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
+			this.UpdateEmpireMemories();
 		}
 
 		/// <summary>

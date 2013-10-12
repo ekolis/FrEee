@@ -260,6 +260,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
+			this.UpdateEmpireMemories();
 		}
 
 		public string Name

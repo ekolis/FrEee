@@ -574,14 +574,15 @@ namespace FrEee.Game.Objects.Space
 					var id = kvp.Key;
 					var obj = (IFoggable)kvp.Value;
 					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis >= Visibility.Visible)
-						CurrentEmpire.Memory[id] = obj;
-					else
+					if (vis < Visibility.Visible)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						referrables.Add(id, CurrentEmpire.Memory[id]);
+						referrables.Add(id, (IReferrable)CurrentEmpire.Memory[id].Remember());
+					if (vis > Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+						CurrentEmpire.Memory.Remove(id); // no need to remember it if you can see it now!
 				}
 
+				// clear data about other empires
 				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
 				{
 					emp.StoredResources.Clear();
@@ -591,6 +592,7 @@ namespace FrEee.Game.Objects.Space
 					emp.AccumulatedResearch.Clear();
 					emp.ResearchQueue.Clear();
 					emp.ResearchSpending.Clear();
+					emp.Memory.Clear();
 				}
 
 				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
@@ -849,6 +851,10 @@ namespace FrEee.Game.Objects.Space
 					v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
+
+					// update memory sight after movement
+					foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten())
+						sobj.UpdateEmpireMemories();
 
 					// check for battles
 					// TODO - alliances

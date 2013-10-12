@@ -185,11 +185,13 @@ namespace FrEee.Game.Objects.Vehicles
 			if (sys != null)
 				sys.Remove(this);
 			base.Dispose();
+			this.UpdateEmpireMemories();
 		}
 
 		/// <summary>
 		/// Resource cost per turn to maintain this vehicle.
 		/// </summary>
+		[IgnoreMap]
 		public ResourceQuantity MaintenanceCost
 		{
 			get
@@ -228,7 +230,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 
-		public void Redact(Empire emp)
+		public override void Redact(Empire emp)
 		{
 			var visibility = CheckVisibility(emp);
 
@@ -254,7 +256,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			if (visibility < Visibility.Fogged)
-				Dispose(); // TODO - memory sight
+				Dispose();
 			else if (visibility == Visibility.Fogged)
 			{
 				var known = emp.Memory[ID];

@@ -120,8 +120,8 @@ namespace FrEee.Utility
 			else if (typeof(Array).IsAssignableFrom(type))
 				WriteArray((Array)o, w, context, tabLevel);
 			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any()
-				// HACK - these types should not be serialized as normal dictionaries/sets!
-				&& type.Name != "ReferenceKeyedDictionary`2" && type.Name != "ReferenceSet`1")
+				// these types should not be serialized as normal dictionaries/sets!
+				&& !typeof(IReferenceEnumerable).IsAssignableFrom(type))
 				WriteCollection((IEnumerable)o, w, context, tabLevel);
 			else
 				WriteObject(o, w, context, tabLevel);
@@ -637,6 +637,9 @@ namespace FrEee.Utility
 
 					// clean up
 					ReadSemicolon(r, type, log);
+
+					if (o is IReferrable && ((IReferrable)o).ID == 2437666120012355370)
+						Console.WriteLine("found " + o);
 				}
 				else if (fin == 'i')
 				{

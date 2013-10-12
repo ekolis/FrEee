@@ -19,6 +19,7 @@ using FrEee.Game.Objects.Commands;
 using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 
 namespace FrEee.Utility.Extensions
 {
@@ -30,11 +31,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
 		/// <returns>The copy.</returns>
-		public static T Copy<T>(this T obj) where T : new()
+		public static T Copy<T>(this T obj)
 		{
 			if (obj == null)
 				return default(T);
-			var dest = new T();
+			var dest = obj.GetType().Instantiate();
 			obj.CopyTo(dest);
 			return (T)dest;
 		}
@@ -391,7 +392,12 @@ namespace FrEee.Utility.Extensions
 
 		public static T Find<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
-			return stuff.FirstOrDefault(item => item.Name == name);
+			return stuff.SingleOrDefault(item => item.Name == name);
+		}
+
+		public static IEnumerable<T> FindAll<T>(this IEnumerable<T> stuff, string name) where T : INamed
+		{
+			return stuff.Where(item => item.Name == name);
 		}
 
 		/// <summary>
@@ -1650,6 +1656,28 @@ namespace FrEee.Utility.Extensions
 		private static IEnumerable<T> SingleItem<T>(this T obj)
 		{
 			return new T[] { obj };
+		}
+
+		/// <summary>
+		/// Updates the memory sight cache of any empires that can see this object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="stillExists"></param>
+		public static void UpdateEmpireMemories(this IFoggable obj)
+		{
+			foreach (var emp in Galaxy.Current.Empires)
+			{
+				if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					emp.UpdateMemory(obj);
+			}
+		}
+
+		public static object Instantiate(this Type type)
+		{
+			if (type.GetConstructor(new Type[0]) != null)
+				return Activator.CreateInstance(type);
+			else
+				return FormatterServices.GetSafeUninitializedObject(type);
 		}
 	}
 }

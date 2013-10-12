@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
-			Memory = new SafeDictionary<long, IFoggable>();
+			Memory = new SafeDictionary<long, Memory>();
 		}
 
 		/// <summary>
@@ -626,6 +626,28 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Information about any foggable objects that this empire has previously seen but cannot currently see.
 		/// </summary>
-		public SafeDictionary<long, IFoggable> Memory { get; private set; }
+		public SafeDictionary<long, Memory> Memory { get; private set; }
+
+		/// <summary>
+		/// Updates the memory sight cache for an object.
+		/// This should only be called when this empire SEES the object's state change,
+		/// or the player decides to delete a sensor ghost.
+		/// </summary>
+		/// <param name="obj"></param>
+		public void UpdateMemory(IFoggable obj)
+		{
+			if (obj.ID > 0)
+			{
+				// object exists, update cache with the data
+				Memory[obj.ID] = new Memory(obj);
+			}
+			else
+			{
+				// object was destroyed, remove from cache
+				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value == obj).Key;
+				if (oldid > 0)
+					Memory.Remove(oldid);
+			}
+		}
 	}
 }

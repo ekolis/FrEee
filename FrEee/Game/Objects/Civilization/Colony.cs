@@ -112,6 +112,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (Container != null)
 				Container.Colony = null;
 			Galaxy.Current.UnassignID(this);
+			this.UpdateEmpireMemories();
 		}
 
 		public Planet Container
