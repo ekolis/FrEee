@@ -320,6 +320,7 @@
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
     <Compile Include="Utility\ReferenceSet.cs" />
+    <Compile Include="Utility\RequiredVisibilityAttribute.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />

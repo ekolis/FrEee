@@ -13,11 +13,6 @@ namespace FrEee.Game.Interfaces
 	public interface IFoggable : IReferrable, IHistorical
 	{
 		/// <summary>
-		/// The visibility of this object to an empire.
-		/// </summary>
-		Visibility CheckVisibility(Empire emp);
-
-		/// <summary>
 		/// Removes any data from this object that the specified empire cannot see.
 		/// </summary>
 		void Redact(Empire emp);

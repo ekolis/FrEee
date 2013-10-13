@@ -76,7 +76,7 @@ namespace FrEee.Utility.Extensions
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[]{map});
+				map = ignorer.Invoke(null, new object[] { map });
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -1758,20 +1758,24 @@ namespace FrEee.Utility.Extensions
 					var h = (IHistorical)o;
 					if (h is ISpaceObject)
 					{
-						// if it moved, save its new location
-						var sobj = (ISpaceObject)h;
-						var lastMove = emp.History[sobj] == null ? null : emp.History[sobj].OfType<MoveKeyframe>().OrderBy(k => k.Timestamp).LastOrDefault();
-						if (lastMove == null || lastMove.NewSector != sobj.Sector)
+						// if we saw it move, save it
+						if (h.CheckVisibility(emp) >= Visibility.Visible)
 						{
-							if (emp.History[sobj] == null)
-								emp.History[sobj] = new List<IKeyframe>();
-							emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
+							var sobj = (ISpaceObject)h;
+							var lastMove = emp.History[sobj] == null ? null : emp.History[sobj].OfType<MoveKeyframe>().OrderBy(k => k.Timestamp).LastOrDefault();
+							if (lastMove == null || lastMove.NewSector != sobj.Sector)
+							{
+								if (emp.History[sobj] == null)
+									emp.History[sobj] = new List<IKeyframe>();
+								emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
+
+							}
 						}
 					}
-					// if any properties changed, save them
-					foreach (var prop in o.GetType().GetSafeProperties())
+					// if we saw any properties change, save them
+					foreach (var prop in h.GetType().GetSafeProperties(h.CheckVisibility(emp)))
 					{
-						var val = o.GetPropertyValue(prop);
+						var val = h.GetPropertyValue(prop);
 						var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
 						if (lastChange == null || lastChange.NewValue != val)
 						{
@@ -1788,9 +1792,27 @@ namespace FrEee.Utility.Extensions
 		/// Get properties which are safe to be serialized.
 		/// </summary>
 		/// <param name="t"></param>
-		public static IEnumerable<PropertyInfo> GetSafeProperties(this Type t)
+		/// <param name="vis">The visibility of the object being serialized.</param>
+		public static IEnumerable<PropertyInfo> GetSafeProperties(this Type t, Visibility vis = Visibility.Owned)
 		{
-			return t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
+			return t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p =>
+					!p.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() &&
+					p.GetGetMethod(true) != null &&
+					p.GetSetMethod(true) != null &&
+					p.GetRequiredVisiblity() <= vis);
+		}
+
+		/// <summary>
+		/// Gets the required visiblity for an empire to see a property of an object.
+		/// </summary>
+		/// <param name="prop"></param>
+		/// <returns></returns>
+		public static Visibility GetRequiredVisiblity(this PropertyInfo prop)
+		{
+			var atts = prop.GetCustomAttributes(typeof(RequiredVisibilityAttribute), true);
+			if (atts.Any())
+				return atts.Cast<RequiredVisibilityAttribute>().Min(att => att.Visibility);
+			return Visibility.Unknown; // no restrictions
 		}
 	}
 }

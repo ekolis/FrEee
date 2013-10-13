@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Civilization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,8 @@ namespace FrEee.Game.Interfaces
 	public interface IHistorical
 	{
 		/// <summary>
-		/// Is this object currently visible to an empire?
+		/// The visibility of this object to an empire.
 		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		bool IsVisibleTo(Empire emp);
+		Visibility CheckVisibility(Empire emp);
 	}
 }
