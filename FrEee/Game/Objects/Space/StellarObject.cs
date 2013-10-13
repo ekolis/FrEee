@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -214,6 +215,11 @@ namespace FrEee.Game.Objects.Space
 		public bool IsVisibleTo(Empire emp)
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
+		}
+
+		public bool IsModObject
+		{
+			get { return Mod.Current.StellarObjectTemplates.Contains(this); }
 		}
 	}
 }

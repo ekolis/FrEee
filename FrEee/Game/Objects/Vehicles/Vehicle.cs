@@ -370,5 +370,13 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Vehicles can never be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

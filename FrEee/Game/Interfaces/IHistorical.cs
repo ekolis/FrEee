@@ -16,5 +16,10 @@ namespace FrEee.Game.Interfaces
 		/// The visibility of this object to an empire.
 		/// </summary>
 		Visibility CheckVisibility(Empire emp);
+
+		/// <summary>
+		/// Is this merely a mod object? If so, it does not need its history saved.
+		/// </summary>
+		bool IsModObject { get; }
 	}
 }

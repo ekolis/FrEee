@@ -261,5 +261,13 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Components can never be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

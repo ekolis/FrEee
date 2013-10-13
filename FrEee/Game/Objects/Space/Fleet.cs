@@ -675,5 +675,13 @@ namespace FrEee.Game.Objects.Space
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Fleets can never be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

@@ -347,5 +347,13 @@ namespace FrEee.Game.Objects.Space
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Star systems can never be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

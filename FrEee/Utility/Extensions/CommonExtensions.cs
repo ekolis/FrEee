@@ -1756,11 +1756,11 @@ namespace FrEee.Utility.Extensions
 				if (o is IHistorical)
 				{
 					var h = (IHistorical)o;
-					if (h is ISpaceObject)
+					if (!h.IsModObject && h.CheckVisibility(emp) >= Visibility.Visible)
 					{
-						// if we saw it move, save it
-						if (h.CheckVisibility(emp) >= Visibility.Visible)
+						if (h is ISpaceObject)
 						{
+							// if we saw it move, save it
 							var sobj = (ISpaceObject)h;
 							var lastMove = emp.History[sobj] == null ? null : emp.History[sobj].OfType<MoveKeyframe>().OrderBy(k => k.Timestamp).LastOrDefault();
 							if (lastMove == null || lastMove.NewSector != sobj.Sector)
@@ -1770,18 +1770,19 @@ namespace FrEee.Utility.Extensions
 								emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
 
 							}
+
 						}
-					}
-					// if we saw any properties change, save them
-					foreach (var prop in h.GetType().GetSafeProperties(h.CheckVisibility(emp)))
-					{
-						var val = h.GetPropertyValue(prop);
-						var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
-						if (lastChange == null || lastChange.NewValue != val)
+						// if we saw any properties change, save them
+						foreach (var prop in h.GetType().GetSafeProperties(h.CheckVisibility(emp)))
 						{
-							if (emp.History[h] == null)
-								emp.History[h] = new List<IKeyframe>();
-							emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+							var val = h.GetPropertyValue(prop);
+							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+							if (lastChange == null || lastChange.NewValue != val)
+							{
+								if (emp.History[h] == null)
+									emp.History[h] = new List<IKeyframe>();
+								emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+							}
 						}
 					}
 				}

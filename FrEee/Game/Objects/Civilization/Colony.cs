@@ -135,5 +135,13 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return CheckVisibility(emp) >= Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Colonies can never be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }
