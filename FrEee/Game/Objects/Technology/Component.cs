@@ -1,7 +1,9 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -17,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IFoggable, IContainable<IVehicle>
 	{
 		public Component(MountedComponentTemplate template)
 		{
@@ -205,6 +207,59 @@ namespace FrEee.Game.Objects.Technology
 		{
 			// TODO - moddable hit chance
 			get { return MaxHitpoints; }
+		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			return Container.CheckVisibility(emp);
+		}
+
+		public void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			// TODO - show components without damage info on vehicles whose design is known
+			if (vis < Visibility.Scanned)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			IsKnownToBeDestroyed = true;
+			Container.Components.Remove(this);
+			Galaxy.Current.UnassignID(this);
+		}
+
+		public Civilization.Empire Owner
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public IVehicle Container
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

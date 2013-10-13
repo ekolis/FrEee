@@ -70,6 +70,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (emp == Owner)
 				return Visibility.Owned;
 			else
+				// colonies cannot be scanned, though that would be a cool special ability
 				return Visibility.Visible;
 		}
 
@@ -88,14 +89,8 @@ namespace FrEee.Game.Objects.Civilization
 				// can only see space used by cargo, not actual cargo
 				Cargo.SetFakeSize();
 			}
-			if (visibility < Visibility.Scanned)
-			{
-				var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
-				var facilCount = Facilities.Count;
-				Facilities.Clear();
-				for (int i = 0; i < facilCount; i++)
-					Facilities.Add(new Facility(unknownFacilityTemplate));
-			}
+			foreach (var f in Facilities)
+				f.Redact(emp);
 
 			if (visibility < Visibility.Visible)
 				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
@@ -112,6 +107,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (Container != null)
 				Container.Colony = null;
 			Galaxy.Current.UnassignID(this);
+			IsKnownToBeDestroyed = true;
 			this.UpdateEmpireMemories();
 		}
 
@@ -127,6 +123,17 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject, IFoggable
+	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject
 	{
 		public Vehicle()
 		{
@@ -42,6 +42,11 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The components on this vehicle.
 		/// </summary>
 		public IList<Component> Components { get; private set; }
+
+		/// <summary>
+		/// The hull of this vehicle.
+		/// </summary>
+		public IHull Hull { get { return Design == null ? null : Design.Hull; } }
 
 		public bool RequiresColonyQueue
 		{
@@ -353,6 +358,17 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get;
 			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

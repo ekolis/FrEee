@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -228,7 +229,7 @@ namespace FrEee.Utility
 				int i = 0; // how far removed in the type hierarchy?
 				while (t != null)
 				{
-					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
+					var newprops = t.GetSafeProperties();
 					foreach (var prop in newprops.Where(prop => prop.GetIndexParameters().Length == 0))
 						props.Add(prop, i);
 					t = t.BaseType;

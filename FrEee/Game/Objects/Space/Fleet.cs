@@ -258,6 +258,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Dispose()
 		{
+			IsKnownToBeDestroyed = true;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 			this.UpdateEmpireMemories();
@@ -662,6 +663,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			get;
 			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

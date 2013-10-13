@@ -102,6 +102,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
+			IsKnownToBeDestroyed = true;
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
@@ -202,6 +203,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			get;
 			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

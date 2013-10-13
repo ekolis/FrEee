@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -9,8 +10,29 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	 [Serializable] public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	[Serializable]
+	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
+		public SafeDictionary()
+		{
+			AutoInitType = null;
+		}
+
+		/// <summary>
+		/// Creates a safe dictionary.
+		/// </summary>
+		/// <param name="autoInit">Should new values be automatically initialized when the key is referenced?</param>
+		public SafeDictionary(Type autoInitType)
+		{
+			AutoInitType = autoInitType;
+		}
+
+		/// <summary>
+		/// A type to automatically initialize new values with when the key is referenced.
+		/// If null, the values will be set to the default.
+		/// </summary>
+		public Type AutoInitType { get; set; }
+
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 
 		public virtual void Add(TKey key, TValue value)
@@ -55,7 +77,7 @@ namespace FrEee.Utility
 				if (ContainsKey(key))
 					return dict[key];
 				else
-					return default(TValue);
+					return AutoInitType != null ? (TValue)AutoInitType.Instantiate() : default(TValue);
 			}
 			set
 			{

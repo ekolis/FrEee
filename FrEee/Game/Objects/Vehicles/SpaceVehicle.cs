@@ -244,7 +244,8 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			// Can't see the ship's components if it's not scanned
-			// TODO - let player see design of previously scanned ship if the ship has not been refit
+			// TODO - let player see design of previously scanned/fought ship if the ship has not been refit
+			// TODO - let player see design of ship if he's previously scanned (or fought) a ship of the same design
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design and clear component list
@@ -254,6 +255,9 @@ namespace FrEee.Game.Objects.Vehicles
 				Design = d;
 				Components.Clear();
 			}
+
+			foreach (var comp in Components)
+				comp.Redact(emp);
 
 			if (visibility < Visibility.Fogged)
 				Dispose();

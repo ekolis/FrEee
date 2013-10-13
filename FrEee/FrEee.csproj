@@ -121,7 +121,9 @@
     <Compile Include="Game\Interfaces\IDamageable.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
+    <Compile Include="Game\Interfaces\IHistorical.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\IKeyframe.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
@@ -147,7 +149,12 @@
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
-    <Compile Include="Game\Objects\Civilization\Memory.cs" />
+    <Compile Include="Game\Objects\History\AppearKeyframe.cs" />
+    <Compile Include="Game\Objects\History\PropertyChangeKeyframe.cs" />
+    <Compile Include="Game\Objects\History\DestroyKeyframe.cs" />
+    <Compile Include="Game\Objects\History\MoveKeyframe.cs" />
+    <Compile Include="Game\Objects\History\DisappearKeyframe.cs" />
+    <Compile Include="Game\Objects\History\Memory.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />

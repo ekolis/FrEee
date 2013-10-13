@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be obscured by fog of war.
 	/// </summary>
-	public interface IFoggable : IReferrable
+	public interface IFoggable : IReferrable, IHistorical
 	{
 		/// <summary>
 		/// The visibility of this object to an empire.
@@ -25,6 +25,11 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Is this object just a memory, or a real object?
 		/// </summary>
-		bool IsMemory { get; set;}
+		bool IsMemory { get; set; }
+
+		/// <summary>
+		/// Is this object known to be destroyed?
+		/// </summary>
+		bool IsKnownToBeDestroyed { get; set; }
 	}
 }

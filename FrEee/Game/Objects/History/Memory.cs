@@ -9,7 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace FrEee.Game.Objects.Civilization
+namespace FrEee.Game.Objects.History
 {
 	/// <summary>
 	/// A memory of some object that has been seen by an empire.

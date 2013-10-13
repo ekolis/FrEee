@@ -21,6 +21,10 @@ namespace FrEee.Game.Objects.Civilization
 	[Serializable]
 	public class ConstructionQueue : IOrderable, IOwnable, IFoggable
 	{
+		private ConstructionQueue()
+		{
+		}
+
 		public ConstructionQueue(ISpaceObject sobj)
 		{
 			Orders = new List<IConstructionOrder>();
@@ -328,6 +332,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			IsKnownToBeDestroyed = true;
 			this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
 		}
@@ -437,6 +442,17 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		public bool IsVisibleTo(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 	}
 }

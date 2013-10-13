@@ -141,6 +141,9 @@ namespace FrEee.Game.Objects.Combat
 						reloads[weapon] -= 1;
 					}
 				}
+
+				// take history snapshot
+				this.TakeSnapshot();
 			}
 
 			// replenish combatants' shields

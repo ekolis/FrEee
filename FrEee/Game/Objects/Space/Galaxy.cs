@@ -373,13 +373,15 @@ namespace FrEee.Game.Objects.Space
 
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
 
-			// save master view
+			// save master view to memory with full history (we'll need it for player views)
 			if (status != null)
 				status.Message = "Saving game (host)";
-			var gamname = Galaxy.Current.Save();
-			var outStream = new MemoryStream();
-			Galaxy.Current.Save(outStream);
-			var inStream = new MemoryStream(outStream.GetBuffer());
+			var fullData = Current.SaveToString();
+
+			// save master view to disk without the history (only the players need that)
+			foreach (var emp in Current.Empires)
+				emp.History.Clear();
+			var gamname = Current.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
@@ -390,8 +392,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					if (status != null)
 						status.Message = "Saving game (player " + (i + 1) + ")";
-					inStream.Seek(0, SeekOrigin.Begin);
-					Load(inStream);
+					LoadFromString(fullData);
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
 					Current.Save();
@@ -615,7 +616,15 @@ namespace FrEee.Game.Objects.Space
 			if (status == null)
 				progressPerOperation = 0d;
 			else
-				progressPerOperation = (desiredProgress - status.Progress) / (7 + Current.Empires.Count);
+				progressPerOperation = (desiredProgress - status.Progress) / (11 + Current.Empires.Count);
+
+			// clear history
+			if (status != null)
+				status.Message = "Clearing history";
+			foreach (var emp in Current.Empires)
+				emp.History.Clear();
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// AI commands
 			if (status != null)
@@ -831,6 +840,13 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			// take history snapshot - beginning of turn
+			if (status != null)
+				status.Message = "Taking pre-turn history snapshot";
+			Current.TakeSnapshot();
+			if (status != null)
+				status.Progress += progressPerOperation;
+
 			// ship movement
 			if (status != null)
 				status.Message = "Moving ships";
@@ -853,9 +869,8 @@ namespace FrEee.Game.Objects.Space
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
 
-					// update memory sight after movement
-					foreach (var sobj in sys.FindSpaceObjects<ISpaceObject>().Flatten())
-						sobj.UpdateEmpireMemories();
+					// take history snapshot
+					v.TakeSnapshot();
 
 					// check for battles
 					// TODO - alliances
@@ -954,6 +969,22 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// take history snapshot - end of turn
+			if (status != null)
+				status.Message = "Taking post-turn history snapshot";
+			Current.TakeSnapshot();
+			if (status != null)
+				status.Progress += progressPerOperation;
+
+			// update memory sight
+			if (status != null)
+				status.Message = "Updating memory sight caches";
+			foreach (var emp in Current.Empires)
+			{
+				emp.Memory.Clear();
+				foreach (var f in emp.History.Keys.OfType<IFoggable>())
+					emp.UpdateMemory(f);
+			}
 			if (status != null)
 				status.Progress += progressPerOperation;
 		}

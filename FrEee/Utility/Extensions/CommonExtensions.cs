@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
+using FrEee.Game.Objects.History;
 
 namespace FrEee.Utility.Extensions
 {
@@ -1069,6 +1070,17 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static object GetPropertyValue(this object o, PropertyInfo prop)
+		{
+			return prop.GetValue(o, new object[0]);
+		}
+
+		/// <summary>
 		/// Sets a property value on an object using reflection.
 		/// </summary>
 		/// <param name="o"></param>
@@ -1077,6 +1089,17 @@ namespace FrEee.Utility.Extensions
 		public static void SetPropertyValue(this object o, string propertyName, object value)
 		{
 			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
+		}
+
+		/// <summary>
+		/// Sets a property value on an object using reflection.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static void SetPropertyValue(this object o, PropertyInfo prop, object value)
+		{
+			prop.SetValue(o, value, new object[0]);
 		}
 
 		/// <summary>
@@ -1713,6 +1736,61 @@ namespace FrEee.Utility.Extensions
 				return Activator.CreateInstance(type);
 			else
 				return FormatterServices.GetSafeUninitializedObject(type);
+		}
+
+		/// <summary>
+		/// Takes a snapshot of an object, recording any changes in data since the last snapshot in the empires' history logs.
+		/// </summary>
+		/// <param name="obj"></param>
+		public static void TakeSnapshot(this object obj)
+		{
+			var parser = new ObjectGraphParser();
+			parser.EndObject += snapshotParser_EndObject;
+			parser.Parse(obj);
+		}
+
+		private static void snapshotParser_EndObject(object o)
+		{
+			foreach (var emp in Galaxy.Current.Empires)
+			{
+				if (o is IHistorical)
+				{
+					var h = (IHistorical)o;
+					if (h is ISpaceObject)
+					{
+						// if it moved, save its new location
+						var sobj = (ISpaceObject)h;
+						var lastMove = emp.History[sobj] == null ? null : emp.History[sobj].OfType<MoveKeyframe>().OrderBy(k => k.Timestamp).LastOrDefault();
+						if (lastMove == null || lastMove.NewSector != sobj.Sector)
+						{
+							if (emp.History[sobj] == null)
+								emp.History[sobj] = new List<IKeyframe>();
+							emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
+						}
+					}
+					// if any properties changed, save them
+					foreach (var prop in o.GetType().GetSafeProperties())
+					{
+						var val = o.GetPropertyValue(prop);
+						var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+						if (lastChange == null || lastChange.NewValue != val)
+						{
+							if (emp.History[h] == null)
+								emp.History[h] = new List<IKeyframe>();
+							emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Get properties which are safe to be serialized.
+		/// </summary>
+		/// <param name="t"></param>
+		public static IEnumerable<PropertyInfo> GetSafeProperties(this Type t)
+		{
+			return t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
 		}
 	}
 }

@@ -53,6 +53,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
+			History = new SafeDictionary<IHistorical, IList<IKeyframe>>(typeof(List<IKeyframe>));
 		}
 
 		/// <summary>
@@ -627,6 +628,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// Information about any foggable objects that this empire has previously seen but cannot currently see.
 		/// </summary>
 		public SafeDictionary<long, IFoggable> Memory { get; private set; }
+
+		/// <summary>
+		/// History of objects for the previous turn.
+		/// </summary>
+		public SafeDictionary<IHistorical, IList<IKeyframe>> History { get; private set; }
 
 		/// <summary>
 		/// Updates the memory sight cache for an object.

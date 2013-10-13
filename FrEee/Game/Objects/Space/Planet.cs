@@ -840,11 +840,5 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return null; }
 		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
 	}
 }
