@@ -53,7 +53,9 @@ namespace FrEee.Game.Objects.Space
 			{
 				var h = kvp.Key;
 				if (h is IReferrable)
-					Current.AssignID((IReferrable)h);
+					Current.AssignID((IReferrable)h); // TODO - make sure empires can't get out of order?
+				if (h is Empire)
+					Empires.Add((Empire)h);
 				var keyframes = kvp.Value;
 				var last = keyframes.OrderBy(k => k.Timestamp).LastOrDefault();
 				if (last != null)
@@ -761,7 +763,7 @@ namespace FrEee.Game.Objects.Space
 						continue; // space object is dead, or not done being built
 
 					v.ExecuteOrders();
-					if (!sys.ExploredByEmpires.Contains(v.Owner))
+					if (!sys.ExploredByEmpires.Contains(v.Owner) && v.Owner != null)
 						v.Owner.ExploredStarSystems.Add(sys);
 
 					// take history snapshot
@@ -911,6 +913,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			var oldid = r.ID;
+			id = oldid;
 
 			if (Referrables.LongCount() == long.MaxValue)
 				throw new Exception("No more IDs are available to assign for objects.");
@@ -923,7 +926,7 @@ namespace FrEee.Game.Objects.Space
 			referrables.Add(id, r);
 
 			// clean up old IDs
-			if (oldid > 0 && referrables.ContainsKey(oldid))
+			if (oldid > 0 && referrables.ContainsKey(oldid) && oldid != id)
 				referrables.Remove(oldid);
 
 			return id;
