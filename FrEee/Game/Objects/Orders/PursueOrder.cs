@@ -165,5 +165,10 @@ namespace FrEee.Game.Objects.Orders
 			if (PathfindingError != null)
 				yield return PathfindingError;
 		}
+
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

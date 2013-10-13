@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A technology that can be researched in the game.
 	/// </summary>
 	[Serializable]
-	public class Technology : INamed, IResearchable, IReferrable
+	public class Technology : INamed, IResearchable
 	{
 		public Technology()
 		{
@@ -286,6 +286,11 @@ namespace FrEee.Game.Objects.Technology
 		public Visibility CheckVisibility(Empire emp)
 		{
 			return Visibility.Scanned;
+		}
+
+		public bool IsModObject
+		{
+			get { return true; }
 		}
 	}
 }

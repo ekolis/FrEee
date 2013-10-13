@@ -493,5 +493,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return VehicleTypeName; }
 		}
+
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

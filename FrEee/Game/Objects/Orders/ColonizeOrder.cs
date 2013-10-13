@@ -148,5 +148,10 @@ namespace FrEee.Game.Objects.Orders
 		{
 			return IsComplete;
 		}
+
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

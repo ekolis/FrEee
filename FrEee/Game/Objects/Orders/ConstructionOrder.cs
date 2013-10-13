@@ -147,5 +147,10 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return Template.Cost; }
 		}
+
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
 }

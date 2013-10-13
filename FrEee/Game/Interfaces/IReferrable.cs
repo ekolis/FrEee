@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be referred to from the client side using an ID.
 	/// </summary>
-	public interface IReferrable : IDisposable, IOwnable
+	public interface IReferrable : IDisposable, IOwnable, IHistorical
 	{
 		long ID { get; set; }
 	}

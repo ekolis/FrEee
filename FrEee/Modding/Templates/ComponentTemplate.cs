@@ -200,5 +200,10 @@ namespace FrEee.Modding.Templates
 		{
 			return Visibility.Scanned;
 		}
+
+		public bool IsModObject
+		{
+			get { return true; }
+		}
 	}
 }

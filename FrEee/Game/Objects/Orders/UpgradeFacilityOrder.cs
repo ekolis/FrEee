@@ -174,5 +174,11 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return NewTemplate.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100; }
 		}
+
+		public bool IsModObject
+		{
+			get { return false; }
+		}
 	}
+
 }

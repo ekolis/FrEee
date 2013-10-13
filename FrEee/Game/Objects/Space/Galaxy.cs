@@ -59,6 +59,9 @@ namespace FrEee.Game.Objects.Space
 				if (last != null)
 					last.Apply(h);
 			}
+			Mod.Current = history.Settings.Mod;
+			foreach (var r in Mod.Current.Referrables)
+				AssignID(r);
 		}
 
 		#region Properties
