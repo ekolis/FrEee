@@ -637,9 +637,6 @@ namespace FrEee.Utility
 
 					// clean up
 					ReadSemicolon(r, type, log);
-
-					if (o is IReferrable && ((IReferrable)o).ID == 2437666120012355370)
-						Console.WriteLine("found " + o);
 				}
 				else if (fin == 'i')
 				{
