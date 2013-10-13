@@ -29,7 +29,6 @@ namespace FrEee.Game.Objects.Space
 			Radius = radius;
 			Abilities = new List<Ability>();
 			SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
-			ExploredByEmpires = new HashSet<Empire>();
 		}
 
 		/// <summary>
@@ -129,57 +128,16 @@ namespace FrEee.Game.Objects.Space
 			return SpaceObjectLocations.Any(l => l.Item == sobj);
 		}
 
-		public Point FindCoordinates(ISpaceObject sobj)
-		{
-			try
-			{
-				return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
-			}
-		}
+		public Point Coordinates { get; set; }
 
 		/// <summary>
 		/// Empires which have explored this star system.
 		/// </summary>
-		public ICollection<Empire> ExploredByEmpires { get; private set; }
-
-		/// <summary>
-		/// Removes any space objects, etc. that the current empire cannot see.
-		/// </summary>
-		/// <param name="galaxy">The galaxy, for context.</param>
-		public void Redact(Empire emp)
+		public IEnumerable<Empire> ExploredByEmpires
 		{
-			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
-			// hide space objects
-			// TODO - don't use tuples, we don't use the point value anymore...
-			var toRemove = new List<Tuple<Point, ISpaceObject>>();
-			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
+			get
 			{
-				foreach (var sobj in group)
-				{
-					var vis = sobj.CheckVisibility(emp);
-					if (vis != Visibility.Unknown)
-						sobj.Redact(emp);
-					else
-						toRemove.Add(Tuple.Create(group.Key, sobj));
-				}
-			}
-			foreach (var t in toRemove)
-				Remove(t.Item2);
-
-			// hide explored-by empires
-			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
-				ExploredByEmpires.Remove(e);
-
-			// hide background image (so player can't see what kind of system it is) and name and abilities
-			if (!ExploredByEmpires.Contains(emp))
-			{
-				BackgroundImagePath = null;
-				Name = "(Unexplored)";
-				Abilities.Clear();
+				return Galaxy.Current.Empires.Where(e => e.ExploredStarSystems.Contains(this));
 			}
 		}
 

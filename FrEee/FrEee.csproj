@@ -150,6 +150,7 @@
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\History\AppearKeyframe.cs" />
+    <Compile Include="Game\Objects\History\GalaxyHistory.cs" />
     <Compile Include="Game\Objects\History\PropertyChangeKeyframe.cs" />
     <Compile Include="Game\Objects\History\DestroyKeyframe.cs" />
     <Compile Include="Game\Objects\History\MoveKeyframe.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
     <Compile Include="Game\Objects\Space\Fleet.cs" />
+    <Compile Include="Game\Objects\Space\GalaxySettings.cs" />
     <Compile Include="Game\Objects\Technology\FacilityUpgrade.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
@@ -304,6 +306,7 @@
     <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
+    <Compile Include="Utility\RequiresExplorationAttribute.cs" />
     <Compile Include="Utility\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ClientSafeAttribute.cs" />
@@ -320,7 +323,7 @@
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
     <Compile Include="Utility\ReferenceSet.cs" />
-    <Compile Include="Utility\RequiredVisibilityAttribute.cs" />
+    <Compile Include="Utility\RequiresVisibilityAttribute.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />

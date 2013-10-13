@@ -888,16 +888,6 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Finds the coordinates of a space object within its star system.
-		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static Point FindCoordinates(this ISpaceObject sobj)
-		{
-			return sobj.FindStarSystem().FindCoordinates(sobj);
-		}
-
-		/// <summary>
 		/// Reads characters until the specified character is found or end of stream.
 		/// Returns all characters read except the specified character.
 		/// </summary>
@@ -1756,7 +1746,8 @@ namespace FrEee.Utility.Extensions
 				if (o is IHistorical)
 				{
 					var h = (IHistorical)o;
-					if (!h.IsModObject && h.CheckVisibility(emp) >= Visibility.Visible)
+					var vis = h.CheckVisibility(emp);
+					if (!h.IsModObject && vis >= Visibility.Visible)
 					{
 						if (h is ISpaceObject)
 						{
@@ -1768,21 +1759,44 @@ namespace FrEee.Utility.Extensions
 								if (emp.History[sobj] == null)
 									emp.History[sobj] = new List<IKeyframe>();
 								emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
-
 							}
 
 						}
 						// if we saw any properties change, save them
-						foreach (var prop in h.GetType().GetSafeProperties(h.CheckVisibility(emp)))
+						foreach (var prop in h.GetType().GetSafeProperties())
 						{
-							var val = h.GetPropertyValue(prop);
-							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
-							if (lastChange == null || lastChange.NewValue != val)
+							object val;
+							if (h is WarpPoint && prop.RequiresExploration())
 							{
-								if (emp.History[h] == null)
-									emp.History[h] = new List<IKeyframe>();
-								emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+								var wp = (WarpPoint)h;
+								if (emp.ExploredStarSystems.Contains(wp.TargetStarSystemLocation.Item))
+									val = h.GetPropertyValue(prop);
+								else
+									val = prop.GetUnexploredValue();
 							}
+							else if (h is Vehicle && prop.RequiresExploration())
+							{
+								var v = (Vehicle)h;
+								if (emp.KnownDesigns.Contains(v.Design))
+									val = h.GetPropertyValue(prop);
+								else
+									val = prop.GetUnexploredValue();
+							}
+							else
+							{
+								if (prop.GetRequiredVisiblity() <= vis)
+									val = h.GetPropertyValue(prop);
+								else
+									val = prop.GetFoggedValue();
+							}
+							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+								if (lastChange == null || lastChange.NewValue != val)
+								{
+									if (emp.History[h] == null)
+										emp.History[h] = new List<IKeyframe>();
+									emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+								}
+							
 						}
 					}
 				}
@@ -1805,15 +1819,42 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Gets the required visiblity for an empire to see a property of an object.
+		/// The default value is Visible.
 		/// </summary>
 		/// <param name="prop"></param>
 		/// <returns></returns>
 		public static Visibility GetRequiredVisiblity(this PropertyInfo prop)
 		{
-			var atts = prop.GetCustomAttributes(typeof(RequiredVisibilityAttribute), true);
+			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
 			if (atts.Any())
-				return atts.Cast<RequiredVisibilityAttribute>().Min(att => att.Visibility);
-			return Visibility.Unknown; // no restrictions
+				return atts.Cast<RequiresVisibilityAttribute>().Min(att => att.Visibility);
+			return Visibility.Visible;
+		}
+
+		public static object GetFoggedValue(this PropertyInfo prop)
+		{
+			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
+			if (atts.Any())
+				return atts.Cast<RequiresVisibilityAttribute>().First().DefaultValue;
+			if (prop.PropertyType.IsValueType)
+				return Activator.CreateInstance(prop.PropertyType);
+			return null;
+		}
+
+		public static bool RequiresExploration(this PropertyInfo prop)
+		{
+			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
+			return atts.Any();
+		}
+
+		public static object GetUnexploredValue(this PropertyInfo prop)
+		{
+			var atts = prop.GetCustomAttributes(typeof(RequiresExplorationAttribute), true);
+			if (atts.Any())
+				return atts.Cast<RequiresExplorationAttribute>().First().DefaultValue;
+			if (prop.PropertyType.IsValueType)
+				return Activator.CreateInstance(prop.PropertyType);
+			return null;
 		}
 	}
 }

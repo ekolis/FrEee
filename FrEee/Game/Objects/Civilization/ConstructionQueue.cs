@@ -350,12 +350,6 @@ namespace FrEee.Game.Objects.Civilization
 			return Visibility.Unknown;
 		}
 
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) < Visibility.Visible)
-				Dispose();
-		}
-
 		public override string ToString()
 		{
 			return SpaceObject + "'s construction queue";

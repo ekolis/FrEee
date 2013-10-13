@@ -49,7 +49,7 @@ namespace FrEee.WinForms.Forms
 		private void Bind()
 		{
 			empireStatusBindingSource.DataSource = Galaxy.Current.Empires.Select(e => new EmpireStatus(e));
-			Text = "Host Console - " + Galaxy.Current.Name + " turn " + Galaxy.Current.TurnNumber;
+			Text = "Host Console - " + Galaxy.Current.Settings.Name + " turn " + Galaxy.Current.Settings.TurnNumber;
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
@@ -73,7 +73,7 @@ namespace FrEee.WinForms.Forms
 				Galaxy.SaveAll(status, 1.0);
 			}));
 			this.ShowChildForm(new StatusForm(t, status));
-			MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
+			MessageBox.Show("Turn successfully processed. It is now turn " + Galaxy.Current.Settings.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 			Cursor = Cursors.Default;
 			CacheGalaxy();
 			Bind();
@@ -129,15 +129,14 @@ namespace FrEee.WinForms.Forms
 							catch (IOException ex)
 							{
 								MessageBox.Show("Could not load " + savefile + ". Attempting to recreate player view.");
-								Galaxy.Current.CurrentEmpire = emp;
-								Galaxy.Current.Redact();
+								Galaxy.Redact(emp);
 							}
 						}
 						else
 						{
 							// AI empires have no GAM files, so create their views in memory
 							Galaxy.Current.CurrentEmpire = emp;
-							Galaxy.Current.Redact();
+							Galaxy.Redact(emp);
 						}
 					}
 					var form = new GameForm(true);

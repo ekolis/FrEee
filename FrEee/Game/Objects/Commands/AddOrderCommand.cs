@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Commands
 					Target.AddOrder(Order);
 			}
 			else
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
+				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!"));
 		}
 
 		private IOrder<T> order

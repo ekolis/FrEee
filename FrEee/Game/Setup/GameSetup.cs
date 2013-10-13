@@ -231,42 +231,43 @@ namespace FrEee.Game.Setup
 		// TODO - status messages for the GUI
 		public void PopulateGalaxy(Galaxy gal)
 		{
-			gal.Name = GameName;
+			gal.Settings = new GalaxySettings();
+			gal.Settings.Name = GameName;
 
 			// remove forbidden techs
 			foreach (var tname in ForbiddenTechnologyNames)
 				gal.Referrables.OfType<Technology>().Single(t => t.Name == tname).Dispose();
 
 			// set omniscient view flag
-			gal.OmniscientView = OmniscientView;
+			gal.Settings.OmniscientView = OmniscientView;
 
 			// set up mining models and resource stuff
-			gal.StandardMiningModel = StandardMiningModel;
-			gal.RemoteMiningModel = RemoteMiningModel;
-			gal.MinPlanetValue = MinPlanetValue;
-			gal.MinSpawnedPlanetValue = MinSpawnedPlanetValue;
-			gal.MaxSpawnedPlanetValue = MaxSpawnedPlanetValue;
-			gal.MaxPlanetValue = MaxPlanetValue;
-			gal.MinAsteroidValue = MinAsteroidValue;
-			gal.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
-			gal.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
+			gal.Settings.StandardMiningModel = StandardMiningModel;
+			gal.Settings.RemoteMiningModel = RemoteMiningModel;
+			gal.Settings.MinPlanetValue = MinPlanetValue;
+			gal.Settings.MinSpawnedPlanetValue = MinSpawnedPlanetValue;
+			gal.Settings.MaxSpawnedPlanetValue = MaxSpawnedPlanetValue;
+			gal.Settings.MaxPlanetValue = MaxPlanetValue;
+			gal.Settings.MinAsteroidValue = MinAsteroidValue;
+			gal.Settings.MinSpawnedAsteroidValue = MinSpawnedAsteroidValue;
+			gal.Settings.MaxSpawnedAsteroidValue = MaxSpawnedAsteroidValue;
 
 			// set score display setting
-			gal.ScoreDisplay = ScoreDisplay;
+			gal.Settings.ScoreDisplay = ScoreDisplay;
 
 			// set up victory conditions
 			foreach (var vc in VictoryConditions)
-				gal.VictoryConditions.Add(vc);
-			gal.VictoryDelay = VictoryDelay;
+				gal.Settings.VictoryConditions.Add(vc);
+			gal.Settings.VictoryDelay = VictoryDelay;
 
 			// set up misc. game options
-			gal.TechnologyCost = TechnologyCost;
-			gal.IsHumansVsAI = IsHumansVsAI;
-			gal.AllowedTrades = AllowedTrades;
-			gal.IsSurrenderAllowed = IsSurrenderAllowed;
-			gal.IsIntelligenceAllowed = IsIntelligenceAllowed;
-			gal.CanColonizeOnlyBreathable = CanColonizeOnlyBreathable;
-			gal.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
+			gal.Settings.TechnologyCost = TechnologyCost;
+			gal.Settings.IsHumansVsAI = IsHumansVsAI;
+			gal.Settings.AllowedTrades = AllowedTrades;
+			gal.Settings.IsSurrenderAllowed = IsSurrenderAllowed;
+			gal.Settings.IsIntelligenceAllowed = IsIntelligenceAllowed;
+			gal.Settings.CanColonizeOnlyBreathable = CanColonizeOnlyBreathable;
+			gal.Settings.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
 
 			// create player empires
 			foreach (var et in EmpireTemplates)
@@ -367,7 +368,7 @@ namespace FrEee.Game.Setup
 			{
 				// set all systems explored
 				foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
-					sys.ExploredByEmpires.Add(emp);
+					emp.ExploredStarSystems.Add(sys);
 			}
 
 			// give empire starting techs
@@ -533,7 +534,7 @@ namespace FrEee.Game.Setup
 			foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
 			{
 				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet.Owner == emp))
-					sys.ExploredByEmpires.Add(emp);
+					emp.ExploredStarSystems.Add(sys);
 			}
 		}
 

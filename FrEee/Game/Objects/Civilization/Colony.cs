@@ -32,11 +32,13 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The facilities on this colony.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public ICollection<Facility> Facilities { get; set; }
 
 		/// <summary>
 		/// The population of this colony, by race.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public SafeDictionary<Race, long> Population { get; private set; }
 
 		public IEnumerable<Ability> Abilities
@@ -53,6 +55,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// This colony's construction queue.
 		/// </summary>
+		[RequiresVisibility(Visibility.Owned)]
 		public ConstructionQueue ConstructionQueue
 		{
 			get;
@@ -62,6 +65,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The cargo stored on this colony.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public Cargo Cargo { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
@@ -72,28 +76,6 @@ namespace FrEee.Game.Objects.Civilization
 			else
 				// colonies cannot be scanned, though that would be a cool special ability
 				return Visibility.Visible;
-		}
-
-		public void Redact(Empire emp)
-		{
-			var visibility = CheckVisibility(emp);
-			if (visibility < Visibility.Owned)
-			{
-				if (ConstructionQueue != null)
-				{
-					ConstructionQueue.Orders.Clear();
-					ConstructionQueue.Rate.Clear();
-					ConstructionQueue.UnspentRate.Clear();
-				}
-
-				// can only see space used by cargo, not actual cargo
-				Cargo.SetFakeSize();
-			}
-			foreach (var f in Facilities)
-				f.Redact(emp);
-
-			if (visibility < Visibility.Visible)
-				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
 		}
 
 		public long ID
@@ -129,11 +111,6 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
 		}
 
 		/// <summary>

@@ -264,6 +264,7 @@ namespace FrEee.Game.Objects.Space
 			this.UpdateEmpireMemories();
 		}
 
+		[RequiresVisibility(Visibility.Owned, "Alien Fleet")]
 		public string Name
 		{
 			get;
@@ -281,7 +282,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Fleets don't have construction queues.
 		/// </summary>
-		public Civilization.ConstructionQueue ConstructionQueue
+		public ConstructionQueue ConstructionQueue
 		{
 			get { return null; }
 		}
@@ -414,15 +415,6 @@ namespace FrEee.Game.Objects.Space
 			return Vehicles.Max(sobj => sobj.CheckVisibility(emp));
 		}
 
-		public void Redact(Empire emp)
-		{
-			var vis = CheckVisibility(emp);
-
-			// Can't see names of alien fleets
-			if (vis < Visibility.Owned)
-				Name = Owner + " Fleet";
-		}
-
 		Sector ILocated.Sector
 		{
 			get { return Sector; }
@@ -433,6 +425,7 @@ namespace FrEee.Game.Objects.Space
 			get { return this.FindStarSystem(); }
 		}
 
+		[RequiresVisibility(Visibility.Owned)]
 		public IList<IOrder<Fleet>> Orders { get; private set; }
 
 		IEnumerable<IOrder> IOrderable.Orders
@@ -535,7 +528,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public IDictionary<Civilization.Race, long> AllPopulation
+		public IDictionary<Race, long> AllPopulation
 		{
 			get
 			{

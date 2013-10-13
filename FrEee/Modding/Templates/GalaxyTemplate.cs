@@ -77,15 +77,15 @@ namespace FrEee.Modding.Templates
 		public Galaxy Instantiate(Status status, double desiredProgress)
 		{
 			var gal = new Galaxy(Mod.Current);
-			gal.Width = GameSetup.GalaxySize.Width;
-			gal.Height = GameSetup.GalaxySize.Height;
-			gal.MinPlanetValue = GameSetup.MinPlanetValue;
-			gal.MinSpawnedPlanetValue = GameSetup.MinSpawnedPlanetValue;
-			gal.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedPlanetValue;
-			gal.MaxPlanetValue = GameSetup.MaxPlanetValue;
-			gal.MinAsteroidValue = GameSetup.MinAsteroidValue;
-			gal.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
-			gal.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
+			gal.Settings.Width = GameSetup.GalaxySize.Width;
+			gal.Settings.Height = GameSetup.GalaxySize.Height;
+			gal.Settings.MinPlanetValue = GameSetup.MinPlanetValue;
+			gal.Settings.MinSpawnedPlanetValue = GameSetup.MinSpawnedPlanetValue;
+			gal.Settings.MaxSpawnedPlanetValue = GameSetup.MaxSpawnedPlanetValue;
+			gal.Settings.MaxPlanetValue = GameSetup.MaxPlanetValue;
+			gal.Settings.MinAsteroidValue = GameSetup.MinAsteroidValue;
+			gal.Settings.MinSpawnedAsteroidValue = GameSetup.MinSpawnedAsteroidValue;
+			gal.Settings.MaxSpawnedAsteroidValue = GameSetup.MaxSpawnedAsteroidValue;
 			var bounds = new Rectangle(-GameSetup.GalaxySize.Width / 2, -GameSetup.GalaxySize.Height / 2, GameSetup.GalaxySize.Width, GameSetup.GalaxySize.Height);
 
 			var unusedNames = new List<string>(Mod.Current.StarSystemNames);
@@ -106,7 +106,7 @@ namespace FrEee.Modding.Templates
 				sys.Name = unusedNames.PickRandom();
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);
-				gal.StarSystemLocations.Add(new ObjectLocation<StarSystem> { Location = p.Value, Item = sys });
+				sys.Coordinates = p.Value;
 				if (status != null)
 					status.Progress += progressPerStarSystem;
 			}
@@ -133,7 +133,7 @@ namespace FrEee.Modding.Templates
 					foreach (var candidate in candidates.Shuffle())
 					{
 						// pick a nearby star system to create a warp point to
-						for (int dist = 1; dist < gal.Width + gal.Height; dist++)
+						for (int dist = 1; dist < gal.Settings.Width + gal.Settings.Height; dist++)
 						{
 							var nearby = gal.StarSystemLocations.Where(ssl => ssl.Location.ManhattanDistance(candidate.Location) == dist);
 							nearby = nearby.Where(ssl => GetWarpPointCount(ssl.Item) < GameSetup.GalaxyTemplate.MaxWarpPointsPerSystem);

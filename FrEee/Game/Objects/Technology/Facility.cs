@@ -36,6 +36,7 @@ namespace FrEee.Game.Objects.Technology
 		/// The template for this facility.
 		/// Specifies the basic stats of the facility and its abilities.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public FacilityTemplate Template { get; private set; }
 
 		public IEnumerable<Ability> Abilities
@@ -126,6 +127,7 @@ namespace FrEee.Game.Objects.Technology
 			return Name;
 		}
 
+		[RequiresVisibility(Visibility.Scanned)]
 		public int Hitpoints
 		{
 			get;
@@ -265,19 +267,6 @@ namespace FrEee.Game.Objects.Technology
 			if (Container == null)
 				return Visibility.Unknown;
 			return Container.CheckVisibility(emp);
-		}
-
-		public void Redact(Empire emp)
-		{
-			var vis = CheckVisibility(emp);
-			if (vis < Visibility.Scanned)
-			{
-				Hitpoints = 0;
-				Template = null;
-			}
-			// TODO - remember previously scanned facilities
-			if (vis < Visibility.Fogged)
-				Dispose();
 		}
 
 		public bool IsMemory

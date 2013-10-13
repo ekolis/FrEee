@@ -51,7 +51,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var message in messages)
 			{
 				var item = lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
-				if (message.TurnNumber < Galaxy.Current.TurnNumber)
+				if (message.TurnNumber < Galaxy.Current.Settings.TurnNumber)
 					item.ForeColor = Color.Gray;
 			}
 		}

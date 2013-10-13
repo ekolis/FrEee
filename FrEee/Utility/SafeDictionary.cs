@@ -77,7 +77,14 @@ namespace FrEee.Utility
 				if (ContainsKey(key))
 					return dict[key];
 				else
-					return AutoInitType != null ? (TValue)AutoInitType.Instantiate() : default(TValue);
+				{
+					if (AutoInitType != null)
+					{
+						dict[key] = (TValue)AutoInitType.Instantiate();
+						return dict[key];
+					}
+					return default(TValue);
+				}
 			}
 			set
 			{

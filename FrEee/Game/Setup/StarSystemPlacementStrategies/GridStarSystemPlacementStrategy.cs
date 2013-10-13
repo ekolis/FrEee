@@ -25,17 +25,17 @@ namespace FrEee.Game.Setup.StarSystemPlacementStrategies
 			if (!openPositions.Any())
 				return null;
 
-			int totalStars = starsLeft + galaxy.StarSystemLocations.Count;
+			int totalStars = starsLeft + galaxy.StarSystemLocations.Count();
 			double xfactor = Math.Sqrt(totalStars) * (double)bounds.Height / (double)bounds.Width;
 			double yfactor = Math.Sqrt(totalStars) * (double)bounds.Width / (double)bounds.Height;
 			int xstars = (int)(totalStars / xfactor);
 			int ystars = (int)(totalStars / yfactor);
 
-			if (xstars * ystars <= galaxy.StarSystemLocations.Count)
+			if (xstars * ystars <= galaxy.StarSystemLocations.Count())
 				return null;
 
-			int row = galaxy.StarSystemLocations.Count % xstars;
-			int col = galaxy.StarSystemLocations.Count / xstars;
+			int row = galaxy.StarSystemLocations.Count() % xstars;
+			int col = galaxy.StarSystemLocations.Count() / xstars;
 			int rowsize, colsize;
 			if (xstars == 1)
 				rowsize = bounds.Width / 2;

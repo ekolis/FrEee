@@ -16,6 +16,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
+using FrEee.Game.Objects.History;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -27,22 +28,42 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Galaxy()
 		{
-			Galaxy.Current = this;
-			StarSystemLocations = new List<ObjectLocation<StarSystem>>();
+			Current = this;
+			Master = this;
 			Empires = new List<Empire>();
-			Name = "Unnamed";
-			TurnNumber = 1;
+			Settings = new GalaxySettings();
+			Settings.TurnNumber = 1;
 			referrables = new Dictionary<long, IReferrable>();
-			VictoryConditions = new List<IVictoryCondition>();
 		}
 
 		public Galaxy(Mod mod)
 			: this()
 		{
-			Mod = mod;
+			Settings.Mod = mod;
+		}
+
+		public Galaxy(GalaxyHistory history)
+		{
+			Current = this;
+			Empires = new List<Empire>();
+			referrables = new Dictionary<long, IReferrable>();
+			Settings = history.Settings;
+			CurrentEmpire = history.Empire;
+			foreach (var kvp in history.Empire.History)
+			{
+				var h = kvp.Key;
+				if (h is IReferrable)
+					Current.AssignID((IReferrable)h);
+				var keyframes = kvp.Value;
+				var last = keyframes.OrderBy(k => k.Timestamp).LastOrDefault();
+				if (last != null)
+					last.Apply(h);
+			}
 		}
 
 		#region Properties
+
+		public GalaxySettings Settings {get; set;}
 
 		/// <summary>
 		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
@@ -50,68 +71,20 @@ namespace FrEee.Game.Objects.Space
 		public static Galaxy Current { get; private set; }
 
 		/// <summary>
-		/// Should players have an omniscient view of all explored systems?
-		/// Does not prevent cloaking from working; this is just basic sight.
-		/// Also does not give battle reports for other empires' battles.
+		/// The master galaxy view (of the host), if known.
 		/// </summary>
-		public bool OmniscientView { get; set; }
-
-		/// <summary>
-		/// Model to use for standard planetary mining.
-		/// </summary>
-		public MiningModel StandardMiningModel { get; set; }
-
-		/// <summary>
-		/// Model to use for remote mining.
-		/// </summary>
-		public MiningModel RemoteMiningModel { get; set; }
-
-		public int MinPlanetValue { get; set; }
-
-		public int MinSpawnedPlanetValue { get; set; }
-
-		public int MaxSpawnedPlanetValue { get; set; }
-
-		public int MaxPlanetValue { get; set; }
-
-		public int MinAsteroidValue { get; set; }
-
-		public int MinSpawnedAsteroidValue { get; set; }
-
-		public int MaxSpawnedAsteroidValue { get; set; }
-
-		/// <summary>
-		/// Who can view empire scores?
-		/// </summary>
-		public ScoreDisplay ScoreDisplay { get; set; }
-
-		/// <summary>
-		/// Is this a single player game? If so, autoprocess the turn after the player takes his turn.
-		/// </summary>
-		public bool IsSinglePlayer { get; set; }
-
-		/// <summary>
-		/// The mod being played.
-		/// </summary>
-		public Mod Mod { get; set; }
-
-		/// <summary>
-		/// The game name.
-		/// </summary>
-		public string Name { get; set; }
-
-		/// <summary>
-		/// Technology research cost formula.
-		/// Low = Level * BaseCost
-		/// Medium = BaseCost for level 1, Level ^ 2 * BaseCost / 2 otherwise
-		/// Hight = Level ^ 2 * BaseCost
-		/// </summary>
-		public TechnologyCost TechnologyCost { get; set; }
+		public static Galaxy Master { get; private set; }
 
 		/// <summary>
 		/// The locations of the star systems in the galaxy.
 		/// </summary>
-		public ICollection<ObjectLocation<StarSystem>> StarSystemLocations { get; private set; }
+		public IEnumerable<ObjectLocation<StarSystem>> StarSystemLocations
+		{
+			get
+			{
+				return Referrables.OfType<StarSystem>().Select(sys => new ObjectLocation<StarSystem>(sys, sys.Coordinates));
+			}
+		}
 
 		/// <summary>
 		/// The empires participating in the game.
@@ -128,9 +101,9 @@ namespace FrEee.Game.Objects.Space
 			get
 			{
 				if (PlayerNumber > 0)
-					return Name + "_" + TurnNumber + "_" + PlayerNumber + FrEeeConstants.SaveGameExtension;
+					return Settings.Name + "_" + Settings.TurnNumber + "_" + PlayerNumber + FrEeeConstants.SaveGameExtension;
 				else
-					return Name + "_" + TurnNumber + FrEeeConstants.SaveGameExtension;
+					return Settings.Name + "_" + Settings.TurnNumber + FrEeeConstants.SaveGameExtension;
 			}
 		}
 
@@ -139,7 +112,7 @@ namespace FrEee.Game.Objects.Space
 			get
 			{
 				if (PlayerNumber > 0)
-					return Name + "_" + TurnNumber + "_" + PlayerNumber + FrEeeConstants.PlayerCommandsSaveGameExtension;
+					return Settings.Name + "_" + Settings.TurnNumber + "_" + PlayerNumber + FrEeeConstants.PlayerCommandsSaveGameExtension;
 				else
 					throw new InvalidOperationException("The game host does not have a command file.");
 			}
@@ -163,18 +136,6 @@ namespace FrEee.Game.Objects.Space
 		public int MaxY
 		{
 			get { return StarSystemLocations.MaxOrDefault(ssl => ssl.Location.Y); }
-		}
-
-		public int Width
-		{
-			get;
-			set;
-		}
-
-		public int Height
-		{
-			get;
-			set;
 		}
 
 		/// <summary>
@@ -204,11 +165,6 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// The current turn number.
-		/// </summary>
-		public int TurnNumber { get; set; }
-
-		/// <summary>
 		/// The current player number (1 is the first player, 0 is the game host).
 		/// </summary>
 		public int PlayerNumber
@@ -223,7 +179,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return TurnNumber.ToStardate();
+				return Settings.TurnNumber.ToStardate();
 			}
 		}
 
@@ -238,36 +194,6 @@ namespace FrEee.Game.Objects.Space
 				return 0;
 			}
 		}
-
-		/// <summary>
-		/// Game victory conditions.
-		/// </summary>
-		public IList<IVictoryCondition> VictoryConditions { get; private set; }
-
-		/// <summary>
-		/// Delay in turns before victory conditions take effect.
-		/// </summary>
-		public int VictoryDelay { get; set; }
-
-		/// <summary>
-		/// Is this a "humans vs. AI" game?
-		/// </summary>
-		public bool IsHumansVsAI { get; set; }
-
-		/// <summary>
-		/// Allowed trades in this game.
-		/// </summary>
-		public AllowedTrades AllowedTrades { get; set; }
-
-		public bool IsSurrenderAllowed { get; set; }
-
-		public bool IsIntelligenceAllowed { get; set; }
-
-		public bool IsAnalysisAllowed { get; set; }
-
-		public bool CanColonizeOnlyBreathable { get; set; }
-
-		public bool CanColonizeOnlyHomeworldSurface { get; set; }
 
 		#endregion
 
@@ -324,11 +250,7 @@ namespace FrEee.Game.Objects.Space
 		public void Save(Stream stream)
 		{
 			AssignIDs();
-			string filename;
-			if (CurrentEmpire == null)
-				filename = Name + "_" + TurnNumber + ".gam";
-			else
-				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
+			var filename = GetGameSavePath(CurrentEmpire);
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 			Serializer.Serialize(this, stream);
@@ -349,14 +271,10 @@ namespace FrEee.Game.Objects.Space
 		public string Save()
 		{
 			AssignIDs();
-			string filename;
-			if (CurrentEmpire == null)
-				filename = Name + "_" + TurnNumber + ".gam";
-			else
-				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
+			var filename = GetGameSavePath(CurrentEmpire);
 			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
 				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
+			var fs = new FileStream(filename, FileMode.Create);
 			Serializer.Serialize(this, fs);
 			fs.Close();
 			return filename;
@@ -368,45 +286,40 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
 		public static void SaveAll(Status status = null, double desiredProgress = 1d)
 		{
-			if (Current.CurrentEmpire != null)
+			if (Master.CurrentEmpire != null)
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
 
-			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
+			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Master.Settings.IsSinglePlayer ? 3 : (Master.Empires.Count + 2));
 
-			// save master view to memory with full history (we'll need it for player views)
-			if (status != null)
-				status.Message = "Saving game (host)";
-			var fullData = Current.SaveToString();
-
-			// save master view to disk without the history (only the players need that)
-			foreach (var emp in Current.Empires)
-				emp.History.Clear();
-			var gamname = Current.Save();
-			if (status != null)
-				status.Progress += progressPerSaveLoad;
-
-			// save player views
-			for (int i = 0; i < Current.Empires.Count; i++)
+			// save player history views
+			for (int i = 0; i < Master.Empires.Count; i++)
 			{
-				if (i == 0 || !Current.IsSinglePlayer)
+				if (i == 0 || !Master.Settings.IsSinglePlayer)
 				{
 					if (status != null)
 						status.Message = "Saving game (player " + (i + 1) + ")";
-					LoadFromString(fullData);
-					Current.CurrentEmpire = Current.Empires[i];
-					Current.Redact();
-					Current.Save();
+					Master.SaveHistory(Master.Empires[i]);
 					if (status != null)
 						status.Progress += progressPerSaveLoad;
 				}
 			}
 
-			// TODO - only reload master view if we really need to
+			// save master view to memory without the history (only players need that)
 			if (status != null)
-				status.Message = "Saving game";
-			Load(gamname);
+				status.Message = "Saving game (host)";
+			foreach (var emp in Master.Empires)
+				emp.History.Clear();
+			Master.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
+		}
+
+		public void SaveHistory(Empire emp)
+		{
+			var filename = GetGameSavePath(emp);
+			var fs = File.OpenWrite(filename);
+			Serializer.Serialize(new GalaxyHistory(this, emp), fs);
+			fs.Close();
 		}
 
 		/// <summary>
@@ -415,8 +328,16 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="stream"></param>
 		public static void Load(Stream stream)
 		{
-			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
-			Mod.Current = Galaxy.Current.Mod;
+			var obj = Serializer.Deserialize(stream);
+			if (obj is Galaxy)
+				Current = (Galaxy)obj;
+			else if (obj is GalaxyHistory)
+				Current = new Galaxy((GalaxyHistory)obj);
+			else
+				throw new Exception("Expected Galaxy or GalaxyHistory, found " + obj.GetType());
+			if (Current.CurrentEmpire == null)
+				Master = Current;
+			Mod.Current = Current.Settings.Mod;
 		}
 
 		/// <summary>
@@ -459,7 +380,7 @@ namespace FrEee.Game.Objects.Space
 		public static void LoadFromString(string serializedData)
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
-			Mod.Current = Galaxy.Current.Mod;
+			Mod.Current = Current.Settings.Mod;
 		}
 
 		/// <summary>
@@ -533,14 +454,14 @@ namespace FrEee.Game.Objects.Space
 
 		public string GetEmpireCommandsSavePath(Empire emp)
 		{
-			return GetEmpireCommandsSavePath(Name, TurnNumber, Empires.IndexOf(emp) + 1);
+			return GetEmpireCommandsSavePath(Settings.Name, Settings.TurnNumber, Empires.IndexOf(emp) + 1);
 		}
 
 		public string GetGameSavePath(Empire emp = null)
 		{
 			if (emp == null)
 				emp = CurrentEmpire;
-			return GetGameSavePath(Name, TurnNumber, emp == null ? 0 : (Empires.IndexOf(emp) + 1));
+			return GetGameSavePath(Settings.Name, Settings.TurnNumber, emp == null ? 0 : (Empires.IndexOf(emp) + 1));
 		}
 
 		public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
@@ -560,47 +481,21 @@ namespace FrEee.Game.Objects.Space
 		#region Public Methods
 
 		/// <summary>
-		/// Removes any space objects, etc. that the current empire cannot see.
+		/// Creates a version of the master galaxy that contains only information that the specified empire can see.
 		/// </summary>
-		public void Redact()
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static Galaxy Redact(Empire emp)
 		{
-			AssignIDs();
-			if (CurrentEmpire != null)
-			{
-				foreach (var ssl in StarSystemLocations)
-					ssl.Item.Redact(CurrentEmpire);
-
-				foreach (var kvp in referrables.Where(kvp => kvp.Value is IFoggable).ToArray())
-				{
-					var id = kvp.Key;
-					var obj = (IFoggable)kvp.Value;
-					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis < Visibility.Fogged)
-						referrables.Remove(id);
-					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory[id].CopyTo(kvp.Value); // memory sight!
-					if (vis > Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory.Remove(id); // no need to remember it if you can see it now!
-				}
-
-				// clear data about other empires
-				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
-				{
-					emp.StoredResources.Clear();
-					emp.KnownDesigns.Clear();
-					emp.Log.Clear();
-					emp.ResearchedTechnologies.Clear();
-					emp.AccumulatedResearch.Clear();
-					emp.ResearchQueue.Clear();
-					emp.ResearchSpending.Clear();
-					emp.Memory.Clear();
-				}
-
-				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
-				{
-					d.VehiclesBuilt = 0;
-				}
-			}
+			if (Master == null)
+				throw new Exception("Can't redact without a master galaxy.");
+			// copy the history so we don't modify existing objects
+			var history = new GalaxyHistory(Master, emp);
+			var serializedHistory = Serializer.SerializeToString(history);
+			var deserializedHistory = Serializer.DeserializeFromString<GalaxyHistory>(serializedHistory);
+			var galaxy = new Galaxy(deserializedHistory);
+			Current = galaxy;
+			return galaxy;
 		}
 
 		/// <summary>
@@ -629,17 +524,14 @@ namespace FrEee.Game.Objects.Space
 			// AI commands
 			if (status != null)
 				status.Message = "Playing AI turns";
-			var serializedGalaxy = Galaxy.Current.SaveToString();
 			var cmds = new Dictionary<int, IList<ICommand>>();
 			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 			{
-				LoadFromString(serializedGalaxy);
-				Current.CurrentEmpire = Current.Empires[i];
-				Current.Redact();
+				Redact(Master.Empires[i]);
 				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
 				cmds.Add(i, Current.CurrentEmpire.Commands);
 			}
-			LoadFromString(serializedGalaxy);
+			Current = Master;
 			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
 				Current.LoadCommands(Current.Empires[i], cmds[i]);
 			if (status != null)
@@ -653,12 +545,12 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			// advance turn number
-			Current.TurnNumber++;
+			Current.Settings.TurnNumber++;
 
 			// reproduction and population replacement from cargo
 			if (status != null)
 				status.Message = "Growing population";
-			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
+			if (Current.Settings.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
 			{
 				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
 				{
@@ -718,7 +610,7 @@ namespace FrEee.Game.Objects.Space
 
 					// adjust resource value
 					foreach (var kvp in p.Income)
-						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+						p.ResourceValue[kvp.Key] -= Current.Settings.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 				else
 				{
@@ -736,7 +628,7 @@ namespace FrEee.Game.Objects.Space
 					// adjust resource value
 					// pay full value decay for non-prorated income though, since the resources were extracted and wasted!
 					foreach (var kvp in p.Income)
-						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+						p.ResourceValue[kvp.Key] -= Current.Settings.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 			}
 			// TODO - remote mining and raw resource generation
@@ -867,7 +759,7 @@ namespace FrEee.Game.Objects.Space
 
 					v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
-						sys.ExploredByEmpires.Add(v.Owner);
+						v.Owner.ExploredStarSystems.Add(sys);
 
 					// take history snapshot
 					v.TakeSnapshot();
@@ -945,9 +837,9 @@ namespace FrEee.Game.Objects.Space
 				order.Dispose();
 
 			// check for victory/defeat
-			foreach (var vc in Current.VictoryConditions)
+			foreach (var vc in Current.Settings.VictoryConditions)
 			{
-				if (vc is TotalEliminationVictoryCondition || Current.TurnNumber > Current.VictoryDelay)
+				if (vc is TotalEliminationVictoryCondition || Current.Settings.TurnNumber > Current.Settings.VictoryDelay)
 				{
 					var winners = new List<Empire>();
 					foreach (var emp in Current.Empires)
@@ -1082,10 +974,13 @@ namespace FrEee.Game.Objects.Space
 			gsu.PopulateGalaxy(Current);
 
 			// set single player flag
-			Current.IsSinglePlayer = gsu.IsSinglePlayer;
+			Current.Settings.IsSinglePlayer = gsu.IsSinglePlayer;
 
 			if (status != null)
 				status.Message = "Saving game";
+
+			// create keyframes
+			Galaxy.Current.TakeSnapshot();
 
 			// save the game
 			Galaxy.SaveAll(status, desiredProgress);

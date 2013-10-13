@@ -73,7 +73,7 @@ namespace FrEee.WinForms.Forms
 			Enabled = true;
 
 			// show empire log if there's anything new there
-			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.Settings.TurnNumber))
 			{
 				var form = new LogForm(this);
 				form.StartPosition = FormStartPosition.CenterScreen;
@@ -207,9 +207,9 @@ namespace FrEee.WinForms.Forms
 						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null &&
 							// HACK - the colonize ability is Gas, the planets are Gas Giant
 							v.Abilities.Any(a => a.Name == "Colonize Planet - " + p.Surface || a.Name + " Giant" == "Colonize Planet - " + p.Surface));
-						if (Galaxy.Current.CanColonizeOnlyBreathable)
+						if (Galaxy.Current.Settings.CanColonizeOnlyBreathable)
 							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
-						if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
+						if (Galaxy.Current.Settings.CanColonizeOnlyHomeworldSurface)
 							suitablePlanets = suitablePlanets.Where(p => p.Surface == Empire.Current.PrimaryRace.NativeSurface);
 						if (suitablePlanets.Any())
 						{
@@ -415,7 +415,7 @@ namespace FrEee.WinForms.Forms
 		{
 			var todos = FindTodos();
 
-			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			if (Galaxy.Current.Settings.IsSinglePlayer && !hostView)
 			{
 				var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
 				if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
@@ -423,7 +423,7 @@ namespace FrEee.WinForms.Forms
 					EndTurn();
 
 					// show empire log if there's anything new there
-					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
+					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.Settings.TurnNumber))
 						this.ShowChildForm(new LogForm(this));
 				}
 			}
@@ -544,7 +544,7 @@ namespace FrEee.WinForms.Forms
 				var todos = FindTodos();
 
 				string msg;
-				if (Galaxy.Current.IsSinglePlayer && !hostView)
+				if (Galaxy.Current.Settings.IsSinglePlayer && !hostView)
 					msg = !todos.Any() ? "Save your commands and process the turn before quitting?" : "Save your commands and process the turn before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
 				else
 					msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
@@ -568,7 +568,7 @@ namespace FrEee.WinForms.Forms
 		private void EndTurn()
 		{
 			Galaxy.Current.SaveCommands();
-			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			if (Galaxy.Current.Settings.IsSinglePlayer && !hostView)
 			{
 				Cursor = Cursors.WaitCursor;
 				Enabled = false;
@@ -577,14 +577,14 @@ namespace FrEee.WinForms.Forms
 				var t = new Thread(new ThreadStart(() =>
 				{
 					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+					Galaxy.Load(Galaxy.Current.Settings.Name, Galaxy.Current.Settings.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
 					Galaxy.ProcessTurn(status, 0.5);
 					status.Message = "Saving game";
 					Galaxy.SaveAll(status, 0.75);
 					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+					Galaxy.Load(Galaxy.Current.Settings.Name, Galaxy.Current.Settings.TurnNumber, plrnum);
 					status.Progress = 1.00;
 				}));
 				this.ShowChildForm(new StatusForm(t, status));

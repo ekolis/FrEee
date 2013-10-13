@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
+	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFoggable
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -54,6 +54,7 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			History = new SafeDictionary<IHistorical, IList<IKeyframe>>(typeof(List<IKeyframe>));
+			ExploredStarSystems = new HashSet<StarSystem>();
 		}
 
 		/// <summary>
@@ -199,11 +200,13 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Finds star systems explored by the empire.
+		/// Star systems explored by the empire.
 		/// </summary>
-		public IEnumerable<StarSystem> ExploredStarSystems
+		[RequiresVisibility(Visibility.Owned)]
+		public ISet<StarSystem> ExploredStarSystems
 		{
-			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
+			get;
+			private set;
 		}
 
 		/// <summary>
@@ -661,6 +664,26 @@ namespace FrEee.Game.Objects.Civilization
 				if (oldid > 0)
 					Memory.Remove(oldid);
 			}
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public bool IsKnownToBeDestroyed
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// Empires cannot be stored in mods.
+		/// </summary>
+		public bool IsModObject
+		{
+			get { return false; }
 		}
 	}
 }

@@ -13,11 +13,6 @@ namespace FrEee.Game.Interfaces
 	public interface IFoggable : IReferrable, IHistorical
 	{
 		/// <summary>
-		/// Removes any data from this object that the specified empire cannot see.
-		/// </summary>
-		void Redact(Empire emp);
-
-		/// <summary>
 		/// Is this object just a memory, or a real object?
 		/// </summary>
 		bool IsMemory { get; set; }

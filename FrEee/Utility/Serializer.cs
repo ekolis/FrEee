@@ -320,6 +320,11 @@ namespace FrEee.Utility
 			return Deserialize<object>(sr);
 		}
 
+		public static object Deserialize(Stream s)
+		{
+			return Deserialize<object>(s);
+		}
+
 		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			var sr = new StreamReader(s);

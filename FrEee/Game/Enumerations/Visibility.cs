@@ -24,6 +24,10 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// Object is owned by the empire.
 		/// </summary>
-		Owned
+		Owned,
+		/// <summary>
+		/// Objects never have this visibility, so any properties requiring this visibility will always be hidden from the player.
+		/// </summary>
+		Impossible
 	}
 }

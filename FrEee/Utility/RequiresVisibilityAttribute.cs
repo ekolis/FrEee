@@ -11,13 +11,16 @@ namespace FrEee.Utility
 	/// Only works on IHistorical objects.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-	public sealed class RequiredVisibilityAttribute : Attribute
+	public sealed class RequiresVisibilityAttribute : Attribute
 	{
-		public RequiredVisibilityAttribute(Visibility visibility)
+		public RequiresVisibilityAttribute(Visibility visibility, object defaultValue = null)
 		{
 			Visibility = visibility;
+			DefaultValue = defaultValue;
 		}
 
 		public Visibility Visibility { get; set; }
+
+		public object DefaultValue { get; set; }
 	}
 }

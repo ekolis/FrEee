@@ -36,11 +36,13 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
+		[RequiresExploration]
 		public IDesign Design { get; set; }
 
 		/// <summary>
 		/// The components on this vehicle.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public IList<Component> Components { get; private set; }
 
 		/// <summary>
@@ -351,8 +353,6 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get;
 		}
-
-		public abstract void Redact(Empire emp);
 
 		public bool IsMemory
 		{

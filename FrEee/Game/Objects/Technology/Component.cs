@@ -31,6 +31,7 @@ namespace FrEee.Game.Objects.Technology
 		/// The template for this component.
 		/// Specifies the basic stats of the component and its abilities.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public MountedComponentTemplate Template { get; private set; }
 
 		public IEnumerable<Ability> Abilities
@@ -56,6 +57,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The current hitpoints of this component.
 		/// </summary>
+		[RequiresVisibility(Visibility.Scanned)]
 		public int Hitpoints { get; set; }
 
 		/// <summary>
@@ -212,14 +214,6 @@ namespace FrEee.Game.Objects.Technology
 		public Visibility CheckVisibility(Empire emp)
 		{
 			return Container.CheckVisibility(emp);
-		}
-
-		public void Redact(Empire emp)
-		{
-			var vis = CheckVisibility(emp);
-			// TODO - show components without damage info on vehicles whose design is known
-			if (vis < Visibility.Scanned)
-				Dispose();
 		}
 
 		public bool IsMemory

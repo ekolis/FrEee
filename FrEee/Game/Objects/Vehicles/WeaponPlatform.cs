@@ -45,31 +45,5 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return CommonExtensions.FindContainer(this); }
 		}
-
-		public override void Redact(Empire emp)
-		{
-			var visibility = CheckVisibility(emp);
-
-			// Can't see the platform's components if it's not scanned
-			// TODO - let player see design of previously scanned platform if the platform has not been refit
-			if (visibility < Visibility.Scanned)
-			{
-				// create fake design and clear component list
-				var d = new Design<SpaceVehicle>();
-				d.Hull = (IHull<SpaceVehicle>)Design.Hull;
-				d.Owner = Design.Owner;
-				Design = d;
-				Components.Clear();
-			}
-
-			if (visibility < Visibility.Fogged)
-				Dispose();
-			else if (visibility == Visibility.Fogged)
-			{
-				var known = emp.Memory[ID];
-				if (known != null && known.GetType() == GetType())
-					known.CopyTo(this);
-			}
-		}
 	}
 }
