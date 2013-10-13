@@ -213,6 +213,8 @@ namespace FrEee.Game.Objects.Technology
 
 		public Visibility CheckVisibility(Empire emp)
 		{
+			if (Container == null)
+				return Visibility.Unknown;
 			return Container.CheckVisibility(emp);
 		}
 
@@ -243,12 +245,12 @@ namespace FrEee.Game.Objects.Technology
 
 		public Civilization.Empire Owner
 		{
-			get { throw new NotImplementedException(); }
+			get { return Container.Owner; }
 		}
 
 		public IVehicle Container
 		{
-			get { throw new NotImplementedException(); }
+			get { return Galaxy.Current.Referrables.OfType<IVehicle>().SingleOrDefault(v => v.Components.Contains(this)); }
 		}
 
 		public bool IsVisibleTo(Empire emp)

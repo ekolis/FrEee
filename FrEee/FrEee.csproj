@@ -150,8 +150,9 @@
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\History\AppearKeyframe.cs" />
+    <Compile Include="Game\Objects\History\ReferencePropertyChangeKeyframe.cs" />
     <Compile Include="Game\Objects\History\GalaxyHistory.cs" />
-    <Compile Include="Game\Objects\History\PropertyChangeKeyframe.cs" />
+    <Compile Include="Game\Objects\History\SimplePropertyChangeKeyframe.cs" />
     <Compile Include="Game\Objects\History\DestroyKeyframe.cs" />
     <Compile Include="Game\Objects\History\MoveKeyframe.cs" />
     <Compile Include="Game\Objects\History\DisappearKeyframe.cs" />

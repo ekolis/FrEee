@@ -1789,12 +1789,15 @@ namespace FrEee.Utility.Extensions
 								else
 									val = prop.GetFoggedValue();
 							}
-							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<PropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<SimplePropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
 								if (lastChange == null || lastChange.NewValue != val)
 								{
 									if (emp.History[h] == null)
 										emp.History[h] = new List<IKeyframe>();
-									emp.History[h].Add(new PropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+									if (typeof(IReferrable).IsAssignableFrom(prop.PropertyType))
+										emp.History[h].Add(new ReferencePropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, (IReferrable)val));
+									else
+										emp.History[h].Add(new SimplePropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
 								}
 							
 						}
