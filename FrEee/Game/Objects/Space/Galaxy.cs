@@ -841,10 +841,11 @@ namespace FrEee.Game.Objects.Space
 			{
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
+				// Also don't let ships under construction take orders
 				foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
-					var sys = v.FindStarSystem();
+					var sys = v.StarSystem;
 					if (sys == null)
 						continue; // space object is dead, or not done being built
 
@@ -853,7 +854,7 @@ namespace FrEee.Game.Objects.Space
 						sys.ExploredByEmpires.Add(v.Owner);
 
 					// update memory sight after movement
-					foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten())
+					foreach (var sobj in sys.FindSpaceObjects<ISpaceObject>().Flatten())
 						sobj.UpdateEmpireMemories();
 
 					// check for battles
