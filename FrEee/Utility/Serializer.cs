@@ -210,20 +210,22 @@ namespace FrEee.Utility
 			if (type.GetGenericArguments().Length == 2)
 			{
 				// HACK - assume it's a dictionary, no real way to test
+				// well, ok, we could scan through the implemented interfaces...
 				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
 				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
-			else if (type.BaseType.GetGenericArguments().Length == 2)
+			else if (type == typeof(ResourceQuantity))
 			{
-				// HACK - Resources inherits from a dictionary type
-				itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+				// HACK - ResourceQuantity is a dictionary type too
+				itemType = typeof(KeyValuePair<Resource, int>);
 				w.WriteLine("d" + list.Cast<object>().Count() + ":" + tabs);
 				isDict = true;
 			}
 			else if (type.GetGenericArguments().Length == 1)
 			{
 				// HACK - assume it's a collection, no real way to test
+				// well, ok, we could scan through the implemented interfaces...
 				itemType = type.GetGenericArguments()[0];
 				w.WriteLine("c" + list.Cast<object>().Count() + ":" + tabs);
 			}
@@ -545,9 +547,14 @@ namespace FrEee.Utility
 					Type itemType;
 					if (type.GetGenericArguments().Count() == 2)
 						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+					else if (type == typeof(ResourceQuantity))
+						// HACK - ResourceQuantity is a dictionary type
+						itemType = typeof(KeyValuePair<Resource, int>);
 					else
-						// HACK - Resources inherits from a dictionary type
-						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+					{
+						// TODO - scan interface types instead of counting generic args
+						throw new Exception("Can't deserialize a dictionary of type " + type + ".");
+					}
 					for (int i = 0; i < size; i++)
 					{
 						if (!context.KnownProperties.ContainsKey(itemType))
