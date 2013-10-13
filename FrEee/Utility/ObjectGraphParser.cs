@@ -180,7 +180,6 @@ namespace FrEee.Utility
 			KnownTypes = new List<Type>();
 			KnownProperties = new Dictionary<Type, IEnumerable<PropertyInfo>>();
 			KnownObjects = new Dictionary<Type, IList<object>>();
-			KnownIDs = new Dictionary<object, int>();
 		}
 
 		/// <summary>
@@ -199,11 +198,6 @@ namespace FrEee.Utility
 		public IDictionary<Type, IList<object>> KnownObjects { get; private set; }
 
 		/// <summary>
-		/// IDs of known objects.
-		/// </summary>
-		public IDictionary<object, int> KnownIDs { get; private set; }
-
-		/// <summary>
 		/// Adds an object.
 		/// </summary>
 		/// <param name="o"></param>
@@ -217,9 +211,7 @@ namespace FrEee.Utility
 				KnownObjects.Add(type, new List<object>());
 			KnownObjects[type].Add(o);
 			AddProperties(type);
-			var id = KnownObjects[type].Count - 1;
-			KnownIDs.Add(o, id);
-			return id;
+			return KnownObjects[type].Count - 1;
 		}
 
 		/// <summary>
@@ -257,8 +249,9 @@ namespace FrEee.Utility
 		{
 			if (o == null)
 				return null;
-			if (KnownIDs.ContainsKey(o))
-				return KnownIDs[o];
+			var type = o.GetType();
+			if (KnownObjects.ContainsKey(type) && KnownObjects[type].Contains(o, ReferenceEqualityComparer.Instance))
+				return KnownObjects[type].IndexOf(o);
 			return null;
 		}
 

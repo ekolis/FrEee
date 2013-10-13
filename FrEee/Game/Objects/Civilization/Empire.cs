@@ -644,7 +644,6 @@ namespace FrEee.Game.Objects.Civilization
 				else
 				{
 					var memory = obj.CopyAndAssignNewID();
-					// TODO - why is IsMemory flag not being set?
 					memory.IsMemory = true;
 					Memory[obj.ID] = memory;
 				}
