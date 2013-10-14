@@ -1,10 +1,13 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -151,6 +154,17 @@ namespace FrEee.Utility
 			{
 				if (Item != null)
 					Item(item);
+				if (item is KeyValuePair<long, IReferrable>)
+				{
+					var kvp = (KeyValuePair<long, IReferrable>)item;
+					if (kvp.Value is Planet)
+					{
+						var p = (Planet)kvp.Value;
+						if (p.Colony != null)
+						{
+						}
+					}
+				}
 				Parse(item, context);
 			}
 		}
@@ -158,14 +172,29 @@ namespace FrEee.Utility
 		private void ParseObject(object o, ObjectGraphContext context)
 		{
 			var type = o.GetType();
-			var props = context.KnownProperties[type];
-			foreach (var p in props)
+			if (o.GetType().IsGenericType && o.GetType().GetGenericTypeDefinition() == typeof(KeyValuePair<,>))
 			{
-				// serialize field value
-				var val = p.GetValue(o, new object[] { });
+				// HACK - why keyvaluepairs don't have properties here I don't know...
+				var key = o.GetPropertyValue("Key");
+				var val = o.GetPropertyValue("Value");
 				if (Property != null)
-					Property(p.Name, o, val);
+					Property("Key", o, key);
+				Parse(key, context);
+				if (Property != null)
+					Property("Value", o, val);
 				Parse(val, context);
+			}
+			else
+			{
+				var props = context.KnownProperties[type];
+				foreach (var p in props)
+				{
+					// parse property value
+					var val = p.GetValue(o, new object[] { });
+					if (Property != null)
+						Property(p.Name, o, val);
+					Parse(val, context);
+				}
 			}
 		}
 	}

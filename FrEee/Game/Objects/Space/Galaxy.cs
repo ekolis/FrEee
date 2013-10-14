@@ -368,6 +368,8 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if CurrentEmpire is not null.</exception>
 		public static void SaveAll(Status status = null, double desiredProgress = 1d)
 		{
+			Current.AssignIDs();
+
 			if (Current.CurrentEmpire != null)
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
 
