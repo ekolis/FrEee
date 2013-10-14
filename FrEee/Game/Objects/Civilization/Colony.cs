@@ -21,8 +21,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Facilities = new List<Facility>();
 			Population = new SafeDictionary<Race, long>();
-			Cargo = new Cargo();
-		}
+			Cargo = new Cargo();}
 
 		/// <summary>
 		/// The empire which owns this colony.
@@ -119,6 +118,11 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsModObject
 		{
 			get { return false; }
+		}
+
+		public override string ToString()
+		{
+			return Owner + " Colony on " + Container;
 		}
 	}
 }

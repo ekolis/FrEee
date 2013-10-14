@@ -645,7 +645,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <param name="obj"></param>
 		public void UpdateMemory(IFoggable obj)
 		{
-			if (obj.ID > 0)
+			/*if (obj.ID > 0)
 			{
 				// object exists, update cache with the data
 				if (Memory[obj.ID] != null)
@@ -663,7 +663,7 @@ namespace FrEee.Game.Objects.Civilization
 				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value == obj).Key;
 				if (oldid > 0)
 					Memory.Remove(oldid);
-			}
+			}*/
 		}
 
 		public bool IsMemory

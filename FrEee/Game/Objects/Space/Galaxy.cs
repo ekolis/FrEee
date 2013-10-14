@@ -740,7 +740,7 @@ namespace FrEee.Game.Objects.Space
 			// take history snapshot - beginning of turn
 			if (status != null)
 				status.Message = "Taking pre-turn history snapshot";
-			Current.TakeSnapshot();
+			Current.TakeSnapshot(false);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -767,7 +767,7 @@ namespace FrEee.Game.Objects.Space
 						v.Owner.ExploredStarSystems.Add(sys);
 
 					// take history snapshot
-					v.TakeSnapshot();
+					v.TakeSnapshot(false);
 
 					// check for battles
 					// TODO - alliances
@@ -869,7 +869,7 @@ namespace FrEee.Game.Objects.Space
 			// take history snapshot - end of turn
 			if (status != null)
 				status.Message = "Taking post-turn history snapshot";
-			Current.TakeSnapshot();
+			Current.TakeSnapshot(true);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -986,7 +986,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Saving game";
 
 			// create keyframes
-			Galaxy.Current.TakeSnapshot();
+			Galaxy.Current.TakeSnapshot(true);
 
 			// save the game
 			Galaxy.SaveAll(status, desiredProgress);

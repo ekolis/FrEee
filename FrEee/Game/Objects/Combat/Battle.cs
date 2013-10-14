@@ -143,7 +143,7 @@ namespace FrEee.Game.Objects.Combat
 				}
 
 				// take history snapshot
-				this.TakeSnapshot();
+				this.TakeSnapshot(false);
 			}
 
 			// replenish combatants' shields

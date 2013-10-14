@@ -1732,14 +1732,15 @@ namespace FrEee.Utility.Extensions
 		/// Takes a snapshot of an object, recording any changes in data since the last snapshot in the empires' history logs.
 		/// </summary>
 		/// <param name="obj"></param>
-		public static void TakeSnapshot(this object obj)
+		public static void TakeSnapshot(this object obj, bool doProperties)
 		{
 			var parser = new ObjectGraphParser();
-			parser.EndObject += snapshotParser_EndObject;
+			Action<object> snapshotParser_EndObject = o => o.snapshotParser_EndObject_Impl(doProperties);
+			parser.EndObject += new ObjectGraphParser.ObjectDelegate(snapshotParser_EndObject);
 			parser.Parse(obj);
 		}
 
-		private static void snapshotParser_EndObject(object o)
+		private static void snapshotParser_EndObject_Impl(this object o, bool doProperties)
 		{
 			foreach (var emp in Galaxy.Current.Empires)
 			{
@@ -1762,34 +1763,36 @@ namespace FrEee.Utility.Extensions
 							}
 
 						}
-						// if we saw any properties change, save them
-						foreach (var prop in h.GetType().GetSafeProperties())
+						if (doProperties)
 						{
-							object val;
-							if (h is WarpPoint && prop.RequiresExploration())
+							// if we saw any properties change, save them
+							foreach (var prop in h.GetType().GetSafeProperties())
 							{
-								var wp = (WarpPoint)h;
-								if (emp.ExploredStarSystems.Contains(wp.TargetStarSystemLocation.Item))
-									val = h.GetPropertyValue(prop);
+								object val;
+								if (h is WarpPoint && prop.RequiresExploration())
+								{
+									var wp = (WarpPoint)h;
+									if (emp.ExploredStarSystems.Contains(wp.TargetStarSystemLocation.Item))
+										val = h.GetPropertyValue(prop);
+									else
+										val = prop.GetUnexploredValue();
+								}
+								else if (h is Vehicle && prop.RequiresExploration())
+								{
+									var v = (Vehicle)h;
+									if (emp.KnownDesigns.Contains(v.Design))
+										val = h.GetPropertyValue(prop);
+									else
+										val = prop.GetUnexploredValue();
+								}
 								else
-									val = prop.GetUnexploredValue();
-							}
-							else if (h is Vehicle && prop.RequiresExploration())
-							{
-								var v = (Vehicle)h;
-								if (emp.KnownDesigns.Contains(v.Design))
-									val = h.GetPropertyValue(prop);
-								else
-									val = prop.GetUnexploredValue();
-							}
-							else
-							{
-								if (prop.GetRequiredVisiblity() <= vis)
-									val = h.GetPropertyValue(prop);
-								else
-									val = prop.GetFoggedValue();
-							}
-							var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<SimplePropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+								{
+									if (prop.GetRequiredVisiblity() <= vis)
+										val = h.GetPropertyValue(prop);
+									else
+										val = prop.GetFoggedValue();
+								}
+								var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<SimplePropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
 								if (lastChange == null || lastChange.NewValue != val)
 								{
 									if (emp.History[h] == null)
@@ -1799,13 +1802,12 @@ namespace FrEee.Utility.Extensions
 									else
 										emp.History[h].Add(new SimplePropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
 								}
-							
+							}
 						}
 					}
 				}
 			}
 		}
-
 		/// <summary>
 		/// Get properties which are safe to be serialized.
 		/// </summary>

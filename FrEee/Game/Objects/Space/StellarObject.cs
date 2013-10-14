@@ -17,7 +17,8 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	 [Serializable] public abstract class StellarObject : IStellarObject
+	[Serializable]
+	public abstract class StellarObject : IStellarObject
 	{
 		public StellarObject()
 		{
@@ -43,7 +44,7 @@ namespace FrEee.Game.Objects.Space
 		/// A description of this stellar object.
 		/// </summary>
 		public string Description { get; set; }
-		 
+
 		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
@@ -55,7 +56,8 @@ namespace FrEee.Game.Objects.Space
 			get { return Pictures.GetIcon(this); }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}
@@ -87,7 +89,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			return Name;
 		}
-		 
+
 		public void Dispose()
 		{
 			IsKnownToBeDestroyed = true;
@@ -201,7 +203,11 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsModObject
 		{
-			get { return Mod.Current.StellarObjectTemplates.Contains(this); }
+			get
+			{
+				// HACK - we seem to be getting *copies* of mod objects...
+				return Name == null;
+			}
 		}
 	}
 }

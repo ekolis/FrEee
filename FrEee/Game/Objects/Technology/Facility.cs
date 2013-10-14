@@ -246,7 +246,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
+				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().Where(p => p.Colony != null).SingleOrDefault(p => p.Colony.Facilities.Contains(this));
 			}
 		}
 
