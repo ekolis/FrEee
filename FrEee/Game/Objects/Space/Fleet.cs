@@ -467,8 +467,9 @@ namespace FrEee.Game.Objects.Space
 			Orders.Insert(newpos, o);
 		}
 
-		public void ExecuteOrders()
+		public bool ExecuteOrders()
 		{
+			bool didStuff = false;
 			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
 				TimeToNextMove = 0;
 			else
@@ -478,7 +479,9 @@ namespace FrEee.Game.Objects.Space
 				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
+				didStuff = true;
 			}
+			return didStuff;
 		}
 
 		public Cargo Cargo

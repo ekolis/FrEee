@@ -846,14 +846,17 @@ namespace FrEee.Game.Objects.Space
 					if (sys == null)
 						continue; // space object is dead, or not done being built
 
-					v.ExecuteOrders();
+					bool didStuff = v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
 
 					// update memory sight after movement
-					v.UpdateEmpireMemories();
-					foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
-						v.Owner.UpdateMemory(sobj);
+					if (didStuff)
+					{
+						v.UpdateEmpireMemories();
+						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
+							v.Owner.UpdateMemory(sobj);
+					}
 
 					// check for battles
 					// TODO - alliances

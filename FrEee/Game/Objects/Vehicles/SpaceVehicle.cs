@@ -60,8 +60,9 @@ namespace FrEee.Game.Objects.Vehicles
 			private set;
 		}
 
-		public void ExecuteOrders()
+		public bool ExecuteOrders()
 		{
+			bool didStuff = false;
 			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
 				TimeToNextMove = 0;
 			else
@@ -71,7 +72,9 @@ namespace FrEee.Game.Objects.Vehicles
 				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
+				didStuff = true;
 			}
+			return didStuff;
 		}
 
 		/// <summary>
