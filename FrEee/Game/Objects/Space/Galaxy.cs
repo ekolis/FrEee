@@ -577,7 +577,7 @@ namespace FrEee.Game.Objects.Space
 					if (vis < Visibility.Fogged)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory[id].CopyTo(kvp.Value); // memory sight!
+						CurrentEmpire.Memory[id].CopyToExceptID(kvp.Value); // memory sight!
 				}
 
 				// clear data about other empires
