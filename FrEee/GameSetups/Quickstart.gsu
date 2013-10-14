@@ -179,7 +179,7 @@ p44:
 		p2:
 			Height:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				15;
+				30;
 			Width:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 				20;
@@ -234,7 +234,7 @@ p44:
 		0;
 	MinorEmpires:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		4;
+		0;
 	MinPlanetValue:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		0;
@@ -249,7 +249,7 @@ p44:
 		False;
 	RandomAIs:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		2;
+		1;
 	RemoteMiningModel:
 		FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
 		p8:
@@ -270,7 +270,7 @@ p44:
 				0.01;
 			ValueDepletionPerResource:
 				System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				0;
+				1;
 			ValueDepletionPerTurn:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 				1;
@@ -314,7 +314,7 @@ p44:
 		;
 	StarSystemCount:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		10;
+		3;
 	StarSystemGroups:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		1;
