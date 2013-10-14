@@ -386,7 +386,7 @@ namespace FrEee.Game.Objects.Space
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
-				if (i == 0 || !Current.IsSinglePlayer)
+				if (Current.Empires[i].IsPlayerEmpire)
 				{
 					if (status != null)
 						status.Message = "Saving game (player " + (i + 1) + ")";
@@ -578,8 +578,6 @@ namespace FrEee.Game.Objects.Space
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 						CurrentEmpire.Memory[id].CopyTo(kvp.Value); // memory sight!
-					if (vis > Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory.Remove(id); // no need to remember it if you can see it now!
 				}
 
 				// clear data about other empires
