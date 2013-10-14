@@ -13,24 +13,17 @@ namespace FrEee.Game.Objects.History
 	/// Designed for IReferrable objects, stores only the object ID to save space and time.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ReferencePropertyChangeKeyframe : IKeyframe<IHistorical>
+	public class ReferencePropertyChangeKeyframe : IKeyframe<IReferrable>, IPropertyChangeKeyframe
 	{
-		public ReferencePropertyChangeKeyframe(double timestamp, string propertyName, IReferrable newValue)
+		public ReferencePropertyChangeKeyframe(string propertyName, IReferrable newValue)
 		{
-			Timestamp = timestamp;
 			PropertyName = propertyName;
 			NewValue = newValue;
 		}
 
-		public void Apply(IHistorical target)
+		public void Apply(IReferrable target)
 		{
 			target.SetPropertyValue(PropertyName, NewValue);
-		}
-
-		public double Timestamp
-		{
-			get;
-			set;
 		}
 
 		public string PropertyName {get; set;}
@@ -42,6 +35,11 @@ namespace FrEee.Game.Objects.History
 		{
 			get { return newValue == null ? null : newValue.Value; }
 			set { newValue = value == null ? null : value.Reference(); }
+		}
+
+		object IPropertyChangeKeyframe.NewValue
+		{
+			get { return NewValue; }
 		}
 	}
 }

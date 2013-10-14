@@ -13,9 +13,8 @@ namespace FrEee.Game.Objects.History
 	/// <typeparam name="T"></typeparam>
 	public class MoveKeyframe : IKeyframe<ISpaceObject>
 	{
-		public MoveKeyframe(double timestamp, Sector newLocation)
+		public MoveKeyframe(Sector newLocation)
 		{
-			Timestamp = timestamp;
 			NewSector = newLocation;
 		}
 
@@ -24,15 +23,9 @@ namespace FrEee.Game.Objects.History
 			NewSector.Place(target);
 		}
 
-		public double Timestamp
-		{
-			get;
-			set;
-		}
-
 		public Sector NewSector { get; set; }
 
-		void IKeyframe.Apply(IHistorical target)
+		void IKeyframe.Apply(IReferrable target)
 		{
 			if (!(target is ISpaceObject))
 				throw new Exception("Move keyframes can only be applied to space objects.");

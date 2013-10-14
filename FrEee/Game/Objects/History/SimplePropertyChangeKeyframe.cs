@@ -11,24 +11,17 @@ namespace FrEee.Game.Objects.History
 	/// Keyframe for when an object's properties change.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class SimplePropertyChangeKeyframe : IKeyframe<IHistorical>
+	public class SimplePropertyChangeKeyframe : IKeyframe<IReferrable>, IPropertyChangeKeyframe
 	{
-		public SimplePropertyChangeKeyframe(double timestamp, string propertyName, object newValue)
+		public SimplePropertyChangeKeyframe(string propertyName, object newValue)
 		{
-			Timestamp = timestamp;
 			PropertyName = propertyName;
 			NewValue = newValue;
 		}
 
-		public void Apply(IHistorical target)
+		public void Apply(IReferrable target)
 		{
 			target.SetPropertyValue(PropertyName, NewValue);
-		}
-
-		public double Timestamp
-		{
-			get;
-			set;
 		}
 
 		public string PropertyName {get; set;}

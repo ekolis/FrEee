@@ -8,7 +8,7 @@ namespace FrEee.Utility
 {
 	/// <summary>
 	/// Requires an empire to have visibility of an object to see this property's value.
-	/// Only works on IHistorical objects.
+	/// Only works on IReferrable objects.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
 	public sealed class RequiresVisibilityAttribute : Attribute

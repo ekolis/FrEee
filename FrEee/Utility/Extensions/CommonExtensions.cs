@@ -1732,21 +1732,23 @@ namespace FrEee.Utility.Extensions
 		/// Takes a snapshot of an object, recording any changes in data since the last snapshot in the empires' history logs.
 		/// </summary>
 		/// <param name="obj"></param>
-		public static void TakeSnapshot(this object obj, bool doProperties)
+		public static IEnumerable<IKeyframe> TakeSnapshot(this object obj, bool doProperties)
 		{
 			var parser = new ObjectGraphParser();
-			Action<object> snapshotParser_EndObject = o => o.snapshotParser_EndObject_Impl(doProperties);
+			var keyframes = new List<IKeyframe>();
+			Action<object> snapshotParser_EndObject = o => o.snapshotParser_EndObject_Impl(doProperties, keyframes);
 			parser.EndObject += new ObjectGraphParser.ObjectDelegate(snapshotParser_EndObject);
 			parser.Parse(obj);
+			return keyframes;
 		}
 
-		private static void snapshotParser_EndObject_Impl(this object o, bool doProperties)
+		private static void snapshotParser_EndObject_Impl(this object o, bool doProperties, ICollection<IKeyframe> keyframes)
 		{
 			foreach (var emp in Galaxy.Current.Empires)
 			{
-				if (o is IHistorical)
+				if (o is IReferrable)
 				{
-					var h = (IHistorical)o;
+					var h = (IReferrable)o;
 					var vis = h.CheckVisibility(emp);
 					if (!h.IsModObject && vis >= Visibility.Visible)
 					{
@@ -1754,12 +1756,14 @@ namespace FrEee.Utility.Extensions
 						{
 							// if we saw it move, save it
 							var sobj = (ISpaceObject)h;
-							var lastMove = emp.History[sobj] == null ? null : emp.History[sobj].OfType<MoveKeyframe>().OrderBy(k => k.Timestamp).LastOrDefault();
+							var lastMove = emp.History[sobj] == null ? null : (MoveKeyframe)emp.History[sobj].Where(kvp => kvp.Value is MoveKeyframe).OrderBy(k => k.Key).LastOrDefault().Value;
 							if (lastMove == null || lastMove.NewSector != sobj.Sector)
 							{
 								if (emp.History[sobj] == null)
-									emp.History[sobj] = new List<IKeyframe>();
-								emp.History[sobj].Add(new MoveKeyframe(Galaxy.Current.CurrentTick, sobj.Sector));
+									emp.History[sobj] = new SafeDictionary<double, IKeyframe>();
+								var keyframe = new MoveKeyframe(sobj.Sector);
+								keyframes.Add(keyframe);
+								emp.History[sobj].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
 							}
 
 						}
@@ -1792,15 +1796,23 @@ namespace FrEee.Utility.Extensions
 									else
 										val = prop.GetFoggedValue();
 								}
-								var lastChange = emp.History[h] == null ? null : emp.History[h].OfType<SimplePropertyChangeKeyframe>().OrderBy(k => k.Timestamp).Where(k => k.PropertyName == prop.Name).LastOrDefault();
+								var lastChange = emp.History[h] == null ? null : (IPropertyChangeKeyframe)emp.History[h].Where(kvp => kvp.Value is IPropertyChangeKeyframe).OrderBy(k => k.Key).LastOrDefault().Value;
 								if (lastChange == null || lastChange.NewValue != val)
 								{
 									if (emp.History[h] == null)
-										emp.History[h] = new List<IKeyframe>();
+										emp.History[h] = new SafeDictionary<double, IKeyframe>();
 									if (typeof(IReferrable).IsAssignableFrom(prop.PropertyType))
-										emp.History[h].Add(new ReferencePropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, (IReferrable)val));
+									{
+										var keyframe = new ReferencePropertyChangeKeyframe(prop.Name, (IReferrable)val);
+										keyframes.Add(keyframe);
+										emp.History[h].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
+									}
 									else
-										emp.History[h].Add(new SimplePropertyChangeKeyframe(Galaxy.Current.CurrentTick, prop.Name, val));
+									{
+										var keyframe = new SimplePropertyChangeKeyframe(prop.Name, val);
+										keyframes.Add(keyframe);
+										emp.History[h].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
+									}
 								}
 							}
 						}

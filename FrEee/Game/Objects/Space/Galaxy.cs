@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Space
 				if (h is Empire)
 					Empires.Add((Empire)h);
 				var keyframes = kvp.Value;
-				var last = keyframes.OrderBy(k => k.Timestamp).LastOrDefault();
+				var last = keyframes.OrderBy(k => k.Key).LastOrDefault().Value;
 				if (last != null)
 					last.Apply(h);
 			}
@@ -879,7 +879,7 @@ namespace FrEee.Game.Objects.Space
 			foreach (var emp in Current.Empires)
 			{
 				emp.Memory.Clear();
-				foreach (var f in emp.History.Keys.OfType<IFoggable>())
+				foreach (var f in Current.Referrables.OfType<IFoggable>().Where(r => r.CheckVisibility(emp) >= Visibility.Visible))
 					emp.UpdateMemory(f);
 			}
 			if (status != null)

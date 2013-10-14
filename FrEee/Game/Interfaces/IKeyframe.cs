@@ -11,22 +11,16 @@ namespace FrEee.Game.Interfaces
 	public interface IKeyframe
 	{
 		/// <summary>
-		/// The timestamp of the keyframe.
-		/// 0 = beginning of turn, 1 = end of turn
-		/// </summary>
-		double Timestamp { get; set; }
-
-		/// <summary>
 		/// Applies the data in this keyframe to an object.
 		/// </summary>
 		/// <param name="target"></param>
-		void Apply(IHistorical target);
+		void Apply(IReferrable target);
 	}
 
 	/// <summary>
 	/// A keyframe in object history.
 	/// </summary>
-	public interface IKeyframe<in T> : IKeyframe where T : IHistorical
+	public interface IKeyframe<in T> : IKeyframe where T : IReferrable
 	{
 		/// <summary>
 		/// Applies the data in this keyframe to an object.

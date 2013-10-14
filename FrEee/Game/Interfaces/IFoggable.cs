@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something that can be obscured by fog of war.
 	/// </summary>
-	public interface IFoggable : IReferrable, IHistorical
+	public interface IFoggable : IReferrable
 	{
 		/// <summary>
 		/// Is this object just a memory, or a real object?
