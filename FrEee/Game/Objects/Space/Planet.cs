@@ -291,7 +291,7 @@ namespace FrEee.Game.Objects.Space
 				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
-				didst = true;
+				didStuff = true;
 			}
 			return didStuff;
 		}
