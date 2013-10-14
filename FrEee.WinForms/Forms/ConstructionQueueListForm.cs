@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Forms
 			if (e.StateChanged == DataGridViewElementStates.Selected)
 			{
 				var queue = (ConstructionQueue)e.Row.DataBoundItem;
-				var sys = queue.SpaceObject.StarSystem;
+				var sys = queue.SpaceObject.Sector.StarSystem;
 				galaxyView.SelectedStarSystem = sys;
 				starSystemView.StarSystem = sys;
 				starSystemView.SelectedSpaceObject = queue.SpaceObject;

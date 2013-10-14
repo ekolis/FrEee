@@ -451,7 +451,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		IDesign<T> IDesign<T>.Copy()
 		{
-			return Copy();
+			return this.CopyAndAssignNewID();
 		}
 
 		IDesign IDesign.Copy()

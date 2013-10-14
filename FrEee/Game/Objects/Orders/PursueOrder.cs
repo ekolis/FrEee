@@ -52,24 +52,24 @@ namespace FrEee.Game.Objects.Orders
 			if (AvoidEnemies && Target.IsHostileTo(me.Owner))
 			{
 				// don't avoid the target!
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true, me.DijkstraMap).Concat(new Sector[]{Target.FindSector()});
+				return Pathfinder.Pathfind(me, start, Target.Sector, AvoidEnemies, true, me.DijkstraMap).Concat(new Sector[]{Target.Sector});
 			}
 			else
-				return Pathfinder.Pathfind(me, start, Target.FindSector(), AvoidEnemies, true, me.DijkstraMap);
+				return Pathfinder.Pathfind(me, start, Target.Sector, AvoidEnemies, true, me.DijkstraMap);
 		}
 
 		public void Execute(T sobj)
 		{
 			// TODO - movement logs
-			if (sobj.FindSector() == Target.FindSector())
+			if (sobj.Sector == Target.Sector)
 				IsComplete = true;
 			else
 			{
-				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
 				if (gotoSector != null)
 				{
 					// move
-					sobj.FindStarSystem().Remove(sobj);
+					sobj.Sector.StarSystem.Remove(sobj);
 					gotoSector.Place(sobj);
 					sobj.RefreshDijkstraMap();
 				}
@@ -147,7 +147,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public Sector Destination
 		{
-			get { return Target.FindSector(); }
+			get { return Target.Sector; }
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)

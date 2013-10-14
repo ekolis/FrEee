@@ -422,14 +422,9 @@ namespace FrEee.Game.Objects.Space
 				Name = Owner + " Fleet";
 		}
 
-		Sector ILocated.Sector
-		{
-			get { return Sector; }
-		}
-
 		public StarSystem StarSystem
 		{
-			get { return this.FindStarSystem(); }
+			get { return this.Sector.StarSystem; }
 		}
 
 		public IList<IOrder<Fleet>> Orders { get; private set; }
@@ -550,7 +545,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
 		}
 
 		/// <summary>
@@ -626,26 +621,10 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
-		[DoNotSerialize]
-		[IgnoreMap]
 		public Sector Sector
 		{
-			get
-			{
-				return this.FindSector();
-			}
-			set
-			{
-				if (value == null)
-				{
-					if (Sector == null)
-						Sector.Remove(this);
-				}
-				else
-					value.Place(this);
-				foreach (var v in Vehicles)
-					v.Sector = value;
-			}
+			get;
+			set;
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)

@@ -102,7 +102,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			var sys = this.FindStarSystem();
+			var sys = this.Sector.StarSystem;
 			if (sys != null)
 				sys.Remove(this);
 			Galaxy.Current.UnassignID(this);
@@ -149,16 +149,16 @@ namespace FrEee.Game.Objects.Space
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (this.FindStarSystem() == null)
+			if (Sector == null || Sector.StarSystem == null)
 				return Visibility.Scanned;  // probably a mod definition
 
 			if (emp == Owner)
 				return Visibility.Owned;
 
 			// TODO - cloaking
-			if (this.FindStarSystem() == null)
+			if (this.Sector.StarSystem == null)
 				return Visibility.Unknown;
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			var seers = this.Sector.StarSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any())
 			{
 				if (Galaxy.Current.OmniscientView)
@@ -169,7 +169,7 @@ namespace FrEee.Game.Objects.Space
 				else
 					return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.Sector.Coordinates.EightWayDistance(this.Sector.Coordinates));
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
@@ -190,12 +190,13 @@ namespace FrEee.Game.Objects.Space
 
 		public Sector Sector
 		{
-			get { return this.FindSector(); }
+			get;
+			set;
 		}
 
 		public StarSystem StarSystem
 		{
-			get { return this.FindStarSystem(); }
+			get { return this.Sector.StarSystem; }
 		}
 
 		public bool IsMemory

@@ -415,6 +415,11 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(Stream stream)
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
+			if (Empire.Current != null)
+			{
+				foreach (var kvp in Empire.Current.Memory)
+					Current.AssignID(kvp.Value, kvp.Key);
+			}
 			Mod.Current = Galaxy.Current.Mod;
 		}
 
@@ -649,7 +654,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Growing population";
 			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
 			{
-				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Colony != null).Flatten().Flatten())
+				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Colony != null))
 				{
 					var pop = p.Colony.Population;
 					foreach (var race in pop.Keys.ToArray())
@@ -696,11 +701,10 @@ namespace FrEee.Game.Objects.Space
 			// resource generation
 			if (status != null)
 				status.Message = "Generating resources";
-			foreach (var tuple in Current.FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
+			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Owner != null))
 			{
-				var p = tuple.Item3;
-				var sys = tuple.Item1.Item;
-				if (sys.FindSpaceObjects<Planet>().Flatten().Any(p2 => p2.Owner == p.Owner && p2.HasAbility("Spaceport")))
+				var sys = p.Sector.StarSystem;
+				if (sys.FindSpaceObjects<Planet>().Any(p2 => p2.Owner == p.Owner && p2.HasAbility("Spaceport")))
 				{
 					// give owner his income
 					p.Owner.StoredResources += p.Income;
@@ -824,7 +828,7 @@ namespace FrEee.Game.Objects.Space
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
+			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
 				sobj.ReplenishShields();
 			if (status != null)
 				status.Progress += progressPerOperation;
@@ -843,7 +847,7 @@ namespace FrEee.Game.Objects.Space
 				foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
-					var sys = v.StarSystem;
+					var sys = v.Sector.StarSystem;
 					if (sys == null)
 						continue; // space object is dead, or not done being built
 
@@ -855,13 +859,13 @@ namespace FrEee.Game.Objects.Space
 					v.UpdateEmpireMemories();
 					if (v.Owner != null)
 					{
-						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
+						foreach (var sobj in v.Sector.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v))
 							v.Owner.UpdateMemory(sobj);
 					}
 
 					// check for battles
 					// TODO - alliances
-					var sector = v.FindSector();
+					var sector = v.Sector;
 					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
 					{
 						var battle = new Battle(sector);
@@ -889,7 +893,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Cleaning up";
 
 			// deal with population in cargo again, in case colonies took damage and lost some population
-			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().Where(p => p.Colony != null))
+			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
 			{
 				var pop = p.Colony.Population;
 				var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
@@ -912,11 +916,11 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
-			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>().Flatten().Flatten())
+			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
 				sobj.ReplenishShields();
 
 			// repair facilities
-			foreach (var facility in Current.FindSpaceObjects<Planet>().Flatten().Flatten().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
+			foreach (var facility in Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
 				facility.Hitpoints = facility.MaxHitpoints;
 
 			// resource spoilage
@@ -1064,20 +1068,14 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Searches for space objects matching criteria.
+		/// Skips space objects that are part of the mod; only finds ones that are actually in space.
 		/// </summary>
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
-		/// <returns>The matching space objects, grouped by location.</returns>
-		public ILookup<ObjectLocation<StarSystem>, ILookup<Point, T>> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		/// <returns>The matching space objects</returns>
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			var list = new List<Tuple<ObjectLocation<StarSystem>, ILookup<Point, T>>>();
-			foreach (var ssl in StarSystemLocations)
-			{
-				var lookup = ssl.Item.FindSpaceObjects(criteria);
-				if (lookup.Any())
-					list.Add(Tuple.Create(ssl, lookup));
-			}
-			return list.ToLookup(t => t.Item1, t => t.Item2);
+			return Referrables.OfType<T>().Where(sobj => sobj.Sector != null && (criteria == null || criteria(sobj)));
 		}
 
 		/// <summary>

@@ -108,7 +108,7 @@ namespace FrEee.WinForms.Controls
 
 		public void ShowResults()
 		{
-			var results = ObjectsToSearch.Where(o => o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.FindStarSystem() == StarSystem ? 0 : 1);
+			var results = ObjectsToSearch.Where(o => o.Name.ToLower().Contains(textBox.Text.ToLower())).OrderBy(o => o.Sector.StarSystem == StarSystem ? 0 : 1);
 			resultsForm.Results = results;
 			if (!resultsForm.Visible)
 			{

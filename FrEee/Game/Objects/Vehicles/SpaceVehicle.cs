@@ -181,7 +181,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override void Dispose()
 		{
-			var sys = this.FindStarSystem();
+			var sys = this.Sector.StarSystem;
 			if (sys != null)
 				sys.Remove(this);
 			base.Dispose();
@@ -198,8 +198,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.FindStarSystem().GetSectorAbilityValue(this.FindCoordinates(), Owner, "Reduced Maintenance Cost - Sector").ToInt();
-				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+				pct -= this.Sector.StarSystem.GetSectorAbilityValue(this.Sector.Coordinates, Owner, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.Sector.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 				pct -= Owner.Culture.MaintenanceReduction;
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
@@ -211,10 +211,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (emp == Owner)
 				return Visibility.Owned;
-			if (this.FindStarSystem() == null)
+			if (this.Sector.StarSystem == null)
 				return Visibility.Unknown;
 			// TODO - cloaking
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			var seers = this.Sector.StarSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any())
 			{
 				var known = emp.Memory[ID];
@@ -223,7 +223,7 @@ namespace FrEee.Game.Objects.Vehicles
 				else
 					return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
+			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.Sector, this.Sector, false, false, DijkstraMap).Count());
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
@@ -317,14 +317,9 @@ namespace FrEee.Game.Objects.Vehicles
 			return false;
 		}
 
-		Sector ILocated.Sector
-		{
-			get { return Sector; }
-		}
-
 		public StarSystem StarSystem
 		{
-			get { return this.FindStarSystem(); }
+			get { return this.Sector.StarSystem; }
 		}
 
 
@@ -335,7 +330,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
 		}
 
 		/// <summary>
@@ -365,26 +360,10 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		[DoNotSerialize]
-		[IgnoreMap]
 		public Sector Sector
 		{
-			get
-			{
-				return this.FindSector();
-			}
-			set
-			{
-				if (value == null)
-				{
-					if (Sector == null)
-						Sector.Remove(this);
-				}
-				else
-					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
-					v.Sector = value;
-			}
+			get;
+			set;
 		}
 
 		public int? Size

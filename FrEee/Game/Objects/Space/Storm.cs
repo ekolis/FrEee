@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the storm.</returns>
 		public Storm Instantiate()
 		{
-			return this.Copy();
+			return this.CopyAndAssignNewID();
 		}
 
 		public override void Redact(Empire emp)

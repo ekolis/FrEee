@@ -45,11 +45,9 @@ namespace FrEee.Game.Objects.Vehicles
 		public override void Place(ISpaceObject target)
 		{
 			var search = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj == target);
-			if (!search.Any() || !search.First().Any() || !search.First().First().Any())
+			if (!search.Any() )
 				throw new Exception("Can't place newly constructed vehicle near " + target + " because the target is not in any known sector.");
-			var sys = search.First().Key.Item;
-			var coords = search.First().First().First().Key;
-			sys.SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(this, coords));
+			Sector = search.First().Sector;
 		}
 	}
 }

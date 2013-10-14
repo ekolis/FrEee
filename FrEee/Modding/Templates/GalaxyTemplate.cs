@@ -103,6 +103,7 @@ namespace FrEee.Modding.Templates
 					break; // no more locations available
 
 				var sys = StarSystemTemplateChances.PickWeighted().Instantiate();
+				gal.AssignID(sys);
 				sys.Name = unusedNames.PickRandom();
 				unusedNames.Remove(sys.Name);
 				NameStellarObjects(sys);
@@ -193,12 +194,12 @@ namespace FrEee.Modding.Templates
 
 		private int GetWarpPointCount(StarSystem sys)
 		{
-			return sys.FindSpaceObjects<WarpPoint>().Flatten().Count();
+			return sys.FindSpaceObjects<WarpPoint>().Count();
 		}
 
 		private IEnumerable<double> GetWarpPointAngles(ObjectLocation<StarSystem> ssl, Galaxy gal)
 		{
-			foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
+			foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
 			{
 				var target = wp.TargetStarSystemLocation;
 				var offset = target.Location.AngleTo(ssl.Location);
@@ -249,7 +250,7 @@ namespace FrEee.Modding.Templates
 			int index;
 
 			index = 1;
-			var stars = sys.FindSpaceObjects<Star>().Flatten().ToArray();
+			var stars = sys.FindSpaceObjects<Star>().ToArray();
 			foreach (var star in stars)
 			{
 				if (stars.Count() == 1)
@@ -270,7 +271,7 @@ namespace FrEee.Modding.Templates
 			}
 
 			index = 1;
-			var planets = sys.FindSpaceObjects<Planet>().Flatten().ToArray();
+			var planets = sys.FindSpaceObjects<Planet>().ToArray();
 			foreach (var planet in planets.Where(p => p.MoonOf == null))
 			{
 				planet.Name = sys.Name + " " + index.ToRomanNumeral();
@@ -295,7 +296,7 @@ namespace FrEee.Modding.Templates
 			}
 
 			index = 1;
-			var asteroids = sys.FindSpaceObjects<AsteroidField>().Flatten().ToArray();
+			var asteroids = sys.FindSpaceObjects<AsteroidField>().ToArray();
 			foreach (var asteroid in asteroids)
 			{
 				asteroid.Name = sys.Name + " Asteroid Field " + index.ToRomanNumeral();
@@ -303,7 +304,7 @@ namespace FrEee.Modding.Templates
 			}
 
 			index = 1;
-			var storms = sys.FindSpaceObjects<Storm>().Flatten().ToArray();
+			var storms = sys.FindSpaceObjects<Storm>().ToArray();
 			foreach (var storm in storms)
 			{
 				if (storms.Count() == 1)

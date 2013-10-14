@@ -169,7 +169,7 @@ namespace FrEee.WinForms.Controls
 
 					// draw circle for star system
 					// do SE3-style split circles for contested systems because they are AWESOME!
-					var owners = sys.FindSpaceObjects<ISpaceObject>().SelectMany(g => g).Select(g => g.Owner).Distinct().Where(o => o != null);
+					var owners = sys.FindSpaceObjects<ISpaceObject>().Select(g => g.Owner).Distinct().Where(o => o != null);
 					if (owners.Count() == 0)
 						pe.Graphics.FillEllipse(Brushes.Gray, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
 					else
@@ -253,7 +253,7 @@ namespace FrEee.WinForms.Controls
 
 			foreach (var ssl in warpGraph)
 			{
-				foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>().Flatten())
+				foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
 				{
 					if (wp.TargetStarSystemLocation == null)
 						continue; // can't make connection if we don't know where warp point ends!

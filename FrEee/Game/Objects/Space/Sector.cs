@@ -9,6 +9,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
 using FrEee.Utility;
 using FrEee.Game.Objects.Vehicles;
+using AutoMapper;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -37,7 +38,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (StarSystem == null)
 					return Enumerable.Empty<ISpaceObject>();
-				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null).ToList();
+				return StarSystem.SpaceObjects.Where(sobj => sobj.Sector == this && (!(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null)).ToList();
 			}
 		}
 
@@ -219,9 +220,15 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
+		[DoNotSerialize]
+		[IgnoreMap]
 		Sector ILocated.Sector
 		{
 			get { return this; }
+			set
+			{
+				throw new Exception("Can't set the sector of a sector!");
+			}
 		}
 
 		/// <summary>
@@ -235,7 +242,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IUnit> AllUnits
 		{
-			get { return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).OfType<IUnit>().ToList(); }
+			get { return Galaxy.Current.Referrables.OfType<IUnit>().OfType<ISpaceVehicle>().Where(u => u.Sector == this).Cast<IUnit>(); }
 		}
 
 		/// <summary>

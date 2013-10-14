@@ -85,6 +85,36 @@ namespace FrEee.Utility.Extensions
 			Mapper.Map(src, dest, type, type);
 		}
 
+		/// <summary>
+		/// Shallow copies an object's data to another object.
+		/// Skips the ID property.
+		/// </summary>
+		/// <typeparam name="T">The type of object to copy.</typeparam>
+		/// <param name="src">The object to copy.</param>
+		/// <param name="dest">The object to copy the source object's data to.</param>
+		public static void CopyToExceptID(this IReferrable src, IReferrable dest)
+		{
+			var id = dest.ID;
+			if (src.GetType() != dest.GetType())
+				throw new Exception("Can only copy objects onto objects of the same type.");
+			var type = src.GetType();
+			if (!mappedTypes.Contains(type))
+			{
+				mappedTypes.Add(type);
+				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
+				var map = creator.Invoke(null, new object[0]);
+				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
+				map = ignorer.Invoke(null, new object[] { map });
+				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
+				var actionType = typeof(Action<,>).MakeGenericType(type, type);
+				afterMap.Invoke(map, new object[]{
+					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
+				});
+			}
+			Mapper.Map(src, dest, type, type);
+			dest.ID = id;
+		}
+
 		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
 		private static IMappingExpression<T, T> IgnoreReadOnlyProperties<T>(this IMappingExpression<T, T> expression)
 		{
@@ -549,53 +579,6 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Flattens groupings into a single sequence.
-		/// </summary>
-		/// <typeparam name="TKey"></typeparam>
-		/// <typeparam name="TValue"></typeparam>
-		/// <param name="lookup"></param>
-		/// <returns></returns>
-		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<IGrouping<TKey, TValue>> lookup)
-		{
-			return lookup.SelectMany(g => g);
-		}
-
-		/// <summary>
-		/// Flattens lookups into a single sequence.
-		/// </summary>
-		/// <typeparam name="TKey"></typeparam>
-		/// <typeparam name="TValue"></typeparam>
-		/// <param name="lookups"></param>
-		/// <returns></returns>
-		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<ILookup<TKey, TValue>> lookups)
-		{
-			return lookups.SelectMany(g => g).Flatten();
-		}
-
-		/// <summary>
-		/// "Squashes" a nested lookup into a collection of tuples.
-		/// </summary>
-		/// <typeparam name="TKey1"></typeparam>
-		/// <typeparam name="TKey2"></typeparam>
-		/// <typeparam name="TValue"></typeparam>
-		/// <param name="lookup"></param>
-		/// <returns></returns>
-		public static IEnumerable<Tuple<TKey1, TKey2, TValue>> Squash<TKey1, TKey2, TValue>(this ILookup<TKey1, ILookup<TKey2, TValue>> lookup)
-		{
-			foreach (var group1 in lookup)
-			{
-				foreach (var sublookup in group1)
-				{
-					foreach (var group2 in sublookup)
-					{
-						foreach (var item in group2)
-							yield return Tuple.Create(group1.Key, group2.Key, item);
-					}
-				}
-			}
-		}
-
-		/// <summary>
 		/// Gets a capital letter from the English alphabet.
 		/// </summary>
 		/// <param name="i">1 to 26</param>
@@ -858,42 +841,6 @@ namespace FrEee.Utility.Extensions
 			}
 			if (stuff.Any())
 				yield return stuff.Last();
-		}
-
-		/// <summary>
-		/// Finds the sector containing a space object.
-		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static Sector FindSector(this ISpaceObject sobj)
-		{
-			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
-			if (!results.Any())
-				return null;
-			return results.First().Item1.Item.GetSector(results.First().Item2);
-		}
-
-		/// <summary>
-		/// Finds the star system containing a space object.
-		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static StarSystem FindStarSystem(this ISpaceObject sobj)
-		{
-			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
-			if (!results.Any())
-				return null;
-			return results.First().Item1.Item;
-		}
-
-		/// <summary>
-		/// Finds the coordinates of a space object within its star system.
-		/// </summary>
-		/// <param name="sobj"></param>
-		/// <returns></returns>
-		public static Point FindCoordinates(this ISpaceObject sobj)
-		{
-			return sobj.FindStarSystem().FindCoordinates(sobj);
 		}
 
 		/// <summary>
@@ -1484,7 +1431,7 @@ namespace FrEee.Utility.Extensions
 					return;
 				}
 			}
-			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
+			foreach (var container in target.Sector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
 			{
 				var cargo = container.Cargo;
 				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
@@ -1502,7 +1449,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (container != null)
 				return container;
 			if (unit is IMobileSpaceObject)

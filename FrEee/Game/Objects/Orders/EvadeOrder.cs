@@ -55,10 +55,10 @@ namespace FrEee.Game.Objects.Orders
 				if (me.CanWarp && !Target.CanWarp)
 				{
 					// warping via any warp point that leads outside the system should be safe, so prioritize those!
-					var sys = me.FindStarSystem();
-					var paths = sys.FindSpaceObjects<WarpPoint>().Flatten()
+					var sys = me.Sector.StarSystem;
+					var paths = sys.FindSpaceObjects<WarpPoint>()
 						.Where(wp => wp.TargetStarSystemLocation.Item != sys)
-						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies, true, me.DijkstraMap) });
+						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.Sector, AvoidEnemies, true, me.DijkstraMap) });
 					if (paths.Any())
 					{
 						// found a warp point to flee to!
@@ -68,8 +68,8 @@ namespace FrEee.Game.Objects.Orders
 				}
 
 				// see how he can reach us, and go somewhere away from him (that would take longer for him to get to than 
-				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.FindSector(), me.FindSector(), false, true);
-				var canMoveTo = Pathfinder.GetPossibleMoves(me.FindSector(), me.CanWarp, me.Owner);
+				var dijkstraMap = Pathfinder.CreateDijkstraMap((IMobileSpaceObject)Target, Target.Sector, me.Sector, false, true);
+				var canMoveTo = Pathfinder.GetPossibleMoves(me.Sector, me.CanWarp, me.Owner);
 				var goodMoves = canMoveTo.Where(s => !dijkstraMap.Values.SelectMany(set => set).Any(n => n.Location == s));
 
 				if (goodMoves.Any())
@@ -86,10 +86,10 @@ namespace FrEee.Game.Objects.Orders
 			else
 			{
 				// target is immobile! no need to flee, unless it's in the same sector
-				if (Target.FindSector() == me.FindSector())
+				if (Target.Sector == me.Sector)
 				{
 					// don't need to go through warp points to evade it, the warp points might be one way!
-					var moves = Pathfinder.GetPossibleMoves(me.FindSector(), false, me.Owner);
+					var moves = Pathfinder.GetPossibleMoves(me.Sector, false, me.Owner);
 					return new Sector[] { moves.PickRandom() };
 				}
 				else
@@ -100,15 +100,15 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(T sobj)
 		{
 			// TODO - movement logs
-			if (sobj.CanWarp && !Target.CanWarp && sobj.FindStarSystem() != Target.FindStarSystem())
+			if (sobj.CanWarp && !Target.CanWarp && sobj.Sector.StarSystem != Target.Sector.StarSystem)
 				IsComplete = true;
 			else
 			{
-				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
 				if (gotoSector != null)
 				{
 					// move
-					sobj.FindSector().Remove(sobj);
+					sobj.Sector.Remove(sobj);
 					gotoSector.Place(sobj);
 					sobj.RefreshDijkstraMap();
 				}
@@ -176,7 +176,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public Sector Destination
 		{
-			get { return Target.FindSector(); }
+			get { return Target.Sector; }
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)

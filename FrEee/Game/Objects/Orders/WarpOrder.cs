@@ -42,8 +42,8 @@ namespace FrEee.Game.Objects.Orders
 
 			if (!errors.Any())
 			{
-				var here = sobj.FindSector();
-				if (here == WarpPoint.FindSector())
+				var here = sobj.Sector;
+				if (here == WarpPoint.Sector)
 				{
 					// warp now!!!
 					here.Remove(sobj);
@@ -76,7 +76,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
-			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
+			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.Sector.StarSystem;
 		}
 
 		public void Dispose()

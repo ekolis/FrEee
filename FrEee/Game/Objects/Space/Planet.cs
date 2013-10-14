@@ -87,7 +87,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the planet.</returns>
 		public Planet Instantiate()
 		{
-			return this.Copy();
+			return this.CopyAndAssignNewID();
 		}
 
 		/// <summary>
@@ -624,7 +624,7 @@ namespace FrEee.Game.Objects.Space
 				foreach (var race in Colony.Population.Keys)
 				{
 					// TODO - plagued planets should not reproduce, and should lose population each turn
-					var sys = this.FindStarSystem();
+					var sys = this.Sector.StarSystem;
 					var sysModifier = sys == null ? 0 : sys.GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
 					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
@@ -805,7 +805,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
 		}
 
 
@@ -814,25 +814,20 @@ namespace FrEee.Game.Objects.Space
 			get { return Cargo.Units; }
 		}
 
-		[DoNotSerialize]
-		[IgnoreMap]
 		public new Sector Sector
 		{
 			get
 			{
-				return this.FindSector();
+				return base.Sector;
 			}
 			set
 			{
-				if (value == null)
+				base.Sector = value;
+				if (Cargo != null)
 				{
-					if (Sector == null)
-						Sector.Remove(this);
+					foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
+						v.Sector = value;
 				}
-				else
-					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
-					v.Sector = value;
 			}
 		}
 

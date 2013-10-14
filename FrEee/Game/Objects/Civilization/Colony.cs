@@ -119,7 +119,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony == this);
+				return Galaxy.Current.FindSpaceObjects<Planet>().SingleOrDefault(p => p.Colony == this);
 			}
 		}
 

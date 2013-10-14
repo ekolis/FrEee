@@ -28,7 +28,6 @@ namespace FrEee.Game.Objects.Space
 		{
 			Radius = radius;
 			Abilities = new List<Ability>();
-			SpaceObjectLocations = new HashSet<ObjectLocation<ISpaceObject>>();
 			ExploredByEmpires = new HashSet<Empire>();
 		}
 
@@ -101,44 +100,29 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// The space objects contained in this star system.
-		/// </summary>
-		public ICollection<ObjectLocation<ISpaceObject>> SpaceObjectLocations { get; private set; }
-
-		/// <summary>
 		/// Searches for space objects matching criteria.
 		/// </summary>
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
 		/// <returns>The matching space objects, grouped by location.</returns>
-		public ILookup<Point, T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			return SpaceObjectLocations.Where(l => l.Item is T && (criteria == null || criteria((T)l.Item))).ToLookup(l => l.Location, l => (T)l.Item);
+			return SpaceObjects.OfType<T>().Where(item => criteria == null || criteria(item));
+		}
+
+		public IEnumerable<ISpaceObject> SpaceObjects
+		{
+			get { return Galaxy.Current.Referrables.OfType<ISpaceObject>().Where(sobj => sobj.Sector != null && sobj.Sector.StarSystem == this); }
 		}
 
 		public IEnumerable<T> FindSpaceObjectsInSector<T>(Point coords, Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			var lookup = FindSpaceObjects<T>(criteria);
-			if (lookup.Contains(coords))
-				return lookup[coords];
-			return Enumerable.Empty<T>();
+			return FindSpaceObjects<T>().Where(sobj => sobj.Sector.Coordinates == coords);
 		}
 
 		public bool Contains(ISpaceObject sobj)
 		{
-			return SpaceObjectLocations.Any(l => l.Item == sobj);
-		}
-
-		public Point FindCoordinates(ISpaceObject sobj)
-		{
-			try
-			{
-				return SpaceObjectLocations.Single(l => l.Item == sobj).Location;
-			}
-			catch (Exception ex)
-			{
-				throw new Exception("Can't find coordinates of " + sobj + " in " + this + ".", ex);
-			}
+			return sobj.Sector.StarSystem == this;
 		}
 
 		/// <summary>
@@ -154,21 +138,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
 			// hide space objects
-			// TODO - don't use tuples, we don't use the point value anymore...
-			var toRemove = new List<Tuple<Point, ISpaceObject>>();
-			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
+			var toRemove = new List<ISpaceObject>();
+			foreach (var sobj in FindSpaceObjects<ISpaceObject>().ToArray())
 			{
-				foreach (var sobj in group)
-				{
-					var vis = sobj.CheckVisibility(emp);
-					if (vis != Visibility.Unknown)
-						sobj.Redact(emp);
-					else
-						toRemove.Add(Tuple.Create(group.Key, sobj));
-				}
+				var vis = sobj.CheckVisibility(emp);
+				if (vis != Visibility.Unknown)
+					sobj.Redact(emp);
+				else
+					toRemove.Add(sobj);
 			}
 			foreach (var t in toRemove)
-				Remove(t.Item2);
+				Remove(t);
 
 			// hide explored-by empires
 			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
@@ -198,7 +178,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -214,7 +194,8 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetSectorAbilityValue(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
+			var sector = new Sector(this, coords);
+			var sobjs = sector.SpaceObjects.Where(o => o.Owner == emp);
 			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
 			if (!abils.Any())
 				return null;
@@ -231,7 +212,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 
 		/// <summary>
@@ -244,7 +225,8 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
+			var sector = new Sector(this, coords);
+			var sobjs = sector.SpaceObjects.Where(o => o.Owner == emp);
 			return sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
 		}
 
@@ -279,19 +261,12 @@ namespace FrEee.Game.Objects.Space
 
 		public void Place(ISpaceObject sobj, Point coords)
 		{
-			var sys = sobj.FindStarSystem();
-			if (sys != null)
-				sys.Remove(sobj);
-			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+			sobj.Sector = new Sector(this, coords);
 		}
 
 		public void Remove(ISpaceObject sobj)
 		{
-			foreach (var l in SpaceObjectLocations.ToArray())
-			{
-				if (l.Item == sobj)
-					SpaceObjectLocations.Remove(l);
-			}
+			sobj.Sector = null;
 		}
 
 		public Sector GetSector(int x, int y)
