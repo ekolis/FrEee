@@ -122,7 +122,6 @@
     <Compile Include="Game\Interfaces\IDesign.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
-    <Compile Include="Game\Interfaces\IKeyframe.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
@@ -132,7 +131,6 @@
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IPromotable.cs" />
-    <Compile Include="Game\Interfaces\IPropertyChangeKeyframe.cs" />
     <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
@@ -149,11 +147,7 @@
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
-    <Compile Include="Game\Objects\History\ReferencePropertyChangeKeyframe.cs" />
-    <Compile Include="Game\Objects\History\GalaxyHistory.cs" />
-    <Compile Include="Game\Objects\History\SimplePropertyChangeKeyframe.cs" />
-    <Compile Include="Game\Objects\History\MoveKeyframe.cs" />
-    <Compile Include="Game\Objects\History\Memory.cs" />
+    <Compile Include="Game\Objects\Civilization\Memory.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
@@ -178,7 +172,6 @@
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
     <Compile Include="Game\Objects\Space\Fleet.cs" />
-    <Compile Include="Game\Objects\Space\GalaxySettings.cs" />
     <Compile Include="Game\Objects\Technology\FacilityUpgrade.cs" />
     <Compile Include="Game\Objects\Technology\Hull.cs" />
     <Compile Include="Game\Objects\Technology\Mount.cs" />
@@ -304,7 +297,6 @@
     <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
-    <Compile Include="Utility\RequiresExplorationAttribute.cs" />
     <Compile Include="Utility\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ClientSafeAttribute.cs" />
@@ -321,7 +313,6 @@
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
     <Compile Include="Utility\ReferenceSet.cs" />
-    <Compile Include="Utility\RequiresVisibilityAttribute.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />

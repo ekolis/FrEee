@@ -104,7 +104,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
 				var copy = old.Copy();
-				copy.TurnNumber = Galaxy.Current.Settings.TurnNumber;
+				copy.TurnNumber = Galaxy.Current.TurnNumber;
 				copy.Owner = Empire.Current;
 				copy.Iteration++;
 				copy.VehiclesBuilt = 0;
@@ -132,7 +132,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					if (d.TurnNumber < Galaxy.Current.Settings.TurnNumber)
+					if (d.TurnNumber < Galaxy.Current.TurnNumber)
 					{
 						// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
 						MessageBox.Show("You cannot edit a design that was created on a prior turn.");
@@ -155,7 +155,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
 				var copy = old.Copy();
-				copy.TurnNumber = Galaxy.Current.Settings.TurnNumber;
+				copy.TurnNumber = Galaxy.Current.TurnNumber;
 				copy.Owner = Empire.Current;
 				copy.Iteration++;
 				copy.VehiclesBuilt = 0;			

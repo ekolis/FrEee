@@ -257,10 +257,5 @@ namespace FrEee.Game.Objects.Technology
 				return VehicleType.ToSpacedString();
 			}
 		}
-
-		public bool IsModObject
-		{
-			get { return true; }
-		}
 	}
 }

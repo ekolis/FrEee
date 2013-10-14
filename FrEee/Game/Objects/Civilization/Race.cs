@@ -224,11 +224,5 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public long ID { get; set; }
-
-
-		public bool IsModObject
-		{
-			get { return false; }
-		}
 	}
 }

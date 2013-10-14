@@ -21,7 +21,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			Facilities = new List<Facility>();
 			Population = new SafeDictionary<Race, long>();
-			Cargo = new Cargo();}
+			Cargo = new Cargo();
+		}
 
 		/// <summary>
 		/// The empire which owns this colony.
@@ -31,13 +32,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The facilities on this colony.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public ICollection<Facility> Facilities { get; set; }
 
 		/// <summary>
 		/// The population of this colony, by race.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public SafeDictionary<Race, long> Population { get; private set; }
 
 		public IEnumerable<Ability> Abilities
@@ -54,7 +53,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// This colony's construction queue.
 		/// </summary>
-		[RequiresVisibility(Visibility.Owned)]
 		public ConstructionQueue ConstructionQueue
 		{
 			get;
@@ -64,7 +62,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The cargo stored on this colony.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public Cargo Cargo { get; set; }
 
 		public Visibility CheckVisibility(Empire emp)
@@ -73,8 +70,35 @@ namespace FrEee.Game.Objects.Civilization
 			if (emp == Owner)
 				return Visibility.Owned;
 			else
-				// colonies cannot be scanned, though that would be a cool special ability
 				return Visibility.Visible;
+		}
+
+		public void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+			if (visibility < Visibility.Owned)
+			{
+				if (ConstructionQueue != null)
+				{
+					ConstructionQueue.Orders.Clear();
+					ConstructionQueue.Rate.Clear();
+					ConstructionQueue.UnspentRate.Clear();
+				}
+
+				// can only see space used by cargo, not actual cargo
+				Cargo.SetFakeSize();
+			}
+			if (visibility < Visibility.Scanned)
+			{
+				var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
+				var facilCount = Facilities.Count;
+				Facilities.Clear();
+				for (int i = 0; i < facilCount; i++)
+					Facilities.Add(new Facility(unknownFacilityTemplate));
+			}
+
+			if (visibility < Visibility.Visible)
+				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
 		}
 
 		public long ID
@@ -88,7 +112,6 @@ namespace FrEee.Game.Objects.Civilization
 			if (Container != null)
 				Container.Colony = null;
 			Galaxy.Current.UnassignID(this);
-			IsKnownToBeDestroyed = true;
 			this.UpdateEmpireMemories();
 		}
 
@@ -104,25 +127,6 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Colonies can never be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
-		}
-
-		public override string ToString()
-		{
-			return Owner + " Colony on " + Container;
 		}
 	}
 }

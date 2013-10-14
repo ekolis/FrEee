@@ -132,12 +132,12 @@ namespace FrEee.Game.Objects.Orders
 				// no such colony module
 				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because it lacks a " + Planet.Surface + " colony module.");
 			}
-			if (Galaxy.Current.Settings.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
+			if (Galaxy.Current.CanColonizeOnlyBreathable && Planet.Atmosphere != sobj.Owner.PrimaryRace.NativeAtmosphere)
 			{
 				// can only colonize breathable atmosphere (due to game setup option)
 				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeAtmosphere + " planets.");
 			}
-			if (Galaxy.Current.Settings.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
+			if (Galaxy.Current.CanColonizeOnlyHomeworldSurface && Planet.Surface != sobj.Owner.PrimaryRace.NativeSurface)
 			{
 				// can only colonize breathable atmosphere (due to game setup option)
 				yield return sobj.CreateLogMessage(sobj + " cannot colonize " + Planet + " because we can only colonize " + sobj.Owner.PrimaryRace.NativeSurface + " planets.");
@@ -147,11 +147,6 @@ namespace FrEee.Game.Objects.Orders
 		public bool CheckCompletion(SpaceVehicle v)
 		{
 			return IsComplete;
-		}
-
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

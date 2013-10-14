@@ -1,12 +1,9 @@
-﻿using AutoMapper;
-using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
-using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -21,7 +18,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>, IFoggable
+	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -36,17 +33,11 @@ namespace FrEee.Game.Objects.Technology
 		/// The template for this facility.
 		/// Specifies the basic stats of the facility and its abilities.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public FacilityTemplate Template { get; private set; }
 
 		public IEnumerable<Ability> Abilities
 		{
-			get
-			{
-				if (Template == null)
-					return Enumerable.Empty<Ability>();
-				return Template.Abilities;
-			}
+			get { return Template.Abilities; }
 		}
 
 		public IEnumerable<Ability> UnstackedAbilities
@@ -56,12 +47,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public ResourceQuantity Cost
 		{
-			get
-			{
-				if (Template == null)
-					return new ResourceQuantity();
-				return Template.Cost;
-			}
+			get { return Template.Cost; }
 		}
 
 		public ResourceQuantity ConstructionProgress
@@ -70,26 +56,14 @@ namespace FrEee.Game.Objects.Technology
 			set;
 		}
 
-		[DoNotSerialize]
-		public Image Icon
+		[DoNotSerialize] public Image Icon
 		{
-			get
-			{
-				if (Template == null)
-					return null;
-				return Template.Icon;
-			}
+			get { return Template.Icon; }
 		}
 
-		[DoNotSerialize]
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
-			get
-			{
-				if (Template == null)
-					return null;
-				return Template.Portrait;
-			}
+			get { return Template.Portrait; }
 		}
 
 		/// <summary>
@@ -112,22 +86,13 @@ namespace FrEee.Game.Objects.Technology
 				throw new ArgumentException("Facilities can only be placed on colonized planets.");
 		}
 
-		public string Name
-		{
-			get
-			{
-				if (Template == null)
-					return "(Unknown)"; 
-				return Template.Name;
-			}
-		}
+		public string Name { get { return Template.Name; } }
 
 		public override string ToString()
 		{
 			return Name;
 		}
 
-		[RequiresVisibility(Visibility.Scanned)]
 		public int Hitpoints
 		{
 			get;
@@ -138,7 +103,6 @@ namespace FrEee.Game.Objects.Technology
 		/// Facilities do not have shields, though they may provide them to colonies.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
 		public int NormalShields
 		{
 			get
@@ -155,7 +119,6 @@ namespace FrEee.Game.Objects.Technology
 		/// Facilities do not have shields, though they may provide them to colonies.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
 		public int PhasedShields
 		{
 			get
@@ -246,7 +209,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().Where(p => p.Colony != null).SingleOrDefault(p => p.Colony.Facilities.Contains(this));
+				return Galaxy.Current.FindSpaceObjects<Planet>().Flatten().Flatten().SingleOrDefault(p => p.Colony != null && p.Colony.Facilities.Contains(this));
 			}
 		}
 
@@ -254,50 +217,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (Container != null)
 				Container.Colony.Facilities.Remove(this);
-		}
-
-		/// <summary>
-		/// Facilities are visible to anyone who can see the colony containing them.
-		/// Of course, they can't see all the details...
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (Container == null)
-				return Visibility.Unknown;
-			return Container.CheckVisibility(emp);
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		public long ID
-		{
-			get;
-			set;
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
-		}
-		
-		/// <summary>
-		/// Facilities can never be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

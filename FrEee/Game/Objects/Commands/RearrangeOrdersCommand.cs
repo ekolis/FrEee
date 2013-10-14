@@ -40,7 +40,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 			else
 			{
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!"));
+				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
 			}
 		}
 	}

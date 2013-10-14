@@ -13,13 +13,18 @@ namespace FrEee.Game.Interfaces
 	public interface IFoggable : IReferrable
 	{
 		/// <summary>
-		/// Is this object just a memory, or a real object?
+		/// The visibility of this object to an empire.
 		/// </summary>
-		bool IsMemory { get; set; }
+		Visibility CheckVisibility(Empire emp);
 
 		/// <summary>
-		/// Is this object known to be destroyed?
+		/// Removes any data from this object that the specified empire cannot see.
 		/// </summary>
-		bool IsKnownToBeDestroyed { get; set; }
+		void Redact(Empire emp);
+
+		/// <summary>
+		/// Is this object just a memory, or a real object?
+		/// </summary>
+		bool IsMemory { get; set;}
 	}
 }

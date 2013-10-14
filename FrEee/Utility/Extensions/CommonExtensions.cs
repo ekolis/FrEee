@@ -20,7 +20,6 @@ using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
-using FrEee.Game.Objects.History;
 
 namespace FrEee.Utility.Extensions
 {
@@ -76,7 +75,7 @@ namespace FrEee.Utility.Extensions
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[] { map });
+				map = ignorer.Invoke(null, new object[]{map});
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -888,6 +887,16 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Finds the coordinates of a space object within its star system.
+		/// </summary>
+		/// <param name="sobj"></param>
+		/// <returns></returns>
+		public static Point FindCoordinates(this ISpaceObject sobj)
+		{
+			return sobj.FindStarSystem().FindCoordinates(sobj);
+		}
+
+		/// <summary>
 		/// Reads characters until the specified character is found or end of stream.
 		/// Returns all characters read except the specified character.
 		/// </summary>
@@ -1060,17 +1069,6 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Gets a property value from an object using reflection.
-		/// </summary>
-		/// <param name="o"></param>
-		/// <param name="propertyName"></param>
-		/// <returns></returns>
-		public static object GetPropertyValue(this object o, PropertyInfo prop)
-		{
-			return prop.GetValue(o, new object[0]);
-		}
-
-		/// <summary>
 		/// Sets a property value on an object using reflection.
 		/// </summary>
 		/// <param name="o"></param>
@@ -1079,17 +1077,6 @@ namespace FrEee.Utility.Extensions
 		public static void SetPropertyValue(this object o, string propertyName, object value)
 		{
 			o.GetType().GetProperty(propertyName).SetValue(o, value, new object[0]);
-		}
-
-		/// <summary>
-		/// Sets a property value on an object using reflection.
-		/// </summary>
-		/// <param name="o"></param>
-		/// <param name="propertyName"></param>
-		/// <returns></returns>
-		public static void SetPropertyValue(this object o, PropertyInfo prop, object value)
-		{
-			prop.SetValue(o, value, new object[0]);
 		}
 
 		/// <summary>
@@ -1726,152 +1713,6 @@ namespace FrEee.Utility.Extensions
 				return Activator.CreateInstance(type);
 			else
 				return FormatterServices.GetSafeUninitializedObject(type);
-		}
-
-		/// <summary>
-		/// Takes a snapshot of an object, recording any changes in data since the last snapshot in the empires' history logs.
-		/// </summary>
-		/// <param name="obj"></param>
-		public static IEnumerable<IKeyframe> TakeSnapshot(this object obj, bool doProperties)
-		{
-			var parser = new ObjectGraphParser();
-			var keyframes = new List<IKeyframe>();
-			Action<object> snapshotParser_EndObject = o => o.snapshotParser_EndObject_Impl(doProperties, keyframes);
-			parser.EndObject += new ObjectGraphParser.ObjectDelegate(snapshotParser_EndObject);
-			parser.Parse(obj);
-			return keyframes;
-		}
-
-		private static void snapshotParser_EndObject_Impl(this object o, bool doProperties, ICollection<IKeyframe> keyframes)
-		{
-			foreach (var emp in Galaxy.Current.Empires)
-			{
-				if (o is IReferrable)
-				{
-					var h = (IReferrable)o;
-					var vis = h.CheckVisibility(emp);
-					if (!h.IsModObject && vis >= Visibility.Visible)
-					{
-						if (h is ISpaceObject)
-						{
-							// if we saw it move, save it
-							var sobj = (ISpaceObject)h;
-							var lastMove = emp.History[sobj] == null ? null : (MoveKeyframe)emp.History[sobj].Where(kvp => kvp.Value is MoveKeyframe).OrderBy(k => k.Key).LastOrDefault().Value;
-							if (lastMove == null || lastMove.NewSector != sobj.Sector)
-							{
-								if (emp.History[sobj] == null)
-									emp.History[sobj] = new SafeDictionary<double, IKeyframe>();
-								var keyframe = new MoveKeyframe(sobj.Sector);
-								keyframes.Add(keyframe);
-								emp.History[sobj].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
-							}
-
-						}
-						if (doProperties)
-						{
-							// if we saw any properties change, save them
-							foreach (var prop in h.GetType().GetSafeProperties())
-							{
-								object val;
-								if (h is WarpPoint && prop.RequiresExploration())
-								{
-									var wp = (WarpPoint)h;
-									if (emp.ExploredStarSystems.Contains(wp.TargetStarSystemLocation.Item))
-										val = h.GetPropertyValue(prop);
-									else
-										val = prop.GetUnexploredValue();
-								}
-								else if (h is Vehicle && prop.RequiresExploration())
-								{
-									var v = (Vehicle)h;
-									if (emp.KnownDesigns.Contains(v.Design))
-										val = h.GetPropertyValue(prop);
-									else
-										val = prop.GetUnexploredValue();
-								}
-								else
-								{
-									if (prop.GetRequiredVisiblity() <= vis)
-										val = h.GetPropertyValue(prop);
-									else
-										val = prop.GetFoggedValue();
-								}
-								var lastChange = emp.History[h] == null ? null : (IPropertyChangeKeyframe)emp.History[h].Where(kvp => kvp.Value is IPropertyChangeKeyframe).OrderBy(k => k.Key).LastOrDefault().Value;
-								if (lastChange == null || lastChange.NewValue != val)
-								{
-									if (emp.History[h] == null)
-										emp.History[h] = new SafeDictionary<double, IKeyframe>();
-									if (typeof(IReferrable).IsAssignableFrom(prop.PropertyType))
-									{
-										var keyframe = new ReferencePropertyChangeKeyframe(prop.Name, (IReferrable)val);
-										keyframes.Add(keyframe);
-										emp.History[h].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
-									}
-									else
-									{
-										var keyframe = new SimplePropertyChangeKeyframe(prop.Name, val);
-										keyframes.Add(keyframe);
-										emp.History[h].Add(Galaxy.Current.Settings.TurnNumber + Galaxy.Current.CurrentTick, keyframe);
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-		/// <summary>
-		/// Get properties which are safe to be serialized.
-		/// </summary>
-		/// <param name="t"></param>
-		/// <param name="vis">The visibility of the object being serialized.</param>
-		public static IEnumerable<PropertyInfo> GetSafeProperties(this Type t, Visibility vis = Visibility.Owned)
-		{
-			return t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p =>
-					!p.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any() &&
-					p.GetGetMethod(true) != null &&
-					p.GetSetMethod(true) != null &&
-					p.GetRequiredVisiblity() <= vis);
-		}
-
-		/// <summary>
-		/// Gets the required visiblity for an empire to see a property of an object.
-		/// The default value is Visible.
-		/// </summary>
-		/// <param name="prop"></param>
-		/// <returns></returns>
-		public static Visibility GetRequiredVisiblity(this PropertyInfo prop)
-		{
-			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
-			if (atts.Any())
-				return atts.Cast<RequiresVisibilityAttribute>().Min(att => att.Visibility);
-			return Visibility.Visible;
-		}
-
-		public static object GetFoggedValue(this PropertyInfo prop)
-		{
-			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
-			if (atts.Any())
-				return atts.Cast<RequiresVisibilityAttribute>().First().DefaultValue;
-			if (prop.PropertyType.IsValueType)
-				return Activator.CreateInstance(prop.PropertyType);
-			return null;
-		}
-
-		public static bool RequiresExploration(this PropertyInfo prop)
-		{
-			var atts = prop.GetCustomAttributes(typeof(RequiresVisibilityAttribute), true);
-			return atts.Any();
-		}
-
-		public static object GetUnexploredValue(this PropertyInfo prop)
-		{
-			var atts = prop.GetCustomAttributes(typeof(RequiresExplorationAttribute), true);
-			if (atts.Any())
-				return atts.Cast<RequiresExplorationAttribute>().First().DefaultValue;
-			if (prop.PropertyType.IsValueType)
-				return Activator.CreateInstance(prop.PropertyType);
-			return null;
 		}
 	}
 }

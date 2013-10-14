@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A technology that can be researched in the game.
 	/// </summary>
 	[Serializable]
-	public class Technology : INamed, IResearchable
+	public class Technology : INamed, IResearchable, IReferrable
 	{
 		public Technology()
 		{
@@ -121,18 +121,18 @@ namespace FrEee.Game.Objects.Technology
 
 		public int GetLevelCost(int level)
 		{
-			if (Galaxy.Current.Settings.TechnologyCost == TechnologyCost.Low)
+			if (Galaxy.Current.TechnologyCost == TechnologyCost.Low)
 				return LevelCost * level;
-			else if (Galaxy.Current.Settings.TechnologyCost == TechnologyCost.Medium)
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.Medium)
 			{
 				if (Math.Abs(level) == 1)
 					return LevelCost * level;
 				else
 					return LevelCost * level * level / 2;
 			}
-			else if (Galaxy.Current.Settings.TechnologyCost == TechnologyCost.High)
+			else if (Galaxy.Current.TechnologyCost == TechnologyCost.High)
 				return LevelCost * level * level;
-			throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.Settings.TechnologyCost);
+			throw new Exception("Invalid technology cost for galaxy: " + Galaxy.Current.TechnologyCost);
 		}
 
 		public int GetNextLevelCost(Empire emp)
@@ -286,11 +286,6 @@ namespace FrEee.Game.Objects.Technology
 		public Visibility CheckVisibility(Empire emp)
 		{
 			return Visibility.Scanned;
-		}
-
-		public bool IsModObject
-		{
-			get { return true; }
 		}
 	}
 }

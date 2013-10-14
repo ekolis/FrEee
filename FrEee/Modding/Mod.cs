@@ -221,27 +221,5 @@ namespace FrEee.Modding
 		/// Errors encountered when loading the mod.
 		/// </summary>
 		public static IList<DataParsingException> Errors { get; private set; }
-
-		/// <summary>
-		/// All referrable objects in the mod.
-		/// </summary>
-		public IEnumerable<IReferrable> Referrables
-		{
-			get
-			{
-				foreach (var i in StellarObjectTemplates)
-					yield return i;
-				foreach (var i in Technologies)
-					yield return i;
-				foreach (var i in FacilityTemplates)
-					yield return i;
-				foreach (var i in Hulls)
-					yield return i;
-				foreach (var i in ComponentTemplates)
-					yield return i;
-				foreach (var i in Mounts)
-					yield return i;
-			}
-		}
 	}
 }

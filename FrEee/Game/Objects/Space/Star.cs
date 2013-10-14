@@ -41,5 +41,17 @@ namespace FrEee.Game.Objects.Space
 		{
 			return this.Copy();
 		}
+
+		public override void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].CopyTo(this);
+			}
+		}
 	}
 }

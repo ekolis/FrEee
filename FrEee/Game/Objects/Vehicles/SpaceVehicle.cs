@@ -33,7 +33,6 @@ namespace FrEee.Game.Objects.Vehicles
 			Cargo = new Cargo();
 		}
 
-		[RequiresVisibility(Visibility.Scanned)]
 		public IList<Ability> IntrinsicAbilities
 		{
 			get;
@@ -48,7 +47,6 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The amount of supply present on this vehicle.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public int SupplyRemaining { get; set; }
 
 		IEnumerable<IOrder> IOrderable.Orders
@@ -56,7 +54,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Orders; }
 		}
 
-		[RequiresVisibility(Visibility.Owned)]
 		public IList<IOrder<SpaceVehicle>> Orders
 		{
 			get;
@@ -100,7 +97,6 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public abstract bool CanWarp { get; }
 
-		[RequiresVisibility(Visibility.Owned)]
 		private ConstructionQueue constructionQueue { get; set; }
 
 		public ConstructionQueue ConstructionQueue
@@ -146,7 +142,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
-		[RequiresVisibility(Visibility.Scanned)]
 		public Cargo Cargo { get; set; }
 
 		public void AddOrder(IOrder order)
@@ -203,7 +198,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.FindStarSystem().GetSectorAbilityValue(this.Sector.Coordinates, Owner, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.FindStarSystem().GetSectorAbilityValue(this.FindCoordinates(), Owner, "Reduced Maintenance Cost - Sector").ToInt();
 				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 				pct -= Owner.Culture.MaintenanceReduction;
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
@@ -232,6 +227,42 @@ namespace FrEee.Game.Objects.Vehicles
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
+		}
+
+
+		public override void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+
+			if (visibility < Visibility.Owned)
+			{
+				// can't see orders unless it's your vehicle
+				Orders.Clear();
+
+				// can only see space used by cargo, not actual cargo
+				Cargo.SetFakeSize();
+			}
+
+			// Can't see the ship's components if it's not scanned
+			// TODO - let player see design of previously scanned ship if the ship has not been refit
+			if (visibility < Visibility.Scanned)
+			{
+				// create fake design and clear component list
+				var d = new Design<SpaceVehicle>();
+				d.Hull = (IHull<SpaceVehicle>)Design.Hull;
+				d.Owner = Design.Owner;
+				Design = d;
+				Components.Clear();
+			}
+
+			if (visibility < Visibility.Fogged)
+				Dispose();
+			else if (visibility == Visibility.Fogged)
+			{
+				var known = emp.Memory[ID];
+				if (known != null && known.GetType() == GetType())
+					known.CopyTo(this);
+			}
 		}
 
 		public bool IsIdle
@@ -296,6 +327,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.FindStarSystem(); }
 		}
 
+
 		public IDictionary<Race, long> AllPopulation
 		{
 			get { return Cargo.Population; }
@@ -317,6 +349,7 @@ namespace FrEee.Game.Objects.Vehicles
 			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
 				u.SpendTime(timeElapsed);
 		}
+
 
 		public IEnumerable<IUnit> AllUnits
 		{

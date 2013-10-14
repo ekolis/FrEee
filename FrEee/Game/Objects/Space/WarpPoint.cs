@@ -18,13 +18,11 @@ namespace FrEee.Game.Objects.Space
 		/// The sector that ships will appear in when they go through this warp point.
 		/// TODO - make sure that players can't cheat and see through warp points!
 		/// </summary>
-		[RequiresExploration]
 		public Sector Target { get; set; }
 
 		/// <summary>
 		/// Should this warp point be one-way, or should it have a return connection?
 		/// </summary>
-		[RequiresExploration]
 		public bool IsOneWay { get; set; }
 
 		/// <summary>
@@ -51,6 +49,26 @@ namespace FrEee.Game.Objects.Space
 				if (Target == null)
 					return null;
 				return Galaxy.Current.StarSystemLocations.SingleOrDefault(ssl => ssl.Item == Target.StarSystem);
+			}
+		}
+
+		public override void Redact(Empire emp)
+		{
+			// Don't let players see the target sector coordinates or star system name if it's not explored yet
+			var sys = Target.StarSystem;
+			if (!sys.ExploredByEmpires.Contains(emp))
+			{
+				Name = "Warp Point";
+				Target.Coordinates = new System.Drawing.Point();
+			}
+
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].CopyTo(this);
 			}
 		}
 	}

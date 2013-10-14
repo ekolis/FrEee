@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.LogMessages
 		protected LogMessage(string text)
 		{
 			Text = text;
-			TurnNumber = Galaxy.Current.Settings.TurnNumber;
+			TurnNumber = Galaxy.Current.TurnNumber;
 		}
 
 		protected LogMessage(string text, int turn)

@@ -194,10 +194,5 @@ namespace FrEee.Game.Objects.Orders
 			// this order doesn't error
 			yield break;
 		}
-
-		public bool IsModObject
-		{
-			get { return false; }
-		}
 	}
 }

@@ -18,7 +18,6 @@ using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Enumerations;
 using AutoMapper;
-using FrEee.Game.Objects.History;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -26,7 +25,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFoggable
+	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -53,9 +52,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
-			Memory = new SafeDictionary<long, Memory>();
-			History = new SafeDictionary<IReferrable, SafeDictionary<double, IKeyframe>>(typeof(SafeDictionary<double, IKeyframe>));
-			ExploredStarSystems = new HashSet<StarSystem>();
+			Memory = new SafeDictionary<long, IFoggable>();
 		}
 
 		/// <summary>
@@ -201,13 +198,11 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Star systems explored by the empire.
+		/// Finds star systems explored by the empire.
 		/// </summary>
-		[RequiresVisibility(Visibility.Owned)]
-		public ISet<StarSystem> ExploredStarSystems
+		public IEnumerable<StarSystem> ExploredStarSystems
 		{
-			get;
-			private set;
+			get { return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.ExploredByEmpires.Contains(this)); }
 		}
 
 		/// <summary>
@@ -631,12 +626,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Information about any foggable objects that this empire has previously seen but cannot currently see.
 		/// </summary>
-		public SafeDictionary<long, Memory> Memory { get; private set; }
-
-		/// <summary>
-		/// History of objects for the previous turn.
-		/// </summary>
-		public SafeDictionary<IReferrable, SafeDictionary<double, IKeyframe>> History { get; private set; }
+		public SafeDictionary<long, IFoggable> Memory { get; private set; }
 
 		/// <summary>
 		/// Updates the memory sight cache for an object.
@@ -649,33 +639,22 @@ namespace FrEee.Game.Objects.Civilization
 			if (obj.ID > 0)
 			{
 				// object exists, update cache with the data
-				Memory[obj.ID] = new Memory(this, obj);
+				if (Memory[obj.ID] != null)
+					obj.CopyTo(Memory[obj.ID]);
+				else
+				{
+					var memory = obj.CopyAndAssignNewID();
+					memory.IsMemory = true;
+					Memory[obj.ID] = memory;
+				}
 			}
 			else
 			{
 				// object was destroyed, remove from cache
-				Memory.Remove(obj.ID);
+				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value == obj).Key;
+				if (oldid > 0)
+					Memory.Remove(oldid);
 			}
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Empires cannot be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

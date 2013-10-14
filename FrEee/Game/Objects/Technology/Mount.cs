@@ -15,6 +15,8 @@ namespace FrEee.Game.Objects.Technology
 	/// </summary>
 	public class Mount : IResearchable
 	{
+		// TODO - implement mount
+
 		public Mount()
 		{
 			AbilityPercentages = new Dictionary<string, IDictionary<int, int>>();
@@ -170,10 +172,5 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public long ID { get; set; }
-
-		public bool IsModObject
-		{
-			get { return true; }
-		}
 	}
 }

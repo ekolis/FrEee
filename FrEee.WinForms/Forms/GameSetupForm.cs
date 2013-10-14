@@ -94,10 +94,10 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Message = "Setting up galaxy";
 					Galaxy.Initialize(setup, status, 1d);
-					if (Galaxy.Current.Settings.IsSinglePlayer)
+					if (Galaxy.Current.IsSinglePlayer)
 					{
-						var name = Galaxy.Current.Settings.Name;
-						var turn = Galaxy.Current.Settings.TurnNumber;
+						var name = Galaxy.Current.Name;
+						var turn = Galaxy.Current.TurnNumber;
 						status.Message = "Loading game";
 						Galaxy.Load(name + "_" + turn + "_0001.gam");
 					}
@@ -113,10 +113,10 @@ namespace FrEee.WinForms.Forms
 
 			if (status.Exception == null)
 			{
-				if (Galaxy.Current.Settings.IsSinglePlayer)
+				if (Galaxy.Current.IsSinglePlayer)
 				{
-					var name = Galaxy.Current.Settings.Name;
-					var turn = Galaxy.Current.Settings.TurnNumber;
+					var name = Galaxy.Current.Name;
+					var turn = Galaxy.Current.TurnNumber;
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_0001.gam");
 					Hide();
@@ -124,7 +124,7 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					MessageBox.Show("The game \"" + Galaxy.Current.Settings.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
+					MessageBox.Show("The game \"" + Galaxy.Current.Name + "\" has been created. Please distribute the GAM files to appropriate players.");
 					Close();
 				}
 			}

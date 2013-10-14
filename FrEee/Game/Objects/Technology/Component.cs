@@ -1,9 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
@@ -19,7 +17,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IFoggable, IContainable<IVehicle>
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable
 	{
 		public Component(MountedComponentTemplate template)
 		{
@@ -31,7 +29,6 @@ namespace FrEee.Game.Objects.Technology
 		/// The template for this component.
 		/// Specifies the basic stats of the component and its abilities.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public MountedComponentTemplate Template { get; private set; }
 
 		public IEnumerable<Ability> Abilities
@@ -57,7 +54,6 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The current hitpoints of this component.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public int Hitpoints { get; set; }
 
 		/// <summary>
@@ -209,61 +205,6 @@ namespace FrEee.Game.Objects.Technology
 		{
 			// TODO - moddable hit chance
 			get { return MaxHitpoints; }
-		}
-
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (Container == null)
-				return Visibility.Unknown;
-			return Container.CheckVisibility(emp);
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		public long ID
-		{
-			get;
-			set;
-		}
-
-		public void Dispose()
-		{
-			IsKnownToBeDestroyed = true;
-			Container.Components.Remove(this);
-			Galaxy.Current.UnassignID(this);
-		}
-
-		public Civilization.Empire Owner
-		{
-			get { return Container.Owner; }
-		}
-
-		public IVehicle Container
-		{
-			get { return Galaxy.Current.Referrables.OfType<IVehicle>().SingleOrDefault(v => v.Components.Contains(this)); }
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
-		}
-
-		/// <summary>
-		/// Components can never be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

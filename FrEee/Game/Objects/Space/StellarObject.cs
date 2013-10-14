@@ -10,15 +10,13 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
-using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	[Serializable]
-	public abstract class StellarObject : IStellarObject
+	 [Serializable] public abstract class StellarObject : IStellarObject
 	{
 		public StellarObject()
 		{
@@ -44,7 +42,7 @@ namespace FrEee.Game.Objects.Space
 		/// A description of this stellar object.
 		/// </summary>
 		public string Description { get; set; }
-
+		 
 		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
@@ -56,8 +54,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Pictures.GetIcon(this); }
 		}
 
-		[DoNotSerialize]
-		public Image Portrait
+		[DoNotSerialize] public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}
@@ -85,14 +82,26 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public virtual Empire Owner { get { return null; } }
 
+		/// <summary>
+		/// Most stellar objects don't need to have any data redacted.
+		/// </summary>
+		/// <param name="galaxy"></param>
+		/// <param name="starSystem"></param>
+		/// <param name="visibility"></param>
+		public virtual void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
+		{
+			if (visibility == Visibility.Unknown)
+				throw new ArgumentException("If a stellar object is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
+		}
+
 		public override string ToString()
 		{
 			return Name;
 		}
+		 
 
 		public void Dispose()
 		{
-			IsKnownToBeDestroyed = true;
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
@@ -105,6 +114,7 @@ namespace FrEee.Game.Objects.Space
 			get;
 			set;
 		}
+
 
 		public virtual bool IsHostileTo(Empire emp)
 		{
@@ -123,8 +133,9 @@ namespace FrEee.Game.Objects.Space
 
 		public bool HasInfiniteSupplies
 		{
-			get { return true; }
+			get { return this.HasAbility("Quantum Reactor"); }
 		}
+
 
 		public virtual ConstructionQueue ConstructionQueue
 		{
@@ -150,7 +161,7 @@ namespace FrEee.Game.Objects.Space
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
 			if (!seers.Any())
 			{
-				if (Galaxy.Current.Settings.OmniscientView)
+				if (Galaxy.Current.OmniscientView)
 					return Visibility.Visible;
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
@@ -165,6 +176,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public long ID { get; set; }
+
+
+		public abstract void Redact(Empire emp);
 
 		/// <summary>
 		/// Stellar objects by default can't be idle, because they can't take orders or build stuff to begin with.
@@ -188,26 +202,6 @@ namespace FrEee.Game.Objects.Space
 		{
 			get;
 			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
-		}
-
-		public bool IsModObject
-		{
-			get
-			{
-				// HACK - we seem to be getting *copies* of mod objects...
-				return Name == null;
-			}
 		}
 	}
 }

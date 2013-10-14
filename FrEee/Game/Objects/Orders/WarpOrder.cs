@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Orders
 
 					// mark system explored
 					if (!WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(((ISpaceObject)sobj).Owner))
-						((ISpaceObject)sobj).Owner.ExploredStarSystems.Add(WarpPoint.TargetStarSystemLocation.Item);
+						WarpPoint.TargetStarSystemLocation.Item.ExploredByEmpires.Add(((ISpaceObject)sobj).Owner);
 
 					// done warping
 					IsComplete = true;
@@ -143,11 +143,6 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// this order doesn't error
 			yield break;
-		}
-
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

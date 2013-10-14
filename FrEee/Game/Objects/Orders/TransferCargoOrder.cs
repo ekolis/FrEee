@@ -1,5 +1,4 @@
-﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
@@ -114,23 +113,6 @@ namespace FrEee.Game.Objects.Orders
 		{
 			if (Target != null && executor.FindSector() != Target.Sector)
 				yield return executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
-		}
-
-		public bool IsModObject
-		{
-			get { return false; }
-		}
-
-		/// <summary>
-		/// Orders are visible only to their owners.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public Visibility CheckVisibility(Empire emp)
-		{
-			if (emp == Owner)
-				return Visibility.Visible;
-			return Visibility.Unknown;
 		}
 	}
 }

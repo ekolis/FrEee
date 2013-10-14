@@ -258,13 +258,11 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Dispose()
 		{
-			IsKnownToBeDestroyed = true;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 			this.UpdateEmpireMemories();
 		}
 
-		[RequiresVisibility(Visibility.Owned, "Alien Fleet")]
 		public string Name
 		{
 			get;
@@ -282,7 +280,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Fleets don't have construction queues.
 		/// </summary>
-		public ConstructionQueue ConstructionQueue
+		public Civilization.ConstructionQueue ConstructionQueue
 		{
 			get { return null; }
 		}
@@ -415,6 +413,15 @@ namespace FrEee.Game.Objects.Space
 			return Vehicles.Max(sobj => sobj.CheckVisibility(emp));
 		}
 
+		public void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+
+			// Can't see names of alien fleets
+			if (vis < Visibility.Owned)
+				Name = Owner + " Fleet";
+		}
+
 		Sector ILocated.Sector
 		{
 			get { return Sector; }
@@ -425,7 +432,6 @@ namespace FrEee.Game.Objects.Space
 			get { return this.FindStarSystem(); }
 		}
 
-		[RequiresVisibility(Visibility.Owned)]
 		public IList<IOrder<Fleet>> Orders { get; private set; }
 
 		IEnumerable<IOrder> IOrderable.Orders
@@ -528,7 +534,7 @@ namespace FrEee.Game.Objects.Space
 			return false;
 		}
 
-		public IDictionary<Race, long> AllPopulation
+		public IDictionary<Civilization.Race, long> AllPopulation
 		{
 			get
 			{
@@ -656,25 +662,6 @@ namespace FrEee.Game.Objects.Space
 		{
 			get;
 			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
-		}
-
-		/// <summary>
-		/// Fleets can never be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

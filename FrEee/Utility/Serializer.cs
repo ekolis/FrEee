@@ -320,11 +320,6 @@ namespace FrEee.Utility
 			return Deserialize<object>(sr);
 		}
 
-		public static object Deserialize(Stream s)
-		{
-			return Deserialize<object>(s);
-		}
-
 		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			var sr = new StreamReader(s);
@@ -546,7 +541,7 @@ namespace FrEee.Utility
 					var sizeStr = r.ReadTo(':', log);
 					if (!int.TryParse(sizeStr, out size))
 						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-					var coll = type.Instantiate();
+					var coll = Activator.CreateInstance(type);
 					context.Add(coll);
 					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
 					Type itemType;

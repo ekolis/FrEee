@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject
+	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject, IFoggable
 	{
 		public Vehicle()
 		{
@@ -36,19 +36,12 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
-		[RequiresExploration]
 		public IDesign Design { get; set; }
 
 		/// <summary>
 		/// The components on this vehicle.
 		/// </summary>
-		[RequiresVisibility(Visibility.Scanned)]
 		public IList<Component> Components { get; private set; }
-
-		/// <summary>
-		/// The hull of this vehicle.
-		/// </summary>
-		public IHull Hull { get { return Design == null ? null : Design.Hull; } }
 
 		public bool RequiresColonyQueue
 		{
@@ -354,29 +347,12 @@ namespace FrEee.Game.Objects.Vehicles
 			get;
 		}
 
+		public abstract void Redact(Empire emp);
+
 		public bool IsMemory
 		{
 			get;
 			set;
-		}
-
-		public bool IsKnownToBeDestroyed
-		{
-			get;
-			set;
-		}
-
-		public bool IsVisibleTo(Empire emp)
-		{
-			return CheckVisibility(emp) >= Visibility.Visible;
-		}
-
-		/// <summary>
-		/// Vehicles can never be stored in mods.
-		/// </summary>
-		public bool IsModObject
-		{
-			get { return false; }
 		}
 	}
 }

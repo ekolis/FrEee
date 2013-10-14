@@ -33,7 +33,6 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Used for naming.
 		/// </summary>
-		[RequiresVisibility(Visibility.Impossible)]
 		public Planet MoonOf { get; set; }
 
 		/// <summary>
@@ -139,7 +138,7 @@ namespace FrEee.Game.Objects.Space
 					if (aptitude != null && Colony.Population.Any())
 						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
 					factor *= (100 + Owner.Culture.Production) / 100d;
-					amount = Galaxy.Current.Settings.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
+					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
 
 					income.Add(resource, amount);
 				}
@@ -576,6 +575,7 @@ namespace FrEee.Game.Objects.Space
 			return Owner == null ? false : Owner.IsHostileTo(emp);
 		}
 
+
 		public override bool CanBeInFleet
 		{
 			get { return false; }
@@ -645,6 +645,32 @@ namespace FrEee.Game.Objects.Space
 		/// (Sure, why not?)
 		/// </summary>
 		public override bool CanWarp { get { return true; } }
+
+		public override void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+
+			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
+
+			if (Colony != null)
+			{
+				if (Colony.CheckVisibility(emp) < Visibility.Visible)
+					Colony = null;
+				else
+					Colony.Redact(emp);
+			}
+
+			if (vis < Visibility.Owned)
+				Orders.Clear();
+
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].CopyTo(this);
+			}
+		}
 
 		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
 		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
@@ -813,6 +839,12 @@ namespace FrEee.Game.Objects.Space
 		int? IMobileSpaceObject.Size
 		{
 			get { return null; }
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
 		}
 	}
 }

@@ -171,10 +171,5 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return Visibility.Scanned;
 		}
-
-		public bool IsModObject
-		{
-			get { return true; }
-		}
 	}
 }

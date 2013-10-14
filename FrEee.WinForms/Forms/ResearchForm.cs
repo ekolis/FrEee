@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();
 			ddlGroup.Items.Add(new { Text = "All", GroupName = "" });
-			foreach (var group in Galaxy.Current.Settings.Mod.Technologies.Select(t => t.Group).Distinct())
+			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
 				ddlGroup.Items.Add(new { Text = group, GroupName = group });
 			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
 
