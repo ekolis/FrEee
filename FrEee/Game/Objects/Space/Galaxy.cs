@@ -853,8 +853,7 @@ namespace FrEee.Game.Objects.Space
 						sys.ExploredByEmpires.Add(v.Owner);
 
 					// update memory sight after movement
-					foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten())
-						sobj.UpdateEmpireMemories();
+					v.UpdateEmpireMemories();
 
 					// check for battles
 					// TODO - alliances
