@@ -85,6 +85,35 @@ namespace FrEee.Utility.Extensions
 			Mapper.Map(src, dest, type, type);
 		}
 
+		/// <summary>
+		/// Shallow copies an object's data to another object. Skips the ID property.
+		/// </summary>
+		/// <typeparam name="T">The type of object to copy.</typeparam>
+		/// <param name="src">The object to copy.</param>
+		/// <param name="dest">The object to copy the source object's data to.</param>
+		public static void CopyToExceptID(this IReferrable src, IReferrable dest)
+		{
+			var id = dest.ID;
+			if (src.GetType() != dest.GetType())
+				throw new Exception("Can only copy objects onto objects of the same type.");
+			var type = src.GetType();
+			if (!mappedTypes.Contains(type))
+			{
+				mappedTypes.Add(type);
+				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
+				var map = creator.Invoke(null, new object[0]);
+				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
+				map = ignorer.Invoke(null, new object[] { map });
+				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
+				var actionType = typeof(Action<,>).MakeGenericType(type, type);
+				afterMap.Invoke(map, new object[]{
+					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
+				});
+			}
+			Mapper.Map(src, dest, type, type);
+			dest.ID = id;
+		}
+
 		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
 		private static IMappingExpression<T, T> IgnoreReadOnlyProperties<T>(this IMappingExpression<T, T> expression)
 		{

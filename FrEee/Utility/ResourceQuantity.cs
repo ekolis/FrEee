@@ -9,15 +9,8 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class ResourceQuantity : IDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
+	public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
 	{
-		public ResourceQuantity()
-		{
-			resources = new SafeDictionary<string, int>();
-		}
-
-		private SafeDictionary<string, int> resources { get; set; }
-
 		public static ResourceQuantity operator +(ResourceQuantity r1, ResourceQuantity r2)
 		{
 			var result = new ResourceQuantity();
@@ -59,7 +52,7 @@ namespace FrEee.Utility
 		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
 		/// </summary>
 		/// <param name="item"></param>
-		public void Add(KeyValuePair<Resource, int> item)
+		public override void Add(KeyValuePair<Resource, int> item)
 		{
 			Add(item.Key, item.Value);
 		}
@@ -69,7 +62,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="value"></param>
-		public void Add(Resource key, int value)
+		public override void Add(Resource key, int value)
 		{
 			this[key] += value;
 		}
@@ -203,139 +196,6 @@ namespace FrEee.Utility
 			if (obj is ResourceQuantity)
 				return CompareTo((ResourceQuantity)obj);
 			return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
-		}
-
-		public bool ContainsKey(Resource key)
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.ContainsKey(key.Name);
-		}
-
-		public ICollection<Resource> Keys
-		{
-			get
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				return resources.Select(kvp => Resource.Find(kvp.Key)).ToList();
-			}
-		}
-
-		public bool Remove(Resource key)
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.Remove(key.Name);
-		}
-
-		public bool TryGetValue(Resource key, out int value)
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.TryGetValue(key.Name, out value);
-		}
-
-		public ICollection<int> Values
-		{
-			get
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				return resources.Values;
-			}
-		}
-
-		public int this[Resource key]
-		{
-			get
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				if (key == null || key.Name == null)
-					return 0;
-				return resources[key.Name];
-			}
-			set
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				resources[key.Name] = value;
-			}
-		}
-
-
-		public void Clear()
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			resources.Clear();
-		}
-
-		public bool Contains(KeyValuePair<Resource, int> item)
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.Contains(Convert(item));
-		}
-
-		private IDictionary<Resource, int> ToDictionary()
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.Select(kvp => Convert(kvp)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-		}
-
-		private static KeyValuePair<Resource, int> Convert(KeyValuePair<string, int> kvp)
-		{
-			return new KeyValuePair<Resource, int>(Resource.Find(kvp.Key), kvp.Value);
-		}
-
-		private static KeyValuePair<string, int> Convert(KeyValuePair<Resource, int> kvp)
-		{
-			return new KeyValuePair<string, int>(kvp.Key.Name, kvp.Value);
-		}
-
-		public void CopyTo(KeyValuePair<Resource, int>[] array, int arrayIndex)
-		{
-			ToDictionary().CopyTo(array, arrayIndex);
-		}
-
-		public int Count
-		{
-			get
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				return resources.Count;
-			}
-		}
-
-		public bool IsReadOnly
-		{
-			get
-			{
-				if (resources == null)
-					resources = new SafeDictionary<string, int>();
-				return resources.IsReadOnly;
-			}
-		}
-
-		public bool Remove(KeyValuePair<Resource, int> item)
-		{
-			if (resources == null)
-				resources = new SafeDictionary<string, int>();
-			return resources.Remove(Convert(item));
-		}
-
-		public IEnumerator<KeyValuePair<Resource, int>> GetEnumerator()
-		{
-			return ToDictionary().GetEnumerator();
-		}
-
-		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			return GetEnumerator();
 		}
 	}
 }

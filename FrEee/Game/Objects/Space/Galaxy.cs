@@ -577,7 +577,7 @@ namespace FrEee.Game.Objects.Space
 					if (vis < Visibility.Fogged)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory[id].CopyTo(kvp.Value); // memory sight!
+						CurrentEmpire.Memory[id].CopyToExceptID(kvp.Value); // memory sight!
 				}
 
 				// clear data about other empires
@@ -839,22 +839,21 @@ namespace FrEee.Game.Objects.Space
 			{
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-				// Also don't let ships under construction take orders
 				foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
-					var sys = v.StarSystem;
+					var sys = v.FindStarSystem();
 					if (sys == null)
 						continue; // space object is dead, or not done being built
 
-					v.ExecuteOrders();
+					bool didStuff = v.ExecuteOrders();
 					if (!sys.ExploredByEmpires.Contains(v.Owner))
 						sys.ExploredByEmpires.Add(v.Owner);
 
 					// update memory sight after movement
-					v.UpdateEmpireMemories();
-					if (v.Owner != null)
+					if (didStuff)
 					{
+						v.UpdateEmpireMemories();
 						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
 							v.Owner.UpdateMemory(sobj);
 					}

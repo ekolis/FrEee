@@ -210,9 +210,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Executes orders for a turn.
 		/// </summary>
-		public void ExecuteOrders()
+		public bool ExecuteOrders()
 		{
 			UnspentRate = Rate;
+			bool didStuff = false;
 			var empty = new ResourceQuantity();
 			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
 			{
@@ -245,9 +246,12 @@ namespace FrEee.Game.Objects.Civilization
 					}
 				}
 
+				didStuff = true;
+
 				if (Orders.Count == numOrders)
 					break; // couldn't accomplish any orders
 			}
+			return didStuff;
 		}
 
 		/// <summary>

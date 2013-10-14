@@ -277,8 +277,9 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
-		public void ExecuteOrders()
+		public bool ExecuteOrders()
 		{
+			bool didStuff = false;
 			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
 				TimeToNextMove = 0;
 			else
@@ -290,7 +291,9 @@ namespace FrEee.Game.Objects.Space
 				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
 					Orders.RemoveAt(0);
+				didStuff = true;
 			}
+			return didStuff;
 		}
 
 		public override ConstructionQueue ConstructionQueue

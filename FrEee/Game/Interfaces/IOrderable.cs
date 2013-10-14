@@ -26,6 +26,7 @@ namespace FrEee.Game.Interfaces
 		/// Executes orders for an appropriate amount of time.
 		/// Some objects execute orders for an entire turn at once; others only for smaller ticks.
 		/// </summary>
-		void ExecuteOrders();
+		/// <returns>true if there was anything to do this turn</returns>
+		bool ExecuteOrders();
 	}
 }
