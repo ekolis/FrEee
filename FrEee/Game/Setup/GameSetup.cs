@@ -493,6 +493,7 @@ namespace FrEee.Game.Setup
 					var sector = hw.Sector;
 					var replacementHomeworld = MakeHomeworld(emp, hw.Name);
 					replacementHomeworld.CopyTo(hw);
+					replacementHomeworld.Dispose();
 					hw.Sector = sector;
 				}
 				hw.ResourceValue[Resource.Minerals] = hw.ResourceValue[Resource.Organics] = hw.ResourceValue[Resource.Radioactives] = HomeworldValue;
@@ -552,7 +553,7 @@ namespace FrEee.Game.Setup
 						!p.Size.IsConstructed).PickRandom();
 			if (hw == null)
 				throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
-			hw = hw.CopyAndAssignNewID();
+			hw = hw.Instantiate();
 			hw.Name = hwName;
 			hw.Size = Mod.Current.StellarObjectSizes.Where(s =>
 				s.StellarSize == HomeworldSize &&

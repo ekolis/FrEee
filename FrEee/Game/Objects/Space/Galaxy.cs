@@ -420,7 +420,14 @@ namespace FrEee.Game.Objects.Space
 			if (Empire.Current != null)
 			{
 				foreach (var kvp in Empire.Current.Memory)
-					Current.AssignID(kvp.Value, kvp.Key);
+				{
+					if (!Current.referrables.ContainsKey(kvp.Key))
+					{
+						// make memory a physical object for now, since we don't have the current data on the object
+						Current.AssignID(kvp.Value, kvp.Key);
+						kvp.Value.IsMemory = false;
+					}
+				}
 			}
 			Mod.Current = Galaxy.Current.Mod;
 		}
@@ -849,6 +856,8 @@ namespace FrEee.Game.Objects.Space
 				foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle())
 				{
 					// mark system explored if not already
+					if (v.Sector == null)
+						continue;
 					var sys = v.Sector.StarSystem;
 					if (sys == null)
 						continue; // space object is dead, or not done being built
@@ -861,7 +870,7 @@ namespace FrEee.Game.Objects.Space
 					v.UpdateEmpireMemories();
 					if (v.Owner != null)
 					{
-						foreach (var sobj in v.Sector.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v))
+						foreach (var sobj in v.Sector.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v).ToArray())
 							v.Owner.UpdateMemory(sobj);
 					}
 
@@ -983,7 +992,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>The new ID.</returns>
 		internal long AssignID(IReferrable r, long id = 0)
 		{
-			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
+			if (id == 0 && referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
 
 			if (CurrentEmpire != null)
@@ -1077,7 +1086,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>The matching space objects</returns>
 		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			return Referrables.OfType<T>().Where(sobj => sobj.Sector != null && (criteria == null || criteria(sobj)));
+			return Referrables.OfType<T>().Where(sobj => sobj.Sector != null && (criteria == null || criteria(sobj)) && !sobj.IsMemory);
 		}
 
 		/// <summary>

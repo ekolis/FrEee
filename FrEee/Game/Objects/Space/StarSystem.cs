@@ -112,7 +112,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<ISpaceObject> SpaceObjects
 		{
-			get { return Galaxy.Current.Referrables.OfType<ISpaceObject>().Where(sobj => sobj.Sector != null && sobj.Sector.StarSystem == this); }
+			get { return Galaxy.Current.Referrables.OfType<ISpaceObject>().Where(sobj => sobj.Sector != null && sobj.Sector.StarSystem == this && !sobj.IsMemory); }
 		}
 
 		public IEnumerable<T> FindSpaceObjectsInSector<T>(Point coords, Func<T, bool> criteria = null) where T : ISpaceObject

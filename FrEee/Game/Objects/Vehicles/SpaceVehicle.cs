@@ -211,7 +211,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (emp == Owner)
 				return Visibility.Owned;
-			if (this.Sector.StarSystem == null)
+			if (this.Sector == null || this.Sector.StarSystem == null)
 				return Visibility.Unknown;
 			// TODO - cloaking
 			var seers = this.Sector.StarSystem.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);

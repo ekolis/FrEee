@@ -647,7 +647,7 @@ namespace FrEee.Game.Objects.Civilization
 				}
 				else
 				{
-					var memory = obj.CopyAndAssignNewID();
+					var memory = obj.Copy();
 					memory.IsMemory = true;
 					Memory[obj.ID] = memory;
 				}

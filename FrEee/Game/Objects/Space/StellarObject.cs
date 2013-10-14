@@ -102,9 +102,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
-			var sys = this.Sector.StarSystem;
-			if (sys != null)
-				sys.Remove(this);
+			Sector = null;
 			Galaxy.Current.UnassignID(this);
 			this.UpdateEmpireMemories();
 		}
