@@ -113,8 +113,9 @@ namespace FrEee.WinForms.Forms
 				LoadGalaxyFromFile(dlg.FileName);
 		}
 
-		private void LoadGalaxyFromFile(string filename)
+		private void LoadGalaxyFromFile(string filename, bool? loadPlr = null)
 		{
+			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
 			Galaxy.Load(filename);
 			if (Galaxy.Current.CurrentEmpire == null)
 			{
@@ -128,6 +129,13 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				// player view, load up the game
+				if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", plrfile)))
+				{
+					if (loadPlr == null)
+						loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
+					if (loadPlr.Value)
+						Galaxy.Current.LoadCommands();
+				}
 				var form = new GameForm(false);
 				Hide();
 				form.ShowDialog();
@@ -191,8 +199,7 @@ namespace FrEee.WinForms.Forms
 				.Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
 				.ToList();
 			if (mostRecent.Any())
-				// TODO - if PLR file exists, prompt player to resume previously started turn
-				LoadGalaxyFromFile(mostRecent.First().Key);
+				LoadGalaxyFromFile(mostRecent.First().Key, true);
 			else
 				MessageBox.Show("No games to resume; please create a new game.");
 		}
