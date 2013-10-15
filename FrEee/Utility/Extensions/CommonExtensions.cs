@@ -49,13 +49,13 @@ namespace FrEee.Utility.Extensions
 		public static T CopyAndAssignNewID<T>(this T obj)
 			where T : IReferrable
 		{
-			var id = obj.ID;
-			var copy = obj.Copy();
-			Galaxy.Current.UnassignID(obj);
-			copy.ID = 0;
-			Galaxy.Current.AssignID(obj, id);
-			Galaxy.Current.AssignID(copy);
-			return copy;
+			if (obj == null)
+				return default(T);
+			var dest = (T)obj.GetType().Instantiate();
+			obj.CopyToExceptID(dest);
+			dest.ID = 0;
+			Galaxy.Current.AssignID(dest);
+			return (T)dest;
 		}
 
 		/// <summary>
@@ -93,7 +93,6 @@ namespace FrEee.Utility.Extensions
 		/// <param name="dest">The object to copy the source object's data to.</param>
 		public static void CopyToExceptID(this IReferrable src, IReferrable dest)
 		{
-			var id = dest.ID;
 			if (src.GetType() != dest.GetType())
 				throw new Exception("Can only copy objects onto objects of the same type.");
 			var type = src.GetType();
@@ -104,6 +103,8 @@ namespace FrEee.Utility.Extensions
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
 				map = ignorer.Invoke(null, new object[] { map });
+				var ignorer2 = typeof(CommonExtensions).GetMethod("IgnoreIDProperty", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
+				map = ignorer2.Invoke(null, new object[] { map });
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -111,7 +112,6 @@ namespace FrEee.Utility.Extensions
 				});
 			}
 			Mapper.Map(src, dest, type, type);
-			dest.ID = id;
 		}
 
 		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
@@ -121,6 +121,17 @@ namespace FrEee.Utility.Extensions
 			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
 				&& x.DestinationType.Equals(type));
 			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).GetSetMethod() == null))
+				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
+			return expression;
+		}
+
+		private static IMappingExpression<T, T> IgnoreIDProperty<T>(this IMappingExpression<T, T> expression)
+			where T : IReferrable
+		{
+			var type = typeof(T);
+			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
+				&& x.DestinationType.Equals(type));
+			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).Name == "ID" == null))
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
 		}
