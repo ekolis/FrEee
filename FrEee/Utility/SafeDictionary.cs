@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -9,9 +11,19 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	 [Serializable] public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
+	[Serializable]
+	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+
+		public SafeDictionary()
+		{
+		}
+
+		/// <summary>
+		/// For initializing newly created values.
+		/// </summary>
+		public object[] AutoInitArgs { get; set; }
 
 		public virtual void Add(TKey key, TValue value)
 		{
@@ -52,6 +64,9 @@ namespace FrEee.Utility
 		{
 			get
 			{
+				if (key.ToString() == "Log")
+				{
+				}
 				if (ContainsKey(key))
 					return dict[key];
 				else

@@ -3,11 +3,13 @@
 # import necessary classes and extension methods
 clr.AddReference("System.Core");
 import System;
+from System.Collections.Generic import List;
 clr.ImportExtensions(System.Linq);
 import FrEee;
 import FrEee.Utility;
 from FrEee.Game.Objects.Commands import *;
 clr.ImportExtensions(FrEee.Utility.Extensions);
+from System import Console;
 
 # alias the domain and context variables to avoid confusion
 empire = domain;
@@ -25,3 +27,10 @@ if (enabledMinisters.ContainsKey("Empire Management")):
 		empire.ResearchCommand = cmd;
 	# TODO - check for more ministers and execute their code
 # TODO - Vehicle Managment ministers
+
+# test AI data storage
+if (not empire.AINotes.HasProperty("Log")):
+	empire.AINotes.Log = List[str]();
+empire.AINotes.Log.Add(str.Format("{0} has played its turn for stardate {1}.\n", empire.Name, galaxy.Stardate));
+for msg in empire.AINotes.Log:
+	Console.WriteLine(msg);

@@ -20,6 +20,7 @@ using System.Drawing.Imaging;
 using FrEee.Game.Enumerations;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
+using System.Dynamic;
 
 namespace FrEee.Utility.Extensions
 {
@@ -1747,12 +1748,17 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		public static object Instantiate(this Type type)
+		public static object Instantiate(this Type type, params object[] args)
 		{
 			if (type.GetConstructor(new Type[0]) != null)
-				return Activator.CreateInstance(type);
+				return Activator.CreateInstance(type, args);
 			else
 				return FormatterServices.GetSafeUninitializedObject(type);
+		}
+
+		public static bool HasProperty(this ExpandoObject obj, string propertyName)
+		{
+			return obj.GetType().GetProperty(propertyName) != null;
 		}
 	}
 }

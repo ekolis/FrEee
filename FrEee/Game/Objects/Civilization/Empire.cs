@@ -18,6 +18,7 @@ using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Enumerations;
 using AutoMapper;
+using System.Dynamic;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -53,6 +54,7 @@ namespace FrEee.Game.Objects.Civilization
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
+			AINotes = new DynamicDictionary();
 		}
 
 		/// <summary>
@@ -656,5 +658,10 @@ namespace FrEee.Game.Objects.Civilization
 					Memory.Remove(oldid);
 			}
 		}
+
+		/// <summary>
+		/// Arbitrary data stored by the AI to maintain state between turns.
+		/// </summary>
+		public dynamic AINotes { get; set; }
 	}
 }

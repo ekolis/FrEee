@@ -297,6 +297,7 @@
     <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
+    <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Utility\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ClientSafeAttribute.cs" />
