@@ -207,7 +207,7 @@ namespace FrEee.WinForms.Forms
 			var fleet = new Fleet();
 			fleet.Name = txtFleetName.Text;
 
-			var cmd = new CreateFleetCommand(Empire.Current, fleet, sector);
+			var cmd = new CreateFleetCommand(fleet, sector);
 			newCommands.Add(cmd);
 
 			BindFleets();
@@ -223,7 +223,7 @@ namespace FrEee.WinForms.Forms
 				if (!newFleets.Contains(fleet))
 				{
 					// create a disband command
-					var cmd = new DisbandFleetCommand(Empire.Current, fleet);
+					var cmd = new DisbandFleetCommand(fleet);
 					newCommands.Add(cmd);
 				}
 				else
@@ -249,7 +249,7 @@ namespace FrEee.WinForms.Forms
 			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Parent != null)
 			{
 				var vehicle = (IMobileSpaceObject)treeFleets.SelectedNode.Tag;
-				var cmd = new LeaveFleetCommand(Empire.Current, vehicle);
+				var cmd = new LeaveFleetCommand(vehicle);
 				newCommands.Add(cmd);
 				BindVehicles();
 				BindFleets();
@@ -267,12 +267,12 @@ namespace FrEee.WinForms.Forms
 				if (!newFleets.Contains(fleet))
 				{
 					// fleet already exists, we can add to it
-					cmd = new JoinFleetCommand(Empire.Current, vehicle, fleet);
+					cmd = new JoinFleetCommand(vehicle, fleet);
 				}
 				else
 				{
 					// fleet is new, we need to reference it by its command
-					cmd = new JoinFleetCommand(Empire.Current, vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
+					cmd = new JoinFleetCommand(vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
 				}
 				newCommands.Add(cmd);
 				BindVehicles();

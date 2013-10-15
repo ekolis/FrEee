@@ -13,8 +13,8 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class ResearchCommand : Command<Empire>
 	{
-		public ResearchCommand(Empire issuer)
-			: base(issuer, issuer)
+		public ResearchCommand()
+			: base(Empire.Current)
 		{
 			spending = new SafeDictionary<Reference<Technology.Technology>, int>();
 			queue = new List<Reference<Technology.Technology>>();

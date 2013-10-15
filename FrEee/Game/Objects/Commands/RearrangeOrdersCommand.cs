@@ -17,8 +17,8 @@ namespace FrEee.Game.Objects.Commands
 	public class RearrangeOrdersCommand<T> : OrderCommand<T>
 		where T : IOrderable
 	{
-		public RearrangeOrdersCommand(Empire issuer, T target, IOrder<T> order, int deltaPosition)
-			: base(issuer, target, order)
+		public RearrangeOrdersCommand(T target, IOrder<T> order, int deltaPosition)
+			: base(target, order)
 		 {
 			 DeltaPosition = deltaPosition;
 		 }

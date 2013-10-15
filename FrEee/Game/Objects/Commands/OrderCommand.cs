@@ -18,8 +18,8 @@ namespace FrEee.Game.Objects.Commands
 	public abstract class OrderCommand<T> : Command<T>, IOrderCommand<T>
 		where T : IOrderable
 	{
-		protected OrderCommand(Empire issuer, T target, IOrder<T> order)
-			: base(issuer, target)
+		protected OrderCommand(T target, IOrder<T> order)
+			: base(target)
 		{
 			Order = order;
 		}

@@ -18,8 +18,8 @@ namespace FrEee.Game.Objects.Commands
 	public class RemoveOrderCommand<T> : OrderCommand<T>
 		where T : IOrderable
 	{
-		public RemoveOrderCommand(Empire issuer, T target, IOrder<T> order)
-			: base(issuer, target, order)
+		public RemoveOrderCommand(T target, IOrder<T> order)
+			: base(target, order)
 		{
 		}
 

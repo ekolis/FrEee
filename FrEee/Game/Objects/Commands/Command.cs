@@ -17,9 +17,9 @@ namespace FrEee.Game.Objects.Commands
 	public abstract class Command<T> : ICommand<T>
 		where T : IReferrable
 	{
-		protected Command(Empire issuer, T target)
+		protected Command(T target)
 		{
-			Issuer = issuer;
+			Issuer = Empire.Current;
 			Target = target;
 		}
 

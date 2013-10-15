@@ -31,7 +31,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			var emp = new Empire();
 			gal.Empires.Add(emp);
 			emp.BonusResearch = 30000;
-			var cmd = new ResearchCommand(emp);
+			var cmd = new ResearchCommand();
 			cmd.SetSpending(tech, 100);
 
 			// check command client safety

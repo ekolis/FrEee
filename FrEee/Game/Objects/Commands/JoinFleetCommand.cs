@@ -15,14 +15,14 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class JoinFleetCommand : Command<IMobileSpaceObject>
 	{
-		public JoinFleetCommand(Empire issuer, IMobileSpaceObject vehicle, Fleet fleet)
-			: base(issuer, vehicle)
+		public JoinFleetCommand(IMobileSpaceObject vehicle, Fleet fleet)
+			: base(vehicle)
 		{
 			Fleet = fleet;
 		}
 
-		public JoinFleetCommand(Empire issuer, IMobileSpaceObject vehicle, CreateFleetCommand cmd)
-			: base(issuer, vehicle)
+		public JoinFleetCommand(IMobileSpaceObject vehicle, CreateFleetCommand cmd)
+			: base(vehicle)
 		{
 			CreateFleetCommand = cmd;
 		}

@@ -307,7 +307,6 @@ namespace FrEee.WinForms.Forms
 					ConstructionQueue.Orders.Add(order);
 					var cmd = new AddOrderCommand<ConstructionQueue>
 					(
-						Galaxy.Current.CurrentEmpire,
 						ConstructionQueue,
 						order
 					);
@@ -367,7 +366,6 @@ namespace FrEee.WinForms.Forms
 					ConstructionQueue.Orders.Add(order);
 					var cmd = new AddOrderCommand<ConstructionQueue>
 					(
-						Galaxy.Current.CurrentEmpire,
 						ConstructionQueue,
 						order
 					);
@@ -388,7 +386,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedOrderIndex > 0)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, -1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, -1);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
@@ -400,7 +398,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedOrderIndex > 0)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, -SelectedOrderIndex);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, -SelectedOrderIndex);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
@@ -412,7 +410,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, 1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, 1);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
@@ -424,7 +422,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, SelectedOrder, ConstructionQueue.Orders.Count - SelectedOrderIndex - 1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, ConstructionQueue.Orders.Count - SelectedOrderIndex - 1);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
@@ -484,7 +482,7 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				// add remove-order command
-				var cmd = new RemoveOrderCommand<ConstructionQueue>(Empire.Current, ConstructionQueue, order);
+				var cmd = new RemoveOrderCommand<ConstructionQueue>(ConstructionQueue, order);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 			}
@@ -517,7 +515,6 @@ namespace FrEee.WinForms.Forms
 					ConstructionQueue.Orders.Add(order);
 					var cmd = new AddOrderCommand<ConstructionQueue>
 					(
-						Galaxy.Current.CurrentEmpire,
 						ConstructionQueue,
 						order
 					);

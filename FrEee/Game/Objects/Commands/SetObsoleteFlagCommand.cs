@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Commands
 	public class SetObsoleteFlagCommand : Command<IDesign>
 	{
 		public SetObsoleteFlagCommand(IDesign design, bool isObsolete)
-			: base(design.Owner, design)
+			: base(design)
 		{
 			Design = design;
 			IsObsolete = isObsolete;

@@ -478,7 +478,7 @@ namespace FrEee.Game.Objects.Civilization
 			where T : IOrderable
 		{
 			target.AddOrder(order);
-			var cmd = new AddOrderCommand<T>(this, target, order);
+			var cmd = new AddOrderCommand<T>(target, order);
 			Commands.Add(cmd);
 		}
 
@@ -492,7 +492,7 @@ namespace FrEee.Game.Objects.Civilization
 			where T : IOrderable
 		{
 			target.RemoveOrder(order);
-			var cmd = new RemoveOrderCommand<T>(this, target, order);
+			var cmd = new RemoveOrderCommand<T>(target, order);
 			Commands.Add(cmd);
 		}
 

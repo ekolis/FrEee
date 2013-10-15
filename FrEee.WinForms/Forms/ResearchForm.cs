@@ -155,7 +155,7 @@ namespace FrEee.WinForms.Forms
 
 		private void Save()
 		{
-			var cmd = new ResearchCommand(Empire.Current);
+			var cmd = new ResearchCommand();
 			cmd.ClearSpending();
 			foreach (var kvp in Empire.Current.ResearchSpending)
 				cmd.SetSpending(kvp.Key, kvp.Value);

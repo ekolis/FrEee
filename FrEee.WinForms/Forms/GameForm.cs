@@ -111,7 +111,7 @@ namespace FrEee.WinForms.Forms
 					var order = new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode);
 					v.AddOrder(order);
 					BindReport();
-					var cmd = new AddOrderCommand<IMobileSpaceObject>(Empire.Current, v, order);
+					var cmd = new AddOrderCommand<IMobileSpaceObject>(v, order);
 					Empire.Current.Commands.Add(cmd);
 					starSystemView.Invalidate(); // show move lines
 					ChangeCommandMode(CommandMode.None, null);
@@ -1053,7 +1053,7 @@ namespace FrEee.WinForms.Forms
 						if (addCmd == null)
 						{
 							// not a newly added order, so create a remove command to take it off the server
-							var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, v, order);
+							var remCmd = new RemoveOrderCommand<SpaceVehicle>(v, order);
 							Empire.Current.Commands.Add(remCmd);
 						}
 						else
@@ -1074,7 +1074,7 @@ namespace FrEee.WinForms.Forms
 						if (addCmd == null)
 						{
 							// not a newly added order, so create a remove command to take it off the server
-							var remCmd = new RemoveOrderCommand<Planet>(Empire.Current, p, order);
+							var remCmd = new RemoveOrderCommand<Planet>(p, order);
 							Empire.Current.Commands.Add(remCmd);
 						}
 						else

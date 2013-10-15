@@ -15,8 +15,8 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class LeaveFleetCommand : Command<IMobileSpaceObject>
 	{
-		public LeaveFleetCommand(Empire issuer, IMobileSpaceObject vehicle)
-			: base(issuer, vehicle)
+		public LeaveFleetCommand(IMobileSpaceObject vehicle)
+			: base(vehicle)
 		{
 		}
 

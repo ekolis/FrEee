@@ -15,8 +15,8 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class CreateFleetCommand : Command<Empire>
 	{
-		public CreateFleetCommand(Empire issuer, Fleet fleet, Sector sector)
-			: base(issuer, issuer)
+		public CreateFleetCommand(Fleet fleet, Sector sector)
+			: base(Empire.Current)
 		{
 			Fleet = fleet;
 			Sector = sector;

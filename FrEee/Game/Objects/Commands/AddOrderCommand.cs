@@ -19,8 +19,8 @@ namespace FrEee.Game.Objects.Commands
 	public class AddOrderCommand<T> : OrderCommand<T>
 		where T : IOrderable
 	{
-		public AddOrderCommand(Empire issuer, T target, IOrder<T> order)
-			: base(issuer, target, order)
+		public AddOrderCommand(T target, IOrder<T> order)
+			: base(target, order)
 		{
 			
 		}

@@ -39,7 +39,7 @@ namespace FrEee.WinForms.Controls
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
-					Empire.Current, vehicle, order, -vehicle.Orders.IndexOf(order));
+					vehicle, order, -vehicle.Orders.IndexOf(order));
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Bind();
@@ -55,7 +55,7 @@ namespace FrEee.WinForms.Controls
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
-					Empire.Current, vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
+					vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Bind();
@@ -71,7 +71,7 @@ namespace FrEee.WinForms.Controls
 			if (order != null && vehicle.Orders.IndexOf(order) > 0)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
-					Empire.Current, vehicle, order, -1);
+					vehicle, order, -1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Bind();
@@ -89,7 +89,7 @@ namespace FrEee.WinForms.Controls
 			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
-					Empire.Current, vehicle, order, 1);
+					vehicle, order, 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Bind();
@@ -107,7 +107,7 @@ namespace FrEee.WinForms.Controls
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, Vehicle, order);
+					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}
@@ -134,7 +134,7 @@ namespace FrEee.WinForms.Controls
 				if (addCmd == null)
 				{
 					// not a newly added order, so create a remove command to take it off the server
-					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Empire.Current, Vehicle, order);
+					var remCmd = new RemoveOrderCommand<SpaceVehicle>(Vehicle, order);
 					Empire.Current.Commands.Add(remCmd);
 					remCmd.Execute(); // show change locally
 				}

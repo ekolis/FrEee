@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Commands
 	public class CreateDesignCommand<T> : Command<Empire>, ICreateDesignCommand where T : Vehicle
 	{
 		public CreateDesignCommand(IDesign<T> design)
-			: base(design.Owner, design.Owner)
+			: base(Empire.Current)
 		 {
 			 Design = design;
 		 }

@@ -15,8 +15,8 @@ namespace FrEee.Game.Objects.Commands
 	/// </summary>
 	public class DisbandFleetCommand : Command<Fleet>
 	{
-		public DisbandFleetCommand(Empire issuer, Fleet fleet)
-			: base(issuer, fleet)
+		public DisbandFleetCommand(Fleet fleet)
+			: base(fleet)
 		{
 		}
 
