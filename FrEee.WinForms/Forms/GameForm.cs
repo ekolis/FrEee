@@ -34,6 +34,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.hostView = hostView;
+			Galaxy.Current.LoadCommands();
 		}
 
 		private bool hostView;
@@ -580,7 +581,7 @@ namespace FrEee.WinForms.Forms
 					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
 					status.Progress = 0.25;
 					status.Message = "Processing turn";
-					Galaxy.ProcessTurn(status, 0.5);
+					Galaxy.ProcessTurn(false, status, 0.5);
 					status.Message = "Saving game";
 					Galaxy.SaveAll(status, 0.75);
 					status.Message = "Loading game";

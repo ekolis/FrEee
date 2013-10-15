@@ -105,6 +105,7 @@ namespace FrEee.WinForms.Forms
 		private void btnLoad_Click(object sender, EventArgs e)
 		{
 			var dlg = new OpenFileDialog();
+			// TODO - let player resume turn from previously saved PLR
 			dlg.Filter = "Savegames (*.gam)|*.gam";
 			dlg.InitialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Savegame");
 			var result = dlg.ShowDialog();
@@ -190,6 +191,7 @@ namespace FrEee.WinForms.Forms
 				.Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
 				.ToList();
 			if (mostRecent.Any())
+				// TODO - if PLR file exists, prompt player to resume previously started turn
 				LoadGalaxyFromFile(mostRecent.First().Key);
 			else
 				MessageBox.Show("No games to resume; please create a new game.");

@@ -39,7 +39,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 			// perform research
 			emp.ResearchCommand = cmd;
-			Galaxy.ProcessTurn();
+			Galaxy.ProcessTurn(false);
 
 			// verify research was done
 			// 10K for first level, 20K for second

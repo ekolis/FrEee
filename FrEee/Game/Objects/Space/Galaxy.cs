@@ -485,8 +485,10 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Loads player commands into the current game state.
 		/// If this is the host view, commands will be loaded for all players.
+		/// If this is the player view, commands will be immediately executed so as to provide the player with a fresh game state.
 		/// </summary>
-		public void LoadCommands()
+		/// <returns>Player empires which did not submit commands and are not defeated.</returns>
+		public IEnumerable<Empire> LoadCommands()
 		{
 			// whose commands are we loading?
 			var emps = new List<Empire>();
@@ -506,7 +508,13 @@ namespace FrEee.Game.Objects.Space
 					fs.Close();
 				}
 				else if (emp.IsPlayerEmpire)
-					Console.WriteLine(emp.Name + " did not submit a PLR file.");
+					yield return emp;
+			}
+
+			if (CurrentEmpire != null)
+			{
+				foreach (var cmd in CurrentEmpire.Commands)
+					cmd.Execute();
 			}
 		}
 
@@ -603,8 +611,10 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Processes the turn.
 		/// </summary>
+		/// <param name="safeMode">Stop processing if PLR files are missing?</param>
+		/// <returns>Player empires which did not submit commands and are not defeated.</returns>
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
-		public static void ProcessTurn(Status status = null, double desiredProgress = 1d)
+		public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
 		{
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
@@ -637,7 +647,9 @@ namespace FrEee.Game.Objects.Space
 			// load commands
 			if (status != null)
 				status.Message = "Loading player commands";
-			Current.LoadCommands();
+			var missingPlrs = Current.LoadCommands();
+			if (safeMode && missingPlrs.Any())
+				return missingPlrs;
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -957,6 +969,8 @@ namespace FrEee.Game.Objects.Space
 
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			return missingPlrs;
 		}
 
 		/// <summary>
