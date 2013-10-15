@@ -53,5 +53,10 @@ namespace FrEee.Game.Objects.AI
 			get;
 			private set;
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

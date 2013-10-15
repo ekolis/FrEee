@@ -89,7 +89,7 @@ namespace FrEee.WinForms.Forms
 				ddlRaceShipset.Items.Add(shipset);
 				ddlShipset.Items.Add(shipset);
 			}
-			foreach (var ai in ListAIs())
+			foreach (var ai in Mod.Current.EmpireAIs)
 			{
 				ddlRaceAI.Items.Add(ai);
 				ddlAI.Items.Add(ai);
@@ -115,12 +115,6 @@ namespace FrEee.WinForms.Forms
 				txtPointsAvailable.ForeColor = Color.FromArgb(255, 128, 128);
 			else
 				txtPointsAvailable.ForeColor = Color.White;
-		}
-
-		private IEnumerable<string> ListAIs()
-		{
-			// TODO - list empire AIs
-			yield break;
 		}
 
 		private void Bind()
@@ -309,7 +303,7 @@ namespace FrEee.WinForms.Forms
 			r.Color = picRaceColor.BackColor;
 			r.InsigniaName = ddlRaceInsignia.Text;
 			r.ShipsetPath = ddlRaceShipset.Text;
-			// TODO - set race AI
+			r.AIName = ddlRaceAI.Text;
 			r.HappinessModel = (HappinessModel)ddlRaceHappiness.SelectedItem;
 			r.Culture = (Culture)ddlRaceCulture.SelectedItem;
 			r.TraitNames.Clear();
@@ -347,7 +341,10 @@ namespace FrEee.WinForms.Forms
 				et.ShipsetPath = null;
 			else
 				et.ShipsetPath = ddlShipset.Text;
-			// TODO - empire AI
+			if (chkAIFromRace.Checked)
+				et.AIName = null;
+			else
+				et.AIName = ddlAI.Text;
 			if (chkHappinessFromRace.Checked)
 				et.HappinessModel = null;
 			else
