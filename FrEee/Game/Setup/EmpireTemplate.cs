@@ -129,7 +129,7 @@ namespace FrEee.Game.Setup
 			emp.Culture = Culture ?? PrimaryRace.Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
-			emp.AI = Mod.Current.EmpireAIs.Find(AIName ?? PrimaryRace.AIName);
+			emp.AI = Mod.Current.EmpireAIs.FindByName(AIName ?? PrimaryRace.AIName);
 
 			return emp;
 		}
@@ -157,7 +157,7 @@ namespace FrEee.Game.Setup
 				yield return "You must specify a happiness model for your empire or race.";
 			if (Culture == null && (PrimaryRace == null || PrimaryRace.Culture == null))
 				yield return "You must specify a culture for your empire or race.";
-			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.Find(AIName) == null)
+			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.FindByName(AIName) == null)
 				yield return "AI empires require an AI script.";
 			if (PointsSpent > maxPoints)
 				yield return "You have spent too many empire setup points. Only " + maxPoints + " are available.";
@@ -175,7 +175,7 @@ namespace FrEee.Game.Setup
 				int result = 0;
 				foreach (var t in PrimaryRace.Traits)
 					result += t.Cost;
-				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.Find(kvp.Key).GetCost(kvp.Value));
+				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.FindByName(kvp.Key).GetCost(kvp.Value));
 				return result;
 			}
 		}

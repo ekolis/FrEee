@@ -20,12 +20,7 @@ if (enabledMinisters.ContainsKey("Empire Management")):
 	if (category.Contains("Research")):
 		# choose what to research
 		# TODO - actually choose sensibly, don't always research Propulsion
-		cmd = ResearchCommand(empire);
-		techs = galaxy.Mod.Technologies;
-		tech = techs.Single(lambda t: t.Name == "Propulsion");
-		# why isn't this line not working?!
-		#cmd.SetSpending(galaxy.Mod.Technologies.Find("Propulsion"), 100);
-		cmd.SetSpending(tech, 100);
+		cmd.SetSpending(galaxy.Mod.Technologies.FindByName("Propulsion"), 100);
 		empire.ResearchCommand = cmd;
 	# TODO - check for more ministers and execute their code
 # TODO - Vehicle Managment ministers

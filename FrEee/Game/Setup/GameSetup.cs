@@ -44,7 +44,7 @@ namespace FrEee.Game.Setup
 		[DoNotSerialize]
 		public GalaxyTemplate GalaxyTemplate
 		{
-			get { return Mod.Current.GalaxyTemplates.Find(GalaxyTemplateName); }
+			get { return Mod.Current.GalaxyTemplates.FindByName(GalaxyTemplateName); }
 			set { GalaxyTemplateName = value.Name; }
 		}
 

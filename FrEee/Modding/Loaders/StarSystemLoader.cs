@@ -55,7 +55,7 @@ namespace FrEee.Modding.Loaders
 				foreach (var abil in AbilityLoader.Load(rec))
 					sst.Abilities.Add(abil);
 
-				sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.Find(rec.GetString("WP Stellar Abil Type", ref index));
+				sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.FindByName(rec.GetString("WP Stellar Abil Type", ref index));
 
 				int count = 0;
 				int start = 0;
@@ -95,7 +95,7 @@ namespace FrEee.Modding.Loaders
 						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							template.Abilities = mod.StellarAbilityTemplates.FindByName(temp);
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
@@ -167,7 +167,7 @@ namespace FrEee.Modding.Loaders
 						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							template.Abilities = mod.StellarAbilityTemplates.FindByName(temp);
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
@@ -230,7 +230,7 @@ namespace FrEee.Modding.Loaders
 						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							template.Abilities = mod.StellarAbilityTemplates.FindByName(temp);
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
@@ -293,7 +293,7 @@ namespace FrEee.Modding.Loaders
 						}
 						else
 						{
-							template.Abilities = mod.StellarAbilityTemplates.Find(temp);
+							template.Abilities = mod.StellarAbilityTemplates.FindByName(temp);
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();

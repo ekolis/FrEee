@@ -85,7 +85,7 @@ namespace FrEee.Modding.Loaders
 						break; // couldn't load next chance
 					else
 					{
-						sst = mod.StarSystemTemplates.Find(temp);
+						sst = mod.StarSystemTemplates.FindByName(temp);
 						if (sst == null)
 						{
 							Mod.Errors.Add(new DataParsingException("Could not find star system template \"" + temp + "\".", Mod.CurrentFileName, rec, null));

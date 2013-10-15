@@ -186,7 +186,7 @@ namespace FrEee.Game.Objects.Civilization
 					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
 				foreach (var kvp in Aptitudes)
 				{
-					var apt = Aptitude.All.Find(kvp.Key);
+					var apt = Aptitude.All.FindByName(kvp.Key);
 					if (apt == null)
 						yield return "\"" + kvp.Key + "\" is not a valid racial aptitude.";
 					else if (kvp.Value > apt.MaxPercent)

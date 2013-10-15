@@ -450,12 +450,12 @@ namespace FrEee.Utility.Extensions
 			return stuff.Select(selector).MaxOrDefault();
 		}
 
-		public static T Find<T>(this IEnumerable<T> stuff, string name) where T : INamed
+		public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
 			return stuff.SingleOrDefault(item => item.Name == name);
 		}
 
-		public static IEnumerable<T> FindAll<T>(this IEnumerable<T> stuff, string name) where T : INamed
+		public static IEnumerable<T> FindAllByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
 			return stuff.Where(item => item.Name == name);
 		}
