@@ -108,10 +108,6 @@ namespace FrEee.WinForms.Controls
 			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrdersClear = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDelete = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderDown = new FrEee.WinForms.Controls.GameButton();
-			this.btnOrderUp = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
@@ -996,10 +992,6 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Controls.Add(this.btnClearOrders);
 			this.pageOrders.Controls.Add(this.btnOrderGoesUp);
 			this.pageOrders.Controls.Add(this.btnOrderToTop);
-			this.pageOrders.Controls.Add(this.btnOrdersClear);
-			this.pageOrders.Controls.Add(this.btnOrderDelete);
-			this.pageOrders.Controls.Add(this.btnOrderDown);
-			this.pageOrders.Controls.Add(this.btnOrderUp);
 			this.pageOrders.Controls.Add(this.lstOrdersDetail);
 			this.pageOrders.Location = new System.Drawing.Point(4, 29);
 			this.pageOrders.Name = "pageOrders";
@@ -1098,54 +1090,6 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderToTop.UseVisualStyleBackColor = false;
 			this.btnOrderToTop.Click += new System.EventHandler(this.btnOrderToTop_Click);
 			// 
-			// btnOrdersClear
-			// 
-			this.btnOrdersClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrdersClear.BackColor = System.Drawing.Color.Black;
-			this.btnOrdersClear.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrdersClear.Location = new System.Drawing.Point(224, 631);
-			this.btnOrdersClear.Name = "btnOrdersClear";
-			this.btnOrdersClear.Size = new System.Drawing.Size(57, 33);
-			this.btnOrdersClear.TabIndex = 4;
-			this.btnOrdersClear.Text = "Clear";
-			this.btnOrdersClear.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDelete
-			// 
-			this.btnOrderDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOrderDelete.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDelete.Location = new System.Drawing.Point(152, 631);
-			this.btnOrderDelete.Name = "btnOrderDelete";
-			this.btnOrderDelete.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDelete.TabIndex = 3;
-			this.btnOrderDelete.Text = "Del";
-			this.btnOrderDelete.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderDown
-			// 
-			this.btnOrderDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderDown.BackColor = System.Drawing.Color.Black;
-			this.btnOrderDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderDown.Location = new System.Drawing.Point(80, 631);
-			this.btnOrderDown.Name = "btnOrderDown";
-			this.btnOrderDown.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderDown.TabIndex = 2;
-			this.btnOrderDown.Text = "Dn";
-			this.btnOrderDown.UseVisualStyleBackColor = false;
-			// 
-			// btnOrderUp
-			// 
-			this.btnOrderUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnOrderUp.BackColor = System.Drawing.Color.Black;
-			this.btnOrderUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOrderUp.Location = new System.Drawing.Point(8, 631);
-			this.btnOrderUp.Name = "btnOrderUp";
-			this.btnOrderUp.Size = new System.Drawing.Size(57, 33);
-			this.btnOrderUp.TabIndex = 1;
-			this.btnOrderUp.Text = "Up";
-			this.btnOrderUp.UseVisualStyleBackColor = false;
-			// 
 			// lstOrdersDetail
 			// 
 			this.lstOrdersDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1164,7 +1108,7 @@ namespace FrEee.WinForms.Controls
             "Move to Fizbon (3, 6)"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 525);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 555);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
 			// SpaceVehicleReport
@@ -1260,10 +1204,6 @@ namespace FrEee.WinForms.Controls
 		private GameButton btnClearOrders;
 		private GameButton btnOrderGoesUp;
 		private GameButton btnOrderToTop;
-		private GameButton btnOrdersClear;
-		private GameButton btnOrderDelete;
-		private GameButton btnOrderDown;
-		private GameButton btnOrderUp;
 		private System.Windows.Forms.ListBox lstOrdersDetail;
 		private AbilityTreeView abilityTreeView;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
