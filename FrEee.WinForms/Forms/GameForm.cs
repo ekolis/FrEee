@@ -34,7 +34,6 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.hostView = hostView;
-			Galaxy.Current.LoadCommands();
 		}
 
 		private bool hostView;

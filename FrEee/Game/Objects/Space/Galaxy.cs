@@ -497,6 +497,8 @@ namespace FrEee.Game.Objects.Space
 			else
 				emps.Add(CurrentEmpire);
 
+			var noCmds = new List<Empire>();
+
 			foreach (var emp in emps)
 			{
 				var plrfile = GetEmpireCommandsSavePath(emp);
@@ -508,7 +510,7 @@ namespace FrEee.Game.Objects.Space
 					fs.Close();
 				}
 				else if (emp.IsPlayerEmpire)
-					yield return emp;
+					noCmds.Add(emp);
 			}
 
 			if (CurrentEmpire != null)
@@ -516,6 +518,8 @@ namespace FrEee.Game.Objects.Space
 				foreach (var cmd in CurrentEmpire.Commands)
 					cmd.Execute();
 			}
+
+			return emps;
 		}
 
 		private void LoadCommands(Empire emp, IList<ICommand> cmds)
