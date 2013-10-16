@@ -49,7 +49,7 @@ namespace FrEee.Modding.Loaders
 				for (int i = 1; i < valnum; i++)
 				{
 					// replace [%Amount1%] and such
-					abil.Description.Replace("[%Amount" + i + "%]", abil.Values[i]);
+					abil.Description.Replace("[%Amount" + i + "%]", abil.Values[i - 1]);
 				}
 
 				yield return abil;
