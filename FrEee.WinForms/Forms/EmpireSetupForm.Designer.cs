@@ -34,6 +34,20 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.tabGeneral = new System.Windows.Forms.TabPage();
+			this.label2 = new System.Windows.Forms.Label();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.txtRaceHappiness = new System.Windows.Forms.Label();
+			this.ddlRaceHappiness = new System.Windows.Forms.ComboBox();
+			this.label19 = new System.Windows.Forms.Label();
+			this.picRacePopulationIcon = new FrEee.WinForms.Controls.GamePictureBox();
+			this.label18 = new System.Windows.Forms.Label();
+			this.ddlRacePopulationIcon = new System.Windows.Forms.ComboBox();
+			this.ddlRaceNativeAtmosphere = new System.Windows.Forms.ComboBox();
+			this.label17 = new System.Windows.Forms.Label();
+			this.txtRaceName = new System.Windows.Forms.TextBox();
+			this.ddlRaceNativeSurface = new System.Windows.Forms.ComboBox();
+			this.label13 = new System.Windows.Forms.Label();
+			this.label15 = new System.Windows.Forms.Label();
 			this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
 			this.label23 = new System.Windows.Forms.Label();
 			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
@@ -65,21 +79,9 @@
 			this.tabTraits = new System.Windows.Forms.TabPage();
 			this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.label2 = new System.Windows.Forms.Label();
-			this.txtRaceHappiness = new System.Windows.Forms.Label();
-			this.ddlRaceHappiness = new System.Windows.Forms.ComboBox();
-			this.label19 = new System.Windows.Forms.Label();
-			this.picRacePopulationIcon = new FrEee.WinForms.Controls.GamePictureBox();
-			this.label18 = new System.Windows.Forms.Label();
-			this.ddlRacePopulationIcon = new System.Windows.Forms.ComboBox();
-			this.ddlRaceNativeAtmosphere = new System.Windows.Forms.ComboBox();
-			this.label17 = new System.Windows.Forms.Label();
-			this.txtRaceName = new System.Windows.Forms.TextBox();
-			this.ddlRaceNativeSurface = new System.Windows.Forms.ComboBox();
-			this.label13 = new System.Windows.Forms.Label();
-			this.label15 = new System.Windows.Forms.Label();
 			this.tabGeneral.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picShipset)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picInsignia)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picColor)).BeginInit();
@@ -90,8 +92,6 @@
 			this.tabAptitudes.SuspendLayout();
 			this.tabTraits.SuspendLayout();
 			this.tabs.SuspendLayout();
-			this.gamePanel1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtPointsAvailable
@@ -196,6 +196,160 @@
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label2.Location = new System.Drawing.Point(9, 339);
+			this.label2.Margin = new System.Windows.Forms.Padding(3);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(81, 15);
+			this.label2.TabIndex = 15;
+			this.label2.Text = "Primary Race";
+			// 
+			// gamePanel1
+			// 
+			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.txtRaceHappiness);
+			this.gamePanel1.Controls.Add(this.ddlRaceHappiness);
+			this.gamePanel1.Controls.Add(this.label19);
+			this.gamePanel1.Controls.Add(this.picRacePopulationIcon);
+			this.gamePanel1.Controls.Add(this.label18);
+			this.gamePanel1.Controls.Add(this.ddlRacePopulationIcon);
+			this.gamePanel1.Controls.Add(this.ddlRaceNativeAtmosphere);
+			this.gamePanel1.Controls.Add(this.label17);
+			this.gamePanel1.Controls.Add(this.txtRaceName);
+			this.gamePanel1.Controls.Add(this.ddlRaceNativeSurface);
+			this.gamePanel1.Controls.Add(this.label13);
+			this.gamePanel1.Controls.Add(this.label15);
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(12, 360);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(449, 215);
+			this.gamePanel1.TabIndex = 98;
+			// 
+			// txtRaceHappiness
+			// 
+			this.txtRaceHappiness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.txtRaceHappiness.Location = new System.Drawing.Point(25, 143);
+			this.txtRaceHappiness.Name = "txtRaceHappiness";
+			this.txtRaceHappiness.Size = new System.Drawing.Size(297, 67);
+			this.txtRaceHappiness.TabIndex = 99;
+			this.txtRaceHappiness.Text = "Please choose a happiness model.";
+			// 
+			// ddlRaceHappiness
+			// 
+			this.ddlRaceHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlRaceHappiness.FormattingEnabled = true;
+			this.ddlRaceHappiness.Location = new System.Drawing.Point(141, 119);
+			this.ddlRaceHappiness.Name = "ddlRaceHappiness";
+			this.ddlRaceHappiness.Size = new System.Drawing.Size(180, 23);
+			this.ddlRaceHappiness.TabIndex = 92;
+			// 
+			// label19
+			// 
+			this.label19.AutoSize = true;
+			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label19.Location = new System.Drawing.Point(9, 122);
+			this.label19.Margin = new System.Windows.Forms.Padding(3);
+			this.label19.Name = "label19";
+			this.label19.Size = new System.Drawing.Size(66, 15);
+			this.label19.TabIndex = 98;
+			this.label19.Text = "Happiness";
+			// 
+			// picRacePopulationIcon
+			// 
+			this.picRacePopulationIcon.Location = new System.Drawing.Point(328, 33);
+			this.picRacePopulationIcon.Name = "picRacePopulationIcon";
+			this.picRacePopulationIcon.Size = new System.Drawing.Size(22, 20);
+			this.picRacePopulationIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picRacePopulationIcon.TabIndex = 97;
+			this.picRacePopulationIcon.TabStop = false;
+			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label18.Location = new System.Drawing.Point(10, 36);
+			this.label18.Margin = new System.Windows.Forms.Padding(3);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(92, 15);
+			this.label18.TabIndex = 96;
+			this.label18.Text = "Population Icon";
+			// 
+			// ddlRacePopulationIcon
+			// 
+			this.ddlRacePopulationIcon.FormattingEnabled = true;
+			this.ddlRacePopulationIcon.Location = new System.Drawing.Point(142, 33);
+			this.ddlRacePopulationIcon.Name = "ddlRacePopulationIcon";
+			this.ddlRacePopulationIcon.Size = new System.Drawing.Size(180, 23);
+			this.ddlRacePopulationIcon.TabIndex = 89;
+			this.ddlRacePopulationIcon.Leave += new System.EventHandler(this.ddlPic_Leave);
+			// 
+			// ddlRaceNativeAtmosphere
+			// 
+			this.ddlRaceNativeAtmosphere.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlRaceNativeAtmosphere.FormattingEnabled = true;
+			this.ddlRaceNativeAtmosphere.Location = new System.Drawing.Point(142, 90);
+			this.ddlRaceNativeAtmosphere.Name = "ddlRaceNativeAtmosphere";
+			this.ddlRaceNativeAtmosphere.Size = new System.Drawing.Size(180, 23);
+			this.ddlRaceNativeAtmosphere.TabIndex = 91;
+			// 
+			// label17
+			// 
+			this.label17.AutoSize = true;
+			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label17.Location = new System.Drawing.Point(10, 93);
+			this.label17.Margin = new System.Windows.Forms.Padding(3);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(110, 15);
+			this.label17.TabIndex = 95;
+			this.label17.Text = "Native Atmosphere";
+			// 
+			// txtRaceName
+			// 
+			this.txtRaceName.Location = new System.Drawing.Point(141, 6);
+			this.txtRaceName.Name = "txtRaceName";
+			this.txtRaceName.Size = new System.Drawing.Size(180, 21);
+			this.txtRaceName.TabIndex = 88;
+			// 
+			// ddlRaceNativeSurface
+			// 
+			this.ddlRaceNativeSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlRaceNativeSurface.FormattingEnabled = true;
+			this.ddlRaceNativeSurface.Location = new System.Drawing.Point(142, 61);
+			this.ddlRaceNativeSurface.Name = "ddlRaceNativeSurface";
+			this.ddlRaceNativeSurface.Size = new System.Drawing.Size(180, 23);
+			this.ddlRaceNativeSurface.TabIndex = 90;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label13.Location = new System.Drawing.Point(10, 64);
+			this.label13.Margin = new System.Windows.Forms.Padding(3);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(86, 15);
+			this.label13.TabIndex = 94;
+			this.label13.Text = "Native Surface";
+			// 
+			// label15
+			// 
+			this.label15.AutoSize = true;
+			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label15.Location = new System.Drawing.Point(9, 9);
+			this.label15.Margin = new System.Windows.Forms.Padding(3);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(41, 15);
+			this.label15.TabIndex = 93;
+			this.label15.Text = "Name";
+			// 
 			// chkAIsCanUse
 			// 
 			this.chkAIsCanUse.AutoSize = true;
@@ -285,7 +439,7 @@
 			this.ddlShipset.Name = "ddlShipset";
 			this.ddlShipset.Size = new System.Drawing.Size(180, 23);
 			this.ddlShipset.TabIndex = 13;
-			this.ddlShipset.TextChanged += new System.EventHandler(this.ddlInsignia_TextChanged);
+			this.ddlShipset.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// picInsignia
 			// 
@@ -303,7 +457,7 @@
 			this.ddlInsignia.Name = "ddlInsignia";
 			this.ddlInsignia.Size = new System.Drawing.Size(180, 23);
 			this.ddlInsignia.TabIndex = 11;
-			this.ddlInsignia.TextChanged += new System.EventHandler(this.ddlInsignia_TextChanged);
+			this.ddlInsignia.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// picColor
 			// 
@@ -384,7 +538,7 @@
 			this.ddlLeaderPortrait.Name = "ddlLeaderPortrait";
 			this.ddlLeaderPortrait.Size = new System.Drawing.Size(180, 23);
 			this.ddlLeaderPortrait.TabIndex = 5;
-			this.ddlLeaderPortrait.TextChanged += new System.EventHandler(this.ddlLeaderPortrait_TextChanged);
+			this.ddlLeaderPortrait.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// txtLeaderName
 			// 
@@ -546,159 +700,6 @@
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
 			// 
-			// gamePanel1
-			// 
-			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel1.BackColor = System.Drawing.Color.Black;
-			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel1.Controls.Add(this.txtRaceHappiness);
-			this.gamePanel1.Controls.Add(this.ddlRaceHappiness);
-			this.gamePanel1.Controls.Add(this.label19);
-			this.gamePanel1.Controls.Add(this.picRacePopulationIcon);
-			this.gamePanel1.Controls.Add(this.label18);
-			this.gamePanel1.Controls.Add(this.ddlRacePopulationIcon);
-			this.gamePanel1.Controls.Add(this.ddlRaceNativeAtmosphere);
-			this.gamePanel1.Controls.Add(this.label17);
-			this.gamePanel1.Controls.Add(this.txtRaceName);
-			this.gamePanel1.Controls.Add(this.ddlRaceNativeSurface);
-			this.gamePanel1.Controls.Add(this.label13);
-			this.gamePanel1.Controls.Add(this.label15);
-			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(12, 360);
-			this.gamePanel1.Name = "gamePanel1";
-			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(449, 215);
-			this.gamePanel1.TabIndex = 98;
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(9, 339);
-			this.label2.Margin = new System.Windows.Forms.Padding(3);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(81, 15);
-			this.label2.TabIndex = 15;
-			this.label2.Text = "Primary Race";
-			// 
-			// txtRaceHappiness
-			// 
-			this.txtRaceHappiness.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.txtRaceHappiness.Location = new System.Drawing.Point(25, 143);
-			this.txtRaceHappiness.Name = "txtRaceHappiness";
-			this.txtRaceHappiness.Size = new System.Drawing.Size(297, 67);
-			this.txtRaceHappiness.TabIndex = 99;
-			this.txtRaceHappiness.Text = "Please choose a happiness model.";
-			// 
-			// ddlRaceHappiness
-			// 
-			this.ddlRaceHappiness.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlRaceHappiness.FormattingEnabled = true;
-			this.ddlRaceHappiness.Location = new System.Drawing.Point(141, 119);
-			this.ddlRaceHappiness.Name = "ddlRaceHappiness";
-			this.ddlRaceHappiness.Size = new System.Drawing.Size(180, 23);
-			this.ddlRaceHappiness.TabIndex = 92;
-			// 
-			// label19
-			// 
-			this.label19.AutoSize = true;
-			this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label19.Location = new System.Drawing.Point(9, 122);
-			this.label19.Margin = new System.Windows.Forms.Padding(3);
-			this.label19.Name = "label19";
-			this.label19.Size = new System.Drawing.Size(66, 15);
-			this.label19.TabIndex = 98;
-			this.label19.Text = "Happiness";
-			// 
-			// picRacePopulationIcon
-			// 
-			this.picRacePopulationIcon.Location = new System.Drawing.Point(328, 33);
-			this.picRacePopulationIcon.Name = "picRacePopulationIcon";
-			this.picRacePopulationIcon.Size = new System.Drawing.Size(22, 20);
-			this.picRacePopulationIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picRacePopulationIcon.TabIndex = 97;
-			this.picRacePopulationIcon.TabStop = false;
-			// 
-			// label18
-			// 
-			this.label18.AutoSize = true;
-			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label18.Location = new System.Drawing.Point(10, 36);
-			this.label18.Margin = new System.Windows.Forms.Padding(3);
-			this.label18.Name = "label18";
-			this.label18.Size = new System.Drawing.Size(92, 15);
-			this.label18.TabIndex = 96;
-			this.label18.Text = "Population Icon";
-			// 
-			// ddlRacePopulationIcon
-			// 
-			this.ddlRacePopulationIcon.FormattingEnabled = true;
-			this.ddlRacePopulationIcon.Location = new System.Drawing.Point(142, 33);
-			this.ddlRacePopulationIcon.Name = "ddlRacePopulationIcon";
-			this.ddlRacePopulationIcon.Size = new System.Drawing.Size(180, 23);
-			this.ddlRacePopulationIcon.TabIndex = 89;
-			// 
-			// ddlRaceNativeAtmosphere
-			// 
-			this.ddlRaceNativeAtmosphere.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlRaceNativeAtmosphere.FormattingEnabled = true;
-			this.ddlRaceNativeAtmosphere.Location = new System.Drawing.Point(142, 90);
-			this.ddlRaceNativeAtmosphere.Name = "ddlRaceNativeAtmosphere";
-			this.ddlRaceNativeAtmosphere.Size = new System.Drawing.Size(180, 23);
-			this.ddlRaceNativeAtmosphere.TabIndex = 91;
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label17.Location = new System.Drawing.Point(10, 93);
-			this.label17.Margin = new System.Windows.Forms.Padding(3);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(110, 15);
-			this.label17.TabIndex = 95;
-			this.label17.Text = "Native Atmosphere";
-			// 
-			// txtRaceName
-			// 
-			this.txtRaceName.Location = new System.Drawing.Point(141, 6);
-			this.txtRaceName.Name = "txtRaceName";
-			this.txtRaceName.Size = new System.Drawing.Size(180, 21);
-			this.txtRaceName.TabIndex = 88;
-			// 
-			// ddlRaceNativeSurface
-			// 
-			this.ddlRaceNativeSurface.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlRaceNativeSurface.FormattingEnabled = true;
-			this.ddlRaceNativeSurface.Location = new System.Drawing.Point(142, 61);
-			this.ddlRaceNativeSurface.Name = "ddlRaceNativeSurface";
-			this.ddlRaceNativeSurface.Size = new System.Drawing.Size(180, 23);
-			this.ddlRaceNativeSurface.TabIndex = 90;
-			// 
-			// label13
-			// 
-			this.label13.AutoSize = true;
-			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label13.Location = new System.Drawing.Point(10, 64);
-			this.label13.Margin = new System.Windows.Forms.Padding(3);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(86, 15);
-			this.label13.TabIndex = 94;
-			this.label13.Text = "Native Surface";
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label15.Location = new System.Drawing.Point(9, 9);
-			this.label15.Margin = new System.Windows.Forms.Padding(3);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(41, 15);
-			this.label15.TabIndex = 93;
-			this.label15.Text = "Name";
-			// 
 			// EmpireSetupForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -717,6 +718,9 @@
 			this.Text = "Empire Setup";
 			this.tabGeneral.ResumeLayout(false);
 			this.tabGeneral.PerformLayout();
+			this.gamePanel1.ResumeLayout(false);
+			this.gamePanel1.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picShipset)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picInsignia)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picColor)).EndInit();
@@ -727,9 +731,6 @@
 			this.tabAptitudes.ResumeLayout(false);
 			this.tabTraits.ResumeLayout(false);
 			this.tabs.ResumeLayout(false);
-			this.gamePanel1.ResumeLayout(false);
-			this.gamePanel1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picRacePopulationIcon)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -757,16 +758,11 @@
 		private System.Windows.Forms.NumericUpDown spnColorBlue;
 		private System.Windows.Forms.NumericUpDown spnColorGreen;
 		private System.Windows.Forms.NumericUpDown spnColorRed;
-		private Controls.GamePictureBox picLeaderPortrait;
-		private System.Windows.Forms.ComboBox ddlLeaderPortrait;
-		private System.Windows.Forms.TextBox txtLeaderName;
 		private System.Windows.Forms.TextBox txtName;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Label label32;
 		private System.Windows.Forms.TabPage tabAptitudes;
 		private Controls.AptitudePicker aptitudePicker;
@@ -787,5 +783,10 @@
 		private System.Windows.Forms.ComboBox ddlRaceNativeSurface;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.Label label15;
+		private Controls.GamePictureBox picLeaderPortrait;
+		private System.Windows.Forms.ComboBox ddlLeaderPortrait;
+		private System.Windows.Forms.TextBox txtLeaderName;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label1;
 	}
 }

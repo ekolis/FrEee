@@ -119,7 +119,7 @@ namespace FrEee.WinForms.Forms
 			if (EmpireTemplate.PrimaryRace == null)
 				EmpireTemplate.PrimaryRace = new Race();
 
-			
+
 			txtName.Text = EmpireTemplate.Name;
 			txtLeaderName.Text = EmpireTemplate.LeaderName;
 			ddlLeaderPortrait.Text = EmpireTemplate.LeaderPortraitName;
@@ -290,7 +290,7 @@ namespace FrEee.WinForms.Forms
 		}
 
 		#endregion
-		
+
 		public int PointsSpent
 		{
 			get
@@ -340,6 +340,32 @@ namespace FrEee.WinForms.Forms
 			var result = dlg.ShowDialog();
 			if (result == DialogResult.OK)
 				EmpireTemplate.PrimaryRace.Save(dlg.FileName);
+		}
+
+		private void ddlPic_TextChanged(object sender, EventArgs e)
+		{
+			
+		}
+
+		private string lastDdlPicText = null;
+
+		private void ddlPic_Leave(object sender, EventArgs e)
+		{
+			// auto update ddl's that have no value to match this ddl
+			var ddl = (ComboBox)sender;
+			var text = ddl.Text;
+			foreach (var ddl2 in new ComboBox[]
+				{
+					ddlLeaderPortrait,
+					ddlRacePopulationIcon,
+					ddlShipset,
+					ddlInsignia
+				})
+			{
+				if (string.IsNullOrWhiteSpace(ddl2.Text))
+					ddl2.Text = ddl.Text;
+			}
+			lastDdlPicText = ddl.Text;
 		}
 	}
 }
