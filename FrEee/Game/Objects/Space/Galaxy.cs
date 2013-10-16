@@ -875,8 +875,11 @@ namespace FrEee.Game.Objects.Space
 					if (didStuff)
 					{
 						v.UpdateEmpireMemories();
-						foreach (var sobj in sys.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
-							v.Owner.UpdateMemory(sobj);
+						if (v.StarSystem != null)
+						{
+							foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
+								v.Owner.UpdateMemory(sobj);
+						}
 					}
 
 					// check for battles
