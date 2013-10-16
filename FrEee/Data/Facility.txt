@@ -41,128 +41,58 @@ Number Of Abilities, Ability # Type, Ability # Descr, Ability # Val 1, Ability #
 *BEGIN*
 =======================================================================================
 
-Name                := Mineral Miner Facility I
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Mineral Miner Facility ' + level.ToRomanNumeral()
 Description         := Large scale planet processor which mines minerals from the deepest layers.
 Facility Group      := Resource Extraction
 Facility Family     := 1
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 57
-Cost Minerals       := 1500
+Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Minerals Extraction
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 1
 Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 800 minerals each turn.
-Ability 1 Val 1     := 800
+Ability 1 Descr     := Mines [%Amount1%] minerals each turn.
+Ability 1 Val 1     := =700 + 100 * level
 Ability 1 Val 2     := 0
 
-Name                := Mineral Miner Facility II
-Description         := Large scale planet processor which mines minerals from the deepest layers.
-Facility Group      := Resource Extraction
-Facility Family     := 1
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 57
-Cost Minerals       := 2000
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Minerals Extraction
-Tech Level Req 1    := 2
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 900 minerals each turn.
-Ability 1 Val 1     := 900
-Ability 1 Val 2     := 0
-
-Name                := Mineral Miner Facility III
-Description         := Large scale planet processor which mines minerals from the deepest layers.
-Facility Group      := Resource Extraction
-Facility Family     := 1
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 57
-Cost Minerals       := 2500
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Minerals Extraction
-Tech Level Req 1    := 3
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 1000 minerals each turn.
-Ability 1 Val 1     := 1000
-Ability 1 Val 2     := 0
-
-Name                := Organics Farm Facility I
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Organics Farm Facility ' + level.ToRomanNumeral()
 Description         := Biological growing facility which generates organic materials from a planet's surface.
 Facility Group      := Resource Extraction
 Facility Family     := 2
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 60
-Cost Minerals       := 1500
+Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Organics Extraction
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 1
 Ability 1 Type      := Resource Generation - Organics
-Ability 1 Descr     := Grows 800 organics each turn.
-Ability 1 Val 1     := 800
+Ability 1 Descr     := Grows [%Amount1%] organics each turn.
+Ability 1 Val 1     := =700 + 100 * level
 Ability 1 Val 2     := 0
 
-Name                := Organics Farm Facility II
-Description         := Biological growing facility which generates organic materials from a planet's surface.
-Facility Group      := Resource Extraction
-Facility Family     := 2
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 60
-Cost Minerals       := 2000
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Organics Extraction
-Tech Level Req 1    := 2
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Organics
-Ability 1 Descr     := Grows 900 organics each turn.
-Ability 1 Val 1     := 900
-Ability 1 Val 2     := 0
-
-Name                := Organics Farm Facility III
-Description         := Biological growing facility which generates organic materials from a planet's surface.
-Facility Group      := Resource Extraction
-Facility Family     := 2
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 60
-Cost Minerals       := 2500
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Organics Extraction
-Tech Level Req 1    := 3
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Organics
-Ability 1 Descr     := Grows 1000 organics each turn.
-Ability 1 Val 1     := 1000
-Ability 1 Val 2     := 0
-
-Name                := Radioactives Extraction Facility I
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Radioactives Extraction Facility ' + level.ToRomanNumeral()
 Description         := Large fusion reactors which process a planet's ore to generate refined high-energy materials.
 Facility Group      := Resource Extraction
 Facility Family     := 3
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 61
-Cost Minerals       := 1500
+Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
@@ -170,53 +100,17 @@ Tech Area Req 1     := Radioactives Extraction
 Tech Level Req 1    := 1
 Number of Abilities := 1
 Ability 1 Type      := Resource Generation - Radioactives
-Ability 1 Descr     := Extracts 800 radioactives each turn.
-Ability 1 Val 1     := 800
+Ability 1 Descr     := Extracts [%Amount1%] radioactives each turn.
+Ability 1 Val 1     := =700 + 100 * level
 Ability 1 Val 2     := 0
 
-Name                := Radioactives Extraction Facility II
-Description         := Large fusion reactors which process a planet's ore to generate refined high-energy materials.
-Facility Group      := Resource Extraction
-Facility Family     := 3
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 61
-Cost Minerals       := 2000
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Radioactives Extraction
-Tech Level Req 1    := 2
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Radioactives
-Ability 1 Descr     := Extracts 900 radioactives each turn.
-Ability 1 Val 1     := 900
-Ability 1 Val 2     := 0
-
-Name                := Radioactives Extraction Facility III
-Description         := Large fusion reactors which process a planet's ore to generate refined high-energy materials.
-Facility Group      := Resource Extraction
-Facility Family     := 3
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 61
-Cost Minerals       := 2500
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Radioactives Extraction
-Tech Level Req 1    := 3
-Number of Abilities := 1
-Ability 1 Type      := Resource Generation - Radioactives
-Ability 1 Descr     := Extracts 1000 radioactives each turn.
-Ability 1 Val 1     := 1000
-Ability 1 Val 2     := 0
-
-Name                := Monolith Facility I
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Monolith Facility ' + level.ToRomanNumeral()
 Description         := Universal tool which can harvest all of a planet's resources.
 Facility Group      := Resource Extraction
 Facility Family     := 4
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 58
 Cost Minerals       := 10000
@@ -224,187 +118,61 @@ Cost Organics       := 5000
 Cost Radioactives   := 5000
 Number of Tech Req  := 1
 Tech Area Req 1     := Stellar Manipulation
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 3
 Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 500 minerals each turn.
-Ability 1 Val 1     := 500
+Ability 1 Descr     := Mines [%Amount1%] minerals each turn.
+Ability 1 Val 1     := =300 + 200 * level
 Ability 1 Val 2     := 0
 Ability 2 Type      := Resource Generation - Organics
-Ability 2 Descr     := Harvests 500 organics each turn.
-Ability 2 Val 1     := 500
+Ability 2 Descr     := Harvests [%Amount1%] organics each turn.
+Ability 2 Val 1     := =300 + 200 * level
 Ability 2 Val 2     := 0
 Ability 3 Type      := Resource Generation - Radioactives
-Ability 3 Descr     := Extracts 500 radioactives each turn.
-Ability 3 Val 1     := 500
+Ability 3 Descr     := Extracts [%Amount1%] radioactives each turn.
+Ability 3 Val 1     := =300 + 200 * level
 Ability 3 Val 2     := 0
 
-Name                := Monolith Facility II
-Description         := Universal tool which can harvest all of a planet's resources.
-Facility Group      := Resource Extraction
-Facility Family     := 4
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 58
-Cost Minerals       := 10000
-Cost Organics       := 5000
-Cost Radioactives   := 5000
-Number of Tech Req  := 1
-Tech Area Req 1     := Stellar Manipulation
-Tech Level Req 1    := 2
-Number of Abilities := 3
-Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 700 minerals each turn.
-Ability 1 Val 1     := 700
-Ability 1 Val 2     := 0
-Ability 2 Type      := Resource Generation - Organics
-Ability 2 Descr     := Harvests 700 organics each turn.
-Ability 2 Val 1     := 700
-Ability 2 Val 2     := 0
-Ability 3 Type      := Resource Generation - Radioactives
-Ability 3 Descr     := Extracts 700 radioactives each turn.
-Ability 3 Val 1     := 700
-Ability 3 Val 2     := 0
-
-Name                := Monolith Facility III
-Description         := Universal tool which can harvest all of a planet's resources.
-Facility Group      := Resource Extraction
-Facility Family     := 4
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 58
-Cost Minerals       := 10000
-Cost Organics       := 5000
-Cost Radioactives   := 5000
-Number of Tech Req  := 1
-Tech Area Req 1     := Stellar Manipulation
-Tech Level Req 1    := 3
-Number of Abilities := 3
-Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines 900 minerals each turn.
-Ability 1 Val 1     := 900
-Ability 1 Val 2     := 0
-Ability 2 Type      := Resource Generation - Organics
-Ability 2 Descr     := Harvests 900 organics each turn.
-Ability 2 Val 1     := 900
-Ability 2 Val 2     := 0
-Ability 3 Type      := Resource Generation - Radioactives
-Ability 3 Descr     := Extracts 900 radioactives each turn.
-Ability 3 Val 1     := 900
-Ability 3 Val 2     := 0
-
-Name                := Research Center I
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Research Center ' + level.ToRomanNumeral()
 Description         := High-Tech researching facility which develops new technology for a society.
 Facility Group      := Research
 Facility Family     := 5
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 62
-Cost Minerals       := 1500
+Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Applied Research
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 1
 Ability 1 Type      := Point Generation - Research
-Ability 1 Descr     := Generates 500 research points each turn.
-Ability 1 Val 1     := 500
+Ability 1 Descr     := Generates [%Amount1%] research points each turn.
+Ability 1 Val 1     := =400 + 100 * level
 Ability 1 Val 2     := 0
 
-Name                := Research Center II
-Description         := High-Tech researching facility which develops new technology for a society.
-Facility Group      := Research
-Facility Family     := 5
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 62
-Cost Minerals       := 2000
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Applied Research
-Tech Level Req 1    := 2
-Number of Abilities := 1
-Ability 1 Type      := Point Generation - Research
-Ability 1 Descr     := Generates 600 research points each turn.
-Ability 1 Val 1     := 600
-Ability 1 Val 2     := 0
-
-Name                := Research Center III
-Description         := High-Tech researching facility which develops new technology for a society.
-Facility Group      := Research
-Facility Family     := 5
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 62
-Cost Minerals       := 2500
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Applied Research
-Tech Level Req 1    := 3
-Number of Abilities := 1
-Ability 1 Type      := Point Generation - Research
-Ability 1 Descr     := Generates 700 research points each turn.
-Ability 1 Val 1     := 700
-Ability 1 Val 2     := 0
-
-Name                := Intelligence Center I
-Description         := Large intelligence gathering organization. 
+Parameter Name      := level
+Parameter Maximum   := 3
+Name                := ='Intelligence Center ' + level.ToRomanNumeral()
+Description         := Large intelligence gathering organization.
 Facility Group      := Intelligence
 Facility Family     := 6
-Roman Numeral       := 1
+Roman Numeral       := =level
 Restrictions        := None
 Pic Num             := 3
-Cost Minerals       := 1500
+Cost Minerals       := =1000 + 500 * level
 Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Applied Intelligence
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 1
-Ability 1 Type      := Point Generation - Intelligence
-Ability 1 Descr     := Generates 500 intelligence points each turn.
-Ability 1 Val 1     := 500
-Ability 1 Val 2     := 0
-
-Name                := Intelligence Center II
-Description         := Large intelligence gathering organization. 
-Facility Group      := Intelligence
-Facility Family     := 6
-Roman Numeral       := 2
-Restrictions        := None
-Pic Num             := 3
-Cost Minerals       := 2000
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Applied Intelligence
-Tech Level Req 1    := 2
-Number of Abilities := 1
-Ability 1 Type      := Point Generation - Intelligence
-Ability 1 Descr     := Generates 600 intelligence points each turn.
-Ability 1 Val 1     := 600
-Ability 1 Val 2     := 0
-
-Name                := Intelligence Center III
-Description         := Large intelligence gathering organization. 
-Facility Group      := Intelligence
-Facility Family     := 6
-Roman Numeral       := 3
-Restrictions        := None
-Pic Num             := 3
-Cost Minerals       := 2500
-Cost Organics       := 0
-Cost Radioactives   := 0
-Number of Tech Req  := 1
-Tech Area Req 1     := Applied Intelligence
-Tech Level Req 1    := 3
-Number of Abilities := 1
-Ability 1 Type      := Point Generation - Intelligence
-Ability 1 Descr     := Generates 700 intelligence points each turn.
-Ability 1 Val 1     := 700
+Ability 1 Type      := Point Generation - Research
+Ability 1 Descr     := Generates [%Amount1%] research points each turn.
+Ability 1 Val 1     := =400 + 100 * level
 Ability 1 Val 2     := 0
 
 Name                := Space Port
