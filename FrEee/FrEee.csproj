@@ -232,6 +232,8 @@
     <Compile Include="Modding\Loaders\MountLoader.cs" />
     <Compile Include="Modding\Loaders\TraitLoader.cs" />
     <Compile Include="Modding\Loaders\StarSystemLoader.cs" />
+    <Compile Include="Modding\MetaRecord.cs" />
+    <Compile Include="Modding\MetaRecordParameter.cs" />
     <Compile Include="Modding\ModInfo.cs" />
     <Compile Include="Modding\ModSettings.cs" />
     <Compile Include="Modding\PopulationModifier.cs" />
