@@ -41,15 +41,18 @@ namespace FrEee.Game.Setup
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
-		/// Set this to override the color specified by the race.
+		/// The color used to represent this empire.
 		/// </summary>
-		public Color? Color { get; set; }
+		public Color Color { get; set; }
 
 		/// <summary>
-		/// Set this to override the insignia name specified by the race.
+		/// The name of this empire's insignia.
 		/// </summary>
 		public string InsigniaName { get; set; }
 
+		/// <summary>
+		/// The insignia of the empire.
+		/// </summary>
 		public Image Insignia
 		{
 			get
@@ -59,32 +62,21 @@ namespace FrEee.Game.Setup
 		}
 
 		/// <summary>
-		/// Set this to override the shipset path specified by the race.
+		/// The name of the shipset used by this empire.
 		/// </summary>
-		public string ShipsetPath { get; set; }
+		public string ShipsetName { get; set; }
 
 		/// <summary>
-		/// Set this to override the leader portrait specified by the race.
+		/// The name of the leader portrait used by this empire.
 		/// </summary>
 		public string LeaderPortraitName { get; set; }
 
 		/// <summary>
-		/// Set this to override the AI specified by the race.
+		/// The name of the AI used by this empire.
 		/// </summary>
 		public string AIName { get; set; }
 
 		public string HappinessModelName { get; set; }
-
-		/// <summary>
-		/// The empire's cultural happiness model.
-		/// </summary>
-		[DoNotSerialize]
-		[IgnoreMap]
-		public HappinessModel HappinessModel
-		{
-			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
-			set { HappinessModelName = value == null ? null : value.Name; }
-		}
 
 		public string CultureName { get; set; }
 
@@ -117,19 +109,18 @@ namespace FrEee.Game.Setup
 		public Empire Instantiate()
 		{
 			var emp = new Empire();
-			emp.Name = Name ?? PrimaryRace.EmpireName;
-			emp.LeaderName = LeaderName ?? PrimaryRace.LeaderName; ;
-			emp.Color = Color ?? PrimaryRace.Color;
+			emp.Name = Name;
+			emp.LeaderName = LeaderName;
+			emp.Color = Color;
 			emp.PrimaryRace = PrimaryRace;
-			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.LeaderPortraitName;
+			emp.LeaderPortraitName = LeaderPortraitName;
 			emp.InsigniaName = InsigniaName ?? PrimaryRace.Name;
-			emp.ShipsetPath = ShipsetPath ?? PrimaryRace.Name;
+			emp.ShipsetPath = ShipsetName ?? PrimaryRace.Name;
 			emp.LeaderPortraitName = LeaderPortraitName ?? PrimaryRace.Name;
-			emp.HappinessModel = HappinessModel ?? PrimaryRace.HappinessModel;
-			emp.Culture = Culture ?? PrimaryRace.Culture;
+			emp.Culture = Culture;
 			emp.IsPlayerEmpire = IsPlayerEmpire;
 			emp.IsMinorEmpire = IsMinorEmpire;
-			emp.AI = Mod.Current.EmpireAIs.FindByName(AIName ?? PrimaryRace.AIName);
+			emp.AI = Mod.Current.EmpireAIs.FindByName(AIName);
 
 			return emp;
 		}
@@ -143,19 +134,17 @@ namespace FrEee.Game.Setup
 				foreach (var w in PrimaryRace.Warnings)
 					yield return w;
 			}
-			if (string.IsNullOrWhiteSpace(Name) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.EmpireName)))
+			if (string.IsNullOrWhiteSpace(Name))
 				yield return "You must specify a name for your empire or a default empire name for your race.";
-			if (string.IsNullOrWhiteSpace(LeaderName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.LeaderName)))
+			if (string.IsNullOrWhiteSpace(LeaderName))
 				yield return "You must specify a leader name for your empire or race.";
-			if (string.IsNullOrWhiteSpace(LeaderPortraitName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.LeaderPortraitName)))
+			if (string.IsNullOrWhiteSpace(LeaderPortraitName))
 				yield return "You must specify a leader portrait for your empire or race.";
-			if (string.IsNullOrWhiteSpace(InsigniaName) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.InsigniaName)))
+			if (string.IsNullOrWhiteSpace(InsigniaName))
 				yield return "You must specify an insignia for your empire or race.";
-			if (string.IsNullOrWhiteSpace(ShipsetPath) && (PrimaryRace == null || string.IsNullOrWhiteSpace(PrimaryRace.ShipsetPath)))
+			if (string.IsNullOrWhiteSpace(ShipsetName))
 				yield return "You must specify a shipset for your empire or race.";
-			if (HappinessModel == null && (PrimaryRace == null || PrimaryRace.HappinessModel == null))
-				yield return "You must specify a happiness model for your empire or race.";
-			if (Culture == null && (PrimaryRace == null || PrimaryRace.Culture == null))
+			if (Culture == null)
 				yield return "You must specify a culture for your empire or race.";
 			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.FindByName(AIName) == null)
 				yield return "AI empires require an AI script.";

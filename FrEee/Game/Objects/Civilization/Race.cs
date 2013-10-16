@@ -24,7 +24,6 @@ namespace FrEee.Game.Objects.Civilization
 		public Race()
 		{
 			TraitNames = new List<string>();
-			Color = Color.White;
 			Aptitudes = new SafeDictionary<string, int>();
 		}
 
@@ -34,34 +33,9 @@ namespace FrEee.Game.Objects.Civilization
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The default empire name for this race.
-		/// </summary>
-		public string EmpireName { get; set; }
-
-		/// <summary>
-		/// The default leader name for empires of this race.
-		/// </summary>
-		public string LeaderName { get; set; }
-
-		/// <summary>
-		/// The default leader portrait name for empires of this race.
-		/// </summary>
-		public string LeaderPortraitName { get; set; }
-
-		/// <summary>
 		/// The population icon name for this race.
 		/// </summary>
 		public string PopulationIconName { get; set; }
-
-		/// <summary>
-		/// The default insignia name for empires of this race.
-		/// </summary>
-		public string InsigniaName { get; set; }
-
-		/// <summary>
-		/// The default color used to represent empires of this race.
-		/// </summary>
-		public Color Color { get; set; }
 
 		/// <summary>
 		/// The atmosphere which this race breathes.
@@ -73,16 +47,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public string NativeSurface { get; set; }
 
-		/// <summary>
-		/// The race's preferred shipset path.
-		/// </summary>
-		public string ShipsetPath { get; set; }
-
-		/// <summary>
-		/// The AI which controls the behavior of empires of this race.
-		/// </summary>
-		public string AIName { get; set; }
-
 		public string HappinessModelName { get; set; }
 
 		/// <summary>
@@ -92,18 +56,6 @@ namespace FrEee.Game.Objects.Civilization
 		public HappinessModel HappinessModel {
 			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
 			set { HappinessModelName = value == null ? null : value.Name; }
-		}
-
-		public string CultureName { get; set; }
-
-		/// <summary>
-		/// The race's culture.
-		/// </summary>
-		[DoNotSerialize]
-		public Culture Culture
-		{
-			get { return Mod.Current.Cultures.SingleOrDefault(c => c.Name == CultureName); }
-			set { CultureName = value == null ? null : value.Name; }
 		}
 
 		/// <summary>
@@ -135,7 +87,7 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// The leader portrait.
+		/// The population portrait.
 		/// </summary>
 		public Image Portrait
 		{
@@ -146,11 +98,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// Aptitudes of this race.
 		/// </summary>
 		public IDictionary<string, int> Aptitudes { get; private set; }
-
-		/// <summary>
-		/// Can random AI empires use this race?
-		/// </summary>
-		public bool AIsCanUse { get; set; }
 
 		/// <summary>
 		/// Races have no owner.
@@ -184,6 +131,8 @@ namespace FrEee.Game.Objects.Civilization
 					yield return "You must specify a native planet surface for your race.";
 				if (!Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
 					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
+				if (HappinessModel == null)
+					yield return "You must specify a happiness model for your race.";			
 				foreach (var kvp in Aptitudes)
 				{
 					var apt = Aptitude.All.FindByName(kvp.Key);

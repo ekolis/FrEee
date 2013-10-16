@@ -24,18 +24,22 @@ p44:
 			FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
 			p13:
 				AIName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"AI_Default";
 				AIsCanUse:
 					System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-					False;
+					True;
 				Color:
-					System.Nullable`1[[System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:
+					255,255,128,255;
 				CultureName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Scientists";
 				HappinessModelName:
 					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
 				InsigniaName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Fractalian";
 				IsMinorEmpire:
 					System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 					False;
@@ -43,19 +47,17 @@ p44:
 					System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 					True;
 				LeaderName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Emperor Fictus";
 				LeaderPortraitName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Fractalian";
 				Name:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Fractalian Empire";
 				PrimaryRace:
 					FrEee.Game.Objects.Civilization.Race, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
-					p17:
-						AIName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
-						AIsCanUse:
-							System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							True;
+					p8:
 						Aptitudes:
 							FrEee.Utility.SafeDictionary`2[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
 							d15:							
@@ -66,7 +68,7 @@ p44:
 								System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 								"Intelligence";
 								System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-								120;
+								100;
 								System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 								"Cunning";
 								System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
@@ -120,30 +122,12 @@ p44:
 								System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 								100;
 							;
-						Color:
-							System.Drawing.Color, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a:
-							255,255,128,255;
-						CultureName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Scientists";
-						EmpireName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Fractalian Empire";
 						HappinessModelName:
 							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 							"Peaceful";
 						ID:
 							System.Int64, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 							0;
-						InsigniaName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Fractalian";
-						LeaderName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Emperor Fictus";
-						LeaderPortraitName:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Fractalian";
 						Name:
 							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 							"Fractalian";
@@ -156,18 +140,14 @@ p44:
 						PopulationIconName:
 							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 							"Fractalian";
-						ShipsetPath:
-							System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							"Fractalian";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							c1:							
-								System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-								"Crystallurgy";
+							c0:							
 							;
 					;
-				ShipsetPath:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
+				ShipsetName:
+					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+					"Fractalian";
 			;
 		;
 	ForbiddenTechnologyNames:
@@ -179,7 +159,7 @@ p44:
 		p2:
 			Height:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				30;
+				15;
 			Width:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 				20;
@@ -249,7 +229,7 @@ p44:
 		False;
 	RandomAIs:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		1;
+		0;
 	RemoteMiningModel:
 		FrEee.Utility.MiningModel, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
 		p8:
@@ -270,7 +250,7 @@ p44:
 				0.01;
 			ValueDepletionPerResource:
 				System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				1;
+				0;
 			ValueDepletionPerTurn:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 				1;
@@ -314,7 +294,7 @@ p44:
 		;
 	StarSystemCount:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-		3;
+		5;
 	StarSystemGroups:
 		System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		1;

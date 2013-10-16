@@ -596,7 +596,7 @@ namespace FrEee.WinForms.Forms
 			var selected = lstEmpires.SelectedItems.Cast<ListViewItem>().Select(i => (EmpireTemplate)i.Tag);
 			lstEmpires.Initialize(32, 32);
 			foreach (var et in setup.EmpireTemplates)
-				lstEmpires.AddItemWithImage(null, et.IsPlayerEmpire ? (et.Name ?? et.PrimaryRace.EmpireName) : ("(AI) " + (et.Name ?? et.PrimaryRace.EmpireName)), et, et.Insignia);
+				lstEmpires.AddItemWithImage(null, et.IsPlayerEmpire ? et.Name : "(AI) " + et.Name, et, et.Insignia);
 			foreach (ListViewItem item in lstEmpires.Items)
 			{
 				if (selected.Contains((EmpireTemplate)item.Tag))

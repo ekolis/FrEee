@@ -288,13 +288,13 @@ namespace FrEee.Game.Setup
 					PrimaryRace = new Race
 					{
 						Name = "Random Race #" + i,
-						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
-						Culture = Mod.Current.Cultures.PickRandom(),
-						AIName = "AI_Default",
 					},
 					IsPlayerEmpire = false,
+					Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+					Culture = Mod.Current.Cultures.PickRandom(),
+					AIName = "AI_Default",
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;
@@ -315,14 +315,14 @@ namespace FrEee.Game.Setup
 					PrimaryRace = new Race
 					{
 						Name = "Minor Race #" + i,
-						Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
 						NativeAtmosphere = atmosphere,
 						NativeSurface = surface,
-						Culture = Mod.Current.Cultures.PickRandom(),
-						AIName = "AI_Default",
 					},
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
+					Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+					Culture = Mod.Current.Cultures.PickRandom(),
+					AIName = "AI_Default",
 				};
 				foreach (var apt in Aptitude.All)
 					et.PrimaryRace.Aptitudes[apt.Name] = 100;

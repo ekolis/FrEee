@@ -472,7 +472,7 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
-		public static Image GetIcon(Race race)
+		public static Image GetIcon(this Race race)
 		{
 			if (Mod.Current.RootPath != null)
 			{
@@ -502,40 +502,13 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Gets the leader portrait image for a race.
+		/// Gets the population portrait image for a race.
 		/// </summary>
 		/// <param name="sobj"></param>
 		/// <returns></returns>
 		public static Image GetPortrait(Race race)
 		{
-			if (race.LeaderPortraitName == null)
-				return null;
-
-			if (Mod.Current.RootPath != null)
-			{
-				return
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, "Race_Portrait")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Portrait")) ??
-					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
-					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
-					GetGenericImage(race.GetType());
-			}
-			else
-			{
-				// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
-				return
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Race_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Race_Portrait")) ??
-					// fall back on icon if portrait not found
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, "Pop_Portrait")) ??
-					GetCachedImage(Path.Combine("Pictures", "Races", race.LeaderPortraitName, race.LeaderPortraitName + "_Pop_Portrait")) ??
-					GetGenericImage(race.GetType());
-			}
+			return GetIcon(race);
 		}
 
 		/// <summary>
@@ -605,9 +578,9 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image GetIcon(EmpireTemplate emp)
 		{
-			var insigniaName = emp.InsigniaName ?? emp.PrimaryRace.InsigniaName;
+			var insigniaName = emp.InsigniaName;
 			if (insigniaName == null)
-				GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
+				GetSolidColorImage(emp.Color);
 			if (Mod.Current.RootPath != null)
 			{
 				return
@@ -615,7 +588,7 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
-					GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
+					GetSolidColorImage(emp.Color);
 			}
 			else
 			{
@@ -623,7 +596,7 @@ namespace FrEee.Utility
 				return
 					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, "Insignia")) ??
 					GetCachedImage(Path.Combine("Pictures", "Races", insigniaName, insigniaName + "_Insignia")) ??
-					GetSolidColorImage(emp.Color ?? emp.PrimaryRace.Color);
+					GetSolidColorImage(emp.Color);
 			}
 		}
 
