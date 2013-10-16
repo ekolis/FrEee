@@ -95,6 +95,14 @@ namespace FrEee.Modding
 		public IEnumerable<Record> Instantiate()
 		{
 			var parms = Parameters.ToArray();
+			if (!parms.Any())
+			{
+				var rec = new Record();
+				foreach (var f in Fields)
+					rec.Fields.Add(f.Copy());
+				yield return rec;
+				yield break;
+			}
 			IList<IDictionary<string, int>> permutations = null;
 			foreach (var parm in parms)
 				permutations = CreatePermutations(parm, permutations);

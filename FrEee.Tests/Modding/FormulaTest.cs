@@ -38,5 +38,20 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 			int index = 0;
 			Assert.AreEqual(1, recs.Where(r => r.GetString("Name", ref index) == "Nuclear Missile III S4").Count());
 		}
+
+		/// <summary>
+		/// Makes sure that meta records with no parameters still generate records.
+		/// </summary>
+		[TestMethod]
+		public void NoFormula()
+		{
+			var data = "Name := Capital Ship Missile I";
+			var metarec = new MetaRecord(data.Split('\n'));
+			Assert.AreEqual(0, metarec.Parameters.Count());
+			var recs = metarec.Instantiate();
+			Assert.AreEqual(1, recs.Count());
+			int index = 0;
+			Assert.AreEqual("Capital Ship Missile I", recs.First().GetString("Name", ref index));
+		}
 	}
 }

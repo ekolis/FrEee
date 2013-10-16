@@ -40,7 +40,7 @@ namespace FrEee.Modding
 		/// </summary>
 		public DataFile()
 		{
-			Records = new List<Record>();
+			MetaRecords = new List<MetaRecord>();
 		}
 
 		/// <summary>
@@ -74,7 +74,7 @@ namespace FrEee.Modding
 					// done with a record
 					if (recLines.Count > 0)
 					{
-						Records.Add(new Record(recLines));
+						MetaRecords.Add(new MetaRecord(recLines));
 						recLines.Clear();
 					}
 				}
@@ -87,20 +87,32 @@ namespace FrEee.Modding
 
 			// deal with the last record
 			if (recLines.Count > 0)
-				Records.Add(new Record(recLines));
+				MetaRecords.Add(new MetaRecord(recLines));
 
 			// deal with degenerate records
-			Records = Records.Where(rec => rec.Fields.Count > 0).ToList();
+			MetaRecords = MetaRecords.Where(rec => rec.Fields.Count > 0).ToList();
 		}
 
 		/// <summary>
-		/// The records in this data file.
+		/// The meta records in this data file.
+		/// Meta records are records that can contain parameters and static formulas.
 		/// </summary>
-		public IList<Record> Records { get; private set; }
+		public IList<MetaRecord> MetaRecords { get; private set; }
+
+		 /// <summary>
+		 /// The individual records generated from the meta records.
+		 /// </summary>
+		public IEnumerable<Record> Records
+		{
+			get
+			{
+				return MetaRecords.SelectMany(mr => mr.Instantiate());
+			}
+		}
 
 		public override string ToString()
 		{
-			return "(" + Records.Count + " records";
+			return "(" + MetaRecords.Count + " meta records)";
 		}
 	}
 }
