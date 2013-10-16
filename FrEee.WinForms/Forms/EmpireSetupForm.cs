@@ -5,6 +5,7 @@ using FrEee.Game.Setup;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -305,12 +306,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCompareCultures_Click(object sender, EventArgs e)
 		{
-			CompareCultures();
-		}
-
-		private void CompareCultures()
-		{
-			// TODO - show culture comparison form
+			this.ShowChildForm(new CultureComparisonForm());
 		}
 
 		private void btnLoadRace_Click(object sender, EventArgs e)

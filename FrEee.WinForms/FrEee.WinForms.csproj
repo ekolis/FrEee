@@ -75,6 +75,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\CultureComparisonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CultureComparisonForm.Designer.cs">
+      <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -416,6 +422,9 @@
       <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CultureComparisonForm.resx">
+      <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmpireSetupForm.resx">
       <DependentUpon>EmpireSetupForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -481,6 +490,7 @@
     <None Include="app.config" />
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.Culture.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.EmpireStatus.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Mount.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
