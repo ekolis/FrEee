@@ -303,12 +303,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void btnRaceCompareCultures_Click(object sender, EventArgs e)
-		{
-			CompareCultures();
-		}
-
-		private void gameButton1_Click(object sender, EventArgs e)
+		private void btnCompareCultures_Click(object sender, EventArgs e)
 		{
 			CompareCultures();
 		}

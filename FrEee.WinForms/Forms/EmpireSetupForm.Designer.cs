@@ -50,7 +50,7 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.chkAIsCanUse = new System.Windows.Forms.CheckBox();
 			this.label23 = new System.Windows.Forms.Label();
-			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
+			this.btnCompareCultures = new FrEee.WinForms.Controls.GameButton();
 			this.txtCulture = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.ddlCulture = new System.Windows.Forms.ComboBox();
@@ -98,7 +98,7 @@
 			// 
 			this.txtPointsAvailable.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtPointsAvailable.Location = new System.Drawing.Point(183, 629);
+			this.txtPointsAvailable.Location = new System.Drawing.Point(183, 690);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
 			this.txtPointsAvailable.Size = new System.Drawing.Size(127, 17);
 			this.txtPointsAvailable.TabIndex = 5;
@@ -110,7 +110,7 @@
 			this.btnSaveRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnSaveRace.BackColor = System.Drawing.Color.Black;
 			this.btnSaveRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveRace.Location = new System.Drawing.Point(96, 626);
+			this.btnSaveRace.Location = new System.Drawing.Point(96, 687);
 			this.btnSaveRace.Name = "btnSaveRace";
 			this.btnSaveRace.Size = new System.Drawing.Size(80, 22);
 			this.btnSaveRace.TabIndex = 2;
@@ -123,7 +123,7 @@
 			this.btnLoadRace.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnLoadRace.BackColor = System.Drawing.Color.Black;
 			this.btnLoadRace.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadRace.Location = new System.Drawing.Point(10, 626);
+			this.btnLoadRace.Location = new System.Drawing.Point(10, 687);
 			this.btnLoadRace.Name = "btnLoadRace";
 			this.btnLoadRace.Size = new System.Drawing.Size(80, 22);
 			this.btnLoadRace.TabIndex = 1;
@@ -136,7 +136,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(317, 626);
+			this.btnCancel.Location = new System.Drawing.Point(317, 687);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(80, 22);
 			this.btnCancel.TabIndex = 3;
@@ -149,7 +149,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(403, 626);
+			this.btnOK.Location = new System.Drawing.Point(403, 687);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(80, 22);
 			this.btnOK.TabIndex = 4;
@@ -164,7 +164,7 @@
 			this.tabGeneral.Controls.Add(this.gamePanel1);
 			this.tabGeneral.Controls.Add(this.chkAIsCanUse);
 			this.tabGeneral.Controls.Add(this.label23);
-			this.tabGeneral.Controls.Add(this.gameButton1);
+			this.tabGeneral.Controls.Add(this.btnCompareCultures);
 			this.tabGeneral.Controls.Add(this.txtCulture);
 			this.tabGeneral.Controls.Add(this.label22);
 			this.tabGeneral.Controls.Add(this.ddlCulture);
@@ -192,7 +192,7 @@
 			this.tabGeneral.Location = new System.Drawing.Point(4, 29);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(474, 581);
+			this.tabGeneral.Size = new System.Drawing.Size(474, 642);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
@@ -200,7 +200,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(9, 339);
+			this.label2.Location = new System.Drawing.Point(9, 383);
 			this.label2.Margin = new System.Windows.Forms.Padding(3);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(81, 15);
@@ -227,10 +227,10 @@
 			this.gamePanel1.Controls.Add(this.label13);
 			this.gamePanel1.Controls.Add(this.label15);
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(12, 360);
+			this.gamePanel1.Location = new System.Drawing.Point(12, 404);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(449, 215);
+			this.gamePanel1.Size = new System.Drawing.Size(449, 232);
 			this.gamePanel1.TabIndex = 98;
 			// 
 			// txtRaceHappiness
@@ -239,7 +239,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtRaceHappiness.Location = new System.Drawing.Point(25, 143);
 			this.txtRaceHappiness.Name = "txtRaceHappiness";
-			this.txtRaceHappiness.Size = new System.Drawing.Size(297, 67);
+			this.txtRaceHappiness.Size = new System.Drawing.Size(297, 84);
 			this.txtRaceHappiness.TabIndex = 99;
 			this.txtRaceHappiness.Text = "Please choose a happiness model.";
 			// 
@@ -371,17 +371,17 @@
 			this.label23.TabIndex = 97;
 			this.label23.Text = "AI Empires Can Use";
 			// 
-			// gameButton1
+			// btnCompareCultures
 			// 
-			this.gameButton1.BackColor = System.Drawing.Color.Black;
-			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton1.Location = new System.Drawing.Point(238, 293);
-			this.gameButton1.Name = "gameButton1";
-			this.gameButton1.Size = new System.Drawing.Size(80, 22);
-			this.gameButton1.TabIndex = 21;
-			this.gameButton1.Text = "Compare";
-			this.gameButton1.UseVisualStyleBackColor = false;
-			this.gameButton1.Click += new System.EventHandler(this.gameButton1_Click);
+			this.btnCompareCultures.BackColor = System.Drawing.Color.Black;
+			this.btnCompareCultures.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCompareCultures.Location = new System.Drawing.Point(238, 293);
+			this.btnCompareCultures.Name = "btnCompareCultures";
+			this.btnCompareCultures.Size = new System.Drawing.Size(80, 22);
+			this.btnCompareCultures.TabIndex = 21;
+			this.btnCompareCultures.Text = "Compare";
+			this.btnCompareCultures.UseVisualStyleBackColor = false;
+			this.btnCompareCultures.Click += new System.EventHandler(this.btnCompareCultures_Click);
 			// 
 			// txtCulture
 			// 
@@ -389,7 +389,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtCulture.Location = new System.Drawing.Point(22, 291);
 			this.txtCulture.Name = "txtCulture";
-			this.txtCulture.Size = new System.Drawing.Size(210, 287);
+			this.txtCulture.Size = new System.Drawing.Size(210, 89);
 			this.txtCulture.TabIndex = 94;
 			this.txtCulture.Text = "Please choose a culture.";
 			// 
@@ -695,7 +695,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(482, 614);
+			this.tabs.Size = new System.Drawing.Size(482, 675);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -705,7 +705,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(501, 661);
+			this.ClientSize = new System.Drawing.Size(501, 722);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);
@@ -745,7 +745,7 @@
 		private System.Windows.Forms.TabPage tabGeneral;
 		private System.Windows.Forms.CheckBox chkAIsCanUse;
 		private System.Windows.Forms.Label label23;
-		private Controls.GameButton gameButton1;
+		private Controls.GameButton btnCompareCultures;
 		private System.Windows.Forms.Label txtCulture;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.ComboBox ddlCulture;
