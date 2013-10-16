@@ -26,6 +26,23 @@ namespace FrEee.Game.Objects.Combat
 			Combatants = new HashSet<ICombatObject>(Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
 		}
 
+		static Battle()
+		{
+			Current = new HashSet<Battle>();
+			Previous = new HashSet<Battle>();
+		}
+
+		/// <summary>
+		/// Any battles that are currently ongoing.
+		/// This is a collection so we can multithread battle resolution if so desired.
+		/// </summary>
+		public static ICollection<Battle> Current { get; private set; }
+
+		/// <summary>
+		/// Any battles that have completed this turn.
+		/// </summary>
+		public static ICollection<Battle> Previous { get; private set; }
+
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
@@ -60,8 +77,14 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public void Resolve()
 		{
+			Current.Add(this);
 			var reloads = new SafeDictionary<Component, double>();
 			var seekers = new Dictionary<Seeker, int>();
+			
+			// let all combatants scan each other
+			foreach (var c in Combatants)
+				c.UpdateEmpireMemories();
+
 			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
 			{
 				LogRound(i + 1);
@@ -150,6 +173,8 @@ namespace FrEee.Game.Objects.Combat
 			// validate fleets
 			foreach (var fleet in Location.SpaceObjects.OfType<Fleet>())
 				fleet.Validate();
+			Current.Remove(this);
+			Previous.Add(this);
 		}
 
 		public IList<LogMessage> Log { get; private set; }

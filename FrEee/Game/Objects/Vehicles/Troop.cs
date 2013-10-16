@@ -45,7 +45,9 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			// TODO - show enemy troops in a ground invasion
+			var sobj = Container as ISpaceObject;
+			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
 

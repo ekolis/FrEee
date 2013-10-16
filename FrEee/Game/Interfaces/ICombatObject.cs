@@ -12,7 +12,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that may fire weapons and can targeted by weapons.
 	/// </summary>
-	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable
+	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable
 	{
 		/// <summary>
 		/// Can this object fire on another combat object?

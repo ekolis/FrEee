@@ -249,5 +249,10 @@ namespace FrEee.Game.Objects.Space
 				return false;
 			return StarSystem.ExploredByEmpires.Contains(emp);
 		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

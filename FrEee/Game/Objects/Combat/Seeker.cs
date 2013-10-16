@@ -232,5 +232,35 @@ namespace FrEee.Game.Objects.Combat
 			Target = null;
 			Owner = null;
 		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (Owner == emp)
+				return Visibility.Owned;
+			if (Battle.Current.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+			if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Fogged;
+			return Visibility.Unknown;
+		}
+
+		public void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
 	}
 }

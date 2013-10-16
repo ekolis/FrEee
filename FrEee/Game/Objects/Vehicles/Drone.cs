@@ -1,4 +1,6 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +39,15 @@ namespace FrEee.Game.Objects.Vehicles
 		ICargoContainer IContainable<ICargoContainer>.Container
 		{
 			get { return Utility.Extensions.CommonExtensions.FindContainer(this); }
+		}
+
+		public override Visibility CheckVisibility(Empire emp)
+		{
+			var vis = base.CheckVisibility(emp);
+			var sobj = Container as ISpaceObject;
+			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+				vis = Visibility.Scanned;
+			return vis;
 		}
 	}
 }

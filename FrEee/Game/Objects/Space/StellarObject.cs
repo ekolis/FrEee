@@ -155,6 +155,10 @@ namespace FrEee.Game.Objects.Space
 			if (emp == Owner)
 				return Visibility.Owned;
 
+			// You can always scan stellar objects you are in combat with.
+			if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+
 			// TODO - cloaking
 			if (this.FindStarSystem() == null)
 				return Visibility.Unknown;
@@ -165,6 +169,8 @@ namespace FrEee.Game.Objects.Space
 					return Visibility.Visible;
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else if (Battle.Previous.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;

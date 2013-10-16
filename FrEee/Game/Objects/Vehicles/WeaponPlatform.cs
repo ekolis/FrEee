@@ -32,7 +32,9 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			// TODO - show enemy weapon platforms in a ground invasion or planetary assault?
+			var sobj = Container as ISpaceObject;
+			if (sobj != null && sobj.CheckVisibility(emp) >= Visibility.Scanned)
+				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
 

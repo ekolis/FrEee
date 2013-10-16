@@ -623,6 +623,8 @@ namespace FrEee.Game.Objects.Space
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
 
+			Battle.Previous.Clear();
+
 			double progressPerOperation;
 			if (status == null)
 				progressPerOperation = 0d;
