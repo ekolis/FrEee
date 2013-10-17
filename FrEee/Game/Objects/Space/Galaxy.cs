@@ -629,7 +629,7 @@ namespace FrEee.Game.Objects.Space
 			if (status == null)
 				progressPerOperation = 0d;
 			else
-				progressPerOperation = (desiredProgress - status.Progress) / (7 + Current.Empires.Count);
+				progressPerOperation = (desiredProgress - status.Progress) / (8 + Current.Empires.Count);
 
 			// AI commands
 			if (status != null)
@@ -984,6 +984,13 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			// end of turn scripts
+			if (status != null)
+				status.Message = "Executing scripts";
+			ScriptEngine.RunScript(Mod.Current.EndTurnScript);
+			if (status != null)
+				status.Progress += progressPerOperation;
+
 			return missingPlrs;
 		}
 
@@ -1075,18 +1082,26 @@ namespace FrEee.Game.Objects.Space
 			var galtemp = gsu.GalaxyTemplate;
 
 			galtemp.GameSetup = gsu;
-			var curProgress = status == null ? 0d : status.Progress;
-			Current = galtemp.Instantiate(status, curProgress + (desiredProgress - curProgress) / 2d);
+			var startProgress = status == null ? 0d : status.Progress;
+			Current = galtemp.Instantiate(status, startProgress + (desiredProgress - startProgress) / 3d);
 			gsu.PopulateGalaxy(Current);
 
 			// set single player flag
 			Current.IsSinglePlayer = gsu.IsSinglePlayer;
 
+			// run init script
 			if (status != null)
-				status.Message = "Saving game";
+				status.Message = "Executing script";
+			ScriptEngine.RunScript(Mod.Current.GameInitScript);
+			if (status != null)
+				status.Progress = startProgress + (desiredProgress - startProgress) * 2d / 3d;
 
 			// save the game
+			if (status != null)
+				status.Message = "Saving game";
 			Galaxy.SaveAll(status, desiredProgress);
+			if (status != null)
+				status.Progress = desiredProgress;
 		}
 
 		/// <summary>

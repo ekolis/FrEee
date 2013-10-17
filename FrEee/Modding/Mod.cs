@@ -67,7 +67,7 @@ namespace FrEee.Modding
 				new GalaxyLoader(path),
 				new HappinessModelLoader(path),
 				new CultureLoader(path),
-				new GlobalScriptLoader(path),
+				new ScriptLoader(path),
 				new EmpireAILoader(path),
 			};
 
@@ -211,6 +211,16 @@ namespace FrEee.Modding
 		/// The global Python script module which is available to all scripts in the mod.
 		/// </summary>
 		public Script GlobalScript { get; set; }
+
+		/// <summary>
+		/// The script which runs on game initialization, prior to the first turn.
+		/// </summary>
+		public Script GameInitScript { get; set; }
+
+		/// <summary>
+		/// The script which runs after each turn.
+		/// </summary>
+		public Script EndTurnScript { get; set; }
 
 		/// <summary>
 		/// The empire AIs in the game.
