@@ -20,18 +20,15 @@ namespace FrEee.Tests.Game.Objects.Technology
 		{
 			// setup
 			var mod = Mod.Load(null);
-			var tech = new FrEee.Game.Objects.Technology.Technology
-			{
-				Name = "Test Tech",
-				LevelCost = 10000,
-				MaximumLevel = 2,
-			};
-			mod.Technologies.Add(tech);
+			var tech = mod.Technologies.FindByName("Ice Planet Colonization");
+			tech.LevelCost = 500000; // in case the mod changes
 			var gal = new Galaxy(mod);
 			var emp = new Empire();
 			gal.Empires.Add(emp);
-			emp.BonusResearch = 30000;
+			emp.BonusResearch = 1500000;
 			var cmd = new ResearchCommand();
+			cmd.Issuer = emp;
+			cmd.Target = emp;
 			cmd.SetSpending(tech, 100);
 
 			// check command client safety
@@ -42,8 +39,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			Galaxy.ProcessTurn(false);
 
 			// verify research was done
-			// 10K for first level, 20K for second
-			emp = gal.Empires[0];
+			// 500K for first level, 1M for second
 			Assert.AreEqual(2, emp.ResearchedTechnologies[tech]);
 		}
 	}
