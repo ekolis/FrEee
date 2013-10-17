@@ -194,12 +194,11 @@ namespace FrEee.Modding
 
 		public double GetPopulationProductionFactor(long population)
 		{
-			double result = 0d;
+			double result = 1d;
 			foreach (var pm in PopulationModifiers.OrderBy(pm => pm.Key))
 			{
-				if (pm.Key < population)
-					result = pm.Value.ProductionRate / 100d;
-				else
+				result = pm.Value.ConstructionRate / 100d;
+				if (pm.Key > population)
 					break;
 			}
 			return result;
@@ -207,12 +206,11 @@ namespace FrEee.Modding
 
 		public double GetPopulationConstructionFactor(long population)
 		{
-			double result = 0d;
+			double result = 1d;
 			foreach (var pm in PopulationModifiers.OrderBy(pm => pm.Key))
 			{
-				if (pm.Key < population)
-					result = pm.Value.ConstructionRate / 100d;
-				else
+				result = pm.Value.ConstructionRate / 100d;
+				if (pm.Key > population)
 					break;
 			}
 			return result;
