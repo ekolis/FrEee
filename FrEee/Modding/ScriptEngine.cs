@@ -219,7 +219,7 @@ namespace FrEee.Modding
 				foreach (var variable in readOnlyVariables.Keys)
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 			}
-			var code = 
+			var code =
 				string.Join("\n", deserializers.ToArray()) + "\n" +
 				script.Text + "\n" +
 				string.Join("\n", serializers.ToArray());
@@ -281,7 +281,7 @@ namespace FrEee.Modding
 				arglist.Add("arg" + i);
 			var code = string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")";
 			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
-			var sc = new ScriptCode("functionCall", code, script.ExternalScripts.ToArray());
+			var sc = new ScriptCode("functionCall", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var functionCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(functionCall);
 			try
@@ -333,7 +333,7 @@ namespace FrEee.Modding
 				arglist.Add("arg" + i);
 			var code = string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")";
 			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
-			var sc = new ScriptCode("runner", code, script.ExternalScripts.ToArray());
+			var sc = new ScriptCode("runner", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var subCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(subCall);
 
