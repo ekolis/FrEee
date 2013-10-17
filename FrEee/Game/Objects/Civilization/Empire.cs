@@ -19,6 +19,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Enumerations;
 using AutoMapper;
 using System.Dynamic;
+using FrEee.Game.Objects.Orders;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -643,6 +644,18 @@ namespace FrEee.Game.Objects.Civilization
 					var memory = obj.CopyAndAssignNewID();
 					memory.IsMemory = true;
 					Memory[obj.ID] = memory;
+				}
+
+				// update pursue/evade orders' alternate targets if object is fleet
+				if (obj is Fleet)
+				{
+					foreach (var order in this.OwnedSpaceObjects.OfType<IMobileSpaceObject>().SelectMany(sobj => sobj.Orders))
+					{
+						if (order is PursueOrder<IMobileSpaceObject>)
+							((PursueOrder<IMobileSpaceObject>)order).UpdateAlternateTarget();
+						if (order is EvadeOrder<IMobileSpaceObject>)
+							((EvadeOrder<IMobileSpaceObject>)order).UpdateAlternateTarget();
+					}
 				}
 			}
 			else

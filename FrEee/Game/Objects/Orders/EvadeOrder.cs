@@ -33,10 +33,38 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The target we are evading.
 		/// </summary>
-		[DoNotSerialize]
 		public ISpaceObject Target { get { return target.Value; } set { target = value.Reference(); } }
 
 		private Reference<ISpaceObject> target { get; set; }
+
+		/// <summary>
+		/// Alternate target. This should be the largest ship in a fleet when a fleet is being pursued.
+		/// </summary>
+		[DoNotSerialize]
+		public ISpaceObject AlternateTarget
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// Call this when calling UpdateMemory on the target.
+		/// Sets the alternate target to the largest ship in a fleet, if the target is a fleet.
+		/// If the fleet is destroyed, sets the target to the alternate target.
+		/// </summary>
+		public void UpdateAlternateTarget()
+		{
+			if (Target is Fleet)
+			{
+				var f = (Fleet)Target;
+				if (!f.IsDestroyed)
+					AlternateTarget = f.LeafVehicles.Largest();
+				else
+					Target = AlternateTarget;
+			}
+			else
+				AlternateTarget = Target;
+		}
 
 		/// <summary>
 		/// Should pathfinding avoid enemies?
