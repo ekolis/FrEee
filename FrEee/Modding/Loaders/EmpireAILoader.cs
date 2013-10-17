@@ -28,35 +28,38 @@ namespace FrEee.Modding.Loaders
 				empsFolder = Path.Combine("Pictures", "Races");
 			else
 				empsFolder = Path.Combine(ModPath, "Pictures", "Races");
-			foreach (var empFolder in Directory.GetDirectories(empsFolder))
+			if (Directory.Exists(empsFolder))
 			{
-				var script = Script.Load(Path.Combine(empFolder, "AI"));
-				if (script == null)
-					continue; // script does not exist for this shipset
-				var ministers = new SafeDictionary<string, ICollection<string>>();
-				string curCategory = "Uncategorized";
-				var ministersFile = Path.Combine(empFolder, "AI.ministers");
-				if (File.Exists(ministersFile))
+				foreach (var empFolder in Directory.GetDirectories(empsFolder))
 				{
-					foreach (var line in File.ReadAllLines(ministersFile))
+					var script = Script.Load(Path.Combine(empFolder, "AI"));
+					if (script == null)
+						continue; // script does not exist for this shipset
+					var ministers = new SafeDictionary<string, ICollection<string>>();
+					string curCategory = "Uncategorized";
+					var ministersFile = Path.Combine(empFolder, "AI.ministers");
+					if (File.Exists(ministersFile))
 					{
-						if (line.StartsWith("\t"))
+						foreach (var line in File.ReadAllLines(ministersFile))
 						{
-							// found a minister name
-							var ministerName = line.Substring(1);
-							if (ministers[curCategory] == null)
-								ministers[curCategory] = new List<string>();
-							ministers[curCategory].Add(ministerName);
-						}
-						else
-						{
-							// found a minister category
-							curCategory = line;
+							if (line.StartsWith("\t"))
+							{
+								// found a minister name
+								var ministerName = line.Substring(1);
+								if (ministers[curCategory] == null)
+									ministers[curCategory] = new List<string>();
+								ministers[curCategory].Add(ministerName);
+							}
+							else
+							{
+								// found a minister category
+								curCategory = line;
+							}
 						}
 					}
+					var ai = new AI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
+					mod.EmpireAIs.Add(ai);
 				}
-				var ai = new AI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
-				mod.EmpireAIs.Add(ai);
 			}
 		}
 
