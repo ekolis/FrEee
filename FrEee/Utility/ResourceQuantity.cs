@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Utility
 {
@@ -196,6 +197,20 @@ namespace FrEee.Utility
 			if (obj is ResourceQuantity)
 				return CompareTo((ResourceQuantity)obj);
 			return this.Sum(kvp => kvp.Value).CompareTo(obj.ToString().ToInt());
+		}
+
+		public static ResourceQuantity Parse(string s)
+		{
+			var q = new ResourceQuantity();
+			var resSplit = s.Split(',').Select(sub => sub.Trim());
+			foreach (var res in resSplit)
+			{
+				var pos = res.IndexOf(" ");
+				var amount = res.Substring(0, pos);
+				var resName = res.Substring(pos + 1);
+				q.Add(Resource.Find(resName), int.Parse(amount));
+			}
+			return q;
 		}
 	}
 }

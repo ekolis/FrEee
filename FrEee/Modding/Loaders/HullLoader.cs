@@ -26,9 +26,8 @@ namespace FrEee.Modding.Loaders
 			foreach (var rec in DataFile.Records)
 			{
 				IHull<IVehicle> hull;
-				int index = -1;
-				var hullname = rec.GetString("Name", ref index, true, 0, true);
-				var hulltype = rec.GetString("Vehicle Type", ref index, true, 0, true);
+				var hullname = rec.Get<string>("Name", null);
+				var hulltype = rec.Get<string>("Vehicle Type", null);
 				switch (hulltype)
 				{
 					case "Ship":
@@ -62,9 +61,9 @@ namespace FrEee.Modding.Loaders
 				hull.Name = hullname;
 				mod.Hulls.Add(hull);
 
-				hull.ShortName = rec.GetString("Short Name", ref index, true, 0, true);
-				hull.Description = rec.GetString("Description", ref index, true, 0, true);
-				hull.Code = rec.GetString("Code", ref index, true, 0, true);
+				hull.ShortName = rec.Get<string>("Short Name", hull);
+				hull.Description = rec.Get<string>("Description", hull);
+				hull.Code = rec.Get<string>("Code", hull);
 
 				var bitmapfields = rec.Fields.Where(f => f.Name.EndsWith("Bitmap Name"));
 				foreach (var f in bitmapfields)
@@ -72,27 +71,27 @@ namespace FrEee.Modding.Loaders
 					hull.PictureNames.Add(f.Value);
 				}
 
-				hull.Size = rec.GetInt("Tonnage", ref index, true, 0, true);
+				hull.Size = rec.Get<int>("Tonnage", hull);
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
 					hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
-				hull.Mass = rec.GetInt("Engines Per Move", ref index, true, 0, true);
+				hull.Mass = rec.Get<int>("Engines Per Move", hull);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec))
+				foreach (var tr in TechnologyRequirementLoader.Load(rec, hull))
 					hull.TechnologyRequirements.Add(tr);
 
-				foreach (var abil in AbilityLoader.Load(rec))
+				foreach (var abil in AbilityLoader.Load(rec, hull))
 					hull.Abilities.Add(abil);
 
-				hull.NeedsBridge = rec.GetBool("Requirement Must Have Bridge", ref index, true, 0, true);
-				hull.CanUseAuxiliaryControl = rec.GetBool("Requirement Can Have Aux Con", ref index, true, 0, true);
-				hull.MinLifeSupport = rec.GetInt("Requirement Min Life Support", ref index, true, 0, true);
-				hull.MinCrewQuarters = rec.GetInt("Requirement Min Crew Quarters", ref index, true, 0, true);
-				hull.MaxEngines = rec.GetInt("Requirement Max Engines", ref index, true, 0, true);
-				hull.MinPercentFighterBays = rec.GetInt("Requirement Pct Fighter Bays", ref index, true, 0, true);
-				hull.MinPercentColonyModules = rec.GetInt("Requirement Pct Colony Mods", ref index, true, 0, true);
-				hull.MinPercentCargoBays = rec.GetInt("Requirement Pct Cargo", ref index, true, 0, true);
+				hull.NeedsBridge = rec.Get<bool>("Requirement Must Have Bridge", hull);
+				hull.CanUseAuxiliaryControl = rec.Get<bool>("Requirement Can Have Aux Con", hull);
+				hull.MinLifeSupport = rec.Get<int>("Requirement Min Life Support", hull);
+				hull.MinCrewQuarters = rec.Get<int>("Requirement Min Crew Quarters", hull);
+				hull.MaxEngines = rec.Get<int>("Requirement Max Engines", hull);
+				hull.MinPercentFighterBays = rec.Get<int>("Requirement Pct Fighter Bays", hull);
+				hull.MinPercentColonyModules = rec.Get<int>("Requirement Pct Colony Mods", hull);
+				hull.MinPercentCargoBays = rec.Get<int>("Requirement Pct Cargo", hull);
 			}
 		}
 	}

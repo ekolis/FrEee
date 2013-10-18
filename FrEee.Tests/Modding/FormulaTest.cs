@@ -2,6 +2,9 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FrEee.Modding;
+using FrEee.Modding.Templates;
+using FrEee.Modding.Loaders;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Tests.Modding
 {
@@ -35,8 +38,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 
 			var recs = metarec.Instantiate();
 			Assert.AreEqual(15, recs.Count());
-			int index = 0;
-			Assert.AreEqual(1, recs.Where(r => r.GetString("Name", ref index) == "Nuclear Missile III S4").Count());
+			Assert.AreEqual(1, recs.Where(r => r.Get<string>("Name", null) == "Nuclear Missile III S4").Count());
 		}
 
 		/// <summary>
@@ -50,8 +52,20 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 			Assert.AreEqual(0, metarec.Parameters.Count());
 			var recs = metarec.Instantiate();
 			Assert.AreEqual(1, recs.Count());
-			int index = 0;
-			Assert.AreEqual("Capital Ship Missile I", recs.First().GetString("Name", ref index));
+			Assert.AreEqual<string>("Capital Ship Missile I", recs.First().Get<string>("Name", null));
+		}
+
+		/// <summary>
+		/// Tests dynamic formulas.
+		/// </summary>
+		[TestMethod]
+		public void DynamicFormula()
+		{
+			var mod = new Mod();
+			var armor = new ComponentTemplate();
+			armor.Size = 10;
+			armor.Durability = new Formula<int>(armor, "self.Size * 3", FormulaType.Dynamic);
+			Assert.AreEqual<int>(30, armor.Durability);
 		}
 	}
 }

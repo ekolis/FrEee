@@ -28,17 +28,17 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				sos.Name = rec.GetString("Name", ref index, true, 0, true);
-				sos.StellarObjectType = rec.GetString("Physical Type", ref index, true, 0, true);
-				sos.StellarSize = rec.GetEnum<StellarSize>("Stellar Size", ref index, true, 0, true);
-				sos.MaxFacilities = rec.GetInt("Max Facilities", ref index, true, 0, true);
-				sos.MaxPopulation = rec.GetInt("Max Population", ref index, true, 0, true) * mod.Settings.PopulationFactor;
-				sos.MaxCargo = rec.GetInt("Max Cargo Spaces", ref index, true, 0, true);
-				sos.MaxFacilitiesDomed = rec.GetInt("Max Facilities Domed", ref index, true, 0, true);
-				sos.MaxPopulationDomed = rec.GetInt("Max Population Domed", ref index, true, 0, true) * mod.Settings.PopulationFactor;
-				sos.MaxCargoDomed = rec.GetInt("Max Cargo Spaces Domed", ref index, true, 0, true);
-				sos.IsConstructed = rec.GetBool("Constructed", ref index, true, 0, true);
-				sos.ConstructionAbilityID = rec.GetString("Special Ability ID", ref index, true, 0, true);
+				sos.Name = rec.Get<string>("Name", sos);
+				sos.StellarObjectType = rec.Get<string>("Physical Type", sos);
+				sos.StellarSize = rec.Get<StellarSize>("Stellar Size", sos);
+				sos.MaxFacilities = rec.Get<int>("Max Facilities", sos);
+				sos.MaxPopulation = rec.Get<long>("Max Population", sos) * mod.Settings.PopulationFactor;
+				sos.MaxCargo = rec.Get<int>("Max Cargo Spaces", sos);
+				sos.MaxFacilitiesDomed = rec.Get<int>("Max Facilities Domed", sos);
+				sos.MaxPopulationDomed = rec.Get<long>("Max Population Domed", sos) * mod.Settings.PopulationFactor;
+				sos.MaxCargoDomed = rec.Get<int>("Max Cargo Spaces Domed", sos);
+				sos.IsConstructed = rec.Get<bool>("Constructed", sos);
+				sos.ConstructionAbilityID = rec.Get<string>("Special Ability ID", sos);
 			}
 		}
 	}

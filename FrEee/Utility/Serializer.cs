@@ -539,7 +539,7 @@ namespace FrEee.Utility
 					var sizeStr = r.ReadTo(':', log);
 					if (!int.TryParse(sizeStr, out size))
 						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-					var coll = Activator.CreateInstance(type);
+					var coll = type.Instantiate();
 					context.Add(coll);
 					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
 					Type itemType;

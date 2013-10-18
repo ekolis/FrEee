@@ -1,14 +1,20 @@
+using FrEee.Game.Interfaces;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// Requirement for a technology to be researched to a particular level.
 	/// </summary>
-	[Serializable] public class TechnologyRequirement
+	[Serializable]
+	public class TechnologyRequirement : IContainable<IResearchable>
 	{
-		public TechnologyRequirement(Technology tech, int level)
+		public TechnologyRequirement(IResearchable container, Technology tech, Formula<int> level)
 		{
+			Container = container;
 			Technology = tech;
 			Level = level;
 		}
@@ -21,6 +27,12 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The level required.
 		/// </summary>
-		public int Level { get; set; }
+		public Formula<int> Level { get; set; }
+
+		public IResearchable Container
+		{
+			get;
+			private set;
+		}
 	}
 }

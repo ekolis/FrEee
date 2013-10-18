@@ -435,7 +435,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Colony.Facilities.GetAbilityValue("Shield Generation").ToInt() + Colony.Facilities.GetAbilityValue("Planet - Shield Generation").ToInt();
+				return Colony.Facilities.GetAbilityValue("Shield Generation", this).ToInt() + Colony.Facilities.GetAbilityValue("Planet - Shield Generation", this).ToInt();
 			}
 		}
 
@@ -445,7 +445,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Colony.Facilities.GetAbilityValue("Phased Shield Generation").ToInt();
+				return Colony.Facilities.GetAbilityValue("Phased Shield Generation", this).ToInt();
 			}
 		}
 

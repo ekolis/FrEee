@@ -198,7 +198,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(this);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -215,7 +215,8 @@ namespace FrEee.Game.Objects.Space
 		public string GetSectorAbilityValue(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
-			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var sector = new Sector(this, coords);
+			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(sector);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];

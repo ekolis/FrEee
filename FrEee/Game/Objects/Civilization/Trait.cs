@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,18 +22,18 @@ namespace FrEee.Game.Objects.Civilization
 			RestrictedTraits = new List<Trait>();
 		}
 
-		public string Name
+		public Formula<string> Name
 		{
 			get;
 			set;
 		}
 
-		public string Description { get; set; }
+		public Formula<string> Description { get; set; }
 
 		/// <summary>
 		/// The cost of this trait, in empire points.
 		/// </summary>
-		public int Cost { get; set; }
+		public Formula<int> Cost { get; set; }
 
 		IEnumerable<Ability> IAbilityObject.Abilities
 		{
@@ -61,6 +63,11 @@ namespace FrEee.Game.Objects.Civilization
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		string INamed.Name
+		{
+			get { return Name; }
 		}
 	}
 }

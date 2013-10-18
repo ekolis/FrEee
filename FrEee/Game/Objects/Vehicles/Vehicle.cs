@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -89,7 +90,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return UnstackedAbilities.Stack();
+				return UnstackedAbilities.Stack(this);
 			}
 		}
 
@@ -239,7 +240,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var comps = Components.Where(comp => !comp.IsDestroyed);
-				return comps.GetAbilityValue("Shield Generation").ToInt() + comps.GetAbilityValue("Planet - Shield Generation").ToInt();
+				return comps.GetAbilityValue("Shield Generation", this).ToInt() + comps.GetAbilityValue("Planet - Shield Generation", this).ToInt();
 			}
 		}
 
@@ -251,7 +252,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var comps = Components.Where(comp => !comp.IsDestroyed);
-				return comps.GetAbilityValue("Phased Shield Generation").ToInt();
+				return comps.GetAbilityValue("Phased Shield Generation", this).ToInt();
 			}
 		}
 

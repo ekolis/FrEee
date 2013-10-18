@@ -25,20 +25,18 @@ namespace FrEee.Modding.Loaders
 				var c = new Culture();
 				mod.Cultures.Add(c);
 
-				int index = -1;
-
-				c.Name = rec.GetString("Name", ref index);
-				c.Description = rec.GetNullString("Description", ref index);
-				c.Production = rec.GetNullInt("Production", ref index) ?? 0;
-				c.Research = rec.GetNullInt("Research", ref index) ?? 0;
-				c.Intelligence = rec.GetNullInt("Intelligence", ref index) ?? 0;
-				c.Trade = rec.GetNullInt("Trade", ref index) ?? 0;
-				c.SpaceCombat = rec.GetNullInt("Space Combat", ref index) ?? 0;
-				c.GroundCombat = rec.GetNullInt("Ground Combat", ref index) ?? 0;
-				c.Happiness = rec.GetNullInt("Happiness", ref index) ?? 0;
-				c.MaintenanceReduction = rec.GetNullInt("Maintenance", ref index) ?? 0;
-				c.Construction = rec.GetNullInt("SY Rate", ref index) ?? 0;
-				c.Repair = rec.GetNullInt("Repair", ref index) ?? 0;
+				c.Name = rec.Get<string>("Name", c);
+				c.Description = rec.Get<string>("Description", c);
+				c.Production = rec.Get<int>("Production", c) ?? 0;
+				c.Research = rec.Get<int>("Research", c) ?? 0;
+				c.Intelligence = rec.Get<int>("Intelligence", c) ?? 0;
+				c.Trade = rec.Get<int>("Trade", c) ?? 0;
+				c.SpaceCombat = rec.Get<int>("Space Combat", c) ?? 0;
+				c.GroundCombat = rec.Get<int>("Ground Combat", c) ?? 0;
+				c.Happiness = rec.Get<int>("Happiness", c) ?? 0;
+				c.MaintenanceReduction = rec.Get<int>("Maintenance", c) ?? 0;
+				c.Construction = rec.Get<int>("SY Rate", c) ?? 0;
+				c.Repair = rec.Get<int>("Repair", c) ?? 0;
 			}
 		}
 	}

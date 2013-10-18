@@ -130,7 +130,7 @@ namespace FrEee.WinForms.Controls
 					HideRow(3);
 				}
 				abilityTree.IntrinsicAbilities = Component.Abilities;
-				abilityTree.Abilities = Component.Abilities.StackToTree();
+				abilityTree.Abilities = Component.Abilities.StackToTree(Component);
 			}
 		}
 

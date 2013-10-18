@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

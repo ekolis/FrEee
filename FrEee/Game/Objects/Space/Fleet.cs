@@ -387,7 +387,7 @@ namespace FrEee.Game.Objects.Space
 		public IEnumerable<Ability> Abilities
 		{
 			// TODO - stacking rules, so movement abilities and such don't stack on fleets
-			get { return UnstackedAbilities.Stack(); }
+			get { return UnstackedAbilities.Stack(this); }
 		}
 
 		public IEnumerable<Ability> UnstackedAbilities

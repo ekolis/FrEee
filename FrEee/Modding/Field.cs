@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,9 +37,20 @@ namespace FrEee.Modding
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The value of the field.
+		/// The text value of the field.
 		/// </summary>
 		public string Value { get; set; }
+
+		public Formula<T> CreateFormula<T>(object context)
+			where T : IConvertible
+		{
+			var txt = Value.TrimStart('=');
+			if (Value.StartsWith("=="))
+				return new Formula<T>(context, txt, FormulaType.Dynamic);
+			else if (Value.StartsWith("="))
+				return new Formula<T>(context, txt, FormulaType.Static);
+			return new Formula<T>(context, txt, FormulaType.Literal);
+		}
 
 		public override string ToString()
 		{
@@ -51,6 +63,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public double DoubleValue(Record rec)
 		{
 			double d;
@@ -65,6 +78,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public int IntValue(Record rec)
 		{
 			int i;
@@ -79,6 +93,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public long LongValue(Record rec)
 		{
 			long l;
@@ -93,6 +108,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public bool BoolValue(Record rec)
 		{
 			bool b;
@@ -107,6 +123,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public T EnumValue<T>(Record rec) where T : struct
 		{
 			T t;
@@ -121,6 +138,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public double? NullDoubleValue()
 		{
 			double d;
@@ -135,6 +153,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public int? NullIntValue()
 		{
 			int i;
@@ -149,6 +168,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public long? NullLongValue()
 		{
 			long l;
@@ -163,6 +183,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public bool? NullBoolValue()
 		{
 			bool b;
@@ -177,6 +198,7 @@ namespace FrEee.Modding
 		/// <param name="f"></param>
 		/// <param name="rec"></param>
 		/// <returns></returns>
+		[Obsolete("Use CreateFormula instead.")]
 		public T? NullEnumValue<T>() where T : struct
 		{
 			T t;

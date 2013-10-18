@@ -7,6 +7,7 @@ namespace FrEee.Modding
 {
 	/// <summary>
 	/// Modifiers to production/construction rate from population.
+	/// TODO - let population modifiers take a formula parameter so we don't need to list a gazillion of them!
 	/// </summary>
 	public class PopulationModifier
 	{

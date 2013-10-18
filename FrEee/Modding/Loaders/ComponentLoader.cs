@@ -31,33 +31,33 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				c.Name = rec.GetString("Name", ref index, true, 0, true);
-				c.Description = rec.GetString("Description", ref index, true, 0, true);
+				c.Name = rec.Get<string>("Name", c);
+				c.Description = rec.Get<string>("Description", c);
 				
 				var picfield = rec.FindField("Pic", ref index, false, 0, true);
 				if (picfield != null)
-					c.PictureName = picfield.Value;
+					c.PictureName = picfield.CreateFormula<string>(c);
 				else
-					c.PictureName = "Comp_" + rec.GetInt("Pic Num", ref index, true, 0, true).ToString("000"); // for compatibility with SE4
+					c.PictureName = "Comp_" + rec.Get<int>("Pic Num", c).Value.ToString("000"); // for compatibility with SE4
 
-				c.Size = rec.GetInt("Tonnage Space Taken", ref index, true, 0, true);
-				c.Durability = rec.GetInt("Tonnage Structure", ref index, true, 0, true);
+				c.Size = rec.Get<int>("Tonnage Space Taken", c);
+				c.Durability = rec.Get<int>("Tonnage Structure", c);
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					c.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
+					c.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(c);
 
 				var vtoverridefield = rec.FindField(new string[]{"Vehicle List Type Override", "Vechicle List Type Override"}, ref index, false, 0, true); // silly Aaron can't spell "vehicle"
 				if (vtoverridefield != null)
 					c.VehicleTypes = ParseVehicleTypes(vtoverridefield.Value, ",", rec);
 				else
-					c.VehicleTypes = ParseVehicleTypes(rec.GetString("Vehicle Type", ref index, true, 0, true), @"\", rec);
+					c.VehicleTypes = ParseVehicleTypes(rec.Get<string>("Vehicle Type", c), @"\", rec);
 
-				c.SupplyUsage = rec.GetInt("Supply Amount Used", ref index, true, 0, true);
+				c.SupplyUsage = rec.Get<int>("Supply Amount Used", c);
 
-				var restrictions = rec.GetString("Restrictions", ref index, false, 0, true);
+				var restrictions = rec.Get<string>("Restrictions", c);
 				if (!string.IsNullOrEmpty(restrictions) && restrictions != "None")
 				{
-					var word = restrictions.Split(' ').First();
+					var word = restrictions.Value.Split(' ').First();
 					int num;
 					if (numbers.Contains(word))
 						c.MaxPerVehicle = numbers.IndexOf(word);
@@ -67,15 +67,15 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Can't parse \"" + word + "\" as a max-per-vehicle restriction.", Mod.CurrentFileName, rec));
 				}
 
-				c.Group = rec.GetString("General Group", ref index, true, 0, true);
-				c.Family = rec.GetString("Family", ref index, true, 0, true);
-				c.RomanNumeral = rec.GetInt("Roman Numeral", ref index, true, 0, true);
-				c.StellarConstructionGroup = rec.GetString("Custom Group", ref index, true, 0, true);
+				c.Group = rec.Get<string>("General Group", c);
+				c.Family = rec.Get<string>("Family", c);
+				c.RomanNumeral = rec.Get<int>("Roman Numeral", c);
+				c.StellarConstructionGroup = rec.Get<string>("Custom Group", c);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec))
+				foreach (var tr in TechnologyRequirementLoader.Load(rec, c))
 					c.TechnologyRequirements.Add(tr);
 
-				foreach (var abil in AbilityLoader.Load(rec))
+				foreach (var abil in AbilityLoader.Load(rec, c))
 					c.Abilities.Add(abil);
 
 				var wfield = rec.FindField("Weapon Type", ref index, false, 0, true);
@@ -85,14 +85,14 @@ namespace FrEee.Modding.Loaders
 					if (wfield.Value == "Seeking" || wfield.Value == "Seeking Point-Defense")
 					{
 						var sw = new SeekingWeaponInfo();
-						sw.SeekerSpeed = rec.GetInt("Weapon Seeker Speed", ref index, true, 0, true);
-						sw.SeekerDurability = rec.GetInt("Weapon Seeker Dmg Res", ref index, true, 0, true);
+						sw.SeekerSpeed = rec.Get<int>("Weapon Seeker Speed", c);
+						sw.SeekerDurability = rec.Get<int>("Weapon Seeker Dmg Res", c);
 						w = sw;
 					}
 					else if (wfield.Value == "Direct Fire" || wfield.Value == "Point-Defense")
 					{
 						var dfw = new DirectFireWeaponInfo();
-						dfw.AccuracyModifier = rec.GetInt("Weapon Modifier", ref index, true, 0, true);
+						dfw.AccuracyModifier = rec.Get<int>("Weapon Modifier", c);
 						w = dfw;
 					}
 					else if (wfield.Value == "Warhead" || wfield.Value == "Warhead Point-Defense")
@@ -113,12 +113,12 @@ namespace FrEee.Modding.Loaders
 						if (wtoverridefield != null)
 							w.Targets = ParseWeaponTargets(wtoverridefield.Value, ",", rec);
 						else
-							w.Targets = ParseWeaponTargets(rec.GetString("Weapon Target", ref index, true, 0, true), @"\", rec);
+							w.Targets = ParseWeaponTargets(rec.Get<string>("Weapon Target",c), @"\", rec);
 
-						var dmgstr = rec.GetString("Weapon Damage At Rng", ref index, true, 0, true);
+						var dmgstr = rec.Get<string>("Weapon Damage At Rng", c);
 						try
 						{
-							var dmg = dmgstr.Split(' ').Select(s => int.Parse(s)).ToList();
+							var dmg = dmgstr.Value.Split(' ').Select(s => int.Parse(s)).ToList();
 							if (w is SeekingWeaponInfo && dmg.Count >= 20)
 							{
 								// infinite range seekers!
@@ -134,12 +134,12 @@ namespace FrEee.Modding.Loaders
 						}
 
 						// TODO - populate damage types once we implement them
-						w.DamageType = new DamageType { Name = rec.GetString("Weapon Damage Type", ref index, true, 0, true)};
+						w.DamageType = new DamageType { Name = rec.Get<string>("Weapon Damage Type", c)};
 
-						w.ReloadRate = rec.GetInt("Weapon Reload Rate", ref index, true, 0, true);
+						w.ReloadRate = rec.Get<int>("Weapon Reload Rate", c);
 
-						var wdisptype = rec.GetString("Weapon Display Type", ref index, true, 0, true);
-						var wdispname = rec.GetString("Weapon Display", ref index, true, 0, true);
+						var wdisptype = rec.Get<string>("Weapon Display Type", c);
+						var wdispname = rec.Get<string>("Weapon Display", c);
 						if (wdisptype == "Beam")
 							w.DisplayEffect = new BeamWeaponDisplayEffect { Name = wdispname };
 						else if (wdisptype == "Torp" || wdisptype == "Torpedo" || wdisptype == "Projectile")
@@ -153,8 +153,8 @@ namespace FrEee.Modding.Loaders
 						if (wdisptype == "Beam" && w is SeekingWeaponInfo)
 							Mod.Errors.Add(new DataParsingException("A seeking weapon cannot use a beam display effect.", Mod.CurrentFileName, rec));
 
-						w.Sound = rec.GetString("Weapon Sound", ref index, true, 0, true);
-						w.Family = rec.GetString("Weapon Family", ref index, true, 0, true);
+						w.Sound = rec.Get<string>("Weapon Sound", c);
+						w.Family = rec.Get<string>("Weapon Family", c);
 					}
 					c.WeaponInfo = w;
 				}

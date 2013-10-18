@@ -29,24 +29,24 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				f.Name = rec.GetString("Name", ref index, true, 0, true);
-				f.Description = rec.GetString("Description", ref index, true, 0, true);
-				f.Group = rec.GetString("Facility Group", ref index, true, 0, true);
-				f.Family = rec.GetString("Facility Family", ref index, true, 0, true);
-				f.RomanNumeral = rec.GetInt("Roman Numeral", ref index, true, 0, true);
+				f.Name = rec.Get<string>("Name", f);
+				f.Description = rec.Get<string>("Description", f);
+				f.Group = rec.Get<string>("Facility Group", f);
+				f.Family = rec.Get<string>("Facility Family", f);
+				f.RomanNumeral = rec.Get<int>("Roman Numeral", f);
 				var picfield = rec.FindField("Pic", ref index, false, 0, true);
 				if (picfield != null)
 					f.PictureName = picfield.Value;
 				else
-					f.PictureName = "Facil_" + rec.GetInt("Pic Num", ref index, true, 0, true).ToString("000"); // for compatibility with SE4
+					f.PictureName = "Facil_" + rec.Get<int>("Pic Num", f).Value.ToString("000"); // for compatibility with SE4
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
 					f.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec))
+				foreach (var tr in TechnologyRequirementLoader.Load(rec, f))
 					f.TechnologyRequirements.Add(tr);
 
-				foreach (var abil in AbilityLoader.Load(rec))
+				foreach (var abil in AbilityLoader.Load(rec, f))
 					f.Abilities.Add(abil);
 			}
 		}

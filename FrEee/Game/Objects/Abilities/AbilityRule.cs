@@ -37,16 +37,16 @@ namespace FrEee.Game.Objects.Abilities
 		/// </summary>
 		/// <param name="abilities"></param>
 		/// <returns></returns>
-		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities)
+		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, object stackingTo)
 		{
 			var ours = abilities.Where(a => a.Name == Name).ToArray();
 
 			// group abilities
 			IEnumerable<IGrouping<string, Ability>> grouped;
 			if (GroupingRule == AbilityGroupingRule.GroupByValue1)
-				grouped = ours.GroupBy(a => a.Value1);
+				grouped = ours.GroupBy(a => a.Value1.Value);
 			else if (GroupingRule == AbilityGroupingRule.GroupByValue2)
-				grouped = ours.GroupBy(a => a.Value2);
+				grouped = ours.GroupBy(a => a.Value2.Value);
 			else
 				grouped = ours.GroupBy(a => "");
 
@@ -54,7 +54,7 @@ namespace FrEee.Game.Objects.Abilities
 			var list = new List<Tuple<Ability, Ability>>();
 			foreach (var group in grouped)
 			{
-				var stacked = Stack(group);
+				var stacked = Stack(group, stackingTo);
 				foreach (var stack in stacked)
 				{
 					foreach (var abil in stack)
@@ -65,12 +65,12 @@ namespace FrEee.Game.Objects.Abilities
 			return list.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
-		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities)
+		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, object stackingTo)
 		{
 			if (abilities.Count() <= 1)
 				return abilities.ToLookup(a => a, a => a);
 
-			Ability result = new Ability();
+			Ability result = new Ability(stackingTo);
 			result.Name = abilities.First().Name;
 			foreach (var abil in abilities)
 			{
@@ -88,8 +88,8 @@ namespace FrEee.Game.Objects.Abilities
 							return abilities.ToLookup(a => a, a => a);
 					}
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
-					double? oldval = result.Values.Count > i ? (double?)result.Values[i].ToDouble() : null;
-					double incoming = abil.Values.Count > i ? abil.Values[i].ToDouble() : 0;
+					double? oldval = result.Values.Count > i ? (double?)result.Values[i].Value.ToDouble() : null;
+					double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
 					double newval = oldval ?? 0;
 					if (rule == AbilityValueStackingRule.Add)
 						newval = (oldval ?? 0) + incoming;
@@ -122,7 +122,7 @@ namespace FrEee.Game.Objects.Abilities
 				}
 			}
 			if (result.Values.Any())
-				result.Description = result.Name + ": " + string.Join(", ", result.Values.ToArray());
+				result.Description = result.Name + ": " + string.Join(", ", result.Values.Select(v => v.Value).ToArray());
 			else
 				result.Description = result.Name;
 			return abilities.ToLookup(a => result, a => a);

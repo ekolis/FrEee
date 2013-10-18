@@ -9,6 +9,8 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -22,39 +24,44 @@ namespace FrEee.Game.Objects.Technology
 		{
 			Abilities = new List<Ability>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
-			Cost = new ResourceQuantity();
+			Cost = new ResourceFormula(this);
 		}
 
 		/// <summary>
 		/// The name of the facility.
 		/// </summary>
-		public string Name { get; set; }
+		public Formula<string> Name { get; set; }
+
+		string INamed.Name
+		{
+			get { return Name; }
+		}
 
 		/// <summary>
 		/// A description of the facility.
 		/// </summary>
-		public string Description { get; set; }
+		public Formula<string> Description { get; set; }
 
 		/// <summary>
 		/// The group that the facility belongs to. Used for grouping on the construction queue screen.
 		/// </summary>
-		public string Group { get; set; }
+		public Formula<string> Group { get; set; }
 
 		/// <summary>
 		/// The family that the facility belongs to. Used for "Only Latest" on the construction queue screen.
 		/// </summary>
-		public string Family { get; set; }
+		public Formula<string> Family { get; set; }
 
 		/// <summary>
 		/// The value of the Roman numeral that should be displayed on the facility's icon.
 		/// </summary>
-		public int RomanNumeral { get; set; }
+		public Formula<int> RomanNumeral { get; set; }
 
 		/// <summary>
 		/// Name of the picture used to represent this facility, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
 		/// </summary>
-		public string PictureName { get; set; }
+		public Formula<string> PictureName { get; set; }
 
 		[DoNotSerialize] public Image Icon
 		{
@@ -69,7 +76,15 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The cost to build the facility.
 		/// </summary>
-		public ResourceQuantity Cost { get; set; }
+		public ResourceFormula Cost { get; set; }
+
+		ResourceQuantity IConstructionTemplate.Cost
+		{
+			get
+			{
+				return Cost;
+			}
+		}
 
 		/// <summary>
 		/// The technology requirements for this facility.

@@ -37,25 +37,24 @@ namespace FrEee.Modding.Loaders
 				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
 				tech.Description = temp;
 
-				tech.MaximumLevel = rec.FindField("Maximum Level", ref index, true, 0, true).IntValue(rec);
-				tech.LevelCost = rec.FindField("Level Cost", ref index, true, 0, true).IntValue(rec);
-				tech.StartLevel = rec.FindField("Start Level", ref index, true, 0, true).IntValue(rec);
-				tech.RaiseLevel = rec.FindField("Raise Level", ref index, true, 0, true).IntValue(rec);
-				tech.RacialTechID = rec.FindField("Racial Area", ref index, true, 0, true).Value;
-				tech.UniqueTechID = rec.FindField("Unique Area", ref index, true, 0, true).Value;
-				tech.CanBeRemoved = rec.FindField("Can Be Removed", ref index, true, 0, true).BoolValue(rec);
+				tech.MaximumLevel = rec.Get<int>("Maximum Level", tech);
+				tech.LevelCost = rec.Get<int>("Level Cost", tech);
+				tech.StartLevel = rec.Get<int>("Start Level", tech);
+				tech.RaiseLevel = rec.Get<int>("Raise Level Level", tech);
+				tech.RacialTechID = rec.Get<string>("Racial Area", tech);
+				tech.UniqueTechID = rec.Get<string>("Unique Area", tech);
+				tech.CanBeRemoved = rec.Get<bool>("Can Be Removed", tech);
 
 			}
 
 			foreach (var tech in mod.Technologies)
 			{
 				// find this tech's record
-				int index = -1;
-				var rec = DataFile.Records.Single(r => r.GetString("Name", ref index, false, 0, true) == tech.Name);
+				var rec = DataFile.Records.Single(r => r.Get<string>("Name", null) == tech.Name);
 
 				// load its tech reqs
 				// couldn't do it before because some early techs can reference later techs
-				foreach (var tr in TechnologyRequirementLoader.Load(rec))
+				foreach (var tr in TechnologyRequirementLoader.Load(rec, tech))
 					tech.TechnologyRequirements.Add(tr);
 			}
 		}

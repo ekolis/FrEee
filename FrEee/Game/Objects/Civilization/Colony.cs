@@ -41,7 +41,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IEnumerable<Ability> Abilities
 		{
-			get { return UnstackedAbilities.Stack(); }
+			get { return UnstackedAbilities.Stack(this); }
 		}
 
 		public IEnumerable<Ability> UnstackedAbilities

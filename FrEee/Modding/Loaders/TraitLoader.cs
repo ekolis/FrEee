@@ -28,16 +28,16 @@ namespace FrEee.Modding.Loaders
 				t = new Trait();
 				mod.Traits.Add(t);
 
-				t.Name = rec.GetString("Name", ref index, true);
-				t.Description = rec.GetString("Description", ref index);
-				t.Cost = rec.GetInt("Cost", ref index, true);
+				t.Name = rec.Get<string>("Name", t);
+				t.Description = rec.Get<string>("Description", t);
+				t.Cost = rec.Get<int>("Cost", t);
 
 				for (int count = 1; ; count++)
 				{
 					var f = rec.FindField(new string[] { "Trait Type", "Trait Type " + count }, ref index, false, index + 1);
 					if (f == null)
 						break;
-					var abil = new Ability();
+					var abil = new Ability(t);
 					abil.Name = f.Value;
 					for (int vcount = 1; ; vcount++)
 					{
@@ -50,7 +50,7 @@ namespace FrEee.Modding.Loaders
 				}
 
 				if (t.Abilities.Count == 0)
-					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
+					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name.Value + "\" does not have any abilities.", Mod.CurrentFileName, rec));
 			}
 
 			// second pass for required/restricted traits
@@ -58,7 +58,7 @@ namespace FrEee.Modding.Loaders
 			{
 				index = -1;
 
-				t = mod.Traits.Single(t2 => t2.Name == rec.GetString("Name", ref index));
+				t = mod.Traits.Single(t2 => t2.Name == rec.Get<string>("Name", null));
 
 				for (int count = 1; ; count++)
 				{

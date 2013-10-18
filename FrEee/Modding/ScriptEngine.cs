@@ -173,7 +173,7 @@ namespace FrEee.Modding
 			var scope = CreateScope(variables);
 			try
 			{
-				return compiledScript.Execute<T>(scope);
+				return (T)compiledScript.Execute(scope);
 			}
 			catch (Exception ex)
 			{

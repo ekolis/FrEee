@@ -21,6 +21,7 @@ using FrEee.Game.Enumerations;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Dynamic;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Utility.Extensions
 {
@@ -199,13 +200,14 @@ namespace FrEee.Utility.Extensions
 		/// so you can tell which abilities contributed to which stacked abilities.
 		/// </summary>
 		/// <param name="abilities"></param>
+		/// <param name="stackTo">The object which should own the stacked abilities.</param>
 		/// <returns></returns>
-		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities)
+		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, object stackTo)
 		{
 			var stacked = new List<Tuple<Ability, Ability>>();
 			foreach (var rule in Mod.Current.AbilityRules)
 			{
-				var lookup = rule.GroupAndStack(abilities);
+				var lookup = rule.GroupAndStack(abilities, stackTo);
 				foreach (var group in lookup)
 				{
 					foreach (var abil in group)
@@ -217,19 +219,19 @@ namespace FrEee.Utility.Extensions
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
-		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities)
+		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, object stackTo)
 		{
-			return abilities.StackToTree().Select(g => g.Key);
+			return abilities.StackToTree(stackTo).Select(g => g.Key);
 		}
 
-		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs)
+		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, object stackTo)
 		{
-			return objs.SelectMany(obj => obj.Abilities).Stack();
+			return objs.SelectMany(obj => obj.Abilities).Stack(stackTo);
 		}
 
-		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs)
+		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs, object stackTo)
 		{
-			return objs.SelectMany(obj => obj.Abilities).StackToTree();
+			return objs.SelectMany(obj => obj.Abilities).StackToTree(stackTo);
 		}
 
 		/// <summary>
@@ -783,15 +785,15 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The ability value.</returns>
 		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = obj.Abilities.Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = obj.Abilities.Where(a => a.Name == name && (filter == null || filter(a))).Stack(obj);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name,object stackTo, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack();
+			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(stackTo);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -1759,6 +1761,34 @@ namespace FrEee.Utility.Extensions
 		public static bool HasProperty(this ExpandoObject obj, string propertyName)
 		{
 			return obj.GetType().GetProperty(propertyName) != null;
+		}
+
+		/// <summary>
+		/// Parses a string using the type's static Parse method.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public static T Parse<T>(this string s)
+		{
+			var parser = typeof(T).GetMethod("Parse", BindingFlags.Static);
+			var expr = Expression.Call(parser);
+			return (T)expr.Method.Invoke(null, new object[] { s });
+		}
+
+		/// <summary>
+		/// Converts to a string using the invariant culture.
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		public static string ToStringInvariant(this IConvertible c)
+		{
+			return (string)Convert.ChangeType(c, typeof(string), CultureInfo.InvariantCulture);
+		}
+
+		public static string CamelCase(this string s)
+		{
+			return s[0].ToString().ToLowerInvariant() + s.Substring(1);
 		}
 	}
 }

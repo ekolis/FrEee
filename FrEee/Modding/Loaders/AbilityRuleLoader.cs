@@ -28,15 +28,15 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				r.Name = rec.GetString("Name", ref index, true, 0, true);
-				r.GroupingRule = rec.GetEnum<AbilityGroupingRule>("Grouping Rule", ref index, true, 0, true);
+				r.Name = rec.Get<string>("Name", null);
+				r.GroupingRule = rec.Get<AbilityGroupingRule>("Grouping Rule", null);
 				for (int i = 1; i <= 2; i++)
 				{
 					var f = rec.FindField("Value " + i + " Stacking Rule", ref index, false, 0, true);
 					if (f == null)
 						r.StackingRules.Add(AbilityValueStackingRule.DoNotStack);
 					else
-						r.StackingRules.Add(f.EnumValue<AbilityValueStackingRule>(rec));
+						r.StackingRules.Add(f.CreateFormula<AbilityValueStackingRule>(null));
 				}
 				int j = 3;
 				while (true)

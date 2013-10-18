@@ -145,7 +145,7 @@ namespace FrEee.WinForms.Forms
 				IEnumerable<ComponentTemplate> comps = Empire.Current.UnlockedItems.OfType<ComponentTemplate>();
 
 				// filter by vehicle type
-				comps = comps.Where(comp => comp.VehicleTypes.HasFlag(Design.VehicleType));
+				comps = comps.Where(comp => comp.VehicleTypes.Value.HasFlag(Design.VehicleType));
 
 				// filter by can-use-mount if the user wants to
 				if (chkFilterByMount.Checked)

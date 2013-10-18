@@ -32,12 +32,12 @@ namespace FrEee.Modding.Loaders
 				sabil.Name = temp;
 				mod.StellarAbilityTemplates.Add(sabil);
 
-				foreach (var abil in LoadRecord(rec))
+				foreach (var abil in LoadRecord(rec, sabil))
 					sabil.AbilityChances.Add(abil);
 			}
 		}
 
-		private static IEnumerable<AbilityChance> LoadRecord(Record rec)
+		private static IEnumerable<AbilityChance> LoadRecord(Record rec, RandomAbilityTemplate rat)
 		{
 			int count = 0;
 			int start = 0;
@@ -45,7 +45,7 @@ namespace FrEee.Modding.Loaders
 			{
 				count++;
 				var ac = new AbilityChance();
-				ac.Ability = new Ability();
+				ac.Ability = new Ability(rat);
 				string temp;
 
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Chance", "Ability Chance" }, out temp, ref start, null, start, true))

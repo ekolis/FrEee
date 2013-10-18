@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -90,10 +92,10 @@ namespace FrEee.Game.Objects.Technology
 			{
 				return ComponentTemplate.Abilities.Select(a =>
 					{
-						var result = new Ability
+						var result = new Ability(this)
 						{
 							Name = a.Name,
-							Values = new List<string>(a.Values),
+							Values = new List<Formula<string>>(a.Values),
 							Description = a.Description,
 						};
 						if (Mount != null)

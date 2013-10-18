@@ -221,7 +221,7 @@ namespace FrEee.Utility
 			sf.Alignment = StringAlignment.Far;
 			sf.LineAlignment = StringAlignment.Far;
 			if (f.RomanNumeral != 0)
-				g.DrawString(f.RomanNumeral.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
+				g.DrawString(f.RomanNumeral.Value.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
 			return thumb;
 		}
 
@@ -266,7 +266,7 @@ namespace FrEee.Utility
 			sf.Alignment = StringAlignment.Far;
 			sf.LineAlignment = StringAlignment.Far;
 			if (c.RomanNumeral != 0)
-				g.DrawString(c.RomanNumeral.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
+				g.DrawString(c.RomanNumeral.Value.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
 			return thumb;
 		}
 

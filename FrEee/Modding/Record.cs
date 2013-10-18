@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Modding.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -99,6 +100,7 @@ namespace FrEee.Modding
 		/// <param name="allowSkip">Allow skipping fields to find the one we want?</param>
 		/// <returns>true on success, false on failure</returns>
 		// TODO - change method signature to take a bool instead of a collection of errors
+		[Obsolete("Use the various Get methods instead (e.g. GetString).")]
 		public bool TryFindFieldValue(IEnumerable<string> fieldNames, out string value, ref int index, ICollection<DataParsingException> log = null, int startIndex = 0, bool allowSkip = true)
 		{
 			var field = FindField(fieldNames, ref index, log != null, startIndex, allowSkip);
@@ -114,149 +116,41 @@ namespace FrEee.Modding
 			}
 		}
 
-		public double GetDouble(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
+		public Formula<T> Get<T>(string fieldName, object context, bool allowNulls = true)
+			where T : IConvertible
 		{
-			return GetDouble(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+			int index = 0;
+			return Get<T>(fieldName, context, ref index, allowNulls);
 		}
 
-		public int GetInt(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
+		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
+			where T : IConvertible
 		{
-			return GetInt(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+			int index = 0;
+			return Get<T>(fieldNames, context, ref index, allowNulls);
 		}
 
-		public bool GetBool(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
+		public Formula<T> Get<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IConvertible
 		{
-			return GetBool(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
+			return Get<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
 		}
 
-		public string GetString(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
+		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IConvertible
 		{
-			return GetString(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
-		}
-
-		public T GetEnum<T>(string fieldName, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true) where T : struct
-		{
-			return GetEnum<T>(new string[] { fieldName }, ref index, logErrors, startIndex, allowSkip);
-		}
-
-		public double GetDouble(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
+			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
 			if (f == null)
 			{
-				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-				return 0;
+				if (allowNulls)
+					return null;
+				else
+				{
+					Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
+					return default(T);
+				}
 			}
-			return f.DoubleValue(this);
-		}
-
-		public int GetInt(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
-			if (f == null)
-			{
-				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-				return 0;
-			}
-			return f.IntValue(this);
-		}
-
-		public bool GetBool(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
-			if (f == null)
-			{
-				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-				return false;
-			}
-			return f.BoolValue(this);
-		}
-
-		public string GetString(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
-			if (f == null)
-			{
-				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-				return null;
-			}
-			return f.Value;
-		}
-
-		public T GetEnum<T>(IEnumerable<string> fieldNames, ref int index, bool logErrors = false, int startIndex = 0, bool allowSkip = true) where T : struct
-		{
-			var f = FindField(fieldNames, ref index, logErrors, startIndex, allowSkip);
-			if (f == null)
-			{
-				Mod.Errors.Add(new DataParsingException("Cannot find field \"" + fieldNames.First() + "\".", Mod.CurrentFileName, this, null));
-				return default(T);
-			}
-			return f.EnumValue<T>(this);
-		}
-
-		public double? GetNullDouble(string fieldName, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			return GetNullDouble(new string[] { fieldName }, ref index, startIndex, allowSkip);
-		}
-
-		public int? GetNullInt(string fieldName, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			return GetNullInt(new string[] { fieldName }, ref index, startIndex, allowSkip);
-		}
-
-		public bool? GetNullBool(string fieldName, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			return GetNullBool(new string[] { fieldName }, ref index, startIndex, allowSkip);
-		}
-
-		public string GetNullString(string fieldName, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			return GetNullString(new string[] { fieldName }, ref index, startIndex, allowSkip);
-		}
-
-		public T? GetNullEnum<T>(string fieldName, ref int index, int startIndex = 0, bool allowSkip = true) where T : struct
-		{
-			return GetNullEnum<T>(new string[] { fieldName }, ref index, startIndex, allowSkip);
-		}
-
-		public double? GetNullDouble(IEnumerable<string> fieldNames, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, false, startIndex, allowSkip);
-			if (f == null)
-				return null;
-			return f.NullDoubleValue();
-		}
-
-		public int? GetNullInt(IEnumerable<string> fieldNames, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, false, startIndex, allowSkip);
-			if (f == null)
-				return null;
-			return f.NullIntValue();
-		}
-
-		public bool? GetNullBool(IEnumerable<string> fieldNames, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, false, startIndex, allowSkip);
-			if (f == null)
-				return null;
-			return f.NullBoolValue();
-		}
-
-		public string GetNullString(IEnumerable<string> fieldNames, ref int index, int startIndex = 0, bool allowSkip = true)
-		{
-			var f = FindField(fieldNames, ref index, false, startIndex, allowSkip);
-			if (f == null)
-				return null;
-			return f.Value;
-		}
-
-		public T? GetNullEnum<T>(IEnumerable<string> fieldNames, ref int index, int startIndex = 0, bool allowSkip = true) where T : struct
-		{
-			var f = FindField(fieldNames, ref index, false, startIndex, allowSkip);
-			if (f == null)
-				return null;
-			return f.NullEnumValue<T>();
+			return f.CreateFormula<T>(context);
 		}
 	}
 }

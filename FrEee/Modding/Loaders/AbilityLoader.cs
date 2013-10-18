@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -13,7 +14,7 @@ namespace FrEee.Modding.Loaders
 		/// Loads abilities from a record.
 		/// </summary>
 		/// <param name="rec"></param>
-		public static IEnumerable<Ability> Load(Record rec)
+		public static IEnumerable<Ability> Load(Record rec, object obj)
 		{
 			int count = 0;
 			int index = -1;
@@ -21,26 +22,26 @@ namespace FrEee.Modding.Loaders
 			{
 				count++;
 
-				var abilname = rec.GetNullString(new string[] { "Ability " + count + " Type", "Ability Type" }, ref index, index + 1, true);
+				var abilname = rec.Get<string>(new string[] { "Ability " + count + " Type", "Ability Type" }, obj);
 				if (abilname == null)
 					break; // no more abilities
 
-				var abil = new Ability();
+				var abil = new Ability(obj);
 				abil.Name = abilname;
-				abil.Description = rec.GetNullString(new string[] { "Ability " + count + " Descr", "Ability Descr" }, ref index, index + 1, false);
+				abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
 
 				int valnum = 0;
 				while (true)
 				{
 					valnum++;
 
-					var val = rec.GetNullString(new string[]
+					var val = rec.Get<string>(new string[]
 						{
 							"Ability " + count + " Val " + valnum,
 							"Ability " + count + " Val",
 							"Ability Val " + valnum,
 							"Ability Val"
-						}, ref index, index + 1, false);
+						}, obj);
 					if (val == null)
 						break;
 					abil.Values.Add(val);
@@ -49,7 +50,7 @@ namespace FrEee.Modding.Loaders
 				for (int i = 1; i < valnum; i++)
 				{
 					// replace [%Amount1%] and such
-					abil.Description.Replace("[%Amount" + i + "%]", abil.Values[i - 1]);
+					abil.Description = abil.Description.Text.Replace("[%Amount" + i + "%]", abil.Values[i - 1]);
 				}
 
 				yield return abil;
@@ -61,8 +62,9 @@ namespace FrEee.Modding.Loaders
 		/// </summary>
 		/// <param name="rec"></param>
 		/// <param name="what"></param>
+		/// <param name="obj">Formula context.</param>
 		/// <returns></returns>
-		public static IDictionary<string, IDictionary<int, int>> LoadPercentagesOrModifiers(Record rec, string what)
+		public static IDictionary<string, IDictionary<int, int>> LoadPercentagesOrModifiers(Record rec, string what, object obj)
 		{
 			var dict = new Dictionary<string, IDictionary<int,int>>();
 			int count = 0;
@@ -96,7 +98,7 @@ namespace FrEee.Modding.Loaders
 					if (valField == null)
 						break; // no more values
 
-					vals.Add(vcount, valField.IntValue(rec));
+					vals.Add(vcount, valField.CreateFormula<int>(obj));
 				}
 
 				dict.Add(abilName, vals);

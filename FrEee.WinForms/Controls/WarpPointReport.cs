@@ -49,7 +49,7 @@ namespace FrEee.WinForms.Controls
 				txtSize.Text = WarpPoint.StellarSize + " Warp Point";
 				txtDescription.Text = WarpPoint.Description;
 
-				abilityTreeView.Abilities = WarpPoint.UnstackedAbilities.StackToTree();
+				abilityTreeView.Abilities = WarpPoint.UnstackedAbilities.StackToTree(WarpPoint);
 				abilityTreeView.IntrinsicAbilities = WarpPoint.IntrinsicAbilities;
 			}
 		}

@@ -267,7 +267,7 @@ namespace FrEee.WinForms.Controls
 					lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 
 				// abilities
-				abilityTreeView.Abilities = Vehicle.UnstackedAbilities.StackToTree();
+				abilityTreeView.Abilities = Vehicle.UnstackedAbilities.StackToTree(Vehicle);
 				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities));
 			}
 		}

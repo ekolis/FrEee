@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Interfaces
 {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -16,7 +17,7 @@ namespace FrEee.Modding.Loaders
 		/// Loads technology requirements from a record.
 		/// </summary>
 		/// <param name="rec"></param>
-		public static IEnumerable<TechnologyRequirement> Load(Record rec)
+		public static IEnumerable<TechnologyRequirement> Load(Record rec, IResearchable r)
 		{
 			int count = 0;
 			int start = 0;
@@ -40,8 +41,9 @@ namespace FrEee.Modding.Loaders
 				}
 				var tr = new TechnologyRequirement
 					(
+						r,
 						Mod.Current.Technologies.Single(t => t.Name == nfield.Value),
-						lfield.IntValue(rec)
+						lfield.CreateFormula<int>(r)
 					);
 				yield return tr;
 			}

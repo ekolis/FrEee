@@ -79,7 +79,7 @@ namespace FrEee.WinForms.Controls
 				resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
 				resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);
 				abilityTree.IntrinsicAbilities = Facility.Abilities;
-				abilityTree.Abilities = Facility.Abilities.StackToTree();
+				abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
 			}
 		}
 

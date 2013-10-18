@@ -222,7 +222,7 @@ namespace FrEee.Game.Objects.Vehicles
 					yield return "You are over the hull size limit by " + (-SpaceFree).Kilotons() + ".";
 				foreach (var c in comps.Distinct())
 				{
-					if (!c.VehicleTypes.HasFlag(VehicleType))
+					if (!c.VehicleTypes.Value.HasFlag(VehicleType))
 						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
 				}
 				foreach (var comp in Components.GroupBy(mct => mct.ComponentTemplate).Select(g => g.Key))
@@ -295,7 +295,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public IEnumerable<Ability> Abilities
 		{
-			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)).Stack(); }
+			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)).Stack(this); }
 		}
 
 		public IEnumerable<Ability> UnstackedAbilities
@@ -485,7 +485,7 @@ namespace FrEee.Game.Objects.Vehicles
 					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
 				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<TechnologyRequirement>() : c.Mount.TechnologyRequirements))
 					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
-				return reqs.Select(kvp => new TechnologyRequirement(kvp.Key, kvp.Value)).ToList();
+				return reqs.Select(kvp => new TechnologyRequirement(this, kvp.Key, kvp.Value)).ToList();
 			}
 		}
 

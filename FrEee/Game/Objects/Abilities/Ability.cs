@@ -1,3 +1,6 @@
+using FrEee.Game.Interfaces;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +10,13 @@ namespace FrEee.Game.Objects.Abilities
 	/// <summary>
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
-	 [Serializable] public class Ability
+	[Serializable]
+	public class Ability : IContainable<object>
 	{
-		public Ability()
+		public Ability(object container)
 		{
-			Values = new List<string>();
+			Container = container;
+			Values = new List<Formula<string>>();
 		}
 
 		/// <summary>
@@ -22,17 +27,17 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// A description of the ability's effects.
 		/// </summary>
-		public string Description { get; set; }
+		public Formula<string> Description { get; set; }
 
 		/// <summary>
 		/// Extra data for the ability.
 		/// </summary>
-		public IList<string> Values { get; set; }
+		public IList<Formula<string>> Values { get; set; }
 
 		/// <summary>
 		/// The first value of the ability. Not all abilities have values, so this might be null!
 		/// </summary>
-		public string Value1
+		public Formula<string> Value1
 		{
 			get
 			{
@@ -43,7 +48,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// The second value of the ability. Not all abilities have two values, so this might be null!
 		/// </summary>
-		public string Value2
+		public IFormula<string> Value2
 		{
 			get
 			{
@@ -53,8 +58,10 @@ namespace FrEee.Game.Objects.Abilities
 
 		public override string ToString()
 		{
-			return Description ?? (Name + ": " + string.Join(", ", Values.ToArray()));
+			return Description ?? (Name + ": " + string.Join(", ", Values.Select(v => v.Value).ToArray()));
 		}
+
+		public object Container { get; private set; }
 	}
 
 	/// <summary>
