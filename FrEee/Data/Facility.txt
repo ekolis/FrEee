@@ -97,7 +97,7 @@ Cost Organics       := 0
 Cost Radioactives   := 0
 Number of Tech Req  := 1
 Tech Area Req 1     := Radioactives Extraction
-Tech Level Req 1    := 1
+Tech Level Req 1    := =level
 Number of Abilities := 1
 Ability 1 Type      := Resource Generation - Radioactives
 Ability 1 Descr     := Extracts [%Amount1%] radioactives each turn.
