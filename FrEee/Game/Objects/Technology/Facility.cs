@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public ResourceQuantity Cost
 		{
-			get { return Template.Cost; }
+			get { return Template.Cost.Evaluate(this); }
 		}
 
 		public ResourceQuantity ConstructionProgress
@@ -87,7 +87,7 @@ namespace FrEee.Game.Objects.Technology
 				throw new ArgumentException("Facilities can only be placed on colonized planets.");
 		}
 
-		public string Name { get { return Template.Name; } }
+		public string Name { get { return Template.Name.Evaluate(this); } }
 
 		public override string ToString()
 		{
