@@ -49,9 +49,9 @@ namespace FrEee.Game.Objects.Civilization
 			Commands = new List<ICommand>();
 			KnownDesigns = new List<IDesign>();
 			Log = new List<LogMessage>();
-			ResearchedTechnologies = new SafeDictionary<Technology.Technology, int>();
-			AccumulatedResearch = new SafeDictionary<Tech, int>();
-			ResearchSpending = new SafeDictionary<Technology.Technology, int>();
+			ResearchedTechnologies = new NamedDictionary<Technology.Technology, int>();
+			AccumulatedResearch = new NamedDictionary<Tech, int>();
+			ResearchSpending = new NamedDictionary<Technology.Technology, int>();
 			ResearchQueue = new List<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
@@ -247,7 +247,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Technologies that have been researched by this empire and the levels they have been researched to.
 		/// </summary>
-		public IDictionary<Technology.Technology, int> ResearchedTechnologies
+		public NamedDictionary<Technology.Technology, int> ResearchedTechnologies
 		{
 			get;
 			private set;
@@ -319,7 +319,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Accumulated research points.
 		/// </summary>
-		public IDictionary<Technology.Technology, int> AccumulatedResearch
+		public NamedDictionary<Technology.Technology, int> AccumulatedResearch
 		{
 			get;
 			private set;
@@ -328,7 +328,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Research spending as a percentage of budget.
 		/// </summary>
-		public IDictionary<Technology.Technology, int> ResearchSpending
+		public NamedDictionary<Technology.Technology, int> ResearchSpending
 		{
 			get;
 			private set;
