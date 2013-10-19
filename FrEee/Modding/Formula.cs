@@ -76,6 +76,8 @@ namespace FrEee.Modding
 
 		public T Evaluate(object host)
 		{
+			if (FormulaType == FormulaType.Literal)
+				return Value;
 			var variables = new Dictionary<string, object>();
 			variables.Add("self", Context);
 			variables.Add("host", host);
