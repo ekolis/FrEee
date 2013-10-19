@@ -175,7 +175,11 @@ namespace FrEee.Modding
 
 		public static Formula<T> operator +(Formula<T> f, double scalar)
 		{
-			var result = new Formula<T>(f.Context, string.Format("({0}) + {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			Formula<T> result;
+			if (typeof(T) == typeof(string) && f.FormulaType == FormulaType.Literal)
+				result = new Formula<T>(f.Context, string.Format("(\"{0}\") + str({1})", f.Text, scalar.ToStringInvariant()), FormulaType.Static).Compile();
+			else
+				result = new Formula<T>(f.Context, string.Format("({0}) + ({1})", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
 			if (f.FormulaType == FormulaType.Literal)
 				return result.Compile();
 			return result;
@@ -203,6 +207,20 @@ namespace FrEee.Modding
 			if (f.FormulaType == FormulaType.Literal)
 				return result.Compile();
 			return result;
+		}
+
+		public static Formula<string> operator +(Formula<string> f1, Formula<T> f2)
+		{
+			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+			{
+				if (typeof(T) == typeof(string))
+					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + \"{1}\"", f1.Text, f2.Text), FormulaType.Static).Compile();
+				else
+					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Text, f2.Text), FormulaType.Static).Compile();
+			}
+			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
+				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
+			return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Static);
 		}
 
 		public static bool operator ==(Formula<T> f1, Formula<T> f2)
