@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -18,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>
+	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -220,5 +221,18 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		// TODO - dynamic formula evaluation
+
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				return new Dictionary<string, object>
+				{
+					{"colony", Container.Colony},
+					{"planet", Container},
+					{"empire", Owner}
+				};
+			}
+		}
 	}
 }
