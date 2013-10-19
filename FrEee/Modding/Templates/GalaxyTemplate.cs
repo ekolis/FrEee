@@ -189,6 +189,8 @@ namespace FrEee.Modding.Templates
 					// mark systems connected
 					graph.Connect(startLocation, endLocation, true);
 				}
+				else
+					break;
 			}
 
 			return gal;
