@@ -181,7 +181,7 @@ namespace FrEee.Modding
 			else
 			{
 				imports.Add("import " + Mod.Current.GlobalScript.ModuleName + ";");
-				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + expression;
+				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression;
 				sc = new ScriptCode("expression", code, Mod.Current.GlobalScript);
 			}
 			var script = GetCodeScript(sc);
@@ -189,7 +189,8 @@ namespace FrEee.Modding
 			var scope = CreateScope(variables);
 			try
 			{
-				return (T)compiledScript.Execute(scope);
+				dynamic result = compiledScript.Execute(scope);
+				return (T)result;
 			}
 			catch (Exception ex)
 			{
