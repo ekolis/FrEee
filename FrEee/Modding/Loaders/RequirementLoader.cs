@@ -42,7 +42,7 @@ namespace FrEee.Modding.Loaders
 							new Formula<bool>(r,
 								"empire.ResearchedTechnologies[\"" + techname + "\"] >= " + levelFormula, FormulaType.Dynamic),
 							new Formula<string>(r,
-								"Requires level " + levelFormula.ToStringFormula() + " " + techname + ".", FormulaType.Dynamic));
+								"Requires level " + levelFormula.Value + " " + techname + ".", FormulaType.Dynamic));
 				}
 			}
 			start = 0;
