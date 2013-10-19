@@ -28,6 +28,7 @@ namespace FrEee.Game.Enumerations
 		Planets = Planet,
 		Seeker = 0x200,
 		Seekers = Seeker,
+		All = Ship | Base| Fighter | Satellite | Drone | Planet | Seeker,
 		Invalid = 0x400,
 	}
 }

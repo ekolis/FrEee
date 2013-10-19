@@ -1790,5 +1790,16 @@ namespace FrEee.Utility.Extensions
 		{
 			return s[0].ToString().ToLowerInvariant() + s.Substring(1);
 		}
+
+		public static Formula<TValue> BuildMultiConditionalLessThanOrEqual<TKey, TValue>(this IDictionary<TKey, TValue> thresholds, object context, string variableName, TValue defaultValue)
+			where TValue : IConvertible
+		{
+			var sorted = new SortedDictionary<TKey, TValue>(thresholds);
+			var formula = "***";
+			foreach (var kvp in sorted)
+				formula = formula.Replace("***", kvp.Value.ToStringInvariant() + " if " + variableName + " <= " + kvp.Key + " else (***)");
+			formula = formula.Replace("(***)", defaultValue.ToStringInvariant());
+			return new Formula<TValue>(context, formula, FormulaType.Dynamic);
+		}
 	}
 }

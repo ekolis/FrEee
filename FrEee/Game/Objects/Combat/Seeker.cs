@@ -57,12 +57,11 @@ namespace FrEee.Game.Objects.Combat
 			get { return (SeekingWeaponInfo)Launcher.Template.ComponentTemplate.WeaponInfo; }
 		}
 
-		public int[] Damage
+		public Formula<int> Damage
 		{
 			get
 			{
-				// TODO - let mounts affect damage
-				return WeaponInfo.Damage;
+				return Launcher.Template.WeaponDamage;
 			}
 		}
 

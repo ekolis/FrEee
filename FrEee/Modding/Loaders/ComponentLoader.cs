@@ -3,6 +3,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace FrEee.Modding.Loaders
 
 				c.Name = rec.Get<string>("Name", c);
 				c.Description = rec.Get<string>("Description", c);
-				
+
 				var picfield = rec.FindField("Pic", ref index, false, 0, true);
 				if (picfield != null)
 					c.PictureName = picfield.CreateFormula<string>(c);
@@ -46,7 +47,7 @@ namespace FrEee.Modding.Loaders
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
 					c.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(c);
 
-				var vtoverridefield = rec.FindField(new string[]{"Vehicle List Type Override", "Vechicle List Type Override"}, ref index, false, 0, true); // silly Aaron can't spell "vehicle"
+				var vtoverridefield = rec.FindField(new string[] { "Vehicle List Type Override", "Vechicle List Type Override" }, ref index, false, 0, true); // silly Aaron can't spell "vehicle"
 				if (vtoverridefield != null)
 					c.VehicleTypes = ParseVehicleTypes(vtoverridefield.Value, ",", rec);
 				else
@@ -113,28 +114,34 @@ namespace FrEee.Modding.Loaders
 						if (wtoverridefield != null)
 							w.Targets = ParseWeaponTargets(wtoverridefield.Value, ",", rec);
 						else
-							w.Targets = ParseWeaponTargets(rec.Get<string>("Weapon Target",c), @"\", rec);
+							w.Targets = ParseWeaponTargets(rec.Get<string>("Weapon Target", c), @"\", rec);
 
-						var dmgstr = rec.Get<string>("Weapon Damage At Rng", c);
-						try
+						w.MinRange = rec.Get<int>(new string[] { "Min Range", "Minimum Range" }, c) ?? 1;
+						w.MaxRange = rec.Get<int>(new string[] { "Max Range", "Maximum Range" }, c) ?? 20;
+						var dmgfield = rec.FindField(new string[] { "Damage", "Weapon Damage", "Damage At Rng", "Weapon Damage At Rng" }, ref index);
+						if (dmgfield.Value.StartsWith("="))
+							w.Damage = dmgfield.CreateFormula<int>(c);
+						else
 						{
-							var dmg = dmgstr.Value.Split(' ').Select(s => int.Parse(s)).ToList();
-							if (w is SeekingWeaponInfo && dmg.Count >= 20)
+							string dmgstr = null;
+							try
 							{
-								// infinite range seekers!
-								dmg.Insert(0, dmg.Last());
+								dmgstr = dmgfield.Value;
+								var dmg = dmgstr.Split(' ').Select(s => int.Parse(s)).ToList();
+								w.MaxRange = w.MinRange + dmg.Count - 1;
+								var dict = new Dictionary<int, int>();
+								for (int i = 0; i < dmg.Count; i++)
+									dict.Add(i + w.MinRange, dmg[i]);
+								w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
 							}
-							else
-								dmg.Insert(0, 0);
-							w.Damage = dmg.ToArray();
-						}
-						catch (Exception ex)
-						{
-							Mod.Errors.Add(new DataParsingException("Can't parse \"" + dmgstr + "\" as a damage string: " + ex.Message, Mod.CurrentFileName, rec));
+							catch (Exception ex)
+							{
+								Mod.Errors.Add(new DataParsingException("Can't parse \"" + dmgstr + "\" as a damage string: " + ex.Message, Mod.CurrentFileName, rec));
+							}
 						}
 
 						// TODO - populate damage types once we implement them
-						w.DamageType = new DamageType { Name = rec.Get<string>("Weapon Damage Type", c)};
+						w.DamageType = new DamageType { Name = rec.Get<string>("Weapon Damage Type", c) };
 
 						w.ReloadRate = rec.Get<double>("Weapon Reload Rate", c);
 
@@ -163,6 +170,8 @@ namespace FrEee.Modding.Loaders
 
 		private VehicleTypes ParseVehicleTypes(string s, string separator, Record rec)
 		{
+			if (s == null)
+				return VehicleTypes.All;
 			var splitstr = s.Split(new string[] { separator }, StringSplitOptions.None).Select(sub => sub.Trim());
 			var vt = VehicleTypes.None;
 			foreach (var item in splitstr)
@@ -183,6 +192,8 @@ namespace FrEee.Modding.Loaders
 
 		private WeaponTargets ParseWeaponTargets(string s, string separator, Record rec)
 		{
+			if (s == null)
+				return WeaponTargets.All;
 			var splitstr = s.Split(new string[] { separator }, StringSplitOptions.None).Select(sub => sub.Trim());
 			var wt = WeaponTargets.None;
 			foreach (var item in splitstr)

@@ -12,6 +12,7 @@ using FrEee.Modding.Templates;
 using Component = FrEee.Game.Objects.Technology.Component;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.WinForms.Controls
 {
@@ -107,20 +108,15 @@ namespace FrEee.WinForms.Controls
 					}
 					else
 						HideRow(2);
-					int? maxRange = 0;
 					var dmg = Component.Template.WeaponDamage;
-					if (dmg[0] > 0)
-						maxRange = null; // infinite range
-					else
+					var dmglist = new List<int>();
+					for (int r = 1; r <= weapon.MaxRange; r++)
 					{
-						for (int r = 1; r < dmg.Count(); r++)
-						{
-							if (dmg[r] > 0)
-								maxRange = r;
-						}
+						var shot = new Shot(component, null, r);
+						dmglist.Add(weapon.GetDamage(shot));
 					}
-					damageGraph.Title = "Max Range: " + (maxRange == null ? "Infinite" : maxRange.ToString());
-					damageGraph.DataPoints = dmg.Skip(1).Take(1).Concat(dmg.Skip(1)).Concat(dmg.Take(1)).Select(i => (double)i); // put infinite range value at index 21; put range 1 value at range 0
+					damageGraph.Title = "Max Range: " + weapon.MaxRange;
+					damageGraph.DataPoints = dmglist.Select(d => (double)d);
 				}
 				else
 				{

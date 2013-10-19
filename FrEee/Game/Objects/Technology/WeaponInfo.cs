@@ -25,10 +25,19 @@ namespace FrEee.Game.Objects.Technology
 		public Formula<string> TargetDescription { get; set; }
 
 		/// <summary>
-		/// Damage, indexed by range. The first entry (index 0) is used for "infinite range" seekers.
-		/// TODO - let damage be a formula
+		/// Minimum range of the weapon.
 		/// </summary>
-		public int[] Damage { get; set; }
+		public Formula<int> MinRange { get; set; }
+
+		/// <summary>
+		/// Maximum range of the weapon.
+		/// </summary>
+		public Formula<int> MaxRange { get; set; }
+
+		/// <summary>
+		/// Damage of the weapon at range.
+		/// </summary>
+		public Formula<int> Damage { get; set; }
 
 		/// <summary>
 		/// The type of damage inflicted by this weapon.
@@ -64,5 +73,12 @@ namespace FrEee.Game.Objects.Technology
 		/// The weapon type of this weapon.
 		/// </summary>
 		public abstract WeaponTypes WeaponType { get; }
+
+		public int GetDamage(Shot shot)
+		{
+			if (shot.Range < MinRange || shot.Range > MaxRange)
+				return 0;
+			return Damage.Evaluate(shot);
+		}
 	}
 }

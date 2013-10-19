@@ -74,6 +74,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
+    <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
     <Compile Include="Modding\FormulaTest.cs" />
     <Compile Include="Modding\Loaders\LoaderTest.cs" />
     <Compile Include="Modding\ScriptEngineTest.cs" />

@@ -56,6 +56,7 @@ namespace FrEee.Modding
 			int curLine;
 
 			// find *BEGIN* tag
+			// TODO - if no *BEGIN* tag present, don't require it
 			for (curLine = 0; curLine < lines.Length; curLine++)
 			{
 				if (lines[curLine] == "*BEGIN*")

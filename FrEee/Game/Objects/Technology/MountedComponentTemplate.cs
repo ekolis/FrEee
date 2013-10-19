@@ -205,7 +205,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Damage inflicted by this component at range, if it is a weapon.
 		/// </summary>
-		public int[] WeaponDamage
+		public Formula<int> WeaponDamage
 		{
 			get
 			{
@@ -215,26 +215,33 @@ namespace FrEee.Game.Objects.Technology
 				if (Mount == null)
 					return w.Damage;
 
-				var dmg = new List<int>();
-				dmg.Add(w.Damage[0] * Mount.WeaponDamagePercent.Evaluate(this) / 100);
-				if (Mount.WeaponRangeModifier.Evaluate(this) > 0)
-				{
-					if (w.Damage.Length > 1)
-					{
-						// extend range by applying range-1 damage out further
-						for (int i = 0; i < Mount.WeaponRangeModifier.Evaluate(this); i++)
-							dmg.Add(w.Damage[1] * Mount.WeaponDamagePercent.Evaluate(this) / 100);
-					}
-					foreach (var d in w.Damage.Skip(1))
-						dmg.Add(d * Mount.WeaponDamagePercent.Evaluate(this) / 100);
-				}
-				else
-				{
-					// reduce range by applying further-out damage at range 1
-					foreach (var d in w.Damage.Skip(-Mount.WeaponRangeModifier.Evaluate(this) + 1))
-						dmg.Add(d * Mount.WeaponDamagePercent.Evaluate(this) / 100);
-				}
-				return dmg.Take(Math.Min(dmg.Count, 21)).ToArray();
+				return w.Damage * Mount.WeaponDamagePercent / 100;
+			}
+		}
+
+		public Formula<int> WeaponMinRange
+		{
+			get
+			{
+				var w = ComponentTemplate.WeaponInfo;
+				if (w == null)
+					return 0;
+				if (Mount == null)
+					return w.MinRange;
+				return w.MinRange + Mount.WeaponRangeModifier;
+			}
+		}
+
+		public Formula<int> WeaponMaxRange
+		{
+			get
+			{
+				var w = ComponentTemplate.WeaponInfo;
+				if (w == null)
+					return 0;
+				if (Mount == null)
+					return w.MaxRange;
+				return w.MaxRange + Mount.WeaponRangeModifier;
 			}
 		}
 

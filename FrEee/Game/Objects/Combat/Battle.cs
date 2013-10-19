@@ -96,7 +96,8 @@ namespace FrEee.Game.Objects.Combat
 					{
 						seekers.Remove(seeker);
 						Log.Add(seeker.CreateLogMessage(seeker + " detonates!"));
-						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.Damage[1], this);
+						var shot = new Shot(seeker.Launcher, seeker.Target, 1);
+						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.WeaponInfo.GetDamage(shot), this);
 					}
 					else
 						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));
@@ -154,7 +155,7 @@ namespace FrEee.Game.Objects.Combat
 							else
 							{
 								// direct fire
-								weapon.Attack(attacker, defender, this); // TODO - range and accuracy and such
+								weapon.Attack(defender, 1, this); // TODO - range
 							}
 							// TODO - mounts that affect reload rate?
 							reloads[weapon] += weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;

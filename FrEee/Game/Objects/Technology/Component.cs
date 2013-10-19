@@ -78,13 +78,13 @@ namespace FrEee.Game.Objects.Technology
 		/// If not a weapon, does nothing.
 		/// </summary>
 		/// <param name="target"></param>
-		public void Attack(ICombatObject attacker, ICombatObject defender, Battle battle)
+		public void Attack(ICombatObject defender, int range, Battle battle)
 		{
 			if (!CanTarget(defender))
 				return;
 
 			// TODO - check range too
-			var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + Template.WeaponAccuracy + attacker.Accuracy - defender.Evasion;
+			var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + Template.WeaponAccuracy + Container.Accuracy - defender.Evasion;
 			// TODO - moddable min/max hit chances with per-weapon overrides
 			if (tohit > 99)
 				tohit = 99;
@@ -94,7 +94,8 @@ namespace FrEee.Game.Objects.Technology
 			battle.LogShot(this, hit);
 			if (hit)
 			{
-				defender.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, Template.WeaponDamage[1], battle);
+				var shot = new Shot(this, defender, range);
+				defender.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				if (defender.MaxNormalShields < defender.NormalShields)
 					defender.NormalShields = defender.MaxNormalShields;
 				if (defender.MaxPhasedShields < defender.PhasedShields)
