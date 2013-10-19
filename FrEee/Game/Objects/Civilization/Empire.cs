@@ -643,6 +643,7 @@ namespace FrEee.Game.Objects.Civilization
 				{
 					var memory = obj.CopyAndAssignNewID();
 					memory.IsMemory = true;
+					memory.Timestamp = Galaxy.Current.TurnNumber + Galaxy.Current.CurrentTick;
 					Memory[obj.ID] = memory;
 				}
 

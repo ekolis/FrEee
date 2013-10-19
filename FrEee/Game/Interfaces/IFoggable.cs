@@ -26,5 +26,18 @@ namespace FrEee.Game.Interfaces
 		/// Is this object just a memory, or a real object?
 		/// </summary>
 		bool IsMemory { get; set;}
+
+		/// <summary>
+		/// The time at which this object was last seen.
+		/// E.g. 2.5 would be halfway through the second turn.
+		/// </summary>
+		double Timestamp { get; set; }
+
+		/// <summary>
+		/// Is this object an obsolete memory?
+		/// Memories become obsolete when the object's last known location is visible,
+		/// but the object has not been seen for at least 1 full turn.
+		/// </summary>
+		bool IsObsoleteMemory(Empire emp);
 	}
 }

@@ -128,5 +128,13 @@ namespace FrEee.Game.Objects.Civilization
 			get;
 			set;
 		}
+
+		public double Timestamp { get; set; }
+
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
 	}
 }

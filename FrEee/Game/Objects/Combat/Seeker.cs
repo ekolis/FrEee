@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -260,6 +261,13 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get;
 			set;
+		}
+
+		public double Timestamp { get; set; }
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 	}
 }

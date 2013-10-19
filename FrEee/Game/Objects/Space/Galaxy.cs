@@ -566,6 +566,11 @@ namespace FrEee.Game.Objects.Space
 				String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
 		}
 
+		/// <summary>
+		/// Current time equals turn number plus tick.
+		/// </summary>
+		public double Timestamp { get { return TurnNumber + CurrentTick; } }
+
 		#endregion
 
 		#region Public Methods
@@ -955,6 +960,16 @@ namespace FrEee.Game.Objects.Space
 			// clear completed orders
 			foreach (var order in Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
 				order.Dispose();
+
+			// clear obsolete sensor ghosts
+			foreach (var emp in Current.Empires)
+			{
+				foreach (var kvp in emp.Memory.ToArray())
+				{
+					if (kvp.Value.IsObsoleteMemory(emp))
+						emp.Memory.Remove(kvp);
+				}
+			}
 
 			// check for victory/defeat
 			foreach (var vc in Current.VictoryConditions)

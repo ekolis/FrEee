@@ -58,11 +58,11 @@ namespace FrEee.WinForms.Forms
 			if (e.StateChanged == DataGridViewElementStates.Selected)
 			{
 				var queue = (ConstructionQueue)e.Row.DataBoundItem;
-				var sys = queue.SpaceObject.StarSystem;
+				var sys = queue.Container.StarSystem;
 				galaxyView.SelectedStarSystem = sys;
 				starSystemView.StarSystem = sys;
-				starSystemView.SelectedSpaceObject = queue.SpaceObject;
-				starSystemView.SelectedSector = queue.SpaceObject.Sector;
+				starSystemView.SelectedSpaceObject = queue.Container;
+				starSystemView.SelectedSector = queue.Container.Sector;
 			}
 		}
 

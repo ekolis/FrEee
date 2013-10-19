@@ -34,7 +34,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ConstructionQueueForm_Load(object sender, EventArgs e)
 		{
-			Text = ConstructionQueue.SpaceObject.Name + " Construction Queue";
+			Text = ConstructionQueue.Container.Name + " Construction Queue";
 			resMineralsRate.Amount = ConstructionQueue.Rate[Resource.Minerals];
 			resOrganicsRate.Amount = ConstructionQueue.Rate[Resource.Organics];
 			resRadioactivesRate.Amount = ConstructionQueue.Rate[Resource.Radioactives];

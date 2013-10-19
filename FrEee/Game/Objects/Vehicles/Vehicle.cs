@@ -355,5 +355,9 @@ namespace FrEee.Game.Objects.Vehicles
 			get;
 			set;
 		}
+
+		public double Timestamp { get; set; }
+
+		public abstract bool IsObsoleteMemory(Empire emp);
 	}
 }

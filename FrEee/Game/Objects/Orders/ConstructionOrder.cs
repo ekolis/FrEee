@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Orders
 				if (spending < queue.Owner.StoredResources)
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					queue.SpaceObject.CreateLogMessage("Construction of " + Template + " at " + queue.SpaceObject + " was delayed due to lack of resources.");
+					queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was delayed due to lack of resources.");
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
@@ -115,7 +115,7 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// validate that what's being built is unlocked
 			if (!queue.Owner.HasUnlocked(Template))
-				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.SpaceObject + " because we have not yet researched it.");
+				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.");
 
 		}
 

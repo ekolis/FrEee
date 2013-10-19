@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,11 @@ namespace FrEee.Game.Objects.Vehicles
 				if (known != null && known.GetType() == GetType())
 					known.CopyTo(this);
 			}
+		}
+
+		public override bool IsObsoleteMemory(Empire emp)
+		{
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 	}
 }

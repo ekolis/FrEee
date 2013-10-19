@@ -75,7 +75,7 @@ namespace FrEee.Game.Objects.Orders
 				if (spending < queue.Owner.StoredResources)
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					queue.SpaceObject.CreateLogMessage("Construction of " + NewTemplate + " at " + queue.SpaceObject + " was delayed due to lack of resources.");
+					queue.Container.CreateLogMessage("Construction of " + NewTemplate + " at " + queue.Container + " was delayed due to lack of resources.");
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Orders
 				// if we're done, delete the old facility and replace it with this one
 				if (IsComplete)
 				{
-					var planet = (Planet)queue.SpaceObject;
+					var planet = (Planet)queue.Container;
 					planet.Colony.Facilities.Where(f => f.Template == OldTemplate).First().Dispose();
 					planet.Colony.Facilities.Add(NewFacility);
 				}
@@ -133,14 +133,14 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// validate that new facility is unlocked
 			if (!queue.Owner.HasUnlocked(NewTemplate))
-				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.SpaceObject + " could not be upgraded to a " + NewTemplate + " because we have not yet researched the " + NewTemplate + ".");
+				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.Container + " could not be upgraded to a " + NewTemplate + " because we have not yet researched the " + NewTemplate + ".");
 
 			// validate that new and old facilities are in the same family
 			if (NewTemplate.Family != OldTemplate.Family)
-				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.SpaceObject + " could not be upgraded to a " + NewTemplate + " because facilities cannot be upgraded to facilities of a different family.");
+				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.Container + " could not be upgraded to a " + NewTemplate + " because facilities cannot be upgraded to facilities of a different family.");
 
 			// validate that there is a facility to upgrade
-			var planet = (Planet)queue.SpaceObject;
+			var planet = (Planet)queue.Container;
 			var colony = planet.Colony;
 			if (!colony.Facilities.Any(f => f.Template == OldTemplate))
 				yield return planet.CreateLogMessage("There are no " + OldTemplate + "s on " + planet + " to upgrade.");

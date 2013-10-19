@@ -336,5 +336,12 @@ namespace FrEee.Game.Objects.Space
 			get;
 			set;
 		}
+
+		public double Timestamp { get; set; }
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
 	}
 }

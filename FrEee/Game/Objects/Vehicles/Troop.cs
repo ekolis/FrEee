@@ -89,5 +89,10 @@ namespace FrEee.Game.Objects.Vehicles
 					known.CopyTo(this);
 			}
 		}
+
+		public override bool IsObsoleteMemory(Empire emp)
+		{
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
 	}
 }

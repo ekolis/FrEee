@@ -19,19 +19,19 @@ namespace FrEee.Game.Objects.Civilization
 	/// Something which can construct objects.
 	/// </summary>
 	[Serializable]
-	public class ConstructionQueue : IOrderable, IOwnable, IFoggable
+	public class ConstructionQueue : IOrderable, IOwnable, IFoggable, IContainable<ISpaceObject>
 	{
 		public ConstructionQueue(ISpaceObject sobj)
 		{
 			Orders = new List<IConstructionOrder>();
-			SpaceObject = sobj;
+			Container = sobj;
 			UnspentRate = new ResourceQuantity();
 		}
 
 		/// <summary>
 		/// Is this a space yard queue?
 		/// </summary>
-		public bool IsSpaceYardQueue { get { return SpaceObject.HasAbility("Space Yard"); } }
+		public bool IsSpaceYardQueue { get { return Container.HasAbility("Space Yard"); } }
 
 		/// <summary>
 		/// Is this a colony queue?
@@ -45,8 +45,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				if (SpaceObject is Planet)
-					return ((Planet)SpaceObject).Colony;
+				if (Container is Planet)
+					return ((Planet)Container).Colony;
 				return null;
 			}
 		}
@@ -139,13 +139,13 @@ namespace FrEee.Game.Objects.Civilization
 
 		private ResourceQuantity ComputeSYAbilityRate()
 		{
-			if (SpaceObject.HasAbility("Space Yard"))
+			if (Container.HasAbility("Space Yard"))
 			{
 				var rate = new ResourceQuantity();
 				// TODO - moddable resources?
 				for (int i = 1; i <= 3; i++)
 				{
-					var amount = SpaceObject.GetAbilityValue("Space Yard", 2, a => a.Value1 == i.ToString()).ToInt();
+					var amount = Container.GetAbilityValue("Space Yard", 2, a => a.Value1 == i.ToString()).ToInt();
 					Resource res = null;
 					if (i == 1)
 						res = Resource.Minerals;
@@ -187,24 +187,24 @@ namespace FrEee.Game.Objects.Civilization
 			set;
 		}
 
-		public ISpaceObject SpaceObject { get; set; }
+		public ISpaceObject Container { get; set; }
 
 		[DoNotSerialize] public Image Icon
 		{
 			get
 			{
-				return SpaceObject.Icon;
+				return Container.Icon;
 			}
 		}
 
 		public Empire Owner
 		{
-			get { return SpaceObject.Owner; }
+			get { return Container.Owner; }
 		}
 
 		public string Name
 		{
-			get { return SpaceObject.Name; }
+			get { return Container.Name; }
 		}
 
 		/// <summary>
@@ -232,14 +232,14 @@ namespace FrEee.Game.Objects.Civilization
 					{
 						// can't build that here!
 						Orders.RemoveAt(0);
-						Owner.Log.Add(SpaceObject.CreateLogMessage(order.Template + " cannot be built at " + this + " because " + reasonForNotBuilding));
+						Owner.Log.Add(Container.CreateLogMessage(order.Template + " cannot be built at " + this + " because " + reasonForNotBuilding));
 					}
 					else
 					{
 						order.Execute(this);
 						if (order.CheckCompletion(this))
 						{
-							order.Item.Place(SpaceObject);
+							order.Item.Place(Container);
 							Orders.Remove(order);
 							Owner.Log.Add(order.Item.CreateLogMessage(order.Item + " has been constructed at " + Name + "."));
 						}
@@ -343,7 +343,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			var vis = SpaceObject.CheckVisibility(emp);
+			var vis = Container.CheckVisibility(emp);
 			if (vis == Visibility.Owned)
 				return vis;
 			return Visibility.Unknown;
@@ -357,7 +357,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public override string ToString()
 		{
-			return SpaceObject + "'s construction queue";
+			return Container + "'s construction queue";
 		}
 
 		/// <summary>
@@ -383,9 +383,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				if (!(SpaceObject is ICargoContainer))
+				if (!(Container is ICargoContainer))
 					return 0;
-				return ((ICargoContainer)SpaceObject).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
+				return ((ICargoContainer)Container).CargoStorageFree() - Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size);
 			}
 		}
 
@@ -396,9 +396,9 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				var storage = SpaceObject.Sector.SpaceObjects.Where(sobj => sobj.Owner == Owner)
+				var storage = Container.Sector.SpaceObjects.Where(sobj => sobj.Owner == Owner)
 					.OfType<ICargoContainer>().Sum(cc => cc.CargoStorageFree());
-				var queues = SpaceObject.Sector.SpaceObjects.Where
+				var queues = Container.Sector.SpaceObjects.Where
 					(sobj => sobj.Owner == Owner && sobj.ConstructionQueue != null)
 					.Select(sobj => sobj.ConstructionQueue);
 				return storage - queues.Sum(q => q.Orders.Select(o => o.Template).OfType<IDesign<IUnit>>().Sum(t => t.Hull.Size));
@@ -415,7 +415,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (Colony == null)
 					return 0;
 				// TODO - storage racial trait
-				return ((Planet)SpaceObject).MaxFacilities - Colony.Facilities.Count - Orders.Select(o => o.Template).OfType<FacilityTemplate>().Count();
+				return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.Select(o => o.Template).OfType<FacilityTemplate>().Count();
 			}
 		}
 
@@ -441,6 +441,13 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			set;
+		}
+
+		public double Timestamp { get; set; }
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 	}
 }

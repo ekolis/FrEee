@@ -403,10 +403,9 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Design.Hull.Size; }
 		}
 
-		public bool IsMemory
+		public override bool IsObsoleteMemory(Empire emp)
 		{
-			get;
-			set;
+			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 	}
 }
