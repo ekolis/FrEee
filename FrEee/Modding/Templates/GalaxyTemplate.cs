@@ -182,10 +182,13 @@ namespace FrEee.Modding.Templates
 				}
 
 				// create the warp points
-				GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);
+				if (startLocation != null && endLocation != null)
+				{
+					GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);
 
-				// mark systems connected
-				graph.Connect(startLocation, endLocation, true);
+					// mark systems connected
+					graph.Connect(startLocation, endLocation, true);
+				}
 			}
 
 			return gal;
