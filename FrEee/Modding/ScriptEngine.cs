@@ -95,6 +95,9 @@ namespace FrEee.Modding
 		/// <returns></returns>
 		public static void UpdateScope(IDictionary<string, object> variables)
 		{
+			if (variables == null)
+				variables = new Dictionary<string, object>();
+
 			// Separate referrable objects (they just get ID's, not serialized data)
 			var referrables = new Dictionary<string, IReferrable>();
 			var genericObjects = new Dictionary<string, object>();
