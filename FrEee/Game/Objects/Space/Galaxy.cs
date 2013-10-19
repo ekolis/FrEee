@@ -1018,7 +1018,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
-		public IReferrable GetReferrable(int id)
+		public IReferrable GetReferrable(long id)
 		{
 			return referrables[id];
 		}

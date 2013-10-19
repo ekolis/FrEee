@@ -33,7 +33,8 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			var multiplier = here.Item.Radius / Math.Max(Math.Abs(x), Math.Abs(y));
 			x *= multiplier;
 			y *= multiplier;
-			return here.Item.GetSector((int)Math.Round(x), (int)Math.Round(y));
+			var sys = here.Item;
+			return sys.GetSector((int)Math.Round(x), (int)Math.Round(y));
 		}
 	}
 }
