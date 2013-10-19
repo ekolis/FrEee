@@ -136,7 +136,7 @@ namespace FrEee.Modding.Loaders
 						// TODO - populate damage types once we implement them
 						w.DamageType = new DamageType { Name = rec.Get<string>("Weapon Damage Type", c)};
 
-						w.ReloadRate = rec.Get<int>("Weapon Reload Rate", c);
+						w.ReloadRate = rec.Get<double>("Weapon Reload Rate", c);
 
 						var wdisptype = rec.Get<string>("Weapon Display Type", c);
 						var wdispname = rec.Get<string>("Weapon Display", c);

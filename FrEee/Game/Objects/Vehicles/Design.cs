@@ -127,7 +127,11 @@ namespace FrEee.Game.Objects.Vehicles
 			var t = Activator.CreateInstance<T>();
 			t.Design = this;
 			foreach (var mct in Components)
-				t.Components.Add(mct.Instantiate());
+			{
+				var c = mct.Instantiate();
+				t.Components.Add(c);
+				c.Container = t;
+			}
 			VehiclesBuilt++;
 			t.Name = Name + " " + VehiclesBuilt;
 			return t;
@@ -222,7 +226,7 @@ namespace FrEee.Game.Objects.Vehicles
 					yield return "You are over the hull size limit by " + (-SpaceFree).Kilotons() + ".";
 				foreach (var c in comps.Distinct())
 				{
-					if (!c.VehicleTypes.Value.HasFlag(VehicleType))
+					if (!c.VehicleTypes.HasFlag(VehicleType))
 						yield return "The " + c.Name + " cannot be placed on this vehicle type.";
 				}
 				foreach (var comp in Components.GroupBy(mct => mct.ComponentTemplate).Select(g => g.Key))

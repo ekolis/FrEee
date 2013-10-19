@@ -92,7 +92,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The vehicle types on which this component can be installed.
 		/// </summary>
-		public Formula<VehicleTypes> VehicleTypes { get; set; }
+		public VehicleTypes VehicleTypes { get; set; }
 
 		/// <summary>
 		/// Amount of supply consumed when this component is "used". (What "usage" means depends on the component's abilities.)
@@ -205,7 +205,7 @@ namespace FrEee.Modding.Templates
 		{
 			return m == null || (
 			   (m.RequiredComponentFamily == null || Family == m.RequiredComponentFamily) &&
-			   m.WeaponTypes.HasFlag(WeaponType)
+			   m.WeaponTypes.Value.HasFlag(WeaponType)
 			   );
 		}
 
@@ -221,5 +221,7 @@ namespace FrEee.Modding.Templates
 			return Visibility.Scanned;
 		}
 		#endregion
+
+		// TODO - formula evaluation
 	}
 }

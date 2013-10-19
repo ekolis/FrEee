@@ -15,6 +15,7 @@ using System.Reflection;
 using System.Data;
 using FrEee.Utility;
 using Microsoft.Scripting.Runtime;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Modding
 {
@@ -151,8 +152,23 @@ namespace FrEee.Modding
 			if (variables != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				bool addedInit = false;
 				foreach (var variable in variables.Keys)
+				{
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					if (variables[variable] is IReferrable)
+					{
+						// assign ID's to passed-over objects in a fake galaxy so they can reference each other
+						if (!addedInit)
+						{
+							deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
+							deserializers.Add("galaxy = Galaxy();");
+							addedInit = true;
+						}
+						deserializers.Add("galaxy.AssignID(" + variable + ");");
+						deserializers.Add("galaxy.AssignIDs();");
+					}
+				}
 			}
 
 			string code;

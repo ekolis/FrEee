@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// The second value of the ability. Not all abilities have two values, so this might be null!
 		/// </summary>
-		public IFormula<string> Value2
+		public Formula<string> Value2
 		{
 			get
 			{

@@ -64,16 +64,16 @@ namespace FrEee.Modding.Loaders
 		/// <param name="what"></param>
 		/// <param name="obj">Formula context.</param>
 		/// <returns></returns>
-		public static IDictionary<string, IDictionary<int, int>> LoadPercentagesOrModifiers(Record rec, string what, object obj)
+		public static IDictionary<string, IDictionary<int, Formula<int>>> LoadPercentagesOrModifiers(Record rec, string what, object obj)
 		{
-			var dict = new Dictionary<string, IDictionary<int,int>>();
+			var dict = new Dictionary<string, IDictionary<int, Formula<int>>>();
 			int count = 0;
 			int start = 0;
 			while (true)
 			{
 				count++;
 				string abilName;
-				var vals = new Dictionary<int, int>();
+				var vals = new Dictionary<int, Formula<int>>();
 
 				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start, true);
 				if (nameField == null)

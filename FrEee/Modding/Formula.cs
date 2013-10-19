@@ -13,7 +13,7 @@ namespace FrEee.Modding
 	/// </summary>
 	/// <typeparam name="T">Return type.</typeparam>
 	[Serializable]
-	public class Formula<T> : IFormula<T>
+	public class Formula<T> : IFormula
 		where T : IConvertible
 	{
 		/// <summary>
@@ -41,7 +41,6 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				var variables = new Dictionary<string, object>();
 				if (FormulaType == FormulaType.Literal || FormulaType == FormulaType.Static)
 				{
 					// literal and static formulas can be cached
@@ -57,10 +56,7 @@ namespace FrEee.Modding
 								cachedValue = (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
 						}
 						else
-						{
-							variables.Add("self", Context);
-							cachedValue = ScriptEngine.EvaluateExpression<T>(Text, variables);
-						}
+							cachedValue = Evaluate(Context);
 						hasCache = true;
 					}
 					return cachedValue;
@@ -68,10 +64,27 @@ namespace FrEee.Modding
 				else
 				{
 					// dynamic formula must be executed each time
-					variables.Add("self", Context);
-					return ScriptEngine.EvaluateExpression<T>(Text, variables);
+					return Evaluate(Context);
 				}
 			}
+		}
+
+		public T Evaluate(IDictionary<string, object> variables)
+		{
+			return ScriptEngine.EvaluateExpression<T>(Text, variables);
+		}
+
+		public T Evaluate(object host)
+		{
+			var variables = new Dictionary<string, object>();
+			variables.Add("self", Context);
+			variables.Add("host", host);
+			if (host is IFormulaHost)
+			{
+				foreach (var kvp in ((IFormulaHost)host).Variables)
+					variables.Add(kvp.Key, kvp.Value);
+			}
+			return Evaluate(variables);
 		}
 
 		private T cachedValue;

@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
@@ -17,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost
 	{
 		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null)
 		{
@@ -50,7 +52,7 @@ namespace FrEee.Game.Objects.Technology
 			{
 				if (Mount == null)
 					return ComponentTemplate.Name;
-				return Mount.ShortName + " " + ComponentTemplate.Name;
+				return Mount.ShortName + " " + ComponentTemplate.Name.Evaluate(this);
 			}
 		}
 
@@ -96,7 +98,7 @@ namespace FrEee.Game.Objects.Technology
 						{
 							Name = a.Name,
 							Values = new List<Formula<string>>(a.Values),
-							Description = a.Description,
+							Description = a.Description.Evaluate(this),
 						};
 						if (Mount != null)
 						{
@@ -104,7 +106,7 @@ namespace FrEee.Game.Objects.Technology
 							{
 								foreach (var p in Mount.AbilityPercentages[a.Name])
 								{
-									result.Values[p.Key] = (double.Parse(result.Values[p.Key]) * p.Value / 100).ToString();
+									result.Values[p.Key] = (double.Parse(result.Values[p.Key].Evaluate(this)) * p.Value / 100).ToString();
 									a.Description = null; // values have been modified, need to use generic description
 								}
 							}
@@ -112,7 +114,7 @@ namespace FrEee.Game.Objects.Technology
 							{
 								foreach (var m in Mount.AbilityModifiers[a.Name])
 								{
-									result.Values[m.Key] = (double.Parse(result.Values[m.Key]) + m.Value).ToString();
+									result.Values[m.Key] = (double.Parse(result.Values[m.Key].Evaluate(this)) + m.Value).ToString();
 									a.Description = null; // values have been modified, need to use generic description
 								}
 							}
@@ -132,8 +134,8 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (Mount == null)
-					return ComponentTemplate.Size;
-				return ComponentTemplate.Size * Mount.SizePercent / 100;
+					return ComponentTemplate.Size.Evaluate(this);
+				return ComponentTemplate.Size.Evaluate(this) * Mount.SizePercent.Evaluate(this) / 100;
 			}
 		}
 
@@ -142,8 +144,8 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (Mount == null)
-					return ComponentTemplate.Cost;
-				return ComponentTemplate.Cost * Mount.CostPercent / 100;
+					return ComponentTemplate.Cost.Evaluate(this);
+				return ComponentTemplate.Cost.Evaluate(this) * Mount.CostPercent.Evaluate(this) / 100;
 			}
 		}
 
@@ -152,8 +154,8 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (Mount == null)
-					return ComponentTemplate.SupplyUsage;
-				return ComponentTemplate.SupplyUsage * Mount.SupplyUsagePercent / 100;
+					return ComponentTemplate.SupplyUsage.Evaluate(this);
+				return ComponentTemplate.SupplyUsage.Evaluate(this) * Mount.SupplyUsagePercent.Evaluate(this) / 100;
 			}
 		}
 
@@ -162,8 +164,8 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (Mount == null)
-					return ComponentTemplate.Durability;
-				return ComponentTemplate.Durability * Mount.DurabilityPercent / 100;
+					return ComponentTemplate.Durability.Evaluate(this);
+				return ComponentTemplate.Durability.Evaluate(this) * Mount.DurabilityPercent.Evaluate(this) / 100;
 			}
 		}
 
@@ -173,7 +175,7 @@ namespace FrEee.Game.Objects.Technology
 				return true;
 			if (t1.IsNull() || t2.IsNull())
 				return false;
-			return t1.ComponentTemplate == t2.ComponentTemplate && t1.Mount == t2.Mount;
+			return t1.Container == t2.Container && t1.ComponentTemplate == t2.ComponentTemplate && t1.Mount == t2.Mount;
 		}
 
 		public static bool operator !=(MountedComponentTemplate t1, MountedComponentTemplate t2)
@@ -191,8 +193,8 @@ namespace FrEee.Game.Objects.Technology
 		public override int GetHashCode()
 		{
 			if (Mount == null)
-				return ComponentTemplate.GetHashCode();
-			return ComponentTemplate.GetHashCode() ^ Mount.GetHashCode();
+				return Container.GetHashCode() ^ ComponentTemplate.GetHashCode();
+			return Container.GetHashCode() ^ ComponentTemplate.GetHashCode() ^ Mount.GetHashCode();
 		}
 
 		public override string ToString()
@@ -214,23 +216,23 @@ namespace FrEee.Game.Objects.Technology
 					return w.Damage;
 
 				var dmg = new List<int>();
-				dmg.Add(w.Damage[0] * Mount.WeaponDamagePercent / 100);
-				if (Mount.WeaponRangeModifier > 0)
+				dmg.Add(w.Damage[0] * Mount.WeaponDamagePercent.Evaluate(this) / 100);
+				if (Mount.WeaponRangeModifier.Evaluate(this) > 0)
 				{
 					if (w.Damage.Length > 1)
 					{
 						// extend range by applying range-1 damage out further
-						for (int i = 0; i < Mount.WeaponRangeModifier; i++)
-							dmg.Add(w.Damage[1] * Mount.WeaponDamagePercent / 100);
+						for (int i = 0; i < Mount.WeaponRangeModifier.Evaluate(this); i++)
+							dmg.Add(w.Damage[1] * Mount.WeaponDamagePercent.Evaluate(this) / 100);
 					}
 					foreach (var d in w.Damage.Skip(1))
-						dmg.Add(d * Mount.WeaponDamagePercent / 100);
+						dmg.Add(d * Mount.WeaponDamagePercent.Evaluate(this) / 100);
 				}
 				else
 				{
 					// reduce range by applying further-out damage at range 1
-					foreach (var d in w.Damage.Skip(-Mount.WeaponRangeModifier + 1))
-						dmg.Add(d * Mount.WeaponDamagePercent / 100);
+					foreach (var d in w.Damage.Skip(-Mount.WeaponRangeModifier.Evaluate(this) + 1))
+						dmg.Add(d * Mount.WeaponDamagePercent.Evaluate(this) / 100);
 				}
 				return dmg.Take(Math.Min(dmg.Count, 21)).ToArray();
 			}
@@ -247,14 +249,40 @@ namespace FrEee.Game.Objects.Technology
 				if (w == null)
 					return 0;
 				if (w is DirectFireWeaponInfo)
-					return ((DirectFireWeaponInfo)w).AccuracyModifier + (Mount == null ? 0 : Mount.WeaponAccuracyModifier);
+					return ((DirectFireWeaponInfo)w).AccuracyModifier.Evaluate(this) + (Mount == null ? 0 : Mount.WeaponAccuracyModifier.Evaluate(this));
 				return 999; // seekers/warheads
 			}
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
-			// This type does not use client objects, so nothing to do here.
+			container.ReplaceClientIDs(idmap);
+		}
+
+
+		private Reference<IDesign> container { get; set; }
+
+		/// <summary>
+		/// The design which contains this mounted component template.
+		/// </summary>
+		[DoNotSerialize]
+		public IDesign Container { get { return container == null ? null : container.Value; } set { container = value.Reference(); } }
+
+		public IDictionary<string, object> Variables
+		{
+			get 
+			{
+				var design = Container ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
+				var empire = Container == null ? Empire.Current : Container.Owner;
+				return new Dictionary<string, object>
+				{
+					{"component", ComponentTemplate},
+					{"mount", Mount},
+					{"design", design},
+					{"hull", design.Hull},
+					{"empire", empire}
+				};
+			}
 		}
 	}
 }

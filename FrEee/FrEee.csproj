@@ -223,6 +223,7 @@
     <Compile Include="Modding\FormulaContext.cs" />
     <Compile Include="Modding\FormulaType.cs" />
     <Compile Include="Modding\Interfaces\IFormula.cs" />
+    <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
     <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
     <Compile Include="Modding\Loaders\ScriptLoader.cs" />
     <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />

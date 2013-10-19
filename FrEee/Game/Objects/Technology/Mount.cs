@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
@@ -16,12 +17,10 @@ namespace FrEee.Game.Objects.Technology
 	/// </summary>
 	public class Mount : IResearchable
 	{
-		// TODO - implement mount
-
 		public Mount()
 		{
-			AbilityPercentages = new Dictionary<string, IDictionary<int, int>>();
-			AbilityModifiers = new Dictionary<string, IDictionary<int, int>>();
+			AbilityPercentages = new Dictionary<string, IDictionary<int, Formula<int>>>();
+			AbilityModifiers = new Dictionary<string, IDictionary<int, Formula<int>>>();
 			TechnologyRequirements = new List<TechnologyRequirement>();
 		}
 
@@ -33,82 +32,82 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The full name of this mount.
 		/// </summary>
-		public string Name { get; set; }
+		public Formula<string> Name { get; set; }
 
 		/// <summary>
 		/// A shorter name for this mount.
 		/// </summary>
-		public string ShortName { get; set; }
+		public Formula<string> ShortName { get; set; }
 
 		/// <summary>
 		/// A description of this mount.
 		/// </summary>
-		public string Description { get; set; }
+		public Formula<string> Description { get; set; }
 
 		/// <summary>
 		/// An abbreviation for this mount.
 		/// </summary>
-		public string Code { get; set; }
+		public Formula<string> Code { get; set; }
 
 		/// <summary>
 		/// The name of the picture to use for this mount.
 		/// </summary>
-		public string PictureName { get; set; }
+		public Formula<string> PictureName { get; set; }
 
 		/// <summary>
 		/// Percentage of normal component cost.
 		/// </summary>
-		public int CostPercent { get; set; }
+		public Formula<int> CostPercent { get; set; }
 
 		/// <summary>
 		/// Percentage of normal component size.
 		/// </summary>
-		public int SizePercent { get; set; }
+		public Formula<int> SizePercent { get; set; }
 
 		/// <summary>
 		/// Percentage of normal component hitpoints.
 		/// </summary>
-		public int DurabilityPercent { get; set; }
+		public Formula<int> DurabilityPercent { get; set; }
 
 		/// <summary>
 		/// Percentage of normal weapon damage.
 		/// </summary>
-		public int WeaponDamagePercent { get; set; }
+		public Formula<int> WeaponDamagePercent { get; set; }
 
 		/// <summary>
 		/// Percentage of normal component supply usage.
 		/// </summary>
-		public int SupplyUsagePercent { get; set; }
+		public Formula<int> SupplyUsagePercent { get; set; }
 
 		/// <summary>
 		/// Range modifier for weapons.
 		/// </summary>
-		public int WeaponRangeModifier { get; set; }
+		public Formula<int> WeaponRangeModifier { get; set; }
 
 		/// <summary>
 		/// Accuracy modifier for weapons.
 		/// </summary>
-		public int WeaponAccuracyModifier { get; set; }
+		public Formula<int> WeaponAccuracyModifier { get; set; }
 
 		/// <summary>
 		/// Minimum vehicle size to use this mount. Null means no restriction.
 		/// </summary>
-		public int? MinimumVehicleSize { get; set; }
+		public Formula<int> MinimumVehicleSize { get; set; }
 
 		/// <summary>
 		/// Maximum vehicle size to use this mount. Null means no restriction.
 		/// </summary>
-		public int? MaximumVehicleSize { get; set; }
+		public Formula<int> MaximumVehicleSize { get; set; }
 
 		/// <summary>
 		/// Required component family. Null means no restriction.
 		/// </summary>
-		public string RequiredComponentFamily { get; set; }
+		public Formula<string> RequiredComponentFamily { get; set; }
 
 		/// <summary>
 		/// Weapon types which can use this mount.
 		/// </summary>
-		public WeaponTypes WeaponTypes { get; set; }
+		public Formula<WeaponTypes> WeaponTypes { get; set; }
 
 		/// <summary>
 		/// Vehicle types which can use this mount.
@@ -118,7 +117,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Percentage factors for abilities.
 		/// </summary>
-		public IDictionary<string, IDictionary<int, int>> AbilityPercentages
+		public IDictionary<string, IDictionary<int, Formula<int>>> AbilityPercentages
 		{
 			get;
 			set;
@@ -127,7 +126,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Additive modifiers for abilities.
 		/// </summary>
-		public IDictionary<string, IDictionary<int, int>> AbilityModifiers
+		public IDictionary<string, IDictionary<int, Formula<int>>> AbilityModifiers
 		{
 			get;
 			set;
@@ -173,5 +172,10 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public long ID { get; set; }
+
+		string INamed.Name
+		{
+			get { return Name; }
+		}
 	}
 }

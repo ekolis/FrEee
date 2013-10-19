@@ -307,7 +307,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Assigns IDs to referrable objects in the galaxy.
 		/// </summary>
-		internal void AssignIDs()
+		public void AssignIDs()
 		{
 			var parser = new ObjectGraphParser();
 			parser.EndObject += o =>
@@ -1009,7 +1009,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="r">The object.</param>
 		/// <param name="id">The ID, or 0 to generate a new ID.</param>
 		/// <returns>The new ID.</returns>
-		internal long AssignID(IReferrable r, long id = 0)
+		public long AssignID(IReferrable r, long id = 0)
 		{
 			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
@@ -1021,19 +1021,20 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			var oldid = r.ID;
+			long newid = oldid <= 0 ? id : oldid;
 
 			if (Referrables.LongCount() == long.MaxValue)
 				throw new Exception("No more IDs are available to assign for objects.");
 
-			while (id <= 0 || referrables.ContainsKey(id))
+			while (newid <= 0 || referrables.ContainsKey(newid))
 			{
-				id = RandomHelper.Range(1L, long.MaxValue);
+				newid = RandomHelper.Range(1L, long.MaxValue);
 			}
-			r.ID = id;
-			referrables.Add(id, r);
+			r.ID = newid;
+			referrables.Add(newid, r);
 
 			// clean up old IDs
-			if (oldid > 0 && referrables.ContainsKey(oldid))
+			if (oldid > 0 && referrables.ContainsKey(oldid) && oldid != newid)
 				referrables.Remove(oldid);
 
 			return id;

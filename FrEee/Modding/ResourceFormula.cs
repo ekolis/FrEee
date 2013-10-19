@@ -34,6 +34,14 @@ namespace FrEee.Modding
 			}
 		}
 
+		public ResourceQuantity Evaluate(object host)
+		{
+			var q = new ResourceQuantity();
+			foreach (var kvp in this)
+				q.Add(kvp.Key, kvp.Value.Evaluate(host));
+			return q;
+		}
+
 		public static ResourceFormula operator +(ResourceFormula r1, ResourceFormula r2)
 		{
 			var result = new ResourceFormula(r1.Context ?? r2.Context);

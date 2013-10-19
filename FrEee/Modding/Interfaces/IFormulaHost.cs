@@ -5,12 +5,8 @@ using System.Text;
 
 namespace FrEee.Modding.Interfaces
 {
-	public interface IFormula
+	public interface IFormulaHost
 	{
-		string Text { get; set; }
-
-		FormulaType FormulaType { get; set; }
-
-		object Value { get; }
+		IDictionary<string, object> Variables { get; }
 	}
 }

@@ -5,6 +5,8 @@ using FrEee.Modding;
 using FrEee.Modding.Templates;
 using FrEee.Modding.Loaders;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Tests.Modding
 {
@@ -61,11 +63,32 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 		[TestMethod]
 		public void DynamicFormula()
 		{
-			var mod = new Mod();
+			var gal = new Galaxy();
+			Mod.Current = new Mod();
 			var armor = new ComponentTemplate();
 			armor.Size = 10;
 			armor.Durability = new Formula<int>(armor, "self.Size * 3", FormulaType.Dynamic);
-			Assert.AreEqual<int>(30, armor.Durability);
+			Mod.Current.ComponentTemplates.Add(armor);
+			Galaxy.Current.AssignID(armor);
+			var mount = new Mount();
+			mount.DurabilityPercent = 200;
+			mount.SizePercent = new Formula<int>(mount, "design.Hull.Size", FormulaType.Dynamic);
+			Mod.Current.Mounts.Add(mount);
+			Galaxy.Current.AssignID(mount);
+			var mct = new MountedComponentTemplate(armor, mount);
+			var hull = new Hull<Ship>();
+			hull.Size = 150;
+			Mod.Current.Hulls.Add(hull);
+			Galaxy.Current.AssignID(hull);
+			var design = new Design<Ship>();
+			Galaxy.Current.AssignID(design);
+			design.Hull = hull;
+			design.Components.Add(mct);
+			mct.Container = design;
+
+			Assert.AreEqual<int>(30, armor.Durability); // 10 * 3
+			Assert.AreEqual(mct.Durability, 60); // 30 * 200%
+			Assert.AreEqual(15, mct.Size); // 10 * 150%
 		}
 	}
 }

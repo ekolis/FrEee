@@ -218,5 +218,7 @@ namespace FrEee.Game.Objects.Technology
 			if (Container != null)
 				Container.Colony.Facilities.Remove(this);
 		}
+
+		// TODO - dynamic formula evaluation
 	}
 }

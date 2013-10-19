@@ -2,7 +2,9 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -17,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<Vehicle>, IFormulaHost
 	{
 		public Component(MountedComponentTemplate template)
 		{
@@ -205,6 +207,27 @@ namespace FrEee.Game.Objects.Technology
 		{
 			// TODO - moddable hit chance
 			get { return MaxHitpoints; }
+		}
+
+		public Vehicle Container
+		{
+			get;
+			internal set;
+		}
+
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				return new Dictionary<string, object>
+				{
+					{"component", Template.ComponentTemplate},
+					{"mount", Template.Mount},
+					{"vehicle", Container},
+					{"design", Container.Design},
+					{"empire", Container.Owner}
+				};
+			}
 		}
 	}
 }
