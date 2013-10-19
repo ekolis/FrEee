@@ -181,7 +181,7 @@ namespace FrEee.Modding
 			else
 			{
 				imports.Add("import " + Mod.Current.GlobalScript.ModuleName + ";");
-				code = string.Join("\n", imports.ToArray()) + "\n" + expression;
+				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + expression;
 				sc = new ScriptCode("expression", code, Mod.Current.GlobalScript);
 			}
 			var script = GetCodeScript(sc);

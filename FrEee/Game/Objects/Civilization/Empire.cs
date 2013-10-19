@@ -20,6 +20,7 @@ using FrEee.Game.Enumerations;
 using AutoMapper;
 using System.Dynamic;
 using FrEee.Game.Objects.Orders;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -27,7 +28,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
+	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -672,5 +673,17 @@ namespace FrEee.Game.Objects.Civilization
 		/// Arbitrary data stored by the AI to maintain state between turns.
 		/// </summary>
 		public dynamic AINotes { get; set; }
+
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				// let scripters refer to empire as empire, not just as host, because host would be confusing
+				return new Dictionary<string, object>
+				{
+					{"empire", this}
+				};
+			}
+		}
 	}
 }

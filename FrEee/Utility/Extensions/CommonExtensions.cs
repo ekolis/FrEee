@@ -77,7 +77,7 @@ namespace FrEee.Utility.Extensions
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[]{map});
+				map = ignorer.Invoke(null, new object[] { map });
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -791,7 +791,7 @@ namespace FrEee.Utility.Extensions
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name,object stackTo, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, object stackTo, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(stackTo);
 			if (!abils.Any())
@@ -1071,6 +1071,13 @@ namespace FrEee.Utility.Extensions
 			var sw = new StreamWriter("errorlog.txt");
 			sw.WriteLine(ex.GetType().Name + " occurred at " + DateTime.Now + ":");
 			sw.WriteLine(ex.ToString());
+			ex = ex.InnerException;
+			while (ex != null)
+			{
+				sw.WriteLine();
+				sw.WriteLine("Caused by " + ex.GetType().Name + ":");
+				sw.WriteLine(ex.ToString());
+			}
 			sw.Close();
 		}
 
