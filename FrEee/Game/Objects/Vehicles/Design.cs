@@ -109,7 +109,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The hull used in this design.
 		/// </summary>
 		[DoNotSerialize]
-		public IHull<T> Hull { get { return hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
+		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
 
 		private Reference<IHull<T>> hull { get; set; }
 

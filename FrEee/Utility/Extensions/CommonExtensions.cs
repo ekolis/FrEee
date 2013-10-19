@@ -1801,5 +1801,14 @@ namespace FrEee.Utility.Extensions
 			formula = formula.Replace("(***)", defaultValue.ToStringInvariant());
 			return new Formula<TValue>(context, formula, FormulaType.Dynamic);
 		}
+		
+		/// <summary>
+		/// Returns an object's hash code, or 0 for null.
+		/// </summary>
+		/// <param name="o"></param>
+		public static int GetSafeHashCode(this object o)
+		{
+			return o == null ? 0 : o.GetHashCode();
+		}
 	}
 }
