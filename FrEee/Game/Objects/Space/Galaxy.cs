@@ -1018,6 +1018,11 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
+		public IReferrable GetReferrable(int id)
+		{
+			return referrables[id];
+		}
+
 		/// <summary>
 		/// Assigns an ID to an object.
 		/// </summary>

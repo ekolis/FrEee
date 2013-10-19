@@ -93,37 +93,59 @@ namespace FrEee.Modding
 		/// </summary>
 		/// <param name="variables">The variables to set, or null to set no variables.</param>
 		/// <returns></returns>
-		public static void UpdateScope(IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
+		public static void UpdateScope(IDictionary<string, object> variables)
 		{
-			// Set injected variables
-			if (variables != null)
+			// Separate referrable objects (they just get ID's, not serialized data)
+			var referrables = new Dictionary<string, IReferrable>();
+			var genericObjects = new Dictionary<string, object>();
+			foreach (var kvp in variables)
 			{
-				foreach (var kvp in SerializeScriptVariables(variables))
+				if (kvp.Value is IReferrable)
+					referrables.Add(kvp.Key, (IReferrable)kvp.Value);
+				else
+					genericObjects.Add(kvp.Key, kvp.Value);
+			}
+
+			// Set injected variables
+			if (referrables != null)
+			{
+				foreach (var kvp in referrables)
+				{
+					scope.SetVariable("_" + kvp.Key, kvp.Value.ID);
+					lastReferrables.Add(kvp.Key, kvp.Value);
+				}
+			}
+			if (genericObjects != null)
+			{
+				foreach (var kvp in SerializeScriptVariables(genericObjects))
 				{
 					scope.SetVariable("_" + kvp.Key, kvp.Value);
 					lastVariables.Add(kvp.Key, kvp.Value);
 				}
 			}
-			if (readOnlyVariables != null)
+			foreach (var variable in lastReferrables.Keys.ToArray())
 			{
-				foreach (var kvp in SerializeScriptVariables(readOnlyVariables))
+				if (!referrables.ContainsKey(variable))
 				{
-					scope.SetVariable("_" + kvp.Key, kvp.Value);
-					lastVariables.Add(kvp.Key, kvp.Value);
+					scope.RemoveVariable("_" + variable);
+					scope.RemoveVariable(variable);
+					lastReferrables.Remove(variable);
 				}
 			}
 			foreach (var variable in lastVariables.Keys.ToArray())
 			{
-				if (!variables.ContainsKey(variable) && (readOnlyVariables == null || !readOnlyVariables.ContainsKey(variable)))
+				if (!genericObjects.ContainsKey(variable))
+				{
+					scope.RemoveVariable("_" + variable);
+					scope.RemoveVariable(variable);
 					lastVariables.Remove(variable);
+				}
 			}
 			if (lastGalaxy != Galaxy.Current)
 			{
 				lastGalaxy = Galaxy.Current;
 				var dict = new Dictionary<string, object>();
-				// TODO - create SerializeScriptVariable function so we don't need a dictionary
-				dict.Add("galaxy", lastGalaxy);
-				scope.SetVariable("_galaxy", SerializeScriptVariables(dict)["galaxy"]);
+				scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
 				scope.SetVariable("newGalaxy", true);
 			}
 			else if (lastGalaxy == null)
@@ -137,7 +159,10 @@ namespace FrEee.Modding
 
 		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
 		{
-			return variables.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Serializer.SerializeToString(kvp.Value))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			return variables.Select(kvp => new KeyValuePair<string, string>(
+				kvp.Key,
+				Serializer.SerializeToString(kvp.Value)))
+				.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
 		public static IDictionary<string, object> RetrieveVariablesFromScope(ScriptScope scope, IEnumerable<string> variableNames)
@@ -148,6 +173,7 @@ namespace FrEee.Modding
 			return dict;
 		}
 
+		private static IDictionary<string, IReferrable> lastReferrables = new SafeDictionary<string, IReferrable>();
 		private static IDictionary<string, object> lastVariables = new SafeDictionary<string, object>();
 		private static Galaxy lastGalaxy = null;
 
@@ -191,12 +217,10 @@ namespace FrEee.Modding
 				{
 					if (lastVariables[variable] == null || lastVariables[variable] != variables[variable])
 					{
-						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 						if (variables[variable] is IReferrable)
-						{
-							// assign ID's to passed-over objects so they can reference each other
-							deserializers.Add("galaxy.AssignID(" + variable + ");");
-						}
+							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						else
+							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					}
 				}
 			}
@@ -262,11 +286,19 @@ namespace FrEee.Modding
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
-					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					if (variables[variable] is IReferrable)
+						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+					else
+						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					serializers.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
 				}
 				foreach (var variable in readOnlyVariables.Keys)
-					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+				{
+					if (readOnlyVariables[variable] is IReferrable)
+							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						else
+							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+				}
 			}
 			var code =
 				string.Join("\n", deserializers.ToArray()) + "\n" +

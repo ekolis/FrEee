@@ -442,7 +442,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
+				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r)).ToArray();
 			}
 		}
 
