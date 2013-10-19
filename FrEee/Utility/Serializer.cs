@@ -527,7 +527,10 @@ namespace FrEee.Utility
 					for (int i = 0; i < size; i++)
 					{
 						var item = Deserialize(r, itemType, context, log);
-						Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(item))).Compile().DynamicInvoke();
+						Expression.Lambda(Expression.Call(
+							Expression.Constant(coll),
+							adder,
+							Expression.Convert(Expression.Constant(item), itemType))).Compile().DynamicInvoke();
 					}
 					o = coll;
 
