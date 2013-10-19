@@ -75,7 +75,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("Could not place warp point from " + here + " to " + there + " at " + sector1 + ".", ex)
+				throw new Exception("Could not place warp point from " + here + " to " + there + " at " + sector1 + ".", ex);
 			}
 			var wp2 = wpTemplate.Instantiate();
 			wp2.IsOneWay = false;
@@ -87,7 +87,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			}
 			catch (Exception ex)
 			{
-				throw new Exception("Could not place warp point from " + there + " to " + here + " at " + sector2 + ".", ex)
+				throw new Exception("Could not place warp point from " + there + " to " + here + " at " + sector2 + ".", ex);
 			}
 			Ability abil = null;
 			if (abil1 != null && abil2 != null)
