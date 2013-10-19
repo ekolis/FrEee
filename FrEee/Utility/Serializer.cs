@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using System.Linq.Expressions;
 
 namespace FrEee.Utility
 {
@@ -248,8 +249,8 @@ namespace FrEee.Utility
 					}
 					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
 					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
-					Serialize(keyprop.GetValue(item, new object[]{}), w, keyprop.PropertyType, context, tabLevel + 1);
-					Serialize(valprop.GetValue(item, new object[] { }), w, valprop.PropertyType, context, tabLevel + 1);
+					Serialize(Expression.Lambda(Expression.Property(Expression.Constant(item), keyprop)).Compile().DynamicInvoke(), w, keyprop.PropertyType, context, tabLevel + 1);
+					Serialize(Expression.Lambda(Expression.Property(Expression.Constant(item), valprop)).Compile().DynamicInvoke(), w, valprop.PropertyType, context, tabLevel + 1);
 				}
 				else
 					Serialize(item, w, itemType, context, tabLevel + 1);
@@ -279,7 +280,7 @@ namespace FrEee.Utility
 					w.Write(moreTabs);
 					w.Write(p.Name);
 					w.Write(":\n");
-					var val = p.GetValue(o, new object[]{});
+					var val = Expression.Lambda(Expression.Property(Expression.Constant(o), p)).Compile().DynamicInvoke();
 					Serialize(val, w, p.PropertyType, context, tabLevel + 2);
 				}
 				catch (Exception ex)
@@ -526,7 +527,7 @@ namespace FrEee.Utility
 					for (int i = 0; i < size; i++)
 					{
 						var item = Deserialize(r, itemType, context, log);
-						adder.Invoke(coll, new object[] { item });
+						Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(item))).Compile().DynamicInvoke();
 					}
 					o = coll;
 
@@ -563,7 +564,7 @@ namespace FrEee.Utility
 						var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
 						var key = Deserialize(r, keyprop.PropertyType, context, log);
 						var val = Deserialize(r, valprop.PropertyType, context, log);
-						adder.Invoke(coll, new object[] { key, val });
+						Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(key), Expression.Constant(val))).Compile().DynamicInvoke();
 					}
 					o = coll;
 
@@ -610,11 +611,7 @@ namespace FrEee.Utility
 				if (fin == 'p')
 				{
 					// create object and add it to our context
-					var constructor = type.GetConstructor(new Type[] { });
-					if (constructor != null)
-						o = constructor.Invoke(new object[] { });
-					else
-						o = FormatterServices.GetSafeUninitializedObject(type);
+					o = type.Instantiate();
 					context.Add(o);
 
 					// field count - need to create object and populate fields
@@ -629,7 +626,22 @@ namespace FrEee.Utility
 						var pname = r.ReadTo(':', log).Trim();
 						var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
 						if (prop != null)
-							prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[] { });
+						{
+							if (type.IsValueType)
+							{
+								// not sure why LINQ expressions don't work on structs...
+								prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[0]);
+							}
+							else
+							{
+								Expression.Lambda(Expression.Assign(
+										Expression.Property(Expression.Constant(o), prop),
+										Expression.Convert(
+											Expression.Constant(Deserialize(r, prop.PropertyType, context, log)),
+											prop.PropertyType
+											))).Compile().DynamicInvoke();
+							}
+						}
 						else
 							r.ReadTo(';', log);
 						// if p is null, it must be data from an old version with different property names, so don't crash
