@@ -192,9 +192,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public override int GetHashCode()
 		{
-			if (Mount == null)
-				return Container.GetHashCode() ^ ComponentTemplate.GetHashCode();
-			return Container.GetHashCode() ^ ComponentTemplate.GetHashCode() ^ Mount.GetHashCode();
+			return Container.GetSafeHashCode() ^ ComponentTemplate.GetSafeHashCode() ^ Mount.GetSafeHashCode();
 		}
 
 		public override string ToString()
