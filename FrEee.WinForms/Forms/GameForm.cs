@@ -60,6 +60,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnColonize, "Colonize");
 			LoadButtonImage(btnSentry, "Sentry");
 			LoadButtonImage(btnConstructionQueue, "ConstructionQueue");
+			LoadButtonImage(btnTransferCargo, "TransferCargo");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
 			LoadButtonImage(btnPrevIdle, "Previous");
 			LoadButtonImage(btnNextIdle, "Next");
