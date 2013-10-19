@@ -69,12 +69,26 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			wp1.IsOneWay = false;
 			wp1.Name = "Warp Point to " + there.Item;
 			wp1.Target = sector2;
-			sector1.Place(wp1);
+			try
+			{
+				sector1.Place(wp1);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Could not place warp point from " + here + " to " + there + " at " + sector1 + ".", ex)
+			}
 			var wp2 = wpTemplate.Instantiate();
 			wp2.IsOneWay = false;
 			wp2.Name = "Warp Point to " + here.Item;
 			wp2.Target = sector1;
-			sector2.Place(wp2);
+			try
+			{
+				sector2.Place(wpw);
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Could not place warp point from " + there + " to " + here + " at " + sector2 + ".", ex)
+			}
 			Ability abil = null;
 			if (abil1 != null && abil2 != null)
 			{
