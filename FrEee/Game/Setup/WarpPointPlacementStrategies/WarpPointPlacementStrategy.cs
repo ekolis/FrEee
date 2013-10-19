@@ -83,7 +83,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			wp2.Target = sector1;
 			try
 			{
-				sector2.Place(wpw);
+				sector2.Place(wp2);
 			}
 			catch (Exception ex)
 			{
