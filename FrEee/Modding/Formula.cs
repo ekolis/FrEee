@@ -118,12 +118,22 @@ namespace FrEee.Modding
 
 		public override string ToString()
 		{
+			if (Value is string)
+				return '"' + Value.ToString() + '"';
 			return Value.ToString();
 		}
 
 		public static Formula<T> operator +(Formula<T> f1, Formula<T> f2)
 		{
-			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) + ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			string combined = "({0}) + ({1})";
+			if (typeof(T) == typeof(string))
+			{
+				if (f1.FormulaType == FormulaType.Literal)
+					combined = combined.Replace("({0})", "\"{0}\"");
+				if (f2.FormulaType == FormulaType.Literal)
+					combined = combined.Replace("({1})", "\"{1}\"");
+			}
+			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format(combined, f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
 			if (result.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
 				return result.Compile();
 			return result;
