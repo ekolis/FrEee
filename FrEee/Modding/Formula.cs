@@ -123,47 +123,74 @@ namespace FrEee.Modding
 
 		public static Formula<T> operator +(Formula<T> f1, Formula<T> f2)
 		{
-			return new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) + ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) + ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			if (result.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator -(Formula<T> f1, Formula<T> f2)
 		{
-			return new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) - ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) - ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator *(Formula<T> f1, Formula<T> f2)
 		{
-			return new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) * ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) * ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator /(Formula<T> f1, Formula<T> f2)
 		{
-			return new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) / ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) / ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
+			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator -(Formula<T> f)
 		{
-			return new Formula<T>(f.Context, string.Format("-({0})", f.Text), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			var result = new Formula<T>(f.Context, string.Format("-({0})", f.Text), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			if (f.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator +(Formula<T> f, double scalar)
 		{
-			return new Formula<T>(f.Context, string.Format("({0}) + {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			var result = new Formula<T>(f.Context, string.Format("({0}) + {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			if (f.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator -(Formula<T> f, double scalar)
 		{
-			return new Formula<T>(f.Context, string.Format("({0}) - {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			var result = new Formula<T>(f.Context, string.Format("({0}) - {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			if (f.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator *(Formula<T> f, double scalar)
 		{
-			return new Formula<T>(f.Context, string.Format("({0}) * {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			var result = new Formula<T>(f.Context, string.Format("({0}) * {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			if (f.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static Formula<T> operator /(Formula<T> f, double scalar)
 		{
-			return new Formula<T>(f.Context, string.Format("({0}) / {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			var result = new Formula<T>(f.Context, string.Format("({0}) / {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
+			if (f.FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 
 		public static bool operator ==(Formula<T> f1, Formula<T> f2)

@@ -131,7 +131,7 @@ namespace FrEee.Modding.Loaders
 								w.MaxRange = w.MinRange + dmg.Count - 1;
 								var dict = new Dictionary<int, int>();
 								for (int i = 0; i < dmg.Count; i++)
-									dict.Add(i + w.MinRange, dmg[i]);
+									dict.Add(i + w.MinRange.Value, dmg[i]);
 								w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
 							}
 							catch (Exception ex)
