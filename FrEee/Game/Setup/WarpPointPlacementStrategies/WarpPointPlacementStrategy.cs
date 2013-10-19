@@ -62,8 +62,19 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 				wpTemplate = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
 			}
 
-			var sector1 = GetWarpPointSector(here, there);
-			var sector2 = GetWarpPointSector(there, here);
+			Sector sector1, sector2;
+			// HACK - for sectors with null systems
+			int retries = 0;
+			do 
+			{
+				sector1 = GetWarpPointSector(here, there);
+				retries++;
+			} while (sector1.StarSystem == null && retries < 10);
+			do
+			{
+				sector2 = GetWarpPointSector(there, here);
+				retries++;
+			} while (sector2.StarSystem == null && retries < 10);
 
 			var wp1 = wpTemplate.Instantiate();
 			wp1.IsOneWay = false;
