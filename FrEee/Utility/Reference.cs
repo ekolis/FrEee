@@ -71,7 +71,7 @@ namespace FrEee.Utility
 
 		public static implicit operator T(Reference<T> r)
 		{
-			return r.Value;
+			return r == null ? default(T) : r.Value;
 		}
 
 		public static implicit operator Reference<T>(T t)

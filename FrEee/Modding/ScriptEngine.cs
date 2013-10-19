@@ -16,6 +16,7 @@ using System.Data;
 using FrEee.Utility;
 using Microsoft.Scripting.Runtime;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Modding
 {
@@ -116,6 +117,22 @@ namespace FrEee.Modding
 				if (!variables.ContainsKey(variable) && (readOnlyVariables == null || !readOnlyVariables.ContainsKey(variable)))
 					lastVariables.Remove(variable);
 			}
+			if (lastGalaxy != Galaxy.Current)
+			{
+				lastGalaxy = Galaxy.Current;
+				var dict = new Dictionary<string, object>();
+				// TODO - create SerializeScriptVariable function so we don't need a dictionary
+				dict.Add("galaxy", lastGalaxy);
+				scope.SetVariable("_galaxy", SerializeScriptVariables(dict)["galaxy"]);
+				scope.SetVariable("newGalaxy", true);
+			}
+			else if (lastGalaxy == null)
+			{
+				scope.SetVariable("_galaxy", typeof(Galaxy).AssemblyQualifiedName + ":n;");
+				scope.SetVariable("newGalaxy", false);
+			}
+			else
+				scope.SetVariable("newGalaxy", false);
 		}
 
 		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
@@ -132,6 +149,7 @@ namespace FrEee.Modding
 		}
 
 		private static IDictionary<string, object> lastVariables = new SafeDictionary<string, object>();
+		private static Galaxy lastGalaxy = null;
 
 		private static ScriptScope scope;
 
@@ -166,7 +184,9 @@ namespace FrEee.Modding
 			if (variables != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
-				bool addedInit = false;
+				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
 					if (lastVariables[variable] == null || lastVariables[variable] != variables[variable])
@@ -174,15 +194,8 @@ namespace FrEee.Modding
 						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 						if (variables[variable] is IReferrable)
 						{
-							// assign ID's to passed-over objects in a fake galaxy so they can reference each other
-							if (!addedInit)
-							{
-								deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
-								deserializers.Add("galaxy = Galaxy();");
-								addedInit = true;
-							}
+							// assign ID's to passed-over objects so they can reference each other
 							deserializers.Add("galaxy.AssignID(" + variable + ");");
-							deserializers.Add("galaxy.AssignIDs();");
 						}
 					}
 				}
@@ -244,6 +257,9 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
 					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
@@ -306,6 +322,8 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -359,6 +377,8 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script

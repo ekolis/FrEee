@@ -16,10 +16,6 @@ namespace FrEee.Utility
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 
-		public SafeDictionary()
-		{
-		}
-
 		/// <summary>
 		/// For initializing newly created values.
 		/// </summary>
@@ -118,6 +114,8 @@ namespace FrEee.Utility
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
+			if (dict == null)
+				dict = new Dictionary<TKey, TValue>(); // wtf
 			return dict.GetEnumerator();
 		}
 

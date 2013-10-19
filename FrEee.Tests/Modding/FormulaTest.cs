@@ -72,7 +72,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 			Galaxy.Current.AssignID(armor);
 			var mount = new Mount();
 			mount.DurabilityPercent = 200;
-			mount.SizePercent = new Formula<int>(mount, "design.Hull.Size", FormulaType.Dynamic);
+			mount.SizePercent = new Formula<int>(mount, "hull.Size", FormulaType.Dynamic);
 			Mod.Current.Mounts.Add(mount);
 			Galaxy.Current.AssignID(mount);
 			var mct = new MountedComponentTemplate(armor, mount);
