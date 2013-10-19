@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Enumerations;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -73,8 +74,10 @@ namespace FrEee.Modding.Loaders
 				c.RomanNumeral = rec.Get<int>("Roman Numeral", c);
 				c.StellarConstructionGroup = rec.Get<string>("Custom Group", c);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec, c))
-					c.TechnologyRequirements.Add(tr);
+				foreach (var tr in RequirementLoader.Load(rec, c, RequirementType.Unlock))
+					c.UnlockRequirements.Add(tr);
+
+				// TODO - build and use requirements
 
 				foreach (var abil in AbilityLoader.Load(rec, c))
 					c.Abilities.Add(abil);

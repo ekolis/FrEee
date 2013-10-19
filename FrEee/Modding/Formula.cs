@@ -229,5 +229,13 @@ namespace FrEee.Modding
 		{
 			return Text.GetHashCode() ^ (Context == null ? 0 : Context.GetHashCode()) ^ FormulaType.GetHashCode();
 		}
+
+		public Formula<string> ToStringFormula()
+		{
+			var result = new Formula<string>(Context, "str(" + Text + ")", FormulaType == FormulaType.Literal ? FormulaType.Static : FormulaType);
+			if (FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
+		}
 	}
 }

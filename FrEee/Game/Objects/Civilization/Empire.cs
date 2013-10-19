@@ -382,7 +382,7 @@ namespace FrEee.Game.Objects.Civilization
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
 				return false; // unique tech that this empire hasn't discovered
-			return item.TechnologyRequirements.All(r => ResearchedTechnologies[r.Technology] >= r.Level);
+			return item.UnlockRequirements.All(r => r.Formula.Evaluate(this));
 		}
 
 		/// <summary>

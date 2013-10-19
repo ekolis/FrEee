@@ -13,7 +13,7 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	class NamedDictionary<TKey, TValue> : SafeDictionary<TKey, TValue>
+	public class NamedDictionary<TKey, TValue> : SafeDictionary<TKey, TValue>
 		where TKey : INamed
 	{
 		public TValue this[string name]

@@ -23,7 +23,7 @@ namespace FrEee.Modding.Templates
 		public ComponentTemplate()
 		{
 			Abilities = new List<Ability>();
-			TechnologyRequirements = new List<TechnologyRequirement>();
+			UnlockRequirements = new List<Requirement>();
 			Cost = new ResourceFormula(this);
 		}
 
@@ -125,10 +125,9 @@ namespace FrEee.Modding.Templates
 		public Formula<string> StellarConstructionGroup { get; set; }
 
 		/// <summary>
-		/// The technology requirements for this component.
+		/// The requirements to unlock this component.
 		/// </summary>
-		public IList<TechnologyRequirement> TechnologyRequirements {
-			get; private set; }
+		public IList<Requirement> UnlockRequirements { get; private set; }
 
 		/// <summary>
 		/// Abilities possessed by this component.

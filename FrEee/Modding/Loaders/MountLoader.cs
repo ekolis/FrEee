@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Enumerations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,7 +104,8 @@ namespace FrEee.Modding.Loaders
 				}
 				m.AbilityPercentages = AbilityLoader.LoadPercentagesOrModifiers(rec, "Percentage", m);
 				m.AbilityModifiers = AbilityLoader.LoadPercentagesOrModifiers(rec, "Modifier", m);
-				m.TechnologyRequirements = TechnologyRequirementLoader.Load(rec, m).ToList();
+				m.UnlockRequirements = RequirementLoader.Load(rec, m, RequirementType.Unlock).ToList();
+				// TODO - build and use requirements
 			}
 		}
 	}

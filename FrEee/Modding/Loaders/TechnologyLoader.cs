@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Enumerations;
 
 namespace FrEee.Modding.Loaders
 {
@@ -54,8 +55,8 @@ namespace FrEee.Modding.Loaders
 
 				// load its tech reqs
 				// couldn't do it before because some early techs can reference later techs
-				foreach (var tr in TechnologyRequirementLoader.Load(rec, tech))
-					tech.TechnologyRequirements.Add(tr);
+				foreach (var tr in RequirementLoader.Load(rec, tech, RequirementType.Unlock))
+					tech.UnlockRequirements.Add(tr);
 			}
 		}
 	}

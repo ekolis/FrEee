@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			AbilityPercentages = new Dictionary<string, IDictionary<int, Formula<int>>>();
 			AbilityModifiers = new Dictionary<string, IDictionary<int, Formula<int>>>();
-			TechnologyRequirements = new List<TechnologyRequirement>();
+			UnlockRequirements = new List<Requirement>();
 		}
 
 		/// <summary>
@@ -133,9 +133,9 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		/// <summary>
-		/// Technology requirements to use this mount.
+		/// Requirements to unlock this mount.
 		/// </summary>
-		public IList<TechnologyRequirement> TechnologyRequirements
+		public IList<Requirement> UnlockRequirements
 		{
 			get;
 			set;

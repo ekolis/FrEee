@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding.Enumerations;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -78,8 +79,10 @@ namespace FrEee.Modding.Loaders
 
 				hull.Mass = rec.Get<int>("Engines Per Move", hull);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec, hull))
-					hull.TechnologyRequirements.Add(tr);
+				foreach (var tr in RequirementLoader.Load(rec, hull, RequirementType.Unlock))
+					hull.UnlockRequirements.Add(tr);
+
+				// TODO - build and use requirements
 
 				foreach (var abil in AbilityLoader.Load(rec, hull))
 					hull.Abilities.Add(abil);
