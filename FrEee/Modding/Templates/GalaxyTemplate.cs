@@ -182,7 +182,7 @@ namespace FrEee.Modding.Templates
 				}
 
 				// create the warp points
-				if (startLocation != null && endLocation != null)
+				if (startLocation.Item != null && endLocation.Item != null)
 				{
 					GameSetup.WarpPointPlacementStrategy.PlaceWarpPoints(startLocation, endLocation);
 
