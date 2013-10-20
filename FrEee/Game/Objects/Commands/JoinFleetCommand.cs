@@ -52,16 +52,16 @@ namespace FrEee.Game.Objects.Commands
 				Fleet = CreateFleetCommand.Fleet;
 
 			// validation
-			if (Target.Sector != Fleet.Sector)
-				Issuer.Log.Add(Target.CreateLogMessage(Target + " cannot join " + Fleet + " because they are not in the same sector."));
+			if (Executor.Sector != Fleet.Sector)
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot join " + Fleet + " because they are not in the same sector."));
 			else
 			{
 				// remove from old fleet
-				if (Target.Container != null)
-					Target.Container.Vehicles.Remove(Target);
+				if (Executor.Container != null)
+					Executor.Container.Vehicles.Remove(Executor);
 
 				// add to new fleet
-				Fleet.Vehicles.Add(Target);
+				Fleet.Vehicles.Add(Executor);
 			}
 		}
 

@@ -21,6 +21,7 @@ using AutoMapper;
 using System.Dynamic;
 using FrEee.Game.Objects.Orders;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Objects.Civilization.Diplomacy;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -57,6 +58,9 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
+			OutgoingMessages = new HashSet<IMessage>();
+			EncounteredEmpires = new HashSet<Empire>();
+			EncounteredEmpires.Add(this);
 		}
 
 		/// <summary>
@@ -654,6 +658,16 @@ namespace FrEee.Game.Objects.Civilization
 		/// <param name="obj"></param>
 		public void UpdateMemory(IFoggable obj)
 		{
+			// encounter empire if not yet encountered
+			if (obj.Owner != null && !EncounteredEmpires.Contains(obj.Owner))
+			{
+				// not two way encounter if ship is cloaked!
+				// in that case you will need to gift your own comms channels to that empire
+				// if you want them to be able to message you apart from replying to your messages
+				EncounteredEmpires.Add(obj.Owner);
+				Log.Add(obj.Owner.CreateLogMessage("We have encountered a new empire, the " + obj.Owner + "."));
+			}
+			
 			if (obj.ID > 0)
 			{
 				// object exists, update cache with the data
@@ -704,5 +718,15 @@ namespace FrEee.Game.Objects.Civilization
 				};
 			}
 		}
+
+		/// <summary>
+		/// Outgoing diplomatic messages.
+		/// </summary>
+		public ICollection<IMessage> OutgoingMessages { get; private set; }
+
+		/// <summary>
+		/// Any empires that this empire has encountered.
+		/// </summary>
+		public ISet<Empire> EncounteredEmpires { get; private set; }
 	}
 }

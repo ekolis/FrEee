@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			Target.Dispose();
+			Executor.Dispose();
 		}
 	}
 }

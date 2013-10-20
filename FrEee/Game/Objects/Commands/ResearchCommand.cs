@@ -88,22 +88,22 @@ namespace FrEee.Game.Objects.Commands
 			// make sure no techs are prioritized or queued that the empire can't research
 			foreach (var kvp in Spending.ToArray())
 			{
-				if (!Target.HasUnlocked(kvp.Key))
+				if (!Executor.HasUnlocked(kvp.Key))
 					SetSpending(kvp.Key, 0);
 			}
 			foreach (Technology.Technology tech in Queue.ToArray())
 			{
-				if (!Target.HasUnlocked(tech))
+				if (!Executor.HasUnlocked(tech))
 					RemoveFromQueue(tech);
 			}
 
 			// save to empire
-			Target.ResearchSpending.Clear();
+			Executor.ResearchSpending.Clear();
 			foreach (var kvp in Spending)
-				Target.ResearchSpending.Add(kvp);
-			Target.ResearchQueue.Clear();
+				Executor.ResearchSpending.Add(kvp);
+			Executor.ResearchQueue.Clear();
 			foreach (var tech in Queue)
-				Target.ResearchQueue.Add(tech);
+				Executor.ResearchQueue.Add(tech);
 		}
 	}
 }
