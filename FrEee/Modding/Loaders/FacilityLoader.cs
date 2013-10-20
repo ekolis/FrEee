@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
+using FrEee.Modding.Enumerations;
 
 namespace FrEee.Modding.Loaders
 {
@@ -43,8 +44,10 @@ namespace FrEee.Modding.Loaders
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
 					f.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
 
-				foreach (var tr in TechnologyRequirementLoader.Load(rec, f))
-					f.TechnologyRequirements.Add(tr);
+				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, f, RequirementType.Unlock))
+					f.UnlockRequirements.Add(tr);
+
+				// TODO - build and use requirements
 
 				foreach (var abil in AbilityLoader.Load(rec, f))
 					f.Abilities.Add(abil);

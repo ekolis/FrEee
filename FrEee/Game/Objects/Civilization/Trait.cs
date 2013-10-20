@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Civilization
 			RestrictedTraits = new List<Trait>();
 		}
 
-		public Formula<string> Name
+		public string Name
 		{
 			get;
 			set;

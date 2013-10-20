@@ -213,10 +213,13 @@ namespace FrEee.Modding
 		{
 			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
 			{
+				string part1, part2;
+				part1 = "(\"{0}\")";
 				if (typeof(T) == typeof(string))
-					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + \"{1}\"", f1.Text, f2.Text), FormulaType.Static).Compile();
+					part2 = "\"{1}\"";
 				else
-					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Text, f2.Text), FormulaType.Static).Compile();
+					part2 = "str({1})";
+				return new Formula<string>(f1.Context, string.Format(part1 + " + " + part2, f1.Text, f2.Text), FormulaType.Static).Compile();
 			}
 			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
 				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
@@ -248,6 +251,14 @@ namespace FrEee.Modding
 		public override int GetHashCode()
 		{
 			return Text.GetHashCode() ^ (Context == null ? 0 : Context.GetHashCode()) ^ FormulaType.GetHashCode();
+		}
+
+		public Formula<string> ToStringFormula()
+		{
+			var result = new Formula<string>(Context, "str(" + Text + ")", FormulaType == FormulaType.Literal ? FormulaType.Static : FormulaType);
+			if (FormulaType == FormulaType.Literal)
+				return result.Compile();
+			return result;
 		}
 	}
 }

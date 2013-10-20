@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Technology
 		public FacilityTemplate()
 		{
 			Abilities = new List<Ability>();
-			TechnologyRequirements = new List<TechnologyRequirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			Cost = new ResourceFormula(this);
 		}
 
@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The technology requirements for this facility.
 		/// </summary>
-		public IList<TechnologyRequirement> TechnologyRequirements { get; private set; }
+		public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
 
 		/// <summary>
 		/// Abilities possessed by this facility.

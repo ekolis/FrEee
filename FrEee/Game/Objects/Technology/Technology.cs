@@ -19,50 +19,50 @@ namespace FrEee.Game.Objects.Technology
 	{
 		public Technology()
 		{
-			TechnologyRequirements = new List<TechnologyRequirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			expectedResults = new Lazy<IEnumerable<IResearchable>>(() => GetExpectedResults(Empire.Current));
 		}
 
 		/// <summary>
 		/// The name of the technology.
 		/// </summary>
-		public Formula<string> Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>
 		/// The group that the technology belongs to. For grouping on the research screen.
 		/// </summary>
-		public Formula<string> Group { get; set; }
+		public string Group { get; set; }
 
 		/// <summary>
 		/// A description of the technology.
 		/// </summary>
-		public Formula<string> Description { get; set; }
+		public string Description { get; set; }
 
 		/// <summary>
 		/// The maximum level that can be researched.
 		/// </summary>
-		public Formula<int> MaximumLevel { get; set; }
+		public int MaximumLevel { get; set; }
 
 		/// <summary>
 		/// The cost of the first level.
 		/// </summary>
-		public Formula<int> LevelCost { get; set; }
+		public int LevelCost { get; set; }
 
 		/// <summary>
 		/// The starting level for empires at low tech.
 		/// </summary>
-		public Formula<int> StartLevel { get; set; }
+		public int StartLevel { get; set; }
 
 		/// <summary>
 		/// The starting level for empires at medium tech.
 		/// </summary>
-		public Formula<int> RaiseLevel { get; set; }
+		public int RaiseLevel { get; set; }
 
 		/// <summary>
 		/// If not null or zero, this tech is a "racial tech" and will not be researchable
 		/// except by empires possessing the trait referencing this ID.
 		/// </summary>
-		public Formula<string> RacialTechID { get; set; }
+		public string RacialTechID { get; set; }
 
 		/// <summary>
 		/// Traits which unlock this technology.
@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Formula<bool> IsRacial
+		public bool IsRacial
 		{
 			get
 			{
@@ -89,9 +89,9 @@ namespace FrEee.Game.Objects.Technology
 		/// If not null or zero, this tech is a "unique tech" and will not be researchable.
 		/// Instead it will appear on ruins worlds referencing its ID.
 		/// </summary>
-		public Formula<string> UniqueTechID { get; set; }
+		public string UniqueTechID { get; set; }
 
-		public Formula<bool> IsUnique
+		public bool IsUnique
 		{
 			get
 			{
@@ -102,12 +102,12 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Should the game offer game hosts the option of removing this tech from their games?
 		/// </summary>
-		public Formula<bool> CanBeRemoved { get; set; }
+		public bool CanBeRemoved { get; set; }
 
 		/// <summary>
 		/// The prerequisites for this technology.
 		/// </summary>
-		public IList<TechnologyRequirement> TechnologyRequirements { get; private set; }
+		public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
 
 		public long ID
 		{
@@ -233,9 +233,9 @@ namespace FrEee.Game.Objects.Technology
 			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
 			{
 				bool ok = true;
-				foreach (var req in item.TechnologyRequirements)
+				foreach (var req in item.UnlockRequirements)
 				{
-					if (levels[req.Technology] < req.Level)
+					if (!req.IsMetBy(emp))
 					{
 						// didn't meet the requirement
 						ok = false;
