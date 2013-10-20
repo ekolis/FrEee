@@ -14,31 +14,31 @@ namespace FrEee.Game.Objects.Civilization
 	[Serializable]
 	public class Culture : INamed
 	{
-		public Formula<string> Name { get; set; }
+		public string Name { get; set; }
 
 		string INamed.Name { get { return Name; } }
 
-		public Formula<string> Description { get; set; }
+		public string Description { get; set; }
 
-		public Formula<int> Production { get; set; }
+		public int Production { get; set; }
 
-		public Formula<int> Research { get; set; }
+		public int Research { get; set; }
 
-		public Formula<int> Intelligence { get; set; }
+		public int Intelligence { get; set; }
 
-		public Formula<int> Trade { get; set; }
+		public int Trade { get; set; }
 
-		public Formula<int> SpaceCombat { get; set; }
+		public int SpaceCombat { get; set; }
 
-		public Formula<int> GroundCombat { get; set; }
+		public int GroundCombat { get; set; }
 
-		public Formula<int> Happiness { get; set; }
+		public int Happiness { get; set; }
 
-		public Formula<int> MaintenanceReduction { get; set; }
+		public int MaintenanceReduction { get; set; }
 
-		public Formula<int> Construction { get; set; }
+		public int Construction { get; set; }
 
-		public Formula<int> Repair { get; set; }
+		public int Repair { get; set; }
 
 		public override string ToString()
 		{
