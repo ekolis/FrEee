@@ -132,6 +132,7 @@
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IPromotable.cs" />
+    <Compile Include="Game\Interfaces\IProposalMessage.cs" />
     <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Game\Objects\Civilization\Diplomacy\ProposalMessage.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Package.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\TreatyProposal.cs" />
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Memory.cs" />

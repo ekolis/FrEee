@@ -35,8 +35,11 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		private Empire empire;
+
 		private void BindEmpire(Empire emp)
 		{
+			empire = emp;
 			if (emp == Empire.Current && tabs.SelectedTab == tabDiplomacy)
 				tabs.SelectedTab = tabBudget;
 			else if (emp != Empire.Current && tabs.SelectedTab == tabBudget)
@@ -91,6 +94,21 @@ namespace FrEee.WinForms.Forms
 		private void btnClose_Click(object sender, EventArgs e)
 		{
 			Close();
+		}
+
+		private void btnCompose_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new DiplomacyForm(empire));
+		}
+
+		private void btnReply_Click(object sender, EventArgs e)
+		{
+			// TODO - reply to message
+		}
+
+		private void btnRescind_Click(object sender, EventArgs e)
+		{
+			// TODO - rescind message
 		}
 	}
 }

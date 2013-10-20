@@ -93,6 +93,12 @@
     <Compile Include="Forms\CultureComparisonForm.Designer.cs">
       <DependentUpon>CultureComparisonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DiplomacyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DiplomacyForm.Designer.cs">
+      <DependentUpon>DiplomacyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\EmpireListForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -448,6 +454,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CultureComparisonForm.resx">
       <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DiplomacyForm.resx">
+      <DependentUpon>DiplomacyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmpireListForm.resx">
       <DependentUpon>EmpireListForm.cs</DependentUpon>
