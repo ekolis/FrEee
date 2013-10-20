@@ -27,17 +27,17 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			if (Issuer == Target.Owner)
+			if (Issuer == Executor.Owner)
 			{
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
 				else if (Order == null)
-					Issuer.Log.Add(new GenericLogMessage("Attempted to add a null order to " + Target + ". This is probably a game bug."));
+					Issuer.Log.Add(new GenericLogMessage("Attempted to add a null order to " + Executor + ". This is probably a game bug."));
 				else
-					Target.AddOrder(Order);
+					Executor.AddOrder(Order);
 			}
 			else
-				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Target + " belonging to " + Target.Owner + "!", Galaxy.Current.TurnNumber));
+				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 
 		private IOrder<T> order

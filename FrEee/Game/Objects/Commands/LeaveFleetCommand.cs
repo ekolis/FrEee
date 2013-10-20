@@ -23,12 +23,12 @@ namespace FrEee.Game.Objects.Commands
 		public override void Execute()
 		{
 			// validation
-			if (Target.Container == null)
-				Issuer.Log.Add(Target.CreateLogMessage(Target + " cannot leave its fleet because it is not currently in a fleet."));
+			if (Executor.Container == null)
+				Issuer.Log.Add(Executor.CreateLogMessage(Executor + " cannot leave its fleet because it is not currently in a fleet."));
 			else
 			{
 				// remove from fleet
-				Target.Container.Vehicles.Remove(Target);
+				Executor.Container.Vehicles.Remove(Executor);
 			}
 		}
 	}

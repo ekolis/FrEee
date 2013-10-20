@@ -36,6 +36,6 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
-		T Target { get; set; }
+		T Executor { get; set; }
 	}
 }

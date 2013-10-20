@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Commands
 		protected Command(T target)
 		{
 			Issuer = Empire.Current;
-			Target = target;
+			Executor = target;
 		}
 
 		[DoNotSerialize]
@@ -29,16 +29,16 @@ namespace FrEee.Game.Objects.Commands
 		private Reference<Empire> issuer { get; set; }
 
 		[DoNotSerialize]
-		public T Target { get { return target; } set { target = value; } }
+		public T Executor { get { return executor; } set { executor = value; } }
 
-		private Reference<T> target { get; set; }
+		private Reference<T> executor { get; set; }
 
 		public abstract void Execute();
 
 		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
 			issuer.ReplaceClientIDs(idmap);
-			target.ReplaceClientIDs(idmap);
+			executor.ReplaceClientIDs(idmap);
 		}
 
 		public virtual IEnumerable<IReferrable> NewReferrables

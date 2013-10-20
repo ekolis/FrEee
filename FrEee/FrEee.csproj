@@ -123,6 +123,7 @@
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
+    <Compile Include="Game\Interfaces\IMessage.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
@@ -145,6 +146,17 @@
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\CargoDelta.cs" />
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\AcceptRejectMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\ActionMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Action.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\TradeProposal.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\GeneralMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Message.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Proposal.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\ProposalMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Package.cs" />
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Memory.cs" />

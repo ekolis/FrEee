@@ -28,7 +28,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			emp.BonusResearch = 1500000;
 			var cmd = new ResearchCommand();
 			cmd.Issuer = emp;
-			cmd.Target = emp;
+			cmd.Executor = emp;
 			cmd.SetSpending(tech, 100);
 
 			// check command client safety

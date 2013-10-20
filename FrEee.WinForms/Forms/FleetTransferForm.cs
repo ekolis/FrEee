@@ -44,13 +44,13 @@ namespace FrEee.WinForms.Forms
 				vehicles.Add(v);
 			
 			// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
-			foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Target).OfType<ISpaceVehicle>())
+			foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
 				vehicles.Add(v);
-			foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Target.Vehicles.OfType<ISpaceVehicle>()))
+			foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<ISpaceVehicle>()))
 				vehicles.Add(v);
 
 			// remove vehicles that are being added to fleets
-			foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Target).OfType<ISpaceVehicle>())
+			foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
 				vehicles.Remove(v);
 
 			// make a tree of vehicles
@@ -90,12 +90,12 @@ namespace FrEee.WinForms.Forms
 			// remove vehicles that are being removed from fleets
 			foreach (var cmd in newCommands.OfType<LeaveFleetCommand>())
 			{
-				var node = FindNode(treeFleets, cmd.Target);
+				var node = FindNode(treeFleets, cmd.Executor);
 				node.Remove();
 			}
 			foreach (var cmd in newCommands.OfType<DisbandFleetCommand>())
 			{
-				var node = FindNode(treeFleets, cmd.Target);
+				var node = FindNode(treeFleets, cmd.Executor);
 				node.Remove();
 			}
 
@@ -103,7 +103,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var cmd in newCommands.OfType<JoinFleetCommand>())
 			{
 				var node = FindNode(treeFleets, cmd.Fleet);
-				CreateNode(node, cmd.Target);
+				CreateNode(node, cmd.Executor);
 			}
 		}
 
@@ -233,7 +233,7 @@ namespace FrEee.WinForms.Forms
 					newCommands.Remove(cmd);
 					foreach (var c in newCommands.OfType<JoinFleetCommand>().Where(c => c.Fleet == fleet))
 						newCommands.Remove(c);
-					foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Target.Container == fleet))
+					foreach (var c in newCommands.OfType<LeaveFleetCommand>().Where(c => c.Executor.Container == fleet))
 						newCommands.Remove(c);
 				}
 
