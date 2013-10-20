@@ -1,0 +1,72 @@
+using System;
+using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
+using FrEee.Modding.Templates;
+using FrEee.Modding;
+using FrEee.Game.Objects.Civilization;
+
+namespace FrEee.Game.Objects.Space
+{
+	/// <summary>
+	/// An asteroid field. Asteroids can be mined or converted to planets.
+	/// </summary>
+	[Serializable]
+	public class AsteroidField : StellarObject, ITemplate<AsteroidField>
+	{
+		public AsteroidField()
+		{
+			ResourceValue = new ResourceQuantity();
+		}
+
+		/// <summary>
+		/// The PlanetSize.txt entry for this asteroid field's size.
+		/// </summary>
+		public StellarObjectSize Size { get; set; }
+
+		/// <summary>
+		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.
+		/// </summary>
+		public string Surface { get; set; }
+
+		/// <summary>
+		/// The atmospheric composition (e.g. methane, oxygen, carbon dioxide) of this asteroid field.
+		/// </summary>
+		public string Atmosphere { get; set; }
+
+		/// <summary>
+		/// Some sort of combat image? Where are these stored anyway?
+		/// </summary>
+		public string CombatTile { get; set; }
+		/// <summary>
+		/// The resource value of this asteroid field, in %.
+		/// </summary>
+		public ResourceQuantity ResourceValue { get; set; }
+
+		/// <summary>
+		/// Just copy the asteroid field's data.
+		/// </summary>
+		/// <returns>A copy of the asteroid field.</returns>
+		public AsteroidField Instantiate()
+		{
+			return this.Copy();
+		}
+
+		public override void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].CopyTo(this);
+			}
+		}
+
+		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
+		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
+		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
+	}
+}
