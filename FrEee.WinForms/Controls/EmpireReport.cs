@@ -41,10 +41,10 @@ namespace FrEee.WinForms.Controls
 		public void Bind()
 		{
 			if (Empire == null)
-				Visible = false;
+				gameTabControl1.Visible = false;
 			else
 			{
-				Visible = true;
+				gameTabControl1.Visible = true;
 				picPortrait.Image = Empire.Portrait;
 				picInsignia.Image = Empire.Icon;
 				txtName.Text = Empire.Name;

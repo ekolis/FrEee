@@ -30,9 +30,14 @@
 		{
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabDiplomacy = new System.Windows.Forms.TabPage();
-			this.report = new FrEee.WinForms.Controls.EmpireReport();
+			this.btnSend = new FrEee.WinForms.Controls.GameButton();
+			this.lstMessages = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.label13 = new System.Windows.Forms.Label();
 			this.txtTreaty = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
+			this.tabIntel = new System.Windows.Forms.TabPage();
+			this.report = new FrEee.WinForms.Controls.EmpireReport();
 			this.tabBudget = new System.Windows.Forms.TabPage();
 			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
@@ -59,21 +64,26 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.label13 = new System.Windows.Forms.Label();
-			this.lstMessages = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
-			this.lstIntel = new System.Windows.Forms.ListView();
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.label14 = new System.Windows.Forms.Label();
-			this.btnAdd = new FrEee.WinForms.Controls.GameButton();
-			this.btnDel = new FrEee.WinForms.Controls.GameButton();
-			this.btnDown = new FrEee.WinForms.Controls.GameButton();
-			this.btnUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnBottom = new FrEee.WinForms.Controls.GameButton();
 			this.btnTop = new FrEee.WinForms.Controls.GameButton();
+			this.btnDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnUp = new FrEee.WinForms.Controls.GameButton();
+			this.btnDelIntel = new FrEee.WinForms.Controls.GameButton();
+			this.btnAdd = new FrEee.WinForms.Controls.GameButton();
+			this.lstIntel = new System.Windows.Forms.ListView();
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.label14 = new System.Windows.Forms.Label();
+			this.btnDeleteMessage = new FrEee.WinForms.Controls.GameButton();
+			this.label15 = new System.Windows.Forms.Label();
+			this.ddlMessageType = new System.Windows.Forms.ComboBox();
+			this.label16 = new System.Windows.Forms.Label();
+			this.pnlParameters = new FrEee.WinForms.Controls.GamePanel();
+			this.label17 = new System.Windows.Forms.Label();
+			this.txtMessage = new System.Windows.Forms.TextBox();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
+			this.tabIntel.SuspendLayout();
 			this.tabBudget.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
@@ -84,6 +94,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.tabs.Controls.Add(this.tabDiplomacy);
+			this.tabs.Controls.Add(this.tabIntel);
 			this.tabs.Controls.Add(this.tabBudget);
 			this.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
 			this.tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
@@ -95,23 +106,23 @@
 			this.tabs.Size = new System.Drawing.Size(710, 432);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
-			this.tabs.TabIndex = 3;
+			this.tabs.TabIndex = 2;
 			// 
 			// tabDiplomacy
 			// 
 			this.tabDiplomacy.BackColor = System.Drawing.Color.Black;
-			this.tabDiplomacy.Controls.Add(this.btnBottom);
-			this.tabDiplomacy.Controls.Add(this.btnTop);
-			this.tabDiplomacy.Controls.Add(this.btnDown);
-			this.tabDiplomacy.Controls.Add(this.btnUp);
-			this.tabDiplomacy.Controls.Add(this.btnDel);
-			this.tabDiplomacy.Controls.Add(this.btnAdd);
-			this.tabDiplomacy.Controls.Add(this.lstIntel);
+			this.tabDiplomacy.Controls.Add(this.txtMessage);
+			this.tabDiplomacy.Controls.Add(this.label17);
+			this.tabDiplomacy.Controls.Add(this.pnlParameters);
+			this.tabDiplomacy.Controls.Add(this.label16);
+			this.tabDiplomacy.Controls.Add(this.ddlMessageType);
+			this.tabDiplomacy.Controls.Add(this.label15);
+			this.tabDiplomacy.Controls.Add(this.btnDeleteMessage);
 			this.tabDiplomacy.Controls.Add(this.label14);
-			this.tabDiplomacy.Controls.Add(this.btnCompose);
+			this.tabDiplomacy.Controls.Add(this.btnCancel);
+			this.tabDiplomacy.Controls.Add(this.btnSend);
 			this.tabDiplomacy.Controls.Add(this.lstMessages);
 			this.tabDiplomacy.Controls.Add(this.label13);
-			this.tabDiplomacy.Controls.Add(this.report);
 			this.tabDiplomacy.Controls.Add(this.txtTreaty);
 			this.tabDiplomacy.Controls.Add(this.label1);
 			this.tabDiplomacy.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
@@ -122,19 +133,45 @@
 			this.tabDiplomacy.TabIndex = 0;
 			this.tabDiplomacy.Text = "Diplomacy";
 			// 
-			// report
+			// btnSend
 			// 
-			this.report.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.report.BackColor = System.Drawing.Color.Black;
-			this.report.Empire = null;
-			this.report.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.report.ForeColor = System.Drawing.Color.White;
-			this.report.Location = new System.Drawing.Point(320, 6);
-			this.report.Name = "report";
-			this.report.Size = new System.Drawing.Size(376, 390);
-			this.report.TabIndex = 4;
+			this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSend.BackColor = System.Drawing.Color.Black;
+			this.btnSend.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSend.Location = new System.Drawing.Point(596, 370);
+			this.btnSend.Name = "btnSend";
+			this.btnSend.Size = new System.Drawing.Size(100, 23);
+			this.btnSend.TabIndex = 7;
+			this.btnSend.Text = "Send";
+			this.btnSend.UseVisualStyleBackColor = false;
+			// 
+			// lstMessages
+			// 
+			this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstMessages.BackColor = System.Drawing.Color.Black;
+			this.lstMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+			this.lstMessages.ForeColor = System.Drawing.Color.White;
+			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstMessages.Location = new System.Drawing.Point(9, 61);
+			this.lstMessages.Name = "lstMessages";
+			this.lstMessages.Size = new System.Drawing.Size(305, 332);
+			this.lstMessages.TabIndex = 6;
+			this.lstMessages.UseCompatibleStateImageBehavior = false;
+			this.lstMessages.View = System.Windows.Forms.View.Details;
+			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label13.Location = new System.Drawing.Point(6, 41);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(93, 17);
+			this.label13.TabIndex = 5;
+			this.label13.Text = "Message Log";
 			// 
 			// txtTreaty
 			// 
@@ -157,6 +194,39 @@
 			this.label1.Size = new System.Drawing.Size(97, 17);
 			this.label1.TabIndex = 0;
 			this.label1.Text = "Treaty Status:";
+			// 
+			// tabIntel
+			// 
+			this.tabIntel.BackColor = System.Drawing.Color.Black;
+			this.tabIntel.Controls.Add(this.btnBottom);
+			this.tabIntel.Controls.Add(this.btnTop);
+			this.tabIntel.Controls.Add(this.btnDown);
+			this.tabIntel.Controls.Add(this.btnUp);
+			this.tabIntel.Controls.Add(this.btnDelIntel);
+			this.tabIntel.Controls.Add(this.btnAdd);
+			this.tabIntel.Controls.Add(this.lstIntel);
+			this.tabIntel.Controls.Add(this.report);
+			this.tabIntel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+			this.tabIntel.Location = new System.Drawing.Point(4, 29);
+			this.tabIntel.Name = "tabIntel";
+			this.tabIntel.Padding = new System.Windows.Forms.Padding(3);
+			this.tabIntel.Size = new System.Drawing.Size(702, 399);
+			this.tabIntel.TabIndex = 3;
+			this.tabIntel.Text = "Intel";
+			// 
+			// report
+			// 
+			this.report.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.report.BackColor = System.Drawing.Color.Black;
+			this.report.Empire = null;
+			this.report.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.report.ForeColor = System.Drawing.Color.White;
+			this.report.Location = new System.Drawing.Point(320, 3);
+			this.report.Name = "report";
+			this.report.Size = new System.Drawing.Size(376, 390);
+			this.report.TabIndex = 5;
 			// 
 			// tabBudget
 			// 
@@ -473,44 +543,71 @@
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
 			this.lstEmpires.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstEmpires_ItemSelectionChanged);
 			// 
-			// label13
+			// btnBottom
 			// 
-			this.label13.AutoSize = true;
-			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label13.Location = new System.Drawing.Point(6, 41);
-			this.label13.Name = "label13";
-			this.label13.Size = new System.Drawing.Size(93, 17);
-			this.label13.TabIndex = 5;
-			this.label13.Text = "Message Log";
+			this.btnBottom.BackColor = System.Drawing.Color.Black;
+			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnBottom.Location = new System.Drawing.Point(261, 64);
+			this.btnBottom.Name = "btnBottom";
+			this.btnBottom.Size = new System.Drawing.Size(53, 23);
+			this.btnBottom.TabIndex = 22;
+			this.btnBottom.Text = "Bottom";
+			this.btnBottom.UseVisualStyleBackColor = false;
 			// 
-			// lstMessages
+			// btnTop
 			// 
-			this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.lstMessages.BackColor = System.Drawing.Color.Black;
-			this.lstMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-			this.lstMessages.ForeColor = System.Drawing.Color.White;
-			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.lstMessages.Location = new System.Drawing.Point(9, 61);
-			this.lstMessages.Name = "lstMessages";
-			this.lstMessages.Size = new System.Drawing.Size(305, 138);
-			this.lstMessages.TabIndex = 6;
-			this.lstMessages.UseCompatibleStateImageBehavior = false;
-			this.lstMessages.View = System.Windows.Forms.View.Details;
+			this.btnTop.BackColor = System.Drawing.Color.Black;
+			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTop.Location = new System.Drawing.Point(202, 64);
+			this.btnTop.Name = "btnTop";
+			this.btnTop.Size = new System.Drawing.Size(53, 23);
+			this.btnTop.TabIndex = 21;
+			this.btnTop.Text = "Top";
+			this.btnTop.UseVisualStyleBackColor = false;
 			// 
-			// btnCompose
+			// btnDown
 			// 
-			this.btnCompose.BackColor = System.Drawing.Color.Black;
-			this.btnCompose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCompose.Location = new System.Drawing.Point(9, 205);
-			this.btnCompose.Name = "btnCompose";
-			this.btnCompose.Size = new System.Drawing.Size(166, 23);
-			this.btnCompose.TabIndex = 7;
-			this.btnCompose.Text = "Compose Message";
-			this.btnCompose.UseVisualStyleBackColor = false;
+			this.btnDown.BackColor = System.Drawing.Color.Black;
+			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDown.Location = new System.Drawing.Point(261, 35);
+			this.btnDown.Name = "btnDown";
+			this.btnDown.Size = new System.Drawing.Size(53, 23);
+			this.btnDown.TabIndex = 20;
+			this.btnDown.Text = "Down";
+			this.btnDown.UseVisualStyleBackColor = false;
+			// 
+			// btnUp
+			// 
+			this.btnUp.BackColor = System.Drawing.Color.Black;
+			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnUp.Location = new System.Drawing.Point(202, 35);
+			this.btnUp.Name = "btnUp";
+			this.btnUp.Size = new System.Drawing.Size(53, 23);
+			this.btnUp.TabIndex = 19;
+			this.btnUp.Text = "Up";
+			this.btnUp.UseVisualStyleBackColor = false;
+			// 
+			// btnDelIntel
+			// 
+			this.btnDelIntel.BackColor = System.Drawing.Color.Black;
+			this.btnDelIntel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDelIntel.Location = new System.Drawing.Point(261, 6);
+			this.btnDelIntel.Name = "btnDelIntel";
+			this.btnDelIntel.Size = new System.Drawing.Size(53, 23);
+			this.btnDelIntel.TabIndex = 18;
+			this.btnDelIntel.Text = "Del";
+			this.btnDelIntel.UseVisualStyleBackColor = false;
+			// 
+			// btnAdd
+			// 
+			this.btnAdd.BackColor = System.Drawing.Color.Black;
+			this.btnAdd.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnAdd.Location = new System.Drawing.Point(202, 6);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(53, 23);
+			this.btnAdd.TabIndex = 17;
+			this.btnAdd.Text = "Add";
+			this.btnAdd.UseVisualStyleBackColor = false;
 			// 
 			// lstIntel
 			// 
@@ -521,89 +618,116 @@
             this.columnHeader2});
 			this.lstIntel.ForeColor = System.Drawing.Color.White;
 			this.lstIntel.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.lstIntel.Location = new System.Drawing.Point(13, 251);
+			this.lstIntel.Location = new System.Drawing.Point(3, 6);
 			this.lstIntel.Name = "lstIntel";
-			this.lstIntel.Size = new System.Drawing.Size(162, 138);
-			this.lstIntel.TabIndex = 9;
+			this.lstIntel.Size = new System.Drawing.Size(193, 390);
+			this.lstIntel.TabIndex = 16;
 			this.lstIntel.UseCompatibleStateImageBehavior = false;
 			this.lstIntel.View = System.Windows.Forms.View.Details;
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCancel.Location = new System.Drawing.Point(490, 370);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(100, 23);
+			this.btnCancel.TabIndex = 8;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = false;
 			// 
 			// label14
 			// 
 			this.label14.AutoSize = true;
 			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
 			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(10, 231);
+			this.label14.Location = new System.Drawing.Point(320, 41);
 			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(126, 17);
-			this.label14.TabIndex = 8;
-			this.label14.Text = "Intelligence Queue";
+			this.label14.Size = new System.Drawing.Size(67, 17);
+			this.label14.TabIndex = 9;
+			this.label14.Text = "Compose";
 			// 
-			// btnAdd
+			// btnDeleteMessage
 			// 
-			this.btnAdd.BackColor = System.Drawing.Color.Black;
-			this.btnAdd.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnAdd.Location = new System.Drawing.Point(181, 251);
-			this.btnAdd.Name = "btnAdd";
-			this.btnAdd.Size = new System.Drawing.Size(53, 23);
-			this.btnAdd.TabIndex = 10;
-			this.btnAdd.Text = "Add";
-			this.btnAdd.UseVisualStyleBackColor = false;
+			this.btnDeleteMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDeleteMessage.BackColor = System.Drawing.Color.Black;
+			this.btnDeleteMessage.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDeleteMessage.Location = new System.Drawing.Point(384, 370);
+			this.btnDeleteMessage.Name = "btnDeleteMessage";
+			this.btnDeleteMessage.Size = new System.Drawing.Size(100, 23);
+			this.btnDeleteMessage.TabIndex = 10;
+			this.btnDeleteMessage.Text = "Delete";
+			this.btnDeleteMessage.UseVisualStyleBackColor = false;
 			// 
-			// btnDel
+			// label15
 			// 
-			this.btnDel.BackColor = System.Drawing.Color.Black;
-			this.btnDel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDel.Location = new System.Drawing.Point(240, 251);
-			this.btnDel.Name = "btnDel";
-			this.btnDel.Size = new System.Drawing.Size(53, 23);
-			this.btnDel.TabIndex = 11;
-			this.btnDel.Text = "Del";
-			this.btnDel.UseVisualStyleBackColor = false;
+			this.label15.AutoSize = true;
+			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label15.Location = new System.Drawing.Point(336, 61);
+			this.label15.Name = "label15";
+			this.label15.Size = new System.Drawing.Size(101, 17);
+			this.label15.TabIndex = 11;
+			this.label15.Text = "Message Type";
 			// 
-			// btnDown
+			// ddlMessageType
 			// 
-			this.btnDown.BackColor = System.Drawing.Color.Black;
-			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDown.Location = new System.Drawing.Point(240, 280);
-			this.btnDown.Name = "btnDown";
-			this.btnDown.Size = new System.Drawing.Size(53, 23);
-			this.btnDown.TabIndex = 13;
-			this.btnDown.Text = "Down";
-			this.btnDown.UseVisualStyleBackColor = false;
+			this.ddlMessageType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ddlMessageType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlMessageType.FormattingEnabled = true;
+			this.ddlMessageType.Location = new System.Drawing.Point(443, 58);
+			this.ddlMessageType.Name = "ddlMessageType";
+			this.ddlMessageType.Size = new System.Drawing.Size(253, 24);
+			this.ddlMessageType.TabIndex = 12;
 			// 
-			// btnUp
+			// label16
 			// 
-			this.btnUp.BackColor = System.Drawing.Color.Black;
-			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnUp.Location = new System.Drawing.Point(181, 280);
-			this.btnUp.Name = "btnUp";
-			this.btnUp.Size = new System.Drawing.Size(53, 23);
-			this.btnUp.TabIndex = 12;
-			this.btnUp.Text = "Up";
-			this.btnUp.UseVisualStyleBackColor = false;
+			this.label16.AutoSize = true;
+			this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label16.Location = new System.Drawing.Point(336, 85);
+			this.label16.Name = "label16";
+			this.label16.Size = new System.Drawing.Size(81, 17);
+			this.label16.TabIndex = 13;
+			this.label16.Text = "Parameters";
 			// 
-			// btnBottom
+			// pnlParameters
 			// 
-			this.btnBottom.BackColor = System.Drawing.Color.Black;
-			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnBottom.Location = new System.Drawing.Point(240, 309);
-			this.btnBottom.Name = "btnBottom";
-			this.btnBottom.Size = new System.Drawing.Size(53, 23);
-			this.btnBottom.TabIndex = 15;
-			this.btnBottom.Text = "Bottom";
-			this.btnBottom.UseVisualStyleBackColor = false;
+			this.pnlParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlParameters.BackColor = System.Drawing.Color.Black;
+			this.pnlParameters.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.pnlParameters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlParameters.ForeColor = System.Drawing.Color.White;
+			this.pnlParameters.Location = new System.Drawing.Point(339, 106);
+			this.pnlParameters.Name = "pnlParameters";
+			this.pnlParameters.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlParameters.Size = new System.Drawing.Size(357, 144);
+			this.pnlParameters.TabIndex = 14;
 			// 
-			// btnTop
+			// label17
 			// 
-			this.btnTop.BackColor = System.Drawing.Color.Black;
-			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTop.Location = new System.Drawing.Point(181, 309);
-			this.btnTop.Name = "btnTop";
-			this.btnTop.Size = new System.Drawing.Size(53, 23);
-			this.btnTop.TabIndex = 14;
-			this.btnTop.Text = "Top";
-			this.btnTop.UseVisualStyleBackColor = false;
+			this.label17.AutoSize = true;
+			this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label17.Location = new System.Drawing.Point(336, 253);
+			this.label17.Name = "label17";
+			this.label17.Size = new System.Drawing.Size(35, 17);
+			this.label17.TabIndex = 15;
+			this.label17.Text = "Text";
+			// 
+			// txtMessage
+			// 
+			this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtMessage.Location = new System.Drawing.Point(339, 274);
+			this.txtMessage.Multiline = true;
+			this.txtMessage.Name = "txtMessage";
+			this.txtMessage.Size = new System.Drawing.Size(357, 90);
+			this.txtMessage.TabIndex = 16;
 			// 
 			// EmpireListForm
 			// 
@@ -620,6 +744,7 @@
 			this.tabs.ResumeLayout(false);
 			this.tabDiplomacy.ResumeLayout(false);
 			this.tabDiplomacy.PerformLayout();
+			this.tabIntel.ResumeLayout(false);
 			this.tabBudget.ResumeLayout(false);
 			this.tabBudget.PerformLayout();
 			this.gamePanel1.ResumeLayout(false);
@@ -637,7 +762,6 @@
 		private System.Windows.Forms.TabPage tabBudget;
 		private System.Windows.Forms.Label txtTreaty;
 		private System.Windows.Forms.Label label1;
-		private Controls.EmpireReport report;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
@@ -663,15 +787,25 @@
 		private System.Windows.Forms.ListView lstMessages;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
-		private System.Windows.Forms.ListView lstIntel;
-		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private System.Windows.Forms.Label label14;
-		private Controls.GameButton btnCompose;
-		private Controls.GameButton btnDel;
-		private Controls.GameButton btnAdd;
+		private Controls.GameButton btnSend;
+		private System.Windows.Forms.TabPage tabIntel;
+		private Controls.EmpireReport report;
 		private Controls.GameButton btnBottom;
 		private Controls.GameButton btnTop;
 		private Controls.GameButton btnDown;
 		private Controls.GameButton btnUp;
+		private Controls.GameButton btnDelIntel;
+		private Controls.GameButton btnAdd;
+		private System.Windows.Forms.ListView lstIntel;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private Controls.GameButton btnCancel;
+		private System.Windows.Forms.Label label14;
+		private Controls.GameButton btnDeleteMessage;
+		private System.Windows.Forms.Label label15;
+		private System.Windows.Forms.ComboBox ddlMessageType;
+		private System.Windows.Forms.Label label16;
+		private System.Windows.Forms.TextBox txtMessage;
+		private System.Windows.Forms.Label label17;
+		private Controls.GamePanel pnlParameters;
 	}
 }
