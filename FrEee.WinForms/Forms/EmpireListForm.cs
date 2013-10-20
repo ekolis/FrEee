@@ -37,9 +37,9 @@ namespace FrEee.WinForms.Forms
 
 		private void BindEmpire(Empire emp)
 		{
-			if (emp == Empire.Current)
+			if (emp == Empire.Current && tabs.SelectedTab == tabDiplomacy)
 				tabs.SelectedTab = tabBudget;
-			else
+			else if (emp != Empire.Current && tabs.SelectedTab == tabBudget)
 				tabs.SelectedTab = tabDiplomacy;
 
 			report.Empire = emp;
@@ -74,6 +74,8 @@ namespace FrEee.WinForms.Forms
 				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
 				rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
 				rqExpenses.ResourceQuantity = rqdConstruction.ResourceQuantity + rqdMaintenance.ResourceQuantity + rqdTributesOut.ResourceQuantity;
+
+				lblBudgetWarning.Visible = emp != Empire.Current;
 			}
 		}
 
