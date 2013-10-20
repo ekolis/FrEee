@@ -34,6 +34,16 @@
 			this.txtTreaty = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tabBudget = new System.Windows.Forms.TabPage();
+			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdNet = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdTributesOut = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdMaintenance = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdConstruction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqExpenses = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdTributesIn = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdTrade = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdExtraction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdIncome = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.label12 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
@@ -49,16 +59,19 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.rqdExtraction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdTrade = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdTributesIn = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqExpenses = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdConstruction = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdMaintenance = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdTributesOut = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdNet = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
-			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.label13 = new System.Windows.Forms.Label();
+			this.lstMessages = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
+			this.lstIntel = new System.Windows.Forms.ListView();
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.label14 = new System.Windows.Forms.Label();
+			this.btnAdd = new FrEee.WinForms.Controls.GameButton();
+			this.btnDel = new FrEee.WinForms.Controls.GameButton();
+			this.btnDown = new FrEee.WinForms.Controls.GameButton();
+			this.btnUp = new FrEee.WinForms.Controls.GameButton();
+			this.btnBottom = new FrEee.WinForms.Controls.GameButton();
+			this.btnTop = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabBudget.SuspendLayout();
@@ -87,6 +100,17 @@
 			// tabDiplomacy
 			// 
 			this.tabDiplomacy.BackColor = System.Drawing.Color.Black;
+			this.tabDiplomacy.Controls.Add(this.btnBottom);
+			this.tabDiplomacy.Controls.Add(this.btnTop);
+			this.tabDiplomacy.Controls.Add(this.btnDown);
+			this.tabDiplomacy.Controls.Add(this.btnUp);
+			this.tabDiplomacy.Controls.Add(this.btnDel);
+			this.tabDiplomacy.Controls.Add(this.btnAdd);
+			this.tabDiplomacy.Controls.Add(this.lstIntel);
+			this.tabDiplomacy.Controls.Add(this.label14);
+			this.tabDiplomacy.Controls.Add(this.btnCompose);
+			this.tabDiplomacy.Controls.Add(this.lstMessages);
+			this.tabDiplomacy.Controls.Add(this.label13);
 			this.tabDiplomacy.Controls.Add(this.report);
 			this.tabDiplomacy.Controls.Add(this.txtTreaty);
 			this.tabDiplomacy.Controls.Add(this.label1);
@@ -107,9 +131,9 @@
 			this.report.Empire = null;
 			this.report.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.report.ForeColor = System.Drawing.Color.White;
-			this.report.Location = new System.Drawing.Point(314, 6);
+			this.report.Location = new System.Drawing.Point(320, 6);
 			this.report.Name = "report";
-			this.report.Size = new System.Drawing.Size(382, 390);
+			this.report.Size = new System.Drawing.Size(376, 390);
 			this.report.TabIndex = 4;
 			// 
 			// txtTreaty
@@ -164,6 +188,116 @@
 			this.tabBudget.Size = new System.Drawing.Size(702, 399);
 			this.tabBudget.TabIndex = 2;
 			this.tabBudget.Text = "Budget";
+			// 
+			// rqdSpoiled
+			// 
+			this.rqdSpoiled.BackColor = System.Drawing.Color.Black;
+			this.rqdSpoiled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdSpoiled.ForeColor = System.Drawing.Color.White;
+			this.rqdSpoiled.Location = new System.Drawing.Point(177, 330);
+			this.rqdSpoiled.Name = "rqdSpoiled";
+			this.rqdSpoiled.ResourceQuantity = null;
+			this.rqdSpoiled.Size = new System.Drawing.Size(413, 24);
+			this.rqdSpoiled.TabIndex = 23;
+			// 
+			// rqdStored
+			// 
+			this.rqdStored.BackColor = System.Drawing.Color.Black;
+			this.rqdStored.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdStored.ForeColor = System.Drawing.Color.White;
+			this.rqdStored.Location = new System.Drawing.Point(177, 300);
+			this.rqdStored.Name = "rqdStored";
+			this.rqdStored.ResourceQuantity = null;
+			this.rqdStored.Size = new System.Drawing.Size(413, 24);
+			this.rqdStored.TabIndex = 22;
+			// 
+			// rqdNet
+			// 
+			this.rqdNet.BackColor = System.Drawing.Color.Black;
+			this.rqdNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdNet.ForeColor = System.Drawing.Color.White;
+			this.rqdNet.Location = new System.Drawing.Point(177, 270);
+			this.rqdNet.Name = "rqdNet";
+			this.rqdNet.ResourceQuantity = null;
+			this.rqdNet.Size = new System.Drawing.Size(413, 24);
+			this.rqdNet.TabIndex = 21;
+			// 
+			// rqdTributesOut
+			// 
+			this.rqdTributesOut.BackColor = System.Drawing.Color.Black;
+			this.rqdTributesOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdTributesOut.ForeColor = System.Drawing.Color.White;
+			this.rqdTributesOut.Location = new System.Drawing.Point(177, 228);
+			this.rqdTributesOut.Name = "rqdTributesOut";
+			this.rqdTributesOut.ResourceQuantity = null;
+			this.rqdTributesOut.Size = new System.Drawing.Size(413, 24);
+			this.rqdTributesOut.TabIndex = 20;
+			// 
+			// rqdMaintenance
+			// 
+			this.rqdMaintenance.BackColor = System.Drawing.Color.Black;
+			this.rqdMaintenance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdMaintenance.ForeColor = System.Drawing.Color.White;
+			this.rqdMaintenance.Location = new System.Drawing.Point(177, 198);
+			this.rqdMaintenance.Name = "rqdMaintenance";
+			this.rqdMaintenance.ResourceQuantity = null;
+			this.rqdMaintenance.Size = new System.Drawing.Size(413, 24);
+			this.rqdMaintenance.TabIndex = 19;
+			// 
+			// rqdConstruction
+			// 
+			this.rqdConstruction.BackColor = System.Drawing.Color.Black;
+			this.rqdConstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdConstruction.ForeColor = System.Drawing.Color.White;
+			this.rqdConstruction.Location = new System.Drawing.Point(177, 168);
+			this.rqdConstruction.Name = "rqdConstruction";
+			this.rqdConstruction.ResourceQuantity = null;
+			this.rqdConstruction.Size = new System.Drawing.Size(413, 24);
+			this.rqdConstruction.TabIndex = 18;
+			// 
+			// rqExpenses
+			// 
+			this.rqExpenses.BackColor = System.Drawing.Color.Black;
+			this.rqExpenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqExpenses.ForeColor = System.Drawing.Color.White;
+			this.rqExpenses.Location = new System.Drawing.Point(177, 138);
+			this.rqExpenses.Name = "rqExpenses";
+			this.rqExpenses.ResourceQuantity = null;
+			this.rqExpenses.Size = new System.Drawing.Size(413, 24);
+			this.rqExpenses.TabIndex = 17;
+			// 
+			// rqdTributesIn
+			// 
+			this.rqdTributesIn.BackColor = System.Drawing.Color.Black;
+			this.rqdTributesIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdTributesIn.ForeColor = System.Drawing.Color.White;
+			this.rqdTributesIn.Location = new System.Drawing.Point(177, 93);
+			this.rqdTributesIn.Name = "rqdTributesIn";
+			this.rqdTributesIn.ResourceQuantity = null;
+			this.rqdTributesIn.Size = new System.Drawing.Size(413, 24);
+			this.rqdTributesIn.TabIndex = 16;
+			// 
+			// rqdTrade
+			// 
+			this.rqdTrade.BackColor = System.Drawing.Color.Black;
+			this.rqdTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdTrade.ForeColor = System.Drawing.Color.White;
+			this.rqdTrade.Location = new System.Drawing.Point(177, 63);
+			this.rqdTrade.Name = "rqdTrade";
+			this.rqdTrade.ResourceQuantity = null;
+			this.rqdTrade.Size = new System.Drawing.Size(413, 24);
+			this.rqdTrade.TabIndex = 15;
+			// 
+			// rqdExtraction
+			// 
+			this.rqdExtraction.BackColor = System.Drawing.Color.Black;
+			this.rqdExtraction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdExtraction.ForeColor = System.Drawing.Color.White;
+			this.rqdExtraction.Location = new System.Drawing.Point(177, 33);
+			this.rqdExtraction.Name = "rqdExtraction";
+			this.rqdExtraction.ResourceQuantity = null;
+			this.rqdExtraction.Size = new System.Drawing.Size(413, 24);
+			this.rqdExtraction.TabIndex = 14;
 			// 
 			// rqdIncome
 			// 
@@ -339,115 +473,137 @@
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
 			this.lstEmpires.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstEmpires_ItemSelectionChanged);
 			// 
-			// rqdExtraction
+			// label13
 			// 
-			this.rqdExtraction.BackColor = System.Drawing.Color.Black;
-			this.rqdExtraction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdExtraction.ForeColor = System.Drawing.Color.White;
-			this.rqdExtraction.Location = new System.Drawing.Point(177, 33);
-			this.rqdExtraction.Name = "rqdExtraction";
-			this.rqdExtraction.ResourceQuantity = null;
-			this.rqdExtraction.Size = new System.Drawing.Size(413, 24);
-			this.rqdExtraction.TabIndex = 14;
+			this.label13.AutoSize = true;
+			this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label13.Location = new System.Drawing.Point(6, 41);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(93, 17);
+			this.label13.TabIndex = 5;
+			this.label13.Text = "Message Log";
 			// 
-			// rqdTrade
+			// lstMessages
 			// 
-			this.rqdTrade.BackColor = System.Drawing.Color.Black;
-			this.rqdTrade.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdTrade.ForeColor = System.Drawing.Color.White;
-			this.rqdTrade.Location = new System.Drawing.Point(177, 63);
-			this.rqdTrade.Name = "rqdTrade";
-			this.rqdTrade.ResourceQuantity = null;
-			this.rqdTrade.Size = new System.Drawing.Size(413, 24);
-			this.rqdTrade.TabIndex = 15;
+			this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstMessages.BackColor = System.Drawing.Color.Black;
+			this.lstMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+			this.lstMessages.ForeColor = System.Drawing.Color.White;
+			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstMessages.Location = new System.Drawing.Point(9, 61);
+			this.lstMessages.Name = "lstMessages";
+			this.lstMessages.Size = new System.Drawing.Size(305, 138);
+			this.lstMessages.TabIndex = 6;
+			this.lstMessages.UseCompatibleStateImageBehavior = false;
+			this.lstMessages.View = System.Windows.Forms.View.Details;
 			// 
-			// rqdTributesIn
+			// btnCompose
 			// 
-			this.rqdTributesIn.BackColor = System.Drawing.Color.Black;
-			this.rqdTributesIn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdTributesIn.ForeColor = System.Drawing.Color.White;
-			this.rqdTributesIn.Location = new System.Drawing.Point(177, 93);
-			this.rqdTributesIn.Name = "rqdTributesIn";
-			this.rqdTributesIn.ResourceQuantity = null;
-			this.rqdTributesIn.Size = new System.Drawing.Size(413, 24);
-			this.rqdTributesIn.TabIndex = 16;
+			this.btnCompose.BackColor = System.Drawing.Color.Black;
+			this.btnCompose.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCompose.Location = new System.Drawing.Point(9, 205);
+			this.btnCompose.Name = "btnCompose";
+			this.btnCompose.Size = new System.Drawing.Size(166, 23);
+			this.btnCompose.TabIndex = 7;
+			this.btnCompose.Text = "Compose Message";
+			this.btnCompose.UseVisualStyleBackColor = false;
 			// 
-			// rqExpenses
+			// lstIntel
 			// 
-			this.rqExpenses.BackColor = System.Drawing.Color.Black;
-			this.rqExpenses.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqExpenses.ForeColor = System.Drawing.Color.White;
-			this.rqExpenses.Location = new System.Drawing.Point(177, 138);
-			this.rqExpenses.Name = "rqExpenses";
-			this.rqExpenses.ResourceQuantity = null;
-			this.rqExpenses.Size = new System.Drawing.Size(413, 24);
-			this.rqExpenses.TabIndex = 17;
+			this.lstIntel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstIntel.BackColor = System.Drawing.Color.Black;
+			this.lstIntel.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstIntel.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+			this.lstIntel.ForeColor = System.Drawing.Color.White;
+			this.lstIntel.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstIntel.Location = new System.Drawing.Point(13, 251);
+			this.lstIntel.Name = "lstIntel";
+			this.lstIntel.Size = new System.Drawing.Size(162, 138);
+			this.lstIntel.TabIndex = 9;
+			this.lstIntel.UseCompatibleStateImageBehavior = false;
+			this.lstIntel.View = System.Windows.Forms.View.Details;
 			// 
-			// rqdConstruction
+			// label14
 			// 
-			this.rqdConstruction.BackColor = System.Drawing.Color.Black;
-			this.rqdConstruction.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdConstruction.ForeColor = System.Drawing.Color.White;
-			this.rqdConstruction.Location = new System.Drawing.Point(177, 168);
-			this.rqdConstruction.Name = "rqdConstruction";
-			this.rqdConstruction.ResourceQuantity = null;
-			this.rqdConstruction.Size = new System.Drawing.Size(413, 24);
-			this.rqdConstruction.TabIndex = 18;
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(10, 231);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(126, 17);
+			this.label14.TabIndex = 8;
+			this.label14.Text = "Intelligence Queue";
 			// 
-			// rqdMaintenance
+			// btnAdd
 			// 
-			this.rqdMaintenance.BackColor = System.Drawing.Color.Black;
-			this.rqdMaintenance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdMaintenance.ForeColor = System.Drawing.Color.White;
-			this.rqdMaintenance.Location = new System.Drawing.Point(177, 198);
-			this.rqdMaintenance.Name = "rqdMaintenance";
-			this.rqdMaintenance.ResourceQuantity = null;
-			this.rqdMaintenance.Size = new System.Drawing.Size(413, 24);
-			this.rqdMaintenance.TabIndex = 19;
+			this.btnAdd.BackColor = System.Drawing.Color.Black;
+			this.btnAdd.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnAdd.Location = new System.Drawing.Point(181, 251);
+			this.btnAdd.Name = "btnAdd";
+			this.btnAdd.Size = new System.Drawing.Size(53, 23);
+			this.btnAdd.TabIndex = 10;
+			this.btnAdd.Text = "Add";
+			this.btnAdd.UseVisualStyleBackColor = false;
 			// 
-			// rqdTributesOut
+			// btnDel
 			// 
-			this.rqdTributesOut.BackColor = System.Drawing.Color.Black;
-			this.rqdTributesOut.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdTributesOut.ForeColor = System.Drawing.Color.White;
-			this.rqdTributesOut.Location = new System.Drawing.Point(177, 228);
-			this.rqdTributesOut.Name = "rqdTributesOut";
-			this.rqdTributesOut.ResourceQuantity = null;
-			this.rqdTributesOut.Size = new System.Drawing.Size(413, 24);
-			this.rqdTributesOut.TabIndex = 20;
+			this.btnDel.BackColor = System.Drawing.Color.Black;
+			this.btnDel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDel.Location = new System.Drawing.Point(240, 251);
+			this.btnDel.Name = "btnDel";
+			this.btnDel.Size = new System.Drawing.Size(53, 23);
+			this.btnDel.TabIndex = 11;
+			this.btnDel.Text = "Del";
+			this.btnDel.UseVisualStyleBackColor = false;
 			// 
-			// rqdNet
+			// btnDown
 			// 
-			this.rqdNet.BackColor = System.Drawing.Color.Black;
-			this.rqdNet.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdNet.ForeColor = System.Drawing.Color.White;
-			this.rqdNet.Location = new System.Drawing.Point(177, 270);
-			this.rqdNet.Name = "rqdNet";
-			this.rqdNet.ResourceQuantity = null;
-			this.rqdNet.Size = new System.Drawing.Size(413, 24);
-			this.rqdNet.TabIndex = 21;
+			this.btnDown.BackColor = System.Drawing.Color.Black;
+			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDown.Location = new System.Drawing.Point(240, 280);
+			this.btnDown.Name = "btnDown";
+			this.btnDown.Size = new System.Drawing.Size(53, 23);
+			this.btnDown.TabIndex = 13;
+			this.btnDown.Text = "Down";
+			this.btnDown.UseVisualStyleBackColor = false;
 			// 
-			// rqdStored
+			// btnUp
 			// 
-			this.rqdStored.BackColor = System.Drawing.Color.Black;
-			this.rqdStored.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdStored.ForeColor = System.Drawing.Color.White;
-			this.rqdStored.Location = new System.Drawing.Point(177, 300);
-			this.rqdStored.Name = "rqdStored";
-			this.rqdStored.ResourceQuantity = null;
-			this.rqdStored.Size = new System.Drawing.Size(413, 24);
-			this.rqdStored.TabIndex = 22;
+			this.btnUp.BackColor = System.Drawing.Color.Black;
+			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnUp.Location = new System.Drawing.Point(181, 280);
+			this.btnUp.Name = "btnUp";
+			this.btnUp.Size = new System.Drawing.Size(53, 23);
+			this.btnUp.TabIndex = 12;
+			this.btnUp.Text = "Up";
+			this.btnUp.UseVisualStyleBackColor = false;
 			// 
-			// rqdSpoiled
+			// btnBottom
 			// 
-			this.rqdSpoiled.BackColor = System.Drawing.Color.Black;
-			this.rqdSpoiled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdSpoiled.ForeColor = System.Drawing.Color.White;
-			this.rqdSpoiled.Location = new System.Drawing.Point(177, 330);
-			this.rqdSpoiled.Name = "rqdSpoiled";
-			this.rqdSpoiled.ResourceQuantity = null;
-			this.rqdSpoiled.Size = new System.Drawing.Size(413, 24);
-			this.rqdSpoiled.TabIndex = 23;
+			this.btnBottom.BackColor = System.Drawing.Color.Black;
+			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnBottom.Location = new System.Drawing.Point(240, 309);
+			this.btnBottom.Name = "btnBottom";
+			this.btnBottom.Size = new System.Drawing.Size(53, 23);
+			this.btnBottom.TabIndex = 15;
+			this.btnBottom.Text = "Bottom";
+			this.btnBottom.UseVisualStyleBackColor = false;
+			// 
+			// btnTop
+			// 
+			this.btnTop.BackColor = System.Drawing.Color.Black;
+			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTop.Location = new System.Drawing.Point(181, 309);
+			this.btnTop.Name = "btnTop";
+			this.btnTop.Size = new System.Drawing.Size(53, 23);
+			this.btnTop.TabIndex = 14;
+			this.btnTop.Text = "Top";
+			this.btnTop.UseVisualStyleBackColor = false;
 			// 
 			// EmpireListForm
 			// 
@@ -504,5 +660,18 @@
 		private Controls.ResourceQuantityDisplay rqdTrade;
 		private Controls.ResourceQuantityDisplay rqdExtraction;
 		private Controls.ResourceQuantityDisplay rqdSpoiled;
+		private System.Windows.Forms.ListView lstMessages;
+		private System.Windows.Forms.Label label13;
+		private System.Windows.Forms.ColumnHeader columnHeader1;
+		private System.Windows.Forms.ListView lstIntel;
+		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.Label label14;
+		private Controls.GameButton btnCompose;
+		private Controls.GameButton btnDel;
+		private Controls.GameButton btnAdd;
+		private Controls.GameButton btnBottom;
+		private Controls.GameButton btnTop;
+		private Controls.GameButton btnDown;
+		private Controls.GameButton btnUp;
 	}
 }
