@@ -187,9 +187,9 @@ namespace FrEee.WinForms.Forms
 				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
 				var eta = Empire.Current.GetResearchProgress(tech, levels[tech]).Eta;
 				if (eta == null)
-					lstQueue.Items.Add(tech.Name.Value + " L" + levels[tech] + " (never)");
+					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
 				else
-					lstQueue.Items.Add(tech.Name.Value + " L" + levels[tech] + " (" + eta + " turns)");
+					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
 				idx++;
 			}
 		}
@@ -302,12 +302,6 @@ namespace FrEee.WinForms.Forms
 				BindQueue();
 				hasChanged = true;
 			}
-		}
-
-		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e.ColumnIndex == gridQueues.Columns.IndexOf(nameDataGridViewTextBoxColumn))
-				e.Value = (string)(Formula<string>)e.Value;
 		}
 	}
 }
