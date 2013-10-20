@@ -6,6 +6,8 @@ using System.Text;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Interfaces;
 using FrEee.Modding.Enumerations;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Modding.Loaders
 {
@@ -18,7 +20,7 @@ namespace FrEee.Modding.Loaders
 		/// Loads requirements from a record.
 		/// </summary>
 		/// <param name="rec"></param>
-		public static IEnumerable<Requirement> Load(Record rec, IResearchable r, RequirementType rtype)
+		public static IEnumerable<Requirement<Empire>> LoadEmpireRequirements(Record rec, IResearchable r, RequirementType rtype)
 		{
 			int count = 0;
 			int start = 0;
@@ -38,11 +40,11 @@ namespace FrEee.Modding.Loaders
 					}
 					var techname = nfield.CreateFormula<string>(r).Value;
 					var levelFormula = lfield.CreateFormula<int>(r);
-					yield return new Requirement(
-							new Formula<bool>(r,
-								"empire.ResearchedTechnologies[\"" + techname + "\"] >= " + levelFormula.Value, FormulaType.Dynamic),
-							new Formula<string>(r,
-								"Requires level " + levelFormula.Value + " " + techname + ".", FormulaType.Dynamic));
+					var tech = Mod.Current.Technologies.FindByName(techname);
+					if (tech == null)
+						Mod.Errors.Add(new DataParsingException("Could not find a technology named " + techname + ".", null, rec));
+					else
+						yield return new TechnologyRequirement(tech, levelFormula);
 				}
 			}
 			start = 0;
@@ -53,7 +55,7 @@ namespace FrEee.Modding.Loaders
 					break;
 				var descfield = rec.FindField(rtype + " Requirement Description", ref start, false, start);
 				var desc = descfield == null ? (Formula<string>)reqfield.Value : descfield.CreateFormula<string>(r);
-				yield return new Requirement(reqfield.CreateFormula<bool>(r), desc);
+				yield return new ScriptRequirement<Empire>(reqfield.CreateFormula<bool>(r), desc);
 			}
 		}
 	}

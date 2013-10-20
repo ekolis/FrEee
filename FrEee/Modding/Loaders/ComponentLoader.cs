@@ -74,7 +74,7 @@ namespace FrEee.Modding.Loaders
 				c.RomanNumeral = rec.Get<int>("Roman Numeral", c);
 				c.StellarConstructionGroup = rec.Get<string>("Custom Group", c);
 
-				foreach (var tr in RequirementLoader.Load(rec, c, RequirementType.Unlock))
+				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, c, RequirementType.Unlock))
 					c.UnlockRequirements.Add(tr);
 
 				// TODO - build and use requirements

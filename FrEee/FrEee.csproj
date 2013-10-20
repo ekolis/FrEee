@@ -248,6 +248,8 @@
     <Compile Include="Modding\ResourceFormula.cs" />
     <Compile Include="Modding\Script.cs" />
     <Compile Include="Modding\ScriptEngine.cs" />
+    <Compile Include="Modding\ScriptRequirement.cs" />
+    <Compile Include="Modding\TechnologyRequirement.cs" />
     <Compile Include="Modding\Templates\ComponentTemplate.cs" />
     <Compile Include="Game\Objects\Civilization\Empire.cs" />
     <Compile Include="Game\Objects\Technology\DirectFireWeaponInfo.cs" />
