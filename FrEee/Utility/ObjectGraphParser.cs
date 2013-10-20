@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
@@ -180,6 +181,8 @@ namespace FrEee.Utility
 			KnownTypes = new List<Type>();
 			KnownProperties = new Dictionary<Type, IEnumerable<PropertyInfo>>();
 			KnownObjects = new Dictionary<Type, IList<object>>();
+			PropertyGetters = new Dictionary<PropertyInfo, Delegate>();
+			PropertySetters = new Dictionary<PropertyInfo, Delegate>();
 		}
 
 		/// <summary>
@@ -191,6 +194,16 @@ namespace FrEee.Utility
 		/// Known properties for each object type.
 		/// </summary>
 		public IDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; private set; }
+
+		/// <summary>
+		/// Getters for properties.
+		/// </summary>
+		public IDictionary<PropertyInfo, Delegate> PropertyGetters { get; private set; }
+
+		/// <summary>
+		/// Setters for properties.
+		/// </summary>
+		public IDictionary<PropertyInfo, Delegate> PropertySetters { get; private set; }
 
 		/// <summary>
 		/// The known objects, grouped by type. Their IDs are their indices in the lists.
@@ -237,7 +250,38 @@ namespace FrEee.Utility
 				// Mono seems to place inherited properties on the derived type too so we need a consistent ordering
 				var props2 = props.Distinct().GroupBy(p => p.Key.Name).Select(g => g.Single(p2 => p2.Value == g.Max(p3 => p3.Value))).Select(kvp => kvp.Key).OrderBy(p => p.Name);
 				KnownProperties.Add(type, props2.ToArray());
+				foreach (var prop in props2)
+				{
+					var objParm = Expression.Parameter(prop.DeclaringType);
+					var valParm = Expression.Parameter(prop.PropertyType, "val");
+					var getter = Expression.Call(objParm, prop.GetGetMethod(true));
+					var setter = Expression.Call(objParm, prop.GetSetMethod(true), valParm);
+					if (!PropertyGetters.ContainsKey(prop))
+						PropertyGetters.Add(prop, Expression.Lambda(getter, objParm).Compile());
+					if (!PropertySetters.ContainsKey(prop))
+						PropertySetters.Add(prop, Expression.Lambda(setter, objParm, valParm).Compile());
+				}
 			}
+		}
+
+		public object GetObjectProperty(object obj, PropertyInfo prop)
+		{
+			AddProperties(obj.GetType());
+			// lambda expressions don't seem to work on structs
+			if (obj.GetType().IsValueType)
+				return prop.GetValue(obj, new object[] { });
+			else
+				return PropertyGetters[prop].DynamicInvoke(obj);
+		}
+
+		public void SetObjectProperty(object obj, PropertyInfo prop, object val)
+		{
+			AddProperties(obj.GetType());
+			// lambda expressions don't seem to work on structs
+			if (obj.GetType().IsValueType)
+				prop.SetValue(obj, val, new object[] { });
+			else
+				PropertySetters[prop].DynamicInvoke(obj, val);
 		}
 
 		/// <summary>

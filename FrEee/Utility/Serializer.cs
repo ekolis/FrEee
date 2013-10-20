@@ -249,8 +249,8 @@ namespace FrEee.Utility
 					}
 					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
 					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
-					Serialize(Expression.Lambda(Expression.Property(Expression.Constant(item), keyprop)).Compile().DynamicInvoke(), w, keyprop.PropertyType, context, tabLevel + 1);
-					Serialize(Expression.Lambda(Expression.Property(Expression.Constant(item), valprop)).Compile().DynamicInvoke(), w, valprop.PropertyType, context, tabLevel + 1);
+					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
+					Serialize(context.GetObjectProperty(item, valprop), w, valprop.PropertyType, context, tabLevel + 1);
 				}
 				else
 					Serialize(item, w, itemType, context, tabLevel + 1);
@@ -280,7 +280,7 @@ namespace FrEee.Utility
 					w.Write(moreTabs);
 					w.Write(p.Name);
 					w.Write(":\n");
-					var val = Expression.Lambda(Expression.Property(Expression.Constant(o), p)).Compile().DynamicInvoke();
+					var val = context.GetObjectProperty(o, p);
 					Serialize(val, w, p.PropertyType, context, tabLevel + 2);
 				}
 				catch (Exception ex)
@@ -590,14 +590,7 @@ namespace FrEee.Utility
 							prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[0]);
 						}
 						else
-						{
-							Expression.Lambda(Expression.Assign(
-									Expression.Property(Expression.Constant(o), prop),
-									Expression.Convert(
-										Expression.Constant(Deserialize(r, prop.PropertyType, context, log)),
-										prop.PropertyType
-										))).Compile().DynamicInvoke();
-						}
+							context.SetObjectProperty(o, prop, Deserialize(r, prop.PropertyType, context, log));
 					}
 					else
 						r.ReadTo(';', log);
