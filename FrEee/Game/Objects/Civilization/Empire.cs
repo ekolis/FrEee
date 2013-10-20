@@ -426,6 +426,10 @@ namespace FrEee.Game.Objects.Civilization
 					ResearchQueue.Remove(tech);
 				ResearchSpending[tech] = 0;
 			}
+
+			// if we advanced, recheck unlocks
+			if (advanced > 0)
+				RefreshUnlockedItems();
 		}
 
 		/// <summary>
