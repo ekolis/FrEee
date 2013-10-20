@@ -8,15 +8,16 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A requirement for some condition.
 	/// </summary>
-	public class Requirement
+	/// <typeparam name="T">The object which needs to meet the requirement.</typeparam>
+	public abstract class Requirement<T>
 	{
-		public Requirement(Formula<bool> formula, Formula<string> description)
+		public Requirement(Formula<string> description)
 		{
-			Formula = formula;
 			Description = description;
 		}
 
-		public Formula<bool> Formula { get; set; }
+		public abstract bool IsMetBy(T obj);
+
 		public Formula<string> Description { get; set; }
 	}
 }

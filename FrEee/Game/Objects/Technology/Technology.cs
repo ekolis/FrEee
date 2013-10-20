@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Technology
 	{
 		public Technology()
 		{
-			UnlockRequirements = new List<Requirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			expectedResults = new Lazy<IEnumerable<IResearchable>>(() => GetExpectedResults(Empire.Current));
 		}
 
@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// The prerequisites for this technology.
 		/// </summary>
-		public IList<Requirement> UnlockRequirements { get; private set; }
+		public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
 
 		public long ID
 		{
@@ -235,7 +235,7 @@ namespace FrEee.Game.Objects.Technology
 				bool ok = true;
 				foreach (var req in item.UnlockRequirements)
 				{
-					if (!req.Formula.Evaluate(emp))
+					if (!req.IsMetBy(emp))
 					{
 						// didn't meet the requirement
 						ok = false;

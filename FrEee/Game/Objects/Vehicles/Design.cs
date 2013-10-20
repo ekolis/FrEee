@@ -479,16 +479,16 @@ namespace FrEee.Game.Objects.Vehicles
 				mct.ReplaceClientIDs(idmap);
 		}
 
-		public IList<Requirement> UnlockRequirements
+		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get
 			{
-				var list = new List<Requirement>();
+				var list = new List<Requirement<Empire>>();
 				foreach (var req in Hull.UnlockRequirements)
 					list.Add(req);
 				foreach (var req in Components.SelectMany(c => c.ComponentTemplate.UnlockRequirements))
 					list.Add(req);
-				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<Requirement>() : c.Mount.UnlockRequirements))
+				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<Requirement<Empire>>() : c.Mount.UnlockRequirements))
 					list.Add(req);
 				return list;
 			}

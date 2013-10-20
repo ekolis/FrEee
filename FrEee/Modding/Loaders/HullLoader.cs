@@ -79,7 +79,7 @@ namespace FrEee.Modding.Loaders
 
 				hull.Mass = rec.Get<int>("Engines Per Move", hull);
 
-				foreach (var tr in RequirementLoader.Load(rec, hull, RequirementType.Unlock))
+				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, hull, RequirementType.Unlock))
 					hull.UnlockRequirements.Add(tr);
 
 				// TODO - build and use requirements

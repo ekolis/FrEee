@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Technology
 		public Hull()
 		{
 			PictureNames = new List<string>();
-			UnlockRequirements = new List<Requirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			Abilities = new List<Ability>();
 			Cost = new ResourceQuantity();
 		}
@@ -94,7 +94,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Requirements to unlock this hull.
 		/// </summary>
-		public IList<Requirement> UnlockRequirements
+		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get;
 			private set;

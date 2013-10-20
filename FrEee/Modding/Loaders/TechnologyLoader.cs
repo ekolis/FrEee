@@ -55,7 +55,7 @@ namespace FrEee.Modding.Loaders
 
 				// load its tech reqs
 				// couldn't do it before because some early techs can reference later techs
-				foreach (var tr in RequirementLoader.Load(rec, tech, RequirementType.Unlock))
+				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, tech, RequirementType.Unlock))
 					tech.UnlockRequirements.Add(tr);
 			}
 		}

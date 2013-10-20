@@ -23,7 +23,7 @@ namespace FrEee.Modding.Templates
 		public ComponentTemplate()
 		{
 			Abilities = new List<Ability>();
-			UnlockRequirements = new List<Requirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			Cost = new ResourceFormula(this);
 		}
 
@@ -127,7 +127,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// The requirements to unlock this component.
 		/// </summary>
-		public IList<Requirement> UnlockRequirements { get; private set; }
+		public IList<Requirement<Empire>> UnlockRequirements { get; private set; }
 
 		/// <summary>
 		/// Abilities possessed by this component.
