@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -24,7 +25,7 @@ namespace FrEee.Game.Objects.Technology
 		public Hull()
 		{
 			PictureNames = new List<string>();
-			TechnologyRequirements = new List<TechnologyRequirement>();
+			UnlockRequirements = new List<Requirement<Empire>>();
 			Abilities = new List<Ability>();
 			Cost = new ResourceQuantity();
 		}
@@ -91,9 +92,9 @@ namespace FrEee.Game.Objects.Technology
 		public int Mass { get; set; }
 
 		/// <summary>
-		/// Technology requirements to build ships using this hull.
+		/// Requirements to unlock this hull.
 		/// </summary>
-		public IList<TechnologyRequirement> TechnologyRequirements
+		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get;
 			private set;

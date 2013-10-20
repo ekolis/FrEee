@@ -20,6 +20,7 @@ using FrEee.Game.Enumerations;
 using AutoMapper;
 using System.Dynamic;
 using FrEee.Game.Objects.Orders;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -27,7 +28,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable
+	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -376,13 +377,18 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool HasUnlocked(IResearchable item)
 		{
+			return UnlockedItems.Contains(item);
+		}
+
+		public bool CheckUnlockStatus(IResearchable item)
+		{
 			if (item == null)
 				return true;
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
 				return false; // unique tech that this empire hasn't discovered
-			return item.TechnologyRequirements.All(r => ResearchedTechnologies[r.Technology] >= r.Level);
+			return item.UnlockRequirements.All(r => r.IsMetBy(this));
 		}
 
 		/// <summary>
@@ -420,6 +426,10 @@ namespace FrEee.Game.Objects.Civilization
 					ResearchQueue.Remove(tech);
 				ResearchSpending[tech] = 0;
 			}
+
+			// if we advanced, recheck unlocks
+			if (advanced > 0)
+				RefreshUnlockedItems();
 		}
 
 		/// <summary>
@@ -437,12 +447,22 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Unlocked research items such as component and facility templates.
 		/// </summary>
+		[DoNotSerialize]
 		public IEnumerable<IResearchable> UnlockedItems
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r));
+				if (unlockedItems == null)
+					RefreshUnlockedItems();
+				return unlockedItems;
 			}
+		}
+
+		private IEnumerable<IResearchable> unlockedItems;
+
+		public void RefreshUnlockedItems()
+		{
+			unlockedItems = Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => CheckUnlockStatus(r)).ToArray();
 		}
 
 		public IEnumerable<Ability> Abilities
@@ -672,5 +692,17 @@ namespace FrEee.Game.Objects.Civilization
 		/// Arbitrary data stored by the AI to maintain state between turns.
 		/// </summary>
 		public dynamic AINotes { get; set; }
+
+		public IDictionary<string, object> Variables
+		{
+			get
+			{
+				// let scripters refer to empire as empire, not just as host, because host would be confusing
+				return new Dictionary<string, object>
+				{
+					{"empire", this}
+				};
+			}
+		}
 	}
 }

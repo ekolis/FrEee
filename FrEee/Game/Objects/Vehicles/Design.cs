@@ -16,6 +16,7 @@ using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Abilities;
 using Tech = FrEee.Game.Objects.Technology.Technology;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -478,18 +479,18 @@ namespace FrEee.Game.Objects.Vehicles
 				mct.ReplaceClientIDs(idmap);
 		}
 
-		public IList<TechnologyRequirement> TechnologyRequirements
+		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get
 			{
-				var reqs = new SafeDictionary<Tech, int>();
-				foreach (var req in Hull.TechnologyRequirements)
-					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
-				foreach (var req in Components.SelectMany(c => c.ComponentTemplate.TechnologyRequirements))
-					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
-				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<TechnologyRequirement>() : c.Mount.TechnologyRequirements))
-					reqs[req.Technology] = Math.Max(reqs[req.Technology], req.Level);
-				return reqs.Select(kvp => new TechnologyRequirement(this, kvp.Key, kvp.Value)).ToList();
+				var list = new List<Requirement<Empire>>();
+				foreach (var req in Hull.UnlockRequirements)
+					list.Add(req);
+				foreach (var req in Components.SelectMany(c => c.ComponentTemplate.UnlockRequirements))
+					list.Add(req);
+				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<Requirement<Empire>>() : c.Mount.UnlockRequirements))
+					list.Add(req);
+				return list;
 			}
 		}
 

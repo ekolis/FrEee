@@ -66,7 +66,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The traits of the race.
 		/// </summary>
-		public IEnumerable<Trait> Traits { get { return Mod.Current.Traits.Join(TraitNames, t => t.Name.Value, n => n, (t, n) => t); } }
+		public IEnumerable<Trait> Traits { get { return Mod.Current.Traits.Join(TraitNames, t => t.Name, n => n, (t, n) => t); } }
 
 		public IEnumerable<Ability> Abilities
 		{

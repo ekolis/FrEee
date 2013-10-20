@@ -16,6 +16,7 @@ using System.Data;
 using FrEee.Utility;
 using Microsoft.Scripting.Runtime;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Modding
 {
@@ -50,6 +51,7 @@ namespace FrEee.Modding
 			//Now we have everything we need to create the AppDomain, so let's create it.
 			sandbox = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 			engine = Python.CreateEngine(sandbox);
+			scope = engine.CreateScope();
 		}
 
 		/// <summary>
@@ -91,26 +93,79 @@ namespace FrEee.Modding
 		/// </summary>
 		/// <param name="variables">The variables to set, or null to set no variables.</param>
 		/// <returns></returns>
-		public static ScriptScope CreateScope(IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
+		public static void UpdateScope(IDictionary<string, object> variables)
 		{
+			if (variables == null)
+				variables = new Dictionary<string, object>();
+
+			// Separate referrable objects (they just get ID's, not serialized data)
+			var referrables = new Dictionary<string, IReferrable>();
+			var genericObjects = new Dictionary<string, object>();
+			foreach (var kvp in variables)
+			{
+				if (kvp.Value is IReferrable)
+					referrables.Add(kvp.Key, (IReferrable)kvp.Value);
+				else
+					genericObjects.Add(kvp.Key, kvp.Value);
+			}
+
 			// Set injected variables
-			var scope = engine.CreateScope();
-			if (variables != null)
+			if (referrables != null)
 			{
-				foreach (var kvp in SerializeScriptVariables(variables))
-					scope.SetVariable("_" + kvp.Key, kvp.Value);
+				foreach (var kvp in referrables)
+				{
+					scope.SetVariable("_" + kvp.Key, kvp.Value.ID);
+					lastReferrables.Add(kvp.Key, kvp.Value);
+				}
 			}
-			if (readOnlyVariables != null)
+			if (genericObjects != null)
 			{
-				foreach (var kvp in SerializeScriptVariables(readOnlyVariables))
+				foreach (var kvp in SerializeScriptVariables(genericObjects))
+				{
 					scope.SetVariable("_" + kvp.Key, kvp.Value);
+					lastVariables.Add(kvp.Key, kvp.Value);
+				}
 			}
-			return scope;
+			foreach (var variable in lastReferrables.Keys.ToArray())
+			{
+				if (!referrables.ContainsKey(variable) && !genericObjects.ContainsKey(variable))
+				{
+					scope.RemoveVariable("_" + variable);
+					scope.RemoveVariable(variable);
+					lastReferrables.Remove(variable);
+				}
+			}
+			foreach (var variable in lastVariables.Keys.ToArray())
+			{
+				if (!referrables.ContainsKey(variable) && !genericObjects.ContainsKey(variable))
+				{
+					scope.RemoveVariable("_" + variable);
+					scope.RemoveVariable(variable);
+					lastVariables.Remove(variable);
+				}
+			}
+			if (lastGalaxy != Galaxy.Current)
+			{
+				lastGalaxy = Galaxy.Current;
+				var dict = new Dictionary<string, object>();
+				scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
+				scope.SetVariable("newGalaxy", true);
+			}
+			else if (lastGalaxy == null)
+			{
+				scope.SetVariable("_galaxy", typeof(Galaxy).AssemblyQualifiedName + ":n;");
+				scope.SetVariable("newGalaxy", false);
+			}
+			else
+				scope.SetVariable("newGalaxy", false);
 		}
 
 		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
 		{
-			return variables.Select(kvp => new KeyValuePair<string, string>(kvp.Key, Serializer.SerializeToString(kvp.Value))).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			return variables.Select(kvp => new KeyValuePair<string, string>(
+				kvp.Key,
+				Serializer.SerializeToString(kvp.Value)))
+				.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 		}
 
 		public static IDictionary<string, object> RetrieveVariablesFromScope(ScriptScope scope, IEnumerable<string> variableNames)
@@ -120,6 +175,12 @@ namespace FrEee.Modding
 				dict.Add(varName, Serializer.DeserializeFromString(scope.GetVariable<string>("_" + varName)));
 			return dict;
 		}
+
+		private static IDictionary<string, IReferrable> lastReferrables = new SafeDictionary<string, IReferrable>();
+		private static IDictionary<string, object> lastVariables = new SafeDictionary<string, object>();
+		private static Galaxy lastGalaxy = null;
+
+		private static ScriptScope scope;
 
 		/// <summary>
 		/// Evaluates a script expression in a sandboxed environment.
@@ -152,21 +213,17 @@ namespace FrEee.Modding
 			if (variables != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
-				bool addedInit = false;
+				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
-					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
-					if (variables[variable] is IReferrable)
+					if (lastVariables[variable] == null || lastVariables[variable] != variables[variable])
 					{
-						// assign ID's to passed-over objects in a fake galaxy so they can reference each other
-						if (!addedInit)
-						{
-							deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
-							deserializers.Add("galaxy = Galaxy();");
-							addedInit = true;
-						}
-						deserializers.Add("galaxy.AssignID(" + variable + ");");
-						deserializers.Add("galaxy.AssignIDs();");
+						if (variables[variable] is IReferrable)
+							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						else
+							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					}
 				}
 			}
@@ -181,15 +238,16 @@ namespace FrEee.Modding
 			else
 			{
 				imports.Add("import " + Mod.Current.GlobalScript.ModuleName + ";");
-				code = string.Join("\n", imports.ToArray()) + "\n" + expression;
+				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression;
 				sc = new ScriptCode("expression", code, Mod.Current.GlobalScript);
 			}
 			var script = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(script);
-			var scope = CreateScope(variables);
+			UpdateScope(variables);
 			try
 			{
-				return (T)compiledScript.Execute(scope);
+				dynamic result = compiledScript.Execute(scope);
+				return (T)result;
 			}
 			catch (Exception ex)
 			{
@@ -219,7 +277,6 @@ namespace FrEee.Modding
 		/// /// <param name="variables">Read-only variables to inject into the script.</param>
 		public static void RunScript(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
-			var scope = CreateScope(variables, readOnlyVariables);
 			var deserializers = new List<string>();
 			var serializers = new List<string>();
 			if (variables != null)
@@ -227,13 +284,24 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
-					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					if (variables[variable] is IReferrable)
+						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+					else
+						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 					serializers.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
 				}
 				foreach (var variable in readOnlyVariables.Keys)
-					deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+				{
+					if (readOnlyVariables[variable] is IReferrable)
+							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						else
+							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+				}
 			}
 			var code =
 				string.Join("\n", deserializers.ToArray()) + "\n" +
@@ -242,6 +310,7 @@ namespace FrEee.Modding
 			var sc = new ScriptCode("runner", code, script.ExternalScripts.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
+			UpdateScope(variables);
 			try
 			{
 				compiledScript.Execute(scope);
@@ -288,6 +357,8 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -296,10 +367,11 @@ namespace FrEee.Modding
 			for (var i = 0; i < args.Length; i++)
 				arglist.Add("arg" + i);
 			var code = string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")";
-			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
+			var variables = args.ToDictionary(arg => "arg" + args.IndexOf(arg));
 			var sc = new ScriptCode("functionCall", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var functionCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(functionCall);
+			UpdateScope(variables);
 			try
 			{
 				return compiledScript.Execute<T>(scope);
@@ -340,6 +412,8 @@ namespace FrEee.Modding
 				deserializers.Add("import clr;");
 				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -348,11 +422,11 @@ namespace FrEee.Modding
 			for (var i = 0; i < args.Length; i++)
 				arglist.Add("arg" + i);
 			var code = string.Join("\n", deserializers.ToArray()) + "\n" + script.ModuleName + "." + function + "(" + string.Join(", ", arglist) + ")";
-			var scope = CreateScope(args.ToDictionary(arg => "arg" + args.IndexOf(arg)));
+			var variables = args.ToDictionary(arg => "arg" + args.IndexOf(arg));
 			var sc = new ScriptCode("runner", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var subCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(subCall);
-
+			UpdateScope(variables);
 			try
 			{
 				compiledScript.Execute(scope);
