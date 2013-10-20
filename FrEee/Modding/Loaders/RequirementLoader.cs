@@ -40,7 +40,7 @@ namespace FrEee.Modding.Loaders
 					var levelFormula = lfield.CreateFormula<int>(r);
 					yield return new Requirement(
 							new Formula<bool>(r,
-								"empire.ResearchedTechnologies[\"" + techname + "\"] >= " + levelFormula, FormulaType.Dynamic),
+								"empire.ResearchedTechnologies[\"" + techname + "\"] >= " + levelFormula.Value, FormulaType.Dynamic),
 							new Formula<string>(r,
 								"Requires level " + levelFormula.Value + " " + techname + ".", FormulaType.Dynamic));
 				}
