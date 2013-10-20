@@ -81,6 +81,12 @@
     <Compile Include="Forms\CultureComparisonForm.Designer.cs">
       <DependentUpon>CultureComparisonForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\EmpireListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmpireListForm.Designer.cs">
+      <DependentUpon>EmpireListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -424,6 +430,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CultureComparisonForm.resx">
       <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmpireListForm.resx">
+      <DependentUpon>EmpireListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\EmpireSetupForm.resx">
       <DependentUpon>EmpireSetupForm.cs</DependentUpon>

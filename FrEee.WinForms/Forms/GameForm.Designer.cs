@@ -319,6 +319,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEmpires.TabStop = false;
 			this.toolTip.SetToolTip(this.btnEmpires, "(F9 / Shift-E) Empires");
 			this.btnEmpires.UseVisualStyleBackColor = false;
+			this.btnEmpires.Click += new System.EventHandler(this.btnEmpires_Click);
 			// 
 			// btnPlanets
 			// 

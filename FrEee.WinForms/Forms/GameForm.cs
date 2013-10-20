@@ -813,7 +813,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.P || e.KeyCode == Keys.C) // planets and colonies screens are combined
 					this.ShowChildForm(new PlanetListForm());
 				else if (e.KeyCode == Keys.E)
-					; // TODO - empires screen
+					this.ShowChildForm(new EmpireListForm());
 				else if (e.KeyCode == Keys.O)
 					; // TODO - empire status screen
 				else if (e.KeyCode == Keys.S)
@@ -861,7 +861,7 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F4 || e.KeyCode == Keys.F5) // planets and colonies screens are combined
 				this.ShowChildForm(new PlanetListForm());
 			else if (e.KeyCode == Keys.F9)
-				MessageBox.Show("Sorry, the empires screen is not yet implemented."); // TODO - empires screen
+				this.ShowChildForm(new EmpireListForm());
 			else if (e.KeyCode == Keys.F11)
 				MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
 			else if (e.KeyCode == Keys.F6)
@@ -1162,8 +1162,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnEmpires_Click(object sender, EventArgs e)
 		{
-			// TODO - empires screen
-			MessageBox.Show("Sorry, the empires screen is not yet implemented.");
+			this.ShowChildForm(new EmpireListForm());
 		}
 
 		private void btnShips_Click(object sender, EventArgs e)
@@ -1240,11 +1239,6 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(new ConstructionQueueForm(SelectedSpaceObject.ConstructionQueue));
 			BindReport();
 			SetUpResourceDisplay();
-		}
-
-		private void GameForm_Resize(object sender, EventArgs e)
-		{
-
 		}
 	}
 }
