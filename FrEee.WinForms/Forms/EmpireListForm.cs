@@ -8,7 +8,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
@@ -35,7 +37,44 @@ namespace FrEee.WinForms.Forms
 
 		private void BindEmpire(Empire emp)
 		{
-			// TODO - bind empire
+			if (emp == Empire.Current)
+				tabs.SelectedTab = tabBudget;
+			else
+				tabs.SelectedTab = tabDiplomacy;
+
+			report.Empire = emp;
+
+			if (emp == null)
+			{
+				txtTreaty.Text = "N/A";
+				txtTreaty.ForeColor = Color.White;
+			}
+			else
+			{
+				if (emp == Empire.Current)
+				{
+					txtTreaty.Text = "Self";
+					txtTreaty.ForeColor = Color.Green;
+				}
+				else
+				{
+					// TODO - diplomacy
+					txtTreaty.Text = "None";
+					txtTreaty.ForeColor = Color.Yellow;
+				}
+
+				rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.UpcomingSpending);
+				rqdExtraction.ResourceQuantity = emp.ColonizedPlanets.Sum(p => p.Income); // TODO - remote mining
+				rqdIncome.ResourceQuantity = emp.GrossIncome;
+				rqdMaintenance.ResourceQuantity = emp.Maintenance;
+				rqdNet.ResourceQuantity = emp.NetIncome;
+				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncome - emp.ResourceStorage);
+				rqdStored.ResourceQuantity = emp.StoredResources;
+				rqdTrade.ResourceQuantity = new ResourceQuantity(); // TODO - trade
+				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
+				rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
+				rqExpenses.ResourceQuantity = rqdConstruction.ResourceQuantity + rqdMaintenance.ResourceQuantity + rqdTributesOut.ResourceQuantity;
+			}
 		}
 
 		private void lstEmpires_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)

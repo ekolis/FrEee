@@ -75,6 +75,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\EmpireReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EmpireReport.Designer.cs">
+      <DependentUpon>EmpireReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResourceQuantityDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceQuantityDisplay.Designer.cs">
+      <DependentUpon>ResourceQuantityDisplay.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CultureComparisonForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -382,8 +394,14 @@
     <EmbeddedResource Include="Controls\ComponentReport.resx">
       <DependentUpon>ComponentReport.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EmpireReport.resx">
+      <DependentUpon>EmpireReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\FacilityReport.resx">
       <DependentUpon>FacilityReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceQuantityDisplay.resx">
+      <DependentUpon>ResourceQuantityDisplay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\WarpPointReport.resx">
       <DependentUpon>WarpPointReport.cs</DependentUpon>

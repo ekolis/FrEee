@@ -10,7 +10,7 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class ResourceQuantity : SafeDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
+	public class ResourceQuantity : NamedDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
 	{
 		public static ResourceQuantity operator +(ResourceQuantity r1, ResourceQuantity r2)
 		{

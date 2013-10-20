@@ -7,6 +7,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Enumerations;
 
 namespace FrEee.Tests.Modding
 {
