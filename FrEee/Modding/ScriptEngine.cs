@@ -128,7 +128,7 @@ namespace FrEee.Modding
 			}
 			foreach (var variable in lastReferrables.Keys.ToArray())
 			{
-				if (!referrables.ContainsKey(variable))
+				if (!referrables.ContainsKey(variable) && !genericObjects.ContainsKey(variable))
 				{
 					scope.RemoveVariable("_" + variable);
 					scope.RemoveVariable(variable);
@@ -137,7 +137,7 @@ namespace FrEee.Modding
 			}
 			foreach (var variable in lastVariables.Keys.ToArray())
 			{
-				if (!genericObjects.ContainsKey(variable))
+				if (!referrables.ContainsKey(variable) && !genericObjects.ContainsKey(variable))
 				{
 					scope.RemoveVariable("_" + variable);
 					scope.RemoveVariable(variable);
