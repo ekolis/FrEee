@@ -327,6 +327,317 @@ namespace FrEee.Utility
 			return result;
 		}
 
+		private static string DeserializeString(TextReader r, ObjectGraphContext context, StringBuilder log)
+		{
+			string o;
+			bool foundRealSemicolon = false;
+			string s = "";
+			while (!foundRealSemicolon)
+			{
+				s += r.ReadTo(';', log);
+				if (!s.EndsWith("\\") && s.Count(c => c == '"') % 2 == 0)
+					foundRealSemicolon = true;
+				else
+					s += ";";
+			}
+			if (s == "n")
+				o = null;
+			else
+				o = s.Trim().Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
+			return o;
+		}
+
+		private static Array DeserializeArray(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			// arrays
+			Array o;
+			// read bounds or id number
+			var fin = r.Read();
+			while (fin != 0 && char.IsWhiteSpace((char)fin))
+			{
+				log.Append((char)fin);
+				fin = r.Read();
+			}
+			if (fin != 0)
+				log.Append((char)fin);
+			if (fin == 'a')
+			{
+				var boundsStrs = r.ReadTo(':', log).Split(',');
+				if (boundsStrs.Length < 1)
+					throw new SerializationException("Arrays cannot have zero dimensions.");
+
+				if (boundsStrs.Length == 1)
+				{
+					int min, max;
+					var bounds1Strs = boundsStrs[0].Split('_');
+					if (!int.TryParse(bounds1Strs[0], out min))
+						throw new SerializationException("Expected integer, got \"" + bounds1Strs[0] + "\" when parsing array bounds.");
+					if (!int.TryParse(bounds1Strs[1], out max))
+						throw new SerializationException("Expected integer, got \"" + bounds1Strs[1] + "\" when parsing array bounds.");
+					// HACK - figure out how to set min and max bounds, in case it matters (VB?)
+					var array = Array.CreateInstance(type.GetElementType(), max - min + 1);
+					for (int i = min; i <= max; i++)
+						array.SetValue(Deserialize(r, type.GetElementType(), context, log), i);
+					o = array;
+				}
+				else if (boundsStrs.Length == 2)
+				{
+					int min1, max1, min2, max2;
+					var bounds1Strs = boundsStrs[0].Split('_');
+					var bounds2Strs = boundsStrs[1].Split('_');
+					if (!int.TryParse(bounds1Strs[0], out min1))
+						throw new SerializationException("Expected integer, got \"" + bounds1Strs[0] + "\" when parsing array bounds.");
+					if (!int.TryParse(bounds1Strs[1], out max1))
+						throw new SerializationException("Expected integer, got \"" + bounds1Strs[1] + "\" when parsing array bounds.");
+					if (!int.TryParse(bounds2Strs[0], out min2))
+						throw new SerializationException("Expected integer, got \"" + bounds2Strs[0] + "\" when parsing array bounds.");
+					if (!int.TryParse(bounds2Strs[1], out max2))
+						throw new SerializationException("Expected integer, got \"" + bounds2Strs[1] + "\" when parsing array bounds.");
+					// HACK - figure out how to set min and max bounds, in case it matters (VB?)
+					var array = Array.CreateInstance(type.GetElementType(), max1 - min1 + 1, max2 - min2 + 1);
+					for (int x = min1; x <= max1; x++)
+					{
+						for (int y = min2; y <= max2; y++)
+							array.SetValue(Deserialize(r, type.GetElementType(), context, log), x, y);
+					}
+					o = array;
+					context.Add(o);
+				}
+				else
+					throw new SerializationException("Arrays with more than two dimensions are not supported.");
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else if (fin == 'i')
+			{
+				// ID - need to find known object
+				int id;
+				string s = r.ReadTo(';', log);
+				if (!int.TryParse(s, out id))
+					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
+
+				// do we have it?
+				if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
+					throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
+
+				// found it!
+				o = (Array)context.KnownObjects[type][id];
+			}
+			else if (fin == 'n')
+			{
+				// null object!
+				o = null;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else
+				throw new SerializationException("Expected 'a'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+			return o;
+		}
+
+		private static IEnumerable DeserializeCollection(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			IEnumerable o;
+			// collections
+			// read size or id number
+			var fin = r.Read();
+			while (fin != 0 && char.IsWhiteSpace((char)fin))
+			{
+				log.Append((char)fin);
+				fin = r.Read();
+			}
+			if (fin != 0)
+				log.Append((char)fin);
+			if (fin == 'c')
+			{
+				int size;
+				var sizeStr = r.ReadTo(':', log);
+				if (!int.TryParse(sizeStr, out size))
+					throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
+				var coll = Activator.CreateInstance(type);
+				context.Add(coll);
+				var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
+				Type itemType;
+				if (type.GetGenericArguments().Length == 2)
+				{
+					// HACK - assume it's a dictionary, no real way to test
+					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+				}
+				else if (type.GetGenericArguments().Length == 1)
+				{
+					// HACK - assume it's a collection, no real way to test
+					itemType = type.GetGenericArguments()[0];
+				}
+				else
+				{
+					// no generic type? probably a list of objects?
+					itemType = typeof(object);
+				}
+				for (int i = 0; i < size; i++)
+				{
+					var item = Deserialize(r, itemType, context, log);
+					Expression.Lambda(Expression.Call(
+						Expression.Constant(coll),
+						adder,
+						Expression.Convert(Expression.Constant(item), itemType))).Compile().DynamicInvoke();
+				}
+				o = (IEnumerable)coll;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else if (fin == 'd')
+			{
+				int size;
+				var sizeStr = r.ReadTo(':', log);
+				if (!int.TryParse(sizeStr, out size))
+					throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
+				var coll = type.Instantiate();
+				context.Add(coll);
+				var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
+				Type itemType;
+				if (type.GetGenericArguments().Count() == 2)
+					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
+				else
+					// HACK - Resources inherits from a dictionary type
+					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
+				for (int i = 0; i < size; i++)
+				{
+					if (!context.KnownProperties.ContainsKey(itemType))
+					{
+						var props = new PropertyInfo[]
+						{
+							itemType.GetProperty("Key"),
+							itemType.GetProperty("Value"),
+						};
+						context.KnownProperties.Add(itemType, props);
+					}
+					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
+					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
+					var key = Deserialize(r, keyprop.PropertyType, context, log);
+					var val = Deserialize(r, valprop.PropertyType, context, log);
+					Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(key), Expression.Constant(val))).Compile().DynamicInvoke();
+				}
+				o = (IEnumerable)coll;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else if (fin == 'i')
+			{
+				// ID - need to find known object
+				int id;
+				string s = r.ReadTo(';', log);
+				if (!int.TryParse(s, out id))
+					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
+
+				// do we have it?
+				if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
+					throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
+
+				// found it!
+				o = (IEnumerable)context.KnownObjects[type][id];
+			}
+			else if (fin == 'n')
+			{
+				// null object!
+				o = null;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else
+				throw new SerializationException("Expected 'c'/'d'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+			return o;
+		}
+
+		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
+		{
+			object o;
+			// read property count or id number
+			var fin = r.Read();
+			while (fin != 0 && char.IsWhiteSpace((char)fin))
+			{
+				log.Append((char)fin);
+				fin = r.Read();
+			}
+			if (fin != 0)
+				log.Append((char)fin);
+			if (fin == 'p')
+			{
+				// create object and add it to our context
+				o = type.Instantiate();
+				context.Add(o);
+
+				// field count - need to create object and populate fields
+				int count;
+				string s = r.ReadTo(':', log);
+				if (!int.TryParse(s, out count))
+					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing field count.");
+
+				// deserialize the fields
+				for (int i = 0; i < count; i++)
+				{
+					var pname = r.ReadTo(':', log).Trim();
+					var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+					if (prop != null)
+					{
+						if (type.IsValueType)
+						{
+							// not sure why LINQ expressions don't work on structs...
+							prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[0]);
+						}
+						else
+						{
+							Expression.Lambda(Expression.Assign(
+									Expression.Property(Expression.Constant(o), prop),
+									Expression.Convert(
+										Expression.Constant(Deserialize(r, prop.PropertyType, context, log)),
+										prop.PropertyType
+										))).Compile().DynamicInvoke();
+						}
+					}
+					else
+						r.ReadTo(';', log);
+					// if p is null, it must be data from an old version with different property names, so don't crash
+				}
+
+				// clean up
+				ReadSemicolon(r, type, log);
+
+				if (o is IReferrable && ((IReferrable)o).ID == 2437666120012355370)
+					Console.WriteLine("found " + o);
+			}
+			else if (fin == 'i')
+			{
+				// ID - need to find known object
+				int id;
+				string s = r.ReadTo(';', log);
+				if (!int.TryParse(s, out id))
+					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
+
+				// do we have it?
+				if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
+					throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
+
+				// found it!
+				o = context.KnownObjects[type][id];
+			}
+			else if (fin == 'n')
+			{
+				// null object!
+				o = null;
+
+				// clean up
+				ReadSemicolon(r, type, log);
+			}
+			else
+				throw new SerializationException("Expected 'p'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+			return o;
+		}
+
 		public static object Deserialize(TextReader r, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			// set up our serialization context if we haven't already
@@ -368,20 +679,7 @@ namespace FrEee.Utility
 			else if (type == typeof(string))
 			{
 				// parse strings
-				bool foundRealSemicolon = false;
-				string s = "";
-				while (!foundRealSemicolon)
-				{
-					s += r.ReadTo(';', log);
-					if (!s.EndsWith("\\") && s.Count(c => c == '"') % 2 == 0)
-						foundRealSemicolon = true;
-					else
-						s += ";";
-				}
-				if (s == "n")
-					o = null;
-				else
-					o = s.Trim().Trim('"').Replace("\\\"", "\"").Replace("\\;", ";").Replace("\\\\", "\\");
+				o = DeserializeString(r, context, log);
 			}
 			else if (type == typeof(Color))
 			{
@@ -402,285 +700,18 @@ namespace FrEee.Utility
 			}
 			else if (typeof(Array).IsAssignableFrom(type))
 			{
-				// arrays
-				// read bounds or id number
-				var fin = r.Read();
-				while (fin != 0 && char.IsWhiteSpace((char)fin))
-				{
-					log.Append((char)fin);
-					fin = r.Read();
-				}
-				if (fin != 0)
-					log.Append((char)fin);
-				if (fin == 'a')
-				{
-					var boundsStrs = r.ReadTo(':', log).Split(',');
-					if (boundsStrs.Length < 1)
-						throw new SerializationException("Arrays cannot have zero dimensions.");
-
-					if (boundsStrs.Length == 1)
-					{
-						int min, max;
-						var bounds1Strs = boundsStrs[0].Split('_');
-						if (!int.TryParse(bounds1Strs[0], out min))
-							throw new SerializationException("Expected integer, got \"" + bounds1Strs[0] + "\" when parsing array bounds.");
-						if (!int.TryParse(bounds1Strs[1], out max))
-							throw new SerializationException("Expected integer, got \"" + bounds1Strs[1] + "\" when parsing array bounds.");
-						// HACK - figure out how to set min and max bounds, in case it matters (VB?)
-						var array = Array.CreateInstance(type.GetElementType(), max - min + 1);
-						for (int i = min; i <= max; i++)
-							array.SetValue(Deserialize(r, type.GetElementType(), context, log), i);
-						o = array;
-					}
-					else if (boundsStrs.Length == 2)
-					{
-						int min1, max1, min2, max2;
-						var bounds1Strs = boundsStrs[0].Split('_');
-						var bounds2Strs = boundsStrs[1].Split('_');
-						if (!int.TryParse(bounds1Strs[0], out min1))
-							throw new SerializationException("Expected integer, got \"" + bounds1Strs[0] + "\" when parsing array bounds.");
-						if (!int.TryParse(bounds1Strs[1], out max1))
-							throw new SerializationException("Expected integer, got \"" + bounds1Strs[1] + "\" when parsing array bounds.");
-						if (!int.TryParse(bounds2Strs[0], out min2))
-							throw new SerializationException("Expected integer, got \"" + bounds2Strs[0] + "\" when parsing array bounds.");
-						if (!int.TryParse(bounds2Strs[1], out max2))
-							throw new SerializationException("Expected integer, got \"" + bounds2Strs[1] + "\" when parsing array bounds.");
-						// HACK - figure out how to set min and max bounds, in case it matters (VB?)
-						var array = Array.CreateInstance(type.GetElementType(), max1 - min1 + 1, max2 - min2 + 1);
-						for (int x = min1; x <= max1; x++)
-						{
-							for (int y = min2; y <= max2; y++)
-								array.SetValue(Deserialize(r, type.GetElementType(), context, log), x, y);
-						}
-						o = array;
-						context.Add(o);
-					}
-					else
-						throw new SerializationException("Arrays with more than two dimensions are not supported.");
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else if (fin == 'i')
-				{
-					// ID - need to find known object
-					int id;
-					string s = r.ReadTo(';', log);
-					if (!int.TryParse(s, out id))
-						throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
-
-					// do we have it?
-					if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
-						throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
-
-					// found it!
-					o = context.KnownObjects[type][id];
-				}
-				else if (fin == 'n')
-				{
-					// null object!
-					o = null;
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else
-					throw new SerializationException("Expected 'a'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+				// parse arrays
+				o = DeserializeArray(r, type, context, log);
 			}
 			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any() && !typeof(IReferenceEnumerable).IsAssignableFrom(type))
 			{
-				// collections
-				// read size or id number
-				var fin = r.Read();
-				while (fin != 0 && char.IsWhiteSpace((char)fin))
-				{
-					log.Append((char)fin);
-					fin = r.Read();
-				}
-				if (fin != 0)
-					log.Append((char)fin);
-				if (fin == 'c')
-				{
-					int size;
-					var sizeStr = r.ReadTo(':', log);
-					if (!int.TryParse(sizeStr, out size))
-						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-					var coll = Activator.CreateInstance(type);
-					context.Add(coll);
-					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
-					Type itemType;
-					if (type.GetGenericArguments().Length == 2)
-					{
-						// HACK - assume it's a dictionary, no real way to test
-						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
-					}
-					else if (type.GetGenericArguments().Length == 1)
-					{
-						// HACK - assume it's a collection, no real way to test
-						itemType = type.GetGenericArguments()[0];
-					}
-					else
-					{
-						// no generic type? probably a list of objects?
-						itemType = typeof(object);
-					}
-					for (int i = 0; i < size; i++)
-					{
-						var item = Deserialize(r, itemType, context, log);
-						Expression.Lambda(Expression.Call(
-							Expression.Constant(coll),
-							adder,
-							Expression.Convert(Expression.Constant(item), itemType))).Compile().DynamicInvoke();
-					}
-					o = coll;
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else if (fin == 'd')
-				{
-					int size;
-					var sizeStr = r.ReadTo(':', log);
-					if (!int.TryParse(sizeStr, out size))
-						throw new SerializationException("Expected integer, got \"" + sizeStr + "\" when parsing collection size.");
-					var coll = type.Instantiate();
-					context.Add(coll);
-					var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 2);
-					Type itemType;
-					if (type.GetGenericArguments().Count() == 2)
-						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
-					else
-						// HACK - Resources inherits from a dictionary type
-						itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
-					for (int i = 0; i < size; i++)
-					{
-						if (!context.KnownProperties.ContainsKey(itemType))
-						{
-							var props = new PropertyInfo[]
-						{
-							itemType.GetProperty("Key"),
-							itemType.GetProperty("Value"),
-						};
-							context.KnownProperties.Add(itemType, props);
-						}
-						var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
-						var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
-						var key = Deserialize(r, keyprop.PropertyType, context, log);
-						var val = Deserialize(r, valprop.PropertyType, context, log);
-						Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(key), Expression.Constant(val))).Compile().DynamicInvoke();
-					}
-					o = coll;
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else if (fin == 'i')
-				{
-					// ID - need to find known object
-					int id;
-					string s = r.ReadTo(';', log);
-					if (!int.TryParse(s, out id))
-						throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
-
-					// do we have it?
-					if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
-						throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
-
-					// found it!
-					o = context.KnownObjects[type][id];
-				}
-				else if (fin == 'n')
-				{
-					// null object!
-					o = null;
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else
-					throw new SerializationException("Expected 'c'/'d'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+				// parse collections
+				o = DeserializeCollection(r, type, context, log);
 			}
 			else
 			{
-				// read field count or id number
-				var fin = r.Read();
-				while (fin != 0 && char.IsWhiteSpace((char)fin))
-				{
-					log.Append((char)fin);
-					fin = r.Read();
-				}
-				if (fin != 0)
-					log.Append((char)fin);
-				if (fin == 'p')
-				{
-					// create object and add it to our context
-					o = type.Instantiate();
-					context.Add(o);
-
-					// field count - need to create object and populate fields
-					int count;
-					string s = r.ReadTo(':', log);
-					if (!int.TryParse(s, out count))
-						throw new SerializationException("Expected integer, got \"" + s + "\" when parsing field count.");
-
-					// deserialize the fields
-					for (int i = 0; i < count; i++)
-					{
-						var pname = r.ReadTo(':', log).Trim();
-						var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
-						if (prop != null)
-						{
-							if (type.IsValueType)
-							{
-								// not sure why LINQ expressions don't work on structs...
-								prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[0]);
-							}
-							else
-							{
-								Expression.Lambda(Expression.Assign(
-										Expression.Property(Expression.Constant(o), prop),
-										Expression.Convert(
-											Expression.Constant(Deserialize(r, prop.PropertyType, context, log)),
-											prop.PropertyType
-											))).Compile().DynamicInvoke();
-							}
-						}
-						else
-							r.ReadTo(';', log);
-						// if p is null, it must be data from an old version with different property names, so don't crash
-					}
-
-					// clean up
-					ReadSemicolon(r, type, log);
-
-					if (o is IReferrable && ((IReferrable)o).ID == 2437666120012355370)
-						Console.WriteLine("found " + o);
-				}
-				else if (fin == 'i')
-				{
-					// ID - need to find known object
-					int id;
-					string s = r.ReadTo(';', log);
-					if (!int.TryParse(s, out id))
-						throw new SerializationException("Expected integer, got \"" + s + "\" when parsing object ID.");
-
-					// do we have it?
-					if (!context.KnownObjects.ContainsKey(type) || context.KnownObjects[type].Count <= id)
-						throw new SerializationException("No known object of type " + type + " has an ID of " + id + ".");
-
-					// found it!
-					o = context.KnownObjects[type][id];
-				}
-				else if (fin == 'n')
-				{
-					// null object!
-					o = null;
-
-					// clean up
-					ReadSemicolon(r, type, log);
-				}
-				else
-					throw new SerializationException("Expected 'p'/'i'/'n', got '" + (char)fin + "' when parsing " + type + ".");
+				// parse objects
+				o = DeserializeObject(r, type, context, log);
 			}
 
 			// return our new object
