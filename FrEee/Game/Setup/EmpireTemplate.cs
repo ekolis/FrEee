@@ -76,8 +76,6 @@ namespace FrEee.Game.Setup
 		/// </summary>
 		public string AIName { get; set; }
 
-		public string HappinessModelName { get; set; }
-
 		public string CultureName { get; set; }
 
 		/// <summary>
