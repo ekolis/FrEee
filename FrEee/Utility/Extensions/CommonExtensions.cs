@@ -22,6 +22,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Dynamic;
 using FrEee.Modding.Interfaces;
+using FrEee.Modding.Enumerations;
 
 namespace FrEee.Utility.Extensions
 {

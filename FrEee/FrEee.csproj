@@ -220,12 +220,14 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\Enumerations\RequirementType.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\FormulaContext.cs" />
-    <Compile Include="Modding\FormulaType.cs" />
+    <Compile Include="Modding\Enumerations\FormulaType.cs" />
     <Compile Include="Modding\Interfaces\IFormula.cs" />
     <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
     <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
+    <Compile Include="Modding\Loaders\RequirementLoader.cs" />
     <Compile Include="Modding\Loaders\ScriptLoader.cs" />
     <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
     <Compile Include="Modding\Loaders\CultureLoader.cs" />
@@ -243,6 +245,7 @@
     <Compile Include="Modding\ModInfo.cs" />
     <Compile Include="Modding\ModSettings.cs" />
     <Compile Include="Modding\PopulationModifier.cs" />
+    <Compile Include="Modding\Requirement.cs" />
     <Compile Include="Modding\ResourceFormula.cs" />
     <Compile Include="Modding\Script.cs" />
     <Compile Include="Modding\ScriptEngine.cs" />
@@ -282,7 +285,6 @@
     <Compile Include="Modding\Loaders\StellarAbilityLoader.cs" />
     <Compile Include="Modding\Loaders\StellarObjectSizeLoader.cs" />
     <Compile Include="Modding\Loaders\TechnologyLoader.cs" />
-    <Compile Include="Modding\Loaders\TechnologyRequirementLoader.cs" />
     <Compile Include="Modding\StellarObjectSize.cs" />
     <Compile Include="Game\Setup\StarSystemPlacementStrategies\ClusteredStarSystemPlacementStrategy.cs" />
     <Compile Include="Game\Setup\StarSystemPlacementStrategies\GridStarSystemPlacementStrategy.cs" />

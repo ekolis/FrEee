@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Enumerations;
 
 namespace FrEee.Modding
 {
