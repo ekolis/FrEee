@@ -377,6 +377,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool HasUnlocked(IResearchable item)
 		{
+			return UnlockedItems.Contains(item);
+		}
+
+		public bool CheckUnlockStatus(IResearchable item)
+		{
 			if (item == null)
 				return true;
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == ((Tech)item).RacialTechID))
@@ -438,12 +443,22 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Unlocked research items such as component and facility templates.
 		/// </summary>
+		[DoNotSerialize]
 		public IEnumerable<IResearchable> UnlockedItems
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => HasUnlocked(r)).ToArray();
+				if (unlockedItems == null)
+					RefreshUnlockedItems();
+				return unlockedItems;
 			}
+		}
+
+		private IEnumerable<IResearchable> unlockedItems;
+
+		public void RefreshUnlockedItems()
+		{
+			unlockedItems = Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => CheckUnlockStatus(r)).ToArray();
 		}
 
 		public IEnumerable<Ability> Abilities
