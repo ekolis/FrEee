@@ -303,11 +303,5 @@ namespace FrEee.WinForms.Forms
 				hasChanged = true;
 			}
 		}
-
-		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-		{
-			if (e.ColumnIndex == gridQueues.Columns.IndexOf(nameDataGridViewTextBoxColumn))
-				e.Value = (string)(Formula<string>)e.Value;
-		}
 	}
 }
