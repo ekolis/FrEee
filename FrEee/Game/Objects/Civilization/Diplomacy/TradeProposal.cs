@@ -9,9 +9,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// <summary>
 	/// A proposal to trade.
 	/// </summary>
-	public class GiveGiftProposal : Proposal
+	public class TradeProposal : Proposal
 	{
-		public GiveGiftProposal(Empire target)
+		public TradeProposal(Empire target)
 			: base(target)
 		{
 		}
@@ -33,6 +33,16 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public override string ToString()
 		{
 			return Description;
+		}
+
+		/// <summary>
+		/// Is this a tentative offer?
+		/// Tentative offers cannot be accepted; instead they must be countered.
+		/// </summary>
+		public bool IsTentative
+		{
+			get;
+			set;
 		}
 
 		public override void Execute()

@@ -30,6 +30,7 @@
 		{
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabDiplomacy = new System.Windows.Forms.TabPage();
+			this.btnReply = new FrEee.WinForms.Controls.GameButton();
 			this.lstMessages = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label13 = new System.Windows.Forms.Label();
@@ -46,6 +47,7 @@
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.report = new FrEee.WinForms.Controls.EmpireReport();
 			this.tabBudget = new System.Windows.Forms.TabPage();
+			this.lblBudgetWarning = new System.Windows.Forms.Label();
 			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdNet = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
@@ -71,26 +73,13 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.lblBudgetWarning = new System.Windows.Forms.Label();
-			this.pnlCompose = new FrEee.WinForms.Controls.GamePanel();
-			this.txtMessage = new System.Windows.Forms.TextBox();
-			this.label17 = new System.Windows.Forms.Label();
-			this.pnlParameters = new FrEee.WinForms.Controls.GamePanel();
-			this.label16 = new System.Windows.Forms.Label();
-			this.ddlMessageType = new System.Windows.Forms.ComboBox();
-			this.label15 = new System.Windows.Forms.Label();
-			this.btnDeleteMessage = new FrEee.WinForms.Controls.GameButton();
-			this.label14 = new System.Windows.Forms.Label();
-			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-			this.btnSend = new FrEee.WinForms.Controls.GameButton();
-			this.btnReply = new FrEee.WinForms.Controls.GameButton();
-			this.btnView = new FrEee.WinForms.Controls.GameButton();
+			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
+			this.btnRescind = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabIntel.SuspendLayout();
 			this.tabBudget.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
-			this.pnlCompose.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tabs
@@ -116,9 +105,9 @@
 			// tabDiplomacy
 			// 
 			this.tabDiplomacy.BackColor = System.Drawing.Color.Black;
-			this.tabDiplomacy.Controls.Add(this.btnView);
+			this.tabDiplomacy.Controls.Add(this.btnRescind);
+			this.tabDiplomacy.Controls.Add(this.btnCompose);
 			this.tabDiplomacy.Controls.Add(this.btnReply);
-			this.tabDiplomacy.Controls.Add(this.pnlCompose);
 			this.tabDiplomacy.Controls.Add(this.lstMessages);
 			this.tabDiplomacy.Controls.Add(this.label13);
 			this.tabDiplomacy.Controls.Add(this.txtTreaty);
@@ -130,6 +119,19 @@
 			this.tabDiplomacy.Size = new System.Drawing.Size(702, 399);
 			this.tabDiplomacy.TabIndex = 0;
 			this.tabDiplomacy.Text = "Diplomacy";
+			// 
+			// btnReply
+			// 
+			this.btnReply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnReply.BackColor = System.Drawing.Color.Black;
+			this.btnReply.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnReply.Location = new System.Drawing.Point(490, 364);
+			this.btnReply.Name = "btnReply";
+			this.btnReply.Size = new System.Drawing.Size(100, 23);
+			this.btnReply.TabIndex = 18;
+			this.btnReply.Text = "Reply";
+			this.btnReply.UseVisualStyleBackColor = false;
+			this.btnReply.Click += new System.EventHandler(this.btnReply_Click);
 			// 
 			// lstMessages
 			// 
@@ -143,7 +145,7 @@
 			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstMessages.Location = new System.Drawing.Point(9, 61);
 			this.lstMessages.Name = "lstMessages";
-			this.lstMessages.Size = new System.Drawing.Size(305, 297);
+			this.lstMessages.Size = new System.Drawing.Size(687, 297);
 			this.lstMessages.TabIndex = 6;
 			this.lstMessages.UseCompatibleStateImageBehavior = false;
 			this.lstMessages.View = System.Windows.Forms.View.Details;
@@ -327,6 +329,16 @@
 			this.tabBudget.Size = new System.Drawing.Size(702, 399);
 			this.tabBudget.TabIndex = 2;
 			this.tabBudget.Text = "Budget";
+			// 
+			// lblBudgetWarning
+			// 
+			this.lblBudgetWarning.AutoSize = true;
+			this.lblBudgetWarning.ForeColor = System.Drawing.Color.Red;
+			this.lblBudgetWarning.Location = new System.Drawing.Point(6, 361);
+			this.lblBudgetWarning.Name = "lblBudgetWarning";
+			this.lblBudgetWarning.Size = new System.Drawing.Size(320, 20);
+			this.lblBudgetWarning.TabIndex = 24;
+			this.lblBudgetWarning.Text = "Budget is an estimate based on known intel.";
 			// 
 			// rqdSpoiled
 			// 
@@ -575,9 +587,9 @@
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackColor = System.Drawing.Color.Black;
 			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(647, 626);
+			this.btnClose.Location = new System.Drawing.Point(622, 622);
 			this.btnClose.Name = "btnClose";
-			this.btnClose.Size = new System.Drawing.Size(75, 23);
+			this.btnClose.Size = new System.Drawing.Size(100, 23);
 			this.btnClose.TabIndex = 2;
 			this.btnClose.Text = "Close";
 			this.btnClose.UseVisualStyleBackColor = false;
@@ -612,177 +624,31 @@
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
 			this.lstEmpires.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstEmpires_ItemSelectionChanged);
 			// 
-			// lblBudgetWarning
+			// btnCompose
 			// 
-			this.lblBudgetWarning.AutoSize = true;
-			this.lblBudgetWarning.ForeColor = System.Drawing.Color.Red;
-			this.lblBudgetWarning.Location = new System.Drawing.Point(6, 361);
-			this.lblBudgetWarning.Name = "lblBudgetWarning";
-			this.lblBudgetWarning.Size = new System.Drawing.Size(320, 20);
-			this.lblBudgetWarning.TabIndex = 24;
-			this.lblBudgetWarning.Text = "Budget is an estimate based on known intel.";
+			this.btnCompose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCompose.BackColor = System.Drawing.Color.Black;
+			this.btnCompose.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCompose.Location = new System.Drawing.Point(596, 364);
+			this.btnCompose.Name = "btnCompose";
+			this.btnCompose.Size = new System.Drawing.Size(100, 23);
+			this.btnCompose.TabIndex = 19;
+			this.btnCompose.Text = "Compose";
+			this.btnCompose.UseVisualStyleBackColor = false;
+			this.btnCompose.Click += new System.EventHandler(this.btnCompose_Click);
 			// 
-			// pnlCompose
+			// btnRescind
 			// 
-			this.pnlCompose.BackColor = System.Drawing.Color.Black;
-			this.pnlCompose.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.pnlCompose.Controls.Add(this.txtMessage);
-			this.pnlCompose.Controls.Add(this.label17);
-			this.pnlCompose.Controls.Add(this.pnlParameters);
-			this.pnlCompose.Controls.Add(this.label16);
-			this.pnlCompose.Controls.Add(this.ddlMessageType);
-			this.pnlCompose.Controls.Add(this.label15);
-			this.pnlCompose.Controls.Add(this.btnDeleteMessage);
-			this.pnlCompose.Controls.Add(this.label14);
-			this.pnlCompose.Controls.Add(this.btnCancel);
-			this.pnlCompose.Controls.Add(this.btnSend);
-			this.pnlCompose.ForeColor = System.Drawing.Color.White;
-			this.pnlCompose.Location = new System.Drawing.Point(320, 6);
-			this.pnlCompose.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlCompose.Name = "pnlCompose";
-			this.pnlCompose.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlCompose.Size = new System.Drawing.Size(379, 387);
-			this.pnlCompose.TabIndex = 17;
-			// 
-			// txtMessage
-			// 
-			this.txtMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtMessage.Location = new System.Drawing.Point(22, 249);
-			this.txtMessage.Multiline = true;
-			this.txtMessage.Name = "txtMessage";
-			this.txtMessage.Size = new System.Drawing.Size(357, 103);
-			this.txtMessage.TabIndex = 26;
-			// 
-			// label17
-			// 
-			this.label17.AutoSize = true;
-			this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label17.Location = new System.Drawing.Point(19, 228);
-			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(35, 17);
-			this.label17.TabIndex = 25;
-			this.label17.Text = "Text";
-			// 
-			// pnlParameters
-			// 
-			this.pnlParameters.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlParameters.BackColor = System.Drawing.Color.Black;
-			this.pnlParameters.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.pnlParameters.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlParameters.ForeColor = System.Drawing.Color.White;
-			this.pnlParameters.Location = new System.Drawing.Point(22, 81);
-			this.pnlParameters.Name = "pnlParameters";
-			this.pnlParameters.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlParameters.Size = new System.Drawing.Size(355, 144);
-			this.pnlParameters.TabIndex = 24;
-			// 
-			// label16
-			// 
-			this.label16.AutoSize = true;
-			this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label16.Location = new System.Drawing.Point(19, 61);
-			this.label16.Name = "label16";
-			this.label16.Size = new System.Drawing.Size(81, 17);
-			this.label16.TabIndex = 23;
-			this.label16.Text = "Parameters";
-			// 
-			// ddlMessageType
-			// 
-			this.ddlMessageType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ddlMessageType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlMessageType.FormattingEnabled = true;
-			this.ddlMessageType.Location = new System.Drawing.Point(126, 32);
-			this.ddlMessageType.Name = "ddlMessageType";
-			this.ddlMessageType.Size = new System.Drawing.Size(247, 24);
-			this.ddlMessageType.TabIndex = 22;
-			// 
-			// label15
-			// 
-			this.label15.AutoSize = true;
-			this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label15.Location = new System.Drawing.Point(19, 35);
-			this.label15.Name = "label15";
-			this.label15.Size = new System.Drawing.Size(101, 17);
-			this.label15.TabIndex = 21;
-			this.label15.Text = "Message Type";
-			// 
-			// btnDeleteMessage
-			// 
-			this.btnDeleteMessage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDeleteMessage.BackColor = System.Drawing.Color.Black;
-			this.btnDeleteMessage.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDeleteMessage.Location = new System.Drawing.Point(67, 358);
-			this.btnDeleteMessage.Name = "btnDeleteMessage";
-			this.btnDeleteMessage.Size = new System.Drawing.Size(100, 23);
-			this.btnDeleteMessage.TabIndex = 20;
-			this.btnDeleteMessage.Text = "Delete";
-			this.btnDeleteMessage.UseVisualStyleBackColor = false;
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(6, 3);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(67, 17);
-			this.label14.TabIndex = 19;
-			this.label14.Text = "Compose";
-			// 
-			// btnCancel
-			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.BackColor = System.Drawing.Color.Black;
-			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(173, 358);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(100, 23);
-			this.btnCancel.TabIndex = 18;
-			this.btnCancel.Text = "Cancel";
-			this.btnCancel.UseVisualStyleBackColor = false;
-			// 
-			// btnSend
-			// 
-			this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSend.BackColor = System.Drawing.Color.Black;
-			this.btnSend.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSend.Location = new System.Drawing.Point(279, 358);
-			this.btnSend.Name = "btnSend";
-			this.btnSend.Size = new System.Drawing.Size(100, 23);
-			this.btnSend.TabIndex = 17;
-			this.btnSend.Text = "Send";
-			this.btnSend.UseVisualStyleBackColor = false;
-			// 
-			// btnReply
-			// 
-			this.btnReply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnReply.BackColor = System.Drawing.Color.Black;
-			this.btnReply.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnReply.Location = new System.Drawing.Point(214, 364);
-			this.btnReply.Name = "btnReply";
-			this.btnReply.Size = new System.Drawing.Size(100, 23);
-			this.btnReply.TabIndex = 18;
-			this.btnReply.Text = "Reply";
-			this.btnReply.UseVisualStyleBackColor = false;
-			// 
-			// btnView
-			// 
-			this.btnView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.btnView.BackColor = System.Drawing.Color.Black;
-			this.btnView.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnView.Location = new System.Drawing.Point(108, 364);
-			this.btnView.Name = "btnView";
-			this.btnView.Size = new System.Drawing.Size(100, 23);
-			this.btnView.TabIndex = 19;
-			this.btnView.Text = "View";
-			this.btnView.UseVisualStyleBackColor = false;
+			this.btnRescind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRescind.BackColor = System.Drawing.Color.Black;
+			this.btnRescind.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRescind.Location = new System.Drawing.Point(384, 364);
+			this.btnRescind.Name = "btnRescind";
+			this.btnRescind.Size = new System.Drawing.Size(100, 23);
+			this.btnRescind.TabIndex = 20;
+			this.btnRescind.Text = "Rescind";
+			this.btnRescind.UseVisualStyleBackColor = false;
+			this.btnRescind.Click += new System.EventHandler(this.btnRescind_Click);
 			// 
 			// EmpireListForm
 			// 
@@ -803,8 +669,6 @@
 			this.tabBudget.ResumeLayout(false);
 			this.tabBudget.PerformLayout();
 			this.gamePanel1.ResumeLayout(false);
-			this.pnlCompose.ResumeLayout(false);
-			this.pnlCompose.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -855,18 +719,8 @@
 		private System.Windows.Forms.ListView lstIntel;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
 		private System.Windows.Forms.Label lblBudgetWarning;
-		private Controls.GamePanel pnlCompose;
-		private System.Windows.Forms.TextBox txtMessage;
-		private System.Windows.Forms.Label label17;
-		private Controls.GamePanel pnlParameters;
-		private System.Windows.Forms.Label label16;
-		private System.Windows.Forms.ComboBox ddlMessageType;
-		private System.Windows.Forms.Label label15;
-		private Controls.GameButton btnDeleteMessage;
-		private System.Windows.Forms.Label label14;
-		private Controls.GameButton btnCancel;
-		private Controls.GameButton btnSend;
 		private Controls.GameButton btnReply;
-		private Controls.GameButton btnView;
+		private Controls.GameButton btnCompose;
+		private Controls.GameButton btnRescind;
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// A message with a proposal that can be accepted or rejected.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ProposalMessage<T> : Message<AcceptRejectMessage<T>>
+	public class ProposalMessage<T> : Message<AcceptRejectMessage<T>>, IProposalMessage
 		where T : Proposal
 	{
 		public ProposalMessage(Empire recipient)
@@ -30,6 +31,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
 			Proposal.ReplaceClientIDs(idmap);
+		}
+
+		Proposal IProposalMessage.Proposal
+		{
+			get { return Proposal; }
 		}
 	}
 }
