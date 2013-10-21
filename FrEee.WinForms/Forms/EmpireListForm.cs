@@ -125,7 +125,36 @@ namespace FrEee.WinForms.Forms
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
-			// TODO - delete message
+			var msgs = lstMessages.SelectedItems.Cast<ListViewItem>().Select(item => (IMessage)item.Tag);
+			if (msgs.Any())
+			{
+				string confirm;
+				if (msgs.Count() == 1)
+					confirm = "Delete this message?";
+				else
+					confirm = "Delete these " + msgs.Count() + " messages?";
+				if (MessageBox.Show(confirm, "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+				{
+					// delete messages from inbox/outbox/sentbox
+					foreach (var msg in msgs)
+					{
+						if (Empire.Current.IncomingMessages.Contains(msg) || Empire.Current.SentMessages.Contains(msg))
+						{
+							var cmd = new DeleteMessageCommand(msg);
+							Empire.Current.Commands.Add(cmd);
+							cmd.Execute();
+						}
+						var sendCommand = Empire.Current.Commands.OfType<SendMessageCommand>().SingleOrDefault(cmd => cmd.Message == msg);
+						if (sendCommand != null)
+							Empire.Current.Commands.Remove(sendCommand);
+					}
+
+					// refresh
+					BindEmpire(empire, tabDiplomacy);
+				}
+			}
+			else
+				MessageBox.Show("Please select one or more messages to delete before clicking the delete button.");
 		}
 
 		private void lstMessages_SizeChanged(object sender, EventArgs e)

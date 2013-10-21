@@ -165,6 +165,7 @@
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
+    <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />
     <Compile Include="Game\Objects\Commands\LeaveFleetCommand.cs" />
     <Compile Include="Game\Objects\Commands\DisbandFleetCommand.cs" />
     <Compile Include="Game\Objects\Commands\CreateFleetCommand.cs" />
