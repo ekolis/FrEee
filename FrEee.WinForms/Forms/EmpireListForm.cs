@@ -66,7 +66,11 @@ namespace FrEee.WinForms.Forms
 					txtTreaty.ForeColor = Color.Yellow;
 				}
 
-				rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.UpcomingSpending);
+				if (emp == Empire.Current)
+					rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.UpcomingSpending);
+				else
+					// assume other empires' construction queues are running at full capacity
+					rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
 				rqdExtraction.ResourceQuantity = emp.ColonizedPlanets.Sum(p => p.Income); // TODO - remote mining
 				rqdIncome.ResourceQuantity = emp.GrossIncome;
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
