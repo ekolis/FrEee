@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire attempting to rule the galaxy.
 	/// </summary>
 	[Serializable]
-	public class Empire : INamed, IReferrable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
+	public class Empire : INamed, IFoggable, IAbilityObject, IPictorial, IComparable<Empire>, IComparable, IFormulaHost
 	{
 		/// <summary>
 		/// The current empire being controlled by the player.
@@ -61,6 +61,7 @@ namespace FrEee.Game.Objects.Civilization
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
 			IncomingMessages = new HashSet<IMessage>();
+			SentMessages = new HashSet<IMessage>();
 		}
 
 		/// <summary>
@@ -526,6 +527,7 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
+			Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
 		}
 
 		/// <summary>
@@ -634,15 +636,14 @@ namespace FrEee.Game.Objects.Civilization
 			return Name.CompareTo(obj.ToString());
 		}
 
-		/// <summary>
-		/// Empires are known to everyone, though they really should be hidden until first contact...
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			// TODO - hide empires until first contact
-			return Visibility.Scanned;
+			if (emp == this)
+				return Visibility.Owned;
+			else if (emp.EncounteredEmpires.Contains(this))
+				return Visibility.Scanned;
+			else
+				return Visibility.Unknown;
 		}
 
 		/// <summary>
@@ -728,5 +729,52 @@ namespace FrEee.Game.Objects.Civilization
 		/// Incoming messages that are awaiting a response.
 		/// </summary>
 		public ICollection<IMessage> IncomingMessages { get; private set; }
+
+		/// <summary>
+		/// Messages sent by this empire.
+		/// </summary>
+		public ICollection<IMessage> SentMessages { get; private set; }
+
+
+		public void Redact(Empire emp)
+		{
+			// clear data about other empires
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Owned)
+			{
+				// TODO - espionage
+				StoredResources.Clear();
+				KnownDesigns.Clear();
+				Log.Clear();
+				ResearchedTechnologies.Clear();
+				AccumulatedResearch.Clear();
+				ResearchQueue.Clear();
+				ResearchSpending.Clear();
+				Memory.Clear();
+
+				// TODO - show count of encountered vehicles
+				foreach (var d in KnownDesigns.Where(d => d.Owner == this))
+					d.VehiclesBuilt = 0;
+			}
+			if (vis < Visibility.Fogged)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
 	}
 }

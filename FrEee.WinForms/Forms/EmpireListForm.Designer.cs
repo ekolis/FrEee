@@ -34,7 +34,10 @@
 			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
 			this.btnReply = new FrEee.WinForms.Controls.GameButton();
 			this.lstMessages = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colPortrait = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colFrom = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colTo = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label13 = new System.Windows.Forms.Label();
 			this.txtTreaty = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
@@ -161,20 +164,46 @@
 			// 
 			// lstMessages
 			// 
-			this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.lstMessages.BackColor = System.Drawing.Color.Black;
 			this.lstMessages.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
+            this.colPortrait,
+            this.colFrom,
+            this.colTo,
+            this.colText});
 			this.lstMessages.ForeColor = System.Drawing.Color.White;
-			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstMessages.FullRowSelect = true;
+			this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstMessages.Location = new System.Drawing.Point(9, 61);
 			this.lstMessages.Name = "lstMessages";
 			this.lstMessages.Size = new System.Drawing.Size(687, 297);
 			this.lstMessages.TabIndex = 6;
 			this.lstMessages.UseCompatibleStateImageBehavior = false;
 			this.lstMessages.View = System.Windows.Forms.View.Details;
+			this.lstMessages.SizeChanged += new System.EventHandler(this.lstMessages_SizeChanged);
+			// 
+			// colPortrait
+			// 
+			this.colPortrait.Text = "";
+			this.colPortrait.Width = 64;
+			// 
+			// colFrom
+			// 
+			this.colFrom.Text = "From";
+			this.colFrom.Width = 100;
+			// 
+			// colTo
+			// 
+			this.colTo.Text = "To";
+			this.colTo.Width = 100;
+			// 
+			// colText
+			// 
+			this.colText.Text = "Text";
+			this.colText.Width = 400;
 			// 
 			// label13
 			// 
@@ -707,7 +736,6 @@
 		private Controls.ResourceQuantityDisplay rqdSpoiled;
 		private System.Windows.Forms.ListView lstMessages;
 		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.TabPage tabIntel;
 		private Controls.EmpireReport report;
 		private Controls.GameButton btnBottom;
@@ -722,5 +750,9 @@
 		private Controls.GameButton btnReply;
 		private Controls.GameButton btnCompose;
 		private Controls.GameButton btnDelete;
+		private System.Windows.Forms.ColumnHeader colFrom;
+		private System.Windows.Forms.ColumnHeader colTo;
+		private System.Windows.Forms.ColumnHeader colText;
+		private System.Windows.Forms.ColumnHeader colPortrait;
 	}
 }

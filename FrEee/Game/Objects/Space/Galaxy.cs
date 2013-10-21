@@ -596,24 +596,6 @@ namespace FrEee.Game.Objects.Space
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 						CurrentEmpire.Memory[id].CopyToExceptID(kvp.Value); // memory sight!
 				}
-
-				// clear data about other empires
-				foreach (var emp in Empires.Where(emp => emp != CurrentEmpire))
-				{
-					emp.StoredResources.Clear();
-					emp.KnownDesigns.Clear();
-					emp.Log.Clear();
-					emp.ResearchedTechnologies.Clear();
-					emp.AccumulatedResearch.Clear();
-					emp.ResearchQueue.Clear();
-					emp.ResearchSpending.Clear();
-					emp.Memory.Clear();
-				}
-
-				foreach (var d in CurrentEmpire.KnownDesigns.Where(d => d.Owner != CurrentEmpire))
-				{
-					d.VehiclesBuilt = 0;
-				}
 			}
 		}
 
