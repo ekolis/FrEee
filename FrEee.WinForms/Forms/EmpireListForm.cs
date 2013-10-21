@@ -120,15 +120,7 @@ namespace FrEee.WinForms.Forms
 		{
 			var item = lstMessages.SelectedItems.Count != 1 ? null : lstMessages.SelectedItems[0];
 			if (item != null)
-			{
-				var msg = (IMessage)item.Tag;
-				if (msg.Recipient == Empire.Current)
-				{
-					if (this.ShowChildForm(new DiplomacyForm(msg)) == DialogResult.OK)
-						BindEmpire(empire, tabDiplomacy);
-				}
-			}
-		}
+				ReplyToMessage((IMessage)item.Tag);
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
@@ -138,6 +130,27 @@ namespace FrEee.WinForms.Forms
 		private void lstMessages_SizeChanged(object sender, EventArgs e)
 		{
 			lstMessages.Columns[3].Width = Math.Max(100, lstMessages.Width - lstMessages.Columns.Cast<ColumnHeader>().Take(3).Sum(c => c.Width));
+		}
+
+		private void lstMessages_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var item = lstMessages.SelectedItems.Count == 1 ? lstMessages.SelectedItems[0] : null;
+				if (item != null)
+					ReplyToMessage((IMessage)item.Tag);
+			}
+		}
+
+		private void ReplyToMessage(IMessage msg)
+		{
+			if (msg.Recipient == Empire.Current)
+			{
+				if (this.ShowChildForm(new DiplomacyForm(msg)) == DialogResult.OK)
+					BindEmpire(empire, tabDiplomacy);
+			}
+			else
+				MessageBox.Show("You cannot reply to outgoing messages.");
 		}
 	}
 }
