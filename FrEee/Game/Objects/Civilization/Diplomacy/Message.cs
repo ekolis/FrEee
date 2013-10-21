@@ -1,6 +1,8 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -12,13 +14,13 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// <summary>
 	/// A diplomatic message.
 	/// </summary>
-	public abstract class Message<TReply> : IMessage<TReply>
-		where TReply : IMessage
+	public abstract class Message : IMessage
 	{
 		protected Message(Empire recipient)
 		{
 			Owner = Empire.Current;
 			Recipient = recipient;
+			TurnNumber = Galaxy.Current.TurnNumber;
 		}
 
 		public long ID
@@ -35,25 +37,26 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
-			Owner.OutgoingMessages.Remove(this);
+			var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
+			if (cmd != null)
+				Owner.Commands.Remove(cmd);
 		}
+
+		private Reference<Empire> owner {get; set;}
 
 		/// <summary>
 		/// The empire sending this message.
 		/// </summary>
-		public Empire Owner
-		{
-			get;
-			set;
-		}
+		[DoNotSerialize]
+		public Empire Owner {get { return owner;}set { owner = value;}}
+
+		private Reference<Empire> recipient {get; set;}
 
 		/// <summary>
 		/// The empire receiving the message.
 		/// </summary>
-		public Empire Recipient
-		{
-			get; set;
-		}
+		[DoNotSerialize]
+		public Empire Recipient { get { return recipient; } set { recipient = value; } }
 	
 		public Visibility CheckVisibility(Empire emp)
 		{
@@ -94,12 +97,6 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
  			return false;
 		}
 
-		/// <summary>
-		/// Creates a reply to this message.
-		/// </summary>
-		/// <returns></returns>
-		public abstract TReply CreateReply();
-
 		public Image Icon
 		{
 			get
@@ -116,6 +113,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
+		public int TurnNumber { get; private set; }
+
 		public abstract void ReplaceClientIDs(IDictionary<long, long> idmap);
+
+		public IMessage InReplyTo { get; set; }
 	}
 }

@@ -252,7 +252,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public System.Drawing.Image Icon
 		{
-			get { return null; }
+			get { return Resource.Research.Icon; }
 		}
 
 		/// <summary>
@@ -260,7 +260,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public System.Drawing.Image Portrait
 		{
-			get { return null; }
+			get { return Resource.Research.Icon; }
 		}
 
 

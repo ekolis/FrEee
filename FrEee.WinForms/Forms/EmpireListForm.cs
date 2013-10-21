@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.WinForms.Forms
 {
@@ -107,12 +108,18 @@ namespace FrEee.WinForms.Forms
 
 		private void btnReply_Click(object sender, EventArgs e)
 		{
-			// TODO - reply to message
+			var item = lstMessages.SelectedItems.Count != 1 ? null : lstMessages.SelectedItems[0];
+			if (item != null)
+			{
+				var msg = (IMessage)item.Tag;
+				if (msg.Recipient == Empire.Current)
+					this.ShowChildForm(new DiplomacyForm(msg));
+			}
 		}
 
-		private void btnRescind_Click(object sender, EventArgs e)
+		private void btnDelete_Click(object sender, EventArgs e)
 		{
-			// TODO - rescind message
+			// TODO - delete message
 		}
 	}
 }

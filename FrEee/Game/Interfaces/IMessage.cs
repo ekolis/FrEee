@@ -14,11 +14,7 @@ namespace FrEee.Game.Interfaces
 		string Text { get; set; }
 
 		Empire Recipient { get; set; }
-	}
 
-	public interface IMessage<TReply> : IMessage
-		where TReply : IMessage
-	{
-		TReply CreateReply();
+		IMessage InReplyTo { get; set; }
 	}
 }

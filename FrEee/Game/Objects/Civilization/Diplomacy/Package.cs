@@ -12,8 +12,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
 	/// <summary>
 	/// A package of items that can be gifted or traded.
+	/// TODO - treaty elements in packages
 	/// </summary>
-	public class Package : IOwnable
+	public class Package : IOwnable, IPromotable
 	{
 		public Package(Empire owner)
 		{
@@ -22,6 +23,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Vehicles = new ReferenceSet<IVehicle>();
 			Resources = new ResourceQuantity();
 			Technology = new ReferenceKeyedDictionary<Tech, int>();
+			StarCharts = new ReferenceSet<StarSystem>();
+			CommunicationChannels = new ReferenceSet<Empire>();
 		}
 
 		public ReferenceSet<Planet> Planets { get; private set; }
@@ -76,11 +79,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
-		public Empire Owner
-		{
-			get;
-			set;
-		}
+		private Reference<Empire> owner { get; set; }
+
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
 
 		public bool IsEmpty
 		{
@@ -178,6 +180,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 			foreach (var emp in CommunicationChannels)
 				target.EncounteredEmpires.Add(emp); // not two way, you'll have to gift your own comms channels to the target to let them talk to you!
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			// no client objects to promote
 		}
 	}
 }

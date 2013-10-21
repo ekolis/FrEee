@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Objects.Commands;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// <summary>
 	/// A message specifying some unilateral action.
 	/// </summary>
-	public class ActionMessage<T> : Message<GeneralMessage>
-		where T : Action
+	public class ActionMessage : Message
 	{
 		public ActionMessage(Empire recipient)
 			: base(recipient)
@@ -20,12 +20,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The action in question.
 		/// </summary>
-		public T Action { get; set; }
-
-		public override GeneralMessage CreateReply()
-		{
-			return new GeneralMessage(Owner);
-		}
+		public Action Action { get; set; }
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
