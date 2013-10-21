@@ -1029,7 +1029,7 @@ namespace FrEee.Game.Objects.Space
 			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
 
-			if (CurrentEmpire != null)
+			if (CurrentEmpire != null && !(r is IPromotable))
 			{
 				// doesn't have an ID yet, and we're in a player GAM? then the player probably shouldn't see this object anyway...
 				r.Dispose();

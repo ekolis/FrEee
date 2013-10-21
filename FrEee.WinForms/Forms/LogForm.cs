@@ -118,6 +118,13 @@ namespace FrEee.WinForms.Forms
 						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
 						Close();
 					}
+					else if (context is IMessage)
+					{
+						// show diplomacy screen
+						var form = new DiplomacyForm((IMessage)context);
+						gameForm.ShowChildForm(form);
+						Close();
+					}
 
 					// TODO - more types of goto-messages
 				}

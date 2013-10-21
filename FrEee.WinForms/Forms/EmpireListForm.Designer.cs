@@ -30,6 +30,8 @@
 		{
 			this.tabs = new FrEee.WinForms.Controls.GameTabControl();
 			this.tabDiplomacy = new System.Windows.Forms.TabPage();
+			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
+			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
 			this.btnReply = new FrEee.WinForms.Controls.GameButton();
 			this.lstMessages = new System.Windows.Forms.ListView();
 			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -73,8 +75,6 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.btnCompose = new FrEee.WinForms.Controls.GameButton();
-			this.btnRescind = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabIntel.SuspendLayout();
@@ -105,7 +105,7 @@
 			// tabDiplomacy
 			// 
 			this.tabDiplomacy.BackColor = System.Drawing.Color.Black;
-			this.tabDiplomacy.Controls.Add(this.btnRescind);
+			this.tabDiplomacy.Controls.Add(this.btnDelete);
 			this.tabDiplomacy.Controls.Add(this.btnCompose);
 			this.tabDiplomacy.Controls.Add(this.btnReply);
 			this.tabDiplomacy.Controls.Add(this.lstMessages);
@@ -119,6 +119,32 @@
 			this.tabDiplomacy.Size = new System.Drawing.Size(702, 399);
 			this.tabDiplomacy.TabIndex = 0;
 			this.tabDiplomacy.Text = "Diplomacy";
+			// 
+			// btnDelete
+			// 
+			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDelete.BackColor = System.Drawing.Color.Black;
+			this.btnDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDelete.Location = new System.Drawing.Point(384, 364);
+			this.btnDelete.Name = "btnDelete";
+			this.btnDelete.Size = new System.Drawing.Size(100, 23);
+			this.btnDelete.TabIndex = 20;
+			this.btnDelete.Text = "Delete";
+			this.btnDelete.UseVisualStyleBackColor = false;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+			// 
+			// btnCompose
+			// 
+			this.btnCompose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCompose.BackColor = System.Drawing.Color.Black;
+			this.btnCompose.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCompose.Location = new System.Drawing.Point(596, 364);
+			this.btnCompose.Name = "btnCompose";
+			this.btnCompose.Size = new System.Drawing.Size(100, 23);
+			this.btnCompose.TabIndex = 19;
+			this.btnCompose.Text = "Compose";
+			this.btnCompose.UseVisualStyleBackColor = false;
+			this.btnCompose.Click += new System.EventHandler(this.btnCompose_Click);
 			// 
 			// btnReply
 			// 
@@ -624,32 +650,6 @@
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
 			this.lstEmpires.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstEmpires_ItemSelectionChanged);
 			// 
-			// btnCompose
-			// 
-			this.btnCompose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCompose.BackColor = System.Drawing.Color.Black;
-			this.btnCompose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCompose.Location = new System.Drawing.Point(596, 364);
-			this.btnCompose.Name = "btnCompose";
-			this.btnCompose.Size = new System.Drawing.Size(100, 23);
-			this.btnCompose.TabIndex = 19;
-			this.btnCompose.Text = "Compose";
-			this.btnCompose.UseVisualStyleBackColor = false;
-			this.btnCompose.Click += new System.EventHandler(this.btnCompose_Click);
-			// 
-			// btnRescind
-			// 
-			this.btnRescind.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRescind.BackColor = System.Drawing.Color.Black;
-			this.btnRescind.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRescind.Location = new System.Drawing.Point(384, 364);
-			this.btnRescind.Name = "btnRescind";
-			this.btnRescind.Size = new System.Drawing.Size(100, 23);
-			this.btnRescind.TabIndex = 20;
-			this.btnRescind.Text = "Rescind";
-			this.btnRescind.UseVisualStyleBackColor = false;
-			this.btnRescind.Click += new System.EventHandler(this.btnRescind_Click);
-			// 
 			// EmpireListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -721,6 +721,6 @@
 		private System.Windows.Forms.Label lblBudgetWarning;
 		private Controls.GameButton btnReply;
 		private Controls.GameButton btnCompose;
-		private Controls.GameButton btnRescind;
+		private Controls.GameButton btnDelete;
 	}
 }

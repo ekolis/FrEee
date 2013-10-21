@@ -10,32 +10,22 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// A message with a proposal that can be accepted or rejected.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ProposalMessage<T> : Message<AcceptRejectMessage<T>>, IProposalMessage
-		where T : Proposal
+	public class ProposalMessage : Message
 	{
 		public ProposalMessage(Empire recipient)
 			: base(recipient)
 		{
+			Proposal = new Proposal(recipient);
 		}
 
 		/// <summary>
 		/// The proposal in question.
 		/// </summary>
-		public T Proposal { get; set; }
-
-		public override AcceptRejectMessage<T> CreateReply()
-		{
-			return new AcceptRejectMessage<T>(this);
-		}
+		public Proposal Proposal { get; set; }
 
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
 			Proposal.ReplaceClientIDs(idmap);
-		}
-
-		Proposal IProposalMessage.Proposal
-		{
-			get { return Proposal; }
 		}
 	}
 }

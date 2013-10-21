@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
 	/// <summary>
 	/// Declares war on the target empire.
 	/// </summary>
-	public class DeclarWarAction : Action
+	public class DeclareWarAction : Action
 	{
-		public DeclarWarAction(Empire target)
+		public DeclareWarAction(Empire target)
 			: base(target)
 		{
 		}
@@ -22,7 +23,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public override void Execute()
 		{
-			// TODO - declare war, once we have treaty status
+			// TODO - break treaty, once we have treaties
+			Executor.Log.Add(Target.CreateLogMessage("We have declared war on the " + Target + "."));
+			Target.Log.Add(Executor.CreateLogMessage("The " + Target + " has declared war on us!"));
 		}
 	}
 }

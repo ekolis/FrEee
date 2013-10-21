@@ -132,7 +132,6 @@
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IPromotable.cs" />
-    <Compile Include="Game\Interfaces\IProposalMessage.cs" />
     <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
@@ -147,10 +146,10 @@
     <Compile Include="Game\Objects\Civilization\Cargo.cs" />
     <Compile Include="Game\Objects\Civilization\CargoDelta.cs" />
     <Compile Include="Game\Objects\Civilization\Culture.cs" />
-    <Compile Include="Game\Objects\Civilization\Diplomacy\AcceptRejectMessage.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\ActionMessage.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Action.cs" />
-    <Compile Include="Game\Objects\Civilization\Diplomacy\TradeProposal.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\GeneralMessage.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Message.cs" />
@@ -158,7 +157,6 @@
     <Compile Include="Game\Objects\Civilization\Diplomacy\ProposalMessage.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\BreakTreatyAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Package.cs" />
-    <Compile Include="Game\Objects\Civilization\Diplomacy\TreatyProposal.cs" />
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Memory.cs" />
@@ -173,6 +171,7 @@
     <Compile Include="Game\Objects\Commands\JoinFleetCommand.cs" />
     <Compile Include="Game\Objects\Commands\OrderCommand.cs" />
     <Compile Include="Game\Objects\Commands\ResearchCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SendMessageCommand.cs" />
     <Compile Include="Game\Objects\Commands\SetObsoleteFlagCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />

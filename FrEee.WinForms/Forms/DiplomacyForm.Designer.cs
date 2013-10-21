@@ -39,7 +39,9 @@
 			this.lblTheyHave = new System.Windows.Forms.Label();
 			this.treeTable = new System.Windows.Forms.TreeView();
 			this.lblTable = new System.Windows.Forms.Label();
-			this.btnCounter = new FrEee.WinForms.Controls.GameButton();
+			this.chkTentative = new System.Windows.Forms.CheckBox();
+			this.txtQuantity = new System.Windows.Forms.TextBox();
+			this.lblQuantity = new System.Windows.Forms.Label();
 			this.btnReturn = new FrEee.WinForms.Controls.GameButton();
 			this.btnRequest = new FrEee.WinForms.Controls.GameButton();
 			this.btnGive = new FrEee.WinForms.Controls.GameButton();
@@ -47,7 +49,6 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSend = new FrEee.WinForms.Controls.GameButton();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
-			this.chkTentative = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -176,18 +177,32 @@
 			this.lblTable.TabIndex = 30;
 			this.lblTable.Text = "On the Table";
 			// 
-			// btnCounter
+			// chkTentative
 			// 
-			this.btnCounter.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCounter.BackColor = System.Drawing.Color.Black;
-			this.btnCounter.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCounter.Location = new System.Drawing.Point(229, 563);
-			this.btnCounter.Name = "btnCounter";
-			this.btnCounter.Size = new System.Drawing.Size(204, 23);
-			this.btnCounter.TabIndex = 34;
-			this.btnCounter.Text = "Counter Proposal";
-			this.btnCounter.UseVisualStyleBackColor = false;
-			this.btnCounter.Click += new System.EventHandler(this.btnCounter_Click);
+			this.chkTentative.AutoSize = true;
+			this.chkTentative.Location = new System.Drawing.Point(15, 562);
+			this.chkTentative.Name = "chkTentative";
+			this.chkTentative.Size = new System.Drawing.Size(125, 17);
+			this.chkTentative.TabIndex = 35;
+			this.chkTentative.Text = "Proposal is Tentative";
+			this.chkTentative.UseVisualStyleBackColor = true;
+			// 
+			// txtQuantity
+			// 
+			this.txtQuantity.Location = new System.Drawing.Point(356, 566);
+			this.txtQuantity.Name = "txtQuantity";
+			this.txtQuantity.Size = new System.Drawing.Size(77, 20);
+			this.txtQuantity.TabIndex = 36;
+			// 
+			// lblGiveQuantity
+			// 
+			this.lblQuantity.AutoSize = true;
+			this.lblQuantity.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblQuantity.Location = new System.Drawing.Point(273, 568);
+			this.lblQuantity.Name = "lblGiveQuantity";
+			this.lblQuantity.Size = new System.Drawing.Size(77, 13);
+			this.lblQuantity.TabIndex = 37;
+			this.lblQuantity.Text = "Quantity/Level";
 			// 
 			// btnReturn
 			// 
@@ -275,24 +290,15 @@
 			this.picPortrait.TabStop = false;
 			this.picPortrait.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseClick);
 			// 
-			// chkTentative
-			// 
-			this.chkTentative.AutoSize = true;
-			this.chkTentative.Location = new System.Drawing.Point(15, 562);
-			this.chkTentative.Name = "chkTentative";
-			this.chkTentative.Size = new System.Drawing.Size(125, 17);
-			this.chkTentative.TabIndex = 35;
-			this.chkTentative.Text = "Proposal is Tentative";
-			this.chkTentative.UseVisualStyleBackColor = true;
-			// 
 			// DiplomacyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(657, 598);
+			this.Controls.Add(this.lblQuantity);
+			this.Controls.Add(this.txtQuantity);
 			this.Controls.Add(this.chkTentative);
-			this.Controls.Add(this.btnCounter);
 			this.Controls.Add(this.btnReturn);
 			this.Controls.Add(this.btnRequest);
 			this.Controls.Add(this.btnGive);
@@ -340,7 +346,8 @@
 		private Controls.GameButton btnGive;
 		private Controls.GameButton btnRequest;
 		private Controls.GameButton btnReturn;
-		private Controls.GameButton btnCounter;
 		private System.Windows.Forms.CheckBox chkTentative;
+		private System.Windows.Forms.TextBox txtQuantity;
+		private System.Windows.Forms.Label lblQuantity;
 	}
 }

@@ -58,9 +58,9 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
-			OutgoingMessages = new HashSet<IMessage>();
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
+			IncomingMessages = new HashSet<IMessage>();
 		}
 
 		/// <summary>
@@ -667,7 +667,7 @@ namespace FrEee.Game.Objects.Civilization
 				EncounteredEmpires.Add(obj.Owner);
 				Log.Add(obj.Owner.CreateLogMessage("We have encountered a new empire, the " + obj.Owner + "."));
 			}
-			
+
 			if (obj.ID > 0)
 			{
 				// object exists, update cache with the data
@@ -720,13 +720,13 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Outgoing diplomatic messages.
-		/// </summary>
-		public ICollection<IMessage> OutgoingMessages { get; private set; }
-
-		/// <summary>
 		/// Any empires that this empire has encountered.
 		/// </summary>
 		public ISet<Empire> EncounteredEmpires { get; private set; }
+
+		/// <summary>
+		/// Incoming messages that are awaiting a response.
+		/// </summary>
+		public ICollection<IMessage> IncomingMessages { get; private set; }
 	}
 }
