@@ -40,6 +40,8 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
+			Message.Owner.SentMessages.Add(Message);
+			// TODO - comms interference intel projects
 			Message.Recipient.IncomingMessages.Add(Message);
 			Message.Recipient.Log.Add(Message.CreateLogMessage("We have received a diplomatic message from the " + Message.Owner + ": " + Message.Text));
 			if (Message is ActionMessage)

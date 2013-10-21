@@ -16,5 +16,7 @@ namespace FrEee.Game.Interfaces
 		Empire Recipient { get; set; }
 
 		IMessage InReplyTo { get; set; }
+
+		int TurnNumber { get; set; }
 	}
 }

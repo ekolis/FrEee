@@ -12,6 +12,7 @@ using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.WinForms.Forms
 {
@@ -38,10 +39,12 @@ namespace FrEee.WinForms.Forms
 
 		private Empire empire;
 
-		private void BindEmpire(Empire emp)
+		private void BindEmpire(Empire emp, TabPage tab = null)
 		{
 			empire = emp;
-			if (emp == Empire.Current && tabs.SelectedTab == tabDiplomacy)
+			if (tab != null)
+				tabs.SelectedTab = tab;
+			else if (emp == Empire.Current && tabs.SelectedTab == tabDiplomacy)
 				tabs.SelectedTab = tabBudget;
 			else if (emp != Empire.Current && tabs.SelectedTab == tabBudget)
 				tabs.SelectedTab = tabDiplomacy;
@@ -67,6 +70,7 @@ namespace FrEee.WinForms.Forms
 					txtTreaty.ForeColor = Color.Yellow;
 				}
 
+				// budget
 				if (emp == Empire.Current)
 					rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.UpcomingSpending);
 				else
@@ -82,8 +86,13 @@ namespace FrEee.WinForms.Forms
 				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
 				rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
 				rqExpenses.ResourceQuantity = rqdConstruction.ResourceQuantity + rqdMaintenance.ResourceQuantity + rqdTributesOut.ResourceQuantity;
-
 				lblBudgetWarning.Visible = emp != Empire.Current;
+
+				// message log
+				var msgs = Empire.Current.IncomingMessages.Where(m => m.Owner == emp).Union(Empire.Current.SentMessages.Where(m => m.Recipient == emp)).Union(Empire.Current.Commands.OfType<SendMessageCommand>().Select(cmd => cmd.Message));
+				lstMessages.Initialize(64, 64);
+				foreach (var msg in msgs.OrderByDescending(m => m.TurnNumber))
+					lstMessages.AddItemWithImage(msg.TurnNumber.ToStardate(), "", msg, msg.Owner.Portrait, msg.Owner == Empire.Current ? "Us" : msg.Owner.Name, msg.Recipient == Empire.Current ? "Us" : msg.Recipient.Name, msg.Text);
 			}
 		}
 
@@ -103,7 +112,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnCompose_Click(object sender, EventArgs e)
 		{
-			this.ShowChildForm(new DiplomacyForm(empire));
+			if (this.ShowChildForm(new DiplomacyForm(empire)) == DialogResult.OK)
+				BindEmpire(empire, tabDiplomacy);
 		}
 
 		private void btnReply_Click(object sender, EventArgs e)
@@ -113,13 +123,21 @@ namespace FrEee.WinForms.Forms
 			{
 				var msg = (IMessage)item.Tag;
 				if (msg.Recipient == Empire.Current)
-					this.ShowChildForm(new DiplomacyForm(msg));
+				{
+					if (this.ShowChildForm(new DiplomacyForm(msg)) == DialogResult.OK)
+						BindEmpire(empire, tabDiplomacy);
+				}
 			}
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
 			// TODO - delete message
+		}
+
+		private void lstMessages_SizeChanged(object sender, EventArgs e)
+		{
+			lstMessages.Columns[3].Width = Math.Max(100, lstMessages.Width - lstMessages.Columns.Cast<ColumnHeader>().Take(3).Sum(c => c.Width));
 		}
 	}
 }

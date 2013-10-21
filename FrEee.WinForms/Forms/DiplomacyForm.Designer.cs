@@ -194,12 +194,12 @@
 			this.txtQuantity.Size = new System.Drawing.Size(77, 20);
 			this.txtQuantity.TabIndex = 36;
 			// 
-			// lblGiveQuantity
+			// lblQuantity
 			// 
 			this.lblQuantity.AutoSize = true;
 			this.lblQuantity.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.lblQuantity.Location = new System.Drawing.Point(273, 568);
-			this.lblQuantity.Name = "lblGiveQuantity";
+			this.lblQuantity.Name = "lblQuantity";
 			this.lblQuantity.Size = new System.Drawing.Size(77, 13);
 			this.lblQuantity.TabIndex = 37;
 			this.lblQuantity.Text = "Quantity/Level";
@@ -258,6 +258,7 @@
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnCancel.Location = new System.Drawing.Point(439, 563);
 			this.btnCancel.Name = "btnCancel";
@@ -271,6 +272,7 @@
 			// 
 			this.btnSend.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSend.BackColor = System.Drawing.Color.Black;
+			this.btnSend.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnSend.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnSend.Location = new System.Drawing.Point(545, 563);
 			this.btnSend.Name = "btnSend";
