@@ -184,6 +184,7 @@
 			this.lstMessages.UseCompatibleStateImageBehavior = false;
 			this.lstMessages.View = System.Windows.Forms.View.Details;
 			this.lstMessages.SizeChanged += new System.EventHandler(this.lstMessages_SizeChanged);
+			this.lstMessages.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstMessages_MouseDoubleClick);
 			// 
 			// colPortrait
 			// 
