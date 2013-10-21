@@ -121,6 +121,7 @@ namespace FrEee.WinForms.Forms
 			var item = lstMessages.SelectedItems.Count != 1 ? null : lstMessages.SelectedItems[0];
 			if (item != null)
 				ReplyToMessage((IMessage)item.Tag);
+		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
