@@ -53,7 +53,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// <returns></returns>
 		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, object stackingTo)
 		{
-			var ours = abilities.Where(a => a.Name == Name).ToArray();
+			var ours = abilities.Where(a => a.Rule == this).ToArray();
 
 			// group abilities
 			IEnumerable<IGrouping<object, Ability>> grouped;
@@ -93,7 +93,7 @@ namespace FrEee.Game.Objects.Abilities
 				return abilities.ToLookup(a => a, a => a);
 
 			Ability result = new Ability(stackingTo);
-			result.Name = abilities.First().Name;
+			result.Rule = abilities.First().Rule;
 			foreach (var abil in abilities)
 			{
 				for (int i = 0; i < abil.Values.Count; i++)
@@ -134,10 +134,15 @@ namespace FrEee.Game.Objects.Abilities
 				}
 			}
 			if (result.Values.Any())
-				result.Description = result.Name + ": " + string.Join(", ", result.Values.Select(v => v.Value).ToArray());
+				result.Description = result.Rule + ": " + string.Join(", ", result.Values.Select(v => v.Value).ToArray());
 			else
-				result.Description = result.Name;
+				result.Description = result.Rule.Name;
 			return abilities.ToLookup(a => result, a => a);
+		}
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 

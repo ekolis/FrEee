@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace FrEee.Modding.Loaders
 					if (f == null)
 						break;
 					var abil = new Ability(t);
-					abil.Name = f.Value;
+					abil.Rule = Mod.Current.FindAbilityRule(f.Value);
 					for (int vcount = 1; ; vcount++)
 					{
 						var vf = rec.FindField(new string[] { "Value", "Value " + count }, ref index, false, index + 1);

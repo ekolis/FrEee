@@ -205,9 +205,7 @@ namespace FrEee.WinForms.Forms
 					var v = (IMobileSpaceObject)SelectedSpaceObject;
 					if (sector != null)
 					{
-						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null &&
-							// HACK - the colonize ability is Gas, the planets are Gas Giant
-							v.Abilities.Any(a => a.Name == "Colonize Planet - " + p.Surface || a.Name + " Giant" == "Colonize Planet - " + p.Surface));
+						var suitablePlanets = sector.SpaceObjects.OfType<Planet>().Where(p => p.Colony == null && v.Abilities.Any(a => a.Rule.Matches("Colonize Planet - " + p.Surface)));
 						if (Galaxy.Current.CanColonizeOnlyBreathable)
 							suitablePlanets = suitablePlanets.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere);
 						if (Galaxy.Current.CanColonizeOnlyHomeworldSurface)
@@ -794,7 +792,7 @@ namespace FrEee.WinForms.Forms
 					btnPursue.Visible = value is IMobileSpaceObject;
 					btnEvade.Visible = value is IMobileSpaceObject;
 					btnWarp.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).CanWarp;
-					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Name.StartsWith("Colonize Planet - "));
+					btnColonize.Visible = value is IMobileSpaceObject && ((IMobileSpaceObject)value).Abilities.Any(a => a.Rule.Name.StartsWith("Colonize Planet - "));
 					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);

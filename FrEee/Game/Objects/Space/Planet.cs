@@ -111,9 +111,9 @@ namespace FrEee.Game.Objects.Space
 
 				var income = new ResourceQuantity();
 				var prefix = "Resource Generation - ";
-				foreach (var abil in Abilities.ToArray().Where(abil => abil.Name.StartsWith(prefix)))
+				foreach (var abil in Abilities.ToArray().Where(abil => abil.Rule.Name.StartsWith(prefix)))
 				{
-					var resource = Resource.Find(abil.Name.Substring(prefix.Length));
+					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
 					int amount;
 					int.TryParse(abil.Values[0], out amount);
 
@@ -136,9 +136,9 @@ namespace FrEee.Game.Objects.Space
 					income.Add(resource, amount);
 				}
 				prefix = "Point Generation - ";
-				foreach (var abil in Abilities.ToArray().Where(abil => abil.Name.StartsWith(prefix)))
+				foreach (var abil in Abilities.ToArray().Where(abil => abil.Rule.Name.StartsWith(prefix)))
 				{
-					var resource = Resource.Find(abil.Name.Substring(prefix.Length));
+					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
 					int amount;
 					int.TryParse(abil.Values[0], out amount);
 

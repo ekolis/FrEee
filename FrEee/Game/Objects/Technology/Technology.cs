@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Technology
 			{
 				if (!IsRacial)
 					return Enumerable.Empty<Trait>();
-				return Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == RacialTechID));
+				return Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == RacialTechID));
 			}
 		}
 

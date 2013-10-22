@@ -342,7 +342,7 @@ namespace FrEee.Game.Setup
 				{
 					foreach (var abil in p.IntrinsicAbilities.ToArray())
 					{
-						if (abil.Name == "Ancient Ruins")
+						if (abil.Rule.Matches("Ancient Ruins"))
 							p.IntrinsicAbilities.Remove(abil);
 					}
 				}
@@ -353,7 +353,7 @@ namespace FrEee.Game.Setup
 				{
 					foreach (var abil in p.IntrinsicAbilities.ToArray())
 					{
-						if (abil.Name == "Ancient Ruins Unique")
+						if (abil.Rule.Matches("Ancient Ruins Unique"))
 							p.IntrinsicAbilities.Remove(abil);
 					}
 				}

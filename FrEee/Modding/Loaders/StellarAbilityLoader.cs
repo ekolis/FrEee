@@ -1,6 +1,7 @@
 ﻿using FrEee.Game;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Templates;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,7 +63,7 @@ namespace FrEee.Modding.Loaders
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Type", "Ability Type" }, out temp, ref start, null, start))
 					yield break; // couldn't load next ability
 				else
-					ac.Ability.Name = temp;
+					ac.Ability.Rule = Mod.Current.FindAbilityRule(temp);
 				start++;
 
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Descr", "Ability Descr" }, out temp, ref start, null, start))

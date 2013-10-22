@@ -198,7 +198,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(this);
+			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(this);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
 			var sector = new Sector(this, coords);
-			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(sector);
+			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(sector);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -232,7 +232,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		/// <summary>
@@ -246,7 +246,7 @@ namespace FrEee.Game.Objects.Space
 		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
-			return sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Name == name && (filter == null || filter(a))).Any();
+			return sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		public Visibility CheckVisibility(Empire emp)

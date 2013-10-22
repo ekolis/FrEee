@@ -389,7 +389,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (item == null)
 				return true;
-			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Name == "Tech Area" && a.Value1 == ((Tech)item).RacialTechID))
+			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
 				return false; // unique tech that this empire hasn't discovered

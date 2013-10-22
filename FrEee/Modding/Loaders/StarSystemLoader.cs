@@ -52,7 +52,7 @@ namespace FrEee.Modding.Loaders
 				rec.TryFindFieldValue("Non-Tiled Center Pic", out temp, ref index, Mod.Errors, 0, true);
 				sst.NonTiledCenterCombatImage = bool.Parse(temp);
 
-				foreach (var abil in AbilityLoader.Load(rec, sst))
+				foreach (var abil in AbilityLoader.Load(Filename, rec, sst))
 					sst.Abilities.Add(abil);
 
 				sst.WarpPointAbilities = Mod.Current.StellarAbilityTemplates.FindByName(rec.Get<string>("WP Stellar Abil Type", sst));
