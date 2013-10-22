@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Abilities
 	{
 		public AbilityRule()
 		{
-			StackingRules = new List<AbilityValueStackingRule>();
+			ValueRules = new List<AbilityValueRule>();
 		}
 
 		/// <summary>
@@ -23,14 +23,9 @@ namespace FrEee.Game.Objects.Abilities
 		public string Name { get; set; }
 
 		/// <summary>
-		/// The rule for grouping abilities.
+		/// The rules for grouping and stacking abilities.
 		/// </summary>
-		public AbilityGroupingRule GroupingRule { get; set; }
-
-		/// <summary>
-		/// The rules for stacking abilities.
-		/// </summary>
-		public IList<AbilityValueStackingRule> StackingRules { get; set; }
+		public IList<AbilityValueRule> ValueRules { get; set; }
 
 		/// <summary>
 		/// Groups and stacks abilities.
@@ -42,14 +37,16 @@ namespace FrEee.Game.Objects.Abilities
 			var ours = abilities.Where(a => a.Name == Name).ToArray();
 
 			// group abilities
-			IEnumerable<IGrouping<string, Ability>> grouped;
-			if (GroupingRule == AbilityGroupingRule.GroupByValue1)
-				grouped = ours.GroupBy(a => a.Value1.Value);
-			else if (GroupingRule == AbilityGroupingRule.GroupByValue2)
-				grouped = ours.GroupBy(a => a.Value2.Value);
-			else
-				grouped = ours.GroupBy(a => "");
-
+			IEnumerable<IGrouping<object, Ability>> grouped;
+			var groupbys = ValueRules.Select(vr => vr == AbilityValueRule.Group ? true : false).ToArray();
+			grouped = ours.GroupBy(a =>
+				a.Values.Select((v, i) => new {
+					Value = v, Index = i}).Join(
+				groupbys.Select((b, i) => new {
+					DoIt = b, Index = i}),
+				item => item.Index, item => item.Index, (item, groupby) =>
+					groupby.DoIt ? item.Value.Value : ""));
+			
 			// stack abilities		
 			var list = new List<Tuple<Ability, Ability>>();
 			foreach (var group in grouped)
@@ -76,40 +73,30 @@ namespace FrEee.Game.Objects.Abilities
 			{
 				for (int i = 0; i < abil.Values.Count; i++)
 				{
-					var rule = StackingRules.ElementAtOrDefault(i);
-					if (rule == AbilityValueStackingRule.DoNotStack)
-					{
-						// don't stack when Do Not Stack rule is found unless it's the value we're grouping by
-						if (i == 0 && GroupingRule != AbilityGroupingRule.GroupByValue1)
-							return abilities.ToLookup(a => a, a => a);
-						if (i == 1 && GroupingRule != AbilityGroupingRule.GroupByValue2)
-							return abilities.ToLookup(a => a, a => a);
-						if (i >= 2)
-							return abilities.ToLookup(a => a, a => a);
-					}
+					var rule = ValueRules.ElementAtOrDefault(i);
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
 					double? oldval = result.Values.Count > i ? (double?)result.Values[i].Value.ToDouble() : null;
 					double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
 					double newval = oldval ?? 0;
-					if (rule == AbilityValueStackingRule.Add)
+					if (rule == AbilityValueRule.Add)
 						newval = (oldval ?? 0) + incoming;
-					else if (rule == AbilityValueStackingRule.TakeAverage)
+					else if (rule == AbilityValueRule.TakeAverage)
 						newval = (oldval ?? 0) + incoming / abilities.Count();
-					else if (rule == AbilityValueStackingRule.TakeHighest)
+					else if (rule == AbilityValueRule.TakeHighest)
 					{
 						if (oldval == null)
 							newval = incoming;
 						else
 							newval = Math.Max(oldval.Value, incoming);
 					}
-					else if (rule == AbilityValueStackingRule.TakeLowest)
+					else if (rule == AbilityValueRule.TakeLowest)
 					{
 						if (oldval == null)
 							newval = incoming;
 						else
 							newval = Math.Min(oldval.Value, incoming);
 					}
-					else if (GroupingRule == AbilityGroupingRule.GroupByValue1 && i == 0 || GroupingRule == AbilityGroupingRule.GroupByValue2 && i == 1)
+					else if (rule == AbilityValueRule.Group)
 						newval = incoming;
 					if (result.Values.Count > i)
 						result.Values[i] = newval.ToString(CultureInfo.InvariantCulture);
@@ -128,4 +115,37 @@ namespace FrEee.Game.Objects.Abilities
 			return abilities.ToLookup(a => result, a => a);
 		}
 	}
+
+	 /// <summary>
+	 /// Rules for grouping and stacking ability values within a group of similar abilities.
+	 /// </summary>
+	 public enum AbilityValueRule
+	 {
+		 /// <summary>
+		 /// Do not group or stack abilities by this value.
+		 /// Note that this does not necessarily mean that only one instance of the ability will apply!
+		 /// To guarantee this, use TakeHighest, TakeAverage, or TakeLowest.
+		 /// </summary>
+		 None,
+		 /// <summary>
+		 /// Group the abilities by this value.
+		 /// </summary>
+		 Group,
+		 /// <summary>
+		 /// Add the values within the group. Only works properly for numeric values.
+		 /// </summary>
+		 Add,
+		 /// <summary>
+		 /// Take the highest value within the group. Only works properly for numeric values.
+		 /// </summary>
+		 TakeHighest,
+		 /// <summary>
+		 /// Take the average of the group values. Only works properly for numeric values.
+		 /// </summary>
+		 TakeAverage,
+		 /// <summary>
+		 /// Take the lowest value within the group. Only works properly for numeric values.
+		 /// </summary>
+		 TakeLowest
+	 }
 }
