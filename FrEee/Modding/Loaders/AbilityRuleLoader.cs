@@ -29,6 +29,7 @@ namespace FrEee.Modding.Loaders
 				int index = -1;
 
 				r.Name = rec.Get<string>("Name", null);
+				r.Description = rec.Get<string>("Description", null);
 				for (int i = 1; i <= 2; i++)
 				{
 					var f = rec.FindField("Value " + i + " Rule", ref index, false, 0, true);
