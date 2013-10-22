@@ -3,532 +3,428 @@
 =======================================================================================
 
 Name := Warp Point - Turbulence
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Sector - Sight Obscuration
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Sector - Sensor Interference
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Sector - Shield Disruption
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Sector - Damage
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Generation - Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Generation - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Generation - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Point Generation - Research
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Point Generation - Intelligence
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Minerals Value
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Organics Value
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Radioactives Value
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Conditions
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Population Happiness
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Planet - Change Ground Defense
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet - Shield Generation
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Shield Generation
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Phased Shield Generation
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Component Repair
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Cargo Storage
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Drop Troops
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Launch/Recover Fighters
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Lay Mines
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Multiplex Tracking
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Combat To Hit Offense Plus
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Group
 
 Name := Combat To Hit Defense Plus
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Group
 
 Name := Mine Sweeping
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Medical Bay
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Movement Bonus
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := TakeLowest
-Value 2 Stacking Rule := TakeLowest
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
 
 Name := Emissive Armor
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeLowest
-Value 2 Stacking Rule := TakeLowest
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
 
 Name := Shield Regeneration
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Cloak Level
-Grouping Rule := GroupByValue1
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := Group
+Value 2 Rule := TakeHighest
 
 Name := Sensor Level
-Grouping Rule := GroupByValue1
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := Group
+Value 2 Rule := TakeHighest
 
 Name := Emergency Resupply
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Emergency Energy
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Long Range Scanner
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Open Warp Point Distance
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Create Planet Size
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Destroy Planet Size
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Boarding Attack
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Boarding Defense
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Standard Ship Movement
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Supply Storage
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Space Yard
-Grouping Rule := GroupByValue1
-Value 2 Stacking Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Storage - Mineral
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Storage - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Storage - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Resource Gen Modifier Planet - Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier Planet - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier Planet - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier System - Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier System - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier System - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet Point Generation Modifier - Research
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet Point Generation Modifier - Intelligence
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := System Point Generation Modifier - Research
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := System Point Generation Modifier - Intelligence
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Combat Modifier - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Damage Modifier - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet Value Change - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet Conditions Change - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Change Bad Event Chance - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Change Bad Intelligence Chance - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Change Population Happiness - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Ship Training
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Fleet Training
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Modify Reproduction - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Change Population - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Plague Prevention - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Resource Reclamation
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Launch/Recover Satellites
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Remote Resource Generation - Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Remote Resource Generation - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Remote Resource Generation - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Armor Regeneration
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Shield Generation From Damage
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := System - Movement Towards Center
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := System - Movement Random
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := System - Destructive Center
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Ancient Ruins
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Combat Movement
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := Add
+Value 1 Rule := TakeHighest
+Value 2 Rule := Add
 
 Name := Solar Supply Generation
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Extra Movement Generation
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet - Change Atmosphere
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeLowest
-Value 2 Stacking Rule := TakeLowest
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
 
 Name := Constructed Planet Requirements
-Grouping Rule := GroupByValue1
-Value 2 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 2 Rule := Add
+Value 2 Rule := Add
 
 Name := Modified Maintenance Cost
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Ship Training - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Fleet Training - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Solar Resource Generation - Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Solar Resource Generation - Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Solar Resource Generation - Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Reduced Maintenance Cost - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Shield Modifier - System
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Combat To Hit Offense Minus
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Combat To Hit Defense Minus
-Grouping Rule := GroupByValue2
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Generate Points Minerals
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Generate Points Organics
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Generate Points Radioactives
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Generate Points Research
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Generate Points Intelligence
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := Add
-Value 2 Stacking Rule := Add
+Value 1 Rule := Add
+Value 2 Rule := Add
 
 Name := Supply Cost
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeLowest
-Value 2 Stacking Rule := TakeLowest
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
 
 Name := Luck
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeLowest
-Value 2 Stacking Rule := TakeLowest
+Value 1 Rule := TakeLowest
+Value 2 Rule := TakeLowest
 
 Name := Vehicle Speed
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planet Storage Space
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Planetary SY Rate
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := TakeHighest
-Value 2 Stacking Rule := TakeHighest
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
 
 Name := Tech Area
-Grouping Rule := DoNotGroup
-Value 1 Stacking Rule := DoNotStack
-Value 2 Stacking Rule := DoNotStack
+Value 1 Rule := None
+Value 2 Rule := None

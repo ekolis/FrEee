@@ -29,23 +29,22 @@ namespace FrEee.Modding.Loaders
 				int index = -1;
 
 				r.Name = rec.Get<string>("Name", null);
-				r.GroupingRule = rec.Get<AbilityGroupingRule>("Grouping Rule", null);
 				for (int i = 1; i <= 2; i++)
 				{
-					var f = rec.FindField("Value " + i + " Stacking Rule", ref index, false, 0, true);
+					var f = rec.FindField("Value " + i + " Rule", ref index, false, 0, true);
 					if (f == null)
-						r.StackingRules.Add(AbilityValueStackingRule.DoNotStack);
+						r.ValueRules.Add(AbilityValueRule.None);
 					else
-						r.StackingRules.Add(f.CreateFormula<AbilityValueStackingRule>(null));
+						r.ValueRules.Add(f.CreateFormula<AbilityValueRule>(r));
 				}
 				int j = 3;
 				while (true)
 				{
-					var f = rec.FindField("Value " + j + " Stacking Rule", ref index, false, 0, true);
+					var f = rec.FindField("Value " + j + " Rule", ref index, false, 0, true);
 					if (f == null)
 						break;
 					else
-						r.StackingRules.Add(f.EnumValue<AbilityValueStackingRule>(rec));
+						r.ValueRules.Add(f.CreateFormula<AbilityValueRule>(r));
 				}
 			}
 		}
