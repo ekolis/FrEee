@@ -61,12 +61,6 @@ namespace FrEee.Modding.Loaders
 					abil.Values.Add(val);
 				}
 
-				for (int i = 1; i < valnum; i++)
-				{
-					// replace [%Amount1%] and such
-					abil.Description = abil.Description.Text.Replace("[%Amount" + i + "%]", abil.Values[i - 1]);
-				}
-
 				yield return abil;
 			}
 		}

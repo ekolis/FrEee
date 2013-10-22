@@ -23,6 +23,7 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Resource Generation - Minerals
+Description := Mines [%Amount1%] minerals each turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 

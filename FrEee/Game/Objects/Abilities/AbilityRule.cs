@@ -5,6 +5,7 @@ using System.Linq;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Abilities
 {
@@ -40,6 +41,12 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			return name == Name || Aliases.Contains(name);
 		}
+
+		/// <summary>
+		/// A default description for abilities which do not provide their own description.
+		/// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
+		/// </summary>
+		public Formula<string> Description { get; set; }
 
 		/// <summary>
 		/// The rules for grouping and stacking abilities.

@@ -58,9 +58,7 @@ Tech Area Req 1     := Minerals Extraction
 Tech Level Req 1    := =level
 Number of Abilities := 1
 Ability 1 Type      := Resource Generation - Minerals
-Ability 1 Descr     := Mines [%Amount1%] minerals each turn.
 Ability 1 Val 1     := =700 + 100 * level
-Ability 1 Val 2     := 0
 
 Parameter Name      := level
 Parameter Maximum   := 3

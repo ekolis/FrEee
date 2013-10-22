@@ -26,6 +26,7 @@ namespace FrEee.Game.Objects.Abilities
 
 		/// <summary>
 		/// A description of the ability's effects.
+		/// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
 		/// </summary>
 		public Formula<string> Description { get; set; }
 
@@ -58,8 +59,20 @@ namespace FrEee.Game.Objects.Abilities
 
 		public override string ToString()
 		{
-			// TODO - default description for ability rules
-			return Description ?? (Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value).ToArray()));
+			// get basic description
+			string result;
+			if (Description != null)
+				result = Description.Value;
+			else if (Rule.Description != null)
+				result = Rule.Description.Value;
+			else
+				result = Rule.Name;
+			
+			// replace [%Amount1%] and such
+			for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
+				result = result.Replace("[%Amount" + i + "%]", Values[i - 1]);
+
+			return result;
 		}
 
 		public object Container { get; private set; }
