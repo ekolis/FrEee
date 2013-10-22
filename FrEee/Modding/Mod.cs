@@ -231,5 +231,20 @@ namespace FrEee.Modding
 		/// Errors encountered when loading the mod.
 		/// </summary>
 		public static IList<DataParsingException> Errors { get; private set; }
+
+		/// <summary>
+		/// Do these ability names refer to the same ability, using aliases?
+		/// </summary>
+		/// <param name="n1"></param>
+		/// <param name="n2"></param>
+		/// <returns></returns>
+		public bool DoAbilityNamesMatch(string n1, string n2)
+		{
+			if (n1 == n2)
+				return true;
+			var r1 = AbilityRules.SingleOrDefault(r => r.Matches(n1));
+			var r2 = AbilityRules.SingleOrDefault(r => r.Matches(n2));
+			return r1 != null && r2 != null && r1 == r2;
+		}
 	}
 }

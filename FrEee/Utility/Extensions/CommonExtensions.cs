@@ -786,7 +786,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The ability value.</returns>
 		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = obj.Abilities.Where(a => a.Name == name && (filter == null || filter(a))).Stack(obj);
+			var abils = obj.Abilities.Where(a => Mod.Current.DoAbilityNamesMatch(a.Name, name) && (filter == null || filter(a))).Stack(obj);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -794,7 +794,7 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name,object stackTo, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Name == name && (filter == null || filter(a))).Stack(stackTo);
+			var abils = objs.SelectMany(o => o.Abilities).Where(a => Mod.Current.DoAbilityNamesMatch(a.Name, name) && (filter == null || filter(a))).Stack(stackTo);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
