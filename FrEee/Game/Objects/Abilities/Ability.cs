@@ -66,7 +66,7 @@ namespace FrEee.Game.Objects.Abilities
 			else if (Rule.Description != null)
 				result = Rule.Description.Value;
 			else
-				result = Rule.Name;
+				result = Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value));
 			
 			// replace [%Amount1%] and such
 			for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)

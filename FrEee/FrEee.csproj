@@ -345,6 +345,7 @@
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
     <Compile Include="Utility\SafeDictionary.cs" />
+    <Compile Include="Utility\SequenceEqualityComparer.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Utility\Status.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
