@@ -581,13 +581,8 @@ namespace FrEee.Game.Objects.Civilization
 				r += IntrinsicResourceStorage;
 				foreach (var sobj in OwnedSpaceObjects)
 				{
-					// yes, Aaron did spell it "Mineral", not "Minerals"... we can support both though!
-					var min = sobj.GetAbilityValue("Resource Storage - Mineral").ToInt() + sobj.GetAbilityValue("Resource Storage - Minerals").ToInt();
-					var org = sobj.GetAbilityValue("Resource Storage - Organics").ToInt();
-					var rad = sobj.GetAbilityValue("Resource Storage - Radioactives").ToInt();
-					r.Add(Resource.Minerals, min);
-					r.Add(Resource.Organics, org);
-					r.Add(Resource.Radioactives, rad);
+					foreach (var res in Resource.All.Where(res => res.IsGlobal))
+						r.Add(res, sobj.GetAbilityValue("Resource Storage - " + res.Name).ToInt());
 				}
 				return r;
 			}

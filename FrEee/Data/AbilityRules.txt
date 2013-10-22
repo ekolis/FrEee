@@ -179,9 +179,11 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Space Yard
+Value 1 Rule := Group
 Value 2 Rule := Add
 
 Name := Resource Storage - Mineral
+Alias := Resource Storage - Minerals
 Value 1 Rule := Add
 Value 2 Rule := Add
 
@@ -285,6 +287,29 @@ Name := Resource Reclamation
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
+Name := Close Warp Point
+
+Name := Destroy Star
+
+Name := Create Star
+    
+Name := Destroy Storm
+    
+Name := Create Storm
+    
+Name := Self-Destruct
+    
+Name := Colonize Planet - Rock
+    
+Name := Colonize Planet - Ice
+    
+Name := Colonize Planet - Gas
+Alias := Colonize Planet - Gas Giant
+    
+Name := Point-Defense
+  
+Name := Armor
+  
 Name := Launch/Recover Satellites
 Value 1 Rule := Add
 Value 2 Rule := Add
@@ -426,5 +451,3 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Tech Area
-Value 1 Rule := None
-Value 2 Rule := None

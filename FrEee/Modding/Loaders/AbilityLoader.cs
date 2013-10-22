@@ -14,7 +14,7 @@ namespace FrEee.Modding.Loaders
 		/// Loads abilities from a record.
 		/// </summary>
 		/// <param name="rec"></param>
-		public static IEnumerable<Ability> Load(Record rec, object obj)
+		public static IEnumerable<Ability> Load(string filename, Record rec, object obj)
 		{
 			int count = 0;
 			int index = -1;
@@ -27,7 +27,21 @@ namespace FrEee.Modding.Loaders
 					break; // no more abilities
 
 				var abil = new Ability(obj);
-				abil.Name = abilname;
+				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname));
+				if (rules.Count() > 1)
+				{
+					Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec);
+					continue;
+				}
+				else if (rules.Count() == 0)
+				{
+					// create an ad hoc ability rule
+					abil.Rule = new AbilityRule { Name = abilname };
+					Mod.Current.AbilityRules.Add(abil.Rule);
+				}
+				else
+					abil.Rule = rules.Single();
+
 				abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
 
 				int valnum = 0;

@@ -20,9 +20,9 @@ namespace FrEee.Game.Objects.Abilities
 		}
 
 		/// <summary>
-		/// The name of the ability.
+		/// The ability rule which defines what ability this is.
 		/// </summary>
-		public string Name { get; set; }
+		public AbilityRule Rule { get; set; }
 
 		/// <summary>
 		/// A description of the ability's effects.
@@ -58,7 +58,8 @@ namespace FrEee.Game.Objects.Abilities
 
 		public override string ToString()
 		{
-			return Description ?? (Name + ": " + string.Join(", ", Values.Select(v => v.Value).ToArray()));
+			// TODO - default description for ability rules
+			return Description ?? (Rule.Name + ": " + string.Join(", ", Values.Select(v => v.Value).ToArray()));
 		}
 
 		public object Container { get; private set; }

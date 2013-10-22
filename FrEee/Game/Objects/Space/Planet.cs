@@ -49,14 +49,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				// TODO - custom surface types?
-				if (Surface == "Rock")
-					return "Colonize Planet - Rock";
-				else if (Surface == "Ice")
-					return "Colonize Planet - Ice";
-				else if (Surface == "Gas Giant")
-					return "Colonize Planet - Gas";
-				return null;
+				return "Colonize Planet - " + Surface;
 			}
 		}
 
