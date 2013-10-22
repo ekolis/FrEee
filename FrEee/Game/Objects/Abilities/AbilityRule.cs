@@ -63,25 +63,30 @@ namespace FrEee.Game.Objects.Abilities
 			var ours = abilities.Where(a => a.Rule == this).ToArray();
 
 			// group abilities
-			IEnumerable<IGrouping<object, Ability>> grouped;
-			var groupbys = ValueRules.Select(vr => vr == AbilityValueRule.Group ? true : false).ToArray();
-			grouped = ours.GroupBy(a =>
-				a.Values.Select((v, i) => new
+			var dict = new SafeDictionary<IList<string>, ICollection<Ability>>();
+			var groupIndices = new List<int>();
+			for (int i = 0; i < ValueRules.Count; i++)
+			{
+				if (ValueRules[i] == AbilityValueRule.Group)
+					groupIndices.Add(i);
+			}
+			foreach (var a in ours)
+			{
+				// treat non-group indices as "equal" for grouping purposes
+				var key = a.Values.Select((v, i) => groupIndices.Contains(i) ? v.Value : "").ToList();
+				var existingKey = dict.Keys.SingleOrDefault(k => k.SequenceEqual(key));
+				if (existingKey == null)
 				{
-					Value = v,
-					Index = i
-				}).Join(
-				groupbys.Select((b, i) => new
-				{
-					DoIt = b,
-					Index = i
-				}),
-				item => item.Index, item => item.Index, (item, groupby) =>
-					groupby.DoIt ? item.Value.Value : ""));
+					dict[key] = new List<Ability>();
+					dict[key].Add(a);
+				}
+				else
+					dict[existingKey].Add(a);
+			}
 
 			// stack abilities		
 			var list = new List<Tuple<Ability, Ability>>();
-			foreach (var group in grouped)
+			foreach (var group in dict.Values)
 			{
 				var stacked = Stack(group, stackingTo);
 				foreach (var stack in stacked)
@@ -140,10 +145,6 @@ namespace FrEee.Game.Objects.Abilities
 					}
 				}
 			}
-			if (result.Values.Any())
-				result.Description = result.Rule + ": " + string.Join(", ", result.Values.Select(v => v.Value).ToArray());
-			else
-				result.Description = result.Rule.Name;
 			return abilities.ToLookup(a => result, a => a);
 		}
 
