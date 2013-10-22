@@ -30,7 +30,7 @@ namespace FrEee.Modding.Loaders
 				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname));
 				if (rules.Count() > 1)
 				{
-					Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec);
+					Mod.Errors.Add(new DataParsingException("Ambiguous ability name match for " + abilname + " alias between the following abilities: " + string.Join(", ", rules.Select(r => r.Name).ToArray()) + ".", filename, rec));
 					continue;
 				}
 				else if (rules.Count() == 0)
@@ -78,24 +78,22 @@ namespace FrEee.Modding.Loaders
 		/// <param name="what"></param>
 		/// <param name="obj">Formula context.</param>
 		/// <returns></returns>
-		public static IDictionary<string, IDictionary<int, Formula<int>>> LoadPercentagesOrModifiers(Record rec, string what, object obj)
+		public static IDictionary<AbilityRule, IDictionary<int, Formula<int>>> LoadPercentagesOrModifiers(Record rec, string what, object obj)
 		{
-			var dict = new Dictionary<string, IDictionary<int, Formula<int>>>();
+			var dict = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
 			int count = 0;
 			int start = 0;
 			while (true)
 			{
 				count++;
-				string abilName;
+				AbilityRule abilRule;
 				var vals = new Dictionary<int, Formula<int>>();
 
 				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start, true);
 				if (nameField == null)
 					break; // no more abilities
 
-				abilName = nameField.Value;
-
-				dict.Add(abilName, vals);
+				abilRule = Mod.Current.FindAbilityRule(nameField.Value);
 
 				int vcount = 0;
 				while (true)
@@ -115,7 +113,7 @@ namespace FrEee.Modding.Loaders
 					vals.Add(vcount, valField.CreateFormula<int>(obj));
 				}
 
-				dict.Add(abilName, vals);
+				dict.Add(abilRule, vals);
 			}
 			return dict;
 		}

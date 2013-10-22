@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
@@ -19,8 +20,8 @@ namespace FrEee.Game.Objects.Technology
 	{
 		public Mount()
 		{
-			AbilityPercentages = new Dictionary<string, IDictionary<int, Formula<int>>>();
-			AbilityModifiers = new Dictionary<string, IDictionary<int, Formula<int>>>();
+			AbilityPercentages = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
+			AbilityModifiers = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
 			UnlockRequirements = new List<Requirement<Empire>>();
 		}
 
@@ -117,7 +118,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Percentage factors for abilities.
 		/// </summary>
-		public IDictionary<string, IDictionary<int, Formula<int>>> AbilityPercentages
+		public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityPercentages
 		{
 			get;
 			set;
@@ -126,7 +127,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Additive modifiers for abilities.
 		/// </summary>
-		public IDictionary<string, IDictionary<int, Formula<int>>> AbilityModifiers
+		public IDictionary<AbilityRule, IDictionary<int, Formula<int>>> AbilityModifiers
 		{
 			get;
 			set;

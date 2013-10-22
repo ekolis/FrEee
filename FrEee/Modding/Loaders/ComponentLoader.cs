@@ -79,7 +79,7 @@ namespace FrEee.Modding.Loaders
 
 				// TODO - build and use requirements
 
-				foreach (var abil in AbilityLoader.Load(rec, c))
+				foreach (var abil in AbilityLoader.Load(Filename, rec, c))
 					c.Abilities.Add(abil);
 
 				var wfield = rec.FindField("Weapon Type", ref index, false, 0, true);

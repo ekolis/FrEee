@@ -84,7 +84,7 @@ namespace FrEee.Modding.Loaders
 
 				// TODO - build and use requirements
 
-				foreach (var abil in AbilityLoader.Load(rec, hull))
+				foreach (var abil in AbilityLoader.Load(Filename, rec, hull))
 					hull.Abilities.Add(abil);
 
 				hull.NeedsBridge = rec.Get<bool>("Requirement Must Have Bridge", hull);

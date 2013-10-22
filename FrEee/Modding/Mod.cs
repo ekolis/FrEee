@@ -242,9 +242,19 @@ namespace FrEee.Modding
 		{
 			if (n1 == n2)
 				return true;
-			var r1 = AbilityRules.SingleOrDefault(r => r.Matches(n1));
-			var r2 = AbilityRules.SingleOrDefault(r => r.Matches(n2));
+			var r1 = FindAbilityRule(n1);
+			var r2 = FindAbilityRule(n2);
 			return r1 != null && r2 != null && r1 == r2;
+		}
+
+		/// <summary>
+		/// Finds an ability rule by name or alias.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public AbilityRule FindAbilityRule(string name)
+		{
+			return AbilityRules.SingleOrDefault(r => r.Matches(name));
 		}
 	}
 }

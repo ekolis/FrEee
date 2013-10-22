@@ -96,23 +96,23 @@ namespace FrEee.Game.Objects.Technology
 					{
 						var result = new Ability(this)
 						{
-							Name = a.Name,
+							Rule = a.Rule,
 							Values = new List<Formula<string>>(a.Values),
 							Description = a.Description.Evaluate(this),
 						};
 						if (Mount != null)
 						{
-							if (Mount.AbilityPercentages.ContainsKey(a.Name))
+							if (Mount.AbilityPercentages.ContainsKey(a.Rule))
 							{
-								foreach (var p in Mount.AbilityPercentages[a.Name])
+								foreach (var p in Mount.AbilityPercentages[a.Rule])
 								{
 									result.Values[p.Key] = (double.Parse(result.Values[p.Key].Evaluate(this)) * p.Value / 100).ToString();
 									a.Description = null; // values have been modified, need to use generic description
 								}
 							}
-							if (Mount.AbilityModifiers.ContainsKey(a.Name))
+							if (Mount.AbilityModifiers.ContainsKey(a.Rule))
 							{
-								foreach (var m in Mount.AbilityModifiers[a.Name])
+								foreach (var m in Mount.AbilityModifiers[a.Rule])
 								{
 									result.Values[m.Key] = (double.Parse(result.Values[m.Key].Evaluate(this)) + m.Value).ToString();
 									a.Description = null; // values have been modified, need to use generic description
