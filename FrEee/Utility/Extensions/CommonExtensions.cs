@@ -786,7 +786,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The ability value.</returns>
 		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = obj.Abilities.Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(obj);
+			var abils = obj.Abilities.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a))).Stack(obj);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -794,7 +794,28 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name,object stackTo, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var abils = objs.SelectMany(o => o.Abilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(stackTo);
+			var abils = objs.SelectMany(o => o.Abilities.GroupBy(a => new { Rule = a.Rule, Object = o}).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Where(a => filter == null || filter(a))).Stack(stackTo);
+			if (!abils.Any())
+				return null;
+			return abils.First().Values[index - 1];
+		}
+
+		/// <summary>
+		/// Aggregates abilities for an empire's space objects.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <param name="name"></param>
+		/// <param name="index"></param>
+		/// <param name="filter"></param>
+		/// <returns></returns>
+		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, bool includeUnowned, string name, int index = 1, Func<Ability, bool> filter = null)
+		{
+			IEnumerable<Ability> abils;
+			var subabils = obj.GetContainedAbilityObjects(emp, includeUnowned).SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			if (obj is IAbilityObject)
+				abils = ((IAbilityObject)obj).Abilities.Concat(subabils).Stack(obj);
+			else
+				abils = subabils;
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];

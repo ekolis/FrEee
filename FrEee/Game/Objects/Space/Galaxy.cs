@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Space
 	/// A galaxy in which the game is played.
 	/// </summary>
 	[Serializable]
-	public class Galaxy
+	public class Galaxy : ISharedAbilityObject
 	{
 		public Galaxy()
 		{
@@ -268,6 +268,11 @@ namespace FrEee.Game.Objects.Space
 		public bool CanColonizeOnlyBreathable { get; set; }
 
 		public bool CanColonizeOnlyHomeworldSurface { get; set; }
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Galaxy; }
+		}
 
 		#endregion
 
@@ -1141,5 +1146,10 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		#endregion
+
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		{
+			return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp, includeUnowned)));
+		}
 	}
 }

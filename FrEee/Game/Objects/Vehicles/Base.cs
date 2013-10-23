@@ -51,5 +51,10 @@ namespace FrEee.Game.Objects.Vehicles
 			var coords = search.First().First().First().Key;
 			sys.SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(this, coords));
 		}
+
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Base; }
+		}
 	}
 }

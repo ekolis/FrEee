@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem : IReferrable, IPictorial, IFoggable
+	public class StarSystem : IReferrable, IPictorial, IFoggable, ISharedAbilityObject, IAbilityObject
 	{
 		/// <summary>
 		/// Creates a star system.
@@ -189,40 +189,6 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Aggregates abilities across a star system for an empire's space objects.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public string GetAbilityValue(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-		{
-			var abils = FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(this);
-			if (!abils.Any())
-				return null;
-			return abils.First().Values[index - 1];
-		}
-
-		/// <summary>
-		/// Aggregates abilities across a sector for an empire's space objects.
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <param name="name"></param>
-		/// <param name="index"></param>
-		/// <param name="filter"></param>
-		/// <returns></returns>
-		public string GetSectorAbilityValue(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
-		{
-			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
-			var sector = new Sector(this, coords);
-			var abils = sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Stack(sector);
-			if (!abils.Any())
-				return null;
-			return abils.First().Values[index - 1];
-		}
-
-		/// <summary>
 		/// Do any of the empire's space objects in this system have an ability?
 		/// </summary>
 		/// <param name="emp"></param>
@@ -342,6 +308,26 @@ namespace FrEee.Game.Objects.Space
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.StarSystem; }
+		}
+
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		{
+			return SpaceObjectLocations.Select(l => l.Item).OfType<IAbilityObject>();
+		}
+
+		IEnumerable<Ability> IAbilityObject.Abilities
+		{
+			get { return UnstackedAbilities.Stack(this); }
+		}
+
+		public IEnumerable<Ability> UnstackedAbilities
+		{
+			get { return Abilities; }
 		}
 	}
 }

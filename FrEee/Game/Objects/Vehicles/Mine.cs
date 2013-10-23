@@ -53,5 +53,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Utility.Extensions.CommonExtensions.FindContainer(this); }
 		}
+
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Mine; }
+		}
 	}
 }

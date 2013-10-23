@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Modding.Loaders
 {
@@ -28,7 +29,9 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				r.Name = rec.Get<string>("Name", null);
+				r.Name = rec.Get<string>("Name", null, false);
+				r.Aliases = rec.GetMany<string>("Alias", null).Select(f => f.Value).ToList();
+				r.Targets = rec.Get<AbilityTargets>("Targets", null) ?? AbilityTargets.All;
 				r.Description = rec.Get<string>("Description", null);
 				for (int i = 1; i <= 2; i++)
 				{

@@ -6,6 +6,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Abilities
 {
@@ -31,6 +32,21 @@ namespace FrEee.Game.Objects.Abilities
 		/// These must not be aliases or names of other abilities.
 		/// </summary>
 		public ICollection<string> Aliases { get; set; }
+
+		/// <summary>
+		/// Valid targets for this ability.
+		/// </summary>
+		public AbilityTargets Targets { get; set; }
+
+		/// <summary>
+		/// Can this ability target something?
+		/// </summary>
+		/// <param name="target"></param>
+		/// <returns></returns>
+		public bool CanTarget(AbilityTargets target)
+		{
+			return Targets.HasFlag(target);
+		}
 
 		/// <summary>
 		/// Does the specified name match this ability's name or aliases?
@@ -152,38 +168,5 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			return Name;
 		}
-	}
-
-	/// <summary>
-	/// Rules for grouping and stacking ability values within a group of similar abilities.
-	/// </summary>
-	public enum AbilityValueRule
-	{
-		/// <summary>
-		/// Do not group or stack abilities by this value.
-		/// Note that this does not necessarily mean that only one instance of the ability will apply!
-		/// To guarantee this, use TakeHighest, TakeAverage, or TakeLowest.
-		/// </summary>
-		None,
-		/// <summary>
-		/// Group the abilities by this value.
-		/// </summary>
-		Group,
-		/// <summary>
-		/// Add the values within the group. Only works properly for numeric values.
-		/// </summary>
-		Add,
-		/// <summary>
-		/// Take the highest value within the group. Only works properly for numeric values.
-		/// </summary>
-		TakeHighest,
-		/// <summary>
-		/// Take the average of the group values. Only works properly for numeric values.
-		/// </summary>
-		TakeAverage,
-		/// <summary>
-		/// Take the lowest value within the group. Only works properly for numeric values.
-		/// </summary>
-		TakeLowest
 	}
 }

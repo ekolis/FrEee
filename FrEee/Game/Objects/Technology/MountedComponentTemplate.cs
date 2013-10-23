@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Vehicles;
@@ -288,6 +289,11 @@ namespace FrEee.Game.Objects.Technology
 					{"empire", empire}
 				};
 			}
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Component; }
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
@@ -233,6 +234,11 @@ namespace FrEee.Game.Objects.Technology
 					{"empire", Owner}
 				};
 			}
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Facility; }
 		}
 	}
 }

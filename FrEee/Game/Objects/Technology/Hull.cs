@@ -258,5 +258,29 @@ namespace FrEee.Game.Objects.Technology
 				return VehicleType.ToSpacedString();
 			}
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get
+			{
+				if (VehicleType == VehicleTypes.Base)
+					return AbilityTargets.Base;
+				if (VehicleType == VehicleTypes.Ship)
+					return AbilityTargets.Ship;
+				if (VehicleType == VehicleTypes.Fighter)
+					return AbilityTargets.Fighter;
+				if (VehicleType == VehicleTypes.Satellite)
+					return AbilityTargets.Satellite;
+				if (VehicleType == VehicleTypes.Mine)
+					return AbilityTargets.Mine;
+				if (VehicleType == VehicleTypes.Drone)
+					return AbilityTargets.Drone;
+				if (VehicleType == VehicleTypes.Troop)
+					return AbilityTargets.Troop;
+				if (VehicleType == VehicleTypes.WeaponPlatform)
+					return AbilityTargets.WeaponPlatform;
+				return AbilityTargets.Invalid;
+			}
+		}
 	}
 }

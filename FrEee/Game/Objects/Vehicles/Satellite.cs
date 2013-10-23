@@ -49,5 +49,10 @@ namespace FrEee.Game.Objects.Vehicles
 				vis = Visibility.Scanned;
 			return vis;
 		}
+
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Satellite; }
+		}
 	}
 }

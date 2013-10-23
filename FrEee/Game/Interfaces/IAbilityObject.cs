@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Interfaces
 {
@@ -18,5 +19,10 @@ namespace FrEee.Game.Interfaces
 		/// The abilities possessed by this object, before stacking.
 		/// </summary>
 		IEnumerable<Ability> UnstackedAbilities { get; }
+
+		/// <summary>
+		/// The type of ability target that this object represents.
+		/// </summary>
+		AbilityTargets AbilityTarget { get; }
 	}
 }

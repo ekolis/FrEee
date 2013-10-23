@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Interfaces;
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -68,6 +69,11 @@ namespace FrEee.Game.Objects.Civilization
 		string INamed.Name
 		{
 			get { return Name; }
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Trait; }
 		}
 	}
 }
