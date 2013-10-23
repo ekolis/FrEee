@@ -771,5 +771,10 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return false;
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Empire; }
+		}
 	}
 }

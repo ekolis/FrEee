@@ -97,6 +97,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FrEeeConstants.cs" />
+    <Compile Include="Game\Enumerations\AbilityTargets.cs" />
+    <Compile Include="Game\Enumerations\AbilityValueRule.cs" />
     <Compile Include="Game\Enumerations\AllowedTrades.cs" />
     <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
     <Compile Include="Game\Enumerations\Mood.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
+    <Compile Include="Game\Interfaces\ISharedAbilityObject.cs" />
     <Compile Include="Game\Interfaces\ISpaceVehicle.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\IUnit.cs" />

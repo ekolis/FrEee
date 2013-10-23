@@ -71,5 +71,10 @@ namespace FrEee.Game.Objects.Space
 					emp.Memory[ID].CopyTo(this);
 			}
 		}
+
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.WarpPoint; }
+		}
 	}
 }

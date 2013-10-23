@@ -202,8 +202,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.FindStarSystem().GetSectorAbilityValue(this.FindCoordinates(), Owner, "Reduced Maintenance Cost - Sector").ToInt();
-				pct -= this.FindStarSystem().GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+				pct -= this.Sector.GetAbilityValue(Owner, false, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.StarSystem.GetAbilityValue(Owner, false, "Reduced Maintenance Cost - System").ToInt();
 				pct -= Owner.Culture.MaintenanceReduction;
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;

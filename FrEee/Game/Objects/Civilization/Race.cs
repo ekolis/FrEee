@@ -173,5 +173,10 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public long ID { get; set; }
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Race; }
+		}
 	}
 }

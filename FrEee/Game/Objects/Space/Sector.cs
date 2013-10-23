@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	/// A sector in a star system.
 	/// </summary>
 	[Serializable]
-	public class Sector : IPromotable, ICargoContainer
+	public class Sector : IPromotable, ICargoContainer, ISharedAbilityObject
 	{
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
@@ -253,6 +253,16 @@ namespace FrEee.Game.Objects.Space
 		public Visibility CheckVisibility(Empire emp)
 		{
 			throw new NotImplementedException();
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Sector; }
+		}
+
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		{
+			return SpaceObjects.OfType<IAbilityObject>();
 		}
 	}
 }

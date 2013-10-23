@@ -230,5 +230,10 @@ namespace FrEee.Game.Objects.Technology
 				};
 			}
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Component; }
+		}
 	}
 }

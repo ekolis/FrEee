@@ -94,5 +94,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
+
+		public override AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Troop; }
+		}
 	}
 }

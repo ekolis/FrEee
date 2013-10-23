@@ -136,5 +136,10 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Colony; }
+		}
 	}
 }

@@ -216,5 +216,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
+
+		public abstract AbilityTargets AbilityTarget { get; }
 	}
 }

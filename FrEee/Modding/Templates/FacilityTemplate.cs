@@ -186,5 +186,10 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return Visibility.Scanned;
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Facility; }
+		}
 	}
 }

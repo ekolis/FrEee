@@ -498,5 +498,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return VehicleTypeName; }
 		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return Hull == null ? AbilityTargets.None : Hull.AbilityTarget; }
+		}
 	}
 }

@@ -152,5 +152,40 @@ namespace FrEee.Modding
 			}
 			return f.CreateFormula<T>(context);
 		}
+
+		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, bool allowNulls = true)
+			where T : IConvertible
+		{
+			int index = 0;
+			return GetMany<T>(fieldName, context, ref index, allowNulls);
+		}
+
+		public IEnumerable<Formula<T>> GetMany<T>(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
+			where T : IConvertible
+		{
+			int index = 0;
+			return GetMany<T>(fieldNames, context, ref index, allowNulls);
+		}
+
+		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IConvertible
+		{
+			return GetMany<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
+		}
+
+		public IEnumerable<Formula<T>> GetMany<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
+			where T : IConvertible
+		{
+			Field f;
+			var result = new List<Formula<T>>();
+			do
+			{
+				f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
+				startIndex = index + 1;
+				if (f != null)
+					result.Add(f.CreateFormula<T>(context));
+			} while (f != null);
+			return result;
+		}
 	}
 }

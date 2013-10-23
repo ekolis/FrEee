@@ -221,6 +221,9 @@ namespace FrEee.Modding.Templates
 		}
 		#endregion
 
-		// TODO - formula evaluation
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.Component; }
+		}
 	}
 }
