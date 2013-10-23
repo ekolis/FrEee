@@ -15,37 +15,36 @@ namespace FrEee.Game.Enumerations
 		None = 0,
 
 		// basic types
-		Colony = 0x1,
-		Empire = 0x2,
-		Race = 0x4,
-		Trait = 0x8,
-		Component = 0x10, // includes MountedComponentTemplate and ComponentTemplate
-		Facility = 0x20, // includes FacilityTemplate
+		Empire = 0x1,
+		Race = 0x2,
+		Trait = 0x4,
+		Component = 0x8, // includes MountedComponentTemplate and ComponentTemplate
+		Facility = 0x10, // includes FacilityTemplate
 
 		// shared types
-		Sector = 0x40,
-		StarSystem = 0x80,
-		Galaxy = 0x100,
+		Sector = 0x20,
+		StarSystem = 0x40,
+		Galaxy = 0x80,
 
 		// stellar objects
-		AsteroidField = 0x200,
-		Planet = 0x400,
-		Star = 0x800,
-		Storm = 0x1000,
-		WarpPoint = 0x2000,
+		AsteroidField = 0x100,
+		Planet = 0x200,
+		Star = 0x400,
+		Storm = 0x800,
+		WarpPoint = 0x1000,
 
 		// vehicles
-		Base = 0x4000,
-		Drone = 0x8000,
-		Fighter = 0x10000,
-		Mine = 0x20000,
-		Satellite = 0x40000,
-		Ship = 0x80000,
-		Troop = 0x100000,
-		WeaponPlatform = 0x200000,
+		Base = 0x2000,
+		Drone = 0x4000,
+		Fighter = 0x8000,
+		Mine = 0x10000,
+		Satellite = 0x20000,
+		Ship = 0x40000,
+		Troop = 0x80000,
+		WeaponPlatform = 0x100000,
 
 		// fleets
-		Fleet = 0x400000,
+		Fleet = 0x200000,
 
 		// compound types
 		StellarObject = AsteroidField | Planet | Star | Storm | WarpPoint,
