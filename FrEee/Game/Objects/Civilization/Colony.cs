@@ -139,7 +139,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public AbilityTargets AbilityTarget
 		{
-			get { return AbilityTargets.Colony; }
+			get { return AbilityTargets.Planet; }
 		}
 	}
 }
