@@ -182,5 +182,20 @@ namespace FrEee.WinForms.Forms
 			else
 				MessageBox.Show("You cannot reply to outgoing messages.");
 		}
+
+		private void btnMinisters_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, control of AI ministers is not yet implemented.");
+		}
+
+		private void btnAvoidSystems_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, marking systems to avoid is not yet implemented.");
+		}
+
+		private void btnWaypoints_Click(object sender, EventArgs e)
+		{
+			MessageBox.Show("Sorry, setting waypoints is not yet implemented.");
+		}
 	}
 }
