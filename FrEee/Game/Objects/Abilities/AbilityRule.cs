@@ -19,6 +19,7 @@ namespace FrEee.Game.Objects.Abilities
 		public AbilityRule()
 		{
 			ValueRules = new List<AbilityValueRule>();
+			GroupRules = new List<AbilityValueRule>();
 			Aliases = new HashSet<string>();
 		}
 
@@ -70,6 +71,11 @@ namespace FrEee.Game.Objects.Abilities
 		public IList<AbilityValueRule> ValueRules { get; set; }
 
 		/// <summary>
+		/// The rules for stacking abilities after grouping.
+		/// </summary>
+		public IList<AbilityValueRule> GroupRules { get; set; }
+
+		/// <summary>
 		/// Groups and stacks abilities.
 		/// </summary>
 		/// <param name="abilities"></param>
@@ -101,21 +107,41 @@ namespace FrEee.Game.Objects.Abilities
 			}
 
 			// stack abilities		
-			var list = new List<Tuple<Ability, Ability>>();
+			var stackedInGroups = new SafeDictionary<Ability, IEnumerable<Ability>>();
 			foreach (var group in dict.Values)
 			{
-				var stacked = Stack(group, stackingTo);
+				var stacked = Stack(group, stackingTo, false);
 				foreach (var stack in stacked)
-				{
-					foreach (var abil in stack)
-						list.Add(Tuple.Create(stack.Key, abil));
-				}
+					stackedInGroups.Add(stack.Key, stack);
 			}
 
-			return list.ToLookup(t => t.Item1, t => t.Item2);
+			var final = new List<Tuple<Ability, Ability>>();
+
+			// stack grouped abilities if needed
+			if (ValueRules.Any(r => r == AbilityValueRule.Group))
+			{
+				foreach (var group in stackedInGroups.GroupBy(kvp => kvp.Key.Group))
+				{
+					var abils = group.SelectMany(kvp => kvp.Value);
+					var stacked = Stack(abils, stackingTo, true);
+					foreach (var stack in stacked)
+					{
+						foreach (var a in stack)
+							final.Add(Tuple.Create(stack.Key, a));
+					}
+				}
+			}
+			else
+			{
+				foreach (var group in stackedInGroups)
+					final.Add(Tuple.Create(group.Key, group.Key));
+			}
+
+			return final.ToLookup(t => t.Item1, t => t.Item2);
+
 		}
 
-		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, object stackingTo)
+		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, object stackingTo, bool groupStacking)
 		{
 			if (abilities.Count() <= 1)
 				return abilities.ToLookup(a => a, a => a);
@@ -126,7 +152,11 @@ namespace FrEee.Game.Objects.Abilities
 			{
 				for (int i = 0; i < abil.Values.Count; i++)
 				{
-					var rule = ValueRules.ElementAtOrDefault(i);
+					AbilityValueRule rule;
+					if (groupStacking)
+						rule = GroupRules.ElementAtOrDefault(i);
+					else
+						rule = ValueRules.ElementAtOrDefault(i);
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
 					double? oldval = result.Values.Count > i ? (double?)result.Values[i].Value.ToDouble() : null;
 					double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
@@ -149,7 +179,7 @@ namespace FrEee.Game.Objects.Abilities
 						else
 							newval = Math.Min(oldval.Value, incoming);
 					}
-					else if (rule == AbilityValueRule.Group)
+					else // group or none
 						newval = incoming;
 					if (result.Values.Count > i)
 						result.Values[i] = newval.ToString(CultureInfo.InvariantCulture);

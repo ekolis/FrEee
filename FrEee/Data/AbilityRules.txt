@@ -104,11 +104,13 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Combat To Hit Offense Plus
-Value 1 Rule := Add
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Combat To Hit Defense Plus
-Value 1 Rule := Add
+Value 1 Rule := TakeHighest
+Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Mine Sweeping
@@ -134,10 +136,12 @@ Value 2 Rule := Add
 Name := Cloak Level
 Value 1 Rule := Group
 Value 2 Rule := TakeHighest
+Value 2 Group Rule := None
 
 Name := Sensor Level
 Value 1 Rule := Group
 Value 2 Rule := TakeHighest
+Value 2 Group Rule := None
 
 Name := Emergency Resupply
 Value 1 Rule := Add
@@ -182,6 +186,7 @@ Value 2 Rule := Add
 Name := Space Yard
 Value 1 Rule := Group
 Value 2 Rule := Add
+Value 2 Group Rule := None
 
 Name := Resource Storage - Mineral
 Alias := Resource Storage - Minerals
@@ -353,7 +358,8 @@ Value 2 Rule := Add
 
 Name := Combat Movement
 Value 1 Rule := TakeHighest
-Value 2 Rule := Add
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Solar Supply Generation
 Value 1 Rule := Add

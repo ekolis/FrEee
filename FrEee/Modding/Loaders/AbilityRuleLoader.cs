@@ -40,6 +40,11 @@ namespace FrEee.Modding.Loaders
 						r.ValueRules.Add(AbilityValueRule.None);
 					else
 						r.ValueRules.Add(f.CreateFormula<AbilityValueRule>(r));
+					f = rec.FindField("Value " + i + " Group Rule", ref index, false, 0, true);
+					if (f == null)
+						r.GroupRules.Add(AbilityValueRule.None);
+					else
+						r.GroupRules.Add(f.CreateFormula<AbilityValueRule>(r));
 				}
 				int j = 3;
 				while (true)
@@ -49,6 +54,11 @@ namespace FrEee.Modding.Loaders
 						break;
 					else
 						r.ValueRules.Add(f.CreateFormula<AbilityValueRule>(r));
+					f = rec.FindField("Value " + j + " Group Rule", ref index, false, 0, true);
+					if (f == null)
+						r.GroupRules.Add(AbilityValueRule.None);
+					else
+						r.GroupRules.Add(f.CreateFormula<AbilityValueRule>(r));
 				}
 			}
 		}

@@ -1,3 +1,4 @@
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -76,5 +77,22 @@ namespace FrEee.Game.Objects.Abilities
 		}
 
 		public object Container { get; private set; }
+
+		/// <summary>
+		/// Key for ability groups.
+		/// </summary>
+		public IEnumerable<string> Group
+		{
+			get
+			{
+				var list = new List<string>();
+				for (int i = 0; i < Rule.ValueRules.Count; i++)
+				{
+					if (Rule.ValueRules.Count > i && Rule.ValueRules[i] == AbilityValueRule.Group)
+						yield return Values[i];
+					yield return "";
+				}
+			}
+		}
 	}
 }
