@@ -160,6 +160,18 @@ namespace FrEee.Modding
 				scope.SetVariable("newGalaxy", false);
 		}
 
+		/// <summary>
+		/// Clears any variables in the script scope.
+		/// </summary>
+		public static void ClearScope()
+		{
+			lastReferrables.Clear();
+			lastVariables.Clear();
+			lastGalaxy = null;
+			foreach (var name in scope.GetVariableNames())
+				scope.RemoveVariable(name);
+		}
+
 		public static IDictionary<string, string> SerializeScriptVariables(IDictionary<string, object> variables)
 		{
 			return variables.Select(kvp => new KeyValuePair<string, string>(
