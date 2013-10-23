@@ -135,7 +135,7 @@ namespace FrEee.WinForms.Controls
 					txtFacilitySlotsFree.Text = string.Format("{0} / {1} slots free", Planet.MaxFacilities - Planet.Colony.Facilities.Count, Planet.MaxFacilities);
 
 					foreach (var fg in Planet.Colony.Facilities.GroupBy(f => f.Template))
-						lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name, fg.Key, fg.Key.Icon);
+						lstFacilitiesDetail.AddItemWithImage(fg.Key.Group, fg.Count() + "x " + fg.Key.Name.Value, fg.Key, fg.Key.Icon);
 				}
 				else
 					txtFacilitySlotsFree.Text = "";
