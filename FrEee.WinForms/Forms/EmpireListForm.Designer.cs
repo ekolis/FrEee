@@ -78,6 +78,9 @@
 			this.btnClose = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
+			this.btnMinisters = new FrEee.WinForms.Controls.GameButton();
+			this.btnAvoidSystems = new FrEee.WinForms.Controls.GameButton();
+			this.btnWaypoints = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabIntel.SuspendLayout();
@@ -642,6 +645,7 @@
 			// 
 			this.btnClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClose.BackColor = System.Drawing.Color.Black;
+			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnClose.Location = new System.Drawing.Point(622, 622);
 			this.btnClose.Name = "btnClose";
@@ -663,7 +667,7 @@
 			this.gamePanel1.Location = new System.Drawing.Point(12, 12);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(710, 169);
+			this.gamePanel1.Size = new System.Drawing.Size(604, 169);
 			this.gamePanel1.TabIndex = 1;
 			// 
 			// lstEmpires
@@ -675,17 +679,60 @@
 			this.lstEmpires.HideSelection = false;
 			this.lstEmpires.Location = new System.Drawing.Point(3, 3);
 			this.lstEmpires.Name = "lstEmpires";
-			this.lstEmpires.Size = new System.Drawing.Size(702, 161);
+			this.lstEmpires.Size = new System.Drawing.Size(596, 161);
 			this.lstEmpires.TabIndex = 1;
 			this.lstEmpires.UseCompatibleStateImageBehavior = false;
 			this.lstEmpires.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstEmpires_ItemSelectionChanged);
+			// 
+			// btnMinisters
+			// 
+			this.btnMinisters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnMinisters.BackColor = System.Drawing.Color.Black;
+			this.btnMinisters.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMinisters.Location = new System.Drawing.Point(622, 12);
+			this.btnMinisters.Name = "btnMinisters";
+			this.btnMinisters.Size = new System.Drawing.Size(100, 23);
+			this.btnMinisters.TabIndex = 3;
+			this.btnMinisters.Text = "Ministers";
+			this.btnMinisters.UseVisualStyleBackColor = false;
+			this.btnMinisters.Click += new System.EventHandler(this.btnMinisters_Click);
+			// 
+			// btnAvoidSystems
+			// 
+			this.btnAvoidSystems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnAvoidSystems.BackColor = System.Drawing.Color.Black;
+			this.btnAvoidSystems.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnAvoidSystems.Location = new System.Drawing.Point(622, 41);
+			this.btnAvoidSystems.Name = "btnAvoidSystems";
+			this.btnAvoidSystems.Size = new System.Drawing.Size(100, 23);
+			this.btnAvoidSystems.TabIndex = 4;
+			this.btnAvoidSystems.Text = "Avoid Systems";
+			this.btnAvoidSystems.UseVisualStyleBackColor = false;
+			this.btnAvoidSystems.Click += new System.EventHandler(this.btnAvoidSystems_Click);
+			// 
+			// btnWaypoints
+			// 
+			this.btnWaypoints.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnWaypoints.BackColor = System.Drawing.Color.Black;
+			this.btnWaypoints.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWaypoints.Location = new System.Drawing.Point(622, 70);
+			this.btnWaypoints.Name = "btnWaypoints";
+			this.btnWaypoints.Size = new System.Drawing.Size(100, 23);
+			this.btnWaypoints.TabIndex = 4;
+			this.btnWaypoints.Text = "Waypoints";
+			this.btnWaypoints.UseVisualStyleBackColor = false;
+			this.btnWaypoints.Click += new System.EventHandler(this.btnWaypoints_Click);
 			// 
 			// EmpireListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
+			this.CancelButton = this.btnClose;
 			this.ClientSize = new System.Drawing.Size(734, 661);
+			this.Controls.Add(this.btnWaypoints);
+			this.Controls.Add(this.btnAvoidSystems);
+			this.Controls.Add(this.btnMinisters);
 			this.Controls.Add(this.tabs);
 			this.Controls.Add(this.btnClose);
 			this.Controls.Add(this.gamePanel1);
@@ -755,5 +802,8 @@
 		private System.Windows.Forms.ColumnHeader colTo;
 		private System.Windows.Forms.ColumnHeader colText;
 		private System.Windows.Forms.ColumnHeader colPortrait;
+		private Controls.GameButton btnMinisters;
+		private Controls.GameButton btnAvoidSystems;
+		private Controls.GameButton btnWaypoints;
 	}
 }
