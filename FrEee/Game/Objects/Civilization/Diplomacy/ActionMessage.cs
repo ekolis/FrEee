@@ -15,6 +15,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public ActionMessage(Empire recipient)
 			: base(recipient)
 		{
+			if (Recipient == Owner)
+				throw new Exception("You can't perform a diplomatic action on yourself!");
 		}
 
 		/// <summary>

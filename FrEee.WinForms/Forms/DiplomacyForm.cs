@@ -32,9 +32,12 @@ namespace FrEee.WinForms.Forms
 			TargetEmpire = targetEmpire;
 			picPortrait.Image = TargetEmpire.Portrait;
 			ddlMessageType.Items.Add("General Message");
-			ddlMessageType.Items.Add("Make Proposal");
-			ddlMessageType.Items.Add("Break Treaty");
-			ddlMessageType.Items.Add("Declare War");
+			if (targetEmpire != Empire.Current)
+			{
+				ddlMessageType.Items.Add("Make Proposal");
+				ddlMessageType.Items.Add("Break Treaty");
+				ddlMessageType.Items.Add("Declare War");
+			}
 			ddlMessageType.SelectedIndex = 0;
 			givePackage = new Package(Empire.Current, targetEmpire);
 			receivePackage = new Package(targetEmpire, Empire.Current);
