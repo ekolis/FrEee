@@ -21,6 +21,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using System.Threading;
 using FrEee.WinForms.Interfaces;
+using FrEee.Game.Objects.Civilization.Diplomacy;
 
 namespace FrEee.WinForms.Forms
 {
@@ -480,14 +481,14 @@ namespace FrEee.WinForms.Forms
 			if (unallocatedPct > 0)
 				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
 
-			var messages = Empire.Current.IncomingMessages.Count(m =>
+			var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
 				m.TurnNumber >= Galaxy.Current.TurnNumber - 1 && 
 				!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
 				!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
 			if (messages == 1)
-				todos.Add("1 unresolved diplomatic message");
+				todos.Add("1 unresolved diplomatic proposals");
 			else if (messages > 1)
-				todos.Add(messages + " unresolved diplomatic messages");
+				todos.Add(messages + " unresolved diplomatic proposals");
 
 			return todos;
 		}
