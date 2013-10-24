@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// <summary>
 	/// A clause in a treaty.
 	/// </summary>
-	public abstract class Clause : IOwnable, IFoggable
+	public abstract class Clause : IOwnable, IFoggable, IPromotable
 	{
 		protected Clause(Empire giver, Empire receiver)
 		{
@@ -101,6 +101,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		public override string ToString()
 		{
 			return BriefDescription;
+		}
+
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap)
+		{
+			// nothing to do here...
 		}
 	}
 }

@@ -16,10 +16,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 	/// </summary>
 	public class Proposal : Command<Empire>, IFoggable
 	{
-		public Proposal(Empire target)
+		public Proposal(Empire recipient)
 			: base(Empire.Current)
 		{
 			Timestamp = Galaxy.Current.TurnNumber;
+			Recipient = recipient;
 		}
 
 		private Reference<Empire> recipient { get; set; }
@@ -27,6 +28,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// <summary>
 		/// The empire that the proposal is being sent to.
 		/// </summary>
+		[DoNotSerialize]
 		public Empire Recipient { get { return recipient; } set { recipient = value; } }
 
 		public string Description

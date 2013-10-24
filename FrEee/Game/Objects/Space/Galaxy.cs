@@ -1045,7 +1045,7 @@ namespace FrEee.Game.Objects.Space
 			if (oldid > 0 && referrables.ContainsKey(oldid) && oldid != newid)
 				referrables.Remove(oldid);
 
-			return id;
+			return newid;
 		}
 
 		public void UnassignID(long id)

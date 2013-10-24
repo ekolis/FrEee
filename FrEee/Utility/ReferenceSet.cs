@@ -22,7 +22,8 @@ namespace FrEee.Utility
 
 		public bool Add(T item)
 		{
-			return set.Add(item.Reference());
+			var r = item.Reference();
+			return set.Add(r);
 		}
 
 		private ISet<T> Set { get { return new HashSet<T>(set.Select(r => r.Value)); } }

@@ -40,16 +40,19 @@
 			this.treeTable = new System.Windows.Forms.TreeView();
 			this.lblTable = new System.Windows.Forms.Label();
 			this.chkTentative = new System.Windows.Forms.CheckBox();
-			this.txtQuantity = new System.Windows.Forms.TextBox();
-			this.lblQuantity = new System.Windows.Forms.Label();
 			this.btnReturn = new FrEee.WinForms.Controls.GameButton();
 			this.btnRequest = new FrEee.WinForms.Controls.GameButton();
 			this.btnGive = new FrEee.WinForms.Controls.GameButton();
-			this.btnGenerate = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSend = new FrEee.WinForms.Controls.GameButton();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+			this.pnlQuantityLevel = new System.Windows.Forms.Panel();
+			this.lblQuantityLevel = new System.Windows.Forms.Label();
+			this.txtQuantityLevel = new System.Windows.Forms.TextBox();
+			this.chkPercent = new System.Windows.Forms.CheckBox();
+			this.ddlAlliance = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.pnlQuantityLevel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -71,7 +74,7 @@
 			this.txtInReplyTo.Multiline = true;
 			this.txtInReplyTo.Name = "txtInReplyTo";
 			this.txtInReplyTo.ReadOnly = true;
-			this.txtInReplyTo.Size = new System.Drawing.Size(524, 100);
+			this.txtInReplyTo.Size = new System.Drawing.Size(636, 100);
 			this.txtInReplyTo.TabIndex = 2;
 			// 
 			// label2
@@ -92,7 +95,7 @@
 			this.txtMessage.Location = new System.Drawing.Point(15, 163);
 			this.txtMessage.Multiline = true;
 			this.txtMessage.Name = "txtMessage";
-			this.txtMessage.Size = new System.Drawing.Size(630, 100);
+			this.txtMessage.Size = new System.Drawing.Size(742, 100);
 			this.txtMessage.TabIndex = 5;
 			// 
 			// ddlMessageType
@@ -103,7 +106,7 @@
 			this.ddlMessageType.FormattingEnabled = true;
 			this.ddlMessageType.Location = new System.Drawing.Point(83, 136);
 			this.ddlMessageType.Name = "ddlMessageType";
-			this.ddlMessageType.Size = new System.Drawing.Size(197, 21);
+			this.ddlMessageType.Size = new System.Drawing.Size(199, 21);
 			this.ddlMessageType.TabIndex = 23;
 			this.ddlMessageType.SelectedIndexChanged += new System.EventHandler(this.ddlMessageType_SelectedIndexChanged);
 			// 
@@ -114,10 +117,12 @@
 			this.treeWeHave.BackColor = System.Drawing.Color.Black;
 			this.treeWeHave.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.treeWeHave.ForeColor = System.Drawing.Color.White;
+			this.treeWeHave.HideSelection = false;
 			this.treeWeHave.Location = new System.Drawing.Point(15, 290);
 			this.treeWeHave.Name = "treeWeHave";
-			this.treeWeHave.Size = new System.Drawing.Size(201, 236);
+			this.treeWeHave.Size = new System.Drawing.Size(253, 236);
 			this.treeWeHave.TabIndex = 25;
+			this.treeWeHave.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeWeHave_MouseDoubleClick);
 			// 
 			// treeTheyHave
 			// 
@@ -126,10 +131,12 @@
 			this.treeTheyHave.BackColor = System.Drawing.Color.Black;
 			this.treeTheyHave.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.treeTheyHave.ForeColor = System.Drawing.Color.White;
-			this.treeTheyHave.Location = new System.Drawing.Point(439, 290);
+			this.treeTheyHave.HideSelection = false;
+			this.treeTheyHave.Location = new System.Drawing.Point(505, 290);
 			this.treeTheyHave.Name = "treeTheyHave";
-			this.treeTheyHave.Size = new System.Drawing.Size(206, 236);
+			this.treeTheyHave.Size = new System.Drawing.Size(252, 236);
 			this.treeTheyHave.TabIndex = 26;
+			this.treeTheyHave.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeTheyHave_MouseDoubleClick);
 			// 
 			// lblWeHave
 			// 
@@ -144,10 +151,11 @@
 			// 
 			// lblTheyHave
 			// 
+			this.lblTheyHave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.lblTheyHave.AutoSize = true;
 			this.lblTheyHave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
 			this.lblTheyHave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblTheyHave.Location = new System.Drawing.Point(436, 270);
+			this.lblTheyHave.Location = new System.Drawing.Point(502, 270);
 			this.lblTheyHave.Name = "lblTheyHave";
 			this.lblTheyHave.Size = new System.Drawing.Size(77, 17);
 			this.lblTheyHave.TabIndex = 28;
@@ -161,17 +169,20 @@
 			this.treeTable.BackColor = System.Drawing.Color.Black;
 			this.treeTable.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.treeTable.ForeColor = System.Drawing.Color.White;
-			this.treeTable.Location = new System.Drawing.Point(222, 290);
+			this.treeTable.HideSelection = false;
+			this.treeTable.Location = new System.Drawing.Point(274, 290);
 			this.treeTable.Name = "treeTable";
-			this.treeTable.Size = new System.Drawing.Size(211, 236);
+			this.treeTable.Size = new System.Drawing.Size(225, 236);
 			this.treeTable.TabIndex = 29;
+			this.treeTable.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeTable_AfterSelect);
+			this.treeTable.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.treeTable_MouseDoubleClick);
 			// 
 			// lblTable
 			// 
 			this.lblTable.AutoSize = true;
 			this.lblTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
 			this.lblTable.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblTable.Location = new System.Drawing.Point(219, 270);
+			this.lblTable.Location = new System.Drawing.Point(271, 270);
 			this.lblTable.Name = "lblTable";
 			this.lblTable.Size = new System.Drawing.Size(91, 17);
 			this.lblTable.TabIndex = 30;
@@ -187,31 +198,15 @@
 			this.chkTentative.Text = "Proposal is Tentative";
 			this.chkTentative.UseVisualStyleBackColor = true;
 			// 
-			// txtQuantity
-			// 
-			this.txtQuantity.Location = new System.Drawing.Point(356, 566);
-			this.txtQuantity.Name = "txtQuantity";
-			this.txtQuantity.Size = new System.Drawing.Size(77, 20);
-			this.txtQuantity.TabIndex = 36;
-			// 
-			// lblQuantity
-			// 
-			this.lblQuantity.AutoSize = true;
-			this.lblQuantity.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblQuantity.Location = new System.Drawing.Point(273, 568);
-			this.lblQuantity.Name = "lblQuantity";
-			this.lblQuantity.Size = new System.Drawing.Size(77, 13);
-			this.lblQuantity.TabIndex = 37;
-			this.lblQuantity.Text = "Quantity/Level";
-			// 
 			// btnReturn
 			// 
-			this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReturn.BackColor = System.Drawing.Color.Black;
 			this.btnReturn.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnReturn.Location = new System.Drawing.Point(229, 532);
+			this.btnReturn.Location = new System.Drawing.Point(274, 532);
 			this.btnReturn.Name = "btnReturn";
-			this.btnReturn.Size = new System.Drawing.Size(204, 23);
+			this.btnReturn.Size = new System.Drawing.Size(225, 23);
 			this.btnReturn.TabIndex = 33;
 			this.btnReturn.Text = "X";
 			this.btnReturn.UseVisualStyleBackColor = false;
@@ -222,9 +217,9 @@
 			this.btnRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnRequest.BackColor = System.Drawing.Color.Black;
 			this.btnRequest.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRequest.Location = new System.Drawing.Point(439, 532);
+			this.btnRequest.Location = new System.Drawing.Point(505, 532);
 			this.btnRequest.Name = "btnRequest";
-			this.btnRequest.Size = new System.Drawing.Size(204, 23);
+			this.btnRequest.Size = new System.Drawing.Size(250, 23);
 			this.btnRequest.TabIndex = 32;
 			this.btnRequest.Text = "<";
 			this.btnRequest.UseVisualStyleBackColor = false;
@@ -232,27 +227,16 @@
 			// 
 			// btnGive
 			// 
-			this.btnGive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnGive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.btnGive.BackColor = System.Drawing.Color.Black;
 			this.btnGive.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.btnGive.Location = new System.Drawing.Point(12, 532);
 			this.btnGive.Name = "btnGive";
-			this.btnGive.Size = new System.Drawing.Size(204, 23);
+			this.btnGive.Size = new System.Drawing.Size(256, 23);
 			this.btnGive.TabIndex = 31;
 			this.btnGive.Text = ">";
 			this.btnGive.UseVisualStyleBackColor = false;
 			this.btnGive.Click += new System.EventHandler(this.btnGive_Click);
-			// 
-			// btnGenerate
-			// 
-			this.btnGenerate.BackColor = System.Drawing.Color.Black;
-			this.btnGenerate.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnGenerate.Location = new System.Drawing.Point(286, 134);
-			this.btnGenerate.Name = "btnGenerate";
-			this.btnGenerate.Size = new System.Drawing.Size(100, 23);
-			this.btnGenerate.TabIndex = 24;
-			this.btnGenerate.Text = "Generate";
-			this.btnGenerate.UseVisualStyleBackColor = false;
 			// 
 			// btnCancel
 			// 
@@ -260,7 +244,7 @@
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(439, 563);
+			this.btnCancel.Location = new System.Drawing.Point(551, 563);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 23);
 			this.btnCancel.TabIndex = 20;
@@ -274,7 +258,7 @@
 			this.btnSend.BackColor = System.Drawing.Color.Black;
 			this.btnSend.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnSend.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSend.Location = new System.Drawing.Point(545, 563);
+			this.btnSend.Location = new System.Drawing.Point(657, 563);
 			this.btnSend.Name = "btnSend";
 			this.btnSend.Size = new System.Drawing.Size(100, 23);
 			this.btnSend.TabIndex = 19;
@@ -292,14 +276,67 @@
 			this.picPortrait.TabStop = false;
 			this.picPortrait.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseClick);
 			// 
+			// pnlQuantityLevel
+			// 
+			this.pnlQuantityLevel.Controls.Add(this.chkPercent);
+			this.pnlQuantityLevel.Controls.Add(this.lblQuantityLevel);
+			this.pnlQuantityLevel.Controls.Add(this.txtQuantityLevel);
+			this.pnlQuantityLevel.Location = new System.Drawing.Point(233, 563);
+			this.pnlQuantityLevel.Name = "pnlQuantityLevel";
+			this.pnlQuantityLevel.Size = new System.Drawing.Size(312, 25);
+			this.pnlQuantityLevel.TabIndex = 38;
+			this.pnlQuantityLevel.Visible = false;
+			// 
+			// lblQuantityLevel
+			// 
+			this.lblQuantityLevel.AutoSize = true;
+			this.lblQuantityLevel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblQuantityLevel.Location = new System.Drawing.Point(66, 7);
+			this.lblQuantityLevel.Name = "lblQuantityLevel";
+			this.lblQuantityLevel.Size = new System.Drawing.Size(77, 13);
+			this.lblQuantityLevel.TabIndex = 39;
+			this.lblQuantityLevel.Text = "Quantity/Level";
+			// 
+			// txtQuantityLevel
+			// 
+			this.txtQuantityLevel.Location = new System.Drawing.Point(147, 3);
+			this.txtQuantityLevel.Name = "txtQuantityLevel";
+			this.txtQuantityLevel.Size = new System.Drawing.Size(67, 20);
+			this.txtQuantityLevel.TabIndex = 38;
+			this.txtQuantityLevel.TextChanged += new System.EventHandler(this.txtQuantityLevel_TextChanged);
+			// 
+			// chkPercent
+			// 
+			this.chkPercent.AutoSize = true;
+			this.chkPercent.Location = new System.Drawing.Point(222, 6);
+			this.chkPercent.Name = "chkPercent";
+			this.chkPercent.Size = new System.Drawing.Size(34, 17);
+			this.chkPercent.TabIndex = 40;
+			this.chkPercent.Text = "%";
+			this.chkPercent.UseVisualStyleBackColor = true;
+			this.chkPercent.CheckedChanged += new System.EventHandler(this.chkPercent_CheckedChanged);
+			// 
+			// ddlAlliance
+			// 
+			this.ddlAlliance.DisplayMember = "Name";
+			this.ddlAlliance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlAlliance.FormattingEnabled = true;
+			this.ddlAlliance.Location = new System.Drawing.Point(336, 565);
+			this.ddlAlliance.Name = "ddlAlliance";
+			this.ddlAlliance.Size = new System.Drawing.Size(121, 21);
+			this.ddlAlliance.TabIndex = 43;
+			this.ddlAlliance.ValueMember = "Value";
+			this.ddlAlliance.Visible = false;
+			this.ddlAlliance.SelectedIndexChanged += new System.EventHandler(this.ddlAlliance_SelectedIndexChanged);
+			// 
 			// DiplomacyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(657, 598);
-			this.Controls.Add(this.lblQuantity);
-			this.Controls.Add(this.txtQuantity);
+			this.ClientSize = new System.Drawing.Size(769, 598);
+			this.Controls.Add(this.ddlAlliance);
+			this.Controls.Add(this.pnlQuantityLevel);
 			this.Controls.Add(this.chkTentative);
 			this.Controls.Add(this.btnReturn);
 			this.Controls.Add(this.btnRequest);
@@ -310,7 +347,6 @@
 			this.Controls.Add(this.lblWeHave);
 			this.Controls.Add(this.treeTheyHave);
 			this.Controls.Add(this.treeWeHave);
-			this.Controls.Add(this.btnGenerate);
 			this.Controls.Add(this.ddlMessageType);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSend);
@@ -323,6 +359,8 @@
 			this.Name = "DiplomacyForm";
 			this.Text = "Diplomacy";
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
+			this.pnlQuantityLevel.ResumeLayout(false);
+			this.pnlQuantityLevel.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -338,7 +376,6 @@
 		private Controls.GameButton btnCancel;
 		private Controls.GameButton btnSend;
 		private System.Windows.Forms.ComboBox ddlMessageType;
-		private Controls.GameButton btnGenerate;
 		private System.Windows.Forms.TreeView treeWeHave;
 		private System.Windows.Forms.TreeView treeTheyHave;
 		private System.Windows.Forms.Label lblWeHave;
@@ -349,7 +386,10 @@
 		private Controls.GameButton btnRequest;
 		private Controls.GameButton btnReturn;
 		private System.Windows.Forms.CheckBox chkTentative;
-		private System.Windows.Forms.TextBox txtQuantity;
-		private System.Windows.Forms.Label lblQuantity;
+		private System.Windows.Forms.Panel pnlQuantityLevel;
+		private System.Windows.Forms.Label lblQuantityLevel;
+		private System.Windows.Forms.TextBox txtQuantityLevel;
+		private System.Windows.Forms.CheckBox chkPercent;
+		private System.Windows.Forms.ComboBox ddlAlliance;
 	}
 }
