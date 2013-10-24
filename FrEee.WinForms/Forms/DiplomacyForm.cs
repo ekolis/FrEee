@@ -2,10 +2,12 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Civilization.Diplomacy;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -34,8 +36,8 @@ namespace FrEee.WinForms.Forms
 			ddlMessageType.Items.Add("Break Treaty");
 			ddlMessageType.Items.Add("Declare War");
 			ddlMessageType.SelectedIndex = 0;
-			givePackage = new Package(Empire.Current);
-			receivePackage = new Package(targetEmpire);
+			givePackage = new Package(Empire.Current, targetEmpire);
+			receivePackage = new Package(targetEmpire, Empire.Current);
 		}
 
 		public DiplomacyForm(IMessage inReplyTo)
@@ -112,8 +114,8 @@ namespace FrEee.WinForms.Forms
 				txtQuantity.Visible = true;
 				if (item == "Make Proposal")
 				{
-					givePackage = new Package(Empire.Current);
-					receivePackage = new Package(TargetEmpire);
+					givePackage = new Package(Empire.Current, TargetEmpire);
+					receivePackage = new Package(TargetEmpire, Empire.Current);
 				}
 				else // Counter Proposal
 				{
@@ -164,8 +166,66 @@ namespace FrEee.WinForms.Forms
 		{
 			treeTable.Initialize(32);
 
-			// TODO - treaty elements
+			// treaty elements
 			var treatyNode = tree.AddItemWithImage("Treaty Elements", "Treaty Elements", emp.Icon);
+			if (!package.TreatyClauses.OfType<AllianceClause>().Any())
+			{
+				var allianceNode = treatyNode.AddItemWithImage("Alliances", "Alliances", emp.Icon);
+				foreach (AllianceLevel alliance in Enum.GetValues(typeof(AllianceLevel)))
+				{
+					if (alliance != AllianceLevel.None)
+					{
+						var clause = new AllianceClause(package.Owner, package.Recipient, alliance);
+						allianceNode.AddItemWithImage(clause.BriefDescription, clause, null);
+					}
+				}
+			}
+			if (!package.TreatyClauses.OfType<CooperativeResearchClause>().Any())
+			{
+				var clause = new CooperativeResearchClause(package.Owner, package.Recipient);
+				treatyNode.AddItemWithImage(clause.BriefDescription, clause, null);
+			}
+			var freeTradeNode = treatyNode.AddItemWithImage("Free Trade", "Free Trade", Resource.Minerals.Icon);
+			foreach (var res in Resource.All.Where(res => res.IsGlobal && !package.TreatyClauses.OfType<FreeTradeClause>().Any(c => c.Resource == res)))
+			{
+				var clause = new FreeTradeClause(package.Owner, package.Recipient, res);
+				freeTradeNode.AddItemWithImage(res.Name, clause, res.Icon);
+			}
+			if (freeTradeNode.Nodes.Count == 0)
+				freeTradeNode.Remove();
+			var abilNode = treatyNode.AddItemWithImage("Ability Sharing", "Ability Sharing", null);
+			foreach (var abil in Mod.Current.AbilityRules.Where(abil =>
+				(abil.CanTarget(AbilityTargets.Sector) || abil.CanTarget(AbilityTargets.StarSystem) || abil.CanTarget(AbilityTargets.Galaxy)) &&
+				!package.TreatyClauses.OfType<ShareAbilityClause>().Any(c => c.AbilityRule == abil)))
+			{
+				var clause = new ShareAbilityClause(package.Owner, package.Recipient, abil, SharingPriority.Medium);
+				abilNode.AddItemWithImage(abil.Name, clause, null);
+			}
+			if (abilNode.Nodes.Count == 0)
+				abilNode.Remove();
+			if (!package.TreatyClauses.OfType<ShareCombatLogsClause>().Any())
+			{
+				var clause = new ShareCombatLogsClause(package.Owner, package.Recipient);
+				treatyNode.AddItemWithImage(clause.BriefDescription, clause, null);
+			}
+			if (!package.TreatyClauses.OfType<ShareDesignsClause>().Any())
+			{
+				var clause = new ShareDesignsClause(package.Owner, package.Recipient);
+				treatyNode.AddItemWithImage(clause.BriefDescription, clause, null);
+			}
+			if (!package.TreatyClauses.OfType<ShareVisionClause>().Any())
+			{
+				var clause = new ShareVisionClause(package.Owner, package.Recipient);
+				treatyNode.AddItemWithImage(clause.BriefDescription, clause, null);
+			}
+			var tributeNode = treatyNode.AddItemWithImage("Tribute", "Tribute", Resource.Minerals.Icon);
+			foreach (var res in Resource.All.Where(res => res.IsGlobal && !package.TreatyClauses.OfType<FreeTradeClause>().Any(c => c.Resource == res)))
+			{
+				var clause = new TributeClause(package.Owner, package.Recipient, res, 10, true);
+				tributeNode.AddItemWithImage(res.Name, clause, res.Icon);
+			}
+			if (tributeNode.Nodes.Count == 0)
+				tributeNode.Remove();
 
 			// sort planets alphabetically
 			var planetsNode = tree.AddItemWithImage("Planets", "Planets", Pictures.GetGenericImage(typeof(Planet)));
@@ -220,7 +280,8 @@ namespace FrEee.WinForms.Forms
 			treeTable.Initialize(32);
 			var node = treeTable.AddItemWithImage(text, package, package.Owner.Icon);
 
-			// TODO - treaty elements
+			foreach (var c in package.TreatyClauses)
+				node.AddItemWithImage(c.BriefDescription, c, null); // TODO - treaty clause icons?
 
 			foreach (var p in package.Planets.OrderBy(p => p.Name))
 				node.AddItemWithImage(p.Name, p, p.Icon);

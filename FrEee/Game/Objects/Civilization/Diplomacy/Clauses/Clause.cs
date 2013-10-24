@@ -20,6 +20,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		}
 
 		/// <summary>
+		/// Is this clause in effect, or is it still a proposal?
+		/// </summary>
+		public bool IsInEffect { get; set; }
+
+		/// <summary>
 		/// The empire that is offering something in this clause.
 		/// </summary>
 		public Empire Giver { get; set; }
@@ -37,7 +42,12 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// A description of the effects of this clause.
 		/// </summary>
-		public abstract string Description { get; }
+		public abstract string BriefDescription { get; }
+
+		/// <summary>
+		/// A description of the effects of this clause.
+		/// </summary>
+		public abstract string FullDescription { get; }
 
 		public Empire Owner
 		{
@@ -90,7 +100,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 
 		public override string ToString()
 		{
-			return Description;
+			return BriefDescription;
 		}
 	}
 }

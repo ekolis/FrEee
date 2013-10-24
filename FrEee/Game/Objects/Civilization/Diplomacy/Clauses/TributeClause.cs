@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				toPay = Debt / totalDebt * maxGiveable;
 				var unpaid = Debt - toPay;
 				Giver.Log.Add(Receiver.CreateLogMessage("We were unable to fulfill our tribute obligations to the " + Receiver + ". We fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + "."));
-				Receiver.Log.Add(Giver.CreateLogMessage("The " + Giver  + "was unable to fulfill its tribute obligations. They fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + "."));
+				Receiver.Log.Add(Giver.CreateLogMessage("The " + Giver + "was unable to fulfill its tribute obligations. They fell short by " + unpaid.ToUnitString(true) + " " + Resource.Name.ToLower() + "."));
 			}
 
 			// transfer resources
@@ -83,7 +83,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			}
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
@@ -91,6 +91,19 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 					return Giver.WeOrName() + " will pay " + Receiver.UsOrName() + " a tribute of " + Quantity + "% of " + Giver.WeOrName(false).Possessive() + " gross " + Resource.Name.ToLower() + " income.";
 				else
 					return Giver.WeOrName() + " will pay " + Receiver.UsOrName() + " a tribute of " + Quantity.ToUnitString(true) + " " + Resource.Name.ToLower() + " per turn.";
+			}
+		}
+
+		public override string BriefDescription
+		{
+			get
+			{
+				string qty;
+				if (IsPercentage)
+					qty = Quantity + "%";
+				else
+					qty = Quantity.ToUnitString(true);
+				return "Tribute (" + Resource + ") - " + qty;
 			}
 		}
 	}

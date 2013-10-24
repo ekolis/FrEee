@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// </summary>
 	public class ShareDesignsClause : Clause
 	{
-		protected ShareDesignsClause(Empire giver, Empire receiver)
+		public ShareDesignsClause(Empire giver, Empire receiver)
 			: base(giver, receiver)
 		{
 		}
@@ -22,12 +22,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				Receiver.KnownDesigns.Add(d);
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Giver.WeOrName() + " will share all known vehicle designs with " + Receiver.UsOrName();
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Share Designs"; }
 		}
 	}
 }
