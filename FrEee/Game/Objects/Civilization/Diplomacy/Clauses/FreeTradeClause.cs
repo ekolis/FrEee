@@ -52,12 +52,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			set;
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Receiver.WeOrName() + " will receive income equal to " + TradePercentage + "% of " + Giver.UsOrName().Possessive() + " gross " + Resource.Name.ToLower() + " income (will increase to " + Mod.Current.Settings.MaxTradePercent + "% over " + Math.Ceiling(Mod.Current.Settings.MaxTradePercent - TradePercentage) / Mod.Current.Settings.TradePercentPerTurn + " turns).";
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Free Trade (" + Resource + ")"; }
 		}
 	}
 }

@@ -788,7 +788,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ILookup<Empire, Clause> OfferedTreatyClauses
 		{
-			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this).ToLookup(c => c.Receiver); }
+			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver); }
 		}
 
 		/// <summary>
@@ -796,7 +796,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ILookup<Empire, Clause> ReceivedTreatyClauses
 		{
-			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this).ToLookup(c => c.Giver); }
+			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver); }
 		}
 	}
 }

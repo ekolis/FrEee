@@ -63,7 +63,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			Empire.Current.Commands.Add(cmd);
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
@@ -79,6 +79,14 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				else // no alliance
 					list.Add(Giver.WeOrName() + " is hostile to " + Receiver.UsOrName() + ".");
 				return string.Join("\n", list.ToArray());
+			}
+		}
+
+		public override string BriefDescription
+		{
+			get
+			{
+				return AllianceLevel.ToSpacedString();
 			}
 		}
 	}

@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// </summary>
 	public class CooperativeResearchClause : Clause
 	{
-		protected CooperativeResearchClause(Empire giver, Empire receiver)
+		public CooperativeResearchClause(Empire giver, Empire receiver)
 			: base(giver, receiver)
 		{
 		}
@@ -50,12 +50,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			}
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Receiver.WeOrName() + " has a " + Mod.Current.Settings.CooperativeResearchBreakthroughChance + "% chance of achieving a breakthrough each turn in any technology that " + Giver.WeOrName(false) + " " + (Giver == Empire.Current ? "are" : "is") + " more advanced in, provided " + Receiver.WeOrName() + " meet" + (Receiver == Empire.Current ? "" : "s") + " the prerequisites.";
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Cooperative Research"; }
 		}
 	}
 }

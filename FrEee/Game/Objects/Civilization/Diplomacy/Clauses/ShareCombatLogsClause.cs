@@ -13,7 +13,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// </summary>
 	public class ShareCombatLogsClause : Clause
 	{
-		protected ShareCombatLogsClause(Empire giver, Empire receiver)
+		public ShareCombatLogsClause(Empire giver, Empire receiver)
 			: base(giver, receiver)
 		{
 		}
@@ -24,12 +24,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				Receiver.Log.Add(msg.Copy());
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Giver.WeOrName() + " will share all combat logs with " + Receiver.UsOrName();
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Share Combat Logs"; }
 		}
 	}
 }

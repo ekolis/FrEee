@@ -38,12 +38,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Giver.WeOrName() + " will share the " + AbilityRule.Name + " ability with " + Receiver.UsOrName() + " at " + Priority.ToString().ToLower() + " priority.";
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Share Ability (" + AbilityRule.Name + ") - " + Priority + " Priority"; }
 		}
 	}
 }

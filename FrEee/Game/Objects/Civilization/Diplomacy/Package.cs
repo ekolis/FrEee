@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -12,13 +13,14 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
 	/// <summary>
 	/// A package of items that can be gifted or traded.
-	/// TODO - treaty elements in packages
 	/// </summary>
 	public class Package : IOwnable, IPromotable
 	{
-		public Package(Empire owner)
+		public Package(Empire owner, Empire recipient)
 		{
 			Owner = owner;
+			Recipient = recipient;
+			TreatyClauses = new ReferenceSet<Clause>();
 			Planets = new ReferenceSet<Planet>();
 			Vehicles = new ReferenceSet<IVehicle>();
 			Resources = new ResourceQuantity();
@@ -26,6 +28,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			StarCharts = new ReferenceSet<StarSystem>();
 			CommunicationChannels = new ReferenceSet<Empire>();
 		}
+
+		public ReferenceSet<Clause> TreatyClauses { get; private set; }
 
 		public ReferenceSet<Planet> Planets { get; private set; }
 
@@ -58,6 +62,22 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 			get
 			{
+				if (TreatyClauses.OfType<AllianceClause>().Count() > 1)
+					yield return "A treaty cannot contain more than one alliance clause per side.";
+				if (TreatyClauses.OfType<CooperativeResearchClause>().Count() > 1)
+					yield return "A treaty cannot contain more than one cooperative research clause per side.";
+				if (TreatyClauses.OfType<FreeTradeClause>().GroupBy(c => c.Resource).Any(g => g.Count() > 1))
+					yield return "A treaty cannot contain more than free trade clause per resource per side.";
+				if (TreatyClauses.OfType<ShareAbilityClause>().GroupBy(c => c.AbilityRule).Any(g => g.Count() > 1))
+					yield return "A treaty cannot contain more than ability-sharing clause per ability per side.";
+				if (TreatyClauses.OfType<ShareCombatLogsClause>().Count() > 1)
+					yield return "A treaty cannot contain more than one combat-log-sharing clause per side.";
+				if (TreatyClauses.OfType<ShareDesignsClause>().Count() > 1)
+					yield return "A treaty cannot contain more than one design-sharing clause per side.";
+				if (TreatyClauses.OfType<ShareVisionClause>().Count() > 1)
+					yield return "A treaty cannot contain more than one vision-sharing clause per side.";
+				if (TreatyClauses.OfType<TributeClause>().GroupBy(c => c.Resource).Any(g => g.Count() > 1))
+					yield return "A treaty cannot contain more than tribute clause per resource per side.";
 				foreach (var p in Planets.Where(p => p.Owner != Owner))
 					yield return "The " + Owner + " does not own " + p + ".";
 				foreach (var v in Vehicles.Where(v => v.Owner != Owner))
@@ -75,7 +95,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 				foreach (var emp in CommunicationChannels.Where(emp => !Owner.EncounteredEmpires.Contains(emp)))
 					yield return "The " + Owner + " has not encountered the " + emp + ".";
 
-				// TODO - game setup restrictions on gifts/trades
+				// TODO - game setup restrictions on gifts/trades/treaties
 			}
 		}
 
@@ -83,6 +103,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
+
+		private Reference<Empire> recipient { get; set; }
+
+		[DoNotSerialize]
+		public Empire Recipient { get { return recipient; } set { recipient = value; } }
 
 		public bool IsEmpty
 		{

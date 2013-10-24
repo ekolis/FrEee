@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 	/// </summary>
 	public class ShareVisionClause : Clause
 	{
-		protected ShareVisionClause(Empire giver, Empire receiver)
+		public ShareVisionClause(Empire giver, Empire receiver)
 			: base(giver, receiver)
 		{
 		}
@@ -30,12 +30,17 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			}
 		}
 
-		public override string Description
+		public override string FullDescription
 		{
 			get
 			{
 				return Giver.WeOrName() + " will share all vision memory with " + Receiver.UsOrName();
 			}
+		}
+
+		public override string BriefDescription
+		{
+			get { return "Share Vision"; }
 		}
 	}
 }
