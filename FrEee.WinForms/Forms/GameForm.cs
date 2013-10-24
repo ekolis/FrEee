@@ -442,13 +442,17 @@ namespace FrEee.WinForms.Forms
 		{
 			var todos = new List<string>();
 
-			var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Speed > 0 && !v.Orders.Any()).Count();
+			var ships = Empire.Current.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => v.Container == null && v.Speed > 0 && !v.Orders.Any()).Count();
 			if (ships == 1)
 				todos.Add("1 idle ship");
 			else if (ships > 1)
 				todos.Add(ships + " idle ships");
 
-			// TODO - idle fleets
+			var fleets = Empire.Current.OwnedSpaceObjects.OfType<Fleet>().Where(f => f.Container == null && f.Speed > 0 && !f.Orders.Any()).Count();
+			if (fleets == 1)
+				todos.Add("1 idle fleet");
+			else if (fleets > 1)
+				todos.Add(fleets + " idle fleets");
 
 			var queues = Empire.Current.ConstructionQueues.Where(q => q.Eta < 1d).Count();
 			if (queues == 1)
@@ -476,7 +480,14 @@ namespace FrEee.WinForms.Forms
 			if (unallocatedPct > 0)
 				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
 
-			// TODO - unresolved diplomatic messages (not replied or marked as ignored)
+			var messages = Empire.Current.IncomingMessages.Count(m =>
+				m.TurnNumber >= Galaxy.Current.TurnNumber - 1 && 
+				!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
+				!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
+			if (messages == 1)
+				todos.Add("1 unresolved diplomatic message");
+			else if (messages > 1)
+				todos.Add(messages + " unresolved diplomatic messages");
 
 			return todos;
 		}
