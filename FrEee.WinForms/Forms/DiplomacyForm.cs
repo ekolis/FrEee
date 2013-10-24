@@ -171,8 +171,8 @@ namespace FrEee.WinForms.Forms
 		{
 			tree.Initialize(32);
 
-			// treaty elements
-			var treatyNode = tree.AddItemWithImage("Treaty Elements", "Treaty Elements", emp.Icon);
+			// treaty clauses
+			var treatyNode = tree.AddItemWithImage("Treaty Clauses", "Treaty Clauses", emp.Icon);
 			if (!package.TreatyClauses.OfType<AllianceClause>().Any())
 			{
 				var allianceNode = treatyNode.AddItemWithImage("Alliances", "Alliances", emp.Icon);
@@ -308,7 +308,7 @@ namespace FrEee.WinForms.Forms
 				Package package = node.Parent.Text == "We Give" ? givePackage : receivePackage;
 				if (node.Tag is Clause)
 					package.TreatyClauses.Remove((Clause)node.Tag);
-				if (node.Tag is Planet)
+				else if (node.Tag is Planet)
 					package.Planets.Remove((Planet)node.Tag);
 				else if (node.Tag is Vehicle)
 					package.Vehicles.Remove((Vehicle)node.Tag);
@@ -326,6 +326,13 @@ namespace FrEee.WinForms.Forms
 					package.StarCharts.Remove((StarSystem)node.Tag);
 				else if (node.Tag is Empire)
 					package.CommunicationChannels.Remove((Empire)node.Tag);
+				else
+					return;
+				PopulateTable();
+				if (package == givePackage)
+					PopulateWeHave();
+				else if (package == receivePackage)
+					PopulateTheyHave();
 			}
 		}
 
