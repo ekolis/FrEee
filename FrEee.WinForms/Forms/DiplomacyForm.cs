@@ -38,6 +38,11 @@ namespace FrEee.WinForms.Forms
 			ddlMessageType.SelectedIndex = 0;
 			givePackage = new Package(Empire.Current, targetEmpire);
 			receivePackage = new Package(targetEmpire, Empire.Current);
+			foreach (AllianceLevel alliance in Enum.GetValues(typeof(AllianceLevel)))
+			{
+				if (alliance != AllianceLevel.None)
+					ddlAlliance.Items.Add(new { Name = alliance.ToSpacedString(), Value = alliance });
+			}
 		}
 
 		public DiplomacyForm(IMessage inReplyTo)
@@ -93,8 +98,8 @@ namespace FrEee.WinForms.Forms
 				btnRequest.Visible = false;
 				btnReturn.Visible = false;
 				chkTentative.Visible = false;
-				lblQuantity.Visible = false;
-				txtQuantity.Visible = false;
+				pnlQuantityLevel.Visible = false;
+				ddlAlliance.Visible = false;
 			}
 			else if (item == "Make Proposal" ||
 					item == "Counter Proposal")
@@ -110,8 +115,8 @@ namespace FrEee.WinForms.Forms
 				btnReturn.Visible = true;
 				chkTentative.Visible = true;
 				chkTentative.Enabled = true;
-				lblQuantity.Visible = true;
-				txtQuantity.Visible = true;
+				pnlQuantityLevel.Visible = false;
+				ddlAlliance.Visible = false;
 				if (item == "Make Proposal")
 				{
 					givePackage = new Package(Empire.Current, TargetEmpire);
@@ -142,8 +147,8 @@ namespace FrEee.WinForms.Forms
 				chkTentative.Visible = true;
 				chkTentative.Enabled = false;
 				chkTentative.Checked = ((ProposalMessage)InReplyTo).Proposal.IsTentative;
-				lblQuantity.Visible = false;
-				txtQuantity.Visible = false;
+				pnlQuantityLevel.Visible = false;
+				ddlAlliance.Visible = false;
 				var pm = (ProposalMessage)InReplyTo;
 				// invert give/receive since we're on the target side of the proposal
 				givePackage = pm.Proposal.ReceivePackage;
@@ -164,7 +169,7 @@ namespace FrEee.WinForms.Forms
 
 		private void PopulateSomeoneHas(Empire emp, TreeView tree, Package package)
 		{
-			treeTable.Initialize(32);
+			tree.Initialize(32);
 
 			// treaty elements
 			var treatyNode = tree.AddItemWithImage("Treaty Elements", "Treaty Elements", emp.Icon);
@@ -191,8 +196,6 @@ namespace FrEee.WinForms.Forms
 				var clause = new FreeTradeClause(package.Owner, package.Recipient, res);
 				freeTradeNode.AddItemWithImage(res.Name, clause, res.Icon);
 			}
-			if (freeTradeNode.Nodes.Count == 0)
-				freeTradeNode.Remove();
 			var abilNode = treatyNode.AddItemWithImage("Ability Sharing", "Ability Sharing", null);
 			foreach (var abil in Mod.Current.AbilityRules.Where(abil =>
 				(abil.CanTarget(AbilityTargets.Sector) || abil.CanTarget(AbilityTargets.StarSystem) || abil.CanTarget(AbilityTargets.Galaxy)) &&
@@ -201,8 +204,6 @@ namespace FrEee.WinForms.Forms
 				var clause = new ShareAbilityClause(package.Owner, package.Recipient, abil, SharingPriority.Medium);
 				abilNode.AddItemWithImage(abil.Name, clause, null);
 			}
-			if (abilNode.Nodes.Count == 0)
-				abilNode.Remove();
 			if (!package.TreatyClauses.OfType<ShareCombatLogsClause>().Any())
 			{
 				var clause = new ShareCombatLogsClause(package.Owner, package.Recipient);
@@ -224,23 +225,17 @@ namespace FrEee.WinForms.Forms
 				var clause = new TributeClause(package.Owner, package.Recipient, res, 10, true);
 				tributeNode.AddItemWithImage(res.Name, clause, res.Icon);
 			}
-			if (tributeNode.Nodes.Count == 0)
-				tributeNode.Remove();
 
 			// sort planets alphabetically
 			var planetsNode = tree.AddItemWithImage("Planets", "Planets", Pictures.GetGenericImage(typeof(Planet)));
 			foreach (var p in emp.ColonizedPlanets.Where(p => !package.Planets.Contains(p)).OrderBy(p => p.Name))
 				planetsNode.AddItemWithImage(p.Name, p, p.Icon);
-			if (planetsNode.Nodes.Count == 0)
-				planetsNode.Remove();
 
 			// sort vehicles descending by size, then alphabetically
 			// no trading units that are in cargo
 			var vehiclesNode = tree.AddItemWithImage("Vehicles", "Vehicles", Pictures.GetVehicleTypeImage(emp.ShipsetPath, VehicleTypes.Ship));
 			foreach (var v in emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(v => !package.Vehicles.Contains(v) && !(v is IUnit && ((IUnit)v).Container is ISpaceObject)).OrderByDescending(v => v.Design.Hull.Size).ThenBy(v => v.Name))
 				vehiclesNode.AddItemWithImage(v.Name, v, v.Icon);
-			if (vehiclesNode.Nodes.Count == 0)
-				vehiclesNode.Remove();
 
 			// resources
 			var resourcesNode = tree.AddItemWithImage("Resources", "Resources", Resource.Minerals.Icon);
@@ -251,33 +246,27 @@ namespace FrEee.WinForms.Forms
 			var techNode = tree.AddItemWithImage("Technology", "Technology", Resource.Research.Icon);
 			foreach (var kvp in emp.ResearchedTechnologies.Where(kvp => kvp.Value > 0))
 				techNode.AddItemWithImage(kvp.Key.Name + " level " + kvp.Value, kvp.Key, kvp.Key.Icon);
-			if (techNode.Nodes.Count == 0)
-				techNode.Remove();
 
 			// star charts
 			var chartsNode = tree.AddItemWithImage("Star Charts", "Star Charts", Pictures.GetGenericImage(typeof(StarSystem)));
 			foreach (var sys in emp.ExploredStarSystems.Where(sys => !package.StarCharts.Contains(sys)))
 				chartsNode.AddItemWithImage(sys.Name, sys, sys.Icon);
-			if (chartsNode.Nodes.Count == 0)
-				chartsNode.Remove();
 
 			// comms channels
 			var commsNode = tree.AddItemWithImage("Communications Channels", "Communications Channels", Pictures.GetGenericImage(typeof(Empire)));
 			foreach (var ee in emp.EncounteredEmpires.Where(ee => !package.CommunicationChannels.Contains(ee)))
 				commsNode.AddItemWithImage(ee.Name, ee, ee.Icon);
-			if (commsNode.Nodes.Count == 0)
-				commsNode.Remove();
 		}
 
 		private void PopulateTable()
 		{
+			treeTable.Initialize(32);
 			PopulateTable("We Give", givePackage);
 			PopulateTable("We Receive", receivePackage);
 		}
 
 		private void PopulateTable(string text, Package package)
 		{
-			treeTable.Initialize(32);
 			var node = treeTable.AddItemWithImage(text, package, package.Owner.Icon);
 
 			foreach (var c in package.TreatyClauses)
@@ -300,6 +289,8 @@ namespace FrEee.WinForms.Forms
 
 			foreach (var ee in package.CommunicationChannels)
 				node.AddItemWithImage(ee.Name, ee, ee.Icon);
+
+			treeTable.ExpandAll();
 		}
 
 		private Package givePackage, receivePackage;
@@ -315,7 +306,8 @@ namespace FrEee.WinForms.Forms
 			if (node != null && node.Parent != null)
 			{
 				Package package = node.Parent.Text == "We Give" ? givePackage : receivePackage;
-				// TODO - treaty elements
+				if (node.Tag is Clause)
+					package.TreatyClauses.Remove((Clause)node.Tag);
 				if (node.Tag is Planet)
 					package.Planets.Remove((Planet)node.Tag);
 				else if (node.Tag is Vehicle)
@@ -348,15 +340,15 @@ namespace FrEee.WinForms.Forms
 			if (node != null && node.Parent != null)
 			{
 				var type = (string)node.Parent.Tag;
-				if (type == "Treaty Elements")
+				if (node.Tag is Clause)
 				{
-					// TODO - treaty elements
+					var c = (Clause)node.Tag;
+					package.TreatyClauses.Add(c);
 				}
 				else if (type == "Planets")
 				{
 					var p = (Planet)node.Tag;
 					package.Planets.Add(p);
-
 				}
 				else if (type == "Vehicles")
 				{
@@ -365,29 +357,13 @@ namespace FrEee.WinForms.Forms
 				}
 				else if (type == "Resources")
 				{
-					var amount = Parser.Units(txtQuantity.Text);
-					if (amount == null)
-						MessageBox.Show("Invalid quantity specified. Please specify a numeric quantity of resources, optionally using metric suffixes (e.g. K for thousands).");
-					else if (amount < 0)
-						MessageBox.Show("You cannot transfer negative resources.");
-					else
-					{
-						var r = (Resource)node.Tag;
-						package.Resources.Add(r, (int)amount.Value);
-					}
+					var res = (Resource)node.Tag;
+					package.Resources.Add(res, Math.Min(10000, package.Owner.StoredResources[res]));
 				}
 				else if (type == "Technology")
 				{
-					int level;
-					if (!int.TryParse(txtQuantity.Text, out level))
-						MessageBox.Show("Invalid level specified. Please specify a whole number.");
-					else if (level <= 0)
-						MessageBox.Show("Please specify a positive technology level.");
-					else
-					{
-						var tech = (Technology)node.Tag;
-						package.Technology.Add(tech, level);
-					}
+					var tech = (Technology)node.Tag;
+					package.Technology.Add(tech, package.Owner.ResearchedTechnologies[tech]);
 				}
 				else if (type == "Star Charts")
 				{
@@ -399,7 +375,10 @@ namespace FrEee.WinForms.Forms
 					var ee = (Empire)node.Tag;
 					package.CommunicationChannels.Add(ee);
 				}
+				else
+					return;
 				PopulateSomeoneHas(package.Owner, tree, package);
+				PopulateTable();
 			}
 		}
 
@@ -411,6 +390,7 @@ namespace FrEee.WinForms.Forms
 		private void btnSend_Click(object sender, EventArgs e)
 		{
 			// create our message
+			// TODO - autogenerate message text if none was specified
 			var msgtype = (string)ddlMessageType.SelectedItem;
 			IMessage msg;
 			if (msgtype == "General Message")
@@ -462,13 +442,157 @@ namespace FrEee.WinForms.Forms
 				MessageBox.Show("Invalid message type " + msgtype + ". This is probably a bug...");
 				return;
 			}
-			
+
 			// create a command to send it
 			var cmd = new SendMessageCommand(msg);
 			Empire.Current.Commands.Add(cmd);
 
 			// all done!
 			Close();
+		}
+
+		private void treeTable_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			// see if we need to display any detail editor
+			if (e.Node != null && e.Node.Parent != null)
+			{
+				var package = ((string)e.Node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
+				if (e.Node.Tag is Resource)
+				{
+					// display resource quantity editor
+					pnlQuantityLevel.Visible = true;
+					txtQuantityLevel.Text = package.Resources[(Resource)e.Node.Tag].ToUnitString(true);
+					lblQuantityLevel.Text = "Quantity";
+					chkPercent.Visible = false;
+					ddlAlliance.Visible = false;
+				}
+				else if (e.Node.Tag is Technology)
+				{
+					// display tech level editor
+					pnlQuantityLevel.Visible = true;
+					txtQuantityLevel.Text = package.Technology[(Technology)e.Node.Tag].ToString();
+					lblQuantityLevel.Text = "Level";
+					chkPercent.Visible = false;
+					ddlAlliance.Visible = false;
+				}
+				else if (e.Node.Tag is AllianceClause)
+				{
+					// display alliance clause editor
+					pnlQuantityLevel.Visible = false;
+					ddlAlliance.Visible = true;
+					ddlAlliance.SelectedValue = ((AllianceClause)e.Node.Tag).AllianceLevel;
+				}
+				else if (e.Node.Tag is TributeClause)
+				{
+					// display tribute clause editor
+					pnlQuantityLevel.Visible = true;
+					var clause = (TributeClause)e.Node.Tag;
+					lblQuantityLevel.Text = "Quantity";
+					txtQuantityLevel.Text = clause.Quantity.ToUnitString(true);
+					chkPercent.Visible = true;
+					chkPercent.Checked = clause.IsPercentage;
+					ddlAlliance.Visible = false;
+				}
+				else
+				{
+					// hide editor
+					pnlQuantityLevel.Visible = false;
+					ddlAlliance.Visible = false;
+				}
+			}
+			else
+			{
+				// hide editor
+				pnlQuantityLevel.Visible = false;
+				ddlAlliance.Visible = false;
+			}
+		}
+
+		private void treeWeHave_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+				btnGive_Click(treeWeHave, e);
+		}
+
+		private void treeTable_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+				btnReturn_Click(treeTable, e);
+		}
+
+		private void treeTheyHave_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+				btnRequest_Click(treeTheyHave, e);
+		}
+
+		private void ddlAlliance_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			var node = treeTable.SelectedNode;
+			if (node != null && node.Parent != null)
+			{
+				var amount = Parser.Units(txtQuantityLevel.Text);
+				if (amount != null && amount > 0)
+				{
+					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
+					if (node.Tag is AllianceClause)
+					{
+						var clause = (AllianceClause)node.Tag;
+						clause.AllianceLevel = (AllianceLevel)ddlAlliance.SelectedValue;
+						PopulateTable();
+					}
+				}
+			}
+		}
+
+		private void chkPercent_CheckedChanged(object sender, EventArgs e)
+		{
+			var node = treeTable.SelectedNode;
+			if (node != null && node.Parent != null)
+			{
+				var amount = Parser.Units(txtQuantityLevel.Text);
+				if (amount != null && amount > 0)
+				{
+					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
+					if (node.Tag is TributeClause)
+					{
+						var clause = (TributeClause)node.Tag;
+						clause.IsPercentage = chkPercent.Checked;
+						PopulateTable();
+					}
+				}
+			}
+		}
+
+		private void txtQuantityLevel_TextChanged(object sender, EventArgs e)
+		{
+			var node = treeTable.SelectedNode;
+			if (node != null && node.Parent != null)
+			{
+				var amount = Parser.Units(txtQuantityLevel.Text);
+				if (amount != null && amount > 0)
+				{
+					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
+					if (node.Tag is Resource)
+					{
+						var r = (Resource)treeTable.SelectedNode.Tag;
+						package.Resources[r] = (int)amount;
+						PopulateTable();
+					}
+					else if (node.Tag is Technology)
+					{
+						var tech = (Technology)treeTable.SelectedNode.Tag;
+						package.Technology[tech] = (int)amount;
+						PopulateTable();
+					}
+					else if (node.Tag is TributeClause)
+					{
+						var clause = (TributeClause)node.Tag;
+						clause.Quantity = (int)amount;
+						PopulateTable();
+					}
+				}
+			}
 		}
 	}
 }
