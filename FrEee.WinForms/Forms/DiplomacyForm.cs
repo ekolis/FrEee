@@ -70,6 +70,11 @@ namespace FrEee.WinForms.Forms
 				ddlMessageType.Items.Add("General Message");
 				ddlMessageType.SelectedIndex = 0;
 			}
+			foreach (AllianceLevel alliance in Enum.GetValues(typeof(AllianceLevel)))
+			{
+				if (alliance != AllianceLevel.None)
+					ddlAlliance.Items.Add(new { Name = alliance.ToSpacedString(), Value = alliance });
+			}
 		}
 
 		public Empire TargetEmpire { get; private set; }
@@ -263,6 +268,8 @@ namespace FrEee.WinForms.Forms
 			treeTable.Initialize(32);
 			PopulateTable("We Give", givePackage);
 			PopulateTable("We Receive", receivePackage);
+			pnlQuantityLevel.Visible = false;
+			ddlAlliance.Visible = false;
 		}
 
 		private void PopulateTable(string text, Package package)
@@ -487,7 +494,8 @@ namespace FrEee.WinForms.Forms
 					// display alliance clause editor
 					pnlQuantityLevel.Visible = false;
 					ddlAlliance.Visible = true;
-					ddlAlliance.SelectedValue = ((AllianceClause)e.Node.Tag).AllianceLevel;
+					var alliance = ((AllianceClause)e.Node.Tag).AllianceLevel;
+					ddlAlliance.SelectedItem = ddlAlliance.Items.Cast<dynamic>().Single(d => d.Value == alliance);
 				}
 				else if (e.Node.Tag is TributeClause)
 				{
@@ -538,16 +546,12 @@ namespace FrEee.WinForms.Forms
 			var node = treeTable.SelectedNode;
 			if (node != null && node.Parent != null)
 			{
-				var amount = Parser.Units(txtQuantityLevel.Text);
-				if (amount != null && amount > 0)
+				var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
+				if (node.Tag is AllianceClause)
 				{
-					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
-					if (node.Tag is AllianceClause)
-					{
-						var clause = (AllianceClause)node.Tag;
-						clause.AllianceLevel = (AllianceLevel)ddlAlliance.SelectedValue;
-						PopulateTable();
-					}
+					var clause = (AllianceClause)node.Tag;
+					clause.AllianceLevel = (AllianceLevel)(((dynamic)ddlAlliance.SelectedItem).Value);
+					PopulateTable();
 				}
 			}
 		}
