@@ -113,13 +113,20 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 			get
 			{
-				return !Planets.Any() && !Vehicles.Any() && !Resources.Any(r => r.Value != 0) && !Technology.Any() && !StarCharts.Any() && !CommunicationChannels.Any();
+				return !TreatyClauses.Any() && !Planets.Any() && !Vehicles.Any() && !Resources.Any(r => r.Value != 0) && !Technology.Any() && !StarCharts.Any() && !CommunicationChannels.Any();
 			}
 		}
 
 		public override string ToString()
 		{
 			var items = new List<string>();
+			if (TreatyClauses.Any())
+			{
+				if (TreatyClauses.Count == 1)
+					items.Add(TreatyClauses.Single().ToString());
+				else
+					items.Add(TreatyClauses.Count + " treaty clauses");
+			}
 			if (Planets.Any())
 			{
 				if (Planets.Count == 1)
