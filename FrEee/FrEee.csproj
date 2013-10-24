@@ -99,10 +99,12 @@
     <Compile Include="FrEeeConstants.cs" />
     <Compile Include="Game\Enumerations\AbilityTargets.cs" />
     <Compile Include="Game\Enumerations\AbilityValueRule.cs" />
+    <Compile Include="Game\Enumerations\AllianceLevel.cs" />
     <Compile Include="Game\Enumerations\AllowedTrades.cs" />
     <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
     <Compile Include="Game\Enumerations\Mood.cs" />
     <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
+    <Compile Include="Game\Enumerations\SharingPriority.cs" />
     <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
     <Compile Include="Game\Enumerations\TechnologyCost.cs" />
     <Compile Include="Game\Enumerations\WeaponTypes.cs" />
@@ -152,6 +154,14 @@
     <Compile Include="Game\Objects\Civilization\Diplomacy\AcceptProposalAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\ActionMessage.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Action.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\AllianceClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\Clause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\CooperativeResearchClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareAbilityClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareCombatLogsClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareDesignsClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\ShareVisionClause.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\TributeClause.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\RejectProposalAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\DeclareWarAction.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\GeneralMessage.cs" />
@@ -328,6 +338,7 @@
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Utility\DynamicDictionary.cs" />
+    <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
     <Compile Include="Utility\NamedDictionary.cs" />
     <Compile Include="Utility\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

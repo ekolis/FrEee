@@ -99,5 +99,19 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return AbilityTargets.Troop; }
 		}
+
+		public override Sector Sector
+		{
+			get { return Container.Sector; }
+			set
+			{
+				throw new NotSupportedException("Cannot set the sector of a troop.");
+			}
+		}
+
+		public override StarSystem StarSystem
+		{
+			get { return Container.StarSystem; }
+		}
 	}
 }

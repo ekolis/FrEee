@@ -260,9 +260,9 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.Sector; }
 		}
 
-		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
-			return SpaceObjects.OfType<IAbilityObject>();
+			return SpaceObjects.Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
 		}
 	}
 }

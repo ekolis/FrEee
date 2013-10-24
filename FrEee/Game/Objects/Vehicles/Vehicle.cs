@@ -361,5 +361,9 @@ namespace FrEee.Game.Objects.Vehicles
 		public abstract bool IsObsoleteMemory(Empire emp);
 
 		public abstract AbilityTargets AbilityTarget { get; }
+
+		public abstract Sector Sector { get; set;  }
+
+		public abstract StarSystem StarSystem { get; }
 	}
 }

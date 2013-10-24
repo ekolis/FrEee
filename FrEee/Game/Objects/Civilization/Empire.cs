@@ -22,6 +22,7 @@ using System.Dynamic;
 using FrEee.Game.Objects.Orders;
 using FrEee.Modding.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -49,7 +50,7 @@ namespace FrEee.Game.Objects.Civilization
 			StoredResources = new ResourceQuantity();
 			IntrinsicResourceStorage = new ResourceQuantity();
 			Commands = new List<ICommand>();
-			KnownDesigns = new List<IDesign>();
+			KnownDesigns = new HashSet<IDesign>();
 			Log = new List<LogMessage>();
 			ResearchedTechnologies = new NamedDictionary<Technology.Technology, int>();
 			AccumulatedResearch = new NamedDictionary<Tech, int>();
@@ -552,17 +553,22 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Is this empire hostile to another empire?
+		/// Is this empire hostile to another empire in a particular system?
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public bool IsHostileTo(Empire emp)
+		public bool IsHostileTo(Empire emp, StarSystem sys)
 		{
 			if (emp == null)
 				return false;
 			if (emp == this)
 				return false;
-			return true; // TODO - alliances
+			var alliance = OfferedTreatyClauses[emp].OfType<AllianceClause>().MaxOrDefault(c => c.AllianceLevel);
+			if (alliance >= AllianceLevel.NonAggression)
+				return false;
+			if (alliance >= AllianceLevel.NeutralZone)
+				return sys.FindSpaceObjects<Planet>().Flatten().Any(p => p.Owner == this);
+			return true;
 		}
 
 		/// <summary>
@@ -775,6 +781,22 @@ namespace FrEee.Game.Objects.Civilization
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Empire; }
+		}
+
+		/// <summary>
+		/// Any treaty clauses this empire is offering to other empires.
+		/// </summary>
+		public ILookup<Empire, Clause> OfferedTreatyClauses
+		{
+			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this).ToLookup(c => c.Receiver); }
+		}
+
+		/// <summary>
+		/// Any treaty clauses this empire is receiving from other empires.
+		/// </summary>
+		public ILookup<Empire, Clause> ReceivedTreatyClauses
+		{
+			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this).ToLookup(c => c.Giver); }
 		}
 	}
 }

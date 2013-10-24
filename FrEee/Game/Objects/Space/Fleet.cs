@@ -113,7 +113,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsHostileTo(Empire emp)
 		{
-			return Owner.IsHostileTo(emp);
+			return Owner.IsHostileTo(emp, StarSystem);
 		}
 
 		public int Accuracy

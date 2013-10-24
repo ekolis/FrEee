@@ -315,9 +315,9 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.StarSystem; }
 		}
 
-		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
-			return SpaceObjectLocations.Select(l => l.Item).OfType<IAbilityObject>();
+			return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
 		}
 
 		IEnumerable<Ability> IAbilityObject.Abilities

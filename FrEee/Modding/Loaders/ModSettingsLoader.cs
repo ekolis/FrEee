@@ -34,6 +34,13 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.StartTradePercent = rec.Get<double>("Starting Trade Percentage", null) ?? 0;
+			settings.TradePercentPerTurn = rec.Get<double>("Trade Percentage Increase Per Turn", null) ?? 1;
+			settings.MaxTradePercent = rec.Get<double>("Maximum Trade Percentage", null) ?? 20;
+			settings.CooperativeResearchBreakthroughChance = rec.Get<double>("Cooperative Researhc Breakthrough Chance", null) ?? 5;
+
+			// TODO - load more settings
+
 			settings.UpgradeFacilityPercentCost = rec.Get<int>("Upgrade Facility Percent Cost", null) ?? 50;
 
 			// TODO - load more settings

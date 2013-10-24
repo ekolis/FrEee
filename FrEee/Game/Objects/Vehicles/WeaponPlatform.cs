@@ -84,5 +84,19 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return AbilityTargets.WeaponPlatform; }
 		}
+
+		public override Sector Sector
+		{
+			get { return Container.Sector; }
+			set
+			{
+				throw new NotSupportedException("Cannot set the sector of a weapon platform.");
+			}
+		}
+
+		public override StarSystem StarSystem
+		{
+			get { return Container.StarSystem; }
+		}
 	}
 }

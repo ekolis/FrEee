@@ -14,16 +14,16 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Combat
 {
-	public class Battle : INamed, IPictorial
+	public class Battle : INamed, IPictorial, ILocated
 	{
 		public Battle(Sector location)
 		{
 			if (location == null)
 				throw new Exception("Battles require a sector location.");
-			Location = location;
+			Sector = location;
 			Log = new List<LogMessage>();
-			Empires = Location.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = new HashSet<ICombatObject>(Location.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
+			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Combatants = new HashSet<ICombatObject>(Sector.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
 		}
 
 		static Battle()
@@ -46,7 +46,12 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
-		public Sector Location { get; private set; }
+		public Sector Sector { get; private set; }
+
+		/// <summary>
+		/// The star system in which this battle took place.
+		/// </summary>
+		public StarSystem StarSystem { get { return Sector.StarSystem; } }
 
 		/// <summary>
 		/// The empires engagaed in battle.
@@ -65,10 +70,10 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get
 			{
-				if (Location.SpaceObjects.OfType<StellarObject>().Any())
-					return "Battle at " + Location.SpaceObjects.OfType<StellarObject>().Largest();
-				var coords = Location.Coordinates;
-				return "Battle at " + Location.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
+				if (Sector.SpaceObjects.OfType<StellarObject>().Any())
+					return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
+				var coords = Sector.Coordinates;
+				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
 			}
 		}
 
@@ -148,7 +153,7 @@ namespace FrEee.Game.Objects.Combat
 							{
 								// launch a seeker
 								var swinfo = (SeekingWeaponInfo)winfo;
-								var seeker = new Seeker(attacker.Owner, weapon, defender);
+								var seeker = new Seeker(this, attacker.Owner, weapon, defender);
 								seekers.Add(seeker, 20 / swinfo.SeekerSpeed);
 								LogLaunch(seeker);
 							}
@@ -168,11 +173,11 @@ namespace FrEee.Game.Objects.Combat
 			}
 
 			// replenish combatants' shields
-			foreach (var combatant in Location.SpaceObjects.OfType<ICombatObject>())
+			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatObject>())
 				combatant.ReplenishShields();
 
 			// validate fleets
-			foreach (var fleet in Location.SpaceObjects.OfType<Fleet>())
+			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
 				fleet.Validate();
 			Current.Remove(this);
 			Previous.Add(this);
