@@ -73,6 +73,11 @@ namespace FrEee.Modding
 		public int UnmothballPercentCost { get; set; }
 
 		/// <summary>
+		/// Starting trade percentage for treaties.
+		/// </summary>
+		public double StartTradePercent { get; set; }
+
+		/// <summary>
 		/// Trade percentage increase per turn for treaties.
 		/// </summary>
 		public double TradePercentPerTurn { get; set; }
@@ -80,7 +85,12 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Maxiumum trade percentage for treaties.
 		/// </summary>
-		public int MaxTradePercent { get; set; }
+		public double MaxTradePercent { get; set; }
+
+		/// <summary>
+		/// Cooperative research treaty breakthrough chance.
+		/// </summary>
+		public double CooperativeResearchBreakthroughChance { get; set; }
 
 		/// <summary>
 		/// Tribute percent of income paid by subjugated empires.

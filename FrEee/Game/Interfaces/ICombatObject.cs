@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that may fire weapons and can targeted by weapons.
 	/// </summary>
-	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable
+	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated
 	{
 		/// <summary>
 		/// Can this object fire on another combat object?

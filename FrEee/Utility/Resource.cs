@@ -176,5 +176,12 @@ namespace FrEee.Utility
 				result ^= PictureName.GetHashCode();
 			return result;
 		}
+
+		public static ResourceQuantity operator *(int quantity, Resource resource)
+		{
+			var q = new ResourceQuantity();
+			q.Add(resource, quantity);
+			return q;
+		}
 	}
 }

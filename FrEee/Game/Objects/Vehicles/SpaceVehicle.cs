@@ -202,8 +202,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
 				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.Sector.GetAbilityValue(Owner, false, "Reduced Maintenance Cost - Sector").ToInt();
-				pct -= this.StarSystem.GetAbilityValue(Owner, false, "Reduced Maintenance Cost - System").ToInt();
+				pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+				pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 				pct -= Owner.Culture.MaintenanceReduction;
 				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
 					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
@@ -333,12 +333,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Sector; }
 		}
 
-		public StarSystem StarSystem
-		{
-			get { return this.FindStarSystem(); }
-		}
-
-
 		public IDictionary<Race, long> AllPopulation
 		{
 			get { return Cargo.Population; }
@@ -378,7 +372,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		[DoNotSerialize]
 		[IgnoreMap]
-		public Sector Sector
+		public override Sector Sector
 		{
 			get
 			{
@@ -396,6 +390,11 @@ namespace FrEee.Game.Objects.Vehicles
 				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
 					v.Sector = value;
 			}
+		}
+
+		public override StarSystem StarSystem
+		{
+			get { return Sector.StarSystem; }
 		}
 
 		public int? Size

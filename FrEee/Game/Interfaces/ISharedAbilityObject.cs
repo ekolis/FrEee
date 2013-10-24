@@ -18,7 +18,7 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned);
+		IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp);
 
 		AbilityTargets AbilityTarget { get; }
 	}

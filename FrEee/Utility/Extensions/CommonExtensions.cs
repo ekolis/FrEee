@@ -23,6 +23,8 @@ using System.Runtime.Serialization;
 using System.Dynamic;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Enumerations;
+using System.Text.RegularExpressions;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 
 namespace FrEee.Utility.Extensions
 {
@@ -190,9 +192,14 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <param name="abilityName"></param>
 		/// <returns></returns>
-		public static bool HasAbility(this IAbilityObject obj, string abilityName)
+		public static bool HasAbility(this IAbilityObject obj, string abilityName, bool includeShared = true)
 		{
-			return obj.Abilities.Any(abil => abil.Rule.Matches(abilityName));
+			IEnumerable<Ability> abils;
+			if (includeShared)
+				abils = obj.Abilities.Union(obj.GetSharedAbilities());
+			else
+				abils = obj.Abilities;
+			return abils.Any(abil => abil.Rule.Matches(abilityName));
 		}
 
 		/// <summary>
@@ -640,6 +647,21 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// "Squashes" a nested collection into a collection of tuples.
+		/// </summary>
+		/// <typeparam name="T1"></typeparam>
+		/// <typeparam name="T2"></typeparam>
+		/// <returns></returns>
+		public static IEnumerable<Tuple<TParent, TChild>> Squash<TParent, TChild>(this IEnumerable<TParent> parents, Func<TParent, IEnumerable<TChild>> childSelector)
+		{
+			foreach (var parent in parents)
+			{
+				foreach (var child in childSelector(parent))
+					yield return Tuple.Create(parent, child);
+			}
+		}
+
+		/// <summary>
 		/// Gets a capital letter from the English alphabet.
 		/// </summary>
 		/// <param name="i">1 to 26</param>
@@ -784,17 +806,24 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index">The ability value index (usually 1 or 2).</param>
 		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
 		/// <returns>The ability value.</returns>
-		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1,bool includeShared = true, Func<Ability, bool> filter = null)
 		{
-			var abils = obj.Abilities.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a))).Stack(obj);
+			var abils = obj.Abilities;
+			if (includeShared)
+				abils = abils.Union(obj.GetSharedAbilities());
+			abils = abils.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			abils = abils.Stack(obj);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name,object stackTo, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, object stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
 		{
-			var abils = objs.SelectMany(o => o.Abilities.GroupBy(a => new { Rule = a.Rule, Object = o}).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Where(a => filter == null || filter(a))).Stack(stackTo);
+			var tuples = objs.Squash(o => o.Abilities);
+			if (includeShared)
+				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities()));
+			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -808,10 +837,10 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, bool includeUnowned, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			IEnumerable<Ability> abils;
-			var subabils = obj.GetContainedAbilityObjects(emp, includeUnowned).SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			if (obj is IAbilityObject)
 				abils = ((IAbilityObject)obj).Abilities.Concat(subabils).Stack(obj);
 			else
@@ -819,6 +848,57 @@ namespace FrEee.Utility.Extensions
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
+		}
+
+		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp)
+		{
+			return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities);
+		}
+
+		/// <summary>
+		/// Gets abilities that have been shared to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> GetSharedAbilities(this IAbilityObject obj)
+		{
+			// Unowned objects cannot have abilities shared to them.
+			if (!(obj is IOwnable))
+				yield break;
+			var owner = ((IOwnable)obj).Owner;
+			if (owner == null)
+				yield break;
+
+			foreach (var clause in owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
+			{
+				var rule = clause.AbilityRule;
+				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+				{
+					var sector = ((ILocated)obj).Sector;
+					foreach (var abil in sector.GetAbilities(owner))
+					{
+						if (clause.AbilityRule == abil.Rule)
+							yield return abil;
+					}
+				}
+				else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
+				{
+					var sys = ((ILocated)obj).StarSystem;
+					foreach (var abil in sys.GetAbilities(owner))
+					{
+						if (clause.AbilityRule == abil.Rule)
+							yield return abil;
+					}
+				}
+				else if (rule.CanTarget(AbilityTargets.Galaxy))
+				{
+					foreach (var abil in Galaxy.Current.GetAbilities(owner))
+					{
+						if (clause.AbilityRule == abil.Rule)
+							yield return abil;
+					} 
+				}
+			}
 		}
 
 		/// <summary>
@@ -1831,6 +1911,79 @@ namespace FrEee.Utility.Extensions
 		public static int GetSafeHashCode(this object o)
 		{
 			return o == null ? 0 : o.GetHashCode();
+		}
+
+		/// <summary>
+		/// Returns "We" if the empire is the current empire, otherwise "The " followed by the empire name.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string WeOrName(this Empire emp, bool capitalize = true)
+		{
+			if (emp == Empire.Current)
+				return "We";
+			return "The " + emp.Name;
+		}
+
+		/// <summary>
+		/// Returns "us" if the empire is the current empire, otherwise "the " followed by the empire name.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string UsOrName(this Empire emp, bool capitalize = false)
+		{
+			if (emp == Empire.Current)
+				return "us";
+			return "the " + emp.Name;
+		}
+
+		/// <summary>
+		/// Gets a possessive form of a noun or pronoun.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="isStart">For "I", is this the first word? For "you" and "she", is this in the subject of the sentence?</param>
+		/// <returns></returns>
+		public static string Possessive(this string s, bool isStart = false)
+		{
+			if (s == "I")
+				return isStart ? "My" : "my";
+			if (s == "we")
+				return "our";
+			if (s == "We")
+				return "Our";
+			if (s == "you")
+				return isStart ? "your" : "yours";
+			if (s == "You")
+				return isStart ? "Your" : "Yours";
+			if (s == "he" || s == "him")
+				return "his";
+			if (s == "He")
+				return "His";
+			if (s == "she" || s == "her")
+				return isStart ? "her" : "hers";
+			if (s == "She")
+				return "Her";
+			if (s == "it")
+				return "its";
+			if (s == "they")
+				return "their";
+			if (s == "They")
+				return "Their";
+			if (s == "them")
+				return "theirs";
+
+			if (s.EndsWith("s"))
+				return s + "'";
+			return s + "'s";
+		}
+
+		public static string Capitalize(this string s)
+		{
+			if (s == null)
+				return null;
+			if (s.Length == 0)
+				return s;
+			return s[0].ToString().ToUpper() + s.Substring(1);
 		}
 	}
 }

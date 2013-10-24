@@ -566,12 +566,6 @@ namespace FrEee.Game.Objects.Space
 			get { return 1; }
 		}
 
-		public override bool IsHostileTo(Empire emp)
-		{
-			return Owner == null ? false : Owner.IsHostileTo(emp);
-		}
-
-
 		public override bool CanBeInFleet
 		{
 			get { return false; }
@@ -621,13 +615,13 @@ namespace FrEee.Game.Objects.Space
 				{
 					// TODO - plagued planets should not reproduce, and should lose population each turn
 					var sys = this.FindStarSystem();
-					var sysModifier = sys == null ? 0 : sys.GetAbilityValue(Owner, false, "Modify Reproduction - System").ToInt();
+					var sysModifier = sys == null ? 0 : sys.GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
 					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?
-					var sysCloning = sys == null ? 0 : sys.GetAbilityValue(Owner, false, "Change Population - System").ToInt();
+					var sysCloning = sys == null ? 0 : sys.GetAbilityValue(Owner, "Change Population - System").ToInt();
 					var planetCloning = this.GetAbilityValue("Change Population - Planet").ToInt();
 					deltapop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
 				}

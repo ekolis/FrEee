@@ -18,8 +18,9 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Seeker : ICombatObject
 	{
-		public Seeker(Empire owner, Component launcher, ICombatObject target)
+		public Seeker(Battle battle, Empire owner, Component launcher, ICombatObject target)
 		{
+			Battle = battle;
 			Owner = owner;
 			if (launcher.Template.ComponentTemplate.WeaponInfo is SeekingWeaponInfo)
 				Launcher = launcher;
@@ -32,6 +33,11 @@ namespace FrEee.Game.Objects.Combat
 				throw new Exception(launcher + " cannot target a " + target.WeaponTargetType + ".");
 			Hitpoints = WeaponInfo.SeekerDurability; // TODO - can mounts affect seeker durability?
 		}
+
+		/// <summary>
+		/// The battle in which this seeker was fired.
+		/// </summary>
+		public Battle Battle { get; set; }
 
 		/// <summary>
 		/// The name of the seeker.
@@ -207,7 +213,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public bool IsHostileTo(Empire emp)
 		{
-			return Owner == null ? false : Owner.IsHostileTo(emp);
+			return Owner == null ? false : Owner.IsHostileTo(emp, StarSystem);
 		}
 
 		/// <summary>
@@ -268,6 +274,16 @@ namespace FrEee.Game.Objects.Combat
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return Timestamp < Galaxy.Current.Timestamp - 1;
+		}
+		
+		public Sector Sector
+		{
+			get { return Battle.Sector; }
+		}
+
+		public StarSystem StarSystem
+		{
+			get { return Battle.StarSystem; }
 		}
 	}
 }

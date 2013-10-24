@@ -145,7 +145,7 @@ namespace FrEee.Game.Objects.Civilization
 				// TODO - moddable resources?
 				for (int i = 1; i <= 3; i++)
 				{
-					var amount = Container.GetAbilityValue("Space Yard", 2, a => a.Value1 == i.ToString()).ToInt();
+					var amount = Container.GetAbilityValue("Space Yard", 2, true, a => a.Value1 == i.ToString()).ToInt();
 					Resource res = null;
 					if (i == 1)
 						res = Resource.Minerals;

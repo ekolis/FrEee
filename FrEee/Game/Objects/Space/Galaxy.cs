@@ -16,6 +16,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -774,6 +775,10 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 
+				// perform treaty actions
+				foreach (var clause in emp.OfferedTreatyClauses.Flatten())
+					clause.PerformAction();
+
 				// don't let stored resources actually fall below zero
 				foreach (var r in emp.StoredResources.Keys.Where(r => emp.StoredResources[r] < 0).ToArray())
 					emp.StoredResources[r] = 0;
@@ -1147,9 +1152,9 @@ namespace FrEee.Game.Objects.Space
 
 		#endregion
 
-		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp, bool includeUnowned)
+		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
-			return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp, includeUnowned)));
+			return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
 		}
 	}
 }
