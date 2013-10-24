@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,19 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public bool IsInEffect { get; set; }
 
+		private Reference<Empire> giver { get; set; }
+
 		/// <summary>
 		/// The empire that is offering something in this clause.
 		/// </summary>
-		public Empire Giver { get; set; }
+		public Empire Giver { get { return giver; } set { giver = value; } }
+		
+		private Reference<Empire> receiver { get; set; }
 
 		/// <summary>
 		/// The empire that is receiving a benefit from this clause.
 		/// </summary>
-		public Empire Receiver { get; set; }
+		public Empire Receiver { get { return receiver; } set { receiver = value; } }
 
 		/// <summary>
 		/// Performs any per-turn action for this treaty clause, if applicable.

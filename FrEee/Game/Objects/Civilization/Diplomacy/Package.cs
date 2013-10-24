@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 			Owner = owner;
 			Recipient = recipient;
-			TreatyClauses = new ReferenceSet<Clause>();
+			TreatyClauses = new HashSet<Clause>();
 			Planets = new ReferenceSet<Planet>();
 			Vehicles = new ReferenceSet<IVehicle>();
 			Resources = new ResourceQuantity();
@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			CommunicationChannels = new ReferenceSet<Empire>();
 		}
 
-		public ReferenceSet<Clause> TreatyClauses { get; private set; }
+		public ISet<Clause> TreatyClauses { get; private set; }
 
 		public ReferenceSet<Planet> Planets { get; private set; }
 
@@ -209,7 +209,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap)
 		{
-			// no client objects to promote
+			foreach (var clause in TreatyClauses)
+				clause.ReplaceClientIDs(idmap);
 		}
 	}
 }
