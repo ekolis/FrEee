@@ -15,6 +15,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public ProposalMessage(Empire recipient)
 			: base(recipient)
 		{
+			if (Recipient == Owner)
+				throw new Exception("You can't send a diplomatic proposal to yourself!");
 			Proposal = new Proposal(recipient);
 		}
 

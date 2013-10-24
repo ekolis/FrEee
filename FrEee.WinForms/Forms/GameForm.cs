@@ -1223,7 +1223,7 @@ namespace FrEee.WinForms.Forms
 			BindReport();
 		}
 
-		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		protected override bool ProcessCmdKey(ref System.Windows.Forms.Message msg, Keys keyData)
 		{
 			// trap tab key
 			if (keyData == Keys.Tab || keyData == (Keys.Tab | Keys.Shift))
