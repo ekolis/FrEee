@@ -29,33 +29,38 @@
 		private void InitializeComponent()
 		{
 			this.lstLog = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.SuspendLayout();
 			// 
 			// lstLog
 			// 
 			this.lstLog.BackColor = System.Drawing.Color.Black;
 			this.lstLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3});
+            this.colDate,
+            this.colMessage});
 			this.lstLog.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.lstLog.ForeColor = System.Drawing.Color.White;
-			this.lstLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstLog.FullRowSelect = true;
+			this.lstLog.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lstLog.Location = new System.Drawing.Point(0, 0);
 			this.lstLog.Name = "lstLog";
 			this.lstLog.ShowItemToolTips = true;
 			this.lstLog.Size = new System.Drawing.Size(774, 492);
 			this.lstLog.TabIndex = 0;
 			this.lstLog.UseCompatibleStateImageBehavior = false;
-			this.lstLog.View = System.Windows.Forms.View.List;
+			this.lstLog.View = System.Windows.Forms.View.Details;
 			this.lstLog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstLog_MouseDoubleClick);
 			// 
-			// columnHeader1
+			// colMessage
 			// 
-			this.columnHeader1.Width = 0;
+			this.colMessage.Text = "Message";
+			this.colMessage.Width = 670;
+			// 
+			// colDate
+			// 
+			this.colDate.Text = "Date";
+			this.colDate.Width = 100;
 			// 
 			// LogForm
 			// 
@@ -68,6 +73,7 @@
 			this.Name = "LogForm";
 			this.Text = "Log";
 			this.Load += new System.EventHandler(this.LogForm_Load);
+			this.SizeChanged += new System.EventHandler(this.LogForm_SizeChanged);
 			this.ResumeLayout(false);
 
 		}
@@ -75,9 +81,8 @@
 		#endregion
 
 		private System.Windows.Forms.ListView lstLog;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
-		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private System.Windows.Forms.ColumnHeader columnHeader3;
+		private System.Windows.Forms.ColumnHeader colMessage;
+		private System.Windows.Forms.ColumnHeader colDate;
 
 	}
 }

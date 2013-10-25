@@ -50,7 +50,8 @@ namespace FrEee.WinForms.Forms
 			lstLog.Initialize(32, 32);
 			foreach (var message in messages)
 			{
-				var item = lstLog.AddItemWithImage(message.TurnNumber.ToStardate(), message.TurnNumber.ToStardate() + ": " + message.Text, message, message.Picture);
+				var item = lstLog.AddItemWithImage(null, message.TurnNumber.ToStardate(), message, message.Picture);
+				item.SubItems.Add(message.Text);
 				if (message.TurnNumber < Galaxy.Current.TurnNumber)
 					item.ForeColor = Color.Gray;
 			}
@@ -129,6 +130,12 @@ namespace FrEee.WinForms.Forms
 					// TODO - more types of goto-messages
 				}
 			}
+		}
+
+		private void LogForm_SizeChanged(object sender, EventArgs e)
+		{
+			// auto size it again
+			lstLog.Columns[1].Width = -2;
 		}
 	}
 }
