@@ -29,10 +29,16 @@ namespace FrEee.WinForms.Forms
 
 			clFrom.CargoContainer = fromContainer;
 			txtFromContainer.Text = fromContainer.Name;
-			ddlToContainer.Items.Add(targetSector);
+			var ccs = new List<ICargoContainer>();
+			ccs.Add(targetSector);
 			foreach (var cc in targetSector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc != fromContainer && cc.Owner == Empire.Current).OrderBy(cc => cc.Name))
+				ccs.Add(cc);
+			foreach (var cc in ccs)
 				ddlToContainer.Items.Add(cc);
-			ddlToContainer.SelectedIndex = 0;
+			if (ccs.OfType<ISpaceObject>().Any())
+				ddlToContainer.SelectedItem = ccs.OfType<ISpaceObject>().Cast<ICargoContainer>().WithMax(cc => cc.CargoStorage).First();
+			else
+				ddlToContainer.SelectedItem = targetSector;
 			clLoad.CargoDelta = new CargoDelta();
 			clDrop.CargoDelta = new CargoDelta();
         }
