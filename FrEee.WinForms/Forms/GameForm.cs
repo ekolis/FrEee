@@ -545,6 +545,8 @@ namespace FrEee.WinForms.Forms
 			resRes.Amount = income[Resource.Research];
 			if (Empire.Current.BonusResearch != 0)
 				resRes.Change = Empire.Current.BonusResearch;
+			else
+				resRes.Change = null;
 			resInt.Amount = income[Resource.Intelligence];
 		}
 
