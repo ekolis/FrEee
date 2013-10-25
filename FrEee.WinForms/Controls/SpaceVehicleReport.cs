@@ -356,5 +356,10 @@ namespace FrEee.WinForms.Controls
 				}
 			}
 		}
+
+		private void picPortrait_MouseClick(object sender, MouseEventArgs e)
+		{
+			picPortrait.ShowFullSize(Vehicle.Name);
+		}
 	}
 }

@@ -28,18 +28,18 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem13 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem14 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem15 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem16 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem17 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem18 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem19 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem20 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem21 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem22 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem23 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem24 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
+			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
+			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
+			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
+			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
+			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
 			this.pageDetail = new System.Windows.Forms.TabPage();
 			this.txtConstructionTime = new System.Windows.Forms.Label();
 			this.lblConstructionTime = new System.Windows.Forms.Label();
@@ -89,7 +89,6 @@ namespace FrEee.WinForms.Controls
 			this.lblClass = new System.Windows.Forms.Label();
 			this.txtRole = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picPortrait = new System.Windows.Forms.PictureBox();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageComps = new System.Windows.Forms.TabPage();
 			this.txtComponentsFunctionalDetail = new System.Windows.Forms.Label();
@@ -109,25 +108,27 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.pageDetail.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.pnlStats.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
 			this.pageComps.SuspendLayout();
 			this.pageCargo.SuspendLayout();
 			this.pageAbility.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
 			this.pageOrders.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// pageDetail
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.txtConstructionTime);
 			this.pageDetail.Controls.Add(this.lblConstructionTime);
 			this.pageDetail.Controls.Add(this.txtConstructionItem);
@@ -158,7 +159,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblClass);
 			this.pageDetail.Controls.Add(this.txtRole);
 			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
@@ -394,9 +394,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
 			this.lstCargoSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem13,
-            listViewItem14,
-            listViewItem15});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
 			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
 			this.lstCargoSummary.Name = "lstCargoSummary";
 			this.lstCargoSummary.Size = new System.Drawing.Size(264, 92);
@@ -447,9 +447,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem16,
-            listViewItem17,
-            listViewItem18});
+            listViewItem4,
+            listViewItem5,
+            listViewItem6});
 			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
 			this.lstComponentsSummary.Name = "lstComponentsSummary";
 			this.lstComponentsSummary.Size = new System.Drawing.Size(264, 92);
@@ -824,15 +824,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Constitution 0001";
 			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(8, 32);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 9;
-			this.picPortrait.TabStop = false;
-			// 
 			// picOwnerFlag
 			// 
 			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
@@ -879,9 +870,9 @@ namespace FrEee.WinForms.Controls
 			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
 			this.lstComponentsDetail.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem19,
-            listViewItem20,
-            listViewItem21});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
 			this.lstComponentsDetail.Location = new System.Drawing.Point(3, 21);
 			this.lstComponentsDetail.Name = "lstComponentsDetail";
 			this.lstComponentsDetail.Size = new System.Drawing.Size(286, 590);
@@ -927,9 +918,9 @@ namespace FrEee.WinForms.Controls
 			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
 			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem22,
-            listViewItem23,
-            listViewItem24});
+            listViewItem10,
+            listViewItem11,
+            listViewItem12});
 			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
 			this.lstCargoDetail.Name = "lstCargoDetail";
 			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
@@ -1111,6 +1102,16 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 555);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(6, 32);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picPortrait.TabIndex = 89;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseClick);
+			// 
 			// SpaceVehicleReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1129,7 +1130,6 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel1.PerformLayout();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
 			this.pageComps.ResumeLayout(false);
 			this.pageComps.PerformLayout();
@@ -1138,6 +1138,7 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
 			this.pageOrders.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 
 		}
@@ -1153,7 +1154,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblClass;
 		private System.Windows.Forms.Label txtRole;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picPortrait;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
 		private System.Windows.Forms.Label lblMovement;
@@ -1213,5 +1213,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblConstructionTime;
 		private System.Windows.Forms.Label txtConstructionItem;
 		private System.Windows.Forms.Label lblConstructionItem;
+		private GamePictureBox picPortrait;
 	}
 }
