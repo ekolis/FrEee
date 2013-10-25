@@ -82,10 +82,19 @@ namespace FrEee.WinForms.Forms
 				this.ShowChildForm(form);
 			}
 
+			HasLogBeenShown = true;
+
 			// so the search box can lose focus...
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
 		}
+
+		/// <summary>
+		/// Has the turn log been shown yet?
+		/// Will return true after the time the log would normally be shown
+		/// even if there is no need to show the log.
+		/// </summary>
+		public bool HasLogBeenShown { get; private set; }
 
 		private void AssignClickHandler(Control ctl)
 		{

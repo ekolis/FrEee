@@ -38,7 +38,7 @@ namespace FrEee.WinForms.Forms
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
-			ShowInTaskbar = !gameForm.Visible;
+			ShowInTaskbar = !gameForm.HasLogBeenShown;
 		}
 
 		IEnumerable<LogMessage> messages;
