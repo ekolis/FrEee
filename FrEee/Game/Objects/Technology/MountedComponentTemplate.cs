@@ -22,8 +22,9 @@ namespace FrEee.Game.Objects.Technology
 	[Serializable]
 	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost
 	{
-		public MountedComponentTemplate(ComponentTemplate ct, Mount mount = null)
+		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 		{
+			Container = container;
 			ComponentTemplate = ct;
 			Mount = mount;
 		}
@@ -86,7 +87,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public Component Instantiate()
 		{
-			return new Component(this);
+			return new Component(null, this);
 		}
 
 		public IEnumerable<Ability> Abilities

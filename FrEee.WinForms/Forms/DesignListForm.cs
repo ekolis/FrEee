@@ -111,7 +111,7 @@ namespace FrEee.WinForms.Forms
 				copy.Components.Clear();
 				foreach (var mct in old.Components)
 				{
-					copy.Components.Add(new MountedComponentTemplate(mct.ComponentTemplate, mct.Mount));
+					copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
 				}
 				var form = new VehicleDesignForm();
 				form.Design = copy;
@@ -164,7 +164,7 @@ namespace FrEee.WinForms.Forms
 				{
 					var mount = mct.Mount;
 					var ct = mct.ComponentTemplate.LatestVersion;
-					copy.Components.Add(new MountedComponentTemplate(ct, mount));
+					copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
 				}
 				var form = new VehicleDesignForm();
 				form.Design = copy;

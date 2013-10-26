@@ -19,11 +19,12 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<Vehicle>, IFormulaHost
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost
 	{
-		public Component(MountedComponentTemplate template)
+		public Component(IVehicle container, MountedComponentTemplate template)
 		{
-			this.Template = template;
+			Container = container;
+			Template = template;
 			Hitpoints = template.Durability;
 		}
 
@@ -210,7 +211,7 @@ namespace FrEee.Game.Objects.Technology
 			get { return MaxHitpoints; }
 		}
 
-		public Vehicle Container
+		public IVehicle Container
 		{
 			get;
 			internal set;

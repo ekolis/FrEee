@@ -132,12 +132,12 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind(MountedComponentTemplate data)
 		{
-			Bind(new Component(data));
+			Bind(new Component(null, data));
 		}
 
 		public void Bind(ComponentTemplate data)
 		{
-			Bind(new Component(new MountedComponentTemplate(data, null)));
+			Bind(new Component(null, new MountedComponentTemplate(null, data, null)));
 		}
 
 		private void picPortrait_Click(object sender, EventArgs e)

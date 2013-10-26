@@ -162,9 +162,9 @@ namespace FrEee.WinForms.Forms
 				{
 					MountedComponentTemplate mct;
 					if (comp.CanUseMount(CurrentMount))
-						mct = new MountedComponentTemplate(comp, CurrentMount);
+						mct = new MountedComponentTemplate(Design, comp, CurrentMount);
 					else
-						mct = new MountedComponentTemplate(comp);
+						mct = new MountedComponentTemplate(Design, comp);
 					lstComponentsAvailable.AddItemWithImage(comp.Group, mct.Size.Kilotons() + " " + mct.Name, mct, mct.Icon);
 				}
 			}

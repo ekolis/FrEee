@@ -14,5 +14,9 @@ namespace FrEee.Game.Interfaces
 		/// The design of this vehicle.
 		/// </summary>
 		IDesign Design { get; }
+
+		int Accuracy { get; }
+
+		int Evasion { get; }
 	}
 }
