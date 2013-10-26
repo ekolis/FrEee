@@ -105,7 +105,7 @@ namespace FrEee.Game.Objects.Orders
 			return Visibility.Unknown;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			// This type does not use client objects, so nothing to do here.
 		}

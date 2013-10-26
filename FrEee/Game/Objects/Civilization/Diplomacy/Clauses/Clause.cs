@@ -108,7 +108,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			return BriefDescription;
 		}
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			// nothing to do here...
 		}

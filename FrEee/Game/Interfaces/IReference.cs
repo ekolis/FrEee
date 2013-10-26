@@ -5,10 +5,9 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IReference<out T> where T : IReferrable
+	public interface IReference<out T> : IPromotable where T : IReferrable
 	{
 		long ID { get; }
 		T Value { get; }
-		void ReplaceClientIDs(IDictionary<long, long> idmap);
 	}
 }

@@ -139,10 +139,16 @@ namespace FrEee.Utility
 			return GetEnumerator();
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			foreach (var r in set)
-				r.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				foreach (var r in set)
+					r.ReplaceClientIDs(idmap, done);
+			}
 		}
 	}
 }

@@ -84,9 +84,15 @@ namespace FrEee.Game.Objects.Space
 				StarSystem.Remove(sobj);
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			starSystem.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				starSystem.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public static bool operator ==(Sector s1, Sector s2)

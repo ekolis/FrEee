@@ -651,9 +651,15 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			Vehicles.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				Vehicles.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public int? Size

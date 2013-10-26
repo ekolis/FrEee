@@ -261,9 +261,15 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			container.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				container.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 

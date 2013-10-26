@@ -15,6 +15,7 @@ namespace FrEee.Game.Interfaces
 		/// Replaces client-side object IDs with the newly generated server side IDs.
 		/// </summary>
 		/// <param name="idmap"></param>
-		void ReplaceClientIDs(IDictionary<long, long> idmap);
+		/// <param name="done">Any promoted objects that are already done replacing IDs.</param>
+		void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
 	}
 }

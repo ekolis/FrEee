@@ -80,10 +80,16 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			target.ReplaceClientIDs(idmap);
-			owner.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				target.ReplaceClientIDs(idmap, done);
+				owner.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public override string ToString()
