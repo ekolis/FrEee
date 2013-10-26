@@ -107,7 +107,8 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				if (this.HasAbility("Space Yard"))
+				// only vehicles with a space yard that are not under construction have a construction queue
+				if (this.HasAbility("Space Yard") && Sector != null)
 					return constructionQueue;
 				else
 					return null;

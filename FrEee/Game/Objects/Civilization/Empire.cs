@@ -181,7 +181,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this);
+				return Galaxy.Current.Referrables.OfType<ConstructionQueue>().Where(q => q.Owner == this && q.Container.Sector != null);
 			}
 		}
 
