@@ -382,7 +382,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				if (value == null)
 				{
-					if (Sector == null)
+					if (Sector != null)
 						Sector.Remove(this);
 				}
 				else
