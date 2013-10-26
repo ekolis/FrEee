@@ -155,7 +155,7 @@ namespace FrEee.Modding.Templates
 		/// <returns></returns>
 		public Component Instantiate()
 		{
-			return new Component(new MountedComponentTemplate(this, null));
+			return new Component(null, new MountedComponentTemplate(null, this, null));
 		}
 
 		public string ResearchGroup

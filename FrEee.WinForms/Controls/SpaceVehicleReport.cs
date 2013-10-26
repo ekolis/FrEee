@@ -350,7 +350,7 @@ namespace FrEee.WinForms.Controls
 			{
 				get
 				{
-					var c = new Component(Template);
+					var c = new Component(null, Template);
 					c.Hitpoints = Hitpoints;
 					return c;
 				}
