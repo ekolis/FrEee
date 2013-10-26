@@ -383,7 +383,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool HasUnlocked(IResearchable item)
 		{
-			return UnlockedItems.Contains(item);
+			return item == null || UnlockedItems.Contains(item);
 		}
 
 		public bool CheckUnlockStatus(IResearchable item)
