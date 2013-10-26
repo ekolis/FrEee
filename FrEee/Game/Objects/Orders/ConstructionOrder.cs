@@ -103,9 +103,15 @@ namespace FrEee.Game.Objects.Orders
 			return Visibility.Unknown;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			template.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				template.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public long ID { get; set; }

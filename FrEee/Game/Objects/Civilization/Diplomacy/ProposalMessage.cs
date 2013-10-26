@@ -25,9 +25,15 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// </summary>
 		public Proposal Proposal { get; set; }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			Proposal.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				Proposal.ReplaceClientIDs(idmap, done);
+			}
 		}
 	}
 }

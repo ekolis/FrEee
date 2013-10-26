@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// </summary>
 		public Action Action { get; set; }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			Action.ReplaceClientIDs(idmap);
 		}

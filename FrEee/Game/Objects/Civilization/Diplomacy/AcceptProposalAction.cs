@@ -1,4 +1,5 @@
-﻿using FrEee.Utility;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,15 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		[DoNotSerialize]
 		public Proposal Proposal { get { return proposal; } set { proposal = value; } }
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			proposal.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				proposal.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public override string Description

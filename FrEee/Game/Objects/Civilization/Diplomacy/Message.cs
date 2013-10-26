@@ -115,7 +115,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public int TurnNumber { get; set; }
 
-		public abstract void ReplaceClientIDs(IDictionary<long, long> idmap);
+		public abstract void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
 
 		public IMessage InReplyTo { get; set; }
 	}

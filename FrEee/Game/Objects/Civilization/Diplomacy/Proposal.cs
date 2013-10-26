@@ -92,9 +92,15 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			return package == null || package.IsEmpty;
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			recipient.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				recipient.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		/// <summary>

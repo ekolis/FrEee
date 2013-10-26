@@ -84,12 +84,18 @@ namespace FrEee.Utility
 			return "ID=" + ID + ", Value=" + Value;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			if (idmap.ContainsKey(ID))
-				ID = idmap[ID];
-			if (HasValue && Value is IPromotable)
-				((IPromotable)Value).ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				if (idmap.ContainsKey(ID))
+					ID = idmap[ID];
+				if (HasValue && Value is IPromotable)
+					((IPromotable)Value).ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public static bool operator ==(Reference<T> r1, Reference<T> r2)

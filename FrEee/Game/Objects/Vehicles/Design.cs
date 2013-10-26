@@ -473,10 +473,16 @@ namespace FrEee.Game.Objects.Vehicles
 			return Visibility.Unknown;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			foreach (var mct in Components)
-				mct.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				foreach (var mct in Components)
+					mct.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public IList<Requirement<Empire>> UnlockRequirements

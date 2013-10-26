@@ -34,10 +34,16 @@ namespace FrEee.Game.Objects.Commands
 			Issuer.KnownDesigns.Add(Design);
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			base.ReplaceClientIDs(idmap);
-			Design.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				base.ReplaceClientIDs(idmap, done);
+				Design.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public override IEnumerable<IReferrable> NewReferrables

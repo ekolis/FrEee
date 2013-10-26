@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Game.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		{
 		}
 
-		public override void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done)
 		{
 			// nothing to do
 		}

@@ -73,10 +73,17 @@ namespace FrEee.Game.Objects.Civilization
 			return string.Join(", ", items.ToArray());
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			RacePopulation.ReplaceClientIDs(idmap);
-			UnitDesignTonnage.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				RacePopulation.ReplaceClientIDs(idmap, done);
+				UnitDesignTonnage.ReplaceClientIDs(idmap, done);
+				Units.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		/// <summary>

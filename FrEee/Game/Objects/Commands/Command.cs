@@ -35,10 +35,16 @@ namespace FrEee.Game.Objects.Commands
 
 		public abstract void Execute();
 
-		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap)
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
-			issuer.ReplaceClientIDs(idmap);
-			executor.ReplaceClientIDs(idmap);
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				issuer.ReplaceClientIDs(idmap, done);
+				executor.ReplaceClientIDs(idmap, done);
+			}
 		}
 
 		public virtual IEnumerable<IReferrable> NewReferrables
