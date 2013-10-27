@@ -384,14 +384,18 @@ namespace FrEee.WinForms.Forms
 			if (sobj is SpaceVehicle)
 			{
 				var r = new SpaceVehicleReport((SpaceVehicle)sobj);
-				r.OrdersChanged += AutonomousSpaceVehicleReport_OrdersChanged;
+				r.OrdersChanged += VehicleFleetReport_OrdersChanged;
 				return r;
 			};
-			// TODO - fleet, unit group reports
+			if (sobj is Fleet)
+			{
+				var r = new FleetReport((Fleet)sobj);
+				r.OrdersChanged += VehicleFleetReport_OrdersChanged;
+			}
 			return null;
 		}
 
-		void AutonomousSpaceVehicleReport_OrdersChanged()
+		void VehicleFleetReport_OrdersChanged()
 		{
 			starSystemView.Invalidate(); // show move lines
 		}
