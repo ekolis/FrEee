@@ -392,12 +392,12 @@ namespace FrEee.Game.Objects.Space
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
+				inStream.Seek(0, SeekOrigin.Begin);
+				Load(inStream);
 				if (Current.Empires[i].IsPlayerEmpire)
 				{
 					if (status != null)
 						status.Message = "Saving game (player " + (i + 1) + ")";
-					inStream.Seek(0, SeekOrigin.Begin);
-					Load(inStream);
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
 					Current.Save();
