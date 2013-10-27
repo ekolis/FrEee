@@ -336,7 +336,7 @@ namespace FrEee.WinForms.Forms
 						i++;
 						lv.Items.Add(item);
 					}
-					lv.MouseDoubleClick += SpaceObjectListReport_MouseDoubleClick;
+					lv.MouseClick += SpaceObjectListReport_MouseClick;
 					SelectedSpaceObject = null;
 				}
 
@@ -358,12 +358,15 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		void SpaceObjectListReport_MouseDoubleClick(object sender, MouseEventArgs e)
+		void SpaceObjectListReport_MouseClick(object sender, MouseEventArgs e)
 		{
-			var lv = (ListView)sender;
-			var item = lv.GetItemAt(e.X, e.Y);
-			if (item != null)
-				SelectedSpaceObject = (ISpaceObject)item.Tag;
+			if (e.Button == MouseButtons.Left)
+			{
+				var lv = (ListView)sender;
+				var item = lv.GetItemAt(e.X, e.Y);
+				if (item != null)
+					SelectedSpaceObject = (ISpaceObject)item.Tag;
+			}
 		}
 
 		private Control CreateSpaceObjectReport(ISpaceObject sobj)
