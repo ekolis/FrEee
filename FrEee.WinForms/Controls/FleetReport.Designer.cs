@@ -1,6 +1,6 @@
 namespace FrEee.WinForms.Controls
 {
-	partial class SpaceVehicleReport
+	partial class FleetReport
 	{
 		/// <summary> 
 		/// Required designer variable.
@@ -28,43 +28,24 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("100x Eee Population");
-			System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem("6x Ion Engine");
-			System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem("2x Phased Shield Generator");
-			System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem("3x Anti-Proton Beam");
-			System.Windows.Forms.ListViewItem listViewItem10 = new System.Windows.Forms.ListViewItem("3x \"Buster\" class Weapon Platform");
-			System.Windows.Forms.ListViewItem listViewItem11 = new System.Windows.Forms.ListViewItem("10x \"Guard\" class Troop");
-			System.Windows.Forms.ListViewItem listViewItem12 = new System.Windows.Forms.ListViewItem("100x Eee Population");
+			System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("6x Constitution Heavy Cruiser");
+			System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem("4x Phalanx Destroyer");
+			System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem("2x Trooper Medium Transport");
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
-			this.txtConstructionTime = new System.Windows.Forms.Label();
-			this.lblConstructionTime = new System.Windows.Forms.Label();
-			this.txtConstructionItem = new System.Windows.Forms.Label();
-			this.lblConstructionItem = new System.Windows.Forms.Label();
-			this.txtComponentsFunctional = new System.Windows.Forms.Label();
 			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblComponents = new System.Windows.Forms.Label();
 			this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblMaint = new System.Windows.Forms.Label();
-			this.txtFleet = new System.Windows.Forms.Label();
-			this.lblFleet = new System.Windows.Forms.Label();
 			this.txtExperience = new System.Windows.Forms.Label();
 			this.lblExperience = new System.Windows.Forms.Label();
 			this.txtOrder = new System.Windows.Forms.Label();
 			this.lblOrder = new System.Windows.Forms.Label();
-			this.txtCargoSpaceFree = new System.Windows.Forms.Label();
-			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstCargoSummary = new System.Windows.Forms.ListView();
-			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.lblCargo = new System.Windows.Forms.Label();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstComponentsSummary = new System.Windows.Forms.ListView();
+			this.lstVehicleSummary = new System.Windows.Forms.ListView();
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.pnlStats = new System.Windows.Forms.TableLayoutPanel();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -88,16 +69,11 @@ namespace FrEee.WinForms.Controls
 			this.lblHullSize = new System.Windows.Forms.Label();
 			this.txtClass = new System.Windows.Forms.Label();
 			this.lblClass = new System.Windows.Forms.Label();
-			this.txtRole = new System.Windows.Forms.Label();
+			this.txtCount = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
 			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
-			this.pageComps = new System.Windows.Forms.TabPage();
-			this.txtComponentsFunctionalDetail = new System.Windows.Forms.Label();
-			this.lstComponentsDetail = new System.Windows.Forms.ListView();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.pageCargo = new System.Windows.Forms.TabPage();
-			this.txtCargoSpaceFreeDetail = new System.Windows.Forms.Label();
-			this.lstCargoDetail = new System.Windows.Forms.ListView();
+			this.pageVehicles = new System.Windows.Forms.TabPage();
+			this.treeVehicles = new System.Windows.Forms.TreeView();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
@@ -111,14 +87,12 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
-			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.pnlStats.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
-			this.pageComps.SuspendLayout();
-			this.pageCargo.SuspendLayout();
+			this.pageVehicles.SuspendLayout();
 			this.pageAbility.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
 			this.pageOrders.SuspendLayout();
@@ -128,26 +102,18 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.txtCargoSpaceFree);
+			this.pageDetail.Controls.Add(this.label1);
 			this.pageDetail.Controls.Add(this.picPortrait);
-			this.pageDetail.Controls.Add(this.txtConstructionTime);
-			this.pageDetail.Controls.Add(this.lblConstructionTime);
-			this.pageDetail.Controls.Add(this.txtConstructionItem);
-			this.pageDetail.Controls.Add(this.lblConstructionItem);
-			this.pageDetail.Controls.Add(this.txtComponentsFunctional);
 			this.pageDetail.Controls.Add(this.resMaintMin);
 			this.pageDetail.Controls.Add(this.lblComponents);
 			this.pageDetail.Controls.Add(this.resMaintOrg);
 			this.pageDetail.Controls.Add(this.resMaintRad);
 			this.pageDetail.Controls.Add(this.lblMaint);
-			this.pageDetail.Controls.Add(this.txtFleet);
-			this.pageDetail.Controls.Add(this.lblFleet);
 			this.pageDetail.Controls.Add(this.txtExperience);
 			this.pageDetail.Controls.Add(this.lblExperience);
 			this.pageDetail.Controls.Add(this.txtOrder);
 			this.pageDetail.Controls.Add(this.lblOrder);
-			this.pageDetail.Controls.Add(this.txtCargoSpaceFree);
-			this.pageDetail.Controls.Add(this.gamePanel2);
-			this.pageDetail.Controls.Add(this.lblCargo);
 			this.pageDetail.Controls.Add(this.gamePanel1);
 			this.pageDetail.Controls.Add(this.pnlStats);
 			this.pageDetail.Controls.Add(this.txtMovement);
@@ -157,15 +123,38 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblHullSize);
 			this.pageDetail.Controls.Add(this.txtClass);
 			this.pageDetail.Controls.Add(this.lblClass);
-			this.pageDetail.Controls.Add(this.txtRole);
+			this.pageDetail.Controls.Add(this.txtCount);
 			this.pageDetail.Controls.Add(this.txtName);
 			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
 			this.pageDetail.Padding = new System.Windows.Forms.Padding(3);
-			this.pageDetail.Size = new System.Drawing.Size(292, 642);
+			this.pageDetail.Size = new System.Drawing.Size(292, 492);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// txtCargoSpaceFree
+			// 
+			this.txtCargoSpaceFree.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.txtCargoSpaceFree.AutoSize = true;
+			this.txtCargoSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCargoSpaceFree.Location = new System.Drawing.Point(177, 351);
+			this.txtCargoSpaceFree.Name = "txtCargoSpaceFree";
+			this.txtCargoSpaceFree.Size = new System.Drawing.Size(101, 15);
+			this.txtCargoSpaceFree.TabIndex = 91;
+			this.txtCargoSpaceFree.Text = "0kT / 1200kT free";
+			this.txtCargoSpaceFree.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label1.Location = new System.Drawing.Point(6, 346);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(40, 15);
+			this.label1.TabIndex = 90;
+			this.label1.Text = "Cargo";
 			// 
 			// picPortrait
 			// 
@@ -177,60 +166,6 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.TabStop = false;
 			this.picPortrait.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseClick);
 			// 
-			// txtConstructionTime
-			// 
-			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionTime.Location = new System.Drawing.Point(128, 349);
-			this.txtConstructionTime.Name = "txtConstructionTime";
-			this.txtConstructionTime.Size = new System.Drawing.Size(153, 15);
-			this.txtConstructionTime.TabIndex = 88;
-			this.txtConstructionTime.Text = "0.3 years";
-			this.txtConstructionTime.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// lblConstructionTime
-			// 
-			this.lblConstructionTime.AutoSize = true;
-			this.lblConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblConstructionTime.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblConstructionTime.Location = new System.Drawing.Point(7, 349);
-			this.lblConstructionTime.Name = "lblConstructionTime";
-			this.lblConstructionTime.Size = new System.Drawing.Size(99, 15);
-			this.lblConstructionTime.TabIndex = 87;
-			this.lblConstructionTime.Text = "Time Remaining";
-			// 
-			// txtConstructionItem
-			// 
-			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionItem.Location = new System.Drawing.Point(128, 334);
-			this.txtConstructionItem.Name = "txtConstructionItem";
-			this.txtConstructionItem.Size = new System.Drawing.Size(153, 15);
-			this.txtConstructionItem.TabIndex = 86;
-			this.txtConstructionItem.Text = "Barracuda IV";
-			this.txtConstructionItem.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// lblConstructionItem
-			// 
-			this.lblConstructionItem.AutoSize = true;
-			this.lblConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblConstructionItem.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblConstructionItem.Location = new System.Drawing.Point(6, 334);
-			this.lblConstructionItem.Name = "lblConstructionItem";
-			this.lblConstructionItem.Size = new System.Drawing.Size(112, 15);
-			this.lblConstructionItem.TabIndex = 85;
-			this.lblConstructionItem.Text = "Under Construction";
-			// 
-			// txtComponentsFunctional
-			// 
-			this.txtComponentsFunctional.AutoSize = true;
-			this.txtComponentsFunctional.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtComponentsFunctional.Location = new System.Drawing.Point(188, 384);
-			this.txtComponentsFunctional.Name = "txtComponentsFunctional";
-			this.txtComponentsFunctional.Size = new System.Drawing.Size(94, 15);
-			this.txtComponentsFunctional.TabIndex = 35;
-			this.txtComponentsFunctional.Text = "11/11 functional";
-			// 
 			// resMaintMin
 			// 
 			this.resMaintMin.Amount = 500;
@@ -239,7 +174,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintMin.Change = null;
 			this.resMaintMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resMaintMin.Location = new System.Drawing.Point(63, 364);
+			this.resMaintMin.Location = new System.Drawing.Point(60, 331);
 			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintMin.Name = "resMaintMin";
 			this.resMaintMin.ResourceName = "Minerals";
@@ -251,11 +186,11 @@ namespace FrEee.WinForms.Controls
 			this.lblComponents.AutoSize = true;
 			this.lblComponents.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblComponents.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblComponents.Location = new System.Drawing.Point(10, 384);
+			this.lblComponents.Location = new System.Drawing.Point(6, 361);
 			this.lblComponents.Name = "lblComponents";
-			this.lblComponents.Size = new System.Drawing.Size(77, 15);
+			this.lblComponents.Size = new System.Drawing.Size(107, 15);
 			this.lblComponents.TabIndex = 21;
-			this.lblComponents.Text = "Components";
+			this.lblComponents.Text = "Vehicles/Subfleets";
 			// 
 			// resMaintOrg
 			// 
@@ -265,7 +200,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintOrg.Change = null;
 			this.resMaintOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resMaintOrg.Location = new System.Drawing.Point(138, 364);
+			this.resMaintOrg.Location = new System.Drawing.Point(135, 331);
 			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintOrg.Name = "resMaintOrg";
 			this.resMaintOrg.ResourceName = "Organics";
@@ -280,7 +215,7 @@ namespace FrEee.WinForms.Controls
 			this.resMaintRad.Change = null;
 			this.resMaintRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.resMaintRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resMaintRad.Location = new System.Drawing.Point(213, 364);
+			this.resMaintRad.Location = new System.Drawing.Point(210, 331);
 			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resMaintRad.Name = "resMaintRad";
 			this.resMaintRad.ResourceName = "Radioactives";
@@ -292,34 +227,11 @@ namespace FrEee.WinForms.Controls
 			this.lblMaint.AutoSize = true;
 			this.lblMaint.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblMaint.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblMaint.Location = new System.Drawing.Point(9, 364);
+			this.lblMaint.Location = new System.Drawing.Point(6, 331);
 			this.lblMaint.Name = "lblMaint";
 			this.lblMaint.Size = new System.Drawing.Size(41, 15);
 			this.lblMaint.TabIndex = 43;
 			this.lblMaint.Text = "Maint.";
-			// 
-			// txtFleet
-			// 
-			this.txtFleet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtFleet.AutoSize = true;
-			this.txtFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFleet.Location = new System.Drawing.Point(206, 320);
-			this.txtFleet.Name = "txtFleet";
-			this.txtFleet.Size = new System.Drawing.Size(68, 15);
-			this.txtFleet.TabIndex = 42;
-			this.txtFleet.Text = "Alpha Fleet";
-			this.txtFleet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// lblFleet
-			// 
-			this.lblFleet.AutoSize = true;
-			this.lblFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblFleet.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblFleet.Location = new System.Drawing.Point(6, 320);
-			this.lblFleet.Name = "lblFleet";
-			this.lblFleet.Size = new System.Drawing.Size(34, 15);
-			this.lblFleet.TabIndex = 41;
-			this.lblFleet.Text = "Fleet";
 			// 
 			// txtExperience
 			// 
@@ -340,9 +252,9 @@ namespace FrEee.WinForms.Controls
 			this.lblExperience.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.lblExperience.Location = new System.Drawing.Point(6, 305);
 			this.lblExperience.Name = "lblExperience";
-			this.lblExperience.Size = new System.Drawing.Size(100, 15);
+			this.lblExperience.Size = new System.Drawing.Size(114, 15);
 			this.lblExperience.TabIndex = 39;
-			this.lblExperience.Text = "Crew Experience";
+			this.lblExperience.Text = "Admiral Experience";
 			// 
 			// txtOrder
 			// 
@@ -367,69 +279,6 @@ namespace FrEee.WinForms.Controls
 			this.lblOrder.TabIndex = 37;
 			this.lblOrder.Text = "Current Order";
 			// 
-			// txtCargoSpaceFree
-			// 
-			this.txtCargoSpaceFree.AutoSize = true;
-			this.txtCargoSpaceFree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCargoSpaceFree.Location = new System.Drawing.Point(185, 517);
-			this.txtCargoSpaceFree.Name = "txtCargoSpaceFree";
-			this.txtCargoSpaceFree.Size = new System.Drawing.Size(92, 15);
-			this.txtCargoSpaceFree.TabIndex = 36;
-			this.txtCargoSpaceFree.Text = "100/300 kT free";
-			// 
-			// gamePanel2
-			// 
-			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel2.BackColor = System.Drawing.Color.Black;
-			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel2.Controls.Add(this.lstCargoSummary);
-			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(6, 535);
-			this.gamePanel2.Name = "gamePanel2";
-			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(272, 100);
-			this.gamePanel2.TabIndex = 24;
-			// 
-			// lstCargoSummary
-			// 
-			this.lstCargoSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstCargoSummary.BackColor = System.Drawing.Color.Black;
-			this.lstCargoSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstCargoSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader3});
-			this.lstCargoSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstCargoSummary.ForeColor = System.Drawing.Color.White;
-			this.lstCargoSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.lstCargoSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
-			this.lstCargoSummary.Location = new System.Drawing.Point(2, 3);
-			this.lstCargoSummary.Name = "lstCargoSummary";
-			this.lstCargoSummary.Size = new System.Drawing.Size(264, 92);
-			this.lstCargoSummary.TabIndex = 23;
-			this.lstCargoSummary.TileSize = new System.Drawing.Size(64, 64);
-			this.lstCargoSummary.UseCompatibleStateImageBehavior = false;
-			this.lstCargoSummary.View = System.Windows.Forms.View.Tile;
-			// 
-			// columnHeader3
-			// 
-			this.columnHeader3.Width = 198;
-			// 
-			// lblCargo
-			// 
-			this.lblCargo.AutoSize = true;
-			this.lblCargo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblCargo.Location = new System.Drawing.Point(8, 517);
-			this.lblCargo.Name = "lblCargo";
-			this.lblCargo.Size = new System.Drawing.Size(40, 15);
-			this.lblCargo.TabIndex = 24;
-			this.lblCargo.Text = "Cargo";
-			// 
 			// gamePanel1
 			// 
 			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -437,37 +286,37 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel1.BackColor = System.Drawing.Color.Black;
 			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel1.Controls.Add(this.lstComponentsSummary);
+			this.gamePanel1.Controls.Add(this.lstVehicleSummary);
 			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(8, 414);
+			this.gamePanel1.Location = new System.Drawing.Point(9, 379);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel1.Size = new System.Drawing.Size(272, 100);
 			this.gamePanel1.TabIndex = 23;
 			// 
-			// lstComponentsSummary
+			// lstVehicleSummary
 			// 
-			this.lstComponentsSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.lstVehicleSummary.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstComponentsSummary.BackColor = System.Drawing.Color.Black;
-			this.lstComponentsSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstComponentsSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+			this.lstVehicleSummary.BackColor = System.Drawing.Color.Black;
+			this.lstVehicleSummary.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstVehicleSummary.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader2});
-			this.lstComponentsSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstComponentsSummary.ForeColor = System.Drawing.Color.White;
-			this.lstComponentsSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.lstComponentsSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
-			this.lstComponentsSummary.Location = new System.Drawing.Point(4, 3);
-			this.lstComponentsSummary.Name = "lstComponentsSummary";
-			this.lstComponentsSummary.Size = new System.Drawing.Size(264, 92);
-			this.lstComponentsSummary.TabIndex = 23;
-			this.lstComponentsSummary.TileSize = new System.Drawing.Size(64, 64);
-			this.lstComponentsSummary.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsSummary.View = System.Windows.Forms.View.Tile;
-			this.lstComponentsSummary.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsSummary_MouseDown);
+			this.lstVehicleSummary.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lstVehicleSummary.ForeColor = System.Drawing.Color.White;
+			this.lstVehicleSummary.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+			this.lstVehicleSummary.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
+			this.lstVehicleSummary.Location = new System.Drawing.Point(4, 3);
+			this.lstVehicleSummary.Name = "lstVehicleSummary";
+			this.lstVehicleSummary.Size = new System.Drawing.Size(264, 92);
+			this.lstVehicleSummary.TabIndex = 23;
+			this.lstVehicleSummary.TileSize = new System.Drawing.Size(64, 64);
+			this.lstVehicleSummary.UseCompatibleStateImageBehavior = false;
+			this.lstVehicleSummary.View = System.Windows.Forms.View.Tile;
+			this.lstVehicleSummary.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstVehicleSummary_MouseClick);
 			// 
 			// columnHeader2
 			// 
@@ -779,9 +628,9 @@ namespace FrEee.WinForms.Controls
 			this.txtHullSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtHullSize.Location = new System.Drawing.Point(159, 103);
 			this.txtHullSize.Name = "txtHullSize";
-			this.txtHullSize.Size = new System.Drawing.Size(127, 15);
+			this.txtHullSize.Size = new System.Drawing.Size(48, 15);
 			this.txtHullSize.TabIndex = 15;
-			this.txtHullSize.Text = "Heavy Cruiser (600kT)";
+			this.txtHullSize.Text = "5000kT";
 			// 
 			// lblHullSize
 			// 
@@ -790,9 +639,9 @@ namespace FrEee.WinForms.Controls
 			this.lblHullSize.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.lblHullSize.Location = new System.Drawing.Point(144, 88);
 			this.lblHullSize.Name = "lblHullSize";
-			this.lblHullSize.Size = new System.Drawing.Size(29, 15);
+			this.lblHullSize.Size = new System.Drawing.Size(86, 15);
 			this.lblHullSize.TabIndex = 14;
-			this.lblHullSize.Text = "Hull";
+			this.lblHullSize.Text = "Total Tonnage";
 			// 
 			// txtClass
 			// 
@@ -811,28 +660,28 @@ namespace FrEee.WinForms.Controls
 			this.lblClass.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.lblClass.Location = new System.Drawing.Point(144, 58);
 			this.lblClass.Name = "lblClass";
-			this.lblClass.Size = new System.Drawing.Size(37, 15);
+			this.lblClass.Size = new System.Drawing.Size(82, 15);
 			this.lblClass.TabIndex = 12;
-			this.lblClass.Text = "Class";
+			this.lblClass.Text = "Primary Class";
 			// 
-			// txtRole
+			// txtCount
 			// 
-			this.txtRole.AutoSize = true;
-			this.txtRole.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtRole.Location = new System.Drawing.Point(159, 26);
-			this.txtRole.Name = "txtRole";
-			this.txtRole.Size = new System.Drawing.Size(67, 15);
-			this.txtRole.TabIndex = 11;
-			this.txtRole.Text = "Attack Ship";
+			this.txtCount.AutoSize = true;
+			this.txtCount.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtCount.Location = new System.Drawing.Point(159, 26);
+			this.txtCount.Name = "txtCount";
+			this.txtCount.Size = new System.Drawing.Size(68, 15);
+			this.txtCount.TabIndex = 11;
+			this.txtCount.Text = "12 vehicles";
 			// 
 			// txtName
 			// 
 			this.txtName.AutoSize = true;
 			this.txtName.Location = new System.Drawing.Point(143, 6);
 			this.txtName.Name = "txtName";
-			this.txtName.Size = new System.Drawing.Size(134, 20);
+			this.txtName.Size = new System.Drawing.Size(102, 20);
 			this.txtName.TabIndex = 10;
-			this.txtName.Text = "Constitution 0001";
+			this.txtName.Text = "Assault Fleet";
 			// 
 			// picOwnerFlag
 			// 
@@ -843,100 +692,29 @@ namespace FrEee.WinForms.Controls
 			this.picOwnerFlag.TabIndex = 8;
 			this.picOwnerFlag.TabStop = false;
 			// 
-			// pageComps
+			// pageVehicles
 			// 
-			this.pageComps.BackColor = System.Drawing.Color.Black;
-			this.pageComps.Controls.Add(this.txtComponentsFunctionalDetail);
-			this.pageComps.Controls.Add(this.lstComponentsDetail);
-			this.pageComps.Location = new System.Drawing.Point(4, 29);
-			this.pageComps.Name = "pageComps";
-			this.pageComps.Padding = new System.Windows.Forms.Padding(3);
-			this.pageComps.Size = new System.Drawing.Size(292, 642);
-			this.pageComps.TabIndex = 2;
-			this.pageComps.Text = "Comps";
+			this.pageVehicles.BackColor = System.Drawing.Color.Black;
+			this.pageVehicles.Controls.Add(this.treeVehicles);
+			this.pageVehicles.Location = new System.Drawing.Point(4, 29);
+			this.pageVehicles.Name = "pageVehicles";
+			this.pageVehicles.Padding = new System.Windows.Forms.Padding(3);
+			this.pageVehicles.Size = new System.Drawing.Size(292, 492);
+			this.pageVehicles.TabIndex = 2;
+			this.pageVehicles.Text = "Vehicles";
 			// 
-			// txtComponentsFunctionalDetail
+			// treeVehicles
 			// 
-			this.txtComponentsFunctionalDetail.AutoSize = true;
-			this.txtComponentsFunctionalDetail.Dock = System.Windows.Forms.DockStyle.Top;
-			this.txtComponentsFunctionalDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtComponentsFunctionalDetail.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtComponentsFunctionalDetail.Location = new System.Drawing.Point(3, 3);
-			this.txtComponentsFunctionalDetail.Name = "txtComponentsFunctionalDetail";
-			this.txtComponentsFunctionalDetail.Size = new System.Drawing.Size(94, 15);
-			this.txtComponentsFunctionalDetail.TabIndex = 36;
-			this.txtComponentsFunctionalDetail.Text = "11/11 functional";
-			// 
-			// lstComponentsDetail
-			// 
-			this.lstComponentsDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstComponentsDetail.BackColor = System.Drawing.Color.Black;
-			this.lstComponentsDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstComponentsDetail.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1});
-			this.lstComponentsDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstComponentsDetail.ForeColor = System.Drawing.Color.White;
-			this.lstComponentsDetail.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.lstComponentsDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
-			this.lstComponentsDetail.Location = new System.Drawing.Point(3, 21);
-			this.lstComponentsDetail.Name = "lstComponentsDetail";
-			this.lstComponentsDetail.Size = new System.Drawing.Size(286, 590);
-			this.lstComponentsDetail.TabIndex = 24;
-			this.lstComponentsDetail.UseCompatibleStateImageBehavior = false;
-			this.lstComponentsDetail.View = System.Windows.Forms.View.Details;
-			this.lstComponentsDetail.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstComponentsDetail_MouseDown);
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Width = 288;
-			// 
-			// pageCargo
-			// 
-			this.pageCargo.BackColor = System.Drawing.Color.Black;
-			this.pageCargo.Controls.Add(this.txtCargoSpaceFreeDetail);
-			this.pageCargo.Controls.Add(this.lstCargoDetail);
-			this.pageCargo.Location = new System.Drawing.Point(4, 29);
-			this.pageCargo.Name = "pageCargo";
-			this.pageCargo.Padding = new System.Windows.Forms.Padding(3);
-			this.pageCargo.Size = new System.Drawing.Size(292, 642);
-			this.pageCargo.TabIndex = 3;
-			this.pageCargo.Text = "Cargo";
-			// 
-			// txtCargoSpaceFreeDetail
-			// 
-			this.txtCargoSpaceFreeDetail.AutoSize = true;
-			this.txtCargoSpaceFreeDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtCargoSpaceFreeDetail.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.txtCargoSpaceFreeDetail.Location = new System.Drawing.Point(3, 3);
-			this.txtCargoSpaceFreeDetail.Name = "txtCargoSpaceFreeDetail";
-			this.txtCargoSpaceFreeDetail.Size = new System.Drawing.Size(92, 15);
-			this.txtCargoSpaceFreeDetail.TabIndex = 37;
-			this.txtCargoSpaceFreeDetail.Text = "100/300 kT free";
-			// 
-			// lstCargoDetail
-			// 
-			this.lstCargoDetail.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.lstCargoDetail.BackColor = System.Drawing.Color.Black;
-			this.lstCargoDetail.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstCargoDetail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lstCargoDetail.ForeColor = System.Drawing.Color.White;
-			this.lstCargoDetail.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem10,
-            listViewItem11,
-            listViewItem12});
-			this.lstCargoDetail.Location = new System.Drawing.Point(-1, 21);
-			this.lstCargoDetail.Name = "lstCargoDetail";
-			this.lstCargoDetail.Size = new System.Drawing.Size(293, 640);
-			this.lstCargoDetail.TabIndex = 24;
-			this.lstCargoDetail.UseCompatibleStateImageBehavior = false;
-			this.lstCargoDetail.View = System.Windows.Forms.View.List;
+			this.treeVehicles.BackColor = System.Drawing.Color.Black;
+			this.treeVehicles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.treeVehicles.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.treeVehicles.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.treeVehicles.ForeColor = System.Drawing.Color.White;
+			this.treeVehicles.Location = new System.Drawing.Point(3, 3);
+			this.treeVehicles.Name = "treeVehicles";
+			this.treeVehicles.Size = new System.Drawing.Size(286, 486);
+			this.treeVehicles.TabIndex = 0;
+			this.treeVehicles.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeVehicles_NodeMouseClick);
 			// 
 			// pageAbility
 			// 
@@ -945,7 +723,7 @@ namespace FrEee.WinForms.Controls
 			this.pageAbility.Location = new System.Drawing.Point(4, 29);
 			this.pageAbility.Name = "pageAbility";
 			this.pageAbility.Padding = new System.Windows.Forms.Padding(3);
-			this.pageAbility.Size = new System.Drawing.Size(292, 642);
+			this.pageAbility.Size = new System.Drawing.Size(292, 492);
 			this.pageAbility.TabIndex = 4;
 			this.pageAbility.Text = "Ability";
 			// 
@@ -960,15 +738,14 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Location = new System.Drawing.Point(3, 3);
 			this.abilityTreeView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.abilityTreeView.Name = "abilityTreeView";
-			this.abilityTreeView.Size = new System.Drawing.Size(286, 636);
+			this.abilityTreeView.Size = new System.Drawing.Size(286, 486);
 			this.abilityTreeView.TabIndex = 0;
 			// 
 			// gameTabControl1
 			// 
 			this.gameTabControl1.Controls.Add(this.pageDetail);
 			this.gameTabControl1.Controls.Add(this.pageOrders);
-			this.gameTabControl1.Controls.Add(this.pageComps);
-			this.gameTabControl1.Controls.Add(this.pageCargo);
+			this.gameTabControl1.Controls.Add(this.pageVehicles);
 			this.gameTabControl1.Controls.Add(this.pageAbility);
 			this.gameTabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
@@ -978,7 +755,7 @@ namespace FrEee.WinForms.Controls
 			this.gameTabControl1.SelectedIndex = 0;
 			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.SkyBlue;
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(300, 675);
+			this.gameTabControl1.Size = new System.Drawing.Size(300, 525);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
@@ -997,7 +774,7 @@ namespace FrEee.WinForms.Controls
 			this.pageOrders.Location = new System.Drawing.Point(4, 29);
 			this.pageOrders.Name = "pageOrders";
 			this.pageOrders.Padding = new System.Windows.Forms.Padding(3);
-			this.pageOrders.Size = new System.Drawing.Size(292, 642);
+			this.pageOrders.Size = new System.Drawing.Size(292, 492);
 			this.pageOrders.TabIndex = 1;
 			this.pageOrders.Text = "Orders";
 			// 
@@ -1109,22 +886,21 @@ namespace FrEee.WinForms.Controls
             "Move to Fizbon (3, 6)"});
 			this.lstOrdersDetail.Location = new System.Drawing.Point(7, 84);
 			this.lstOrdersDetail.Name = "lstOrdersDetail";
-			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 555);
+			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 390);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
-			// SpaceVehicleReport
+			// FleetReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.Controls.Add(this.gameTabControl1);
 			this.ForeColor = System.Drawing.Color.White;
-			this.Name = "SpaceVehicleReport";
-			this.Size = new System.Drawing.Size(300, 675);
+			this.Name = "FleetReport";
+			this.Size = new System.Drawing.Size(300, 525);
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
-			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
 			this.pnlStats.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -1132,10 +908,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
-			this.pageComps.ResumeLayout(false);
-			this.pageComps.PerformLayout();
-			this.pageCargo.ResumeLayout(false);
-			this.pageCargo.PerformLayout();
+			this.pageVehicles.ResumeLayout(false);
 			this.pageAbility.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
 			this.pageOrders.ResumeLayout(false);
@@ -1146,13 +919,12 @@ namespace FrEee.WinForms.Controls
 		#endregion
 
 		private System.Windows.Forms.TabPage pageDetail;
-		private System.Windows.Forms.TabPage pageComps;
-		private System.Windows.Forms.TabPage pageCargo;
+		private System.Windows.Forms.TabPage pageVehicles;
 		private System.Windows.Forms.Label txtHullSize;
 		private System.Windows.Forms.Label lblHullSize;
 		private System.Windows.Forms.Label txtClass;
 		private System.Windows.Forms.Label lblClass;
-		private System.Windows.Forms.Label txtRole;
+		private System.Windows.Forms.Label txtCount;
 		private System.Windows.Forms.Label txtName;
 		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
@@ -1162,16 +934,7 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.TableLayoutPanel pnlStats;
 		private System.Windows.Forms.Label lblComponents;
 		private GamePanel gamePanel1;
-		private System.Windows.Forms.ListView lstComponentsSummary;
-		private GamePanel gamePanel2;
-		private System.Windows.Forms.ListView lstCargoSummary;
-		private System.Windows.Forms.Label lblCargo;
-		private System.Windows.Forms.ListView lstComponentsDetail;
-		private System.Windows.Forms.ListView lstCargoDetail;
-		private System.Windows.Forms.Label txtCargoSpaceFree;
-		private System.Windows.Forms.Label txtComponentsFunctional;
-		private System.Windows.Forms.Label txtComponentsFunctionalDetail;
-		private System.Windows.Forms.Label txtCargoSpaceFreeDetail;
+		private System.Windows.Forms.ListView lstVehicleSummary;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.Label lblSupplies;
 		private GameProgressBar progSupplies;
@@ -1190,8 +953,6 @@ namespace FrEee.WinForms.Controls
 		private ResourceDisplay resMaintOrg;
 		private ResourceDisplay resMaintRad;
 		private System.Windows.Forms.Label lblMaint;
-		private System.Windows.Forms.Label txtFleet;
-		private System.Windows.Forms.Label lblFleet;
 		private System.Windows.Forms.Label txtExperience;
 		private System.Windows.Forms.Label lblExperience;
 		private System.Windows.Forms.Label txtOrder;
@@ -1206,13 +967,10 @@ namespace FrEee.WinForms.Controls
 		private GameButton btnOrderToTop;
 		private System.Windows.Forms.ListBox lstOrdersDetail;
 		private AbilityTreeView abilityTreeView;
-		private System.Windows.Forms.ColumnHeader columnHeader1;
-		private System.Windows.Forms.ColumnHeader columnHeader3;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
-		private System.Windows.Forms.Label txtConstructionTime;
-		private System.Windows.Forms.Label lblConstructionTime;
-		private System.Windows.Forms.Label txtConstructionItem;
-		private System.Windows.Forms.Label lblConstructionItem;
 		private GamePictureBox picPortrait;
+		private System.Windows.Forms.TreeView treeVehicles;
+		private System.Windows.Forms.Label txtCargoSpaceFree;
+		private System.Windows.Forms.Label label1;
 	}
 }

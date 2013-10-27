@@ -162,7 +162,6 @@
     <Compile Include="Game\Interfaces\IReferrable.cs" />
     <Compile Include="Game\Interfaces\ICombatObject.cs" />
     <Compile Include="Game\Interfaces\ISharedAbilityObject.cs" />
-    <Compile Include="Game\Interfaces\ISpaceVehicle.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\IUnit.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />

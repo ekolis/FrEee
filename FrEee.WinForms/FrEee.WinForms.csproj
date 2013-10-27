@@ -93,6 +93,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\FleetReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FleetReport.Designer.cs">
+      <DependentUpon>FleetReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EmpireReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -417,6 +423,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ComponentReport.resx">
       <DependentUpon>ComponentReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FleetReport.resx">
+      <DependentUpon>FleetReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\EmpireReport.resx">
       <DependentUpon>EmpireReport.cs</DependentUpon>

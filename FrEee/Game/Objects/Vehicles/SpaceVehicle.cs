@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public abstract class SpaceVehicle : Vehicle, ISpaceVehicle, ICargoTransferrer, IMobileSpaceObject<SpaceVehicle>
+	public abstract class SpaceVehicle : Vehicle, ICargoTransferrer, IMobileSpaceObject<SpaceVehicle>
 	{
 		public SpaceVehicle()
 		{

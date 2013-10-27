@@ -835,5 +835,48 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return AbilityTargets.Planet; }
 		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return NormalShields + PhasedShields; }
+		}
+
+		/// <summary>
+		/// TODO - planetary "armor" facilities that soak damage first?
+		/// </summary>
+		public int ArmorHitpoints
+		{
+			get { return Cargo == null ? 0 : Cargo.ArmorHitpoints; }
+		}
+
+		public int HullHitpoints
+		{
+			get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.Hitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.HullHitpoints); }
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return MaxNormalShields + MaxPhasedShields; }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return Cargo.MaxArmorHitpoints; }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return Colony == null ? 0 : (Colony.Facilities.Sum(f => f.MaxHitpoints) + (int)(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints) + Cargo.MaxHullHitpoints); }
+		}
+
+		/// <summary>
+		/// Planets currently cost nothing to maintain.
+		/// TODO - moddable unit/population/facility maintenance
+		/// </summary>
+		public ResourceQuantity MaintenanceCost
+		{
+			get { return new ResourceQuantity(); }
+		}
 	}
 }

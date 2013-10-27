@@ -236,5 +236,48 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return AbilityTargets.Component; }
 		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return NormalShields + PhasedShields; }
+		}
+
+		public int ArmorHitpoints
+		{
+			get 
+			{
+				return this.HasAbility("Armor") ? Hitpoints : 0;
+			}
+		}
+
+		public int HullHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? 0 : Hitpoints;
+			}
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return MaxNormalShields + MaxPhasedShields; }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? MaxHitpoints : 0;
+			}
+		}
+
+		public int MaxHullHitpoints
+		{
+			get
+			{
+				return this.HasAbility("Armor") ? 0 : MaxHitpoints;
+			}
+		}
 	}
 }
