@@ -217,7 +217,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Components.Where(c => c.HasAbility("Armor")).Sum(c => c.Hitpoints);
+				return Components.Sum(c => c.ArmorHitpoints);
 			}
 		}
 
@@ -228,7 +228,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Components.Where(c => !c.HasAbility("Armor")).Sum(c => c.Hitpoints);
+				return Components.Sum(c => c.HullHitpoints);
 			}
 		}
 
@@ -365,5 +365,27 @@ namespace FrEee.Game.Objects.Vehicles
 		public abstract Sector Sector { get; set;  }
 
 		public abstract StarSystem StarSystem { get; }
+
+
+		public ResourceQuantity MaintenanceCost
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+
+		public int MaxShieldHitpoints
+		{
+			get { return MaxNormalShields + MaxPhasedShields; }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return Components.Sum(c => c.MaxArmorHitpoints); }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return Components.Sum(c => c.MaxHullHitpoints); }
+		}
 	}
 }

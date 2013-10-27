@@ -10,7 +10,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can move about in space.
 	/// </summary>
-	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>
+	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageable
 	{
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }
@@ -31,6 +31,8 @@ namespace FrEee.Game.Interfaces
 		/// The Dijkstra map used for pathfinding.
 		/// </summary>
 		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
+
+		ResourceQuantity MaintenanceCost { get; }
 	}
 
 	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>

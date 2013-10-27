@@ -32,6 +32,18 @@ namespace FrEee.Game.Interfaces
 
 		int MaxPhasedShields { get; }
 
+		int ShieldHitpoints { get; }
+
+		int ArmorHitpoints { get; }
+
+		int HullHitpoints { get; }
+
+		int MaxShieldHitpoints { get; }
+
+		int MaxArmorHitpoints { get; }
+
+		int MaxHullHitpoints { get; }
+
 		/// <summary>
 		/// Replenishes normal and phased shields.
 		/// </summary>

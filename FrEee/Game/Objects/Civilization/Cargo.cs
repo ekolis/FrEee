@@ -235,5 +235,36 @@ namespace FrEee.Game.Objects.Civilization
 				result.Units.Add(unit);
 			return result;
 		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return Units.Sum(u => u.ShieldHitpoints); }
+		}
+
+		public int ArmorHitpoints
+		{
+			get { return Units.Sum(u => u.ArmorHitpoints); }
+		}
+
+		public int HullHitpoints
+		{
+			get { return Units.Sum(u => u.HullHitpoints) + (int)(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints); }
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return Units.Sum(u => u.MaxShieldHitpoints); }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return Units.Sum(u => u.MaxArmorHitpoints); }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return Units.Sum(u => u.MaxHullHitpoints); }
+		}
 	}
 }

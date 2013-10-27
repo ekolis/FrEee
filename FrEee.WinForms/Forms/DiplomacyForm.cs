@@ -242,7 +242,7 @@ namespace FrEee.WinForms.Forms
 			// sort vehicles descending by size, then alphabetically
 			// no trading units that are in cargo
 			var vehiclesNode = tree.AddItemWithImage("Vehicles", "Vehicles", Pictures.GetVehicleTypeImage(emp.ShipsetPath, VehicleTypes.Ship));
-			foreach (var v in emp.OwnedSpaceObjects.OfType<ISpaceVehicle>().Where(v => !package.Vehicles.Contains(v) && !(v is IUnit && ((IUnit)v).Container is ISpaceObject)).OrderByDescending(v => v.Design.Hull.Size).ThenBy(v => v.Name))
+			foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(v => !package.Vehicles.Contains(v) && !(v is IUnit && ((IUnit)v).Container is ISpaceObject)).OrderByDescending(v => v.Design.Hull.Size).ThenBy(v => v.Name))
 				vehiclesNode.AddItemWithImage(v.Name, v, v.Icon);
 
 			// resources

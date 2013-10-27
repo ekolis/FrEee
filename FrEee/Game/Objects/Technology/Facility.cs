@@ -240,5 +240,39 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return AbilityTargets.Facility; }
 		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return 0; }
+		}
+
+		/// <summary>
+		/// TODO - "armor" facilities that are hit before other facilities on a planet?
+		/// </summary>
+		public int ArmorHitpoints
+		{
+			get { return 0; }
+		}
+
+		public int HullHitpoints
+		{
+			get { return Hitpoints; }
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return 0; }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return 0; }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return MaxHitpoints; }
+		}
 	}
 }

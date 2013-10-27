@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -110,12 +111,12 @@ namespace FrEee.Game.Objects.Combat
 				foreach (var launcher in Combatants.ToArray())
 				{
 					// find launchable units
-					var unitsToLaunch = new List<ISpaceVehicle>();
+					var unitsToLaunch = new List<SpaceVehicle>();
 					if (launcher is Planet)
 					{
 						// planets can launch infinite units per turn
 						var p = (Planet)launcher;
-						unitsToLaunch.AddRange(p.Cargo.Units.OfType<ISpaceVehicle>());
+						unitsToLaunch.AddRange(p.Cargo.Units.OfType<SpaceVehicle>());
 					}
 					else if (launcher is ICargoTransferrer)
 					{
@@ -124,7 +125,7 @@ namespace FrEee.Game.Objects.Combat
 						foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
 						{
 							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString()).ToInt();
-							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<ISpaceVehicle>().Take(rate));
+							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate));
 						}
 					}
 

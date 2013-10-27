@@ -15,7 +15,7 @@ using FrEee.Game.Objects.Technology;
 namespace FrEee.WinForms.Controls
 {
 	/// <summary>
-	/// A report on a ship or base.
+	/// A report on a space vehicle.
 	/// </summary>
 	public partial class SpaceVehicleReport : UserControl, IBindable<SpaceVehicle>
 	{
@@ -55,7 +55,7 @@ namespace FrEee.WinForms.Controls
 			if (order != null)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
-					vehicle, order, Vehicle.Orders.Count - vehicle.Orders.IndexOf(order) - 1);
+					vehicle, order, Vehicle.Orders.Count() - vehicle.Orders.IndexOf(order) - 1);
 				Empire.Current.Commands.Add(cmd);
 				cmd.Execute(); // show change locally
 				Bind();
@@ -86,7 +86,7 @@ namespace FrEee.WinForms.Controls
 		private void btnOrderGoesDown_Click(object sender, System.EventArgs e)
 		{
 			var order = (IOrder<SpaceVehicle>)lstOrdersDetail.SelectedItem;
-			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count - 1)
+			if (order != null && vehicle.Orders.IndexOf(order) < vehicle.Orders.Count() - 1)
 			{
 				var cmd = new RearrangeOrdersCommand<SpaceVehicle>(
 					vehicle, order, 1);
@@ -176,8 +176,8 @@ namespace FrEee.WinForms.Controls
 				txtName.Text = vehicle.Name;
 				txtRole.Text = vehicle.Design.Role;
 				txtClass.Text = vehicle.Design.Name;
-				txtSize.Text = vehicle.Design.Hull.Name + " (" + vehicle.Design.Hull.Size.Kilotons() + ")";
-				txtMovement.Text = vehicle.MovementRemaining + " / " + vehicle.Speed;
+				txtHullSize.Text = vehicle.Design.Hull.Name + " (" + vehicle.Design.Hull.Size.Kilotons() + ")";
+				txtMovement.Text = vehicle.Speed + " / " + vehicle.Design.Speed;
 				progMovement.Maximum = vehicle.Design.Speed;
 				progMovement.Value = vehicle.MovementRemaining;
 

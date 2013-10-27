@@ -285,5 +285,39 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get { return Battle.StarSystem; }
 		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return NormalShields + PhasedShields; }
+		}
+
+		/// <summary>
+		/// TODO - armored seekers?
+		/// </summary>
+		public int ArmorHitpoints
+		{
+			get { return 0; }
+		}
+
+		public int HullHitpoints
+		{
+			get { return Hitpoints; }
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return MaxNormalShields + MaxPhasedShields; }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return 0; }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return MaxHitpoints; }
+		}
 	}
 }

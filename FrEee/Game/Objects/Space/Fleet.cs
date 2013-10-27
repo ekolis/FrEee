@@ -4,6 +4,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -605,20 +606,20 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// All space vehicles in this fleet and subfleets, but not counting the subfleets themselves.
 		/// </summary>
-		public IEnumerable<IMobileSpaceObject> LeafVehicles
+		public IEnumerable<SpaceVehicle> LeafVehicles
 		{
 			get
 			{
 				return Vehicles.SelectMany(v =>
 				{
-					var list = new List<IMobileSpaceObject>();
+					var list = new List<SpaceVehicle>();
 					if (v is Fleet)
 					{
 						foreach (var v2 in ((Fleet)v).LeafVehicles)
 							list.Add(v2);
 					}
-					else
-						list.Add(v);
+					else if (v is SpaceVehicle)
+						list.Add((SpaceVehicle)v);
 					return list;
 				});
 			}
@@ -683,6 +684,42 @@ namespace FrEee.Game.Objects.Space
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Fleet; }
+		}
+
+
+		public int ShieldHitpoints
+		{
+			get { return Vehicles.Sum(v => v.ShieldHitpoints); }
+		}
+
+		public int ArmorHitpoints
+		{
+			get { return Vehicles.Sum(v => v.ArmorHitpoints); }
+		}
+
+		public int HullHitpoints
+		{
+			get { return Vehicles.Sum(v => v.HullHitpoints); }
+		}
+
+		public int MaxShieldHitpoints
+		{
+			get { return Vehicles.Sum(v => v.MaxShieldHitpoints); }
+		}
+
+		public int MaxArmorHitpoints
+		{
+			get { return Vehicles.Sum(v => v.MaxArmorHitpoints); }
+		}
+
+		public int MaxHullHitpoints
+		{
+			get { return Vehicles.Sum(v => v.MaxHullHitpoints); }
+		}
+
+		public ResourceQuantity MaintenanceCost
+		{
+			get { return Vehicles.Sum(v => v.MaintenanceCost); }
 		}
 	}
 }

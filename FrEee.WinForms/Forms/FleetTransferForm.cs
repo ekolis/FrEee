@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Utility.Extensions;
@@ -40,17 +41,17 @@ namespace FrEee.WinForms.Forms
 			var vehicles = new HashSet<IVehicle>();
 
 			// find vehicles in sector that are not fleets
-			foreach (var v in sector.SpaceObjects.OfType<ISpaceVehicle>())
+			foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>())
 				vehicles.Add(v);
 			
 			// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
-			foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
+			foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 				vehicles.Add(v);
-			foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<ISpaceVehicle>()))
+			foreach (var v in newCommands.OfType<DisbandFleetCommand>().SelectMany(c => c.Executor.Vehicles.OfType<SpaceVehicle>()))
 				vehicles.Add(v);
 
 			// remove vehicles that are being added to fleets
-			foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Executor).OfType<ISpaceVehicle>())
+			foreach (var v in newCommands.OfType<JoinFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 				vehicles.Remove(v);
 
 			// make a tree of vehicles
