@@ -8,6 +8,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Game.Enumerations;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -230,12 +231,18 @@ namespace FrEee.Game.Objects.Technology
 
 		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
+			// create a "hypothetical" empire for testing out research
+			var empCopy = emp.CopyAndAssignNewID();
+			empCopy.ResearchedTechnologies = new NamedDictionary<Technology, int>();
+			foreach (var kvp in levels)
+				empCopy.ResearchedTechnologies[kvp.Key] = kvp.Value;
+			
 			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
 			{
 				bool ok = true;
 				foreach (var req in item.UnlockRequirements)
 				{
-					if (!req.IsMetBy(emp))
+					if (!req.IsMetBy(empCopy))
 					{
 						// didn't meet the requirement
 						ok = false;
@@ -245,6 +252,9 @@ namespace FrEee.Game.Objects.Technology
 				if (ok)
 					yield return item;
 			}
+
+			// get rid of the hypothetical empire
+			empCopy.Dispose();
 		}
 
 		/// <summary>
