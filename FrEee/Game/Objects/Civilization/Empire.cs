@@ -257,7 +257,7 @@ namespace FrEee.Game.Objects.Civilization
 		public NamedDictionary<Technology.Technology, int> ResearchedTechnologies
 		{
 			get;
-			private set;
+			internal set;
 		}
 
 		/// <summary>
@@ -528,7 +528,8 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
-			Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
+			if (Galaxy.Current.Empires.Contains(this))
+				Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
 		}
 
 		/// <summary>
