@@ -81,11 +81,6 @@ namespace FrEee.Game.Objects.Civilization
 		public Race PrimaryRace { get; set; }
 
 		/// <summary>
-		/// Traits of this empire.
-		/// </summary>
-		public IList<Trait> Traits { get; private set; }
-
-		/// <summary>
 		/// The name of the insignia picture file, relative to Pictures/Insignia.
 		/// </summary>
 		public string InsigniaName { get; set; }
@@ -390,6 +385,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (item == null)
 				return true;
+			// TODO - racial/unique tech should just be requirements
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
@@ -473,7 +469,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IEnumerable<Ability> Abilities
 		{
-			get { return Traits == null ? Enumerable.Empty<Ability>() : Traits.SelectMany(t => t.Abilities); }
+			get { return PrimaryRace.Traits == null ? Enumerable.Empty<Ability>() : PrimaryRace.Traits.SelectMany(t => t.Abilities).Where(a => a.Rule.CanTarget(AbilityTargets.Empire)); }
 		}
 
 		public IEnumerable<Ability> UnstackedAbilities
