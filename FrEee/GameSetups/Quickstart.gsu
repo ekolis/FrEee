@@ -22,7 +22,7 @@ p44:
 		System.Collections.Generic.List`1[[FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 		c1:		
 			FrEee.Game.Setup.EmpireTemplate, FrEee.Core, Version=0.0.4.0, Culture=neutral, PublicKeyToken=1f58fa7bbe756d08:
-			p13:
+			p12:
 				AIName:
 					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 					"AI_Default";
@@ -35,8 +35,6 @@ p44:
 				CultureName:
 					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 					"Scientists";
-				HappinessModelName:
-					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:n;
 				InsigniaName:
 					System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 					"Fractalian";
@@ -142,7 +140,9 @@ p44:
 							"Fractalian";
 						TraitNames:
 							System.Collections.Generic.List`1[[System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-							c0:							
+							c1:							
+								System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
+								"Crystallurgy";
 							;
 					;
 				ShipsetName:
@@ -159,10 +159,10 @@ p44:
 		p2:
 			Height:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				15;
+				30;
 			Width:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				20;
+				40;
 		;
 	GalaxyTemplateName:
 		System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
@@ -250,7 +250,7 @@ p44:
 				0.01;
 			ValueDepletionPerResource:
 				System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
-				0;
+				1;
 			ValueDepletionPerTurn:
 				System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089:
 				1;

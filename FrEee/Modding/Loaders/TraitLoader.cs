@@ -29,9 +29,9 @@ namespace FrEee.Modding.Loaders
 				t = new Trait();
 				mod.Traits.Add(t);
 
-				t.Name = rec.Get<string>("Name", t);
-				t.Description = rec.Get<string>("Description", t);
-				t.Cost = rec.Get<int>("Cost", t);
+				t.Name = rec.Get<string>("Name", t, ref index);
+				t.Description = rec.Get<string>("Description", t, ref index);
+				t.Cost = rec.Get<int>("Cost", t, ref index);
 
 				for (int count = 1; ; count++)
 				{
@@ -42,7 +42,7 @@ namespace FrEee.Modding.Loaders
 					abil.Rule = Mod.Current.FindAbilityRule(f.Value);
 					for (int vcount = 1; ; vcount++)
 					{
-						var vf = rec.FindField(new string[] { "Value", "Value " + count }, ref index, false, index + 1);
+						var vf = rec.FindField(new string[] { "Value", "Value " + vcount }, ref index, false, index + 1);
 						if (vf == null)
 							break;
 						abil.Values.Add(vf.Value);
