@@ -652,15 +652,15 @@ namespace FrEee.Utility
 					{
 						fileCache[path] = Image.FromFile(path);
 					}
-					catch
+					catch (Exception ex)
 					{
-						// TODO - log missing images
+						Console.Error.WriteLine("Could not load " + Path.GetFullPath(path) + ": " + ex.Message);
 						fileCache[path] = null;
 					}
 				}
 				else
 				{
-					// TODO - log missing images
+					Console.Error.WriteLine("Could not find " + Path.GetFullPath(path) + ".");
 					fileCache[path] = null;
 				}
 			}

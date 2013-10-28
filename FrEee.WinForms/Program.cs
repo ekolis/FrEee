@@ -29,6 +29,10 @@ namespace FrEee.WinForms
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
+			var stdout = File.OpenWrite("stdout.txt");
+			Console.SetOut(new StreamWriter(stdout));
+			var stderr = File.OpenWrite("stderr.txt");
+			Console.SetError(new StreamWriter(stderr));
 			if (args.Length == 0)
 			{
 				Application.Run(MainMenuForm.GetInstance());
