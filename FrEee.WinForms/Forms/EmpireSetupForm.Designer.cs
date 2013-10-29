@@ -100,7 +100,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtPointsAvailable.Location = new System.Drawing.Point(183, 690);
 			this.txtPointsAvailable.Name = "txtPointsAvailable";
-			this.txtPointsAvailable.Size = new System.Drawing.Size(127, 17);
+			this.txtPointsAvailable.Size = new System.Drawing.Size(172, 17);
 			this.txtPointsAvailable.TabIndex = 5;
 			this.txtPointsAvailable.Text = "Points Available: 0 / 0";
 			this.txtPointsAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -136,7 +136,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(317, 687);
+			this.btnCancel.Location = new System.Drawing.Point(362, 687);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(80, 22);
 			this.btnCancel.TabIndex = 3;
@@ -149,7 +149,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(403, 687);
+			this.btnOK.Location = new System.Drawing.Point(448, 687);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(80, 22);
 			this.btnOK.TabIndex = 4;
@@ -192,7 +192,7 @@
 			this.tabGeneral.Location = new System.Drawing.Point(4, 29);
 			this.tabGeneral.Name = "tabGeneral";
 			this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-			this.tabGeneral.Size = new System.Drawing.Size(474, 642);
+			this.tabGeneral.Size = new System.Drawing.Size(519, 642);
 			this.tabGeneral.TabIndex = 0;
 			this.tabGeneral.Text = "General";
 			// 
@@ -230,7 +230,7 @@
 			this.gamePanel1.Location = new System.Drawing.Point(12, 404);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(449, 232);
+			this.gamePanel1.Size = new System.Drawing.Size(494, 232);
 			this.gamePanel1.TabIndex = 98;
 			// 
 			// txtRaceHappiness
@@ -639,7 +639,7 @@
 			this.tabAptitudes.Location = new System.Drawing.Point(4, 29);
 			this.tabAptitudes.Name = "tabAptitudes";
 			this.tabAptitudes.Padding = new System.Windows.Forms.Padding(3);
-			this.tabAptitudes.Size = new System.Drawing.Size(474, 581);
+			this.tabAptitudes.Size = new System.Drawing.Size(519, 642);
 			this.tabAptitudes.TabIndex = 4;
 			this.tabAptitudes.Text = "Aptitudes";
 			// 
@@ -651,7 +651,7 @@
 			this.aptitudePicker.Location = new System.Drawing.Point(3, 3);
 			this.aptitudePicker.Margin = new System.Windows.Forms.Padding(4);
 			this.aptitudePicker.Name = "aptitudePicker";
-			this.aptitudePicker.Size = new System.Drawing.Size(468, 575);
+			this.aptitudePicker.Size = new System.Drawing.Size(513, 636);
 			this.aptitudePicker.TabIndex = 0;
 			this.aptitudePicker.Values = null;
 			this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
@@ -662,7 +662,7 @@
 			this.tabTraits.Controls.Add(this.raceTraitPicker);
 			this.tabTraits.Location = new System.Drawing.Point(4, 29);
 			this.tabTraits.Name = "tabTraits";
-			this.tabTraits.Size = new System.Drawing.Size(474, 581);
+			this.tabTraits.Size = new System.Drawing.Size(519, 642);
 			this.tabTraits.TabIndex = 5;
 			this.tabTraits.Text = "Traits";
 			// 
@@ -674,7 +674,7 @@
 			this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
 			this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.raceTraitPicker.Name = "raceTraitPicker";
-			this.raceTraitPicker.Size = new System.Drawing.Size(474, 581);
+			this.raceTraitPicker.Size = new System.Drawing.Size(519, 642);
 			this.raceTraitPicker.TabIndex = 0;
 			this.raceTraitPicker.Traits = null;
 			this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
@@ -695,7 +695,7 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(482, 675);
+			this.tabs.Size = new System.Drawing.Size(527, 675);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
@@ -705,7 +705,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(501, 722);
+			this.ClientSize = new System.Drawing.Size(546, 722);
 			this.Controls.Add(this.txtPointsAvailable);
 			this.Controls.Add(this.btnSaveRace);
 			this.Controls.Add(this.btnLoadRace);
