@@ -58,8 +58,9 @@ namespace FrEee.Game.Objects.Space
 				u.Container.RemoveUnit(u);
 			}
 
-			// place in space
-			StarSystem.Place(sobj, Coordinates);
+			// place in space if it's actually in space
+			if (StarSystem != null)
+				StarSystem.Place(sobj, Coordinates);
 		}
 
 		public void Remove(ISpaceObject sobj)
