@@ -133,17 +133,17 @@ namespace FrEee.Game.Setup
 					yield return w;
 			}
 			if (string.IsNullOrWhiteSpace(Name))
-				yield return "You must specify a name for your empire or a default empire name for your race.";
+				yield return "You must specify a name for your empire.";
 			if (string.IsNullOrWhiteSpace(LeaderName))
-				yield return "You must specify a leader name for your empire or race.";
+				yield return "You must specify a leader name for your empire.";
 			if (string.IsNullOrWhiteSpace(LeaderPortraitName))
-				yield return "You must specify a leader portrait for your empire or race.";
+				yield return "You must specify a leader portrait for your empire.";
 			if (string.IsNullOrWhiteSpace(InsigniaName))
-				yield return "You must specify an insignia for your empire or race.";
+				yield return "You must specify an insignia for your empire.";
 			if (string.IsNullOrWhiteSpace(ShipsetName))
-				yield return "You must specify a shipset for your empire or race.";
+				yield return "You must specify a shipset for your empire.";
 			if (Culture == null)
-				yield return "You must specify a culture for your empire or race.";
+				yield return "You must specify a culture for your empire.";
 			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.FindByName(AIName) == null)
 				yield return "AI empires require an AI script.";
 			if (PointsSpent > maxPoints)
