@@ -196,7 +196,7 @@ namespace FrEee.Utility.Extensions
 		{
 			IEnumerable<Ability> abils;
 			if (includeShared)
-				abils = obj.Abilities.Union(obj.GetSharedAbilities());
+				abils = obj.Abilities.Union(obj.GetSharedAbilities().Flatten());
 			else
 				abils = obj.Abilities;
 			return abils.Any(abil => abil.Rule.Matches(abilityName));
@@ -810,7 +810,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var abils = obj.Abilities;
 			if (includeShared)
-				abils = abils.Union(obj.GetSharedAbilities());
+				abils = abils.Union(obj.GetSharedAbilities().Flatten());
 			abils = abils.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
@@ -822,7 +822,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var tuples = objs.Squash(o => o.Abilities);
 			if (includeShared)
-				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities()));
+				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities().Flatten()));
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
