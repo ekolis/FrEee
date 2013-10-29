@@ -130,7 +130,7 @@ namespace FrEee.WinForms.Forms
 			ddlInsignia.Text = EmpireTemplate.InsigniaName;
 			ddlShipset.Text = EmpireTemplate.ShipsetName;
 			ddlAI.Text = EmpireTemplate.AIName;
-			ddlCulture.SelectedValue = EmpireTemplate.Culture;
+			ddlCulture.SelectedItem = EmpireTemplate.Culture;
 
 			// race general stuff
 			txtRaceName.Text = EmpireTemplate.PrimaryRace.Name;
