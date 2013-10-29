@@ -27,32 +27,46 @@ namespace FrEee.Game.Objects.Vehicles
 	{
 		public static IDesign Create(VehicleTypes vt)
 		{
+			IDesign d;
 			switch (vt)
 			{
 				case VehicleTypes.Ship:
-					return new Design<Ship>();
+					d = new Design<Ship>();
+					break;
 				case VehicleTypes.Base:
-					return new Design<Base>();
+					d = new Design<Base>();
+					break;
 				case VehicleTypes.Fighter:
-					return new Design<Fighter>();
+					d = new Design<Fighter>();
+					break;
 				case VehicleTypes.Troop:
-					return new Design<Troop>();
+					d = new Design<Troop>();
+					break;
 				case VehicleTypes.Mine:
-					return new Design<Mine>();
+					d = new Design<Mine>();
+					break;
 				case VehicleTypes.Satellite:
-					return new Design<Satellite>();
+					d = new Design<Satellite>();
+					break;
 				case VehicleTypes.Drone:
-					return new Design<Drone>();
+					d = new Design<Drone>();
+					break;
 				case VehicleTypes.WeaponPlatform:
-					return new Design<WeaponPlatform>();
+					d = new Design<WeaponPlatform>();
+					break;
 				default:
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
+					break;
 			}
+			d.Owner = Empire.Current;
+			return d;
 		}
 
 		public static IDesign Create(IHull<IVehicle> hull)
 		{
-			return Create(hull.VehicleType);
+			var d = Create(hull.VehicleType);
+			d.Hull = hull;
+			return d;
 		}
 	}
 
