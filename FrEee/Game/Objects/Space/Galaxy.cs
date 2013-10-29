@@ -525,7 +525,7 @@ namespace FrEee.Game.Objects.Space
 					cmd.Execute();
 			}
 
-			return emps;
+			return noCmds;
 		}
 
 		private void LoadCommands(Empire emp, IList<ICommand> cmds)
