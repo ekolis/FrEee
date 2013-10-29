@@ -7,6 +7,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 
 namespace FrEee.WinForms.Controls
 {
@@ -198,7 +199,7 @@ namespace FrEee.WinForms.Controls
 								var font = new Font("Sans Serif", 8);
 								var sf = new StringFormat();
 								sf.Alignment = StringAlignment.Center; // center align our name
-								sf.LineAlignment = StringAlignment.Far; // bottom align our name
+								sf.LineAlignment = StringAlignment.Near; // top align our name
 								var name = largest.Name;
 								pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 							}
@@ -250,6 +251,74 @@ namespace FrEee.WinForms.Controls
 								}
 							}
 						}
+
+						// draw ability text
+						// TODO - make ability text moddable via AbilityRules.txt
+						var abilText = "";
+						var sobjs = sector.SpaceObjects.Where(sobj => sobj.Owner == Empire.Current);
+						if (sobjs.Any(o => o.HasAbility("Space Yard")))
+							abilText += "Sy";
+						if (sobjs.Any(o => o.HasAbility("Component Repair")))
+							abilText += "Rp";
+						if (sobjs.Any(o => o.HasAbility("Supply Generation")))
+							abilText += "Rd";
+						// TODO - make quantum reactor code same as resupply depot if we decide to make it auto-resupply like a resupply depot
+						if (sobjs.Any(o => o.HasAbility("Quantum Reactor")))
+							abilText += "Qr";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Minerals").ToInt() > 0))
+							abilText += "Mi+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Minerals").ToInt() < 0))
+							abilText += "Mi-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Organics").ToInt() > 0))
+							abilText += "Or+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Organics").ToInt() < 0))
+							abilText += "Or-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Radioactives").ToInt() > 0))
+							abilText += "Ra+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Resource Gen Modifier Planet - Radioactives").ToInt() < 0))
+							abilText += "Ra-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Point Gen Modifier Planet - Research").ToInt() > 0))
+							abilText += "Re+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Point Gen Modifier Planet - Research").ToInt() < 0))
+							abilText += "Re-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Point Gen Modifier Planet - Intelligence").ToInt() > 0))
+							abilText += "In+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Point Gen Modifier Planet - Intelligence").ToInt() < 0))
+							abilText += "In-";
+						if (sobjs.Any(o => o.HasAbility("Resource Conversion")))
+							abilText += "Rc";
+						if (sobjs.Any(o => o.HasAbility("Resource Reclamation")))
+							abilText += "Rr";
+						if (sobjs.Any(o => o.HasAbility("Ship Training")))
+							abilText += "Ts";
+						if (sobjs.Any(o => o.HasAbility("Fleet Training")))
+							abilText += "Tf";
+						if (sobjs.OfType<Planet>().Any(o => o.HasAbility("Stop Planet Destroyer")))
+							abilText += "Sh";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Conditions").ToInt() > 0))
+							abilText += "Co+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Conditions").ToInt() < 0))
+							abilText += "Co-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Minerals Value").ToInt() > 0))
+							abilText += "Vm+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Minerals Value").ToInt() < 0))
+							abilText += "Vm-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Organics Value").ToInt() > 0))
+							abilText += "Vo+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Organics Value").ToInt() < 0))
+							abilText += "Vo-";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Radioactives Value").ToInt() > 0))
+							abilText += "Vr+";
+						if (sobjs.OfType<Planet>().Any(o => o.GetAbilityValue("Planet - Change Radioactives Value").ToInt() < 0))
+							abilText += "Vr-";
+						if (sobjs.OfType<Planet>().Any(o => o.HasAbility("Planet - Change Atmosphere")))
+							abilText += "At";
+						// TODO - cache font/brush assets
+						var sfAbil = new StringFormat();
+						sfAbil.Alignment = StringAlignment.Far;
+						sfAbil.LineAlignment = StringAlignment.Far;
+						var rectAbil = new RectangleF(drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+						pe.Graphics.DrawString(abilText, new Font("Sans Serif", 6), new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
 
 						// draw selection reticule
 						if (sector == SelectedSector)
