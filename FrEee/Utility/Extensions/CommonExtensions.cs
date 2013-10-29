@@ -860,14 +860,16 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> GetSharedAbilities(this IAbilityObject obj)
+		public static ILookup<Empire, Ability> GetSharedAbilities(this IAbilityObject obj)
 		{
+			var abils = new SafeDictionary<Empire, ICollection<Ability>>();
+
 			// Unowned objects cannot have abilities shared to them.
 			if (!(obj is IOwnable))
-				yield break;
+				return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
 			var owner = ((IOwnable)obj).Owner;
 			if (owner == null)
-				yield break;
+				return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
 
 			foreach (var clause in owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
 			{
@@ -875,30 +877,53 @@ namespace FrEee.Utility.Extensions
 				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
 				{
 					var sector = ((ILocated)obj).Sector;
-					foreach (var abil in sector.GetAbilities(owner))
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						if (clause.AbilityRule == abil.Rule)
-							yield return abil;
+						foreach (var abil in sector.GetAbilities(emp))
+						{
+							if (clause.AbilityRule == abil.Rule)
+							{
+								if (abils[emp] == null)
+									abils.Add(emp, new List<Ability>());
+								abils[emp].Add(abil);
+							}
+						}
 					}
 				}
 				else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
 				{
 					var sys = ((ILocated)obj).StarSystem;
-					foreach (var abil in sys.GetAbilities(owner))
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						if (clause.AbilityRule == abil.Rule)
-							yield return abil;
+						foreach (var abil in sys.GetAbilities(emp))
+						{
+							if (clause.AbilityRule == abil.Rule)
+							{
+								if (abils[emp] == null)
+									abils.Add(emp, new List<Ability>());
+								abils[emp].Add(abil);
+							}
+						}
 					}
 				}
 				else if (rule.CanTarget(AbilityTargets.Galaxy))
 				{
-					foreach (var abil in Galaxy.Current.GetAbilities(owner))
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						if (clause.AbilityRule == abil.Rule)
-							yield return abil;
-					} 
+						foreach (var abil in Galaxy.Current.GetAbilities(emp))
+						{
+							if (clause.AbilityRule == abil.Rule)
+							{
+								if (abils[emp] == null)
+									abils.Add(emp, new List<Ability>());
+								abils[emp].Add(abil);
+							}
+						}
+					}
 				}
 			}
+
+			return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
 		}
 
 		/// <summary>
@@ -1984,6 +2009,18 @@ namespace FrEee.Utility.Extensions
 			if (s.Length == 0)
 				return s;
 			return s[0].ToString().ToUpper() + s.Substring(1);
+		}
+
+		public static ILookup<TKey, TValue> MyLookup<TKey, TEnumerable, TValue>(this IEnumerable<KeyValuePair<TKey, TEnumerable>> dict)
+			where TEnumerable : IEnumerable<TValue>
+		{
+			var list = new List<KeyValuePair<TKey, TValue>>();
+			foreach (var kvp in dict)
+			{
+				foreach (var item in kvp.Value)
+					list.Add(new KeyValuePair<TKey, TValue>(kvp.Key, item));
+			}
+			return list.ToLookup(kvp => kvp.Key, kvp => kvp.Value);
 		}
 	}
 }
