@@ -219,8 +219,12 @@ namespace FrEee.WinForms.Forms
 		{
 			txtGalaxyName.Text = setup.GameName;
 			spnStarSystems.Value = setup.StarSystemCount;
+			spnWidth.ValueChanged -= spnWidth_ValueChanged;
+			spnHeight.ValueChanged -= spnHeight_ValueChanged;
 			spnWidth.Value = setup.GalaxySize.Width;
 			spnHeight.Value = setup.GalaxySize.Height;
+			spnWidth.ValueChanged += spnWidth_ValueChanged;
+			spnHeight.ValueChanged += spnHeight_ValueChanged;
 			spnSystemGroups.Value = setup.StarSystemGroups;
 			chkAllSystemsExplored.Checked = setup.AllSystemsExplored;
 			chkOmniscient.Checked = setup.OmniscientView;
