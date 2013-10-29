@@ -509,5 +509,29 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Hull == null ? AbilityTargets.None : Hull.AbilityTarget; }
 		}
+
+
+		public void Redact(Empire emp)
+		{
+			if (CheckVisibility(emp) < Visibility.Fogged)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
 	}
 }
