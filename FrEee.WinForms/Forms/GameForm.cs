@@ -488,6 +488,7 @@ namespace FrEee.WinForms.Forms
 				idx++;
 			}
 			var totalRP = Empire.Current.NetIncome[Resource.Research] + Empire.Current.BonusResearch;
+			queueSpending = Math.Min(queueSpending, totalRP);
 			var leftover = totalRP - queueSpending;
 			var pctSpending = 0;
 			foreach (var kvp in Empire.Current.ResearchSpending)
