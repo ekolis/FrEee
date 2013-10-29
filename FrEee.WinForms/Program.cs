@@ -96,16 +96,17 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			var hostRegex = @"(?i).*_.*\.gam";
 			var cmdRegex = @"(?i).*_.*_.*\.plr";
 
-			if (Regex.IsMatch(file, playerRegex))
-				operation = "play";
-			else if (Regex.IsMatch(file, hostRegex))
-				operation = "host";
-			else if (Regex.IsMatch(file, cmdRegex))
-				operation = "play";
-				
-			else
-				return DisplaySyntax();
-
+			if (operation == null)
+			{
+				if (Regex.IsMatch(file, playerRegex))
+					operation = "play";
+				else if (Regex.IsMatch(file, hostRegex))
+					operation = "host";
+				else if (Regex.IsMatch(file, cmdRegex))
+					operation = "play";
+				else
+					return DisplaySyntax();
+			}
 			gamfile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Path.GetFileNameWithoutExtension(file) + ".gam");
 			plrfile = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Path.GetFileNameWithoutExtension(file) + ".plr");
 
