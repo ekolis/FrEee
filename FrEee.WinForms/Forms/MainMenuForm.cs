@@ -115,6 +115,7 @@ namespace FrEee.WinForms.Forms
 
 		private void LoadGalaxyFromFile(string filename, bool? loadPlr = null)
 		{
+			Cursor = Cursors.WaitCursor;
 			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
 			Galaxy.Load(filename);
 			if (Galaxy.Current.CurrentEmpire == null)
@@ -122,6 +123,7 @@ namespace FrEee.WinForms.Forms
 				// host view, load host console
 				Cursor = Cursors.WaitCursor;
 				var form = new HostConsoleForm();
+				Cursor = Cursors.Default;
 				Hide();
 				this.ShowChildForm(form);
 				Show();
@@ -137,6 +139,7 @@ namespace FrEee.WinForms.Forms
 						Galaxy.Current.LoadCommands();
 				}
 				var form = new GameForm(false);
+				Cursor = Cursors.Default;
 				Hide();
 				form.ShowDialog();
 				Show();
