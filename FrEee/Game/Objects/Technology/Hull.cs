@@ -232,9 +232,9 @@ namespace FrEee.Game.Objects.Technology
 		{
 			if (m == null)
 				return true;
-			if (m.MinimumVehicleSize > Size)
+			if (m.MinimumVehicleSize != null && m.MinimumVehicleSize > Size)
 				return false;
-			if (m.MaximumVehicleSize < Size)
+			if (m.MaximumVehicleSize != null && m.MaximumVehicleSize < Size)
 				return false;
 			if (!m.VehicleTypes.HasFlag(VehicleType))
 				return false;

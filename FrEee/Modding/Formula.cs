@@ -213,15 +213,7 @@ namespace FrEee.Modding
 		public static Formula<string> operator +(Formula<string> f1, Formula<T> f2)
 		{
 			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
-			{
-				string part1, part2;
-				part1 = "(\"{0}\")";
-				if (typeof(T) == typeof(string))
-					part2 = "\"{1}\"";
-				else
-					part2 = "str({1})";
-				return new Formula<string>(f1.Context, string.Format(part1 + " + " + part2, f1.Text, f2.Text), FormulaType.Static).Compile();
-			}
+				return f1.Value + f2.Value;
 			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
 				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
 			return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Static);

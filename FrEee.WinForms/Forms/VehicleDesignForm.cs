@@ -133,8 +133,21 @@ namespace FrEee.WinForms.Forms
 			// show GUI
 			ddlName.Enabled = Design != null;
 			ddlRole.Enabled = Design != null;
-			btnMount.Enabled = Design != null;
-			btnClearMount.Enabled = Design != null;
+			ddlMount.Enabled = Design != null;
+			btnMountInfo.Enabled = Design != null;
+		}
+
+		private void BindMountList()
+		{
+			// bind mount list
+			ddlMount.Items.Clear();
+			ddlMount.Items.Add(new MountInfo(null));
+			if (Design.Hull != null)
+			{
+				foreach (var m in Mod.Current.Mounts.Where(m => Design.Hull.CanUseMount(m)))
+					ddlMount.Items.Add(new MountInfo(m));
+			}
+			ddlMount.SelectedIndex = 0;
 		}
 
 		private void BindAvailableComponents()
@@ -183,6 +196,7 @@ namespace FrEee.WinForms.Forms
 		private void BindAll()
 		{
 			BindDesignData();
+			BindMountList();
 			BindAvailableComponents();
 			BindInstalledComponents();
 		}
@@ -371,9 +385,10 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void btnClearMount_Click(object sender, EventArgs e)
+		private void btnMountInfo_Click(object sender, EventArgs e)
 		{
-			CurrentMount = null;
+			if (CurrentMount != null)
+				this.ShowChildForm(new MountReport(CurrentMount).CreatePopupForm(CurrentMount.ShortName));
 		}
 
 		/// <summary>
@@ -389,9 +404,9 @@ namespace FrEee.WinForms.Forms
 			{
 				mount = value;
 				if (mount == null)
-					btnMount.Text = "(none)";
+					ddlMount.SelectedIndex = 0;
 				else
-					btnMount.Text = mount.ShortName;
+					ddlMount.SelectedItem = ddlMount.Items.Cast<MountInfo>().SingleOrDefault(item => item.Mount == mount);
 				BindAvailableComponents();
 			}
 		}
@@ -451,6 +466,22 @@ namespace FrEee.WinForms.Forms
 					form.ShowDialog();
 				}
 			}
+		}
+
+		private void ddlMount_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			CurrentMount = ((dynamic)ddlMount.SelectedItem).Mount;
+		}
+
+		private class MountInfo
+		{
+			public MountInfo(Mount mount)
+			{
+				Mount = mount;
+			}
+
+			public string ShortName { get { return Mount == null ? "(No Mount)" : Mount.ShortName.Value; } }
+			public Mount Mount { get; set; }
 		}
 	}
 }

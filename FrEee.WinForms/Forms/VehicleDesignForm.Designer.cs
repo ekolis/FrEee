@@ -40,9 +40,7 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkOnlyLatest = new System.Windows.Forms.CheckBox();
 			this.chkFilterByMount = new System.Windows.Forms.CheckBox();
-			this.btnClearMount = new FrEee.WinForms.Controls.GameButton();
 			this.btnWeaponsReport = new FrEee.WinForms.Controls.GameButton();
-			this.btnMount = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
@@ -87,6 +85,8 @@
 			this.btnHull = new FrEee.WinForms.Controls.GameButton();
 			this.txtIteration = new System.Windows.Forms.Label();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+			this.btnMountInfo = new FrEee.WinForms.Controls.GameButton();
+			this.ddlMount = new System.Windows.Forms.ComboBox();
 			this.pnlStats.SuspendLayout();
 			this.gamePanel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picDetailIcon)).BeginInit();
@@ -174,7 +174,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label6.Location = new System.Drawing.Point(13, 105);
+			this.label6.Location = new System.Drawing.Point(13, 99);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(59, 13);
 			this.label6.TabIndex = 13;
@@ -226,19 +226,6 @@
 			this.chkFilterByMount.UseVisualStyleBackColor = true;
 			this.chkFilterByMount.CheckedChanged += new System.EventHandler(this.chkFilterByMount_CheckedChanged);
 			// 
-			// btnClearMount
-			// 
-			this.btnClearMount.BackColor = System.Drawing.Color.Black;
-			this.btnClearMount.Enabled = false;
-			this.btnClearMount.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearMount.Location = new System.Drawing.Point(226, 100);
-			this.btnClearMount.Name = "btnClearMount";
-			this.btnClearMount.Size = new System.Drawing.Size(20, 23);
-			this.btnClearMount.TabIndex = 26;
-			this.btnClearMount.Text = "X";
-			this.btnClearMount.UseVisualStyleBackColor = false;
-			this.btnClearMount.Click += new System.EventHandler(this.btnClearMount_Click);
-			// 
 			// btnWeaponsReport
 			// 
 			this.btnWeaponsReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -251,19 +238,6 @@
 			this.btnWeaponsReport.TabIndex = 26;
 			this.btnWeaponsReport.Text = "Weapons Report";
 			this.btnWeaponsReport.UseVisualStyleBackColor = false;
-			// 
-			// btnMount
-			// 
-			this.btnMount.BackColor = System.Drawing.Color.Black;
-			this.btnMount.Enabled = false;
-			this.btnMount.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMount.Location = new System.Drawing.Point(78, 100);
-			this.btnMount.Name = "btnMount";
-			this.btnMount.Size = new System.Drawing.Size(142, 23);
-			this.btnMount.TabIndex = 25;
-			this.btnMount.Text = "(none)";
-			this.btnMount.UseVisualStyleBackColor = false;
-			this.btnMount.Click += new System.EventHandler(this.btnMount_Click);
 			// 
 			// btnCancel
 			// 
@@ -786,18 +760,46 @@
 			this.picPortrait.TabStop = false;
 			this.picPortrait.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseDown);
 			// 
+			// btnMountInfo
+			// 
+			this.btnMountInfo.BackColor = System.Drawing.Color.Black;
+			this.btnMountInfo.Enabled = false;
+			this.btnMountInfo.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMountInfo.Location = new System.Drawing.Point(226, 94);
+			this.btnMountInfo.Name = "btnMountInfo";
+			this.btnMountInfo.Size = new System.Drawing.Size(20, 23);
+			this.btnMountInfo.TabIndex = 26;
+			this.btnMountInfo.Text = "?";
+			this.btnMountInfo.UseVisualStyleBackColor = false;
+			this.btnMountInfo.Click += new System.EventHandler(this.btnMountInfo_Click);
+			// 
+			// ddlMount
+			// 
+			this.ddlMount.BackColor = System.Drawing.Color.Black;
+			this.ddlMount.DisplayMember = "ShortName";
+			this.ddlMount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlMount.Enabled = false;
+			this.ddlMount.ForeColor = System.Drawing.Color.White;
+			this.ddlMount.FormattingEnabled = true;
+			this.ddlMount.Location = new System.Drawing.Point(80, 96);
+			this.ddlMount.Name = "ddlMount";
+			this.ddlMount.Size = new System.Drawing.Size(140, 21);
+			this.ddlMount.TabIndex = 31;
+			this.ddlMount.ValueMember = "Mount";
+			this.ddlMount.SelectedIndexChanged += new System.EventHandler(this.ddlMount_SelectedIndexChanged);
+			// 
 			// VehicleDesignForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(709, 636);
+			this.Controls.Add(this.ddlMount);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtIteration);
 			this.Controls.Add(this.chkFilterByMount);
-			this.Controls.Add(this.btnClearMount);
+			this.Controls.Add(this.btnMountInfo);
 			this.Controls.Add(this.btnWeaponsReport);
-			this.Controls.Add(this.btnMount);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnSave);
 			this.Controls.Add(this.pnlStats);
@@ -891,13 +893,13 @@
 		private System.Windows.Forms.Label label11;
 		private Controls.GameButton btnSave;
 		private Controls.GameButton btnCancel;
-		private Controls.GameButton btnMount;
 		private Controls.GameButton btnWeaponsReport;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label txtSupplyUsage;
-		private Controls.GameButton btnClearMount;
 		private System.Windows.Forms.CheckBox chkFilterByMount;
 		private System.Windows.Forms.Label txtIteration;
 		private Controls.GamePictureBox picPortrait;
+		private Controls.GameButton btnMountInfo;
+		private System.Windows.Forms.ComboBox ddlMount;
 	}
 }
