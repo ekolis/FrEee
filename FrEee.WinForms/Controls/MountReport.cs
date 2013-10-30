@@ -74,10 +74,15 @@ namespace FrEee.WinForms.Controls
 					txtVehicleSizes.Text = "Up to " + Mount.MaximumVehicleSize.Value.Kilotons();
 				else
 					txtVehicleSizes.Text = "Any";
-				txtComponentFamily.Text = Mount.RequiredComponentFamily.Value;
-				var comp = Mod.Current.ComponentTemplates.Where(ct => ct.Family == Mount.RequiredComponentFamily.Value).FirstOrDefault();
-				if (comp != null)
-					txtComponentFamily.Text += " (" + comp + ", etc.)";
+				if (Mount.RequiredComponentFamily == null)
+					txtComponentFamily.Text = "Any";
+				else
+				{
+					txtComponentFamily.Text = Mount.RequiredComponentFamily.Value;
+					var comp = Mod.Current.ComponentTemplates.Where(ct => ct.Family == Mount.RequiredComponentFamily.Value).FirstOrDefault();
+					if (comp != null)
+						txtComponentFamily.Text += " (" + comp + ", etc.)";
+				}
 
 				// basic modifiers
 				Color red = Color.FromArgb(255, 128, 128);
@@ -123,7 +128,7 @@ namespace FrEee.WinForms.Controls
 					txtRange.ForeColor = green;
 				else
 					txtRange.ForeColor = white;
-				var accy = Mount.WeaponRangeModifier.Value;
+				var accy = Mount.WeaponAccuracyModifier.Value;
 				txtAccuracy.Text = (accy > 0 ? ("+" + accy) : accy.ToString()) + "%";
 				if (accy < 0)
 					txtAccuracy.ForeColor = red;

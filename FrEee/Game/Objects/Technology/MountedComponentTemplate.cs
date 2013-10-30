@@ -54,7 +54,7 @@ namespace FrEee.Game.Objects.Technology
 			{
 				if (Mount == null)
 					return ComponentTemplate.Name;
-				return Mount.ShortName + " " + ComponentTemplate.Name.Evaluate(this);
+				return Mount.ShortName + " " + ComponentTemplate.Name;
 			}
 		}
 

@@ -32,7 +32,6 @@
 			this.label6 = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
 			this.txtVehicleTypes = new System.Windows.Forms.Label();
-			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.label17 = new System.Windows.Forms.Label();
 			this.label18 = new System.Windows.Forms.Label();
 			this.label19 = new System.Windows.Forms.Label();
@@ -60,8 +59,9 @@
 			this.lstAbilities = new System.Windows.Forms.ListView();
 			this.colAbility = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colModifier = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
+			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.gamePanel1.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// txtName
@@ -102,16 +102,6 @@
 			this.txtVehicleTypes.Size = new System.Drawing.Size(235, 18);
 			this.txtVehicleTypes.TabIndex = 15;
 			this.txtVehicleTypes.Text = "Vehicle Types";
-			// 
-			// picPortrait
-			// 
-			this.picPortrait.Location = new System.Drawing.Point(3, 3);
-			this.picPortrait.Name = "picPortrait";
-			this.picPortrait.Size = new System.Drawing.Size(128, 128);
-			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picPortrait.TabIndex = 0;
-			this.picPortrait.TabStop = false;
-			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
 			// label17
 			// 
@@ -162,9 +152,9 @@
 			// 
 			this.txtSize.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSize.Location = new System.Drawing.Point(155, 265);
+			this.txtSize.Location = new System.Drawing.Point(141, 263);
 			this.txtSize.Name = "txtSize";
-			this.txtSize.Size = new System.Drawing.Size(217, 18);
+			this.txtSize.Size = new System.Drawing.Size(234, 18);
 			this.txtSize.TabIndex = 13;
 			this.txtSize.Text = "100%";
 			// 
@@ -172,9 +162,9 @@
 			// 
 			this.txtDurability.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDurability.Location = new System.Drawing.Point(155, 281);
+			this.txtDurability.Location = new System.Drawing.Point(141, 279);
 			this.txtDurability.Name = "txtDurability";
-			this.txtDurability.Size = new System.Drawing.Size(217, 18);
+			this.txtDurability.Size = new System.Drawing.Size(234, 18);
 			this.txtDurability.TabIndex = 14;
 			this.txtDurability.Text = "100%";
 			// 
@@ -182,17 +172,17 @@
 			// 
 			this.txtSupply.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtSupply.Location = new System.Drawing.Point(157, 352);
+			this.txtSupply.Location = new System.Drawing.Point(143, 350);
 			this.txtSupply.Name = "txtSupply";
-			this.txtSupply.Size = new System.Drawing.Size(217, 18);
+			this.txtSupply.Size = new System.Drawing.Size(234, 18);
 			this.txtSupply.TabIndex = 15;
 			this.txtSupply.Text = "100%";
 			// 
 			// txtCost
 			// 
-			this.txtCost.Location = new System.Drawing.Point(155, 248);
+			this.txtCost.Location = new System.Drawing.Point(141, 246);
 			this.txtCost.Name = "txtCost";
-			this.txtCost.Size = new System.Drawing.Size(217, 17);
+			this.txtCost.Size = new System.Drawing.Size(234, 17);
 			this.txtCost.TabIndex = 16;
 			this.txtCost.Text = "100%";
 			// 
@@ -209,9 +199,9 @@
 			// 
 			this.txtDamage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDamage.Location = new System.Drawing.Point(155, 299);
+			this.txtDamage.Location = new System.Drawing.Point(141, 297);
 			this.txtDamage.Name = "txtDamage";
-			this.txtDamage.Size = new System.Drawing.Size(217, 18);
+			this.txtDamage.Size = new System.Drawing.Size(234, 18);
 			this.txtDamage.TabIndex = 18;
 			this.txtDamage.Text = "100%";
 			// 
@@ -228,9 +218,9 @@
 			// 
 			this.txtRange.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtRange.Location = new System.Drawing.Point(156, 317);
+			this.txtRange.Location = new System.Drawing.Point(142, 315);
 			this.txtRange.Name = "txtRange";
-			this.txtRange.Size = new System.Drawing.Size(217, 18);
+			this.txtRange.Size = new System.Drawing.Size(234, 18);
 			this.txtRange.TabIndex = 20;
 			this.txtRange.Text = "0";
 			// 
@@ -247,9 +237,9 @@
 			// 
 			this.txtAccuracy.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtAccuracy.Location = new System.Drawing.Point(156, 334);
+			this.txtAccuracy.Location = new System.Drawing.Point(142, 332);
 			this.txtAccuracy.Name = "txtAccuracy";
-			this.txtAccuracy.Size = new System.Drawing.Size(217, 18);
+			this.txtAccuracy.Size = new System.Drawing.Size(234, 18);
 			this.txtAccuracy.TabIndex = 22;
 			this.txtAccuracy.Text = "0%";
 			// 
@@ -285,9 +275,9 @@
 			// 
 			this.txtDescription.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDescription.Location = new System.Drawing.Point(141, 31);
+			this.txtDescription.Location = new System.Drawing.Point(141, 49);
 			this.txtDescription.Name = "txtDescription";
-			this.txtDescription.Size = new System.Drawing.Size(235, 100);
+			this.txtDescription.Size = new System.Drawing.Size(235, 82);
 			this.txtDescription.TabIndex = 27;
 			this.txtDescription.Text = "Description";
 			// 
@@ -371,6 +361,16 @@
 			this.colModifier.Text = "Modifier";
 			this.colModifier.Width = 120;
 			// 
+			// picPortrait
+			// 
+			this.picPortrait.Location = new System.Drawing.Point(3, 3);
+			this.picPortrait.Name = "picPortrait";
+			this.picPortrait.Size = new System.Drawing.Size(128, 128);
+			this.picPortrait.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.picPortrait.TabIndex = 0;
+			this.picPortrait.TabStop = false;
+			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
+			// 
 			// MountReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -408,8 +408,8 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "MountReport";
 			this.Size = new System.Drawing.Size(379, 554);
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.gamePanel1.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 
 		}

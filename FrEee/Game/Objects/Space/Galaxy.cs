@@ -1007,7 +1007,12 @@ namespace FrEee.Game.Objects.Space
 		/// using a Reference object instead of passing whole objects around.
 		/// Stuff needs to be registered to be found though!
 		/// </summary>
-		internal IDictionary<long, IReferrable> referrables { get; private set; }
+		internal IDictionary<long, IReferrable> referrables { get; set; }
+
+		public IReferrable GetReferrable(long key)
+		{
+			return referrables[key];
+		}
 
 		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
