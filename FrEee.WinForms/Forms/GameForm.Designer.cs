@@ -32,8 +32,6 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
-			this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
 			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
 			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
 			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
@@ -53,6 +51,18 @@ namespace FrEee.WinForms.Forms
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
+			this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
+			this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
+			this.btnResupply = new FrEee.WinForms.Controls.GameButton();
+			this.btnRepair = new FrEee.WinForms.Controls.GameButton();
+			this.btnRepeatOrders = new FrEee.WinForms.Controls.GameButton();
+			this.btnScrap = new FrEee.WinForms.Controls.GameButton();
+			this.btnRename = new FrEee.WinForms.Controls.GameButton();
+			this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
+			this.btnStellarManipulation = new FrEee.WinForms.Controls.GameButton();
+			this.btnCloak = new FrEee.WinForms.Controls.GameButton();
+			this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
+			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlLeft = new System.Windows.Forms.Panel();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
@@ -89,39 +99,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// btnNextIdle
-			// 
-			this.btnNextIdle.BackColor = System.Drawing.Color.Black;
-			this.btnNextIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnNextIdle.Location = new System.Drawing.Point(393, 4);
-			this.btnNextIdle.Name = "btnNextIdle";
-			this.btnNextIdle.Size = new System.Drawing.Size(36, 36);
-			this.btnNextIdle.TabIndex = 4;
-			this.btnNextIdle.TabStop = false;
-			this.btnNextIdle.Text = "Next";
-			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
-			this.btnNextIdle.UseVisualStyleBackColor = false;
-			this.btnNextIdle.Click += new System.EventHandler(this.btnNextIdle_Click);
-			// 
-			// btnPrevIdle
-			// 
-			this.btnPrevIdle.BackColor = System.Drawing.Color.Black;
-			this.btnPrevIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPrevIdle.Location = new System.Drawing.Point(351, 4);
-			this.btnPrevIdle.Name = "btnPrevIdle";
-			this.btnPrevIdle.Size = new System.Drawing.Size(36, 36);
-			this.btnPrevIdle.TabIndex = 3;
-			this.btnPrevIdle.TabStop = false;
-			this.btnPrevIdle.Text = "Prev";
-			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
-			this.btnPrevIdle.UseVisualStyleBackColor = false;
-			this.btnPrevIdle.Click += new System.EventHandler(this.btnPrevIdle_Click);
-			// 
 			// btnSentry
 			// 
 			this.btnSentry.BackColor = System.Drawing.Color.Black;
 			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSentry.Location = new System.Drawing.Point(211, 4);
+			this.btnSentry.Location = new System.Drawing.Point(86, 48);
 			this.btnSentry.Name = "btnSentry";
 			this.btnSentry.Size = new System.Drawing.Size(36, 36);
 			this.btnSentry.TabIndex = 12;
@@ -133,9 +115,10 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnClearOrders
 			// 
+			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
 			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearOrders.Location = new System.Drawing.Point(476, 4);
+			this.btnClearOrders.Location = new System.Drawing.Point(422, 6);
 			this.btnClearOrders.Name = "btnClearOrders";
 			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
 			this.btnClearOrders.TabIndex = 11;
@@ -149,7 +132,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
 			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnFleetTransfer.Location = new System.Drawing.Point(336, 4);
+			this.btnFleetTransfer.Location = new System.Drawing.Point(212, 48);
 			this.btnFleetTransfer.Name = "btnFleetTransfer";
 			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
 			this.btnFleetTransfer.TabIndex = 10;
@@ -163,7 +146,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
 			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTransferCargo.Location = new System.Drawing.Point(294, 4);
+			this.btnTransferCargo.Location = new System.Drawing.Point(212, 6);
 			this.btnTransferCargo.Name = "btnTransferCargo";
 			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
 			this.btnTransferCargo.TabIndex = 9;
@@ -177,7 +160,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
 			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnConstructionQueue.Location = new System.Drawing.Point(252, 4);
+			this.btnConstructionQueue.Location = new System.Drawing.Point(170, 6);
 			this.btnConstructionQueue.Name = "btnConstructionQueue";
 			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
 			this.btnConstructionQueue.TabIndex = 8;
@@ -191,7 +174,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnColonize.BackColor = System.Drawing.Color.Black;
 			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnColonize.Location = new System.Drawing.Point(169, 4);
+			this.btnColonize.Location = new System.Drawing.Point(47, 48);
 			this.btnColonize.Name = "btnColonize";
 			this.btnColonize.Size = new System.Drawing.Size(36, 36);
 			this.btnColonize.TabIndex = 7;
@@ -205,7 +188,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnEvade.BackColor = System.Drawing.Color.Black;
 			this.btnEvade.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEvade.Location = new System.Drawing.Point(86, 4);
+			this.btnEvade.Location = new System.Drawing.Point(86, 6);
 			this.btnEvade.Name = "btnEvade";
 			this.btnEvade.Size = new System.Drawing.Size(36, 36);
 			this.btnEvade.TabIndex = 6;
@@ -219,7 +202,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnWarp.BackColor = System.Drawing.Color.Black;
 			this.btnWarp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWarp.Location = new System.Drawing.Point(127, 4);
+			this.btnWarp.Location = new System.Drawing.Point(7, 48);
 			this.btnWarp.Name = "btnWarp";
 			this.btnWarp.Size = new System.Drawing.Size(36, 36);
 			this.btnWarp.TabIndex = 5;
@@ -233,7 +216,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnPursue.BackColor = System.Drawing.Color.Black;
 			this.btnPursue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPursue.Location = new System.Drawing.Point(47, 4);
+			this.btnPursue.Location = new System.Drawing.Point(47, 6);
 			this.btnPursue.Name = "btnPursue";
 			this.btnPursue.Size = new System.Drawing.Size(36, 36);
 			this.btnPursue.TabIndex = 4;
@@ -247,7 +230,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnMove.BackColor = System.Drawing.Color.Black;
 			this.btnMove.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMove.Location = new System.Drawing.Point(7, 4);
+			this.btnMove.Location = new System.Drawing.Point(7, 6);
 			this.btnMove.Name = "btnMove";
 			this.btnMove.Size = new System.Drawing.Size(36, 36);
 			this.btnMove.TabIndex = 2;
@@ -376,11 +359,172 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.Name = "progResearch";
 			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
 			this.progResearch.RightText = "0.2 years";
-			this.progResearch.Size = new System.Drawing.Size(358, 38);
+			this.progResearch.Size = new System.Drawing.Size(411, 38);
 			this.progResearch.TabIndex = 11;
 			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
 			this.progResearch.Value = 350000;
 			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
+			// 
+			// btnNextIdle
+			// 
+			this.btnNextIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNextIdle.BackColor = System.Drawing.Color.Black;
+			this.btnNextIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNextIdle.Location = new System.Drawing.Point(422, 48);
+			this.btnNextIdle.Name = "btnNextIdle";
+			this.btnNextIdle.Size = new System.Drawing.Size(36, 36);
+			this.btnNextIdle.TabIndex = 6;
+			this.btnNextIdle.TabStop = false;
+			this.btnNextIdle.Text = "Next";
+			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
+			this.btnNextIdle.UseVisualStyleBackColor = false;
+			// 
+			// btnPrevIdle
+			// 
+			this.btnPrevIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnPrevIdle.BackColor = System.Drawing.Color.Black;
+			this.btnPrevIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPrevIdle.Location = new System.Drawing.Point(380, 48);
+			this.btnPrevIdle.Name = "btnPrevIdle";
+			this.btnPrevIdle.Size = new System.Drawing.Size(36, 36);
+			this.btnPrevIdle.TabIndex = 5;
+			this.btnPrevIdle.TabStop = false;
+			this.btnPrevIdle.Text = "Prev";
+			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
+			this.btnPrevIdle.UseVisualStyleBackColor = false;
+			// 
+			// btnResupply
+			// 
+			this.btnResupply.BackColor = System.Drawing.Color.Black;
+			this.btnResupply.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnResupply.Location = new System.Drawing.Point(128, 6);
+			this.btnResupply.Name = "btnResupply";
+			this.btnResupply.Size = new System.Drawing.Size(36, 36);
+			this.btnResupply.TabIndex = 13;
+			this.btnResupply.TabStop = false;
+			this.btnResupply.Text = "Sply";
+			this.toolTip.SetToolTip(this.btnResupply, "(S) Resupply");
+			this.btnResupply.UseVisualStyleBackColor = false;
+			// 
+			// btnRepair
+			// 
+			this.btnRepair.BackColor = System.Drawing.Color.Black;
+			this.btnRepair.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRepair.Location = new System.Drawing.Point(128, 48);
+			this.btnRepair.Name = "btnRepair";
+			this.btnRepair.Size = new System.Drawing.Size(36, 36);
+			this.btnRepair.TabIndex = 14;
+			this.btnRepair.TabStop = false;
+			this.btnRepair.Text = "Repr";
+			this.toolTip.SetToolTip(this.btnRepair, "(R) Repair");
+			this.btnRepair.UseVisualStyleBackColor = false;
+			// 
+			// btnRepeatOrders
+			// 
+			this.btnRepeatOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRepeatOrders.BackColor = System.Drawing.Color.Black;
+			this.btnRepeatOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRepeatOrders.Location = new System.Drawing.Point(380, 6);
+			this.btnRepeatOrders.Name = "btnRepeatOrders";
+			this.btnRepeatOrders.Size = new System.Drawing.Size(36, 36);
+			this.btnRepeatOrders.TabIndex = 15;
+			this.btnRepeatOrders.TabStop = false;
+			this.btnRepeatOrders.Text = "Rept";
+			this.toolTip.SetToolTip(this.btnRepeatOrders, "(P) Repeat Orders");
+			this.btnRepeatOrders.UseVisualStyleBackColor = false;
+			// 
+			// btnScrap
+			// 
+			this.btnScrap.BackColor = System.Drawing.Color.Black;
+			this.btnScrap.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnScrap.Location = new System.Drawing.Point(170, 48);
+			this.btnScrap.Name = "btnScrap";
+			this.btnScrap.Size = new System.Drawing.Size(36, 36);
+			this.btnScrap.TabIndex = 16;
+			this.btnScrap.TabStop = false;
+			this.btnScrap.Text = "Rcy";
+			this.toolTip.SetToolTip(this.btnScrap, "(Ctrl-R) Recycle/Scuttle");
+			this.btnScrap.UseVisualStyleBackColor = false;
+			// 
+			// btnRename
+			// 
+			this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRename.BackColor = System.Drawing.Color.Black;
+			this.btnRename.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRename.Location = new System.Drawing.Point(338, 6);
+			this.btnRename.Name = "btnRename";
+			this.btnRename.Size = new System.Drawing.Size(36, 36);
+			this.btnRename.TabIndex = 17;
+			this.btnRename.TabStop = false;
+			this.btnRename.Text = "Nam";
+			this.toolTip.SetToolTip(this.btnRename, "(N) Rename/Notes");
+			this.btnRename.UseVisualStyleBackColor = false;
+			// 
+			// btnToggleMinister
+			// 
+			this.btnToggleMinister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnToggleMinister.BackColor = System.Drawing.Color.Black;
+			this.btnToggleMinister.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnToggleMinister.Location = new System.Drawing.Point(338, 48);
+			this.btnToggleMinister.Name = "btnToggleMinister";
+			this.btnToggleMinister.Size = new System.Drawing.Size(36, 36);
+			this.btnToggleMinister.TabIndex = 18;
+			this.btnToggleMinister.TabStop = false;
+			this.btnToggleMinister.Text = "Min";
+			this.toolTip.SetToolTip(this.btnToggleMinister, "(T) Toggle Minister Control");
+			this.btnToggleMinister.UseVisualStyleBackColor = false;
+			// 
+			// btnStellarManipulation
+			// 
+			this.btnStellarManipulation.BackColor = System.Drawing.Color.Black;
+			this.btnStellarManipulation.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnStellarManipulation.Location = new System.Drawing.Point(296, 6);
+			this.btnStellarManipulation.Name = "btnStellarManipulation";
+			this.btnStellarManipulation.Size = new System.Drawing.Size(36, 36);
+			this.btnStellarManipulation.TabIndex = 19;
+			this.btnStellarManipulation.TabStop = false;
+			this.btnStellarManipulation.Text = "SM";
+			this.toolTip.SetToolTip(this.btnStellarManipulation, "(Ctrl-M) Stellar Manipulation");
+			this.btnStellarManipulation.UseVisualStyleBackColor = false;
+			// 
+			// btnCloak
+			// 
+			this.btnCloak.BackColor = System.Drawing.Color.Black;
+			this.btnCloak.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCloak.Location = new System.Drawing.Point(254, 6);
+			this.btnCloak.Name = "btnCloak";
+			this.btnCloak.Size = new System.Drawing.Size(36, 36);
+			this.btnCloak.TabIndex = 20;
+			this.btnCloak.TabStop = false;
+			this.btnCloak.Text = "Clk";
+			this.toolTip.SetToolTip(this.btnCloak, "(Z) Cloak");
+			this.btnCloak.UseVisualStyleBackColor = false;
+			// 
+			// btnDecloak
+			// 
+			this.btnDecloak.BackColor = System.Drawing.Color.Black;
+			this.btnDecloak.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDecloak.Location = new System.Drawing.Point(254, 48);
+			this.btnDecloak.Name = "btnDecloak";
+			this.btnDecloak.Size = new System.Drawing.Size(36, 36);
+			this.btnDecloak.TabIndex = 21;
+			this.btnDecloak.TabStop = false;
+			this.btnDecloak.Text = "Dclk";
+			this.toolTip.SetToolTip(this.btnDecloak, "(X) Decloak");
+			this.btnDecloak.UseVisualStyleBackColor = false;
+			// 
+			// gameButton1
+			// 
+			this.gameButton1.BackColor = System.Drawing.Color.Black;
+			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.gameButton1.Location = new System.Drawing.Point(296, 48);
+			this.gameButton1.Name = "gameButton1";
+			this.gameButton1.Size = new System.Drawing.Size(36, 36);
+			this.gameButton1.TabIndex = 22;
+			this.gameButton1.TabStop = false;
+			this.gameButton1.Text = "ML";
+			this.toolTip.SetToolTip(this.gameButton1, "(Ctrl-L) Movement Log");
+			this.gameButton1.UseVisualStyleBackColor = false;
 			// 
 			// pnlLayout
 			// 
@@ -414,7 +558,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlLeft.Location = new System.Drawing.Point(1, 0);
 			this.pnlLeft.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.pnlLeft.Name = "pnlLeft";
-			this.pnlLeft.Size = new System.Drawing.Size(868, 777);
+			this.pnlLeft.Size = new System.Drawing.Size(816, 777);
 			this.pnlLeft.TabIndex = 6;
 			// 
 			// pnlSystemMap
@@ -431,7 +575,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlSystemMap.Name = "pnlSystemMap";
 			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSystemMap.Size = new System.Drawing.Size(723, 642);
+			this.pnlSystemMap.Size = new System.Drawing.Size(671, 642);
 			this.pnlSystemMap.TabIndex = 9;
 			// 
 			// starSystemView
@@ -443,7 +587,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
 			this.starSystemView.SelectedSpaceObject = null;
-			this.starSystemView.Size = new System.Drawing.Size(715, 634);
+			this.starSystemView.Size = new System.Drawing.Size(663, 634);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
@@ -451,20 +595,16 @@ namespace FrEee.WinForms.Forms
 			// 
 			// pnlSearch
 			// 
-			this.pnlSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlSearch.BackColor = System.Drawing.Color.Black;
 			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSearch.Controls.Add(this.btnNextIdle);
-			this.pnlSearch.Controls.Add(this.btnPrevIdle);
 			this.pnlSearch.Controls.Add(this.searchBox);
 			this.pnlSearch.ForeColor = System.Drawing.Color.White;
 			this.pnlSearch.Location = new System.Drawing.Point(-2, 85);
 			this.pnlSearch.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlSearch.Name = "pnlSearch";
 			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSearch.Size = new System.Drawing.Size(871, 49);
+			this.pnlSearch.Size = new System.Drawing.Size(342, 49);
 			this.pnlSearch.TabIndex = 8;
 			// 
 			// searchBox
@@ -526,6 +666,18 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSubCommands.Controls.Add(this.gameButton1);
+			this.pnlSubCommands.Controls.Add(this.btnDecloak);
+			this.pnlSubCommands.Controls.Add(this.btnCloak);
+			this.pnlSubCommands.Controls.Add(this.btnStellarManipulation);
+			this.pnlSubCommands.Controls.Add(this.btnToggleMinister);
+			this.pnlSubCommands.Controls.Add(this.btnRename);
+			this.pnlSubCommands.Controls.Add(this.btnScrap);
+			this.pnlSubCommands.Controls.Add(this.btnRepeatOrders);
+			this.pnlSubCommands.Controls.Add(this.btnNextIdle);
+			this.pnlSubCommands.Controls.Add(this.btnRepair);
+			this.pnlSubCommands.Controls.Add(this.btnPrevIdle);
+			this.pnlSubCommands.Controls.Add(this.btnResupply);
 			this.pnlSubCommands.Controls.Add(this.btnSentry);
 			this.pnlSubCommands.Controls.Add(this.btnClearOrders);
 			this.pnlSubCommands.Controls.Add(this.btnFleetTransfer);
@@ -541,7 +693,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlSubCommands.Name = "pnlSubCommands";
 			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
-			this.pnlSubCommands.Size = new System.Drawing.Size(529, 50);
+			this.pnlSubCommands.Size = new System.Drawing.Size(476, 97);
 			this.pnlSubCommands.TabIndex = 6;
 			// 
 			// pnlMainCommands
@@ -584,7 +736,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlHeader.Size = new System.Drawing.Size(870, 37);
+			this.pnlHeader.Size = new System.Drawing.Size(818, 37);
 			this.pnlHeader.TabIndex = 5;
 			// 
 			// resInt
@@ -593,11 +745,11 @@ namespace FrEee.WinForms.Forms
 			this.resInt.BackColor = System.Drawing.Color.Black;
 			this.resInt.Change = null;
 			this.resInt.ForeColor = System.Drawing.Color.White;
-			this.resInt.Location = new System.Drawing.Point(777, 6);
+			this.resInt.Location = new System.Drawing.Point(638, 6);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
 			this.resInt.ResourceName = "Intelligence";
-			this.resInt.Size = new System.Drawing.Size(87, 20);
+			this.resInt.Size = new System.Drawing.Size(147, 20);
 			this.resInt.TabIndex = 14;
 			// 
 			// resRes
@@ -606,11 +758,11 @@ namespace FrEee.WinForms.Forms
 			this.resRes.BackColor = System.Drawing.Color.Black;
 			this.resRes.Change = null;
 			this.resRes.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			this.resRes.Location = new System.Drawing.Point(599, 6);
+			this.resRes.Location = new System.Drawing.Point(488, 6);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
 			this.resRes.ResourceName = "Research";
-			this.resRes.Size = new System.Drawing.Size(176, 20);
+			this.resRes.Size = new System.Drawing.Size(147, 20);
 			this.resRes.TabIndex = 13;
 			// 
 			// resRad
@@ -619,11 +771,11 @@ namespace FrEee.WinForms.Forms
 			this.resRad.BackColor = System.Drawing.Color.Black;
 			this.resRad.Change = null;
 			this.resRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resRad.Location = new System.Drawing.Point(415, 6);
+			this.resRad.Location = new System.Drawing.Point(341, 7);
 			this.resRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resRad.Name = "resRad";
 			this.resRad.ResourceName = "Radioactives";
-			this.resRad.Size = new System.Drawing.Size(184, 20);
+			this.resRad.Size = new System.Drawing.Size(147, 20);
 			this.resRad.TabIndex = 12;
 			// 
 			// resOrg
@@ -632,11 +784,11 @@ namespace FrEee.WinForms.Forms
 			this.resOrg.BackColor = System.Drawing.Color.Black;
 			this.resOrg.Change = null;
 			this.resOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resOrg.Location = new System.Drawing.Point(231, 6);
+			this.resOrg.Location = new System.Drawing.Point(194, 6);
 			this.resOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resOrg.Name = "resOrg";
 			this.resOrg.ResourceName = "Organics";
-			this.resOrg.Size = new System.Drawing.Size(184, 20);
+			this.resOrg.Size = new System.Drawing.Size(147, 20);
 			this.resOrg.TabIndex = 11;
 			// 
 			// resMin
@@ -649,7 +801,7 @@ namespace FrEee.WinForms.Forms
 			this.resMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resMin.Name = "resMin";
 			this.resMin.ResourceName = "Minerals";
-			this.resMin.Size = new System.Drawing.Size(184, 20);
+			this.resMin.Size = new System.Drawing.Size(147, 20);
 			this.resMin.TabIndex = 10;
 			// 
 			// picEmpireFlag
@@ -669,10 +821,10 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.Controls.Add(this.pnlGalaxyMap);
 			this.pnlRight.Controls.Add(this.pnlDetailReport);
 			this.pnlRight.Controls.Add(this.progResearch);
-			this.pnlRight.Location = new System.Drawing.Point(865, 2);
+			this.pnlRight.Location = new System.Drawing.Point(812, 2);
 			this.pnlRight.Margin = new System.Windows.Forms.Padding(0, 1, 1, 1);
 			this.pnlRight.Name = "pnlRight";
-			this.pnlRight.Size = new System.Drawing.Size(361, 775);
+			this.pnlRight.Size = new System.Drawing.Size(414, 775);
 			this.pnlRight.TabIndex = 4;
 			// 
 			// pnlGalaxyMap
@@ -684,11 +836,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlGalaxyMap.Controls.Add(this.galaxyView);
 			this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
-			this.pnlGalaxyMap.Location = new System.Drawing.Point(0, 495);
+			this.pnlGalaxyMap.Location = new System.Drawing.Point(4, 495);
 			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
 			this.pnlGalaxyMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlGalaxyMap.Size = new System.Drawing.Size(362, 280);
+			this.pnlGalaxyMap.Size = new System.Drawing.Size(411, 280);
 			this.pnlGalaxyMap.TabIndex = 14;
 			// 
 			// galaxyView
@@ -698,7 +850,7 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.Location = new System.Drawing.Point(3, 3);
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(354, 272);
+			this.galaxyView.Size = new System.Drawing.Size(403, 272);
 			this.galaxyView.TabIndex = 0;
 			this.galaxyView.Text = "galaxyView1";
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
@@ -717,7 +869,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlDetailReport.Name = "pnlDetailReport";
 			this.pnlDetailReport.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlDetailReport.Size = new System.Drawing.Size(359, 460);
+			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
 			// GameForm
@@ -768,8 +920,6 @@ namespace FrEee.WinForms.Forms
 		private GamePanel pnlSystemMap;
 		private StarSystemView starSystemView;
 		private GamePanel pnlSearch;
-		private GameButton btnNextIdle;
-		private GameButton btnPrevIdle;
 		private SearchBox searchBox;
 		private GamePanel pnlSystemTabs;
 		private System.Windows.Forms.FlowLayoutPanel pnlTabs;
@@ -801,6 +951,18 @@ namespace FrEee.WinForms.Forms
 		private ResourceDisplay resOrg;
 		private ResourceDisplay resMin;
 		private System.Windows.Forms.PictureBox picEmpireFlag;
+		private GameButton btnNextIdle;
+		private GameButton btnPrevIdle;
+		private GameButton btnRepeatOrders;
+		private GameButton btnRepair;
+		private GameButton btnResupply;
+		private GameButton btnScrap;
+		private GameButton btnRename;
+		private GameButton btnToggleMinister;
+		private GameButton btnStellarManipulation;
+		private GameButton btnCloak;
+		private GameButton btnDecloak;
+		private GameButton gameButton1;
 	}
 }
 
