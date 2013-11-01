@@ -474,7 +474,7 @@ namespace FrEee.WinForms.Forms
 			var queues = Empire.Current.ConstructionQueues.Where(q => q.Eta == null || q.Eta < 1d).Count();
 			if (queues == 1)
 				todos.Add("1 idle construction queue");
-			else if (ships > 1)
+			else if (queues > 1)
 				todos.Add(queues + " idle construction queues");
 
 			var idx = 0;
