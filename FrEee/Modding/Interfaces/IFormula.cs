@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FrEee.Modding.Interfaces
 {
-	public interface IFormula
+	public interface IFormula : IComparable
 	{
 		string Text { get; set; }
 
