@@ -249,7 +249,7 @@ namespace FrEee.WinForms.Forms
 			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
 			this.btnEndTurn.TabIndex = 7;
 			this.btnEndTurn.TabStop = false;
-			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) End Turn");
+			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) Save Commands");
 			this.btnEndTurn.UseVisualStyleBackColor = false;
 			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
 			// 
