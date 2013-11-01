@@ -14,8 +14,8 @@ namespace FrEee.Modding
 	/// </summary>
 	/// <typeparam name="T">Return type.</typeparam>
 	[Serializable]
-	public class Formula<T> : IFormula
-		where T : IConvertible
+	public class Formula<T> : IFormula, IComparable<T>, IComparable<Formula<T>>
+		where T : IConvertible, IComparable
 	{
 		/// <summary>
 		/// For serialization.
@@ -252,6 +252,25 @@ namespace FrEee.Modding
 			if (FormulaType == FormulaType.Literal)
 				return result.Compile();
 			return result;
+		}
+
+		public int CompareTo(object obj)
+		{
+			if (obj is IFormula)
+				return Value.CompareTo(((IFormula)obj).Value);
+			return Value.CompareTo(obj);
+		}
+
+		public int CompareTo(T other)
+		{
+			if (other is Formula<T>)
+				return Value.CompareTo(((Formula<T>)other).Value);
+			return Value.CompareTo(other);
+		}
+
+		public int CompareTo(Formula<T> other)
+		{
+			return Value.CompareTo(other.Value);
 		}
 	}
 }

@@ -117,27 +117,27 @@ namespace FrEee.Modding
 		}
 
 		public Formula<T> Get<T>(string fieldName, object context, bool allowNulls = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			int index = 0;
 			return Get<T>(fieldName, context, ref index, allowNulls);
 		}
 
 		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			int index = 0;
 			return Get<T>(fieldNames, context, ref index, allowNulls);
 		}
 
 		public Formula<T> Get<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			return Get<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
 		}
 
 		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			var f = FindField(fieldNames, ref index, !allowNulls, startIndex, allowSkip);
 			if (f == null)
@@ -154,27 +154,27 @@ namespace FrEee.Modding
 		}
 
 		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, bool allowNulls = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			int index = 0;
 			return GetMany<T>(fieldName, context, ref index, allowNulls);
 		}
 
 		public IEnumerable<Formula<T>> GetMany<T>(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			int index = 0;
 			return GetMany<T>(fieldNames, context, ref index, allowNulls);
 		}
 
 		public IEnumerable<Formula<T>> GetMany<T>(string fieldName, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			return GetMany<T>(new string[] { fieldName }, context, ref index, allowNulls, startIndex = 0, allowSkip = true);
 		}
 
 		public IEnumerable<Formula<T>> GetMany<T>(IEnumerable<string> fieldNames, object context, ref int index, bool allowNulls = true, int startIndex = 0, bool allowSkip = true)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			Field f;
 			var result = new List<Formula<T>>();

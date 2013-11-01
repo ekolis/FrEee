@@ -1919,7 +1919,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		public static Formula<TValue> BuildMultiConditionalLessThanOrEqual<TKey, TValue>(this IDictionary<TKey, TValue> thresholds, object context, string variableName, TValue defaultValue)
-			where TValue : IConvertible, IComparable<TValue>
+			where TValue : IConvertible, IComparable, IComparable<TValue>
 		{
 			var sorted = new SortedDictionary<TKey, TValue>(thresholds);
 			var formula = "***";

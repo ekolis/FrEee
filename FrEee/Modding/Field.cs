@@ -43,7 +43,7 @@ namespace FrEee.Modding
 		public string Value { get; set; }
 
 		public Formula<T> CreateFormula<T>(object context)
-			where T : IConvertible
+			where T : IConvertible, IComparable
 		{
 			var txt = Value.TrimStart('=');
 			if (Value.StartsWith("=="))
