@@ -113,6 +113,7 @@ namespace FrEee.WinForms.Forms
 			Empire.Current.ResearchSpending[curTech] = sldSpending.Value;
 			RebindTechGrid();
 			BindQueue();
+			BindDetails();
             hasChanged = true;
 		}
 
