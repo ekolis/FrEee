@@ -811,7 +811,7 @@ namespace FrEee.Utility.Extensions
 			var abils = obj.Abilities;
 			if (includeShared)
 				abils = abils.Union(obj.GetSharedAbilities().Flatten());
-			abils = abils.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
 				return null;

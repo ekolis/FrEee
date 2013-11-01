@@ -395,7 +395,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override StarSystem StarSystem
 		{
-			get { return Sector.StarSystem; }
+			get { return Sector == null ? null : Sector.StarSystem; }
 		}
 
 		public int? Size
@@ -405,6 +405,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override bool IsObsoleteMemory(Empire emp)
 		{
+			if (StarSystem == null)
+				return Timestamp < Galaxy.Current.Timestamp - 1;
 			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 	}
