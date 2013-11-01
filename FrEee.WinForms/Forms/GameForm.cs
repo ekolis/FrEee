@@ -353,8 +353,17 @@ namespace FrEee.WinForms.Forms
 			}
 			else
 			{
+				// deselect space object
 				SelectedSpaceObject = null;
-				// TODO - show star system report
+
+				// show star system report
+				var newReport = new StarSystemReport(starSystemView.StarSystem);
+				pnlDetailReport.Controls.Add(newReport);
+				newReport.Left = newReport.Margin.Left;
+				newReport.Width = pnlDetailReport.Width - newReport.Margin.Right - newReport.Margin.Left;
+				newReport.Top = newReport.Margin.Top;
+				newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
+				newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
 			}
 		}
 
