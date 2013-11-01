@@ -23,7 +23,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public override void Execute()
 		{
-			// TODO - break treaty, once we have treaties
+			foreach (var clause in Executor.GetTreaty(Target))
+				clause.Dispose();
 			Executor.Log.Add(Target.CreateLogMessage("We have broken our treaty with the " + Target + "."));
 			Target.Log.Add(Executor.CreateLogMessage("The " + Target + " has broken its treaty with us."));
 		}

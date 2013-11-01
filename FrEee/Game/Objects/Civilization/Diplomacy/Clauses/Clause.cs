@@ -101,6 +101,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		public void Dispose()
 		{
 			Galaxy.Current.UnassignID(this);
+			IsInEffect = false;
 		}
 
 		public override string ToString()

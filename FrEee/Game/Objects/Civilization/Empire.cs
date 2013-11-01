@@ -797,6 +797,16 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
+		/// Gets all the clauses in a treaty with another empire.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public IEnumerable<Clause> GetTreaty(Empire emp)
+		{
+			return OfferedTreatyClauses[emp].Union(ReceivedTreatyClauses[emp]);
+		}
+
+		/// <summary>
 		/// Returns true if empires are not the same and neither empire is hostile to the other in the star system.
 		/// </summary>
 		/// <param name="other"></param>
