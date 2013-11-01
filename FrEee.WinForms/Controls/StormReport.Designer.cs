@@ -46,9 +46,9 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.abilityTreeView.ForeColor = System.Drawing.Color.White;
 			this.abilityTreeView.IntrinsicAbilities = null;
-			this.abilityTreeView.Location = new System.Drawing.Point(3, 185);
+			this.abilityTreeView.Location = new System.Drawing.Point(3, 199);
 			this.abilityTreeView.Name = "abilityTreeView";
-			this.abilityTreeView.Size = new System.Drawing.Size(314, 271);
+			this.abilityTreeView.Size = new System.Drawing.Size(314, 257);
 			this.abilityTreeView.TabIndex = 59;
 			// 
 			// picPortrait
