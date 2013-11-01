@@ -93,6 +93,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\StarSystemReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StarSystemReport.Designer.cs">
+      <DependentUpon>StarSystemReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\MountReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -429,6 +435,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\ComponentReport.resx">
       <DependentUpon>ComponentReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StarSystemReport.resx">
+      <DependentUpon>StarSystemReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\MountReport.resx">
       <DependentUpon>MountReport.cs</DependentUpon>

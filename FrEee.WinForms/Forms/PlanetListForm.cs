@@ -43,9 +43,9 @@ namespace FrEee.WinForms.Forms
 			txtUs.Text = Empire.Current.ColonizedPlanets.Count().ToString();
 			var colonizable = planets.Where(p => p.Owner != Empire.Current && Empire.Current.CanColonize(p));
 			txtColonizable.Text = colonizable.Count().ToString();
-			txtEnemies.Text = "0"; // TODO - war state
-			txtAllies.Text = "0"; // TODO - alliances
-			txtNonAligned.Text = colonizable.Where(p => p.Owner != null).Count().ToString();
+			txtEnemies.Text = colonizable.Count(p => p.Owner != null && p.Owner.IsEnemyOf(Empire.Current, p.StarSystem)).ToString();
+			txtAllies.Text = colonizable.Count(p => p.Owner != null && p.Owner.IsAllyOf(Empire.Current, p.StarSystem)).ToString();
+			txtNonAligned.Text = colonizable.Count(p => p.Owner != null && p.Owner.IsNeutralTo(Empire.Current, p.StarSystem)).ToString();
 			var uncolonized = colonizable.Where(p => p.Owner == null);
 			txtUncolonized.Text = uncolonized.Count().ToString();
 			txtBreathableUs.Text = uncolonized.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere).Count().ToString();

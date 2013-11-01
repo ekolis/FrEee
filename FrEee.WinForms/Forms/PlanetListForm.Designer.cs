@@ -33,12 +33,7 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			FrEee.Utility.Resource resource6 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource7 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource8 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource9 = new FrEee.Utility.Resource();
-			FrEee.Utility.Resource resource10 = new FrEee.Utility.Resource();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.txtPopulation = new System.Windows.Forms.Label();
 			this.resStorageRad = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -175,12 +170,6 @@ namespace FrEee.WinForms.Forms
 			this.resStorageRad.Location = new System.Drawing.Point(271, 136);
 			this.resStorageRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageRad.Name = "resStorageRad";
-			resource6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			resource6.IsGlobal = true;
-			resource6.IsLocal = false;
-			resource6.Name = "Radioactives";
-			resource6.PictureName = "Resource3";
-			this.resStorageRad.Resource = resource6;
 			this.resStorageRad.ResourceName = "Radioactives";
 			this.resStorageRad.Size = new System.Drawing.Size(107, 12);
 			this.resStorageRad.TabIndex = 37;
@@ -194,12 +183,6 @@ namespace FrEee.WinForms.Forms
 			this.resStorageOrg.Location = new System.Drawing.Point(271, 123);
 			this.resStorageOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageOrg.Name = "resStorageOrg";
-			resource7.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			resource7.IsGlobal = true;
-			resource7.IsLocal = false;
-			resource7.Name = "Organics";
-			resource7.PictureName = "Resource2";
-			this.resStorageOrg.Resource = resource7;
 			this.resStorageOrg.ResourceName = "Organics";
 			this.resStorageOrg.Size = new System.Drawing.Size(107, 12);
 			this.resStorageOrg.TabIndex = 36;
@@ -213,12 +196,6 @@ namespace FrEee.WinForms.Forms
 			this.resStorageMin.Location = new System.Drawing.Point(271, 110);
 			this.resStorageMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resStorageMin.Name = "resStorageMin";
-			resource8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			resource8.IsGlobal = true;
-			resource8.IsLocal = false;
-			resource8.Name = "Minerals";
-			resource8.PictureName = "Resource1";
-			this.resStorageMin.Resource = resource8;
 			this.resStorageMin.ResourceName = "Minerals";
 			this.resStorageMin.Size = new System.Drawing.Size(107, 12);
 			this.resStorageMin.TabIndex = 35;
@@ -242,12 +219,6 @@ namespace FrEee.WinForms.Forms
 			this.resInt.Location = new System.Drawing.Point(274, 84);
 			this.resInt.Margin = new System.Windows.Forms.Padding(0);
 			this.resInt.Name = "resInt";
-			resource9.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			resource9.IsGlobal = false;
-			resource9.IsLocal = false;
-			resource9.Name = "Intelligence";
-			resource9.PictureName = "Resource5";
-			this.resInt.Resource = resource9;
 			this.resInt.ResourceName = "Intelligence";
 			this.resInt.Size = new System.Drawing.Size(107, 12);
 			this.resInt.TabIndex = 33;
@@ -261,12 +232,6 @@ namespace FrEee.WinForms.Forms
 			this.resRes.Location = new System.Drawing.Point(274, 71);
 			this.resRes.Margin = new System.Windows.Forms.Padding(0);
 			this.resRes.Name = "resRes";
-			resource10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-			resource10.IsGlobal = false;
-			resource10.IsLocal = false;
-			resource10.Name = "Research";
-			resource10.PictureName = "Resource4";
-			this.resRes.Resource = resource10;
 			this.resRes.ResourceName = "Research";
 			this.resRes.Size = new System.Drawing.Size(107, 12);
 			this.resRes.TabIndex = 32;
@@ -333,6 +298,7 @@ namespace FrEee.WinForms.Forms
 			// txtUs
 			// 
 			this.txtUs.AutoSize = true;
+			this.txtUs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.txtUs.Location = new System.Drawing.Point(185, 43);
 			this.txtUs.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtUs.MinimumSize = new System.Drawing.Size(30, 0);
@@ -377,6 +343,7 @@ namespace FrEee.WinForms.Forms
 			// txtBreathableOther
 			// 
 			this.txtBreathableOther.AutoSize = true;
+			this.txtBreathableOther.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.txtBreathableOther.Location = new System.Drawing.Point(185, 135);
 			this.txtBreathableOther.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtBreathableOther.MinimumSize = new System.Drawing.Size(30, 0);
@@ -423,6 +390,7 @@ namespace FrEee.WinForms.Forms
 			// txtBreathableUs
 			// 
 			this.txtBreathableUs.AutoSize = true;
+			this.txtBreathableUs.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.txtBreathableUs.Location = new System.Drawing.Point(185, 122);
 			this.txtBreathableUs.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtBreathableUs.MinimumSize = new System.Drawing.Size(30, 0);
@@ -447,6 +415,7 @@ namespace FrEee.WinForms.Forms
 			// txtNonAligned
 			// 
 			this.txtNonAligned.AutoSize = true;
+			this.txtNonAligned.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
 			this.txtNonAligned.Location = new System.Drawing.Point(185, 96);
 			this.txtNonAligned.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtNonAligned.MinimumSize = new System.Drawing.Size(30, 0);
@@ -471,6 +440,7 @@ namespace FrEee.WinForms.Forms
 			// txtEnemies
 			// 
 			this.txtEnemies.AutoSize = true;
+			this.txtEnemies.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
 			this.txtEnemies.Location = new System.Drawing.Point(185, 70);
 			this.txtEnemies.MaximumSize = new System.Drawing.Size(30, 30);
 			this.txtEnemies.MinimumSize = new System.Drawing.Size(30, 0);
@@ -643,8 +613,8 @@ namespace FrEee.WinForms.Forms
 			this.gridPlanets.Name = "gridPlanets";
 			this.gridPlanets.ReadOnly = true;
 			this.gridPlanets.RowHeadersVisible = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
-			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			this.gridPlanets.RowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridPlanets.RowTemplate.Height = 32;
 			this.gridPlanets.RowTemplate.ReadOnly = true;
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;

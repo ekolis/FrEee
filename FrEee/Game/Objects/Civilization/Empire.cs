@@ -795,5 +795,36 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver); }
 		}
+
+		/// <summary>
+		/// Returns true if empires are not the same and neither empire is hostile to the other in the star system.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool IsAllyOf(Empire other, StarSystem sys)
+		{
+			return this != other && !this.IsHostileTo(other, sys) && !other.IsHostileTo(this, sys);
+		}
+
+		/// <summary>
+		/// Returns true if empires are at war.
+		/// TODO - implement war status; right now this always returns false
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool IsEnemyOf(Empire other, StarSystem sys)
+		{
+			return false;
+		}
+
+		/// <summary>
+		/// Returns true if empires are not the same, and are neither allies nor at war.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool IsNeutralTo(Empire other, StarSystem sys)
+		{
+			return this != other && !this.IsAllyOf(other, sys) && !this.IsEnemyOf(other, sys);
+		}
 	}
 }
