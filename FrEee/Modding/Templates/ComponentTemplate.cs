@@ -225,5 +225,27 @@ namespace FrEee.Modding.Templates
 		{
 			get { return AbilityTargets.Component; }
 		}
+
+		public void Redact(Empire emp)
+		{
+			// TODO - tech items that aren't visible until some requirements are met
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
 	}
 }
