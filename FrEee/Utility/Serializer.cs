@@ -518,7 +518,14 @@ namespace FrEee.Utility
 					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
 					var key = Deserialize(r, keyprop.PropertyType, context, log);
 					var val = Deserialize(r, valprop.PropertyType, context, log);
-					Expression.Lambda(Expression.Call(Expression.Constant(coll), adder, Expression.Constant(key), Expression.Constant(val))).Compile().DynamicInvoke();
+					Expression.Lambda(
+						Expression.Call(
+							Expression.Constant(coll),
+							adder,
+							Expression.Convert(Expression.Constant(key), keyprop.PropertyType),
+							Expression.Convert(Expression.Constant(val), valprop.PropertyType)
+						)
+					).Compile().DynamicInvoke();
 				}
 				o = (IEnumerable)coll;
 

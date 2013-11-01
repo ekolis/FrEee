@@ -196,7 +196,8 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			}
 			catch (Exception ex)
 			{
-				Console.WriteLine(ex);
+				Console.Error.WriteLine("Exception occurred (" + ex.Message + "): check errorlog.txt for details.");
+				ex.Log();
 				return 3;
 			}
 		}
