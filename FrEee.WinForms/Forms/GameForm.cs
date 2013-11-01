@@ -433,25 +433,31 @@ namespace FrEee.WinForms.Forms
 
 			if (Galaxy.Current.IsSinglePlayer && !hostView)
 			{
-				var msg = !todos.Any() ? "Really end your turn now?" : "Really end your turn now? You have:\n\n" + string.Join("\n", todos.ToArray());
-				if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				var msg = !todos.Any() ? "Process turn after saving your commands?" : "Process turn after saving your commands? You have:\n\n" + string.Join("\n", todos.ToArray());
+				var result = MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				if (result == DialogResult.Yes)
 				{
-					EndTurn();
+					SaveCommands(true);
 
 					// show empire log if there's anything new there
 					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
 						this.ShowChildForm(new LogForm(this));
 				}
+				else if (result == DialogResult.No)
+					SaveCommands(false);
 			}
 			else
 			{
-				var msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
-				if (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+				var msg = !todos.Any() ? "Quit after saving your commands?" : "Quit after saving your commands? You have:\n\n" + string.Join("\n", todos.ToArray());
+				var result = MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+				if (result == DialogResult.Yes)
 				{
-					EndTurn();
+					SaveCommands(true);
 					turnEnded = true;
 					Close();
 				}
+				else if (result == DialogResult.No)
+					SaveCommands(false);
 			}
 		}
 
@@ -573,16 +579,12 @@ namespace FrEee.WinForms.Forms
 			{
 				var todos = FindTodos();
 
-				string msg;
-				if (Galaxy.Current.IsSinglePlayer && !hostView)
-					msg = !todos.Any() ? "Save your commands and process the turn before quitting?" : "Save your commands and process the turn before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
-				else
-					msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
+				var msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
 				
 				switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
 					case DialogResult.Yes:
-						EndTurn();
+						SaveCommands(!Galaxy.Current.IsSinglePlayer || hostView);
 						break;
 					case DialogResult.No:
 						break; // nothing to do here
@@ -595,36 +597,39 @@ namespace FrEee.WinForms.Forms
 
 		private bool turnEnded;
 
-		private void EndTurn()
+		private void SaveCommands(bool endTurn)
 		{
 			Galaxy.Current.SaveCommands();
-			if (Galaxy.Current.IsSinglePlayer && !hostView)
+			if (endTurn)
 			{
-				Cursor = Cursors.WaitCursor;
-				Enabled = false;
-				var plrnum = Galaxy.Current.PlayerNumber;
-				var status = new Status { Message = "Initializing" };
-				var t = new Thread(new ThreadStart(() =>
+				if (Galaxy.Current.IsSinglePlayer && !hostView)
 				{
-					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
-					status.Progress = 0.25;
-					status.Message = "Processing turn";
-					Galaxy.ProcessTurn(false, status, 0.5);
-					status.Message = "Saving game";
-					Galaxy.SaveAll(status, 0.75);
-					status.Message = "Loading game";
-					Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
-					status.Progress = 1.00;
-				}));
-				this.ShowChildForm(new StatusForm(t, status));
-				SetUpGui();
-				Enabled = true;
-				Cursor = Cursors.Default;
-			}
-			else
-			{
-				MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
+					Cursor = Cursors.WaitCursor;
+					Enabled = false;
+					var plrnum = Galaxy.Current.PlayerNumber;
+					var status = new Status { Message = "Initializing" };
+					var t = new Thread(new ThreadStart(() =>
+					{
+						status.Message = "Loading game";
+						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber);
+						status.Progress = 0.25;
+						status.Message = "Processing turn";
+						Galaxy.ProcessTurn(false, status, 0.5);
+						status.Message = "Saving game";
+						Galaxy.SaveAll(status, 0.75);
+						status.Message = "Loading game";
+						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
+						status.Progress = 1.00;
+					}));
+					this.ShowChildForm(new StatusForm(t, status));
+					SetUpGui();
+					Enabled = true;
+					Cursor = Cursors.Default;
+				}
+				else if (!hostView)
+					MessageBox.Show("Please send " + Galaxy.Current.CommandFileName + " to the game host.");
+				else
+					MessageBox.Show("Commands saved for " + Empire.Current + ".");
 			}
 		}
 
