@@ -628,23 +628,26 @@ namespace FrEee.Game.Objects.Space
 			// AI commands
 			if (status != null)
 				status.Message = "Playing AI turns";
-			var serializedGalaxy = Galaxy.Current.SaveToString();
-			var cmds = new Dictionary<int, IList<ICommand>>();
-			var notes = new Dictionary<int, DynamicDictionary>();
-			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
+			if (Current.Empires.Any(e => !e.IsPlayerEmpire && e.AI != null))
 			{
+				var serializedGalaxy = Galaxy.Current.SaveToString();
+				var cmds = new Dictionary<int, IList<ICommand>>();
+				var notes = new Dictionary<int, DynamicDictionary>();
+				foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
+				{
+					LoadFromString(serializedGalaxy);
+					Current.CurrentEmpire = Current.Empires[i];
+					Current.Redact();
+					Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
+					cmds.Add(i, Current.CurrentEmpire.Commands);
+					notes.Add(i, Current.CurrentEmpire.AINotes);
+				}
 				LoadFromString(serializedGalaxy);
-				Current.CurrentEmpire = Current.Empires[i];
-				Current.Redact();
-				Current.CurrentEmpire.AI.Act(Current.CurrentEmpire, Current, Current.CurrentEmpire.AI.MinisterNames);
-				cmds.Add(i, Current.CurrentEmpire.Commands);
-				notes.Add(i, Current.CurrentEmpire.AINotes);
-			}
-			LoadFromString(serializedGalaxy);
-			foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
-			{
-				Current.LoadCommands(Current.Empires[i], cmds[i]);
-				Current.Empires[i].AINotes = notes[i];
+				foreach (var i in Current.Empires.Where(e => !e.IsPlayerEmpire && e.AI != null).Select(e => Current.Empires.IndexOf(e)).ToArray())
+				{
+					Current.LoadCommands(Current.Empires[i], cmds[i]);
+					Current.Empires[i].AINotes = notes[i];
+				}
 			}
 			if (status != null)
 				status.Progress += progressPerOperation;
