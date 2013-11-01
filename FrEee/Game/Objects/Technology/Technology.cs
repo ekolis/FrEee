@@ -237,7 +237,7 @@ namespace FrEee.Game.Objects.Technology
 			foreach (var kvp in levels)
 				empCopy.ResearchedTechnologies[kvp.Key] = kvp.Value;
 			
-			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>())
+			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>().Where(item => item.CheckVisibility(emp) >= Visibility.Fogged))
 			{
 				bool ok = true;
 				foreach (var req in item.UnlockRequirements)
@@ -302,6 +302,28 @@ namespace FrEee.Game.Objects.Technology
 		string INamed.Name
 		{
 			get { return Name; }
+		}
+
+		public void Redact(Empire emp)
+		{
+			// TODO - tech items that aren't visible until some requirements are met
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
 		}
 	}
 }
