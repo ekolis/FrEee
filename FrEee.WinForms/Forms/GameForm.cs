@@ -1160,6 +1160,7 @@ namespace FrEee.WinForms.Forms
 		public void ShowResearchForm()
 		{
 			this.ShowChildForm(new ResearchForm());
+			Empire.Current.ComputeResearchProgress();
 			BindResearch();
 		}
 
