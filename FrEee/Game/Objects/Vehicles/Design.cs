@@ -200,6 +200,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
+				if (string.IsNullOrWhiteSpace(Name))
+					yield return "You must give your design a name.";
+				if (string.IsNullOrEmpty(Role))
+					yield return "You must give your design a role.";
 				if (Hull == null)
 					yield return "You must select a hull for your design.";
 				if (!Owner.HasUnlocked(Hull))
