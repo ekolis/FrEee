@@ -51,6 +51,11 @@ namespace FrEee.Modding
 			//Now we have everything we need to create the AppDomain, so let's create it.
 			sandbox = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 			engine = Python.CreateEngine(sandbox);
+			engine.ImportModule("clr");
+			engine.Runtime.LoadAssembly(typeof(string).Assembly); // load System.dll
+			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load mscorlib.dll
+			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(Enumerable))); // load System.Core.dll
+			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(CommonExtensions))); // load FrEee.Core.dll
 			scope = engine.CreateScope();
 		}
 
@@ -212,16 +217,13 @@ namespace FrEee.Modding
 				throw new ScriptException("Cannot evaluate a script containing newlines. Consider using CallFunction instead.");
 
 			var imports = new List<string>();
-			imports.Add("import clr;");
-			imports.Add("import System;");
-			imports.Add("clr.AddReference('System.Core');");
-			imports.Add("from System import Linq;");
-			imports.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
-			imports.Add("from FrEee.Utility import Extensions;");
-			imports.Add("clr.ImportExtensions(Extensions);");
-			imports.Add("from System import Math;");
+			
 
 			var deserializers = new List<string>();
+			deserializers.Add("import System;");
+			deserializers.Add("import System.Math;");
+			deserializers.Add("import System.Linq;");
+			deserializers.Add("import FrEee.Utility.Extensions;");
 			if (variables != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
@@ -293,8 +295,6 @@ namespace FrEee.Modding
 			var serializers = new List<string>();
 			if (variables != null)
 			{
-				deserializers.Add("import clr;");
-				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
 				deserializers.Add("if (newGalaxy):");
@@ -366,8 +366,6 @@ namespace FrEee.Modding
 			var deserializers = new List<string>();
 			if (args != null)
 			{
-				deserializers.Add("import clr;");
-				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("if (newGalaxy):");
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
@@ -421,8 +419,6 @@ namespace FrEee.Modding
 			var deserializers = new List<string>();
 			if (args != null)
 			{
-				deserializers.Add("import clr;");
-				deserializers.Add("clr.AddReferenceToFileAndPath('FrEee.Core.dll');");
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("if (newGalaxy):");
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
