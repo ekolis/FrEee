@@ -432,9 +432,11 @@ namespace FrEee.WinForms.Forms
 				else if (e.Button == MouseButtons.Right)
 				{
 					// show report
+					Cursor = Cursors.WaitCursor;
 					var report = new ComponentReport(mct);
 					var form = report.CreatePopupForm(mct.Name);
 					form.ShowDialog();
+					Cursor = Cursors.Default;
 				}
 			}
 		}
@@ -461,9 +463,11 @@ namespace FrEee.WinForms.Forms
 				else if (e.Button == MouseButtons.Right)
 				{
 					// show report
+					Cursor = Cursors.WaitCursor;
 					var report = new ComponentReport(mct);
 					var form = report.CreatePopupForm(mct.Name);
 					form.ShowDialog();
+					Cursor = Cursors.Default;
 				}
 			}
 		}
