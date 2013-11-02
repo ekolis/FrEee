@@ -215,8 +215,16 @@ namespace FrEee.Modding
 			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
 				return f1.Value + f2.Value;
 			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
-				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
-			return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Static);
+			{
+				if (f1.FormulaType == FormulaType.Literal)
+					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), FormulaType.Dynamic);
+				else
+					return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
+			}
+			if (f1.FormulaType == FormulaType.Literal)
+				return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), FormulaType.Static);
+			else
+				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Static);
 		}
 
 		public static bool operator ==(Formula<T> f1, Formula<T> f2)
