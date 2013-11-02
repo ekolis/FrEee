@@ -109,8 +109,10 @@ namespace FrEee.WinForms.Controls
 				{
 					var g = (IGrouping<MountedComponentTemplate, MountedComponentTemplate>)item.Tag;
 					var mct = g.Key;
+					Cursor = Cursors.WaitCursor;
 					var form = new ComponentReport(mct).CreatePopupForm(mct.Name);
 					form.ShowDialog();
+					Cursor = Cursors.Default;
 				}
 			}
 		}

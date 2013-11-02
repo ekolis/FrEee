@@ -281,8 +281,10 @@ namespace FrEee.WinForms.Controls
 				{
 					var g = (IGrouping<MountedComponentTemplate, Component>)item.Tag;
 					var mct = g.Key;
+					Cursor = Cursors.WaitCursor;
 					var form = new ComponentReport(mct).CreatePopupForm(mct.Name);
 					form.ShowDialog();
+					Cursor = Cursors.Default;
 				}
 			}
 		}
@@ -295,8 +297,10 @@ namespace FrEee.WinForms.Controls
 				if (item != null)
 				{
 					var g = (ComponentGroup)item.Tag;
+					Cursor = Cursors.WaitCursor;
 					var form = new ComponentReport(g.SampleComponent).CreatePopupForm(g.Template.Name);
 					form.ShowDialog();
+					Cursor = Cursors.Default;
 				}
 			}
 		}
