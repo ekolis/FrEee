@@ -110,12 +110,12 @@ namespace FrEee.WinForms.Controls
 						HideRow(2);
 					var dmg = Component.Template.WeaponDamage;
 					var dmglist = new List<int>();
-					for (int r = 1; r <= weapon.MaxRange; r++)
+					for (int r = 0; r <= Math.Max(weapon.MaxRange, 20); r++)
 					{
 						var shot = new Shot(component, null, r);
 						dmglist.Add(weapon.GetDamage(shot));
 					}
-					damageGraph.Title = "Max Range: " + weapon.MaxRange;
+					damageGraph.Title = "Range: " + weapon.MinRange + " - " + weapon.MaxRange;
 					damageGraph.DataPoints = dmglist.Select(d => (double)d);
 				}
 				else
