@@ -23,15 +23,17 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Resource Generation - Minerals
-Description := Mines [%Amount1%] minerals each turn.
+Description := Mines [%Amount1%] minerals each turn (modified by planet value).
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Resource Generation - Organics
+Description := Farms [%Amount1%] organics each turn (modified by planet value).
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Resource Generation - Radioactives
+Description := Refines [%Amount1%] radioactives each turn (modified by planet value).
 Value 1 Rule := Add
 Value 2 Rule := Add
 
@@ -104,11 +106,13 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Combat To Hit Offense Plus
+Description := Accuracy modifier of [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Combat To Hit Defense Plus
+Description := Evasion modifier of [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
@@ -242,6 +246,7 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Combat Modifier - System
+Description := Provides a [%Amount1%]% system-wide accuracy and evasion bonus.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
@@ -378,6 +383,7 @@ Value 2 Rule := Add
 Value 2 Rule := Add
 
 Name := Modified Maintenance Cost
+Description := Maintenance rate is modified by [%Amount1%]%.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
@@ -402,6 +408,12 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Reduced Maintenance Cost - System
+Description := Maintenance rate is reduced by [%Amount1%]% for the entire system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Reduced Maintenance Cost - Sector
+Description := Maintenance rate is reduced by [%Amount1%]% for the entire sector.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
