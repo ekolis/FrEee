@@ -132,17 +132,17 @@ namespace FrEee.WinForms.Controls
 				int x, y, w, h;
 				if (actualAspect > desiredAspect)
 				{
-					x = 0;
-					w = Width;
-					h = (int)(Width / actualAspect);
-					y = (Height - h) / 2;
+					x = -(int)(Width / actualAspect / 2) + Width / 2;
+					w = (int)(Width / actualAspect);
+					h = Height;
+					y = 0;
 				}
 				else
 				{
-					y = 0;
-					h = Height;
-					w = (int)(Height * actualAspect);
-					x = (Width - w) / 2;
+					y = -(int)(Height * actualAspect / 2) + Height / 2;
+					h = (int)(Height * actualAspect);
+					w = Width;
+					x = 0;
 				}
 				pe.Graphics.DrawImage(backgroundImage, x, y, w, h);
 			}
