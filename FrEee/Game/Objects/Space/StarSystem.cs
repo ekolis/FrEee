@@ -174,11 +174,12 @@ namespace FrEee.Game.Objects.Space
 			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
 				ExploredByEmpires.Remove(e);
 
-			// hide background image (so player can't see what kind of system it is) and name and abilities
+			// hide background image and description (so player can't see what kind of system it is) and name and abilities
 			if (!ExploredByEmpires.Contains(emp))
 			{
 				BackgroundImagePath = null;
 				Name = "(Unexplored)";
+				Description = "An unexplored star system. Who knows what lies in wait here?";
 				Abilities.Clear();
 			}
 		}
