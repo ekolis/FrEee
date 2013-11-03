@@ -208,18 +208,17 @@ namespace FrEee.WinForms.Controls
 						}
 
 						// draw number to indicate how many stellar objects are present if >1
-						var top = 0;
 						if (DrawText && sector.SpaceObjects.OfType<StellarObject>().Count() > 1)
 						{
 							// TODO - cache brush assets
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Near; // left align our number
-							sf.LineAlignment = StringAlignment.Near; // top align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, sf);
-							top = fontSize;
+							sf.LineAlignment = StringAlignment.Far; // bottom align our number
+							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy + drawsize / 2f - fontSize, sf);
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
+						var top = 0;
 						if (availForFlagsAndNums > 0)
 						{
 							var cornerx = drawx - drawsize / 2;
@@ -324,7 +323,7 @@ namespace FrEee.WinForms.Controls
 						var sfAbil = new StringFormat();
 						sfAbil.Alignment = StringAlignment.Far;
 						sfAbil.LineAlignment = StringAlignment.Far;
-						var rectAbil = new RectangleF(drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize - fontSize);
+						var rectAbil = new RectangleF(drawx - drawsize / 2f + fontSize, drawy - drawsize / 2f, drawsize - fontSize, drawsize - fontSize);
 						var abilFont = new Font("Sans Serif", 5);
 						pe.Graphics.DrawString(abilText, abilFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
 
