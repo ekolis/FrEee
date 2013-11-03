@@ -146,6 +146,9 @@ namespace FrEee.WinForms.Controls
 
 			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
+			var fontSize = 7;
+			var font = new Font("Sans Serif", fontSize);
+
 			if (StarSystem != null)
 			{
 				if (StarSystem.BackgroundImage != null)
@@ -196,35 +199,33 @@ namespace FrEee.WinForms.Controls
 							// TODO - cache font and brush assets
 							if (DrawText)
 							{
-								var font = new Font("Sans Serif", 8);
 								var sf = new StringFormat();
 								sf.Alignment = StringAlignment.Center; // center align our name
-								sf.LineAlignment = StringAlignment.Near; // top align our name
+								sf.LineAlignment = StringAlignment.Far; // bottom align our name
 								var name = largest.Name;
 								pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 							}
 						}
 
 						// draw number to indicate how many stellar objects are present if >1
+						var top = 0;
 						if (DrawText && sector.SpaceObjects.OfType<StellarObject>().Count() > 1)
 						{
-							// TODO - cache font and brush assets
-							var font = new Font("Sans Serif", 8);
+							// TODO - cache brush assets
 							var sf = new StringFormat();
-							sf.Alignment = StringAlignment.Far; // right align our number
-							sf.LineAlignment = StringAlignment.Far; // bottom align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx + drawsize / 2f, drawy + drawsize / 2f - 12, sf);
+							sf.Alignment = StringAlignment.Near; // left align our number
+							sf.LineAlignment = StringAlignment.Near; // top align our number
+							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, sf);
+							top = fontSize;
 						}
 
-						var availForFlagsAndNums = Math.Min(drawsize - 21, 12);
+						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
 						if (availForFlagsAndNums > 0)
 						{
 							var cornerx = drawx - drawsize / 2;
 							var cornery = drawy - drawsize / 2;
 							if (sector.SpaceObjects.Count() > 1)
 							{
-								int top = 0;
-								int insigniaSize = availForFlagsAndNums / 2;
 								foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).GroupBy(sobj => sobj.Owner))
 								{
 									// draw empire insignia and space object count
@@ -237,17 +238,22 @@ namespace FrEee.WinForms.Controls
 										if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
 										{
 											pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize * 2, insigniaSize * 2);
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, fontSize * 2, fontSize * 2);
 											pe.Graphics.InterpolationMode = mode;
 										}
 										else
-											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, insigniaSize, insigniaSize);
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, fontSize, fontSize);
 
 									}
-									// TODO - cache font and brush assets
 									if (DrawText)
-										pe.Graphics.DrawString(count.ToString(), new Font("Sans Serif", insigniaSize), new SolidBrush(owner.Color), cornerx + insigniaSize, cornery + top);
-									top += insigniaSize;
+									{
+										// TODO - cache brush assets
+										var sf = new StringFormat();
+										sf.Alignment = StringAlignment.Near; // left align our number
+										sf.LineAlignment = StringAlignment.Near; // top align our number
+										pe.Graphics.DrawString(count.ToString(), font, new SolidBrush(owner.Color), cornerx + fontSize, cornery + top, sf);
+									}
+									top += fontSize;
 								}
 							}
 						}
@@ -313,12 +319,14 @@ namespace FrEee.WinForms.Controls
 							abilText += "Vr-";
 						if (sobjs.OfType<Planet>().Any(o => o.HasAbility("Planet - Change Atmosphere")))
 							abilText += "At";
-						// TODO - cache font/brush assets
+						abilText = abilText.ToSpacedString();
+						// TODO - cache brush assets
 						var sfAbil = new StringFormat();
 						sfAbil.Alignment = StringAlignment.Far;
 						sfAbil.LineAlignment = StringAlignment.Far;
-						var rectAbil = new RectangleF(drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
-						pe.Graphics.DrawString(abilText, new Font("Sans Serif", 6), new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
+						var rectAbil = new RectangleF(drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize - fontSize);
+						var abilFont = new Font("Sans Serif", 5);
+						pe.Graphics.DrawString(abilText, abilFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
 
 						// draw selection reticule
 						if (sector == SelectedSector)
@@ -384,7 +392,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center;
 							sf.LineAlignment = StringAlignment.Center;
-							pe.Graphics.DrawString(turns.ToString(), new Font("Sans Serif", 8), Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
+							pe.Graphics.DrawString(turns.ToString(), font, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
 						}
 
 						last = cur;
