@@ -51,7 +51,6 @@ namespace FrEee.Modding
 			//Now we have everything we need to create the AppDomain, so let's create it.
 			sandbox = AppDomain.CreateDomain("ScriptEngine", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 			engine = Python.CreateEngine(sandbox);
-			engine.ImportModule("clr");
 			engine.Runtime.LoadAssembly(typeof(string).Assembly); // load System.dll
 			engine.Runtime.LoadAssembly(typeof(Uri).Assembly); // load mscorlib.dll
 			engine.Runtime.LoadAssembly(Assembly.GetAssembly(typeof(Enumerable))); // load System.Core.dll
@@ -220,10 +219,13 @@ namespace FrEee.Modding
 			
 
 			var deserializers = new List<string>();
+			deserializers.Add("import clr;");
 			deserializers.Add("import System;");
-			deserializers.Add("import System.Math;");
-			deserializers.Add("import System.Linq;");
-			deserializers.Add("import FrEee.Utility.Extensions;");
+			deserializers.Add("from System import Math;");
+			deserializers.Add("from System import Linq;");
+			deserializers.Add("import FrEee;");
+			deserializers.Add("from FrEee.Utility import Extensions;");
+			deserializers.Add("clr.ImportExtensions(FrEee.Utility.Extensions);");
 			if (variables != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
