@@ -10,6 +10,7 @@ using System.Text;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -55,6 +56,47 @@ namespace FrEee.Game.Objects.Orders
 					// planet unit on planet
 					Planet.AddUnit(unit);
 				}
+
+				// ruins?
+				var ruinsTechs = Planet.GetAbilityValue("Ancient Ruins").ToInt();
+				for (int i = 0; i < ruinsTechs; i++)
+				{
+					var msg = "We have discovered new technology from the ancient ruins on " + Planet + ".";
+					// pick a random tech that's unlocked but not fully researched and level it up
+					var tech = Mod.Current.Technologies.Where(t => sobj.Owner.HasUnlocked(t) && sobj.Owner.ResearchedTechnologies[t] < t.MaximumLevel).PickRandom();
+					if (tech == null)
+						msg = "We have discovered ancient ruins on " + Planet + ", but there is nothing left for us to learn.";
+					else
+					{
+						var oldlvl = sobj.Owner.ResearchedTechnologies[tech];
+						sobj.Owner.ResearchedTechnologies[tech]++;
+						var newlvl = sobj.Owner.ResearchedTechnologies[tech];
+						var progress = sobj.Owner.ResearchProgress.SingleOrDefault(p => p.Item == tech);
+						if (progress != null)
+							progress.Value = 0;
+						sobj.Owner.Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + newlvl + " in " + tech + "!"));
+					}
+					if (i == 0)
+						sobj.Owner.Log.Add(Planet.CreateLogMessage(msg));
+				}
+
+				// unique ruins?
+				foreach (var abil in Planet.Abilities.Where(a => a.Rule.Name == "Ancient Ruins Unique"))
+				{
+					if (sobj.Owner.UniqueTechsFound.Contains(abil.Value1))
+						sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered \"unique\" technology from the ancient ruins on " + Planet + ", but it appears we have already found this one elsewhere. Perhaps it was not as unique as we had thought..."));
+					else
+					{
+						sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered new unique technology from the ancient ruins on " + Planet + "."));
+						sobj.Owner.UniqueTechsFound.Add(abil.Value1);
+						foreach (var tech in Mod.Current.Technologies.Where(t => t.UniqueTechID == abil.Value1 && sobj.Owner.HasUnlocked(t)))
+							sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!"));
+					}
+				}
+
+				// delete ruins and unique ruins abilities
+				foreach (var a in Planet.IntrinsicAbilities.Where(a => a.Rule.Name == "Ancient Ruins" || a.Rule.Name == "Ancient Ruins Unique").ToArray())
+					Planet.IntrinsicAbilities.Remove(a);
 
 				// log it!
 				sobj.Owner.Log.Add(Planet.CreateLogMessage(sobj + " has founded a new colony on " + Planet + "."));
