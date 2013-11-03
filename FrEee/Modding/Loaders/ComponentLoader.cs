@@ -131,11 +131,22 @@ namespace FrEee.Modding.Loaders
 							{
 								dmgstr = dmgfield.Value;
 								var dmg = dmgstr.Split(' ').Select(s => int.Parse(s)).ToList();
-								w.MaxRange = w.MinRange + dmg.Count - 1;
+								int firstNonzero = w.MinRange;
+								while (dmg.Count > 0 && dmg[firstNonzero] == 0)
+									firstNonzero++;
+								int lastNonzero = w.MaxRange - w.MinRange;
+								while (dmg.Count > lastNonzero && dmg[lastNonzero] == 0)
+									lastNonzero--;
+								if (dmg.Count > lastNonzero && dmg[lastNonzero] > 0)
+									lastNonzero++;
+								w.MaxRange = w.MinRange + lastNonzero - 1;
 								var dict = new Dictionary<int, int>();
-								for (int i = 0; i < dmg.Count; i++)
+								for (int i = firstNonzero; i <= lastNonzero - firstNonzero; i++)
 									dict.Add(i + w.MinRange.Value, dmg[i]);
-								w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
+								if (firstNonzero > lastNonzero)
+									w.Damage = 0;
+								else
+									w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
 							}
 							catch (Exception ex)
 							{
