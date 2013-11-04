@@ -25,7 +25,7 @@ namespace FrEee.Modding.Templates
 		{
 			Abilities = new List<Ability>();
 			StellarObjectLocations = new List<IStellarObjectLocation>();
-			Radius = 8;
+			Radius = 7;
 		}
 
 		/// <summary>
