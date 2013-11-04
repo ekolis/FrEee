@@ -147,7 +147,7 @@ namespace FrEee.WinForms.Controls
 			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
 			var drawsize = SectorDrawSize;
-			var bigFontSize = Math.Max(SectorDrawSize / 5, 1);
+			var bigFontSize = Math.Max(SectorDrawSize / 6, 1);
 			var bigFont = new Font("Sans Serif", bigFontSize);
 			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
 			var littleFont = new Font("Sans Serif", littleFontSize);
