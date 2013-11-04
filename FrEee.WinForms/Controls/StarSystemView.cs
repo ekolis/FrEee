@@ -146,8 +146,11 @@ namespace FrEee.WinForms.Controls
 
 			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-			var fontSize = 7;
-			var font = new Font("Sans Serif", fontSize);
+			var drawsize = SectorDrawSize;
+			var bigFontSize = SectorDrawSize / 5;
+			var bigFont = new Font("Sans Serif", bigFontSize);
+			var littleFontSize = SectorDrawSize / 8;
+			var littleFont = new Font("Sans Serif", littleFontSize);
 
 			if (StarSystem != null)
 			{
@@ -167,7 +170,6 @@ namespace FrEee.WinForms.Controls
 					for (var y = -StarSystem.Radius; y <= StarSystem.Radius; y++)
 					{
 						// where and how big will we draw the sector?
-						var drawsize = SectorDrawSize;
 						var drawPoint = GetDrawPoint(x, y);
 						var drawx = drawPoint.X;
 						var drawy = drawPoint.Y;
@@ -203,7 +205,7 @@ namespace FrEee.WinForms.Controls
 								sf.Alignment = StringAlignment.Center; // center align our name
 								sf.LineAlignment = StringAlignment.Far; // bottom align our name
 								var name = largest.Name;
-								pe.Graphics.DrawString(name, font, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
+								pe.Graphics.DrawString(name, bigFont, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
 							}
 						}
 
@@ -214,7 +216,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Near; // left align our number
 							sf.LineAlignment = StringAlignment.Far; // bottom align our number
-							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), font, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy + drawsize / 2f - fontSize, sf);
+							pe.Graphics.DrawString(sector.SpaceObjects.OfType<StellarObject>().Count().ToString(), bigFont, new SolidBrush(Color.White), drawx - drawsize / 2f, drawy + drawsize / 2f - bigFontSize, sf);
 						}
 
 						var availForFlagsAndNums = Math.Min(drawsize - 21, 24);
@@ -237,11 +239,11 @@ namespace FrEee.WinForms.Controls
 										if (owner.Icon.Width == 1 && owner.Icon.Height == 1)
 										{
 											pe.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, fontSize * 2, fontSize * 2);
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize * 2, bigFontSize * 2);
 											pe.Graphics.InterpolationMode = mode;
 										}
 										else
-											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, fontSize, fontSize);
+											pe.Graphics.DrawImage(owner.Icon, cornerx, cornery + top, bigFontSize, bigFontSize);
 
 									}
 									if (DrawText)
@@ -250,9 +252,9 @@ namespace FrEee.WinForms.Controls
 										var sf = new StringFormat();
 										sf.Alignment = StringAlignment.Near; // left align our number
 										sf.LineAlignment = StringAlignment.Near; // top align our number
-										pe.Graphics.DrawString(count.ToString(), font, new SolidBrush(owner.Color), cornerx + fontSize, cornery + top, sf);
+										pe.Graphics.DrawString(count.ToString(), bigFont, new SolidBrush(owner.Color), cornerx + bigFontSize, cornery + top, sf);
 									}
-									top += fontSize;
+									top += bigFontSize;
 								}
 							}
 						}
@@ -323,9 +325,8 @@ namespace FrEee.WinForms.Controls
 						var sfAbil = new StringFormat();
 						sfAbil.Alignment = StringAlignment.Far;
 						sfAbil.LineAlignment = StringAlignment.Far;
-						var rectAbil = new RectangleF(drawx - drawsize / 2f + fontSize, drawy - drawsize / 2f, drawsize - fontSize, drawsize - fontSize);
-						var abilFont = new Font("Sans Serif", 5);
-						pe.Graphics.DrawString(abilText, abilFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
+						var rectAbil = new RectangleF(drawx - drawsize / 2f + bigFontSize, drawy - drawsize / 2f, drawsize - bigFontSize, drawsize - bigFontSize - 1);
+						pe.Graphics.DrawString(abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
 
 						// draw selection reticule
 						if (sector == SelectedSector)
@@ -391,7 +392,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center;
 							sf.LineAlignment = StringAlignment.Center;
-							pe.Graphics.DrawString(turns.ToString(), font, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
+							pe.Graphics.DrawString(turns.ToString(), bigFont, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
 						}
 
 						last = cur;
