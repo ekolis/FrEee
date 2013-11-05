@@ -174,6 +174,14 @@ namespace FrEee.WinForms.Controls
 				picOwnerFlag.Image = Fleet.Owner.Icon;
 				picPortrait.Image = Fleet.Portrait;
 
+				// timestamp
+				if (Fleet.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - Fleet.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Fleet.Timestamp) + " turns ago";
+
 				// name and stuff
 				txtName.Text = Fleet.Name;
 				txtCount.Text = Fleet.LeafVehicles.Count().ToString();

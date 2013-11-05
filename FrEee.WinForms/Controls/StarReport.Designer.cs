@@ -39,6 +39,7 @@ namespace FrEee.WinForms.Controls
 			this.lblDescription = new System.Windows.Forms.Label();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
+			this.label1 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -153,11 +154,22 @@ namespace FrEee.WinForms.Controls
 			this.picPortrait.TabStop = false;
 			this.picPortrait.Click += new System.EventHandler(this.picPortrait_Click);
 			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.Location = new System.Drawing.Point(28, 11);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(47, 15);
+			this.label1.TabIndex = 56;
+			this.label1.Text = "Current";
+			// 
 			// StarReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
+			this.Controls.Add(this.label1);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtDescription);
 			this.Controls.Add(this.lblDescription);
@@ -189,5 +201,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblDescription;
 		private System.Windows.Forms.Label txtDescription;
 		private GamePictureBox picPortrait;
+		private System.Windows.Forms.Label label1;
 	}
 }

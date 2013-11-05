@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.WinForms.Interfaces;
+using System;
 
 namespace FrEee.WinForms.Controls
 {
@@ -54,8 +55,13 @@ namespace FrEee.WinForms.Controls
 			{
 				Visible = true;
 
-				picOwnerFlag.Image = null; // TODO - load owner flag
 				picPortrait.Image = AsteroidField.Portrait;
+				if (AsteroidField.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - AsteroidField.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - AsteroidField.Timestamp) + " turns ago";
 
 				txtName.Text = AsteroidField.Name;
 				txtSizeSurface.Text = AsteroidField.Size + " " + AsteroidField.Surface + " Asteroid Field";

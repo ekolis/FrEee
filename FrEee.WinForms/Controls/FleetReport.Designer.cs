@@ -85,6 +85,7 @@ namespace FrEee.WinForms.Controls
 			this.btnOrderGoesUp = new FrEee.WinForms.Controls.GameButton();
 			this.btnOrderToTop = new FrEee.WinForms.Controls.GameButton();
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
+			this.txtAge = new System.Windows.Forms.Label();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.gamePanel1.SuspendLayout();
@@ -102,6 +103,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.txtAge);
 			this.pageDetail.Controls.Add(this.txtCargoSpaceFree);
 			this.pageDetail.Controls.Add(this.label1);
 			this.pageDetail.Controls.Add(this.picPortrait);
@@ -889,6 +891,16 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail.Size = new System.Drawing.Size(279, 390);
 			this.lstOrdersDetail.TabIndex = 0;
 			// 
+			// txtAge
+			// 
+			this.txtAge.AutoSize = true;
+			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAge.Location = new System.Drawing.Point(46, 9);
+			this.txtAge.Name = "txtAge";
+			this.txtAge.Size = new System.Drawing.Size(47, 15);
+			this.txtAge.TabIndex = 56;
+			this.txtAge.Text = "Current";
+			// 
 			// FleetReport
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -972,5 +984,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.TreeView treeVehicles;
 		private System.Windows.Forms.Label txtCargoSpaceFree;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.Label txtAge;
 	}
 }

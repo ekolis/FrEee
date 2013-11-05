@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
+using System;
 
 namespace FrEee.WinForms.Controls
 {
@@ -44,6 +45,12 @@ namespace FrEee.WinForms.Controls
 				Visible = true;
 
 				picPortrait.Image = WarpPoint.Portrait;
+				if (WarpPoint.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - WarpPoint.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - WarpPoint.Timestamp) + " turns ago";
 
 				txtName.Text = WarpPoint.Name;
 				txtSize.Text = WarpPoint.StellarSize + " Warp Point";

@@ -7,6 +7,7 @@ using FrEee.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Technology;
+using System;
 
 namespace FrEee.WinForms.Controls
 {
@@ -67,6 +68,13 @@ namespace FrEee.WinForms.Controls
 
 				picOwnerFlag.Image = Planet.Owner == null ? null : Planet.Owner.Icon;
 				picPortrait.Image = Planet.Portrait;
+
+				if (Planet.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - Planet.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Planet.Timestamp) + " turns ago";
 
 				txtName.Text = Planet.Name;
 				txtSizeSurface.Text = Planet.Size + " " + Planet.Surface + " Planet";

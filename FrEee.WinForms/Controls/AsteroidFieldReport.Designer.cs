@@ -30,6 +30,9 @@ namespace FrEee.WinForms.Controls
 		{
 			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.pageDetail = new System.Windows.Forms.TabPage();
+			this.txtValueRadioactives = new System.Windows.Forms.Label();
+			this.txtValueOrganics = new System.Windows.Forms.Label();
+			this.txtValueMinerals = new System.Windows.Forms.Label();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.lblValue = new System.Windows.Forms.Label();
@@ -39,16 +42,12 @@ namespace FrEee.WinForms.Controls
 			this.lblAtmosphere = new System.Windows.Forms.Label();
 			this.txtSizeSurface = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
-			this.picOwnerFlag = new System.Windows.Forms.PictureBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
-			this.txtValueRadioactives = new System.Windows.Forms.Label();
-			this.txtValueOrganics = new System.Windows.Forms.Label();
-			this.txtValueMinerals = new System.Windows.Forms.Label();
+			this.txtAge = new System.Windows.Forms.Label();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).BeginInit();
 			this.pageAbility.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -73,6 +72,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.txtAge);
 			this.pageDetail.Controls.Add(this.txtValueRadioactives);
 			this.pageDetail.Controls.Add(this.txtValueOrganics);
 			this.pageDetail.Controls.Add(this.txtValueMinerals);
@@ -85,13 +85,42 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.Controls.Add(this.lblAtmosphere);
 			this.pageDetail.Controls.Add(this.txtSizeSurface);
 			this.pageDetail.Controls.Add(this.txtName);
-			this.pageDetail.Controls.Add(this.picOwnerFlag);
 			this.pageDetail.Location = new System.Drawing.Point(4, 29);
 			this.pageDetail.Name = "pageDetail";
 			this.pageDetail.Padding = new System.Windows.Forms.Padding(3);
 			this.pageDetail.Size = new System.Drawing.Size(312, 426);
 			this.pageDetail.TabIndex = 0;
 			this.pageDetail.Text = "Detail";
+			// 
+			// txtValueRadioactives
+			// 
+			this.txtValueRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueRadioactives.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.txtValueRadioactives.Location = new System.Drawing.Point(230, 133);
+			this.txtValueRadioactives.Name = "txtValueRadioactives";
+			this.txtValueRadioactives.Size = new System.Drawing.Size(45, 23);
+			this.txtValueRadioactives.TabIndex = 54;
+			this.txtValueRadioactives.Text = "150%";
+			// 
+			// txtValueOrganics
+			// 
+			this.txtValueOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueOrganics.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.txtValueOrganics.Location = new System.Drawing.Point(193, 133);
+			this.txtValueOrganics.Name = "txtValueOrganics";
+			this.txtValueOrganics.Size = new System.Drawing.Size(45, 23);
+			this.txtValueOrganics.TabIndex = 53;
+			this.txtValueOrganics.Text = "150%";
+			// 
+			// txtValueMinerals
+			// 
+			this.txtValueMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtValueMinerals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.txtValueMinerals.Location = new System.Drawing.Point(159, 133);
+			this.txtValueMinerals.Name = "txtValueMinerals";
+			this.txtValueMinerals.Size = new System.Drawing.Size(45, 23);
+			this.txtValueMinerals.TabIndex = 52;
+			this.txtValueMinerals.Text = "150%";
 			// 
 			// picPortrait
 			// 
@@ -186,15 +215,6 @@ namespace FrEee.WinForms.Controls
 			this.txtName.TabIndex = 10;
 			this.txtName.Text = "Tudran Asteroid Field I";
 			// 
-			// picOwnerFlag
-			// 
-			this.picOwnerFlag.Location = new System.Drawing.Point(6, 6);
-			this.picOwnerFlag.Name = "picOwnerFlag";
-			this.picOwnerFlag.Size = new System.Drawing.Size(34, 20);
-			this.picOwnerFlag.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.picOwnerFlag.TabIndex = 8;
-			this.picOwnerFlag.TabStop = false;
-			// 
 			// pageAbility
 			// 
 			this.pageAbility.BackColor = System.Drawing.Color.Black;
@@ -219,35 +239,15 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Size = new System.Drawing.Size(306, 420);
 			this.abilityTreeView.TabIndex = 1;
 			// 
-			// txtValueRadioactives
+			// txtAge
 			// 
-			this.txtValueRadioactives.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueRadioactives.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.txtValueRadioactives.Location = new System.Drawing.Point(230, 133);
-			this.txtValueRadioactives.Name = "txtValueRadioactives";
-			this.txtValueRadioactives.Size = new System.Drawing.Size(45, 23);
-			this.txtValueRadioactives.TabIndex = 54;
-			this.txtValueRadioactives.Text = "150%";
-			// 
-			// txtValueOrganics
-			// 
-			this.txtValueOrganics.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueOrganics.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.txtValueOrganics.Location = new System.Drawing.Point(193, 133);
-			this.txtValueOrganics.Name = "txtValueOrganics";
-			this.txtValueOrganics.Size = new System.Drawing.Size(45, 23);
-			this.txtValueOrganics.TabIndex = 53;
-			this.txtValueOrganics.Text = "150%";
-			// 
-			// txtValueMinerals
-			// 
-			this.txtValueMinerals.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtValueMinerals.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.txtValueMinerals.Location = new System.Drawing.Point(159, 133);
-			this.txtValueMinerals.Name = "txtValueMinerals";
-			this.txtValueMinerals.Size = new System.Drawing.Size(45, 23);
-			this.txtValueMinerals.TabIndex = 52;
-			this.txtValueMinerals.Text = "150%";
+			this.txtAge.AutoSize = true;
+			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAge.Location = new System.Drawing.Point(46, 9);
+			this.txtAge.Name = "txtAge";
+			this.txtAge.Size = new System.Drawing.Size(47, 15);
+			this.txtAge.TabIndex = 55;
+			this.txtAge.Text = "Current";
 			// 
 			// AsteroidFieldReport
 			// 
@@ -261,7 +261,6 @@ namespace FrEee.WinForms.Controls
 			this.pageDetail.ResumeLayout(false);
 			this.pageDetail.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.picOwnerFlag)).EndInit();
 			this.pageAbility.ResumeLayout(false);
 			this.ResumeLayout(false);
 
@@ -278,7 +277,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblAtmosphere;
 		private System.Windows.Forms.Label txtSizeSurface;
 		private System.Windows.Forms.Label txtName;
-		private System.Windows.Forms.PictureBox picOwnerFlag;
 		private System.Windows.Forms.TabPage pageAbility;
 		private System.Windows.Forms.Label txtDescription;
 		private GamePictureBox picPortrait;
@@ -286,5 +284,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtValueRadioactives;
 		private System.Windows.Forms.Label txtValueOrganics;
 		private System.Windows.Forms.Label txtValueMinerals;
+		private System.Windows.Forms.Label txtAge;
 	}
 }
