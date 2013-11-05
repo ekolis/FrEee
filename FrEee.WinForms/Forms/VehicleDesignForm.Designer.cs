@@ -606,11 +606,11 @@
 			this.resDetailMin.BackColor = System.Drawing.Color.Black;
 			this.resDetailMin.Change = null;
 			this.resDetailMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resDetailMin.Location = new System.Drawing.Point(206, 24);
+			this.resDetailMin.Location = new System.Drawing.Point(206, 30);
 			this.resDetailMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resDetailMin.Name = "resDetailMin";
 			this.resDetailMin.ResourceName = "Minerals";
-			this.resDetailMin.Size = new System.Drawing.Size(81, 21);
+			this.resDetailMin.Size = new System.Drawing.Size(81, 15);
 			this.resDetailMin.TabIndex = 3;
 			// 
 			// txtDetailSize
