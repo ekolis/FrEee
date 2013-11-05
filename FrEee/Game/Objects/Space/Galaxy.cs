@@ -573,9 +573,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Current time equals turn number plus tick.
+		/// Current time equals turn number plus tick minus 1.
 		/// </summary>
-		public double Timestamp { get { return TurnNumber + CurrentTick; } }
+		public double Timestamp { get { return TurnNumber + CurrentTick - 1; } }
 
 		#endregion
 
@@ -1001,6 +1001,9 @@ namespace FrEee.Game.Objects.Space
 			ScriptEngine.RunScript(Mod.Current.EndTurnScript);
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			// reset timestamp
+			Current.CurrentTick = 1;
 
 			return missingPlrs;
 		}
