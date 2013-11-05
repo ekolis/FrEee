@@ -64,7 +64,10 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// TODO - movement logs
 			if (sobj.FindSector() == Destination)
+			{
 				IsComplete = true;
+				return;
+			}
 			else
 			{
 				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
