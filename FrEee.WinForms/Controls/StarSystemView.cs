@@ -205,7 +205,12 @@ namespace FrEee.WinForms.Controls
 								sf.Alignment = StringAlignment.Center; // center align our name
 								sf.LineAlignment = StringAlignment.Far; // bottom align our name
 								var name = largest.Name;
-								pe.Graphics.DrawString(name, bigFont, new SolidBrush(Color.White), drawx, drawy + drawsize / 2f, sf);
+								Brush nameBrush;
+								if (largest.Timestamp < Galaxy.Current.Timestamp)
+									nameBrush = Brushes.Gray;
+								else
+									nameBrush = Brushes.White;
+								pe.Graphics.DrawString(name, bigFont, nameBrush, drawx, drawy + drawsize / 2f, sf);
 							}
 						}
 

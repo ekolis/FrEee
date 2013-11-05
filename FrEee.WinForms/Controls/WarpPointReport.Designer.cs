@@ -33,6 +33,7 @@ namespace FrEee.WinForms.Controls
 			this.txtDescription = new System.Windows.Forms.Label();
 			this.txtSize = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
+			this.txtAge = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -91,10 +92,21 @@ namespace FrEee.WinForms.Controls
 			this.txtName.TabIndex = 55;
 			this.txtName.Text = "Warp Point";
 			// 
+			// txtAge
+			// 
+			this.txtAge.AutoSize = true;
+			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAge.Location = new System.Drawing.Point(42, 6);
+			this.txtAge.Name = "txtAge";
+			this.txtAge.Size = new System.Drawing.Size(47, 15);
+			this.txtAge.TabIndex = 60;
+			this.txtAge.Text = "Current";
+			// 
 			// WarpPointReport
 			// 
 			this.AutoScroll = true;
 			this.BackColor = System.Drawing.Color.Black;
+			this.Controls.Add(this.txtAge);
 			this.Controls.Add(this.abilityTreeView);
 			this.Controls.Add(this.picPortrait);
 			this.Controls.Add(this.txtDescription);
@@ -116,6 +128,7 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtDescription;
 		private System.Windows.Forms.Label txtSize;
 		private System.Windows.Forms.Label txtName;
+		private System.Windows.Forms.Label txtAge;
 
 	}
 }

@@ -81,6 +81,7 @@ namespace FrEee.WinForms.Controls
 			this.lstOrdersDetail = new System.Windows.Forms.ListBox();
 			this.pageAbility = new System.Windows.Forms.TabPage();
 			this.abilityTreeView = new FrEee.WinForms.Controls.AbilityTreeView();
+			this.txtAge = new System.Windows.Forms.Label();
 			this.gameTabControl1.SuspendLayout();
 			this.pageDetail.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
@@ -116,6 +117,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.pageDetail.AutoScroll = true;
 			this.pageDetail.BackColor = System.Drawing.Color.Black;
+			this.pageDetail.Controls.Add(this.txtAge);
 			this.pageDetail.Controls.Add(this.picPortrait);
 			this.pageDetail.Controls.Add(this.pnlColony);
 			this.pageDetail.Controls.Add(this.txtDescription);
@@ -699,6 +701,16 @@ namespace FrEee.WinForms.Controls
 			this.abilityTreeView.Size = new System.Drawing.Size(306, 420);
 			this.abilityTreeView.TabIndex = 0;
 			// 
+			// txtAge
+			// 
+			this.txtAge.AutoSize = true;
+			this.txtAge.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.txtAge.Location = new System.Drawing.Point(46, 9);
+			this.txtAge.Name = "txtAge";
+			this.txtAge.Size = new System.Drawing.Size(47, 15);
+			this.txtAge.TabIndex = 56;
+			this.txtAge.Text = "Current";
+			// 
 			// PlanetReport
 			// 
 			this.AutoScroll = true;
@@ -773,5 +785,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label lblIncome;
 		private GamePictureBox picPortrait;
 		private AbilityTreeView abilityTreeView;
+		private System.Windows.Forms.Label txtAge;
 	}
 }

@@ -11,6 +11,8 @@ using FrEee.Game.Objects.Commands;
 using FrEee.Utility;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Space;
+using System;
 
 namespace FrEee.WinForms.Controls
 {
@@ -171,6 +173,14 @@ namespace FrEee.WinForms.Controls
 				// pictures
 				picOwnerFlag.Image = vehicle.Owner.Icon;
 				picPortrait.Image = vehicle.Portrait;
+
+				// timestamp
+				if (Vehicle.Timestamp == Galaxy.Current.Timestamp)
+					txtAge.Text = "Current";
+				else if (Galaxy.Current.Timestamp - Vehicle.Timestamp <= 1)
+					txtAge.Text = "Last turn";
+				else
+					txtAge.Text = Math.Ceiling(Galaxy.Current.Timestamp - Vehicle.Timestamp) + " turns ago";
 
 				// name and stuff
 				txtName.Text = vehicle.Name;
