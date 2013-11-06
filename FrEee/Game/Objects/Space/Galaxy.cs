@@ -897,6 +897,10 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 				Current.CurrentTick += Current.NextTickSize;
+				if (Current.CurrentTick > 1d)
+					Current.CurrentTick = 1d;
+				foreach (var f in Current.Referrables.OfType<IFoggable>())
+					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
@@ -1001,9 +1005,6 @@ namespace FrEee.Game.Objects.Space
 			ScriptEngine.RunScript(Mod.Current.EndTurnScript);
 			if (status != null)
 				status.Progress += progressPerOperation;
-
-			// reset timestamp
-			Current.CurrentTick = 1;
 
 			return missingPlrs;
 		}
