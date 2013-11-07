@@ -173,7 +173,7 @@ namespace FrEee.Game.Objects.Vehicles
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
-				var comp = comps.ToDictionary(c => c, c => c.HitChance).PickWeighted();
+				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted();
 				damage = comp.TakeDamage(damageType, damage, battle);
 			}
 
