@@ -241,7 +241,7 @@ namespace FrEee.WinForms.Controls
 					BuildVehicleTreeNode(treeVehicles, v);
 
 				// abilities
-				abilityTreeView.Abilities = Fleet.UnstackedAbilities.StackToTree(Fleet);
+				abilityTreeView.Abilities = Fleet.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = Fleet.IntrinsicAbilities;
 			}
 		}

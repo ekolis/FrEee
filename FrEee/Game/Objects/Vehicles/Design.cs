@@ -56,7 +56,6 @@ namespace FrEee.Game.Objects.Vehicles
 					break;
 				default:
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
-					break;
 			}
 			d.Owner = Empire.Current;
 			return d;
@@ -326,6 +325,27 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Hull.Abilities.Concat(Components.SelectMany(c => c.UnstackedAbilities)); }
 		}
 
+		/// <summary>
+		/// Designs don't have intrinsic abilities.
+		/// </summary>
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		/// <summary>
+		/// Designs contain abilities from their 
+		/// </summary>
+		public IEnumerable<Ability> ChildAbilities
+		{
+			get { throw new NotImplementedException(); }
+		}
+
+		public IEnumerable<Ability> ParentAbilities
+		{
+			get { throw new NotImplementedException(); }
+		}
+
 		public int SupplyUsagePerSector
 		{
 			get
@@ -550,6 +570,16 @@ namespace FrEee.Game.Objects.Vehicles
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return false;
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return Components; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Owner; }
 		}
 	}
 }

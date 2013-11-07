@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		/// <summary>
@@ -213,7 +213,7 @@ namespace FrEee.Game.Objects.Space
 		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
-			return sobjs.SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+			return sobjs.SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		public Visibility CheckVisibility(Empire emp)
@@ -321,14 +321,23 @@ namespace FrEee.Game.Objects.Space
 			return SpaceObjectLocations.Select(l => l.Item).Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
 		}
 
-		IEnumerable<Ability> IAbilityObject.Abilities
-		{
-			get { return UnstackedAbilities.Stack(this); }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
+		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get
+			{
+				foreach (var l in SpaceObjectLocations)
+					yield return l.Item;
+			}
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }

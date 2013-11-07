@@ -271,14 +271,6 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Fleets don't have intrinsic abilities, though it would be cool if they could gain them through experience like in SE5.
-		/// </summary>
-		public IList<Ability> IntrinsicAbilities
-		{
-			get { return new List<Ability>(); }
-		}
-
-		/// <summary>
 		/// Fleets don't have construction queues.
 		/// </summary>
 		public Civilization.ConstructionQueue ConstructionQueue
@@ -383,17 +375,6 @@ namespace FrEee.Game.Objects.Space
 						return list;
 					});
 			}
-		}
-
-		public IEnumerable<Ability> Abilities
-		{
-			// TODO - stacking rules, so movement abilities and such don't stack on fleets
-			get { return UnstackedAbilities.Stack(this); }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Vehicles.SelectMany(sobj => sobj.Abilities); }
 		}
 
 		public long ID
@@ -720,6 +701,25 @@ namespace FrEee.Game.Objects.Space
 		public ResourceQuantity MaintenanceCost
 		{
 			get { return Vehicles.Sum(v => v.MaintenanceCost); }
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get
+			{
+				// TODO - fleet experience
+				yield break;
+			}
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return Vehicles; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Owner; }
 		}
 	}
 }

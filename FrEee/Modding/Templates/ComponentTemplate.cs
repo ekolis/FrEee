@@ -134,12 +134,7 @@ namespace FrEee.Modding.Templates
 		/// </summary>
 		public IList<Ability> Abilities { get; private set; }
 
-		IEnumerable<Ability> IAbilityObject.Abilities
-		{
-			get { return Abilities; }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
+		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get { return Abilities; }
 		}
@@ -246,6 +241,17 @@ namespace FrEee.Modding.Templates
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return false;
+		}
+
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }

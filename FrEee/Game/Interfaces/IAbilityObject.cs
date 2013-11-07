@@ -11,14 +11,19 @@ namespace FrEee.Game.Interfaces
 	public interface IAbilityObject
 	{
 		/// <summary>
-		/// The abilities possessed by this object.
+		/// Abilities possessed intrinsically by this object.
 		/// </summary>
-		IEnumerable<Ability> Abilities { get; }
+		IEnumerable<Ability> IntrinsicAbilities { get; }
 
 		/// <summary>
-		/// The abilities possessed by this object, before stacking.
+		/// Child objects that can pass up abilities to this object.
 		/// </summary>
-		IEnumerable<Ability> UnstackedAbilities { get; }
+		IEnumerable<IAbilityObject> Children { get; }
+
+		/// <summary>
+		/// Parent object from which this object can inherit abilities.
+		/// </summary>
+		IAbilityObject Parent { get; }
 
 		/// <summary>
 		/// The type of ability target that this object represents.

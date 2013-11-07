@@ -81,7 +81,7 @@ namespace FrEee.Game.Interfaces
 
 		new string Name { get; set; }
 
-		new ICollection<Ability> Abilities { get; }
+		ICollection<Ability> Abilities { get; }
 
 		/// <summary>
 		/// Can this hull use a mount?

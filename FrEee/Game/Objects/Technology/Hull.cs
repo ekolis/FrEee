@@ -100,16 +100,6 @@ namespace FrEee.Game.Objects.Technology
 			private set;
 		}
 
-		IEnumerable<Abilities.Ability> IAbilityObject.Abilities
-		{
-			get { return Abilities; }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
-		}
-
 		public ICollection<Ability> Abilities { get; private set; }
 
 		/// <summary>
@@ -303,6 +293,21 @@ namespace FrEee.Game.Objects.Technology
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return false;
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }

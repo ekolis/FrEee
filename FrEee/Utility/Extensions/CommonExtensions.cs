@@ -80,7 +80,7 @@ namespace FrEee.Utility.Extensions
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[]{map});
+				map = ignorer.Invoke(null, new object[] { map });
 				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
@@ -196,9 +196,9 @@ namespace FrEee.Utility.Extensions
 		{
 			IEnumerable<Ability> abils;
 			if (includeShared)
-				abils = obj.Abilities.Union(obj.GetSharedAbilities().Flatten());
+				abils = obj.Abilities().Union(obj.GetSharedAbilities());
 			else
-				abils = obj.Abilities;
+				abils = obj.Abilities();
 			return abils.Any(abil => abil.Rule.Matches(abilityName));
 		}
 
@@ -234,12 +234,12 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, object stackTo)
 		{
-			return objs.SelectMany(obj => obj.Abilities).Stack(stackTo);
+			return objs.SelectMany(obj => obj.Abilities()).Stack(stackTo);
 		}
 
 		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs, object stackTo)
 		{
-			return objs.SelectMany(obj => obj.Abilities).StackToTree(stackTo);
+			return objs.SelectMany(obj => obj.Abilities()).StackToTree(stackTo);
 		}
 
 		/// <summary>
@@ -806,11 +806,11 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index">The ability value index (usually 1 or 2).</param>
 		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
 		/// <returns>The ability value.</returns>
-		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1,bool includeShared = true, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
 		{
-			var abils = obj.Abilities;
+			var abils = obj.Abilities();
 			if (includeShared)
-				abils = abils.Union(obj.GetSharedAbilities().Flatten());
+				abils = abils.Union(obj.GetSharedAbilities());
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
@@ -820,9 +820,9 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, object stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
 		{
-			var tuples = objs.Squash(o => o.Abilities);
+			var tuples = objs.Squash(o => o.Abilities());
 			if (includeShared)
-				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities().Flatten()));
+				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities()));
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
@@ -840,19 +840,23 @@ namespace FrEee.Utility.Extensions
 		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			IEnumerable<Ability> abils;
-			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities).Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			if (obj is IAbilityObject)
-				abils = ((IAbilityObject)obj).Abilities.Concat(subabils).Stack(obj);
+				abils = ((IAbilityObject)obj).Abilities().Concat(subabils).Stack(obj);
 			else
 				abils = subabils;
+			abils = abils.Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
 		}
 
-		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp)
+		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities);
+			if (sourceFilter == null)
+				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+			else
+				return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
 		/// <summary>
@@ -860,70 +864,57 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static ILookup<Empire, Ability> GetSharedAbilities(this IAbilityObject obj)
+		public static IEnumerable<Ability> GetSharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			var abils = new SafeDictionary<Empire, ICollection<Ability>>();
-
 			// Unowned objects cannot have abilities shared to them.
 			if (!(obj is IOwnable))
-				return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
+				yield break;
 			var owner = ((IOwnable)obj).Owner;
 			if (owner == null)
-				return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
+				yield break;
 
 			foreach (var clause in owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
 			{
 				var rule = clause.AbilityRule;
-				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+				if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
 				{
-					var sector = ((ILocated)obj).Sector;
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
 					{
-						foreach (var abil in sector.GetAbilities(emp))
+						var sector = ((ILocated)obj).Sector;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							if (clause.AbilityRule == abil.Rule)
+							foreach (var abil in sector.GetAbilities(emp, sourceFilter))
 							{
-								if (abils[emp] == null)
-									abils.Add(emp, new List<Ability>());
-								abils[emp].Add(abil);
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
 							}
 						}
 					}
-				}
-				else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
-				{
-					var sys = ((ILocated)obj).StarSystem;
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
 					{
-						foreach (var abil in sys.GetAbilities(emp))
+						var sys = ((ILocated)obj).StarSystem;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							if (clause.AbilityRule == abil.Rule)
+							foreach (var abil in sys.GetAbilities(emp, sourceFilter))
 							{
-								if (abils[emp] == null)
-									abils.Add(emp, new List<Ability>());
-								abils[emp].Add(abil);
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
 							}
 						}
 					}
-				}
-				else if (rule.CanTarget(AbilityTargets.Galaxy))
-				{
-					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+					else if (rule.CanTarget(AbilityTargets.Galaxy))
 					{
-						foreach (var abil in Galaxy.Current.GetAbilities(emp))
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							if (clause.AbilityRule == abil.Rule)
+							foreach (var abil in Galaxy.Current.GetAbilities(emp, sourceFilter))
 							{
-								if (abils[emp] == null)
-									abils.Add(emp, new List<Ability>());
-								abils[emp].Add(abil);
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
 							}
 						}
 					}
 				}
 			}
-
-			return abils.MyLookup<Empire, ICollection<Ability>, Ability>();
 		}
 
 		/// <summary>
@@ -1928,7 +1919,7 @@ namespace FrEee.Utility.Extensions
 			formula = formula.Replace("(***)", defaultValue.ToStringInvariant());
 			return new Formula<TValue>(context, formula, FormulaType.Dynamic);
 		}
-		
+
 		/// <summary>
 		/// Returns an object's hash code, or 0 for null.
 		/// </summary>
@@ -2021,6 +2012,71 @@ namespace FrEee.Utility.Extensions
 					list.Add(new KeyValuePair<TKey, TValue>(kvp.Key, item));
 			}
 			return list.ToLookup(kvp => kvp.Key, kvp => kvp.Value);
+		}
+
+		/// <summary>
+		/// All abilities belonging to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			return obj.UnstackedAbilities(sourceFilter).Stack(obj);
+		}
+
+		/// <summary>
+		/// All abilities belonging to an object, before stacking.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (sourceFilter == null || sourceFilter(obj))
+				return obj.IntrinsicAbilities.Concat(obj.GetSharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+			else
+				return obj.GetSharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+		}
+
+		/// <summary>
+		/// Abilities passed up from descendant objects.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			return obj.Children.SelectMany(c => c.IntrinsicAbilities.Concat(c.DescendantAbilities(sourceFilter))).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+		}
+
+		/// <summary>
+		/// Abilities inherited from ancestor objects.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="includeShared"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			if (obj.Parent == null)
+				return Enumerable.Empty<Ability>();
+			return obj.Parent.IntrinsicAbilities.Concat(obj.Parent.AncestorAbilities(sourceFilter)).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+		}
+
+		/// <summary>
+		/// Appends an item to a sequence.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="sequence"></param>
+		/// <param name="item"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> Append<T>(this IEnumerable<T> sequence, T item)
+		{
+			return sequence.Concat(new T[] { item });
+		}
+
+		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);
 		}
 	}
 }

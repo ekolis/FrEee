@@ -302,5 +302,20 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return AbilityTargets.Component; }
 		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield return ComponentTemplate; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Container; }
+		}
 	}
 }

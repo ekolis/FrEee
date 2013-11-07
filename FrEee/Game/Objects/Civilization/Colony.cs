@@ -39,17 +39,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public SafeDictionary<Race, long> Population { get; private set; }
 
-		public IEnumerable<Ability> Abilities
-		{
-			get { return UnstackedAbilities.Stack(this); }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			// TODO - take into account racial abilities if all races on colony share a trait
-			get { return Facilities.SelectMany(f => f.Abilities).ToArray().Concat(Owner.Abilities); }
-		}
-
 		/// <summary>
 		/// This colony's construction queue.
 		/// </summary>
@@ -140,6 +129,24 @@ namespace FrEee.Game.Objects.Civilization
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Planet; }
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get
+			{
+				return Facilities.Cast<IAbilityObject>().Union(Cargo.Units.Cast<IAbilityObject>());
+			}
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Container; }
 		}
 	}
 }

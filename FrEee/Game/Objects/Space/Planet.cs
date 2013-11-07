@@ -59,17 +59,6 @@ namespace FrEee.Game.Objects.Space
 		public string Atmosphere { get; set; }
 
 		/// <summary>
-		/// Planet abilities take into account abilities on the colony if one is present.
-		/// </summary>
-		public override IEnumerable<Ability> Abilities
-		{
-			get
-			{
-				return IntrinsicAbilities.Concat(Colony == null ? Enumerable.Empty<Ability>() : Colony.Abilities);
-			}
-		}
-
-		/// <summary>
 		/// The resource value of this planet, in %.
 		/// </summary>
 		public ResourceQuantity ResourceValue { get; set; }
@@ -111,7 +100,7 @@ namespace FrEee.Game.Objects.Space
 
 				var income = new ResourceQuantity();
 				var prefix = "Resource Generation - ";
-				foreach (var abil in Abilities.ToArray().Where(abil => abil.Rule.Name.StartsWith(prefix)))
+				foreach (var abil in this.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
 				{
 					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
 					int amount;
@@ -136,7 +125,7 @@ namespace FrEee.Game.Objects.Space
 					income.Add(resource, amount);
 				}
 				prefix = "Point Generation - ";
-				foreach (var abil in Abilities.ToArray().Where(abil => abil.Rule.Name.StartsWith(prefix)))
+				foreach (var abil in this.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
 				{
 					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
 					int amount;
@@ -665,7 +654,7 @@ namespace FrEee.Game.Objects.Space
 		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
 		public double OrganicsValue { get { return ResourceValue[Resource.Organics]; } }
 		public double RadioactivesValue { get { return ResourceValue[Resource.Radioactives]; } }
-		
+
 		public override bool IsIdle
 		{
 			get
@@ -877,6 +866,25 @@ namespace FrEee.Game.Objects.Space
 		public ResourceQuantity MaintenanceCost
 		{
 			get { return new ResourceQuantity(); }
+		}
+
+		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
+		{
+			get { return IntrinsicAbilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get
+			{
+				if (Colony != null)
+					yield return Colony;
+			}
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Owner; }
 		}
 	}
 }

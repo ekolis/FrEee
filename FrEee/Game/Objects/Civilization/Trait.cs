@@ -36,16 +36,6 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Formula<int> Cost { get; set; }
 
-		IEnumerable<Ability> IAbilityObject.Abilities
-		{
-			get { return Abilities; }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
-		}
-
 		/// <summary>
 		/// Abilities granted by this trait.
 		/// </summary>
@@ -74,6 +64,21 @@ namespace FrEee.Game.Objects.Civilization
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.Trait; }
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }
