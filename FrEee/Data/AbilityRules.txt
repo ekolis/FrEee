@@ -1080,8 +1080,8 @@ Value 1 Rule := TakeLowest
 Value 2 Rule := TakeLowest
 
 Name := No Spaceports
-Targets := Empire, StarSystem
-Description := The empire does not require spaceports to gather resources and points.
+Targets := Race, Planet
+Description := Colonies containing this race's population do not require spaceports to gather resources and points.
 
 Name := Vehicle Speed
 Targets := Empire, SpaceVehicle
