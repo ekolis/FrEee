@@ -65,19 +65,6 @@ namespace FrEee.Game.Objects.Space
 		public IList<Ability> IntrinsicAbilities { get; private set; }
 
 		/// <summary>
-		/// Typical stellar objects don't inherit any abilities, so this is usually just the intrinsic abilities.
-		/// </summary>
-		public virtual IEnumerable<Ability> Abilities
-		{
-			get { return IntrinsicAbilities; }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
-		}
-
-		/// <summary>
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>
 		public virtual Empire Owner { get { return null; } }
@@ -220,5 +207,20 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public abstract AbilityTargets AbilityTarget { get; }
+
+		IEnumerable<Ability> IAbilityObject.IntrinsicAbilities
+		{
+			get { return IntrinsicAbilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return StarSystem; }
+		}
 	}
 }

@@ -178,5 +178,20 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return AbilityTargets.Race; }
 		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return Traits; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
+		}
 	}
 }

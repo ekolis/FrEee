@@ -28,16 +28,9 @@ namespace FrEee.Game.Objects.Vehicles
 	{
 		public SpaceVehicle()
 		{
-			IntrinsicAbilities = new List<Ability>();
 			Orders = new List<IOrder<SpaceVehicle>>();
 			constructionQueue = new ConstructionQueue(this);
 			Cargo = new Cargo();
-		}
-
-		public IList<Ability> IntrinsicAbilities
-		{
-			get;
-			private set;
 		}
 
 		/// <summary>
@@ -191,26 +184,6 @@ namespace FrEee.Game.Objects.Vehicles
 				sys.Remove(this);
 			base.Dispose();
 			this.UpdateEmpireMemories();
-		}
-
-		/// <summary>
-		/// Resource cost per turn to maintain this vehicle.
-		/// </summary>
-		[IgnoreMap]
-		public ResourceQuantity MaintenanceCost
-		{
-			get
-			{
-				double pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
-				pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-				pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
-				pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
-				pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
-				pct -= Owner.Culture.MaintenanceReduction;
-				if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
-					pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
-				return Cost * pct / 100d;
-			}
 		}
 
 		public override Visibility CheckVisibility(Empire emp)
@@ -409,6 +382,16 @@ namespace FrEee.Game.Objects.Vehicles
 			if (StarSystem == null)
 				return Timestamp < Galaxy.Current.Timestamp - 1;
 			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+		}
+
+		public override IAbilityObject Parent
+		{
+			get
+			{
+				if (Container != null)
+					return Container;
+				return base.Parent;
+			}
 		}
 	}
 }

@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 
 				// unique ruins?
-				foreach (var abil in Planet.Abilities.Where(a => a.Rule.Name == "Ancient Ruins Unique"))
+				foreach (var abil in Planet.Abilities().Where(a => a.Rule.Name == "Ancient Ruins Unique"))
 				{
 					if (sobj.Owner.UniqueTechsFound.Contains(abil.Value1))
 						sobj.Owner.Log.Add(Planet.CreateLogMessage("We have discovered \"unique\" technology from the ancient ruins on " + Planet + ", but it appears we have already found this one elsewhere. Perhaps it was not as unique as we had thought..."));

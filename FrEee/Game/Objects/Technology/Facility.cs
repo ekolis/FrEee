@@ -274,5 +274,20 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return MaxHitpoints; }
 		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Container; }
+		}
 	}
 }

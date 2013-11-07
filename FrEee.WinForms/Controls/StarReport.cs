@@ -1,6 +1,7 @@
 using System.Windows.Forms;
 using FrEee.Game.Objects.Space;
 using FrEee.WinForms.Interfaces;
+using FrEee.Utility.Extensions;
 using System;
 
 namespace FrEee.WinForms.Controls
@@ -56,7 +57,7 @@ namespace FrEee.WinForms.Controls
 				txtDescription.Text = Star.Description;
 				picPortrait.Image = Star.Portrait;
 				lstAbilities.Items.Clear();
-				foreach (var abil in Star.Abilities)
+				foreach (var abil in Star.Abilities())
 					lstAbilities.Items.Add(abil.Description);
 			}
 		}

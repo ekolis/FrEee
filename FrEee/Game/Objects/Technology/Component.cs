@@ -279,5 +279,20 @@ namespace FrEee.Game.Objects.Technology
 				return this.HasAbility("Armor") ? 0 : MaxHitpoints;
 			}
 		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield return Template; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return Container; }
+		}
 	}
 }

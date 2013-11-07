@@ -18,11 +18,6 @@ namespace FrEee.Game.Interfaces
 		new string Name { get; set; }
 
 		/// <summary>
-		/// Abilities intrinsically possessed by this space object.
-		/// </summary>
-		IList<Ability> IntrinsicAbilities { get; }
-
-		/// <summary>
 		/// Is this space object hostile to an empire?
 		/// </summary>
 		bool IsHostileTo(Empire emp);

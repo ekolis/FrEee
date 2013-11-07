@@ -96,16 +96,6 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public IList<Ability> Abilities { get; private set; }
 
-		IEnumerable<Ability> IAbilityObject.Abilities
-		{
-			get { return Abilities; }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
-		}
-
 		/// <summary>
 		/// Creates a facility from the template.
 		/// </summary>
@@ -212,6 +202,21 @@ namespace FrEee.Game.Objects.Technology
 		public bool IsObsoleteMemory(Empire emp)
 		{
 			return false;
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }

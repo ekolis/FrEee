@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -86,21 +87,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public Empire Owner { get; set; }
 
-		public IEnumerable<Ability> Abilities
+		public IEnumerable<Ability> IntrinsicAbilities
 		{
-			get
-			{
-				return UnstackedAbilities.Stack(this);
-			}
-		}
-
-		[IgnoreMap]
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get
-			{
-				return Design.Hull.Abilities.Concat(Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities)).Concat(Owner.Abilities);
-			}
+			get { yield break; }
 		}
 
 		public int Speed
@@ -193,7 +182,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Is this vehicle destroyed?
 		/// Vehicles are destroyed when all components are destroyed.
 		/// </summary>
-		public bool IsDestroyed { get { return Components.All(c => c.IsDestroyed ); } }
+		public bool IsDestroyed { get { return Components.All(c => c.IsDestroyed); } }
 
 		/// <summary>
 		/// The current amount of shields.
@@ -362,16 +351,39 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public abstract AbilityTargets AbilityTarget { get; }
 
-		public abstract Sector Sector { get; set;  }
+		public abstract Sector Sector { get; set; }
 
 		public abstract StarSystem StarSystem { get; }
 
-
+		/// <summary>
+		/// Resource cost per turn to maintain this vehicle.
+		/// </summary>
+		[IgnoreMap]
 		public ResourceQuantity MaintenanceCost
 		{
-			get { throw new NotImplementedException(); }
-		}
+			get
+			{
+				double pct;
+				if (Design.Hull.VehicleType == VehicleTypes.Ship || Design.Hull.VehicleType == VehicleTypes.Base)
+					pct = Mod.Current.Settings.ShipBaseMaintenanceRate;
+				else
+					pct = Mod.Current.Settings.UnitMaintenanceRate;
 
+				if (pct > 0)
+				{
+					pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
+					pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+					pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+					pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
+					pct -= Owner.Culture.MaintenanceReduction;
+					if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
+						pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
+					return Cost * pct / 100d;
+				}
+				else
+					return new ResourceQuantity();
+			}
+		}
 
 		public int MaxShieldHitpoints
 		{
@@ -386,6 +398,17 @@ namespace FrEee.Game.Objects.Vehicles
 		public int MaxHullHitpoints
 		{
 			get { return Components.Sum(c => c.MaxHullHitpoints); }
+		}
+
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return Components.Cast<IAbilityObject>().Append(Design.Hull); }
+		}
+
+		public virtual IAbilityObject Parent
+		{
+			get { return Owner ; }
 		}
 	}
 }

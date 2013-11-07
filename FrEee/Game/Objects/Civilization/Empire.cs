@@ -386,7 +386,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (item == null)
 				return true;
 			// TODO - racial/unique tech should just be requirements
-			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities.Any(a => a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
+			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities().Any(a => a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
 				return false; // unique tech that this empire hasn't discovered
@@ -467,14 +467,12 @@ namespace FrEee.Game.Objects.Civilization
 			unlockedItems = Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => CheckUnlockStatus(r)).ToArray();
 		}
 
-		public IEnumerable<Ability> Abilities
+		/// <summary>
+		/// Empires don't have intrinsic abilities.
+		/// </summary>
+		public IEnumerable<Ability> IntrinsicAbilities
 		{
-			get { return PrimaryRace.Traits == null ? Enumerable.Empty<Ability>() : PrimaryRace.Traits.SelectMany(t => t.Abilities).Where(a => a.Rule.CanTarget(AbilityTargets.Empire)); }
-		}
-
-		public IEnumerable<Ability> UnstackedAbilities
-		{
-			get { return Abilities; }
+			get { yield break; }
 		}
 
 		/// <summary>
@@ -835,6 +833,16 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsNeutralTo(Empire other, StarSystem sys)
 		{
 			return this != other && !this.IsAllyOf(other, sys) && !this.IsEnemyOf(other, sys);
+		}
+		
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace); }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
 		}
 	}
 }

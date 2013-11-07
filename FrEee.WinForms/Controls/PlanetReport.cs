@@ -159,11 +159,11 @@ namespace FrEee.WinForms.Controls
 						lstCargoDetail.AddItemWithImage("Population", pop.Value.ToUnitString(true) + " " + pop.Key.Name, pop, pop.Key.Icon);
 				}
 
-				abilityTreeView.Abilities = Planet.UnstackedAbilities.StackToTree(Planet);
+				abilityTreeView.Abilities = Planet.AbilityTree();
 				if (Planet.Colony == null)
 					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
 				else
-					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities);
+					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities());
 
 			}
 		}
