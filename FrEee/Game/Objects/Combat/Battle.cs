@@ -124,7 +124,7 @@ namespace FrEee.Game.Objects.Combat
 						var ct = (ICargoTransferrer)launcher;
 						foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
 						{
-							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString()).ToInt();
+							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString() + "s").ToInt();
 							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate));
 						}
 					}
