@@ -524,6 +524,12 @@ Description := Weapon damage is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
+Name := Planet Value Change - Sector
+Targets := Sector, Planet
+Description := The value of each colonized planet in this sector is changed by [%Amount1%] every 10 turns (all resources).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
 Name := Planet Value Change - System
 Targets := StarSystem, Planet
 Description := The value of each colonized planet in this system is changed by [%Amount1%] every 10 turns (all resources).
@@ -533,6 +539,12 @@ Value 2 Rule := TakeHighest
 Name := Planet Value Change - Empire
 Targets := Empire, Planet
 Description := The value of each colonized planet throughout the empire is changed by [%Amount1%] every 10 turns (all resources).
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Planet Conditions Change - Sector
+Targets := Sector, Planet
+Description := The conditions of each colonized planet in this sector are changed by [%Amount1%] every 10 turns.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
@@ -548,6 +560,12 @@ Description := The conditions of each colonized planet throughout the empire are
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
+Name := Change Bad Event Chance - Sector
+Targets := Sector, Planet, Vehicle
+Description := The chance of a bad random event occurring in this sector is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
 Name := Change Bad Event Chance - System
 Targets := StarSystem, Planet, Vehicle
 Description := The chance of a bad random event occurring in this system is changed by [%Amount1%].
@@ -560,6 +578,12 @@ Description := The chance of a bad random event occurring is changed by [%Amount
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
+Name := Change Bad Intelligence Chance - Sector
+Targets := Sector, Planet, Vehicle
+Description := The chance of foreign intelligence operations occurring in this sector is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
 Name := Change Bad Intelligence Chance - System
 Targets := StarSystem, Planet, Vehicle
 Description := The chance of foreign intelligence operations occurring in this system is changed by [%Amount1%].
@@ -569,6 +593,12 @@ Value 2 Rule := TakeHighest
 Name := Change Bad Intelligence Chance - Empire
 Targets := Empire, Planet, Vehicle
 Description := The chance of foreign intelligence operations occurring is changed by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
+
+Name := Change Population Happiness - Sector
+Targets := Sector, Planet
+Description := Population happiness is changed by [%Amount1%] per turn in this sector.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
@@ -585,12 +615,14 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Ship Training
+Alias := Ship Training - Sector
 Targets := Sector, SpaceVehicle
 Description := Ships in this sector can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Fleet Training
+Alias := Fleet Training - Sector
 Targets := Sector, Fleet
 Description := Fleets in this sector can be trained, giving them a [%Amount1%]% accuracy/evasion bonus per turn (max [%Amount2%]%).
 Value 1 Rule := TakeHighest
