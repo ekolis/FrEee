@@ -854,7 +854,7 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (sourceFilter == null)
-				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
 			else
 				return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 		}
@@ -2021,6 +2021,14 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
+			if (sourceFilter == null && Empire.Current != null)
+			{
+				// use the ability cache
+				if (Galaxy.Current.AbilityCache[obj] == null)
+					Galaxy.Current.AbilityCache[obj] = obj.UnstackedAbilities(sourceFilter).Stack(obj).ToArray();
+				return Galaxy.Current.AbilityCache[obj];
+			}
+
 			return obj.UnstackedAbilities(sourceFilter).Stack(obj);
 		}
 

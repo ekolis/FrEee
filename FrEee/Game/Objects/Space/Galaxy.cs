@@ -35,6 +35,7 @@ namespace FrEee.Game.Objects.Space
 			TurnNumber = 1;
 			referrables = new Dictionary<long, IReferrable>();
 			VictoryConditions = new List<IVictoryCondition>();
+			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 		}
 
 		public Galaxy(Mod mod)
@@ -1168,5 +1169,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
 		}
+
+		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 	}
 }
