@@ -606,6 +606,8 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
+		private bool didLastTick;
+
 		/// <summary>
 		/// Processes the turn.
 		/// </summary>
@@ -616,6 +618,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
+
+			Current.didLastTick = false;
 
 			Battle.Previous.Clear();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
@@ -860,7 +864,7 @@ namespace FrEee.Game.Objects.Space
 			Current.CurrentTick = 0;
 			foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
-			while (Current.CurrentTick <= 1)
+			while (!Current.didLastTick)
 			{
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
@@ -898,8 +902,11 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 				Current.CurrentTick += Current.NextTickSize;
-				if (Current.CurrentTick > 1d)
+				if (Current.CurrentTick >= 1d)
+				{
 					Current.CurrentTick = 1d;
+					Current.didLastTick = true;
+				}
 				foreach (var f in Current.Referrables.OfType<IFoggable>())
 					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
