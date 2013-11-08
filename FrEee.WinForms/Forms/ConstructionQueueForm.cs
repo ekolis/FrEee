@@ -78,26 +78,72 @@ namespace FrEee.WinForms.Forms
 			lstQueue.LargeImageList = il;
 			int i = 0;
 			var prevCost = new ResourceQuantity();
+			IConstructionTemplate lastTemplate = null;
+			var firstEta = 0d;
+			int count = 0;
+			double totalMin = 0d, totalOrg = 0d, totalRad = 0d;
 			foreach (var order in ConstructionQueue.Orders)
 			{
-				var item = new ListViewItem(order.Template.Name);
-				item.Tag = order;
-				item.UseItemStyleForSubItems = false;
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)ConstructionQueue.Rate[res]));
 				var remainingCost = order.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
 				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
 				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
 				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]);
-				item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1"), lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : lstQueue.BackColor, lstQueue.Font));
-				item.ImageIndex = i;
-				il.Images.Add(order.Template.Icon);
-				lstQueue.Items.Add(item);
-				i++;
+				if (order.Template == lastTemplate)
+				{
+					// building same as previous item
+					count++;
+					totalMin += minprogress;
+					totalOrg += orgprogress;
+					totalRad += radprogress;
+					lstQueue.Items.RemoveAt(lstQueue.Items.Count - 1);
+					var item = new ListViewItem(count + "x " + order.Template.Name);
+					item.Tag = order;
+					item.UseItemStyleForSubItems = false;
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalMin) ? "-" :
+						totalMin >= 1 ?
+							totalMin.ToString("f1") + "x" :
+							(int)Math.Round(totalMin * 100) + "%",
+						Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalOrg) ? "-" :
+						totalOrg >= 1 ?
+							totalOrg.ToString("f1") + "x" :
+							(int)Math.Round(totalOrg * 100) + "%",
+						Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalRad) ? "-" :
+						totalRad >= 1 ?
+							totalRad.ToString("f1") + "x" :
+							(int)Math.Round(totalRad * 100) + "%",
+						Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.ToString("f1") + "(" + eta.ToString("f1") + ")", lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : firstEta <= 1.0 ? Color.FromArgb(96, 64, 0) : lstQueue.BackColor, lstQueue.Font));
+					item.ImageIndex = i;
+					il.Images.Add(order.Template.Icon);
+					lstQueue.Items.Add(item);
+					i++;
+				}
+				else
+				{
+					// building something different
+					count = 1;
+					totalMin = minprogress;
+					totalOrg = orgprogress;
+					totalRad = radprogress;
+					var item = new ListViewItem(order.Template.Name);
+					item.Tag = order;
+					item.UseItemStyleForSubItems = false;
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1"), lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : lstQueue.BackColor, lstQueue.Font));
+					item.ImageIndex = i;
+					il.Images.Add(order.Template.Icon);
+					lstQueue.Items.Add(item);
+					i++;
+					firstEta = eta;
+				}
 				prevCost += remainingCost;
+				lastTemplate = order.Template;
 			}
 			txtCargoStorageFree.Text = string.Format("Cargo Storage Free: {0} ({1} total in sector)", ConstructionQueue.CargoStorageFree.Kilotons(), ConstructionQueue.CargoStorageFreeInSector.Kilotons());
 			txtFacilitySlotsFree.Text = string.Format("Facility Slots Free: {0}", ConstructionQueue.FacilitySlotsFree);

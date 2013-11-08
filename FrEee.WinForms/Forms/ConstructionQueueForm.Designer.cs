@@ -57,31 +57,31 @@
 			this.resCostOrg = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resCostMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.label2 = new System.Windows.Forms.Label();
+			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
+			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.lstShips = new System.Windows.Forms.ListView();
+			this.colShipItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colShipETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPage3 = new System.Windows.Forms.TabPage();
+			this.lstFacilities = new System.Windows.Forms.ListView();
+			this.colFacilityItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colFacilityETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.tabPage4 = new System.Windows.Forms.TabPage();
+			this.lstUpgrades = new System.Windows.Forms.ListView();
+			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.resRadioactivesRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resOrganicsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resMineralsRate = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
-			this.tabPage4 = new System.Windows.Forms.TabPage();
-			this.lstUpgrades = new System.Windows.Forms.ListView();
-			this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabPage3 = new System.Windows.Forms.TabPage();
-			this.lstFacilities = new System.Windows.Forms.ListView();
-			this.colFacilityItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colFacilityETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.tabPage1 = new System.Windows.Forms.TabPage();
-			this.lstShips = new System.Windows.Forms.ListView();
-			this.colShipItem = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colShipETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.gameTabControl1 = new FrEee.WinForms.Controls.GameTabControl();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
-			this.tabPage4.SuspendLayout();
-			this.tabPage3.SuspendLayout();
-			this.tabPage1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
+			this.tabPage1.SuspendLayout();
+			this.tabPage3.SuspendLayout();
+			this.tabPage4.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -95,10 +95,11 @@
 			// 
 			// chkOnlyLatest
 			// 
+			this.chkOnlyLatest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkOnlyLatest.AutoSize = true;
 			this.chkOnlyLatest.Checked = true;
 			this.chkOnlyLatest.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkOnlyLatest.Location = new System.Drawing.Point(656, 40);
+			this.chkOnlyLatest.Location = new System.Drawing.Point(703, 40);
 			this.chkOnlyLatest.Name = "chkOnlyLatest";
 			this.chkOnlyLatest.Size = new System.Drawing.Size(79, 17);
 			this.chkOnlyLatest.TabIndex = 8;
@@ -108,8 +109,9 @@
 			// 
 			// chkEmergency
 			// 
+			this.chkEmergency.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkEmergency.AutoSize = true;
-			this.chkEmergency.Location = new System.Drawing.Point(656, 63);
+			this.chkEmergency.Location = new System.Drawing.Point(703, 63);
 			this.chkEmergency.Name = "chkEmergency";
 			this.chkEmergency.Size = new System.Drawing.Size(105, 17);
 			this.chkEmergency.TabIndex = 9;
@@ -118,8 +120,9 @@
 			// 
 			// chkRepeat
 			// 
+			this.chkRepeat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkRepeat.AutoSize = true;
-			this.chkRepeat.Location = new System.Drawing.Point(656, 86);
+			this.chkRepeat.Location = new System.Drawing.Point(703, 86);
 			this.chkRepeat.Name = "chkRepeat";
 			this.chkRepeat.Size = new System.Drawing.Size(87, 17);
 			this.chkRepeat.TabIndex = 10;
@@ -128,8 +131,9 @@
 			// 
 			// chkOnHold
 			// 
+			this.chkOnHold.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkOnHold.AutoSize = true;
-			this.chkOnHold.Location = new System.Drawing.Point(656, 109);
+			this.chkOnHold.Location = new System.Drawing.Point(703, 109);
 			this.chkOnHold.Name = "chkOnHold";
 			this.chkOnHold.Size = new System.Drawing.Size(65, 17);
 			this.chkOnHold.TabIndex = 11;
@@ -138,13 +142,12 @@
 			// 
 			// btnBottom
 			// 
-			this.btnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBottom.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnBottom.BackColor = System.Drawing.Color.Black;
 			this.btnBottom.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnBottom.Location = new System.Drawing.Point(743, 375);
+			this.btnBottom.Location = new System.Drawing.Point(790, 375);
 			this.btnBottom.Name = "btnBottom";
-			this.btnBottom.Size = new System.Drawing.Size(87, 29);
+			this.btnBottom.Size = new System.Drawing.Size(88, 29);
 			this.btnBottom.TabIndex = 23;
 			this.btnBottom.Text = "Bottom";
 			this.btnBottom.UseVisualStyleBackColor = false;
@@ -152,13 +155,12 @@
 			// 
 			// btnTop
 			// 
-			this.btnTop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnTop.BackColor = System.Drawing.Color.Black;
 			this.btnTop.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTop.Location = new System.Drawing.Point(743, 339);
+			this.btnTop.Location = new System.Drawing.Point(790, 339);
 			this.btnTop.Name = "btnTop";
-			this.btnTop.Size = new System.Drawing.Size(87, 29);
+			this.btnTop.Size = new System.Drawing.Size(88, 29);
 			this.btnTop.TabIndex = 22;
 			this.btnTop.Text = "Top";
 			this.btnTop.UseVisualStyleBackColor = false;
@@ -166,13 +168,12 @@
 			// 
 			// btnDown
 			// 
-			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDown.BackColor = System.Drawing.Color.Black;
 			this.btnDown.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDown.Location = new System.Drawing.Point(656, 375);
+			this.btnDown.Location = new System.Drawing.Point(703, 375);
 			this.btnDown.Name = "btnDown";
-			this.btnDown.Size = new System.Drawing.Size(87, 29);
+			this.btnDown.Size = new System.Drawing.Size(88, 29);
 			this.btnDown.TabIndex = 21;
 			this.btnDown.Text = "Down";
 			this.btnDown.UseVisualStyleBackColor = false;
@@ -180,13 +181,12 @@
 			// 
 			// btnUp
 			// 
-			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnUp.BackColor = System.Drawing.Color.Black;
 			this.btnUp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnUp.Location = new System.Drawing.Point(656, 339);
+			this.btnUp.Location = new System.Drawing.Point(703, 339);
 			this.btnUp.Name = "btnUp";
-			this.btnUp.Size = new System.Drawing.Size(87, 29);
+			this.btnUp.Size = new System.Drawing.Size(88, 29);
 			this.btnUp.TabIndex = 20;
 			this.btnUp.Text = "Up";
 			this.btnUp.UseVisualStyleBackColor = false;
@@ -194,13 +194,12 @@
 			// 
 			// btnCancel
 			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(656, 410);
+			this.btnCancel.Location = new System.Drawing.Point(703, 410);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(174, 29);
+			this.btnCancel.Size = new System.Drawing.Size(175, 29);
 			this.btnCancel.TabIndex = 19;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
@@ -208,13 +207,12 @@
 			// 
 			// btnOK
 			// 
-			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(656, 445);
+			this.btnOK.Location = new System.Drawing.Point(703, 445);
 			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new System.Drawing.Size(174, 29);
+			this.btnOK.Size = new System.Drawing.Size(175, 29);
 			this.btnOK.TabIndex = 18;
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = false;
@@ -222,13 +220,12 @@
 			// 
 			// btnClear
 			// 
-			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClear.BackColor = System.Drawing.Color.Black;
 			this.btnClear.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClear.Location = new System.Drawing.Point(656, 304);
+			this.btnClear.Location = new System.Drawing.Point(703, 304);
 			this.btnClear.Name = "btnClear";
-			this.btnClear.Size = new System.Drawing.Size(174, 29);
+			this.btnClear.Size = new System.Drawing.Size(175, 29);
 			this.btnClear.TabIndex = 16;
 			this.btnClear.Text = "Clear Queue";
 			this.btnClear.UseVisualStyleBackColor = false;
@@ -236,60 +233,57 @@
 			// 
 			// btnLoadQueue
 			// 
-			this.btnLoadQueue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnLoadQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnLoadQueue.BackColor = System.Drawing.Color.Black;
 			this.btnLoadQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLoadQueue.Location = new System.Drawing.Point(656, 234);
+			this.btnLoadQueue.Location = new System.Drawing.Point(703, 234);
 			this.btnLoadQueue.Name = "btnLoadQueue";
-			this.btnLoadQueue.Size = new System.Drawing.Size(174, 29);
+			this.btnLoadQueue.Size = new System.Drawing.Size(175, 29);
 			this.btnLoadQueue.TabIndex = 15;
 			this.btnLoadQueue.Text = "Load Queue";
 			this.btnLoadQueue.UseVisualStyleBackColor = false;
 			// 
 			// btnSaveQueue
 			// 
-			this.btnSaveQueue.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSaveQueue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSaveQueue.BackColor = System.Drawing.Color.Black;
 			this.btnSaveQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSaveQueue.Location = new System.Drawing.Point(656, 199);
+			this.btnSaveQueue.Location = new System.Drawing.Point(703, 199);
 			this.btnSaveQueue.Name = "btnSaveQueue";
-			this.btnSaveQueue.Size = new System.Drawing.Size(174, 29);
+			this.btnSaveQueue.Size = new System.Drawing.Size(175, 29);
 			this.btnSaveQueue.TabIndex = 14;
 			this.btnSaveQueue.Text = "Save Queue";
 			this.btnSaveQueue.UseVisualStyleBackColor = false;
 			// 
 			// btnClearMoveTo
 			// 
-			this.btnClearMoveTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClearMoveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClearMoveTo.BackColor = System.Drawing.Color.Black;
 			this.btnClearMoveTo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearMoveTo.Location = new System.Drawing.Point(656, 164);
+			this.btnClearMoveTo.Location = new System.Drawing.Point(703, 164);
 			this.btnClearMoveTo.Name = "btnClearMoveTo";
-			this.btnClearMoveTo.Size = new System.Drawing.Size(174, 29);
+			this.btnClearMoveTo.Size = new System.Drawing.Size(175, 29);
 			this.btnClearMoveTo.TabIndex = 13;
 			this.btnClearMoveTo.Text = "Clear Move To";
 			this.btnClearMoveTo.UseVisualStyleBackColor = false;
 			// 
 			// btnSetMoveTo
 			// 
-			this.btnSetMoveTo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSetMoveTo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnSetMoveTo.BackColor = System.Drawing.Color.Black;
 			this.btnSetMoveTo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSetMoveTo.Location = new System.Drawing.Point(656, 129);
+			this.btnSetMoveTo.Location = new System.Drawing.Point(703, 129);
 			this.btnSetMoveTo.Name = "btnSetMoveTo";
-			this.btnSetMoveTo.Size = new System.Drawing.Size(174, 29);
+			this.btnSetMoveTo.Size = new System.Drawing.Size(175, 29);
 			this.btnSetMoveTo.TabIndex = 12;
 			this.btnSetMoveTo.Text = "Set Move To";
 			this.btnSetMoveTo.UseVisualStyleBackColor = false;
 			// 
 			// gamePanel2
 			// 
-			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.gamePanel2.BackColor = System.Drawing.Color.Black;
 			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -298,7 +292,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(301, 86);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(349, 388);
+			this.gamePanel2.Size = new System.Drawing.Size(396, 388);
 			this.gamePanel2.TabIndex = 7;
 			// 
 			// lstQueue
@@ -318,7 +312,7 @@
 			this.lstQueue.HoverSelection = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
-			this.lstQueue.Size = new System.Drawing.Size(341, 380);
+			this.lstQueue.Size = new System.Drawing.Size(388, 380);
 			this.lstQueue.TabIndex = 6;
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
@@ -432,160 +426,24 @@
 			this.label2.TabIndex = 13;
 			this.label2.Text = "Cost:";
 			// 
-			// resRadioactivesRate
+			// gameTabControl1
 			// 
-			this.resRadioactivesRate.Amount = 0;
-			this.resRadioactivesRate.BackColor = System.Drawing.Color.Black;
-			this.resRadioactivesRate.Change = null;
-			this.resRadioactivesRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resRadioactivesRate.Location = new System.Drawing.Point(544, 13);
-			this.resRadioactivesRate.Margin = new System.Windows.Forms.Padding(0);
-			this.resRadioactivesRate.Name = "resRadioactivesRate";
-			this.resRadioactivesRate.ResourceName = "Radioactives";
-			this.resRadioactivesRate.Size = new System.Drawing.Size(72, 20);
-			this.resRadioactivesRate.TabIndex = 4;
-			// 
-			// resOrganicsRate
-			// 
-			this.resOrganicsRate.Amount = 0;
-			this.resOrganicsRate.BackColor = System.Drawing.Color.Black;
-			this.resOrganicsRate.Change = null;
-			this.resOrganicsRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resOrganicsRate.Location = new System.Drawing.Point(472, 13);
-			this.resOrganicsRate.Margin = new System.Windows.Forms.Padding(0);
-			this.resOrganicsRate.Name = "resOrganicsRate";
-			this.resOrganicsRate.ResourceName = "Organics";
-			this.resOrganicsRate.Size = new System.Drawing.Size(72, 20);
-			this.resOrganicsRate.TabIndex = 3;
-			// 
-			// resMineralsRate
-			// 
-			this.resMineralsRate.Amount = 0;
-			this.resMineralsRate.BackColor = System.Drawing.Color.Black;
-			this.resMineralsRate.Change = null;
-			this.resMineralsRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resMineralsRate.Location = new System.Drawing.Point(400, 13);
-			this.resMineralsRate.Margin = new System.Windows.Forms.Padding(0);
-			this.resMineralsRate.Name = "resMineralsRate";
-			this.resMineralsRate.ResourceName = "Minerals";
-			this.resMineralsRate.Size = new System.Drawing.Size(72, 20);
-			this.resMineralsRate.TabIndex = 2;
-			// 
-			// btnDelete
-			// 
-			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+			this.gameTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDelete.BackColor = System.Drawing.Color.Black;
-			this.btnDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDelete.Location = new System.Drawing.Point(656, 269);
-			this.btnDelete.Name = "btnDelete";
-			this.btnDelete.Size = new System.Drawing.Size(174, 29);
-			this.btnDelete.TabIndex = 24;
-			this.btnDelete.Text = "Delete";
-			this.btnDelete.UseVisualStyleBackColor = false;
-			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
-			// 
-			// txtCargoStorageFree
-			// 
-			this.txtCargoStorageFree.AutoSize = true;
-			this.txtCargoStorageFree.Location = new System.Drawing.Point(298, 39);
-			this.txtCargoStorageFree.Name = "txtCargoStorageFree";
-			this.txtCargoStorageFree.Size = new System.Drawing.Size(102, 13);
-			this.txtCargoStorageFree.TabIndex = 25;
-			this.txtCargoStorageFree.Text = "Cargo Storage Free:";
-			// 
-			// txtFacilitySlotsFree
-			// 
-			this.txtFacilitySlotsFree.AutoSize = true;
-			this.txtFacilitySlotsFree.Location = new System.Drawing.Point(298, 63);
-			this.txtFacilitySlotsFree.Name = "txtFacilitySlotsFree";
-			this.txtFacilitySlotsFree.Size = new System.Drawing.Size(92, 13);
-			this.txtFacilitySlotsFree.TabIndex = 26;
-			this.txtFacilitySlotsFree.Text = "Facility Slots Free:";
-			// 
-			// tabPage4
-			// 
-			this.tabPage4.BackColor = System.Drawing.Color.Black;
-			this.tabPage4.Controls.Add(this.lstUpgrades);
-			this.tabPage4.Location = new System.Drawing.Point(4, 22);
-			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(266, 373);
-			this.tabPage4.TabIndex = 3;
-			this.tabPage4.Text = "Upgrades";
-			// 
-			// lstUpgrades
-			// 
-			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
-			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader4,
-            this.columnHeader5});
-			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
-			this.lstUpgrades.FullRowSelect = true;
-			this.lstUpgrades.HoverSelection = true;
-			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
-			this.lstUpgrades.Name = "lstUpgrades";
-			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
-			this.lstUpgrades.TabIndex = 8;
-			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
-			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
-			this.lstUpgrades.View = System.Windows.Forms.View.Details;
-			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
-			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
-			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
-			// 
-			// columnHeader4
-			// 
-			this.columnHeader4.Text = "Item";
-			this.columnHeader4.Width = 200;
-			// 
-			// columnHeader5
-			// 
-			this.columnHeader5.Text = "ETA";
-			this.columnHeader5.Width = 40;
-			// 
-			// tabPage3
-			// 
-			this.tabPage3.BackColor = System.Drawing.Color.Black;
-			this.tabPage3.Controls.Add(this.lstFacilities);
-			this.tabPage3.Location = new System.Drawing.Point(4, 22);
-			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(266, 373);
-			this.tabPage3.TabIndex = 2;
-			this.tabPage3.Text = "Facilities";
-			// 
-			// lstFacilities
-			// 
-			this.lstFacilities.BackColor = System.Drawing.Color.Black;
-			this.lstFacilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstFacilities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colFacilityItem,
-            this.colFacilityETA});
-			this.lstFacilities.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstFacilities.ForeColor = System.Drawing.Color.White;
-			this.lstFacilities.FullRowSelect = true;
-			this.lstFacilities.HoverSelection = true;
-			this.lstFacilities.Location = new System.Drawing.Point(0, 0);
-			this.lstFacilities.Name = "lstFacilities";
-			this.lstFacilities.Size = new System.Drawing.Size(266, 373);
-			this.lstFacilities.TabIndex = 7;
-			this.lstFacilities.TileSize = new System.Drawing.Size(32, 32);
-			this.lstFacilities.UseCompatibleStateImageBehavior = false;
-			this.lstFacilities.View = System.Windows.Forms.View.Details;
-			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
-			this.lstFacilities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDown);
-			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
-			// 
-			// colFacilityItem
-			// 
-			this.colFacilityItem.Text = "Item";
-			this.colFacilityItem.Width = 200;
-			// 
-			// colFacilityETA
-			// 
-			this.colFacilityETA.Text = "ETA";
-			this.colFacilityETA.Width = 40;
+			this.gameTabControl1.Controls.Add(this.tabPage1);
+			this.gameTabControl1.Controls.Add(this.tabPage3);
+			this.gameTabControl1.Controls.Add(this.tabPage4);
+			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
+			this.gameTabControl1.Location = new System.Drawing.Point(3, 3);
+			this.gameTabControl1.Name = "gameTabControl1";
+			this.gameTabControl1.SelectedIndex = 0;
+			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
+			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
+			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
+			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
+			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
+			this.gameTabControl1.TabIndex = 1;
 			// 
 			// tabPage1
 			// 
@@ -630,31 +488,166 @@
 			this.colShipETA.Text = "ETA";
 			this.colShipETA.Width = 40;
 			// 
-			// gameTabControl1
+			// tabPage3
 			// 
-			this.gameTabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameTabControl1.Controls.Add(this.tabPage1);
-			this.gameTabControl1.Controls.Add(this.tabPage3);
-			this.gameTabControl1.Controls.Add(this.tabPage4);
-			this.gameTabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-			this.gameTabControl1.Location = new System.Drawing.Point(3, 3);
-			this.gameTabControl1.Name = "gameTabControl1";
-			this.gameTabControl1.SelectedIndex = 0;
-			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
-			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
-			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
-			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameTabControl1.TabIndex = 1;
+			this.tabPage3.BackColor = System.Drawing.Color.Black;
+			this.tabPage3.Controls.Add(this.lstFacilities);
+			this.tabPage3.Location = new System.Drawing.Point(4, 22);
+			this.tabPage3.Name = "tabPage3";
+			this.tabPage3.Size = new System.Drawing.Size(266, 373);
+			this.tabPage3.TabIndex = 2;
+			this.tabPage3.Text = "Facilities";
+			// 
+			// lstFacilities
+			// 
+			this.lstFacilities.BackColor = System.Drawing.Color.Black;
+			this.lstFacilities.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstFacilities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colFacilityItem,
+            this.colFacilityETA});
+			this.lstFacilities.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstFacilities.ForeColor = System.Drawing.Color.White;
+			this.lstFacilities.FullRowSelect = true;
+			this.lstFacilities.HoverSelection = true;
+			this.lstFacilities.Location = new System.Drawing.Point(0, 0);
+			this.lstFacilities.Name = "lstFacilities";
+			this.lstFacilities.Size = new System.Drawing.Size(266, 373);
+			this.lstFacilities.TabIndex = 7;
+			this.lstFacilities.TileSize = new System.Drawing.Size(32, 32);
+			this.lstFacilities.UseCompatibleStateImageBehavior = false;
+			this.lstFacilities.View = System.Windows.Forms.View.Details;
+			this.lstFacilities.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstFacilities_ItemMouseHover);
+			this.lstFacilities.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstFacilities_MouseDown);
+			this.lstFacilities.MouseLeave += new System.EventHandler(this.lstFacilities_MouseLeave);
+			// 
+			// colFacilityItem
+			// 
+			this.colFacilityItem.Text = "Item";
+			this.colFacilityItem.Width = 200;
+			// 
+			// colFacilityETA
+			// 
+			this.colFacilityETA.Text = "ETA";
+			this.colFacilityETA.Width = 40;
+			// 
+			// tabPage4
+			// 
+			this.tabPage4.BackColor = System.Drawing.Color.Black;
+			this.tabPage4.Controls.Add(this.lstUpgrades);
+			this.tabPage4.Location = new System.Drawing.Point(4, 22);
+			this.tabPage4.Name = "tabPage4";
+			this.tabPage4.Size = new System.Drawing.Size(266, 373);
+			this.tabPage4.TabIndex = 3;
+			this.tabPage4.Text = "Upgrades";
+			// 
+			// lstUpgrades
+			// 
+			this.lstUpgrades.BackColor = System.Drawing.Color.Black;
+			this.lstUpgrades.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstUpgrades.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader4,
+            this.columnHeader5});
+			this.lstUpgrades.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstUpgrades.ForeColor = System.Drawing.Color.White;
+			this.lstUpgrades.FullRowSelect = true;
+			this.lstUpgrades.HoverSelection = true;
+			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
+			this.lstUpgrades.Name = "lstUpgrades";
+			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
+			this.lstUpgrades.TabIndex = 8;
+			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
+			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
+			this.lstUpgrades.View = System.Windows.Forms.View.Details;
+			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
+			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
+			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
+			// 
+			// columnHeader4
+			// 
+			this.columnHeader4.Text = "Item";
+			this.columnHeader4.Width = 200;
+			// 
+			// columnHeader5
+			// 
+			this.columnHeader5.Text = "ETA";
+			this.columnHeader5.Width = 40;
+			// 
+			// resRadioactivesRate
+			// 
+			this.resRadioactivesRate.Amount = 0;
+			this.resRadioactivesRate.BackColor = System.Drawing.Color.Black;
+			this.resRadioactivesRate.Change = null;
+			this.resRadioactivesRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resRadioactivesRate.Location = new System.Drawing.Point(544, 13);
+			this.resRadioactivesRate.Margin = new System.Windows.Forms.Padding(0);
+			this.resRadioactivesRate.Name = "resRadioactivesRate";
+			this.resRadioactivesRate.ResourceName = "Radioactives";
+			this.resRadioactivesRate.Size = new System.Drawing.Size(72, 20);
+			this.resRadioactivesRate.TabIndex = 4;
+			// 
+			// resOrganicsRate
+			// 
+			this.resOrganicsRate.Amount = 0;
+			this.resOrganicsRate.BackColor = System.Drawing.Color.Black;
+			this.resOrganicsRate.Change = null;
+			this.resOrganicsRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resOrganicsRate.Location = new System.Drawing.Point(472, 13);
+			this.resOrganicsRate.Margin = new System.Windows.Forms.Padding(0);
+			this.resOrganicsRate.Name = "resOrganicsRate";
+			this.resOrganicsRate.ResourceName = "Organics";
+			this.resOrganicsRate.Size = new System.Drawing.Size(72, 20);
+			this.resOrganicsRate.TabIndex = 3;
+			// 
+			// resMineralsRate
+			// 
+			this.resMineralsRate.Amount = 0;
+			this.resMineralsRate.BackColor = System.Drawing.Color.Black;
+			this.resMineralsRate.Change = null;
+			this.resMineralsRate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resMineralsRate.Location = new System.Drawing.Point(400, 13);
+			this.resMineralsRate.Margin = new System.Windows.Forms.Padding(0);
+			this.resMineralsRate.Name = "resMineralsRate";
+			this.resMineralsRate.ResourceName = "Minerals";
+			this.resMineralsRate.Size = new System.Drawing.Size(72, 20);
+			this.resMineralsRate.TabIndex = 2;
+			// 
+			// btnDelete
+			// 
+			this.btnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDelete.BackColor = System.Drawing.Color.Black;
+			this.btnDelete.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDelete.Location = new System.Drawing.Point(703, 269);
+			this.btnDelete.Name = "btnDelete";
+			this.btnDelete.Size = new System.Drawing.Size(175, 29);
+			this.btnDelete.TabIndex = 24;
+			this.btnDelete.Text = "Delete";
+			this.btnDelete.UseVisualStyleBackColor = false;
+			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+			// 
+			// txtCargoStorageFree
+			// 
+			this.txtCargoStorageFree.AutoSize = true;
+			this.txtCargoStorageFree.Location = new System.Drawing.Point(298, 39);
+			this.txtCargoStorageFree.Name = "txtCargoStorageFree";
+			this.txtCargoStorageFree.Size = new System.Drawing.Size(102, 13);
+			this.txtCargoStorageFree.TabIndex = 25;
+			this.txtCargoStorageFree.Text = "Cargo Storage Free:";
+			// 
+			// txtFacilitySlotsFree
+			// 
+			this.txtFacilitySlotsFree.AutoSize = true;
+			this.txtFacilitySlotsFree.Location = new System.Drawing.Point(298, 63);
+			this.txtFacilitySlotsFree.Name = "txtFacilitySlotsFree";
+			this.txtFacilitySlotsFree.Size = new System.Drawing.Size(92, 13);
+			this.txtFacilitySlotsFree.TabIndex = 26;
+			this.txtFacilitySlotsFree.Text = "Facility Slots Free:";
 			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(832, 486);
+			this.ClientSize = new System.Drawing.Size(880, 486);
 			this.Controls.Add(this.txtFacilitySlotsFree);
 			this.Controls.Add(this.txtCargoStorageFree);
 			this.Controls.Add(this.btnDelete);
@@ -680,7 +673,6 @@
 			this.Controls.Add(this.resMineralsRate);
 			this.Controls.Add(this.label1);
 			this.ForeColor = System.Drawing.Color.White;
-			this.MaximumSize = new System.Drawing.Size(849, 99998);
 			this.Name = "ConstructionQueueForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Construction Queue";
@@ -689,10 +681,10 @@
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel1.PerformLayout();
-			this.tabPage4.ResumeLayout(false);
-			this.tabPage3.ResumeLayout(false);
-			this.tabPage1.ResumeLayout(false);
 			this.gameTabControl1.ResumeLayout(false);
+			this.tabPage1.ResumeLayout(false);
+			this.tabPage3.ResumeLayout(false);
+			this.tabPage4.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
