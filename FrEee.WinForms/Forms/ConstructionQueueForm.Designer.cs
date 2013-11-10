@@ -673,11 +673,14 @@
 			this.Controls.Add(this.resMineralsRate);
 			this.Controls.Add(this.label1);
 			this.ForeColor = System.Drawing.Color.White;
+			this.KeyPreview = true;
 			this.Name = "ConstructionQueueForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Construction Queue";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConstructionQueueForm_FormClosing);
 			this.Load += new System.EventHandler(this.ConstructionQueueForm_Load);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConstructionQueueForm_KeyDown);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ConstructionQueueForm_KeyUp);
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel1.PerformLayout();

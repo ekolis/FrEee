@@ -82,6 +82,7 @@ namespace FrEee.WinForms.Forms
 			var firstEta = 0d;
 			int count = 0;
 			double totalMin = 0d, totalOrg = 0d, totalRad = 0d;
+			var orders = new List<IConstructionOrder>();
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)ConstructionQueue.Rate[res]));
@@ -94,12 +95,13 @@ namespace FrEee.WinForms.Forms
 				{
 					// building same as previous item
 					count++;
+					orders.Add(order);
 					totalMin += minprogress;
 					totalOrg += orgprogress;
 					totalRad += radprogress;
 					lstQueue.Items.RemoveAt(lstQueue.Items.Count - 1);
 					var item = new ListViewItem(count + "x " + order.Template.Name);
-					item.Tag = order;
+					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalMin) ? "-" :
 						totalMin >= 1 ?
@@ -126,11 +128,13 @@ namespace FrEee.WinForms.Forms
 				{
 					// building something different
 					count = 1;
+					orders.Clear();
+					orders.Add(order);
 					totalMin = minprogress;
 					totalOrg = orgprogress;
 					totalRad = radprogress;
 					var item = new ListViewItem(order.Template.Name);
-					item.Tag = order;
+					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
@@ -348,15 +352,25 @@ namespace FrEee.WinForms.Forms
 				var design = (IDesign)item.Tag;
 				if (e.Button == MouseButtons.Left)
 				{
-					// add to queue
-					var order = design.CreateConstructionOrder(ConstructionQueue);
-					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand<ConstructionQueue>
-					(
-						ConstructionQueue,
-						order
-					);
-					newCommands.Add(cmd);
+					// how many to add?
+					var amount = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						amount *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						amount *= 100;
+
+					for (int i = 0; i < amount; i++)
+					{
+						// add to queue
+						var order = design.CreateConstructionOrder(ConstructionQueue);
+						ConstructionQueue.Orders.Add(order);
+						var cmd = new AddOrderCommand<ConstructionQueue>
+						(
+							ConstructionQueue,
+							order
+						);
+						newCommands.Add(cmd);
+					}
 					BindQueueListView();
 				}
 				else if (e.Button == MouseButtons.Right)
@@ -407,15 +421,25 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.Button == MouseButtons.Left)
 				{
+					// how many to add?
+					var amount = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						amount *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						amount *= 100;
+
 					var template = (FacilityTemplate)item.Tag;
-					var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
-					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand<ConstructionQueue>
-					(
-						ConstructionQueue,
-						order
-					);
-					newCommands.Add(cmd);
+					for (int i = 0; i < amount; i++)
+					{
+						var order = new ConstructionOrder<Facility, FacilityTemplate> { Template = template };
+						ConstructionQueue.Orders.Add(order);
+						var cmd = new AddOrderCommand<ConstructionQueue>
+						(
+							ConstructionQueue,
+							order
+						);
+						newCommands.Add(cmd);
+					}
 					BindQueueListView();
 				}
 				else if (e.Button == MouseButtons.Right)
@@ -509,9 +533,18 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.Button == MouseButtons.Left)
 				{
+					// how many to remove?
+					var amount = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						amount *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						amount *= 100;
+
 					// delete order
-					var order = (IConstructionOrder)item.Tag;
-					RemoveOrder(order);
+					var orders = (IEnumerable<IConstructionOrder>)item.Tag;
+					for (int i = orders.Count() - 1; i >= 0 && i >= orders.Count() - amount; i--)
+						RemoveOrder(orders.ElementAt(i), false);
+					BindQueueListView();
 				}
 			}
 		}
@@ -556,15 +589,26 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.Button == MouseButtons.Left)
 				{
+					// how many to add?
+					var amount = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						amount *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						amount *= 100;
+
 					var upgrade = (FacilityUpgrade)item.Tag;
-					var order = new UpgradeFacilityOrder(upgrade.Old, upgrade.New);
-					ConstructionQueue.Orders.Add(order);
-					var cmd = new AddOrderCommand<ConstructionQueue>
-					(
-						ConstructionQueue,
-						order
-					);
-					newCommands.Add(cmd);
+
+					for (int i = 0; i < amount; i++)
+					{
+						var order = new UpgradeFacilityOrder(upgrade.Old, upgrade.New);
+						ConstructionQueue.Orders.Add(order);
+						var cmd = new AddOrderCommand<ConstructionQueue>
+						(
+							ConstructionQueue,
+							order
+						);
+						newCommands.Add(cmd);
+					}
 					BindQueueListView();
 					IEnumerable<FacilityTemplate> templates;
 					if (chkOnlyLatest.Checked)
@@ -586,6 +630,24 @@ namespace FrEee.WinForms.Forms
 		private void lstUpgrades_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
 		{
 
+		}
+
+		private bool shiftPressed = false, ctrlPressed = false;
+
+		private void ConstructionQueueForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Shift)
+				shiftPressed = true;
+			else if (e.KeyCode == Keys.Control)
+				ctrlPressed = true;
+		}
+
+		private void ConstructionQueueForm_KeyUp(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Shift)
+				shiftPressed = false;
+			else if (e.KeyCode == Keys.Control)
+				ctrlPressed = false;
 		}
 	}
 }
