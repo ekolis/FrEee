@@ -215,6 +215,7 @@ namespace FrEee.Game.Objects.Civilization
 			UnspentRate = Rate;
 			bool didStuff = false;
 			var empty = new ResourceQuantity();
+			var builtThisTurn = new HashSet<IConstructable>();
 			while (Orders.Any() && ResourceQuantity.Min(Owner.StoredResources, UpcomingSpending) > empty)
 			{
 				var numOrders = Orders.Count;
@@ -241,7 +242,7 @@ namespace FrEee.Game.Objects.Civilization
 						{
 							order.Item.Place(Container);
 							Orders.Remove(order);
-							Owner.Log.Add(order.Item.CreateLogMessage(order.Item + " has been constructed at " + Name + "."));
+							builtThisTurn.Add(order.Item);
 						}
 					}
 				}
@@ -250,6 +251,13 @@ namespace FrEee.Game.Objects.Civilization
 
 				if (Orders.Count == numOrders)
 					break; // couldn't accomplish any orders
+			}
+			foreach (var g in builtThisTurn.GroupBy(i => i.Template))
+			{
+				if (g.Count() == 1)
+					Owner.Log.Add(g.First().CreateLogMessage(g.First() + " has been constructed at " + Name + "."));
+				else
+					Owner.Log.Add(g.First().CreateLogMessage(g.Count() + "x " + g.Key + " have been constructed at " + Name + "."));
 			}
 			return didStuff;
 		}

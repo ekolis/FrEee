@@ -581,5 +581,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Owner; }
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

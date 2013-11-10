@@ -37,6 +37,11 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public FacilityTemplate Template { get; private set; }
 
+		IConstructionTemplate IConstructable.Template
+		{
+			get { return Template; }
+		}
+
 		public IEnumerable<Ability> Abilities
 		{
 			get { return Template.Abilities; }
