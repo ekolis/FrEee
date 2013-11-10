@@ -845,7 +845,7 @@ namespace FrEee.Utility.Extensions
 				abils = ((IAbilityObject)obj).Abilities().Concat(subabils).Stack(obj);
 			else
 				abils = subabils;
-			abils = abils.Where(a => a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			if (!abils.Any())
 				return null;
 			return abils.First().Values[index - 1];
@@ -2054,7 +2054,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			return obj.Children.SelectMany(c => c.IntrinsicAbilities.Concat(c.DescendantAbilities(sourceFilter))).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+			return obj.Children.SelectMany(c => c.IntrinsicAbilities.Concat(c.DescendantAbilities(sourceFilter))).Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
 		/// <summary>
@@ -2067,7 +2067,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (obj.Parent == null)
 				return Enumerable.Empty<Ability>();
-			return obj.Parent.IntrinsicAbilities.Concat(obj.Parent.AncestorAbilities(sourceFilter)).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
+			return obj.Parent.IntrinsicAbilities.Concat(obj.Parent.AncestorAbilities(sourceFilter)).Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
 		/// <summary>
