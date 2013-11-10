@@ -33,5 +33,10 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="target">The space object which the item should be placed on or near.</param>
 		void Place(ISpaceObject target);
+
+		/// <summary>
+		/// The construction template used to build this item.
+		/// </summary>
+		IConstructionTemplate Template { get; }
 	}
 }

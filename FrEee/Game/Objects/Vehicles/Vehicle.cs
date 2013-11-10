@@ -410,5 +410,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Owner ; }
 		}
+
+		public IConstructionTemplate Template
+		{
+			get { return Design; }
+		}
 	}
 }
