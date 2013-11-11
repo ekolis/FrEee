@@ -254,6 +254,7 @@ namespace FrEee.Modding.Loaders
 
 				rec.TryFindFieldValue("Description", out temp, ref index, Mod.Errors, 0, true);
 				sobj.Description = temp;
+				sobj.ModID = rec.Get<string>("ID", sobj);
 
 				mod.StellarObjectTemplates.Add(sobj);
 			}

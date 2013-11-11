@@ -1,4 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// Keeps track of anger modifiers for various events.
 	/// Values are in tenths of a percent.
 	/// </summary>
-	public class HappinessModel : INamed
+	public class HappinessModel : IModObject
 	{
 		public string Name { get; set; }
 
@@ -102,5 +103,6 @@ namespace FrEee.Game.Objects.Civilization
 			return Name;
 		}
 
+		public string ModID { get; set; }
 	}
 }

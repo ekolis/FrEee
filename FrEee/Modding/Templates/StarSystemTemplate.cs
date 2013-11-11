@@ -16,7 +16,7 @@ namespace FrEee.Modding.Templates
 	/// A template for creating star systems.
 	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
-	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, INamed
+	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, IModObject
 	{
 		/// <summary>
 		/// Creates an empty star system template.
@@ -122,6 +122,12 @@ namespace FrEee.Modding.Templates
 				}
 			}
 			return sys;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

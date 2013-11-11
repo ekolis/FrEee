@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IHull : INamed, IResearchable, IAbilityObject, IReferrable, IPictorial
+	public interface IHull : IModObject, IResearchable, IAbilityObject, IReferrable, IPictorial
 	{
 		string ShortName { get; set; }
 

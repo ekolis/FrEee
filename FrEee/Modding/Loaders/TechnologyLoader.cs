@@ -28,6 +28,7 @@ namespace FrEee.Modding.Loaders
 				string temp;
 				int index = -1;
 
+				tech.ModID = rec.Get<string>("ID", tech);
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
 				tech.Name = temp;
 				mod.Technologies.Add(tech);

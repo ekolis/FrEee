@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IStellarObject : ISpaceObject, IReferrable
+	public interface IStellarObject : ISpaceObject, IReferrable, IModObject
 	{
 		/// <summary>
 		/// The stellar size of this object.

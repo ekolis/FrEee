@@ -14,7 +14,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A trait that grants abilities to an empire or race.
 	/// </summary>
 	[Serializable]
-	public class Trait : INamed, IAbilityObject
+	public class Trait : IModObject, IAbilityObject
 	{
 		public Trait()
 		{
@@ -80,5 +80,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return null; }
 		}
+
+		public string ModID { get; set; }
 	}
 }

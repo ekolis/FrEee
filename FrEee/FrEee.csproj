@@ -275,6 +275,7 @@
     <Compile Include="Modding\Enumerations\FormulaType.cs" />
     <Compile Include="Modding\Interfaces\IFormula.cs" />
     <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
+    <Compile Include="Modding\Interfaces\IModObject.cs" />
     <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
     <Compile Include="Modding\Loaders\RequirementLoader.cs" />
     <Compile Include="Modding\Loaders\ScriptLoader.cs" />

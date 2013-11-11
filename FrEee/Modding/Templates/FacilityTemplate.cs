@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A template for a facility.
 	/// </summary>
 	[Serializable]
-	public class FacilityTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable, IConstructionTemplate
+	public class FacilityTemplate : IModObject, IResearchable, IAbilityObject, ITemplate<Facility>, IReferrable, IConstructionTemplate
 	{
 		public FacilityTemplate()
 		{
@@ -217,6 +217,12 @@ namespace FrEee.Game.Objects.Technology
 		public IAbilityObject Parent
 		{
 			get { return null; }
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

@@ -36,6 +36,7 @@ namespace FrEee.Modding.Loaders
 				string temp;
 				int index = -1;
 
+				sst.ModID = rec.Get<string>("ID", sst);
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
 				sst.Name = temp;
 				mod.StarSystemTemplates.Add(sst);

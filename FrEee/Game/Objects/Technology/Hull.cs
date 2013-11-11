@@ -309,5 +309,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return null; }
 		}
+
+		public string ModID { get; set; }
 	}
 }

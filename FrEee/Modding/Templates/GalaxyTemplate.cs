@@ -19,7 +19,7 @@ namespace FrEee.Modding.Templates
 	/// Maps to a record in QuadrantTypes.txt.
 	/// </summary>
 	[Serializable]
-	public class GalaxyTemplate : ITemplate<Galaxy>, INamed
+	public class GalaxyTemplate : ITemplate<Galaxy>, IModObject
 	{
 		public GalaxyTemplate()
 		{
@@ -327,6 +327,12 @@ namespace FrEee.Modding.Templates
 				}
 				index++;
 			}
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

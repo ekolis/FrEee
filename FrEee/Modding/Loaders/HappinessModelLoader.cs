@@ -27,6 +27,7 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
+				h.ModID = rec.Get<string>("ID", h);
 				h.Name = rec.Get<string>("Name", h);
 				h.Description = rec.Get<string>("Description", h);
 				h.MaxPositiveTurnAngerChange = rec.Get<int>("Max Positive Anger Change", h);

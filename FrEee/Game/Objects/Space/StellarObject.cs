@@ -222,5 +222,11 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return StarSystem; }
 		}
+
+		public string ModID
+		{
+			get;
+			set;
+		}
 	}
 }

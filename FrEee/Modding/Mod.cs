@@ -12,8 +12,10 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding.Loaders;
 using FrEee.Modding.Templates;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding
 {
@@ -255,6 +257,37 @@ namespace FrEee.Modding
 		public AbilityRule FindAbilityRule(string name)
 		{
 			return AbilityRules.SingleOrDefault(r => r.Matches(name));
+		}
+
+		/// <summary>
+		/// Patches a mod with data from a new mod.
+		/// </summary>
+		/// <param name="newMod">The new mod.</param>
+		public void Patch(Mod newMod)
+		{
+			newMod.Info.CopyTo(Info);
+			StarSystemNames.Clear();
+			foreach (var n in newMod.StarSystemNames)
+				StarSystemNames.Add(n);
+			AbilityRules.Patch(newMod.AbilityRules);
+			newMod.Settings.CopyTo(Settings);
+			StellarObjectSizes.Patch(newMod.StellarObjectSizes);
+			StellarObjectTemplates.Patch(newMod.StellarObjectTemplates);
+			Traits.Patch(newMod.Traits);
+			Technologies.Patch(newMod.Technologies);
+			FacilityTemplates.Patch(newMod.FacilityTemplates);
+			Hulls.Patch(newMod.Hulls);
+			ComponentTemplates.Patch(newMod.ComponentTemplates);
+			Mounts.Patch(newMod.Mounts);
+			StellarAbilityTemplates.Patch(newMod.StellarAbilityTemplates);
+			StarSystemTemplates.Patch(newMod.StarSystemTemplates);
+			GalaxyTemplates.Patch(newMod.GalaxyTemplates);
+			HappinessModels.Patch(newMod.HappinessModels);
+			Cultures.Patch(newMod.Cultures);
+			newMod.GameInitScript.CopyTo(GameInitScript);
+			newMod.GlobalScript.CopyTo(GlobalScript);
+			newMod.EndTurnScript.CopyTo(EndTurnScript);
+			EmpireAIs.Patch(newMod.EmpireAIs);
 		}
 	}
 }

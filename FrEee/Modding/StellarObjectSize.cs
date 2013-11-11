@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace FrEee.Modding
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class StellarObjectSize : INamed, IComparable<StellarObjectSize>, IComparable
+	public class StellarObjectSize : IModObject, IComparable<StellarObjectSize>, IComparable
 	{
 		/// <summary>
 		/// The name of this size.
@@ -88,6 +89,12 @@ namespace FrEee.Modding
 		public int CompareTo(StellarObjectSize obj)
 		{
 			return StellarSize.CompareTo(obj.StellarSize);
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

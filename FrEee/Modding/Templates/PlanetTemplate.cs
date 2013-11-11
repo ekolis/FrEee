@@ -8,6 +8,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
 {
@@ -15,8 +16,10 @@ namespace FrEee.Modding.Templates
 	/// A template for generating planets.
 	/// </summary>
 	[Serializable]
-	public class PlanetTemplate : ITemplate<Planet>
+	public class PlanetTemplate : ITemplate<Planet>, IModObject
 	{
+		public string Name { get; set; }
+
 		/// <summary>
 		/// Abilities to assign to the planet.
 		/// </summary>
@@ -73,6 +76,12 @@ namespace FrEee.Modding.Templates
 			planet.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedPlanetValue, Galaxy.Current.MaxSpawnedPlanetValue);
 
 			return planet;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

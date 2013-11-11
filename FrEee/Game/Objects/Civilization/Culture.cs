@@ -12,7 +12,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// An empire's culture. Provides percentage modifiers to various abilities.
 	/// </summary>
 	[Serializable]
-	public class Culture : INamed
+	public class Culture : IModObject
 	{
 		public string Name { get; set; }
 
@@ -44,5 +44,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return Name;
 		}
+
+		public string ModID { get; set; }
 	}
 }

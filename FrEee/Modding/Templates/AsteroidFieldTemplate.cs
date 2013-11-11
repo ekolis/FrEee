@@ -8,14 +8,17 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// A template for generating asteroid fields.
 	/// </summary>
-	 [Serializable] public class AsteroidFieldTemplate : ITemplate<AsteroidField>
+	 [Serializable] public class AsteroidFieldTemplate : ITemplate<AsteroidField>, IModObject
 	{
+		 public string Name { get; set; }
+
 		/// <summary>
 		/// Abilities to assign to the asteroid field.
 		/// </summary>
@@ -66,6 +69,12 @@ namespace FrEee.Modding.Templates
 			asteroids.ResourceValue[Resource.Radioactives] = RandomHelper.Range(Galaxy.Current.MinSpawnedAsteroidValue, Galaxy.Current.MaxSpawnedAsteroidValue);
 
 			return asteroids;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

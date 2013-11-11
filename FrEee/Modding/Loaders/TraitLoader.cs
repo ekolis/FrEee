@@ -29,6 +29,7 @@ namespace FrEee.Modding.Loaders
 				t = new Trait();
 				mod.Traits.Add(t);
 
+				t.ModID = rec.Get<string>("ID", t);
 				t.Name = rec.Get<string>("Name", t, ref index);
 				t.Description = rec.Get<string>("Description", t, ref index);
 				t.Cost = rec.Get<int>("Cost", t, ref index);
