@@ -6,13 +6,14 @@ using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// Chooses a random ability, or none at all, based on a roll of a d1000.
 	/// </summary>
-	 [Serializable] public class RandomAbilityTemplate : ITemplate<Ability>, INamed
+	 [Serializable] public class RandomAbilityTemplate : ITemplate<Ability>, IModObject
 	{
 		public RandomAbilityTemplate()
 		{
@@ -42,6 +43,12 @@ namespace FrEee.Modding.Templates
 					return ac.Ability;
 			}
 			return null;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 

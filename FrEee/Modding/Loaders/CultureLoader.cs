@@ -25,6 +25,7 @@ namespace FrEee.Modding.Loaders
 				var c = new Culture();
 				mod.Cultures.Add(c);
 
+				c.ModID = rec.Get<string>("ID", c);
 				c.Name = rec.Get<string>("Name", c);
 				c.Description = rec.Get<string>("Description", c);
 				c.Production = rec.Get<int>("Production", c) ?? 0;

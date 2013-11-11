@@ -29,10 +29,11 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
-				r.Name = rec.Get<string>("Name", null, false);
-				r.Aliases = rec.GetMany<string>("Alias", null).Select(f => f.Value).ToList();
-				r.Targets = rec.Get<AbilityTargets>("Targets", null) ?? AbilityTargets.All;
-				r.Description = rec.Get<string>("Description", null);
+				r.ModID = rec.Get<string>("ID", r);
+				r.Name = rec.Get<string>("Name", r, false);
+				r.Aliases = rec.GetMany<string>("Alias", r).Select(f => f.Value).ToList();
+				r.Targets = rec.Get<AbilityTargets>("Targets", r) ?? AbilityTargets.All;
+				r.Description = rec.Get<string>("Description", r);
 				for (int i = 1; i <= 2; i++)
 				{
 					var f = rec.FindField("Value " + i + " Rule", ref index, false, 0, true);

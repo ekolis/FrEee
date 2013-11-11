@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A technology that can be researched in the game.
 	/// </summary>
 	[Serializable]
-	public class Technology : INamed, IResearchable, IReferrable
+	public class Technology : IModObject, IResearchable, IReferrable
 	{
 		public Technology()
 		{
@@ -325,5 +325,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return false;
 		}
+
+		public string ModID { get; set; }
 	}
 }

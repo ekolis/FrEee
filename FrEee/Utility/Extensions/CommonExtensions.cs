@@ -2086,5 +2086,65 @@ namespace FrEee.Utility.Extensions
 		{
 			return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);
 		}
+
+		public static void Patch<T>(this ICollection<T> old, IEnumerable<T> nu)
+			where T : class, IModObject
+		{
+			foreach (var item in old.Where(item => !item.StillExists(old, nu)).ToArray())
+			{
+				// delete item that was deleted
+				old.Remove(item);
+			}
+			foreach (var item in nu)
+			{
+				var oldItem = old.FindMatch(item, nu);
+				if (oldItem == null)
+				{
+					// add item that was added
+					old.Add(item);
+				}
+				else
+				{
+					// patch item
+					item.CopyTo(oldItem);
+				}
+			}
+		}
+
+		public static T FindByModID<T>(this IEnumerable<T> items, string modID)
+			where T : IModObject
+		{
+			if (modID == null)
+				return default(T);
+			return items.SingleOrDefault(item => item.ModID == modID);
+		}
+
+		public static T FindByNameAndIndex<T>(this IEnumerable<T> items, string name, int index)
+			where T : IModObject
+		{
+			return items.Where(item => item.Name == name).ElementAt(index);
+		}
+
+		public static int GetIndex<T>(this IEnumerable<T> items, T item)
+			where T : INamed
+		{
+			return items.Where(i => i.Name == item.Name).IndexOf(item);
+		}
+
+		public static T FindMatch<T>(this IEnumerable<T> items, T nu, IEnumerable<T> nuItems)
+			where T : class, IModObject
+		{
+			return items.FindByModID(nu.ModID) ?? items.FindByNameAndIndex(nu.Name, nuItems.GetIndex(nu));
+		}
+
+		public static bool StillExists<T>(this T old, IEnumerable<T> oldItems, IEnumerable<T> nuItems)
+			where T : IModObject
+		{
+			var match = nuItems.FindByModID(old.ModID);
+			if (match != null)
+				return true;
+			match = nuItems.FindByNameAndIndex(old.Name, oldItems.GetIndex(old));
+			return match != null;
+		}
 	}
 }

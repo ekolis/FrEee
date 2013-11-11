@@ -29,6 +29,7 @@ namespace FrEee.Modding.Loaders
 				string temp;
 				int index = -1;
 
+				sabil.ModID = rec.Get<string>("ID", sabil);
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
 				sabil.Name = temp;
 				mod.StellarAbilityTemplates.Add(sabil);

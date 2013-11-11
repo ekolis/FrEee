@@ -28,6 +28,7 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
+				sos.ModID = rec.Get<string>("ID", sos);
 				sos.Name = rec.Get<string>("Name", sos);
 				sos.StellarObjectType = rec.Get<string>("Physical Type", sos);
 				sos.StellarSize = rec.Get<StellarSize>("Stellar Size", sos);

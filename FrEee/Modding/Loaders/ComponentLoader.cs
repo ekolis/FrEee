@@ -33,6 +33,7 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
+				c.ModID = rec.Get<string>("ID", c);
 				c.Name = rec.Get<string>("Name", c);
 				c.Description = rec.Get<string>("Description", c);
 

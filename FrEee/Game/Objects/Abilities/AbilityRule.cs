@@ -7,6 +7,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Game.Enumerations;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Objects.Abilities
 {
@@ -14,7 +15,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// A rule for grouping and stacking abilities.
 	/// </summary>
 	[Serializable]
-	public class AbilityRule : INamed
+	public class AbilityRule : IModObject
 	{
 		public AbilityRule()
 		{
@@ -197,6 +198,12 @@ namespace FrEee.Game.Objects.Abilities
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

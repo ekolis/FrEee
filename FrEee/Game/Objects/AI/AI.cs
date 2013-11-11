@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace FrEee.Game.Objects.AI
 	/// <typeparam name="TDomain">The type of domain.</typeparam>
 	/// <typeparam name="TContext">The type of contextual data that the AI needs to be aware of.</typeparam>
 	[Serializable]
-	public class AI<TDomain, TContext> : INamed
+	public class AI<TDomain, TContext> : IModObject
 	{
 		public AI(string name, Script script, IDictionary<string, ICollection<string>> ministerNames)
 		{
@@ -58,5 +59,7 @@ namespace FrEee.Game.Objects.AI
 		{
 			return Name;
 		}
+
+		public string ModID { get; set; }
 	}
 }

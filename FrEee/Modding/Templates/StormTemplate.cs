@@ -8,14 +8,17 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// A template for generating storms.
 	/// </summary>
-	 [Serializable] public class StormTemplate : ITemplate<Storm>
+	 [Serializable] public class StormTemplate : ITemplate<Storm>, IModObject
 	{
+		 public string Name { get; set; }
+
 		/// <summary>
 		/// Abilities to assign to the storm.
 		/// </summary>
@@ -41,6 +44,12 @@ namespace FrEee.Modding.Templates
 				storm.IntrinsicAbilities.Add(abil);
 
 			return storm;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

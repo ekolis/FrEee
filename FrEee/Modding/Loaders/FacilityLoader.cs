@@ -30,6 +30,7 @@ namespace FrEee.Modding.Loaders
 
 				int index = -1;
 
+				f.ModID = rec.Get<string>("ID", f);
 				f.Name = rec.Get<string>("Name", f);
 				f.Description = rec.Get<string>("Description", f);
 				f.Group = rec.Get<string>("Facility Group", f);

@@ -18,7 +18,7 @@ namespace FrEee.Modding.Templates
 	/// A template for a vehicle component.
 	/// </summary>
 	[Serializable]
-	public class ComponentTemplate : INamed, IResearchable, IAbilityObject, ITemplate<Component>, IReferrable
+	public class ComponentTemplate : IModObject, IResearchable, IAbilityObject, ITemplate<Component>, IReferrable
 	{
 		public ComponentTemplate()
 		{
@@ -252,6 +252,12 @@ namespace FrEee.Modding.Templates
 		public IAbilityObject Parent
 		{
 			get { return null; }
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

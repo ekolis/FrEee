@@ -59,6 +59,7 @@ namespace FrEee.Modding.Loaders
 						Mod.Errors.Add(new DataParsingException("Invalid vehicle type \"" + hulltype + "\" specified for " + hullname + " hull.", Mod.CurrentFileName, rec));
 						continue;
 				}
+				hull.ModID = rec.Get<string>("ID", hull);
 				hull.Name = hullname;
 				mod.Hulls.Add(hull);
 

@@ -31,6 +31,7 @@ namespace FrEee.Modding.Loaders
 				string temp;
 				int index = -1;
 
+				galtemp.ModID = rec.Get<string>("ID", galtemp);
 				rec.TryFindFieldValue("Name", out temp, ref index, Mod.Errors, 0, true);
 				galtemp.Name = temp;
 				mod.GalaxyTemplates.Add(galtemp);

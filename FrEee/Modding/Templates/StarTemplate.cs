@@ -8,14 +8,17 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
 {
 	/// <summary>
 	/// A template for generating stars.
 	/// </summary>
-	 [Serializable] public class StarTemplate : ITemplate<Star>
+	 [Serializable] public class StarTemplate : ITemplate<Star>, IModObject
 	{
+		 public string Name { get; set; }
+
 		/// <summary>
 		/// Abilities to assign to the star.
 		/// </summary>
@@ -67,6 +70,12 @@ namespace FrEee.Modding.Templates
 				star.IntrinsicAbilities.Add(abil);
 
 			return star;
+		}
+
+		public string ModID
+		{
+			get;
+			set;
 		}
 	}
 }

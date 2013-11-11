@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A mount that can be applied to a component.
 	/// </summary>
-	public class Mount : IResearchable
+	public class Mount : IResearchable, IModObject
 	{
 		public Mount()
 		{
@@ -200,5 +200,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			return false;
 		}
+
+		public string ModID { get; set; }
 	}
 }
