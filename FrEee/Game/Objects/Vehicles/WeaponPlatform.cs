@@ -87,7 +87,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override Sector Sector
 		{
-			get { return Container.Sector; }
+			get { return Container == null ? null : Container.Sector; }
 			set
 			{
 				throw new NotSupportedException("Cannot set the sector of a weapon platform.");
