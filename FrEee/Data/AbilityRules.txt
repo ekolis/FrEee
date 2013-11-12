@@ -378,7 +378,7 @@ Name := Space Yard
 Targets := Vehicle, Planet, Component, Facility
 Description := Can construct with [%Amount2%] [%Amount1%] per turn.
 Value 1 Rule := Group
-Value 2 Rule := Add
+Value 2 Rule := TakeHighest
 Value 2 Group Rule := None
 
 Name := Resource Storage - Mineral
