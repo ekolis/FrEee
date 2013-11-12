@@ -21,6 +21,13 @@ namespace FrEee.WinForms.Forms
 			this.status = status;
 		}
 
+		public StatusForm(Action action, Status status)
+		{
+			InitializeComponent();
+			this.thread = new Thread(new ThreadStart(action));
+			this.status = status;		
+		}
+
 		private Thread thread;
 		private Status status;
 		private string lastMessage;

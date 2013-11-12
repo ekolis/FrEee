@@ -199,7 +199,7 @@ namespace FrEee.Utility.Extensions
 				abils = obj.Abilities().Union(obj.GetSharedAbilities());
 			else
 				abils = obj.Abilities();
-			return abils.Any(abil => abil.Rule.Matches(abilityName));
+			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
 		}
 
 		/// <summary>
@@ -2119,10 +2119,10 @@ namespace FrEee.Utility.Extensions
 			return items.SingleOrDefault(item => item.ModID == modID);
 		}
 
-		public static T FindByNameAndIndex<T>(this IEnumerable<T> items, string name, int index)
+		public static T FindByTypeNameIndex<T>(this IEnumerable<T> items, Type type, string name, int index)
 			where T : IModObject
 		{
-			return items.Where(item => item.Name == name).ElementAt(index);
+			return items.Where(item => item.GetType() == type && item.Name == name).ElementAtOrDefault(index);
 		}
 
 		public static int GetIndex<T>(this IEnumerable<T> items, T item)
@@ -2134,7 +2134,7 @@ namespace FrEee.Utility.Extensions
 		public static T FindMatch<T>(this IEnumerable<T> items, T nu, IEnumerable<T> nuItems)
 			where T : class, IModObject
 		{
-			return items.FindByModID(nu.ModID) ?? items.FindByNameAndIndex(nu.Name, nuItems.GetIndex(nu));
+			return items.FindByModID(nu.ModID) ?? items.FindByTypeNameIndex(nu.GetType(), nu.Name, nuItems.GetIndex(nu));
 		}
 
 		public static bool StillExists<T>(this T old, IEnumerable<T> oldItems, IEnumerable<T> nuItems)
@@ -2143,7 +2143,7 @@ namespace FrEee.Utility.Extensions
 			var match = nuItems.FindByModID(old.ModID);
 			if (match != null)
 				return true;
-			match = nuItems.FindByNameAndIndex(old.Name, oldItems.GetIndex(old));
+			match = nuItems.FindByTypeNameIndex(old.GetType(), old.Name, oldItems.GetIndex(old));
 			return match != null;
 		}
 	}
