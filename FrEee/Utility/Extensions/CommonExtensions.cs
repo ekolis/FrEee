@@ -229,7 +229,7 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, object stackTo)
 		{
-			return abilities.StackToTree(stackTo).Select(g => g.Key);
+			return abilities.StackToTree(stackTo).Select(g => g.Key).ToArray();
 		}
 
 		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, object stackTo)
@@ -820,9 +820,9 @@ namespace FrEee.Utility.Extensions
 
 		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, object stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
 		{
-			var tuples = objs.Squash(o => o.Abilities());
+			var tuples = objs.Squash(o => o.Abilities()).ToArray();
 			if (includeShared)
-				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities()));
+				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities())).ToArray();
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
