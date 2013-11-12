@@ -50,6 +50,11 @@ namespace FrEee.Modding.Templates
 			get;
 			set;
 		}
+
+		public void Dispose()
+		{
+			// nothing to do
+		}
 	}
 
 	[Serializable]

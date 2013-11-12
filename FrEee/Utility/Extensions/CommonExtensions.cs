@@ -2094,6 +2094,7 @@ namespace FrEee.Utility.Extensions
 			{
 				// delete item that was deleted
 				old.Remove(item);
+				item.Dispose();
 			}
 			foreach (var item in nu)
 			{
@@ -2105,8 +2106,9 @@ namespace FrEee.Utility.Extensions
 				}
 				else
 				{
-					// patch item
+					// patch item and delete the patch
 					item.CopyTo(oldItem);
+					item.Dispose();
 				}
 			}
 		}
