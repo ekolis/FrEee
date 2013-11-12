@@ -883,7 +883,7 @@ namespace FrEee.Game.Objects.Space
 					if (didStuff)
 					{
 						v.UpdateEmpireMemories();
-						if (v.StarSystem != null)
+						if (v.StarSystem != null && v.Owner != null)
 						{
 							foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Flatten().Where(sobj => sobj != v))
 								v.Owner.UpdateMemory(sobj);
