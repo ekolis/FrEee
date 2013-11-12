@@ -229,7 +229,7 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, object stackTo)
 		{
-			return abilities.StackToTree(stackTo).Select(g => g.Key).ToArray();
+			return abilities.StackToTree(stackTo).Select(g => g.Key);
 		}
 
 		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, object stackTo)
@@ -840,9 +840,9 @@ namespace FrEee.Utility.Extensions
 		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			IEnumerable<Ability> abils;
-			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities());
+			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
 			if (obj is IAbilityObject)
-				abils = ((IAbilityObject)obj).Abilities().Concat(subabils).Stack(obj);
+				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule.Name == name).Concat(subabils).Stack(obj);
 			else
 				abils = subabils;
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
