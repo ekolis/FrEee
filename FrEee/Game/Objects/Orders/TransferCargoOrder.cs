@@ -45,8 +45,11 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(ICargoTransferrer executor)
 		{
 			var errors = GetErrors(executor);
-			foreach (var error in errors)
-				executor.Owner.Log.Add(error);
+			if (executor.Owner != null)
+			{
+				foreach (var error in errors)
+					executor.Owner.Log.Add(error);
+			}
 
 			if (!errors.Any())
 			{
