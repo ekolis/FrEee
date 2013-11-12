@@ -191,7 +191,6 @@ Ability 1 Type      := Spaceport
 Ability 1 Descr     := Acts as a spaceport for this system.
 Ability 1 Val 1     := 0
 Ability 1 Val 2     := 0
-Ability 2 Type      := None
 
 Name                := Resupply Depot
 Description         := Resupplies any ships which move through the sector it occupies.
