@@ -92,7 +92,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Container == null ? null : Container.Sector; }
 			set
 			{
-				throw new NotSupportedException("Cannot set the sector of a weapon platform.");
+				//throw new NotSupportedException("Cannot set the sector of a weapon platform.");
 			}
 		}
 
