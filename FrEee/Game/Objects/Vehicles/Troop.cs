@@ -2,6 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return AbilityTargets.Troop; }
 		}
 
+		[DoNotSerialize]
 		public override Sector Sector
 		{
 			get { return Container == null ? null : Container.Sector; }
