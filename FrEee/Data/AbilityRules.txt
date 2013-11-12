@@ -67,7 +67,7 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Spaceport
-Targets := StarSystem
+Targets := Planet, Vehicle, StarSystem
 Description := Allows resources and points generated in this system to be collected by the empire.
 
 Name := Palace
