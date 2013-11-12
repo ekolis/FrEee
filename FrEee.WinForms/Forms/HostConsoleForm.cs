@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Utility;
 using FrEee.WinForms.Utility.Extensions;
 using System;
@@ -102,8 +103,23 @@ namespace FrEee.WinForms.Forms
 
 		private void btnPatchMod_Click(object sender, EventArgs e)
 		{
-			// TODO - patch mod
-			MessageBox.Show("Sorry, mod patching is not yet implemented.");
+			var pickerForm = new ModPickerForm();
+			var result = this.ShowChildForm(pickerForm);
+			if (result == DialogResult.OK)
+			{
+				var status = new Status();
+				var statusForm = new StatusForm(() =>
+				{
+					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
+					status.Message = "Backing up GAM file";
+					File.Copy(Path.Combine("Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
+					status.Progress = 0.75;
+					status.Message = "Patching mod";
+					Galaxy.Current.Mod.Patch(mod);
+					status.Progress = 1d;
+				}, status);
+				this.ShowChildForm(statusForm);
+			}
 		}
 
 		private void btnPlayerView_Click(object sender, EventArgs e)
