@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Container == null ? null : Container.Sector; }
 			set
 			{
-				throw new NotSupportedException("Cannot set the sector of a troop.");
+				//throw new NotSupportedException("Cannot set the sector of a troop.");
 			}
 		}
 

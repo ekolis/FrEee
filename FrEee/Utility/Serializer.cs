@@ -589,7 +589,7 @@ namespace FrEee.Utility
 				{
 					var pname = r.ReadTo(':', log).Trim();
 					var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
-					if (prop != null)
+					if (prop != null && !prop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any())
 					{
 						if (type.IsValueType)
 						{
