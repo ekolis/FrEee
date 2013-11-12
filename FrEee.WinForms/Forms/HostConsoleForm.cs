@@ -108,8 +108,7 @@ namespace FrEee.WinForms.Forms
 			if (result == DialogResult.OK)
 			{
 				var status = new Status();
-				var statusForm = new StatusForm(() =>
-				{
+				var t = new Thread(new ThreadStart(() =>{
 					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
 					status.Message = "Backing up GAM file";
 					File.Copy(Path.Combine("Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
@@ -117,8 +116,8 @@ namespace FrEee.WinForms.Forms
 					status.Message = "Patching mod";
 					Galaxy.Current.Mod.Patch(mod);
 					status.Progress = 1d;
-				}, status);
-				this.ShowChildForm(statusForm);
+				}));
+				this.ShowChildForm(new StatusForm(t, status));
 			}
 		}
 
