@@ -82,5 +82,10 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public string ModID { get; set; }
+
+		public void Dispose()
+		{
+			// nothing to do
+		}
 	}
 }

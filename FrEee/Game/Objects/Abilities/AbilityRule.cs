@@ -205,5 +205,10 @@ namespace FrEee.Game.Objects.Abilities
 			get;
 			set;
 		}
+
+		public void Dispose()
+		{
+			// nothing to do
+		}
 	}
 }

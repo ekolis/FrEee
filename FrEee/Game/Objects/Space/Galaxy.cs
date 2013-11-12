@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Space
 		#region Properties
 
 		/// <summary>
-		/// The current galaxy. Shouldn't change except at loading a game or turn processing.
+		/// The current galaxy. Shouldn't change except at loading a game, turn proecssing, or mod patching.
 		/// </summary>
 		public static Galaxy Current { get; private set; }
 
@@ -1029,7 +1029,7 @@ namespace FrEee.Game.Objects.Space
 			return referrables[key];
 		}
 
-		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
+		public IEnumerable<IReferrable> Referrables { get { return referrables.Values.Distinct(); } }
 
 		/// <summary>
 		/// Assigns an ID to an object.
@@ -1170,13 +1170,14 @@ namespace FrEee.Game.Objects.Space
 				NextTickSize = double.PositiveInfinity;
 		}
 
-		#endregion
-
 		public IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp)
 		{
 			return StarSystemLocations.Select(ssl => ssl.Item).Concat(StarSystemLocations.SelectMany(ssl => ssl.Item.GetContainedAbilityObjects(emp)));
 		}
 
+		#endregion
+
+		
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 	}
 }

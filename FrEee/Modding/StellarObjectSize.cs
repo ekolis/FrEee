@@ -96,5 +96,10 @@ namespace FrEee.Modding
 			get;
 			set;
 		}
+
+		public void Dispose()
+		{
+			// nothing to do
+		}
 	}
 }
