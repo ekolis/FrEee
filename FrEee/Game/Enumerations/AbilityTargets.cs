@@ -49,6 +49,7 @@ namespace FrEee.Game.Enumerations
 		// compound types
 		StellarObject = AsteroidField | Planet | Star | Storm | WarpPoint,
 		SpaceVehicle = Base | Drone | Fighter | Mine | Satellite | Ship,
+		GroundVehicle = WeaponPlatform | Troop,
 		Unit = Drone | Fighter | Mine | Satellite | Troop | WeaponPlatform,
 		Vehicle = Ship | Base | Unit,
 		SpaceObject = StellarObject | SpaceVehicle,
