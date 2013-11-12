@@ -85,6 +85,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return AbilityTargets.WeaponPlatform; }
 		}
 
+		[DoNotSerialize]
 		public override Sector Sector
 		{
 			get { return Container == null ? null : Container.Sector; }
