@@ -36,6 +36,7 @@ namespace FrEee.Game.Objects.Space
 			referrables = new Dictionary<long, IReferrable>();
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
+			SharedAbilityCache = new SafeDictionary<Tuple<ISharedAbilityObject, Empire>, IEnumerable<Ability>>();
 		}
 
 		public Galaxy(Mod mod)
@@ -1177,7 +1178,8 @@ namespace FrEee.Game.Objects.Space
 
 		#endregion
 
-		
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
+
+		internal SafeDictionary<Tuple<ISharedAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 	}
 }

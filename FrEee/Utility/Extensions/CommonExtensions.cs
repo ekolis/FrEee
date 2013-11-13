@@ -213,13 +213,16 @@ namespace FrEee.Utility.Extensions
 		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, object stackTo)
 		{
 			var stacked = new List<Tuple<Ability, Ability>>();
-			foreach (var rule in Mod.Current.AbilityRules)
+			if (abilities.Any())
 			{
-				var lookup = rule.GroupAndStack(abilities, stackTo);
-				foreach (var group in lookup)
+				foreach (var rule in Mod.Current.AbilityRules)
 				{
-					foreach (var abil in group)
-						stacked.Add(Tuple.Create(group.Key, abil));
+					var lookup = rule.GroupAndStack(abilities, stackTo);
+					foreach (var group in lookup)
+					{
+						foreach (var abil in group)
+							stacked.Add(Tuple.Create(group.Key, abil));
+					}
 				}
 			}
 			foreach (var abil in abilities.Where(a => !Mod.Current.AbilityRules.Any(r => r == a.Rule)))
@@ -839,6 +842,19 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
+			if (filter == null && Empire.Current != null)
+			{
+				// use the cache
+				var cached = Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)];
+				if (cached != null)
+				{
+					if (cached.Any())
+						return cached.First().Values[index - 1];
+					else
+						return null;
+				}
+			}
+
 			IEnumerable<Ability> abils;
 			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
 			if (obj is IAbilityObject)
@@ -846,9 +862,17 @@ namespace FrEee.Utility.Extensions
 			else
 				abils = subabils;
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
+			string result;
 			if (!abils.Any())
-				return null;
-			return abils.First().Values[index - 1];
+				result = null;
+			else
+				result = abils.First().Values[index - 1];
+
+			// cache abilities if we can
+			if (filter == null && Empire.Current != null)
+				Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
+
+			return result;
 		}
 
 		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
