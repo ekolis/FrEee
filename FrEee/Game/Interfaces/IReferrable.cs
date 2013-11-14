@@ -13,5 +13,7 @@ namespace FrEee.Game.Interfaces
 	public interface IReferrable : IDisposable, IOwnable
 	{
 		long ID { get; set; }
+
+		bool IsDisposed { get; set; }
 	}
 }

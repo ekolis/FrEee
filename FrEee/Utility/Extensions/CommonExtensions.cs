@@ -100,23 +100,9 @@ namespace FrEee.Utility.Extensions
 		{
 			if (src.GetType() != dest.GetType())
 				throw new Exception("Can only copy objects onto objects of the same type.");
-			var type = src.GetType();
-			if (!mappedTypes.Contains(type))
-			{
-				mappedTypes.Add(type);
-				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
-				var map = creator.Invoke(null, new object[0]);
-				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[] { map });
-				var ignorer2 = typeof(CommonExtensions).GetMethod("IgnoreIDProperty", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer2.Invoke(null, new object[] { map });
-				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
-				var actionType = typeof(Action<,>).MakeGenericType(type, type);
-				afterMap.Invoke(map, new object[]{
-					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
-				});
-			}
-			Mapper.Map(src, dest, type, type);
+			var id = dest.ID;
+			src.CopyTo(dest);
+			dest.ID = id;
 		}
 
 		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
@@ -858,7 +844,7 @@ namespace FrEee.Utility.Extensions
 			IEnumerable<Ability> abils;
 			var subabils = obj.GetContainedAbilityObjects(emp).SelectMany(o => o.UnstackedAbilities().Where(a => a.Rule.Name == name));
 			if (obj is IAbilityObject)
-				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule.Name == name).Concat(subabils).Stack(obj);
+				abils = ((IAbilityObject)obj).Abilities().Where(a => a.Rule != null && a.Rule.Name == name).Concat(subabils).Stack(obj);
 			else
 				abils = subabils;
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
@@ -2118,7 +2104,8 @@ namespace FrEee.Utility.Extensions
 			{
 				// delete item that was deleted
 				old.Remove(item);
-				item.Dispose();
+				if (item is IReferrable)
+					((IReferrable)item).Dispose();
 			}
 			foreach (var item in nu)
 			{
@@ -2131,8 +2118,15 @@ namespace FrEee.Utility.Extensions
 				else
 				{
 					// patch item and delete the patch
-					item.CopyTo(oldItem);
-					item.Dispose();
+					if (item is IReferrable)
+					{
+						var r = (IReferrable)item;
+						var r2 = (IReferrable)oldItem;
+						r.CopyToExceptID(r2);
+						r.Dispose();
+					}
+					else
+						item.CopyTo(oldItem);
 				}
 			}
 		}

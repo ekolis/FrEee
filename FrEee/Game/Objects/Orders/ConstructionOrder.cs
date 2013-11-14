@@ -79,7 +79,10 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Dispose()
 		{
-			// TODO - remove from queue, but we don't know which object we're on...
+			if (IsDisposed)
+				return;
+			foreach (var q in Galaxy.Current.Referrables.OfType<ConstructionQueue>())
+				q.Orders.Remove(this);
 			Galaxy.Current.UnassignID(this);
 		}
 
@@ -153,5 +156,7 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return Template.Cost; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

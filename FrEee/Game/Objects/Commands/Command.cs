@@ -54,5 +54,7 @@ namespace FrEee.Game.Objects.Commands
 				yield break;
 			}
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

@@ -521,6 +521,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
 			if (Galaxy.Current.Empires.Contains(this))
 				Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
@@ -844,5 +846,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return null; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

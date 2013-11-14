@@ -474,7 +474,11 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
+			foreach (var emp in Galaxy.Current.Empires)
+				emp.KnownDesigns.Remove(this);
 		}
 
 		public Design<T> Copy()
@@ -586,5 +590,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			return Name;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

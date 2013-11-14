@@ -116,6 +116,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
 		}
 

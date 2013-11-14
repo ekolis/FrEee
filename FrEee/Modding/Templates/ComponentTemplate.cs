@@ -187,7 +187,10 @@ namespace FrEee.Modding.Templates
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
+			Mod.Current.ComponentTemplates.Remove(this);
 		}
 
 		/// <summary>
@@ -259,5 +262,7 @@ namespace FrEee.Modding.Templates
 			get;
 			set;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

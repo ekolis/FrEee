@@ -48,7 +48,10 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Dispose()
 		{
-			// TODO - remove from queue, but we don't know which object we're on...
+			if (IsDisposed)
+				return;
+			foreach (var v in Galaxy.Current.Referrables.OfType<SpaceVehicle>())
+				v.Orders.Remove(this);
 			Galaxy.Current.UnassignID(this);
 		}
 
@@ -89,5 +92,7 @@ namespace FrEee.Game.Objects.Orders
 			// this order doesn't error
 			yield break;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

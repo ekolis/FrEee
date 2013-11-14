@@ -36,6 +36,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
 			var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
 			if (cmd != null)
@@ -118,5 +120,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public abstract void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null);
 
 		public IMessage InReplyTo { get; set; }
+
+		public bool IsDisposed { get; set; }
 	}
 }

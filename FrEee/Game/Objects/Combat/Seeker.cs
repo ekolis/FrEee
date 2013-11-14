@@ -235,6 +235,8 @@ namespace FrEee.Game.Objects.Combat
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Target = null;
 			Owner = null;
 		}
@@ -319,5 +321,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get { return MaxHitpoints; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

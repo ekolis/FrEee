@@ -1030,16 +1030,24 @@ namespace FrEee.Game.Objects.Space
 			return referrables[key];
 		}
 
-		public IEnumerable<IReferrable> Referrables { get { return referrables.Values.Distinct(); } }
+		public IEnumerable<IReferrable> Referrables { get { return referrables.Values; } }
 
 		/// <summary>
 		/// Assigns an ID to an object.
+		/// Will dispose of an object that has a negative ID if it hasn't already been disposed of.
 		/// </summary>
 		/// <param name="r">The object.</param>
 		/// <param name="id">The ID, or 0 to generate a new ID.</param>
 		/// <returns>The new ID.</returns>
 		public long AssignID(IReferrable r, long id = 0)
 		{
+			if (r.ID < 0)
+			{
+				if (!r.IsDisposed)
+					r.Dispose();
+				return r.ID;
+			}
+
 			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
 				return r.ID; // no need to reassign ID
 
@@ -1074,7 +1082,7 @@ namespace FrEee.Game.Objects.Space
 			if (referrables.ContainsKey(id))
 			{
 				var r = referrables[id];
-				r.ID = 0;
+				r.ID = -1;
 				referrables.Remove(id);
 			}
 		}
@@ -1084,16 +1092,18 @@ namespace FrEee.Game.Objects.Space
 			if (r != null && referrables.ContainsKey(r.ID))
 			{
 				if (referrables[r.ID] == r)
-				{
-					r.ID = 0;
 					referrables.Remove(r.ID);
-				}
 				else
 				{
-					r.ID = 0;
 					var galaxyThinksTheIDIs = referrables.SingleOrDefault(kvp => kvp.Value == r);
 					referrables.Remove(galaxyThinksTheIDIs);
 				}
+			}
+			if (r != null)
+			{
+				r.ID = -1;
+				r.IsDisposed = true;
+				r.Dispose();
 			}
 		}
 
