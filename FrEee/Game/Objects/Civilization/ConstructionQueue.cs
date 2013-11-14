@@ -340,6 +340,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
 		}
@@ -457,5 +459,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

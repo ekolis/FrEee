@@ -20,8 +20,6 @@ namespace FrEee.Game.Interfaces
 		void SpendTime(double timeElapsed);
 		new Sector Sector { get; set; }
 
-		void AddOrder(IOrder order);
-
 		/// <summary>
 		/// The tonnage of the object, in kT, or null if it's a planet.
 		/// </summary>

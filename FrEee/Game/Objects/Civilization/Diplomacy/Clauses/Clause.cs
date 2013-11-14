@@ -100,6 +100,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
 			IsInEffect = false;
 		}
@@ -113,5 +115,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		{
 			// nothing to do here...
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

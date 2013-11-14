@@ -215,7 +215,10 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
+			Mod.Current.Hulls.Remove(this);
 		}
 
 		public bool CanUseMount(Mount m)
@@ -311,5 +314,7 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public string ModID { get; set; }
+
+		public bool IsDisposed { get; set; }
 	}
 }

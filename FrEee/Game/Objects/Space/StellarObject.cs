@@ -89,6 +89,8 @@ namespace FrEee.Game.Objects.Space
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
@@ -228,5 +230,7 @@ namespace FrEee.Game.Objects.Space
 			get;
 			set;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

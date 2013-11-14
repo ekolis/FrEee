@@ -179,6 +179,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);

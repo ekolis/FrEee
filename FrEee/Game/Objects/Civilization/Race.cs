@@ -109,6 +109,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
 		}
 
@@ -193,5 +195,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return null; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

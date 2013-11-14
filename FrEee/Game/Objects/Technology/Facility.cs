@@ -222,8 +222,13 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			if (Container != null)
+			{
 				Container.Colony.Facilities.Remove(this);
+				Container.Colony.UpdateEmpireMemories();
+			}
 		}
 
 		// TODO - dynamic formula evaluation
@@ -294,5 +299,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Container; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

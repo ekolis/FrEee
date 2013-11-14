@@ -151,7 +151,10 @@ namespace FrEee.Game.Objects.Technology
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
+			Mod.Current.FacilityTemplates.Remove(this);
 		}
 
 		/// <summary>
@@ -224,5 +227,7 @@ namespace FrEee.Game.Objects.Technology
 			get;
 			set;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

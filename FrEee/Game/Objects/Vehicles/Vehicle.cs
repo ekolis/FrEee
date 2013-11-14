@@ -253,7 +253,10 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public virtual void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Galaxy.Current.UnassignID(this);
+			this.UpdateEmpireMemories();
 		}
 
 		[DoNotSerialize]
@@ -415,5 +418,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Design; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

@@ -98,6 +98,8 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			if (Container != null)
 				Container.Colony = null;
 			Galaxy.Current.UnassignID(this);
@@ -148,5 +150,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Container; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

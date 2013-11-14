@@ -259,6 +259,8 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Dispose()
 		{
+			if (IsDisposed)
+				return;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 			this.UpdateEmpireMemories();
@@ -721,5 +723,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return Owner; }
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }
