@@ -10,6 +10,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using FrEee.Modding;
 
 namespace FrEee.WinForms
 {
@@ -22,6 +23,7 @@ namespace FrEee.WinForms
 		/// 1 for syntax error in command line
 		/// 2 for missing GAM or PLR file specified to load
 		/// 3 for crash
+		/// 4 for missing mod to load when patching
 		/// 1xxx for missing PLR file for player xxx when running in "safe processing" mode
 		/// </summary>
 		[STAThread]
@@ -30,9 +32,13 @@ namespace FrEee.WinForms
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			var stdout = File.OpenWrite("stdout.txt");
-			Console.SetOut(new StreamWriter(stdout));
+			var swOut = new StreamWriter(stdout);
+			swOut.AutoFlush = true;
+			Console.SetOut(swOut);
 			var stderr = File.OpenWrite("stderr.txt");
-			Console.SetError(new StreamWriter(stderr));
+			var swErr = new StreamWriter(stderr);
+			swErr.AutoFlush = true;
+			Console.SetError(swErr);
 			if (args.Length == 0)
 			{
 				Application.Run(MainMenuForm.GetInstance());
@@ -57,6 +63,13 @@ namespace FrEee.WinForms
 				var file = args[1];
 				return ProcessArgs(file, operation.TrimStart('-').ToLower());
 			}
+			else if (args.Length == 3)
+			{
+				var operation = args[0];
+				var file = args[1];
+				var extra = args[2];
+				return ProcessArgs(file, operation.TrimStart('-').ToLower(), extra);
+			}
 			else
 			{
 				return DisplaySyntax();
@@ -76,6 +89,7 @@ FrEee --host gamename_turnnumber.gam: load host console
 	Shortcut: FrEee gamename_turnnumber.gam
 FrEee --process gamename_turnnumber.gam: process turn
 FrEee --process-safe gamename_turnnumber.gam: process turn, halting if any plr files are missing
+FrEee --patch gamename_turnnumber.gam modfolder: patch mod (use """" for the stock mod)
 
 FrEee --play gamename_turnnumber_playernumber.gam: play a turn, resuming from where you left off if a plr file is present
 	Shortcut: FrEee gamename_turnnumber_playernumber.gam
@@ -86,7 +100,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 			return 1;
 		}
 
-		private static int ProcessArgs(string file, string operation = null)
+		private static int ProcessArgs(string file, string operation = null, string extraArg = null)
 		{
 			string gamfile = null, plrfile = null;
 
@@ -133,6 +147,8 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					return ProcessTurn(false);
 				else if (operation == "process-safe")
 					return ProcessTurn(true);
+				else if (operation == "patch")
+					return PatchMod(extraArg);
 				else
 					return DisplaySyntax();
 			}
@@ -192,6 +208,44 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				Galaxy.SaveAll();
 				Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
 				Application.Exit();
+				return 0;
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine("Exception occurred (" + ex.Message + "): check errorlog.txt for details.");
+				ex.Log();
+				return 3;
+			}
+		}
+
+		private static int PatchMod(string modFolder)
+		{
+			if (modFolder == null)
+				return DisplaySyntax();
+			Mod mod;
+			try
+			{
+				Console.WriteLine("Loading mod...");
+				if (modFolder == "")
+				{
+					// use stock mod
+					mod = Mod.Load(null, false);
+				}
+				else
+				{
+					// use custom mod
+					if (!Directory.Exists(Path.Combine("Mods", modFolder)))
+					{
+						Console.Error.WriteLine("Mod folder " + modFolder + " does not exist in " + Path.GetFullPath("Mods") + ".");
+						return 4;
+					}
+					mod = Mod.Load(modFolder, false);
+				}
+				Console.WriteLine("Patching mod...");
+				Galaxy.Current.Mod.Patch(mod);
+				Console.WriteLine("Saving game...");
+				Galaxy.SaveAll();
+				Console.WriteLine("Done.");
 				return 0;
 			}
 			catch (Exception ex)
