@@ -550,6 +550,7 @@ namespace FrEee.Game.Setup
 						!p.Size.IsConstructed).PickRandom();
 			if (hw == null)
 				throw new Exception("No planets found in SectType.txt with surface " + emp.PrimaryRace.NativeSurface + ", atmosphere " + emp.PrimaryRace.NativeAtmosphere + ", and size " + HomeworldSize + ". Such a planet is required for creating the " + emp + " homeworld.");
+			hw = hw.Instantiate();
 			hw.Name = hwName;
 			hw.Size = Mod.Current.StellarObjectSizes.Where(s =>
 				s.StellarSize == HomeworldSize &&
