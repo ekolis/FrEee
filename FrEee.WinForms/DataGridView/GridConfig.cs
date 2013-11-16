@@ -21,10 +21,5 @@ namespace FrEee.WinForms.DataGridView
 		public string Name { get; set; }
 
 		public IList<GridColumnConfig> Columns { get; private set; }
-
-		public void AddColumn(string propertyName, string headerText, Type columnType, Color foreColor, Sort sort = Sort.None, int sortPriority = 0)
-		{
-			Columns.Add(new GridColumnConfig(propertyName, headerText, columnType, foreColor, sort, sortPriority));
-		}
 	}
 }

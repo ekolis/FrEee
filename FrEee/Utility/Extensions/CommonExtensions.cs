@@ -298,14 +298,60 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Adds SI prefixes to a value and rounds it off.
+		/// e.g. 25000 becomes 25.00k
+		/// </summary>
+		/// <param name="value"></param>
+		public static string ToUnitString(this double value, bool bForBillions = false, int sigfigs = 4)
+		{
+			if (Math.Abs(value) >= 1e12 * Math.Pow(10, sigfigs - 3))
+			{
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e12));
+				var decimals = sigfigs - 1 - log;
+				return (value / 1e12).ToString("f" + decimals) + "T";
+			}
+			if (Math.Abs(value) >= 1e9 * Math.Pow(10, sigfigs - 3))
+			{
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e9));
+				var decimals = sigfigs - 1 - log;
+				return (value / 1e9).ToString("f" + decimals) + (bForBillions ? "B" : "G");
+			}
+			if (Math.Abs(value) >= 1e6 * Math.Pow(10, sigfigs - 3))
+			{
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e6));
+				var decimals = sigfigs - 1 - log;
+				return (value / 1e6).ToString("f" + decimals) + "M";
+			}
+			if (Math.Abs(value) >= 1e3 * Math.Pow(10, sigfigs - 3))
+			{
+				var log = (int)Math.Floor(Math.Log10(Math.Abs(value) / 1e3));
+				var decimals = sigfigs - 1 - log;
+				return (value / 1e3).ToString("f" + decimals) + "k";
+			}
+			return value.ToString();
+		}
+
+		/// <summary>
+		/// Adds SI prefixes to a value and rounds it off.
+		/// e.g. 25000 becomes 25.00k
+		/// </summary>
+		/// <param name="value"></param>
+		public static string ToUnitString(this double? value, bool bForBillions = false, int sigfigs = 4, string undefinedValue = "Undefined")
+		{
+			if (value == null)
+				return undefinedValue;
+			return value.Value.ToUnitString(bForBillions, sigfigs);
+		}
+
+		/// <summary>
 		/// Displays a number in kT, MT, etc.
 		/// </summary>
 		/// <param name="value"></param>
 		/// <returns></returns>
-		public static string Kilotons(this long? value)
+		public static string Kilotons(this long? value, string undefinedValue = "Undefined")
 		{
 			if (value == null)
-				return "Undefined";
+				return undefinedValue;
 			return value.Value.Kilotons();
 		}
 
@@ -341,6 +387,28 @@ namespace FrEee.Utility.Extensions
 		public static string Kilotons(this int value)
 		{
 			return ((long)value).Kilotons();
+		}
+
+		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Kilotons(this double? value, string undefinedValue = "Undefined")
+		{
+			if (value == null)
+				return undefinedValue;
+			return value.Value.Kilotons();
+		}
+
+		/// <summary>
+		/// Displays a number in kT, MT, etc.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <returns></returns>
+		public static string Kilotons(this double value)
+		{
+			return (value * 1000).ToUnitString() + "T";
 		}
 
 		/// <summary>
@@ -1230,13 +1298,17 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Gets a property value from an object using reflection.
+		/// If the property does not exist, returns null.
 		/// </summary>
 		/// <param name="o"></param>
 		/// <param name="propertyName"></param>
 		/// <returns></returns>
 		public static object GetPropertyValue(this object o, string propertyName)
 		{
-			return o.GetType().GetProperty(propertyName).GetValue(o, new object[0]);
+			var prop =  o.GetType().GetProperty(propertyName);
+			if (prop == null)
+				return null;
+			return prop.GetValue(o, new object[0]);
 		}
 
 		/// <summary>

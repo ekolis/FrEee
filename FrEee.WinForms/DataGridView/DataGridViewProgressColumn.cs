@@ -16,6 +16,7 @@ namespace FrEee.WinForms.DataGridView
 		public DataGridViewProgressColumn()
 		{
 			CellTemplate = new DataGridViewProgressCell();
+			MinimumWidth = 100;
 		}
 
 		private Color barColor;

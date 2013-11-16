@@ -21,8 +21,8 @@ namespace FrEee.WinForms.Controls
 			Invalidate();
 		}
 
-		private int value = 0;
-		public int Value
+		private long value = 0;
+		public long Value
 		{
 			get { return value; }
 			set
@@ -32,8 +32,8 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private int maximum = 100;
-		public int Maximum
+		private long maximum = 100;
+		public long Maximum
 		{
 			get { return maximum; }
 			set
@@ -43,8 +43,8 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
-		private int incrementalProgress = 0;
-		public int IncrementalProgress
+		private long incrementalProgress = 0;
+		public long IncrementalProgress
 		{
 			get { return incrementalProgress; }
 			set

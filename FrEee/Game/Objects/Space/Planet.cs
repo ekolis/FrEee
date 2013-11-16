@@ -223,6 +223,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				// TODO - abilities that modify max pop
 				if (IsDomed)
 					return Size.MaxPopulationDomed;
 				return Size.MaxPopulation;
@@ -233,6 +234,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
+				// TODO - cargo facilities and such
 				if (IsDomed)
 					return Size.MaxCargoDomed;
 				return Size.MaxCargo;
@@ -886,5 +888,22 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return Owner; }
 		}
+
+		public Progress PopulationFill
+		{
+			get
+			{
+				var pop = 0L;
+				if (Colony != null)
+					pop = Colony.Population.Sum(kvp => kvp.Value);
+				return new Progress(pop, MaxPopulation);
+			}
+		}
+
+		public int MineralsIncome { get { return Income[Resource.Minerals]; } }
+		public int OrganicsIncome { get { return Income[Resource.Organics]; } }
+		public int RadioactivesIncome { get { return Income[Resource.Radioactives]; } }
+		public int ResearchIncome { get { return Income[Resource.Research]; } }
+		public int IntelligenceIncome { get { return Income[Resource.Intelligence]; } }
 	}
 }

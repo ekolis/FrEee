@@ -5,6 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using FrEee.Utility;
+using AutoMapper;
 
 namespace FrEee.WinForms.DataGridView
 {
@@ -15,12 +16,13 @@ namespace FrEee.WinForms.DataGridView
 	public class GridColumnConfig
 	{
 		// TODO - filtering
-		public GridColumnConfig(string propertyName, string headerText, Type columnType, Color foreColor, Sort sort = Sort.None, int sortPriority = 0)
+		public GridColumnConfig(string propertyName, string headerText, Type columnType, Color foreColor, Format format = Format.Raw, Sort sort = Sort.None, int sortPriority = 0)
 		{
 			PropertyName = propertyName;
 			HeaderText = headerText;
 			ColumnType = columnType;
 			ForeColor = foreColor;
+			Format = format;
 			Sort = sort;
 			SortPriority = sortPriority;
 		}
@@ -35,12 +37,13 @@ namespace FrEee.WinForms.DataGridView
 		/// </summary>
 		public string HeaderText { get; set; }
 
-		private string columnTypeName { get; set; }
+		public string columnTypeName { get; set; }
 
 		/// <summary>
 		/// The type of data grid view column to use.
 		/// </summary>
 		[DoNotSerialize]
+		[IgnoreMap]
 		public Type ColumnType
 		{
 			get { return Type.GetType(columnTypeName); }
@@ -56,6 +59,11 @@ namespace FrEee.WinForms.DataGridView
 		/// The color to display text in.
 		/// </summary>
 		public Color ForeColor { get; set; }
+
+		/// <summary>
+		/// Format for the column.
+		/// </summary>
+		public Format Format { get; set; }
 
 		/// <summary>
 		/// How to sort the data.
