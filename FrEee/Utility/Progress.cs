@@ -11,7 +11,7 @@ namespace FrEee.Utility
 	/// </summary>
 	public class Progress
 	{
-		public Progress(int value, int maximum, int incrementalProgressBeforeDelay = 0, double? delay = null, int extraIncrementalProgressAfterDelay = 0)
+		public Progress(long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = null, long extraIncrementalProgressAfterDelay = 0)
 		{
 			Value = value;
 			Maximum = maximum;
@@ -20,11 +20,11 @@ namespace FrEee.Utility
 			ExtraIncrementalProgressAfterDelay = extraIncrementalProgressAfterDelay;
 		}
 
-		public int Value { get; set; }
-		public int Maximum { get; set; }
-		public int IncrementalProgressBeforeDelay { get; set; }
+		public long Value { get; set; }
+		public long Maximum { get; set; }
+		public long IncrementalProgressBeforeDelay { get; set; }
 		public double? Delay { get; set; }
-		public int ExtraIncrementalProgressAfterDelay { get; set; }
+		public long ExtraIncrementalProgressAfterDelay { get; set; }
 
 		/// <summary>
 		/// Estimated time to completion (null for never).
@@ -77,7 +77,7 @@ namespace FrEee.Utility
 	/// <typeparam name="T"></typeparam>
 	public class Progress<T> : Progress
 	{
-		public Progress(T item, int value, int maximum, int incrementalProgressBeforeDelay = 0, double? delay = 0, int extraIncrementalProgressAfterDelay = 0)
+		public Progress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)
 			: base(value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)
 		{
 			Item = item;

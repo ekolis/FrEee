@@ -95,8 +95,8 @@ namespace FrEee.WinForms.Forms
                 txtTechDiscription.Text = curTech.Description; 
 				var spent = allTechs.Sum(t => t.Spending.Value);
 				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
-				sldSpending.Maximum = 100 - spent + curTech.Spending.Value;
-				sldSpending.Value = curTech.Spending.Value;
+				sldSpending.Maximum = (int)(100 - spent + curTech.Spending.Value);
+				sldSpending.Value = (int)curTech.Spending.Value;
 				sldSpending.Enabled = true;
 				if (curTech.Progress.Eta == null)
 					lblResults.Text = "Expected Results (never)";

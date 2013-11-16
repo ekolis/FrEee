@@ -123,6 +123,7 @@
     <Compile Include="Controls\ResourceQuantityDisplay.Designer.cs">
       <DependentUpon>ResourceQuantityDisplay.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridView\Format.cs" />
     <Compile Include="Forms\CultureComparisonForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -161,16 +161,19 @@ namespace FrEee.WinForms.Forms
 				if (col.Sort == Sort.Ascending)
 				{
 					sortedPlanets = sortedPlanets.ThenBy(p => p.GetPropertyValue(col.PropertyName));
-					gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				else if (col.Sort == Sort.Descending)
 				{
 					sortedPlanets = sortedPlanets.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
-					gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				}
 				else
 				{
-					gridCol.HeaderCell.SortGlyphDirection = SortOrder.None;
+					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.None;
 				}
 			}
 
@@ -204,6 +207,8 @@ namespace FrEee.WinForms.Forms
 		private void gridPlanets_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
 			var prop = typeof(Planet).GetProperty(gridPlanets.Columns[e.ColumnIndex].DataPropertyName);
+			if (prop == null)
+				return; // no such data property to sort by
 			if (typeof(IComparable).IsAssignableFrom(prop.PropertyType))
 			{
 				var col = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Single(c => c.PropertyName == prop.Name);
@@ -259,6 +264,57 @@ namespace FrEee.WinForms.Forms
 		{
 			ClientSettings.Instance.CurrentPlanetListConfig.Name = txtConfigName.Text;
 			BindTabs();
+		}
+
+		private void btnColumns_Click(object sender, EventArgs e)
+		{
+			// TODO - edit columns
+		}
+
+		private void btnReset_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Reset all grid configurations to default?", "Confirm Reset", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				// TODO - reset only the planet list configs
+				ClientSettings.Initialize();
+				BindTabs();
+				BindGrid(true);
+			}
+		}
+
+		private void gridPlanets_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			var col = ClientSettings.Instance.CurrentPlanetListConfig.Columns[e.ColumnIndex];
+			switch (col.Format)
+			{
+				case Format.Units:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).ToUnitString();
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).ToUnitString();
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).ToUnitString();
+					e.FormattingApplied = true;
+					break;
+				case Format.UnitsBForBillions:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).ToUnitString(true);
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).ToUnitString(true);
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).ToUnitString(true);
+					e.FormattingApplied = true;
+					break;
+				case Format.Kilotons:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).Kilotons();
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).Kilotons();
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).Kilotons();
+					e.FormattingApplied = true;
+					break;
+			}
 		}
 	}
 }
