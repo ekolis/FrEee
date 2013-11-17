@@ -14,6 +14,7 @@ using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Properties;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Objects;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -83,7 +84,7 @@ namespace FrEee.WinForms.Forms
 
 			// show galaxy view background
 			// TODO - galaxy view background image can depend on galaxy template?
-			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
+			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Map", "quadrant"));
 		}
 
 		private void BindTabs()

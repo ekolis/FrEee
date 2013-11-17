@@ -12,6 +12,7 @@ using System.IO;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -45,7 +46,7 @@ namespace FrEee.WinForms.Forms
 				if (info.Folder == null)
 					img = Pictures.GetCachedImage("MODICON");
 				else
-					img = Pictures.GetCachedImage(Path.Combine("Mods", info.Folder, "MODICON"));
+					img = Pictures.GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", info.Folder, "MODICON"));
 				lstMods.AddItemWithImage(null, info.Name, info, img);
 			}
 

@@ -10,6 +10,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
+using System.Reflection;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -58,7 +59,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (BackgroundImagePath == null)
 					return null;
-				return Pictures.GetCachedImage(Path.Combine("Pictures", "Systems", BackgroundImagePath));
+				return Pictures.GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Systems", BackgroundImagePath));
 			}
 		}
 

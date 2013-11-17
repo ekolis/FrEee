@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace FrEee.Modding.Loaders
@@ -22,31 +23,31 @@ namespace FrEee.Modding.Loaders
 			{
 				var name = "Global";
 				string filename;
-				string stockFilename = filename = Path.Combine("Scripts", name);
+				string stockFilename = filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Scripts", name);
 				if (ModPath == null)
 					filename = stockFilename;
 				else
-					filename = Path.Combine(ModPath, "Scripts", name);
+					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ModPath, "Scripts", name);
 				mod.GlobalScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
 			}
 			{
 				var name = "GameInit";
 				string filename;
-				string stockFilename = filename = Path.Combine("Scripts", name);
+				string stockFilename = filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Scripts", name);
 				if (ModPath == null)
 					filename = stockFilename;
 				else
-					filename = Path.Combine(ModPath, "Scripts", name);
+					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ModPath, "Scripts", name);
 				mod.GameInitScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
 			}
 			{
 				var name = "EndTurn";
 				string filename;
-				string stockFilename = filename = Path.Combine("Scripts", name);
+				string stockFilename = filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Scripts", name);
 				if (ModPath == null)
 					filename = stockFilename;
 				else
-					filename = Path.Combine(ModPath, "Scripts", name);
+					filename = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ModPath, "Scripts", name);
 				mod.EndTurnScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
 			}
 		}

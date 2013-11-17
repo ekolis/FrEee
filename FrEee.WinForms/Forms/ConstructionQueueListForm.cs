@@ -12,6 +12,7 @@ using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System.IO;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -28,7 +29,7 @@ namespace FrEee.WinForms.Forms
 			RateRadioactives.DefaultCellStyle.ForeColor = Resource.Radioactives.Color;
 
 			// TODO - galaxy view background image can depend on galaxy template?
-			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
+			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Map", "quadrant"));
 		}
 
 		private void BindQueueList()

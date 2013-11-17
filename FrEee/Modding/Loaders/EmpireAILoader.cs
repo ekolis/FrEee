@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.AI;
+using System.Reflection;
 
 namespace FrEee.Modding.Loaders
 {
@@ -25,9 +26,9 @@ namespace FrEee.Modding.Loaders
 		{
 			string empsFolder;
 			if (ModPath == null)
-				empsFolder = Path.Combine("Pictures", "Races");
+				empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races");
 			else
-				empsFolder = Path.Combine(ModPath, "Pictures", "Races");
+				empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ModPath, "Pictures", "Races");
 			if (Directory.Exists(empsFolder))
 			{
 				foreach (var empFolder in Directory.GetDirectories(empsFolder))

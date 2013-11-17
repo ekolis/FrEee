@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace FrEee.Modding.Loaders
@@ -23,9 +24,9 @@ namespace FrEee.Modding.Loaders
 			var dest = DestinationGetter(mod);
 			string filepath;
 			if (ModPath == null)
-				filepath = Path.Combine("Data", FileName);
+				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data", FileName);
 			else
-				filepath = Path.Combine("Mods", ModPath, "Data", FileName);
+				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", ModPath, "Data", FileName);
 			if (File.Exists(filepath))
 			{
 				foreach (var s in File.ReadAllLines(filepath))
@@ -33,7 +34,7 @@ namespace FrEee.Modding.Loaders
 			}
 			else if (ModPath != null)
 			{
-				filepath = Path.Combine("Data", FileName);
+				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data", FileName);
 				if (File.Exists(filepath))
 				{
 					foreach (var s in File.ReadAllLines(filepath))

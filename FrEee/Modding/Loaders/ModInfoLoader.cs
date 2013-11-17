@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace FrEee.Modding.Loaders
@@ -27,7 +28,7 @@ namespace FrEee.Modding.Loaders
 			if (ModPath == null)
 				filepath = FileName;
 			else
-				filepath = Path.Combine("Mods", ModPath, FileName);
+				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", ModPath, FileName);
 			if (!File.Exists(filepath))
 			{
 				mod.Info.Name = ModPath ?? "Stock";
