@@ -362,9 +362,9 @@ namespace FrEee.Game.Objects.Space
 				filename = Name + "_" + TurnNumber + ".gam";
 			else
 				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
-			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
-				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
-			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
+			if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory)))
+				Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
+			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
 			Serializer.Serialize(this, fs);
 			fs.Close();
 			return filename;
@@ -433,7 +433,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="filename"></param>
 		public static void Load(string filename)
 		{
-			var fs = new FileStream(Path.Combine(FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
+			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
 			Load(fs);
 			fs.Close();
 		}
@@ -564,12 +564,12 @@ namespace FrEee.Game.Objects.Space
 
 		public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-			return Path.Combine("Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
 		}
 
 		public static string GetGameSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-			return Path.Combine("Savegame", empireNumber < 1 ?
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", empireNumber < 1 ?
 				String.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
 				String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
 		}

@@ -22,6 +22,7 @@ using FrEee.Game.Objects.Combat;
 using System.Threading;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -67,7 +68,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnNextIdle, "Next");
 
 			// TODO - galaxy view background image can depend on galaxy template?
-			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "quadrant"));
+			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Map", "quadrant"));
 
 			// set up GUI bindings to galaxy
 			SetUpGui();
@@ -1239,7 +1240,7 @@ namespace FrEee.WinForms.Forms
 
 		private void LoadButtonImage(Button btn, string picName)
 		{
-			var pic = Pictures.GetModImage(Path.Combine("Pictures", "UI", "Buttons", picName));
+			var pic = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Buttons", picName));
 			if (pic != null)
 			{
 				btn.Text = "";

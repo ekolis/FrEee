@@ -234,7 +234,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				else
 				{
 					// use custom mod
-					if (!Directory.Exists(Path.Combine("Mods", modFolder)))
+					if (!Directory.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", modFolder)))
 					{
 						Console.Error.WriteLine("Mod folder " + modFolder + " does not exist in " + Path.GetFullPath("Mods") + ".");
 						return 4;

@@ -10,6 +10,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -111,7 +112,7 @@ namespace FrEee.WinForms.Forms
 				var t = new Thread(new ThreadStart(() =>{
 					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
 					status.Message = "Backing up GAM file";
-					File.Copy(Path.Combine("Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
+					File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
 					status.Progress = 0.75;
 					status.Message = "Patching mod";
 					Galaxy.Current.Mod.Patch(mod);

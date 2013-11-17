@@ -46,7 +46,7 @@ namespace FrEee.Modding
 				{
 					var externalScript = Script.Load(externalScriptPath);
 					if (externalScript == null)
-						throw new ScriptException("Cannot find script file: " + Path.Combine(Directory.GetCurrentDirectory(), externalScriptPath + ".py"));
+						throw new ScriptException("Cannot find script file: " + Path.GetFullPath(externalScriptPath + ".py"));
 					externalScripts.Add(externalScript);
 				}
 			}

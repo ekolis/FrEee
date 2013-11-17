@@ -64,7 +64,7 @@ namespace FrEee.WinForms.Forms
 						Mod.Load(null, true, status, 0.5);
 					}
 					status.Message = "Setting up game";
-					var setup = GameSetup.Load(Path.Combine("GameSetups", "Quickstart.gsu"));
+					var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
 					warnings = setup.Warnings.ToArray();
 					if (warnings.Any())
 						MessageBox.Show(warnings.First(), "Game Setup Error");
@@ -196,7 +196,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnResume_Click(object sender, EventArgs e)
 		{
-			var mostRecent = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "Savegame"))
+			var mostRecent = Directory.GetFiles(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame"))
 				.Select(filePath => new KeyValuePair<string, DateTime>(filePath, File.GetLastWriteTime(filePath)))
 				.OrderByDescending(kvp => kvp.Value)
 				.Where(kvp => Regex.Match(kvp.Key, @"_\d+_\d+.gam$").Success)
