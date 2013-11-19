@@ -1184,6 +1184,259 @@ Tech Area Req         := Sociology
 Tech Level Req        := 5
 Can Be Removed        := True
 
+Name                  := Galactic Currency Exchange
+Group                 := Economy
+Description           := Galaxy wide stock market which increases income throughout the empire.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Sociology
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Electronic Computer
+Group                 := Weapons
+Description           := Electronic computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 50
+Start Level           := 1
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 1
+Can Be Removed        := True
+
+Name                  := Research Laboratory
+Group                 := Research
+Description           := Laboratory which conducts research for an empire.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Optronic Computer
+Group                 := Weapons
+Description           := Optical computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 150
+Start Level           := 0
+Raise Level           := 1
+Tech Area Req         := Computers
+Tech Level Req        := 2
+Can Be Removed        := True
+
+Name                  := Neural Scanner
+Group                 := Intelligence
+Description           := Mind reading device which increases espionage effectiveness.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Scout Lab
+Group                 := Research
+Description           := Mobile research lab which can be installed on a starship.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Security Stations
+Group                 := Defenses
+Description           := Automated anti-personnel turrets used to protect a ship's crew from enemy boarding parties.
+Maximum Level         := 1
+Level Cost            := 400
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 3
+Can Be Removed        := True
+
+Name                  := Positronic Computer
+Group                 := Weapons
+Description           := Positronic computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Planetary Supercomputer
+Group                 := Weapons
+Description           := Massive computer system which increases a planet's research output.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Holo Simulator
+Group                 := Civilian
+Description           := Virtual reality system which increases population happiness.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 4
+Can Be Removed        := True
+
+Name                  := Emissions Guidance System
+Group                 := Weapons
+Description           := Missile enhancement designed to specifically target a ship's engines.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Cyber-Security Link
+Group                 := Intelligence
+Description           := Brain/machine interface which improves espionage effectiveness.
+Maximum Level         := 1
+Level Cost            := 1500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 5
+Can Be Removed        := True
+
+Name                  := Cybertronic Computer
+Group                 := Weapons
+Description           := Partly biological computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Autolab
+Group                 := Research
+Description           := Completely automated research lab. (May or may not contain cake.)
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Structural Analyzer
+Group                 := Weapons
+Description           := Specialized targeting computer which analyzes enemy ships for weak points, increasing damage inflicted by weapons.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 6
+Can Be Removed        := True
+
+Name                  := Android Farmers
+Group                 := Civilian
+Description           := Android farmers which efficiently produce food for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Android Workers
+Group                 := Civilian
+Description           := Android workers which efficiently produce minerals for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Android Scientists
+Group                 := Civilian
+Description           := Android scientists which efficiently produce research points for a colony.
+Maximum Level         := 1
+Level Cost            := 3500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 7
+Can Be Removed        := True
+
+Name                  := Virtual Reality Network
+Group                 := Civilian
+Description           := Galaxy wide network providing virtual reality entertainment, increasing population happiness.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Galactic Cybernet
+Group                 := Research
+Description           := Galaxy wide network providing scientists access to research data.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 8
+Can Be Removed        := True
+
+Name                  := Pleasure Dome
+Group                 := Civilian
+Description           := Truly immersive virtual reality system which increases population happiness drastically.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Moleculartronic Computer
+Group                 := Weapons
+Description           := Quantum computer which increases a ship's weapons accuracy.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
+Name                  := Achilles Targeting Unit
+Group                 := Weapons
+Description           := Advanced targeting computer which analyzes enemy ships for weak points, greatly increasing damage inflicted by weapons.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Tech Area Req         := Computers
+Tech Level Req        := 9
+Can Be Removed        := True
+
 =======================================================================================
 *END*
 =======================================================================================
