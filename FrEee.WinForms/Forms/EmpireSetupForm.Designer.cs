@@ -290,6 +290,7 @@
 			this.ddlRacePopulationIcon.Name = "ddlRacePopulationIcon";
 			this.ddlRacePopulationIcon.Size = new System.Drawing.Size(180, 23);
 			this.ddlRacePopulationIcon.TabIndex = 89;
+			this.ddlRacePopulationIcon.TextChanged += new System.EventHandler(this.ddlRacePopulationIcon_TextChanged);
 			this.ddlRacePopulationIcon.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// ddlRaceNativeAtmosphere
@@ -439,6 +440,7 @@
 			this.ddlShipset.Name = "ddlShipset";
 			this.ddlShipset.Size = new System.Drawing.Size(180, 23);
 			this.ddlShipset.TabIndex = 13;
+			this.ddlShipset.TextChanged += new System.EventHandler(this.ddlShipset_TextChanged);
 			this.ddlShipset.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// picInsignia
@@ -457,6 +459,7 @@
 			this.ddlInsignia.Name = "ddlInsignia";
 			this.ddlInsignia.Size = new System.Drawing.Size(180, 23);
 			this.ddlInsignia.TabIndex = 11;
+			this.ddlInsignia.TextChanged += new System.EventHandler(this.ddlInsignia_TextChanged);
 			this.ddlInsignia.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// picColor
@@ -538,6 +541,7 @@
 			this.ddlLeaderPortrait.Name = "ddlLeaderPortrait";
 			this.ddlLeaderPortrait.Size = new System.Drawing.Size(180, 23);
 			this.ddlLeaderPortrait.TabIndex = 5;
+			this.ddlLeaderPortrait.TextChanged += new System.EventHandler(this.ddlLeaderPortrait_TextChanged);
 			this.ddlLeaderPortrait.Leave += new System.EventHandler(this.ddlPic_Leave);
 			// 
 			// txtLeaderName
