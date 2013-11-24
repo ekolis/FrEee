@@ -104,7 +104,7 @@ namespace FrEee.WinForms.Controls
 				txtMood.Text = ""; // TODO - load mood
 
 				// load income
-				var income = Planet.Income;
+				var income = Planet.GrossIncome;
 				resIncomeMinerals.Amount = income[Resource.Minerals];
 				resIncomeOrganics.Amount = income[Resource.Organics];
 				resIncomeRadioactives.Amount = income[Resource.Radioactives];
