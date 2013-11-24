@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Civilization
 					if (!ColonizedPlanets.Any())
 						grossIncome = new ResourceQuantity();
 					else
-						grossIncome = ColonizedPlanets.Sum(p => p.Income);
+						grossIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
 					// TODO - remote mining and raw resource/points generation
 				}
 				return grossIncome;

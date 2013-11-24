@@ -182,9 +182,25 @@ namespace FrEee.Utility.Extensions
 		{
 			IEnumerable<Ability> abils;
 			if (includeShared)
-				abils = obj.Abilities().Union(obj.GetSharedAbilities());
+				abils = obj.Abilities().Union(obj.SharedAbilities());
 			else
 				abils = obj.Abilities();
+			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
+		}
+
+		/// <summary>
+		/// Determines if a common ability object has a specified ability for an empire.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="abilityName"></param>
+		/// <returns></returns>
+		public static bool HasAbility(this ICommonAbilityObject obj, string abilityName, Empire emp, bool includeShared = true)
+		{
+			IEnumerable<Ability> abils;
+			if (includeShared)
+				abils = obj.Abilities(emp).Union(obj.SharedAbilities(emp));
+			else
+				abils = obj.Abilities(emp);
 			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
 		}
 
@@ -867,7 +883,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var abils = obj.Abilities();
 			if (includeShared)
-				abils = abils.Union(obj.GetSharedAbilities());
+				abils = abils.Union(obj.SharedAbilities());
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
@@ -879,7 +895,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var tuples = objs.Squash(o => o.Abilities()).ToArray();
 			if (includeShared)
-				tuples = tuples.Union(objs.Squash(o => o.GetSharedAbilities())).ToArray();
+				tuples = tuples.Union(objs.Squash(o => o.SharedAbilities())).ToArray();
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
@@ -894,7 +910,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public static string GetAbilityValue(this ISharedAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			if (filter == null && Empire.Current != null)
 			{
@@ -929,7 +945,7 @@ namespace FrEee.Utility.Extensions
 			return result;
 		}
 
-		public static IEnumerable<Ability> GetAbilities(this ISharedAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> Abilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (sourceFilter == null)
 				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
@@ -942,7 +958,7 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static IEnumerable<Ability> GetSharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			// Unowned objects cannot have abilities shared to them.
 			if (!(obj is IOwnable))
@@ -961,7 +977,7 @@ namespace FrEee.Utility.Extensions
 						var sector = ((ILocated)obj).Sector;
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in sector.GetAbilities(emp, sourceFilter))
+							foreach (var abil in sector.Abilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -973,7 +989,7 @@ namespace FrEee.Utility.Extensions
 						var sys = ((ILocated)obj).StarSystem;
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in sys.GetAbilities(emp, sourceFilter))
+							foreach (var abil in sys.Abilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -984,7 +1000,58 @@ namespace FrEee.Utility.Extensions
 					{
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in Galaxy.Current.GetAbilities(emp, sourceFilter))
+							foreach (var abil in Galaxy.Current.Abilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Gets abilities that have been shared to an object.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			foreach (var clause in empire.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
+			{
+				var rule = clause.AbilityRule;
+				if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
+				{
+					if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+					{
+						var sector = ((ILocated)obj).Sector;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in sector.Abilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+					else if (rule.CanTarget(AbilityTargets.StarSystem) && (obj is StarSystem || obj is ILocated))
+					{
+						var sys = ((ILocated)obj).StarSystem;
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in sys.Abilities(emp, sourceFilter))
+							{
+								if (clause.AbilityRule == abil.Rule)
+									yield return abil;
+							}
+						}
+					}
+					else if (rule.CanTarget(AbilityTargets.Galaxy))
+					{
+						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						{
+							foreach (var abil in Galaxy.Current.Abilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -2123,9 +2190,9 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> UnstackedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (sourceFilter == null || sourceFilter(obj))
-				return obj.IntrinsicAbilities.Concat(obj.GetSharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+				return obj.IntrinsicAbilities.Concat(obj.SharedAbilities(sourceFilter)).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
 			else
-				return obj.GetSharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
+				return obj.SharedAbilities(sourceFilter).Concat(obj.DescendantAbilities(sourceFilter)).Concat(obj.AncestorAbilities(sourceFilter));
 		}
 
 		/// <summary>

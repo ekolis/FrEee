@@ -152,5 +152,19 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Ratio of population that has the "No Spaceports" ability.
+		/// </summary>
+		public double MerchantsRatio
+		{
+			get
+			{
+				var merchants = Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
+				var totalPop = Population.Sum(kvp => kvp.Value);
+				var ratio = (double)merchants * (double)totalPop;
+				return ratio;
+			}
+		}
 	}
 }

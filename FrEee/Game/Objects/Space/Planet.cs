@@ -89,9 +89,9 @@ namespace FrEee.Game.Objects.Space
 		public Colony Colony { get; set; }
 
 		/// <summary>
-		/// The resource income from this planet.
+		/// The resource income from this planet, not taking into account presence or lack of a spaceport.
 		/// </summary>
-		public ResourceQuantity Income
+		public ResourceQuantity GrossIncomeIgnoringSpaceport
 		{
 			get
 			{
@@ -151,6 +151,24 @@ namespace FrEee.Game.Objects.Space
 					income.Add(resource, (int)(amount * factor));
 				}
 				return income;
+			}
+		}
+
+		/// <summary>
+		/// The planet's gross income, taking into presence presence or lack of a spaceport.
+		/// </summary>
+		public ResourceQuantity GrossIncome
+		{
+			get
+			{
+				if (Colony == null)
+					return new ResourceQuantity();
+
+				var sys = StarSystem;
+				if (sys.HasAbility("Spaceport", Owner))
+					return GrossIncomeIgnoringSpaceport;
+				else
+					return GrossIncomeIgnoringSpaceport * Colony.MerchantsRatio;
 			}
 		}
 
@@ -900,10 +918,10 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int MineralsIncome { get { return Income[Resource.Minerals]; } }
-		public int OrganicsIncome { get { return Income[Resource.Organics]; } }
-		public int RadioactivesIncome { get { return Income[Resource.Radioactives]; } }
-		public int ResearchIncome { get { return Income[Resource.Research]; } }
-		public int IntelligenceIncome { get { return Income[Resource.Intelligence]; } }
+		public int MineralsIncome { get { return GrossIncome[Resource.Minerals]; } }
+		public int OrganicsIncome { get { return GrossIncome[Resource.Organics]; } }
+		public int RadioactivesIncome { get { return GrossIncome[Resource.Radioactives]; } }
+		public int ResearchIncome { get { return GrossIncome[Resource.Research]; } }
+		public int IntelligenceIncome { get { return GrossIncome[Resource.Intelligence]; } }
 	}
 }

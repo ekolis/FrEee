@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 	/// A galaxy in which the game is played.
 	/// </summary>
 	[Serializable]
-	public class Galaxy : ISharedAbilityObject
+	public class Galaxy : ICommonAbilityObject
 	{
 		public Galaxy()
 		{
@@ -36,7 +36,7 @@ namespace FrEee.Game.Objects.Space
 			referrables = new Dictionary<long, IReferrable>();
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
-			SharedAbilityCache = new SafeDictionary<Tuple<ISharedAbilityObject, Empire>, IEnumerable<Ability>>();
+			SharedAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
 		}
 
 		public Galaxy(Mod mod)
@@ -724,33 +724,28 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 			foreach (var tuple in Current.FindSpaceObjects<Planet>(p => p.Owner != null).Squash())
 			{
+				// compute income
 				var p = tuple.Item3;
-				var sys = tuple.Item1.Item;
-				if (sys.FindSpaceObjects<Planet>().Flatten().Any(p2 => p2.Owner == p.Owner && p2.HasAbility("Spaceport")))
+				if (p.Colony != null)
 				{
+					var sys = tuple.Item1.Item;
+					var income = p.GrossIncome;
+
+					// log messages
+					if (income < p.GrossIncomeIgnoringSpaceport)
+					{
+						var ratio = p.Colony.MerchantsRatio;
+						if (ratio == 0)
+							p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
+						else if (ratio < 1)
+							p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
+					}
+
 					// give owner his income
-					p.Owner.StoredResources += p.Income;
+					p.Owner.StoredResources += income;
 
 					// adjust resource value
-					foreach (var kvp in p.Income)
-						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
-				}
-				else
-				{
-					// prorated income based on how much population doesn't need spaceport
-					var merchants = p.Colony.Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
-					var totalPop = p.Colony.Population.Sum(kvp => kvp.Value);
-					var ratio = (double)merchants * (double)totalPop;
-					if (ratio == 0)
-						p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
-					else if (ratio < 1)
-						p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
-					p.Owner.StoredResources += p.Income * ratio;
-					p.Owner.StoredResources = ResourceQuantity.Min(p.Owner.StoredResources, p.Owner.ResourceStorage);
-
-					// adjust resource value
-					// pay full value decay for non-prorated income though, since the resources were extracted and wasted!
-					foreach (var kvp in p.Income)
+					foreach (var kvp in income)
 						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 			}
@@ -1190,6 +1185,6 @@ namespace FrEee.Game.Objects.Space
 
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 
-		internal SafeDictionary<Tuple<ISharedAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 	}
 }
