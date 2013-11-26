@@ -925,5 +925,28 @@ namespace FrEee.Game.Objects.Space
 		public int IntelligenceIncome { get { return GrossIncome[Resource.Intelligence]; } }
 
 		public bool HasColony { get { return Colony != null; } }
+		public bool HasSpaceYard { get { return this.HasAbility("Space Yard"); } }
+
+		public Progress FacilityFill
+		{
+			get
+			{
+				var facils = 0;
+				if (Colony != null)
+					facils = Colony.Facilities.Count;
+				return new Progress(facils, MaxFacilities);
+			}
+		}
+
+		public Progress CargoFill
+		{
+			get
+			{
+				var cargo = 0;
+				if (Colony != null)
+					cargo = Colony.Cargo.Size;
+				return new Progress(cargo, MaxCargo);
+			}
+		}
 	}
 }
