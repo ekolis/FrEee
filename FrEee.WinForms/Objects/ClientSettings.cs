@@ -47,7 +47,7 @@ namespace FrEee.WinForms.Objects
 		public static GridConfig CreateDefaultPlanetListConfig()
 		{
 			var cfg = new GridConfig();
-			cfg.Name = "Default";
+			cfg.Name = "Uncolonized";
 			cfg.Columns.Add(colIcon.Copy());
 			cfg.Columns.Add(colName.Copy());
 			cfg.Columns.Add(colStellarSize.Copy());
@@ -57,7 +57,6 @@ namespace FrEee.WinForms.Objects
 			cfg.Columns.Add(colMineralsValue.Copy());
 			cfg.Columns.Add(colOrganicsValue.Copy());
 			cfg.Columns.Add(colRadioactivesValue.Copy());
-			cfg.Columns.Add(colOwner.Copy());
 			cfg.Columns.Add(colHasNoColony.Copy());
 			return cfg;
 		}
@@ -72,7 +71,10 @@ namespace FrEee.WinForms.Objects
 			cfg.Columns.Add(colIsDomed.Copy());
 			cfg.Columns.Add(colConditions.Copy());
 			cfg.Columns.Add(colPopulation.Copy());
+			cfg.Columns.Add(colFacilities.Copy());
+			cfg.Columns.Add(colCargo.Copy());
 			cfg.Columns.Add(colAnger.Copy());
+			cfg.Columns.Add(colHasSpaceYard.Copy());
 			cfg.Columns.Add(colMineralsIncome.Copy());
 			cfg.Columns.Add(colOrganicsIncome.Copy());
 			cfg.Columns.Add(colRadioactivesIncome.Copy());
@@ -92,7 +94,7 @@ namespace FrEee.WinForms.Objects
 		private static readonly GridColumnConfig colOrganicsValue = new GridColumnConfig("OrganicsValue", "Org Val", typeof(DataGridViewTextBoxColumn), Resource.Organics.Color, Format.Units);
 		private static readonly GridColumnConfig colRadioactivesValue = new GridColumnConfig("RadioactivesValue", "Rad Val", typeof(DataGridViewTextBoxColumn), Resource.Radioactives.Color, Format.Units);
 		private static readonly GridColumnConfig colOwner = new GridColumnConfig("Owner", "Owner", typeof(DataGridViewTextBoxColumn), Color.White);
-		private static readonly GridColumnConfig colPopulation = new GridColumnConfig("PopulationFill", "Pop", typeof(DataGridViewProgressColumn), Color.Green, Format.UnitsBForBillions);
+		private static readonly GridColumnConfig colPopulation = new GridColumnConfig("PopulationFill", "Population", typeof(DataGridViewProgressColumn), Color.Green, Format.UnitsBForBillions);
 		private static readonly GridColumnConfig colAnger = new GridColumnConfig("Anger", "Anger", typeof(DataGridViewProgressColumn), Color.Red);
 		private static readonly GridColumnConfig colRole = new GridColumnConfig("Role", "Role", typeof(DataGridViewTextBoxColumn), Color.White);
 		private static readonly GridColumnConfig colMineralsIncome = new GridColumnConfig("MineralsIncome", "Min", typeof(DataGridViewTextBoxColumn), Resource.Minerals.Color, Format.Units);
@@ -100,8 +102,8 @@ namespace FrEee.WinForms.Objects
 		private static readonly GridColumnConfig colRadioactivesIncome = new GridColumnConfig("RadioactivesIncome", "Rad", typeof(DataGridViewTextBoxColumn), Resource.Radioactives.Color, Format.Units);
 		private static readonly GridColumnConfig colResearchIncome = new GridColumnConfig("ResearchIncome", "Res", typeof(DataGridViewTextBoxColumn), Resource.Research.Color, Format.Units);
 		private static readonly GridColumnConfig colIntelligenceIncome = new GridColumnConfig("IntelligenceIncome", "Int", typeof(DataGridViewTextBoxColumn), Resource.Intelligence.Color, Format.Units);
-		private static readonly GridColumnConfig colFacilitySlotsFree = new GridColumnConfig("FacilityFill", "Facil", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
-		private static readonly GridColumnConfig colCargoSpaceFree = new GridColumnConfig("CargoFill", "Cargo", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
+		private static readonly GridColumnConfig colFacilities = new GridColumnConfig("FacilityFill", "Facil", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
+		private static readonly GridColumnConfig colCargo = new GridColumnConfig("CargoFill", "Cargo", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
 		private static readonly GridColumnConfig colFirstConstructionItem = new GridColumnConfig("FirstConstructionItem", "Constr", typeof(DataGridViewTextBoxColumn), Color.White);
 		private static readonly GridColumnConfig colFirstConstructionETA = new GridColumnConfig("FirstConstructionEta", "1st ETA", typeof(DataGridViewTextBoxColumn), Color.White);
 		private static readonly GridColumnConfig colConstructionETA = new GridColumnConfig("ConstructionEta", "ETA", typeof(DataGridViewTextBoxColumn), Color.White);

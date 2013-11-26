@@ -132,7 +132,7 @@ namespace FrEee.WinForms.Forms
 			this.gridPlanets.RowTemplate.Height = 32;
 			this.gridPlanets.RowTemplate.ReadOnly = true;
 			this.gridPlanets.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridPlanets.Size = new System.Drawing.Size(878, 459);
+			this.gridPlanets.Size = new System.Drawing.Size(1054, 491);
 			this.gridPlanets.TabIndex = 1;
 			this.gridPlanets.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridPlanets_CellFormatting);
 			this.gridPlanets.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridPlanets_ColumnHeaderMouseClick);
@@ -229,7 +229,7 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 200F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(984, 705);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(1160, 737);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// galaxyView
@@ -239,7 +239,7 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.Location = new System.Drawing.Point(403, 3);
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(578, 194);
+			this.galaxyView.Size = new System.Drawing.Size(754, 194);
 			this.galaxyView.TabIndex = 22;
 			this.galaxyView.Text = "galaxyView1";
 			// 
@@ -742,7 +742,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlConfigsBorder.Location = new System.Drawing.Point(3, 243);
 			this.pnlConfigsBorder.Name = "pnlConfigsBorder";
 			this.pnlConfigsBorder.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlConfigsBorder.Size = new System.Drawing.Size(94, 459);
+			this.pnlConfigsBorder.Size = new System.Drawing.Size(94, 491);
 			this.pnlConfigsBorder.TabIndex = 23;
 			// 
 			// pnlConfigs
@@ -751,7 +751,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlConfigs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
 			this.pnlConfigs.Location = new System.Drawing.Point(3, 3);
 			this.pnlConfigs.Name = "pnlConfigs";
-			this.pnlConfigs.Size = new System.Drawing.Size(86, 451);
+			this.pnlConfigs.Size = new System.Drawing.Size(86, 483);
 			this.pnlConfigs.TabIndex = 2;
 			// 
 			// gamePanel2
@@ -770,7 +770,7 @@ namespace FrEee.WinForms.Forms
 			this.gamePanel2.Location = new System.Drawing.Point(103, 203);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(878, 34);
+			this.gamePanel2.Size = new System.Drawing.Size(1054, 34);
 			this.gamePanel2.TabIndex = 25;
 			// 
 			// btnReset
@@ -778,7 +778,7 @@ namespace FrEee.WinForms.Forms
 			this.btnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnReset.BackColor = System.Drawing.Color.Black;
 			this.btnReset.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnReset.Location = new System.Drawing.Point(795, 6);
+			this.btnReset.Location = new System.Drawing.Point(971, 6);
 			this.btnReset.Name = "btnReset";
 			this.btnReset.Size = new System.Drawing.Size(75, 19);
 			this.btnReset.TabIndex = 30;
@@ -803,7 +803,7 @@ namespace FrEee.WinForms.Forms
 			this.btnDeleteConfig.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDeleteConfig.BackColor = System.Drawing.Color.Black;
 			this.btnDeleteConfig.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDeleteConfig.Location = new System.Drawing.Point(714, 6);
+			this.btnDeleteConfig.Location = new System.Drawing.Point(890, 6);
 			this.btnDeleteConfig.Name = "btnDeleteConfig";
 			this.btnDeleteConfig.Size = new System.Drawing.Size(75, 19);
 			this.btnDeleteConfig.TabIndex = 28;
@@ -834,7 +834,7 @@ namespace FrEee.WinForms.Forms
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(1008, 729);
+			this.ClientSize = new System.Drawing.Size(1184, 761);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.DoubleBuffered = true;
 			this.ForeColor = System.Drawing.Color.White;
