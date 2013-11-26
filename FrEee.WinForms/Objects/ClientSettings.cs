@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Objects
 			cfg.Columns.Add(colOrganicsValue.Copy());
 			cfg.Columns.Add(colRadioactivesValue.Copy());
 			cfg.Columns.Add(colOwner.Copy());
-			// TODO - filter to uncolonized planets?
+			cfg.Columns.Add(colHasNoColony.Copy());
 			return cfg;
 		}
 
@@ -78,7 +78,7 @@ namespace FrEee.WinForms.Objects
 			cfg.Columns.Add(colRadioactivesIncome.Copy());
 			cfg.Columns.Add(colResearchIncome.Copy());
 			cfg.Columns.Add(colIntelligenceIncome.Copy());
-			// TODO - filter to our colonies
+			cfg.Columns.Add(colHasColony.Copy());
 			return cfg;
 		}
 
@@ -106,7 +106,8 @@ namespace FrEee.WinForms.Objects
 		private static readonly GridColumnConfig colFirstConstructionETA = new GridColumnConfig("FirstConstructionEta", "1st ETA", typeof(DataGridViewTextBoxColumn), Color.White);
 		private static readonly GridColumnConfig colConstructionETA = new GridColumnConfig("ConstructionEta", "ETA", typeof(DataGridViewTextBoxColumn), Color.White);
 		private static readonly GridColumnConfig colHasSpaceYard = new GridColumnConfig("HasSpaceYard", "SY", typeof(DataGridViewCheckBoxColumn), Color.White);
-		private static readonly GridColumnConfig colIsColony = new GridColumnConfig("IsColony", "Col", typeof(DataGridViewCheckBoxColumn), Color.White);
+		private static readonly GridColumnConfig colHasColony = new GridColumnConfig("HasColony", "Col", typeof(DataGridViewCheckBoxColumn), Color.White, Format.Raw, Sort.None, 0, Filter.Exact, true);
+		private static readonly GridColumnConfig colHasNoColony = new GridColumnConfig("HasColony", "Col", typeof(DataGridViewCheckBoxColumn), Color.White, Format.Raw, Sort.None, 0, Filter.Exact, false);
 		private static readonly GridColumnConfig colEmergencyBuild = new GridColumnConfig("EmergencyBuild", "Ebuild", typeof(DataGridViewCheckBoxColumn), Color.White);
 		private static readonly GridColumnConfig colRepeatBuild = new GridColumnConfig("RepeatBuild", "Repeat", typeof(DataGridViewCheckBoxColumn), Color.White);
 		private static readonly GridColumnConfig colOnHold = new GridColumnConfig("OnHold", "Hold", typeof(DataGridViewCheckBoxColumn), Color.White);
