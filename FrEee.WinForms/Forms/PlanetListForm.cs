@@ -145,7 +145,8 @@ namespace FrEee.WinForms.Forms
 			if (refreshColumns)
 			{
 				gridPlanets.Columns.Clear();
-				foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+				// Don't display columns that have an exact filter; that would be pointless
+				foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.Where(c => c.Filter != Filter.Exact))
 				{
 					var gridcol = (DataGridViewColumn)Activator.CreateInstance(col.ColumnType);
 					gridcol.DataPropertyName = col.PropertyName;
@@ -155,30 +156,43 @@ namespace FrEee.WinForms.Forms
 				}
 			}
 
-			var sortedPlanets = planets.OrderBy(p => "");
+			// do filtering
+			var filteredPlanets = planets;
+			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+			{
+				if (col.Filter == Filter.Exact)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) == 0);
+				else if (col.Filter == Filter.Minimum)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) <= 0);
+				else if (col.Filter == Filter.Maximum)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) >= 0);
+			}
+
+			// do sorting
+			var sortedPlanets = filteredPlanets.OrderBy(p => "");
 			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.OrderBy(c => c.SortPriority))
 			{
-				var gridCol = gridPlanets.Columns.Cast<DataGridViewColumn>().Single(c => c.DataPropertyName == col.PropertyName);
+				var gridCol = gridPlanets.Columns.Cast<DataGridViewColumn>().SingleOrDefault(c => c.DataPropertyName == col.PropertyName);
 				if (col.Sort == Sort.Ascending)
 				{
 					sortedPlanets = sortedPlanets.ThenBy(p => p.GetPropertyValue(col.PropertyName));
-					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
 						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				else if (col.Sort == Sort.Descending)
 				{
 					sortedPlanets = sortedPlanets.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
-					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
 						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				}
 				else
 				{
-					if (gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
 						gridCol.HeaderCell.SortGlyphDirection = SortOrder.None;
 				}
 			}
 
-			planetBindingSource.DataSource = sortedPlanets;
+			planetBindingSource.DataSource = sortedPlanets.ToArray();
 		}
 
 		private void gridPlanets_DataError(object sender, DataGridViewDataErrorEventArgs e)

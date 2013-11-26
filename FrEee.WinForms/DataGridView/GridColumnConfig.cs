@@ -15,8 +15,7 @@ namespace FrEee.WinForms.DataGridView
 	[Serializable]
 	public class GridColumnConfig
 	{
-		// TODO - filtering
-		public GridColumnConfig(string propertyName, string headerText, Type columnType, Color foreColor, Format format = Format.Raw, Sort sort = Sort.None, int sortPriority = 0)
+		public GridColumnConfig(string propertyName, string headerText, Type columnType, Color foreColor, Format format = Format.Raw, Sort sort = Sort.None, int sortPriority = 0, Filter filter = Filter.None, IComparable filterValue = null)
 		{
 			PropertyName = propertyName;
 			HeaderText = headerText;
@@ -25,6 +24,8 @@ namespace FrEee.WinForms.DataGridView
 			Format = format;
 			Sort = sort;
 			SortPriority = sortPriority;
+			Filter = filter;
+			FilterValue = filterValue;
 		}
 
 		/// <summary>
@@ -74,5 +75,15 @@ namespace FrEee.WinForms.DataGridView
 		/// Priority of sorting this column (lower is higher priority)
 		/// </summary>
 		public int SortPriority { get; set; }
+
+		/// <summary>
+		/// Type of filter to use on this column.
+		/// </summary>
+		public Filter Filter { get; set; }
+
+		/// <summary>
+		/// Value to filter by.
+		/// </summary>
+		public IComparable FilterValue { get; set; }
 	}
 }

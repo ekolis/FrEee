@@ -923,5 +923,7 @@ namespace FrEee.Game.Objects.Space
 		public int RadioactivesIncome { get { return GrossIncome[Resource.Radioactives]; } }
 		public int ResearchIncome { get { return GrossIncome[Resource.Research]; } }
 		public int IntelligenceIncome { get { return GrossIncome[Resource.Intelligence]; } }
+
+		public bool HasColony { get { return Colony != null; } }
 	}
 }
