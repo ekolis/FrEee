@@ -2455,6 +2455,8 @@
 			this.Controls.Add(this.btnStart);
 			this.Controls.Add(this.tabs);
 			this.ForeColor = System.Drawing.Color.White;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.MaximizeBox = false;
 			this.Name = "GameSetupForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Game Setup";
