@@ -83,14 +83,15 @@ namespace FrEee.WinForms.Forms
 			int count = 0;
 			double totalMin = 0d, totalOrg = 0d, totalRad = 0d;
 			var orders = new List<IConstructionOrder>();
+			var rate = ConstructionQueue.Rate;
 			foreach (var order in ConstructionQueue.Orders)
 			{
-				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)ConstructionQueue.Rate[res]));
+				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)rate[res]));
 				var remainingCost = order.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
 				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
 				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];
-				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)ConstructionQueue.Rate[res]);
+				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)rate[res]);
 				if (order.Template == lastTemplate)
 				{
 					// building same as previous item
