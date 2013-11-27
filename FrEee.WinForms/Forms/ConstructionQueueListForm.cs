@@ -56,15 +56,7 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
 		{
-			if (e.StateChanged == DataGridViewElementStates.Selected)
-			{
-				var queue = (ConstructionQueue)e.Row.DataBoundItem;
-				var sys = queue.Container.StarSystem;
-				galaxyView.SelectedStarSystem = sys;
-				starSystemView.StarSystem = sys;
-				starSystemView.SelectedSpaceObject = queue.Container;
-				starSystemView.SelectedSector = queue.Container.Sector;
-			}
+
 		}
 
 		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -91,6 +83,28 @@ namespace FrEee.WinForms.Forms
 		private void gridQueues_SelectionChanged(object sender, EventArgs e)
 		{
 			gridQueues.ClearSelection();
+		}
+
+		private void gridQueues_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.RowIndex >= 0 && e.RowIndex < gridQueues.Rows.Count)
+			{
+				var row = gridQueues.Rows[e.RowIndex];
+				var queue = (ConstructionQueue)row.DataBoundItem;
+				var sys = queue.Container.StarSystem;
+				galaxyView.SelectedStarSystem = sys;
+				starSystemView.StarSystem = sys;
+				starSystemView.SelectedSpaceObject = queue.Container;
+				starSystemView.SelectedSector = queue.Container.Sector;
+			}
+		}
+
+		private void gridQueues_CellMouseLeave(object sender, DataGridViewCellEventArgs e)
+		{
+			galaxyView.SelectedStarSystem = null;
+			starSystemView.StarSystem = null;
+			starSystemView.SelectedSpaceObject = null;
+			starSystemView.SelectedSector = null;
 		}
 	}
 }

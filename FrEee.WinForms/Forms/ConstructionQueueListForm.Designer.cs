@@ -106,7 +106,8 @@
 			this.gridQueues.TabIndex = 0;
 			this.gridQueues.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellDoubleClick);
 			this.gridQueues.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.gridQueues_CellFormatting);
-			this.gridQueues.RowStateChanged += new System.Windows.Forms.DataGridViewRowStateChangedEventHandler(this.gridQueues_RowStateChanged);
+			this.gridQueues.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellMouseEnter);
+			this.gridQueues.CellMouseLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_CellMouseLeave);
 			this.gridQueues.SelectionChanged += new System.EventHandler(this.gridQueues_SelectionChanged);
 			// 
 			// IconCol
