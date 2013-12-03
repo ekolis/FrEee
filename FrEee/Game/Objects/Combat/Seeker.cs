@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Game.Objects.Combat2
+namespace FrEee.Game.Objects.Combat
 {
 	/// <summary>
 	/// A seeking missile or torpedo.

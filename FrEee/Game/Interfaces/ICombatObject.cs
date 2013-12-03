@@ -1,6 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using System;

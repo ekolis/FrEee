@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {

@@ -1,5 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Utility;
