@@ -197,7 +197,9 @@
     <Compile Include="Game\Objects\Civilization\Memory.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
+    <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
+    <Compile Include="Game\Objects\Combat2\Point3d.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
     <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />

@@ -2,7 +2,7 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding.Interfaces;
@@ -162,7 +162,7 @@ namespace FrEee.Game.Objects.Technology
 			// do nothing
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Combat.Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, Combat2.Battle battle)
 		{
 			// TODO - take into account damage types
 			int realDamage;

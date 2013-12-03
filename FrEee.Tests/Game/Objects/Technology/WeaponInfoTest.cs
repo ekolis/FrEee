@@ -5,7 +5,7 @@ using FrEee.Modding.Templates;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Loaders;
 using FrEee.Modding;
-using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.Tests.Game.Objects.Technology
 {

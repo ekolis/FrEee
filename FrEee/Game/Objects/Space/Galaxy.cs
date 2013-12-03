@@ -12,7 +12,7 @@ using FrEee.Utility;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
-using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
