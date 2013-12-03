@@ -12,7 +12,7 @@ using FrEee.Modding.Templates;
 using Component = FrEee.Game.Objects.Technology.Component;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.WinForms.Controls
 {

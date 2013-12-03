@@ -18,7 +18,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 using System.Threading;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
