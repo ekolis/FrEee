@@ -11,7 +11,7 @@ using FrEee.Modding.Templates;
 using FrEee.Modding;
 using System.Drawing;
 using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
 using System.IO;
 using AutoMapper;

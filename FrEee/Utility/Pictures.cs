@@ -10,7 +10,7 @@ using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using System.Linq;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Vehicles;

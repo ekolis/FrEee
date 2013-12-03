@@ -1,4 +1,4 @@
-﻿using FrEee.Game.Objects.Combat2;
+﻿using FrEee.Game.Objects.Combat;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -9,7 +9,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Space
 {

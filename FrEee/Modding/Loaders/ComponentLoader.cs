@@ -1,5 +1,5 @@
 ﻿using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Enumerations;
 using FrEee.Modding.Templates;
