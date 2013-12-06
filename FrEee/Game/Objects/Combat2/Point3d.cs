@@ -6,94 +6,6 @@ using FrEee.Game.Interfaces;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class combatWaypoint
-    {
-        public combatWaypoint()
-        { }
-        public combatWaypoint(Point3d cmbt_loc)
-        {
-            this.cmbt_loc = cmbt_loc;
-        }
-        public combatWaypoint(CombatObj comObj)
-        {
-            this.comObj = comObj;
-            this.cmbt_loc = comObj.cmbt_loc;
-            this.cmbt_vel = comObj.cmbt_vel;
-        }
-
-        /// <summary>
-        /// location within the sector
-        /// </summary>
-        public Point3d cmbt_loc { get; set; }
-
-        /// <summary>
-        /// combat velocity
-        /// </summary>
-        public Point3d cmbt_vel { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public CombatObj comObj { get; set; }
- 
-    }
-
-    public class CombatObj
-    {
-        private ICombatObject comObj;
-
-        public CombatObj(ICombatObject comObj)
-        {
-            this.comObj = comObj;
-            Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
-            this.Accel = ship.Speed;
-            this.Strafe = ship.Speed / 4;
-            this.Rotate = ship.Speed / 12;
-        }
-
-        /// <summary>
-        /// location within the sector
-        /// </summary>
-        public Point3d cmbt_loc { get; set; }
-
-        /// <summary>
-        /// facing towards this point
-        /// </summary>
-        public Point3d cmbt_face { get; set; }
-
-        /// <summary>
-        /// combat velocity
-        /// </summary>
-        public Point3d cmbt_vel { get; set; }
-
-        public ICombatObject icomobj
-        {
-
-            get { return this.comObj; }
-            set { this.comObj = value;}
-        }
-
-        public combatWaypoint movetarget { get; set; }
-        public Point3d lastvectortotarget { get; set; }
-
-        public List<CombatObj> weaponTarget { get; set; }
-
-        public int Accel { get; set; }
-        public int Strafe { get; set; }
-        public int Rotate { get; set; }
-       
-    }
-
-    public class EmpireinCombat
-    {      
-        public List<CombatObj> ownships;
-        public List<CombatObj> friendly;
-        public List<CombatObj> nutral; //not actualy used.
-        public List<CombatObj> hostile;
-        public EmpireinCombat()
-        { }
-    }
-
     public class Point3d
     {
         private List<double> point_list;
@@ -354,6 +266,31 @@ namespace FrEee.Game.Objects.Combat2
         }
 
         /// <summary>
+        /// returns a 3d vector for a scaler and given angles.
+        /// Needs testing!
+        /// </summary>
+        /// <param name="hypotinuse"></param>
+        /// <param name="angle_A"></param>
+        /// <param name="radians">if angle_A is given in deg, make this false</param>
+        /// <returns>a 3d point</returns>
+        public static Point3d sides_abc(double hypotinuse, double angle_A, double angle_B, bool radians = true)
+        {
+            if (!radians)
+            { 
+                angle_A = angle_A * Math.PI / 180;
+                angle_A = angle_B * Math.PI / 180;
+            }
+            double side_a = 0;
+            double side_b = 0;
+            double side_c = 0;
+            side_b = Math.Sin(angle_A) * hypotinuse;
+            side_a = Math.Cos(angle_A) * hypotinuse;
+            side_c = Math.Tan(angle_B) * side_a;
+
+            return new Point3d(side_b, side_a, side_c);
+        }
+
+        /// <summary>
         /// law of cosines
         /// </summary>
         /// <param name="side_b"></param>
@@ -404,7 +341,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="point1"></param>
         /// <param name="point2"></param>
         /// <param name="distance"></param>
-        /// <returns> </returns>
+        /// <returns>an intermediate point between p1 and p2 at distance from p1 </returns>
         public static Point3d intermediatePoint(Point3d point1, Point3d point2, double distance)
         {
             return new Point3d(sides_ab(distance, angleA(point2 -= point1)));
