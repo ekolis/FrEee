@@ -28,6 +28,7 @@ namespace FrEee.WinForms.MogreCombatRender
         //protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
         protected SceneNode mNode_lines = null;
 
+        System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
 
         Dictionary<string, CombatObj> renderObjects = new Dictionary<string, CombatObj>();
         private Battle_Space battle;
@@ -454,10 +455,35 @@ namespace FrEee.WinForms.MogreCombatRender
         }
         #endregion
 
-        private void do_graphics()
+        private void startloop()
         {
-            foreach (CombatObj obj in renderObjects.Values)
+            bool running = true;
+            while (running)
             {
+                physicsstopwatch.Restart();
+                double battletic = 0;
+                while (physicsstopwatch.ElapsedMilliseconds < 1000)
+                {
+                    foreach (CombatObj comObj in renderObjects.Values)
+                    {
+                        Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
+                        do_graphics(comObj, renderloc);
+                    }
+                }
+                battletic++;
+                foreach (CombatObj comObj in renderObjects.Values)
+                {
+                    Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
+                    do_graphics(comObj, renderloc);
+                }
+            }
+
+        }
+
+        private void do_graphics(CombatObj obj, Point3d renderloc)
+        {
+            //foreach (CombatObj obj in renderObjects.Values)
+            //{
 
                 //Console.Out.WriteLine(obj.Loc.ToString());
 
@@ -478,12 +504,12 @@ namespace FrEee.WinForms.MogreCombatRender
                 */
 
                 SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
-                Vector3 mvector3 = (TranslateMogrePhys.smVector_mVector3_xzy(obj.cmbt_loc));
+                Vector3 mvector3 = (TranslateMogrePhys.smVector_mVector3_xzy(renderloc));
                 node.Position = mvector3;
                 Vector3 rotateaxis = new Vector3(0f, 1f, 0f);
                 Quaternion quat = new Quaternion((float)(Trig.angleA(obj.cmbt_face) - 1.57079633), rotateaxis);
                 node.Orientation = quat;
-            }
+            //}
         }
     }
 }

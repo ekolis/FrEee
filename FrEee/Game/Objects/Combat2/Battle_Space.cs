@@ -32,6 +32,10 @@ namespace FrEee.Game.Objects.Combat2
                 fleets.Add(fleet);
             }
             this.replaylog = replaylog;
+            if (replaylog != null)
+            { notreplay = true;  }
+            else
+            { notreplay = false; }
 		}
 
         static Battle_Space()
@@ -39,6 +43,8 @@ namespace FrEee.Game.Objects.Combat2
             Current = new HashSet<Battle_Space>();
             Previous = new HashSet<Battle_Space>();
         }
+
+        public bool notreplay = true;
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -65,13 +71,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// The empires engagaed in battle.
 		/// </summary>
 		public IEnumerable<Empire> EmpiresArray { get; private set; }
-        private Dictionary<Empire, EmpireinCombat> Empires = new Dictionary<Empire,EmpireinCombat>{ };
+        public Dictionary<Empire, EmpireinCombat> Empires = new Dictionary<Empire,EmpireinCombat>{ };
 
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
 		public ISet<ICombatObject> Combatants { get; private set; }
-        public ISet<CombatObj> comObjs { get; set; }
+        public List<CombatObj> comObjs  = new List<CombatObj>();
         /// <summary>
         /// the Fleets in this battle
         /// </summary>
@@ -101,23 +107,20 @@ namespace FrEee.Game.Objects.Combat2
 
         private int startrange = 120;
 
-        /// <summary>
-        /// can happen as often as the renderer can handle it. happens between renderPhysTic() 
-        /// </summary>
-        public void renderPhysTic()
-        { }
-
+ 
 
         /// <summary>
-        /// this should happen as fast as possible when processing, but be every ticlen when rendering. 
+        ///  
         /// </summary>
-        public void simPhysTic(double tic)
-        {
-            foreach (CombatObj comObj in comObjs)
-            {
-                //move ship
+        public Point3d simPhysTic(CombatObj comObj, double tic_time, double plus_time = 0)
+        {     
+                comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
+
+                comObj.cmbt_vel += comObj.cmbt_accel;          
+
                 comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
-            }
+                 
+                return new Point3d(comObj.cmbt_loc + comObj.cmbt_vel * plus_time * 0.001);
         }
 
 
@@ -126,16 +129,16 @@ namespace FrEee.Game.Objects.Combat2
             Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
             int angle = 0;
-            for (int i = 0; i <= EmpiresArray.Count(); i++)
+            for (int i = 0; i <= EmpiresArray.Count()-1; i++)
             {
                 startpoints[i] = new Point3d(Trig.sides_ab(startrange, angle));
-                startpoints[i].Z = 0;
+                
             }
 
             //setup the game peices
             foreach (Empire empire in EmpiresArray)
             {
-                Empires.Add(empire, null);
+                Empires.Add(empire, new EmpireinCombat());
             }
             foreach (SpaceVehicle ship in Combatants)
             {
@@ -164,7 +167,8 @@ namespace FrEee.Game.Objects.Combat2
             combatWaypoint wpt = new combatWaypoint(Empires[comObj.icomobj.Owner].hostile[0]);
             comObj.waypointTarget = wpt;
             //pick a primary target to fire apon from a list of enemy within weapon range
-            comObj.weaponTarget[0] = Empires[comObj.icomobj.Owner].hostile[0];
+            comObj.weaponTarget = new List<CombatObj>();
+            comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
             
         }
 
@@ -179,14 +183,17 @@ namespace FrEee.Game.Objects.Combat2
 
             timetoturn = angletoturn.Radians / comObj.Rotate;
             Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            double timetomatchspeed = Trig.angleA(offsetVector) / comObj.Accel;
+            double timetomatchspeed = Trig.angleA(offsetVector) / comObj.maxfowardThrust;
 
             double timetowpt = Trig.angleA(offsetVector) / ticlen;
+
+            bool thrustToTarget = true;
 
             //if/when we're going to overshoot teh waypoint
             if (timetowpt <= timetomatchspeed + timetoturn)
             {
                 angletoturn.Degrees += 180; //turn around and thrust the other way
+                thrustToTarget = false;
             }
 
             if (angletoturn.Degrees < 180) //turn to the right
@@ -212,13 +219,30 @@ namespace FrEee.Game.Objects.Combat2
                 }
             }
 
-            //thrust ship
-            if (angletoturn.Degrees < 45 || angletoturn.Degrees > 315)
+            //thrust ship using strafe
+            if (thrustToTarget) //(if we want to accelerate towards the target, not away from it)
             {
-                //I think.... also todo add straf ability (and reverse thrust)
-                comObj.cmbt_vel += Trig.intermediatePoint(comObj.cmbt_vel, comObj.cmbt_face, comObj.Accel);
+                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);                
             }
-
+            else
+            {
+                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
+            }
+            //main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
+            double thrustby = 0;
+            if (angletoturn.Degrees > 0 && angletoturn.Degrees < 90)
+            {
+                thrustby = (double)comObj.maxfowardThrust / (angletoturn.Degrees / 0.9); 
+            }
+            else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
+            {
+                Compass angle = new Compass(-angletoturn.Degrees);
+                angle.normalize();
+                thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);               
+            }  
+  
+            Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+            comObj.cmbt_thrust += fowardthrust;                
             comObj.lastVectortoWaypoint = vectortowaypoint;
         }
 
@@ -229,7 +253,7 @@ namespace FrEee.Game.Objects.Combat2
                 Vehicle ship = (Vehicle)comObj.icomobj;
                 //ship.Weapons
                 Component wpn = (Component)weapon;
-                if (wpn.CanTarget(comObj.weaponTarget[0].icomobj))
+                if (comObj.weaponTarget.Count() > 0 && wpn.CanTarget(comObj.weaponTarget[0].icomobj))
                 {
                     //wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
                     //combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
@@ -247,6 +271,11 @@ namespace FrEee.Game.Objects.Combat2
                         {
                             fire.endevent(tic_countr, comObj.weaponTarget[0].cmbt_loc);
                         }
+                        if (notreplay)
+                        {
+                            replaylog.addEvent(tic_countr, fire);
+                        }
+
                     }
                 }
             }
@@ -265,19 +294,17 @@ namespace FrEee.Game.Objects.Combat2
                 firecontrol(tic_countr, comObj);
               
                 //comObj.lastDistancetoWaypoint = Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc);
+                simPhysTic(comObj, tic_countr);
             }
-            simPhysTic(tic_countr);
+            
         }
 
         public void Resolve()
         {
             //start combat
             Current.Add(this);
-            bool isreplay = false;
-            if (replaylog != null)
-            {
-                isreplay = true;
-            }
+            
+
 
             setupPices();
             

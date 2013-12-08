@@ -9,10 +9,10 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class EmpireinCombat
     {
-        public List<CombatObj> ownships;
-        public List<CombatObj> friendly;
-        public List<CombatObj> nutral; //not actualy used.
-        public List<CombatObj> hostile;
+        public List<CombatObj> ownships = new List<CombatObj>();
+        public List<CombatObj> friendly = new List<CombatObj>();
+        public List<CombatObj> nutral = new List<CombatObj>(); //not currently used.
+        public List<CombatObj> hostile = new List<CombatObj>();
         public EmpireinCombat()
         { }
     }
@@ -25,16 +25,23 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.comObj = comObj;
             Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
-            this.Accel = ship.Speed;
-            this.Strafe = ship.Speed / 4;
-            this.Rotate = ship.Speed / 12;
+            this.cmbt_mass = (double)ship.Size;
+            this.maxfowardThrust = ship.Speed / this.cmbt_mass;
+            this.maxStrafeThrust = (ship.Speed / this.cmbt_mass) / 4;
+            this.Rotate = (ship.Speed / this.cmbt_mass) / 12;
+
+            this.waypointTarget = new combatWaypoint();
+            this.weaponTarget = new List<CombatObj>(1);//eventualy this should be something with the multiplex tracking component.
+            
+            this.cmbt_thrust = new Point3d(0, 0, 0);
+            this.cmbt_accel = new Point3d(0, 0, 0);
+
         }
 
         /// <summary>
         /// location within the sector
         /// </summary>
         public Point3d cmbt_loc { get; set; }
-
 
         /// <summary>
         /// between phys tic locations. 
@@ -51,6 +58,15 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         public Point3d cmbt_vel { get; set; }
 
+        public Point3d cmbt_accel { get; set; }
+
+        public Point3d cmbt_thrust { get; set; }
+
+        public double cmbt_mass { get; set; }
+
+        //public Point3d cmbt_maxThrust { get; set; }
+        //public Point3d cmbt_minThrust { get; set; }
+
         public ICombatObject icomobj
         {
 
@@ -64,9 +80,9 @@ namespace FrEee.Game.Objects.Combat2
 
         public List<CombatObj> weaponTarget { get; set; }
 
-        public int Accel { get; set; }
-        public int Strafe { get; set; }
-        public int Rotate { get; set; }
+        public double maxfowardThrust { get; set; }
+        public double maxStrafeThrust { get; set; }
+        public double Rotate { get; set; }
 
     }
 
@@ -128,7 +144,10 @@ namespace FrEee.Game.Objects.Combat2
     public class combatWaypoint
     {
         public combatWaypoint()
-        { }
+        {
+            this.cmbt_loc = new Point3d(0, 0, 0);
+            this.cmbt_vel = new Point3d(0, 0, 0);
+        }
         public combatWaypoint(Point3d cmbt_loc)
         {
             this.cmbt_loc = cmbt_loc;
