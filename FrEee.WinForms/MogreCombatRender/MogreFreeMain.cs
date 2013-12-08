@@ -84,7 +84,17 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void CreateRoot()
         {
-            mRoot = new Root(); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
+			try
+			{
+				mRoot = new Root("MogreCombatRender/plugins.cfg"); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
+			}
+			catch (SEHException ex)
+			{
+				if (OgreException.IsThrown)
+					throw new InvalidOperationException(OgreException.LastException.FullDescription);
+				else
+					throw;
+			}
         }
 
         private void DefineResources()
