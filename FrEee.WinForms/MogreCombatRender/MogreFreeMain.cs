@@ -8,6 +8,8 @@ using FrEee.Game.Objects.Combat2;
 using System.Runtime.InteropServices;
 
 using Mogre;
+using System.Windows.Forms;
+using System.Drawing;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -25,6 +27,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
         protected Camera mCamera;
         protected CameraMan mCameraMan;
+
+		private Form form;
 
         //protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
         protected SceneNode mNode_lines = null;
@@ -51,9 +55,8 @@ namespace FrEee.WinForms.MogreCombatRender
                 CreateScene();
                 InitializeInput();
                 CreateFrameListeners();
-             
-                EnterRenderLoop();
-                startloop();
+
+				Go();
 
             }
             catch (OperationCanceledException) { }
@@ -65,7 +68,6 @@ namespace FrEee.WinForms.MogreCombatRender
             {
                 renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
             }
-
         }
 
 
@@ -112,8 +114,28 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void CreateRenderWindow()
         {
-            mRenderWindow = mRoot.Initialise(true, "Main CC Window");
+			// Create Render Window
+			mRoot.Initialise(false, "Main Ogre Window");
+			NameValuePairList misc = new NameValuePairList();
+			form = new Form();
+			misc["externalWindowHandle"] = form.Handle.ToString();
+			mRenderWindow = mRoot.CreateRenderWindow("Main RenderWindow", 800, 600, false, misc);
+			form.Size = new Size(800, 600);
+			form.Disposed += form_Disposed;
+			form.Resize += form_Resize;
+			form.Show();
         }
+
+		void form_Resize(object sender, EventArgs e)
+		{
+			mRenderWindow.WindowMovedOrResized();
+		}
+
+		void form_Disposed(object sender, EventArgs e)
+		{
+			mRoot.Dispose();
+			mRoot = null;
+		}
 
         private void InitializeResources()
         {
@@ -220,7 +242,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void EnterRenderLoop()
         {
-            mRoot.StartRendering();
+			if (mRoot != null)
+				mRoot.StartRendering();
         }
 
         protected void Shutdown()
@@ -407,10 +430,10 @@ namespace FrEee.WinForms.MogreCombatRender
         }
         #endregion
 
-        private void startloop()
+        private void Go()
         {
             bool running = true;
-            while (running)
+            while (running && mRoot != null && mRoot.RenderOneFrame())
             {
                 physicsstopwatch.Restart();
                 double battletic = 0;
@@ -428,8 +451,8 @@ namespace FrEee.WinForms.MogreCombatRender
                     Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
                     do_graphics(comObj, renderloc);
                 }
+				Application.DoEvents();
             }
-
         }
 
         private void do_graphics(CombatObj obj, Point3d renderloc)
