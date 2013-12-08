@@ -61,7 +61,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void setup()
         {
-            foreach (CombatObj comObj in battle.Combatants)
+            foreach (CombatObj comObj in battle.comObjs)
             {
                 renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
             }
@@ -155,12 +155,12 @@ namespace FrEee.WinForms.MogreCombatRender
         {
             mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
 
-            Camera camera = mSceneMgr.CreateCamera("Camera");
-            camera.Position = new Vector3(0, 0, 5000);
-            camera.LookAt(Vector3.ZERO);
-            Viewport viewport = mRenderWindow.AddViewport(camera);
-            viewport.BackgroundColour = ColourValue.Black;
-            camera.AspectRatio = (float)viewport.ActualWidth / viewport.ActualHeight;
+			CreateCamera();
+            mCamera.Position = new Vector3(0, 0, 5000);
+			mCamera.LookAt(Vector3.ZERO);
+			mViewport = mRenderWindow.AddViewport(mCamera);
+			mViewport.BackgroundColour = ColourValue.Black;
+			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 
 
             foreach (CombatObj obj in renderObjects.Values)
