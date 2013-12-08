@@ -81,10 +81,10 @@
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="Mogre">
-      <HintPath>CombatMogre\Mogre.dll</HintPath>
+      <HintPath>MogreCombatRender\Mogre.dll</HintPath>
     </Reference>
     <Reference Include="MOIS">
-      <HintPath>CombatMogre\MOIS.dll</HintPath>
+      <HintPath>MogreCombatRender\MOIS.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
