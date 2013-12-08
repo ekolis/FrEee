@@ -25,7 +25,8 @@ namespace FrEee.Game.Objects.Combat2
 			Sector = location;
 			//Log = new List<LogMessage>();
             EmpiresArray = (Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray());
-			Combatants = new HashSet<ICombatObject>(Sector.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
+			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
+			CombatObjects = new HashSet<CombatObject>();
             
             foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
             {
@@ -68,13 +69,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// The empires engagaed in battle.
 		/// </summary>
 		public IEnumerable<Empire> EmpiresArray { get; private set; }
-        public Dictionary<Empire, EmpireinCombat> Empires = new Dictionary<Empire,EmpireinCombat>{ };
+        public Dictionary<Empire, CombatEmpire> Empires = new Dictionary<Empire,CombatEmpire>{ };
 
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
-		public ISet<ICombatObject> Combatants { get; private set; }
-        public List<CombatObj> comObjs  = new List<CombatObj>();
+		public ISet<ICombatant> Combatants { get; private set; }
+		public ISet<CombatObject> CombatObjects { get; private set; }
         /// <summary>
         /// the Fleets in this battle
         /// </summary>
@@ -109,7 +110,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         ///  
         /// </summary>
-        public Point3d simPhysTic(CombatObj comObj, double tic_time, double plus_time = 0)
+        public Point3d simPhysTic(CombatObject comObj, double tic_time, double plus_time = 0)
         {     
                 comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
 
@@ -121,7 +122,7 @@ namespace FrEee.Game.Objects.Combat2
         }
 
 
-        private void setupPices()
+        private void SetUpPieces()
         {
             Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
@@ -135,19 +136,19 @@ namespace FrEee.Game.Objects.Combat2
             //setup the game peices
             foreach (Empire empire in EmpiresArray)
             {
-                Empires.Add(empire, new EmpireinCombat());
+                Empires.Add(empire, new CombatEmpire());
             }
             foreach (SpaceVehicle ship in Combatants)
             {
-                CombatObj thiscomobj = new CombatObj(ship);
+                CombatObject thiscomobj = new CombatObject(ship);
                 int empindex = EmpiresArray.GetIndex(ship.Owner);
                 thiscomobj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
                 thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
                 int speed = ship.Speed;
                 thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
-                comObjs.Add(thiscomobj);
+                CombatObjects.Add(thiscomobj);
                 Empires[ship.Owner].ownships.Add(thiscomobj);
-                foreach (KeyValuePair<Empire, EmpireinCombat> empire in Empires)
+                foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
                 {
                     if (ship.IsHostileTo(empire.Key))
                         empire.Value.hostile.Add(thiscomobj);
@@ -157,19 +158,19 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-        private void commandAI(CombatObj comObj)
+        private void commandAI(CombatObject comObj)
         {
             //do AI decision stuff.
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
             combatWaypoint wpt = new combatWaypoint(Empires[comObj.icomobj.Owner].hostile[0]);
             comObj.waypointTarget = wpt;
             //pick a primary target to fire apon from a list of enemy within weapon range
-            comObj.weaponTarget = new List<CombatObj>();
+            comObj.weaponTarget = new List<CombatObject>();
             comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
             
         }
 
-        private void helm(CombatObj comObj)
+        private void helm(CombatObject comObj)
         {
             //rotate ship
             double timetoturn = 0;
@@ -243,7 +244,7 @@ namespace FrEee.Game.Objects.Combat2
             comObj.lastVectortoWaypoint = vectortowaypoint;
         }
 
-        private void firecontrol(double tic_countr, CombatObj comObj)
+        private void firecontrol(double tic_countr, CombatObject comObj)
         {
             foreach (var weapon in comObj.icomobj.Weapons)
             {
@@ -281,7 +282,7 @@ namespace FrEee.Game.Objects.Combat2
         private void battleloop(double tic_countr)
         {
 
-            foreach (CombatObj comObj in comObjs)
+            foreach (CombatObject comObj in CombatObjects)
             {
 
                 //heading and thrust
@@ -303,7 +304,7 @@ namespace FrEee.Game.Objects.Combat2
             
 
 
-            setupPices();
+            SetUpPieces();
             
             
             //unleash the dogs of war!
@@ -316,7 +317,7 @@ namespace FrEee.Game.Objects.Combat2
                 battleloop(tic_countr);
                 if (cmdfreq_countr >= comdfreq)
                 {
-                    foreach (CombatObj comObj in comObjs)
+                    foreach (CombatObject comObj in CombatObjects)
                         commandAI(comObj);
                     cmdfreq_countr = 0;
                 }
@@ -340,7 +341,7 @@ namespace FrEee.Game.Objects.Combat2
             Previous.Add(this);
         }
 
-        private bool isinRange(CombatObj attacker, Component weapon, CombatObj target)
+        private bool isinRange(CombatObject attacker, Component weapon, CombatObject target)
         {
             bool inrange = false;
             var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
@@ -371,11 +372,11 @@ namespace FrEee.Game.Objects.Combat2
             return inrange;
         }
 
-        private combatEvent FireWeapon(double tic, CombatObj attacker, Component weapon, CombatObj target)
+        private combatEvent FireWeapon(double tic, CombatObject attacker, Component weapon, CombatObject target)
         {
             combatEvent shotevent = new combatEvent(tic, "FireWeapon", attacker, target);
             double range = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            ICombatObject defender = target.icomobj;
+            ICombatant defender = target.icomobj;
             Vehicle defenderV = (Vehicle)defender;
 
             if (!weapon.CanTarget(defender))
@@ -406,7 +407,7 @@ namespace FrEee.Game.Objects.Combat2
             return shotevent;
         }
 
-        private void combatDamage(CombatObj target, Component weapon, int damage)
+        private void combatDamage(CombatObject target, Component weapon, int damage)
         {
 
             Combat.DamageType damageType = weapon.Template.ComponentTemplate.WeaponInfo.DamageType;           

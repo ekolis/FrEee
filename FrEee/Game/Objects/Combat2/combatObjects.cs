@@ -7,21 +7,21 @@ using FrEee.Game.Interfaces;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class EmpireinCombat
+    public class CombatEmpire
     {
-        public List<CombatObj> ownships = new List<CombatObj>();
-        public List<CombatObj> friendly = new List<CombatObj>();
-        public List<CombatObj> nutral = new List<CombatObj>(); //not currently used.
-        public List<CombatObj> hostile = new List<CombatObj>();
-        public EmpireinCombat()
+        public List<CombatObject> ownships = new List<CombatObject>();
+        public List<CombatObject> friendly = new List<CombatObject>();
+        public List<CombatObject> neutral = new List<CombatObject>(); //not currently used.
+        public List<CombatObject> hostile = new List<CombatObject>();
+        public CombatEmpire()
         { }
     }
 
-    public class CombatObj
+    public class CombatObject
     {
-        private ICombatObject comObj;
+        private ICombatant comObj;
 
-        public CombatObj(ICombatObject comObj)
+        public CombatObject(ICombatant comObj)
         {
             this.comObj = comObj;
             Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
@@ -31,7 +31,7 @@ namespace FrEee.Game.Objects.Combat2
             this.Rotate = (ship.Speed / this.cmbt_mass) / 12;
 
             this.waypointTarget = new combatWaypoint();
-            this.weaponTarget = new List<CombatObj>(1);//eventualy this should be something with the multiplex tracking component.
+            this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
             
             this.cmbt_thrust = new Point3d(0, 0, 0);
             this.cmbt_accel = new Point3d(0, 0, 0);
@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Combat2
         //public Point3d cmbt_maxThrust { get; set; }
         //public Point3d cmbt_minThrust { get; set; }
 
-        public ICombatObject icomobj
+        public ICombatant icomobj
         {
 
             get { return this.comObj; }
@@ -78,7 +78,7 @@ namespace FrEee.Game.Objects.Combat2
         public Point3d lastVectortoWaypoint { get; set; }
         //public double lastDistancetoWaypoint { get; set; }
 
-        public List<CombatObj> weaponTarget { get; set; }
+        public List<CombatObject> weaponTarget { get; set; }
 
         public double maxfowardThrust { get; set; }
         public double maxStrafeThrust { get; set; }
@@ -117,13 +117,13 @@ namespace FrEee.Game.Objects.Combat2
     {
         double evnttic;
         string evnttype;
-        CombatObj comObj;
+        CombatObject comObj;
         //something component/weapon type
-        CombatObj target;
+        CombatObject target;
         bool hit;
         double endpoint_tic;
         Point3d endpoint;
-        public combatEvent(double tic, string type, CombatObj comObj, CombatObj target)
+        public combatEvent(double tic, string type, CombatObject comObj, CombatObject target)
         {
             this.evnttic = tic;
             this.evnttype = type;
@@ -152,7 +152,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.cmbt_loc = cmbt_loc;
         }
-        public combatWaypoint(CombatObj comObj)
+        public combatWaypoint(CombatObject comObj)
         {
             this.comObj = comObj;
             this.cmbt_loc = comObj.cmbt_loc;
@@ -172,7 +172,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// 
         /// </summary>
-        public CombatObj comObj { get; set; }
+        public CombatObject comObj { get; set; }
 
     }
 }

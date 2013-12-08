@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public bool CanTarget(ICombatObject target)
+		public bool CanTarget(ICombatant target)
 		{
 			if (IsDestroyed)
 				return false; // damaged weapons can't fire!
@@ -79,7 +79,7 @@ namespace FrEee.Game.Objects.Technology
 		/// If not a weapon, does nothing.
 		/// </summary>
 		/// <param name="target"></param>
-		public void Attack(ICombatObject defender, int range, Battle battle)
+		public void Attack(ICombatant defender, int range, Battle battle)
 		{
 			if (!CanTarget(defender))
 				return;

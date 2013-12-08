@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Combat
 			Sector = location;
 			Log = new List<LogMessage>();
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Combatants = new HashSet<ICombatObject>(Sector.SpaceObjects.OfType<ICombatObject>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
+			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
 		}
 
 		static Battle()
@@ -62,7 +62,7 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
-		public ISet<ICombatObject> Combatants { get; private set; }
+		public ISet<ICombatant> Combatants { get; private set; }
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -174,7 +174,7 @@ namespace FrEee.Game.Objects.Combat
 			}
 
 			// replenish combatants' shields
-			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatObject>())
+			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatant>())
 				combatant.ReplenishShields();
 
 			// validate fleets
@@ -191,9 +191,9 @@ namespace FrEee.Game.Objects.Combat
 			Log.Add(new GenericLogMessage("Begin round " + i + "!"));
 		}
 
-		public void LogSalvo(ICombatObject attacker, ICombatObject defender)
+		public void LogSalvo(ICombatant attacker, ICombatant defender)
 		{
-			Log.Add(new PictorialLogMessage<ICombatObject>(attacker + " attacks " + defender + "!", attacker));
+			Log.Add(new PictorialLogMessage<ICombatant>(attacker + " attacks " + defender + "!", attacker));
 		}
 
 		public void LogShot(Component weapon, bool hit)
@@ -201,14 +201,14 @@ namespace FrEee.Game.Objects.Combat
 			Log.Add(new PictorialLogMessage<Component>("Fires " + weapon + " and " + (hit ? "hits" : "misses") + "!", weapon));
 		}
 
-		public void LogLaunch(ICombatObject craft)
+		public void LogLaunch(ICombatant craft)
 		{
-			Log.Add(new PictorialLogMessage<ICombatObject>("Launches " + craft + "!", craft));
+			Log.Add(new PictorialLogMessage<ICombatant>("Launches " + craft + "!", craft));
 		}
 
-		public void LogShieldDamage(ICombatObject defender, int damage)
+		public void LogShieldDamage(ICombatant defender, int damage)
 		{
-			Log.Add(new PictorialLogMessage<ICombatObject>(defender + "'s shields take " + damage + " damage!", defender));
+			Log.Add(new PictorialLogMessage<ICombatant>(defender + "'s shields take " + damage + " damage!", defender));
 		}
 
 		public void LogComponentDamage(Component component, int damage)
@@ -230,9 +230,9 @@ namespace FrEee.Game.Objects.Combat
 			Log.Add(seeker.CreateLogMessage(seeker + " takes " + damage + " damage!"));
 		}
 
-		public void LogTargetDeath(ICombatObject defender)
+		public void LogTargetDeath(ICombatant defender)
 		{
-			Log.Add(new PictorialLogMessage<ICombatObject>(defender + " is destroyed!", defender));
+			Log.Add(new PictorialLogMessage<ICombatant>(defender + " is destroyed!", defender));
 		}
 
 		public System.Drawing.Image Icon

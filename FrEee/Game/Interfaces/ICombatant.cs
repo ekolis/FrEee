@@ -11,16 +11,16 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// An object that may fire weapons and can targeted by weapons.
+	/// An object that can fire weapons and/or targeted by weapons.
 	/// </summary>
-	public interface ICombatObject : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated
+	public interface ICombatant : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated
 	{
 		/// <summary>
 		/// Can this object fire on another combat object?
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns>true if the target is an enemy and this combat object has weapons capable of targeting it</returns>
-		bool CanTarget(ICombatObject target);
+		bool CanTarget(ICombatant target);
 
 		/// <summary>
 		/// What type of object is this for weapon targeting purposes?
