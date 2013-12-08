@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using FrEee.Game.Objects.Combat2;
 
 using Mogre;
+using System.Runtime.InteropServices;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -89,15 +90,35 @@ namespace FrEee.WinForms.MogreCombatRender
         private void DefineResources()
         {
             ConfigFile cf = new ConfigFile();
-            cf.Load("resources.cfg", "\t:=", true);
+			try
+			{
+				cf.Load("MogreCombatRender/resources.cfg", "\t:=", true);
+			}
+			catch (SEHException ex)
+			{
+				if (OgreException.IsThrown)
+					throw new InvalidOperationException(OgreException.LastException.FullDescription);
+				else
+					throw;
+			}
 
             var section = cf.GetSectionIterator();
             while (section.MoveNext())
             {
                 foreach (var line in section.Current)
                 {
-                    ResourceGroupManager.Singleton.AddResourceLocation(
-                        line.Value, line.Key, section.CurrentKey);
+					try
+					{
+						ResourceGroupManager.Singleton.AddResourceLocation(
+							line.Value, line.Key, section.CurrentKey);
+					}
+					catch (SEHException ex)
+					{
+						if (OgreException.IsThrown)
+							throw new InvalidOperationException(OgreException.LastException.FullDescription);
+						else
+							throw;
+					}
                 }
             }
         }
