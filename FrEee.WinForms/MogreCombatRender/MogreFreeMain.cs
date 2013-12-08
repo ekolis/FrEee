@@ -76,12 +76,10 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected virtual void CreateCamera()
 		{
 			mCamera = mSceneMgr.CreateCamera("PlayerCam");
-
-			mCamera.Position = new Vector3(750, 2000, 750);
-
-			mCamera.LookAt(new Vector3(0, 0, 0));
+			mCamera.Position = new Vector3(0, 0, 500e3f);
+			mCamera.LookAt(Vector3.ZERO);
 			mCamera.NearClipDistance = 5;
-			mCamera.FarClipDistance = 5000;
+			mCamera.FarClipDistance = 1e6f;
 
 			mCameraMan = new CameraMan(mCamera);
 		}
@@ -179,8 +177,6 @@ namespace FrEee.WinForms.MogreCombatRender
 			mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
 
 			CreateCamera();
-			mCamera.Position = new Vector3(0, 0, 5000);
-			mCamera.LookAt(Vector3.ZERO);
 			mViewport = mRenderWindow.AddViewport(mCamera);
 			mViewport.BackgroundColour = ColourValue.Black;
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
@@ -418,14 +414,15 @@ namespace FrEee.WinForms.MogreCombatRender
 			//float scalex = ((float)(obj.Size.X) / sizex);
 			//float scaley = ((float)(obj.Size.Z) / sizey);
 			//float scalez = ((float)(obj.Size.Y) / sizez);
-			float scalex = ((float)(50) / sizex);
-			float scaley = ((float)(50) / sizey);
-			float scalez = ((float)(100) / sizez);
+			float scalex = ((float)(50000) / sizex);
+			float scaley = ((float)(50000) / sizey);
+			float scalez = ((float)(100000) / sizez);
 			objNode.Scale(scalex, scaley, scalez);
 			//objNode.Yaw(new Degree(-90));
 
 			objNode.AttachObject(objEnt);
-			objNode.Position = new Vector3((float)obj.cmbt_loc.X, (float)obj.cmbt_loc.Z, (float)obj.cmbt_loc.Y);
+			objNode.Position = new Vector3();
+			//objNode.Position = new Vector3((float)obj.cmbt_loc.X / 1e6f, (float)obj.cmbt_loc.Z / 1e6f, (float)obj.cmbt_loc.Y / 1e6f);
 			//renderObjects.Add(obj);
 		}
 		#endregion
