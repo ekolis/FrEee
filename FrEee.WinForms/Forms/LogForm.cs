@@ -18,6 +18,8 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.WinForms.Controls;
 
+using FrEee.Game.Objects.Combat2;
+
 namespace FrEee.WinForms.Forms
 {
 	public partial class LogForm : Form
@@ -119,13 +121,17 @@ namespace FrEee.WinForms.Forms
 						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
 						Close();
 					}
-					else if (context is IMessage)
-					{
-						// show diplomacy screen
-						var form = new DiplomacyForm((IMessage)context);
-						gameForm.ShowChildForm(form);
-						Close();
-					}
+                    else if (context is Battle_Space)
+                    {
+                        MogreCombatRender.MogreFreeMain replay = new MogreCombatRender.MogreFreeMain((Battle_Space)context);
+                    }
+                    else if (context is IMessage)
+                    {
+                        // show diplomacy screen
+                        var form = new DiplomacyForm((IMessage)context);
+                        gameForm.ShowChildForm(form);
+                        Close();
+                    }
 
 					// TODO - more types of goto-messages
 				}
