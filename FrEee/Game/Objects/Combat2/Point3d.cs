@@ -247,7 +247,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// returns a 2d vector for a given angle and scaler
         /// </summary>
-        /// <param name="hypotinuse"></param>
+        /// <param name="hypotinuse - note! in 3d space this will be too long and the result will be incorrect"></param>
         /// <param name="angle_A"></param>
         /// <param name="radians">if angle_A is given in deg, make this false</param>
         /// <returns>a 2d point</returns>
@@ -262,33 +262,10 @@ namespace FrEee.Game.Objects.Combat2
             side_a = Math.Cos(angle_A) * hypotinuse;
 
 
-            return new Point3d(side_b, side_a);
+            return new Point3d(side_b, side_a, 0);
         }
 
-        /// <summary>
-        /// returns a 3d vector for a scaler and given angles.
-        /// Needs testing!
-        /// </summary>
-        /// <param name="hypotinuse"></param>
-        /// <param name="angle_A"></param>
-        /// <param name="radians">if angle_A is given in deg, make this false</param>
-        /// <returns>a 3d point</returns>
-        public static Point3d sides_abc(double hypotinuse, double angle_A, double angle_B, bool radians = true)
-        {
-            if (!radians)
-            { 
-                angle_A = angle_A * Math.PI / 180;
-                angle_A = angle_B * Math.PI / 180;
-            }
-            double side_a = 0;
-            double side_b = 0;
-            double side_c = 0;
-            side_b = Math.Sin(angle_A) * hypotinuse;
-            side_a = Math.Cos(angle_A) * hypotinuse;
-            side_c = Math.Tan(angle_B) * side_a;
 
-            return new Point3d(side_b, side_a, side_c);
-        }
 
         /// <summary>
         /// law of cosines
@@ -374,4 +351,121 @@ namespace FrEee.Game.Objects.Combat2
         }
 
     }
+
+    public static class GravMath
+    {
+
+        //
+
+        public const double bigG_N_kg_ms = 6.67428e-11;
+        public const double bigG_N_kg_ks = 6.67428e-20;
+        public const double bigG_N_kg_mh = 7.716049382716049382716049382716e-8;
+
+        /// <summary>
+        /// calculates the grav force between two bodies
+        /// </summary>
+        /// <param name="mass1">first mass in kg</param>
+        /// <param name="mass2">second mass in kg</param>
+        /// <param name="distance">distance from COM in m</param>
+        /// <returns>
+        /// Force in Newtons.
+        /// </returns>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        public static double gravForce(double mass1, double mass2, double distance)
+        {
+
+            double force;
+            //force = bigG_N_kg_mh * (mass1 * mass2 / Math.Pow(distance, 2));
+            //force = bigG_N_kg_ms * (mass1 * mass2 / Math.Pow(distance, 2));
+            force = bigG_N_kg_ms * mass1 * mass2 / Math.Pow(distance, 2);
+            return force;
+        }
+
+
+        /// <summary>
+        /// turns acceleration into a vector
+        /// </summary>
+        /// <param name="pos2">second position ralitive to the first. ie zeroedloc</param>
+        /// <param name="accel">acceleration in m/s</param>
+        /// <param name="distance">distance in m</param>
+        /// <returns>
+        ///  vectorMD
+        /// </returns>
+        /// <remarks>
+        ///  distance so we don't have to calculate this again, since we already did it for gravforce
+        /// </remarks>
+        public static Point3d accelVector(Point3d pos2, double accel, double distance)
+        {
+            double multiplier = (distance * 0.01) * accel; //wait wait what? why am I distance * 0.01?
+            return pos2 * multiplier;
+        }
+
+
+        /// <summary>
+        /// calculate the acceleration for a given mass and force.
+        /// </summary>
+        /// <param name="mass">mass as a double in kg</param>
+        /// <param name="forcevec"> force as a CartVec in newtons</param>
+        /// <returns>aceleration as a CartVec</returns>
+        public static Point3d accelVector(double mass, Point3d forcevec)
+        {
+            //return new VectorMD(forcevec.X / mass, forcevec.Y / mass, forcevec.Z / mass);
+            return forcevec / mass;
+        }
+
+
+        /// <summary>
+        /// calculates the accelerat of two bodies
+        /// </summary>
+        /// <param name="mass"> mass in kg</param>
+        /// <param name="force">force from gravity in Netwtons</param>
+        /// <returns>
+        /// acceleration as a double in m/s.
+        /// </returns>
+        /// <remarks>
+        /// 
+        /// </remarks>
+        public static double acceldouble(double mass, double force)
+        {
+            return force / mass;
+        }
+
+        /// <summary>
+        /// returns the angular acceleration for a given mass, and force at radius from pivot.
+        /// </summary>
+        /// <param name="mass"></param>
+        /// <param name="radius"></param>
+        /// <param name="force"></param>
+        /// <returns></returns>
+        public static double angular_acceleration(double mass, double force, double radius)
+        {
+
+            return torque(force, radius) / moment_of_Intertia(mass, radius);
+        }
+
+        /// <summary>
+        /// returns the tourque as a double. todo: return as a vector.
+        /// </summary>
+        /// <param name="force"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static double torque(double force, double radius)
+        {
+            return force * radius;
+        }
+
+        /// <summary>
+        /// returns the moment of intertia for a given mass and radius.
+        /// </summary>
+        /// <param name="mass"></param>
+        /// <param name="radius"></param>
+        /// <returns></returns>
+        public static double moment_of_Intertia(double mass, double radius)
+        {
+            return mass * System.Math.Pow(radius, 2);
+        }
+    }
+
 }
