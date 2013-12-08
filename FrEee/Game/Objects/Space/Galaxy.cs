@@ -17,6 +17,7 @@ using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -891,9 +892,10 @@ namespace FrEee.Game.Objects.Space
 					var sector = v.FindSector();
 					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
 					{
-						var battle = new Battle(sector);
+						//var battle = new Battle(sector);
+						var battle = new Battle_Space(sector);
 						battle.Resolve();
-						foreach (var emp in battle.Empires)
+						foreach (var emp in battle.Empires.Keys)
 							emp.Log.Add(battle.CreateLogMessage(battle.Name));
 					}
 				}
