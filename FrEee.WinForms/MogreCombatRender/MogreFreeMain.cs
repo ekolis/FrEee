@@ -81,6 +81,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
             mCamera.LookAt(new Vector3(0, 0, 0));
             mCamera.NearClipDistance = 5;
+			mCamera.FarClipDistance = 5000;
 
             mCameraMan = new CameraMan(mCamera);
         }
