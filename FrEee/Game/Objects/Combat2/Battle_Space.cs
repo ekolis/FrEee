@@ -329,6 +329,8 @@ namespace FrEee.Game.Objects.Combat2
 
                 if (!ships_persuing && !ships_inrange)
                     battleongoing = false;
+                if (tic_countr > 10000)
+                    battleongoing = false;
                 cmdfreq_countr++;
                 tic_countr++;
             }
