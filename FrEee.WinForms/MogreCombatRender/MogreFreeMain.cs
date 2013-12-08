@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using FrEee.Game.Objects.Combat2;
+using System.Runtime.InteropServices;
 
 using Mogre;
 
@@ -50,11 +51,9 @@ namespace FrEee.WinForms.MogreCombatRender
                 CreateScene();
                 InitializeInput();
                 CreateFrameListeners();
-
-                //physicsstopwatch.Start();
-                //pyhsics_eventtimer();
              
                 EnterRenderLoop();
+                startloop();
 
             }
             catch (OperationCanceledException) { }
@@ -62,7 +61,10 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void setup()
         {
-
+            foreach (CombatObj comObj in battle.Combatants)
+            {
+                renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
+            }
 
         }
 
@@ -151,28 +153,19 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void CreateScene()
         {
-            mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_EXTERIOR_CLOSE);
-            mSceneMgr.SetWorldGeometry("terrain.cfg");
-            //Camera camera = mSceneMgr.CreateCamera("Camera");
-            //camera.Position = new Vector3(50, 1000, 0);
-            //camera.LookAt(Vector3.ZERO);
-            CreateCamera();
-            mViewport = mRenderWindow.AddViewport(mCamera);
-            mViewport.BackgroundColour = ColourValue.Black;
-            mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
+            mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
+
+            Camera camera = mSceneMgr.CreateCamera("Camera");
+            camera.Position = new Vector3(0, 0, 5000);
+            camera.LookAt(Vector3.ZERO);
+            Viewport viewport = mRenderWindow.AddViewport(camera);
+            viewport.BackgroundColour = ColourValue.Black;
+            camera.AspectRatio = (float)viewport.ActualWidth / viewport.ActualHeight;
 
 
             foreach (CombatObj obj in renderObjects.Values)
             {
-                //Entity dudeEnt = mSceneMgr.CreateEntity(obj.getID, obj.MeshName);
-                //SceneNode dudeNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.getID);
-
-                //dudeNode.Yaw(new Degree(-90));
-
-                //dudeNode.AttachObject(dudeEnt);
-                //dudeNode.Position = new Vector3((float)obj.Loc.X, 0, (float)obj.Loc.Y);
                 CreateNewEntity(obj);
-
             }
 
             String resourceGroupName = "lines";
@@ -202,47 +195,6 @@ namespace FrEee.WinForms.MogreCombatRender
             moMaterialgreen.Dispose();  // dispose pointer, not the material
 
             mNode_lines = mSceneMgr.RootSceneNode.CreateChildSceneNode(" ", Vector3.ZERO);
-            //foreach (ControlledSO ship in shiplist)
-            //{
-            //    Entity shipEnt = sceneMgr.CreateEntity(ship.IDName, ship.Meshname);
-            //    //Entity shipEnt = sceneMgr.CreateEntity(ship.IDName, "ogrehead.mesh");
-            //    SceneNode shipNode = sceneMgr.RootSceneNode.CreateChildSceneNode(ship.IDName);
-
-            //    shipNode.AttachObject(shipEnt);
-            //    shipNode.Position = new Vector3((float)ship.Location.X, (float)ship.Location.Y, 0);
-
-            //}
-
-            //foreach (SpaceObjects rock in rocklist)
-            //{
-            //    //Mogre.MeshPtr rockmesh = MeshManager.Singleton.CreateManual("create", "general");
-
-            //    ManualObject rockMobj = sceneMgr.CreateManualObject();
-            //    rockMobj.Begin("Ogre/Eyes", RenderOperation.OperationTypes.OT_TRIANGLE_FAN);
-            //    //rockMobj.Begin("Ogre/Eyes", RenderOperation.OperationTypes.OT_TRIANGLE_STRIP);
-            //    rockMobj.Position(0.0f, 0.0f, 0.0f);
-            //    rockMobj.Position(100.0f, 0.0f, 0.0f);
-            //    rockMobj.Position(75.0f, 75.0f, 0.0f);
-            //    rockMobj.Position(0.0f, 100.0f, 0.0f);
-            //    rockMobj.Position(-75.0f, 75.0f, 0.0f);
-            //    rockMobj.Position(-100.0f, 0.0f, 0.0f);
-            //    rockMobj.Position(-75.0f, -75.0f, 0.0f);
-            //    rockMobj.Index(0);//Front Side
-            //    rockMobj.Index(1);
-            //    rockMobj.Index(2);
-            //    rockMobj.Index(3);
-            //    rockMobj.Index(4);
-            //    rockMobj.Index(5);
-            //    rockMobj.Index(6);
-            //    rockMobj.Index(7);
-            //    rockMobj.End();
-
-            //    SceneNode rockNode = sceneMgr.RootSceneNode.CreateChildSceneNode(rock.IDName);
-
-            //    rockNode.AttachObject(rockMobj);
-            //    rockNode.Position = new Vector3((float)rock.Location.X, (float)rock.Location.Y, 0);
-            //}
-
 
             mSceneMgr.AmbientLight = new ColourValue(0.5f, 0.5f, 0.5f);
 
