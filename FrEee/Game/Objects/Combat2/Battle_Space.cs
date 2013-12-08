@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class Battle_Space : INamed, ILocated, IPictorial
     {
-        public Battle_Space(Sector location, combatReplayLog replaylog = null)
+        public Battle_Space(Sector location, bool isreplay = false)
 		{
 			if (location == null)
 				throw new Exception("Battles require a sector location.");
@@ -31,11 +31,8 @@ namespace FrEee.Game.Objects.Combat2
             {
                 fleets.Add(fleet);
             }
-            this.replaylog = replaylog;
-            if (replaylog != null)
-            { notreplay = true;  }
-            else
-            { notreplay = false; }
+            this.isreplay = isreplay;
+
 		}
 
         static Battle_Space()
@@ -44,7 +41,7 @@ namespace FrEee.Game.Objects.Combat2
             Previous = new HashSet<Battle_Space>();
         }
 
-        public bool notreplay = true;
+        public bool isreplay = true;
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -271,7 +268,7 @@ namespace FrEee.Game.Objects.Combat2
                         {
                             fire.endevent(tic_countr, comObj.weaponTarget[0].cmbt_loc);
                         }
-                        if (notreplay)
+                        if (isreplay)
                         {
                             replaylog.addEvent(tic_countr, fire);
                         }

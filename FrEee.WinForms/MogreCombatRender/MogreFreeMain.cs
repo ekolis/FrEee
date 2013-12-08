@@ -35,7 +35,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
         public MogreFreeMain(Battle_Space battle)
         {
-            this.battle = battle;
+            this.battle = new Battle_Space(battle.Sector, true);
             setup();
 
             try
