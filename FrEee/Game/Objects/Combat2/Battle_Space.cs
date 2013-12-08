@@ -16,7 +16,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class Battle_Space : INamed, ILocated
+    public class Battle_Space : INamed, ILocated, IPictorial
     {
         public Battle_Space(Sector location, combatReplayLog replaylog = null)
 		{
@@ -454,5 +454,14 @@ namespace FrEee.Game.Objects.Combat2
 
         }
 
+		public System.Drawing.Image Icon
+		{
+			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
+		}
+
+		public System.Drawing.Image Portrait
+		{
+			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
+		}
     }
 }
