@@ -35,12 +35,12 @@ namespace FrEee.WinForms.MogreCombatRender
 
         System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
 
-        Dictionary<string, CombatObj> renderObjects = new Dictionary<string, CombatObj>();
+        Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
         private Battle_Space battle;
 
         public MogreFreeMain(Battle_Space battle)
         {
-            this.battle = new Battle_Space(battle.Sector, true);
+			this.battle = battle;
             setup();
 
             try
@@ -64,7 +64,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void setup()
         {
-            foreach (CombatObj comObj in battle.comObjs)
+            foreach (CombatObject comObj in battle.CombatObjects)
             {
                 renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
             }
@@ -186,7 +186,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 
 
-            foreach (CombatObj obj in renderObjects.Values)
+            foreach (CombatObject obj in renderObjects.Values)
             {
                 CreateNewEntity(obj);
             }
@@ -408,7 +408,7 @@ namespace FrEee.WinForms.MogreCombatRender
             return true;
         }
 
-        private void CreateNewEntity(CombatObj obj)
+        private void CreateNewEntity(CombatObject obj)
         {
 
             Entity objEnt = mSceneMgr.CreateEntity(obj.icomobj.ID.ToString(), "DeltaShip.mesh");
@@ -440,14 +440,14 @@ namespace FrEee.WinForms.MogreCombatRender
                 double battletic = 0;
                 while (physicsstopwatch.ElapsedMilliseconds < 1000)
                 {
-                    foreach (CombatObj comObj in renderObjects.Values)
+                    foreach (CombatObject comObj in renderObjects.Values)
                     {
                         Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
                         do_graphics(comObj, renderloc);
                     }
                 }
                 battletic++;
-                foreach (CombatObj comObj in renderObjects.Values)
+                foreach (CombatObject comObj in renderObjects.Values)
                 {
                     Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
                     do_graphics(comObj, renderloc);
@@ -456,7 +456,7 @@ namespace FrEee.WinForms.MogreCombatRender
             }
         }
 
-        private void do_graphics(CombatObj obj, Point3d renderloc)
+        private void do_graphics(CombatObject obj, Point3d renderloc)
         {
             //foreach (CombatObj obj in renderObjects.Values)
             //{

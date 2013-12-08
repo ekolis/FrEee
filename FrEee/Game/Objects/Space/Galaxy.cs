@@ -890,7 +890,7 @@ namespace FrEee.Game.Objects.Space
 					// check for battles
 					// TODO - alliances
 					var sector = v.FindSector();
-					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatObject>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
+					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
 					{
 						//var battle = new Battle(sector);
 						var battle = new Battle_Space(sector);

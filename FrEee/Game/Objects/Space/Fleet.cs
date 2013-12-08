@@ -94,7 +94,7 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
-		public bool CanTarget(ICombatObject target)
+		public bool CanTarget(ICombatant target)
 		{
 			return Vehicles.Any(sobj => sobj.CanTarget(target));
 		}
@@ -554,15 +554,15 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Any combat objects contained in this fleet and any subfleets.
 		/// </summary>
-		public IEnumerable<ICombatObject> CombatObjects
+		public IEnumerable<ICombatant> CombatObjects
 		{
 			get
 			{
 				return Vehicles.SelectMany(sobj =>
 				{
-					var list = new List<ICombatObject>();
-					if (sobj is ICombatObject)
-						list.Add((ICombatObject)sobj);
+					var list = new List<ICombatant>();
+					if (sobj is ICombatant)
+						list.Add((ICombatant)sobj);
 					if (sobj is Fleet)
 						list.AddRange(((Fleet)sobj).CombatObjects);
 					return list;
