@@ -32,6 +32,7 @@ namespace FrEee.Game.Objects.Orders
 		/// <summary>
 		/// The target we are pursuing.
 		/// </summary>
+		[DoNotSerialize]
 		public ISpaceObject Target { get { return target.Value; } set { target = value.Reference(); } }
 
 		private Reference<ISpaceObject> target {get; set;}
