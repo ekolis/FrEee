@@ -13,108 +13,108 @@ using System.Drawing;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
-    class ShutdownException : Exception { }
-    class MogreFreeMain
-    {       
-        private static int tickcounter = 0; //the tick age of the game.
-        private Root mRoot;
-        private RenderWindow mRenderWindow;
-        private SceneManager mSceneMgr;
-        private Viewport mViewport;
+	class ShutdownException : Exception { }
+	class MogreFreeMain
+	{
+		private static int tickcounter = 0; //the tick age of the game.
+		private Root mRoot;
+		private RenderWindow mRenderWindow;
+		private SceneManager mSceneMgr;
+		private Viewport mViewport;
 
-        private MOIS.Keyboard mKeybrd;
-        private MOIS.Mouse mMouse;
+		private MOIS.Keyboard mKeybrd;
+		private MOIS.Mouse mMouse;
 
-        protected Camera mCamera;
-        protected CameraMan mCameraMan;
+		protected Camera mCamera;
+		protected CameraMan mCameraMan;
 
 		private Form form;
 
-        //protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
-        protected SceneNode mNode_lines = null;
+		//protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
+		protected SceneNode mNode_lines = null;
 
-        System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
+		System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
 
-        Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
-        private Battle_Space battle;
+		Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
+		private Battle_Space battle;
 
-        public MogreFreeMain(Battle_Space battle)
-        {
+		public MogreFreeMain(Battle_Space battle)
+		{
 			this.battle = battle;
-            setup();
+			setup();
 
-            try
-            {
-                CreateRoot();
-                DefineResources();
-                CreateRenderSystem();
-                CreateRenderWindow();
-                InitializeResources();
+			try
+			{
+				CreateRoot();
+				DefineResources();
+				CreateRenderSystem();
+				CreateRenderWindow();
+				InitializeResources();
 
 
-                CreateScene();
-                InitializeInput();
-                CreateFrameListeners();
+				CreateScene();
+				InitializeInput();
+				CreateFrameListeners();
 
 				Go();
 
-            }
-            catch (OperationCanceledException) { }
-        }
+			}
+			catch (OperationCanceledException) { }
+		}
 
-        private void setup()
-        {
-            foreach (CombatObject comObj in battle.CombatObjects)
-            {
-                renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
-            }
-        }
+		private void setup()
+		{
+			foreach (CombatObject comObj in battle.CombatObjects)
+			{
+				renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
+			}
+		}
 
 
-        #region mogresetup
+		#region mogresetup
 
-        protected virtual void CreateCamera()
-        {
-            mCamera = mSceneMgr.CreateCamera("PlayerCam");
+		protected virtual void CreateCamera()
+		{
+			mCamera = mSceneMgr.CreateCamera("PlayerCam");
 
-            mCamera.Position = new Vector3(750, 2000, 750);
+			mCamera.Position = new Vector3(750, 2000, 750);
 
-            mCamera.LookAt(new Vector3(0, 0, 0));
-            mCamera.NearClipDistance = 5;
+			mCamera.LookAt(new Vector3(0, 0, 0));
+			mCamera.NearClipDistance = 5;
 			mCamera.FarClipDistance = 5000;
 
-            mCameraMan = new CameraMan(mCamera);
-        }
+			mCameraMan = new CameraMan(mCamera);
+		}
 
-        private void CreateRoot()
-        {
-            mRoot = new Root(); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
-        }
+		private void CreateRoot()
+		{
+			mRoot = new Root(); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
+		}
 
-        private void DefineResources()
-        {
-            ConfigFile cf = new ConfigFile();
-            cf.Load("resources.cfg", "\t:=", true);
+		private void DefineResources()
+		{
+			ConfigFile cf = new ConfigFile();
+			cf.Load("resources.cfg", "\t:=", true);
 
-            var section = cf.GetSectionIterator();
-            while (section.MoveNext())
-            {
-                foreach (var line in section.Current)
-                {
-                    ResourceGroupManager.Singleton.AddResourceLocation(
-                        line.Value, line.Key, section.CurrentKey);
-                }
-            }
-        }
+			var section = cf.GetSectionIterator();
+			while (section.MoveNext())
+			{
+				foreach (var line in section.Current)
+				{
+					ResourceGroupManager.Singleton.AddResourceLocation(
+						line.Value, line.Key, section.CurrentKey);
+				}
+			}
+		}
 
-        private void CreateRenderSystem()
-        {
-            if (!mRoot.ShowConfigDialog())
-                throw new OperationCanceledException();
-        }
+		private void CreateRenderSystem()
+		{
+			if (!mRoot.ShowConfigDialog())
+				throw new OperationCanceledException();
+		}
 
-        private void CreateRenderWindow()
-        {
+		private void CreateRenderWindow()
+		{
 			// Create Render Window
 			mRoot.Initialise(false, "Main Ogre Window");
 			NameValuePairList misc = new NameValuePairList();
@@ -125,7 +125,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			form.Disposed += form_Disposed;
 			form.Resize += form_Resize;
 			form.Show();
-        }
+		}
 
 		void form_Resize(object sender, EventArgs e)
 		{
@@ -138,354 +138,353 @@ namespace FrEee.WinForms.MogreCombatRender
 			mRoot = null;
 		}
 
-        private void InitializeResources()
-        {
-            TextureManager.Singleton.DefaultNumMipmaps = 5;
-            ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
-        }
+		private void InitializeResources()
+		{
+			TextureManager.Singleton.DefaultNumMipmaps = 5;
+			ResourceGroupManager.Singleton.InitialiseAllResourceGroups();
+		}
 
-        protected void InitializeInput()
-        {
+		protected void InitializeInput()
+		{
 
-            MOIS.ParamList pl = new MOIS.ParamList();
-            int windowHnd;
-            mRenderWindow.GetCustomAttribute("WINDOW", out windowHnd);
-            pl.Insert("WINDOW", windowHnd.ToString());
-            pl.Insert("w32_mouse", "DISCL_FOREGROUND");
-            pl.Insert("w32_mouse", "DISCL_NONEXCLUSIVE");
-            pl.Insert("w32_keyboard", "DISCL_FOREGROUND");
-            pl.Insert("w32_keyboard", "DISCL_NONEXCLUSIVE");
-            //var inputMgr = MOIS.InputManager.CreateInputSystem((uint)windowHnd);
-            var inputMgr = MOIS.InputManager.CreateInputSystem(pl);
+			MOIS.ParamList pl = new MOIS.ParamList();
+			int windowHnd;
+			mRenderWindow.GetCustomAttribute("WINDOW", out windowHnd);
+			pl.Insert("WINDOW", windowHnd.ToString());
+			pl.Insert("w32_mouse", "DISCL_FOREGROUND");
+			pl.Insert("w32_mouse", "DISCL_NONEXCLUSIVE");
+			pl.Insert("w32_keyboard", "DISCL_FOREGROUND");
+			pl.Insert("w32_keyboard", "DISCL_NONEXCLUSIVE");
+			//var inputMgr = MOIS.InputManager.CreateInputSystem((uint)windowHnd);
+			var inputMgr = MOIS.InputManager.CreateInputSystem(pl);
 
-            mKeybrd = (MOIS.Keyboard)inputMgr.CreateInputObject(MOIS.Type.OISKeyboard, true);
-            mMouse = (MOIS.Mouse)inputMgr.CreateInputObject(MOIS.Type.OISMouse, true);
+			mKeybrd = (MOIS.Keyboard)inputMgr.CreateInputObject(MOIS.Type.OISKeyboard, true);
+			mMouse = (MOIS.Mouse)inputMgr.CreateInputObject(MOIS.Type.OISMouse, true);
 
-            MOIS.MouseState_NativePtr mouseState = mMouse.MouseState;
-            mouseState.width = mViewport.ActualWidth; //! update after resize window
-            mouseState.height = mViewport.ActualHeight;
+			MOIS.MouseState_NativePtr mouseState = mMouse.MouseState;
+			mouseState.width = mViewport.ActualWidth; //! update after resize window
+			mouseState.height = mViewport.ActualHeight;
 
-            mKeybrd.KeyPressed += new MOIS.KeyListener.KeyPressedHandler(OnKeyPressed);
-            mKeybrd.KeyReleased += new MOIS.KeyListener.KeyReleasedHandler(OnKeyReleased);
-            mMouse.MouseMoved += new MOIS.MouseListener.MouseMovedHandler(OnMouseMoved);
-            mMouse.MousePressed += new MOIS.MouseListener.MousePressedHandler(OnMousePressed);
-            mMouse.MouseReleased += new MOIS.MouseListener.MouseReleasedHandler(OnMouseReleased);
+			mKeybrd.KeyPressed += new MOIS.KeyListener.KeyPressedHandler(OnKeyPressed);
+			mKeybrd.KeyReleased += new MOIS.KeyListener.KeyReleasedHandler(OnKeyReleased);
+			mMouse.MouseMoved += new MOIS.MouseListener.MouseMovedHandler(OnMouseMoved);
+			mMouse.MousePressed += new MOIS.MouseListener.MousePressedHandler(OnMousePressed);
+			mMouse.MouseReleased += new MOIS.MouseListener.MouseReleasedHandler(OnMouseReleased);
 
-            //mRaySceneQuery = mSceneMgr.CreateRayQuery(new Ray());
-        }
+			//mRaySceneQuery = mSceneMgr.CreateRayQuery(new Ray());
+		}
 
-        private void CreateScene()
-        {
-            mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
+		private void CreateScene()
+		{
+			mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
 
 			CreateCamera();
-            mCamera.Position = new Vector3(0, 0, 5000);
+			mCamera.Position = new Vector3(0, 0, 5000);
 			mCamera.LookAt(Vector3.ZERO);
 			mViewport = mRenderWindow.AddViewport(mCamera);
 			mViewport.BackgroundColour = ColourValue.Black;
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 
 
-            foreach (CombatObject obj in renderObjects.Values)
-            {
-                CreateNewEntity(obj);
-            }
+			foreach (CombatObject obj in renderObjects.Values)
+			{
+				CreateNewEntity(obj);
+			}
 
-            String resourceGroupName = "lines";
-            if (ResourceGroupManager.Singleton.ResourceGroupExists(resourceGroupName) == false)
-                ResourceGroupManager.Singleton.CreateResourceGroup(resourceGroupName);
+			String resourceGroupName = "lines";
+			if (ResourceGroupManager.Singleton.ResourceGroupExists(resourceGroupName) == false)
+				ResourceGroupManager.Singleton.CreateResourceGroup(resourceGroupName);
 
-            MaterialPtr moMaterialblue = MaterialManager.Singleton.Create("line_blue", resourceGroupName);
-            moMaterialblue.ReceiveShadows = false;
-            moMaterialblue.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialblue.GetTechnique(0).GetPass(0).SetDiffuse(0, 0, 1, 0);
-            moMaterialblue.GetTechnique(0).GetPass(0).SetAmbient(0, 0, 1);
-            moMaterialblue.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 0, 1);
-            moMaterialblue.Dispose();  // dispose pointer, not the material
-            MaterialPtr moMaterialred = MaterialManager.Singleton.Create("line_red", resourceGroupName);
-            moMaterialred.ReceiveShadows = false;
-            moMaterialred.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialred.GetTechnique(0).GetPass(0).SetDiffuse(1, 0, 0, 0);
-            moMaterialred.GetTechnique(0).GetPass(0).SetAmbient(1, 0, 0);
-            moMaterialred.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 0, 0);
-            moMaterialred.Dispose();  // dispose pointer, not the material
-            MaterialPtr moMaterialgreen = MaterialManager.Singleton.Create("line_green", resourceGroupName);
-            moMaterialgreen.ReceiveShadows = false;
-            moMaterialgreen.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialgreen.GetTechnique(0).GetPass(0).SetDiffuse(0, 1, 0, 0);
-            moMaterialgreen.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 0);
-            moMaterialgreen.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 0);
-            moMaterialgreen.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialblue = MaterialManager.Singleton.Create("line_blue", resourceGroupName);
+			moMaterialblue.ReceiveShadows = false;
+			moMaterialblue.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialblue.GetTechnique(0).GetPass(0).SetDiffuse(0, 0, 1, 0);
+			moMaterialblue.GetTechnique(0).GetPass(0).SetAmbient(0, 0, 1);
+			moMaterialblue.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 0, 1);
+			moMaterialblue.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialred = MaterialManager.Singleton.Create("line_red", resourceGroupName);
+			moMaterialred.ReceiveShadows = false;
+			moMaterialred.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialred.GetTechnique(0).GetPass(0).SetDiffuse(1, 0, 0, 0);
+			moMaterialred.GetTechnique(0).GetPass(0).SetAmbient(1, 0, 0);
+			moMaterialred.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 0, 0);
+			moMaterialred.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialgreen = MaterialManager.Singleton.Create("line_green", resourceGroupName);
+			moMaterialgreen.ReceiveShadows = false;
+			moMaterialgreen.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialgreen.GetTechnique(0).GetPass(0).SetDiffuse(0, 1, 0, 0);
+			moMaterialgreen.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 0);
+			moMaterialgreen.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 0);
+			moMaterialgreen.Dispose();  // dispose pointer, not the material
 
-            mNode_lines = mSceneMgr.RootSceneNode.CreateChildSceneNode(" ", Vector3.ZERO);
+			mNode_lines = mSceneMgr.RootSceneNode.CreateChildSceneNode(" ", Vector3.ZERO);
 
-            mSceneMgr.AmbientLight = new ColourValue(0.5f, 0.5f, 0.5f);
+			mSceneMgr.AmbientLight = new ColourValue(0.5f, 0.5f, 0.5f);
 
-            Light l = mSceneMgr.CreateLight("MainLight");
-            l.Position = new Vector3(0, 0, 5000);
+			Light l = mSceneMgr.CreateLight("MainLight");
+			l.Position = new Vector3(0, 0, 5000);
 
-        }
+		}
 
-        private void CreateFrameListeners()
-        {
-            mRoot.FrameRenderingQueued += new FrameListener.FrameRenderingQueuedHandler(ProcessBufferedInput);
-        }
+		private void CreateFrameListeners()
+		{
+			mRoot.FrameRenderingQueued += new FrameListener.FrameRenderingQueuedHandler(ProcessBufferedInput);
+		}
 
-        private bool ProcessBufferedInput(FrameEvent evt)
-        {
-            //mTimer -= evt.timeSinceLastFrame;
-            //return (mTimer > 0);
-            mKeybrd.Capture();
-            mMouse.Capture();
-            mCameraMan.UpdateCamera(evt.timeSinceLastFrame);
-            return true;
-        }
+		private bool ProcessBufferedInput(FrameEvent evt)
+		{
+			//mTimer -= evt.timeSinceLastFrame;
+			//return (mTimer > 0);
+			mKeybrd.Capture();
+			mMouse.Capture();
+			mCameraMan.UpdateCamera(evt.timeSinceLastFrame);
+			return true;
+		}
 
-        private void EnterRenderLoop()
-        {
+		private void EnterRenderLoop()
+		{
 			if (mRoot != null)
 				mRoot.StartRendering();
-        }
+		}
 
-        protected void Shutdown()
-        {
-            throw new ShutdownException();
-        }
+		protected void Shutdown()
+		{
+			throw new ShutdownException();
+		}
 
-        protected bool OnKeyPressed(MOIS.KeyEvent evt)
-        {
-            switch (evt.key)
-            {
-                case MOIS.KeyCode.KC_W:
-                case MOIS.KeyCode.KC_UP:
-                    //shiplist[0].Thrusting = 1;
-                    mCameraMan.GoingForward = true;
-                    break;
+		protected bool OnKeyPressed(MOIS.KeyEvent evt)
+		{
+			switch (evt.key)
+			{
+				case MOIS.KeyCode.KC_W:
+				case MOIS.KeyCode.KC_UP:
+					//shiplist[0].Thrusting = 1;
+					mCameraMan.GoingForward = true;
+					break;
 
-                case MOIS.KeyCode.KC_S:
-                case MOIS.KeyCode.KC_DOWN:
-                    //shiplist[0].Thrusting = -1;
-                    mCameraMan.GoingBack = true;
-                    break;
+				case MOIS.KeyCode.KC_S:
+				case MOIS.KeyCode.KC_DOWN:
+					//shiplist[0].Thrusting = -1;
+					mCameraMan.GoingBack = true;
+					break;
 
-                case MOIS.KeyCode.KC_A:
-                case MOIS.KeyCode.KC_LEFT:
-                    //shiplist[0].Strafing = -1;
-                    mCameraMan.GoingLeft = true;
-                    break;
+				case MOIS.KeyCode.KC_A:
+				case MOIS.KeyCode.KC_LEFT:
+					//shiplist[0].Strafing = -1;
+					mCameraMan.GoingLeft = true;
+					break;
 
-                case MOIS.KeyCode.KC_D:
-                case MOIS.KeyCode.KC_RIGHT:
-                    //shiplist[0].Strafing = 1;
-                    mCameraMan.GoingRight = true;
-                    break;
+				case MOIS.KeyCode.KC_D:
+				case MOIS.KeyCode.KC_RIGHT:
+					//shiplist[0].Strafing = 1;
+					mCameraMan.GoingRight = true;
+					break;
 
-                case MOIS.KeyCode.KC_E:
-                case MOIS.KeyCode.KC_PGUP:
-                    //shiplist[0].Rotating = 1;
-                    break;
+				case MOIS.KeyCode.KC_E:
+				case MOIS.KeyCode.KC_PGUP:
+					//shiplist[0].Rotating = 1;
+					break;
 
-                case MOIS.KeyCode.KC_Q:
-                case MOIS.KeyCode.KC_PGDOWN:
-                    //shiplist[0].Rotating = -1;
-                    break;
+				case MOIS.KeyCode.KC_Q:
+				case MOIS.KeyCode.KC_PGDOWN:
+					//shiplist[0].Rotating = -1;
+					break;
 
-                case MOIS.KeyCode.KC_SPACE:
-                    Console.Out.WriteLine("space was pushed.");
-                    //Rocks rocksphere = new Rocks(60, 6, 8);
-                    //Console.Out.WriteLine(rocksphere.ToString());
-                    //Console.Out.WriteLine(rocksphere.verts[1][1].ToString());
-                    break;
+				case MOIS.KeyCode.KC_SPACE:
+					Console.Out.WriteLine("space was pushed.");
+					//Rocks rocksphere = new Rocks(60, 6, 8);
+					//Console.Out.WriteLine(rocksphere.ToString());
+					//Console.Out.WriteLine(rocksphere.verts[1][1].ToString());
+					break;
 
-                case MOIS.KeyCode.KC_LSHIFT:
-                case MOIS.KeyCode.KC_RSHIFT:
-                    //mCameraMan.FastMove = true;
-                    break;
+				case MOIS.KeyCode.KC_LSHIFT:
+				case MOIS.KeyCode.KC_RSHIFT:
+					//mCameraMan.FastMove = true;
+					break;
 
-                case MOIS.KeyCode.KC_T:
-                    //CycleTextureFilteringMode();
-                    break;
+				case MOIS.KeyCode.KC_T:
+					//CycleTextureFilteringMode();
+					break;
 
-                case MOIS.KeyCode.KC_R:
-                    //CyclePolygonMode();
-                    break;
+				case MOIS.KeyCode.KC_R:
+					//CyclePolygonMode();
+					break;
 
-                case MOIS.KeyCode.KC_F5:
-                    //ReloadAllTextures();
-                    break;
+				case MOIS.KeyCode.KC_F5:
+					//ReloadAllTextures();
+					break;
 
-                case MOIS.KeyCode.KC_SYSRQ:
-                    //TakeScreenshot();
-                    break;
+				case MOIS.KeyCode.KC_SYSRQ:
+					//TakeScreenshot();
+					break;
 
 
 
-                case MOIS.KeyCode.KC_ESCAPE:
-                    Shutdown();
-                    break;
-            }
+				case MOIS.KeyCode.KC_ESCAPE:
+					Shutdown();
+					break;
+			}
 
-            return true;
-        }
+			return true;
+		}
 
-        protected bool OnKeyReleased(MOIS.KeyEvent evt)
-        {
-            switch (evt.key)
-            {
-                case MOIS.KeyCode.KC_W:
-                case MOIS.KeyCode.KC_UP:
-     
-                    mCameraMan.GoingForward = false;
-                    break;
+		protected bool OnKeyReleased(MOIS.KeyEvent evt)
+		{
+			switch (evt.key)
+			{
+				case MOIS.KeyCode.KC_W:
+				case MOIS.KeyCode.KC_UP:
 
-                case MOIS.KeyCode.KC_S:
-                case MOIS.KeyCode.KC_DOWN:
-                    
-                    mCameraMan.GoingBack = false;
-                    break;
+					mCameraMan.GoingForward = false;
+					break;
 
-                case MOIS.KeyCode.KC_A:
-                case MOIS.KeyCode.KC_LEFT:
-                    
-                    mCameraMan.GoingLeft = false;
-                    break;
+				case MOIS.KeyCode.KC_S:
+				case MOIS.KeyCode.KC_DOWN:
 
-                case MOIS.KeyCode.KC_D:
-                case MOIS.KeyCode.KC_RIGHT:
-                  
-                    mCameraMan.GoingRight = false;
-                    break;
+					mCameraMan.GoingBack = false;
+					break;
 
-                case MOIS.KeyCode.KC_E:
-                case MOIS.KeyCode.KC_PGUP:
-                  
-                    mCameraMan.GoingUp = false;
-                    break;
+				case MOIS.KeyCode.KC_A:
+				case MOIS.KeyCode.KC_LEFT:
 
-                case MOIS.KeyCode.KC_Q:
-                case MOIS.KeyCode.KC_PGDOWN:
-                   
-                    mCameraMan.GoingDown = false;
-                    break;
+					mCameraMan.GoingLeft = false;
+					break;
 
-                case MOIS.KeyCode.KC_LSHIFT:
-                case MOIS.KeyCode.KC_RSHIFT:
-                    //mCameraMan.FastMove = false;
-                    break;
-            }
+				case MOIS.KeyCode.KC_D:
+				case MOIS.KeyCode.KC_RIGHT:
 
-            return true;
-        }
+					mCameraMan.GoingRight = false;
+					break;
 
-        protected virtual bool OnMouseMoved(MOIS.MouseEvent evt)
-        {
-            if (mCameraMan.MouseLook == true)
-            {
-                mCameraMan.MouseMovement(evt.state.X.rel, evt.state.Y.rel);
-            }
-            return true;
-        }
+				case MOIS.KeyCode.KC_E:
+				case MOIS.KeyCode.KC_PGUP:
 
-        protected virtual bool OnMousePressed(MOIS.MouseEvent evt, MOIS.MouseButtonID id)
-        {
-            if (id == MOIS.MouseButtonID.MB_Right)
-            {
-                mCameraMan.MouseLook = true;
-            }
-            else if (id == MOIS.MouseButtonID.MB_Left)
-            {
+					mCameraMan.GoingUp = false;
+					break;
 
-            }
-            return true;
-        }
+				case MOIS.KeyCode.KC_Q:
+				case MOIS.KeyCode.KC_PGDOWN:
 
-        protected virtual bool OnMouseReleased(MOIS.MouseEvent evt, MOIS.MouseButtonID id)
-        {
-            if (id == MOIS.MouseButtonID.MB_Right)
-            {
-                mCameraMan.MouseLook = false;
-            }
-            return true;
-        }
+					mCameraMan.GoingDown = false;
+					break;
 
-        private void CreateNewEntity(CombatObject obj)
-        {
+				case MOIS.KeyCode.KC_LSHIFT:
+				case MOIS.KeyCode.KC_RSHIFT:
+					//mCameraMan.FastMove = false;
+					break;
+			}
 
-            Entity objEnt = mSceneMgr.CreateEntity(obj.icomobj.ID.ToString(), "DeltaShip.mesh");
-            SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.icomobj.ID.ToString());
-            float sizex = objEnt.BoundingBox.Size.x;
-            float sizey = objEnt.BoundingBox.Size.y;
-            float sizez = objEnt.BoundingBox.Size.z;
-            //float scalex = ((float)(obj.Size.X) / sizex);
-            //float scaley = ((float)(obj.Size.Z) / sizey);
-            //float scalez = ((float)(obj.Size.Y) / sizez);
-            float scalex = ((float)(50) / sizex);
-            float scaley = ((float)(50) / sizey);
-            float scalez = ((float)(100) / sizez);
-            objNode.Scale(scalex, scaley, scalez);
-            //objNode.Yaw(new Degree(-90));
+			return true;
+		}
 
-            objNode.AttachObject(objEnt);
-            objNode.Position = new Vector3((float)obj.cmbt_loc.X, (float)obj.cmbt_loc.Z, (float)obj.cmbt_loc.Y);
-            //renderObjects.Add(obj);
-        }
-        #endregion
+		protected virtual bool OnMouseMoved(MOIS.MouseEvent evt)
+		{
+			if (mCameraMan.MouseLook == true)
+			{
+				mCameraMan.MouseMovement(evt.state.X.rel, evt.state.Y.rel);
+			}
+			return true;
+		}
 
-        private void Go()
-        {
-            bool running = true;
-            while (running && mRoot != null && mRoot.RenderOneFrame())
-            {
-                physicsstopwatch.Restart();
-                double battletic = 0;
-                while (physicsstopwatch.ElapsedMilliseconds < 1000)
-                {
-                    foreach (CombatObject comObj in renderObjects.Values)
-                    {
-                        Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
-                        do_graphics(comObj, renderloc);
-                    }
-                }
-                battletic++;
-                foreach (CombatObject comObj in renderObjects.Values)
-                {
-                    Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
-                    do_graphics(comObj, renderloc);
-                }
+		protected virtual bool OnMousePressed(MOIS.MouseEvent evt, MOIS.MouseButtonID id)
+		{
+			if (id == MOIS.MouseButtonID.MB_Right)
+			{
+				mCameraMan.MouseLook = true;
+			}
+			else if (id == MOIS.MouseButtonID.MB_Left)
+			{
+
+			}
+			return true;
+		}
+
+		protected virtual bool OnMouseReleased(MOIS.MouseEvent evt, MOIS.MouseButtonID id)
+		{
+			if (id == MOIS.MouseButtonID.MB_Right)
+			{
+				mCameraMan.MouseLook = false;
+			}
+			return true;
+		}
+
+		private void CreateNewEntity(CombatObject obj)
+		{
+			Entity objEnt = mSceneMgr.CreateEntity(obj.icomobj.ID.ToString(), "DeltaShip.mesh");
+			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.icomobj.ID.ToString());
+			float sizex = objEnt.BoundingBox.Size.x;
+			float sizey = objEnt.BoundingBox.Size.y;
+			float sizez = objEnt.BoundingBox.Size.z;
+			//float scalex = ((float)(obj.Size.X) / sizex);
+			//float scaley = ((float)(obj.Size.Z) / sizey);
+			//float scalez = ((float)(obj.Size.Y) / sizez);
+			float scalex = ((float)(50) / sizex);
+			float scaley = ((float)(50) / sizey);
+			float scalez = ((float)(100) / sizez);
+			objNode.Scale(scalex, scaley, scalez);
+			//objNode.Yaw(new Degree(-90));
+
+			objNode.AttachObject(objEnt);
+			objNode.Position = new Vector3((float)obj.cmbt_loc.X, (float)obj.cmbt_loc.Z, (float)obj.cmbt_loc.Y);
+			//renderObjects.Add(obj);
+		}
+		#endregion
+
+		private void Go()
+		{
+			bool running = true;
+			while (running && mRoot != null && mRoot.RenderOneFrame())
+			{
+				physicsstopwatch.Restart();
+				double battletic = 0;
+				while (physicsstopwatch.ElapsedMilliseconds < 1000)
+				{
+					foreach (CombatObject comObj in renderObjects.Values)
+					{
+						Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
+						do_graphics(comObj, renderloc);
+					}
+				}
+				battletic++;
+				foreach (CombatObject comObj in renderObjects.Values)
+				{
+					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
+					do_graphics(comObj, renderloc);
+				}
 				Application.DoEvents();
-            }
-        }
+			}
+		}
 
-        private void do_graphics(CombatObject obj, Point3d renderloc)
-        {
-            //foreach (CombatObj obj in renderObjects.Values)
-            //{
+		private void do_graphics(CombatObject obj, Point3d renderloc)
+		{
+			//foreach (CombatObj obj in renderObjects.Values)
+			//{
 
-                //Console.Out.WriteLine(obj.Loc.ToString());
+			//Console.Out.WriteLine(obj.Loc.ToString());
 
-                //this stuff is for ground combat
-                /*
-                Ray heightRay = new Ray(new Vector3((float)obj.cmbt_loc.X, 5000.0f, (float)obj.cmbt_loc.Y), Vector3.NEGATIVE_UNIT_Y);
-                mRaySceneQuery.Ray = heightRay;
+			//this stuff is for ground combat
+			/*
+			Ray heightRay = new Ray(new Vector3((float)obj.cmbt_loc.X, 5000.0f, (float)obj.cmbt_loc.Y), Vector3.NEGATIVE_UNIT_Y);
+			mRaySceneQuery.Ray = heightRay;
 
-                //// Execute query
-                RaySceneQueryResult result = mRaySceneQuery.Execute();
-                RaySceneQueryResult.Enumerator itr = (RaySceneQueryResult.Enumerator)(result.GetEnumerator());
-                if ((itr != null) && itr.MoveNext())
-                {
-                    float terrainHeight = itr.Current.worldFragment.singleIntersection.y;
-                    //Console.Out.WriteLine("T_height" + terrainHeight);
-                    obj.cmbt_loc.Z = terrainHeight;
-                }
-                */
+			//// Execute query
+			RaySceneQueryResult result = mRaySceneQuery.Execute();
+			RaySceneQueryResult.Enumerator itr = (RaySceneQueryResult.Enumerator)(result.GetEnumerator());
+			if ((itr != null) && itr.MoveNext())
+			{
+				float terrainHeight = itr.Current.worldFragment.singleIntersection.y;
+				//Console.Out.WriteLine("T_height" + terrainHeight);
+				obj.cmbt_loc.Z = terrainHeight;
+			}
+			*/
 
-                SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
-                Vector3 mvector3 = (TranslateMogrePhys.smVector_mVector3_xzy(renderloc));
-                node.Position = mvector3;
-                Vector3 rotateaxis = new Vector3(0f, 1f, 0f);
-                Quaternion quat = new Quaternion((float)(Trig.angleA(obj.cmbt_face) - 1.57079633), rotateaxis);
-                node.Orientation = quat;
-            //}
-        }
-    }
+			SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
+			Vector3 mvector3 = (TranslateMogrePhys.smVector_mVector3_xzy(renderloc));
+			node.Position = mvector3;
+			Vector3 rotateaxis = new Vector3(0f, 1f, 0f);
+			Quaternion quat = new Quaternion((float)(Trig.angleA(obj.cmbt_face) - 1.57079633), rotateaxis);
+			node.Orientation = quat;
+			//}
+		}
+	}
 }
