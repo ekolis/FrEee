@@ -8,7 +8,6 @@ using FrEee.Game.Objects.Combat2;
 using System.Runtime.InteropServices;
 
 using Mogre;
-using System.Runtime.InteropServices;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -86,51 +85,21 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void CreateRoot()
         {
-			try
-			{
-				mRoot = new Root("MogreCombatRender/plugins.cfg"); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
-			}
-			catch (SEHException ex)
-			{
-				if (OgreException.IsThrown)
-					throw new InvalidOperationException(OgreException.LastException.FullDescription);
-				else
-					throw;
-			}
+            mRoot = new Root(); //can change location/name of plugins.cfg ogre.cfg and Ogre.log files here using the Root parameters. 
         }
 
         private void DefineResources()
         {
             ConfigFile cf = new ConfigFile();
-			try
-			{
-				cf.Load("MogreCombatRender/resources.cfg", "\t:=", true);
-			}
-			catch (SEHException ex)
-			{
-				if (OgreException.IsThrown)
-					throw new InvalidOperationException(OgreException.LastException.FullDescription);
-				else
-					throw;
-			}
+            cf.Load("resources.cfg", "\t:=", true);
 
             var section = cf.GetSectionIterator();
             while (section.MoveNext())
             {
                 foreach (var line in section.Current)
                 {
-					try
-					{
-						ResourceGroupManager.Singleton.AddResourceLocation(
-							line.Value, line.Key, section.CurrentKey);
-					}
-					catch (SEHException ex)
-					{
-						if (OgreException.IsThrown)
-							throw new InvalidOperationException(OgreException.LastException.FullDescription);
-						else
-							throw;
-					}
+                    ResourceGroupManager.Singleton.AddResourceLocation(
+                        line.Value, line.Key, section.CurrentKey);
                 }
             }
         }
