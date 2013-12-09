@@ -125,9 +125,8 @@ namespace FrEee.Game.Objects.Combat2
                 
             Point3d renderloc = new Point3d(comObj.cmbt_loc + comObj.cmbt_vel * plus_time * 0.001);
 
-            CombatEventLoc location = new CombatEventLoc(comObj.cmbt_loc);
-
-            ReplayLog.addEvent(tic_time, comObj.icomobj.ID, location);
+            //CombatEventLoc location = new CombatEventLoc(comObj.cmbt_loc);
+            //ReplayLog.addEvent(tic_time, comObj.icomobj.ID, location);
 
             return renderloc;
         }
