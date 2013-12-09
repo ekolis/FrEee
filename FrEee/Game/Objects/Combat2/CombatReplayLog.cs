@@ -55,34 +55,41 @@ namespace FrEee.Game.Objects.Combat2
 
     public class CombatshipEvent
     {
-        string evnttype;
-        //something component/weapon type
-        CombatObject target;
-        bool hit;
-        double endpoint_tic;
-        Point3d endpoint;
-        CombatshipEvent targetevent;
+        protected string evnttype;
+                
         public CombatshipEvent(string type)
         { 
             this.evnttype = type;
         }
-
-        public void CombatEventLoc(Point3d loc)
+    }
+    public class CombatEventLoc : CombatshipEvent
+    {
+        Point3d loc;
+        public CombatEventLoc(Point3d cmbt_loc) : base("Location")
         {
- 
-            this.evnttype = "loc";
-
+            this.loc = cmbt_loc;
         }
-        public void CombatEventFireWeapon(Point3d loc,   CombatshipEvent targetevent)
-        { 
-            this.evnttype = "loc";
-            this.targetevent = targetevent;
-        }
-
-        public void targetEvent(double endtic, Point3d endpoint, bool hit)
+    }
+    public class CombatEventFireWeapon : CombatEventLoc
+    {
+        CombatEventTakeFire takefireevent;
+        Technology.Component weapon;
+        public CombatEventFireWeapon(Point3d loc, Technology.Component weapon, CombatEventTakeFire targetevent) : base(loc)
         {
-            this.endpoint_tic = endtic;
-            this.endpoint = endpoint;
+            this.evnttype = "FireWeapon";
+            this.weapon = weapon;         
+            this.takefireevent = targetevent;  
+        }
+    }
+    public class CombatEventTakeFire : CombatEventLoc
+    {
+
+        double endpoint_tic;
+        bool hit;
+        public CombatEventTakeFire(double endtic, Point3d endpoint, bool hit) : base(endpoint)
+        {
+            this.evnttype = "TakeFire";
+            this.endpoint_tic = endtic;            
             this.hit = hit;
         }
     }
