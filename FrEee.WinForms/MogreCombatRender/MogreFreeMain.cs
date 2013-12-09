@@ -426,10 +426,12 @@ namespace FrEee.WinForms.MogreCombatRender
 		private void Go()
 		{
 			bool running = true;
+            double battletic = 0;
+            CombatShipsLogs logsthisturn; 
 			while (running && mRoot != null && mRoot.RenderOneFrame())
 			{
-				physicsstopwatch.Restart();
-				double battletic = 0;
+                logsthisturn = battle.replaylog.logsforturn(battletic); 
+				physicsstopwatch.Restart();				
 				while (physicsstopwatch.ElapsedMilliseconds < 1000)
 				{
 					foreach (CombatObject comObj in renderObjects.Values)
@@ -443,6 +445,19 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
 					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
 					do_graphics(comObj, renderloc);
+                    if (logsthisturn != null)
+                    {
+                        if (logsthisturn.ContainsKey(comObj.icomobj.ID))
+                        {
+                            foreach (CombatshipEvent comEvent in logsthisturn[comObj.icomobj.ID])
+                            {
+                                if (comEvent.type() == "FireWeapon")
+                                { 
+                                    //if type projectile, create whatever sprite and render it towards target.
+                                }
+                            }
+                        }
+                    }
 				}
 				Application.DoEvents();
 			}

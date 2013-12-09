@@ -13,9 +13,15 @@ namespace FrEee.Game.Objects.Combat2
 
         }
 
-  
+        public CombatShipsLogs logsforturn(double tic)
+        {
 
-        
+            if (logs.ContainsKey(tic))            
+                return logs[tic];
+            
+            else 
+                return null;
+        }
 
         public void addEvent(double tic, long shipID ,CombatshipEvent comevnt)
         {
@@ -51,6 +57,13 @@ namespace FrEee.Game.Objects.Combat2
                 this.Add(shipID, new List<CombatshipEvent>() {shipevent});
             }
         }
+        public List<CombatshipEvent> eventsforship(long shipID)
+        {
+            if (this.ContainsKey(shipID))
+                return this[shipID];
+            else
+                return null;
+        }
     }
 
     public class CombatshipEvent
@@ -60,6 +73,11 @@ namespace FrEee.Game.Objects.Combat2
         public CombatshipEvent(string type)
         { 
             this.evnttype = type;
+        }
+
+        public string type()
+        {
+            return evnttype;
         }
     }
     public class CombatEventLoc : CombatshipEvent
