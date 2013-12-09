@@ -430,7 +430,7 @@ namespace FrEee.WinForms.MogreCombatRender
             CombatShipsLogs logsthisturn; 
 			while (running && mRoot != null && mRoot.RenderOneFrame())
 			{
-                logsthisturn = battle.replaylog.logsforturn(battletic); 
+                logsthisturn = battle.ReplayLog.logsforturn(battletic); 
 				physicsstopwatch.Restart();				
 				while (physicsstopwatch.ElapsedMilliseconds < 1000)
 				{
@@ -451,9 +451,9 @@ namespace FrEee.WinForms.MogreCombatRender
                         {
                             foreach (CombatshipEvent comEvent in logsthisturn[comObj.icomobj.ID])
                             {
-                                if (comEvent.type() == "FireWeapon")
+                                if (comEvent is CombatEventFireWeapon)
                                 { 
-                                    //if type projectile, create whatever sprite and render it towards target.
+                                    // TODO - if type projectile, create whatever sprite and render it towards target.
                                 }
                             }
                         }
