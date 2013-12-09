@@ -25,16 +25,18 @@ namespace FrEee.Game.Objects.Combat2
 			Sector = location;
 			//Log = new List<LogMessage>();
             EmpiresArray = (Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray());
+			Empires = new Dictionary<Empire,CombatEmpire>{ };
 			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.CombatObjects)));
 			CombatObjects = new HashSet<CombatObject>();
+			Fleets = new List<Fleet> { };
             
             foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
             {
-                fleets.Add(fleet);
+                Fleets.Add(fleet);
             }
-            this.isreplay = isreplay;
+            this.IsReplay = isreplay;
             if (!isreplay)
-                replaylog = new CombatReplayLog();
+                ReplayLog = new CombatReplayLog();
 
 		}
 
@@ -44,7 +46,7 @@ namespace FrEee.Game.Objects.Combat2
             Previous = new HashSet<Battle_Space>();
         }
 
-        public bool isreplay = true;
+		public bool IsReplay { get; private set; }
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -71,19 +73,20 @@ namespace FrEee.Game.Objects.Combat2
 		/// The empires engagaed in battle.
 		/// </summary>
 		public IEnumerable<Empire> EmpiresArray { get; private set; }
-        public Dictionary<Empire, CombatEmpire> Empires = new Dictionary<Empire,CombatEmpire>{ };
+		public Dictionary<Empire, CombatEmpire> Empires { get; private set; }
 
 		/// <summary>
 		/// The combatants in this battle.
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
 		public ISet<CombatObject> CombatObjects { get; private set; }
+
         /// <summary>
         /// the Fleets in this battle
         /// </summary>
-        private List<Fleet> fleets = new List<Fleet> { };
+		public ICollection<Fleet> Fleets { get; private set; }
 
-        public CombatReplayLog replaylog;
+		public CombatReplayLog ReplayLog { get; private set; }
 
         private List<IMobileSpaceObject> combatgroups;
 
@@ -124,7 +127,7 @@ namespace FrEee.Game.Objects.Combat2
 
             CombatEventLoc location = new CombatEventLoc(comObj.cmbt_loc);
 
-            replaylog.addEvent(tic_time, comObj.icomobj.ID, location);
+            ReplayLog.addEvent(tic_time, comObj.icomobj.ID, location);
 
             return renderloc;
         }
@@ -278,17 +281,17 @@ namespace FrEee.Game.Objects.Combat2
                         
 
 
-                        if (!isreplay)
+                        if (!IsReplay)
                         {
-                            replaylog.addEvent(tic_countr, comObj.weaponTarget[0].icomobj.ID,  target_event);
+                            ReplayLog.addEvent(tic_countr, comObj.weaponTarget[0].icomobj.ID,  target_event);
                             
                             if (weapon.Template.ComponentTemplate.WeaponInfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect)) //projectile
                             {
-                                replaylog.addEvent(tic_countr - 1, comObj.icomobj.ID, attack_event); //this shot was fired last turn.
+                                ReplayLog.addEvent(tic_countr - 1, comObj.icomobj.ID, attack_event); //this shot was fired last turn.
                             }
                             else if (weapon.Template.ComponentTemplate.WeaponInfo.DisplayEffect.GetType() == typeof(Combat.BeamWeaponDisplayEffect))
                             {
-                                replaylog.addEvent(tic_countr, comObj.icomobj.ID, attack_event); //beam weapons are instantanious. 
+                                ReplayLog.addEvent(tic_countr, comObj.icomobj.ID, attack_event); //beam weapons are instantanious. 
                             }
                         }
 
