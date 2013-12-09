@@ -86,60 +86,7 @@ namespace FrEee.Game.Objects.Combat2
 
     }
 
-    public class combatReplayLog
-    {
-        Dictionary<double, List<combatEvent>> log;
-        public combatReplayLog()
-        {
-            combatEvent comevnt = new combatEvent(0, "startlog", null, null);
-            log = new Dictionary<double, List<combatEvent>>();
-            List<combatEvent> evntlist = new List<combatEvent>();
-            evntlist.Add(comevnt);
-            log.Add(0, new List<combatEvent>(evntlist));
-        }
 
-        public void addEvent(double tic, combatEvent comevnt)
-        {
-            if (log.ContainsKey(tic))
-            {
-                log[tic].Add(comevnt);
-            }
-            else
-            {
-                List<combatEvent> evntlist = new List<combatEvent>();
-                evntlist.Add(comevnt);
-                log.Add(tic, new List<combatEvent>(evntlist));
-            }
-        }
-    }
-
-    public class combatEvent
-    {
-        double evnttic;
-        string evnttype;
-        CombatObject comObj;
-        //something component/weapon type
-        CombatObject target;
-        bool hit;
-        double endpoint_tic;
-        Point3d endpoint;
-        public combatEvent(double tic, string type, CombatObject comObj, CombatObject target)
-        {
-            this.evnttic = tic;
-            this.evnttype = type;
-            this.comObj = comObj;
-            this.target = target;
-        }
-        public void hitTarget(bool hit)
-        {
-            this.hit = hit;
-        }
-        public void endevent(double endtic, Point3d endpoint)
-        {
-            this.endpoint_tic = endtic;
-            this.endpoint = endpoint;
-        }
-    }
 
     public class combatWaypoint
     {

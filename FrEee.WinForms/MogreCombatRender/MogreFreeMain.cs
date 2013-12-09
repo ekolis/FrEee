@@ -419,7 +419,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			//float scalez = ((float)(100000) / sizez);
 			objNode.AttachObject(objEnt);
 			objNode.Scale(500, 500, 500);
-			do_graphics(obj); // set up initial position and orientation
+			//do_graphics(obj); // set up initial position and orientation
 		}
 		#endregion
 
@@ -435,20 +435,20 @@ namespace FrEee.WinForms.MogreCombatRender
 					foreach (CombatObject comObj in renderObjects.Values)
 					{
 						Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
-						do_graphics(comObj);
+						do_graphics(comObj, renderloc);
 					}
 				}
 				battletic++;
 				foreach (CombatObject comObj in renderObjects.Values)
 				{
 					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
-					do_graphics(comObj);
+					do_graphics(comObj, renderloc);
 				}
 				Application.DoEvents();
 			}
 		}
 
-		private void do_graphics(CombatObject obj)
+		private void do_graphics(CombatObject obj, Point3d renderloc)
 		{
 			//foreach (CombatObj obj in renderObjects.Values)
 			//{
@@ -472,8 +472,8 @@ namespace FrEee.WinForms.MogreCombatRender
 			*/
 
 			SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
-			node.Position = new Vector3((float)obj.cmbt_loc.X, (float)obj.cmbt_loc.Y, 0);
-			Quaternion quat = new Quaternion((float)(Trig.angleto(obj.cmbt_loc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Z);
+			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, 0);
+			Quaternion quat = new Quaternion((float)(Trig.angleto(renderloc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Z);
 			node.Orientation = quat;
 		}
 	}
