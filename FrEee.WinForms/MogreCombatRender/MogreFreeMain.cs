@@ -76,11 +76,10 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected virtual void CreateCamera()
 		{
 			mCamera = mSceneMgr.CreateCamera("PlayerCam");
-			mCamera.Position = new Vector3(0, 0, 500e3f);
+			mCamera.Position = new Vector3(0, 0, 1e6f);
 			mCamera.LookAt(Vector3.ZERO);
 			mCamera.NearClipDistance = 5;
-			mCamera.FarClipDistance = 1e6f;
-
+			mCamera.FarClipDistance = 2e6f;
 			mCameraMan = new CameraMan(mCamera);
 		}
 
@@ -414,16 +413,12 @@ namespace FrEee.WinForms.MogreCombatRender
 			//float scalex = ((float)(obj.Size.X) / sizex);
 			//float scaley = ((float)(obj.Size.Z) / sizey);
 			//float scalez = ((float)(obj.Size.Y) / sizez);
-			float scalex = ((float)(50000) / sizex);
-			float scaley = ((float)(50000) / sizey);
-			float scalez = ((float)(100000) / sizez);
-			objNode.Scale(scalex, scaley, scalez);
-			//objNode.Yaw(new Degree(-90));
-
+			//float scalex = ((float)(50000) / sizex);
+			//float scaley = ((float)(50000) / sizey);
+			//float scalez = ((float)(100000) / sizez);
 			objNode.AttachObject(objEnt);
-			objNode.Position = new Vector3();
-			//objNode.Position = new Vector3((float)obj.cmbt_loc.X / 1e6f, (float)obj.cmbt_loc.Z / 1e6f, (float)obj.cmbt_loc.Y / 1e6f);
-			//renderObjects.Add(obj);
+			objNode.Scale(500, 500, 500);
+			do_graphics(obj); // set up initial position and orientation
 		}
 		#endregion
 
@@ -439,20 +434,20 @@ namespace FrEee.WinForms.MogreCombatRender
 					foreach (CombatObject comObj in renderObjects.Values)
 					{
 						Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
-						do_graphics(comObj, renderloc);
+						do_graphics(comObj);
 					}
 				}
 				battletic++;
 				foreach (CombatObject comObj in renderObjects.Values)
 				{
 					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
-					do_graphics(comObj, renderloc);
+					do_graphics(comObj);
 				}
 				Application.DoEvents();
 			}
 		}
 
-		private void do_graphics(CombatObject obj, Point3d renderloc)
+		private void do_graphics(CombatObject obj)
 		{
 			//foreach (CombatObj obj in renderObjects.Values)
 			//{
@@ -476,12 +471,9 @@ namespace FrEee.WinForms.MogreCombatRender
 			*/
 
 			SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
-			Vector3 mvector3 = (TranslateMogrePhys.smVector_mVector3_xzy(renderloc));
-			node.Position = mvector3;
-			Vector3 rotateaxis = new Vector3(0f, 1f, 0f);
-			Quaternion quat = new Quaternion((float)(Trig.angleA(obj.cmbt_face) - 1.57079633), rotateaxis);
+			node.Position = new Vector3((float)obj.cmbt_loc.X, (float)obj.cmbt_loc.Y, 0);
+			Quaternion quat = new Quaternion((float)(Trig.angleto(obj.cmbt_loc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Z);
 			node.Orientation = quat;
-			//}
 		}
 	}
 }
