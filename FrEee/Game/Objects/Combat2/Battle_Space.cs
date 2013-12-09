@@ -33,6 +33,8 @@ namespace FrEee.Game.Objects.Combat2
                 fleets.Add(fleet);
             }
             this.isreplay = isreplay;
+            if (!isreplay)
+                replaylog = new CombatReplayLog();
 
 		}
 
@@ -112,13 +114,19 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         public Point3d simPhysTic(CombatObject comObj, double tic_time, double plus_time = 0)
         {     
-                comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
+            comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
 
-                comObj.cmbt_vel += comObj.cmbt_accel;          
+            comObj.cmbt_vel += comObj.cmbt_accel;          
 
-                comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
-                 
-                return new Point3d(comObj.cmbt_loc + comObj.cmbt_vel * plus_time * 0.001);
+            comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
+                
+            Point3d renderloc = new Point3d(comObj.cmbt_loc + comObj.cmbt_vel * plus_time * 0.001);
+
+            CombatEventLoc location = new CombatEventLoc(comObj.cmbt_loc);
+
+            replaylog.addEvent(tic_time, comObj.icomobj.ID, location);
+
+            return renderloc;
         }
 
 
@@ -126,10 +134,11 @@ namespace FrEee.Game.Objects.Combat2
         {
             Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
-            int angle = 0;
+            Compass angle = new Compass(360 / EmpiresArray.Count(), false);
             for (int i = 0; i <= EmpiresArray.Count()-1; i++)
             {
-                startpoints[i] = new Point3d(Trig.sides_ab(startrange, angle));
+                double angleoffset = angle.Radians * i;
+                startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));
                 
             }
 
