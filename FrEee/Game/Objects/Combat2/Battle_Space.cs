@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         private List<Fleet> fleets = new List<Fleet> { };
 
-        private CombatReplayLog replaylog;
+        public CombatReplayLog replaylog;
 
         private List<IMobileSpaceObject> combatgroups;
 
