@@ -79,7 +79,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			mCamera.Position = new Vector3(0, 0, 1000f);
 			mCamera.LookAt(Vector3.ZERO);
 			mCamera.NearClipDistance = 5;
-			mCamera.FarClipDistance = 2000f;
+			mCamera.FarClipDistance = 10000f;
 			mCameraMan = new CameraMan(mCamera);
 		}
 
@@ -411,14 +411,14 @@ namespace FrEee.WinForms.MogreCombatRender
 			float sizex = objEnt.BoundingBox.Size.x;
 			float sizey = objEnt.BoundingBox.Size.y;
 			float sizez = objEnt.BoundingBox.Size.z;
-			//float scalex = ((float)(obj.Size.X) / sizex);
-			//float scaley = ((float)(obj.Size.Z) / sizey);
-			//float scalez = ((float)(obj.Size.Y) / sizez);
-			//float scalex = ((float)(50000) / sizex);
-			//float scaley = ((float)(50000) / sizey);
-			//float scalez = ((float)(100000) / sizez);
+			var desiredSize = (float)System.Math.Pow(obj.cmbt_mass, 1d / 3d);
+			float scalex = (desiredSize / sizex);
+			float scaley = (desiredSize / sizey);
+			float scalez = (desiredSize / sizez);
+			float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
 			objNode.AttachObject(objEnt);
-			//objNode.Scale(500, 500, 500);
+			objNode.Scale(scale, scale, scale);
+			objNode.Scale(10, 10, 10);
 			//do_graphics(obj); // set up initial position and orientation
 		}
 		#endregion
