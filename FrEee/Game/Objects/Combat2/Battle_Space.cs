@@ -90,8 +90,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		private List<IMobileSpaceObject> combatgroups;
 
-		private double ticlen = 0.1; //physics tick length
-		public static double CommandFrequency = 10;   //new commands (move, new targets etc) are given every 10 ticks.
+		private const double ticlen = 0.1; //physics tick length
+		public const double CommandFrequency = 10;   //new commands (move, new targets etc) are given every 10 ticks.
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -111,11 +111,7 @@ namespace FrEee.Game.Objects.Combat2
 		private int startrange = 120;
 
 
-
-		/// <summary>
-		///  
-		/// </summary>
-		public Point3d simPhysTic(CombatObject comObj, double tic_time, double plus_time = 0)
+		public Point3d SimNewtonianPhysics(CombatObject comObj)
 		{
 			comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
 
@@ -123,11 +119,13 @@ namespace FrEee.Game.Objects.Combat2
 
 			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
 
-			Point3d renderloc = new Point3d(comObj.cmbt_loc + comObj.cmbt_vel * plus_time * 0.001);
-
-			return renderloc;
+			return comObj.cmbt_loc;
 		}
 
+		public Point3d InterpolatePosition(CombatObject comObj, double fractionalTick)
+		{
+			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
+		}
 
 		public void SetUpPieces()
 		{
@@ -301,7 +299,7 @@ namespace FrEee.Game.Objects.Combat2
 				firecontrol(tic_countr, comObj);
 
 				//comObj.lastDistancetoWaypoint = Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc);
-				simPhysTic(comObj, tic_countr);
+				SimNewtonianPhysics(comObj);
 			}
 
 		}
