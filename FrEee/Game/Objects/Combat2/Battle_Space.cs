@@ -91,7 +91,7 @@ namespace FrEee.Game.Objects.Combat2
 		private List<IMobileSpaceObject> combatgroups;
 
 		private double ticlen = 0.1; //physics tick length
-		private double comdfreq = 10;   //new commands (move, new targets etc) are given every 10 ticks.
+		public static double CommandFrequency = 10;   //new commands (move, new targets etc) are given every 10 ticks.
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -129,7 +129,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		private void SetUpPieces()
+		public void SetUpPieces()
 		{
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
@@ -142,7 +142,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			//setup the game peices
-			foreach (Empire empire in EmpiresArray)
+			foreach (Empire empire in EmpiresArray.Where(e => !Empires.ContainsKey(e)))
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
@@ -166,7 +166,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private void commandAI(CombatObject comObj)
+		public void commandAI(CombatObject comObj)
 		{
 			//do AI decision stuff.
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
@@ -178,7 +178,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		}
 
-		private void helm(CombatObject comObj)
+		public void helm(CombatObject comObj)
 		{
 			//rotate ship
 			double timetoturn = 0;
@@ -324,7 +324,7 @@ namespace FrEee.Game.Objects.Combat2
 			while (battleongoing)
 			{
 				battleloop(tic_countr);
-				if (cmdfreq_countr >= comdfreq)
+				if (cmdfreq_countr >= CommandFrequency)
 				{
 					foreach (CombatObject comObj in CombatObjects)
 						commandAI(comObj);
