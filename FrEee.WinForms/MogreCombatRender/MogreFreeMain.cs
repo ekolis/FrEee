@@ -35,7 +35,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
 
-		Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
+		//Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
 		private Battle_Space battle;
 
 		public MogreFreeMain(Battle_Space battle)
@@ -66,7 +66,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			foreach (CombatObject comObj in battle.CombatObjects)
 			{
-				renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
+				//renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
 			}
 		}
 
@@ -182,7 +182,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 
 
-			foreach (CombatObject obj in renderObjects.Values)
+			foreach (CombatObject obj in battle.CombatObjects)
 			{
 				CreateNewEntity(obj);
 			}
@@ -434,18 +434,21 @@ namespace FrEee.WinForms.MogreCombatRender
 				physicsstopwatch.Restart();
 				while (physicsstopwatch.ElapsedMilliseconds < 100)
 				{
-					// TODO - interpolation rendering of objects between ticks
+					foreach (CombatObject comObj in battle.CombatObjects)
+					{
+						Point3d renderloc = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / 100f);
+						do_graphics(comObj, renderloc);
+					}
 				}
 
 				battletic++;
 
-				foreach (CombatObject comObj in renderObjects.Values)
+				foreach (CombatObject comObj in battle.CombatObjects)
 				{
-
 					battle.helm(comObj);
 					if (cmdfreq_countr >= Battle_Space.CommandFrequency)
 						battle.commandAI(comObj);
-					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
+					Point3d renderloc = battle.SimNewtonianPhysics(comObj);
 					do_graphics(comObj, renderloc);
 					var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 					foreach (var comEvent in ourLogs)
