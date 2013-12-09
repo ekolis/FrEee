@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         private List<Fleet> fleets = new List<Fleet> { };
 
-        private combatReplayLog replaylog;
+        private CombatReplayLog replaylog;
 
         private List<IMobileSpaceObject> combatgroups;
 
@@ -263,15 +263,24 @@ namespace FrEee.Game.Objects.Combat2
                     int damage = tmplt.WeaponDamage;
                     if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
                     {
-                        combatEvent fire = FireWeapon(tic_countr - 1, comObj, wpn, comObj.weaponTarget[0]);
+                        //this function figures out if there's a hit, deals the damage, and creates an event.
+                        CombatshipEvent target_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]); 
+                        CombatshipEvent attack_event = new CombatshipEvent("Attack");
+                        attack_event.CombatEventFireWeapon(comObj.cmbt_loc, target_event);
 
-                        if (weapon.Template.ComponentTemplate.WeaponInfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect)) //projectile
+
+                        if (!isreplay)
                         {
-                            fire.endevent(tic_countr, comObj.weaponTarget[0].cmbt_loc);
-                        }
-                        if (isreplay)
-                        {
-                            replaylog.addEvent(tic_countr, fire);
+                            replaylog.addEvent(tic_countr, comObj.weaponTarget[0].icomobj.ID,  target_event);
+                            
+                            if (weapon.Template.ComponentTemplate.WeaponInfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect)) //projectile
+                            {
+                                replaylog.addEvent(tic_countr - 1, comObj.icomobj.ID, attack_event); //this shot was fired last turn.
+                            }
+                            else if (weapon.Template.ComponentTemplate.WeaponInfo.DisplayEffect.GetType() == typeof(Combat.BeamWeaponDisplayEffect))
+                            {
+                                replaylog.addEvent(tic_countr, comObj.icomobj.ID, attack_event); //beam weapons are instantanious. 
+                            }
                         }
 
                     }
@@ -372,39 +381,42 @@ namespace FrEee.Game.Objects.Combat2
             return inrange;
         }
 
-        private combatEvent FireWeapon(double tic, CombatObject attacker, Component weapon, CombatObject target)
+        private CombatshipEvent FireWeapon(double tic, CombatObject attacker, Component weapon, CombatObject target)
         {
-            combatEvent shotevent = new combatEvent(tic, "FireWeapon", attacker, target);
+            
             double range = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            ICombatant defender = target.icomobj;
-            Vehicle defenderV = (Vehicle)defender;
+            ICombatant target_icomobj = target.icomobj;
+            //Vehicle defenderV = (Vehicle)target_icomobj;
 
-            if (!weapon.CanTarget(defender))
+            if (!weapon.CanTarget(target_icomobj))
                 return null;
 
             // TODO - check range too
-            var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + weapon.Template.WeaponAccuracy + weapon.Container.Accuracy - defender.Evasion;
+            var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + weapon.Template.WeaponAccuracy + weapon.Container.Accuracy - target_icomobj.Evasion;
             // TODO - moddable min/max hit chances with per-weapon overrides
             if (tohit > 99)
                 tohit = 99;
             if (tohit < 1)
                 tohit = 1;
             bool hit = RandomHelper.Range(0, 99) < tohit;
-            shotevent.hitTarget(hit);
-            //battle.LogShot(this, hit);
+            CombatshipEvent target_event = new CombatshipEvent("Attack");
+            target_event.targetEvent(tic, target.cmbt_loc, hit);
+
             if (hit)
             {
-                var shot = new Combat.Shot(weapon, defender, (int)range); 
+                var shot = new Combat.Shot(weapon, target_icomobj, (int)range); 
                 //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
-                if (defender.MaxNormalShields < defender.NormalShields)
-                    defender.NormalShields = defender.MaxNormalShields;
-                if (defender.MaxPhasedShields < defender.PhasedShields)
-                    defender.PhasedShields = defender.MaxPhasedShields;
+                int damage = shot.Damage;
+                combatDamage(target, weapon, damage);
+                if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                    target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+                if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                    target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
                 //if (defender.IsDestroyed)
                     //battle.LogTargetDeath(defender);
                 
             }
-            return shotevent;
+            return target_event;
         }
 
         private void combatDamage(CombatObject target, Component weapon, int damage)
