@@ -76,10 +76,10 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected virtual void CreateCamera()
 		{
 			mCamera = mSceneMgr.CreateCamera("PlayerCam");
-			mCamera.Position = new Vector3(0, 0, 1e6f);
+			mCamera.Position = new Vector3(0, 0, 1000f);
 			mCamera.LookAt(Vector3.ZERO);
 			mCamera.NearClipDistance = 5;
-			mCamera.FarClipDistance = 2e6f;
+			mCamera.FarClipDistance = 2000f;
 			mCameraMan = new CameraMan(mCamera);
 		}
 
@@ -418,7 +418,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			//float scaley = ((float)(50000) / sizey);
 			//float scalez = ((float)(100000) / sizez);
 			objNode.AttachObject(objEnt);
-			objNode.Scale(500, 500, 500);
+			//objNode.Scale(500, 500, 500);
 			//do_graphics(obj); // set up initial position and orientation
 		}
 		#endregion
