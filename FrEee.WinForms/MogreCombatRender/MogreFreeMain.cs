@@ -427,21 +427,25 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			bool running = true;
 			int battletic = 0;
+			battle.SetUpPieces();
+			double cmdfreq_countr = 0;
 			while (running && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
-				while (physicsstopwatch.ElapsedMilliseconds < 1000)
+				while (physicsstopwatch.ElapsedMilliseconds < 100)
 				{
-					foreach (CombatObject comObj in renderObjects.Values)
-					{
-						Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
-						do_graphics(comObj, renderloc);
-					}
+					// TODO - interpolation rendering of objects between ticks
 				}
+
 				battletic++;
+
 				foreach (CombatObject comObj in renderObjects.Values)
 				{
-					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
+
+					battle.helm(comObj);
+					if (cmdfreq_countr >= Battle_Space.CommandFrequency)
+						battle.commandAI(comObj);
+					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic, physicsstopwatch.ElapsedMilliseconds));
 					do_graphics(comObj, renderloc);
 					var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 					foreach (var comEvent in ourLogs)
@@ -457,8 +461,11 @@ namespace FrEee.WinForms.MogreCombatRender
 							// TODO - kersplosions
 						}
 					}
-
 				}
+
+				if (cmdfreq_countr >= Battle_Space.CommandFrequency)
+					cmdfreq_countr = 0;
+
 				Application.DoEvents();
 			}
 		}
