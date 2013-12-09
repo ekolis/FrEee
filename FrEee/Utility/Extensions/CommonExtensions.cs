@@ -2284,6 +2284,13 @@ namespace FrEee.Utility.Extensions
 			return items.Where(item => item.GetType() == type && item.Name == name).ElementAtOrDefault(index);
 		}
 
+		/// <summary>
+		/// Returns the index of an item in a list after the list has been filtered to items with the same name.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items"></param>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public static int GetIndex<T>(this IEnumerable<T> items, T item)
 			where T : INamed
 		{
