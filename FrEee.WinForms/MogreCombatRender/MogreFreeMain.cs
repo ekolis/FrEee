@@ -127,6 +127,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		void form_Resize(object sender, EventArgs e)
 		{
 			mRenderWindow.WindowMovedOrResized();
+			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 		}
 
 		void form_Disposed(object sender, EventArgs e)
