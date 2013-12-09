@@ -7,7 +7,7 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class CombatReplayLog
     {
-        Dictionary<double, CombatShipsLogs> logs;
+        Dictionary<double, CombatShipsLogs> logs = new Dictionary<double,CombatShipsLogs>();
         public CombatReplayLog()
         {
 
