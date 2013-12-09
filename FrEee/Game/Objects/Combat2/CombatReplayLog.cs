@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Game.Objects.Technology;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,104 +8,68 @@ namespace FrEee.Game.Objects.Combat2
 {
 	public class CombatReplayLog
 	{
-		private Dictionary<double, CombatShipsLogs> Logs { get; set; }
+		public ICollection<CombatEvent> Events { get; private set; }
+
 		public CombatReplayLog()
 		{
-			Logs = new Dictionary<double, CombatShipsLogs>();
+			Events = new List<CombatEvent>();
 		}
 
-		public CombatShipsLogs logsforturn(double tic)
+		public IEnumerable<CombatEvent> EventsForTick(int tick)
 		{
-
-			if (Logs.ContainsKey(tic))
-				return Logs[tic];
-
-			else
-				return null;
+			return Events.Where(e => e.Tick == tick);
 		}
 
-		public void addEvent(double tic, long shipID, CombatshipEvent comevnt)
+		public IEnumerable<CombatEvent> EventsForObject(CombatObject obj)
 		{
-			if (Logs.ContainsKey(tic))
-			{
-				if (Logs[tic].ContainsKey(shipID))
-				{
-					Logs[tic][shipID].Add(comevnt);
-				}
-				else
-				{
-					Logs[tic].Add(shipID, new List<CombatshipEvent>() { comevnt });
-				}
-			}
-			else
-			{
-				CombatShipsLogs shipslogs = new CombatShipsLogs(shipID, comevnt);
-				Logs.Add(tic, shipslogs);
-			}
+			return Events.Where(e => e.Object == obj).OrderBy(e => e.Tick);
+		}
+
+		public IEnumerable<CombatEvent> EventsForObjectAtTick(CombatObject obj, int tick)
+		{
+			return Events.Where(e => e.Object == obj && e.Tick == tick);
 		}
 	}
 
-	public class CombatShipsLogs : Dictionary<long, List<CombatshipEvent>>
+	public abstract class CombatEvent
 	{
-		public CombatShipsLogs(long shipID, CombatshipEvent shipevent)
+		public int Tick { get; private set; }
+		public CombatObject Object { get; private set; }
+
+		protected CombatEvent(int tick, CombatObject obj)
 		{
-			if (this.ContainsKey(shipID))
-			{
-				this[shipID].Add(shipevent);
-			}
-			else
-			{
-				this.Add(shipID, new List<CombatshipEvent>() { shipevent });
-			}
-		}
-		public List<CombatshipEvent> eventsforship(long shipID)
-		{
-			if (this.ContainsKey(shipID))
-				return this[shipID];
-			else
-				return null;
+			Tick = tick;
+			Object = obj;
 		}
 	}
 
-	public class CombatshipEvent
-	{
-		public string EventType { get; protected set; }
-
-		public CombatshipEvent(string type)
-		{
-			this.EventType = type;
-		}
-	}
-	public class CombatEventLoc : CombatshipEvent
+	public class CombatLocationEvent : CombatEvent
 	{
 		public Point3d Location { get; private set; }
-		public CombatEventLoc(Point3d cmbt_loc)
-			: base("Location")
+		public CombatLocationEvent(int tick, CombatObject obj, Point3d cmbt_loc)
+			: base(tick, obj)
 		{
 			this.Location = cmbt_loc;
 		}
 	}
-	public class CombatEventFireWeapon : CombatEventLoc
+	public class CombatFireEvent : CombatLocationEvent
 	{
-		public CombatEventTakeFire TakeFireEvent { get; private set; }
+		public CombatTakeFireEvent TakeFireEvent { get; private set; }
 		public Technology.Component Weapon { get; private set; }
-		public CombatEventFireWeapon(Point3d loc, Technology.Component weapon, CombatEventTakeFire targetevent)
-			: base(loc)
+
+		public CombatFireEvent(int tick, CombatObject obj, Point3d loc, Component weapon, CombatTakeFireEvent targetevent)
+			: base(tick, obj, loc)
 		{
-			this.EventType = "FireWeapon";
 			this.Weapon = weapon;
 			this.TakeFireEvent = targetevent;
 		}
 	}
-	public class CombatEventTakeFire : CombatEventLoc
+	public class CombatTakeFireEvent : CombatLocationEvent
 	{
-		double EndpointTick { get; set; }
 		bool IsHit { get; set; }
-		public CombatEventTakeFire(double endtic, Point3d endpoint, bool hit)
-			: base(endpoint)
+		public CombatTakeFireEvent(int tick, CombatObject obj, Point3d endpoint, bool hit)
+			: base(tick, obj, endpoint)
 		{
-			this.EventType = "TakeFire";
-			this.EndpointTick = endtic;
 			this.IsHit = hit;
 		}
 	}

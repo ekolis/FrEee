@@ -426,12 +426,10 @@ namespace FrEee.WinForms.MogreCombatRender
 		private void Go()
 		{
 			bool running = true;
-            double battletic = 0;
-            CombatShipsLogs logsthisturn; 
+			int battletic = 0;
 			while (running && mRoot != null && mRoot.RenderOneFrame())
 			{
-                logsthisturn = battle.ReplayLog.logsforturn(battletic); 
-				physicsstopwatch.Restart();				
+				physicsstopwatch.Restart();
 				while (physicsstopwatch.ElapsedMilliseconds < 1000)
 				{
 					foreach (CombatObject comObj in renderObjects.Values)
@@ -445,19 +443,21 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
 					Point3d renderloc = new Point3d(battle.simPhysTic(comObj, battletic));
 					do_graphics(comObj, renderloc);
-                    if (logsthisturn != null)
-                    {
-                        if (logsthisturn.ContainsKey(comObj.icomobj.ID))
-                        {
-                            foreach (CombatshipEvent comEvent in logsthisturn[comObj.icomobj.ID])
-                            {
-                                if (comEvent is CombatEventFireWeapon)
-                                { 
-                                    // TODO - if type projectile, create whatever sprite and render it towards target.
-                                }
-                            }
-                        }
-                    }
+					var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
+					foreach (var comEvent in ourLogs)
+					{
+						if (comEvent is CombatFireEvent)
+						{
+							// TODO - if type projectile, create whatever sprite and render it flying towards target.
+							// or if type beam, draw a beam sprite
+							// seekers should really be their own event type, spawning new combat objects that track enemies
+						}
+						else if (comEvent is CombatTakeFireEvent)
+						{
+							// TODO - kersplosions
+						}
+					}
+
 				}
 				Application.DoEvents();
 			}
