@@ -264,9 +264,9 @@ namespace FrEee.Game.Objects.Combat2
                     if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
                     {
                         //this function figures out if there's a hit, deals the damage, and creates an event.
-                        CombatshipEvent target_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]); 
-                        CombatshipEvent attack_event = new CombatshipEvent("Attack");
-                        attack_event.CombatEventFireWeapon(comObj.cmbt_loc, target_event);
+                        CombatEventTakeFire target_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
+                        CombatEventFireWeapon attack_event = new CombatEventFireWeapon(comObj.cmbt_loc, weapon, target_event);
+                        
 
 
                         if (!isreplay)
@@ -381,7 +381,7 @@ namespace FrEee.Game.Objects.Combat2
             return inrange;
         }
 
-        private CombatshipEvent FireWeapon(double tic, CombatObject attacker, Component weapon, CombatObject target)
+        private CombatEventTakeFire FireWeapon(double tic, CombatObject attacker, Component weapon, CombatObject target)
         {
             
             double range = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
@@ -399,9 +399,8 @@ namespace FrEee.Game.Objects.Combat2
             if (tohit < 1)
                 tohit = 1;
             bool hit = RandomHelper.Range(0, 99) < tohit;
-            CombatshipEvent target_event = new CombatshipEvent("Attack");
-            target_event.targetEvent(tic, target.cmbt_loc, hit);
-
+            CombatEventTakeFire target_event = new CombatEventTakeFire(tic, target.cmbt_loc, hit);
+            
             if (hit)
             {
                 var shot = new Combat.Shot(weapon, target_icomobj, (int)range); 
