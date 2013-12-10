@@ -348,6 +348,15 @@ namespace FrEee.Game.Objects.Combat2
 			return pythagC(p2.X, p2.Y);
 		}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <returns>distance between 0,0 and p1.x , p1.y</returns>
+        public static double hypotinuse(Point3d p1)
+        {
+            return pythagC(p1.X, p1.Y);
+        }
 	}
 
 	public static class GravMath

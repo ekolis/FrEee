@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Combat2
 			Previous = new HashSet<Battle_Space>();
 		}
 
-		public bool IsReplay { get; private set; }
+		public bool IsReplay { get; set; }
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -108,7 +108,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private int startrange = 120;
+		private int startrange = 12000;
 
 
 		public Point3d SimNewtonianPhysics(CombatObject comObj)
@@ -127,6 +127,28 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
 		}
 
+        private void FirstSetup()
+        {
+            foreach (Empire empire in EmpiresArray.Where(e => !Empires.ContainsKey(e)))
+            {
+                Empires.Add(empire, new CombatEmpire());
+            }
+            foreach (SpaceVehicle ship in Combatants)
+            {
+                CombatObject comObj = new CombatObject(ship);
+                CombatObjects.Add(comObj);
+                Empires[ship.Owner].ownships.Add(comObj);
+
+                foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
+                {
+                    if (ship.IsHostileTo(empire.Key))
+                        empire.Value.hostile.Add(comObj);
+                    else if (ship.Owner != empire.Key)
+                        empire.Value.friendly.Add(comObj);
+                }
+            }
+        }
+
 		public void SetUpPieces()
 		{
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
@@ -139,31 +161,23 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 
+            if (!IsReplay)
+                FirstSetup();
 			//setup the game peices
-			foreach (Empire empire in EmpiresArray.Where(e => !Empires.ContainsKey(e)))
+			foreach (CombatObject comObj in CombatObjects)
 			{
-				Empires.Add(empire, new CombatEmpire());
-			}
-			foreach (SpaceVehicle ship in Combatants)
-			{
-				CombatObject thiscomobj = new CombatObject(ship);
-				int empindex = EmpiresArray.IndexOf(ship.Owner);
-				thiscomobj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
+
+                int empindex = EmpiresArray.IndexOf(comObj.icomobj.Owner);
+                comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
-                thiscomobj.cmbt_head = new Compass(thiscomobj.cmbt_loc, new Point3d(0, 0, 0));
-                thiscomobj.cmbt_att = new Compass(0);
-                int speed = ship.Speed;
+                comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
+                comObj.cmbt_att = new Compass(0);
+                int speed = ((SpaceVehicle)comObj.icomobj).Speed;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
-                thiscomobj.cmbt_vel = Trig.sides_ab(speed, thiscomobj.cmbt_head.Radians);
-				CombatObjects.Add(thiscomobj);
-				Empires[ship.Owner].ownships.Add(thiscomobj);
-				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
-				{
-					if (ship.IsHostileTo(empire.Key))
-						empire.Value.hostile.Add(thiscomobj);
-					else if (ship.Owner != empire.Key)
-						empire.Value.friendly.Add(thiscomobj);
-				}
+                comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
+
+                
+
 			}
 		}
 
@@ -190,16 +204,20 @@ namespace FrEee.Game.Objects.Combat2
 			if (comObj.lastVectortoWaypoint != null)
 				angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-			timetoturn = angletoturn.Radians / comObj.maxRotate;
+			timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
+            double oneEightytime = 3.14159265 / comObj.maxRotate * ticlen;
 			Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-			double timetomatchspeed = Trig.angleA(offsetVector) / comObj.maxfowardThrust;
+            
+            double timetomatchspeed = Trig.distance(comObj.waypointTarget.cmbt_vel, comObj.cmbt_vel) / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
 
-			double timetowpt = Trig.angleA(offsetVector) / ticlen;
+            double speedDelta = Trig.hypotinuse(offsetVector);
+            double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
+            double timetowpt = distance / speedDelta;
 
 			bool thrustToTarget = true;
 
 			//if/when we're going to overshoot teh waypoint
-			if (timetowpt <= timetomatchspeed + timetoturn)
+            if (timetowpt <= timetomatchspeed + oneEightytime)
 			{
 				angletoturn.Degrees += 180; //turn around and thrust the other way
 				thrustToTarget = false;
