@@ -108,7 +108,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private int startrange = 12000;
+		 
 
 
 		public Point3d SimNewtonianPhysics(CombatObject comObj)
@@ -151,6 +151,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void SetUpPieces()
 		{
+            int startrange = 1200;
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
 			Compass angle = new Compass(360 / EmpiresArray.Count(), false);
