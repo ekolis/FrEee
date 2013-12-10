@@ -41,6 +41,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		public MogreFreeMain(Battle_Space battle)
 		{
 			this.battle = battle;
+            battle.IsReplay = true;
 			setup();
 
 			try
