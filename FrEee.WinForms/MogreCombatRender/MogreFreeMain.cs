@@ -498,8 +498,9 @@ namespace FrEee.WinForms.MogreCombatRender
 
 			SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
 			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, 0);
-			Quaternion quat = new Quaternion((float)(Trig.angleto(renderloc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Y);
-			node.Orientation = quat;
+			//Quaternion quat = new Quaternion((float)(Trig.angleto(renderloc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Y);
+			Quaternion quat = new Quaternion((float)obj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
+            node.Orientation = quat;
 		}
 	}
 }
