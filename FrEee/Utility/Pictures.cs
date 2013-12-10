@@ -651,7 +651,10 @@ namespace FrEee.Utility
 				{
 					try
 					{
-						fileCache[path] = Image.FromFile(path);
+						var bmp = new Bitmap(path);
+						if (Path.GetExtension(path).ToLower() == ".bmp")
+							bmp.MakeTransparent(Color.Black);
+						fileCache[path] = bmp; 	
 					}
 					catch (Exception ex)
 					{
