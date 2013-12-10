@@ -1070,7 +1070,7 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Supply Cost
-Targets := Empire
+Targets := Race, Empire
 Description := Vehicle supply usage is modified by [%Amount1%]%.
 Value 1 Rule := TakeLowest
 Value 2 Rule := TakeLowest
@@ -1080,7 +1080,7 @@ Targets := Race
 Description := The race's population is immune to plagues.
 
 Name := Luck
-Targets := Empire
+Targets := Race, Empire
 Description := The chance of a bad random event occurring in this empire is changed by [%Amount1%].
 Value 1 Rule := TakeLowest
 Value 2 Rule := TakeLowest
@@ -1090,27 +1090,27 @@ Targets := Race, Planet
 Description := Colonies containing this race's population do not require spaceports to gather resources and points.
 
 Name := Vehicle Speed
-Targets := Empire, SpaceVehicle
+Targets := Race, Empire, SpaceVehicle
 Description := The speed of this empire's vehicles is modified by [%Amount1%].
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Galaxy Seen
-Targets := Empire
+Targets := Race, Empire
 Description := The empire has prior knowledge of the entire galaxy at the start of the game.
 
 Name := Planet Storage Space
-Targets := Empire, Planet
+Targets := Race, Empire, Planet
 Description := Colonies' facility, cargo, and population storage space is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Planetary SY Rate
-Targets := Empire, Planet
+Targets := Race, Empire, Planet
 Description := Planetary space yards' construction rate is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Tech Area
-Targets := Empire
+Targets := Race, Empire
 Description := Empire gains access to the [%Amount1%] racial tech.
