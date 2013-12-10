@@ -149,9 +149,12 @@ namespace FrEee.Game.Objects.Combat2
 				CombatObject thiscomobj = new CombatObject(ship);
 				int empindex = EmpiresArray.IndexOf(ship.Owner);
 				thiscomobj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
-				thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
-				int speed = ship.Speed;
-				thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
+				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
+                thiscomobj.cmbt_head = new Compass(thiscomobj.cmbt_loc, new Point3d(0, 0, 0));
+                thiscomobj.cmbt_att = new Compass(0);
+                int speed = ship.Speed;
+				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
+                thiscomobj.cmbt_vel = Trig.sides_ab(speed, thiscomobj.cmbt_head.Radians);
 				CombatObjects.Add(thiscomobj);
 				Empires[ship.Owner].ownships.Add(thiscomobj);
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
@@ -180,12 +183,14 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			//rotate ship
 			double timetoturn = 0;
-			Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+            Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc);
+            Compass angletoturn = new Compass(comObj.cmbt_head.Radians - angletoWaypoint.Radians);
 			Point3d vectortowaypoint = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			if (comObj.lastVectortoWaypoint != null)
 				angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-			timetoturn = angletoturn.Radians / comObj.Rotate;
+			timetoturn = angletoturn.Radians / comObj.maxRotate;
 			Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
 			double timetomatchspeed = Trig.angleA(offsetVector) / comObj.maxfowardThrust;
 
@@ -202,24 +207,28 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (angletoturn.Degrees < 180) //turn to the right
 			{
-				if (angletoturn.Degrees > comObj.Rotate)
+				if (angletoturn.Degrees > comObj.maxRotate)
 				{
-					comObj.cmbt_face += comObj.Rotate;
+					//comObj.cmbt_face += comObj.Rotate;
+                    comObj.cmbt_head.Radians += comObj.maxRotate;
 				}
 				else
 				{
-					comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                    comObj.cmbt_head.Radians += angletoWaypoint.Radians;
 				}
 			}
 			else
 			{
-				if (angletoturn.Degrees > -comObj.Rotate)
+				if (angletoturn.Degrees > -comObj.maxRotate)
 				{
-					comObj.cmbt_face -= comObj.Rotate;
+					//comObj.cmbt_face -= comObj.maxRotate;
+                    comObj.cmbt_head.Radians -= comObj.maxRotate;
 				}
 				else
 				{
-					comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                    comObj.cmbt_head.Radians += angletoWaypoint.Radians;
 				}
 			}
 
@@ -245,7 +254,8 @@ namespace FrEee.Game.Objects.Combat2
 				thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);
 			}
 
-			Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+			//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+            Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
 			comObj.cmbt_thrust += fowardthrust;
 			comObj.lastVectortoWaypoint = vectortowaypoint;
 		}
