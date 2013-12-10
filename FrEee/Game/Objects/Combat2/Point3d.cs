@@ -179,6 +179,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 	}
 
+
 	public class Compass
 	{
 		double heading_degrees;
@@ -193,6 +194,11 @@ namespace FrEee.Game.Objects.Combat2
 				Degrees = angle;
 			}
 		}
+
+        public Compass(Point3d point1, Point3d point2)
+        {
+            Radians = Trig.angleto(point1, point2);
+        }
 
 		public double Degrees
 		{
@@ -212,6 +218,10 @@ namespace FrEee.Game.Objects.Combat2
 				normalize();
 			}
 		}
+        public Point3d Point(double distance)
+        {
+            return Trig.sides_ab(distance, Radians);
+        }
 
 		public void normalize()
 		{

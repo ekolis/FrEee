@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Combat2
             this.cmbt_mass = (double)ship.Size;
             this.maxfowardThrust = ship.Speed / this.cmbt_mass;
             this.maxStrafeThrust = (ship.Speed / this.cmbt_mass) / 4;
-            this.Rotate = (ship.Speed / this.cmbt_mass) / 12;
+            this.maxRotate = (ship.Speed / this.cmbt_mass) / 12;
 
             this.waypointTarget = new combatWaypoint();
             this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
@@ -51,7 +51,18 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// facing towards this point
         /// </summary>
-        public Point3d cmbt_face { get; set; }
+        //public Point3d cmbt_face { get; set; }
+
+
+        /// <summary>
+        /// ship heading 
+        /// </summary>
+        public Compass cmbt_head { get; set; }
+
+        /// <summary>
+        /// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
+        /// </summary>
+        public Compass cmbt_att { get; set; }
 
         /// <summary>
         /// combat velocity
@@ -82,7 +93,7 @@ namespace FrEee.Game.Objects.Combat2
 
         public double maxfowardThrust { get; set; }
         public double maxStrafeThrust { get; set; }
-        public double Rotate { get; set; }
+        public double maxRotate { get; set; }
 
     }
 
