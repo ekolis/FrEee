@@ -193,15 +193,18 @@ namespace FrEee.Game.Objects.Combat2
                 comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
                 comObj.newDice(battleseed);
-
+                
 			}
+            foreach (CombatObject comObj in CombatObjects)
+                commandAI(comObj);
 		}
 
 		public void commandAI(CombatObject comObj)
 		{
 			//do AI decision stuff.
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-			combatWaypoint wpt = new combatWaypoint(Empires[comObj.icomobj.Owner].hostile[0]);
+            CombatObject tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
+            combatWaypoint wpt = new combatWaypoint(tgtObj);
 			comObj.waypointTarget = wpt;
 			//pick a primary target to fire apon from a list of enemy within weapon range
 			comObj.weaponTarget = new List<CombatObject>();
@@ -214,22 +217,22 @@ namespace FrEee.Game.Objects.Combat2
 			//rotate ship
 			double timetoturn = 0;
 			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
-            
-            Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc);
+            combatWaypoint wpt = comObj.waypointTarget;
+            Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc); //relitive to me. 
             Compass angletoturn = new Compass(comObj.cmbt_head.Radians - angletoWaypoint.Radians);
-			Point3d vectortowaypoint = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
-			if (comObj.lastVectortoWaypoint != null)
-				angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
+            Point3d vectortowaypoint = comObj.cmbt_loc - comObj.waypointTarget.cmbt_loc;
+            //if (comObj.lastVectortoWaypoint != null)
+            //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
 			timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
             double oneEightytime = 3.14159265 / comObj.maxRotate * ticlen;
-			Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            
-            double timetomatchspeed = Trig.distance(comObj.waypointTarget.cmbt_vel, comObj.cmbt_vel) / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
+			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
+            double closingSpeed = Trig.distance(comObj.waypointTarget.cmbt_vel, comObj.cmbt_vel);//Trig.hypotinuse(offsetVector);
+            double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
 
-            double speedDelta = Trig.hypotinuse(offsetVector);
+            
             double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
-            double timetowpt = distance / speedDelta;
+            double timetowpt = distance / closingSpeed;
 
 			bool thrustToTarget = true;
 
@@ -295,7 +298,7 @@ namespace FrEee.Game.Objects.Combat2
 			comObj.lastVectortoWaypoint = vectortowaypoint;
 		}
 
-		private void firecontrol(int tic_countr, CombatObject comObj)
+		public void firecontrol(int tic_countr, CombatObject comObj)
 		{
 			foreach (var weapon in comObj.icomobj.Weapons)
 			{
@@ -331,30 +334,10 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private void battleloop(int tic_countr)
-		{
-
-			foreach (CombatObject comObj in CombatObjects)
-			{
-
-				//heading and thrust
-				helm(comObj);
-
-				//fire ready weapons.
-				firecontrol(tic_countr, comObj);
-
-				//comObj.lastDistancetoWaypoint = Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc);
-				SimNewtonianPhysics(comObj);
-			}
-
-		}
-
 		public void Resolve()
 		{
 			//start combat
 			Current.Add(this);
-
-
 
 			SetUpPieces();
 
@@ -362,27 +345,39 @@ namespace FrEee.Game.Objects.Combat2
 			//unleash the dogs of war!
 			bool battleongoing = true;
 
-			int tic_countr = 0;
+            int battletic = 0;
 			double cmdfreq_countr = 0;
+
 			while (battleongoing)
 			{
-				battleloop(tic_countr);
-				if (cmdfreq_countr >= CommandFrequency)
-				{
-					foreach (CombatObject comObj in CombatObjects)
-						commandAI(comObj);
-					cmdfreq_countr = 0;
-				}
+                foreach (CombatObject comObj in CombatObjects)
+                {
+
+                    //heading and thrust
+                    helm(comObj);
+
+                    //fire ready weapons.
+                    firecontrol(battletic, comObj);
+
+                    //physicsmove objects.
+                    SimNewtonianPhysics(comObj);
+
+                    if (cmdfreq_countr >= CommandFrequency)
+                    {
+                        commandAI(comObj);
+                        cmdfreq_countr = 0;
+                    }
+                }
 
 				bool ships_persuing = true;
 				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships
 
 				if (!ships_persuing && !ships_inrange)
 					battleongoing = false;
-				if (tic_countr > 10000)
+                if (battletic > 10000)
 					battleongoing = false;
 				cmdfreq_countr++;
-				tic_countr++;
+                battletic++;
 			}
 
 			//end combat
