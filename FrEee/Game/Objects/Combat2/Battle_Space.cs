@@ -214,6 +214,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void helm(CombatObject comObj)
 		{
+            Ship ship = (Ship)comObj.icomobj;
+            string name = ship.Name;
 			//rotate ship
 			double timetoturn = 0;
 			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
@@ -239,11 +241,11 @@ namespace FrEee.Game.Objects.Combat2
 			//if/when we're going to overshoot teh waypoint
             if (timetowpt <= timetomatchspeed + oneEightytime)
 			{
-				angletoturn.Degrees += 180; //turn around and thrust the other way
+				angletoturn.Degrees = (angletoWaypoint + 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
 				thrustToTarget = false;
 			}
 
-            if (angletoturn.Degrees < 180 && angletoturn.Degrees > 0) //turn to the right
+            if (angletoturn.Degrees <= 180 && angletoturn.Degrees > 0) //turn to the right
 			{
 				if (angletoturn.Radians > comObj.maxRotate)
 				{
