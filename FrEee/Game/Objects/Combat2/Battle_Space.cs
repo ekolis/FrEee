@@ -290,7 +290,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
 			{
-				Compass angle = new Compass(-angletoturn.Degrees);
+				Compass angle = new Compass(360 -angletoturn.Degrees);
 				angle.normalize();
 				thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);
 			}
