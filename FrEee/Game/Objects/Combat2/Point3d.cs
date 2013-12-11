@@ -231,11 +231,13 @@ namespace FrEee.Game.Objects.Combat2
 		public static double operator +(Compass angle, double addend)
 		{
 			angle.Degrees += addend;
+            angle.normalize();
 			return angle.Degrees;
 		}
 		public static double operator -(Compass angle, double subend)
 		{
 			angle.Degrees -= subend;
+            angle.normalize();
 			return angle.Degrees;
 		}
 	}

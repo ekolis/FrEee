@@ -214,6 +214,27 @@ namespace FrEee.WinForms.MogreCombatRender
 			moMaterialgreen.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 0);
 			moMaterialgreen.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 0);
 			moMaterialgreen.Dispose();  // dispose pointer, not the material
+            MaterialPtr moMaterialpurple = MaterialManager.Singleton.Create("line_purple", resourceGroupName);
+            moMaterialpurple.ReceiveShadows = false;
+            moMaterialpurple.GetTechnique(0).SetLightingEnabled(true);
+            moMaterialpurple.GetTechnique(0).GetPass(0).SetDiffuse(1, 0, 1, 0);
+            moMaterialpurple.GetTechnique(0).GetPass(0).SetAmbient(1, 0, 1);
+            moMaterialpurple.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 0, 1);
+            moMaterialpurple.Dispose();  // dispose pointer, not the material
+            MaterialPtr moMaterialyellow = MaterialManager.Singleton.Create("line_yellow", resourceGroupName);
+            moMaterialyellow.ReceiveShadows = false;
+            moMaterialyellow.GetTechnique(0).SetLightingEnabled(true);
+            moMaterialyellow.GetTechnique(0).GetPass(0).SetDiffuse(1, 1, 0, 0);
+            moMaterialyellow.GetTechnique(0).GetPass(0).SetAmbient(1, 1, 0);
+            moMaterialyellow.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 1, 0);
+            moMaterialyellow.Dispose();  // dispose pointer, not the material
+            MaterialPtr moMaterialcyan = MaterialManager.Singleton.Create("line_cyan", resourceGroupName);
+            moMaterialcyan.ReceiveShadows = false;
+            moMaterialcyan.GetTechnique(0).SetLightingEnabled(true);
+            moMaterialcyan.GetTechnique(0).GetPass(0).SetDiffuse(0, 1, 1, 0);
+            moMaterialcyan.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 1);
+            moMaterialcyan.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 1);
+            moMaterialcyan.Dispose();  // dispose pointer, not the material
 
 			mNode_lines = mSceneMgr.RootSceneNode.CreateChildSceneNode(" ", Vector3.ZERO);
 
@@ -484,7 +505,8 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 
 		private void do_graphics(CombatObject obj, Point3d renderloc)
-		{
+		{            
+            string IDName = obj.icomobj.ID.ToString();
 			//foreach (CombatObj obj in renderObjects.Values)
 			//{
 
@@ -506,11 +528,44 @@ namespace FrEee.WinForms.MogreCombatRender
 			}
 			*/
 
-			SceneNode node = mSceneMgr.GetSceneNode(obj.icomobj.ID.ToString());
+            //so.Nodes[1].AttachObject(forceline);
+
+
+
+
+            SceneNode node = mSceneMgr.GetSceneNode(IDName);
 			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
-			//Quaternion quat = new Quaternion((float)(Trig.angleto(renderloc, obj.cmbt_face)), Vector3.NEGATIVE_UNIT_Y);
 			Quaternion quat = new Quaternion((float)obj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
             node.Orientation = quat;
+
+
+            //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+            //ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);            
+            //node.AttachObject(toWaypointLine);
+            //toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+            //toWaypointLine.Position(node.Position);
+            //toWaypointLine.Position(new Vector3((float)obj.waypointTarget.cmbt_loc.X, (float)obj.waypointTarget.cmbt_loc.Y, (float)obj.waypointTarget.cmbt_loc.Z));
+            //toWaypointLine.End();
+
+
+            mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
+            ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
+            node.AttachObject(toTargetLine);
+            toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
+            toTargetLine.Position(node.Position);
+            toTargetLine.Position(new Vector3((float)obj.waypointTarget.comObj.cmbt_loc.X, (float)obj.waypointTarget.comObj.cmbt_loc.Y, (float)obj.waypointTarget.comObj.cmbt_loc.Z));
+            toTargetLine.End();
+
+            //mSceneMgr.DestroyManualObject("toOtherNodeline" + IDName);
+            //ManualObject toOtherNodeline = mSceneMgr.CreateManualObject("toOtherNodeline" + IDName);
+            //node.AttachObject(toOtherNodeline);
+            //toOtherNodeline.Begin("line_cyan", RenderOperation.OperationTypes.OT_LINE_LIST);
+            //toOtherNodeline.Position(node.Position);
+            //toOtherNodeline.Position(mSceneMgr.GetSceneNode(obj.waypointTarget.comObj.icomobj.ID.ToString()).Position);
+            //toOtherNodeline.End();
+
+            //Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
+
 		}
 	}
 }
