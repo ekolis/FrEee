@@ -457,10 +457,13 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, int> src)
+		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.Next(total);
+            var num = RandomHelper.Next(total);
+            if (prng != null)
+                num = prng.Next(total);
+
 			int sofar = 0;
 			foreach (var kvp in src)
 			{

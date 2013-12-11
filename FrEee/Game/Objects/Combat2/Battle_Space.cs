@@ -37,7 +37,14 @@ namespace FrEee.Game.Objects.Combat2
 			this.IsReplay = isreplay;
 			if (!isreplay)
 				ReplayLog = new CombatReplayLog();
-
+            
+            
+            double stardate = Galaxy.Current.Timestamp;
+            int starday = (int)(Galaxy.Current.CurrentTick * 10);                     
+            
+            int moduloID = (int)(location.StarSystem.ID % 100000);           
+            this.battleseed = (int)(moduloID / stardate * 10);
+            
 		}
 
 		static Battle_Space()
@@ -46,7 +53,15 @@ namespace FrEee.Game.Objects.Combat2
 			Previous = new HashSet<Battle_Space>();
 		}
 
+        /// <summary>
+        /// whether or not this is a processing(false) or a replay(true)
+        /// </summary>
 		public bool IsReplay { get; set; }
+
+        /// <summary>
+        /// seed for this battle.
+        /// </summary>
+        private int battleseed { get; set; }
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -88,7 +103,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public CombatReplayLog ReplayLog { get; private set; }
 
-		private List<IMobileSpaceObject> combatgroups;
+        public Sector sectoratStart { get; private set; }
 
 		private const double ticlen = 0.1; //physics tick length
 		public const double CommandFrequency = 10;   //new commands (move, new targets etc) are given every 10 ticks.
@@ -107,8 +122,6 @@ namespace FrEee.Game.Objects.Combat2
 				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
 			}
 		}
-
-		 
 
 
 		public Point3d SimNewtonianPhysics(CombatObject comObj)
@@ -135,7 +148,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             foreach (SpaceVehicle ship in Combatants)
             {
-                CombatObject comObj = new CombatObject(ship);
+                CombatObject comObj = new CombatObject(ship, battleseed);
                 CombatObjects.Add(comObj);
                 Empires[ship.Owner].ownships.Add(comObj);
 
@@ -177,7 +190,7 @@ namespace FrEee.Game.Objects.Combat2
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
                 comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
-                
+                comObj.newDice(battleseed);
 
 			}
 		}
@@ -411,7 +424,7 @@ namespace FrEee.Game.Objects.Combat2
 		private CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, Component weapon, CombatObject target)
 		{
 
-			double range = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+			double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
 			ICombatant target_icomobj = target.icomobj;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
@@ -425,15 +438,18 @@ namespace FrEee.Game.Objects.Combat2
 				tohit = 99;
 			if (tohit < 1)
 				tohit = 1;
-			bool hit = RandomHelper.Range(0, 99) < tohit;
+            
+			//bool hit = RandomHelper.Range(0, 99) < tohit;
+            PRNG dice = attacker.getDice();
+            bool hit = dice.Range(0, 99) < tohit;
 			CombatTakeFireEvent target_event = new CombatTakeFireEvent(tic, target, target.cmbt_loc, hit);
 
 			if (hit)
 			{
-				var shot = new Combat.Shot(weapon, target_icomobj, (int)range);
+				var shot = new Combat.Shot(weapon, target_icomobj, (int)rangetotarget);
 				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				int damage = shot.Damage;
-				combatDamage(target, weapon, damage);
+				combatDamage(target, weapon, damage, attacker.getDice());
 				if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
 					target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
 				if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
@@ -445,7 +461,7 @@ namespace FrEee.Game.Objects.Combat2
 			return target_event;
 		}
 
-		private void combatDamage(CombatObject target, Component weapon, int damage)
+		private void combatDamage(CombatObject target, Component weapon, int damage, PRNG attackersdice)
 		{
 
 			Combat.DamageType damageType = weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
@@ -477,7 +493,7 @@ namespace FrEee.Game.Objects.Combat2
 					var armor = comps.Where(c => c.HasAbility("Armor"));
 					var internals = comps.Where(c => !c.HasAbility("Armor"));
 					var canBeHit = armor.Any() ? armor : internals;
-					var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted();
+                    var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
 					damage = comp.TakeDamage(damageType, damage, null);// battle);
 				}
 
