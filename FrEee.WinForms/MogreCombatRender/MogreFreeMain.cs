@@ -39,6 +39,8 @@ namespace FrEee.WinForms.MogreCombatRender
 		//Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
 		private Battle_Space battle;
 
+        private int SelectedComObj = 1;
+
 		public MogreFreeMain(Battle_Space battle)
 		{
 			this.battle = battle;
@@ -305,7 +307,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     break;
 
 				case MOIS.KeyCode.KC_PGUP:
-                    replaySpeed *= 1.5f;
+                    replaySpeed *= 2f;
 					break;
 
 				case MOIS.KeyCode.KC_Q:
@@ -316,7 +318,7 @@ namespace FrEee.WinForms.MogreCombatRender
 					break;
 
 				case MOIS.KeyCode.KC_SPACE:
-					Console.Out.WriteLine("space was pushed.");
+					//Console.Out.WriteLine("space was pushed.");
 					//Rocks rocksphere = new Rocks(60, 6, 8);
 					//Console.Out.WriteLine(rocksphere.ToString());
 					//Console.Out.WriteLine(rocksphere.verts[1][1].ToString());
@@ -326,6 +328,14 @@ namespace FrEee.WinForms.MogreCombatRender
 				case MOIS.KeyCode.KC_RSHIFT:
 					mCameraMan.FastMove = true;
 					break;
+
+                case MOIS.KeyCode.KC_LBRACKET:
+                    SelectedComObj += 1;                    
+                    break;
+
+                case MOIS.KeyCode.KC_RBRACKET:
+                    SelectedComObj -= 1;  
+                    break;
 
 				case MOIS.KeyCode.KC_T:
 					//CycleTextureFilteringMode();
@@ -454,6 +464,8 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 		#endregion
 
+
+
 		private void Go()
 		{
 			bool running = true;
@@ -504,9 +516,9 @@ namespace FrEee.WinForms.MogreCombatRender
 			}
 		}
 
-		private void do_graphics(CombatObject obj, Point3d renderloc)
+		private void do_graphics(CombatObject comObj, Point3d renderloc)
 		{            
-            string IDName = obj.icomobj.ID.ToString();
+            string IDName = comObj.icomobj.ID.ToString();
 			//foreach (CombatObj obj in renderObjects.Values)
 			//{
 
@@ -535,17 +547,17 @@ namespace FrEee.WinForms.MogreCombatRender
 
             SceneNode node = mSceneMgr.GetSceneNode(IDName);
 			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
-			Quaternion quat = new Quaternion((float)obj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
+			Quaternion quat = new Quaternion((float)comObj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
             node.Orientation = quat;
 
 
-            //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
-            //ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);            
-            //node.AttachObject(toWaypointLine);
-            //toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toWaypointLine.Position(node.Position);
-            //toWaypointLine.Position(new Vector3((float)obj.waypointTarget.cmbt_loc.X, (float)obj.waypointTarget.cmbt_loc.Y, (float)obj.waypointTarget.cmbt_loc.Z));
-            //toWaypointLine.End();
+            mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+            ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
+            node.AttachObject(toWaypointLine);
+            toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+            toWaypointLine.Position(node.Position);
+            toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
+            toWaypointLine.End();
 
 
             mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
@@ -553,9 +565,13 @@ namespace FrEee.WinForms.MogreCombatRender
             node.AttachObject(toTargetLine);
             toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
             toTargetLine.Position(node.Position);
-            toTargetLine.Position(new Vector3((float)obj.waypointTarget.comObj.cmbt_loc.X, (float)obj.waypointTarget.comObj.cmbt_loc.Y, (float)obj.waypointTarget.comObj.cmbt_loc.Z));
+            toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
             toTargetLine.End();
 
+            if (comObj.icomobj.ID == 3299939791363671165)
+            {
+                bool p = true;
+            }
             //mSceneMgr.DestroyManualObject("toOtherNodeline" + IDName);
             //ManualObject toOtherNodeline = mSceneMgr.CreateManualObject("toOtherNodeline" + IDName);
             //node.AttachObject(toOtherNodeline);
