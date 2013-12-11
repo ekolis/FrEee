@@ -16,6 +16,26 @@ namespace FrEee.WinForms.MogreCombatRender
         private bool mFreeze;
         private bool mMouselook;
 
+		/// <summary>
+		/// Speed of camera panning, as a factor of the camera's Z coordinate.
+		/// </summary>
+		private const float PanSpeed = 0.15f;
+
+		/// <summary>
+		/// Sensitivity of the mouse movement (not the wheel).
+		/// TODO - make this depend on the window size
+		/// </summary>
+		private const float MouseSensitivity = 0.05f;
+
+		/// <summary>
+		/// Multiplier for camera sensitivity when "fast move" is enabled.
+		/// </summary>
+		private const float FastMoveFactor = 3;
+
+		/// <summary>
+		/// Exponential base for camera zoom.
+		/// </summary>
+		private const float ZoomBase = 0.999f;
 
 
         public CameraMan(Camera camera)
@@ -90,22 +110,35 @@ namespace FrEee.WinForms.MogreCombatRender
             if (mGoingUp) move += mCamera.Up;
             if (mGoingDown) move -= mCamera.Up;
 
-            move.Normalise();
-            move *= 150; // Natural speed is 150 units/sec.
+            move.Normalise(); // move at constant speed even if going diagonal
+            move *= PanSpeed * mCamera.Position.z;
             if (mFastMove)
-                move *= 3; // With shift button pressed, move twice as fast.
+                move *= FastMoveFactor; // With shift button pressed, move faster.
 
             if (move != Vector3.ZERO)
                 mCamera.Move(move * timeFragment);
         }
 
-        public void MouseMovement(int x, int y)
+		/// <summary>
+		/// Performs mouse based movement of the camera.
+		/// </summary>
+		/// <param name="x">Horizontal component.</param>
+		/// <param name="y">Vertical component.</param>
+		/// <param name="z">Zoom.</param>
+        public void MouseMovement(int x, int y, int z)
         {
             if (mFreeze)
                 return;
 
-            mCamera.Yaw(new Degree(-x * 0.15f));
-            mCamera.Pitch(new Degree(-y * 0.15f));
+			// TODO - make camera speed faster when zoomed out and slower when zoomed in so it "looks constant"
+			mCamera.Position = new Vector3(
+					mCamera.Position.x + x * PanSpeed * mCamera.Position.z * MouseSensitivity,
+					mCamera.Position.y + y * PanSpeed * mCamera.Position.z * MouseSensitivity,
+					mCamera.Position.z * (float)System.Math.Pow(ZoomBase, z)
+				);
+
+			mCamera.NearClipDistance = mCamera.Position.z / 100;
+			mCamera.FarClipDistance = mCamera.Position.z * 2;
         }
     }
 }

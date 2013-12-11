@@ -418,8 +418,10 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			if (mCameraMan.MouseLook == true)
 			{
-				mCameraMan.MouseMovement(evt.state.X.rel, evt.state.Y.rel);
+				mCameraMan.MouseMovement(evt.state.X.rel, evt.state.Y.rel, evt.state.Z.rel);
 			}
+			else
+				mCameraMan.MouseMovement(0, 0, evt.state.Z.rel);
 			return true;
 		}
 
