@@ -569,14 +569,14 @@ namespace FrEee.WinForms.MogreCombatRender
             node.Orientation = quat;
 
 
-            //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
-            //ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
-            //mNode_lines.AttachObject(toWaypointLine);
-            //toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toWaypointLine.Position(node.Position);
-            ////toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
-            //toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
-            //toWaypointLine.End();
+            mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+            ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
+            mNode_lines.AttachObject(toWaypointLine);
+            toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+            toWaypointLine.Position(node.Position);
+            //toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
+            toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
+            toWaypointLine.End();
 
 
             //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
