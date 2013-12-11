@@ -29,6 +29,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected CameraMan mCameraMan;
 
 		private Form form;
+        private float replaySpeed = 1f;
 
 		//protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
 		protected SceneNode mNode_lines = null;
@@ -42,7 +43,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			this.battle = battle;
             battle.IsReplay = true;
-			setup();
+			
 
 			try
 			{
@@ -56,7 +57,8 @@ namespace FrEee.WinForms.MogreCombatRender
 				CreateScene();
 				InitializeInput();
 				CreateFrameListeners();
-
+                
+                setup();
 				Go();
 
 			}
@@ -65,9 +67,11 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		private void setup()
 		{
+            battle.SetUpPieces();
 			foreach (CombatObject comObj in battle.CombatObjects)
 			{
-				//renderObjects.Add(comObj.icomobj.ID.ToString(), comObj);
+                CreateNewEntity(comObj);
+                do_graphics(comObj, comObj.cmbt_loc);
 			}
 		}
 
@@ -128,7 +132,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		void form_Resize(object sender, EventArgs e)
 		{
 			mRenderWindow.WindowMovedOrResized();
-			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
+			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;            
 		}
 
 		void form_Disposed(object sender, EventArgs e)
@@ -183,10 +187,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 
 
-			foreach (CombatObject obj in battle.CombatObjects)
-			{
-				CreateNewEntity(obj);
-			}
+
 
 			String resourceGroupName = "lines";
 			if (ResourceGroupManager.Singleton.ResourceGroupExists(resourceGroupName) == false)
@@ -256,13 +257,15 @@ namespace FrEee.WinForms.MogreCombatRender
 				case MOIS.KeyCode.KC_W:
 				case MOIS.KeyCode.KC_UP:
 					//shiplist[0].Thrusting = 1;
-					mCameraMan.GoingForward = true;
+					//mCameraMan.GoingForward = true;
+                    mCameraMan.GoingUp = true;
 					break;
 
 				case MOIS.KeyCode.KC_S:
 				case MOIS.KeyCode.KC_DOWN:
 					//shiplist[0].Thrusting = -1;
-					mCameraMan.GoingBack = true;
+					//mCameraMan.GoingBack = true;
+                    mCameraMan.GoingDown = true;
 					break;
 
 				case MOIS.KeyCode.KC_A:
@@ -278,13 +281,17 @@ namespace FrEee.WinForms.MogreCombatRender
 					break;
 
 				case MOIS.KeyCode.KC_E:
+                    break;
+
 				case MOIS.KeyCode.KC_PGUP:
-					//shiplist[0].Rotating = 1;
+                    replaySpeed *= 1.5f;
 					break;
 
 				case MOIS.KeyCode.KC_Q:
+                    break;
+
 				case MOIS.KeyCode.KC_PGDOWN:
-					//shiplist[0].Rotating = -1;
+                    replaySpeed *= 0.5f;
 					break;
 
 				case MOIS.KeyCode.KC_SPACE:
@@ -296,7 +303,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				case MOIS.KeyCode.KC_LSHIFT:
 				case MOIS.KeyCode.KC_RSHIFT:
-					//mCameraMan.FastMove = true;
+					mCameraMan.FastMove = true;
 					break;
 
 				case MOIS.KeyCode.KC_T:
@@ -332,13 +339,15 @@ namespace FrEee.WinForms.MogreCombatRender
 				case MOIS.KeyCode.KC_W:
 				case MOIS.KeyCode.KC_UP:
 
-					mCameraMan.GoingForward = false;
+					//mCameraMan.GoingForward = false;
+                    mCameraMan.GoingUp = false;
 					break;
 
 				case MOIS.KeyCode.KC_S:
 				case MOIS.KeyCode.KC_DOWN:
 
-					mCameraMan.GoingBack = false;
+					//mCameraMan.GoingBack = false;
+                    mCameraMan.GoingDown = false;
 					break;
 
 				case MOIS.KeyCode.KC_A:
@@ -367,7 +376,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				case MOIS.KeyCode.KC_LSHIFT:
 				case MOIS.KeyCode.KC_RSHIFT:
-					//mCameraMan.FastMove = false;
+					mCameraMan.FastMove = false;
 					break;
 			}
 
@@ -428,16 +437,16 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			bool running = true;
 			int battletic = 0;
-			battle.SetUpPieces();
+			
 			double cmdfreq_countr = 0;
 			while (running && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
-				while (physicsstopwatch.ElapsedMilliseconds < 100)
+				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
 					foreach (CombatObject comObj in battle.CombatObjects)
 					{
-						Point3d renderloc = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / 100f);
+						Point3d renderloc = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
 						do_graphics(comObj, renderloc);
 					}
 				}

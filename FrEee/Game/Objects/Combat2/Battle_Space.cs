@@ -212,6 +212,7 @@ namespace FrEee.Game.Objects.Combat2
 			//rotate ship
 			double timetoturn = 0;
 			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+            
             Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc);
             Compass angletoturn = new Compass(comObj.cmbt_head.Radians - angletoWaypoint.Radians);
 			Point3d vectortowaypoint = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
