@@ -152,13 +152,7 @@ namespace FrEee.Game.Objects.Combat2
                 CombatObjects.Add(comObj);
                 Empires[ship.Owner].ownships.Add(comObj);
 
-                foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
-                {
-                    if (ship.IsHostileTo(empire.Key))
-                        empire.Value.hostile.Add(comObj);
-                    else if (ship.Owner != empire.Key)
-                        empire.Value.friendly.Add(comObj);
-                }
+
             }
         }
 
@@ -180,6 +174,14 @@ namespace FrEee.Game.Objects.Combat2
 			//setup the game peices
 			foreach (CombatObject comObj in CombatObjects)
 			{
+                foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
+                {
+                    Ship ship = (Ship)comObj.icomobj;
+                    if (ship.IsHostileTo(empire.Key))
+                        empire.Value.hostile.Add(comObj);
+                    else if (ship.Owner != empire.Key)
+                        empire.Value.friendly.Add(comObj);
+                }
 
                 int empindex = EmpiresArray.IndexOf(comObj.icomobj.Owner);
                 comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
