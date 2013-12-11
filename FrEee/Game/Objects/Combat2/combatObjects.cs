@@ -90,7 +90,7 @@ namespace FrEee.Game.Objects.Combat2
             set { this.comObj = value; }
         }
 
-        public combatWaypoint waypointTarget { get; set; }
+        public combatWaypoint waypointTarget;
         public Point3d lastVectortoWaypoint { get; set; }
         //public double lastDistancetoWaypoint { get; set; }
 
@@ -124,11 +124,11 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.cmbt_loc = cmbt_loc;
         }
-        public combatWaypoint(CombatObject comObj)
+        public combatWaypoint(CombatObject tgtcomObj)
         {
-            this.comObj = comObj;
-            this.cmbt_loc = comObj.cmbt_loc;
-            this.cmbt_vel = comObj.cmbt_vel;
+            this.comObj = tgtcomObj;
+            this.cmbt_loc = tgtcomObj.cmbt_loc;
+            this.cmbt_vel = tgtcomObj.cmbt_vel;
         }
 
         /// <summary>
