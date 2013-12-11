@@ -241,7 +241,8 @@ namespace FrEee.Game.Objects.Combat2
 			//if/when we're going to overshoot teh waypoint
             if (timetowpt <= timetomatchspeed + oneEightytime)
 			{
-				angletoturn.Degrees = (angletoWaypoint + 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+				angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+                angletoturn.normalize();
 				thrustToTarget = false;
 			}
 
@@ -255,7 +256,7 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Radians = angletoWaypoint.Radians;
+                    comObj.cmbt_head.Radians += angletoturn.Radians;
 				}
 			}
 			else
@@ -268,7 +269,7 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Radians = angletoWaypoint.Radians;
+                    comObj.cmbt_head.Radians -= angletoturn.Radians;
 				}
 			}
 
