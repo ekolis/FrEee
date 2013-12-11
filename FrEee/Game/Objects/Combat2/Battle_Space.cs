@@ -238,7 +238,7 @@ namespace FrEee.Game.Objects.Combat2
 				thrustToTarget = false;
 			}
 
-			if (angletoturn.Degrees < 180) //turn to the right
+            if (angletoturn.Degrees < 180 && angletoturn.Degrees > 0) //turn to the right
 			{
 				if (angletoturn.Radians > comObj.maxRotate)
 				{
@@ -248,12 +248,12 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Radians += angletoWaypoint.Radians;
+                    comObj.cmbt_head.Radians = angletoWaypoint.Radians;
 				}
 			}
 			else
 			{
-                if (angletoturn.Radians > -comObj.maxRotate)
+                if (angletoturn.Radians < -comObj.maxRotate)
 				{
 					//comObj.cmbt_face -= comObj.maxRotate;
                     comObj.cmbt_head.Radians -= comObj.maxRotate;
@@ -261,7 +261,7 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Radians += angletoWaypoint.Radians;
+                    comObj.cmbt_head.Radians = angletoWaypoint.Radians;
 				}
 			}
 
