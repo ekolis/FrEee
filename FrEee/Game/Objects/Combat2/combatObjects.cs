@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 using FrEee.Game.Interfaces;
 
@@ -17,11 +18,14 @@ namespace FrEee.Game.Objects.Combat2
         { }
     }
 
+
     public class CombatObject
     {
         private ICombatant comObj;
 
-        public CombatObject(ICombatant comObj)
+        private PRNG shipDice;
+
+        public CombatObject(ICombatant comObj, int battleseed)
         {
             this.comObj = comObj;
             Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
@@ -36,6 +40,7 @@ namespace FrEee.Game.Objects.Combat2
             this.cmbt_thrust = new Point3d(0, 0, 0);
             this.cmbt_accel = new Point3d(0, 0, 0);
 
+            newDice(battleseed);
         }
 
         /// <summary>
@@ -95,6 +100,15 @@ namespace FrEee.Game.Objects.Combat2
         public double maxStrafeThrust { get; set; }
         public double maxRotate { get; set; }
 
+        public PRNG getDice()
+        {
+            return shipDice;
+        }
+        public void newDice(int battleseed)
+        {            
+            int seed = (int)(this.icomobj.ID %  100000) + battleseed;
+            shipDice = new PRNG(seed);
+        }
     }
 
 
