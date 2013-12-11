@@ -31,8 +31,8 @@ namespace FrEee.Game.Objects.Combat2
             Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
             this.cmbt_mass = (double)ship.Size;
             this.maxfowardThrust = ship.Speed / this.cmbt_mass;
-            this.maxStrafeThrust = (ship.Speed / this.cmbt_mass) / 4;
-            this.maxRotate = (ship.Speed / this.cmbt_mass) / 12;
+            this.maxStrafeThrust = (ship.Speed / this.cmbt_mass) / (4 - ship.Evasion * 0.01);
+            this.maxRotate = (ship.Speed / this.cmbt_mass) / (12 - ship.Evasion * 0.1);
 
             this.waypointTarget = new combatWaypoint();
             this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
