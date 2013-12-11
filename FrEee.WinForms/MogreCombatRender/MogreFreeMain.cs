@@ -487,7 +487,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				}
 
 				battletic++;
-
+                cmdfreq_countr++;
 				foreach (CombatObject comObj in battle.CombatObjects)
 				{
 					battle.helm(comObj);
@@ -513,7 +513,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				if (cmdfreq_countr >= Battle_Space.CommandFrequency)
 					cmdfreq_countr = 0;
-
+                
+                //battletic++;
 				Application.DoEvents();
 			}
 		}
@@ -570,10 +571,7 @@ namespace FrEee.WinForms.MogreCombatRender
             toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
             toTargetLine.End();
 
-            if (comObj.icomobj.ID == 3299939791363671165)
-            {
-                bool p = true;
-            }
+
             //mSceneMgr.DestroyManualObject("toOtherNodeline" + IDName);
             //ManualObject toOtherNodeline = mSceneMgr.CreateManualObject("toOtherNodeline" + IDName);
             //node.AttachObject(toOtherNodeline);
