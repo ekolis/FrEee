@@ -262,38 +262,45 @@ namespace FrEee.Game.Objects.Combat2
             Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
             double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
 
-
-
             double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
-
 
             double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
             double optimaldistance = 100;
             double timetowpt = distance / closingSpeed;
 
-            bool thrustToTarget = true;
+            bool thrustToWaypoint = true;
 
 
             if (closingSpeed > 0 && distance > optimaldistance) //if we're getting closer, and not already too close.
             {
-                thrustToTarget = true;  //then go towards the targetWaypoint.
+                thrustToWaypoint = true;  //then go towards the targetWaypoint.
             }
             else if (timetowpt <= timetomatchspeed + oneEightytime)//if/when we're going to overshoot teh waypoint
             {
                 angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
                 angletoturn.normalize();
-                thrustToTarget = false;
+                thrustToWaypoint = false;
             }
             else if (closingSpeed < 0)// we're getting further away. 
             {
-                thrustToTarget = true;
+                thrustToWaypoint = true;
             }
             else //I guess we're close to the waypoint.
             {
-                thrustToTarget = false;
+                thrustToWaypoint = false;
             }
 
-            if (angletoturn.Degrees <= 180) //turn clockwise
+            turnship(comObj, angletoturn, angletoWaypoint);
+
+            thrustship(comObj, angletoturn, thrustToWaypoint);
+
+            comObj.lastVectortoWaypoint = vectortowaypoint;
+
+        }
+
+        private void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
+        {
+            if (angleToTarget.Degrees <= 180) //turn clockwise
             {
                 if (angletoturn.Radians > comObj.maxRotate)
                 {
@@ -318,10 +325,13 @@ namespace FrEee.Game.Objects.Combat2
                     //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
                     comObj.cmbt_head.Radians -= angletoturn.Radians;
                 }
-            }
+            } 
+        }
 
+        private void strafeship(CombatObject comObj, bool thrustToWaypoint)
+        {
             //thrust ship using strafe
-            if (thrustToTarget) //(if we want to accelerate towards the target, not away from it)
+            if (thrustToWaypoint) //(if we want to accelerate towards the target, not away from it)
             {
                 comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
             }
@@ -329,6 +339,12 @@ namespace FrEee.Game.Objects.Combat2
             {
                 comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
             }
+        }
+
+        private void thrustship(CombatObject comObj, Compass angletoturn, bool thrustToWaypoint)
+        {
+            comObj.cmbt_thrust.ZEROIZE();
+            strafeship(comObj, thrustToWaypoint);
             //main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
             double thrustby = 0;
             if (angletoturn.Degrees > 0 && angletoturn.Degrees < 90)
@@ -345,7 +361,7 @@ namespace FrEee.Game.Objects.Combat2
             //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
             Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
             comObj.cmbt_thrust += fowardthrust;
-            comObj.lastVectortoWaypoint = vectortowaypoint;
+            
         }
 
 		public void firecontrol(int tic_countr, CombatObject comObj)
