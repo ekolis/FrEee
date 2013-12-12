@@ -85,6 +85,19 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		public int Hitpoints
 		{
 			get { return HullHitpoints + ArmorHitpoints; }
+			set
+			{
+				if (value > MaxHullHitpoints)
+				{
+					HullHitpoints = MaxHullHitpoints;
+					ArmorHitpoints = Math.Min(MaxArmorHitpoints, value - MaxHullHitpoints);
+				}
+				else
+				{
+					HullHitpoints = value;
+					ArmorHitpoints = 0;
+				}
+			}
 		}
 
 		public int NormalShields
@@ -136,7 +149,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
 		public int MaxShieldHitpoints
 		{
-			get { return MaxNormalShields + MaxPhasedShields }
+			get { return MaxNormalShields + MaxPhasedShields; }
 		}
 
 		public int MaxArmorHitpoints
