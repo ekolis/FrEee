@@ -16,13 +16,15 @@ Name := Sector - Sight Obscuration
 Targets := Sector, SpaceObject, Component, Facility
 Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this sector.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Sector - Sensor Interference
 Targets := Sector, SpaceObject, Component, Facility
 Description := Weapon accuracy is reduced by [%Amount1%]% in this sector.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Sector - Shield Disruption
 Targets := Sector, SpaceObject, Component, Facility
@@ -153,25 +155,22 @@ Name := Planet - Change Ground Defense
 Targets := Planet, Facility, GroundVehicle, Component
 Description := Weapon damage inflicted by troops defending this colony is changed by [%Amount1%]%.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := System - Change Ground Defense
 Targets := Sector, Planet, Facility, Vehicle, Component
 Description := Weapon damage inflicted by troops defending colonies in this system in ground combat is changed by [%Amount1%]%.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
-
-Name := System - Change Ground Defense
-Targets := StarSystem, Planet, Facility, Vehicle, Component
-Description := Weapon damage inflicted by troops defending colonies in this system in ground combat is changed by [%Amount1%]%.
-Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Empire - Change Ground Defense
 Targets := Empire, Planet, Facility, Vehicle, Component
 Description := Weapon damage inflicted by troops defending this empire's colonies is changed by [%Amount1%]%.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet - Shield Generation
 Targets := Planet, Facility, GroundVehicle, Component
@@ -226,7 +225,8 @@ Name := Multiplex Tracking
 Targets := Vehicle, Component
 Description := Vehicle can fire on [%Amount1%] different targets in a combat round.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Combat To Hit Offense Plus
 Targets := Vehicle, Planet, Component, Facility
@@ -252,19 +252,22 @@ Name := Medical Bay
 Targets := Vehicle, Planet, Component, Facility
 Description := Can cure plagues up to level [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Movement Bonus
 Targets := SpaceVehicle, Component
 Description := Speed bonus of [%Amount1%].
 Value 1 Rule := TakeLowest
-Value 2 Rule := TakeLowest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Emissive Armor
 Targets := Vehicle, Planet, Component, Facility
 Description := Negates [%Amount1%] damage from each hit, except from armor piercing weapons.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Shield Regeneration
 Targets := Vehicle, Planet, Component, Facility
@@ -312,7 +315,8 @@ Name := Open Warp Point Distance
 Targets := SpaceVehicle, Component
 Description := Can open a warp point to a star system up to [%Amount1%] light-years away.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Create Planet Size
 Targets := SpaceVehicle, Component
@@ -405,220 +409,256 @@ Name := Resource Gen Modifier - Minerals
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Mineral mining rate is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier Planet - Organics
 Name := Resource Gen Modifier - Organics
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Organics farming rate is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier Planet - Radioactives
 Name := Resource Gen Modifier - Radioactives
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Radioactives refining rate is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier System - Minerals
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Mineral mining rate is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier System - Organics
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Organics farming rate is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier System - Radioactives
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Radioactives refining rate is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier Empire - Minerals
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Mineral mining rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier Empire - Organics
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Organics farming rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Resource Gen Modifier Empire - Radioactives
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Radioactives refining rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Point Generation Modifier - Research
 Name := Point Generation Modifier - Research
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Research rate is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Point Generation Modifier - Intelligence
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Intelligence rate is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := System Point Generation Modifier - Research
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Research rate is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := System Point Generation Modifier - Intelligence
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Intelligence rate is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Empire Point Generation Modifier - Research
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Research rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Empire Point Generation Modifier - Intelligence
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Intelligence rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Combat Modifier - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := Weapon accuracy and evasion is changed by [%Amount1%]% in this sector.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Combat Modifier - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := Weapon accuracy and evasion is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Combat Modifier - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := Weapon accuracy and evasion is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Damage Modifier - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := Weapon damage is changed by [%Amount1%]% in this sector.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Damage Modifier - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := Weapon damage is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Damage Modifier - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := Weapon damage is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Value Change - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := The value of each colonized planet in this sector is changed by [%Amount1%] every 10 turns (all resources).
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Value Change - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := The value of each colonized planet in this system is changed by [%Amount1%] every 10 turns (all resources).
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Value Change - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := The value of each colonized planet throughout the empire is changed by [%Amount1%] every 10 turns (all resources).
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Conditions Change - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := The conditions of each colonized planet in this sector are changed by [%Amount1%] every 10 turns.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Conditions Change - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := The conditions of each colonized planet in this system are changed by [%Amount1%] every 10 turns.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planet Conditions Change - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := The conditions of each colonized planet throughout the empire are changed by [%Amount1%] every 10 turns.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Event Chance - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := The chance of a bad random event occurring in this sector is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Event Chance - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := The chance of a bad random event occurring in this system is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Event Chance - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := The chance of a bad random event occurring is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Intelligence Chance - Sector
 Targets := Sector, Planet, Vehicle, Component, Facility
 Description := The chance of foreign intelligence operations occurring in this sector is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Intelligence Chance - System
 Targets := StarSystem, Planet, Vehicle, Component, Facility
 Description := The chance of foreign intelligence operations occurring in this system is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Bad Intelligence Chance - Empire
 Targets := Empire, Planet, Vehicle, Component, Facility
 Description := The chance of foreign intelligence operations occurring is changed by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Population Happiness - Sector
 Targets := Sector, Planet, Component, Facility
 Description := Population happiness is changed by [%Amount1%] per turn in this sector.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Population Happiness - System
 Targets := StarSystem, Planet, Component, Facility
 Description := Population happiness is changed by [%Amount1%] per turn in this system.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Change Population Happiness - Empire
 Targets := Empire, Planet, Component, Facility
 Description := Population happiness is changed by [%Amount1%] per turn throughout the empire.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Ship Training
 Alias := Ship Training - Sector
@@ -1073,16 +1113,17 @@ Name := Supply Cost
 Targets := Race, Empire
 Description := Vehicle supply usage is modified by [%Amount1%]%.
 Value 1 Rule := TakeLowest
-Value 2 Rule := TakeLowest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := No Plagues
 Targets := Race
 Description := The race's population is immune to plagues.
 
 Name := Luck
-Targets := Race, Empire
+Targets := Race, Empire, Planet, Facility, Vehicle, Component
 Description := The chance of a bad random event occurring in this empire is changed by [%Amount1%].
-Value 1 Rule := TakeLowest
+Value 1 Rule := Add
 Value 2 Rule := TakeLowest
 
 Name := No Spaceports
@@ -1090,26 +1131,29 @@ Targets := Race, Planet
 Description := Colonies containing this race's population do not require spaceports to gather resources and points.
 
 Name := Vehicle Speed
-Targets := Race, Empire, SpaceVehicle
+Targets := Race, Empire, Planet, Facility, Vehicle, Component
 Description := The speed of this empire's vehicles is modified by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Galaxy Seen
 Targets := Race, Empire
 Description := The empire has prior knowledge of the entire galaxy at the start of the game.
 
 Name := Planet Storage Space
-Targets := Race, Empire, Planet
+Targets := Race, Empire, Planet, Facility
 Description := Colonies' facility, cargo, and population storage space is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Planetary SY Rate
 Targets := Race, Empire, Planet
 Description := Planetary space yards' construction rate is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
 
 Name := Tech Area
 Targets := Race, Empire
@@ -1119,4 +1163,5 @@ Name := Breakthrough Chance
 Targets := Race, Empire, Planet, Facility, Vehicle, Component
 Description := The chance of a research breakthrough in this empire is modified by [%Amount1%].
 Value 1 Rule := TakeHighest
-Value 2 Rule := TakeHighest
+Value 1 Group Rule := Add
+Value 2 Rule := Group
