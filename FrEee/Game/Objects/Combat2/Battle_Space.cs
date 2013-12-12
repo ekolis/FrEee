@@ -183,62 +183,80 @@ namespace FrEee.Game.Objects.Combat2
                 commandAI(comObj);
 		}
 
-		public void Resolve()
+		public void Start()
 		{
 			//start combat
 			Current.Add(this);
 
 			SetUpPieces();
+		}
 
-
-			//unleash the dogs of war!
-			bool battleongoing = true;
-
-            int battletic = 0;
-			double cmdfreq_countr = 0;
-
-			while (battleongoing)
-			{
-                foreach (CombatObject comObj in CombatObjects)
-                {
-
-                    //heading and thrust
-                    helm(comObj);
-
-                    //fire ready weapons.
-                    firecontrol(battletic, comObj);
-
-                    //physicsmove objects.
-                    SimNewtonianPhysics(comObj);
-
- 
-                }
-                if (cmdfreq_countr >= Battle_Space.CommandFrequency)
-                {
-                    foreach (CombatObject comObj in CombatObjects)
-                    {                   
-                        commandAI(comObj);                       
-                    }
-                    cmdfreq_countr = 0;
-                }
-
-				bool ships_persuing = true;
-				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships
-
-				if (!ships_persuing && !ships_inrange)
-					battleongoing = false;
-                if (battletic > 10000)
-					battleongoing = false;
-				cmdfreq_countr++;
-                battletic++;
-			}
-
+		public void End()
+		{
 			//end combat
-
-
-
 			Current.Remove(this);
 			Previous.Add(this);
+		}
+
+		/// <summary>
+		/// Processes a tick of combat
+		/// </summary>
+		/// <param name="tick">The tick number</param>
+		/// <param name="cmdfreqCounter">Counter to keep track of when the ship AI can issue comamnds.</param>
+		/// <returns>True if the battle should continue; false if it should end.</returns>
+		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
+		{
+			//unleash the dogs of war!
+			foreach (CombatObject comObj in CombatObjects)
+			{
+
+				//heading and thrust
+				helm(comObj);
+
+				//fire ready weapons.
+				firecontrol(tick, comObj);
+
+				//physicsmove objects.
+				SimNewtonianPhysics(comObj);
+
+
+			}
+			if (cmdfreqCounter >= Battle_Space.CommandFrequency)
+			{
+				foreach (CombatObject comObj in CombatObjects)
+				{
+					commandAI(comObj);
+				}
+				cmdfreqCounter = 0;
+			}
+
+			bool ships_persuing = true; // TODO - check if ships are actually pursuing
+			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
+
+			bool cont;
+			if (!ships_persuing && !ships_inrange)
+				cont = false;
+			else if (tick > 10000)
+				cont = false;
+			else
+				cont = true;
+			cmdfreqCounter++;
+			tick++;
+			return cont;
+		}
+
+		public void Resolve()
+		{
+			Start();
+
+			
+			int tick = 1, cmdFreqCounter = 0;
+			while (ProcessTick(ref tick, ref cmdFreqCounter))
+			{
+                // keep on truckin'
+			}
+
+			End();			
 		}
 
 		public void helm(CombatObject comObj)
