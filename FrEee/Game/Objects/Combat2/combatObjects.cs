@@ -21,13 +21,13 @@ namespace FrEee.Game.Objects.Combat2
 
     public class CombatObject
     {
-        private ICombatant comObj;
+        private ICombatant icomObj;
 
         private PRNG shipDice;
 
         public CombatObject(ICombatant comObj, int battleseed)
         {
-            this.comObj = comObj;
+            this.icomObj = comObj;
             Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
             this.cmbt_mass = (double)ship.Size;
             this.maxfowardThrust = ship.Speed / this.cmbt_mass;
@@ -86,8 +86,8 @@ namespace FrEee.Game.Objects.Combat2
         public ICombatant icomobj
         {
 
-            get { return this.comObj; }
-            set { this.comObj = value; }
+            get { return this.icomObj; }
+            set { this.icomObj = value; }
         }
 
         public combatWaypoint waypointTarget;
