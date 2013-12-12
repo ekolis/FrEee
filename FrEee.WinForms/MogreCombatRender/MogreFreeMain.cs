@@ -124,8 +124,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			// Create Render Window
 			mRoot.Initialise(false, "Main Ogre Window");
 			NameValuePairList misc = new NameValuePairList();
-			form = new MogreCombatForm();
-			form.Text = battle.Name;
+			form = new MogreCombatForm(battle);
 			misc["externalWindowHandle"] = form.Handle.ToString();
 			mRenderWindow = mRoot.CreateRenderWindow("Main RenderWindow", 800, 600, false, misc);
 			form.Size = new Size(800, 600);

@@ -28,118 +28,138 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton2 = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton3 = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton4 = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton5 = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton6 = new FrEee.WinForms.Controls.GameButton();
-			this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.txtLog = new System.Windows.Forms.TextBox();
+			this.btnRestart = new FrEee.WinForms.Controls.GameButton();
+			this.btnplay = new FrEee.WinForms.Controls.GameButton();
+			this.btnFastForward = new FrEee.WinForms.Controls.GameButton();
+			this.btnPreviousShip = new FrEee.WinForms.Controls.GameButton();
+			this.btnFreeCam = new FrEee.WinForms.Controls.GameButton();
+			this.btnNextShip = new FrEee.WinForms.Controls.GameButton();
+			this.spaceVehicleReport = new FrEee.WinForms.Controls.SpaceVehicleReport();
 			this.SuspendLayout();
 			// 
-			// gameButton1
+			// txtLog
 			// 
-			this.gameButton1.BackColor = System.Drawing.Color.Black;
-			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton1.Location = new System.Drawing.Point(3, 3);
-			this.gameButton1.Name = "gameButton1";
-			this.gameButton1.Size = new System.Drawing.Size(78, 34);
-			this.gameButton1.TabIndex = 6;
-			this.gameButton1.Text = "Back to Start";
-			this.gameButton1.UseVisualStyleBackColor = false;
+			this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.txtLog.Location = new System.Drawing.Point(12, 92);
+			this.txtLog.Multiline = true;
+			this.txtLog.Name = "txtLog";
+			this.txtLog.Size = new System.Drawing.Size(255, 657);
+			this.txtLog.TabIndex = 14;
 			// 
-			// gameButton2
+			// btnRestart
 			// 
-			this.gameButton2.BackColor = System.Drawing.Color.Black;
-			this.gameButton2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton2.Location = new System.Drawing.Point(87, 3);
-			this.gameButton2.Name = "gameButton2";
-			this.gameButton2.Size = new System.Drawing.Size(78, 34);
-			this.gameButton2.TabIndex = 8;
-			this.gameButton2.Text = "Play";
-			this.gameButton2.UseVisualStyleBackColor = false;
+			this.btnRestart.BackColor = System.Drawing.Color.Black;
+			this.btnRestart.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRestart.Location = new System.Drawing.Point(12, 12);
+			this.btnRestart.Name = "btnRestart";
+			this.btnRestart.Size = new System.Drawing.Size(78, 34);
+			this.btnRestart.TabIndex = 6;
+			this.btnRestart.Text = "Back to Start";
+			this.btnRestart.UseVisualStyleBackColor = false;
 			// 
-			// gameButton3
+			// btnplay
 			// 
-			this.gameButton3.BackColor = System.Drawing.Color.Black;
-			this.gameButton3.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton3.Location = new System.Drawing.Point(171, 3);
-			this.gameButton3.Name = "gameButton3";
-			this.gameButton3.Size = new System.Drawing.Size(87, 34);
-			this.gameButton3.TabIndex = 9;
-			this.gameButton3.Text = "Fast Foward";
-			this.gameButton3.UseVisualStyleBackColor = false;
+			this.btnplay.BackColor = System.Drawing.Color.Black;
+			this.btnplay.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnplay.Location = new System.Drawing.Point(96, 12);
+			this.btnplay.Name = "btnplay";
+			this.btnplay.Size = new System.Drawing.Size(78, 34);
+			this.btnplay.TabIndex = 8;
+			this.btnplay.Text = "Play";
+			this.btnplay.UseVisualStyleBackColor = false;
 			// 
-			// gameButton4
+			// btnFastForward
 			// 
-			this.gameButton4.BackColor = System.Drawing.Color.Black;
-			this.gameButton4.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton4.Location = new System.Drawing.Point(3, 43);
-			this.gameButton4.Name = "gameButton4";
-			this.gameButton4.Size = new System.Drawing.Size(78, 34);
-			this.gameButton4.TabIndex = 10;
-			this.gameButton4.Text = "Previous Ship";
-			this.gameButton4.UseVisualStyleBackColor = false;
+			this.btnFastForward.BackColor = System.Drawing.Color.Black;
+			this.btnFastForward.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnFastForward.Location = new System.Drawing.Point(180, 12);
+			this.btnFastForward.Name = "btnFastForward";
+			this.btnFastForward.Size = new System.Drawing.Size(87, 34);
+			this.btnFastForward.TabIndex = 9;
+			this.btnFastForward.Text = "Fast Foward";
+			this.btnFastForward.UseVisualStyleBackColor = false;
 			// 
-			// gameButton5
+			// btnPreviousShip
 			// 
-			this.gameButton5.BackColor = System.Drawing.Color.Black;
-			this.gameButton5.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton5.Location = new System.Drawing.Point(87, 43);
-			this.gameButton5.Name = "gameButton5";
-			this.gameButton5.Size = new System.Drawing.Size(78, 34);
-			this.gameButton5.TabIndex = 11;
-			this.gameButton5.Text = "Free Cam";
-			this.gameButton5.UseVisualStyleBackColor = false;
+			this.btnPreviousShip.BackColor = System.Drawing.Color.Black;
+			this.btnPreviousShip.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPreviousShip.Location = new System.Drawing.Point(12, 52);
+			this.btnPreviousShip.Name = "btnPreviousShip";
+			this.btnPreviousShip.Size = new System.Drawing.Size(78, 34);
+			this.btnPreviousShip.TabIndex = 10;
+			this.btnPreviousShip.Text = "Previous Ship";
+			this.btnPreviousShip.UseVisualStyleBackColor = false;
+			this.btnPreviousShip.Click += new System.EventHandler(this.btnPreviousShip_Click);
 			// 
-			// gameButton6
+			// btnFreeCam
 			// 
-			this.gameButton6.BackColor = System.Drawing.Color.Black;
-			this.gameButton6.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton6.Location = new System.Drawing.Point(171, 43);
-			this.gameButton6.Name = "gameButton6";
-			this.gameButton6.Size = new System.Drawing.Size(87, 34);
-			this.gameButton6.TabIndex = 12;
-			this.gameButton6.Text = "Next Ship";
-			this.gameButton6.UseVisualStyleBackColor = false;
+			this.btnFreeCam.BackColor = System.Drawing.Color.Black;
+			this.btnFreeCam.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnFreeCam.Location = new System.Drawing.Point(96, 52);
+			this.btnFreeCam.Name = "btnFreeCam";
+			this.btnFreeCam.Size = new System.Drawing.Size(78, 34);
+			this.btnFreeCam.TabIndex = 11;
+			this.btnFreeCam.Text = "Free Cam";
+			this.btnFreeCam.UseVisualStyleBackColor = false;
 			// 
-			// richTextBox1
+			// btnNextShip
 			// 
-			this.richTextBox1.Location = new System.Drawing.Point(3, 121);
-			this.richTextBox1.Name = "richTextBox1";
-			this.richTextBox1.Size = new System.Drawing.Size(261, 430);
-			this.richTextBox1.TabIndex = 7;
-			this.richTextBox1.Text = "";
+			this.btnNextShip.BackColor = System.Drawing.Color.Black;
+			this.btnNextShip.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNextShip.Location = new System.Drawing.Point(180, 52);
+			this.btnNextShip.Name = "btnNextShip";
+			this.btnNextShip.Size = new System.Drawing.Size(87, 34);
+			this.btnNextShip.TabIndex = 12;
+			this.btnNextShip.Text = "Next Ship";
+			this.btnNextShip.UseVisualStyleBackColor = false;
+			this.btnNextShip.Click += new System.EventHandler(this.btnNextShip_Click);
+			// 
+			// spaceVehicleReport
+			// 
+			this.spaceVehicleReport.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.spaceVehicleReport.BackColor = System.Drawing.Color.Black;
+			this.spaceVehicleReport.ForeColor = System.Drawing.Color.White;
+			this.spaceVehicleReport.Location = new System.Drawing.Point(842, 12);
+			this.spaceVehicleReport.Name = "spaceVehicleReport";
+			this.spaceVehicleReport.Size = new System.Drawing.Size(330, 737);
+			this.spaceVehicleReport.TabIndex = 15;
+			this.spaceVehicleReport.Vehicle = null;
 			// 
 			// MogreCombatForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(954, 554);
-			this.Controls.Add(this.gameButton1);
-			this.Controls.Add(this.gameButton2);
-			this.Controls.Add(this.gameButton3);
-			this.Controls.Add(this.gameButton4);
-			this.Controls.Add(this.gameButton5);
-			this.Controls.Add(this.gameButton6);
-			this.Controls.Add(this.richTextBox1);
+			this.ClientSize = new System.Drawing.Size(1184, 761);
+			this.Controls.Add(this.spaceVehicleReport);
+			this.Controls.Add(this.txtLog);
+			this.Controls.Add(this.btnRestart);
+			this.Controls.Add(this.btnplay);
+			this.Controls.Add(this.btnFastForward);
+			this.Controls.Add(this.btnPreviousShip);
+			this.Controls.Add(this.btnFreeCam);
+			this.Controls.Add(this.btnNextShip);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "MogreCombatForm";
 			this.Text = "Space Combat";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
         }
 
         #endregion
 
-		private Controls.GameButton gameButton1;
-		private Controls.GameButton gameButton2;
-		private Controls.GameButton gameButton3;
-		private Controls.GameButton gameButton4;
-		private Controls.GameButton gameButton5;
-		private Controls.GameButton gameButton6;
-		private System.Windows.Forms.RichTextBox richTextBox1;
+		private Controls.GameButton btnRestart;
+		private Controls.GameButton btnplay;
+		private Controls.GameButton btnFastForward;
+		private Controls.GameButton btnPreviousShip;
+		private Controls.GameButton btnFreeCam;
+		private Controls.GameButton btnNextShip;
+		private System.Windows.Forms.TextBox txtLog;
+		private Controls.SpaceVehicleReport spaceVehicleReport;
 
 	}
 }
