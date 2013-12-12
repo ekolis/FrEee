@@ -5,146 +5,164 @@ using System.Text;
 using FrEee.Utility;
 
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class CombatEmpire
-    {
-        public List<CombatObject> ownships = new List<CombatObject>();
-        public List<CombatObject> friendly = new List<CombatObject>();
-        public List<CombatObject> neutral = new List<CombatObject>(); //not currently used.
-        public List<CombatObject> hostile = new List<CombatObject>();
-        public CombatEmpire()
-        { }
-    }
+	public class CombatEmpire
+	{
+		public List<CombatObject> ownships = new List<CombatObject>();
+		public List<CombatObject> friendly = new List<CombatObject>();
+		public List<CombatObject> neutral = new List<CombatObject>(); //not currently used.
+		public List<CombatObject> hostile = new List<CombatObject>();
+		public CombatEmpire()
+		{ }
+	}
 
 
-    public class CombatObject
-    {
-        private ICombatant icomObj;
+	public class CombatObject
+	{
+		private ICombatant icomObj;
 
-        private PRNG shipDice;
+		private PRNG shipDice;
 
-        public CombatObject(ICombatant comObj, int battleseed)
-        {
-            this.icomObj = comObj;
-            Vehicles.SpaceVehicle ship = (Vehicles.SpaceVehicle)comObj;
-            this.cmbt_mass = (double)ship.Size;
-            this.maxfowardThrust = ship.Speed / this.cmbt_mass;
-            this.maxStrafeThrust = (ship.Speed / this.cmbt_mass) / (4 - ship.Evasion * 0.01);
-            this.maxRotate = (ship.Speed / this.cmbt_mass) / (12 - ship.Evasion * 0.1);
+		public CombatObject(SpaceVehicle v, int battleseed)
+			: this((ICombatant)v, battleseed)
+		{
+			this.cmbt_mass = (double)v.Size;
+			// XXX - why is speed being divided by mass here? mods can already implement QNP if they want big ships to be slow...
+			this.maxfowardThrust = v.Speed / this.cmbt_mass;
+			this.maxStrafeThrust = (v.Speed / this.cmbt_mass) / (4 - v.Evasion * 0.01);
+			this.maxRotate = (v.Speed / this.cmbt_mass) / (12 - v.Evasion * 0.1);
+		}
 
-            this.waypointTarget = new combatWaypoint();
-            this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
-            
-            this.cmbt_thrust = new Point3d(0, 0, 0);
-            this.cmbt_accel = new Point3d(0, 0, 0);
+		public CombatObject(Seeker s, int battleseed)
+			: this((ICombatant)s, battleseed)
+		{
+			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
+			// XXX - I'm dividing speed by mass here because you were doing it with the space vehicles... still seems silly to me!
+			this.maxfowardThrust = s.WeaponInfo.SeekerSpeed / this.cmbt_mass;
+			this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed / this.cmbt_mass) / (4 - s.Evasion * 0.01);
+			this.maxRotate = (s.WeaponInfo.SeekerSpeed / this.cmbt_mass) / (12 - s.Evasion * 0.1);
+		}
 
-            newDice(battleseed);
-        }
+		public CombatObject(ICombatant c, int battleseed)
+		{
+			this.icomobj = c;
 
-        /// <summary>
-        /// location within the sector
-        /// </summary>
-        public Point3d cmbt_loc { get; set; }
+			this.waypointTarget = new combatWaypoint();
+			this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
 
-        /// <summary>
-        /// between phys tic locations. 
-        /// </summary>
-        public Point3d rndr_loc { get; set; }
+			this.cmbt_thrust = new Point3d(0, 0, 0);
+			this.cmbt_accel = new Point3d(0, 0, 0);
 
-        /// <summary>
-        /// facing towards this point
-        /// </summary>
-        //public Point3d cmbt_face { get; set; }
+			newDice(battleseed);
+		}
 
+		/// <summary>
+		/// location within the sector
+		/// </summary>
+		public Point3d cmbt_loc { get; set; }
 
-        /// <summary>
-        /// ship heading 
-        /// </summary>
-        public Compass cmbt_head { get; set; }
+		/// <summary>
+		/// between phys tic locations. 
+		/// </summary>
+		public Point3d rndr_loc { get; set; }
 
-        /// <summary>
-        /// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
-        /// </summary>
-        public Compass cmbt_att { get; set; }
-
-        /// <summary>
-        /// combat velocity
-        /// </summary>
-        public Point3d cmbt_vel { get; set; }
-
-        public Point3d cmbt_accel { get; set; }
-
-        public Point3d cmbt_thrust { get; set; }
-
-        public double cmbt_mass { get; set; }
-
-        //public Point3d cmbt_maxThrust { get; set; }
-        //public Point3d cmbt_minThrust { get; set; }
-
-        public ICombatant icomobj
-        {
-
-            get { return this.icomObj; }
-            set { this.icomObj = value; }
-        }
-
-        public combatWaypoint waypointTarget;
-        public Point3d lastVectortoWaypoint { get; set; }
-        //public double lastDistancetoWaypoint { get; set; }
-
-        public List<CombatObject> weaponTarget { get; set; }
-
-        public double maxfowardThrust { get; set; }
-        public double maxStrafeThrust { get; set; }
-        public double maxRotate { get; set; }
-
-        public PRNG getDice()
-        {
-            return shipDice;
-        }
-        public void newDice(int battleseed)
-        {            
-            int seed = (int)(this.icomobj.ID %  100000) + battleseed;
-            shipDice = new PRNG(seed);
-        }
-    }
+		/// <summary>
+		/// facing towards this point
+		/// </summary>
+		//public Point3d cmbt_face { get; set; }
 
 
+		/// <summary>
+		/// ship heading 
+		/// </summary>
+		public Compass cmbt_head { get; set; }
 
-    public class combatWaypoint
-    {
-        public combatWaypoint()
-        {
-            this.cmbt_loc = new Point3d(0, 0, 0);
-            this.cmbt_vel = new Point3d(0, 0, 0);
-        }
-        public combatWaypoint(Point3d cmbt_loc)
-        {
-            this.cmbt_loc = cmbt_loc;
-        }
-        public combatWaypoint(CombatObject tgtcomObj)
-        {
-            this.comObj = tgtcomObj;
-            this.cmbt_loc = tgtcomObj.cmbt_loc;
-            this.cmbt_vel = tgtcomObj.cmbt_vel;
-        }
+		/// <summary>
+		/// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
+		/// </summary>
+		public Compass cmbt_att { get; set; }
 
-        /// <summary>
-        /// location within the sector
-        /// </summary>
-        public Point3d cmbt_loc { get; set; }
+		/// <summary>
+		/// combat velocity
+		/// </summary>
+		public Point3d cmbt_vel { get; set; }
 
-        /// <summary>
-        /// combat velocity
-        /// </summary>
-        public Point3d cmbt_vel { get; set; }
+		public Point3d cmbt_accel { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        public CombatObject comObj { get; set; }
+		public Point3d cmbt_thrust { get; set; }
 
-    }
+		public double cmbt_mass { get; set; }
+
+		//public Point3d cmbt_maxThrust { get; set; }
+		//public Point3d cmbt_minThrust { get; set; }
+
+		public ICombatant icomobj
+		{
+
+			get { return this.icomObj; }
+			set { this.icomObj = value; }
+		}
+
+		public combatWaypoint waypointTarget;
+		public Point3d lastVectortoWaypoint { get; set; }
+		//public double lastDistancetoWaypoint { get; set; }
+
+		public List<CombatObject> weaponTarget { get; set; }
+
+		public double maxfowardThrust { get; set; }
+		public double maxStrafeThrust { get; set; }
+		public double maxRotate { get; set; }
+
+		public PRNG getDice()
+		{
+			return shipDice;
+		}
+		public void newDice(int battleseed)
+		{
+			int seed = (int)(this.icomobj.ID % 100000) + battleseed;
+			shipDice = new PRNG(seed);
+		}
+	}
+
+
+
+	public class combatWaypoint
+	{
+		public combatWaypoint()
+		{
+			this.cmbt_loc = new Point3d(0, 0, 0);
+			this.cmbt_vel = new Point3d(0, 0, 0);
+		}
+		public combatWaypoint(Point3d cmbt_loc)
+		{
+			this.cmbt_loc = cmbt_loc;
+		}
+		public combatWaypoint(CombatObject tgtcomObj)
+		{
+			this.comObj = tgtcomObj;
+			this.cmbt_loc = tgtcomObj.cmbt_loc;
+			this.cmbt_vel = tgtcomObj.cmbt_vel;
+		}
+
+		/// <summary>
+		/// location within the sector
+		/// </summary>
+		public Point3d cmbt_loc { get; set; }
+
+		/// <summary>
+		/// combat velocity
+		/// </summary>
+		public Point3d cmbt_vel { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		public CombatObject comObj { get; set; }
+
+	}
 }
