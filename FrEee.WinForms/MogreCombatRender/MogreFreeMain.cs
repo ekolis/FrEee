@@ -560,10 +560,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
             //so.Nodes[1].AttachObject(forceline);
 
-
-
-
             SceneNode node = mSceneMgr.GetSceneNode(IDName);
+            
 			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
 			Quaternion quat = new Quaternion((float)comObj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
             node.Orientation = quat;
@@ -579,17 +577,6 @@ namespace FrEee.WinForms.MogreCombatRender
             toWaypointLine.End();
 
 
-            //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
-            //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
-            //node.AttachObject(toTargetLine);
-            //toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toTargetLine.Position(new Vector3(0, 0, 0));
-            //toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
-            //toTargetLine.End();
-
-            
-           
-            
             mSceneMgr.DestroyManualObject("forceLine" + IDName);
             ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
             //forceLine.
@@ -598,6 +585,15 @@ namespace FrEee.WinForms.MogreCombatRender
             forceLine.Position(new Vector3(0, 0, 0));
             forceLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust * 1000));
             forceLine.End();
+
+            //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
+            //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
+            //node.AttachObject(toTargetLine);
+            //toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
+            //toTargetLine.Position(new Vector3(0, 0, 0));
+            //toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
+            //toTargetLine.End();
+           
 
             //mSceneMgr.DestroyManualObject("forceLine2" + IDName);
             //ManualObject forceLine2 = mSceneMgr.CreateManualObject("forceLine2" + IDName);
