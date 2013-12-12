@@ -123,23 +123,6 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-
-		public Point3d SimNewtonianPhysics(CombatObject comObj)
-		{
-			comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
-
-			comObj.cmbt_vel += comObj.cmbt_accel;
-
-			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
-
-			return comObj.cmbt_loc;
-		}
-
-		public Point3d InterpolatePosition(CombatObject comObj, double fractionalTick)
-		{
-			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
-		}
-
         private void FirstSetup()
         {
             foreach (Empire empire in EmpiresArray.Where(e => !Empires.ContainsKey(e)))
@@ -162,6 +145,7 @@ namespace FrEee.Game.Objects.Combat2
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
 			Compass angle = new Compass(360 / EmpiresArray.Count(), false);
+            
 			for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
 			{
 				double angleoffset = angle.Radians * i;
@@ -199,17 +183,58 @@ namespace FrEee.Game.Objects.Combat2
                 commandAI(comObj);
 		}
 
-		public void commandAI(CombatObject comObj)
+		public void Resolve()
 		{
-			//do AI decision stuff.
-			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-            CombatObject tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
-            combatWaypoint wpt = new combatWaypoint(tgtObj);
-			comObj.waypointTarget = wpt;
-			//pick a primary target to fire apon from a list of enemy within weapon range
-			comObj.weaponTarget = new List<CombatObject>();
-			comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
+			//start combat
+			Current.Add(this);
 
+			SetUpPieces();
+
+
+			//unleash the dogs of war!
+			bool battleongoing = true;
+
+            int battletic = 0;
+			double cmdfreq_countr = 0;
+
+			while (battleongoing)
+			{
+                foreach (CombatObject comObj in CombatObjects)
+                {
+
+                    //heading and thrust
+                    helm(comObj);
+
+                    //fire ready weapons.
+                    firecontrol(battletic, comObj);
+
+                    //physicsmove objects.
+                    SimNewtonianPhysics(comObj);
+
+                    if (cmdfreq_countr >= CommandFrequency)
+                    {
+                        commandAI(comObj);
+                        cmdfreq_countr = 0;
+                    }
+                }
+
+				bool ships_persuing = true;
+				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships
+
+				if (!ships_persuing && !ships_inrange)
+					battleongoing = false;
+                if (battletic > 10000)
+					battleongoing = false;
+				cmdfreq_countr++;
+                battletic++;
+			}
+
+			//end combat
+
+
+
+			Current.Remove(this);
+			Previous.Add(this);
 		}
 
 		public void helm(CombatObject comObj)
@@ -337,59 +362,36 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		public void Resolve()
+		public Point3d SimNewtonianPhysics(CombatObject comObj)
 		{
-			//start combat
-			Current.Add(this);
+			comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
 
-			SetUpPieces();
+			comObj.cmbt_vel += comObj.cmbt_accel;
 
+			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
 
-			//unleash the dogs of war!
-			bool battleongoing = true;
-
-            int battletic = 0;
-			double cmdfreq_countr = 0;
-
-			while (battleongoing)
-			{
-                foreach (CombatObject comObj in CombatObjects)
-                {
-
-                    //heading and thrust
-                    helm(comObj);
-
-                    //fire ready weapons.
-                    firecontrol(battletic, comObj);
-
-                    //physicsmove objects.
-                    SimNewtonianPhysics(comObj);
-
-                    if (cmdfreq_countr >= CommandFrequency)
-                    {
-                        commandAI(comObj);
-                        cmdfreq_countr = 0;
-                    }
-                }
-
-				bool ships_persuing = true;
-				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships
-
-				if (!ships_persuing && !ships_inrange)
-					battleongoing = false;
-                if (battletic > 10000)
-					battleongoing = false;
-				cmdfreq_countr++;
-                battletic++;
-			}
-
-			//end combat
-
-
-
-			Current.Remove(this);
-			Previous.Add(this);
+			return comObj.cmbt_loc;
 		}
+
+		public Point3d InterpolatePosition(CombatObject comObj, double fractionalTick)
+		{
+			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
+		}
+
+		public void commandAI(CombatObject comObj)
+		{
+			//do AI decision stuff.
+			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
+            CombatObject tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
+            combatWaypoint wpt = new combatWaypoint(tgtObj);
+			comObj.waypointTarget = wpt;
+			//pick a primary target to fire apon from a list of enemy within weapon range
+			comObj.weaponTarget = new List<CombatObject>();
+			comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
+
+		}
+
+
 
 		private bool isinRange(CombatObject attacker, Component weapon, CombatObject target)
 		{
