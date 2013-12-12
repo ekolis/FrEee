@@ -440,19 +440,19 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier Empire - Minerals
-Targets := Empire, Planet, SpaceVehicle, Component, Facility
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Mineral mining rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier Empire - Organics
-Targets := Empire, Planet, SpaceVehicle, Component, Facility
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Organics farming rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Resource Gen Modifier Empire - Radioactives
-Targets := Empire, Planet, SpaceVehicle, Component, Facility
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Radioactives refining rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
@@ -483,13 +483,13 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Empire Point Generation Modifier - Research
-Targets := Empire, Planet, SpaceVehicle, Component, Facility
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Research rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Empire Point Generation Modifier - Intelligence
-Targets := Empire, Planet, SpaceVehicle, Component, Facility
+Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Intelligence rate is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
