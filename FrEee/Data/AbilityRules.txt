@@ -1114,3 +1114,9 @@ Value 2 Rule := TakeHighest
 Name := Tech Area
 Targets := Race, Empire
 Description := Empire gains access to the [%Amount1%] racial tech.
+
+Name := Breakthrough Chance
+Targets := Race, Empire, Planet, Facility, Vehicle, Component
+Description := The chance of a research breakthrough in this empire is modified by [%Amount1%].
+Value 1 Rule := TakeHighest
+Value 2 Rule := TakeHighest
