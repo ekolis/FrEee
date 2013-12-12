@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using Mogre;
 using System.Windows.Forms;
 using System.Drawing;
+using FrEee.WinForms.Forms;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -28,7 +29,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected Camera mCamera;
 		protected CameraMan mCameraMan;
 
-		private Form form;
+		private MogreCombatForm form;
         private float replaySpeed = 1f;
 
 		//protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
@@ -123,7 +124,8 @@ namespace FrEee.WinForms.MogreCombatRender
 			// Create Render Window
 			mRoot.Initialise(false, "Main Ogre Window");
 			NameValuePairList misc = new NameValuePairList();
-			form = new Form();
+			form = new MogreCombatForm();
+			form.Text = battle.Name;
 			misc["externalWindowHandle"] = form.Handle.ToString();
 			mRenderWindow = mRoot.CreateRenderWindow("Main RenderWindow", 800, 600, false, misc);
 			form.Size = new Size(800, 600);
