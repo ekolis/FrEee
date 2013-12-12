@@ -170,6 +170,8 @@ namespace FrEee.WinForms.Controls
 				Visible = false;
 			else
 			{
+				Visible = true;
+
 				// pictures
 				picOwnerFlag.Image = vehicle.Owner.Icon;
 				picPortrait.Image = vehicle.Portrait;
