@@ -211,11 +211,15 @@ namespace FrEee.Game.Objects.Combat2
                     //physicsmove objects.
                     SimNewtonianPhysics(comObj);
 
-                    if (cmdfreq_countr >= CommandFrequency)
-                    {
-                        commandAI(comObj);
-                        cmdfreq_countr = 0;
+ 
+                }
+                if (cmdfreq_countr >= Battle_Space.CommandFrequency)
+                {
+                    foreach (CombatObject comObj in CombatObjects)
+                    {                   
+                        commandAI(comObj);                       
                     }
+                    cmdfreq_countr = 0;
                 }
 
 				bool ships_persuing = true;
@@ -238,12 +242,12 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 		public void helm(CombatObject comObj)
-		{
+        {
             Ship ship = (Ship)comObj.icomobj;
             string name = ship.Name;
-			//rotate ship
-			double timetoturn = 0;
-			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+            //rotate ship
+            double timetoturn = 0;
+            //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
             combatWaypoint wpt = comObj.waypointTarget;
             Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc); //relitive to me. 
             Compass angletoturn = new Compass(comObj.cmbt_head.Radians - angletoWaypoint.Radians);
@@ -251,80 +255,98 @@ namespace FrEee.Game.Objects.Combat2
             //if (comObj.lastVectortoWaypoint != null)
             //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-			timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
+            timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
             double oneEightytime = 3.14159265 / comObj.maxRotate * ticlen;
-			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            double closingSpeed = Trig.distance(comObj.waypointTarget.cmbt_vel, comObj.cmbt_vel);//Trig.hypotinuse(offsetVector);
+            //Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
+            Point3d combinedVelocity = comObj.cmbt_vel + comObj.waypointTarget.cmbt_vel;
+            Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+            double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
+
+
+
             double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
 
-            
+
             double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
+            double optimaldistance = 100;
             double timetowpt = distance / closingSpeed;
 
-			bool thrustToTarget = true;
+            bool thrustToTarget = true;
 
-			//if/when we're going to overshoot teh waypoint
-            if (timetowpt <= timetomatchspeed + oneEightytime)
-			{
-				angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+
+            if (closingSpeed > 0 && distance > optimaldistance) //if we're getting closer, and not already too close.
+            {
+                thrustToTarget = true;  //then go towards the targetWaypoint.
+            }
+            else if (timetowpt <= timetomatchspeed + oneEightytime)//if/when we're going to overshoot teh waypoint
+            {
+                angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
                 angletoturn.normalize();
-				thrustToTarget = false;
-			}
+                thrustToTarget = false;
+            }
+            else if (closingSpeed < 0)// we're getting further away. 
+            {
+                thrustToTarget = true;
+            }
+            else //I guess we're close to the waypoint.
+            {
+                thrustToTarget = false;
+            }
 
             if (angletoturn.Degrees <= 180) //turn clockwise
-			{
-				if (angletoturn.Radians > comObj.maxRotate)
-				{
-					//comObj.cmbt_face += comObj.Rotate;
-                    comObj.cmbt_head.Radians += comObj.maxRotate;
-				}
-				else
-				{
-					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Radians += angletoturn.Radians;
-				}
-			}
-			else //turn counterclockwise
-			{
+            {
                 if (angletoturn.Radians > comObj.maxRotate)
-				{
-					//comObj.cmbt_face -= comObj.maxRotate;
+                {
+                    //comObj.cmbt_face += comObj.Rotate;
+                    comObj.cmbt_head.Radians += comObj.maxRotate;
+                }
+                else
+                {
+                    //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                    comObj.cmbt_head.Radians += angletoturn.Radians;
+                }
+            }
+            else //turn counterclockwise
+            {
+                if (angletoturn.Radians > comObj.maxRotate)
+                {
+                    //comObj.cmbt_face -= comObj.maxRotate;
                     comObj.cmbt_head.Radians -= comObj.maxRotate;
-				}
-				else
-				{
-					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                }
+                else
+                {
+                    //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
                     comObj.cmbt_head.Radians -= angletoturn.Radians;
-				}
-			}
+                }
+            }
 
-			//thrust ship using strafe
-			if (thrustToTarget) //(if we want to accelerate towards the target, not away from it)
-			{
-				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
-			}
-			else
-			{
-				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
-			}
-			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
-			double thrustby = 0;
-			if (angletoturn.Degrees > 0 && angletoturn.Degrees < 90)
-			{
-				thrustby = (double)comObj.maxfowardThrust / (angletoturn.Degrees / 0.9);
-			}
-			else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
-			{
-				Compass angle = new Compass(360 -angletoturn.Degrees);
-				angle.normalize();
-				thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);
-			}
+            //thrust ship using strafe
+            if (thrustToTarget) //(if we want to accelerate towards the target, not away from it)
+            {
+                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
+            }
+            else
+            {
+                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
+            }
+            //main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
+            double thrustby = 0;
+            if (angletoturn.Degrees > 0 && angletoturn.Degrees < 90)
+            {
+                thrustby = (double)comObj.maxfowardThrust / (angletoturn.Degrees / 0.9);
+            }
+            else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
+            {
+                Compass angle = new Compass(360 - angletoturn.Degrees);
+                angle.normalize();
+                thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);
+            }
 
-			//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+            //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
             Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
-			comObj.cmbt_thrust += fowardthrust;
-			comObj.lastVectortoWaypoint = vectortowaypoint;
-		}
+            comObj.cmbt_thrust += fowardthrust;
+            comObj.lastVectortoWaypoint = vectortowaypoint;
+        }
 
 		public void firecontrol(int tic_countr, CombatObject comObj)
 		{
