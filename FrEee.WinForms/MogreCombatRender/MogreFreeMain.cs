@@ -501,11 +501,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     //physicsmove objects. 
                     Point3d renderloc = battle.SimNewtonianPhysics(comObj);
 
-                    if (cmdfreq_countr >= Battle_Space.CommandFrequency)
-                    {
-                        battle.commandAI(comObj);
-                        cmdfreq_countr = 0;
-                    }
+
 
 					
 					do_graphics(comObj, renderloc);
@@ -526,6 +522,15 @@ namespace FrEee.WinForms.MogreCombatRender
 						}
 					}
 				}
+                if (cmdfreq_countr >= Battle_Space.CommandFrequency)
+                {               
+                    foreach (CombatObject comObj in battle.CombatObjects)
+                    {   
+                        battle.commandAI(comObj);
+                        
+                    }
+                    cmdfreq_countr = 0;
+                }
 
                 cmdfreq_countr++;
                 battletic++;

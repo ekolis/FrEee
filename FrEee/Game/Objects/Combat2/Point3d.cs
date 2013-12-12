@@ -321,7 +321,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>an intermediate point between p1 and p2 at distance from p1 </returns>
 		public static Point3d intermediatePoint(Point3d point1, Point3d point2, double distance)
 		{
-			return new Point3d(sides_ab(distance, angleA(point2 -= point1)));
+			return new Point3d(sides_ab(distance, angleA(point2 - point1)));
 		}
 
 		/// <summary>
@@ -358,6 +358,17 @@ namespace FrEee.Game.Objects.Combat2
         public static double hypotinuse(Point3d p1)
         {
             return pythagC(p1.X, p1.Y);
+        }
+
+        /// <summary>
+        /// dot product between two points
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static double dotProduct(Point3d p1, Point3d p2)
+        {
+            return p1.X * p2.X + p1.Y * p2.Y + p1.Z * p2.Z;
         }
 	}
 
