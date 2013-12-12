@@ -9,16 +9,11 @@ using System.Windows.Forms;
 
 namespace FrEee.WinForms.Forms
 {
-    public partial class MogreCombatForm : Form
-    {
-        public MogreCombatForm()
-        {
-            InitializeComponent();
-        }
-
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-    }
+	public partial class MogreCombatForm : Form
+	{
+		public MogreCombatForm()
+		{
+			InitializeComponent();
+		}
+	}
 }
