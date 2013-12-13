@@ -82,18 +82,18 @@ namespace FrEee.Tests.Game.Objects.Combat2
             // test 4 ship heading 180 waypoint at 0
 			// ship should rotate either direction by turn rate but not past waypoint
 			testComObj.cmbt_loc = new Point3d();
-			testComObj.cmbt_head = new Compass(0, false);
+			testComObj.cmbt_head = new Compass(180, false);
 			wpCompass.Degrees = 0;
 			testComObj.waypointTarget = new combatWaypoint(wpCompass.Point(1));
 			battle.ProcessTick(ref tick, ref cmdFreqCounter);
 			Assert.AreEqual(
-				Math.Max(180 - testComObj.maxRotate, 0),
-				Math.Abs(180 - testComObj.cmbt_head.Degrees));
+				testComObj.maxRotate,
+				Math.Abs(testComObj.cmbt_head - 180));
 
             // test 5 ship heading 180 waypoint at 270
 			// ship should rotate positive by turn rate but not past waypoint
 			testComObj.cmbt_loc = new Point3d();
-			testComObj.cmbt_head = new Compass(0, false);
+			testComObj.cmbt_head = new Compass(180, false);
 			wpCompass.Degrees = 270;
 			testComObj.waypointTarget = new combatWaypoint(wpCompass.Point(1));
 			battle.ProcessTick(ref tick, ref cmdFreqCounter);
@@ -109,7 +109,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			testComObj.waypointTarget = new combatWaypoint(wpCompass.Point(1));
 			battle.ProcessTick(ref tick, ref cmdFreqCounter);
 			Assert.AreEqual(
-				testComObj.maxRotate,
+				wpCompass.Degrees,
 				testComObj.cmbt_head.Degrees);
 
 			battle.End();
