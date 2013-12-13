@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using System.Drawing;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.Tests.Game.Objects.Combat2
 {
@@ -23,7 +24,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			testComObj.maxRotate = 5;
 			testComObj.cmbt_accel = new Point3d(0, 0);
 			testComObj.maxStrafeThrust = 0;
-			var battle = new Battle_Space(new Sector(sys, new Point()));
+			var combatants = new ICombatant[] { combatant };
+			var battle = new Battle_Space(combatants);
 			battle.Combatants.Add(combatant);
 			battle.CombatObjects.Add(testComObj);
 
