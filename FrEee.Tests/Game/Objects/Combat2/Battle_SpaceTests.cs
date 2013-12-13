@@ -35,6 +35,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             
 
             //test 0 ship heading 0 waypoint at 90
+			testComObj.cmbt_loc = new Point3d();
 			testComObj.cmbt_head = new Compass(0, false);
 			testComObj.waypointTarget = new combatWaypoint(new Point3d(0, 1));
 			battle.ProcessTick(ref tick, ref cmdFreqCounter);
