@@ -130,9 +130,9 @@ namespace FrEee.WinForms.MogreCombatRender
             if (mFreeze)
                 return;
 
-			// TODO - make camera speed faster when zoomed out and slower when zoomed in so it "looks constant"
+			// TODO - make camera pan speed dependent on window size
 			mCamera.Position = new Vector3(
-					mCamera.Position.x + x * PanSpeed * mCamera.Position.z * MouseSensitivity,
+					mCamera.Position.x - x * PanSpeed * mCamera.Position.z * MouseSensitivity,
 					mCamera.Position.y + y * PanSpeed * mCamera.Position.z * MouseSensitivity,
 					mCamera.Position.z * (float)System.Math.Pow(ZoomBase, z)
 				);
