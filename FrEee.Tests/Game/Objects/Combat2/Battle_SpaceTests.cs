@@ -20,14 +20,14 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			var emp = new Empire();
 			var combatant = new MockCombatant(emp);
             var testComObj = new CombatObject(combatant, 42);
-			testComObj.maxRotate = 5;
+			testComObj.maxRotate = 0.5;
 			testComObj.cmbt_accel = new Point3d(0, 0);
 			testComObj.maxStrafeThrust = 0;
 			var battle = new Battle_Space(new Sector(sys, new Point()));
 			battle.Combatants.Add(combatant);
 			battle.CombatObjects.Add(testComObj);
 
-			battle.Start();
+			//battle.Start();
 
 			int tick = 1, cmdFreqCounter = 0;
             
@@ -35,9 +35,14 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //test 0 ship heading 0 waypoint at 90
 			testComObj.cmbt_head = new Compass(0, false);
 			testComObj.waypointTarget = new combatWaypoint(new Point3d(0, 1));
-			battle.ProcessTick(ref tick, ref cmdFreqCounter);
-			Assert.AreEqual(testComObj.maxRotate, testComObj.cmbt_head.Degrees);
-
+			//battle.ProcessTick(ref tick, ref cmdFreqCounter);
+			//Assert.AreEqual(testComObj.maxRotate, testComObj.cmbt_head.Degrees);
+            
+            Compass angletoturn_t0 = new Compass(90, false);
+            Compass angletotarget_t0 = new Compass(90, false);
+            Compass angleExpected_t0 = new Compass(0.5);
+            battle.turnship(testComObj, angletoturn_t0, angletotarget_t0);
+            Assert.AreEqual(angleExpected_t0, testComObj.cmbt_head);
 
             /*//test 1 ship heading 0 waypoint at 180
             Compass angletoturn_t1 = new Compass(180, false);
