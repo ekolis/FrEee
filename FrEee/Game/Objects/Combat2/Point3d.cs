@@ -314,6 +314,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		/// <summary>
 		/// Math.Atan2(point.X, point.Y);
+		/// we swap X and Y, and negate Y, so that we can use "naval coordinates" instead of "geometric coordinates"
+		/// i.e. zero degrees is north, not east, and positive angles are clockwise, not counterclockwise
 		/// </summary>
 		/// <param name="point"></param>
 		/// <returns>angleA</returns>
@@ -344,8 +346,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>relitive angle of p2</returns>
 		public static double angleto(Point3d p1, Point3d p2)
 		{
-			p2 -= p1;
-			return angleA(p2);
+			return angleA(p2 - p1);
 		}
 
 		/// <summary>
@@ -357,8 +358,8 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>distance of p2 ralitive to p1</returns>
 		public static double distance(Point3d p1, Point3d p2)
 		{
-			p2 -= p1;
-			return pythagC(p2.X, p2.Y);
+			var d = p2 - p1;
+			return pythagC(d.X, d.Y);
 		}
 
         /// <summary>

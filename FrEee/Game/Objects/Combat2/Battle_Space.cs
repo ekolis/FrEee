@@ -290,7 +290,7 @@ namespace FrEee.Game.Objects.Combat2
 			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
 			combatWaypoint wpt = comObj.waypointTarget;
 			Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc); //relitive to me. 
-			Compass angletoturn = new Compass(comObj.cmbt_head.Radians - angletoWaypoint.Radians);
+			Compass angletoturn = new Compass(angletoWaypoint.Radians - comObj.cmbt_head.Radians);
 			Point3d vectortowaypoint = comObj.cmbt_loc - comObj.waypointTarget.cmbt_loc;
 			//if (comObj.lastVectortoWaypoint != null)
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
@@ -340,7 +340,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		private void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
 		{
-			if (angleToTarget.Degrees <= 180) //turn clockwise
+			if (angletoturn.Degrees <= 180) //turn clockwise
 			{
 				if (angletoturn.Degrees > comObj.maxRotate)
 				{
@@ -350,12 +350,12 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-					comObj.cmbt_head.Degrees += angletoturn.Radians;
+					comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 			else //turn counterclockwise
 			{
-				if (angletoturn.Degrees > comObj.maxRotate)
+				if ((360 - angletoturn.Degrees) > comObj.maxRotate)
 				{
 					//comObj.cmbt_face -= comObj.maxRotate;
 					comObj.cmbt_head.Degrees -= comObj.maxRotate;
@@ -363,7 +363,8 @@ namespace FrEee.Game.Objects.Combat2
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-					comObj.cmbt_head.Degrees -= angletoturn.Radians;
+					// subtract 360 minus the angle
+					comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 		}
