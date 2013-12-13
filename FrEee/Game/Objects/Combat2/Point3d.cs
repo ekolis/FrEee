@@ -237,6 +237,11 @@ namespace FrEee.Game.Objects.Combat2
             angle.normalize();
 			return angle.Degrees;
 		}
+
+		public override string ToString()
+		{
+			return Degrees.ToString("f0") + " degrees";
+		}
 	}
 
 	public class Trig
