@@ -180,6 +180,10 @@ namespace FrEee.Game.Objects.Combat2
 	public class Compass
 	{
 		double heading_degrees;
+		public Compass()
+		{
+			// leave it initialized to zero
+		}
 		public Compass(double angle, bool radians = true)
 		{
 			if (radians)
