@@ -222,7 +222,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void normalize()
 		{
-			heading_degrees = ((heading_degrees % 360) + 360) % 360; // thanks SJ ;)
+			heading_degrees = NormalizeDegrees(heading_degrees);
+		}
+
+		public static double NormalizeDegrees(double degrees)
+		{
+			return ((degrees % 360) + 360) % 360; // thanks SJ ;)
 		}
 
 		public static double operator +(Compass angle, double addend)
