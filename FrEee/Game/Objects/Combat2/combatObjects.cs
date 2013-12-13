@@ -141,6 +141,12 @@ namespace FrEee.Game.Objects.Combat2
 		public combatWaypoint(Point3d cmbt_loc)
 		{
 			this.cmbt_loc = cmbt_loc;
+			this.cmbt_vel = new Point3d(0, 0, 0);
+		}
+		public combatWaypoint(Point3d cmbt_loc, Point3d cmbt_vel)
+		{
+			this.cmbt_loc = cmbt_loc;
+			this.cmbt_vel = cmbt_vel;
 		}
 		public combatWaypoint(CombatObject tgtcomObj)
 		{
