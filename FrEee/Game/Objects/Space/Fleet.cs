@@ -552,9 +552,9 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Any combat objects contained in this fleet and any subfleets.
+		/// Any combatants contained in this fleet and any subfleets.
 		/// </summary>
-		public IEnumerable<ICombatant> CombatObjects
+		public IEnumerable<ICombatant> Combatants
 		{
 			get
 			{
@@ -564,7 +564,7 @@ namespace FrEee.Game.Objects.Space
 					if (sobj is ICombatant)
 						list.Add((ICombatant)sobj);
 					if (sobj is Fleet)
-						list.AddRange(((Fleet)sobj).CombatObjects);
+						list.AddRange(((Fleet)sobj).Combatants);
 					return list;
 				});
 			}
