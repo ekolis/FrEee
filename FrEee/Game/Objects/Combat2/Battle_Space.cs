@@ -283,7 +283,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void helm(CombatObject comObj)
 		{
-			Ship ship = (Ship)comObj.icomobj;
+			var ship = comObj.icomobj;
 			string name = ship.Name;
 			//rotate ship
 			double timetoturn = 0;
@@ -460,13 +460,16 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			//do AI decision stuff.
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-			CombatObject tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
-			combatWaypoint wpt = new combatWaypoint(tgtObj);
-			comObj.waypointTarget = wpt;
-			//pick a primary target to fire apon from a list of enemy within weapon range
-			comObj.weaponTarget = new List<CombatObject>();
-			comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
-
+			CombatObject tgtObj;
+			if (Empires[comObj.icomobj.Owner].hostile.Any())
+			{
+				tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
+				combatWaypoint wpt = new combatWaypoint(tgtObj);
+				comObj.waypointTarget = wpt;
+				//pick a primary target to fire apon from a list of enemy within weapon range
+				comObj.weaponTarget = new List<CombatObject>();
+				comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
+			}
 		}
 
 

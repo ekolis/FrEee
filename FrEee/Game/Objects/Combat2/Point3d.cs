@@ -10,23 +10,20 @@ namespace FrEee.Game.Objects.Combat2
 	{
 		private List<double> point_list;
 
-
-		public Point3d(double x, double y, double z)
+		public Point3d(double x, double y, double z = 0)
 		{
 			this.point_list = new List<double>() { x, y, z };
 		}
-		public Point3d(double x, double y)
-		{
-			this.point_list = new List<double>() { x, y };
-		}
 		public Point3d(Point3d point)
+			:this(point.Point_List)
 		{
-			this.point_list = point.Point_List;
 		}
-		public Point3d(List<double> dimensions)
+		public Point3d(IEnumerable<double> dimensions)
 		{
-			this.point_list = dimensions;
+			// don't want to reuse list references across multiple points, do we?
+			this.point_list = new List<double>(dimensions);
 		}
+		public Point3d() : this(0, 0, 0) { }
 
 		public override string ToString()
 		{

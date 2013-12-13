@@ -13,13 +13,13 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can fire weapons and/or targeted by weapons.
 	/// </summary>
-	public interface ICombatant : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated
+	public interface ICombatant : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated, INamed
 	{
 		/// <summary>
-		/// Can this object fire on another combat object?
+		/// Can this object fire on another combatant?
 		/// </summary>
 		/// <param name="target"></param>
-		/// <returns>true if the target is an enemy and this combat object has weapons capable of targeting it</returns>
+		/// <returns>true if the target is an enemy and this combatant has weapons capable of targeting it</returns>
 		bool CanTarget(ICombatant target);
 
 		/// <summary>
@@ -28,23 +28,20 @@ namespace FrEee.Game.Interfaces
 		WeaponTargets WeaponTargetType { get; }
 
 		/// <summary>
-		/// Any undamaged weapons this combat object is armed with.
+		/// Any undamaged weapons this combatant is armed with.
 		/// </summary>
 		IEnumerable<Component> Weapons { get; }
 
 		bool IsHostileTo(Empire emp);
 
 		/// <summary>
-		/// Accuracy rating of this combat object.
+		/// Accuracy rating of this combatant.
 		/// </summary>
 		int Accuracy { get; }
 
 		/// <summary>
-		/// Evasion rating of this combat object.
+		/// Evasion rating of this combatant.
 		/// </summary>
 		int Evasion { get; }
-
- 
-
     }
 }

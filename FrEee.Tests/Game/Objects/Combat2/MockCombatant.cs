@@ -292,5 +292,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		{
 			get { return null; }
 		}
+
+		public string Name { get; set; }
 	}
 }
