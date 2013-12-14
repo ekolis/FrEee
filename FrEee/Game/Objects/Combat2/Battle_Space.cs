@@ -298,8 +298,8 @@ namespace FrEee.Game.Objects.Combat2
 			timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
 			double oneEightytime = 3.14159265 / comObj.maxRotate * ticlen;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-			Point3d combinedVelocity = comObj.cmbt_vel + comObj.waypointTarget.cmbt_vel;
-			Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+            Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+            Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
 
 			double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
@@ -342,29 +342,29 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			if (angletoturn.Degrees <= 180) //turn clockwise
 			{
-				if (angletoturn.Degrees > comObj.maxRotate)
+				if (angletoturn.Radians > comObj.maxRotate)
 				{
 					//comObj.cmbt_face += comObj.Rotate;
-					comObj.cmbt_head.Degrees += comObj.maxRotate;
+                    comObj.cmbt_head.Radians += comObj.maxRotate;
 				}
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-					comObj.cmbt_head.Degrees += angletoturn.Degrees;
+                    comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 			else //turn counterclockwise
 			{
-				if ((360 - angletoturn.Degrees) > comObj.maxRotate)
+                if ((360 - angletoturn.Radians) > comObj.maxRotate)
 				{
 					//comObj.cmbt_face -= comObj.maxRotate;
-					comObj.cmbt_head.Degrees -= comObj.maxRotate;
+					comObj.cmbt_head.Radians -= comObj.maxRotate;
 				}
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
 					// subtract 360 minus the angle
-					comObj.cmbt_head.Degrees += angletoturn.Degrees;
+                    comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 		}
@@ -388,15 +388,16 @@ namespace FrEee.Game.Objects.Combat2
 			strafeship(comObj, thrustToWaypoint);
 			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
 			double thrustby = 0;
-			if (angletoturn.Degrees > 0 && angletoturn.Degrees < 90)
+			if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
 			{
-				thrustby = (double)comObj.maxfowardThrust / (angletoturn.Degrees / 0.9);
+                
+				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
 			}
 			else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
 			{
 				Compass angle = new Compass(360 - angletoturn.Degrees);
 				angle.normalize();
-				thrustby = (double)comObj.maxfowardThrust / (angle.Degrees / 0.9);
+				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
 			}
 
 			//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
