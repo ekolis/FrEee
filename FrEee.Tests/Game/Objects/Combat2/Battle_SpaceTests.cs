@@ -20,7 +20,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			var sys = new StarSystem(1);
 			var emp = new Empire();
 			var combatant = new MockCombatant(emp);
-            var testComObj = new CombatObject(combatant, 42);
+            ICombatant icom = (ICombatant)combatant;
+            var testComObj = new CombatObject((SpaceVehicle)icom, 42);
 			testComObj.maxRotate = 5;
 			testComObj.cmbt_accel = new Point3d(0, 0);
 			testComObj.maxStrafeThrust = 0;

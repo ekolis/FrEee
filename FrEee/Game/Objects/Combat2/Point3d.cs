@@ -362,6 +362,11 @@ namespace FrEee.Game.Objects.Combat2
 			return pythagC(d.X, d.Y);
 		}
 
+        //public static Point3d vectorDistance(Point3d p1, Point3d p2)
+        //{
+ 
+        //}
+
         /// <summary>
         /// 
         /// </summary>
