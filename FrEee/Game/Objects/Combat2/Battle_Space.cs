@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			if (location == null)
 				throw new ArgumentNullException("location", "Battles require a sector location.");
-			Initialize(Sector, Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)), isreplay);
+			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)), isreplay);
 		}
 
 		/// <summary>
@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			foreach (var ship in Combatants)
 			{
-				CombatObject comObj = new CombatObject(ship, battleseed);
+				CombatObject comObj = new CombatObject((SpaceVehicle)ship, battleseed);
 				CombatObjects.Add(comObj);
 				Empires[ship.Owner].ownships.Add(comObj);
 			}
