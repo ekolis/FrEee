@@ -194,7 +194,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.cmbt_att = new Compass(0);
 				int speed = 0;
 				if (comObj.icomobj is Vehicle)
-					speed = ((Vehicle)comObj.icomobj).Speed;
+					speed = ((Vehicle)comObj.icomobj).Speed / 5;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
 				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
@@ -295,8 +295,8 @@ namespace FrEee.Game.Objects.Combat2
 			//if (comObj.lastVectortoWaypoint != null)
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-			timetoturn = angletoturn.Radians / comObj.maxRotate * ticlen;
-			double oneEightytime = 3.14159265 / comObj.maxRotate * ticlen;
+			timetoturn = angletoturn.Radians / comObj.maxRotate;
+            double oneEightytime = 3.14159265 / comObj.maxRotate;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
             Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
             Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
@@ -305,7 +305,7 @@ namespace FrEee.Game.Objects.Combat2
 			double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
 
 			double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
-			double optimaldistance = 100;
+			double optimaldistance = comObj.maxStrafeThrust;
 			double timetowpt = distance / closingSpeed;
 
 			bool thrustToWaypoint = true;
@@ -314,17 +314,18 @@ namespace FrEee.Game.Objects.Combat2
 			if (closingSpeed > 0 && distance > optimaldistance) //if we're getting closer, and not already too close.
 			{
 				thrustToWaypoint = true;  //then go towards the targetWaypoint.
-			}
-			else if (timetowpt <= timetomatchspeed + oneEightytime)//if/when we're going to overshoot teh waypoint
-			{
-				angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
-				angletoturn.normalize();
-				thrustToWaypoint = false;
-			}
-			else if (closingSpeed < 0)// we're getting further away. 
-			{
-				thrustToWaypoint = true;
-			}
+			
+			    if (timetowpt <= timetomatchspeed + oneEightytime)//if/when we're going to overshoot teh waypoint
+			    {
+				    angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+				    angletoturn.normalize();
+				    thrustToWaypoint = false;
+			    }
+                //else (closingSpeed < 0)// we're getting further away. 
+                //{
+                //    thrustToWaypoint = true;
+                //}
+            }
 			else //I guess we're close to the waypoint.
 			{
 				thrustToWaypoint = false;
