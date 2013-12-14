@@ -586,9 +586,9 @@ namespace FrEee.WinForms.MogreCombatRender
             mSceneMgr.DestroyManualObject("forceLine" + IDName);
             ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
             //forceLine.
-            node.AttachObject(forceLine);
+            mNode_lines.AttachObject(forceLine);
             forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
-            forceLine.Position(new Vector3(0, 0, 0));
+            forceLine.Position(node.Position);
             forceLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust * 100000));
             forceLine.End();
 
