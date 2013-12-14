@@ -302,34 +302,35 @@ namespace FrEee.Game.Objects.Combat2
             Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
 
-			double timetomatchspeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
+            double myspeed = Trig.hypotinuse(comObj.cmbt_vel);
+
+			double timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
+            double timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
 
 			double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
-			double optimaldistance = comObj.maxStrafeThrust;
+			double nominaldistance = comObj.maxStrafeThrust;
 			double timetowpt = distance / closingSpeed;
 
-			bool thrustToWaypoint = true;
+			bool? thrustToWaypoint = true;
 
 
-			if (closingSpeed > 0 && distance > optimaldistance) //if we're getting closer, and not already too close.
-			{
-				thrustToWaypoint = true;  //then go towards the targetWaypoint.
-			
-			    if (timetowpt <= timetomatchspeed + oneEightytime)//if/when we're going to overshoot teh waypoint
-			    {
-				    angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
-				    angletoturn.normalize();
-				    thrustToWaypoint = false;
-			    }
-                //else (closingSpeed < 0)// we're getting further away. 
-                //{
-                //    thrustToWaypoint = true;
-                //}
+            if (closingSpeed > 0) //getting closer
+            {
+                if (distance <= nominaldistance)  //close to the waypoint.
+                {
+                    thrustToWaypoint = null;//should attempt to match speed
+                }
+                if (timetowpt <= timetokill_MySpeed + oneEightytime)//if/when we're going to overshoot teh waypoint, this doesn't work if targets are closing on each other.
+                {
+                    angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+                    angletoturn.normalize();
+                    thrustToWaypoint = false;
+                }
             }
-			else //I guess we're close to the waypoint.
-			{
-				thrustToWaypoint = false;
-			}
+            else 
+            { 
+            }
+
 
 			turnship(comObj, angletoturn, angletoWaypoint);
 
@@ -370,40 +371,47 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private void strafeship(CombatObject comObj, bool thrustToWaypoint)
+		private void strafeship(CombatObject comObj, bool? thrustToWaypoint)
 		{
 			//thrust ship using strafe
-			if (thrustToWaypoint) //(if we want to accelerate towards the target, not away from it)
+			if (thrustToWaypoint == true) //(if we want to accelerate towards the target, not away from it)
 			{
 				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
 			}
-			else
-			{
-				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
-			}
+            else if (thrustToWaypoint == false)
+            {
+                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
+            }
+            else
+            {
+                //comObj.cmbt_thrust = Trig.intermediatePoint(
+            }
 		}
 
-		private void thrustship(CombatObject comObj, Compass angletoturn, bool thrustToWaypoint)
+		private void thrustship(CombatObject comObj, Compass angletoturn, bool? thrustToWaypoint)
 		{
 			comObj.cmbt_thrust.ZEROIZE();
 			strafeship(comObj, thrustToWaypoint);
 			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
-			double thrustby = 0;
-			if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
-			{
+            double thrustby = 0;
+            if (thrustToWaypoint != null)
+            {            
+			    if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
+			    {
                 
-				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
-			}
-			else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
-			{
-				Compass angle = new Compass(360 - angletoturn.Degrees);
-				angle.normalize();
-				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
-			}
+				    thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
+			    }
+			    else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
+			    {
+				    Compass angle = new Compass(360 - angletoturn.Degrees);
+				    angle.normalize();
+				    thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
+			    }
 
-			//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
-			Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
-			comObj.cmbt_thrust += fowardthrust;
+			    //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+			    Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
+			    comObj.cmbt_thrust += fowardthrust;
+            }
 
 		}
 
