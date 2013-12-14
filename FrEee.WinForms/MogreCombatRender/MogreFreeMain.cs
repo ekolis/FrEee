@@ -622,7 +622,7 @@ namespace FrEee.WinForms.MogreCombatRender
             mNode_lines.AttachObject(forceLine);
             forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
             forceLine.Position(node.Position);
-            forceLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust * 100000));
+            forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust * 5000)));
             forceLine.End();
 
             //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
