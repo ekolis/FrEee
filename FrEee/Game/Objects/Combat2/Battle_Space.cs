@@ -316,7 +316,7 @@ namespace FrEee.Game.Objects.Combat2
 
         }
 
-        public void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
+        private void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
         {
             if (angleToTarget.Degrees <= 180) //turn clockwise
             {
