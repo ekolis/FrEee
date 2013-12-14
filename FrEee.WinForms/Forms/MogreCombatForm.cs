@@ -59,5 +59,10 @@ namespace FrEee.WinForms.Forms
 			else
 				SelectedVehicle = AliveVehicles.ElementAt(idx);
 		}
+
+        public void updateText(string txt)
+        {
+            txtLog.Text = txt; 
+        }
 	}
 }

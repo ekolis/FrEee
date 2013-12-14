@@ -332,11 +332,11 @@ namespace FrEee.WinForms.MogreCombatRender
 					break;
 
                 case MOIS.KeyCode.KC_LBRACKET:
-                    SelectedComObj += 1;                    
+                    selectPrev();                    
                     break;
 
                 case MOIS.KeyCode.KC_RBRACKET:
-                    SelectedComObj -= 1;  
+                    selectNext();  
                     break;
 
 				case MOIS.KeyCode.KC_T:
@@ -468,7 +468,28 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 		#endregion
 
-
+        public CombatObject selectedObj()
+        {
+            return battle.CombatObjects.ToList<CombatObject>()[SelectedComObj]; 
+        }
+        public CombatObject selectNext()
+        {
+            SelectedComObj++;
+            if (SelectedComObj == battle.CombatObjects.Count())
+            {
+                SelectedComObj = 0;
+            }
+            return selectedObj();
+        }
+        public CombatObject selectPrev()
+        {
+            SelectedComObj--;
+            if (SelectedComObj == -1)
+            {
+                SelectedComObj = battle.CombatObjects.Count()-1;
+            }
+            return selectedObj();
+        }
 
 		private void Go()
 		{
@@ -533,6 +554,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     cmdfreq_countr = 0;
                 }
 
+                do_txt();
                 cmdfreq_countr++;
                 battletic++;
                 
@@ -540,6 +562,17 @@ namespace FrEee.WinForms.MogreCombatRender
 			}
 		}
 
+        private void do_txt()
+        {
+            CombatObject comObj = selectedObj();
+            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comObj.icomobj;
+            string txt = ship.Name + "\r\n";
+            txt += "Location: " + comObj.cmbt_loc.ToString() + "\r\n";
+            double speed = Trig.hypotinuse(comObj.cmbt_vel);
+            txt += "Speed: " + speed.ToString() + "\r\n";
+            txt += "Heading: " + comObj.cmbt_head.Degrees.ToString() + "\r\n";
+            form.updateText(txt);
+        }
 		private void do_graphics(CombatObject comObj, Point3d renderloc)
 		{            
             string IDName = comObj.icomobj.ID.ToString();
