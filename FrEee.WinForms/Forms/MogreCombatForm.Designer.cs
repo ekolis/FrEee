@@ -42,6 +42,8 @@
             // 
             this.txtLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
+            this.txtLog.BackColor = System.Drawing.Color.Black;
+            this.txtLog.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.txtLog.Location = new System.Drawing.Point(12, 92);
             this.txtLog.Multiline = true;
             this.txtLog.Name = "txtLog";

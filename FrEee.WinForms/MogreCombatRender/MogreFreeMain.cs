@@ -566,11 +566,22 @@ namespace FrEee.WinForms.MogreCombatRender
         {
             CombatObject comObj = selectedObj();
             Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comObj.icomobj;
+
             string txt = ship.Name + "\r\n";
-            txt += "Location: " + comObj.cmbt_loc.ToString() + "\r\n";
+            txt += "Location:\t" 
+                + comObj.cmbt_loc.X.ToString() + "\r\n\t" 
+                + comObj.cmbt_loc.Y.ToString() + "\r\n\t" 
+                + comObj.cmbt_loc.Z.ToString() + "\r\n";
             double speed = Trig.hypotinuse(comObj.cmbt_vel);
-            txt += "Speed: " + speed.ToString() + "\r\n";
-            txt += "Heading: " + comObj.cmbt_head.Degrees.ToString() + "\r\n";
+            txt += "Speed:\t" + speed.ToString() + "\r\n";
+            txt += "Heading:\t" + comObj.cmbt_head.Degrees.ToString() + "\r\n";
+
+            txt += "\r\n";
+            
+            Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comObj.weaponTarget[0].icomobj;
+            txt += "Target:\t" + tgtship.Name + "\r\n";
+            txt += "Distance\t" + Trig.hypotinuse(comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc) + "\r\n";
+
             form.updateText(txt);
         }
 		private void do_graphics(CombatObject comObj, Point3d renderloc)
