@@ -387,6 +387,21 @@ namespace FrEee.Game.Objects.Combat2
         {
             return p1.X * p2.X + p1.Y * p2.Y + p1.Z * p2.Z;
         }
+
+        /// <summary>
+        /// cross product of two points.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static Point3d crossProduct(Point3d p1, Point3d p2)
+        {
+            double cx = p1.Y * p2.Z - p1.Z * p2.Y;
+            double cy = p1.Z * p2.X - p1.X * p2.Z;
+            double cz = p1.X * p2.Y - p1.Y * p2.X;
+
+            return new Point3d(cx, cy, cz);
+        }
 	}
 
 	public static class GravMath
@@ -503,6 +518,46 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			return mass * System.Math.Pow(radius, 2);
 		}
+
+        /// <summary>
+        /// the rate at which two points are aproaching each other as a vector. 
+        /// </summary>
+        /// <param name="p1">position 1</param>
+        /// <param name="v1">velocity 1</param>
+        /// <param name="p2">position 2</param>
+        /// <param name="v2">velocity 2</param>
+        /// <returns></returns>
+        public static Point3d closingVector(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
+        {
+            Point3d closingVector = new Point3d(0,0,0);
+            if (p1.X < p2.X)
+                closingVector.X = v1.X - v2.X;
+            else
+                closingVector.X = v1.X + v2.X;
+            if (p1.Y < p2.Y)
+                closingVector.Y = v1.Y - v2.Y;
+            else
+                closingVector.Y = v1.Y + v2.Y;
+            if (p1.Z < p2.Z)
+                closingVector.Z = v1.Z - v2.Z;
+            else
+                closingVector.Z = v1.Z + v2.Z;
+            return closingVector;
+        }
+
+
+        /// <summary>
+        /// the rate at which two points are aproaching each other as a scaler
+        /// </summary>
+        /// <param name="p1">position 1</param>
+        /// <param name="v1">velocity 1</param>
+        /// <param name="p2">position 2</param>
+        /// <param name="v2">velocity 2</param>
+        /// <returns></returns>
+        public static double closingSpeed(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
+        {
+            return Trig.hypotinuse(closingVector(p1, v1, p2, v2));
+        }
 	}
 
 }

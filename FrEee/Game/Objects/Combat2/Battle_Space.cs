@@ -281,6 +281,12 @@ namespace FrEee.Game.Objects.Combat2
 			End();
 		}
 
+
+        /// <summary>
+        /// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
+        /// the strategic AI should be responsible for setting where the waypoint is and where thet waypoint is going. 
+        /// </summary>
+        /// <param name="comObj"></param>
 		public void helm(CombatObject comObj)
 		{
 			var ship = comObj.icomobj;
@@ -298,16 +304,21 @@ namespace FrEee.Game.Objects.Combat2
 			timetoturn = angletoturn.Radians / comObj.maxRotate;
             double oneEightytime = 3.14159265 / comObj.maxRotate;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
-            Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
-			double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
+            //Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+            //Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
+            double closingSpeed = GravMath.closingSpeed(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
 
             double myspeed = Trig.hypotinuse(comObj.cmbt_vel);
 
 			double timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
+            double strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
             double timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
+            
 
 			double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
+            
+
 			double nominaldistance = comObj.maxStrafeThrust;
 			double timetowpt = distance / closingSpeed;
 
@@ -320,7 +331,7 @@ namespace FrEee.Game.Objects.Combat2
                 {
                     thrustToWaypoint = null;//should attempt to match speed
                 }
-                if (timetowpt <= timetokill_MySpeed + oneEightytime)//if/when we're going to overshoot teh waypoint, this doesn't work if targets are closing on each other.
+                if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint, this doesn't work if targets are closing on each other.
                 {
                     angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
                     angletoturn.normalize();
