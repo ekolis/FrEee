@@ -18,5 +18,19 @@ namespace FrEee.Tests.Game.Objects.Combat2
             double side_bt1 = 12;
             Assert.AreEqual(13,Trig.pythagC(side_at1, side_bt1));
         }
+
+        [TestMethod]
+        public void closingVector()
+        {
+            Point3d p1 = new Point3d(-10, 0, 0);
+            Point3d v1 = new Point3d(5, 5, 0);
+
+            Point3d p2 = new Point3d(5, 15, 0);
+            Point3d v2 = new Point3d(-3, -3, 0);
+
+            Point3d result = new Point3d(8, 8, 0);
+            
+            Assert.AreEqual(result, GravMath.closingVector(p1, v1, p2, v2));       
+        }
     }
 }

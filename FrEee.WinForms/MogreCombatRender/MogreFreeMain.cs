@@ -101,7 +101,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			ConfigFile cf = new ConfigFile();
 			cf.Load("resources.cfg", "\t:=", true);
-
+            
 			var section = cf.GetSectionIterator();
 			while (section.MoveNext())
 			{
