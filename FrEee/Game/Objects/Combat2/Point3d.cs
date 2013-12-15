@@ -325,8 +325,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 		/// <summary>
-		/// sides_ab(distance, angleA(point2 -= point1))); 
-		/// I'm sure this is misnamed.
+		/// sides_ab(distance, angleA(point2 - point1))); 
 		/// </summary>
 		/// <param name="point1"></param>
 		/// <param name="point2"></param>
