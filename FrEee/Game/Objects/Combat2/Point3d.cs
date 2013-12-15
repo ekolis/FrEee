@@ -519,32 +519,8 @@ namespace FrEee.Game.Objects.Combat2
 			return mass * System.Math.Pow(radius, 2);
 		}
 
-        /// <summary>
-        /// the rate at which two points are aproaching each other as a vector. 
-        /// </summary>
-        /// <param name="p1">position 1</param>
-        /// <param name="v1">velocity 1</param>
-        /// <param name="p2">position 2</param>
-        /// <param name="v2">velocity 2</param>
-        /// <returns></returns>
-        public static Point3d closingVector(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
-        {
-            Point3d closingVector = new Point3d(0,0,0);
-            if (p1.X < p2.X)
-                closingVector.X = v1.X - v2.X;
-            else
-                closingVector.X = v1.X + v2.X;
-            if (p1.Y < p2.Y)
-                closingVector.Y = v1.Y - v2.Y;
-            else
-                closingVector.Y = v1.Y + v2.Y;
-            if (p1.Z < p2.Z)
-                closingVector.Z = v1.Z - v2.Z;
-            else
-                closingVector.Z = v1.Z + v2.Z;
-            return closingVector;
-        }
 
+         //Ship A vs Ship B closing rate:  V=speedVector P=distanceVector Closing rate: (Va-Vb)dot((Pa-Pb)/|Pa-Pb|)
 
         /// <summary>
         /// the rate at which two points are aproaching each other as a scaler
@@ -554,9 +530,12 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="p2">position 2</param>
         /// <param name="v2">velocity 2</param>
         /// <returns></returns>
-        public static double closingSpeed(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
+        public static double closingrate(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
         {
-            return Trig.hypotinuse(closingVector(p1, v1, p2, v2));
+            Point3d v = v2 - v1;
+            Point3d p = p1 - p2;
+            double closingrate = Trig.dotProduct(v, (p / Trig.hypotinuse(p)));
+            return closingrate;
         }
 	}
 
