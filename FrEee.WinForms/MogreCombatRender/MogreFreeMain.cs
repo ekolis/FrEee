@@ -513,6 +513,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				foreach (CombatObject comObj in battle.CombatObjects)
 				{
+                    comObj.debuginfo = "";
                     //heading and thrust
 					battle.helm(comObj);
 
@@ -575,12 +576,14 @@ namespace FrEee.WinForms.MogreCombatRender
             double speed = Trig.hypotinuse(comObj.cmbt_vel);
             txt += "Speed:\t" + speed.ToString() + "\r\n";
             txt += "Heading:\t" + comObj.cmbt_head.Degrees.ToString() + "\r\n";
-
+           
             txt += "\r\n";
             
             Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comObj.weaponTarget[0].icomobj;
             txt += "Target:\t" + tgtship.Name + "\r\n";
             txt += "Distance\t" + Trig.hypotinuse(comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc) + "\r\n";
+
+            txt += comObj.debuginfo;
 
             form.updateText(txt);
         }

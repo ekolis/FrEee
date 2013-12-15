@@ -33,9 +33,9 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			this.cmbt_mass = (double)v.Size;
 			// XXX - why is speed being divided by mass here? mods can already implement QNP if they want big ships to be slow...
-			this.maxfowardThrust = v.Speed / this.cmbt_mass;
-			this.maxStrafeThrust = (v.Speed / this.cmbt_mass) / (4 - v.Evasion * 0.01);
-			this.maxRotate = (v.Speed / this.cmbt_mass) / (12 - v.Evasion * 0.1);
+			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.0001;
+			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.0001) / (4 - v.Evasion * 0.01);
+            this.maxRotate = (v.Speed * this.cmbt_mass * 0.0001) / (12 - v.Evasion * 0.1);
 		}
 
 		public CombatObject(Seeker s, int battleseed)
@@ -43,9 +43,9 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
 			// XXX - I'm dividing speed by mass here because you were doing it with the space vehicles... still seems silly to me!
-			this.maxfowardThrust = s.WeaponInfo.SeekerSpeed / this.cmbt_mass;
-			this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed / this.cmbt_mass) / (4 - s.Evasion * 0.01);
-			this.maxRotate = (s.WeaponInfo.SeekerSpeed / this.cmbt_mass) / (12 - s.Evasion * 0.1);
+            this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001;
+            this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001) / (4 - s.Evasion * 0.01);
+            this.maxRotate = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001) / (12 - s.Evasion * 0.1);
 		}
 
 		public CombatObject(ICombatant c, int battleseed)
@@ -127,6 +127,9 @@ namespace FrEee.Game.Objects.Combat2
 			int seed = (int)(this.icomobj.ID % 100000) + battleseed;
 			shipDice = new PRNG(seed);
 		}
+
+
+        public string debuginfo = "";
 	}
 
 
