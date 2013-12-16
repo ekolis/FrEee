@@ -7,6 +7,7 @@ using FrEee.Utility;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Combat2
@@ -21,6 +22,80 @@ namespace FrEee.Game.Objects.Combat2
 		{ }
 	}
 
+    public class CombatWeapon
+    {        
+        
+        
+        public CombatWeapon(Component weapon)
+        {
+            this.weapon = weapon;
+            var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
+
+            if (wpninfo.DisplayEffect.GetType() == typeof(Combat.BeamWeaponDisplayEffect))
+            {
+                weaponType = "Beam";
+                maxRange = wpninfo.MaxRange * 1000;
+                minRange = wpninfo.MinRange * 1000;
+            }
+            else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect))
+            {
+                weaponType = "Bolt";
+                boltSpeed = wpninfo.MaxRange * 1000; //modfiles are in klometers
+                maxRange = 1;// (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
+                minRange = wpninfo.MinRange / boltSpeed; //(minTime for bolts) distance / speed = time  
+            }
+            else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
+                weaponType = "Seeker";
+            else
+                weaponType = "Unknown"; 
+            reloadRate = wpninfo.ReloadRate;
+            nextReload = 1;
+
+            
+        }
+
+        /// <summary>
+        /// "Beam", "Bolt", "Seeker".
+        /// </summary>
+        public string weaponType { get; set; }
+
+        /// <summary>
+        /// the actual component.
+        /// </summary>
+        public Component weapon { get; private set; }
+
+        /// <summary>
+        /// nextReload tick (when battletick >= this, fire again, then reset this to current tick + reload rate)
+        /// </summary>
+        public int nextReload { get; set; }
+
+        /// <summary>
+        /// the rate the weapon can reload in seconds.
+        /// </summary>
+        public double reloadRate { get; private set; }
+
+        /// <summary>
+        /// if a bolt, what is it's speed if fired at rest?
+        /// </summary>
+        public double boltSpeed { get; private set; }
+
+        /// <summary>
+        /// if a bolt (or seeker?), this is time, else it's distance 
+        /// </summary>
+        public int maxRange { get; private set; }
+
+        /// <summary>
+        /// if a bolt (or seeker?), this is time, else it's distance 
+        /// </summary>
+        public int minRange { get; private set; }
+
+        public bool CanTarget(ICombatant target)
+        {
+            return weapon.CanTarget(target);
+        }
+       
+    }
+
 
 	public class CombatObject
 	{
@@ -33,9 +108,9 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			this.cmbt_mass = (double)v.Size;
 			// XXX - why is speed being divided by mass here? mods can already implement QNP if they want big ships to be slow...
-			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.0001;
-			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.0001) / (4 - v.Evasion * 0.01);
-            this.maxRotate = (v.Speed * this.cmbt_mass * 0.0001) / (12 - v.Evasion * 0.1);
+			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.1;
+			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.1) / (4 - v.Evasion * 0.01);
+            this.maxRotate = (v.Speed * this.cmbt_mass * 0.1) / (12 - v.Evasion * 0.1);
 		}
 
 		public CombatObject(Seeker s, int battleseed)
@@ -43,10 +118,12 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
 			// XXX - I'm dividing speed by mass here because you were doing it with the space vehicles... still seems silly to me!
-            this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001;
-            this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001) / (4 - s.Evasion * 0.01);
-            this.maxRotate = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.0001) / (12 - s.Evasion * 0.1);
+            this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001;
+            this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (4 - s.Evasion * 0.01);
+            this.maxRotate = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (12 - s.Evasion * 0.1);
 		}
+
+
 
 		public CombatObject(ICombatant c, int battleseed)
 		{
@@ -58,6 +135,12 @@ namespace FrEee.Game.Objects.Combat2
 			this.cmbt_thrust = new Point3d(0, 0, 0);
 			this.cmbt_accel = new Point3d(0, 0, 0);
 
+            this.weaponList = new List<CombatWeapon>();
+            foreach (Component weapon in icomobj.Weapons)
+            {
+                CombatWeapon wpn = new CombatWeapon(weapon);
+                this.weaponList.Add(wpn);
+            }
 			newDice(battleseed);
 		}
 
@@ -113,6 +196,8 @@ namespace FrEee.Game.Objects.Combat2
 		//public double lastDistancetoWaypoint { get; set; }
 
 		public List<CombatObject> weaponTarget { get; set; }
+
+        public List<CombatWeapon> weaponList { get; set; }
 
 		public double maxfowardThrust { get; set; }
 		public double maxStrafeThrust { get; set; }
