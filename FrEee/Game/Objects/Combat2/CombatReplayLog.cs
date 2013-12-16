@@ -45,19 +45,27 @@ namespace FrEee.Game.Objects.Combat2
 
 	public class CombatLocationEvent : CombatEvent
 	{
-		public Point3d Location { get; private set; }
+		public Point3d Location { get; protected set; }
 		public CombatLocationEvent(int tick, CombatObject obj, Point3d cmbt_loc)
 			: base(tick, obj)
 		{
 			this.Location = cmbt_loc;
 		}
 	}
-	public class CombatFireEvent : CombatLocationEvent
+	public class CombatFireOnTargetEvent : CombatLocationEvent
 	{
 		public CombatTakeFireEvent TakeFireEvent { get; private set; }
-		public Technology.Component Weapon { get; private set; }
+		public CombatWeapon Weapon { get; private set; }
 
-		public CombatFireEvent(int tick, CombatObject obj, Point3d loc, Component weapon, CombatTakeFireEvent targetevent)
+        /// <summary>
+        /// this event is for the object that is firing apon something else
+        /// </summary>
+        /// <param name="tick"></param>
+        /// <param name="obj"></param>
+        /// <param name="loc"></param>
+        /// <param name="weapon"></param>
+        /// <param name="targetevent">the event for the target ship</param>
+		public CombatFireOnTargetEvent(int tick, CombatObject obj, Point3d loc, CombatWeapon weapon, CombatTakeFireEvent targetevent)
 			: base(tick, obj, loc)
 		{
 			this.Weapon = weapon;
@@ -67,10 +75,23 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatTakeFireEvent : CombatLocationEvent
 	{
 		bool IsHit { get; set; }
+        
+        /// <summary>
+        /// This event is for the object under fire.
+        /// </summary>
+        /// <param name="tick"></param>
+        /// <param name="obj"></param>
+        /// <param name="endpoint"></param>
+        /// <param name="hit">whether this ship is hit or if the shot is a miss</param>
 		public CombatTakeFireEvent(int tick, CombatObject obj, Point3d endpoint, bool hit)
 			: base(tick, obj, endpoint)
 		{
 			this.IsHit = hit;
 		}
+
+        public void setLocation(Point3d location)
+        {
+            base.Location = location;
+        }
 	}
 }

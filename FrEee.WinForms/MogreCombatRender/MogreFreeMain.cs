@@ -533,7 +533,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 					foreach (var comEvent in ourLogs)
 					{
-						if (comEvent is CombatFireEvent)
+						if (comEvent is CombatFireOnTargetEvent)
 						{
 							// TODO - if type projectile, create whatever sprite and render it flying towards target.
 							// or if type beam, draw a beam sprite
