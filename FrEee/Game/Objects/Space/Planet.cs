@@ -584,7 +584,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Mod.Current.Settings.PlanetAccuracy + this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + Owner.Culture.SpaceCombat;
+				return Mod.Current.Settings.PlanetAccuracy + this.GetAbilityValue("Combat To Hit Offense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Offense Minus").ToInt() + (Owner == null ? 0 : Owner.Culture.SpaceCombat);
 			}
 		}
 
@@ -592,7 +592,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + Owner.Culture.SpaceCombat;
+				return Mod.Current.Settings.PlanetEvasion + this.GetAbilityValue("Combat To Hit Defense Plus").ToInt() - this.GetAbilityValue("Combat To Hit Defense Minus").ToInt() + (Owner == null ? 0 : Owner.Culture.SpaceCombat);
 			}
 		}
 
@@ -810,7 +810,7 @@ namespace FrEee.Game.Objects.Space
 
 		public IEnumerable<IUnit> AllUnits
 		{
-			get { return Cargo.Units; }
+			get { return Cargo == null ? Enumerable.Empty<IUnit>() : Cargo.Units; }
 		}
 
 		[DoNotSerialize]
@@ -871,7 +871,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int MaxArmorHitpoints
 		{
-			get { return Cargo.MaxArmorHitpoints; }
+			get { return Cargo == null ? 0 : Cargo.MaxArmorHitpoints; }
 		}
 
 		public int MaxHullHitpoints
