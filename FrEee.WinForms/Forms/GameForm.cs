@@ -23,6 +23,7 @@ using System.Threading;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
 using System.Reflection;
+using FrEee.WinForms.Objects;
 
 namespace FrEee.WinForms.Forms
 {
@@ -88,6 +89,17 @@ namespace FrEee.WinForms.Forms
 			// so the search box can lose focus...
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
+
+			try
+			{
+				ClientSettings.Load();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show("Error loading client settings. Resetting to defaults.");
+				ClientSettings.Initialize();
+				ClientSettings.Save();
+			}
 		}
 
 		/// <summary>
