@@ -543,6 +543,10 @@ namespace FrEee.WinForms.MogreCombatRender
 						{
 							// TODO - kersplosions
 						}
+                        else if (comEvent is CombatDestructionEvent)
+                        {
+                            // - kersplosions and removal of model. 
+                        }
 					}
 				}
                 if (cmdfreq_countr >= Battle_Space.CommandFrequency)
@@ -636,7 +640,7 @@ namespace FrEee.WinForms.MogreCombatRender
             mNode_lines.AttachObject(forceLine);
             forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
             forceLine.Position(node.Position);
-            forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust * 5000)));
+            forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
             forceLine.End();
 
             //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
