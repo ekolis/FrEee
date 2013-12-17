@@ -42,7 +42,7 @@ namespace FrEee.Game.Objects.Combat2
                 weaponType = "Bolt";
                 boltSpeed = wpninfo.MaxRange * 1000; //modfiles are in klometers
                 maxRange = 1;// (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
-                minRange = wpninfo.MinRange / boltSpeed; //(minTime for bolts) distance / speed = time  
+                minRange = wpninfo.MinRange / boltSpeed; //(minTime for bolts) distance / speed = time                  
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
                 weaponType = "Seeker";
@@ -97,7 +97,34 @@ namespace FrEee.Game.Objects.Combat2
     }
 
 
-	public class CombatObject
+    public class CombatNode
+    {
+        /// <summary>
+        /// for creating bullets. & other non AI or acelerating things. used by the renderer to move and display.
+        /// </summary>
+        /// <param name="position"> ship position this is fiired from </param>
+        /// <param name="vector">direction this is going</param>
+        public CombatNode(Point3d position, Point3d vector)
+        {
+            this.cmbt_loc = position;
+            this.cmbt_vel = vector;
+        }
+        /// <summary>
+        /// location within the sector
+        /// </summary>
+        public Point3d cmbt_loc { get; set; }
+
+        /// <summary>
+        /// combat velocity
+        /// </summary>
+        public Point3d cmbt_vel { get; set; }
+
+
+
+
+    }
+
+	public class CombatObject : CombatNode
 	{
 		private ICombatant icomObj;
 
@@ -107,7 +134,6 @@ namespace FrEee.Game.Objects.Combat2
 			: this((ICombatant)v, battleseed)
 		{
 			this.cmbt_mass = (double)v.Size;
-			// XXX - why is speed being divided by mass here? mods can already implement QNP if they want big ships to be slow...
 			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.1;
 			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.1) / (4 - v.Evasion * 0.01);
             this.maxRotate = (v.Speed * this.cmbt_mass * 0.1) / (12000 - v.Evasion * 0.1);
@@ -117,7 +143,6 @@ namespace FrEee.Game.Objects.Combat2
 			: this((ICombatant)s, battleseed)
 		{
 			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
-			// XXX - I'm dividing speed by mass here because you were doing it with the space vehicles... still seems silly to me!
             this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001;
             this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (4 - s.Evasion * 0.01);
             this.maxRotate = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (12 - s.Evasion * 0.1);
@@ -125,7 +150,8 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-		public CombatObject(ICombatant c, int battleseed)
+		public CombatObject(ICombatant c, int battleseed) 
+            : base(new Point3d(0,0,0), new Point3d(0,0,0))
 		{
 			this.icomobj = c;
 
@@ -144,15 +170,12 @@ namespace FrEee.Game.Objects.Combat2
 			newDice(battleseed);
 		}
 
-		/// <summary>
-		/// location within the sector
-		/// </summary>
-		public Point3d cmbt_loc { get; set; }
+
 
 		/// <summary>
 		/// between phys tic locations. 
 		/// </summary>
-		public Point3d rndr_loc { get; set; }
+		//public Point3d rndr_loc { get; set; }
 
 		/// <summary>
 		/// facing towards this point
@@ -170,14 +193,9 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public Compass cmbt_att { get; set; }
 
-		/// <summary>
-		/// combat velocity
-		/// </summary>
-		public Point3d cmbt_vel { get; set; }
-
-		public Point3d cmbt_accel { get; set; }
-
 		public Point3d cmbt_thrust { get; set; }
+
+        public Point3d cmbt_accel { get; set; }
 
 		public double cmbt_mass { get; set; }
 
