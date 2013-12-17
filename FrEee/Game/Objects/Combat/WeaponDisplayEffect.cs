@@ -15,40 +15,35 @@ namespace FrEee.Game.Objects.Combat
 	[Serializable]
 	public abstract class WeaponDisplayEffect : IPictorial
 	{
-		protected WeaponDisplayEffect(string name, string shipsetSpriteSheetName, Point shipsetSpriteOffset, string globalSpriteSheetName, Point globalSpriteOffset, Size spriteSize)
+		protected WeaponDisplayEffect(string name)
 		{
 			Name = name;
-			ShipsetSpriteSheetName = shipsetSpriteSheetName;
-			ShipsetSpriteOffset = shipsetSpriteOffset;
-			GlobalSpriteSheetName = globalSpriteSheetName;
-			GlobalSpriteOffset = globalSpriteOffset;
-			SpriteSize = spriteSize;
 		}
 
 		/// <summary>
 		/// The name of the sprite sheet to use.
 		/// </summary>
-		public string ShipsetSpriteSheetName { get; private set; }
+		public abstract string ShipsetSpriteSheetName { get; }
 
 		/// <summary>
 		/// The pixel offset to the first sprite in the shipset-specific sprite sheet.
 		/// </summary>
-		public Point ShipsetSpriteOffset { get; private set; }
+		public abstract Point ShipsetSpriteOffset { get; }
 
 		/// <summary>
 		/// The name of the sprite sheet to use.
 		/// </summary>
-		public string GlobalSpriteSheetName { get; private set; }
+		public abstract string GlobalSpriteSheetName { get; }
 
 		/// <summary>
 		/// The pixel offset to the first sprite in the global sprite sheet.
 		/// </summary>
-		public Point GlobalSpriteOffset { get; private set; }
+		public abstract Point GlobalSpriteOffset { get; }
 
 		/// <summary>
 		/// The size of each sprite, in pixels.
 		/// </summary>
-		public Size SpriteSize { get; private set; }
+		public abstract Size SpriteSize { get; }
 
 		/// <summary>
 		/// The name or index of the effect to use.

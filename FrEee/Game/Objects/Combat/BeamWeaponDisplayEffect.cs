@@ -10,9 +10,34 @@ namespace FrEee.Game.Objects.Combat
 	public class BeamWeaponDisplayEffect : WeaponDisplayEffect
 	{
 		public BeamWeaponDisplayEffect(string name)
-			: base(name, "Beams", new Point(), "Beams", new Point(), new Size(20, 20))
+			: base(name)
 		{
 
+		}
+
+		public override string ShipsetSpriteSheetName
+		{
+			get { return "Beams"; }
+		}
+
+		public override Point ShipsetSpriteOffset
+		{
+			get { return new Point(); }
+		}
+
+		public override string GlobalSpriteSheetName
+		{
+			get { return "Beams"; }
+		}
+
+		public override Point GlobalSpriteOffset
+		{
+			get { return new Point(); }
+		}
+
+		public override Size SpriteSize
+		{
+			get { return new Size(20, 20); }
 		}
 	}
 }

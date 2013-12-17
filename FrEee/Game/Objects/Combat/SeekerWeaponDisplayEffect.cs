@@ -10,9 +10,34 @@ namespace FrEee.Game.Objects.Combat
 	public class SeekerWeaponDisplayEffect : WeaponDisplayEffect
 	{
 		public SeekerWeaponDisplayEffect(string name)
-			: base(name, "Main", new Point(), "Seekers", new Point(40, 0), new Size(20, 20))
+			: base(name)
 		{
 
+		}
+
+		public override string ShipsetSpriteSheetName
+		{
+			get { return "Main"; }
+		}
+
+		public override Point ShipsetSpriteOffset
+		{
+			get { return new Point(40, 0); }
+		}
+
+		public override string GlobalSpriteSheetName
+		{
+			get { return "Seekers"; }
+		}
+
+		public override Point GlobalSpriteOffset
+		{
+			get { return new Point(); }
+		}
+
+		public override Size SpriteSize
+		{
+			get { return new Size(20, 20); }
 		}
 	}
 }
