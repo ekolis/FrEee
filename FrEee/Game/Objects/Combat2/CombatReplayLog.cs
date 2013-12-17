@@ -94,4 +94,10 @@ namespace FrEee.Game.Objects.Combat2
             base.Location = location;
         }
 	}
+    public class CombatDestructionEvent : CombatLocationEvent
+    {
+        public CombatDestructionEvent(int tick, CombatObject obj, Point3d point)
+            : base(tick, obj, point)
+        {}
+    }
 }

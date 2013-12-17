@@ -520,11 +520,14 @@ namespace FrEee.Game.Objects.Combat2
             }
 		}
 
-		public Point3d SimNewtonianPhysics(CombatObject comObj)
+		public Point3d SimNewtonianPhysics(CombatNode comObj)
 		{
-			comObj.cmbt_accel = (GravMath.accelVector(comObj.cmbt_mass, comObj.cmbt_thrust));
-
-			comObj.cmbt_vel += comObj.cmbt_accel;
+            if (comObj is CombatObject)
+            {
+                CombatObject comObjo = (CombatObject)comObj;
+                comObjo.cmbt_accel = (GravMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
+                comObj.cmbt_vel += comObjo.cmbt_accel;
+            }		
 
 			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
 
