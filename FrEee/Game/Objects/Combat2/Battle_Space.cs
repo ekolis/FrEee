@@ -639,6 +639,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             else
                 rangeForDamageCalcs = rangetotarget / 1000;
+
             rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
 			ICombatant target_icomobj = target.icomobj;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
@@ -660,7 +661,13 @@ namespace FrEee.Game.Objects.Combat2
             
 			CombatTakeFireEvent target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
 
-			if (hit)
+            long ID = target_icomobj.ID;
+            if (ID == -1)
+            { 
+
+            }
+
+			if (hit && !target_icomobj.IsDestroyed)
 			{
                 var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
 				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
@@ -719,6 +726,16 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				//battle.LogTargetDeath(this);
 				targetV.Dispose();
+                foreach (KeyValuePair<Empire, CombatEmpire>  empireKVP in Empires)
+                {
+                    CombatEmpire empire = empireKVP.Value;
+                    if (empire.ownships.Contains(target))
+                        empire.ownships.Remove(target);
+                    else if (empire.hostile.Contains(target))
+                        empire.hostile.Remove(target);                    
+                    else if (empire.friendly.Contains(target))
+                        empire.friendly.Remove(target);
+                }
 			}
 
 			// update memory sight
