@@ -608,11 +608,16 @@ namespace FrEee.Game.Objects.Combat2
 
 		private CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
+            
+
             var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
             double rangeForDamageCalcs;
             double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
             int targettic = tic;
-            
+
+            //reset the weapon nextReload.
+            weapon.nextReload = tic + (int)(weapon.reloadRate * 10);
+
             if (weapon.weaponType == "Bolt")
             {
                 double boltTTT = boltTimeToTarget(attacker, weapon, target);
@@ -629,6 +634,7 @@ namespace FrEee.Game.Objects.Combat2
                 //what am I trying to do here again?
                 rangeForDamageCalcs = rThis_distance * scaler * 0.001;
 
+                //set target tick for the future.
                 targettic += (int)boltTTT;
             }
             else
