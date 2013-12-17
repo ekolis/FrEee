@@ -110,7 +110,7 @@ namespace FrEee.Game.Objects.Combat2
 			// XXX - why is speed being divided by mass here? mods can already implement QNP if they want big ships to be slow...
 			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.1;
 			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.1) / (4 - v.Evasion * 0.01);
-            this.maxRotate = (v.Speed * this.cmbt_mass * 0.1) / (12 - v.Evasion * 0.1);
+            this.maxRotate = (v.Speed * this.cmbt_mass * 0.1) / (12000 - v.Evasion * 0.1);
 		}
 
 		public CombatObject(Seeker s, int battleseed)
