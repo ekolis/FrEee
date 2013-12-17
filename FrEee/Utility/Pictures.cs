@@ -679,6 +679,19 @@ namespace FrEee.Utility
 			});
 		}
 
+		public static Image GetModImage(params string[] paths)
+		{
+			if (Mod.Current.RootPath == null)
+				return GetCachedImage(paths);
+			var allpaths = new List<string>();
+			foreach (var p in paths)
+			{
+				allpaths.Add(Path.Combine("Mods", Mod.Current.RootPath, p));
+				allpaths.Add(p);
+			}
+			return GetCachedImage(allpaths);
+		}
+
 		/// <summary>
 		/// Gets a generic image for a type of object.
 		/// </summary>
@@ -928,6 +941,37 @@ namespace FrEee.Utility
 			var g = Graphics.FromImage(result);
 			g.DrawImage(scaled, (result.Width - scaled.Width) / 2, (result.Height - scaled.Height) / 2);
 			return result;
+		}
+
+		/// <summary>
+		/// Crops an image to a specific size at a specific position.
+		/// </summary>
+		/// <param name="src">The source image.</param>
+		/// <param name="upperLeft">The upper left corner of the crop rectangle.</param>
+		/// <param name="size">The size of the crop rectangle.</param>
+		/// <returns>The cropped image.</returns>
+		public static Image Crop(this Image src, Point upperLeft, Size size)
+		{
+			// http://stackoverflow.com/questions/734930/how-to-crop-an-image-using-c
+			var rect = new Rectangle(upperLeft, size);
+			var bmp = new Bitmap(size.Width, size.Height);
+			var g = Graphics.FromImage(bmp);
+			g.DrawImage(src, new Rectangle(0, 0, size.Width, size.Height), rect, GraphicsUnit.Pixel);
+			return bmp;
+		}
+
+		/// <summary>
+		/// Crops an image to a size relative to the source image's size with (1,1) being the full size of the image.
+		/// </summary>
+		/// <param name="src"></param>
+		/// <param name="upperLeft"></param>
+		/// <param name="size"></param>
+		/// <returns></returns>
+		public static Image CropRelative(this Image src, PointF upperLeft, SizeF size)
+		{
+			var ul = new Point((int)(upperLeft.X * src.Width), (int)(upperLeft.Y * src.Height));
+			var sz = new Size((int)(size.Width * src.Width), (int)(size.Height * src.Height));
+			return src.Crop(ul, sz);
 		}
 	}
 }
