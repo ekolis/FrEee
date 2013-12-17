@@ -162,11 +162,11 @@ namespace FrEee.Modding.Loaders
 						var wdisptype = rec.Get<string>("Weapon Display Type", c);
 						var wdispname = rec.Get<string>("Weapon Display", c);
 						if (wdisptype == "Beam")
-							w.DisplayEffect = new BeamWeaponDisplayEffect { Name = wdispname };
+							w.DisplayEffect = new BeamWeaponDisplayEffect(wdispname);
 						else if (wdisptype == "Torp" || wdisptype == "Torpedo" || wdisptype == "Projectile")
-							w.DisplayEffect = new ProjectileWeaponDisplayEffect { Name = wdispname };
+							w.DisplayEffect = new ProjectileWeaponDisplayEffect(wdispname);
 						else if (wdisptype == "Seeker")
-							w.DisplayEffect = new SeekerWeaponDisplayEffect { Name = wdispname };
+							w.DisplayEffect = new SeekerWeaponDisplayEffect(wdispname);
 						else
 							Mod.Errors.Add(new DataParsingException("Invalid weapon display effect type \"" + wdisptype + "\".", Mod.CurrentFileName, rec));
 
