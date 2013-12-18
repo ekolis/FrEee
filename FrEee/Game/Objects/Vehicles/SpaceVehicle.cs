@@ -132,6 +132,8 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return this.GetAbilityValue("Supply Storage").ToInt(); }
 		}
 
+		public Progress SupplyFill { get { return new Progress(SupplyRemaining, SupplyStorage); } }
+
 		/// <summary>
 		/// Space vehicles do not have infinite supplies unless they have a quantum reactor or they are bases.
 		/// </summary>

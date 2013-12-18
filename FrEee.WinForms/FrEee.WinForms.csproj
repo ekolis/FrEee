@@ -149,6 +149,12 @@
     <Compile Include="Forms\EmpireListForm.Designer.cs">
       <DependentUpon>EmpireListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ShipListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShipListForm.Designer.cs">
+      <DependentUpon>ShipListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -550,6 +556,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShipListForm.resx">
+      <DependentUpon>ShipListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetListForm.resx">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
