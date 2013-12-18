@@ -571,7 +571,11 @@ namespace FrEee.Game.Objects.Civilization
 			if (alliance >= AllianceLevel.NonAggression)
 				return false;
 			if (alliance >= AllianceLevel.NeutralZone)
+			{
+				if (sys == null)
+					return true; // assume hostility if unknown system
 				return sys.FindSpaceObjects<Planet>().Flatten().Any(p => p.Owner == this);
+			}
 			return true;
 		}
 

@@ -873,7 +873,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.O)
 					; // TODO - empire status screen
 				else if (e.KeyCode == Keys.S)
-					; // TODO - ships screen
+					this.ShowChildForm(new ShipListForm());
 				else if (e.KeyCode == Keys.Q)
 					ShowConstructionQueueListForm();
 				else if (e.KeyCode == Keys.L)
@@ -921,7 +921,7 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F11)
 				MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
 			else if (e.KeyCode == Keys.F6)
-				MessageBox.Show("Sorry, the ship list screen is not yet implemented."); // TODO - ships screen
+				this.ShowChildForm(new ShipListForm());
 			else if (e.KeyCode == Keys.F7)
 				ShowConstructionQueueListForm();
 			else if (e.KeyCode == Keys.F10)
@@ -1224,8 +1224,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnShips_Click(object sender, EventArgs e)
 		{
-			// TODO - ships screen
-			MessageBox.Show("Sorry, the ships screen is not yet implemented.");
+			this.ShowChildForm(new ShipListForm());
 		}
 
 		private void btnPrevIdle_Click(object sender, EventArgs e)

@@ -210,6 +210,11 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		public Progress ArmorHitpointsFill
+		{
+			get { return new Progress(ArmorHitpoints, MaxArmorHitpoints); }
+		}
+
 		/// <summary>
 		/// Current HP of all non-armor components.
 		/// </summary>
@@ -219,6 +224,16 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				return Components.Sum(c => c.HullHitpoints);
 			}
+		}
+
+		public Progress HullHitpointsFill
+		{
+			get { return new Progress(HullHitpoints, MaxHullHitpoints); }
+		}
+
+		public Progress ShieldHitpointsFill
+		{
+			get { return new Progress(ShieldHitpoints, MaxShieldHitpoints); }
 		}
 
 		/// <summary>
@@ -388,6 +403,21 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
+		public int MineralsMaintenance
+		{
+			get { return MaintenanceCost[Resource.Minerals]; }
+		}
+
+		public int OrganicsMaintenance
+		{
+			get { return MaintenanceCost[Resource.Organics]; }
+		}
+
+		public int RadioactivesMaintenance
+		{
+			get { return MaintenanceCost[Resource.Radioactives]; }
+		}
+
 		public int MaxShieldHitpoints
 		{
 			get { return MaxNormalShields + MaxPhasedShields; }
@@ -420,5 +450,9 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public IHull Hull { get { return Design.Hull; } }
+
+		public bool IsOurs { get { return Owner == Empire.Current; } }
 	}
 }
