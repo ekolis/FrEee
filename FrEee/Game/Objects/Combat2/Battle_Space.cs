@@ -634,11 +634,22 @@ namespace FrEee.Game.Objects.Combat2
                 double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
 
                 double scaler = rMax_distance_standstill / rMax_distance;
-                //what am I trying to do here again?
+                
                 rangeForDamageCalcs = rThis_distance * scaler * 0.001;
 
                 //set target tick for the future.
                 targettic += (int)boltTTT;
+
+                
+                if (IsReplay)
+                {
+                    //something like the below. 
+                    //var Logs = ReplayLog.EventsForObjectAtTick(target, targettic);
+                    //CombatLocationEvent log = (CombatLocationEvent)Logs[0];
+                    //Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, log.Location, rThis_distance);
+                    //CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector);
+                    //bulletslist.Add(bullet); //should we have a seperate list, or change the exsisting combatobjects list to combatnodes?
+                }
             }
             else
                 rangeForDamageCalcs = rangetotarget / 1000;
