@@ -80,6 +80,12 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Mogre">
+      <HintPath>MogreCombatRender\Mogre.dll</HintPath>
+    </Reference>
+    <Reference Include="MOIS">
+      <HintPath>MogreCombatRender\MOIS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
@@ -93,12 +99,14 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\GameGridView.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="Forms\MogreCombatForm.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Controls\GameGridView.Designer.cs">
-      <DependentUpon>GameGridView.cs</DependentUpon>
+    <Compile Include="Forms\MogreCombatForm.Designer.cs">
+      <DependentUpon>MogreCombatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MogreCombatRender\CamaraMan.cs" />
+    <Compile Include="MogreCombatRender\MogreFreeMain.cs" />
     <Compile Include="Controls\StarSystemReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -149,12 +157,7 @@
     <Compile Include="Forms\EmpireListForm.Designer.cs">
       <DependentUpon>EmpireListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\ShipListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ShipListForm.Designer.cs">
-      <DependentUpon>ShipListForm.cs</DependentUpon>
-    </Compile>
+    <Compile Include="MogreCombatRender\TranslateMogrePhys.cs" />
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -450,9 +453,6 @@
     <EmbeddedResource Include="Controls\ComponentReport.resx">
       <DependentUpon>ComponentReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controls\GameGridView.resx">
-      <DependentUpon>GameGridView.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Controls\StarSystemReport.resx">
       <DependentUpon>StarSystemReport.cs</DependentUpon>
     </EmbeddedResource>
@@ -530,6 +530,9 @@
     <EmbeddedResource Include="Forms\FleetTransferForm.resx">
       <DependentUpon>FleetTransferForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MogreCombatForm.resx">
+      <DependentUpon>MogreCombatForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HostConsoleForm.resx">
       <DependentUpon>HostConsoleForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -557,13 +560,8 @@
     <EmbeddedResource Include="Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ShipListForm.resx">
-      <DependentUpon>ShipListForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\PlanetListForm.resx">
       <DependentUpon>PlanetListForm.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\StatusForm.resx">
       <DependentUpon>StatusForm.cs</DependentUpon>
@@ -591,6 +589,39 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel2.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matFuel.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matHull.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matHullBridge.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matReactor.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matThurster.material">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\models\DeltaShip.mesh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="MogreCombatRender\Media\packs\OgreCore.zip">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="ogre.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="plugins.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.Culture.datasource" />
@@ -609,6 +640,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="resources.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrEee\FrEee.csproj">
@@ -622,6 +656,18 @@
     </Content>
     <Content Include="FrEee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="OgreMain.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugin_OctreeSceneManager.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RenderSystem_Direct3D9.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RenderSystem_GL.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup />

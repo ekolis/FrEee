@@ -24,7 +24,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
             try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
-			//BindTabs();
+			BindTabs();
 		}
 
 		private IEnumerable<Planet> planets;
@@ -80,27 +80,130 @@ namespace FrEee.WinForms.Forms
 			resStorageRad.Amount = storage[Resource.Radioactives];
 			
 			// show planet data
-			grid.Data = planets.ToArray();
-			grid.CreateDefaultGridConfig = ClientSettings.CreateDefaultPlanetListConfig;
-			grid.LoadCurrentGridConfig = () => ClientSettings.Instance.CurrentPlanetListConfig;
-			grid.LoadGridConfigs = () => ClientSettings.Instance.PlanetListConfigs;
-			grid.ResetGridConfigs = () => new List<GridConfig> { ClientSettings.CreateDefaultPlanetListConfig(), ClientSettings.CreateDefaultColonyPlanetListConfig() };
-			grid.Initialize();
+			BindGrid(true);
 
 			// show galaxy view background
 			// TODO - galaxy view background image can depend on galaxy template?
 			galaxyView.BackgroundImage = Pictures.GetModImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "UI", "Map", "quadrant"));
 		}
 
-		private void PlanetListForm_FormClosed(object sender, FormClosedEventArgs e)
+		private void BindTabs()
 		{
-			// save client settings
-			ClientSettings.Save();
+			pnlConfigs.Controls.Clear();
+
+			// add buttons for each existing config
+			foreach (var cfg in ClientSettings.Instance.PlanetListConfigs)
+			{
+				var btn = new GameButton();
+				btn.Text = cfg.Name;
+				btn.Tag = cfg;
+				btn.Click += btnConfig_Click;
+				pnlConfigs.Controls.Add(btn);
+			}
+
+			// add button for a new config
+			{
+				var btn = new GameButton();
+				btn.Text = "(New Config)";
+				btn.Click += btnConfig_Click;
+				pnlConfigs.Controls.Add(btn);
+			}
+
+			// highlight the current config
+			foreach (var b in pnlConfigs.Controls.OfType<GameButton>())
+				b.BackColor = b.Tag == ClientSettings.Instance.CurrentPlanetListConfig ? Color.Navy : Color.Black;
 		}
 
-		private void grid_RowEnter(object sender, DataGridViewCellEventArgs e)
+		void btnConfig_Click(object sender, EventArgs e)
 		{
-			var planet = (Planet)grid.SelectedItem;
+			var btn = (GameButton)sender;
+			if (btn.Tag == null)
+			{
+				// create a new config based on the default and activate it
+				var cfg = ClientSettings.CreateDefaultPlanetListConfig();
+				ClientSettings.Instance.PlanetListConfigs.Add(cfg);
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				btn.Tag = cfg;
+				BindTabs();
+				BindGrid(true);
+				txtConfigName.Text = cfg.Name;
+			}
+			else
+			{
+				// activate the selected config
+				var cfg = (GridConfig)btn.Tag;
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				BindGrid(true);
+				txtConfigName.Text = cfg.Name;
+			}
+			foreach (var b in pnlConfigs.Controls.OfType<GameButton>())
+				b.BackColor = b.Tag == ClientSettings.Instance.CurrentPlanetListConfig ? Color.Navy : Color.Black;
+		}
+
+		private void BindGrid(bool refreshColumns)
+		{
+			if (refreshColumns)
+			{
+				gridPlanets.Columns.Clear();
+				// Don't display columns that have an exact filter; that would be pointless
+				foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.Where(c => c.Filter != Filter.Exact))
+				{
+					var gridcol = (DataGridViewColumn)Activator.CreateInstance(col.ColumnType);
+					gridcol.DataPropertyName = col.PropertyName;
+					gridcol.HeaderText = col.HeaderText;
+					gridcol.DefaultCellStyle.ForeColor = col.ForeColor;
+					gridPlanets.Columns.Add(gridcol);
+				}
+			}
+
+			// do filtering
+			var filteredPlanets = planets;
+			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns)
+			{
+				if (col.Filter == Filter.Exact)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) == 0);
+				else if (col.Filter == Filter.Minimum)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) <= 0);
+				else if (col.Filter == Filter.Maximum)
+					filteredPlanets = filteredPlanets.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) >= 0);
+			}
+
+			// do sorting
+			var sortedPlanets = filteredPlanets.OrderBy(p => "");
+			foreach (var col in ClientSettings.Instance.CurrentPlanetListConfig.Columns.OrderBy(c => c.SortPriority))
+			{
+				var gridCol = gridPlanets.Columns.Cast<DataGridViewColumn>().SingleOrDefault(c => c.DataPropertyName == col.PropertyName);
+				if (col.Sort == Sort.Ascending)
+				{
+					sortedPlanets = sortedPlanets.ThenBy(p => p.GetPropertyValue(col.PropertyName));
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+				}
+				else if (col.Sort == Sort.Descending)
+				{
+					sortedPlanets = sortedPlanets.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+				}
+				else
+				{
+					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
+						gridCol.HeaderCell.SortGlyphDirection = SortOrder.None;
+				}
+			}
+
+			planetBindingSource.DataSource = sortedPlanets.ToArray();
+		}
+
+		private void gridPlanets_DataError(object sender, DataGridViewDataErrorEventArgs e)
+		{
+			// ignore silly errors
+			e.ThrowException = false;
+		}
+
+		private void gridPlanets_RowEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			var planet = (Planet)gridPlanets.Rows[e.RowIndex].DataBoundItem;
 			foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
 			{
 				if (sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(p => p == planet))
@@ -111,9 +214,122 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void grid_RowLeave(object sender, DataGridViewCellEventArgs e)
+		private void gridPlanets_RowLeave(object sender, DataGridViewCellEventArgs e)
 		{
 			galaxyView.SelectedStarSystem = null;
+		}
+
+		private void gridPlanets_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			var prop = typeof(Planet).GetProperty(gridPlanets.Columns[e.ColumnIndex].DataPropertyName);
+			if (prop == null)
+				return; // no such data property to sort by
+			if (typeof(IComparable).IsAssignableFrom(prop.PropertyType))
+			{
+				var col = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Single(c => c.PropertyName == prop.Name);
+
+				// cycle sort options
+				var minPriority = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Min(c => c.SortPriority);
+				if (col.Sort == Sort.None)
+				{
+					col.Sort = Sort.Ascending;
+					col.SortPriority = minPriority - 1;
+				}
+				else if (col.Sort == Sort.Ascending)
+				{
+					col.Sort = Sort.Descending;
+					col.SortPriority = minPriority - 1;
+				}
+				else if (col.Sort == Sort.Descending)
+				{
+					col.Sort = Sort.None;
+					col.SortPriority = 0;
+				}
+
+				// normalize priorities so we don't get ridiculous negative numbers and cause an overflow when the player clicks 2 billion times
+				minPriority = ClientSettings.Instance.CurrentPlanetListConfig.Columns.Min(c => c.SortPriority);
+				foreach (var c in ClientSettings.Instance.CurrentPlanetListConfig.Columns.Where(c => c.Sort != Sort.None))
+					c.SortPriority -= minPriority;
+
+				BindGrid(false);
+			}
+		}
+
+		private void btnDeleteConfig_Click(object sender, EventArgs e)
+		{
+			ClientSettings.Instance.PlanetListConfigs.Remove(ClientSettings.Instance.CurrentPlanetListConfig);
+			ClientSettings.Instance.CurrentPlanetListConfig = ClientSettings.Instance.PlanetListConfigs.FirstOrDefault();
+			// don't let the player have no configs
+			if (ClientSettings.Instance.CurrentPlanetListConfig == null)
+			{
+				var cfg = ClientSettings.CreateDefaultPlanetListConfig();
+				ClientSettings.Instance.CurrentPlanetListConfig = cfg;
+				ClientSettings.Instance.PlanetListConfigs.Add(cfg);
+			}
+			BindTabs();
+		}
+
+		private void PlanetListForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			// save client settings
+			ClientSettings.Save();
+		}
+
+		private void txtConfigName_TextChanged(object sender, EventArgs e)
+		{
+			ClientSettings.Instance.CurrentPlanetListConfig.Name = txtConfigName.Text;
+			BindTabs();
+		}
+
+		private void btnColumns_Click(object sender, EventArgs e)
+		{
+			// TODO - edit columns
+		}
+
+		private void btnReset_Click(object sender, EventArgs e)
+		{
+			if (MessageBox.Show("Reset all grid configurations to default?", "Confirm Reset", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
+				// TODO - reset only the planet list configs
+				ClientSettings.Initialize();
+				BindTabs();
+				BindGrid(true);
+			}
+		}
+
+		private void gridPlanets_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+		{
+			var col = ClientSettings.Instance.CurrentPlanetListConfig.Columns[e.ColumnIndex];
+			switch (col.Format)
+			{
+				case Format.Units:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).ToUnitString();
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).ToUnitString();
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).ToUnitString();
+					e.FormattingApplied = true;
+					break;
+				case Format.UnitsBForBillions:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).ToUnitString(true);
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).ToUnitString(true);
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).ToUnitString(true);
+					e.FormattingApplied = true;
+					break;
+				case Format.Kilotons:
+					if (e.Value is int)
+						e.Value = ((int)e.Value).Kilotons();
+					else if (e.Value is long)
+						e.Value = ((long)e.Value).Kilotons();
+					else if (e.Value is double)
+						e.Value = ((double)e.Value).Kilotons();
+					e.FormattingApplied = true;
+					break;
+			}
 		}
 	}
 }

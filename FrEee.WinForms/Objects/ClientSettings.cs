@@ -32,16 +32,6 @@ namespace FrEee.WinForms.Objects
 		/// </summary>
 		public GridConfig CurrentPlanetListConfig { get; set; }
 
-		/// <summary>
-		/// Configurations for the ship list.
-		/// </summary>
-		public IList<GridConfig> ShipListConfigs { get; private set; }
-
-		/// <summary>
-		/// Current ship list config.
-		/// </summary>
-		public GridConfig CurrentShipListConfig { get; set; }
-
 		public static ClientSettings Instance { get; private set; }
 
 		public static string ConfigFile
@@ -94,49 +84,6 @@ namespace FrEee.WinForms.Objects
 			return cfg;
 		}
 
-		public static GridConfig CreateDefaultShipListConfig()
-		{
-			var cfg = new GridConfig();
-			cfg.Name = "Our Ships";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colDesign.Copy());
-			cfg.Columns.Add(colRole.Copy());
-			cfg.Columns.Add(colHull.Copy());
-			cfg.Columns.Add(colSpeed.Copy());
-			cfg.Columns.Add(colHullHitpoints.Copy());
-			cfg.Columns.Add(colArmorHitpoints.Copy());
-			cfg.Columns.Add(colShieldHitpoints.Copy());
-			cfg.Columns.Add(colSupply.Copy());
-			cfg.Columns.Add(colCargo.Copy());
-			cfg.Columns.Add(colMineralsMaintenance.Copy());
-			cfg.Columns.Add(colOrganicsMaintenance.Copy());
-			cfg.Columns.Add(colRadioactivesMaintenance.Copy());
-			cfg.Columns.Add(colHasOrders.Copy());
-			cfg.Columns.Add(colIsOurs.Copy());
-			return cfg;
-		}
-
-		public static GridConfig CreateDefaultAlienShipListConfig()
-		{
-			var cfg = new GridConfig();
-			cfg.Name = "Alien Ships";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colOwner.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colDesign.Copy());
-			cfg.Columns.Add(colRole.Copy());
-			cfg.Columns.Add(colHull.Copy());
-			cfg.Columns.Add(colSpeed.Copy());
-			cfg.Columns.Add(colHullHitpoints.Copy());
-			cfg.Columns.Add(colArmorHitpoints.Copy());
-			cfg.Columns.Add(colShieldHitpoints.Copy());
-			cfg.Columns.Add(colSupply.Copy());
-			cfg.Columns.Add(colCargo.Copy());
-			cfg.Columns.Add(colIsAlien.Copy());
-			return cfg;
-		}
-
 		private static readonly GridColumnConfig colIcon = new GridColumnConfig("Icon", "Icon", typeof(DataGridViewImageColumn), Color.White);
 		private static readonly GridColumnConfig colName = new GridColumnConfig("Name", "Name", typeof(DataGridViewTextBoxColumn), Color.White, Format.Raw, Sort.Ascending);
 		private static readonly GridColumnConfig colStellarSize = new GridColumnConfig("StellarSize", "Size", typeof(DataGridViewTextBoxColumn), Color.White);
@@ -168,46 +115,18 @@ namespace FrEee.WinForms.Objects
 		private static readonly GridColumnConfig colOnHold = new GridColumnConfig("OnHold", "Hold", typeof(DataGridViewCheckBoxColumn), Color.White);
 		private static readonly GridColumnConfig colIsDomed = new GridColumnConfig("IsDomed", "Domed", typeof(DataGridViewCheckBoxColumn), Color.White);
 		private static readonly GridColumnConfig colHasOrders = new GridColumnConfig("HasOrders", "Orders", typeof(DataGridViewCheckBoxColumn), Color.White);
-		private static readonly GridColumnConfig colHull = new GridColumnConfig("Hull", "Hull", typeof(DataGridViewTextBoxColumn), Color.White);
-		private static readonly GridColumnConfig colDesign = new GridColumnConfig("Design", "Design", typeof(DataGridViewTextBoxColumn), Color.White);
-		private static readonly GridColumnConfig colSpeed = new GridColumnConfig("Speed", "Speed", typeof(DataGridViewTextBoxColumn), Color.White);
-		private static readonly GridColumnConfig colHullHitpoints = new GridColumnConfig("HullHitpointsFill", "Hull HP", typeof(DataGridViewProgressColumn), Color.White, Format.Units);
-		private static readonly GridColumnConfig colArmorHitpoints = new GridColumnConfig("ArmorHitpointsFill", "Armor HP", typeof(DataGridViewProgressColumn), Color.Yellow, Format.Units);
-		private static readonly GridColumnConfig colShieldHitpoints = new GridColumnConfig("ShieldHitpointsFill", "Shield HP", typeof(DataGridViewProgressColumn), Color.Cyan, Format.Units);
-		private static readonly GridColumnConfig colSupply = new GridColumnConfig("SupplyFill", "Supply", typeof(DataGridViewProgressColumn), Color.Blue, Format.Units);
-		private static readonly GridColumnConfig colMineralsMaintenance = new GridColumnConfig("MineralsMaintenance", "Min", typeof(DataGridViewTextBoxColumn), Resource.Minerals.Color, Format.Units);
-		private static readonly GridColumnConfig colOrganicsMaintenance = new GridColumnConfig("OrganicsMaintenance", "Org", typeof(DataGridViewTextBoxColumn), Resource.Organics.Color, Format.Units);
-		private static readonly GridColumnConfig colRadioactivesMaintenance = new GridColumnConfig("RadioactivesMaintenance", "Rad", typeof(DataGridViewTextBoxColumn), Resource.Radioactives.Color, Format.Units);
-		private static readonly GridColumnConfig colIsOurs = new GridColumnConfig("IsOurs", "Ours", typeof(DataGridViewCheckBoxColumn), Color.White, Format.Raw, Sort.None, 0, Filter.Exact, true);
-		private static readonly GridColumnConfig colIsAlien = new GridColumnConfig("IsOurs", "Ours", typeof(DataGridViewCheckBoxColumn), Color.White, Format.Raw, Sort.None, 0, Filter.Exact, false);
-
 
 		public static void Initialize()
 		{
 			// create instance
 			Instance = new ClientSettings();
 
-			InitializePlanetList();
-		}
-
-		private static void InitializePlanetList()
-		{
 			// create default planet list config
 			var cfg = CreateDefaultPlanetListConfig();
 			Instance.CurrentPlanetListConfig = cfg;
 			Instance.PlanetListConfigs = new List<GridConfig>();
 			Instance.PlanetListConfigs.Add(cfg);
 			Instance.PlanetListConfigs.Add(CreateDefaultColonyPlanetListConfig());
-		}
-
-		private static void InitializeShipList()
-		{
-			// create default ship list config
-			var cfg = CreateDefaultShipListConfig();
-			Instance.CurrentShipListConfig = cfg;
-			Instance.ShipListConfigs = new List<GridConfig>();
-			Instance.ShipListConfigs.Add(cfg);
-			Instance.ShipListConfigs.Add(CreateDefaultAlienShipListConfig());
 		}
 
 		public static void Load()
@@ -230,12 +149,6 @@ namespace FrEee.WinForms.Objects
 					if (fs != null)
 						fs.Close();
 				}
-
-				// initialize anything that wasn't there
-				if (Instance.PlanetListConfigs == null)
-					InitializePlanetList();
-				if (Instance.ShipListConfigs == null)
-					InitializeShipList();
 			}
 			else
 				Initialize();

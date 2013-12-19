@@ -23,7 +23,6 @@ using System.Threading;
 using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
 using System.Reflection;
-using FrEee.WinForms.Objects;
 
 namespace FrEee.WinForms.Forms
 {
@@ -89,17 +88,6 @@ namespace FrEee.WinForms.Forms
 			// so the search box can lose focus...
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
-
-			try
-			{
-				ClientSettings.Load();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show("Error loading client settings. Resetting to defaults.");
-				ClientSettings.Initialize();
-				ClientSettings.Save();
-			}
 		}
 
 		/// <summary>
@@ -873,7 +861,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.O)
 					; // TODO - empire status screen
 				else if (e.KeyCode == Keys.S)
-					this.ShowChildForm(new ShipListForm());
+					; // TODO - ships screen
 				else if (e.KeyCode == Keys.Q)
 					ShowConstructionQueueListForm();
 				else if (e.KeyCode == Keys.L)
@@ -921,7 +909,7 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F11)
 				MessageBox.Show("Sorry, the empire status screen is not yet implemented."); // TODO - empire status screen
 			else if (e.KeyCode == Keys.F6)
-				this.ShowChildForm(new ShipListForm());
+				MessageBox.Show("Sorry, the ship list screen is not yet implemented."); // TODO - ships screen
 			else if (e.KeyCode == Keys.F7)
 				ShowConstructionQueueListForm();
 			else if (e.KeyCode == Keys.F10)
@@ -1224,7 +1212,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnShips_Click(object sender, EventArgs e)
 		{
-			this.ShowChildForm(new ShipListForm());
+			// TODO - ships screen
+			MessageBox.Show("Sorry, the ships screen is not yet implemented.");
 		}
 
 		private void btnPrevIdle_Click(object sender, EventArgs e)
