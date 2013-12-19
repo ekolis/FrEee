@@ -59,6 +59,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -73,11 +74,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Game\Objects\Combat2\Battle_SpaceTests.cs" />
+    <Compile Include="Game\Objects\Combat2\MockCombatant.cs" />
+    <Compile Include="Game\Objects\Combat2\Point3dTests.cs" />
+    <Compile Include="Game\Objects\Combat2\UnitTest1.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
     <Compile Include="Modding\FormulaTest.cs" />
     <Compile Include="Modding\Loaders\LoaderTest.cs" />
     <Compile Include="Modding\ScriptEngineTest.cs" />
+    <Compile Include="Modding\StockMod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

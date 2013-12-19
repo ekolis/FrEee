@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
 			this.lstLog = new System.Windows.Forms.ListView();
-			this.colMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colMessage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.SuspendLayout();
 			// 
 			// lstLog
@@ -52,15 +52,15 @@
 			this.lstLog.View = System.Windows.Forms.View.Details;
 			this.lstLog.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstLog_MouseDoubleClick);
 			// 
-			// colMessage
-			// 
-			this.colMessage.Text = "Message";
-			this.colMessage.Width = 670;
-			// 
 			// colDate
 			// 
 			this.colDate.Text = "Date";
 			this.colDate.Width = 100;
+			// 
+			// colMessage
+			// 
+			this.colMessage.Text = "Message";
+			this.colMessage.Width = 670;
 			// 
 			// LogForm
 			// 

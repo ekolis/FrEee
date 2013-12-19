@@ -16,9 +16,9 @@ namespace FrEee.Game.Objects.Combat
 	/// <summary>
 	/// A seeking missile or torpedo.
 	/// </summary>
-	public class Seeker : ICombatObject
+	public class Seeker : ICombatant
 	{
-		public Seeker(Battle battle, Empire owner, Component launcher, ICombatObject target)
+		public Seeker(Battle battle, Empire owner, Component launcher, ICombatant target)
 		{
 			Battle = battle;
 			Owner = owner;
@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Combat
 		/// <summary>
 		/// The target of the seeker.
 		/// </summary>
-		public ICombatObject Target { get; private set; }
+		public ICombatant Target { get; private set; }
 
 		/// <summary>
 		/// The component which launched this seeker.
@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public int Hitpoints { get; set; }
 
-		public bool CanTarget(ICombatObject target)
+		public bool CanTarget(ICombatant target)
 		{
 			return target != null && Launcher.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
 		}

@@ -457,10 +457,13 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, int> src)
+		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.Next(total);
+            var num = RandomHelper.Next(total);
+            if (prng != null)
+                num = prng.Next(total);
+
 			int sofar = 0;
 			foreach (var kvp in src)
 			{
@@ -2284,6 +2287,13 @@ namespace FrEee.Utility.Extensions
 			return items.Where(item => item.GetType() == type && item.Name == name).ElementAtOrDefault(index);
 		}
 
+		/// <summary>
+		/// Returns the index of an item in a list after the list has been filtered to items with the same name.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="items"></param>
+		/// <param name="item"></param>
+		/// <returns></returns>
 		public static int GetIndex<T>(this IEnumerable<T> items, T item)
 			where T : INamed
 		{
