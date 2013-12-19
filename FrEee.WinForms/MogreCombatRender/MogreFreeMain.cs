@@ -465,6 +465,9 @@ namespace FrEee.WinForms.MogreCombatRender
 			objNode.Scale(scale, scale, scale);
 			objNode.Scale(10, 10, 10);
 			//do_graphics(obj); // set up initial position and orientation
+            //Entity objEn = mSceneMgr.CreateEntity(
+            //objNode.AttachObject()
+
 		}
 		#endregion
 
@@ -538,6 +541,11 @@ namespace FrEee.WinForms.MogreCombatRender
 							// TODO - if type projectile, create whatever sprite and render it flying towards target.
 							// or if type beam, draw a beam sprite
 							// seekers should really be their own event type, spawning new combat objects that track enemies
+                            CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;
+                            var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+                            //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
+                            //sprite.
+                            
 						}
 						else if (comEvent is CombatTakeFireEvent)
 						{

@@ -36,4 +36,36 @@ namespace FrEee.WinForms.MogreCombatRender
             return new Point3d(mVector3.x, mVector3.z, mVector3.y);
         }
     }
+
+    public static class ImageConv
+    {
+        //public static Mogre.Image ImagetoImage(System.Drawing.Image image)
+        //    {
+        //     System.IO.Stream oStream = new System.IO.MemoryStream();
+
+        //     image.Save(oStream, System.Drawing.Imaging.ImageFormat.Png); //why?
+        //     /* Back to the start of the stream */
+        //     oStream.Position = 0;
+
+        //     /* read all the stream in a buffer */
+        //     System.IO.BinaryReader oBinaryReader = new System.IO.BinaryReader(oStream);
+        //     byte[] pBuffer = oBinaryReader.ReadBytes((int)oBinaryReader.BaseStream.Length);
+        //     oStream.Close(); /*No more needed */
+
+        //     Mogre.Image oMogreImage = new Mogre.Image();
+
+        //     unsafe
+        //     {
+        //         System.Runtime.InteropServices.GCHandle handle = System.Runtime.InteropServices.GCHandle.Alloc(pBuffer, System.Runtime.InteropServices.GCHandleType.Pinned);
+        //         byte* pUnsafeByte = (byte*)handle.AddrOfPinnedObject();
+        //         void* pUnsafeBuffer = (void*)handle.AddrOfPinnedObject();
+
+        //         MemoryDataStream oMemoryStream = new MemoryDataStream(pUnsafeBuffer, (uint)pBuffer.Length);
+        //         DataStreamPtr oPtrDataStream = new DataStreamPtr(oMemoryStream);
+        //         oMogreImage = oMogreImage.Load(oPtrDataStream, "png");
+        //         handle.Free();
+        //     }
+        //     return oMogreImage;
+        //}
+    }
 }
