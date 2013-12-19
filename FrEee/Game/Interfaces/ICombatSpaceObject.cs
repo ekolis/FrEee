@@ -8,7 +8,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A space object that can participate in combat.
 	/// </summary>
-	public interface ICombatSpaceObject : ICombatObject, ISpaceObject
+	public interface ICombatSpaceObject : ICombatant, ISpaceObject
 	{
 	}
 }
