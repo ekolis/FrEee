@@ -117,6 +117,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
 		public ISet<CombatObject> CombatObjects { get; private set; }
+        public ISet<CombatNode> CombatNodes { get; private set; }
 
 		/// <summary>
 		/// the Fleets in this battle
@@ -620,42 +621,10 @@ namespace FrEee.Game.Objects.Combat2
 
             //reset the weapon nextReload.
             weapon.nextReload = tic + (int)(weapon.reloadRate * 10);
+            
 
-            if (weapon.weaponType == "Bolt")
-            {
-                double boltTTT = boltTimeToTarget(attacker, weapon, target);
-                double boltSpeed = boltClosingSpeed(attacker, weapon, target);
-                double rThis_distance = boltSpeed * boltTTT;
-
-                double rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
-                double rMin_distance = boltSpeed * weapon.minRange; //s * t = d
-                
-                double rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
-                double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
-
-                double scaler = rMax_distance_standstill / rMax_distance;
-                
-                rangeForDamageCalcs = rThis_distance * scaler * 0.001;
-
-                //set target tick for the future.
-                targettic += (int)boltTTT;
-
-                
-                if (IsReplay)
-                {
-                    //something like the below. 
-                    //var Logs = ReplayLog.EventsForObjectAtTick(target, targettic);
-                    //CombatLocationEvent log = (CombatLocationEvent)Logs[0];
-                    //Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, log.Location, rThis_distance);
-                    //CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector);
-                    //bulletslist.Add(bullet); //should we have a seperate list, or change the exsisting combatobjects list to combatnodes?
-                }
-            }
-            else
-                rangeForDamageCalcs = rangetotarget / 1000;
-
-            rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
-			ICombatant target_icomobj = target.icomobj;
+			
+            ICombatant target_icomobj = target.icomobj;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
 			if (!weapon.CanTarget(target_icomobj))
@@ -672,8 +641,45 @@ namespace FrEee.Game.Objects.Combat2
 			//bool hit = RandomHelper.Range(0, 99) < tohit;
 			PRNG dice = attacker.getDice();
 			bool hit = dice.Range(0, 99) < tohit;
-            
-			CombatTakeFireEvent target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+
+            CombatTakeFireEvent target_event = null;
+             //for bolt calc, need again for adding to list.
+            if (weapon.weaponType == "Bolt")
+            {
+                double boltTTT = boltTimeToTarget(attacker, weapon, target);
+                double boltSpeed = boltClosingSpeed(attacker, weapon, target);
+                double rThis_distance = boltSpeed * boltTTT;
+
+                double rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
+                double rMin_distance = boltSpeed * weapon.minRange; //s * t = d
+
+                double rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
+                double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
+
+                double scaler = rMax_distance_standstill / rMax_distance;
+
+                rangeForDamageCalcs = rThis_distance * scaler * 0.001;
+
+                //set target tick for the future.
+                targettic += (int)boltTTT;
+                if (IsReplay)
+                {
+                    //spawn a bullet object for the render to track 
+                    target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                    Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
+                    CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector);
+                    CombatNodes.Add(bullet);
+                }
+                else
+                    target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+            }
+            else
+            {
+                rangeForDamageCalcs = rangetotarget / 1000;
+                target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+            }
+
+            rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
 
             long ID = target_icomobj.ID;
             if (ID == -1)
@@ -693,7 +699,6 @@ namespace FrEee.Game.Objects.Combat2
 					target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
 				//if (defender.IsDestroyed)
 				//battle.LogTargetDeath(defender);
-
 			}
 			return target_event;
 		}
