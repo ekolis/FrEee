@@ -705,21 +705,6 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.Sum(v => v.MaintenanceCost); }
 		}
 
-		public int MineralsMaintenance
-		{
-			get { return MaintenanceCost[Resource.Minerals]; }
-		}
-
-		public int OrganicsMaintenance
-		{
-			get { return MaintenanceCost[Resource.Organics]; }
-		}
-
-		public int RadioactivesMaintenance
-		{
-			get { return MaintenanceCost[Resource.Radioactives]; }
-		}
-
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get
@@ -740,7 +725,5 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public bool IsDisposed { get; set; }
-
-		public bool IsOurs { get { return Owner == Empire.Current; } }
 	}
 }

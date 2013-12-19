@@ -290,7 +290,6 @@ namespace FrEee.WinForms.Forms
 			this.btnShips.TabStop = false;
 			this.toolTip.SetToolTip(this.btnShips, "(F6 / Shift-S) Ships");
 			this.btnShips.UseVisualStyleBackColor = false;
-			this.btnShips.Click += new System.EventHandler(this.btnShips_Click);
 			// 
 			// btnEmpires
 			// 
@@ -352,18 +351,18 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.progResearch.ForeColor = System.Drawing.Color.White;
-			this.progResearch.IncrementalProgress = ((long)(0));
+			this.progResearch.IncrementalProgress = 0;
 			this.progResearch.LeftText = "Ice Planet Colonization";
 			this.progResearch.Location = new System.Drawing.Point(3, -3);
 			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
-			this.progResearch.Maximum = ((long)(500000));
+			this.progResearch.Maximum = 500000;
 			this.progResearch.Name = "progResearch";
 			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
 			this.progResearch.RightText = "0.2 years";
 			this.progResearch.Size = new System.Drawing.Size(411, 38);
 			this.progResearch.TabIndex = 11;
 			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
-			this.progResearch.Value = ((long)(350000));
+			this.progResearch.Value = 350000;
 			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
 			// 
 			// btnNextIdle

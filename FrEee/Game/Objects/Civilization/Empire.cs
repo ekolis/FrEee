@@ -286,15 +286,8 @@ namespace FrEee.Game.Objects.Civilization
 			var totalRP = NetIncome[Resource.Research] + BonusResearch;
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
-			var firstQueueSpending = 0;
-			var cost = tech.GetLevelCost(level);
-			if (ResearchQueue.FirstOrDefault() == tech)
-				firstQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - AccumulatedResearch[tech]);
-			var laterQueueSpending = 0;
-			if (ResearchQueue.FirstOrDefault() != tech && ResearchQueue.Contains(tech))
-				laterQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - AccumulatedResearch[tech]);
-			return new Progress<Tech>(tech, AccumulatedResearch[tech], cost,
-					ResearchSpending[tech] * totalRP / 100 + firstQueueSpending, GetResearchQueueDelay(tech, level), laterQueueSpending);
+			return new Progress<Tech>(tech, AccumulatedResearch[tech], tech.GetLevelCost(level),
+					ResearchSpending[tech] * totalRP / 100, GetResearchQueueDelay(tech, level), queueSpending * totalRP / 100);
 		}
 
 		/// <summary>
@@ -571,11 +564,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (alliance >= AllianceLevel.NonAggression)
 				return false;
 			if (alliance >= AllianceLevel.NeutralZone)
-			{
-				if (sys == null)
-					return true; // assume hostility if unknown system
 				return sys.FindSpaceObjects<Planet>().Flatten().Any(p => p.Owner == this);
-			}
 			return true;
 		}
 
