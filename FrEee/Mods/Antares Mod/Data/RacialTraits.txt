@@ -106,7 +106,7 @@ Trait Type            := Tech Area
 Value                 := Cybernetic
 
 Name                  := Lithovore
-Description           := Race does not eat food, and can subsist on common minerals. Can build basic planetary facilities for one-tenth the normal organics cost.
+Description           := Race does not eat food, and can subsist on common minerals. Can build basic planetary facilities and colony modules for one-tenth the normal organics cost.
 Pic Num               := 0
 General Type          := Advantage
 Cost                  := 1000
