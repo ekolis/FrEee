@@ -2299,7 +2299,7 @@ Can Be Removed        := True
 
 Name                  := Inorganic Infrastructure
 Group                 := Civilian
-Description           := Unique to Lithovores, this technology allows construction of basic planetary facilities for one-tenth the normal organics cost.
+Description           := Unique to Lithovores, this technology allows construction of basic planetary facilities and colony modules for one-tenth the normal organics cost.
 Maximum Level         := 1
 Level Cost            := 1
 Start Level           := 1
