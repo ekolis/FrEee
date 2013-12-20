@@ -13,7 +13,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(Component weapon, ICombatObject target, int range)
+		public Shot(Component weapon, ICombatant target, int range)
 		{
 			Weapon = weapon;
 			Target = target;
@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Combat
 
 		public Component Weapon { get; set; }
 
-		public ICombatObject Target { get; set; }
+		public ICombatant Target { get; set; }
 
 		public int Range { get; set; }
 

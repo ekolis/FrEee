@@ -107,6 +107,12 @@
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="Mogre">
+      <HintPath>Game\Objects\Combat2\CombatMogre\Mogre.dll</HintPath>
+    </Reference>
+    <Reference Include="MOIS">
+      <HintPath>Game\Objects\Combat2\CombatMogre\MOIS.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -162,7 +168,7 @@
     <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
-    <Compile Include="Game\Interfaces\ICombatObject.cs" />
+    <Compile Include="Game\Interfaces\ICombatant.cs" />
     <Compile Include="Game\Interfaces\ICommonAbilityObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\IUnit.cs" />
@@ -197,7 +203,11 @@
     <Compile Include="Game\Objects\Civilization\Memory.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
+    <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
+    <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
+    <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
+    <Compile Include="Game\Objects\Combat2\Point3d.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
     <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />
@@ -362,6 +372,7 @@
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
+    <Compile Include="Utility\PRNG.cs" />
     <Compile Include="Utility\NamedDictionary.cs" />
     <Compile Include="Utility\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

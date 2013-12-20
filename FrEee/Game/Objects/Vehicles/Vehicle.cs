@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// A ship, base, or unit.
 	/// </summary>
 	[Serializable]
-	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatObject, IFoggable
+	public abstract class Vehicle : INamed, IConstructable, IVehicle, ICombatant, IFoggable
 	{
 		public Vehicle()
 		{
@@ -323,7 +323,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public abstract Visibility CheckVisibility(Empire emp);
 
-		public bool CanTarget(ICombatObject target)
+		public bool CanTarget(ICombatant target)
 		{
 			// TODO - alliances
 			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
