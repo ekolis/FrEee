@@ -50,7 +50,7 @@ namespace FrEee.Game.Objects.Combat2
 			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 			Combatants = new HashSet<ICombatant>(combatants);
-			CombatObjects = new HashSet<CombatObject>();
+			CombatNodes = new HashSet<CombatNode>();
 			Fleets = new List<Fleet> { };
 
 			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
@@ -116,8 +116,23 @@ namespace FrEee.Game.Objects.Combat2
 		/// The combatants in this battle.
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
-		public ISet<CombatObject> CombatObjects { get; private set; }
+
+		/// <summary>
+		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
+		/// </summary>
         public ISet<CombatNode> CombatNodes { get; private set; }
+
+		/// <summary>
+		/// Combat nodes that have an AI attached to them.
+		/// This includes ships, bases, units, and seekers.
+		/// </summary>
+		public IEnumerable<CombatObject> CombatObjects
+		{
+			get
+			{
+				return CombatNodes.OfType<CombatObject>();
+			}
+		}
 
 		/// <summary>
 		/// the Fleets in this battle
@@ -154,8 +169,12 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			foreach (var ship in Combatants)
 			{
-				CombatObject comObj = new CombatObject((SpaceVehicle)ship, battleseed);
-				CombatObjects.Add(comObj);
+				CombatObject comObj;
+				if (ship is SpaceVehicle)
+					comObj = new CombatObject((SpaceVehicle)ship, battleseed);
+				else
+					comObj = new CombatObject(ship, battleseed); // for unit tests
+				CombatNodes.Add(comObj);
 				Empires[ship.Owner].ownships.Add(comObj);
 			}
 		}
@@ -256,6 +275,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
+			// TODO - check for all hostiles eliminated
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
@@ -597,14 +617,14 @@ namespace FrEee.Game.Objects.Combat2
 			return inrange;
 		}
 
-        private double boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public static double boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
         {
             double shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
             double shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);          
             return shotspeed_actual * ticlen;
         }
 
-        private double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+        public static double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
         {
             double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
             double boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
@@ -665,15 +685,8 @@ namespace FrEee.Game.Objects.Combat2
                 targettic += (int)boltTTT;
                 if (IsReplay)
                 {
-                    //read teh event & spawn a bullet object for the render to track 
+                    //read the event
                     target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
-                                        
-                    //TODO: add some jitter if not a hit
-                    Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
-                    long id = CombatNodes.Count;
-                    CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector, id);
-                    CombatNodes.Add(bullet);
-                    target_event.BulletNode = bullet;
                 }
                 else
                 { 

@@ -222,7 +222,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public double maxfowardThrust { get; set; }
 		public double maxStrafeThrust { get; set; }
-		public double maxRotate { get; set; }
+		public double maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
 
 		public PRNG getDice()
 		{
