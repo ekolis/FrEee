@@ -541,7 +541,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				}
 
 
-				foreach (CombatObject comObj in battle.CombatObjects)
+				foreach (CombatObject comObj in battle.CombatObjects.ToArray())
 				{
                     comObj.debuginfo = "";
                     //heading and thrust
@@ -569,8 +569,19 @@ namespace FrEee.WinForms.MogreCombatRender
                             var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
                             //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
                             //sprite.
-                            if (fireEvent.Weapon.weaponType == "Bolt")
-                                CreateNewEntity(fireEvent.TakeFireEvent.BulletNode); //create an entity for the bullet node.
+							if (fireEvent.Weapon.weaponType == "Bolt")
+							{
+								//TODO: add some jitter if not a hit
+								//create an entity for the bullet node.
+								double boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+								double boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+								double rThis_distance = boltSpeed * boltTTT;
+								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
+								long id = -battle.CombatNodes.Count - 2; // negative numbers other than -1 aren't used by game objects
+								CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
+								battle.CombatNodes.Add(bullet);
+								CreateNewEntity(bullet);
+							}
                             
 						}
                         else if (comEvent is CombatTakeFireEvent)
