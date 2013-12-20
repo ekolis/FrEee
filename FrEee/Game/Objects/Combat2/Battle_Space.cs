@@ -497,7 +497,8 @@ namespace FrEee.Game.Objects.Combat2
 						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
                         //then create teh event for this ship firing on the target
                         CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-						
+                        targets_event.fireOnEvent = attack_event;
+
 						if (!IsReplay)
 						{
 							ReplayLog.Events.Add(targets_event);
@@ -535,7 +536,7 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc;
 		}
 
-		public Point3d InterpolatePosition(CombatObject comObj, double fractionalTick)
+		public Point3d InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
 			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
 		}
@@ -615,7 +616,7 @@ namespace FrEee.Game.Objects.Combat2
             
 
             var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-            double rangeForDamageCalcs;
+            double rangeForDamageCalcs = 0;
             double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
             int targettic = tic;
 
@@ -664,19 +665,33 @@ namespace FrEee.Game.Objects.Combat2
                 targettic += (int)boltTTT;
                 if (IsReplay)
                 {
-                    //spawn a bullet object for the render to track 
+                    //read teh event & spawn a bullet object for the render to track 
                     target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                                        
+                    //TODO: add some jitter if not a hit
                     Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
-                    CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector);
+                    long id = CombatNodes.Count;
+                    CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector, id);
                     CombatNodes.Add(bullet);
+                    target_event.BulletNode = bullet;
                 }
                 else
+                { 
+                    //*write* the event
                     target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+                }
+                    
             }
             else
             {
-                rangeForDamageCalcs = rangetotarget / 1000;
-                target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+                if (IsReplay)
+                { //read the replay... nothing to do if a beam. 
+                }
+                else
+                { //write the event.
+                    rangeForDamageCalcs = rangetotarget / 1000;
+                    target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+                }
             }
 
             rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
@@ -759,7 +774,6 @@ namespace FrEee.Game.Objects.Combat2
 
 			// update memory sight
 			targetV.UpdateEmpireMemories();
-
 		}
 
 		public System.Drawing.Image Icon

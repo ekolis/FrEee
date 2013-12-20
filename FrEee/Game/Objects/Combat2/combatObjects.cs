@@ -104,10 +104,12 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="position"> ship position this is fiired from </param>
         /// <param name="vector">direction this is going</param>
-        public CombatNode(Point3d position, Point3d vector)
+        public CombatNode(Point3d position, Point3d vector, long ID)
         {
             this.cmbt_loc = position;
             this.cmbt_vel = vector;
+            this.cmbt_head = new Compass(0);
+            this.ID = ID;
         }
         /// <summary>
         /// location within the sector
@@ -120,8 +122,12 @@ namespace FrEee.Game.Objects.Combat2
         public Point3d cmbt_vel { get; set; }
 
 
+        /// <summary>
+        /// ship heading 
+        /// </summary>
+        public Compass cmbt_head { get; set; }
 
-
+        public long ID { get; private set; }
     }
 
 	public class CombatObject : CombatNode
@@ -151,7 +157,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
 		public CombatObject(ICombatant c, int battleseed) 
-            : base(new Point3d(0,0,0), new Point3d(0,0,0))
+            : base(new Point3d(0,0,0), new Point3d(0,0,0), c.ID)
 		{
 			this.icomobj = c;
 
@@ -183,10 +189,7 @@ namespace FrEee.Game.Objects.Combat2
 		//public Point3d cmbt_face { get; set; }
 
 
-		/// <summary>
-		/// ship heading 
-		/// </summary>
-		public Compass cmbt_head { get; set; }
+
 
 		/// <summary>
 		/// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
