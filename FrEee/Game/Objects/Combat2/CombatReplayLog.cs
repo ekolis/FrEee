@@ -75,7 +75,7 @@ namespace FrEee.Game.Objects.Combat2
 	}
 	public class CombatTakeFireEvent : CombatLocationEvent
 	{
-		bool IsHit { get; set; }
+		public bool IsHit { get; private set; }
         public CombatNode BulletNode { get; set; }
         public CombatFireOnTargetEvent fireOnEvent { get; set; }
         /// <summary>
