@@ -571,12 +571,19 @@ namespace FrEee.WinForms.MogreCombatRender
                             //sprite.
 							if (fireEvent.Weapon.weaponType == "Bolt")
 							{
-								//TODO: add some jitter if not a hit
+								
 								//create an entity for the bullet node.
 								double boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
 								double boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
 								double rThis_distance = boltSpeed * boltTTT;
 								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
+                                if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
+                                {
+                                    //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
+                                    //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
+                                    //Point3d jitter = new Point3d(FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount)) //aaand the randomHelper takes an int not a double.
+                                    //bulletVector += jitter;
+                                }
 								long id = -battle.CombatNodes.Count - 2; // negative numbers other than -1 aren't used by game objects
 								CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
 								battle.CombatNodes.Add(bullet);
@@ -665,24 +672,24 @@ namespace FrEee.WinForms.MogreCombatRender
 
                 
 
-                mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
-                ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
-                mNode_lines.AttachObject(toWaypointLine);
-                toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
-                toWaypointLine.Position(node.Position);
-                //toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
-                toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
-                toWaypointLine.End();
+                //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+                //ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
+                //mNode_lines.AttachObject(toWaypointLine);
+                //toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+                //toWaypointLine.Position(node.Position);
+                ////toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
+                //toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
+                //toWaypointLine.End();
 
 
-                mSceneMgr.DestroyManualObject("forceLine" + IDName);
-                ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
-                //forceLine.
-                mNode_lines.AttachObject(forceLine);
-                forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
-                forceLine.Position(node.Position);
-                forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
-                forceLine.End();
+                //mSceneMgr.DestroyManualObject("forceLine" + IDName);
+                //ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
+                ////forceLine.
+                //mNode_lines.AttachObject(forceLine);
+                //forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
+                //forceLine.Position(node.Position);
+                //forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
+                //forceLine.End();
 
                 //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
                 //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
