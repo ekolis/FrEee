@@ -275,7 +275,8 @@ namespace FrEee.WinForms.MogreCombatRender
 			throw new ShutdownException();
 		}
 
-		protected bool OnKeyPressed(MOIS.KeyEvent evt)
+        #region input control
+        protected bool OnKeyPressed(MOIS.KeyEvent evt)
 		{
 			switch (evt.key)
 			{
@@ -449,10 +450,12 @@ namespace FrEee.WinForms.MogreCombatRender
 			return true;
 		}
 
-		private void CreateNewEntity(CombatObject obj)
+        #endregion
+
+        private void CreateNewEntity(CombatObject obj)
 		{
-			Entity objEnt = mSceneMgr.CreateEntity(obj.icomobj.ID.ToString(), "DeltaShip.mesh");
-			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.icomobj.ID.ToString());
+			Entity objEnt = mSceneMgr.CreateEntity(obj.ID.ToString(), "DeltaShip.mesh");
+			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.ID.ToString());
 			float sizex = objEnt.BoundingBox.Size.x;
 			float sizey = objEnt.BoundingBox.Size.y;
 			float sizez = objEnt.BoundingBox.Size.z;
@@ -469,6 +472,25 @@ namespace FrEee.WinForms.MogreCombatRender
             //objNode.AttachObject()
 
 		}
+
+
+        private void CreateNewEntity(CombatNode obj)
+        {
+            Entity objEnt = mSceneMgr.CreateEntity(obj.ID.ToString(), "DeltaShip.mesh");
+            SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.ID.ToString());
+            float sizex = objEnt.BoundingBox.Size.x;
+            float sizey = objEnt.BoundingBox.Size.y;
+            float sizez = objEnt.BoundingBox.Size.z;
+            var desiredSize = 0.5f;
+            float scalex = (desiredSize / sizex);
+            float scaley = (desiredSize / sizey);
+            float scalez = (desiredSize / sizez);
+            float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
+            objNode.AttachObject(objEnt);
+            objNode.Scale(scale, scale, scale);
+            objNode.Scale(10, 10, 10);
+        }
+
 		#endregion
 
         public CombatObject selectedObj()
@@ -511,6 +533,11 @@ namespace FrEee.WinForms.MogreCombatRender
 						Point3d renderloc = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
 						do_graphics(comObj, renderloc);
 					}
+                    foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
+                    {
+                        Point3d renderloc = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+                        do_graphics(comNode, renderloc);
+                    }
 				}
 
 
@@ -526,13 +553,10 @@ namespace FrEee.WinForms.MogreCombatRender
 
                     //physicsmove objects. 
                     Point3d renderloc = battle.SimNewtonianPhysics(comObj);
-
-
-
 					
 					do_graphics(comObj, renderloc);
 					
-                    
+                  
                     var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 					foreach (var comEvent in ourLogs)
 					{
@@ -545,18 +569,33 @@ namespace FrEee.WinForms.MogreCombatRender
                             var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
                             //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
                             //sprite.
+                            if (fireEvent.Weapon.weaponType == "Bolt")
+                                CreateNewEntity(fireEvent.TakeFireEvent.BulletNode); //create an entity for the bullet node.
                             
 						}
-						else if (comEvent is CombatTakeFireEvent)
-						{
-							// TODO - kersplosions
-						}
+                        else if (comEvent is CombatTakeFireEvent)
+                        {
+                            // TODO - kersplosions
+                            CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
+
+                            if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt")
+                            {//remove the node, stop rendering. TODO remove this at its TTL?
+                                //ie should go past the ship.
+                                battle.CombatNodes.Remove(takefireEvent.BulletNode);
+                            }
+                        }
                         else if (comEvent is CombatDestructionEvent)
                         {
                             // - kersplosions and removal of model. 
                         }
 					}
 				}
+                foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
+                {
+                    Point3d renderloc = battle.SimNewtonianPhysics(comNode);
+                    do_graphics(comNode, renderloc);
+                }
+
                 if (cmdfreq_countr >= Battle_Space.CommandFrequency)
                 {               
                     foreach (CombatObject comObj in battle.CombatObjects)
@@ -599,76 +638,59 @@ namespace FrEee.WinForms.MogreCombatRender
 
             form.updateText(txt);
         }
-		private void do_graphics(CombatObject comObj, Point3d renderloc)
-		{            
-            string IDName = comObj.icomobj.ID.ToString();
-			//foreach (CombatObj obj in renderObjects.Values)
-			//{
-
-			//Console.Out.WriteLine(obj.Loc.ToString());
-
-			//this stuff is for ground combat
-			/*
-			Ray heightRay = new Ray(new Vector3((float)obj.cmbt_loc.X, 5000.0f, (float)obj.cmbt_loc.Y), Vector3.NEGATIVE_UNIT_Y);
-			mRaySceneQuery.Ray = heightRay;
-
-			//// Execute query
-			RaySceneQueryResult result = mRaySceneQuery.Execute();
-			RaySceneQueryResult.Enumerator itr = (RaySceneQueryResult.Enumerator)(result.GetEnumerator());
-			if ((itr != null) && itr.MoveNext())
-			{
-				float terrainHeight = itr.Current.worldFragment.singleIntersection.y;
-				//Console.Out.WriteLine("T_height" + terrainHeight);
-				obj.cmbt_loc.Z = terrainHeight;
-			}
-			*/
-
-            //so.Nodes[1].AttachObject(forceline);
+        private void do_graphics(CombatNode comNode, Point3d renderloc)
+		{
+            string IDName = comNode.ID.ToString();
 
             SceneNode node = mSceneMgr.GetSceneNode(IDName);
             
 			node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
-			Quaternion quat = new Quaternion((float)comObj.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
+            Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
             node.Orientation = quat;
 
+            if (comNode is CombatObject)
+            {
+                CombatObject comObj = (CombatObject)comNode;
 
-            mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
-            ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
-            mNode_lines.AttachObject(toWaypointLine);
-            toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
-            toWaypointLine.Position(node.Position);
-            //toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
-            toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
-            toWaypointLine.End();
+                
+
+                mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+                ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
+                mNode_lines.AttachObject(toWaypointLine);
+                toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+                toWaypointLine.Position(node.Position);
+                //toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
+                toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
+                toWaypointLine.End();
 
 
-            mSceneMgr.DestroyManualObject("forceLine" + IDName);
-            ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
-            //forceLine.
-            mNode_lines.AttachObject(forceLine);
-            forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
-            forceLine.Position(node.Position);
-            forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
-            forceLine.End();
+                mSceneMgr.DestroyManualObject("forceLine" + IDName);
+                ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
+                //forceLine.
+                mNode_lines.AttachObject(forceLine);
+                forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
+                forceLine.Position(node.Position);
+                forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
+                forceLine.End();
 
-            //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
-            //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
-            //node.AttachObject(toTargetLine);
-            //toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toTargetLine.Position(new Vector3(0, 0, 0));
-            //toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
-            //toTargetLine.End();
-           
+                //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
+                //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
+                //node.AttachObject(toTargetLine);
+                //toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
+                //toTargetLine.Position(new Vector3(0, 0, 0));
+                //toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
+                //toTargetLine.End();
 
-            //mSceneMgr.DestroyManualObject("forceLine2" + IDName);
-            //ManualObject forceLine2 = mSceneMgr.CreateManualObject("forceLine2" + IDName);
-            //node.AttachObject(forceLine2);
-            //forceLine2.Begin("line_red", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //forceLine2.Position(new Vector3(0, 0, 0));
-            //forceLine2.Position(forceVec2);
-            //forceLine2.End();
-            //Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
 
+                //mSceneMgr.DestroyManualObject("forceLine2" + IDName);
+                //ManualObject forceLine2 = mSceneMgr.CreateManualObject("forceLine2" + IDName);
+                //node.AttachObject(forceLine2);
+                //forceLine2.Begin("line_red", RenderOperation.OperationTypes.OT_LINE_LIST);
+                //forceLine2.Position(new Vector3(0, 0, 0));
+                //forceLine2.Position(forceVec2);
+                //forceLine2.End();
+                //Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
+            }
 		}
 	}
 }
