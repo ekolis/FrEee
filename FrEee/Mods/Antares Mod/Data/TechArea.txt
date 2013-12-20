@@ -2287,6 +2287,76 @@ Raise Level           := 0
 Unique Area           := Black Hole Generator
 Can Be Removed        := True
 
+Name                  := Cybernetic Repair Interface
+Group                 := Support
+Description           := Unique to Cybernetic races, this technology allows ships to repair themselves in combat, even without an Automated Repair Unit.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Cybernetic
+Can Be Removed        := True
+
+Name                  := Inorganic Infrastructure
+Group                 := Civilian
+Description           := Unique to Lithovores, this technology allows construction of basic planetary facilities for one-tenth the normal organics cost.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Lithovore
+Can Be Removed        := True
+
+Name                  := Advanced Banking
+Group                 := Civilian
+Description           := Unique to Fantastic Traders, this technology allows construction of banks for one-quarter the normal cost.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Fantastic Traders
+Can Be Removed        := True
+
+Name                  := Mental Subversion
+Group                 := Weapons
+Description           := Unique to Telepathic races, this technology allows ship crews to seize control of enemy ships remotely by mind-controlling their crew.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Telepathic
+Can Be Removed        := True
+
+Name                  := Clairvoyance
+Group                 := Support
+Description           := Unique to Omniscient races, this technology allows detection of all cloaked ships in a system, regardless of how strongly they are cloaked.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Omniscient
+Can Be Removed        := True
+
+Name                  := Advanced Stealth
+Group                 := Defenses
+Description           := Unique to races with Stealthy Ships, this technology allows ships to completely evade detection, except by Omniscient races.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Stealthy Ships
+Can Be Removed        := True
+
+Name                  := Elite Military Training
+Group                 := Support
+Description           := Unique to Warlords, this technology allows for superior ship and fleet training, both in terms of speed and quality.
+Maximum Level         := 1
+Level Cost            := 1
+Start Level           := 1
+Raise Level           := 0
+Racial Area           := Warlords
+Can Be Removed        := True
+
 =======================================================================================
 *END*
 =======================================================================================
