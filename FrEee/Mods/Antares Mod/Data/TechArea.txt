@@ -2279,7 +2279,7 @@ Can Be Removed        := True
 
 Name                  := Black Hole Generator
 Group                 := Weapons
-Description           := Ancient subspace distortion weapon. Similar to the Pulsar, it fires rapidly and can target ships, fighters, and missiles, but is more powerful and skips shields.
+Description           := Ancient weapon which creates a miniature black hole inside an enemy ship, eating it from the inside out.
 Maximum Level         := 1
 Level Cost            := 6000
 Start Level           := 0
