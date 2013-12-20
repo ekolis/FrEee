@@ -56,6 +56,7 @@ namespace FrEee.Game.Objects.Combat2
 	{
 		public CombatTakeFireEvent TakeFireEvent { get; private set; }
 		public CombatWeapon Weapon { get; private set; }
+        
 
         /// <summary>
         /// this event is for the object that is firing apon something else
@@ -75,7 +76,8 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatTakeFireEvent : CombatLocationEvent
 	{
 		bool IsHit { get; set; }
-        
+        public CombatNode BulletNode { get; set; }
+        public CombatFireOnTargetEvent fireOnEvent { get; set; }
         /// <summary>
         /// This event is for the object under fire.
         /// </summary>
