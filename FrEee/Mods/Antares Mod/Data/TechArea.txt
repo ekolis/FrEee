@@ -2207,6 +2207,86 @@ Tech Area Req         := Force Fields
 Tech Level Req        := 10
 Can Be Removed        := True
 
+Name                  := Death Ray
+Group                 := Weapons
+Description           := Ancient beam weapon which fires a concentrated burst of gamma rays.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Death Ray
+Can Be Removed        := True
+
+Name                  := Reflection Field
+Group                 := Defenses
+Description           := Ancient device which surrounds a ship in a temporal sheath, greatly increasing its evasion.
+Maximum Level         := 1
+Level Cost            := 2000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Reflection Field
+Can Be Removed        := True
+
+Name                  := Damper Field
+Group                 := Defenses
+Description           := Ancient device which negates enemy weapons fire, up to a certain limit.
+Maximum Level         := 1
+Level Cost            := 4500
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Damper Field
+Can Be Removed        := True
+
+Name                  := Quantum Detonator
+Group                 := Defenses
+Description           := Ancient device which allows a ship to self-destruct, and will activate automatically if the ship is captured.
+Maximum Level         := 1
+Level Cost            := 900
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Quantum Detonator
+Can Be Removed        := True
+
+Name                  := Particle Beam
+Group                 := Weapons
+Description           := Ancient beam weapon which fires a stream of shield-piercing polaron particles.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Particle Beam
+Can Be Removed        := True
+
+Name                  := Spatial Compressor
+Group                 := Weapons
+Description           := Ancient subspace distortion weapon. Similar to the Pulsar, it fires rapidly and can target ships, fighters, and missiles, but is more powerful and skips shields.
+Maximum Level         := 1
+Level Cost            := 2750
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Spatial Compressor
+Can Be Removed        := True
+
+Name                  := Xentronium Armor
+Group                 := Defenses
+Description           := Ancient exotic-matter armor placed on the exterior of a ship to prevent damage.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Xentronium Armor
+Can Be Removed        := True
+
+Name                  := Black Hole Generator
+Group                 := Weapons
+Description           := Ancient subspace distortion weapon. Similar to the Pulsar, it fires rapidly and can target ships, fighters, and missiles, but is more powerful and skips shields.
+Maximum Level         := 1
+Level Cost            := 6000
+Start Level           := 0
+Raise Level           := 0
+Unique Area           := Black Hole Generator
+Can Be Removed        := True
+
 =======================================================================================
 *END*
 =======================================================================================
