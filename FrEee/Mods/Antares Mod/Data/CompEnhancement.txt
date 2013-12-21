@@ -84,8 +84,9 @@ Tech Level Req X:   (Optional)
 *BEGIN*
 =======================================================================================
 
+
 Long Name                      := Scale Mount 25
-Short Name                     := Scale 25
+Short Name                     := Scaled
 Description                    := Scale mount designed for Frigate hulls.
 Code                           := Sc
 Cost Percent                   := 1
@@ -94,11 +95,11 @@ Tonnage Structure Percent      := 10
 Supply Percent                 := 1
 Vehicle Size Minimum           := 25
 Vehicle Size Maximum           := 25
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
-Vehicle Type                   := Ship, Base
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Vehicle Type                   := Ship
 
 Long Name                      := Scale Mount 60
-Short Name                     := Scale 60
+Short Name                     := Scaled
 Description                    := Scale mount designed for Destroyer hulls.
 Code                           := Sc
 Cost Percent                   := 2
@@ -107,11 +108,11 @@ Tonnage Structure Percent      := 20
 Supply Percent                 := 2
 Vehicle Size Minimum           := 60
 Vehicle Size Maximum           := 60
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
-Vehicle Type                   := Ship, Base
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Vehicle Type                   := Ship
 
 Long Name                      := Scale Mount 120
-Short Name                     := Scale 120
+Short Name                     := Scaled
 Description                    := Scale mount designed for Cruiser hulls.
 Code                           := Sc
 Cost Percent                   := 4
@@ -120,11 +121,11 @@ Tonnage Structure Percent      := 40
 Supply Percent                 := 4
 Vehicle Size Minimum           := 120
 Vehicle Size Maximum           := 120
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
-Vehicle Type                   := Ship, Base
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Vehicle Type                   := Ship
 
 Long Name                      := Scale Mount 250
-Short Name                     := Scale 250
+Short Name                     := Scaled
 Description                    := Scale mount designed for Battleship hulls. Can also be used on Colony Ships and Star Bases.
 Code                           := Sc
 Cost Percent                   := 8
@@ -133,11 +134,11 @@ Tonnage Structure Percent      := 80
 Supply Percent                 := 8
 Vehicle Size Minimum           := 200
 Vehicle Size Maximum           := 300
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
 Vehicle Type                   := Ship, Base
 
 Long Name                      := Scale Mount 500
-Short Name                     := Scale 500
+Short Name                     := Scaled
 Description                    := Scale mount designed for Titan hulls. Can also be used on Battlestations.
 Code                           := Sc
 Cost Percent                   := 16
@@ -146,11 +147,11 @@ Tonnage Structure Percent      := 160
 Supply Percent                 := 16
 Vehicle Size Minimum           := 500
 Vehicle Size Maximum           := 600
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
 Vehicle Type                   := Ship, Base
 
 Long Name                      := Scale Mount 1200
-Short Name                     := Scale 1200
+Short Name                     := Scaled
 Description                    := Scale mount designed for Doom Star hulls. Can also be used on Star Fortresses.
 Code                           := Sc
 Cost Percent                   := 32
@@ -159,8 +160,26 @@ Tonnage Structure Percent      := 320
 Supply Percent                 := 32
 Vehicle Size Minimum           := 1200
 Vehicle Size Maximum           := 1200
-Comp Family Requirement        := Reinforced Hull, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
+Comp Family Requirement        := Reinforced Hull, Augmented Engines, Time Warp Facilitator, ECM Jammer, Inertial Stabilizer, Stealth Field, Displacement Device, Subspace Teleporter, Reflection Field
 Vehicle Type                   := Ship, Base
+
+Long Name                      := Fighter Mount
+Short Name                     := Fighter
+Description                    := Miniaturized weapons, engines, and armor designed for use on fighter craft.
+Code                           := Ftr
+Cost Percent                   := 75
+Tonnage Percent                := 20
+Tonnage Structure Percent      := 20
+Damage Percent                 := 50
+Supply Percent                 := 50
+Ability Percent Type           := Standard Ship Movement
+Ability Percent                := 15
+Ability Percent Type           := Supply Storage
+Ability Percent                := 20
+Ability Percent Type           := Combat Movement
+Ability Percent                := 300
+Comp Family Requirement        := Star Drive, Bomb, Standard Beam Weapon, Standard Projectile Weapon, Armor
+Vehicle Type                   := Fighter
 
 // TODO
 

@@ -567,7 +567,301 @@ Weapon Modifier       := 0
 Weapon Sound          := mine.wav
 Weapon Family         := 24
 
-// TODO - techs starting with Power
+Name                  := Nuclear Drive
+Description           := Drive powered by nuclear fission.
+Pic Num               := 8
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 10
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Nuclear Drive
+Tech Level Req 1      := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 100
+Ability Type          := Combat Movement
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Nuclear Bomb +' + level.ToString()
+Description           := Nuclear fission explosive dropped on planets.
+Pic Num               := 90
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(10, level)
+Vehicle Type          := Ship
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := 1
+Custom Group          := 0
+Tech Area Req         := Nuclear Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =1 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets
+Weapon Damage At Rng  := 12 6 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Tactical Nuclear Bomb +' + level.ToString()
+Description           := Nuclear fission explosive dropped on planets or ships by fighters.
+Pic Num               := 90
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(10, level)
+Vehicle Type          := Fighter
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := 1
+Custom Group          := 0
+Tech Area Req         := Nuclear Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =1 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets, Ships, Bases
+Weapon Damage At Rng  := 12 6 3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Name                  := Fusion Drive
+Description           := Drive powered by nuclear fusion.
+Pic Num               := 131
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 15
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 2
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Fusion Drive
+Tech Level Req 1      := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 150
+Ability Type          := Combat Movement
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Fusion Bomb +' + level.ToString()
+Description           := Nuclear fusion explosive dropped on planets.
+Pic Num               := 92
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(15, level)
+Vehicle Type          := Ship
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := 1
+Custom Group          := 0
+Tech Area Req         := Fusion Bomb
+Tech Level Req        := 1
+Tech Area Req         := Nuclear Bomb
+Tech Level Req        := =2 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets
+Weapon Damage At Rng  := 24 10 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Tactical Fusion Bomb +' + level.ToString()
+Description           := Nuclear fusion explosive dropped on planets or ships by fighters.
+Pic Num               := 92
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(15, level)
+Vehicle Type          := Fighter
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := 1
+Custom Group          := 0
+Tech Area Req         := Fusion Bomb
+Tech Level Req        := 1
+Tech Area Req         := Nuclear Bomb
+Tech Level Req        := =2 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets, Ships, Bases
+Weapon Damage At Rng  := 24 10 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Augmented Engines +' + level.ToString()
+Description           := Afterburners used to increase the speed of a ship in combat. Uses a scale mount.
+Pic Num               := 188
+Tonnage Space Taken   := =miniaturize(500, level)
+Tonnage Structure     := 100
+Cost Minerals         := =miniaturize(500, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(500, level)
+Vehicle Type          := Ship
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Engines
+Family                := Augmented Engines
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Augmented Engines
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =2 + level
+Ability Type          := Combat Movement
+Ability Val           := 5
+Weapon Type           := None
+
+Name                  := Ion Drive
+Description           := Drive powered by ionized plasma.
+Pic Num               := 9
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 20
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 2
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req         := Ion Drive
+Tech Level Req        := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 200
+Ability Type          := Combat Movement
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Ion Pulse Cannon +' + level.ToString()
+Description           := Weapon which fires an ion discharge, disabling the internal systems of unshielded targets.
+Pic Num               := 264
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =miniaturize(50, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 5
+Restrictions          := None
+General Group         := Weapons
+Family                := Ion Pulse Cannon
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Ion Pulse Cannon
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =3 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Ship, Base
+Weapon Damage At Rng  := 10 8 6 4 3 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Skips Armor
+Weapon Reload Rate    := 1
+Weapon Display Type   := Torp
+Weapon Display        := 22
+Weapon Modifier       := 0
+Weapon Sound          := shardc.wav
+Weapon Family         := Ion Pulse Cannon
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Shield Capacitor +' + level.ToString()
+Description           := Reserve battery which allows shields to regenerate faster.
+Pic Num               := 34
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Tonnage Space Taken   := =miniaturize(10, level)
+Cost Organics         := 0
+Tonnage Space Taken   := =discount(50, level)
+Vehicle Type          := Ship, Base
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Shields
+Family                := Shield Capacitor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Shield Capacitor
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =3 + level
+Ability Type          := Shield Regeneration
+Ability Val           := 10
+Weapon Type           := None
+
+// TODO - antimatter drive, etc.
 
 Name                  := Space Yard I
 Description           := Ship construction component which can work on one ship at a time.
