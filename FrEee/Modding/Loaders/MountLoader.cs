@@ -103,7 +103,7 @@ namespace FrEee.Modding.Loaders
 						}
 					}
 				}
-				m.AbilityPercentages = AbilityLoader.LoadPercentagesOrModifiers(rec, "Percentage", m);
+				m.AbilityPercentages = AbilityLoader.LoadPercentagesOrModifiers(rec, "Percent", m);
 				m.AbilityModifiers = AbilityLoader.LoadPercentagesOrModifiers(rec, "Modifier", m);
 				m.UnlockRequirements = RequirementLoader.LoadEmpireRequirements(rec, m, RequirementType.Unlock).ToList();
 				// TODO - build and use requirements
