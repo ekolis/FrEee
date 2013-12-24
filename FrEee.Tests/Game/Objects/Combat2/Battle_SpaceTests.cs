@@ -27,7 +27,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			testComObj.maxStrafeThrust = 0;
 			var combatants = new ICombatant[] { combatant };
 			var battle = new Battle_Space(combatants);
-			battle.Combatants.Add(combatant);
+			battle.WorkingCombatants.Add(combatant);
 			battle.CombatNodes.Add(testComObj);
 
 			battle.Start();

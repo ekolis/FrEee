@@ -52,7 +52,7 @@ namespace FrEee.Game.Objects.Combat2
             Empires = new Dictionary<Empire, CombatEmpire> { };
 
             StartCombatants = new HashSet<ICombatant>();
-            Combatants = new HashSet<ICombatant>();
+            WorkingCombatants = new HashSet<ICombatant>();
             ActualCombatants = new HashSet<ICombatant>(combatants);
             foreach (ICombatant obj in combatants)
             {
@@ -133,7 +133,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The working list of combatants in this battle.
 		/// </summary>
-		public ISet<ICombatant> Combatants { get; private set; }
+		public ISet<ICombatant> WorkingCombatants { get; private set; }
 
         /// <summary>
         /// The REAL combatants objects.
@@ -191,11 +191,35 @@ namespace FrEee.Game.Objects.Combat2
 				Empires.Add(empire, new CombatEmpire());
 			}
             
-			foreach (var shipObj in StartCombatants)
+			foreach (var shipObj in ActualCombatants)
 			{
-                var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
-                Combatants.Add(ship);
+
+                WorkingCombatants.Add(shipObj);
 				CombatObject comObj;
+                if (shipObj is SpaceVehicle)
+                {
+                    comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
+                }
+                else
+                    comObj = new CombatObject(shipObj, battleseed); // for unit tests
+				CombatNodes.Add(comObj);
+                Empires[shipObj.Owner].ownships.Add(comObj);
+                
+			}
+		}
+        private void ReplaySetup()
+        {
+
+            //this time WorkingCombatants is filled with a copy of the shipObj instead of the actual one. 
+            //this is one place where the sim could go slightly different from the actual. the lists *should* be in the same order however
+            //and the prng should have the same seed and be the same. 
+            WorkingCombatants = new HashSet<ICombatant>();
+            CombatNodes = new HashSet<CombatNode>();
+            foreach (var shipObj in StartCombatants)
+            {
+                var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
+                WorkingCombatants.Add(ship);
+                CombatObject comObj;
                 if (ship is SpaceVehicle)
                 {
                     SpaceVehicle sobj = (SpaceVehicle)ship;
@@ -204,11 +228,11 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 else
                     comObj = new CombatObject(ship, battleseed); // for unit tests
-				CombatNodes.Add(comObj);
+                CombatNodes.Add(comObj);
                 Empires[ship.Owner].ownships.Add(comObj);
-                
-			}
-		}
+
+            }
+        }
 
 		public void SetUpPieces()
 		{
@@ -224,8 +248,10 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 
-			if (!IsReplay)
-				FirstSetup();
+            if (!IsReplay)
+                FirstSetup();
+            else
+                ReplaySetup();
 			//setup the game peices
 			foreach (CombatObject comObj in CombatObjects)
 			{
@@ -797,6 +823,10 @@ namespace FrEee.Game.Objects.Combat2
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
 				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
+
+                //comp.
+                //SpaceVehicle actualShip =
+
 				damage = comp.TakeDamage(damageType, damage, null);// battle);
 			}
 
@@ -822,12 +852,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public System.Drawing.Image Icon
 		{
-			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
+			get { return WorkingCombatants.OfType<ISpaceObject>().Largest().Icon; }
 		}
 
 		public System.Drawing.Image Portrait
 		{
-			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
+			get { return WorkingCombatants.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 	}
 }
