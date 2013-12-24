@@ -332,10 +332,12 @@ namespace FrEee.Game.Objects.Combat2
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-			// TODO - check for all hostiles eliminated
+			bool hostiles = CombatObjects.Any(o => !o.icomobj.IsDestroyed && CombatObjects.Any(o2 => !o2.icomobj.IsDestroyed && o.icomobj.IsHostileTo(o2.icomobj.Owner)));
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
+				cont = false;
+			else if (!hostiles)
 				cont = false;
 			else if (tick > 10000)
 				cont = false;
