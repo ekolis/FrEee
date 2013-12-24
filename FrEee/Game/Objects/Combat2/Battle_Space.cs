@@ -53,9 +53,13 @@ namespace FrEee.Game.Objects.Combat2
 
             StartCombatants = new HashSet<ICombatant>();
             Combatants = new HashSet<ICombatant>();
+            ActualCombatants = new HashSet<ICombatant>(combatants);
             foreach (ICombatant obj in combatants)
             {
-                StartCombatants.Add(FrEee.Utility.Extensions.CommonExtensions.Copy(obj));
+                ICombatant copy = FrEee.Utility.Extensions.CommonExtensions.Copy(obj);
+                SpaceVehicle scopy = (SpaceVehicle)copy;
+                scopy.Owner = obj.Owner;
+                StartCombatants.Add(scopy);
             }
 
 
@@ -131,6 +135,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
 
+        /// <summary>
+        /// The REAL combatants objects.
+        /// </summary>
+        public ISet<ICombatant> ActualCombatants { get; private set; }
+
 		/// <summary>
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
 		/// </summary>
@@ -187,10 +196,14 @@ namespace FrEee.Game.Objects.Combat2
                 var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
                 Combatants.Add(ship);
 				CombatObject comObj;
-				if (ship is SpaceVehicle)
-					comObj = new CombatObject((SpaceVehicle)ship, battleseed);
-				else
-					comObj = new CombatObject(ship, battleseed); // for unit tests
+                if (ship is SpaceVehicle)
+                {
+                    SpaceVehicle sobj = (SpaceVehicle)ship;
+                    sobj.Owner = shipObj.Owner;
+                    comObj = new CombatObject(sobj, battleseed);
+                }
+                else
+                    comObj = new CombatObject(ship, battleseed); // for unit tests
 				CombatNodes.Add(comObj);
                 Empires[ship.Owner].ownships.Add(comObj);
                 
