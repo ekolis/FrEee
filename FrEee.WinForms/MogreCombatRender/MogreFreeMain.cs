@@ -518,12 +518,12 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		private void Go()
 		{
-			bool running = true;
-			
             int battletic = 0;			
 			double cmdfreq_countr = 0;
 
-			while (running && mRoot != null && mRoot.RenderOneFrame())
+			bool cont = true; // is combat continuing?
+
+			while (cont && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
@@ -623,10 +623,23 @@ namespace FrEee.WinForms.MogreCombatRender
                     cmdfreq_countr = 0;
                 }
 
+				bool ships_persuing = true; // TODO - check if ships are actually pursuing
+				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
+				bool hostiles = battle.CombatObjects.Any(o => !o.icomobj.IsDestroyed && battle.CombatObjects.Any(o2 => !o2.icomobj.IsDestroyed && o.icomobj.IsHostileTo(o2.icomobj.Owner)));
+
+				if (!ships_persuing && !ships_inrange)
+					cont = false;
+				else if (!hostiles)
+					cont = false;
+				else if (battletic > 10000) // TODO - put max battle tick in Settings.txt or something
+					cont = false;
+				else
+					cont = true;
+
                 do_txt();
                 cmdfreq_countr++;
                 battletic++;
-                
+
 				Application.DoEvents();
 			}
 		}

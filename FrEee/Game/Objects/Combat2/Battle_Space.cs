@@ -339,7 +339,7 @@ namespace FrEee.Game.Objects.Combat2
 				cont = false;
 			else if (!hostiles)
 				cont = false;
-			else if (tick > 10000)
+			else if (tick > 10000) // TODO - put max battle tick in Settings.txt or something
 				cont = false;
 			else
 				cont = true;
