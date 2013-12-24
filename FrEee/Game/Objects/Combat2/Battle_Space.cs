@@ -48,21 +48,21 @@ namespace FrEee.Game.Objects.Combat2
 				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
 
 
-            EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
-            Empires = new Dictionary<Empire, CombatEmpire> { };
+			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Empires = new Dictionary<Empire, CombatEmpire> { };
 
-            StartCombatants = new HashSet<ICombatant>();
-            WorkingCombatants = new HashSet<ICombatant>();
-            ActualCombatants = new HashSet<ICombatant>(combatants);
-            foreach (ICombatant obj in combatants)
-            {
-                ICombatant copy = FrEee.Utility.Extensions.CommonExtensions.Copy(obj);
-                SpaceVehicle scopy = (SpaceVehicle)copy;
-                scopy.Owner = obj.Owner;
-                StartCombatants.Add(scopy);
-            }
-
-
+			StartCombatants = new HashSet<ICombatant>();
+			foreach (ICombatant obj in combatants)
+			{
+				ICombatant copy = FrEee.Utility.Extensions.CommonExtensions.Copy(obj);
+				SpaceVehicle scopy = (SpaceVehicle)copy;
+				if (scopy.Owner != obj.Owner)
+					scopy.Owner.Dispose(); // don't need extra empires!
+				scopy.Owner = obj.Owner;
+				StartCombatants.Add(scopy);
+			}
+			WorkingCombatants = new HashSet<ICombatant>();
+			ActualCombatants = new HashSet<ICombatant>(combatants);
 
 			CombatNodes = new HashSet<CombatNode>();
 			Fleets = new List<Fleet> { };
@@ -71,8 +71,7 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Fleets.Add(fleet);
 			}
-			this.IsReplay = false;
-            ReplayLog = new CombatReplayLog();
+			ReplayLog = new CombatReplayLog();
 
 
 			double stardate = Galaxy.Current.Timestamp;
@@ -125,25 +124,25 @@ namespace FrEee.Game.Objects.Combat2
 		public IEnumerable<Empire> EmpiresArray { get; private set; }
 		public Dictionary<Empire, CombatEmpire> Empires { get; private set; }
 
-        /// <summary>
-        /// The combatants at the start of this battle.
-        /// </summary>
-        public ISet<ICombatant> StartCombatants { get; private set; }
+		/// <summary>
+		/// The combatants at the start of this battle.
+		/// </summary>
+		public ISet<ICombatant> StartCombatants { get; private set; }
 
 		/// <summary>
 		/// The working list of combatants in this battle.
 		/// </summary>
 		public ISet<ICombatant> WorkingCombatants { get; private set; }
 
-        /// <summary>
-        /// The REAL combatants objects.
-        /// </summary>
-        public ISet<ICombatant> ActualCombatants { get; private set; }
+		/// <summary>
+		/// The REAL combatants objects.
+		/// </summary>
+		public ISet<ICombatant> ActualCombatants { get; private set; }
 
 		/// <summary>
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
 		/// </summary>
-        public ISet<CombatNode> CombatNodes { get; private set; }
+		public ISet<CombatNode> CombatNodes { get; private set; }
 
 		/// <summary>
 		/// Combat nodes that have an AI attached to them.
@@ -190,49 +189,51 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
-            
+
 			foreach (var shipObj in ActualCombatants)
 			{
 
-                WorkingCombatants.Add(shipObj);
+				WorkingCombatants.Add(shipObj);
 				CombatObject comObj;
-                if (shipObj is SpaceVehicle)
-                {
-                    comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
-                }
-                else
-                    comObj = new CombatObject(shipObj, battleseed); // for unit tests
+				if (shipObj is SpaceVehicle)
+				{
+					comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
+				}
+				else
+					comObj = new CombatObject(shipObj, battleseed); // for unit tests
 				CombatNodes.Add(comObj);
-                Empires[shipObj.Owner].ownships.Add(comObj);
-                
+				Empires[shipObj.Owner].ownships.Add(comObj);
+
 			}
 		}
-        private void ReplaySetup()
-        {
+		private void ReplaySetup()
+		{
 
-            //this time WorkingCombatants is filled with a copy of the shipObj instead of the actual one. 
-            //this is one place where the sim could go slightly different from the actual. the lists *should* be in the same order however
-            //and the prng should have the same seed and be the same. 
-            WorkingCombatants = new HashSet<ICombatant>();
-            CombatNodes = new HashSet<CombatNode>();
-            foreach (var shipObj in StartCombatants)
-            {
-                var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
-                WorkingCombatants.Add(ship);
-                CombatObject comObj;
-                if (ship is SpaceVehicle)
-                {
-                    SpaceVehicle sobj = (SpaceVehicle)ship;
-                    sobj.Owner = shipObj.Owner;
-                    comObj = new CombatObject(sobj, battleseed);
-                }
-                else
-                    comObj = new CombatObject(ship, battleseed); // for unit tests
-                CombatNodes.Add(comObj);
-                Empires[ship.Owner].ownships.Add(comObj);
+			//this time WorkingCombatants is filled with a copy of the shipObj instead of the actual one. 
+			//this is one place where the sim could go slightly different from the actual. the lists *should* be in the same order however
+			//and the prng should have the same seed and be the same. 
+			WorkingCombatants = new HashSet<ICombatant>();
+			CombatNodes = new HashSet<CombatNode>();
+			foreach (var shipObj in StartCombatants)
+			{
+				var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
+				if (ship.Owner != shipObj.Owner)
+					ship.Owner.Dispose(); // don't need extra empires!
+				WorkingCombatants.Add(ship);
+				CombatObject comObj;
+				if (ship is SpaceVehicle)
+				{
+					SpaceVehicle sobj = (SpaceVehicle)ship;
+					sobj.Owner = shipObj.Owner;
+					comObj = new CombatObject(sobj, battleseed);
+				}
+				else
+					comObj = new CombatObject(ship, battleseed); // for unit tests
+				CombatNodes.Add(comObj);
+				Empires[ship.Owner].ownships.Add(comObj);
 
-            }
-        }
+			}
+		}
 
 		public void SetUpPieces()
 		{
@@ -248,10 +249,10 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 
-            if (!IsReplay)
-                FirstSetup();
-            else
-                ReplaySetup();
+			if (!IsReplay)
+				FirstSetup();
+			else
+				ReplaySetup();
 			//setup the game peices
 			foreach (CombatObject comObj in CombatObjects)
 			{
@@ -308,7 +309,7 @@ namespace FrEee.Game.Objects.Combat2
 			//unleash the dogs of war!
 			foreach (CombatObject comObj in CombatObjects)
 			{
-                comObj.debuginfo = ""; //cleardebuginfo txt.
+				comObj.debuginfo = ""; //cleardebuginfo txt.
 
 				//heading and thrust
 				helm(comObj);
@@ -363,14 +364,14 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-        /// <summary>
-        /// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
-        /// the strategic AI should be responsible for setting where the waypoint is and where thet waypoint is going. 
-        /// </summary>
-        /// <param name="comObj"></param>
+		/// <summary>
+		/// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
+		/// the strategic AI should be responsible for setting where the waypoint is and where thet waypoint is going. 
+		/// </summary>
+		/// <param name="comObj"></param>
 		public void helm(CombatObject comObj)
 		{
-            comObj.debuginfo += "HelmInfo:" + "\r\n";
+			comObj.debuginfo += "HelmInfo:" + "\r\n";
 			var ship = comObj.icomobj;
 			string name = ship.Name;
 			//rotate ship
@@ -384,73 +385,73 @@ namespace FrEee.Game.Objects.Combat2
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
 			timetoturn = angletoturn.Radians / comObj.maxRotate;
-            double oneEightytime = 3.14159265 / comObj.maxRotate;
+			double oneEightytime = 3.14159265 / comObj.maxRotate;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            //Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
-            //Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-            double closingSpeed = GravMath.closingrate(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
+			double closingSpeed = GravMath.closingrate(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
 
-            double myspeed = Trig.hypotinuse(comObj.cmbt_vel);
+			double myspeed = Trig.hypotinuse(comObj.cmbt_vel);
 
 			double timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
-            double strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
-            double timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
-            
+			double strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
+			double timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
+
 
 			double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
-            
+
 
 			double nominaldistance = comObj.maxStrafeThrust;
 			double timetowpt = distance / closingSpeed;
 
 			bool? thrustToWaypoint = true;
-            string helmdo = "";
+			string helmdo = "";
 
-            if (closingSpeed > 0) //getting closer
-            {
-                if (distance <= nominaldistance)  //close to the waypoint.
-                {
-                    thrustToWaypoint = null;//should attempt to match speed
-                }
-                if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
-                {
-                    if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
-                    {
-                        
-                        thrustToWaypoint = false;
-                    }
-                    else
-                    { //use strafe thrust to get close to the waypoint. 
-                         
-                        helmdo = "null" + "\r\n";
-                        thrustToWaypoint = null; //else match speed and use thrusters to get closer
-                    }
-                }
-            }
-            else 
-            { 
-            }
+			if (closingSpeed > 0) //getting closer
+			{
+				if (distance <= nominaldistance)  //close to the waypoint.
+				{
+					thrustToWaypoint = null;//should attempt to match speed
+				}
+				if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
+				{
+					if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
+					{
 
-            if (thrustToWaypoint == false)
-            {
-                helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
-                angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
-                angletoturn.normalize();
-            }
-            else if (thrustToWaypoint == null)
-            {
-                angletoturn.Radians = Trig.angleA(comObj.waypointTarget.cmbt_vel);
-            }
+						thrustToWaypoint = false;
+					}
+					else
+					{ //use strafe thrust to get close to the waypoint. 
 
-            comObj.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
-            comObj.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
-            comObj.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
-            comObj.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
-            comObj.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
-            comObj.debuginfo +=  helmdo + "\r\n";
+						helmdo = "null" + "\r\n";
+						thrustToWaypoint = null; //else match speed and use thrusters to get closer
+					}
+				}
+			}
+			else
+			{
+			}
 
-            
+			if (thrustToWaypoint == false)
+			{
+				helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
+				angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+				angletoturn.normalize();
+			}
+			else if (thrustToWaypoint == null)
+			{
+				angletoturn.Radians = Trig.angleA(comObj.waypointTarget.cmbt_vel);
+			}
+
+			comObj.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
+			comObj.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
+			comObj.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
+			comObj.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
+			comObj.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
+			comObj.debuginfo += helmdo + "\r\n";
+
+
 
 			turnship(comObj, angletoturn, angletoWaypoint);
 
@@ -467,17 +468,17 @@ namespace FrEee.Game.Objects.Combat2
 				if (angletoturn.Radians > comObj.maxRotate)
 				{
 					//comObj.cmbt_face += comObj.Rotate;
-                    comObj.cmbt_head.Radians += comObj.maxRotate;
+					comObj.cmbt_head.Radians += comObj.maxRotate;
 				}
 				else
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    comObj.cmbt_head.Degrees += angletoturn.Degrees;
+					comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 			else //turn counterclockwise
 			{
-                if ((360 - angletoturn.Radians) > comObj.maxRotate)
+				if ((360 - angletoturn.Radians) > comObj.maxRotate)
 				{
 					//comObj.cmbt_face -= comObj.maxRotate;
 					comObj.cmbt_head.Radians -= comObj.maxRotate;
@@ -486,7 +487,7 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
 					// subtract 360 minus the angle
-                    comObj.cmbt_head.Degrees += angletoturn.Degrees;
+					comObj.cmbt_head.Degrees += angletoturn.Degrees;
 				}
 			}
 		}
@@ -498,14 +499,14 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
 			}
-            else if (thrustToWaypoint == false)
-            {
-                comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
-            }
-            else //if null
-            {
-                //comObj.cmbt_thrust = Trig.
-            }
+			else if (thrustToWaypoint == false)
+			{
+				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
+			}
+			else //if null
+			{
+				//comObj.cmbt_thrust = Trig.
+			}
 		}
 
 		private void thrustship(CombatObject comObj, Compass angletoturn, bool? thrustToWaypoint)
@@ -513,36 +514,36 @@ namespace FrEee.Game.Objects.Combat2
 			comObj.cmbt_thrust.ZEROIZE();
 			strafeship(comObj, thrustToWaypoint);
 			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
-            double thrustby = 0;
-            if (thrustToWaypoint != null)
-            {
-                if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
-                {
+			double thrustby = 0;
+			if (thrustToWaypoint != null)
+			{
+				if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
+				{
 
-                    thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
-                }
-                else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
-                {
-                    Compass angle = new Compass(360 - angletoturn.Degrees);
-                    angle.normalize();
-                    thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
-                }
+					thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
+				}
+				else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
+				{
+					Compass angle = new Compass(360 - angletoturn.Degrees);
+					angle.normalize();
+					thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
+				}
 
-                //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
-                Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
-                comObj.cmbt_thrust += fowardthrust;
-            }
-            else
-            {
-                //match velocity with waypoint
-                Point3d wayptvel = comObj.waypointTarget.cmbt_vel;
-                Point3d ourvel = comObj.cmbt_vel;
-              
-                thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
-                 
-                Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
+				//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+				Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
+				comObj.cmbt_thrust += fowardthrust;
+			}
+			else
+			{
+				//match velocity with waypoint
+				Point3d wayptvel = comObj.waypointTarget.cmbt_vel;
+				Point3d ourvel = comObj.cmbt_vel;
 
-            }
+				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
+
+				Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
+
+			}
 
 		}
 
@@ -552,63 +553,63 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Vehicle ship = (Vehicle)comObj.icomobj;
 				//ship.Weapons
-                CombatWeapon wpn = (CombatWeapon)weapon;
+				CombatWeapon wpn = (CombatWeapon)weapon;
 
-                
 
-				if (comObj.weaponTarget.Count() > 0 && 
-                    wpn.CanTarget(comObj.weaponTarget[0].icomobj) &&
-                    tic_countr >= wpn.nextReload )
+
+				if (comObj.weaponTarget.Count() > 0 &&
+					wpn.CanTarget(comObj.weaponTarget[0].icomobj) &&
+					tic_countr >= wpn.nextReload)
 				{
 					//wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
 					//combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
 					//replaylog.addEvent(tic_countr, evnt);
-                    //MountedComponentTemplate tmplt = wpn.Template;
-                    //int maxRange = tmplt.WeaponMaxRange * 100;
-                    //int minRange = tmplt.WeaponMinRange * 100;
-                    //int accuracy = tmplt.WeaponAccuracy;
-                    //int damage = tmplt.WeaponDamage;
+					//MountedComponentTemplate tmplt = wpn.Template;
+					//int maxRange = tmplt.WeaponMaxRange * 100;
+					//int minRange = tmplt.WeaponMinRange * 100;
+					//int accuracy = tmplt.WeaponAccuracy;
+					//int damage = tmplt.WeaponDamage;
 					if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
 					{
 						//this function figures out if there's a hit, deals the damage, and creates an event.
-                        
-                        //first create the event for the target ship
+
+						//first create the event for the target ship
 						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-                        //then create teh event for this ship firing on the target
-                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-                        targets_event.fireOnEvent = attack_event;
+						//then create teh event for this ship firing on the target
+						CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+						targets_event.fireOnEvent = attack_event;
 
 						if (!IsReplay)
 						{
 							ReplayLog.Events.Add(targets_event);
-							ReplayLog.Events.Add(attack_event);                            
+							ReplayLog.Events.Add(attack_event);
 						}
 
 					}
 				}
 			}
-            //update any events where this ship has taken fire, and set the location. 
-            if (!IsReplay)
-            {
-                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
-                {
-                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
-                    {
-                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
-                        takefire.setLocation(comObj.cmbt_loc);
-                    }
-                }
-            }
+			//update any events where this ship has taken fire, and set the location. 
+			if (!IsReplay)
+			{
+				foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+				{
+					if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+					{
+						CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+						takefire.setLocation(comObj.cmbt_loc);
+					}
+				}
+			}
 		}
 
 		public Point3d SimNewtonianPhysics(CombatNode comObj)
 		{
-            if (comObj is CombatObject)
-            {
-                CombatObject comObjo = (CombatObject)comObj;
-                comObjo.cmbt_accel = (GravMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
-                comObj.cmbt_vel += comObjo.cmbt_accel;
-            }		
+			if (comObj is CombatObject)
+			{
+				CombatObject comObjo = (CombatObject)comObj;
+				comObjo.cmbt_accel = (GravMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
+				comObj.cmbt_vel += comObjo.cmbt_accel;
+			}
 
 			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
 
@@ -643,68 +644,68 @@ namespace FrEee.Game.Objects.Combat2
 			bool inrange = false;
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            int weaponMaxRange = weapon.maxRange;
-            int weaponMinRange = weapon.minRange;
-            string weaponRangeinfo = "RangeInfo:\r\n ";
+			int weaponMaxRange = weapon.maxRange;
+			int weaponMinRange = weapon.minRange;
+			string weaponRangeinfo = "RangeInfo:\r\n ";
 
-		
-				if (weapon.weaponType == "Beam")          //beam
+
+			if (weapon.weaponType == "Beam")          //beam
+			{
+				if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
 				{
-                    if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
-                    {
-                        inrange = true;
-                        weaponRangeinfo += "Range for Beam is good \r\n";
-                    }
+					inrange = true;
+					weaponRangeinfo += "Range for Beam is good \r\n";
 				}
-				else if (weapon.weaponType == "Bolt") //projectile
-				{                    
-                    double boltTTT = boltTimeToTarget(attacker, weapon, target);
-                    //remember, maxRange is bolt lifetime. 
-                    if (boltTTT <= weaponMaxRange && boltTTT >= weaponMinRange)
-                    {
-                        inrange = true;
-                        weaponRangeinfo += "Range for Projectile is good \r\n";
-                    }
-				}
-				else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))       //seeker
+			}
+			else if (weapon.weaponType == "Bolt") //projectile
+			{
+				double boltTTT = boltTimeToTarget(attacker, weapon, target);
+				//remember, maxRange is bolt lifetime. 
+				if (boltTTT <= weaponMaxRange && boltTTT >= weaponMinRange)
 				{
-                    if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
-						inrange = true;
+					inrange = true;
+					weaponRangeinfo += "Range for Projectile is good \r\n";
 				}
-			
-            attacker.debuginfo += weaponRangeinfo;
+			}
+			else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))       //seeker
+			{
+				if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
+					inrange = true;
+			}
+
+			attacker.debuginfo += weaponRangeinfo;
 			return inrange;
 		}
 
 		public static double boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
-        {
-            double shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
-            double shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);          
-            return shotspeed_actual * ticlen;
-        }
+		{
+			double shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
+			double shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+			return shotspeed_actual * ticlen;
+		}
 
-        public static double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
-        {
-            double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            double boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
-            return boltTimetoTarget;
-        }
+		public static double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		{
+			double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+			double boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
+			return boltTimetoTarget;
+		}
 
 		private CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-            
 
-            var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-            double rangeForDamageCalcs = 0;
-            double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            int targettic = tic;
 
-            //reset the weapon nextReload.
-            weapon.nextReload = tic + (int)(weapon.reloadRate * 10);
-            
+			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+			double rangeForDamageCalcs = 0;
+			double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+			int targettic = tic;
 
-			
-            ICombatant target_icomobj = target.icomobj;
+			//reset the weapon nextReload.
+			weapon.nextReload = tic + (int)(weapon.reloadRate * 10);
+
+
+
+			ICombatant target_icomobj = target.icomobj;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
 			if (!weapon.CanTarget(target_icomobj))
@@ -722,61 +723,61 @@ namespace FrEee.Game.Objects.Combat2
 			PRNG dice = attacker.getDice();
 			bool hit = dice.Range(0, 99) < tohit;
 
-            CombatTakeFireEvent target_event = null;
-             //for bolt calc, need again for adding to list.
-            if (weapon.weaponType == "Bolt")
-            {
-                double boltTTT = boltTimeToTarget(attacker, weapon, target);
-                double boltSpeed = boltClosingSpeed(attacker, weapon, target);
-                double rThis_distance = boltSpeed * boltTTT;
+			CombatTakeFireEvent target_event = null;
+			//for bolt calc, need again for adding to list.
+			if (weapon.weaponType == "Bolt")
+			{
+				double boltTTT = boltTimeToTarget(attacker, weapon, target);
+				double boltSpeed = boltClosingSpeed(attacker, weapon, target);
+				double rThis_distance = boltSpeed * boltTTT;
 
-                double rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
-                double rMin_distance = boltSpeed * weapon.minRange; //s * t = d
+				double rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
+				double rMin_distance = boltSpeed * weapon.minRange; //s * t = d
 
-                double rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
-                double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
+				double rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
+				double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
 
-                double scaler = rMax_distance_standstill / rMax_distance;
+				double scaler = rMax_distance_standstill / rMax_distance;
 
-                rangeForDamageCalcs = rThis_distance * scaler * 0.001;
+				rangeForDamageCalcs = rThis_distance * scaler * 0.001;
 
-                //set target tick for the future.
-                targettic += (int)boltTTT;
-                if (IsReplay)
-                {
-                    //read the event
-                    target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
-                }
-                else
-                { 
-                    //*write* the event
-                    target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
-                }
-                    
-            }
-            else
-            {
-                if (IsReplay)
-                { //read the replay... nothing to do if a beam. 
-                }
-                else
-                { //write the event.
-                    rangeForDamageCalcs = rangetotarget / 1000;
-                    target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
-                }
-            }
+				//set target tick for the future.
+				targettic += (int)boltTTT;
+				if (IsReplay)
+				{
+					//read the event
+					target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+				}
+				else
+				{
+					//*write* the event
+					target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+				}
 
-            rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
+			}
+			else
+			{
+				if (IsReplay)
+				{ //read the replay... nothing to do if a beam. 
+				}
+				else
+				{ //write the event.
+					rangeForDamageCalcs = rangetotarget / 1000;
+					target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+				}
+			}
 
-            long ID = target_icomobj.ID;
-            if (ID == -1)
-            { 
+			rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
 
-            }
+			long ID = target_icomobj.ID;
+			if (ID == -1)
+			{
+
+			}
 
 			if (hit && !target_icomobj.IsDestroyed)
 			{
-                var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
+				var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
 				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				int damage = shot.Damage;
 				combatDamage(target, weapon, damage, attacker.getDice());
@@ -814,10 +815,10 @@ namespace FrEee.Game.Objects.Combat2
 				damage -= dmg;
 				shieldDmg += dmg;
 			}
-            if (shieldDmg > 0)// && battle != null)
-            {
-                //battle.LogShieldDamage(this, shieldDmg);
-            }
+			if (shieldDmg > 0)// && battle != null)
+			{
+				//battle.LogShieldDamage(this, shieldDmg);
+			}
 			while (damage > 0 && !targetV.IsDestroyed)
 			{
 				var comps = targetV.Components.Where(c => c.Hitpoints > 0);
@@ -826,8 +827,8 @@ namespace FrEee.Game.Objects.Combat2
 				var canBeHit = armor.Any() ? armor : internals;
 				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
 
-                //comp.
-                //SpaceVehicle actualShip =
+				//comp.
+				//SpaceVehicle actualShip =
 
 				damage = comp.TakeDamage(damageType, damage, null);// battle);
 			}
@@ -836,16 +837,16 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				//battle.LogTargetDeath(this);
 				targetV.Dispose();
-                foreach (KeyValuePair<Empire, CombatEmpire>  empireKVP in Empires)
-                {
-                    CombatEmpire empire = empireKVP.Value;
-                    if (empire.ownships.Contains(target))
-                        empire.ownships.Remove(target);
-                    else if (empire.hostile.Contains(target))
-                        empire.hostile.Remove(target);                    
-                    else if (empire.friendly.Contains(target))
-                        empire.friendly.Remove(target);
-                }
+				foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
+				{
+					CombatEmpire empire = empireKVP.Value;
+					if (empire.ownships.Contains(target))
+						empire.ownships.Remove(target);
+					else if (empire.hostile.Contains(target))
+						empire.hostile.Remove(target);
+					else if (empire.friendly.Contains(target))
+						empire.friendly.Remove(target);
+				}
 			}
 
 			// update memory sight
@@ -860,6 +861,21 @@ namespace FrEee.Game.Objects.Combat2
 		public System.Drawing.Image Portrait
 		{
 			get { return WorkingCombatants.OfType<ISpaceObject>().Largest().Portrait; }
+		}
+
+		public ICombatant FindStartCombatant(ICombatant c)
+		{
+			return StartCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+		}
+
+		public ICombatant FindWorkingCombatant(ICombatant c)
+		{
+			return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+		}
+
+		public ICombatant FindActualCombatant(ICombatant c)
+		{
+			return ActualCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
 		}
 	}
 }
