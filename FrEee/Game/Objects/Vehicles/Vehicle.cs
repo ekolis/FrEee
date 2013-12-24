@@ -42,8 +42,10 @@ namespace FrEee.Game.Objects.Vehicles
 
 		/// <summary>
 		/// The components on this vehicle.
+		/// Needs to be protected, not private, so reflection can find it from a derived class.
+		/// Can change CommonExtensions.CopyEnumerableProperties to scan base classes, though...
 		/// </summary>
-		public IList<Component> Components { get; private set; }
+		public IList<Component> Components { get; protected set; }
 
 		public bool RequiresColonyQueue
 		{

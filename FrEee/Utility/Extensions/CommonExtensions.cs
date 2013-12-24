@@ -111,7 +111,9 @@ namespace FrEee.Utility.Extensions
 			var type = typeof(T);
 			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
 				&& x.DestinationType.Equals(type));
-			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).GetSetMethod() == null))
+			// TODO - search properties from their declaring type so we can catch private setters on abstract classes' properties
+			// then we won't need CopyEnumerableProperties maybe?
+			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).GetSetMethod(true) == null))
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
 		}
@@ -130,6 +132,7 @@ namespace FrEee.Utility.Extensions
 		private static void CopyEnumerableProperties(object s, object d)
 		{
 			// map enumerable properties, automapper seems to miss them
+			// or maybe it's just that they don't have a public/protected setter all the time so they get caught by IgnoreReadOnlyProperties?
 			foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
 				prop.SetValue(d, prop.GetValue(s, null), null);
 		}
