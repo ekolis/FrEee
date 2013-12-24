@@ -23,11 +23,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="location"></param>
 		/// <param name="isreplay"></param>
-		public Battle_Space(Sector location, bool isreplay = false)
+		public Battle_Space(Sector location)
 		{
 			if (location == null)
 				throw new ArgumentNullException("location", "Battles require a sector location.");
-			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)), isreplay);
+			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
 		}
 
 		/// <summary>
@@ -35,21 +35,31 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="combatants"></param>
 		/// <param name="isreplay"></param>
-		public Battle_Space(IEnumerable<ICombatant> combatants, bool isreplay = false)
+		public Battle_Space(IEnumerable<ICombatant> combatants)
 		{
-			Initialize(null, combatants, isreplay);
+			Initialize(null, combatants);
 		}
 
-		private void Initialize(Sector sector, IEnumerable<ICombatant> combatants, bool isreplay)
+		private void Initialize(Sector sector, IEnumerable<ICombatant> combatants)
 		{
 			if (sector != null)
 				Sector = sector;
 			else
 				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
 
-			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
-			Empires = new Dictionary<Empire, CombatEmpire> { };
-			Combatants = new HashSet<ICombatant>(combatants);
+
+            EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
+            Empires = new Dictionary<Empire, CombatEmpire> { };
+
+            StartCombatants = new HashSet<ICombatant>();
+            Combatants = new HashSet<ICombatant>();
+            foreach (ICombatant obj in combatants)
+            {
+                StartCombatants.Add(FrEee.Utility.Extensions.CommonExtensions.Copy(obj));
+            }
+
+
+
 			CombatNodes = new HashSet<CombatNode>();
 			Fleets = new List<Fleet> { };
 
@@ -57,9 +67,8 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Fleets.Add(fleet);
 			}
-			this.IsReplay = isreplay;
-			if (!isreplay)
-				ReplayLog = new CombatReplayLog();
+			this.IsReplay = false;
+            ReplayLog = new CombatReplayLog();
 
 
 			double stardate = Galaxy.Current.Timestamp;
@@ -112,8 +121,13 @@ namespace FrEee.Game.Objects.Combat2
 		public IEnumerable<Empire> EmpiresArray { get; private set; }
 		public Dictionary<Empire, CombatEmpire> Empires { get; private set; }
 
+        /// <summary>
+        /// The combatants at the start of this battle.
+        /// </summary>
+        public ISet<ICombatant> StartCombatants { get; private set; }
+
 		/// <summary>
-		/// The combatants in this battle.
+		/// The working list of combatants in this battle.
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
 
@@ -167,15 +181,19 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
-			foreach (var ship in Combatants)
+            
+			foreach (var shipObj in StartCombatants)
 			{
+                var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
+                Combatants.Add(ship);
 				CombatObject comObj;
 				if (ship is SpaceVehicle)
 					comObj = new CombatObject((SpaceVehicle)ship, battleseed);
 				else
 					comObj = new CombatObject(ship, battleseed); // for unit tests
 				CombatNodes.Add(comObj);
-				Empires[ship.Owner].ownships.Add(comObj);
+                Empires[ship.Owner].ownships.Add(comObj);
+                
 			}
 		}
 

@@ -159,7 +159,9 @@ namespace FrEee.Game.Objects.Combat2
 		public CombatObject(ICombatant c, int battleseed) 
             : base(new Point3d(0,0,0), new Point3d(0,0,0), c.ID)
 		{
-			this.icomobj = c;
+            this.icomobj = c;
+            
+            
 
 			this.waypointTarget = new combatWaypoint();
 			this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
