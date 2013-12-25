@@ -31,22 +31,19 @@ namespace FrEee.Utility.Extensions
 	public static class CommonExtensions
 	{
 		/// <summary>
-		/// Shallow copies an object.
+		/// Deep copies an object.
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
 		/// <returns>The copy.</returns>
 		public static T Copy<T>(this T obj)
 		{
-			if (obj == null)
-				return default(T);
-			var dest = obj.GetType().Instantiate();
-			obj.CopyTo(dest);
-			return (T)dest;
+			var s = Serializer.SerializeToString(obj);
+			return Serializer.DeserializeFromString<T>(s);
 		}
 
 		/// <summary>
-		/// Shallow copies an object and assigns the copy a new ID.
+		/// Deep copies an object and assigns the copy a new ID.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
@@ -54,13 +51,10 @@ namespace FrEee.Utility.Extensions
 		public static T CopyAndAssignNewID<T>(this T obj)
 			where T : IReferrable
 		{
-			if (obj == null)
-				return default(T);
-			var dest = (T)obj.GetType().Instantiate();
-			obj.CopyToExceptID(dest);
-			dest.ID = 0;
-			Galaxy.Current.AssignID(dest);
-			return (T)dest;
+			var copy = obj.Copy();
+			copy.ID = 0;
+			Galaxy.Current.AssignID(copy);
+			return copy;
 		}
 
 		/// <summary>
