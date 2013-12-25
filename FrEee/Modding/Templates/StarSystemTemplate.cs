@@ -112,7 +112,7 @@ namespace FrEee.Modding.Templates
 					planets.Add(loc, (Planet)sobj);
 
 				// set flags for naming
-				sobj.Index = sys.FindSpaceObjects<StellarObject>(s => s.GetType() == sobj.GetType()).Count + 1;
+				sobj.Index = sys.FindSpaceObjects<StellarObject>(s => s.GetType() == sobj.GetType()).Count() + 1;
 				sobj.IsUnique = StellarObjectLocations.Where(l => typeof(ITemplate<>).MakeGenericType(sobj.GetType()).IsAssignableFrom(l.StellarObjectTemplate.GetType())).Count() == 1;
 				if (sobj is Planet && loc is SameAsStellarObjectLocation)
 				{

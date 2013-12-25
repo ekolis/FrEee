@@ -28,7 +28,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 
 		public override Sector GetWarpPointSector(ObjectLocation<StarSystem> here, ObjectLocation<StarSystem> there)
 		{
-			var stars = here.Item.FindSpaceObjects<Star>().Flatten();
+			var stars = here.Item.FindSpaceObjects<Star>();
 			if (stars.Any())
 			{
 				var star = stars.PickRandom();

@@ -62,7 +62,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public ICargoContainer Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo.Units.Contains(this)); }
+			get { return Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo.Units.Contains(this)); }
 		}
 
 		public override void Redact(Empire emp)

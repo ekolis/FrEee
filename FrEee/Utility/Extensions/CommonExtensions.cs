@@ -685,18 +685,6 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Flattens lookups into a single sequence.
-		/// </summary>
-		/// <typeparam name="TKey"></typeparam>
-		/// <typeparam name="TValue"></typeparam>
-		/// <param name="lookups"></param>
-		/// <returns></returns>
-		public static IEnumerable<TValue> Flatten<TKey, TValue>(this IEnumerable<ILookup<TKey, TValue>> lookups)
-		{
-			return lookups.SelectMany(g => g).Flatten();
-		}
-
-		/// <summary>
 		/// "Squashes" a nested lookup into a collection of tuples.
 		/// </summary>
 		/// <typeparam name="TKey1"></typeparam>
@@ -1173,10 +1161,10 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static Sector FindSector(this ISpaceObject sobj)
 		{
-			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
-			if (!results.Any())
+			var sys = sobj.FindStarSystem();
+			if (sys == null)
 				return null;
-			return results.First().Item1.Item.GetSector(results.First().Item2);
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
 		}
 
 		/// <summary>
@@ -1186,10 +1174,10 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
-			var results = Galaxy.Current.FindSpaceObjects<ISpaceObject>(s => s == sobj).Squash();
-			if (!results.Any())
+			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			if (loc == null)
 				return null;
-			return results.First().Item1.Item;
+			return loc.Item;
 		}
 
 		/// <summary>
@@ -1812,7 +1800,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Flatten().Flatten().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (container != null)
 				return container;
 			if (unit is IMobileSpaceObject)

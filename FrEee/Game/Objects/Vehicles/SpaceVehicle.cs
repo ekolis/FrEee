@@ -202,7 +202,7 @@ namespace FrEee.Game.Objects.Vehicles
 				return Visibility.Scanned;
 
 			// TODO - cloaking
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any())
 			{
 				var known = emp.Memory[ID];
@@ -319,7 +319,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).Flatten().Flatten().SingleOrDefault(); }
+			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
 		}
 
 		/// <summary>

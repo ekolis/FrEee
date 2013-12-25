@@ -111,18 +111,10 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
-		/// <returns>The matching space objects, grouped by location.</returns>
-		public ILookup<Point, T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		/// <returns>The matching space objects.</returns>
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
 		{
-			return SpaceObjectLocations.Where(l => l.Item is T && (criteria == null || criteria((T)l.Item))).ToLookup(l => l.Location, l => (T)l.Item);
-		}
-
-		public IEnumerable<T> FindSpaceObjectsInSector<T>(Point coords, Func<T, bool> criteria = null) where T : ISpaceObject
-		{
-			var lookup = FindSpaceObjects<T>(criteria);
-			if (lookup.Contains(coords))
-				return lookup[coords];
-			return Enumerable.Empty<T>();
+			return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
 		}
 
 		public bool Contains(ISpaceObject sobj)
@@ -156,20 +148,17 @@ namespace FrEee.Game.Objects.Space
 			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
 			// hide space objects
 			// TODO - don't use tuples, we don't use the point value anymore...
-			var toRemove = new List<Tuple<Point, ISpaceObject>>();
-			foreach (var group in FindSpaceObjects<ISpaceObject>().ToArray())
+			var toRemove = new List<ISpaceObject>();
+			foreach (var sobj in FindSpaceObjects<ISpaceObject>().ToArray())
 			{
-				foreach (var sobj in group)
-				{
-					var vis = sobj.CheckVisibility(emp);
-					if (vis != Visibility.Unknown)
-						sobj.Redact(emp);
-					else
-						toRemove.Add(Tuple.Create(group.Key, sobj));
-				}
+				var vis = sobj.CheckVisibility(emp);
+				if (vis != Visibility.Unknown)
+					sobj.Redact(emp);
+				else
+					toRemove.Add(sobj);
 			}
 			foreach (var t in toRemove)
-				Remove(t.Item2);
+				Remove(t);
 
 			// hide explored-by empires
 			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
@@ -200,7 +189,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool HasAbility(Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).Flatten().SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
+			return FindSpaceObjects<ISpaceObject>(o => o.Owner == emp).SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 
 		/// <summary>
@@ -213,7 +202,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public bool DoesSectorHaveAbility(Point coords, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			var sobjs = FindSpaceObjects<ISpaceObject>()[coords].Where(o => o.Owner == emp);
+			var sobjs = FindSpaceObjects<ISpaceObject>().Where(o => o.Owner == emp && o.FindCoordinates() == coords);
 			return sobjs.SelectMany(o => o.UnstackedAbilities()).Where(a => a.Rule.Matches(name) && (filter == null || filter(a))).Any();
 		}
 

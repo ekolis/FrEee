@@ -217,7 +217,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this).Flatten());
+				return Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item).SelectMany(ss => ss.FindSpaceObjects<Planet>(p => p.Owner == this));
 			}
 		}
 
@@ -574,7 +574,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (sys == null)
 					return true; // assume hostility if unknown system
-				return sys.FindSpaceObjects<Planet>().Flatten().Any(p => p.Owner == this);
+				return sys.FindSpaceObjects<Planet>().Any(p => p.Owner == this);
 			}
 			return true;
 		}
@@ -606,7 +606,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this).Flatten().Flatten();
+				return Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == this);
 			}
 		}
 
