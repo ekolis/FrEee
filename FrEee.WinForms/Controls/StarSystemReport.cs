@@ -51,7 +51,7 @@ namespace FrEee.WinForms.Controls
 				txtName.Text = StarSystem.Name;
 				txtDescription.Text = StarSystem.Description;
 
-				var planets = StarSystem.FindSpaceObjects<Planet>().Flatten();
+				var planets = StarSystem.FindSpaceObjects<Planet>();
 				var colonies = planets.Select(p => p.Colony).Where(c => c != null);
 				txtOurFacilities.Text = colonies.Where(c => c.Owner == Empire.Current).Sum(c => c.Facilities.Count).ToString();
 				txtAllyFacilities.Text = colonies.Where(c => Empire.Current.IsAllyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
@@ -59,7 +59,7 @@ namespace FrEee.WinForms.Controls
 				txtEnemyFacilities.Text = colonies.Where(c => Empire.Current.IsEnemyOf(c.Owner, StarSystem)).Sum(c => c.Facilities.Count).ToString();
 				
 
-				var vehicles = StarSystem.FindSpaceObjects<SpaceVehicle>().Flatten();
+				var vehicles = StarSystem.FindSpaceObjects<SpaceVehicle>();
 				txtOurVehicles.Text = vehicles.Where(v => v.Owner == Empire.Current).Sum(v => v.Design.Hull.Size).Kilotons();
 				txtAllyVehicles.Text = vehicles.Where(v => Empire.Current.IsAllyOf(v.Owner, StarSystem)).Sum(v => v.Design.Hull.Size).Kilotons();
 				txtNeutralVehicles.Text = vehicles.Where(v => Empire.Current.IsNeutralTo(v.Owner, StarSystem)).Sum(v => v.Design.Hull.Size).Kilotons();

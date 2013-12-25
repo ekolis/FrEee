@@ -338,7 +338,7 @@ namespace FrEee.Game.Setup
 			// remove ruins if they're not allowed
 			if (!GenerateRandomRuins)
 			{
-				foreach (var p in gal.FindSpaceObjects<Planet>().Flatten().Flatten())
+				foreach (var p in gal.FindSpaceObjects<Planet>())
 				{
 					foreach (var abil in p.IntrinsicAbilities.ToArray())
 					{
@@ -349,7 +349,7 @@ namespace FrEee.Game.Setup
 			}
 			if (!GenerateUniqueRuins)
 			{
-				foreach (var p in gal.FindSpaceObjects<Planet>().Flatten().Flatten())
+				foreach (var p in gal.FindSpaceObjects<Planet>())
 				{
 					foreach (var abil in p.IntrinsicAbilities.ToArray())
 					{
@@ -437,14 +437,14 @@ namespace FrEee.Game.Setup
 				graph.Add(s);
 			foreach (var s in Galaxy.Current.StarSystemLocations.Select(ssl => ssl.Item))
 			{
-				foreach (var wp in s.FindSpaceObjects<WarpPoint>().Flatten())
+				foreach (var wp in s.FindSpaceObjects<WarpPoint>())
 					graph.Connect(s, wp.TargetStarSystemLocation.Item, true);
 			}
 
 			for (int i = 0; i < HomeworldsPerEmpire; i++)
 			{
 				// TODO - respect Empire Placement and Max Homeworld Dispersion settings
-				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null && p.MoonOf == null).SelectMany(g => g));
+				var planets = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner == null && p.MoonOf == null));
 				var okSystems = gal.StarSystemLocations.Select(ssl => ssl.Item).Where(sys => sys.EmpiresCanStartIn);
 				if (i > 0)
 				{
@@ -464,7 +464,7 @@ namespace FrEee.Game.Setup
 						// filter to systems containing no other empires' homeworlds
 						okSystems = okSystems.Where(sys => !sys.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).Any());
 						// filter to systems that are the maximum distance away from any other empire's homeworlds
-						var otherEmpireHomeSystems = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).SelectMany(g => g).Select(p => p.FindStarSystem()).Distinct()).ToArray();
+						var otherEmpireHomeSystems = gal.StarSystemLocations.SelectMany(ssl => ssl.Item.FindSpaceObjects<Planet>(p => p.Owner != null && p.Owner != emp).Select(p => p.FindStarSystem()).Distinct()).ToArray();
 						okSystems = okSystems.WithMax(sys => otherEmpireHomeSystems.Min(o => graph.ComputeDistance(sys, o)));
 						break;
 				}
@@ -481,7 +481,7 @@ namespace FrEee.Game.Setup
 
 					// make brand new planet in an OK system
 					var sys = okSystems.PickRandom();
-					var nextNum = sys.FindSpaceObjects<Planet>(p => p.MoonOf == null).Count + 1;
+					var nextNum = sys.FindSpaceObjects<Planet>(p => p.MoonOf == null).Count() + 1;
 					hw = MakeHomeworld(emp, sys.Name + " " + nextNum.ToRomanNumeral());
 					var okSectors = sys.Sectors.Where(sector => !sector.SpaceObjects.Any());
 					okSectors.PickRandom().Place(hw);
@@ -532,7 +532,7 @@ namespace FrEee.Game.Setup
 			// mark home systems explored
 			foreach (var sys in gal.StarSystemLocations.Select(ssl => ssl.Item))
 			{
-				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(planet => planet.Owner == emp))
+				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().Any(planet => planet.Owner == emp))
 					sys.ExploredByEmpires.Add(emp);
 			}
 		}

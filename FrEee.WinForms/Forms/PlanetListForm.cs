@@ -37,9 +37,9 @@ namespace FrEee.WinForms.Forms
 			// show planet counts
 			var systems = Empire.Current.ExploredStarSystems;
 			txtSystems.Text = systems.Count().ToString();
-			txtSystemsWithColonies.Text = systems.Where(s => s.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Flatten().Any()).Count().ToString();
+			txtSystemsWithColonies.Text = systems.Where(s => s.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Any()).Count().ToString();
 			// HACK - why are there null explored star systems?
-			planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>().SelectMany(g => g));
+			planets = systems.Where(sys => sys != null).SelectMany(sys => sys.FindSpaceObjects<Planet>());
 			txtPlanets.Text = planets.Count().ToString();
 			txtUs.Text = Empire.Current.ColonizedPlanets.Count().ToString();
 			var colonizable = planets.Where(p => p.Owner != Empire.Current && Empire.Current.CanColonize(p));
@@ -58,7 +58,7 @@ namespace FrEee.WinForms.Forms
 				v.Owner == Empire.Current &&
 				(
 					v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - ")) 
-				)).Flatten().Flatten();
+				));
 			txtShips.Text = colonizers.Count().ToString();
 			txtAvailable.Text = colonizers.Where(v => v.Orders.Count == 0 && v.Speed > 0).Count().ToString();
 
@@ -103,7 +103,7 @@ namespace FrEee.WinForms.Forms
 			var planet = (Planet)grid.SelectedItem;
 			foreach (var sys in Galaxy.Current.CurrentEmpire.ExploredStarSystems)
 			{
-				if (sys.FindSpaceObjects<Planet>().SelectMany(g => g).Any(p => p == planet))
+				if (sys.FindSpaceObjects<Planet>().Any(p => p == planet))
 				{
 					galaxyView.SelectedStarSystem = sys;
 					break;

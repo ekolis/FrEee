@@ -552,7 +552,7 @@ namespace FrEee.WinForms.Forms
 			// create homesystem tab
 			foreach (var tab in ListTabs().ToArray())
 				RemoveTab(tab);
-			var highlyPopulated = Empire.Current.ExploredStarSystems.WithMax(sys => sys.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Flatten().Sum(p => p.Colony.Population.Sum(kvp => kvp.Value)));
+			var highlyPopulated = Empire.Current.ExploredStarSystems.WithMax(sys => sys.FindSpaceObjects<Planet>(p => p.Owner == Empire.Current).Sum(p => p.Colony.Population.Sum(kvp => kvp.Value)));
 			if (highlyPopulated.Any())
 				SelectTab(AddTab(highlyPopulated.First()));
 			else
@@ -572,7 +572,7 @@ namespace FrEee.WinForms.Forms
 
 			// load space objects for search box
 			if (!searchBox.IsDisposed)
-				searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>().Flatten().Flatten();
+				searchBox.ObjectsToSearch = Galaxy.Current.FindSpaceObjects<ISpaceObject>();
 
 			// compute warp point connectivity
 			galaxyView.ComputeWarpPointConnectivity();
@@ -658,10 +658,10 @@ namespace FrEee.WinForms.Forms
 		public void SelectSpaceObject(ISpaceObject sobj)
 		{
 			var lookup = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj2 => sobj2 == sobj);
-			if (lookup.Any() && lookup.First().Any() && lookup.First().First().Any())
+			if (lookup.Any())
 			{
-				SelectStarSystem(lookup.First().Key.Item);
-				SelectSector(lookup.First().First().First().Key);
+				SelectStarSystem(lookup.First().StarSystem);
+				SelectSector(lookup.First().Sector.Coordinates);
 				pnlDetailReport.Controls.Clear();
 				var rpt = CreateSpaceObjectReport(sobj);
 				if (rpt != null)

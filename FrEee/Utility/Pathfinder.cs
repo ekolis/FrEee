@@ -198,7 +198,7 @@ namespace FrEee.Utility
 		{
 			if (sector.StarSystem == null)
 				return null; // no guarantee that the warp point to the unexplored system is two-way!
-			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(g => new Sector(sector.StarSystem, g.Key)).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)
@@ -312,7 +312,7 @@ namespace FrEee.Utility
 					success = true;
 
 				// step 7: check possible moves
-				var moves = node.Location.FindSpaceObjects<WarpPoint>().Flatten().Select(wp => wp.TargetStarSystemLocation.Item);
+				var moves = node.Location.FindSpaceObjects<WarpPoint>().Select(wp => wp.TargetStarSystemLocation.Item);
 
 				// step 7a: remove blocked points (aka calculate cost)
 				// nothing to do here

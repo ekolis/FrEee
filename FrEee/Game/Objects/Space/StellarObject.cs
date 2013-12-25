@@ -151,7 +151,7 @@ namespace FrEee.Game.Objects.Space
 			// TODO - cloaking
 			if (this.FindStarSystem() == null)
 				return Visibility.Unknown;
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Flatten();
+			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any())
 			{
 				if (Galaxy.Current.OmniscientView)
