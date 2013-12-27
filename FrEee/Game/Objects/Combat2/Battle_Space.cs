@@ -54,8 +54,15 @@ namespace FrEee.Game.Objects.Combat2
 			StartCombatants = new HashSet<ICombatant>();
 			foreach (ICombatant obj in combatants)
 			{
+				// TODO - deal with planets in combat
 				ICombatant copy = obj.Copy(false);
 				SpaceVehicle scopy = (SpaceVehicle)copy;
+
+				// copy over the components individually so they can take damage without affecting the starting state
+				scopy.Components.Clear();
+				foreach (var comp in ((SpaceVehicle)obj).Components)
+					scopy.Components.Add(comp.Copy(false));
+
 				if (scopy.Owner != obj.Owner)
 					scopy.Owner.Dispose(); // don't need extra empires!
 				scopy.Owner = obj.Owner;
@@ -219,6 +226,13 @@ namespace FrEee.Game.Objects.Combat2
 				var ship = shipObj.Copy(false);
 				if (ship.Owner != shipObj.Owner)
 					ship.Owner.Dispose(); // don't need extra empires!
+
+				// copy over the components individually so they can take damage without affecting the starting state
+				// TODO - deal with planets in combat
+				((SpaceVehicle)ship).Components.Clear();
+				foreach (var comp in ((SpaceVehicle)shipObj).Components)
+					((SpaceVehicle)ship).Components.Add(comp.Copy(false));
+
 				WorkingCombatants.Add(ship);
 				CombatObject comObj;
 				if (ship is SpaceVehicle)
