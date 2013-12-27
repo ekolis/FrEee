@@ -39,7 +39,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the star.</returns>
 		public Star Instantiate()
 		{
-			return this.Copy(true);
+			return this.Copy();
 		}
 
 		public override void Redact(Empire emp)

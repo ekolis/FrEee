@@ -232,7 +232,7 @@ namespace FrEee.Game.Objects.Technology
 		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
 			// create a "hypothetical" empire for testing out research
-			var empCopy = emp.CopyAndAssignNewID(false);
+			var empCopy = emp.CopyAndAssignNewID();
 			empCopy.ResearchedTechnologies = new NamedDictionary<Technology, int>();
 			foreach (var kvp in levels)
 				empCopy.ResearchedTechnologies[kvp.Key] = kvp.Value;
