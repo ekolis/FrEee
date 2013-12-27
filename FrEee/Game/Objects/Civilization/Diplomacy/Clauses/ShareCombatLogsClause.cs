@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		public override void PerformAction()
 		{
 			foreach (var msg in Giver.Log.OfType<PictorialLogMessage<Battle>>())
-				Receiver.Log.Add(msg.Copy(false));
+				Receiver.Log.Add(msg.Copy());
 		}
 
 		public override string FullDescription

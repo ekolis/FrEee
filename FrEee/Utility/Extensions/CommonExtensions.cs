@@ -31,50 +31,36 @@ namespace FrEee.Utility.Extensions
 	public static class CommonExtensions
 	{
 		/// <summary>
-		/// Deep or shallow copies an object.
+		/// Copies an object.
+		/// TODO - verify whether AutoMapper does a deep or shallow copy
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
 		/// <returns>The copy.</returns>
-		public static T Copy<T>(this T obj, bool deep)
+		public static T Copy<T>(this T obj)
 		{
-			if (deep)
-			{
-				var s = Serializer.SerializeToString(obj);
-				return Serializer.DeserializeFromString<T>(s);
-			}
-			else
-			{
-				if (obj == null)
-					return default(T);
-				var dest = obj.GetType().Instantiate();
-				obj.CopyTo(dest);
-				return (T)dest;
-			}
+			if (obj == null)
+				return default(T);
+			var dest = obj.GetType().Instantiate();
+			obj.CopyTo(dest);
+			return (T)dest;
 		}
 
 		/// <summary>
-		/// Deep or shallow copies an object and assigns the copy a new ID.
-		/// If a deep copy, subordinate objects are assigned new IDs too.
+		/// Copies an object and assigns the copy a new ID.
+		/// Subordinate objects are assigned new IDs too.
+		/// TODO - verify whether AutoMapper does a deep or shallow copy
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static T CopyAndAssignNewID<T>(this T obj, bool deep)
+		public static T CopyAndAssignNewID<T>(this T obj)
 			where T : IReferrable
 		{
-			var copy = obj.Copy(deep);
+			var copy = obj.Copy();
 			var parser = new ObjectGraphParser();
-			if (deep)
-			{
-				parser.EndObject += copyAssignIDParser_EndObject;
-				parser.Parse(copy);
-			}
-			else
-			{
-				obj.ID = 0;
-				Galaxy.Current.AssignID(obj);
-			}
+			parser.EndObject += copyAssignIDParser_EndObject;
+			parser.Parse(copy);
 			return copy;
 		}
 
@@ -89,7 +75,8 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Shallow copies an object's data to another object.
+		/// Copies an object's data to another object.
+		/// TODO - verify whether AutoMapper does a deep or shallow copy
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
@@ -116,7 +103,8 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// Shallow copies an object's data to another object. Skips the ID property.
+		/// Copies an object's data to another object. Skips the ID property.
+		/// TODO - verify whether AutoMapper does a deep or shallow copy
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
@@ -138,7 +126,7 @@ namespace FrEee.Utility.Extensions
 				&& x.DestinationType.Equals(type));
 			// TODO - search properties from their declaring type so we can catch private setters on abstract classes' properties
 			// then we won't need CopyEnumerableProperties maybe?
-			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => 
+			foreach (var property in existingMaps.GetPropertyMaps().Where(pm =>
 				{
 					var prop = (PropertyInfo)pm.DestinationProperty.MemberInfo;
 					var realprop = prop.DeclaringType.GetProperty(prop.Name);
@@ -164,7 +152,7 @@ namespace FrEee.Utility.Extensions
 			// map enumerable properties, automapper seems to miss them
 			// or maybe it's just that they don't have a public/protected setter all the time so they get caught by IgnoreReadOnlyProperties?
 			foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
-				prop.SetValue(d, prop.GetValue(s, null).Copy(false), null);
+				prop.SetValue(d, prop.GetValue(s, null).Copy(), null);
 		}*/
 
 		private static List<Type> mappedTypes = new List<Type>();
