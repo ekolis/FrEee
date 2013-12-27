@@ -685,7 +685,7 @@ namespace FrEee.Game.Objects.Civilization
 					obj.CopyTo(Memory[obj.ID]);
 				else
 				{
-					var memory = obj.CopyAndAssignNewID();
+					var memory = obj.CopyAndAssignNewID(true);
 					memory.IsMemory = true;
 					memory.Timestamp = Galaxy.Current.TurnNumber + Galaxy.Current.CurrentTick;
 					Memory[obj.ID] = memory;

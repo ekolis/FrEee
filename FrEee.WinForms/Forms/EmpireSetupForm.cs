@@ -50,8 +50,8 @@ namespace FrEee.WinForms.Forms
 			}
 			set
 			{
-				originalEmpireTemplate = value.Copy();
-				originalRace = value.PrimaryRace.Copy();
+				originalEmpireTemplate = value.Copy(true);
+				originalRace = value.PrimaryRace.Copy(true);
 				empireTemplate = value;
 				Bind();
 			}

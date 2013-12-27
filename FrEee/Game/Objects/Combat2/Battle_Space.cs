@@ -54,7 +54,7 @@ namespace FrEee.Game.Objects.Combat2
 			StartCombatants = new HashSet<ICombatant>();
 			foreach (ICombatant obj in combatants)
 			{
-				ICombatant copy = FrEee.Utility.Extensions.CommonExtensions.Copy(obj);
+				ICombatant copy = obj.Copy(false);
 				SpaceVehicle scopy = (SpaceVehicle)copy;
 				if (scopy.Owner != obj.Owner)
 					scopy.Owner.Dispose(); // don't need extra empires!
@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Combat2
 			CombatNodes = new HashSet<CombatNode>();
 			foreach (var shipObj in StartCombatants)
 			{
-				var ship = FrEee.Utility.Extensions.CommonExtensions.Copy(shipObj);
+				var ship = shipObj.Copy(false);
 				if (ship.Owner != shipObj.Owner)
 					ship.Owner.Dispose(); // don't need extra empires!
 				WorkingCombatants.Add(ship);

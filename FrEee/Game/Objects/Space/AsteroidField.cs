@@ -50,7 +50,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the asteroid field.</returns>
 		public AsteroidField Instantiate()
 		{
-			return this.Copy();
+			return this.Copy(true);
 		}
 
 		public override void Redact(Empire emp)
