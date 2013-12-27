@@ -1,6 +1,8 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +22,15 @@ namespace FrEee.Game.Objects.Combat
 			Range = range;
 		}
 
-		public Component Weapon { get; set; }
+		public Reference<Component> weapon { get; set; }
 
-		public ICombatant Target { get; set; }
+		[DoNotSerialize]
+		public Component Weapon { get { return weapon; } set { weapon = value; } }
+
+		public Reference<ICombatant> target { get; set; }
+
+		[DoNotSerialize]
+		public ICombatant Target { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
 
 		public int Range { get; set; }
 

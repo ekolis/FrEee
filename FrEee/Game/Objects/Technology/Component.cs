@@ -1,6 +1,8 @@
-﻿using FrEee.Game.Enumerations;
+﻿using AutoMapper;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
@@ -19,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A component of a vehicle.
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable
 	{
 		public Component(IVehicle container, MountedComponentTemplate template)
 		{
@@ -126,6 +128,7 @@ namespace FrEee.Game.Objects.Technology
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
 		[DoNotSerialize]
+		[IgnoreMap]
 		public int NormalShields
 		{
 			get
@@ -142,6 +145,7 @@ namespace FrEee.Game.Objects.Technology
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
 		[DoNotSerialize]
+		[IgnoreMap]
 		public int PhasedShields
 		{
 			get
@@ -211,10 +215,19 @@ namespace FrEee.Game.Objects.Technology
 			get { return MaxHitpoints; }
 		}
 
+		private Reference<IVehicle> container { get; set; }
+
+		[DoNotSerialize]
 		public IVehicle Container
 		{
-			get;
-			internal set;
+			get
+			{
+				return container == null ? null : container.Value;
+			}
+			set
+			{
+				container = value.Reference();
+			}
 		}
 
 		public IDictionary<string, object> Variables
@@ -293,6 +306,29 @@ namespace FrEee.Game.Objects.Technology
 		public IAbilityObject Parent
 		{
 			get { return Container; }
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			Hitpoints = 0;
+			IsDisposed = true;
+		}
+
+		public Empire Owner
+		{
+			get { return Container == null ? null : Container.Owner; }
 		}
 	}
 }
