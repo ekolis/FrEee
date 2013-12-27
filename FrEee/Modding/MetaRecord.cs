@@ -99,7 +99,7 @@ namespace FrEee.Modding
 			{
 				var rec = new Record();
 				foreach (var f in Fields)
-					rec.Fields.Add(f.Copy());
+					rec.Fields.Add(f.Copy(true));
 				yield return rec;
 				yield break;
 			}
@@ -116,7 +116,7 @@ namespace FrEee.Modding
 						if (f.Value.StartsWith("=="))
 						{
 							// dynamic formula field will be evaluated later
-							rec.Fields.Add(f.Copy());
+							rec.Fields.Add(f.Copy(true));
 						}
 						else if (f.Value.StartsWith("="))
 						{
@@ -126,7 +126,7 @@ namespace FrEee.Modding
 						else
 						{
 							// plain old field
-							rec.Fields.Add(f.Copy());
+							rec.Fields.Add(f.Copy(true));
 						}
 					}
 				}

@@ -58,16 +58,16 @@ namespace FrEee.WinForms.Objects
 		{
 			var cfg = new GridConfig();
 			cfg.Name = "Uncolonized";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colStellarSize.Copy());
-			cfg.Columns.Add(colSurface.Copy());
-			cfg.Columns.Add(colAtmosphere.Copy());
-			cfg.Columns.Add(colConditions.Copy());
-			cfg.Columns.Add(colMineralsValue.Copy());
-			cfg.Columns.Add(colOrganicsValue.Copy());
-			cfg.Columns.Add(colRadioactivesValue.Copy());
-			cfg.Columns.Add(colHasNoColony.Copy());
+			cfg.Columns.Add(colIcon.Copy(true));
+			cfg.Columns.Add(colName.Copy(true));
+			cfg.Columns.Add(colStellarSize.Copy(true));
+			cfg.Columns.Add(colSurface.Copy(true));
+			cfg.Columns.Add(colAtmosphere.Copy(true));
+			cfg.Columns.Add(colConditions.Copy(true));
+			cfg.Columns.Add(colMineralsValue.Copy(true));
+			cfg.Columns.Add(colOrganicsValue.Copy(true));
+			cfg.Columns.Add(colRadioactivesValue.Copy(true));
+			cfg.Columns.Add(colHasNoColony.Copy(true));
 			return cfg;
 		}
 
@@ -75,22 +75,22 @@ namespace FrEee.WinForms.Objects
 		{
 			var cfg = new GridConfig();
 			cfg.Name = "Colonies";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colRole.Copy());
-			cfg.Columns.Add(colIsDomed.Copy());
-			cfg.Columns.Add(colConditions.Copy());
-			cfg.Columns.Add(colPopulation.Copy());
-			cfg.Columns.Add(colFacilities.Copy());
-			cfg.Columns.Add(colCargo.Copy());
-			cfg.Columns.Add(colAnger.Copy());
-			cfg.Columns.Add(colHasSpaceYard.Copy());
-			cfg.Columns.Add(colMineralsIncome.Copy());
-			cfg.Columns.Add(colOrganicsIncome.Copy());
-			cfg.Columns.Add(colRadioactivesIncome.Copy());
-			cfg.Columns.Add(colResearchIncome.Copy());
-			cfg.Columns.Add(colIntelligenceIncome.Copy());
-			cfg.Columns.Add(colHasColony.Copy());
+			cfg.Columns.Add(colIcon.Copy(true));
+			cfg.Columns.Add(colName.Copy(true));
+			cfg.Columns.Add(colRole.Copy(true));
+			cfg.Columns.Add(colIsDomed.Copy(true));
+			cfg.Columns.Add(colConditions.Copy(true));
+			cfg.Columns.Add(colPopulation.Copy(true));
+			cfg.Columns.Add(colFacilities.Copy(true));
+			cfg.Columns.Add(colCargo.Copy(true));
+			cfg.Columns.Add(colAnger.Copy(true));
+			cfg.Columns.Add(colHasSpaceYard.Copy(true));
+			cfg.Columns.Add(colMineralsIncome.Copy(true));
+			cfg.Columns.Add(colOrganicsIncome.Copy(true));
+			cfg.Columns.Add(colRadioactivesIncome.Copy(true));
+			cfg.Columns.Add(colResearchIncome.Copy(true));
+			cfg.Columns.Add(colIntelligenceIncome.Copy(true));
+			cfg.Columns.Add(colHasColony.Copy(true));
 			return cfg;
 		}
 
@@ -98,22 +98,22 @@ namespace FrEee.WinForms.Objects
 		{
 			var cfg = new GridConfig();
 			cfg.Name = "Our Ships";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colDesign.Copy());
-			cfg.Columns.Add(colRole.Copy());
-			cfg.Columns.Add(colHull.Copy());
-			cfg.Columns.Add(colSpeed.Copy());
-			cfg.Columns.Add(colHullHitpoints.Copy());
-			cfg.Columns.Add(colArmorHitpoints.Copy());
-			cfg.Columns.Add(colShieldHitpoints.Copy());
-			cfg.Columns.Add(colSupply.Copy());
-			cfg.Columns.Add(colCargo.Copy());
-			cfg.Columns.Add(colMineralsMaintenance.Copy());
-			cfg.Columns.Add(colOrganicsMaintenance.Copy());
-			cfg.Columns.Add(colRadioactivesMaintenance.Copy());
-			cfg.Columns.Add(colHasOrders.Copy());
-			cfg.Columns.Add(colIsOurs.Copy());
+			cfg.Columns.Add(colIcon.Copy(true));
+			cfg.Columns.Add(colName.Copy(true));
+			cfg.Columns.Add(colDesign.Copy(true));
+			cfg.Columns.Add(colRole.Copy(true));
+			cfg.Columns.Add(colHull.Copy(true));
+			cfg.Columns.Add(colSpeed.Copy(true));
+			cfg.Columns.Add(colHullHitpoints.Copy(true));
+			cfg.Columns.Add(colArmorHitpoints.Copy(true));
+			cfg.Columns.Add(colShieldHitpoints.Copy(true));
+			cfg.Columns.Add(colSupply.Copy(true));
+			cfg.Columns.Add(colCargo.Copy(true));
+			cfg.Columns.Add(colMineralsMaintenance.Copy(true));
+			cfg.Columns.Add(colOrganicsMaintenance.Copy(true));
+			cfg.Columns.Add(colRadioactivesMaintenance.Copy(true));
+			cfg.Columns.Add(colHasOrders.Copy(true));
+			cfg.Columns.Add(colIsOurs.Copy(true));
 			return cfg;
 		}
 
@@ -121,19 +121,19 @@ namespace FrEee.WinForms.Objects
 		{
 			var cfg = new GridConfig();
 			cfg.Name = "Alien Ships";
-			cfg.Columns.Add(colIcon.Copy());
-			cfg.Columns.Add(colOwner.Copy());
-			cfg.Columns.Add(colName.Copy());
-			cfg.Columns.Add(colDesign.Copy());
-			cfg.Columns.Add(colRole.Copy());
-			cfg.Columns.Add(colHull.Copy());
-			cfg.Columns.Add(colSpeed.Copy());
-			cfg.Columns.Add(colHullHitpoints.Copy());
-			cfg.Columns.Add(colArmorHitpoints.Copy());
-			cfg.Columns.Add(colShieldHitpoints.Copy());
-			cfg.Columns.Add(colSupply.Copy());
-			cfg.Columns.Add(colCargo.Copy());
-			cfg.Columns.Add(colIsAlien.Copy());
+			cfg.Columns.Add(colIcon.Copy(true));
+			cfg.Columns.Add(colOwner.Copy(true));
+			cfg.Columns.Add(colName.Copy(true));
+			cfg.Columns.Add(colDesign.Copy(true));
+			cfg.Columns.Add(colRole.Copy(true));
+			cfg.Columns.Add(colHull.Copy(true));
+			cfg.Columns.Add(colSpeed.Copy(true));
+			cfg.Columns.Add(colHullHitpoints.Copy(true));
+			cfg.Columns.Add(colArmorHitpoints.Copy(true));
+			cfg.Columns.Add(colShieldHitpoints.Copy(true));
+			cfg.Columns.Add(colSupply.Copy(true));
+			cfg.Columns.Add(colCargo.Copy(true));
+			cfg.Columns.Add(colIsAlien.Copy(true));
 			return cfg;
 		}
 

@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				if (existing == null || existing.Timestamp < kvp.Value.Timestamp)
 				{
 					// copy memory
-					var copy = kvp.Value.CopyAndAssignNewID();
+					var copy = kvp.Value.CopyAndAssignNewID(true);
 					Receiver.Memory[kvp.Key] = copy;
 				}
 			}

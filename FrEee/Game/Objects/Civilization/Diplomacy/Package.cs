@@ -205,7 +205,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 					// copy memory of system and everything in it
 					if (kvp.Value == sys || kvp.Value is ISpaceObject && ((ISpaceObject)kvp.Value).StarSystem == sys)
 					{
-						var copy = kvp.Value.CopyAndAssignNewID();
+						var copy = kvp.Value.CopyAndAssignNewID(true);
 						target.Memory.Add(kvp.Key, copy);
 					}
 				}

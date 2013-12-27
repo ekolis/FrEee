@@ -31,30 +31,61 @@ namespace FrEee.Utility.Extensions
 	public static class CommonExtensions
 	{
 		/// <summary>
-		/// Deep copies an object.
+		/// Deep or shallow copies an object.
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
 		/// <returns>The copy.</returns>
-		public static T Copy<T>(this T obj)
+		public static T Copy<T>(this T obj, bool deep)
 		{
-			var s = Serializer.SerializeToString(obj);
-			return Serializer.DeserializeFromString<T>(s);
+			if (deep)
+			{
+				var s = Serializer.SerializeToString(obj);
+				return Serializer.DeserializeFromString<T>(s);
+			}
+			else
+			{
+				if (obj == null)
+					return default(T);
+				var dest = obj.GetType().Instantiate();
+				obj.CopyTo(dest);
+				return (T)dest;
+			}
 		}
 
 		/// <summary>
-		/// Deep copies an object and assigns the copy a new ID.
+		/// Deep or shallow copies an object and assigns the copy a new ID.
+		/// If a deep copy, subordinate objects are assigned new IDs too.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
 		/// <returns></returns>
-		public static T CopyAndAssignNewID<T>(this T obj)
+		public static T CopyAndAssignNewID<T>(this T obj, bool deep)
 			where T : IReferrable
 		{
-			var copy = obj.Copy();
-			copy.ID = 0;
-			Galaxy.Current.AssignID(copy);
+			var copy = obj.Copy(deep);
+			var parser = new ObjectGraphParser();
+			if (deep)
+			{
+				parser.EndObject += copyAssignIDParser_EndObject;
+				parser.Parse(copy);
+			}
+			else
+			{
+				obj.ID = 0;
+				Galaxy.Current.AssignID(obj);
+			}
 			return copy;
+		}
+
+		static void copyAssignIDParser_EndObject(object o)
+		{
+			if (o is IReferrable)
+			{
+				var r = (IReferrable)o;
+				r.ID = 0;
+				Galaxy.Current.AssignID(r);
+			}
 		}
 
 		/// <summary>
@@ -457,9 +488,9 @@ namespace FrEee.Utility.Extensions
 		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-            var num = RandomHelper.Next(total);
-            if (prng != null)
-                num = prng.Next(total);
+			var num = RandomHelper.Next(total);
+			if (prng != null)
+				num = prng.Next(total);
 
 			int sofar = 0;
 			foreach (var kvp in src)
@@ -1360,7 +1391,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static object GetPropertyValue(this object o, string propertyName)
 		{
-			var prop =  o.GetType().GetProperty(propertyName);
+			var prop = o.GetType().GetProperty(propertyName);
 			if (prop == null)
 				return null;
 			return prop.GetValue(o, new object[0]);
