@@ -1023,6 +1023,8 @@ namespace FrEee.Game.Objects.Space
 
 		public IReferrable GetReferrable(long key)
 		{
+			if (!referrables.ContainsKey(key))
+				return null;
 			return referrables[key];
 		}
 
