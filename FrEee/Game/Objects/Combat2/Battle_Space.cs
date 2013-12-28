@@ -648,7 +648,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.weaponTarget = new List<CombatObject>();
 				comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
 			}
-            if (IsReplay)
+            if (IsReplay && tick < 1000)
             {
                 List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comObj, tick).ToList<CombatEvent>();                
                 CombatLocationEvent locevnt = (CombatLocationEvent)evnts.Where(e => e.GetType() is CombatLocationEvent);
@@ -658,7 +658,7 @@ namespace FrEee.Game.Objects.Combat2
                 else
                     comAI += "Not matched \r\n";
             }
-            else
+            else if (!IsReplay && tick < 1000)
             {
                 CombatLocationEvent locevnt = new CombatLocationEvent(tick, comObj, comObj.cmbt_loc);
                 ReplayLog.Events.Add(locevnt);
