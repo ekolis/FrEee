@@ -617,7 +617,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 {               
                     foreach (CombatObject comObj in battle.CombatObjects)
                     {   
-                        battle.commandAI(comObj);
+                        battle.commandAI(comObj, tickcounter);
                         
                     }
                     cmdfreq_countr = 0;
