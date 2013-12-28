@@ -294,7 +294,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 			foreach (CombatObject comObj in CombatObjects)
-				commandAI(comObj);
+				commandAI(comObj, 1);
 		}
 
 		public void Start()
@@ -333,14 +333,12 @@ namespace FrEee.Game.Objects.Combat2
 
 				//physicsmove objects.
 				SimNewtonianPhysics(comObj);
-
-
 			}
 			if (cmdfreqCounter >= Battle_Space.CommandFrequency)
 			{
 				foreach (CombatObject comObj in CombatObjects)
 				{
-					commandAI(comObj);
+					commandAI(comObj, tick);
 				}
 				cmdfreqCounter = 0;
 			}
@@ -635,10 +633,11 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
 		}
 
-		public void commandAI(CombatObject comObj)
+		public void commandAI(CombatObject comObj, int tick)
 		{
 			//do AI decision stuff.
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
+            string comAI = "";
 			CombatObject tgtObj;
 			if (Empires[comObj.icomobj.Owner].hostile.Any())
 			{
@@ -649,6 +648,23 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.weaponTarget = new List<CombatObject>();
 				comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
 			}
+            if (IsReplay)
+            {
+                List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comObj, tick).ToList<CombatEvent>();                
+                CombatLocationEvent locevnt = (CombatLocationEvent)evnts.Where(e => e.GetType() is CombatLocationEvent);
+                comAI = "Location ";
+                if (locevnt.Location == comObj.cmbt_loc)
+                    comAI += "Does match \r\n";
+                else
+                    comAI += "Not matched \r\n";
+            }
+            else
+            {
+                CombatLocationEvent locevnt = new CombatLocationEvent(tick, comObj, comObj.cmbt_loc);
+                ReplayLog.Events.Add(locevnt);
+            }
+             
+            comObj.debuginfo += comAI;
 		}
 
 
