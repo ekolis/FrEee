@@ -1165,7 +1165,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void ComputeNextTickSize()
 		{
-			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => !obj.IsMemory && obj.Orders.Any());
 			if (objs.Any() && CurrentTick < 1.0)
 				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
 			else
