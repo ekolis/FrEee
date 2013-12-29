@@ -118,6 +118,8 @@ namespace FrEee.Utility
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
+			if (dict == null)
+				return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
 			return dict.GetEnumerator();
 		}
 
