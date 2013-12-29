@@ -668,6 +668,9 @@ namespace FrEee.Game.Objects.Civilization
 		/// <param name="obj"></param>
 		public void UpdateMemory(IFoggable obj)
 		{
+			if (obj.IsMemory)
+				throw new InvalidOperationException("Call UpdateMemory for the physical object, not the memory.");
+
 			// encounter empire if not yet encountered
 			if (obj.Owner != null && !EncounteredEmpires.Contains(obj.Owner))
 			{

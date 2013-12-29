@@ -733,7 +733,7 @@ namespace FrEee.Utility
 	}
 
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
-	public sealed class DoNotSerializeAttribute : Attribute
+	public sealed class DoNotSerializeAttribute : DoNotCopyAttribute
 	{
 
 	}

@@ -323,4 +323,10 @@ namespace FrEee.Utility
 			}
 		}
 	}
+
+	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+	public class DoNotCopyAttribute : Attribute
+	{
+
+	}
 }
