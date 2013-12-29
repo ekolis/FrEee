@@ -56,6 +56,7 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				// TODO - deal with planets in combat
 				ICombatant copy = obj.Copy();
+				copy.IsMemory = true;
 				SpaceVehicle scopy = (SpaceVehicle)copy;
 
 				// copy over the components individually so they can take damage without affecting the starting state
@@ -224,6 +225,7 @@ namespace FrEee.Game.Objects.Combat2
 			foreach (var shipObj in StartCombatants)
 			{
 				var ship = shipObj.Copy();
+				ship.IsMemory = true;
 				if (ship.Owner != shipObj.Owner)
 					ship.Owner.Dispose(); // don't need extra empires!
 
