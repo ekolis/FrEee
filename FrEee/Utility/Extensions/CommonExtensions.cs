@@ -32,7 +32,7 @@ namespace FrEee.Utility.Extensions
 	{
 		/// <summary>
 		/// Copies an object.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy
+		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
@@ -49,7 +49,7 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Copies an object and assigns the copy a new ID.
 		/// Subordinate objects are assigned new IDs too.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy
+		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
@@ -59,24 +59,92 @@ namespace FrEee.Utility.Extensions
 		{
 			var copy = obj.Copy();
 			var parser = new ObjectGraphParser();
-			parser.EndObject += copyAssignIDParser_EndObject;
+			var canCopy = new Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
+			canCopy.Push(true);
+			parser.Property += (pname, o, val) =>
+				{
+					var prop = o.GetType().FindProperty(pname);
+					canCopy.Push(!prop.HasAttribute(typeof(DoNotCopyAttribute)));
+				};
+			parser.Item += (o) =>
+				{
+					// can always serialize collection items
+					canCopy.Push(true);
+				};
+			parser.StartObject += (o) =>
+				{
+					var doit = canCopy.All(b => b);
+					if (doit && o is IReferrable)
+					{
+						var r = (IReferrable)o;
+						r.ID = 0;
+						Galaxy.Current.AssignID(r);
+					}
+				};
+			parser.EndObject += (o) =>
+				{
+					canCopy.Pop();
+				};
+			parser.Null += (o) =>
+				{
+					canCopy.Pop();
+				};
+			parser.KnownObject += (o) =>
+				{
+					canCopy.Pop();
+				};
 			parser.Parse(copy);
 			return copy;
 		}
 
-		static void copyAssignIDParser_EndObject(object o)
+		/// <summary>
+		/// Finds a property on a type, base type, or interface.
+		/// </summary>
+		/// <param name="t"></param>
+		/// <param name="propName"></param>
+		/// <returns></returns>
+		public static PropertyInfo FindProperty(this Type type, string propName)
 		{
-			if (o is IReferrable)
+			var p = type.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			if (p != null)
+				return p.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			var b = type.BaseType;
+			if (b != null)
 			{
-				var r = (IReferrable)o;
-				r.ID = 0;
-				Galaxy.Current.AssignID(r);
+				var bp = b.FindProperty(propName);
+				if (bp != null)
+					return bp.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 			}
+			foreach (var i in type.GetInterfaces())
+			{
+				var ip = i.FindProperty(propName);
+				if (ip != null)
+					return ip.DeclaringType.GetProperty(propName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			}
+			return null;
+		}
+
+		/// <summary>
+		/// Checks for attributes in a class or its interfaces.
+		/// </summary>
+		/// <param name="mi"></param>
+		/// <param name="attributeType"></param>
+		/// <returns></returns>
+		public static bool HasAttribute(this MemberInfo mi, Type attributeType)
+		{
+			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
+				return true;
+			foreach (var i in mi.DeclaringType.GetInterfaces())
+			{
+				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
+					return true;
+			}
+			return false;
 		}
 
 		/// <summary>
 		/// Copies an object's data to another object.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy
+		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
@@ -91,7 +159,7 @@ namespace FrEee.Utility.Extensions
 				mappedTypes.Add(type);
 				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
 				var map = creator.Invoke(null, new object[0]);
-				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
+				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyAndNonSerializableProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
 				map = ignorer.Invoke(null, new object[] { map });
 				/*var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
@@ -104,7 +172,7 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Copies an object's data to another object. Skips the ID property.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy
+		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
@@ -119,18 +187,16 @@ namespace FrEee.Utility.Extensions
 		}
 
 		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
-		private static IMappingExpression<T, T> IgnoreReadOnlyProperties<T>(this IMappingExpression<T, T> expression)
+		private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
 		{
 			var type = typeof(T);
-			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.Equals(type)
-				&& x.DestinationType.Equals(type));
-			// TODO - search properties from their declaring type so we can catch private setters on abstract classes' properties
-			// then we won't need CopyEnumerableProperties maybe?
+			var existingMaps = Mapper.GetAllTypeMaps().First(x => x.SourceType.IsAssignableFrom(type)
+				&& x.DestinationType.IsAssignableFrom(type));
 			foreach (var property in existingMaps.GetPropertyMaps().Where(pm =>
 				{
 					var prop = (PropertyInfo)pm.DestinationProperty.MemberInfo;
 					var realprop = prop.DeclaringType.GetProperty(prop.Name);
-					return realprop.GetSetMethod(true) == null;
+					return realprop.GetSetMethod(true) == null || realprop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any();
 				}))
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
@@ -146,14 +212,6 @@ namespace FrEee.Utility.Extensions
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
 		}
-
-		/*private static void CopyEnumerableProperties(object s, object d)
-		{
-			// map enumerable properties, automapper seems to miss them
-			// or maybe it's just that they don't have a public/protected setter all the time so they get caught by IgnoreReadOnlyProperties?
-			foreach (var prop in s.GetType().GetProperties().Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Length == 0 && typeof(IEnumerable).IsAssignableFrom(p.PropertyType)))
-				prop.SetValue(d, prop.GetValue(s, null).Copy(), null);
-		}*/
 
 		private static List<Type> mappedTypes = new List<Type>();
 
