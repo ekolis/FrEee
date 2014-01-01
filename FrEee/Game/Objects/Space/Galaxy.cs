@@ -671,6 +671,13 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			Current.TurnNumber++;
 
+            //debugstuff
+            var objs0 = Galaxy.Current.Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+            int numobs1 = objs0.Count();
+            var objs1 = objs0.Where(obj => !obj.IsMemory);
+            int numobs2 = objs1.Count();
+            //end-debugstuff
+
 			// reproduction and population replacement from cargo
 			if (status != null)
 				status.Message = "Growing population";
@@ -864,7 +871,9 @@ namespace FrEee.Game.Objects.Space
 			{
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-				foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle())
+                var vlist = Current.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle();
+				//foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle())
+                foreach (var v in vlist)
 				{
 					// mark system explored if not already
 					var sys = v.FindStarSystem();
@@ -892,6 +901,14 @@ namespace FrEee.Game.Objects.Space
 					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
 					{
 						//var battle = new Battle(sector);
+
+                        //debugstuff
+                        var objs3 = Galaxy.Current.Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+                        int numobs3 = objs3.Count();
+                        var objs4 = objs3.Where(obj => !obj.IsMemory);
+                        int numobs4 = objs4.Count();
+                        //end-debugstuff
+
 						var battle = new Battle_Space(sector);
 						battle.Resolve();
 						foreach (var emp in battle.Empires.Keys)
@@ -1165,7 +1182,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void ComputeNextTickSize()
 		{
-			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => !obj.IsMemory && obj.Orders.Any());
+            
+			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
+            objs = objs.Where(obj => !obj.IsMemory);
 			if (objs.Any() && CurrentTick < 1.0)
 				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
 			else
