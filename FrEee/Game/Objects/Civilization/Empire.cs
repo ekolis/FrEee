@@ -685,7 +685,10 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// object exists, update cache with the data
 				if (Memory[obj.ID] != null)
-					obj.CopyTo(Memory[obj.ID]);
+				{
+					obj.CopyToExceptID(Memory[obj.ID]);
+					Memory[obj.ID].IsMemory = true;
+				}
 				else
 				{
 					var memory = obj.CopyAndAssignNewID();
