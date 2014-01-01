@@ -221,7 +221,7 @@ namespace FrEee.Utility
 			var sf = new StringFormat();
 			sf.Alignment = StringAlignment.Far;
 			sf.LineAlignment = StringAlignment.Far;
-			if (f.RomanNumeral != 0)
+			if (f.RomanNumeral != null && f.RomanNumeral != 0)
 				g.DrawString(f.RomanNumeral.Value.ToRomanNumeral(), font, brush, new Point(32, 32), sf);
 			return thumb;
 		}
