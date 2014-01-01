@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -174,6 +175,31 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			return new Point3d(quotient);
 		}
+		public static bool operator ==(Point3d p1, Point3d p2)
+		{
+			if (p1.IsNull() && p2.IsNull())
+				return true;
+			if (p1.IsNull() || p2.IsNull())
+				return false;
+			return p1.Point_List.SequenceEqual(p2.Point_List);
+		}
+		public static bool operator !=(Point3d p1, Point3d p2)
+		{
+			return !(p1 == p2);
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj is Point3d)
+				return ((Point3d)obj) == this;
+			return false;
+		}
+		public override int GetHashCode()
+		{
+			var h = 0;
+			foreach (var n in Point_List)
+				h ^= n.GetHashCode();
+			return h;
+		}
 	}
 
 
@@ -250,6 +276,29 @@ namespace FrEee.Game.Objects.Combat2
 		public override string ToString()
 		{
 			return Degrees.ToString("f0") + " degrees";
+		}
+
+		public static bool operator ==(Compass c1, Compass c2)
+		{
+			if (c1.IsNull() && c2.IsNull())
+				return true;
+			if (c1.IsNull() || c2.IsNull())
+				return false;
+			return c1.Degrees == c2.Degrees;
+		}
+		public static bool operator !=(Compass c1, Compass c2)
+		{
+			return !(c1 == c2);
+		}
+		public override bool Equals(object obj)
+		{
+			if (obj is Compass)
+				return ((Compass)obj) == this;
+			return false;
+		}
+		public override int GetHashCode()
+		{
+			return Degrees.GetHashCode();
 		}
 	}
 
