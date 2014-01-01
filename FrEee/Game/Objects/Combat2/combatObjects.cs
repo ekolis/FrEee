@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
@@ -136,17 +137,17 @@ namespace FrEee.Game.Objects.Combat2
 
 		private PRNG shipDice;
 
-		public CombatObject(SpaceVehicle v, int battleseed)
-			: this((ICombatant)v, battleseed)
+		public CombatObject(SpaceVehicle start_v, SpaceVehicle working_v, int battleseed)
+            : this((ICombatant)start_v, (ICombatant)working_v, battleseed)
 		{
-			this.cmbt_mass = (double)v.Size;
-			this.maxfowardThrust = v.Speed * this.cmbt_mass * 0.1;
-			this.maxStrafeThrust = (v.Speed * this.cmbt_mass * 0.1) / (4 - v.Evasion * 0.01);
-            this.maxRotate = (v.Speed * this.cmbt_mass * 0.1) / (12000 - v.Evasion * 0.1);
+            this.cmbt_mass = (double)working_v.Size;
+            this.maxfowardThrust = working_v.Speed * this.cmbt_mass * 0.1;
+            this.maxStrafeThrust = (working_v.Speed * this.cmbt_mass * 0.1) / (4 - working_v.Evasion * 0.01);
+            this.maxRotate = (working_v.Speed * this.cmbt_mass * 0.1) / (12000 - working_v.Evasion * 0.1);
 		}
 
 		public CombatObject(Seeker s, int battleseed)
-			: this((ICombatant)s, battleseed)
+			: this(null, (ICombatant)s, battleseed)
 		{
 			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
             this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001;
@@ -156,12 +157,12 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-		public CombatObject(ICombatant c, int battleseed) 
-            : base(new Point3d(0,0,0), new Point3d(0,0,0), c.ID)
+        public CombatObject(ICombatant startObj, ICombatant workingObj, int battleseed) 
+            : base(new Point3d(0,0,0), new Point3d(0,0,0), workingObj.ID)
 		{
-            this.icomobj = c;
-            
-            
+            this.icomobj_WorkingCopy = workingObj;
+
+            this.icomobj_StartCopy = startObj;   
 
 			this.waypointTarget = new combatWaypoint();
 			this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
@@ -170,7 +171,7 @@ namespace FrEee.Game.Objects.Combat2
 			this.cmbt_accel = new Point3d(0, 0, 0);
 
             this.weaponList = new List<CombatWeapon>();
-            foreach (Component weapon in icomobj.Weapons)
+            foreach (Component weapon in icomobj_WorkingCopy.Weapons)
             {
                 CombatWeapon wpn = new CombatWeapon(weapon);
                 this.weaponList.Add(wpn);
@@ -207,12 +208,34 @@ namespace FrEee.Game.Objects.Combat2
 		//public Point3d cmbt_maxThrust { get; set; }
 		//public Point3d cmbt_minThrust { get; set; }
 
-		public ICombatant icomobj
+		public ICombatant icomobj_WorkingCopy
 		{
 
 			get { return this.icomObj; }
 			set { this.icomObj = value; }
 		}
+
+        public ICombatant icomobj_StartCopy
+        {
+            get;
+            set;
+        }
+
+        public void renewtoStart()
+        {
+            var ship = icomobj_StartCopy.Copy();
+            ship.IsMemory = true;
+            if (ship.Owner != icomobj_StartCopy.Owner)
+                ship.Owner.Dispose(); // don't need extra empires!
+
+            // copy over the components individually so they can take damage without affecting the starting state
+            // TODO - deal with planets in combat
+            ((SpaceVehicle)ship).Components.Clear();
+            foreach (var comp in ((SpaceVehicle)icomobj_StartCopy).Components)
+                ((SpaceVehicle)ship).Components.Add(comp.Copy());
+
+            this.icomObj = ship;
+        }
 
 		public combatWaypoint waypointTarget;
 		public Point3d lastVectortoWaypoint { get; set; }
@@ -232,7 +255,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		public void newDice(int battleseed)
 		{
-			int seed = (int)(this.icomobj.ID % 100000) + battleseed;
+			int seed = (int)(this.icomobj_WorkingCopy.ID % 100000) + battleseed;
 			shipDice = new PRNG(seed);
 		}
 

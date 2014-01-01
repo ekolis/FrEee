@@ -616,8 +616,8 @@ namespace FrEee.WinForms.MogreCombatRender
                 if (cmdfreq_countr >= Battle_Space.CommandFrequency)
                 {               
                     foreach (CombatObject comObj in battle.CombatObjects)
-                    {   
-                        battle.commandAI(comObj, tickcounter);
+                    {
+                        battle.commandAI(comObj, battletic);
                         
                     }
                     cmdfreq_countr = 0;
@@ -625,7 +625,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				bool ships_persuing = true; // TODO - check if ships are actually pursuing
 				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-				bool hostiles = battle.CombatObjects.Any(o => !o.icomobj.IsDestroyed && battle.CombatObjects.Any(o2 => !o2.icomobj.IsDestroyed && o.icomobj.IsHostileTo(o2.icomobj.Owner)));
+				bool hostiles = battle.CombatObjects.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && battle.CombatObjects.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
 
 				if (!ships_persuing && !ships_inrange)
 					cont = false;
@@ -647,7 +647,7 @@ namespace FrEee.WinForms.MogreCombatRender
         private void do_txt()
         {
             CombatObject comObj = selectedObj();
-            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comObj.icomobj;
+            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comObj.icomobj_WorkingCopy;
 
             string txt = ship.Name + "\r\n";
             txt += "Location:\t" 
@@ -660,7 +660,7 @@ namespace FrEee.WinForms.MogreCombatRender
             
             txt += "\r\n";
             
-            Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comObj.weaponTarget[0].icomobj;
+            Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comObj.weaponTarget[0].icomobj_WorkingCopy;
             txt += "Target:\t" + tgtship.Name + "\r\n";
             txt += "Distance\t" + Trig.hypotinuse(comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc) + "\r\n";
 
