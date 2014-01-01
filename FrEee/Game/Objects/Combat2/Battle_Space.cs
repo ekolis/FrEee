@@ -267,7 +267,7 @@ namespace FrEee.Game.Objects.Combat2
             foreach (CombatObject shipObj in CombatObjects)
             {
                 shipObj.renewtoStart();
-                Empires[shipObj.icomobj_WorkingCopy.Owner].ownships.Add(shipObj);
+                Empires[shipObj.icomobj_StartCopy.Owner].ownships.Add(shipObj);
             }			
 		}
 
