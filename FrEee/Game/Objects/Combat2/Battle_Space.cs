@@ -52,6 +52,7 @@ namespace FrEee.Game.Objects.Combat2
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 
 			StartCombatants = new HashSet<ICombatant>();
+
 			foreach (ICombatant obj in combatants)
 			{
 				// TODO - deal with planets in combat
@@ -69,6 +70,9 @@ namespace FrEee.Game.Objects.Combat2
 				scopy.Owner = obj.Owner;
 				StartCombatants.Add(scopy);
 			}
+
+
+
 			WorkingCombatants = new HashSet<ICombatant>();
 			ActualCombatants = new HashSet<ICombatant>(combatants);
 
