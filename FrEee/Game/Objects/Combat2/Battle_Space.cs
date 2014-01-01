@@ -48,10 +48,19 @@ namespace FrEee.Game.Objects.Combat2
 				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
 
 
+            double stardate = Galaxy.Current.Timestamp;
+            int starday = (int)(Galaxy.Current.CurrentTick * 10);
+
+            int moduloID = (int)(Sector.StarSystem.ID % 100000);
+            this.battleseed = (int)(moduloID / stardate * 10);
+
 			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 
 			StartCombatants = new HashSet<ICombatant>();
+            ActualCombatants = new HashSet<ICombatant>(combatants);
+            //WorkingCombatants = new HashSet<ICombatant>();
+            CombatNodes = new HashSet<CombatNode>();
 
 			foreach (ICombatant obj in combatants)
 			{
@@ -69,14 +78,15 @@ namespace FrEee.Game.Objects.Combat2
 					scopy.Owner.Dispose(); // don't need extra empires!
 				scopy.Owner = obj.Owner;
 				StartCombatants.Add(scopy);
+                CombatObject comObj = new CombatObject((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
+                CombatNodes.Add(comObj);
+                
 			}
 
 
 
-			WorkingCombatants = new HashSet<ICombatant>();
-			ActualCombatants = new HashSet<ICombatant>(combatants);
 
-			CombatNodes = new HashSet<CombatNode>();
+			
 			Fleets = new List<Fleet> { };
 
 			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
@@ -86,11 +96,6 @@ namespace FrEee.Game.Objects.Combat2
 			ReplayLog = new CombatReplayLog();
 
 
-			double stardate = Galaxy.Current.Timestamp;
-			int starday = (int)(Galaxy.Current.CurrentTick * 10);
-
-			int moduloID = (int)(Sector.StarSystem.ID % 100000);
-			this.battleseed = (int)(moduloID / stardate * 10);
 		}
 
 		static Battle_Space()
@@ -144,7 +149,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The working list of combatants in this battle.
 		/// </summary>
-		public ISet<ICombatant> WorkingCombatants { get; private set; }
+		//public ISet<ICombatant> WorkingCombatants { get; private set; }
 
 		/// <summary>
 		/// The REAL combatants objects.
@@ -201,22 +206,27 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
+            foreach (CombatObject comObj in CombatObjects)
+            {
+                Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
+            }
+            //this is now all handled in initialization.
+            //foreach (var shipObj in ActualCombatants)
+            //{
 
-			foreach (var shipObj in ActualCombatants)
-			{
+            //    //WorkingCombatants.Add(shipObj);
+            //    CombatObject comObj;
+            //    if (shipObj is SpaceVehicle)
+            //    {
+            //        //comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
+         
+            //    }
+            //    else
+            //        //comObj = new CombatObject(shipObj, battleseed); // for unit tests
+            //    CombatNodes.Add(comObj);
+            //    Empires[shipObj.Owner].ownships.Add(comObj);
 
-				WorkingCombatants.Add(shipObj);
-				CombatObject comObj;
-				if (shipObj is SpaceVehicle)
-				{
-					comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
-				}
-				else
-					comObj = new CombatObject(shipObj, battleseed); // for unit tests
-				CombatNodes.Add(comObj);
-				Empires[shipObj.Owner].ownships.Add(comObj);
-
-			}
+            //}
 		}
 		private void ReplaySetup()
 		{
@@ -224,8 +234,10 @@ namespace FrEee.Game.Objects.Combat2
 			//this time WorkingCombatants is filled with a copy of the shipObj instead of the actual one. 
 			//this is one place where the sim could go slightly different from the actual. the lists *should* be in the same order however
 			//and the prng should have the same seed and be the same. 
-			WorkingCombatants = new HashSet<ICombatant>();
-			CombatNodes = new HashSet<CombatNode>();
+			//WorkingCombatants = new HashSet<ICombatant>();
+			//CombatNodes = new HashSet<CombatNode>();
+
+            /*
 			foreach (var shipObj in StartCombatants)
 			{
 				var ship = shipObj.Copy();
@@ -245,14 +257,18 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					SpaceVehicle sobj = (SpaceVehicle)ship;
 					sobj.Owner = shipObj.Owner;
-					comObj = new CombatObject(sobj, battleseed);
+					//comObj = new CombatObject(sobj, battleseed);
+                    
 				}
 				else
 					comObj = new CombatObject(ship, battleseed); // for unit tests
 				CombatNodes.Add(comObj);
-				Empires[ship.Owner].ownships.Add(comObj);
-
-			}
+             */
+            foreach (CombatObject shipObj in CombatObjects)
+            {
+                shipObj.renewtoStart();
+                Empires[shipObj.icomobj_WorkingCopy.Owner].ownships.Add(shipObj);
+            }			
 		}
 
 		public void SetUpPieces()
@@ -278,21 +294,21 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
-					var ship = comObj.icomobj;
+					var ship = comObj.icomobj_WorkingCopy;
 					if (ship.IsHostileTo(empire.Key))
 						empire.Value.hostile.Add(comObj);
 					else if (ship.Owner != empire.Key)
 						empire.Value.friendly.Add(comObj);
 				}
 
-				int empindex = EmpiresArray.IndexOf(comObj.icomobj.Owner);
+				int empindex = EmpiresArray.IndexOf(comObj.icomobj_WorkingCopy.Owner);
 				comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
 				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
 				comObj.cmbt_att = new Compass(0);
 				int speed = 0;
-				if (comObj.icomobj is Vehicle)
-					speed = ((Vehicle)comObj.icomobj).Speed / 2;
+				if (comObj.icomobj_WorkingCopy is Vehicle)
+					speed = ((Vehicle)comObj.icomobj_WorkingCopy).Speed / 2;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
 				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
@@ -300,7 +316,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 			foreach (CombatObject comObj in CombatObjects)
-				commandAI(comObj, 1);
+				commandAI(comObj, 0);
 		}
 
 		public void Start()
@@ -351,7 +367,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-			bool hostiles = CombatObjects.Any(o => !o.icomobj.IsDestroyed && CombatObjects.Any(o2 => !o2.icomobj.IsDestroyed && o.icomobj.IsHostileTo(o2.icomobj.Owner)));
+			bool hostiles = CombatObjects.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && CombatObjects.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
@@ -372,7 +388,7 @@ namespace FrEee.Game.Objects.Combat2
 			Start();
 
 
-			int tick = 1, cmdFreqCounter = 0;
+			int tick = 0, cmdFreqCounter = 0;
 			while (ProcessTick(ref tick, ref cmdFreqCounter))
 			{
 				// keep on truckin'
@@ -390,7 +406,7 @@ namespace FrEee.Game.Objects.Combat2
 		public void helm(CombatObject comObj)
 		{
 			comObj.debuginfo += "HelmInfo:" + "\r\n";
-			var ship = comObj.icomobj;
+			var ship = comObj.icomobj_WorkingCopy;
 			string name = ship.Name;
 			//rotate ship
 			double timetoturn = 0;
@@ -569,14 +585,14 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			foreach (var weapon in comObj.weaponList)
 			{
-				Vehicle ship = (Vehicle)comObj.icomobj;
+				Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
 				//ship.Weapons
 				CombatWeapon wpn = (CombatWeapon)weapon;
 
 
 
 				if (comObj.weaponTarget.Count() > 0 &&
-					wpn.CanTarget(comObj.weaponTarget[0].icomobj) &&
+					wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
 					tic_countr >= wpn.nextReload)
 				{
 					//wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
@@ -645,14 +661,14 @@ namespace FrEee.Game.Objects.Combat2
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
             string comAI = "";
 			CombatObject tgtObj;
-			if (Empires[comObj.icomobj.Owner].hostile.Any())
+			if (Empires[comObj.icomobj_WorkingCopy.Owner].hostile.Any())
 			{
-				tgtObj = Empires[comObj.icomobj.Owner].hostile[0];
+				tgtObj = Empires[comObj.icomobj_WorkingCopy.Owner].hostile[0];
 				combatWaypoint wpt = new combatWaypoint(tgtObj);
 				comObj.waypointTarget = wpt;
 				//pick a primary target to fire apon from a list of enemy within weapon range
 				comObj.weaponTarget = new List<CombatObject>();
-				comObj.weaponTarget.Add(Empires[comObj.icomobj.Owner].hostile[0]);
+				comObj.weaponTarget.Add(Empires[comObj.icomobj_WorkingCopy.Owner].hostile[0]);
 			}
             if (IsReplay && tick < 1000)
             {
@@ -741,7 +757,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-			ICombatant target_icomobj = target.icomobj;
+			ICombatant target_icomobj = target.icomobj_WorkingCopy;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
 			if (!weapon.CanTarget(target_icomobj))
@@ -831,7 +847,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
-			Vehicle targetV = (Vehicle)target.icomobj;
+			Vehicle targetV = (Vehicle)target.icomobj_WorkingCopy;
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
@@ -863,9 +879,6 @@ namespace FrEee.Game.Objects.Combat2
 				var canBeHit = armor.Any() ? armor : internals;
 				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
 
-				//comp.
-				//SpaceVehicle actualShip =
-
 				damage = comp.TakeDamage(damageType, damage, null);// battle);
 			}
 
@@ -891,12 +904,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public System.Drawing.Image Icon
 		{
-			get { return WorkingCombatants.OfType<ISpaceObject>().Largest().Icon; }
+			get { return StartCombatants.OfType<ISpaceObject>().Largest().Icon; }
 		}
 
 		public System.Drawing.Image Portrait
 		{
-			get { return WorkingCombatants.OfType<ISpaceObject>().Largest().Portrait; }
+            get { return StartCombatants.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 
 		public ICombatant FindStartCombatant(ICombatant c)
@@ -904,9 +917,15 @@ namespace FrEee.Game.Objects.Combat2
 			return StartCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
 		}
 
+        /// <summary>
+        /// I *think* the id will work here now... the ID for the *comObjs* *Should* stay the same. 
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
-			return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+            return CombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)
