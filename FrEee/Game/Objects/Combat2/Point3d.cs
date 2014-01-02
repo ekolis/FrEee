@@ -249,10 +249,21 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		public double Radians
 		{
-			get { return this.heading_degrees * Math.PI / 180; }
+			get 
+            {
+                //double hd = heading_degrees;
+                //double hd = 180.0;
+                //double pi = Math.PI;
+                //double pi180 = 0.01745329251; //pi / 180;
+                //double result = (float)(hd * pi180);
+                //double result = 3.14159265359;
+                double result = (float)(heading_degrees * Trig.PI180);
+                return result;
+                //return heading_degrees * Math.PI / 180; 
+            }
 			set
 			{
-				this.heading_degrees = value * 180 / Math.PI;
+				this.heading_degrees = value * 180 / Trig.PI;
 				normalize();
 			}
 		}
@@ -316,6 +327,10 @@ namespace FrEee.Game.Objects.Combat2
 
 	public class Trig
 	{
+
+        public static double PI = 3.14159265359;
+        public static double PI180 = 0.01745329251;
+
 		/// <summary>
 		/// returns a 2d vector for a given angle and scaler
 		/// </summary>
@@ -326,7 +341,7 @@ namespace FrEee.Game.Objects.Combat2
 		public static Point3d sides_ab(double hypotinuse, double angle_A, bool radians = true)
 		{
 			if (!radians)
-			{ angle_A = angle_A * Math.PI / 180; }
+            { angle_A = (float)(angle_A * PI180); }
 			double side_a = 0;
 			double side_b = 0;
 

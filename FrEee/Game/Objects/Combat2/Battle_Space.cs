@@ -419,7 +419,7 @@ namespace FrEee.Game.Objects.Combat2
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
 			timetoturn = angletoturn.Radians / comObj.maxRotate;
-			double oneEightytime = Math.PI / comObj.maxRotate;
+			double oneEightytime = Trig.PI / comObj.maxRotate;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
 			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
 			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
