@@ -182,8 +182,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		public Sector sectoratStart { get; private set; }
 
-		private const double ticlen = 0.1; //physics tick length
-		public const double CommandFrequency = 10;   //new commands (move, new targets etc) are given every 10 ticks.
+		public const double TickLength = 0.1; // physics tick length in seconds (each SE4 "combat round" is one second)
+		public const double CommandFrequency = 10; //new commands (move, new targets etc) are given every 10 ticks.
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -273,7 +273,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void SetUpPieces()
 		{
-			int startrange = 1500; //TODO check longest range weapon. startrange should be half this.
+			int startrange = 1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?)
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
 			Compass angle = new Compass(360 / EmpiresArray.Count(), false);
@@ -645,7 +645,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.cmbt_vel += comObjo.cmbt_accel;
 			}
 
-			comObj.cmbt_loc += comObj.cmbt_vel * ticlen;
+			comObj.cmbt_loc += comObj.cmbt_vel * TickLength;
 
 			return comObj.cmbt_loc;
 		}
@@ -712,8 +712,8 @@ namespace FrEee.Game.Objects.Combat2
 			else if (weapon.weaponType == "Bolt") //projectile
 			{
 				double boltTTT = boltTimeToTarget(attacker, weapon, target);
-				//remember, maxRange is bolt lifetime. 
-				if (boltTTT <= weaponMaxRange && boltTTT >= weaponMinRange)
+				//remember, maxRange is bolt lifetime in seconds 
+				if (boltTTT <= weaponMaxRange / TickLength && boltTTT >= weaponMinRange / TickLength)
 				{
 					inrange = true;
 					weaponRangeinfo += "Range for Projectile is good \r\n";
@@ -733,7 +733,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			double shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
 			double shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-			return shotspeed_actual * ticlen;
+			return shotspeed_actual * TickLength;
 		}
 
 		public static double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)

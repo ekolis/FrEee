@@ -41,8 +41,8 @@ namespace FrEee.Game.Objects.Combat2
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect))
             {
                 weaponType = "Bolt";
-                boltSpeed = wpninfo.MaxRange * 1000; //modfiles are in klometers
-                maxRange = 1;// (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
+                boltSpeed = wpninfo.MaxRange * 1000 * Battle_Space.TickLength; // convert from kilometers per second to meters per tick
+                maxRange = 1; // (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = wpninfo.MinRange / boltSpeed; //(minTime for bolts) distance / speed = time                  
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
