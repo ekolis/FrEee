@@ -20,14 +20,14 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			var sys = new StarSystem(1);
 			var emp = new Empire();
 			var combatant = new MockCombatant(emp);
-            var testComObj = new CombatObject(combatant, 42);
+            var testComObj = new CombatObject(combatant, combatant, 42);
 			var spinrate = new Compass(5, false);
 			testComObj.maxRotate = spinrate.Radians;
 			testComObj.cmbt_accel = new Point3d(0, 0);
 			testComObj.maxStrafeThrust = 0;
 			var combatants = new ICombatant[] { combatant };
 			var battle = new Battle_Space(combatants);
-			battle.WorkingCombatants.Add(combatant);
+			//battle.WorkingCombatants.Add(combatant);
 			battle.CombatNodes.Add(testComObj);
 
 			battle.Start();

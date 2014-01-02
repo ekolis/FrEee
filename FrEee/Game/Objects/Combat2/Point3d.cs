@@ -238,7 +238,24 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		public double Radians
 		{
-			get { return this.heading_degrees * Math.PI / 180; }
+			get 
+            {
+                Console.Out.WriteLine("Heading Degrees");
+                Console.Out.WriteLine(this.heading_degrees.ToString("G17"));
+                if (heading_degrees == 180.0)
+                    Console.Out.WriteLine("180 true");
+                if (heading_degrees > 180)
+                    Console.Out.WriteLine("180 larger");
+                Console.Out.WriteLine("PI  is");
+                Console.Out.WriteLine(3.14159265359.ToString("G17"));
+                //Console.Out.WriteLine(Math.PI.ToString("G17"));
+                //double result = this.heading_degrees * Math.PI / 180.0;
+                double result = (heading_degrees * 3.14159265359) / 180.0;             
+                //double result = (180 * 3.14159265359) / 180.0;             
+                Console.Out.WriteLine("Heading Radians");
+                Console.Out.WriteLine(result.ToString("G17"));
+                return result;
+            }
 			set
 			{
 				this.heading_degrees = value * 180 / Math.PI;
@@ -370,7 +387,8 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>angleA</returns>
 		public static double angleA(Point3d point)
 		{
-			return Math.Atan2(point.X, point.Y);
+            double result = Math.Atan2(point.X, point.Y);
+            return result;
 		}
 
 		/// <summary>
@@ -394,7 +412,8 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>relitive angle of p2</returns>
 		public static double angleto(Point3d p1, Point3d p2)
 		{
-			return angleA(p2 - p1);
+			double result =  angleA(p2 - p1);
+            return result; 
 		}
 
 		/// <summary>
