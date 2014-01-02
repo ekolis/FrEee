@@ -575,8 +575,8 @@ namespace FrEee.WinForms.MogreCombatRender
 								//create an entity for the bullet node.
 								double boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
 								double boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-								double rThis_distance = boltSpeed * boltTTT;
-								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
+								double rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
+								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * Battle_Space.TickLength;
                                 if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
                                 {
                                     //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
