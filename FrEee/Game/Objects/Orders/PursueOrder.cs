@@ -117,6 +117,8 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
+			if (Target == null)
+				return "Unknown";
 			if (AvoidEnemies && Target.Owner != null && !Target.IsHostileTo(Owner))
 				return "Escort " + Target;
 			else
