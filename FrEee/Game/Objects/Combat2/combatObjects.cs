@@ -109,7 +109,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.cmbt_loc = position;
             this.cmbt_vel = vector;
-            this.cmbt_head = new Compass(0);
+            this.cmbt_head = new Compass(0.0, false);
             this.ID = ID;
         }
         /// <summary>
@@ -235,6 +235,7 @@ namespace FrEee.Game.Objects.Combat2
                 ((SpaceVehicle)ship).Components.Add(comp.Copy());
 
             this.icomObj = ship;
+            
         }
 
 		public combatWaypoint waypointTarget;
