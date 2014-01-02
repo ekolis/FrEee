@@ -392,12 +392,17 @@ namespace FrEee.Game.Objects.Vehicles
 				if (pct > 0)
 				{
 					pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
-					pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
-					pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
-					pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
-					pct -= Owner.Culture.MaintenanceReduction;
-					if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
-						pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
+					if (Sector != null)
+						pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+					if (StarSystem != null)
+						pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+					if (Owner != null)
+					{
+						pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();
+						pct -= Owner.Culture.MaintenanceReduction;
+						if (Owner.PrimaryRace.Aptitudes.ContainsKey(Aptitude.Maintenance.Name))
+							pct -= Owner.PrimaryRace.Aptitudes[Aptitude.Maintenance.Name] - 100;
+					}
 					return Cost * pct / 100d;
 				}
 				else

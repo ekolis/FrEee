@@ -37,7 +37,7 @@ namespace FrEee.WinForms.Forms
 		{
 			//get { return Battle.WorkingCombatants.OfType<SpaceVehicle>().Where(v => !v.IsDestroyed); }
 
-            get { return (IEnumerable<SpaceVehicle>)Battle.CombatObjects.Where(v => v.icomobj_WorkingCopy.IsDestroyed); }
+            get { return Battle.CombatObjects.Where(v => !v.icomobj_WorkingCopy.IsDestroyed).Select(v => v.icomobj_WorkingCopy).OfType<SpaceVehicle>(); }
 		}
 
 		private void btnPreviousShip_Click(object sender, EventArgs e)
