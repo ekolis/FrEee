@@ -200,6 +200,17 @@ namespace FrEee.Game.Objects.Combat2
 				h ^= n.GetHashCode();
 			return h;
 		}
+
+		/// <summary>
+		/// The length of the vector (distance from origin).
+		/// </summary>
+		public double Length
+		{
+			get
+			{
+				return Math.Sqrt(X * X + Y * Y + Z * Z);
+			}
+		}
 	}
 
 
@@ -300,6 +311,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			return Degrees.GetHashCode();
 		}
+
 	}
 
 	public class Trig
@@ -586,5 +598,4 @@ namespace FrEee.Game.Objects.Combat2
             return closingrate;
         }
 	}
-
 }
