@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Combat2
 
 	public class Compass
 	{
-		double heading_degrees;
+		float heading_degrees;
 		public Compass()
 		{
 			// leave it initialized to zero
@@ -235,7 +235,7 @@ namespace FrEee.Game.Objects.Combat2
 
         public Compass(Point3d point1, Point3d point2)
         {
-            Radians = Trig.angleto(point1, point2);
+            Radians = (float)(Trig.angleto(point1, point2));
         }
 
 		public double Degrees
@@ -243,7 +243,7 @@ namespace FrEee.Game.Objects.Combat2
 			get { return this.heading_degrees; }
 			set
 			{
-				this.heading_degrees = value;
+				this.heading_degrees = (float)value;
 				normalize();
 			}
 		}
@@ -263,7 +263,7 @@ namespace FrEee.Game.Objects.Combat2
             }
 			set
 			{
-				this.heading_degrees = value * 180 / Trig.PI;
+                this.heading_degrees = (float)(value * 180 / Trig.PI);
 				normalize();
 			}
 		}
@@ -274,12 +274,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void normalize()
 		{
-			heading_degrees = NormalizeDegrees(heading_degrees);
+			heading_degrees = (NormalizeDegrees(heading_degrees));
 		}
 
-		public static double NormalizeDegrees(double degrees)
+		public static float NormalizeDegrees(double degrees)
 		{
-			return ((degrees % 360) + 360) % 360; // thanks SJ ;)
+			return (float)(((degrees % 360) + 360) % 360); // thanks SJ ;)
 		}
 
 		public static double operator +(Compass angle, double addend)
@@ -345,8 +345,8 @@ namespace FrEee.Game.Objects.Combat2
 			double side_a = 0;
 			double side_b = 0;
 
-			side_b = Math.Sin(angle_A) * hypotinuse;
-			side_a = Math.Cos(angle_A) * hypotinuse;
+			side_b = (float)(Math.Sin(angle_A) * hypotinuse);
+			side_a = (float)(Math.Cos(angle_A) * hypotinuse);
 
 
 			return new Point3d(side_b, side_a, 0);
