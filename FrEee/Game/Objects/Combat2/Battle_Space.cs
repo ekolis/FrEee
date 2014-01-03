@@ -210,60 +210,10 @@ namespace FrEee.Game.Objects.Combat2
             {
                 Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
             }
-            //this is now all handled in initialization.
-            //foreach (var shipObj in ActualCombatants)
-            //{
-
-            //    //WorkingCombatants.Add(shipObj);
-            //    CombatObject comObj;
-            //    if (shipObj is SpaceVehicle)
-            //    {
-            //        //comObj = new CombatObject((SpaceVehicle)shipObj, battleseed);
-         
-            //    }
-            //    else
-            //        //comObj = new CombatObject(shipObj, battleseed); // for unit tests
-            //    CombatNodes.Add(comObj);
-            //    Empires[shipObj.Owner].ownships.Add(comObj);
-
-            //}
+           
 		}
 		private void ReplaySetup()
 		{
-
-			//this time WorkingCombatants is filled with a copy of the shipObj instead of the actual one. 
-			//this is one place where the sim could go slightly different from the actual. the lists *should* be in the same order however
-			//and the prng should have the same seed and be the same. 
-			//WorkingCombatants = new HashSet<ICombatant>();
-			//CombatNodes = new HashSet<CombatNode>();
-
-            /*
-			foreach (var shipObj in StartCombatants)
-			{
-				var ship = shipObj.Copy();
-				ship.IsMemory = true;
-				if (ship.Owner != shipObj.Owner)
-					ship.Owner.Dispose(); // don't need extra empires!
-
-				// copy over the components individually so they can take damage without affecting the starting state
-				// TODO - deal with planets in combat
-				((SpaceVehicle)ship).Components.Clear();
-				foreach (var comp in ((SpaceVehicle)shipObj).Components)
-					((SpaceVehicle)ship).Components.Add(comp.Copy());
-
-				WorkingCombatants.Add(ship);
-				CombatObject comObj;
-				if (ship is SpaceVehicle)
-				{
-					SpaceVehicle sobj = (SpaceVehicle)ship;
-					sobj.Owner = shipObj.Owner;
-					//comObj = new CombatObject(sobj, battleseed);
-                    
-				}
-				else
-					comObj = new CombatObject(ship, battleseed); // for unit tests
-				CombatNodes.Add(comObj);
-             */
             foreach (CombatObject shipObj in CombatObjects)
             {
                 shipObj.renewtoStart();
