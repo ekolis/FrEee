@@ -235,6 +235,13 @@ namespace FrEee.Game.Objects.Combat2
                 ((SpaceVehicle)ship).Components.Add(comp.Copy());
 
             this.icomObj = ship;
+
+            this.cmbt_loc = new Point3d(0, 0, 0);
+            this.cmbt_vel = new Point3d(0, 0, 0);
+            this.cmbt_head = new Compass(0);
+            this.cmbt_att = new Compass(0);
+            this.cmbt_thrust = new Point3d(0, 0, 0);
+            this.cmbt_accel = new Point3d(0, 0, 0);
         }
 
 		public combatWaypoint waypointTarget;

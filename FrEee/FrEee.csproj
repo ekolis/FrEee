@@ -206,6 +206,7 @@
     <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
     <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
+    <Compile Include="Game\Objects\Combat2\FPoint.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Combat2\Point3d.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
