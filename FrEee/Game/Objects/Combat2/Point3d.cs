@@ -208,7 +208,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			get
 			{
-				return Math.Sqrt(X * X + Y * Y + Z * Z);
+				return (float)(Math.Sqrt(X * X + Y * Y + Z * Z));
 			}
 		}
 	}
@@ -240,7 +240,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public double Degrees
 		{
-			get { return this.heading_degrees; }
+			get { return (float)this.heading_degrees; }
 			set
 			{
 				this.heading_degrees = (float)value;
@@ -397,7 +397,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>angleA</returns>
 		public static double angleA(Point3d point)
 		{
-			return Math.Atan2(point.X, point.Y);
+			return (float)(Math.Atan2(point.X, point.Y));
 		}
 
 		/// <summary>
@@ -421,7 +421,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>relitive angle of p2</returns>
 		public static double angleto(Point3d p1, Point3d p2)
 		{
-			return angleA(p2 - p1);
+			return (float)angleA(p2 - p1);
 		}
 
 		/// <summary>
