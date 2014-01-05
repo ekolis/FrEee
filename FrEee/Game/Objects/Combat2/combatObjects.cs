@@ -11,6 +11,8 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
+using FixMath.NET;
+
 namespace FrEee.Game.Objects.Combat2
 {
 	public class CombatEmpire
@@ -31,25 +33,29 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.weapon = weapon;
             var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
-
+            int wpMaxR = wpninfo.MaxRange;
+            int wpMinR = wpninfo.MinRange;
             if (wpninfo.DisplayEffect.GetType() == typeof(Combat.BeamWeaponDisplayEffect))
             {
                 weaponType = "Beam";
-                maxRange = wpninfo.MaxRange * 1000;
-                minRange = wpninfo.MinRange * 1000;
+
+                maxRange = (Fix16)wpMaxR * (Fix16)1000;
+                minRange = (Fix16)wpMinR * (Fix16)1000;
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect))
             {
                 weaponType = "Bolt";
-                boltSpeed = wpninfo.MaxRange * 1000 * Battle_Space.TickLength; // convert from kilometers per second to meters per tick
-                maxRange = 1; // (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
-                minRange = wpninfo.MinRange / boltSpeed; //(minTime for bolts) distance / speed = time                  
+
+                boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
+                maxRange = (Fix16)1; // (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
+                minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
                 weaponType = "Seeker";
             else
-                weaponType = "Unknown"; 
-            reloadRate = wpninfo.ReloadRate;
+                weaponType = "Unknown";
+            double wpiReloadRate = wpninfo.ReloadRate;
+            reloadRate = (Fix16)wpiReloadRate;
             nextReload = 1;
 
             
@@ -73,22 +79,22 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// the rate the weapon can reload in seconds.
         /// </summary>
-        public double reloadRate { get; private set; }
+        public Fix16 reloadRate { get; private set; }
 
         /// <summary>
         /// if a bolt, what is it's speed if fired at rest?
         /// </summary>
-        public double boltSpeed { get; private set; }
+        public Fix16 boltSpeed { get; private set; }
 
         /// <summary>
         /// if a bolt (or seeker?), this is time, else it's distance 
         /// </summary>
-        public int maxRange { get; private set; }
+        public Fix16 maxRange { get; private set; }
 
         /// <summary>
         /// if a bolt (or seeker?), this is time, else it's distance 
         /// </summary>
-        public int minRange { get; private set; }
+        public Fix16 minRange { get; private set; }
 
         public bool CanTarget(ICombatant target)
         {
@@ -109,7 +115,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             this.cmbt_loc = position;
             this.cmbt_vel = vector;
-            this.cmbt_head = new Compass(0);
+            this.cmbt_head = new Compass((Fix16)0);
             this.ID = ID;
         }
         /// <summary>
@@ -140,19 +146,20 @@ namespace FrEee.Game.Objects.Combat2
 		public CombatObject(SpaceVehicle start_v, SpaceVehicle working_v, int battleseed)
             : this((ICombatant)start_v, (ICombatant)working_v, battleseed)
 		{
-            this.cmbt_mass = (double)working_v.Size;
-            this.maxfowardThrust = working_v.Speed * this.cmbt_mass * 0.1;
-            this.maxStrafeThrust = (working_v.Speed * this.cmbt_mass * 0.1) / (4 - working_v.Evasion * 0.01);
-            this.maxRotate = (working_v.Speed * this.cmbt_mass * 0.1) / (12000 - working_v.Evasion * 0.1);
+            this.cmbt_mass = (Fix16)working_v.Size;
+            this.maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
+            this.maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
+            this.maxRotate = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
 		}
 
 		public CombatObject(Seeker s, int battleseed)
 			: this(null, (ICombatant)s, battleseed)
 		{
-			this.cmbt_mass = (double)s.MaxHitpoints; // sure why not?
-            this.maxfowardThrust = s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001;
-            this.maxStrafeThrust = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (4 - s.Evasion * 0.01);
-            this.maxRotate = (s.WeaponInfo.SeekerSpeed * this.cmbt_mass * 0.001) / (12 - s.Evasion * 0.1);
+			this.cmbt_mass = (Fix16)s.MaxHitpoints; // sure why not?
+            int wpnskrspd = s.WeaponInfo.SeekerSpeed;
+            this.maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001;
+            this.maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)s.Evasion * (Fix16)0.01);
+            this.maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)s.Evasion * (Fix16)0.1);
 		}
 
 
@@ -203,7 +210,7 @@ namespace FrEee.Game.Objects.Combat2
 
         public Point3d cmbt_accel { get; set; }
 
-		public double cmbt_mass { get; set; }
+		public Fix16 cmbt_mass { get; set; }
 
 		//public Point3d cmbt_maxThrust { get; set; }
 		//public Point3d cmbt_minThrust { get; set; }
@@ -252,9 +259,9 @@ namespace FrEee.Game.Objects.Combat2
 
         public List<CombatWeapon> weaponList { get; set; }
 
-		public double maxfowardThrust { get; set; }
-		public double maxStrafeThrust { get; set; }
-		public double maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
+		public Fix16 maxfowardThrust { get; set; }
+        public Fix16 maxStrafeThrust { get; set; }
+        public Fix16 maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
 
 		public PRNG getDice()
 		{
