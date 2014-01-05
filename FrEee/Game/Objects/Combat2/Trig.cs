@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Combat2
         public static Point3d sides_ab(Fix16 hypotinuse, Fix16 angle_A, bool radians = true)
         {
             if (!radians)
-            { angle_A = (angle_A * ((Fix16)(180) / Fix16.Pi)); }
+            { angle_A = (angle_A * (Fix16.Pi / (Fix16)180) ); }
             Fix16 side_a;
             Fix16 side_b;
 
