@@ -58,12 +58,12 @@ namespace FrEee.Game.Objects.Combat2
         {
             get
             {
-                Fix16 result = heading_degrees * ((Fix16)(180) / Fix16.Pi);
+                Fix16 result = heading_degrees * (Fix16.Pi / (Fix16)180);
                 return result; 
             }
             set
             {
-                this.heading_degrees = value * ((Fix16)(180) / Fix16.Pi);
+				this.heading_degrees = value * (Fix16.Pi / (Fix16)180);
                 normalize();
             }
         }
