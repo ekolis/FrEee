@@ -38,9 +38,11 @@ namespace FrEee.Game.Objects.Combat2
 
         public Compass(Point3d point1, Point3d point2)
         {
-            Radians = (Trig.angleto(point1, point2));
-            Fix16 num = new Fix16();
-            num = (Fix16)(180.0d);
+            Fix16 rads = Trig.angleto(point1, point2);
+            Radians = rads;
+            //this.heading_degrees = rads * (Fix16.Pi / (Fix16)(180));
+            //normalize();
+
         }
 
         public Fix16 Degrees
@@ -56,22 +58,12 @@ namespace FrEee.Game.Objects.Combat2
         {
             get
             {
-                //double hd = heading_degrees;
-                //double hd = 180.0;
-                //double pi = Math.PI;
-                //double pi180 = 0.01745329251; //pi / 180;
-                //double result = (float)(hd * pi180);
-                //double result = 3.14159265359;
-                //double result = (heading_degrees * Trig.PI180);
-                
-                
-                Fix16 result = heading_degrees * Fix16.Pi / Fix16.FromRaw(180);
-                return result;
-                //return heading_degrees * Math.PI / 180; 
+                Fix16 result = heading_degrees * ((Fix16)(180) / Fix16.Pi);
+                return result; 
             }
             set
             {
-                this.heading_degrees = (value * Fix16.FromRaw(180) / Fix16.Pi);
+                this.heading_degrees = value * ((Fix16)(180) / Fix16.Pi);
                 normalize();
             }
         }
