@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -182,8 +183,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		public Sector sectoratStart { get; private set; }
 
-		public const double TickLength = 0.1; // physics tick length in seconds (each SE4 "combat round" is one second)
-		public const double CommandFrequency = 10; //new commands (move, new targets etc) are given every 10 ticks.
+        public const float TickLength = 0.1f; // physics tick length in seconds (each SE4 "combat round" is one second)
+        public const int CommandFrequency = 10; //new commands (move, new targets etc) are given every 10 ticks.
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -223,16 +224,15 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void SetUpPieces()
 		{
-			int startrange = 1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?)
+            Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
-			Compass angle = new Compass(360 / EmpiresArray.Count(), false);
+            Compass angle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
 
 			for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
 			{
-				double angleoffset = angle.Radians * i;
-				startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));
-
+                Fix16 angleoffset = angle.Radians * (Fix16)i;
+                startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));	
 			}
 
 			if (!IsReplay)
@@ -256,9 +256,9 @@ namespace FrEee.Game.Objects.Combat2
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
 				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
 				comObj.cmbt_att = new Compass(0);
-				int speed = 0;
+                Fix16 speed = (Fix16)0;
 				if (comObj.icomobj_WorkingCopy is Vehicle)
-					speed = ((Vehicle)comObj.icomobj_WorkingCopy).Speed / 2;
+                    speed = ((Fix16)((Vehicle)comObj.icomobj_WorkingCopy).Speed) / (Fix16)2;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
 				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
@@ -359,7 +359,7 @@ namespace FrEee.Game.Objects.Combat2
 			var ship = comObj.icomobj_WorkingCopy;
 			string name = ship.Name;
 			//rotate ship
-			double timetoturn = 0;
+			Fix16 timetoturn = (Fix16)0;
 			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
 			combatWaypoint wpt = comObj.waypointTarget;
 			Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc); //relitive to me. 
@@ -369,30 +369,30 @@ namespace FrEee.Game.Objects.Combat2
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
 			timetoturn = angletoturn.Radians / comObj.maxRotate;
-			double oneEightytime = Trig.PI / comObj.maxRotate;
+            Fix16 oneEightytime = Fix16.Pi / comObj.maxRotate;
 			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
 			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
 			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-			double closingSpeed = GravMath.closingrate(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
+            Fix16 closingSpeed = GravMath.closingrate(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
 
-			double myspeed = Trig.hypotinuse(comObj.cmbt_vel);
+            Fix16 myspeed = Trig.hypotinuse(comObj.cmbt_vel);
 
-			double timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
-			double strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
-			double timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
-
-
-			double distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
+            Fix16 timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
+            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
+            Fix16 timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
 
 
-			double nominaldistance = comObj.maxStrafeThrust;
-			double timetowpt = distance / closingSpeed;
+            Fix16 distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
+
+
+            Fix16 nominaldistance = comObj.maxStrafeThrust;
+            Fix16 timetowpt = distance / closingSpeed;
 
 			bool? thrustToWaypoint = true;
 			string helmdo = "";
 
-			if (closingSpeed > 0) //getting closer
+            if (closingSpeed > (Fix16)0) //getting closer
 			{
 				if (distance <= nominaldistance)  //close to the waypoint.
 				{
@@ -420,7 +420,7 @@ namespace FrEee.Game.Objects.Combat2
 			if (thrustToWaypoint == false)
 			{
 				helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
-				angletoturn.Degrees = (angletoWaypoint.Degrees - 180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
+                angletoturn.Degrees = (angletoWaypoint.Degrees - (Fix16)180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
 				angletoturn.normalize();
 			}
 			else if (thrustToWaypoint == null)
@@ -447,7 +447,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		private void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
 		{
-			if (angletoturn.Degrees <= 180) //turn clockwise
+            if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
 			{
 				if (angletoturn.Radians > comObj.maxRotate)
 				{
@@ -462,7 +462,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			else //turn counterclockwise
 			{
-				if ((360 - angletoturn.Radians) > comObj.maxRotate)
+                if (((Fix16)360 - angletoturn.Radians) > comObj.maxRotate)
 				{
 					//comObj.cmbt_face -= comObj.maxRotate;
 					comObj.cmbt_head.Radians -= comObj.maxRotate;
@@ -498,21 +498,21 @@ namespace FrEee.Game.Objects.Combat2
 			comObj.cmbt_thrust.ZEROIZE();
 			strafeship(comObj, thrustToWaypoint);
 			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
-			double thrustby = 0;
+            Fix16 thrustby = (Fix16)0;
 			if (thrustToWaypoint != null)
 			{
-				if (angletoturn.Degrees >= 0 && angletoturn.Degrees < 90)
+                if (angletoturn.Degrees >= (Fix16)0 && angletoturn.Degrees < (Fix16)90)
 				{
 
-					thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
+                    thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
 				}
-				else if (angletoturn.Degrees > 270 && angletoturn.Degrees < 360)
+                else if (angletoturn.Degrees > (Fix16)270 && angletoturn.Degrees < (Fix16)360)
 				{
-					Compass angle = new Compass(360 - angletoturn.Degrees);
+                    Compass angle = new Compass((Fix16)360 - angletoturn.Degrees);
 					angle.normalize();
-					thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angle.Degrees / 0.9));
+                    thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angle.Degrees / (Fix16)0.9));
 				}
-
+                
 				//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
 				Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
 				comObj.cmbt_thrust += fowardthrust;
@@ -523,7 +523,7 @@ namespace FrEee.Game.Objects.Combat2
 				Point3d wayptvel = comObj.waypointTarget.cmbt_vel;
 				Point3d ourvel = comObj.cmbt_vel;
 
-				thrustby = (double)comObj.maxfowardThrust / (Math.Max(1, angletoturn.Degrees / 0.9));
+                thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
 
 				Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
 
@@ -595,14 +595,14 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.cmbt_vel += comObjo.cmbt_accel;
 			}
 
-			comObj.cmbt_loc += comObj.cmbt_vel * TickLength;
+            comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
 
 			return comObj.cmbt_loc;
 		}
 
 		public Point3d InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
-			return comObj.cmbt_loc + comObj.cmbt_vel * fractionalTick;
+			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
 
 		public void commandAI(CombatObject comObj, int tick)
@@ -645,9 +645,9 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			bool inrange = false;
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-			double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			int weaponMaxRange = weapon.maxRange;
-			int weaponMinRange = weapon.minRange;
+			Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 weaponMaxRange = (Fix16)weapon.maxRange;
+            Fix16 weaponMinRange = (Fix16)weapon.minRange;
 			string weaponRangeinfo = "RangeInfo:\r\n ";
 
 
@@ -661,9 +661,9 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			else if (weapon.weaponType == "Bolt") //projectile
 			{
-				double boltTTT = boltTimeToTarget(attacker, weapon, target);
+                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
 				//remember, maxRange is bolt lifetime in seconds 
-				if (boltTTT <= weaponMaxRange / TickLength && boltTTT >= weaponMinRange / TickLength)
+                if (boltTTT <= weaponMaxRange / (Fix16)TickLength && boltTTT >= weaponMinRange / (Fix16)TickLength)
 				{
 					inrange = true;
 					weaponRangeinfo += "Range for Projectile is good \r\n";
@@ -679,17 +679,17 @@ namespace FrEee.Game.Objects.Combat2
 			return inrange;
 		}
 
-		public static double boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+        public static Fix16 boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-			double shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
-			double shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-			return shotspeed_actual * TickLength;
+            Fix16 shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
+            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            return shotspeed_actual * (Fix16)TickLength;
 		}
 
-		public static double boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+        public static Fix16 boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-			double distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			double boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
+            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
 			return boltTimetoTarget;
 		}
 
@@ -698,12 +698,12 @@ namespace FrEee.Game.Objects.Combat2
 
 
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-			double rangeForDamageCalcs = 0;
-			double rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 rangeForDamageCalcs = (Fix16)0;
+            Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
 			int targettic = tic;
 
 			//reset the weapon nextReload.
-			weapon.nextReload = tic + (int)(weapon.reloadRate * 10);
+            weapon.nextReload = tic + (int)(weapon.reloadRate * (Fix16)10);
 
 
 
@@ -729,19 +729,19 @@ namespace FrEee.Game.Objects.Combat2
 			//for bolt calc, need again for adding to list.
 			if (weapon.weaponType == "Bolt")
 			{
-				double boltTTT = boltTimeToTarget(attacker, weapon, target);
-				double boltSpeed = boltClosingSpeed(attacker, weapon, target);
-				double rThis_distance = boltSpeed * boltTTT;
+                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
+                Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
+                Fix16 rThis_distance = boltSpeed * boltTTT;
 
-				double rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
-				double rMin_distance = boltSpeed * weapon.minRange; //s * t = d
+                Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
+                Fix16 rMin_distance = boltSpeed * weapon.minRange; //s * t = d
 
-				double rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
-				double rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
+                Fix16 rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
+                Fix16 rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
 
-				double scaler = rMax_distance_standstill / rMax_distance;
+                Fix16 scaler = rMax_distance_standstill / rMax_distance;
 
-				rangeForDamageCalcs = rThis_distance * scaler * 0.001;
+				rangeForDamageCalcs = rThis_distance * scaler * (Fix16)0.001;
 
 				//set target tick for the future.
 				targettic += (int)boltTTT;
@@ -764,12 +764,12 @@ namespace FrEee.Game.Objects.Combat2
 				}
 				else
 				{ //write the event.
-					rangeForDamageCalcs = rangetotarget / 1000;
+					rangeForDamageCalcs = rangetotarget / (Fix16)1000;
 					target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
 				}
 			}
 
-			rangeForDamageCalcs = Math.Max(1, rangeForDamageCalcs); //don't be less than 1.
+            rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
 
 			long ID = target_icomobj.ID;
 			if (ID == -1)

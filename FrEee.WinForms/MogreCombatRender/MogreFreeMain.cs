@@ -12,6 +12,8 @@ using System.Windows.Forms;
 using System.Drawing;
 using FrEee.WinForms.Forms;
 
+using FixMath.NET;
+
 namespace FrEee.WinForms.MogreCombatRender
 {
 	class ShutdownException : Exception { }
@@ -459,7 +461,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			float sizex = objEnt.BoundingBox.Size.x;
 			float sizey = objEnt.BoundingBox.Size.y;
 			float sizez = objEnt.BoundingBox.Size.z;
-			var desiredSize = (float)System.Math.Pow(obj.cmbt_mass, 1d / 3d);
+			var desiredSize = (float)System.Math.Pow((double)obj.cmbt_mass, 1d / 3d);
 			float scalex = (desiredSize / sizex);
 			float scaley = (desiredSize / sizey);
 			float scalez = (desiredSize / sizez);
@@ -573,10 +575,10 @@ namespace FrEee.WinForms.MogreCombatRender
 							if (fireEvent.Weapon.weaponType == "Bolt")
 							{								
 								//create an entity for the bullet node.
-								double boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-								double boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-								double rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
-								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * Battle_Space.TickLength;
+								Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                                Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                                Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
+								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * (Fix16)(Battle_Space.TickLength);
                                 if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
                                 {
                                     //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
@@ -654,7 +656,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 + comObj.cmbt_loc.X.ToString() + "\r\n\t" 
                 + comObj.cmbt_loc.Y.ToString() + "\r\n\t" 
                 + comObj.cmbt_loc.Z.ToString() + "\r\n";
-            double speed = Trig.hypotinuse(comObj.cmbt_vel);
+            double speed = (double)Trig.hypotinuse(comObj.cmbt_vel);
             txt += "Speed:\t" + speed.ToString() + "\r\n";
             txt += "Heading:\t" + comObj.cmbt_head.Degrees.ToString() + "\r\n";
             

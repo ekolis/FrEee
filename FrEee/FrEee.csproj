@@ -107,14 +107,12 @@
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Mogre">
-      <HintPath>Game\Objects\Combat2\CombatMogre\Mogre.dll</HintPath>
-    </Reference>
-    <Reference Include="MOIS">
-      <HintPath>Game\Objects\Combat2\CombatMogre\MOIS.dll</HintPath>
+    <Reference Include="nunit.framework">
+      <HintPath>Game\Objects\Combat2\FixedMath\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -206,7 +204,12 @@
     <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
     <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
-    <Compile Include="Game\Objects\Combat2\FPoint.cs" />
+    <Compile Include="Game\Objects\Combat2\Compass.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16SinLut.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16Test.cs" />
+    <Compile Include="Game\Objects\Combat2\GravMath.cs" />
+    <Compile Include="Game\Objects\Combat2\Trig.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Combat2\Point3d.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
