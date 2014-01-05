@@ -20,13 +20,14 @@ namespace FixMath.NET {
         public static readonly Fix16 X4CorrectionComponent = new Fix16(0x399A);
         public static readonly Fix16 PiDiv4 = new Fix16(0x0000C90F);
         public static readonly Fix16 ThreePiDiv4 = new Fix16(0x00025B2F);
-        public static readonly Fix16 PiDiv180 = Pi / (Fix16)(180);
+        
 
         public static readonly Fix16 MaxValue = new Fix16(int.MaxValue);
         public static readonly Fix16 MinValue = new Fix16(int.MinValue);
         public static readonly Fix16 Overflow = new Fix16(int.MinValue);
 
         public static readonly Fix16 Pi = new Fix16(205887);
+        //public static readonly Fix16 PiDiv180 = Pi / (Fix16)(180); this seems to return something strange
         public static readonly Fix16 E = new Fix16(178145);
         public static readonly Fix16 One = new Fix16(0x00010000);
         public static readonly Fix16 Zero = new Fix16(0);

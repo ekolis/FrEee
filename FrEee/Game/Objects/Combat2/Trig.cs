@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Combat2
         public static Point3d sides_ab(Fix16 hypotinuse, Fix16 angle_A, bool radians = true)
         {
             if (!radians)
-            { angle_A = (angle_A * Fix16.PiDiv180); }
+            { angle_A = (angle_A * ((Fix16)(180) / Fix16.Pi)); }
             Fix16 side_a;
             Fix16 side_b;
 
@@ -77,7 +77,8 @@ namespace FrEee.Game.Objects.Combat2
         /// <returns>angleA</returns>
         public static Fix16 angleA(Point3d point)
         {
-            return (Fix16.Atan2(point.X, point.Y));
+            Fix16 angle = Fix16.Atan2(point.X, point.Y);
+            return angle;
         }
 
         /// <summary>
@@ -96,12 +97,13 @@ namespace FrEee.Game.Objects.Combat2
         /// calculates the angle of p2 in relation to p1
         /// currently only handles 2d ie: X and Y 
         /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
+        /// <param name="p1">location from</param>
+        /// <param name="p2">location to</param>
         /// <returns>relitive angle of p2</returns>
         public static Fix16 angleto(Point3d p1, Point3d p2)
         {
-            return angleA(p2 - p1);
+            Fix16 angle = angleA(p2 - p1);
+            return angle;
         }
 
         /// <summary>
