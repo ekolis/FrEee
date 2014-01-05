@@ -63,7 +63,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             set
             {
-				this.heading_degrees = value * (Fix16.Pi / (Fix16)180);
+				this.heading_degrees = value * ((Fix16)180 / Fix16.Pi);
                 normalize();
             }
         }
