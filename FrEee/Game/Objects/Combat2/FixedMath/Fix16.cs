@@ -5,7 +5,7 @@ namespace FixMath.NET {
 
     public partial struct Fix16 : IEquatable<Fix16>, IComparable<Fix16> {
 
-        readonly int m_rawValue;
+		private int m_rawValue { get; set; }
         static readonly Fix16[][] Fix16AtanCacheIndex;
         static readonly Fix16[] Fix16AtanCacheValue = new Fix16[4096];
 
@@ -513,11 +513,11 @@ namespace FixMath.NET {
             return new Fix16(i);
         }
 
-        Fix16(int rawValue) {
+        Fix16(int rawValue) : this() {
             m_rawValue = rawValue;
         }
 
-        Fix16(uint rawValue) {
+        Fix16(uint rawValue) : this() {
             m_rawValue = (int)rawValue;
         }
 
