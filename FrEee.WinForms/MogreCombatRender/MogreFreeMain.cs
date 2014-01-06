@@ -557,7 +557,6 @@ namespace FrEee.WinForms.MogreCombatRender
                     Point3d renderloc = battle.SimNewtonianPhysics(comObj);
 					
 					do_graphics(comObj, renderloc);
-					
                   
                     var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 					foreach (var comEvent in ourLogs)

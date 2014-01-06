@@ -164,8 +164,8 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-        public CombatObject(ICombatant startObj, ICombatant workingObj, int battleseed) 
-            : base(new Point3d(0,0,0), new Point3d(0,0,0), workingObj.ID)
+        public CombatObject(ICombatant startObj, ICombatant workingObj, int battleseed)
+            : base(new Point3d(0, 0, 0), new Point3d(0, 0, 0), startObj.ID)
 		{
             this.icomobj_WorkingCopy = workingObj;
 
