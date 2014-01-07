@@ -32,23 +32,23 @@ namespace FixMath.NET {
         public static readonly Fix16 One = new Fix16(0x00010000);
         public static readonly Fix16 Zero = new Fix16(0);
 
-        public static explicit operator Fix16(int a) {
+        public static implicit operator Fix16(int a) {
             return new Fix16(a * One.m_rawValue);
         }
 
-        public static explicit operator float(Fix16 a) {
+        public static implicit operator float(Fix16 a) {
             return (float)a.m_rawValue / One.m_rawValue;
         }
 
-        public static explicit operator double(Fix16 a) {
+        public static implicit operator double(Fix16 a) {
             return (double)a.m_rawValue / One.m_rawValue;
         }
 
-        public static explicit operator decimal(Fix16 a) {
+        public static implicit operator decimal(Fix16 a) {
             return (decimal)a.m_rawValue / One.m_rawValue;
         }
 
-        public static explicit operator int(Fix16 a) {
+        public static implicit operator int(Fix16 a) {
 #if !FIXMATH_NO_ROUNDING
             return a.m_rawValue >> 16;
 #else
@@ -59,7 +59,7 @@ namespace FixMath.NET {
 #endif
         }
 
-        public static explicit operator Fix16(float a) {
+        public static implicit operator Fix16(float a) {
             var temp = a * One.m_rawValue;
 #if !FIXMATH_NO_ROUNDING
             temp += (temp >= 0) ? 0.5f : -0.5f;
@@ -67,7 +67,7 @@ namespace FixMath.NET {
             return new Fix16((int)temp);
         }
 
-        public static explicit operator Fix16(double a) {
+        public static implicit operator Fix16(double a) {
             var temp = a * One.m_rawValue;
 #if !FIXMATH_NO_ROUNDING
             temp += (temp >= 0) ? 0.5f : -0.5f;
