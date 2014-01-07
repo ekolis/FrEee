@@ -17,11 +17,6 @@ namespace FrEee.Game.Objects.Combat2
 			this.point_list = new List<Fix16>() { x, y, z };
 		}
 
-        public Point3d(double x, double y, double z)
-        {
-            this.point_list = new List<Fix16>() { (Fix16)x, (Fix16)y, (Fix16)z };
-        }
-
 		public Point3d(Point3d point)
 			:this(point.Point_List)
 		{
