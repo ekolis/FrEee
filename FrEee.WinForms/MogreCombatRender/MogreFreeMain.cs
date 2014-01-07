@@ -547,7 +547,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
                     comObj.debuginfo = "";
                     //heading and thrust
-					battle.helm(comObj);
+					comObj.helm();
 
                     //firecontrol, these get logged, but we still need to run through it
                     //so that prng.next happens.
