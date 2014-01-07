@@ -24,18 +24,6 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-        public Compass(double angle, bool radians = true)
-        {
-            if (radians)
-            {
-                Radians = (Fix16)angle;
-            }
-            else
-            {
-                Degrees = (Fix16)angle;
-            }
-        }
-
         public Compass(Point3d point1, Point3d point2)
         {
             Fix16 rads = Trig.angleto(point1, point2);
