@@ -298,7 +298,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
 				//heading and thrust
-				helm(comObj);
+				comObj.helm();
 
 				//fire ready weapons.
 				firecontrol(tick, comObj);
@@ -348,243 +348,8 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		/// <summary>
-		/// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
-		/// the strategic AI should be responsible for setting where the waypoint is and where thet waypoint is going. 
-		/// </summary>
-		/// <param name="comObj"></param>
-		public void helm(CombatObject comObj)
-		{
-			comObj.debuginfo += "HelmInfo:" + "\r\n";
-			var ship = comObj.icomobj_WorkingCopy;
-			string name = ship.Name;
-			//rotate ship
-			Fix16 timetoturn = (Fix16)0;
-			//Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
-			combatWaypoint wpt = comObj.waypointTarget;
-			Compass angletoWaypoint = new Compass(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc); //relitive to me. 
-			Compass angletoturn = new Compass(angletoWaypoint.Radians - comObj.cmbt_head.Radians);
-			Point3d vectortowaypoint = comObj.cmbt_loc - comObj.waypointTarget.cmbt_loc;
-			//if (comObj.lastVectortoWaypoint != null)
-			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
-
-			timetoturn = angletoturn.Radians / comObj.maxRotate;
-            Fix16 oneEightytime = Fix16.Pi / comObj.maxRotate;
-			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
-			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
-			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-            Fix16 closingSpeed = GravMath.closingrate(comObj.cmbt_loc, comObj.cmbt_vel, comObj.waypointTarget.cmbt_loc, comObj.waypointTarget.cmbt_vel);
-
-            Fix16 myspeed = Trig.hypotinuse(comObj.cmbt_vel);
-
-            Fix16 timetokill_ClosingSpeed = closingSpeed / (comObj.maxfowardThrust / comObj.cmbt_mass); //t = v / a
-            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (comObj.maxStrafeThrust / comObj.cmbt_mass);
-            Fix16 timetokill_MySpeed = myspeed / (comObj.maxfowardThrust / comObj.cmbt_mass);
 
 
-            Fix16 distance = Trig.distance(comObj.waypointTarget.cmbt_loc, comObj.cmbt_loc);
-
-
-            Fix16 nominaldistance = comObj.maxStrafeThrust;
-            Fix16 timetowpt = distance / closingSpeed;
-
-			bool? thrustToWaypoint = true;
-			string helmdo = "";
-
-            if (closingSpeed > (Fix16)0) //getting closer
-			{
-				if (distance <= nominaldistance)  //close to the waypoint.
-				{
-					thrustToWaypoint = null;//should attempt to match speed
-				}
-				if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
-				{
-					if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
-					{
-
-						thrustToWaypoint = false;
-					}
-					else
-					{ //use strafe thrust to get close to the waypoint. 
-
-						helmdo = "null" + "\r\n";
-						thrustToWaypoint = null; //else match speed and use thrusters to get closer
-					}
-				}
-			}
-			else
-			{
-			}
-
-			if (thrustToWaypoint == false)
-			{
-				helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
-                angletoturn.Degrees = (angletoWaypoint.Degrees - (Fix16)180) - comObj.cmbt_head.Degrees; //turn around and thrust the other way
-				angletoturn.normalize();
-			}
-			else if (thrustToWaypoint == null)
-			{
-				angletoturn.Radians = Trig.angleA(comObj.waypointTarget.cmbt_vel);
-			}
-
-			comObj.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
-			comObj.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
-			comObj.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
-			comObj.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
-			comObj.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
-			comObj.debuginfo += helmdo + "\r\n";
-
-
-
-			turnship(comObj, angletoturn, angletoWaypoint);
-
-			thrustship(comObj, angletoturn, thrustToWaypoint);
-
-			comObj.lastVectortoWaypoint = vectortowaypoint;
-
-		}
-
-		private void turnship(CombatObject comObj, Compass angletoturn, Compass angleToTarget)
-		{
-            if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
-			{
-				if (angletoturn.Radians > comObj.maxRotate)
-				{
-					//comObj.cmbt_face += comObj.Rotate;
-					comObj.cmbt_head.Radians += comObj.maxRotate;
-				}
-				else
-				{
-					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-					comObj.cmbt_head.Degrees += angletoturn.Degrees;
-				}
-			}
-			else //turn counterclockwise
-			{
-                if (((Fix16)360 - angletoturn.Radians) > comObj.maxRotate)
-				{
-					//comObj.cmbt_face -= comObj.maxRotate;
-					comObj.cmbt_head.Radians -= comObj.maxRotate;
-				}
-				else
-				{
-					//comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-					// subtract 360 minus the angle
-					comObj.cmbt_head.Degrees += angletoturn.Degrees;
-				}
-			}
-		}
-
-		private void strafeship(CombatObject comObj, bool? thrustToWaypoint)
-		{
-			//thrust ship using strafe
-			if (thrustToWaypoint == true) //(if we want to accelerate towards the target, not away from it)
-			{
-				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, comObj.maxStrafeThrust);
-			}
-			else if (thrustToWaypoint == false)
-			{
-				comObj.cmbt_thrust = Trig.intermediatePoint(comObj.cmbt_loc, comObj.waypointTarget.cmbt_loc, -comObj.maxStrafeThrust);
-			}
-			else //if null
-			{
-				//comObj.cmbt_thrust = Trig.
-			}
-		}
-
-		private void thrustship(CombatObject comObj, Compass angletoturn, bool? thrustToWaypoint)
-		{
-			comObj.cmbt_thrust.ZEROIZE();
-			strafeship(comObj, thrustToWaypoint);
-			//main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
-            Fix16 thrustby = (Fix16)0;
-			if (thrustToWaypoint != null)
-			{
-                if (angletoturn.Degrees >= (Fix16)0 && angletoturn.Degrees < (Fix16)90)
-				{
-
-                    thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
-				}
-                else if (angletoturn.Degrees > (Fix16)270 && angletoturn.Degrees < (Fix16)360)
-				{
-                    Compass angle = new Compass((Fix16)360 - angletoturn.Degrees);
-					angle.normalize();
-                    thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angle.Degrees / (Fix16)0.9));
-				}
-                
-				//Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
-				Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, comObj.cmbt_head.Radians));
-				comObj.cmbt_thrust += fowardthrust;
-			}
-			else
-			{
-				//match velocity with waypoint
-				Point3d wayptvel = comObj.waypointTarget.cmbt_vel;
-				Point3d ourvel = comObj.cmbt_vel;
-
-                thrustby = (Fix16)comObj.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
-
-				Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
-
-			}
-
-		}
-
-		public void firecontrol(int tic_countr, CombatObject comObj)
-		{
-			foreach (var weapon in comObj.weaponList)
-			{
-				Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
-				//ship.Weapons
-				CombatWeapon wpn = (CombatWeapon)weapon;
-
-
-
-				if (comObj.weaponTarget.Count() > 0 &&
-					wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
-					tic_countr >= wpn.nextReload)
-				{
-					//wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
-					//combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
-					//replaylog.addEvent(tic_countr, evnt);
-					//MountedComponentTemplate tmplt = wpn.Template;
-					//int maxRange = tmplt.WeaponMaxRange * 100;
-					//int minRange = tmplt.WeaponMinRange * 100;
-					//int accuracy = tmplt.WeaponAccuracy;
-					//int damage = tmplt.WeaponDamage;
-					if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
-					{
-						//this function figures out if there's a hit, deals the damage, and creates an event.
-
-						//first create the event for the target ship
-						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-						//then create teh event for this ship firing on the target
-						CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-						targets_event.fireOnEvent = attack_event;
-
-						if (!IsReplay)
-						{
-							ReplayLog.Events.Add(targets_event);
-							ReplayLog.Events.Add(attack_event);
-						}
-
-					}
-				}
-			}
-			//update any events where this ship has taken fire, and set the location. 
-			if (!IsReplay)
-			{
-				foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
-				{
-					if (comevnt.GetType() == typeof(CombatTakeFireEvent))
-					{
-						CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
-						takefire.setLocation(comObj.cmbt_loc);
-					}
-				}
-			}
-		}
 
 		public Point3d SimNewtonianPhysics(CombatNode comObj)
 		{
@@ -641,7 +406,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-		private bool isinRange(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public static bool isinRange(CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			bool inrange = false;
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
@@ -693,7 +458,7 @@ namespace FrEee.Game.Objects.Combat2
 			return boltTimetoTarget;
 		}
 
-		private CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 
 
@@ -792,6 +557,62 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			return target_event;
 		}
+
+
+        public void firecontrol(int tic_countr, CombatObject comObj)
+        {
+            foreach (var weapon in comObj.weaponList)
+            {
+                Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
+                //ship.Weapons
+                CombatWeapon wpn = (CombatWeapon)weapon;
+
+
+
+                if (comObj.weaponTarget.Count() > 0 &&
+                    wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
+                    tic_countr >= wpn.nextReload)
+                {
+                    //wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
+                    //combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
+                    //replaylog.addEvent(tic_countr, evnt);
+                    //MountedComponentTemplate tmplt = wpn.Template;
+                    //int maxRange = tmplt.WeaponMaxRange * 100;
+                    //int minRange = tmplt.WeaponMinRange * 100;
+                    //int accuracy = tmplt.WeaponAccuracy;
+                    //int damage = tmplt.WeaponDamage;
+                    if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
+                    {
+                        //this function figures out if there's a hit, deals the damage, and creates an event.
+
+                        //first create the event for the target ship
+                        CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
+                        //then create teh event for this ship firing on the target
+                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+                        targets_event.fireOnEvent = attack_event;
+
+                        if (!IsReplay)
+                        {
+                            ReplayLog.Events.Add(targets_event);
+                            ReplayLog.Events.Add(attack_event);
+                        }
+
+                    }
+                }
+            }
+            //update any events where this ship has taken fire, and set the location. 
+            if (!IsReplay)
+            {
+                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+                {
+                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+                    {
+                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+                        takefire.setLocation(comObj.cmbt_loc);
+                    }
+                }
+            }
+        }
 
 		private void combatDamage(CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
 		{

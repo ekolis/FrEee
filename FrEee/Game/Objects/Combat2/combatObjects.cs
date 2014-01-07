@@ -275,6 +275,196 @@ namespace FrEee.Game.Objects.Combat2
 
 
         public string debuginfo = "";
+
+
+
+
+        /// <summary>
+        /// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
+        /// the strategic AI should be responsible for setting where the waypoint is and where thet waypoint is going. 
+        /// </summary>
+        /// <param name="comObj"></param>
+        public void helm()
+        {
+            this.debuginfo += "HelmInfo:" + "\r\n";
+            var ship = this.icomobj_WorkingCopy;
+            string name = ship.Name;
+            //rotate ship
+            Fix16 timetoturn = (Fix16)0;
+            //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+            combatWaypoint wpt = this.waypointTarget;
+            Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
+            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+            //if (comObj.lastVectortoWaypoint != null)
+            //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
+
+            timetoturn = angletoturn.Radians / this.maxRotate;
+            Fix16 oneEightytime = Fix16.Pi / this.maxRotate;
+            //Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
+            //Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+            //Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+            //double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
+            Fix16 closingSpeed = GravMath.closingrate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+
+            Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
+
+            Fix16 timetokill_ClosingSpeed = closingSpeed / (this.maxfowardThrust / this.cmbt_mass); //t = v / a
+            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (this.maxStrafeThrust / this.cmbt_mass);
+            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass);
+
+
+            Fix16 distance = Trig.distance(this.waypointTarget.cmbt_loc, this.cmbt_loc);
+
+
+            Fix16 nominaldistance = this.maxStrafeThrust;
+            Fix16 timetowpt = distance / closingSpeed;
+
+            bool? thrustToWaypoint = true;
+            string helmdo = "";
+
+            if (closingSpeed > (Fix16)0) //getting closer
+            {
+                if (distance <= nominaldistance)  //close to the waypoint.
+                {
+                    thrustToWaypoint = null;//should attempt to match speed
+                }
+                if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
+                {
+                    if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
+                    {
+
+                        thrustToWaypoint = false;
+                    }
+                    else
+                    { //use strafe thrust to get close to the waypoint. 
+
+                        helmdo = "null" + "\r\n";
+                        thrustToWaypoint = null; //else match speed and use thrusters to get closer
+                    }
+                }
+            }
+            else
+            {
+            }
+
+            if (thrustToWaypoint == false)
+            {
+                helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
+                angletoturn.Degrees = (angletoWaypoint.Degrees - (Fix16)180) - this.cmbt_head.Degrees; //turn around and thrust the other way
+                angletoturn.normalize();
+            }
+            else if (thrustToWaypoint == null)
+            {
+                angletoturn.Radians = Trig.angleA(this.waypointTarget.cmbt_vel);
+            }
+
+            this.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
+            this.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
+            this.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
+            this.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
+            this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
+            this.debuginfo += helmdo + "\r\n";
+
+
+
+            turnship(angletoturn, angletoWaypoint);
+
+            thrustship(angletoturn, thrustToWaypoint);
+
+            this.lastVectortoWaypoint = vectortowaypoint;
+
+        }
+
+        private void turnship(Compass angletoturn, Compass angleToTarget)
+        {
+            if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
+            {
+                if (angletoturn.Radians > this.maxRotate)
+                {
+                    //comObj.cmbt_face += comObj.Rotate;
+                    this.cmbt_head.Radians += this.maxRotate;
+                }
+                else
+                {
+                    //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                    this.cmbt_head.Degrees += angletoturn.Degrees;
+                }
+            }
+            else //turn counterclockwise
+            {
+                if (((Fix16)360 - angletoturn.Radians) > this.maxRotate)
+                {
+                    //comObj.cmbt_face -= comObj.maxRotate;
+                    this.cmbt_head.Radians -= this.maxRotate;
+                }
+                else
+                {
+                    //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
+                    // subtract 360 minus the angle
+                    this.cmbt_head.Degrees += angletoturn.Degrees;
+                }
+            }
+        }
+
+        private void strafeship(bool? thrustToWaypoint)
+        {
+            //thrust ship using strafe
+            if (thrustToWaypoint == true) //(if we want to accelerate towards the target, not away from it)
+            {
+                this.cmbt_thrust = Trig.intermediatePoint(this.cmbt_loc, this.waypointTarget.cmbt_loc, this.maxStrafeThrust);
+            }
+            else if (thrustToWaypoint == false)
+            {
+                this.cmbt_thrust = Trig.intermediatePoint(this.cmbt_loc, this.waypointTarget.cmbt_loc, -this.maxStrafeThrust);
+            }
+            else //if null
+            {
+                //comObj.cmbt_thrust = Trig.
+            }
+        }
+
+        private void thrustship(Compass angletoturn, bool? thrustToWaypoint)
+        {
+            this.cmbt_thrust.ZEROIZE();
+            strafeship(thrustToWaypoint);
+            //main foward thrust - still needs some work, ie it doesnt know when to turn it off when close to a waypoint.
+            Fix16 thrustby = (Fix16)0;
+            if (thrustToWaypoint != null)
+            {
+                if (angletoturn.Degrees >= (Fix16)0 && angletoturn.Degrees < (Fix16)90)
+                {
+
+                    thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
+                }
+                else if (angletoturn.Degrees > (Fix16)270 && angletoturn.Degrees < (Fix16)360)
+                {
+                    Compass angle = new Compass((Fix16)360 - angletoturn.Degrees);
+                    angle.normalize();
+                    thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angle.Degrees / (Fix16)0.9));
+                }
+
+                //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
+                Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, this.cmbt_head.Radians));
+                this.cmbt_thrust += fowardthrust;
+            }
+            else
+            {
+                //match velocity with waypoint
+                Point3d wayptvel = this.waypointTarget.cmbt_vel;
+                Point3d ourvel = this.cmbt_vel;
+
+                thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
+
+                Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
+
+            }
+
+        }
+
+
+
+
 	}
 
 
