@@ -31,14 +31,28 @@ namespace FrEee.WinForms
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			var stdout = File.OpenWrite("stdout.txt");
-			var swOut = new StreamWriter(stdout);
-			swOut.AutoFlush = true;
-			Console.SetOut(swOut);
-			var stderr = File.OpenWrite("stderr.txt");
-			var swErr = new StreamWriter(stderr);
-			swErr.AutoFlush = true;
-			Console.SetError(swErr);
+			try
+			{
+				var stdout = File.OpenWrite("stdout.txt");
+				var swOut = new StreamWriter(stdout);
+				swOut.AutoFlush = true;
+				Console.SetOut(swOut);
+			}
+			catch (IOException)
+			{
+				Console.Error.WriteLine("Cannot open stdout.txt.");
+			}
+			try
+			{
+				var stderr = File.OpenWrite("stderr.txt");
+				var swErr = new StreamWriter(stderr);
+				swErr.AutoFlush = true;
+				Console.SetError(swErr);
+			}
+			catch (IOException)
+			{
+				Console.Error.WriteLine("Cannot open stderr.txt.");
+			}
 			if (args.Length == 0)
 			{
 				Application.Run(MainMenuForm.GetInstance());
