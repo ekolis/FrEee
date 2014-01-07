@@ -29,6 +29,11 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			return Events.Where(e => e.Object.ID == obj.ID && e.Tick == tick);
 		}
+
+		public IEnumerable<CombatTakeFireEvent> HitsAgainst(CombatObject obj)
+		{
+			return Events.OfType<CombatTakeFireEvent>().Where(e => e.Object == obj && e.IsHit);
+		}
 	}
 
 	public abstract class CombatEvent

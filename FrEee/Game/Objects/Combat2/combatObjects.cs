@@ -238,8 +238,12 @@ namespace FrEee.Game.Objects.Combat2
             // copy over the components individually so they can take damage without affecting the starting state
             // TODO - deal with planets in combat
             ((SpaceVehicle)ship).Components.Clear();
-            foreach (var comp in ((SpaceVehicle)icomobj_StartCopy).Components)
-                ((SpaceVehicle)ship).Components.Add(comp.Copy());
+			foreach (var comp in ((SpaceVehicle)icomobj_StartCopy).Components)
+			{
+				var ccopy = comp.Copy();
+				((SpaceVehicle)ship).Components.Add(ccopy);
+				ccopy.Container = (SpaceVehicle)ship;
+			}
 
             this.icomObj = ship;
 
