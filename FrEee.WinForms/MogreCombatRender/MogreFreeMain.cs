@@ -608,7 +608,7 @@ namespace FrEee.WinForms.MogreCombatRender
                         }
 					}
 				}
-                foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
+                foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject))) //update bullet and explosion objects.
                 {
                     Point3d renderloc = battle.SimNewtonianPhysics(comNode);
                     do_graphics(comNode, renderloc);
