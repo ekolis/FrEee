@@ -73,7 +73,11 @@ namespace FrEee.Game.Objects.Combat2
 				// copy over the components individually so they can take damage without affecting the starting state
 				scopy.Components.Clear();
 				foreach (var comp in ((SpaceVehicle)obj).Components)
-					scopy.Components.Add(comp.Copy());
+				{
+					var ccopy = comp.Copy();
+					ccopy.Container = scopy;
+					scopy.Components.Add(ccopy);					
+				}
 
 				if (scopy.Owner != obj.Owner)
 					scopy.Owner.Dispose(); // don't need extra empires!
@@ -604,7 +608,7 @@ namespace FrEee.Game.Objects.Combat2
 						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
 						//then create teh event for this ship firing on the target
 						CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-						targets_event.fireOnEvent = attack_event;
+						 targets_event.fireOnEvent = attack_event;
 
 						if (!IsReplay)
 						{
