@@ -249,6 +249,9 @@ namespace FrEee.Game.Objects.Combat2
             this.cmbt_att = new Compass(0);
             this.cmbt_thrust = new Point3d(0, 0, 0);
             this.cmbt_accel = new Point3d(0, 0, 0);
+
+			foreach (var w in weaponList)
+				w.nextReload = 1;
         }
 
 		public combatWaypoint waypointTarget;

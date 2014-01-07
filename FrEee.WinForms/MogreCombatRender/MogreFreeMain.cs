@@ -614,7 +614,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     do_graphics(comNode, renderloc);
                 }
 
-                if (cmdfreq_countr >= Battle_Space.CommandFrequency)
+                if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
                 {               
                     foreach (CombatObject comObj in battle.CombatObjects)
                     {
