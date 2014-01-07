@@ -49,19 +49,19 @@ namespace FrEee.Game.Objects.Combat2
 				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
 
 
-            double stardate = Galaxy.Current.Timestamp;
-            int starday = (int)(Galaxy.Current.CurrentTick * 10);
+			double stardate = Galaxy.Current.Timestamp;
+			int starday = (int)(Galaxy.Current.CurrentTick * 10);
 
-            int moduloID = (int)(Sector.StarSystem.ID % 100000);
-            this.battleseed = (int)(moduloID / stardate * 10);
+			int moduloID = (int)(Sector.StarSystem.ID % 100000);
+			this.battleseed = (int)(moduloID / stardate * 10);
 
 			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 
 			StartCombatants = new HashSet<ICombatant>();
-            ActualCombatants = new HashSet<ICombatant>(combatants);
-            //WorkingCombatants = new HashSet<ICombatant>();
-            CombatNodes = new HashSet<CombatNode>();
+			ActualCombatants = new HashSet<ICombatant>(combatants);
+			//WorkingCombatants = new HashSet<ICombatant>();
+			CombatNodes = new HashSet<CombatNode>();
 
 			foreach (ICombatant obj in combatants)
 			{
@@ -79,15 +79,15 @@ namespace FrEee.Game.Objects.Combat2
 					scopy.Owner.Dispose(); // don't need extra empires!
 				scopy.Owner = obj.Owner;
 				StartCombatants.Add(scopy);
-                CombatObject comObj = new CombatObject((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
-                CombatNodes.Add(comObj);
-                
+				CombatObject comObj = new CombatObject((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
+				CombatNodes.Add(comObj);
+
 			}
 
 
 
 
-			
+
 			Fleets = new List<Fleet> { };
 
 			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
@@ -183,8 +183,27 @@ namespace FrEee.Game.Objects.Combat2
 
 		public Sector sectoratStart { get; private set; }
 
-        public const float TickLength = 0.1f; // physics tick length in seconds (each SE4 "combat round" is one second)
-        public const int CommandFrequency = 10; //new commands (move, new targets etc) are given every 10 ticks.
+		/// <summary>
+		/// Combat sim temporal resolution.
+		/// One SE4 combat round is taken to be one second.
+		/// </summary>
+		public const int TicksPerSecond = 10;
+
+		/// <summary>
+		/// Physics tick length in seconds.
+		/// One SE4 combat round is taken to be one second.
+		/// </summary>
+		public static readonly Fix16 TickLength = (Fix16)1 / (Fix16)TicksPerSecond;
+
+		/// <summary>
+		/// Number of seconds between commands. (accelerate, target, etc.)
+		/// </summary>
+		public static readonly Fix16 CommandFrequencySeconds = 1;
+
+		/// <summary>
+		/// Number of ticks between commands. (accelerate, target, etc.)
+		/// </summary>
+		public static readonly int CommandFrequencyTicks = CommandFrequencySeconds * TicksPerSecond;
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
@@ -207,32 +226,32 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
-            foreach (CombatObject comObj in CombatObjects)
-            {
-                Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
-            }
-           
+			foreach (CombatObject comObj in CombatObjects)
+			{
+				Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
+			}
+
 		}
 		private void ReplaySetup()
 		{
-            foreach (CombatObject shipObj in CombatObjects)
-            {
-                shipObj.renewtoStart();
-                Empires[shipObj.icomobj_StartCopy.Owner].ownships.Add(shipObj);
-            }			
+			foreach (CombatObject shipObj in CombatObjects)
+			{
+				shipObj.renewtoStart();
+				Empires[shipObj.icomobj_StartCopy.Owner].ownships.Add(shipObj);
+			}
 		}
 
 		public void SetUpPieces()
 		{
-            Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
+			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
-            Compass angle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
+			Compass angle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
 
 			for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
 			{
-                Fix16 angleoffset = angle.Radians * (Fix16)i;
-                startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));	
+				Fix16 angleoffset = angle.Radians * (Fix16)i;
+				startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));
 			}
 
 			if (!IsReplay)
@@ -256,9 +275,9 @@ namespace FrEee.Game.Objects.Combat2
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
 				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
 				comObj.cmbt_att = new Compass(0);
-                Fix16 speed = (Fix16)0;
+				Fix16 speed = (Fix16)0;
 				if (comObj.icomobj_WorkingCopy is Vehicle)
-                    speed = ((Fix16)((Vehicle)comObj.icomobj_WorkingCopy).Speed) / (Fix16)2;
+					speed = ((Fix16)((Vehicle)comObj.icomobj_WorkingCopy).Speed) / (Fix16)2;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
 				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
@@ -306,7 +325,7 @@ namespace FrEee.Game.Objects.Combat2
 				//physicsmove objects.
 				SimNewtonianPhysics(comObj);
 			}
-			if (cmdfreqCounter >= Battle_Space.CommandFrequency)
+			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
 				foreach (CombatObject comObj in CombatObjects)
 				{
@@ -360,7 +379,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.cmbt_vel += comObjo.cmbt_accel;
 			}
 
-            comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
+			comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
 
 			return comObj.cmbt_loc;
 		}
@@ -374,7 +393,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			//do AI decision stuff.
 			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-            string comAI = "";
+			string comAI = "";
 			CombatObject tgtObj;
 			if (Empires[comObj.icomobj_WorkingCopy.Owner].hostile.Any())
 			{
@@ -385,23 +404,23 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.weaponTarget = new List<CombatObject>();
 				comObj.weaponTarget.Add(Empires[comObj.icomobj_WorkingCopy.Owner].hostile[0]);
 			}
-            if (IsReplay && tick < 1000)
-            {
-                List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comObj, tick).ToList<CombatEvent>();
+			if (IsReplay && tick < 1000)
+			{
+				List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comObj, tick).ToList<CombatEvent>();
 				CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == comObj.cmbt_loc);
-                comAI = "Location ";
-                if (locevnt != null)
-                    comAI += "Does match \r\n";
-                else
-                    comAI += "Not matched \r\n";
-            }
-            else if (!IsReplay && tick < 1000)
-            {
-                CombatLocationEvent locevnt = new CombatLocationEvent(tick, comObj, comObj.cmbt_loc);
-                ReplayLog.Events.Add(locevnt);
-            }
-             
-            comObj.debuginfo += comAI;
+				comAI = "Location ";
+				if (locevnt != null)
+					comAI += "Does match \r\n";
+				else
+					comAI += "Not matched \r\n";
+			}
+			else if (!IsReplay && tick < 1000)
+			{
+				CombatLocationEvent locevnt = new CombatLocationEvent(tick, comObj, comObj.cmbt_loc);
+				ReplayLog.Events.Add(locevnt);
+			}
+
+			comObj.debuginfo += comAI;
 		}
 
 
@@ -411,8 +430,8 @@ namespace FrEee.Game.Objects.Combat2
 			bool inrange = false;
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            Fix16 weaponMaxRange = (Fix16)weapon.maxRange;
-            Fix16 weaponMinRange = (Fix16)weapon.minRange;
+			Fix16 weaponMaxRange = (Fix16)weapon.maxRange;
+			Fix16 weaponMinRange = (Fix16)weapon.minRange;
 			string weaponRangeinfo = "RangeInfo:\r\n ";
 
 
@@ -426,9 +445,9 @@ namespace FrEee.Game.Objects.Combat2
 			}
 			else if (weapon.weaponType == "Bolt") //projectile
 			{
-                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
+				Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
 				//remember, maxRange is bolt lifetime in seconds 
-                if (boltTTT <= weaponMaxRange / (Fix16)TickLength && boltTTT >= weaponMinRange / (Fix16)TickLength)
+				if (boltTTT <= weaponMaxRange / (Fix16)TickLength && boltTTT >= weaponMinRange / (Fix16)TickLength)
 				{
 					inrange = true;
 					weaponRangeinfo += "Range for Projectile is good \r\n";
@@ -444,34 +463,30 @@ namespace FrEee.Game.Objects.Combat2
 			return inrange;
 		}
 
-        public static Fix16 boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public static Fix16 boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-            Fix16 shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-            return shotspeed_actual * (Fix16)TickLength;
+			Fix16 shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
+			Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+			return shotspeed_actual * (Fix16)TickLength;
 		}
 
-        public static Fix16 boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public static Fix16 boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
+			Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+			Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
 			return boltTimetoTarget;
 		}
 
 		public CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
-
-
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-            Fix16 rangeForDamageCalcs = (Fix16)0;
-            Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+			Fix16 rangeForDamageCalcs = (Fix16)0;
+			Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
 			int targettic = tic;
 
 			//reset the weapon nextReload.
-            weapon.nextReload = tic + (int)(weapon.reloadRate * (Fix16)10);
-
-
-
+			weapon.nextReload = tic + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
+			
 			ICombatant target_icomobj = target.icomobj_WorkingCopy;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
@@ -494,17 +509,17 @@ namespace FrEee.Game.Objects.Combat2
 			//for bolt calc, need again for adding to list.
 			if (weapon.weaponType == "Bolt")
 			{
-                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
-                Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
-                Fix16 rThis_distance = boltSpeed * boltTTT;
+				Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
+				Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
+				Fix16 rThis_distance = boltSpeed * boltTTT;
 
-                Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
-                Fix16 rMin_distance = boltSpeed * weapon.minRange; //s * t = d
+				Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
+				Fix16 rMin_distance = boltSpeed * weapon.minRange; //s * t = d
 
-                Fix16 rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
-                Fix16 rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
+				Fix16 rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
+				Fix16 rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
 
-                Fix16 scaler = rMax_distance_standstill / rMax_distance;
+				Fix16 scaler = rMax_distance_standstill / rMax_distance;
 
 				rangeForDamageCalcs = rThis_distance * scaler * (Fix16)0.001;
 
@@ -534,7 +549,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 			}
 
-            rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
+			rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
 
 			long ID = target_icomobj.ID;
 			if (ID == -1)
@@ -559,60 +574,60 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-        public void firecontrol(int tic_countr, CombatObject comObj)
-        {
-            foreach (var weapon in comObj.weaponList)
-            {
-                Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
-                //ship.Weapons
-                CombatWeapon wpn = (CombatWeapon)weapon;
+		public void firecontrol(int tic_countr, CombatObject comObj)
+		{
+			foreach (var weapon in comObj.weaponList)
+			{
+				Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
+				//ship.Weapons
+				CombatWeapon wpn = (CombatWeapon)weapon;
 
 
 
-                if (comObj.weaponTarget.Count() > 0 &&
-                    wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
-                    tic_countr >= wpn.nextReload)
-                {
-                    //wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
-                    //combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
-                    //replaylog.addEvent(tic_countr, evnt);
-                    //MountedComponentTemplate tmplt = wpn.Template;
-                    //int maxRange = tmplt.WeaponMaxRange * 100;
-                    //int minRange = tmplt.WeaponMinRange * 100;
-                    //int accuracy = tmplt.WeaponAccuracy;
-                    //int damage = tmplt.WeaponDamage;
-                    if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
-                    {
-                        //this function figures out if there's a hit, deals the damage, and creates an event.
+				if (comObj.weaponTarget.Count() > 0 &&
+					wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
+					tic_countr >= wpn.nextReload)
+				{
+					//wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
+					//combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
+					//replaylog.addEvent(tic_countr, evnt);
+					//MountedComponentTemplate tmplt = wpn.Template;
+					//int maxRange = tmplt.WeaponMaxRange * 100;
+					//int minRange = tmplt.WeaponMinRange * 100;
+					//int accuracy = tmplt.WeaponAccuracy;
+					//int damage = tmplt.WeaponDamage;
+					if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
+					{
+						//this function figures out if there's a hit, deals the damage, and creates an event.
 
-                        //first create the event for the target ship
-                        CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-                        //then create teh event for this ship firing on the target
-                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-                        targets_event.fireOnEvent = attack_event;
+						//first create the event for the target ship
+						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
+						//then create teh event for this ship firing on the target
+						CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+						targets_event.fireOnEvent = attack_event;
 
-                        if (!IsReplay)
-                        {
-                            ReplayLog.Events.Add(targets_event);
-                            ReplayLog.Events.Add(attack_event);
-                        }
+						if (!IsReplay)
+						{
+							ReplayLog.Events.Add(targets_event);
+							ReplayLog.Events.Add(attack_event);
+						}
 
-                    }
-                }
-            }
-            //update any events where this ship has taken fire, and set the location. 
-            if (!IsReplay)
-            {
-                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
-                {
-                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
-                    {
-                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
-                        takefire.setLocation(comObj.cmbt_loc);
-                    }
-                }
-            }
-        }
+					}
+				}
+			}
+			//update any events where this ship has taken fire, and set the location. 
+			if (!IsReplay)
+			{
+				foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+				{
+					if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+					{
+						CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+						takefire.setLocation(comObj.cmbt_loc);
+					}
+				}
+			}
+		}
 
 		private void combatDamage(CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
 		{
@@ -680,7 +695,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public System.Drawing.Image Portrait
 		{
-            get { return StartCombatants.OfType<ISpaceObject>().Largest().Portrait; }
+			get { return StartCombatants.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 
 		public ICombatant FindStartCombatant(ICombatant c)
@@ -688,15 +703,15 @@ namespace FrEee.Game.Objects.Combat2
 			return StartCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
 		}
 
-        /// <summary>
-        /// I *think* the id will work here now... the ID for the *comObjs* *Should* stay the same. 
-        /// </summary>
-        /// <param name="c"></param>
-        /// <returns></returns>
+		/// <summary>
+		/// I *think* the id will work here now... the ID for the *comObjs* *Should* stay the same. 
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
 			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
-            return CombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
+			return CombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)
