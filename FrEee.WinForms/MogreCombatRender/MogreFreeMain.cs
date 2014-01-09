@@ -636,7 +636,7 @@ namespace FrEee.WinForms.MogreCombatRender
                         Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
                         Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
                         Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
-                        Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * (Fix16)(Battle_Space.TickLength);
+                        Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
                         if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
                         {
                             //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 

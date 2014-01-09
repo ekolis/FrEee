@@ -210,7 +210,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			get
 			{
-                return (Fix16.Sqrt(X * X + Y * Y + Z * Z));
+                return ((Fix16)Fix64.Sqrt((Fix64)X * (Fix64)X + (Fix64)Y * (Fix64)Y + (Fix64)Z * (Fix64)Z));
 			}
 		}
 	}
