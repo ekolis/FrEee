@@ -283,7 +283,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		public void newDice(int battleseed)
 		{
-			int seed = (int)(this.icomobj_WorkingCopy.ID % 100000) + battleseed;
+			int seed = (int)(this.ID % 100000) + battleseed;
 			shipDice = new PRNG(seed);
 		}
 
