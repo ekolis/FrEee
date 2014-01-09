@@ -550,63 +550,16 @@ namespace FrEee.WinForms.MogreCombatRender
 					comObj.helm();
 
                     //firecontrol, these get logged, but we still need to run through it
-                    //so that prng.next happens.
+                    //so that prng.next happens, and damage is done.
                     battle.firecontrol(battletic, comObj);
+
+                    readlogs(comObj, battletic);
 
                     //physicsmove objects. 
                     Point3d renderloc = battle.SimNewtonianPhysics(comObj);
-					
-					do_graphics(comObj, renderloc);
-                  
-                    var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
-					foreach (var comEvent in ourLogs)
-					{
-						if (comEvent is CombatFireOnTargetEvent)
-						{
-							// TODO - if type projectile, create whatever sprite and render it flying towards target.
-							// or if type beam, draw a beam sprite
-							// seekers should really be their own event type, spawning new combat objects that track enemies
-                            CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;
-                            var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-                            //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
-                            //sprite.
-                            
-							if (fireEvent.Weapon.weaponType == "Bolt")
-							{								
-								//create an entity for the bullet node.
-								Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-                                Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-                                Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
-								Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * (Fix16)(Battle_Space.TickLength);
-                                if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
-                                {
-                                    //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
-                                    //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
-                                    //Point3d jitter = new Point3d(FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount)) //aaand the randomHelper takes an int not a double.
-                                    //bulletVector += jitter;
-                                }
-								long id = -battle.CombatNodes.Count - 2; // negative numbers other than -1 aren't used by game objects
-								CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
-								battle.CombatNodes.Add(bullet);
-								CreateNewEntity(bullet);
-							}                            
-						}
-                        else if (comEvent is CombatTakeFireEvent)
-                        {
-                            // TODO - kersplosions
-                            CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
 
-                            if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt")
-                            {//remove the node, stop rendering. TODO remove this at its TTL?
-                                //ie should go past the ship.
-                                battle.CombatNodes.Remove(takefireEvent.BulletNode);
-                            }
-                        }
-                        else if (comEvent is CombatDestructionEvent)
-                        {
-                            // - kersplosions and removal of model. 
-                        }
-					}
+                    do_graphics(comObj, renderloc);
+                  
 				}
                 foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject))) //update bullet and explosion objects.
                 {
@@ -644,6 +597,80 @@ namespace FrEee.WinForms.MogreCombatRender
 				Application.DoEvents();
 			}
 		}
+
+        private void readlogs(CombatObject comObj, int battletic) 
+        {
+            var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
+            foreach (var comEvent in ourLogs)
+            {
+                if (comEvent is CombatFireOnTargetEvent)
+                {
+                    // TODO - if type projectile, create whatever sprite and render it flying towards target.
+                    // or if type beam, draw a beam sprite
+                    // seekers should really be their own event type, spawning new combat objects that track enemies
+                    CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;
+                    var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+                    //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
+                    //sprite.
+                    if (fireEvent.Location == comObj.cmbt_loc)
+                    {
+                    }
+                    else
+                    {
+                        Point3d difference = fireEvent.Location - comObj.cmbt_loc;
+                        Console.WriteLine("Desync at tick: " + battletic);
+                        Console.WriteLine("Loc difference of: " + difference.ToString());
+                    }
+                    if (fireEvent.Weapon.weaponType == "Bolt")
+                    {
+                        //create an entity for the bullet node.
+                        Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                        Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                        Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
+                        Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance) * (Fix16)(Battle_Space.TickLength);
+                        if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
+                        {
+                            //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
+                            //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
+                            //Point3d jitter = new Point3d(FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount)) //aaand the randomHelper takes an int not a double.
+                            //bulletVector += jitter;
+                        }
+                        long id = -battle.CombatNodes.Count - 2; // negative numbers other than -1 aren't used by game objects
+                        CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
+                        battle.CombatNodes.Add(bullet);
+                        CreateNewEntity(bullet);
+                    }
+                }
+                else if (comEvent is CombatTakeFireEvent)
+                {
+                    // TODO - kersplosions
+                    CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
+
+                    if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt")
+                    {//remove the node, stop rendering. TODO remove this at its TTL?
+                        //ie should go past the ship.
+                        battle.CombatNodes.Remove(takefireEvent.BulletNode);
+                    }
+                }
+                else if (comEvent is CombatDestructionEvent)
+                {
+                    // - kersplosions and removal of model. 
+                }
+                else if (comEvent is CombatLocationEvent)
+                {
+                    CombatLocationEvent locEvent = (CombatLocationEvent)comEvent;
+                    if (locEvent.Location == comObj.cmbt_loc)
+                    {
+                    }
+                    else
+                    {
+                        Point3d difference = locEvent.Location - comObj.cmbt_loc;
+                        Console.WriteLine("Desync at tick: " + battletic);
+                        Console.WriteLine("Loc difference of: " + difference.ToString());
+                    }
+                }
+            }
+        }
 
         private void do_txt()
         {

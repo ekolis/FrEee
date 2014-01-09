@@ -373,8 +373,6 @@ namespace FrEee.Game.Objects.Combat2
             this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
             this.debuginfo += helmdo + "\r\n";
 
-
-
             turnship(angletoturn, angletoWaypoint);
 
             thrustship(angletoturn, thrustToWaypoint);
@@ -469,6 +467,47 @@ namespace FrEee.Game.Objects.Combat2
 
         }
 
+        public int handleShieldDamage(int damage)
+        {
+
+            Vehicle thisV = (Vehicle)icomobj_WorkingCopy;
+            int shieldDmg = 0;
+            if (thisV.NormalShields > 0)
+            {
+                var dmg = Math.Min(damage, thisV.NormalShields);
+                thisV.NormalShields -= dmg;
+                damage -= dmg;
+                shieldDmg += dmg;
+            }
+            if (thisV.PhasedShields > 0)
+            {
+                var dmg = Math.Min(damage, thisV.PhasedShields);
+                thisV.NormalShields -= dmg;
+                damage -= dmg;
+                shieldDmg += dmg;
+            }
+            if (shieldDmg > 0)// && battle != null)
+            {
+                //battle.LogShieldDamage(this, shieldDmg);
+            }
+
+            return damage;
+        }
+
+        public void handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice)
+        {
+            Vehicle thisV = (Vehicle)icomobj_WorkingCopy;
+            while (damage > 0 && !thisV.IsDestroyed)
+            {
+                var comps = thisV.Components.Where(c => c.Hitpoints > 0);
+                var armor = comps.Where(c => c.HasAbility("Armor"));
+                var internals = comps.Where(c => !c.HasAbility("Armor"));
+                var canBeHit = armor.Any() ? armor : internals;
+                var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
+
+                damage = comp.TakeDamage(damageType, damage, null);// battle);
+            }
+        }
 
 
 

@@ -371,9 +371,6 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-
-
-
 		public Point3d SimNewtonianPhysics(CombatNode comObj)
 		{
 			if (comObj is CombatObject)
@@ -387,6 +384,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			return comObj.cmbt_loc;
 		}
+
 
 		public Point3d InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
@@ -481,6 +479,53 @@ namespace FrEee.Game.Objects.Combat2
 			return boltTimetoTarget;
 		}
 
+
+
+        public void firecontrol(int tic_countr, CombatObject comObj)
+        {
+            foreach (var weapon in comObj.weaponList)
+            {
+                Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
+                //ship.Weapons
+                CombatWeapon wpn = (CombatWeapon)weapon;
+
+                if (comObj.weaponTarget.Count() > 0 &&
+                    wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
+                    tic_countr >= wpn.nextReload)
+                {
+                    if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
+                    {
+                        //this function figures out if there's a hit, deals the damage, and creates an event.
+
+                        //first create the event for the target ship
+                        CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
+                        //then create teh event for this ship firing on the target
+                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+                        targets_event.fireOnEvent = attack_event;
+
+                        if (!IsReplay)
+                        {
+                            ReplayLog.Events.Add(targets_event);
+                            ReplayLog.Events.Add(attack_event);
+                        }
+
+                    }
+                }
+            }
+            //update any events where this ship has taken fire, and set the location. 
+            if (!IsReplay)
+            {
+                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+                {
+                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+                    {
+                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+                        takefire.setLocation(comObj.cmbt_loc);
+                    }
+                }
+            }
+        }
+
 		public CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
@@ -513,20 +558,8 @@ namespace FrEee.Game.Objects.Combat2
 			//for bolt calc, need again for adding to list.
 			if (weapon.weaponType == "Bolt")
 			{
-				Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
-				Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
-				Fix16 rThis_distance = boltSpeed * boltTTT;
-
-				Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
-				Fix16 rMin_distance = boltSpeed * weapon.minRange; //s * t = d
-
-				Fix16 rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
-				Fix16 rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
-
-				Fix16 scaler = rMax_distance_standstill / rMax_distance;
-
-				rangeForDamageCalcs = rThis_distance * scaler * (Fix16)0.001;
-
+                rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
+                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
 				//set target tick for the future.
 				targettic += (int)boltTTT;
 				if (IsReplay)
@@ -541,7 +574,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 
 			}
-			else
+			else //not bolt
 			{
 				if (IsReplay)
 				{ //read the replay... nothing to do if a beam. 
@@ -554,12 +587,6 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
-
-			long ID = target_icomobj.ID;
-			if (ID == -1)
-			{
-
-			}
 
 			if (hit && !target_icomobj.IsDestroyed)
 			{
@@ -578,60 +605,23 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		public void firecontrol(int tic_countr, CombatObject comObj)
-		{
-			foreach (var weapon in comObj.weaponList)
-			{
-				Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
-				//ship.Weapons
-				CombatWeapon wpn = (CombatWeapon)weapon;
+        public static Fix16 rangeForDamageCalcs_bolt(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+        {
+            Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
+            Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
+            Fix16 rThis_distance = boltSpeed * boltTTT;
 
+            Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
+            Fix16 rMin_distance = boltSpeed * weapon.minRange; //s * t = d
 
+            Fix16 rMax_distance_standstill = weapon.boltSpeed * weapon.maxRange;
+            Fix16 rMin_distance_standstill = weapon.boltSpeed * weapon.minRange;
 
-				if (comObj.weaponTarget.Count() > 0 &&
-					wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
-					tic_countr >= wpn.nextReload)
-				{
-					//wpn.Attack(comObj.weaponTarget[0].icomobj, (int)Trig.distance(comObj.cmbt_loc, comObj.weaponTarget[0].cmbt_loc), this);
-					//combatEvent evnt = new combatEvent(tic_countr, "", comObj, comObj.weaponTarget[0]);
-					//replaylog.addEvent(tic_countr, evnt);
-					//MountedComponentTemplate tmplt = wpn.Template;
-					//int maxRange = tmplt.WeaponMaxRange * 100;
-					//int minRange = tmplt.WeaponMinRange * 100;
-					//int accuracy = tmplt.WeaponAccuracy;
-					//int damage = tmplt.WeaponDamage;
-					if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
-					{
-						//this function figures out if there's a hit, deals the damage, and creates an event.
+            Fix16 scaler = rMax_distance_standstill / rMax_distance;
 
-						//first create the event for the target ship
-						CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-						//then create teh event for this ship firing on the target
-						CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-						 targets_event.fireOnEvent = attack_event;
-
-						if (!IsReplay)
-						{
-							ReplayLog.Events.Add(targets_event);
-							ReplayLog.Events.Add(attack_event);
-						}
-
-					}
-				}
-			}
-			//update any events where this ship has taken fire, and set the location. 
-			if (!IsReplay)
-			{
-				foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
-				{
-					if (comevnt.GetType() == typeof(CombatTakeFireEvent))
-					{
-						CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
-						takefire.setLocation(comObj.cmbt_loc);
-					}
-				}
-			}
-		}
+            Fix16 rangeForDamageCalcs = rThis_distance * scaler * (Fix16)0.001;
+            return rangeForDamageCalcs;
+        }
 
 		private void combatDamage(CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
 		{
@@ -642,35 +632,10 @@ namespace FrEee.Game.Objects.Combat2
 				return; //damage; // she canna take any more!
 
 			// TODO - worry about damage types, and make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
-			int shieldDmg = 0;
-			if (targetV.NormalShields > 0)
-			{
-				var dmg = Math.Min(damage, targetV.NormalShields);
-				targetV.NormalShields -= dmg;
-				damage -= dmg;
-				shieldDmg += dmg;
-			}
-			if (targetV.PhasedShields > 0)
-			{
-				var dmg = Math.Min(damage, targetV.PhasedShields);
-				targetV.NormalShields -= dmg;
-				damage -= dmg;
-				shieldDmg += dmg;
-			}
-			if (shieldDmg > 0)// && battle != null)
-			{
-				//battle.LogShieldDamage(this, shieldDmg);
-			}
-			while (damage > 0 && !targetV.IsDestroyed)
-			{
-				var comps = targetV.Components.Where(c => c.Hitpoints > 0);
-				var armor = comps.Where(c => c.HasAbility("Armor"));
-				var internals = comps.Where(c => !c.HasAbility("Armor"));
-				var canBeHit = armor.Any() ? armor : internals;
-				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
 
-				damage = comp.TakeDamage(damageType, damage, null);// battle);
-			}
+            damage = target.handleShieldDamage(damage);
+
+            target.handleComponentDamage(damage, damageType, attackersdice);
 
 			if (targetV.IsDestroyed)
 			{
@@ -691,6 +656,8 @@ namespace FrEee.Game.Objects.Combat2
 			// update memory sight
 			targetV.UpdateEmpireMemories();
 		}
+
+
 
 		public System.Drawing.Image Icon
 		{
