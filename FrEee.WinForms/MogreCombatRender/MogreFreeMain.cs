@@ -13,6 +13,7 @@ using System.Drawing;
 using FrEee.WinForms.Forms;
 
 using FixMath.NET;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -528,43 +529,51 @@ namespace FrEee.WinForms.MogreCombatRender
 			while (cont && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
+				var renderlocs = new SafeDictionary<CombatNode, Point3d>();
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
 					foreach (CombatObject comObj in battle.CombatObjects)
 					{
-						Point3d renderloc = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
-						do_graphics(comObj, renderloc);
+						renderlocs[comObj] = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+						do_graphics(comObj, renderlocs[comObj]);
 					}
-                    foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
-                    {
-                        Point3d renderloc = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
-                        do_graphics(comNode, renderloc);
-                    }
+					foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
+					{
+						renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+						do_graphics(comNode, renderlocs[comNode]);
+					}
 				}
 
 
-				foreach (CombatObject comObj in battle.CombatObjects.ToArray())
-				{
+				foreach (var comObj in battle.CombatObjects.ToArray())
                     comObj.debuginfo = "";
-                    //heading and thrust
-					comObj.helm();
 
+				foreach (var comObj in battle.CombatObjects.ToArray())
+					comObj.helm(); //heading and thrust
+
+				foreach (var comObj in battle.CombatObjects.ToArray())
+				{
                     //firecontrol, these get logged, but we still need to run through it
                     //so that prng.next happens, and damage is done.
                     battle.firecontrol(battletic, comObj);
+				}
 
-                    readlogs(comObj, battletic);
+				foreach (var comObj in battle.CombatObjects.ToArray())
+					readlogs(comObj, battletic);
 
+				foreach (var comObj in battle.CombatObjects.ToArray())
+				{
                     //physicsmove objects. 
                     Point3d renderloc = battle.SimNewtonianPhysics(comObj);
-
-                    do_graphics(comObj, renderloc);
-                  
 				}
+
+				foreach (var comObj in battle.CombatObjects.ToArray())
+                    do_graphics(comObj, renderlocs[comObj]);
+                  
                 foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject))) //update bullet and explosion objects.
                 {
-                    Point3d renderloc = battle.SimNewtonianPhysics(comNode);
-                    do_graphics(comNode, renderloc);
+                    renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
+                    do_graphics(comNode, renderlocs[comNode]);
                 }
 
                 if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
