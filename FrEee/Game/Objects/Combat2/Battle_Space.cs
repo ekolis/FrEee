@@ -316,19 +316,18 @@ namespace FrEee.Game.Objects.Combat2
 		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
 		{
 			//unleash the dogs of war!
-			foreach (CombatObject comObj in CombatObjects)
-			{
+			foreach (var comObj in CombatObjects)
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
-				//heading and thrust
-				comObj.helm();
+			foreach (var comObj in CombatObjects)
+				comObj.helm(); //heading and thrust
 
-				//fire ready weapons.
-				firecontrol(tick, comObj);
+			foreach (var comObj in CombatObjects)
+				firecontrol(tick, comObj); //fire ready weapons.
 
-				//physicsmove objects.
-				SimNewtonianPhysics(comObj);
-			}
+			foreach (var comObj in CombatObjects)
+				SimNewtonianPhysics(comObj); //physicsmove objects.
+
 			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
 				foreach (CombatObject comObj in CombatObjects)
