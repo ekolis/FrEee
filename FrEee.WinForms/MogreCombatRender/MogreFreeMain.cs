@@ -639,10 +639,20 @@ namespace FrEee.WinForms.MogreCombatRender
                         Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
                         if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
                         {
-                            //double jitterAmount = fireEvent.Weapon.weapon.HitChance; //somethingsomethingsomething... this is backwards. 
+							// TODO - take into account firing ship's accuracy and target's evasion
+							int accuracy = fireEvent.Weapon.weapon.Template.WeaponAccuracy;
+							int jitterAmount = 0;
+							if (accuracy < 50)
+								jitterAmount = (int)System.Math.Pow(50 - accuracy, 2) / 50;
+							if (jitterAmount < 5)
+								jitterAmount = 5;
+							if (jitterAmount > 30)
+								jitterAmount = 30;
                             //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
-                            //Point3d jitter = new Point3d(FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount), FrEee.Utility.RandomHelper.Range(-jitterAmount, jitterAmount)) //aaand the randomHelper takes an int not a double.
-                            //bulletVector += jitter;
+							Compass jitter = new Compass(RandomHelper.Range(-jitterAmount, jitterAmount), false);
+							Compass bulletCompass = bulletVector.Compass;
+							Compass offsetCompass = bulletCompass + jitter;
+							bulletVector = offsetCompass.Point(bulletVector.Length);
                         }
                         long id = -battle.CombatNodes.Count - 2; // negative numbers other than -1 aren't used by game objects
                         CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);

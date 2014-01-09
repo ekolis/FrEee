@@ -111,5 +111,14 @@ namespace FrEee.Game.Objects.Combat2
             return Degrees.GetHashCode();
         }
 
+		public static Compass operator +(Compass c1, Compass c2)
+		{
+			return new Compass(c1.Radians + c2.Radians);
+		}
+
+		public static Compass operator -(Compass c1, Compass c2)
+		{
+			return new Compass(c1.Radians - c2.Radians);
+		}
     }
 }
