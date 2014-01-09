@@ -57,6 +57,13 @@ namespace FrEee.Game.Objects.Combat2
 			get { return this.point_list[2]; }
 			set { this.point_list[2] = value; }
 		}
+		public Compass Compass
+		{
+			get
+			{
+				return new Compass(Trig.angleA(this));
+			}
+		}
 
 		public void ZEROIZE()
 		{
