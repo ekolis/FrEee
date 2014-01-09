@@ -208,6 +208,10 @@
     <Compile Include="Game\Objects\Combat2\FixedMath\Fix16.cs" />
     <Compile Include="Game\Objects\Combat2\FixedMath\Fix16SinLut.cs" />
     <Compile Include="Game\Objects\Combat2\FixedMath\Fix16Test.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64SinLut.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64TanLut.cs" />
+    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64Tests.cs" />
     <Compile Include="Game\Objects\Combat2\GravMath.cs" />
     <Compile Include="Game\Objects\Combat2\Trig.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />

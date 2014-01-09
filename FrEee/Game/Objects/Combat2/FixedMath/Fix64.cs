@@ -260,7 +260,7 @@ namespace FixMath.NET {
             return new Fix64(sum);
         }
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)] 
+        //[MethodImplAttribute(MethodImplOptions.AggressiveInlining)] 
         static int Clz(ulong x) {
             int result = 0;
             while ((x & 0xF000000000000000) == 0) { result += 4; x <<= 4; }
@@ -481,7 +481,7 @@ namespace FixMath.NET {
 
 
 
-        [MethodImplAttribute(MethodImplOptions.AggressiveInlining)] 
+        //[MethodImplAttribute(MethodImplOptions.AggressiveInlining)] 
         static long ClampSinValue(long angle, out bool flipHorizontal, out bool flipVertical) {
             // Clamp value to 0 - 2*PI using modulo; this is very slow but there's no better way AFAIK
             var clamped2Pi = angle % PI_TIMES_2;
@@ -594,30 +594,38 @@ namespace FixMath.NET {
 
 
 
-        public static explicit operator Fix64(long value) {
+        public static implicit operator Fix64(long value) {
             return new Fix64(value * ONE);
         }
-        public static explicit operator long(Fix64 value) {
+        public static implicit operator long(Fix64 value) {
             return value.m_rawValue >> FRACTIONAL_PLACES;
         }
-        public static explicit operator Fix64(float value) {
+        public static implicit operator Fix64(float value) {
             return new Fix64((long)(value * ONE));
         }
-        public static explicit operator float(Fix64 value) {
+        public static implicit operator float(Fix64 value) {
             return (float)value.m_rawValue / ONE;
         }
-        public static explicit operator Fix64(double value) {
+        public static implicit operator Fix64(double value) {
             return new Fix64((long)(value * ONE));
         }
-        public static explicit operator double(Fix64 value) {
+        public static implicit operator double(Fix64 value) {
             return (double)value.m_rawValue / ONE;
         }
-        public static explicit operator Fix64(decimal value) {
+        public static implicit operator Fix64(decimal value) {
             return new Fix64((long)(value * ONE));
         }
-        public static explicit operator decimal(Fix64 value) {
+        public static implicit operator decimal(Fix64 value) {
             return (decimal)value.m_rawValue / ONE;
         }
+		public static implicit operator Fix64(Fix16 value)
+		{
+			return (Fix64)(decimal)value;
+		}
+		public static explicit operator Fix16(Fix64 value)
+		{
+			return (Fix16)(decimal)value;
+		}
 
         public override bool Equals(object obj) {
             return obj is Fix64 && ((Fix64)obj).m_rawValue == m_rawValue;
