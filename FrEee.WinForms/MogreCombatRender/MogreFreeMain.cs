@@ -251,6 +251,10 @@ namespace FrEee.WinForms.MogreCombatRender
 			Light l = mSceneMgr.CreateLight("MainLight");
 			l.Position = new Vector3(0, 0, 5000);
 
+            ParticleSystem explosionParticle = mSceneMgr.CreateParticleSystem("Explosion", "Explosion");
+            SceneNode particleNode = mSceneMgr.RootSceneNode.CreateChildSceneNode("Particle");
+            particleNode.AttachObject(explosionParticle);
+
 		}
 
 		private void CreateFrameListeners()
