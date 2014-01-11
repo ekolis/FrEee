@@ -609,38 +609,22 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel2.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matFuel.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matHull.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matHullBridge.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matReactor.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\materials\scripts\matThurster.material">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\models\DeltaShip.mesh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="MogreCombatRender\Media\packs\OgreCore.zip">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="ogre.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matBarrel2.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matFuel.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matHull.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matHullBridge.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matReactor.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\matThurster.material" />
+    <None Include="MogreCombatRender\Media\materials\scripts\Ogre.material" />
+    <None Include="MogreCombatRender\Media\models\DeltaShip.mesh" />
+    <None Include="MogreCombatRender\Media\models\ogrehead.mesh" />
+    <None Include="MogreCombatRender\Media\packs\cubemap.zip" />
+    <None Include="MogreCombatRender\Media\packs\OgreCore.zip" />
+    <None Include="MogreCombatRender\Media\packs\skybox.zip" />
+    <None Include="MogreCombatRender\Media\Particles\explosion.particle" />
     <None Include="plugins.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
@@ -661,7 +645,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <None Include="resources.cfg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -677,20 +661,36 @@
     <Content Include="FrEee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Mogre.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="MogreCombatRender\Media\materials\textures\dirt01.jpg" />
+    <Content Include="MogreCombatRender\Media\materials\textures\Fireball.000.png" />
+    <Content Include="MogreCombatRender\Media\materials\textures\GreenSkin.jpg" />
+    <Content Include="MogreCombatRender\Media\materials\textures\spheremap.png" />
+    <Content Include="MogreCombatRender\Media\materials\textures\WeirdEye.png" />
+    <Content Include="MOIS.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="OgreMain.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Plugin_OctreeSceneManager.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Plugin_ParticleFX.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RenderSystem_Direct3D9.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="RenderSystem_GL.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="MogreCombatRender\Media\materials\programs\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
