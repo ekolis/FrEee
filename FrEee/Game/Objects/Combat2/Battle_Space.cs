@@ -88,10 +88,6 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
 
-
-
-
-
 			Fleets = new List<Fleet> { };
 
 			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())

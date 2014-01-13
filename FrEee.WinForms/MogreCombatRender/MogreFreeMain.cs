@@ -596,6 +596,10 @@ namespace FrEee.WinForms.MogreCombatRender
                 {
                     renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
                     do_graphics(comNode, renderlocs[comNode]);
+                    if (comNode.deathTick > battletic)
+                    {
+                        disposeBullet(comNode, renderlocs);
+                    }
                 }
 
                 //readlogs, create and dispose of bullets.
@@ -716,20 +720,9 @@ namespace FrEee.WinForms.MogreCombatRender
                     // TODO - kersplosions
                     CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
 
-                    if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt")
-                    {//remove the node, stop rendering. TODO remove this at its TTL?
-                        //ie should go past the ship.
-                        
-                        //dispose the Ogre node
-                        string IDName = takefireEvent.BulletNode.ID.ToString();
-                        SceneNode node = mSceneMgr.GetSceneNode(IDName);                       
-                        Entity objEnt = mSceneMgr.GetEntity(IDName);
-                        objEnt.Dispose();
-                        node.Dispose();
-
-                        //remove from the list of game nodes.
-                        renderlocs.Remove(takefireEvent.BulletNode);
-                        battle.CombatNodes.Remove(takefireEvent.BulletNode);
+                    if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt" && takefireEvent.IsHit)
+                    {//remove the node, stop rendering.                    
+                        disposeBullet(takefireEvent.BulletNode, renderlocs);
                     }
                 }
                 else if (comEvent is CombatDestructionEvent)
@@ -754,6 +747,19 @@ namespace FrEee.WinForms.MogreCombatRender
                     }
                 }
             }
+        }
+
+        private void disposeBullet(CombatNode bulletNode, SafeDictionary<CombatNode, Point3d> renderlocs)
+        {
+            string IDName = bulletNode.ID.ToString();
+            SceneNode node = mSceneMgr.GetSceneNode(IDName);
+            Entity objEnt = mSceneMgr.GetEntity(IDName);
+            objEnt.Dispose();
+            node.Dispose();
+
+            //remove from the list of game nodes.
+            renderlocs.Remove(bulletNode);
+            battle.CombatNodes.Remove(bulletNode);
         }
 
         private void do_txt()
