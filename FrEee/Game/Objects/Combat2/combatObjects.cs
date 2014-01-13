@@ -134,7 +134,12 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         public Compass cmbt_head { get; set; }
 
+        /// <summary>
+        /// the ID of the origional icomatant if a ship.
+        /// </summary>
         public long ID { get; private set; }
+
+        public int deathTick { get; set; }
     }
 
 	public class CombatObject : CombatNode

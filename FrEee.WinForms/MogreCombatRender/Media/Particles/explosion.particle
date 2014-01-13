@@ -1,12 +1,12 @@
 particle_system Explosion
 {
 	material Particles/Fireball.000
-	particle_width 50.0
-	particle_height 50.0
+	particle_width 1.0
+	particle_height 1.0
 	quota 50
 	cull_each false
 	sorted false
-	local_space false
+	local_space true
 	iteration_interval 0.0
 	nonvisible_update_timeout 0.0
 	billboard_type point
@@ -18,18 +18,18 @@ particle_system Explosion
 	emitter Box
 	{
 		position 0.0 0.0 0.0
-		direction 0.0 0.0 1.0
+		direction 0.499999970197678 0.70710676908493 0.499999970197678
 		angle 180
-		width 100
-		height 100
-		depth 100
+		width 0.5
+		height 0.5
+		depth 0.5
 		emission_rate 150.67
-		velocity_min 9.46
-		velocity_max 95.8
-		time_to_live_min 0.16
-		time_to_live_max 4.54
-		duration_min 1
-		duration_max 1
+		velocity_min 5
+		velocity_max 50
+		time_to_live_min 0.1
+		time_to_live_max 2
+		duration_min 0.5
+		duration_max 2
 		repeat_delay_min 4
 		repeat_delay_max 4
 		colour_range_start 0 0 0 1
@@ -54,7 +54,7 @@ particle_system Explosion
 
 	affector Scaler
 	{
-		rate 156.47
+		rate 100
 	}
 
 	affector Rotator
