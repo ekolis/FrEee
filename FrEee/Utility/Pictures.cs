@@ -183,15 +183,15 @@ namespace FrEee.Utility
 				if (Mod.Current.RootPath != null)
 				{
 					portrait =
-						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName)) ??
-						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName)) ??
+						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", Mod.Current.RootPath, "Pictures", "Planets", sobj.PictureName), scale) ??
+						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName), scale) ??
 						GetGenericImage(sobj.GetType(), scale);
 				}
 				else
 				{
 					// stock mod has no entry in Mods folder, and looking for a null path crashes Path.Combine
 					portrait =
-						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName)) ??
+						GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Planets", sobj.PictureName), scale) ??
 						GetGenericImage(sobj.GetType(), scale);
 				}
 
@@ -621,28 +621,24 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetCachedImage(IEnumerable<string> paths)
+		public static Image GetCachedImage(IEnumerable<string> paths, double scale = 1d)
 		{
 			foreach (var path in paths)
 			{
-				var img = GetCachedImage(path);
+				var img = GetCachedImage(path, scale);
 				if (img != null)
 					return img;
 			}
 			return null;
 		}
 
-		public static Image GetCachedImage(params string[] paths)
-		{
-			return GetCachedImage((IEnumerable<string>)paths);
-		}
-
-		public static Image GetCachedImage(string path)
+		public static Image GetCachedImage(string path, double scale = 1d)
 		{
 			if (string.IsNullOrEmpty(Path.GetExtension(path)))
 			{
 				// check PNG, then BMP, if no extension specified
-				return GetCachedImage(path + ".png") ?? GetCachedImage(path + ".bmp");
+				// don't scale BMP files (unless they're specifically requested as BMP with a scale factor)
+				return GetCachedImage(path + ".png", scale) ?? GetCachedImage(path + ".bmp");
 			}
 
 			if (!fileCache.ContainsKey(path))
@@ -668,7 +664,7 @@ namespace FrEee.Utility
 					fileCache[path] = null;
 				}
 			}
-			return fileCache[path];
+			return fileCache[path].Frame(scale);
 		}
 
 		public static Image GetModImage(string path)
@@ -939,6 +935,8 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static Image Frame(this Image src, double scale)
 		{
+			if (src == null)
+				return null;
 			var scaled = src.Resize((int)Math.Ceiling(Math.Max(src.Width, src.Height) * scale));
 			var result = new Bitmap(src.Width, src.Height);
 			var g = Graphics.FromImage(result);
