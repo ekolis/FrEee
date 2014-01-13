@@ -13,6 +13,7 @@ using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Orders;
 using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
@@ -900,15 +901,7 @@ namespace FrEee.Game.Objects.Space
 					var sector = v.FindSector();
 					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
 					{
-						//var battle = new Battle(sector);
-
-                        //debugstuff
-                        var objs3 = Galaxy.Current.Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
-                        int numobs3 = objs3.Count();
-                        var objs4 = objs3.Where(obj => !obj.IsMemory);
-                        int numobs4 = objs4.Count();
-                        //end-debugstuff
-
+						// resolve the battle
 						var battle = new Battle_Space(sector);
 						battle.Resolve();
 						foreach (var emp in battle.Empires.Keys)
