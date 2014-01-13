@@ -42,7 +42,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		//Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
 		private Battle_Space battle;
-
+        
         private int SelectedComObj = 1;
 
 		public MogreFreeMain(Battle_Space battle)
@@ -252,8 +252,10 @@ namespace FrEee.WinForms.MogreCombatRender
 			l.Position = new Vector3(0, 0, 5000);
 
             ParticleSystem explosionParticle = mSceneMgr.CreateParticleSystem("Explosion", "Explosion");
-            SceneNode particleNode = mSceneMgr.RootSceneNode.CreateChildSceneNode("Particle");
-            particleNode.AttachObject(explosionParticle);
+
+
+            //SceneNode particleNode = mSceneMgr.RootSceneNode.CreateChildSceneNode("Particle");
+            //particleNode.AttachObject(explosionParticle);
 
 		}
 
@@ -539,7 +541,8 @@ namespace FrEee.WinForms.MogreCombatRender
             return selectedObj();
         }
 
-        long bulletsCreated = 0;
+        
+        int bulletsCreated = 0;
 		private void Go()
 		{
             int battletic = 0;			
@@ -547,11 +550,11 @@ namespace FrEee.WinForms.MogreCombatRender
             
 
 			bool cont = true; // is combat continuing?
-
+            var renderlocs = new SafeDictionary<CombatNode, Point3d>();
 			while (cont && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
-				var renderlocs = new SafeDictionary<CombatNode, Point3d>();
+				
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
                     //foreach (CombatObject comObj in battle.CombatObjects)
@@ -579,8 +582,6 @@ namespace FrEee.WinForms.MogreCombatRender
                     //so that prng.next happens, and damage is done.
                     battle.firecontrol(battletic, comObj);
 				}
-
-
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
 				{
@@ -630,6 +631,20 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				Application.DoEvents();
 			}
+
+            //might as well keep rendering after the battle is over.
+            bool loopafterbattle = true;
+            while (loopafterbattle && mRoot != null && mRoot.RenderOneFrame())
+            {
+                foreach (CombatNode comNode in battle.CombatNodes)
+                {
+                    
+                    do_graphics(comNode, renderlocs[comNode]);
+                    
+                }
+                do_txt();
+                Application.DoEvents();
+            }
 		}
 
 
@@ -683,6 +698,14 @@ namespace FrEee.WinForms.MogreCombatRender
                         long id = -bulletsCreated -2; // negative numbers other than -1 aren't used by game objects
                         bulletsCreated++;
                         CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
+                        if (fireEvent.TakeFireEvent.IsHit)
+                        {
+                            bullet.deathTick = fireEvent.TakeFireEvent.Tick;
+                        }
+                        else
+                        {
+                            bullet.deathTick = battletic + fireEvent.Weapon.maxRange;
+                        }
                         battle.CombatNodes.Add(bullet);
                         fireEvent.TakeFireEvent.BulletNode = bullet;
                         CreateNewEntity(bullet);
@@ -712,6 +735,10 @@ namespace FrEee.WinForms.MogreCombatRender
                 else if (comEvent is CombatDestructionEvent)
                 {
                     // - kersplosions and removal of model. 
+                    string IDName = comEvent.Object.ID.ToString();
+                    SceneNode node = mSceneMgr.GetSceneNode(IDName);
+                    ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");               
+                    node.AttachObject(expl);                    
                 }
                 else if (comEvent is CombatLocationEvent)
                 {
@@ -721,9 +748,9 @@ namespace FrEee.WinForms.MogreCombatRender
                     }
                     else
                     {
-                        Point3d difference = locEvent.Location - comObj.cmbt_loc;
-                        Console.WriteLine("Desync at tick: " + battletic);
-                        Console.WriteLine("Loc difference of: " + difference.ToString());
+                        //Point3d difference = locEvent.Location - comObj.cmbt_loc;
+                        //Console.WriteLine("Desync at tick: " + battletic);
+                        //Console.WriteLine("Loc difference of: " + difference.ToString());
                     }
                 }
             }

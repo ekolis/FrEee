@@ -620,7 +620,6 @@
     <None Include="MogreCombatRender\Media\models\DeltaShip.mesh" />
     <None Include="MogreCombatRender\Media\models\ogrehead.mesh" />
     <None Include="MogreCombatRender\Media\packs\cubemap.zip" />
-    <None Include="MogreCombatRender\Media\packs\OgreCore.zip" />
     <None Include="MogreCombatRender\Media\packs\skybox.zip" />
     <None Include="MogreCombatRender\Media\Particles\explosion.particle" />
     <None Include="plugins.cfg">

@@ -525,15 +525,15 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-		public CombatTakeFireEvent FireWeapon(int tic, CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public CombatTakeFireEvent FireWeapon(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 rangeForDamageCalcs = (Fix16)0;
 			Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			int targettic = tic;
+			int targettic = tick;
 
 			//reset the weapon nextReload.
-			weapon.nextReload = tic + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
+			weapon.nextReload = tick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
 			
 			ICombatant target_icomobj = target.icomobj_WorkingCopy;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
@@ -592,7 +592,7 @@ namespace FrEee.Game.Objects.Combat2
 				var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
 				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				int damage = shot.Damage;
-				combatDamage(target, weapon, damage, attacker.getDice());
+				combatDamage(tick, target, weapon, damage, attacker.getDice());
 				if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
 					target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
 				if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
@@ -622,7 +622,7 @@ namespace FrEee.Game.Objects.Combat2
             return rangeForDamageCalcs;
         }
 
-		private void combatDamage(CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
+		private void combatDamage(int tick, CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
 		{
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
@@ -640,6 +640,12 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				//battle.LogTargetDeath(this);
 				targetV.Dispose();
+                target.deathTick = tick;
+                if (!IsReplay)
+                {
+                    CombatDestructionEvent deathEvent = new CombatDestructionEvent(tick, target, target.cmbt_loc);
+                    ReplayLog.Events.Add(deathEvent);
+                }
 				foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
 				{
 					CombatEmpire empire = empireKVP.Value;
