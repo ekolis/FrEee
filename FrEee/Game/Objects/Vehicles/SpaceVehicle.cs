@@ -4,6 +4,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
@@ -199,6 +200,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 			// You can always scan ships you are in combat with.
 			if (Battle.Current.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+			if (Battle_Space.Current.Any(b => b.ActualCombatants.Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// TODO - cloaking
