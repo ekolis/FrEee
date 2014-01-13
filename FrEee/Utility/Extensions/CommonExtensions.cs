@@ -2382,5 +2382,25 @@ namespace FrEee.Utility.Extensions
 			match = nuItems.FindByTypeNameIndex(old.GetType(), old.Name, oldItems.GetIndex(old));
 			return match != null;
 		}
+
+		/// <summary>
+		/// Finds the original object of a memory, if it is known.
+		/// </summary>
+		/// <param name="f"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
+		{
+			// not a memory? it is its own real object
+			if (!(f is Memory))
+				return f;
+
+			// look for the real object
+			if (emp.Memory.Any(kvp => kvp.Value == f))
+				return (IFoggable)Galaxy.Current.referrables[emp.Memory.Single(kvp => kvp.Value == f).Key];
+
+			// nothing found?
+			return null;
+		}
 	}
 }

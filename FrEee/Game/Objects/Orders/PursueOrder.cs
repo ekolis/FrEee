@@ -51,6 +51,9 @@ namespace FrEee.Game.Objects.Orders
 		/// Call this when calling UpdateMemory on the target.
 		/// Sets the alternate target to the largest ship in a fleet, if the target is a fleet.
 		/// If the fleet is destroyed, sets the target to the alternate target.
+		/// If the target is a ship, etc., and it is destroyed, sets the target to the memory of the target, or deletes the order if there is no memory.
+		/// If the target is a memory, and the original object is sighted again, sets the target to the original object.
+		/// Otherwise sets the alternate target to the target.
 		/// </summary>
 		public void UpdateAlternateTarget()
 		{
@@ -61,6 +64,18 @@ namespace FrEee.Game.Objects.Orders
 					AlternateTarget = f.LeafVehicles.Largest();
 				else
 					Target = AlternateTarget;
+			}
+			else if (Target is IMobileSpaceObject)
+			{
+				var sobj = (IMobileSpaceObject)Target;
+				if (sobj.IsMemory && sobj.FindOriginalObject(Owner) != null)
+					Target = (ISpaceObject)sobj.FindOriginalObject(Owner);
+				if (!sobj.IsDestroyed)
+					AlternateTarget = Target;
+				else if (Owner.Memory[Target.ID] != null)
+					Target = (ISpaceObject)Owner.Memory[Target.ID];
+				else
+					Dispose();
 			}
 			else
 				AlternateTarget = Target;
