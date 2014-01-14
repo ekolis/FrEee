@@ -520,9 +520,6 @@ namespace FrEee.Game.Objects.Combat2
                 damage = comp.TakeDamage(damageType, damage, null);// battle);
             }
         }
-
-
-
 	}
 
 
