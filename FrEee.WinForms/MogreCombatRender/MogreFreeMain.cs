@@ -594,12 +594,15 @@ namespace FrEee.WinForms.MogreCombatRender
                   
                 foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject)).ToArray()) //update bullet and explosion objects.
                 {
-                    renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
-                    do_graphics(comNode, renderlocs[comNode]);
-                    if (comNode.deathTick > battletic)
-                    {
-                        disposeBullet(comNode, renderlocs);
-                    }
+					if (comNode.deathTick <= battletic)
+					{
+						disposeBullet(comNode, renderlocs);
+					}
+					else
+					{
+						renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
+						do_graphics(comNode, renderlocs[comNode]);
+					}                    
                 }
 
                 //readlogs, create and dispose of bullets.
@@ -719,11 +722,6 @@ namespace FrEee.WinForms.MogreCombatRender
                 {
                     // TODO - kersplosions
                     CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
-
-                    if (takefireEvent.fireOnEvent.Weapon.weaponType == "Bolt" && takefireEvent.IsHit)
-                    {//remove the node, stop rendering.                    
-                        disposeBullet(takefireEvent.BulletNode, renderlocs);
-                    }
                 }
                 else if (comEvent is CombatDestructionEvent)
                 {
@@ -754,6 +752,8 @@ namespace FrEee.WinForms.MogreCombatRender
             string IDName = bulletNode.ID.ToString();
             SceneNode node = mSceneMgr.GetSceneNode(IDName);
             Entity objEnt = mSceneMgr.GetEntity(IDName);
+			mSceneMgr.DestroySceneNode(node);
+			mSceneMgr.DestroyEntity(objEnt);
             objEnt.Dispose();
             node.Dispose();
 
