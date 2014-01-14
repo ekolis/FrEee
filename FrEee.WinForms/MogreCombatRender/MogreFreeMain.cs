@@ -289,7 +289,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     battle.CombatNodes.Remove(comNode);
                 }
             }
-			throw new ShutdownException();
+			//throw new ShutdownException();
 		}
 
         #region input control
