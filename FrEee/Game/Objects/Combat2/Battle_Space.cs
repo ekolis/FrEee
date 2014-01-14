@@ -488,7 +488,7 @@ namespace FrEee.Game.Objects.Combat2
                     wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
                     tic_countr >= wpn.nextReload)
                 {
-                    if (Battle_Space.isinRange(comObj, wpn, comObj.weaponTarget[0]))
+                    if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
                     {
                         //this function figures out if there's a hit, deals the damage, and creates an event.
 

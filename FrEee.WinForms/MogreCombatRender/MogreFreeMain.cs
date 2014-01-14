@@ -592,7 +592,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				foreach (var comObj in battle.CombatObjects.ToArray())
                     do_graphics(comObj, renderlocs[comObj]);
                   
-                foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject))) //update bullet and explosion objects.
+                foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject)).ToArray()) //update bullet and explosion objects.
                 {
                     renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
                     do_graphics(comNode, renderlocs[comNode]);
