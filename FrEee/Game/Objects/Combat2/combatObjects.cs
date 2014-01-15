@@ -47,11 +47,21 @@ namespace FrEee.Game.Objects.Combat2
                 weaponType = "Bolt";
 
                 boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
-                maxRange = (Fix16)1; // (maxTime for bolts) untill modfiles can handle this, bolt weapons range is the distance it can go in 1 sec.
+                maxRange = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
+            {
+                SeekingWeaponInfo  seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
                 weaponType = "Seeker";
+
+                int mass = seekerinfo.SeekerDurability; // sure why not?
+                int wpnskrspd = seekerinfo.SeekerSpeed;
+                Fix16 maxfowardThrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
+
+                //boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
+                maxRange = 1; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
+            }
             else
                 weaponType = "Unknown";
             double wpiReloadRate = wpninfo.ReloadRate;
@@ -100,7 +110,83 @@ namespace FrEee.Game.Objects.Combat2
         {
             return weapon.CanTarget(target);
         }
-       
+
+        public bool isinRange(CombatObject attacker, CombatObject target)
+        {
+            bool inrange = false;
+            var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
+            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+
+            string weaponRangeinfo = "RangeInfo:\r\n ";
+
+
+            if (weaponType == "Beam")          //beam
+            {
+                if (distance_toTarget <= maxRange && distance_toTarget >= minRange)
+                {
+                    inrange = true;
+                    weaponRangeinfo += "Range for Beam is good \r\n";
+                }
+            }
+            else if (weaponType == "Bolt") //projectile
+            {
+                inrange = bolt_isinRange(attacker, target);
+            }
+            else if (weaponType == "Seeker")       //seeker
+            {
+                if (distance_toTarget <= maxRange && distance_toTarget >= minRange)
+                    inrange = true;
+            }
+
+            attacker.debuginfo += weaponRangeinfo;
+            return inrange;
+        }
+
+        private bool seeker_isinRange(CombatObject attacker, CombatObject target)
+        {
+            bool isinRange = false;
+            Fix16 TickLength = Battle_Space.TickLength;
+
+            Fix16 baseclosingSpeed = GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            return isinRange;
+        }
+
+        public Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target)
+        {
+            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 TimetoTarget = distance_toTarget / boltClosingSpeed(attacker, target);
+            return TimetoTarget;
+        }  
+
+        private bool bolt_isinRange(CombatObject attacker, CombatObject target)
+        {
+            bool isinRange = false;
+            Fix16 TickLength = Battle_Space.TickLength;
+            Fix16 boltTTT = boltTimeToTarget(attacker, target);
+            //remember, maxRange is bolt lifetime in seconds 
+            if (boltTTT <= maxRange / TickLength && boltTTT >= minRange / TickLength)
+            {
+                isinRange = true;
+                //weaponRangeinfo += "Range for Projectile is good \r\n";
+            }
+            return isinRange;
+        }
+
+        public Fix16 boltClosingSpeed(CombatObject attacker, CombatObject target)
+        {
+            Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
+            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            return shotspeed_actual * Battle_Space.TickLength;
+        }
+
+        public Fix16 boltTimeToTarget(CombatObject attacker, CombatObject target)
+        {
+            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, target);
+            return boltTimetoTarget;
+        }
+
+
     }
 
 

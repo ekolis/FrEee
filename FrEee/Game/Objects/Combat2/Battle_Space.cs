@@ -420,62 +420,6 @@ namespace FrEee.Game.Objects.Combat2
 			comObj.debuginfo += comAI;
 		}
 
-
-
-		public static bool isinRange(CombatObject attacker, CombatWeapon weapon, CombatObject target)
-		{
-			bool inrange = false;
-			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-			Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			Fix16 weaponMaxRange = (Fix16)weapon.maxRange;
-			Fix16 weaponMinRange = (Fix16)weapon.minRange;
-			string weaponRangeinfo = "RangeInfo:\r\n ";
-
-
-			if (weapon.weaponType == "Beam")          //beam
-			{
-				if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
-				{
-					inrange = true;
-					weaponRangeinfo += "Range for Beam is good \r\n";
-				}
-			}
-			else if (weapon.weaponType == "Bolt") //projectile
-			{
-				Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
-				//remember, maxRange is bolt lifetime in seconds 
-				if (boltTTT <= weaponMaxRange / (Fix16)TickLength && boltTTT >= weaponMinRange / (Fix16)TickLength)
-				{
-					inrange = true;
-					weaponRangeinfo += "Range for Projectile is good \r\n";
-				}
-			}
-			else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))       //seeker
-			{
-				if (distance_toTarget <= weaponMaxRange && distance_toTarget >= weaponMinRange)
-					inrange = true;
-			}
-
-			attacker.debuginfo += weaponRangeinfo;
-			return inrange;
-		}
-
-		public static Fix16 boltClosingSpeed(CombatObject attacker, CombatWeapon weapon, CombatObject target)
-		{
-			Fix16 shotspeed = weapon.boltSpeed; //speed of bullet when ship is at standstill
-			Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-			return shotspeed_actual * (Fix16)TickLength;
-		}
-
-		public static Fix16 boltTimeToTarget(CombatObject attacker, CombatWeapon weapon, CombatObject target)
-		{
-			Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, weapon, target);
-			return boltTimetoTarget;
-		}
-
-
-
         public void firecontrol(int tic_countr, CombatObject comObj)
         {
             foreach (var weapon in comObj.weaponList)
@@ -488,7 +432,7 @@ namespace FrEee.Game.Objects.Combat2
                     wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
                     tic_countr >= wpn.nextReload)
                 {
-                    if (isinRange(comObj, wpn, comObj.weaponTarget[0]))
+                    if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
                     {
                         //this function figures out if there's a hit, deals the damage, and creates an event.
 
@@ -554,7 +498,7 @@ namespace FrEee.Game.Objects.Combat2
 			if (weapon.weaponType == "Bolt")
 			{
                 rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
-                Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
+                Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
 				//set target tick for the future.
 				targettic += (int)boltTTT;
 				if (IsReplay)
@@ -602,8 +546,8 @@ namespace FrEee.Game.Objects.Combat2
 
         public static Fix16 rangeForDamageCalcs_bolt(CombatObject attacker, CombatWeapon weapon, CombatObject target)
         {
-            Fix16 boltTTT = boltTimeToTarget(attacker, weapon, target);
-            Fix16 boltSpeed = boltClosingSpeed(attacker, weapon, target);
+            Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
+            Fix16 boltSpeed = weapon.boltClosingSpeed(attacker, target);
             Fix16 rThis_distance = boltSpeed * boltTTT;
 
             Fix16 rMax_distance = boltSpeed * weapon.maxRange; //s * t = d
