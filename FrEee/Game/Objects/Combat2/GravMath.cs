@@ -142,7 +142,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
         /// <summary>
-        /// 
+        /// quadratic equasion solver.
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>

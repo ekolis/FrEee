@@ -83,7 +83,7 @@ namespace FrEee.Game.Objects.Combat2
 					scopy.Owner.Dispose(); // don't need extra empires!
 				scopy.Owner = obj.Owner;
 				StartCombatants.Add(scopy);
-				CombatObject comObj = new CombatObject((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
+                CombatVehicle comObj = new CombatVehicle((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
 				CombatNodes.Add(comObj);
 
 			}
@@ -174,6 +174,14 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
+        public IEnumerable<CombatVehicle> CombatVehicles
+        {
+            get
+            {
+                return CombatNodes.OfType<CombatVehicle>();
+            }
+        }
+
 		/// <summary>
 		/// the Fleets in this battle
 		/// </summary>
@@ -226,7 +234,7 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
-			foreach (CombatObject comObj in CombatObjects)
+            foreach (CombatVehicle comObj in CombatObjects)
 			{
 				Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
 			}
@@ -234,7 +242,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		private void ReplaySetup()
 		{
-			foreach (CombatObject shipObj in CombatObjects)
+            foreach (CombatVehicle shipObj in CombatObjects)
 			{
 				shipObj.renewtoStart();
 				Empires[shipObj.icomobj_StartCopy.Owner].ownships.Add(shipObj);
@@ -259,7 +267,7 @@ namespace FrEee.Game.Objects.Combat2
 			else
 				ReplaySetup();
 			//setup the game peices
-			foreach (CombatObject comObj in CombatObjects)
+            foreach (CombatVehicle comObj in CombatObjects)
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
@@ -284,8 +292,8 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.newDice(battleseed);
 
 			}
-			foreach (CombatObject comObj in CombatObjects)
-				commandAI(comObj, 0);
+            foreach (CombatVehicle comVehic in CombatObjects)
+				commandAI(comVehic, 0);
 		}
 
 		public void Start()
@@ -326,16 +334,17 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
-				foreach (CombatObject comObj in CombatObjects)
+                foreach (CombatVehicle comVeh in CombatVehicles)
 				{
-					commandAI(comObj, tick);
+					commandAI(comVeh, tick);
 				}
 				cmdfreqCounter = 0;
 			}
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-			bool hostiles = CombatObjects.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && CombatObjects.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
+            //TODO: check for alive missiles and bullets.
+            bool hostiles = CombatVehicles.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && CombatVehicles.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
@@ -386,80 +395,88 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
 
-		public void commandAI(CombatObject comObj, int tick)
-		{
-			//do AI decision stuff.
-			//pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-			string comAI = "";
-			CombatObject tgtObj;
-			if (Empires[comObj.icomobj_WorkingCopy.Owner].hostile.Any())
-			{
-				tgtObj = Empires[comObj.icomobj_WorkingCopy.Owner].hostile[0];
-				combatWaypoint wpt = new combatWaypoint(tgtObj);
-				comObj.waypointTarget = wpt;
-				//pick a primary target to fire apon from a list of enemy within weapon range
-				comObj.weaponTarget = new List<CombatObject>();
-				comObj.weaponTarget.Add(Empires[comObj.icomobj_WorkingCopy.Owner].hostile[0]);
-			}
-			if (IsReplay && tick < 1000)
-			{
-				List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comObj, tick).ToList<CombatEvent>();
-				CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == comObj.cmbt_loc);
-				comAI = "Location ";
-				if (locevnt != null)
-					comAI += "Does match \r\n";
-				else
-					comAI += "Not matched \r\n";
-			}
-			else if (!IsReplay && tick < 1000)
-			{
-				CombatLocationEvent locevnt = new CombatLocationEvent(tick, comObj, comObj.cmbt_loc);
-				ReplayLog.Events.Add(locevnt);
-			}
-
-			comObj.debuginfo += comAI;
-		}
-
-        private void missilefirecontrol(int tic_countr, CombatObject comObj)
-        { 
-            Fix16 locdistance = (comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc).Length;
-            if (locdistance <= comObj.cmbt_vel.Length)//erm, I think?
+        public void commandAI(CombatVehicle comVehic, int tick)
+        {
+            //do AI decision stuff.
+            //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
+            if (comVehic.icomobj_WorkingCopy != null)
             {
-                CombatTakeFireEvent evnt = comObj.seekertargethit;
+                string comAI = "";
+                CombatObject tgtObj;
+                if (Empires[comVehic.icomobj_WorkingCopy.Owner].hostile.Any())
+                {
+                    tgtObj = Empires[comVehic.icomobj_WorkingCopy.Owner].hostile[0];
+                    combatWaypoint wpt = new combatWaypoint(tgtObj);
+                    comVehic.waypointTarget = wpt;
+                    //pick a primary target to fire apon from a list of enemy within weapon range
+                    comVehic.weaponTarget = new List<CombatObject>();
+                    comVehic.weaponTarget.Add(Empires[comVehic.icomobj_WorkingCopy.Owner].hostile[0]);
+                }
+                if (IsReplay && tick < 1000)
+                {
+                    List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comVehic, tick).ToList<CombatEvent>();
+                    CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == comVehic.cmbt_loc);
+                    comAI = "Location ";
+                    if (locevnt != null)
+                        comAI += "Does match \r\n";
+                    else
+                        comAI += "Not matched \r\n";
+                }
+                else if (!IsReplay && tick < 1000)
+                {
+                    CombatLocationEvent locevnt = new CombatLocationEvent(tick, comVehic, comVehic.cmbt_loc);
+                    ReplayLog.Events.Add(locevnt);
+                }
+
+                comVehic.debuginfo += comAI;
+            }
+        }
+
+        private void missilefirecontrol(int tic_countr, CombatSeeker comSek)
+        { 
+            Fix16 locdistance = (comSek.cmbt_loc - comSek.weaponTarget[0].cmbt_loc).Length;
+            if (locdistance <= comSek.cmbt_vel.Length)//erm, I think?
+            {
+                CombatTakeFireEvent evnt = comSek.seekertargethit;
                 evnt.IsHit = true;
                 evnt.Tick = tic_countr;
 
-                CombatWeapon launcherwpn = comObj.weaponList[0];
-                Component launcher = launcherwpn.weapon;
-                CombatObject target = comObj.weaponTarget[0];
-                ICombatant target_icomobj = target.icomobj_WorkingCopy;
-                var shot = new Combat.Shot(launcher, target_icomobj, 0);
-                //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
-                int damage = shot.Damage;
-                combatDamage(tic_countr, target, launcherwpn, damage, comObj.getDice());
-                if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
-                    target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
-                if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
-                    target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+                
+                Component launcher = comSek.launcher.weapon;
+                CombatObject target = comSek.weaponTarget[0];
+                if (target is CombatVehicle) 
+                {
+                    CombatVehicle comVehTgt = (CombatVehicle)target;
+                    ICombatant target_icomobj = comVehTgt.icomobj_WorkingCopy;
+                    var shot = new Combat.Shot(launcher, target_icomobj, 0);
+                    //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+                    int damage = shot.Damage;
+                    combatDamage(tic_countr, target, comSek.launcher, damage, comSek.getDice());
+                    if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                        target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+                    if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                        target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+                }
             }
         }
 
         public void firecontrol(int tic_countr, CombatObject comObj)
         {
-            if (comObj.icomobj_WorkingCopy == null)
+            if (comObj is CombatSeeker)
             {//is a seeker 
-                missilefirecontrol(tic_countr, comObj);
+                missilefirecontrol(tic_countr, (CombatSeeker)comObj);
             }
             else //is a ship.
             {
-                foreach (var weapon in comObj.weaponList)
+                CombatVehicle comVeh = (CombatVehicle)comObj;
+                foreach (var weapon in comVeh.weaponList)
                 {
-                    Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
+                    Vehicle ship = (Vehicle)comVeh.icomobj_WorkingCopy;
                     //ship.Weapons
                     CombatWeapon wpn = (CombatWeapon)weapon;
 
                     if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
-                        wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) && //if we CAN target 
+                        wpn.CanTarget(comVeh.weaponTarget[0].icomobj_WorkingCopy) && //if we CAN target 
                         tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
                     {
                         if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
@@ -530,7 +547,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 //Seeker2 iseeker = new Seeker2(attacker.icomobj_WorkingCopy.Owner, weapon.weapon, target.icomobj_WorkingCopy);
 
-                CombatObject seeker = new CombatObject(attacker, weapon, dice.Next(100000));
+                CombatSeeker seeker = new CombatSeeker(attacker, weapon, dice.Next(100000));
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
                 CombatNodes.Add(seeker);
@@ -680,7 +697,7 @@ namespace FrEee.Game.Objects.Combat2
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
 			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
-			return CombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
+            return CombatVehicles.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)

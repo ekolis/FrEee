@@ -518,9 +518,9 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		#endregion
 
-        public CombatObject selectedObj()
+        public CombatVehicle selectedObj()
         {
-            return battle.CombatObjects.ToList<CombatObject>()[SelectedComObj]; 
+            return battle.CombatVehicles.ToList<CombatVehicle>()[SelectedComObj]; 
         }
         public CombatObject selectNext()
         {
@@ -610,18 +610,17 @@ namespace FrEee.WinForms.MogreCombatRender
 					readlogs(comObj, battletic, renderlocs);
 
                 if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
-                {               
-                    foreach (CombatObject comObj in battle.CombatObjects)
+                {
+                    foreach (CombatVehicle comVehic in battle.CombatVehicles)
                     {
-                        battle.commandAI(comObj, battletic);
-                        
+                        battle.commandAI(comVehic, battletic);                        
                     }
                     cmdfreq_countr = 0;
                 }
 
 				bool ships_persuing = true; // TODO - check if ships are actually pursuing
 				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-				bool hostiles = battle.CombatObjects.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && battle.CombatObjects.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
+                bool hostiles = battle.CombatVehicles.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
 
 				if (!ships_persuing && !ships_inrange)
 					cont = false;
@@ -769,25 +768,25 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void do_txt()
         {
-            CombatObject comObj = selectedObj();
-            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comObj.icomobj_WorkingCopy;
+            CombatVehicle comVehic = selectedObj();
+            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.icomobj_WorkingCopy;
 
             string txt = ship.Name + "\r\n";
             txt += "Location:\t" 
-                + comObj.cmbt_loc.X.ToString() + "\r\n\t" 
-                + comObj.cmbt_loc.Y.ToString() + "\r\n\t" 
-                + comObj.cmbt_loc.Z.ToString() + "\r\n";
-            double speed = (double)Trig.hypotinuse(comObj.cmbt_vel);
+                + comVehic.cmbt_loc.X.ToString() + "\r\n\t" 
+                + comVehic.cmbt_loc.Y.ToString() + "\r\n\t" 
+                + comVehic.cmbt_loc.Z.ToString() + "\r\n";
+            double speed = (double)Trig.hypotinuse(comVehic.cmbt_vel);
             txt += "Speed:\t" + speed.ToString() + "\r\n";
-            txt += "Heading:\t" + comObj.cmbt_head.Degrees.ToString() + "\r\n";
+            txt += "Heading:\t" + comVehic.cmbt_head.Degrees.ToString() + "\r\n";
             
             txt += "\r\n";
             
-            Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comObj.weaponTarget[0].icomobj_WorkingCopy;
-            txt += "Target:\t" + tgtship.Name + "\r\n";
-            txt += "Distance\t" + Trig.hypotinuse(comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc) + "\r\n";
+            //Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comVehic.weaponTarget[0].icomobj_WorkingCopy;
+            //txt += "Target:\t" + tgtship.Name + "\r\n";
+            txt += "Distance\t" + Trig.hypotinuse(comVehic.cmbt_loc - comVehic.weaponTarget[0].cmbt_loc) + "\r\n";
 
-            txt += comObj.debuginfo;
+            txt += comVehic.debuginfo;
 
             form.updateText(txt);
         
