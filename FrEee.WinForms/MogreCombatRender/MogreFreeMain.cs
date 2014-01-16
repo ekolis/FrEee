@@ -678,11 +678,16 @@ namespace FrEee.WinForms.MogreCombatRender
                         Console.WriteLine("Desync at tick: " + battletic);
                         Console.WriteLine("Loc difference of: " + difference.ToString());
                     }
-                    if (fireEvent.Weapon.weaponType == "Bolt")
+                    if (fireEvent.Weapon.weaponType == "Seeker")
+                    { 
+                    }
+                    else if (fireEvent.Weapon.weaponType == "Bolt")
                     {
                         //create an entity for the bullet node.
-                        Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-                        Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                        //Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                        //Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
+                        Fix16 boltTTT = fireEvent.Weapon.boltTimeToTarget(fireEvent.Object, fireEvent.TakeFireEvent.Object);
+                        Fix16 boltSpeed = fireEvent.Weapon.boltClosingSpeed(fireEvent.Object, fireEvent.TakeFireEvent.Object);
                         Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
                         Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
                         if (!fireEvent.TakeFireEvent.IsHit) //jitter it!

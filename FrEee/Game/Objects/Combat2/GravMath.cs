@@ -139,5 +139,45 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 closingrate = Trig.dotProduct(v, (p / Trig.hypotinuse(p)));
             return closingrate;
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <param name="c"></param>
+        /// <returns>ans[3] can be -1, where ans[2] is imagenary, 1 where [0],[1] are real, and 0 where there is only one real answer [0] </returns>
+        public static Fix16[] quadratic(Fix16 a, Fix16 b, Fix16 c)
+        {
+            Fix16 foo = (b * b) - (4 * a * c);
+            Fix16 one, two, pinkElephant;
+            Fix16[] ans = new Fix16[3];
+            
+            if (foo < 0)
+            {
+                foo = -foo;
+                one = -b / (2 * a);
+                two = Fix16.Sqrt(foo) / (2 * a);
+                pinkElephant = -1;
+            }
+            else if (foo > 0)
+            { 
+                one = (-b + Fix16.Sqrt(foo)) / 2 * a;
+                two = (-b - Fix16.Sqrt(foo)) / 2 * a;
+                pinkElephant = 1;
+            }
+            else 
+            {
+                one = (-b + Fix16.Sqrt(foo)) / 2 * a;
+                two = 0;
+                pinkElephant = 0;
+            }
+            ans[0] = one;
+            ans[1] = two;
+            ans[2] = pinkElephant;
+            return ans;
+ 
+        }
     }
 }
