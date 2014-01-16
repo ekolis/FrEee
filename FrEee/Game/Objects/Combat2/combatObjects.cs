@@ -39,7 +39,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Beam";
 
-                maxRange = (Fix16)wpMaxR * (Fix16)1000;
+                maxRange_distance = (Fix16)wpMaxR * (Fix16)1000;
                 minRange = (Fix16)wpMinR * (Fix16)1000;
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect))
@@ -47,23 +47,27 @@ namespace FrEee.Game.Objects.Combat2
                 weaponType = "Bolt";
 
                 boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
-                maxRange = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
+                maxRange_time = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
             {
-                SeekingWeaponInfo  seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
+                SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
                 weaponType = "Seeker";
-
+                boltSpeed = 0; //seekers get launched at 0 speed. 
                 int mass = seekerinfo.SeekerDurability; // sure why not?
                 int wpnskrspd = seekerinfo.SeekerSpeed;
-                Fix16 maxfowardThrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
+                Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
 
                 //boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
-                maxRange = 1; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
+                maxRange_time = (Fix16)wpMaxR; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
             }
-            else
+            else //treat it like a beam I guess. 
+            {
                 weaponType = "Unknown";
+                maxRange_distance = (Fix16)wpMaxR * (Fix16)1000;
+                minRange = (Fix16)wpMinR * (Fix16)1000;
+            }
             double wpiReloadRate = wpninfo.ReloadRate;
             reloadRate = (Fix16)wpiReloadRate;
             nextReload = 1;
@@ -99,7 +103,31 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// if a bolt (or seeker?), this is time, else it's distance 
         /// </summary>
-        public Fix16 maxRange { get; private set; }
+        public Fix16 maxRange {
+            get
+            {
+                Fix16 retnum;
+                if (weaponType == "Beam")
+                {
+                    retnum = maxRange_distance;
+                }
+                else
+                {
+                    retnum = maxRange_time;
+                }
+                return retnum;
+            }
+        }
+
+        /// <summary>
+        /// for seekers and bolts.
+        /// </summary>
+        public Fix16 maxRange_time { get; private set; }
+
+        /// <summary>
+        /// for beams.
+        /// </summary>
+        public Fix16 maxRange_distance { get; private set; }
 
         /// <summary>
         /// if a bolt (or seeker?), this is time, else it's distance 
@@ -134,8 +162,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             else if (weaponType == "Seeker")       //seeker
             {
-                if (distance_toTarget <= maxRange && distance_toTarget >= minRange)
-                    inrange = true;
+                inrange = seeker_isinRange(attacker, target);
             }
 
             attacker.debuginfo += weaponRangeinfo;
@@ -146,17 +173,41 @@ namespace FrEee.Game.Objects.Combat2
         {
             bool isinRange = false;
             Fix16 TickLength = Battle_Space.TickLength;
-
-            Fix16 baseclosingSpeed = GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            if (seekerTimeToTarget(attacker, target) < maxRange_time)
+                isinRange = true;
             return isinRange;
         }
 
         public Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target)
         {
             Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            Fix16 TimetoTarget = distance_toTarget / boltClosingSpeed(attacker, target);
+            SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
+            int mass = seekerinfo.SeekerDurability; // sure why not?
+            int wpnskrspd = seekerinfo.SeekerSpeed;
+            Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
+            Fix16 acceleration = Thrust * mass;
+            Fix16 startV = seekerClosingSpeed_base(attacker, target);
+            //Fix16 endV = ???
+            //Fix16 baseTimetoTarget = distance_toTarget / startV;
+            
+            //Fix16 deltaV = baseTimetoTarget
+            Fix16[] ttt = GravMath.quadratic(acceleration, startV, distance_toTarget);
+            Fix16 TimetoTarget;
+            if (ttt[2] == 1)
+            {
+                TimetoTarget = Fix16.Min(ttt[0], ttt[1]);
+            }
+            else
+                TimetoTarget = ttt[0];
             return TimetoTarget;
-        }  
+        }
+
+        public Fix16 seekerClosingSpeed_base(CombatObject attacker, CombatObject target)
+        {
+            Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
+            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            return shotspeed_actual * Battle_Space.TickLength;
+        }
 
         private bool bolt_isinRange(CombatObject attacker, CombatObject target)
         {
@@ -228,6 +279,7 @@ namespace FrEee.Game.Objects.Combat2
         public int deathTick { get; set; }
     }
 
+
 	public class CombatObject : CombatNode
 	{
 		private ICombatant icomObj;
@@ -243,15 +295,40 @@ namespace FrEee.Game.Objects.Combat2
             this.maxRotate = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
 		}
 
-		public CombatObject(Seeker s, int battleseed)
-			: this(null, (ICombatant)s, battleseed)
-		{
-			this.cmbt_mass = (Fix16)s.MaxHitpoints; // sure why not?
-            int wpnskrspd = s.WeaponInfo.SeekerSpeed;
+        //public CombatObject(Seeker2 s, int battleseed)
+        //    : this(null, (ICombatant)s, battleseed)
+        //{
+        //    this.cmbt_mass = (Fix16)s.MaxHitpoints; // sure why not?
+        //    int wpnskrspd = s.WeaponInfo.SeekerSpeed;
+        //    this.maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001;
+        //    this.maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)s.Evasion * (Fix16)0.01);
+        //    this.maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)s.Evasion * (Fix16)0.1);
+        //}
+
+        public CombatObject(CombatObject attacker, CombatWeapon launcher, int ID)
+            : base(new Point3d(attacker.cmbt_loc), new Point3d(attacker.cmbt_vel), ID)
+        {
+
+            SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)launcher.weapon.Template.ComponentTemplate.WeaponInfo;
+            int hitpoints = skrinfo.SeekerDurability;
+            this.cmbt_mass = (Fix16)hitpoints;//(Fix16)s.MaxHitpoints; // sure why not?
+            int wpnskrspd = skrinfo.SeekerSpeed;
+            int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
             this.maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001;
-            this.maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)s.Evasion * (Fix16)0.01);
-            this.maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)s.Evasion * (Fix16)0.1);
-		}
+            this.maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
+            this.maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)wpnskrEvade * (Fix16)0.1);
+
+            
+            this.waypointTarget = new combatWaypoint();
+            this.weaponTarget = new List<CombatObject>(1);
+
+            this.cmbt_thrust = new Point3d(0, 0, 0);
+            this.cmbt_accel = new Point3d(0, 0, 0);
+
+            newDice(ID);
+
+            this.weaponList = new List<CombatWeapon>() { launcher };
+        }
 
 
 
@@ -295,7 +372,7 @@ namespace FrEee.Game.Objects.Combat2
 		//public Point3d cmbt_face { get; set; }
 
 
-
+        public CombatTakeFireEvent seekertargethit { get; set; }
 
 		/// <summary>
 		/// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
@@ -382,7 +459,17 @@ namespace FrEee.Game.Objects.Combat2
         public string debuginfo = "";
 
 
+        private void seekerHelm()
+        {
+            combatWaypoint wpt = this.waypointTarget;
+            Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
+            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
+            turnship(angletoturn, angletoWaypoint);
+
+            thrustship(angletoturn, true);
+        }
 
         /// <summary>
         /// endgoal for helm is for the  ship to get to and match speed with the comObj.targetWaypiont as fast as possible.
@@ -391,92 +478,97 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="comObj"></param>
         public void helm()
         {
-            this.debuginfo += "HelmInfo:" + "\r\n";
-            var ship = this.icomobj_WorkingCopy;
-            string name = ship.Name;
-            //rotate ship
-            Fix16 timetoturn = (Fix16)0;
-            //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
-            combatWaypoint wpt = this.waypointTarget;
-            Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
-            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
-            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
-            //if (comObj.lastVectortoWaypoint != null)
-            //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
-
-            timetoturn = angletoturn.Radians / this.maxRotate;
-            Fix16 oneEightytime = Fix16.Pi / this.maxRotate;
-            //Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-            //Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
-            //Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
-            //double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-            Fix16 closingSpeed = GravMath.closingrate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
-
-            Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
-
-            Fix16 timetokill_ClosingSpeed = closingSpeed / (this.maxfowardThrust / this.cmbt_mass); //t = v / a
-            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (this.maxStrafeThrust / this.cmbt_mass);
-            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass);
-
-
-            Fix16 distance = Trig.distance(this.waypointTarget.cmbt_loc, this.cmbt_loc);
-
-
-            Fix16 nominaldistance = this.maxStrafeThrust;
-            Fix16 timetowpt = distance / closingSpeed;
-
-            bool? thrustToWaypoint = true;
-            string helmdo = "";
-
-            if (closingSpeed > (Fix16)0) //getting closer
+            if (icomobj_WorkingCopy == null)
+                seekerHelm(); //do this helm if a seeker
+            else //only do this helm if a ship
             {
-                if (distance <= nominaldistance)  //close to the waypoint.
+                this.debuginfo += "HelmInfo:" + "\r\n";
+                var ship = this.icomobj_WorkingCopy;
+                string name = ship.Name;
+                //rotate ship
+                Fix16 timetoturn = (Fix16)0;
+                //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
+                combatWaypoint wpt = this.waypointTarget;
+                Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
+                Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+                Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+                //if (comObj.lastVectortoWaypoint != null)
+                //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
+
+                timetoturn = angletoturn.Radians / this.maxRotate;
+                Fix16 oneEightytime = Fix16.Pi / this.maxRotate;
+                //Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
+                //Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+                //Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+                //double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
+                Fix16 closingSpeed = GravMath.closingrate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+
+                Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
+
+                Fix16 timetokill_ClosingSpeed = closingSpeed / (this.maxfowardThrust / this.cmbt_mass); //t = v / a
+                Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (this.maxStrafeThrust / this.cmbt_mass);
+                Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass);
+
+
+                Fix16 distance = Trig.distance(this.waypointTarget.cmbt_loc, this.cmbt_loc);
+
+
+                Fix16 nominaldistance = this.maxStrafeThrust;
+                Fix16 timetowpt = distance / closingSpeed;
+
+                bool? thrustToWaypoint = true;
+                string helmdo = "";
+
+                if (closingSpeed > (Fix16)0) //getting closer
                 {
-                    thrustToWaypoint = null;//should attempt to match speed
-                }
-                if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
-                {
-                    if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
+                    if (distance <= nominaldistance)  //close to the waypoint.
                     {
-
-                        thrustToWaypoint = false;
+                        thrustToWaypoint = null;//should attempt to match speed
                     }
-                    else
-                    { //use strafe thrust to get close to the waypoint. 
+                    if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
+                    {
+                        if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
+                        {
 
-                        helmdo = "null" + "\r\n";
-                        thrustToWaypoint = null; //else match speed and use thrusters to get closer
+                            thrustToWaypoint = false;
+                        }
+                        else
+                        { //use strafe thrust to get close to the waypoint. 
+
+                            helmdo = "null" + "\r\n";
+                            thrustToWaypoint = null; //else match speed and use thrusters to get closer
+                        }
                     }
                 }
+                else
+                {
+                }
+
+                if (thrustToWaypoint == false)
+                {
+                    helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
+                    angletoturn.Degrees = (angletoWaypoint.Degrees - (Fix16)180) - this.cmbt_head.Degrees; //turn around and thrust the other way
+                    angletoturn.normalize();
+                }
+                else if (thrustToWaypoint == null)
+                {
+                    angletoturn.Radians = Trig.angleA(this.waypointTarget.cmbt_vel);
+                }
+
+                this.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
+                this.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
+                this.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
+                this.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
+                this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
+                this.debuginfo += helmdo + "\r\n";
+
+                turnship(angletoturn, angletoWaypoint);
+
+                thrustship(angletoturn, thrustToWaypoint);
+
+                this.lastVectortoWaypoint = vectortowaypoint;
+
             }
-            else
-            {
-            }
-
-            if (thrustToWaypoint == false)
-            {
-                helmdo = "Initiating Turnaround" + "\r\n"; //turn around and thrust the other way
-                angletoturn.Degrees = (angletoWaypoint.Degrees - (Fix16)180) - this.cmbt_head.Degrees; //turn around and thrust the other way
-                angletoturn.normalize();
-            }
-            else if (thrustToWaypoint == null)
-            {
-                angletoturn.Radians = Trig.angleA(this.waypointTarget.cmbt_vel);
-            }
-
-            this.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
-            this.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
-            this.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
-            this.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
-            this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
-            this.debuginfo += helmdo + "\r\n";
-
-            turnship(angletoturn, angletoWaypoint);
-
-            thrustship(angletoturn, thrustToWaypoint);
-
-            this.lastVectortoWaypoint = vectortowaypoint;
-
         }
 
         private void turnship(Compass angletoturn, Compass angleToTarget)

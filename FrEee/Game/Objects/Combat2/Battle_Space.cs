@@ -318,7 +318,7 @@ namespace FrEee.Game.Objects.Combat2
 			foreach (var comObj in CombatObjects)
 				comObj.helm(); //heading and thrust
 
-			foreach (var comObj in CombatObjects)
+			foreach (var comObj in CombatObjects.ToArray())
 				firecontrol(tick, comObj); //fire ready weapons.
 
 			foreach (var comObj in CombatObjects)
@@ -420,46 +420,77 @@ namespace FrEee.Game.Objects.Combat2
 			comObj.debuginfo += comAI;
 		}
 
+        private void missilefirecontrol(int tic_countr, CombatObject comObj)
+        { 
+            Fix16 locdistance = (comObj.cmbt_loc - comObj.weaponTarget[0].cmbt_loc).Length;
+            if (locdistance <= comObj.cmbt_vel.Length)//erm, I think?
+            {
+                CombatTakeFireEvent evnt = comObj.seekertargethit;
+                evnt.IsHit = true;
+                evnt.Tick = tic_countr;
+
+                CombatWeapon launcherwpn = comObj.weaponList[0];
+                Component launcher = launcherwpn.weapon;
+                CombatObject target = comObj.weaponTarget[0];
+                ICombatant target_icomobj = target.icomobj_WorkingCopy;
+                var shot = new Combat.Shot(launcher, target_icomobj, 0);
+                //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+                int damage = shot.Damage;
+                combatDamage(tic_countr, target, launcherwpn, damage, comObj.getDice());
+                if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                    target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+                if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                    target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+            }
+        }
+
         public void firecontrol(int tic_countr, CombatObject comObj)
         {
-            foreach (var weapon in comObj.weaponList)
+            if (comObj.icomobj_WorkingCopy == null)
+            {//is a seeker 
+                missilefirecontrol(tic_countr, comObj);
+            }
+            else //is a ship.
             {
-                Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
-                //ship.Weapons
-                CombatWeapon wpn = (CombatWeapon)weapon;
-
-                if (comObj.weaponTarget.Count() > 0 &&
-                    wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) &&
-                    tic_countr >= wpn.nextReload)
+                foreach (var weapon in comObj.weaponList)
                 {
-                    if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
+                    Vehicle ship = (Vehicle)comObj.icomobj_WorkingCopy;
+                    //ship.Weapons
+                    CombatWeapon wpn = (CombatWeapon)weapon;
+
+                    if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
+                        wpn.CanTarget(comObj.weaponTarget[0].icomobj_WorkingCopy) && //if we CAN target 
+                        tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
                     {
-                        //this function figures out if there's a hit, deals the damage, and creates an event.
-
-                        //first create the event for the target ship
-                        CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-                        //then create teh event for this ship firing on the target
-                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
-                        targets_event.fireOnEvent = attack_event;
-
-                        if (!IsReplay)
+                        if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
                         {
-                            ReplayLog.Events.Add(targets_event);
-                            ReplayLog.Events.Add(attack_event);
-                        }
+                            //this function figures out if there's a hit, deals the damage, and creates an event.
 
+                            //first create the event for the target ship
+                            CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
+                            //then create teh event for this ship firing on the target
+                            CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+                            targets_event.fireOnEvent = attack_event;
+
+                            if (!IsReplay)
+                            {
+                                ReplayLog.Events.Add(targets_event);
+                                ReplayLog.Events.Add(attack_event);
+                            }
+
+                        }
                     }
                 }
-            }
-            //update any events where this ship has taken fire, and set the location. 
-            if (!IsReplay)
-            {
-                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+                //update any events where this ship has taken fire, and set the location. 
+                if (!IsReplay)
                 {
-                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+                    foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
                     {
-                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
-                        takefire.setLocation(comObj.cmbt_loc);
+                        if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+                        {
+                            CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+                            takefire.setLocation(comObj.cmbt_loc);
+                        }
                     }
                 }
             }
@@ -494,8 +525,30 @@ namespace FrEee.Game.Objects.Combat2
 			bool hit = dice.Range(0, 99) < tohit;
 
 			CombatTakeFireEvent target_event = null;
+
+            if (weapon.weaponType == "Seeker")
+            {
+                //Seeker2 iseeker = new Seeker2(attacker.icomobj_WorkingCopy.Owner, weapon.weapon, target.icomobj_WorkingCopy);
+
+                CombatObject seeker = new CombatObject(attacker, weapon, dice.Next(100000));
+                seeker.waypointTarget = new combatWaypoint(target);
+                seeker.weaponTarget = new List<CombatObject>() { target};
+                CombatNodes.Add(seeker);
+                if (IsReplay)
+                {
+                    //read the event
+                    target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                }
+                else
+                {
+                    //*write* the event
+                    target_event = new CombatTakeFireEvent(tick, target, target.cmbt_loc, false);
+                    target_event.BulletNode = seeker;
+                    seeker.seekertargethit = target_event;
+                }
+            }
 			//for bolt calc, need again for adding to list.
-			if (weapon.weaponType == "Bolt")
+			else if (weapon.weaponType == "Bolt")
 			{
                 rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
                 Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
