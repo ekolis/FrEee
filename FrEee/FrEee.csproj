@@ -204,6 +204,8 @@
     <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
     <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
+    <Compile Include="Game\Objects\Combat2\CombatSeeker.cs" />
+    <Compile Include="Game\Objects\Combat2\CombatVehicle.cs" />
     <Compile Include="Game\Objects\Combat2\Compass.cs" />
     <Compile Include="Game\Objects\Combat2\FixedMath\Fix16.cs" />
     <Compile Include="Game\Objects\Combat2\FixedMath\Fix16SinLut.cs" />

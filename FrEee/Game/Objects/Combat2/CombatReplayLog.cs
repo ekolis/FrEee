@@ -38,7 +38,7 @@ namespace FrEee.Game.Objects.Combat2
 
 	public abstract class CombatEvent
 	{
-		public int Tick { get; private set; }
+		public int Tick { get; set; }
 		public CombatObject Object { get; private set; }
 
 		protected CombatEvent(int tick, CombatObject obj)
@@ -80,7 +80,7 @@ namespace FrEee.Game.Objects.Combat2
 	}
 	public class CombatTakeFireEvent : CombatLocationEvent
 	{
-		public bool IsHit { get; private set; }
+		public bool IsHit { get; set; }
         public CombatNode BulletNode { get; set; }
         public CombatFireOnTargetEvent fireOnEvent { get; set; }
         /// <summary>
