@@ -17,8 +17,6 @@ namespace FrEee.Game.Objects.Combat2
 {
 	public class CombatVehicle : CombatObject
 	{
-		private ICombatant icomObj;
-
 		public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed)
 			: base(working_v, new Point3d(0, 0, 0), new Point3d(0, 0, 0), start_v.ID)
 		{
@@ -43,7 +41,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The current state of the vehicle.
 		/// </summary>
-		public Vehicle WorkingVehicle { get { return (Vehicle)WorkingObject; } }
+		public Vehicle WorkingVehicle { get { return (Vehicle)WorkingObject; } private set { WorkingObject = value; } }
 
 		#endregion
 
@@ -65,7 +63,7 @@ namespace FrEee.Game.Objects.Combat2
 				ccopy.Container = ship;
 			}
 
-			this.icomObj = ship;
+			WorkingVehicle = ship;
 
 			this.cmbt_loc = new Point3d(0, 0, 0);
 			this.cmbt_vel = new Point3d(0, 0, 0);
