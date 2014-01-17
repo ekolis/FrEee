@@ -188,6 +188,10 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
+		/// <summary>
+		/// Combat nodes that represent vehicles.
+		/// This includes ships, bases, and units.
+		/// </summary>
         public IEnumerable<CombatVehicle> CombatVehicles
         {
             get
@@ -256,7 +260,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 		private void ReplaySetup()
 		{
-            foreach (CombatVehicle shipObj in CombatObjects)
+            foreach (var shipObj in CombatVehicles)
 			{
 				shipObj.renewtoStart();
 				Empires[shipObj.StartVehicle.Owner].ownships.Add(shipObj);
@@ -281,7 +285,7 @@ namespace FrEee.Game.Objects.Combat2
 			else
 				ReplaySetup();
 			//setup the game peices
-            foreach (CombatVehicle comObj in CombatObjects)
+            foreach (var comObj in CombatVehicles)
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
@@ -310,7 +314,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.newDice(battleseed);
 
 			}
-            foreach (CombatVehicle comVehic in CombatObjects)
+            foreach (var comVehic in CombatVehicles)
 				commandAI(comVehic, 0);
 		}
 
