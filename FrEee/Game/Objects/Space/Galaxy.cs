@@ -601,13 +601,16 @@ namespace FrEee.Game.Objects.Space
 			if (o is IFoggable)
 			{
 				var obj = (IFoggable)o;
-				obj.Redact(Empire.Current);
-				var id = obj.ID;
-				var vis = obj.CheckVisibility(CurrentEmpire);
-				if (vis < Visibility.Fogged)
-					referrables.Remove(id);
-				if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-					CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
+				if (!obj.IsMemory)
+				{
+					obj.Redact(Empire.Current);
+					var id = obj.ID;
+					var vis = obj.CheckVisibility(CurrentEmpire);
+					if (vis < Visibility.Fogged)
+						referrables.Remove(id);
+					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+						CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
+				}
 			}
 		}
 
