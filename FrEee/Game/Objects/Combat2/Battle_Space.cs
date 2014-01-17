@@ -85,6 +85,7 @@ namespace FrEee.Game.Objects.Combat2
 				StartCombatants.Add(scopy);
                 CombatVehicle comObj = new CombatVehicle((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
 				CombatNodes.Add(comObj);
+               
 
 			}
 
@@ -161,6 +162,19 @@ namespace FrEee.Game.Objects.Combat2
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
 		/// </summary>
 		public ISet<CombatNode> CombatNodes { get; private set; }
+
+        /// <summary>
+        /// objects go here when they're created during combat, so the replay can create the graphic ojects)
+        /// Objects Not Launched or Created during combat should not go here, (ie not objects at combat start)
+        /// </summary>
+        public ISet<CombatNode> FreshNodes { get; set; }
+
+        /// <summary>
+        /// objects go here to die. (this is so replay can clean up the graphic objects)
+        /// ONLY OBJECTS CREATED *DURING* combat should go here. (or Replaysetup() won't have all the objects. humn, how' we going to diferentiate for launchable cargo, ie fighters?)
+        /// Maybe we need StartNodes as well, and have Replaysetup() go from that. and it won't matter.
+        /// </summary>
+        public ISet<CombatNode> DeadNodes { get; set; }
 
 		/// <summary>
 		/// Combat nodes that have an AI attached to them.
@@ -316,7 +330,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 		/// <summary>
-		/// Processes a tick of combat
+		/// Processes a tick of combat (processing only)
 		/// </summary>
 		/// <param name="tick">The tick number</param>
 		/// <param name="cmdfreqCounter">Counter to keep track of when the ship AI can issue comamnds.</param>
@@ -344,6 +358,17 @@ namespace FrEee.Game.Objects.Combat2
 				}
 				cmdfreqCounter = 0;
 			}
+
+            foreach (CombatNode comNod in FreshNodes.ToArray())
+            {                
+                CombatNodes.Add(comNod);
+                FreshNodes.Remove(comNod);
+            }
+            foreach (CombatNode comNod in DeadNodes.ToArray())
+            {
+                CombatNodes.Remove(comNod);
+                DeadNodes.Remove(comNod);
+            }
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
@@ -439,12 +464,11 @@ namespace FrEee.Game.Objects.Combat2
         private void missilefirecontrol(int tic_countr, CombatSeeker comSek)
         { 
             Fix16 locdistance = (comSek.cmbt_loc - comSek.weaponTarget[0].cmbt_loc).Length;
-            if (locdistance <= comSek.cmbt_vel.Length)//erm, I think?
+            if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
                 CombatTakeFireEvent evnt = comSek.seekertargethit;
                 evnt.IsHit = true;
                 evnt.Tick = tic_countr;
-
                 
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
@@ -461,6 +485,14 @@ namespace FrEee.Game.Objects.Combat2
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
                         target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
                 }
+
+                DeadNodes.Add(comSek);
+                CombatNodes.Remove(comSek);                
+            }
+            else if (tic_countr > comSek.deathTick)
+            {
+                DeadNodes.Add(comSek);
+                CombatNodes.Remove(comSek);
             }
         }
 
@@ -552,7 +584,7 @@ namespace FrEee.Game.Objects.Combat2
                 //Seeker2 iseeker = new Seeker2(attacker.WorkingObject.Owner, weapon.weapon, target.WorkingObject);
 
 				// XXX - use negative numbers for seeker IDs and share nicely with bullets, to avoid collisions with ships
-                CombatSeeker seeker = new CombatSeeker(attacker, weapon, dice.Next(100000));
+                CombatSeeker seeker = new CombatSeeker(attacker, weapon, -dice.Next(100000));
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
 				foreach (var emp in Empires.Values)
@@ -567,6 +599,7 @@ namespace FrEee.Game.Objects.Combat2
 						emp.hostile.Add(seeker);
 				}
                 CombatNodes.Add(seeker);
+                FreshNodes.Add(seeker);
                 if (IsReplay)
                 {
                     //read the event
