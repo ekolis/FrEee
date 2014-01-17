@@ -62,6 +62,8 @@ namespace FrEee.Game.Objects.Combat2
 			ActualCombatants = new HashSet<ICombatant>(combatants);
 			//WorkingCombatants = new HashSet<ICombatant>();
 			CombatNodes = new HashSet<CombatNode>();
+			FreshNodes = new HashSet<CombatNode>();
+			DeadNodes = new HashSet<CombatNode>();
 
 			foreach (ICombatant obj in combatants)
 			{
