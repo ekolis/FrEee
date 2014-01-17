@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Combat2
     public class CombatSeeker : CombatObject, ITargetable
     {
         public CombatSeeker(CombatObject attacker, CombatWeapon launcher, int ID)
-            : base(null, new Point3d(attacker.cmbt_loc), new Point3d(attacker.cmbt_vel), ID)
+            : base(null, new Point3d(attacker.cmbt_loc), new Point3d(attacker.cmbt_vel), ID, "SKR")
         {
 			WorkingObject = this;
             SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)launcher.weapon.Template.ComponentTemplate.WeaponInfo;

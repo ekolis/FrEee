@@ -248,12 +248,13 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="position"> ship position this is fiired from </param>
         /// <param name="vector">direction this is going</param>
-        public CombatNode(Point3d position, Point3d vector, long ID)
+        public CombatNode(Point3d position, Point3d vector, long ID, string IDPrefix)
         {
             this.cmbt_loc = position;
             this.cmbt_vel = vector;
             this.cmbt_head = new Compass((Fix16)0);
             this.ID = ID;
+            this.IDPrefix = IDPrefix;
         }
         /// <summary>
         /// location within the sector
@@ -276,6 +277,16 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         public long ID { get; set; }
 
+        public string IDPrefix { get; private set; }
+
+        public string strID
+        {
+            get
+            {
+                return IDPrefix + ID.ToString();
+            }
+        }
+
         public int deathTick { get; set; }
     }
 
@@ -283,8 +294,8 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatObject : CombatNode
 	{
 
-        public CombatObject(ITargetable workingObject, Point3d position, Point3d vector, long ID)
-            : base(position, vector, ID)
+        public CombatObject(ITargetable workingObject, Point3d position, Point3d vector, long ID, string IDprefix)
+            : base(position, vector, ID, IDprefix)
         {
 			WorkingObject = workingObject;
             this.waypointTarget = new combatWaypoint();
@@ -304,6 +315,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		private PRNG shipDice;
 
+        
 		/// <summary>
 		/// ship attitude, ie angle from level plain (0/360) pointing straight up (90)
 		/// </summary>
