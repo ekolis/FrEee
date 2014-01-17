@@ -169,6 +169,7 @@
     <Compile Include="Game\Interfaces\ICombatant.cs" />
     <Compile Include="Game\Interfaces\ICommonAbilityObject.cs" />
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
+    <Compile Include="Game\Interfaces\ITargetable.cs" />
     <Compile Include="Game\Interfaces\IUnit.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
