@@ -65,7 +65,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				CreateFrameListeners();
                 
                 setup();
-				Go();
+                ProcessTick();
 
 			}
 			catch (OperationCanceledException) { }
@@ -471,8 +471,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
         private void CreateNewEntity(CombatObject obj)
 		{
-			Entity objEnt = mSceneMgr.CreateEntity(obj.ID.ToString(), "DeltaShip.mesh");
-			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.ID.ToString());
+			Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
+			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
 			float sizex = objEnt.BoundingBox.Size.x;
 			float sizey = objEnt.BoundingBox.Size.y;
 			float sizez = objEnt.BoundingBox.Size.z;
@@ -496,8 +496,8 @@ namespace FrEee.WinForms.MogreCombatRender
             
             try
             {
-                Entity objEnt = mSceneMgr.CreateEntity(obj.ID.ToString(), "DeltaShip.mesh");
-                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.ID.ToString());
+                Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
+                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
                 float sizex = objEnt.BoundingBox.Size.x;
                 float sizey = objEnt.BoundingBox.Size.y;
                 float sizez = objEnt.BoundingBox.Size.z;
@@ -543,7 +543,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
         
         int bulletsCreated = 0;
-		private void Go()
+        private void ProcessTick()
 		{
             int battletic = 0;			
 			double cmdfreq_countr = 0;
@@ -596,7 +596,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 {
 					if (comNode.deathTick <= battletic)
 					{
-						disposeBullet(comNode, renderlocs);
+						disposeObj(comNode, renderlocs);
 					}
 					else
 					{
@@ -616,6 +616,17 @@ namespace FrEee.WinForms.MogreCombatRender
                         battle.commandAI(comVehic, battletic);                        
                     }
                     cmdfreq_countr = 0;
+                }
+
+                foreach (CombatNode comNod in battle.FreshNodes.ToArray())
+                {
+                    CreateNewEntity(comNod);
+                    battle.CombatNodes.Add(comNod);
+                    battle.FreshNodes.Remove(comNod);
+                }
+                foreach (CombatNode comNod in battle.DeadNodes.ToArray())
+                {
+                    disposeObj(comNod, renderlocs);
                 }
 
 				bool ships_persuing = true; // TODO - check if ships are actually pursuing
@@ -708,7 +719,7 @@ namespace FrEee.WinForms.MogreCombatRender
                         }
                         long id = -bulletsCreated -2; // negative numbers other than -1 aren't used by game objects
                         bulletsCreated++;
-                        CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id);
+                        CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id, "BLT");
                         if (fireEvent.TakeFireEvent.IsHit)
                         {
                             bullet.deathTick = fireEvent.TakeFireEvent.Tick;
@@ -717,7 +728,7 @@ namespace FrEee.WinForms.MogreCombatRender
                         {
                             bullet.deathTick = battletic + fireEvent.Weapon.maxRange;
                         }
-                        battle.CombatNodes.Add(bullet);
+                        battle.CombatNodes.Add(bullet); //TODO I feel that this should be done in battle_space not here.
                         fireEvent.TakeFireEvent.BulletNode = bullet;
                         CreateNewEntity(bullet);
                     }
@@ -730,7 +741,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 else if (comEvent is CombatDestructionEvent)
                 {
                     // - kersplosions and removal of model. 
-                    string IDName = comEvent.Object.ID.ToString();
+                    string IDName = comEvent.Object.strID;
                     SceneNode node = mSceneMgr.GetSceneNode(IDName);
                     ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");               
                     node.AttachObject(expl);                    
@@ -751,19 +762,20 @@ namespace FrEee.WinForms.MogreCombatRender
             }
         }
 
-        private void disposeBullet(CombatNode bulletNode, SafeDictionary<CombatNode, Point3d> renderlocs)
+        private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, Point3d> renderlocs)
         {
-            string IDName = bulletNode.ID.ToString();
-            SceneNode node = mSceneMgr.GetSceneNode(IDName);
-            Entity objEnt = mSceneMgr.GetEntity(IDName);
+
+            SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
+            Entity objEnt = mSceneMgr.GetEntity(comNode.strID);
 			mSceneMgr.DestroySceneNode(node);
 			mSceneMgr.DestroyEntity(objEnt);
             objEnt.Dispose();
             node.Dispose();
 
             //remove from the list of game nodes.
-            renderlocs.Remove(bulletNode);
-            battle.CombatNodes.Remove(bulletNode);
+            renderlocs.Remove(comNode); 
+            battle.CombatNodes.Remove(comNode);
+            battle.DeadNodes.Remove(comNode);
         }
 
         private void do_txt()
@@ -837,9 +849,9 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
             try
             {
-                string IDName = comNode.ID.ToString();
 
-                SceneNode node = mSceneMgr.GetSceneNode(IDName);
+
+                SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
 
                 node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
