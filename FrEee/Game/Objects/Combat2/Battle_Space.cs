@@ -333,6 +333,10 @@ namespace FrEee.Game.Objects.Combat2
 			//end combat
 			Current.Remove(this);
 			Previous.Add(this);
+
+			// delete leftover seekers that were en route when combat ended
+			foreach (var seeker in CombatNodes.OfType<CombatSeeker>().ToArray())
+				CombatNodes.Remove(seeker);
 		}
 
 		/// <summary>
