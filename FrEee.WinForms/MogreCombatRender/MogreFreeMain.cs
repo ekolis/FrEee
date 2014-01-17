@@ -620,7 +620,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				bool ships_persuing = true; // TODO - check if ships are actually pursuing
 				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-                bool hostiles = battle.CombatVehicles.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
+                bool hostiles = battle.CombatVehicles.Any(o => !o.WorkingVehicle.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingVehicle.Owner)));
 
 				if (!ships_persuing && !ships_inrange)
 					cont = false;
@@ -769,7 +769,7 @@ namespace FrEee.WinForms.MogreCombatRender
         private void do_txt()
         {
             CombatVehicle comVehic = selectedObj();
-            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.icomobj_WorkingCopy;
+            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.WorkingVehicle;
 
             string txt = ship.Name + "\r\n";
             txt += "Location:\t" 

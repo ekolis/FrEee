@@ -461,5 +461,11 @@ namespace FrEee.Game.Objects.Vehicles
 		public IHull Hull { get { return Design.Hull; } }
 
 		public bool IsOurs { get { return Owner == Empire.Current; } }
+
+		public int? Size
+		{
+			get { return Design.Hull.Size; }
+		}
+
 	}
 }

@@ -33,10 +33,5 @@ namespace FrEee.Game.Interfaces
 		/// Accuracy rating of this combatant.
 		/// </summary>
 		int Accuracy { get; }
-
-		/// <summary>
-		/// Evasion rating of this combatant.
-		/// </summary>
-		int Evasion { get; }
     }
 }

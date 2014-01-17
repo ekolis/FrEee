@@ -236,7 +236,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
             foreach (CombatVehicle comObj in CombatObjects)
 			{
-				Empires[comObj.icomobj_WorkingCopy.Owner].ownships.Add(comObj);
+				Empires[comObj.WorkingObject.Owner].ownships.Add(comObj);
 			}
 
 		}
@@ -245,7 +245,7 @@ namespace FrEee.Game.Objects.Combat2
             foreach (CombatVehicle shipObj in CombatObjects)
 			{
 				shipObj.renewtoStart();
-				Empires[shipObj.icomobj_StartCopy.Owner].ownships.Add(shipObj);
+				Empires[shipObj.StartVehicle.Owner].ownships.Add(shipObj);
 			}
 		}
 
@@ -271,21 +271,25 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
-					var ship = comObj.icomobj_WorkingCopy;
-					if (ship.IsHostileTo(empire.Key))
-						empire.Value.hostile.Add(comObj);
-					else if (ship.Owner != empire.Key)
-						empire.Value.friendly.Add(comObj);
+					var ship = comObj.WorkingObject;
+					if (ship is ICombatant)
+					{
+						var c = (ICombatant)ship;
+						if (c.IsHostileTo(empire.Key))
+							empire.Value.hostile.Add(comObj);
+						else if (c.Owner != empire.Key)
+							empire.Value.friendly.Add(comObj);
+					}
 				}
 
-				int empindex = EmpiresArray.IndexOf(comObj.icomobj_WorkingCopy.Owner);
+				int empindex = EmpiresArray.IndexOf(comObj.WorkingObject.Owner);
 				comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
 				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
 				comObj.cmbt_att = new Compass(0);
 				Fix16 speed = (Fix16)0;
-				if (comObj.icomobj_WorkingCopy is Vehicle)
-					speed = ((Fix16)((Vehicle)comObj.icomobj_WorkingCopy).Speed) / (Fix16)2;
+				if (comObj.WorkingObject is Vehicle)
+					speed = ((Fix16)((Vehicle)comObj.WorkingObject).Speed) / (Fix16)2;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
 				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
 
@@ -344,7 +348,7 @@ namespace FrEee.Game.Objects.Combat2
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
             //TODO: check for alive missiles and bullets.
-            bool hostiles = CombatVehicles.Any(o => !o.icomobj_WorkingCopy.IsDestroyed && CombatVehicles.Any(o2 => !o2.icomobj_WorkingCopy.IsDestroyed && o.icomobj_WorkingCopy.IsHostileTo(o2.icomobj_WorkingCopy.Owner)));
+			bool hostiles = CombatVehicles.Any(o => !o.WorkingObject.IsDestroyed && CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingObject.Owner)));
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
@@ -399,18 +403,18 @@ namespace FrEee.Game.Objects.Combat2
         {
             //do AI decision stuff.
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-            if (comVehic.icomobj_WorkingCopy != null)
+            if (comVehic.WorkingObject != null)
             {
                 string comAI = "";
                 CombatObject tgtObj;
-                if (Empires[comVehic.icomobj_WorkingCopy.Owner].hostile.Any())
+                if (Empires[comVehic.WorkingObject.Owner].hostile.Any())
                 {
-                    tgtObj = Empires[comVehic.icomobj_WorkingCopy.Owner].hostile[0];
+                    tgtObj = Empires[comVehic.WorkingObject.Owner].hostile[0];
                     combatWaypoint wpt = new combatWaypoint(tgtObj);
                     comVehic.waypointTarget = wpt;
                     //pick a primary target to fire apon from a list of enemy within weapon range
                     comVehic.weaponTarget = new List<CombatObject>();
-                    comVehic.weaponTarget.Add(Empires[comVehic.icomobj_WorkingCopy.Owner].hostile[0]);
+                    comVehic.weaponTarget.Add(Empires[comVehic.WorkingObject.Owner].hostile[0]);
                 }
                 if (IsReplay && tick < 1000)
                 {
@@ -447,7 +451,7 @@ namespace FrEee.Game.Objects.Combat2
                 if (target is CombatVehicle) 
                 {
                     CombatVehicle comVehTgt = (CombatVehicle)target;
-                    ICombatant target_icomobj = comVehTgt.icomobj_WorkingCopy;
+                    var target_icomobj = comVehTgt.WorkingObject;
                     var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
                     int damage = shot.Damage;
@@ -471,12 +475,12 @@ namespace FrEee.Game.Objects.Combat2
                 CombatVehicle comVeh = (CombatVehicle)comObj;
                 foreach (var weapon in comVeh.weaponList)
                 {
-                    Vehicle ship = (Vehicle)comVeh.icomobj_WorkingCopy;
+                    Vehicle ship = (Vehicle)comVeh.WorkingObject;
                     //ship.Weapons
                     CombatWeapon wpn = (CombatWeapon)weapon;
 
                     if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
-                        wpn.CanTarget(comVeh.weaponTarget[0].icomobj_WorkingCopy) && //if we CAN target 
+                        wpn.CanTarget(comVeh.weaponTarget[0].WorkingObject) && //if we CAN target 
                         tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
                     {
                         if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
@@ -523,7 +527,7 @@ namespace FrEee.Game.Objects.Combat2
 			//reset the weapon nextReload.
 			weapon.nextReload = tick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
 			
-			ICombatant target_icomobj = target.icomobj_WorkingCopy;
+			var target_icomobj = target.WorkingObject;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
 
 			if (!weapon.CanTarget(target_icomobj))
@@ -545,11 +549,23 @@ namespace FrEee.Game.Objects.Combat2
 
             if (weapon.weaponType == "Seeker")
             {
-                //Seeker2 iseeker = new Seeker2(attacker.icomobj_WorkingCopy.Owner, weapon.weapon, target.icomobj_WorkingCopy);
+                //Seeker2 iseeker = new Seeker2(attacker.WorkingObject.Owner, weapon.weapon, target.WorkingObject);
 
+				// XXX - use negative numbers for seeker IDs and share nicely with bullets, to avoid collisions with ships
                 CombatSeeker seeker = new CombatSeeker(attacker, weapon, dice.Next(100000));
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
+				foreach (var emp in Empires.Values)
+				{
+					if (emp.ownships.Contains(attacker))
+						emp.ownships.Add(seeker);
+					if (emp.friendly.Contains(attacker))
+						emp.friendly.Add(seeker);
+					if (emp.neutral.Contains(attacker))
+						emp.neutral.Add(seeker);
+					if (emp.hostile.Contains(attacker))
+						emp.hostile.Add(seeker);
+				}
                 CombatNodes.Add(seeker);
                 if (IsReplay)
                 {
@@ -636,7 +652,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
-			Vehicle targetV = (Vehicle)target.icomobj_WorkingCopy;
+			Vehicle targetV = (Vehicle)target.WorkingObject;
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
@@ -694,13 +710,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="c"></param>
 		/// <returns></returns>
-		public ICombatant FindWorkingCombatant(ICombatant c)
+		public ITargetable FindWorkingCombatant(ITargetable c)
 		{
 			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
-            return CombatVehicles.SingleOrDefault(c2 => c2.ID == c.ID).icomobj_WorkingCopy;
+            return CombatVehicles.SingleOrDefault(c2 => c2.ID == c.ID).WorkingObject;
 		}
 
-		public ICombatant FindActualCombatant(ICombatant c)
+		public ITargetable FindActualCombatant(ITargetable c)
 		{
 			return ActualCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
 		}
