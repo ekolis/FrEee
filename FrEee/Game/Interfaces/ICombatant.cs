@@ -13,19 +13,14 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can fire weapons and/or targeted by weapons.
 	/// </summary>
-	public interface ICombatant : IPictorial, IOwnable, IDamageable, IDisposable, IFoggable, ILocated, INamed
+	public interface ICombatant : IPictorial, ITargetable, IDisposable, IFoggable, ILocated, INamed
 	{
 		/// <summary>
-		/// Can this object fire on another combatant?
+		/// Can this object fire on another object?
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns>true if the target is an enemy and this combatant has weapons capable of targeting it</returns>
-		bool CanTarget(ICombatant target);
-
-		/// <summary>
-		/// What type of object is this for weapon targeting purposes?
-		/// </summary>
-		WeaponTargets WeaponTargetType { get; }
+		bool CanTarget(ITargetable target);
 
 		/// <summary>
 		/// Any undamaged weapons this combatant is armed with.

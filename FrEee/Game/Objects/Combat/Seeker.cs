@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public int Hitpoints { get; set; }
 
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			return target != null && Launcher.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
 		}

@@ -319,7 +319,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			return Cargo.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target));
 		}

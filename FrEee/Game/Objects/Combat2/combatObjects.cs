@@ -338,7 +338,7 @@ namespace FrEee.Game.Objects.Combat2
         public string debuginfo = "";
 
 
-        public void helm()
+        public virtual void helm()
         {
             combatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 

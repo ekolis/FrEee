@@ -94,7 +94,7 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			return Vehicles.Any(sobj => sobj.CanTarget(target));
 		}

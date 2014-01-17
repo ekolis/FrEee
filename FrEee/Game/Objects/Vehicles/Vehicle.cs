@@ -325,7 +325,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public abstract Visibility CheckVisibility(Empire emp);
 
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			// TODO - alliances
 			return target.Owner != Owner && Components.Any(c => !c.IsDestroyed && c.Template.ComponentTemplate.WeaponInfo != null && c.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType));
