@@ -379,11 +379,6 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Sector == null ? null : Sector.StarSystem; }
 		}
 
-		public int? Size
-		{
-			get { return Design.Hull.Size; }
-		}
-
 		public override bool IsObsoleteMemory(Empire emp)
 		{
 			if (StarSystem == null)

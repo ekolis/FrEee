@@ -35,7 +35,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			private set;
 		}
 
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			return true;
 		}

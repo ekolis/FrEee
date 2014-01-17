@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		/// <param name="target"></param>
 		/// <returns></returns>
-		public bool CanTarget(ICombatant target)
+		public bool CanTarget(ITargetable target)
 		{
 			if (IsDestroyed)
 				return false; // damaged weapons can't fire!

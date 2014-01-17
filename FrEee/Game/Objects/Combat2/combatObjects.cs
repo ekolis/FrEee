@@ -134,7 +134,7 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         public Fix16 minRange { get; private set; }
 
-        public bool CanTarget(ICombatant target)
+        public bool CanTarget(ITargetable target)
         {
             return weapon.CanTarget(target);
         }
@@ -274,7 +274,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// the ID of the origional icomatant if a ship.
         /// </summary>
-        public long ID { get; private set; }
+        public long ID { get; set; }
 
         public int deathTick { get; set; }
     }
@@ -283,18 +283,25 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatObject : CombatNode
 	{
 
-        public CombatObject(Point3d position, Point3d vector, long ID)
+        public CombatObject(ITargetable workingObject, Point3d position, Point3d vector, long ID)
             : base(position, vector, ID)
         {
-
-
+			WorkingObject = workingObject;
             this.waypointTarget = new combatWaypoint();
             weaponTarget = new List<CombatObject>(1); //eventualy this should be something with the multiplex tracking component.
             this.cmbt_thrust = new Point3d(0, 0, 0);
             this.cmbt_accel = new Point3d(0, 0, 0);
+		}
 
-            
-        }
+		/// <summary>
+		/// The object's current state.
+		/// </summary>
+		public ITargetable WorkingObject
+		{
+			get;
+			protected set;
+		}
+
 		private PRNG shipDice;
 
 		/// <summary>
@@ -437,6 +444,8 @@ namespace FrEee.Game.Objects.Combat2
 
         }
 
+		public virtual int handleShieldDamage(int damage) { return damage; }
+		public virtual int handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice) { return damage; }
 
 	}
 
