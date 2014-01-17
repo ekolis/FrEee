@@ -591,21 +591,23 @@ namespace FrEee.Game.Objects.Space
 		public void Redact()
 		{
 			AssignIDs();
-			if (CurrentEmpire != null)
-			{
-				foreach (var ssl in StarSystemLocations)
-					ssl.Item.Redact(CurrentEmpire);
+			var parser = new ObjectGraphParser();
+			parser.StartObject += redactParser_StartObject;
+			parser.Parse(this);
+		}
 
-				foreach (var kvp in referrables.Where(kvp => kvp.Value is IFoggable).ToArray())
-				{
-					var id = kvp.Key;
-					var obj = (IFoggable)kvp.Value;
-					var vis = obj.CheckVisibility(CurrentEmpire);
-					if (vis < Visibility.Fogged)
-						referrables.Remove(id);
-					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
-						CurrentEmpire.Memory[id].CopyToExceptID(kvp.Value); // memory sight!
-				}
+		void redactParser_StartObject(object o)
+		{
+			if (o is IFoggable)
+			{
+				var obj = (IFoggable)o;
+				obj.Redact(Empire.Current);
+				var id = obj.ID;
+				var vis = obj.CheckVisibility(CurrentEmpire);
+				if (vis < Visibility.Fogged)
+					referrables.Remove(id);
+				if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+					CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
 			}
 		}
 
