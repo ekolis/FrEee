@@ -17,8 +17,8 @@ namespace FrEee.Game.Objects.Combat2
 {
 	public class CombatVehicle : CombatObject
 	{
-		public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed)
-			: base(working_v, new Point3d(0, 0, 0), new Point3d(0, 0, 0), start_v.ID)
+		public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed, string IDPrefix = "SHP")
+			: base(working_v, new Point3d(0, 0, 0), new Point3d(0, 0, 0), start_v.ID, IDPrefix)
 		{
 			cmbt_mass = (Fix16)working_v.Size;
 			maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
