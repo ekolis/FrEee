@@ -542,7 +542,7 @@ namespace FrEee.WinForms.MogreCombatRender
         }
 
         
-        int bulletsCreated = 0;
+        
         private void ProcessTick()
 		{
             int battletic = 0;			
@@ -672,71 +672,48 @@ namespace FrEee.WinForms.MogreCombatRender
             {
                 if (comEvent is CombatFireOnTargetEvent)
                 {
+                    
                     // TODO - if type projectile, create whatever sprite and render it flying towards target.
                     // or if type beam, draw a beam sprite
                     // seekers should really be their own event type, spawning new combat objects that track enemies
-                    CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;
+                    CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;                    
                     var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-                    //Mogre.Image sprite = ImageConv.ImagetoImage(wpninfo.DisplayEffect.Icon);
-                    //sprite.
+
+                    Console.WriteLine(comObj.strID + " Fires on " + fireEvent.TakeFireEvent.Object.strID);
+                    Console.WriteLine("With it's " + fireEvent.Weapon.weapon.Name);
+
+
                     if (fireEvent.Location == comObj.cmbt_loc)
                     {
                     }
                     else
                     {
-                        Point3d difference = fireEvent.Location - comObj.cmbt_loc;
-                        Console.WriteLine("Desync at tick: " + battletic);
-                        Console.WriteLine("Loc difference of: " + difference.ToString());
+                        //Point3d difference = fireEvent.Location - comObj.cmbt_loc;
+                        //Console.WriteLine("Desync at tick: " + battletic);
+                        //Console.WriteLine("Loc difference of: " + difference.ToString());
                     }
                     if (fireEvent.Weapon.weaponType == "Seeker")
                     { 
                     }
                     else if (fireEvent.Weapon.weaponType == "Bolt")
+                    {                       
+                    }
+                    else if (fireEvent.Weapon.weaponType == "Beam")
                     {
-                        //create an entity for the bullet node.
-                        //Fix16 boltTTT = Battle_Space.boltTimeToTarget(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-                        //Fix16 boltSpeed = Battle_Space.boltClosingSpeed(fireEvent.Object, fireEvent.Weapon, fireEvent.TakeFireEvent.Object);
-                        Fix16 boltTTT = fireEvent.Weapon.boltTimeToTarget(fireEvent.Object, fireEvent.TakeFireEvent.Object);
-                        Fix16 boltSpeed = fireEvent.Weapon.boltClosingSpeed(fireEvent.Object, fireEvent.TakeFireEvent.Object);
-                        Fix16 rThis_distance = (fireEvent.TakeFireEvent.Location - fireEvent.Location).Length;
-                        Point3d bulletVector = Trig.intermediatePoint(fireEvent.Location, fireEvent.TakeFireEvent.Location, rThis_distance);
-                        if (!fireEvent.TakeFireEvent.IsHit) //jitter it!
-                        {
-							// TODO - take into account firing ship's accuracy and target's evasion
-							int accuracy = fireEvent.Weapon.weapon.Template.WeaponAccuracy;
-							int jitterAmount = 0;
-							if (accuracy < 50)
-								jitterAmount = (int)System.Math.Pow(50 - accuracy, 2) / 50;
-							if (jitterAmount < 5)
-								jitterAmount = 5;
-							if (jitterAmount > 30)
-								jitterAmount = 30;
-                            //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
-							Compass jitter = new Compass(RandomHelper.Range(-jitterAmount, jitterAmount), false);
-							Compass bulletCompass = bulletVector.Compass;
-							Compass offsetCompass = bulletCompass + jitter;
-							bulletVector = offsetCompass.Point(bulletVector.Length);
-                        }
-                        long id = -bulletsCreated -2; // negative numbers other than -1 aren't used by game objects
-                        bulletsCreated++;
-                        CombatNode bullet = new CombatNode(fireEvent.Location, bulletVector, id, "BLT");
-                        if (fireEvent.TakeFireEvent.IsHit)
-                        {
-                            bullet.deathTick = fireEvent.TakeFireEvent.Tick;
-                        }
-                        else
-                        {
-                            bullet.deathTick = battletic + fireEvent.Weapon.maxRange;
-                        }
-                        battle.CombatNodes.Add(bullet); //TODO I feel that this should be done in battle_space not here.
-                        fireEvent.TakeFireEvent.BulletNode = bullet;
-                        CreateNewEntity(bullet);
                     }
                 }
                 else if (comEvent is CombatTakeFireEvent)
                 {
                     // TODO - kersplosions
                     CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
+                    if (takefireEvent.IsHit)
+                    {
+                        Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Hits it's target!" );
+                    }
+                    else
+                    {
+                        Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Misses it's target!");
+                    }
                 }
                 else if (comEvent is CombatDestructionEvent)
                 {

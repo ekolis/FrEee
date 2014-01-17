@@ -233,6 +233,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public static readonly int CommandFrequencyTicks = CommandFrequencySeconds * TicksPerSecond;
 
+        int tOC = 0;
+        private int tempObjCounter
+        {
+            get
+            { return tOC++; }
+        }
+
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
 		/// </summary>
@@ -271,6 +278,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void SetUpPieces()
 		{
+            tOC = 0;
 			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
 
@@ -559,15 +567,15 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-		public CombatTakeFireEvent FireWeapon(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public CombatTakeFireEvent FireWeapon(int battletick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 rangeForDamageCalcs = (Fix16)0;
 			Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-			int targettic = tick;
+			int targettic = battletick;
 
 			//reset the weapon nextReload.
-			weapon.nextReload = tick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
+			weapon.nextReload = battletick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
 			
 			var target_icomobj = target.WorkingObject;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
@@ -591,12 +599,14 @@ namespace FrEee.Game.Objects.Combat2
 
             if (weapon.weaponType == "Seeker")
             {
-                //Seeker2 iseeker = new Seeker2(attacker.WorkingObject.Owner, weapon.weapon, target.WorkingObject);
-
-				// XXX - use negative numbers for seeker IDs and share nicely with bullets, to avoid collisions with ships
-                CombatSeeker seeker = new CombatSeeker(attacker, weapon, -dice.Next(100000));
+                
+                //create seeker and node.
+                CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
+                seeker.deathTick = battletick + weapon.maxRange_time;;
+                FreshNodes.Add(seeker);
+
 				foreach (var emp in Empires.Values)
 				{
 					if (emp.ownships.Contains(attacker))
@@ -608,8 +618,7 @@ namespace FrEee.Game.Objects.Combat2
 					if (emp.hostile.Contains(attacker))
 						emp.hostile.Add(seeker);
 				}
-                CombatNodes.Add(seeker);
-                FreshNodes.Add(seeker);
+
                 if (IsReplay)
                 {
                     //read the event
@@ -618,7 +627,7 @@ namespace FrEee.Game.Objects.Combat2
                 else
                 {
                     //*write* the event
-                    target_event = new CombatTakeFireEvent(tick, target, target.cmbt_loc, false);
+                    target_event = new CombatTakeFireEvent(battletick, target, target.cmbt_loc, false);
                     target_event.BulletNode = seeker;
                     seeker.seekertargethit = target_event;
                 }
@@ -626,19 +635,56 @@ namespace FrEee.Game.Objects.Combat2
 			//for bolt calc, need again for adding to list.
 			else if (weapon.weaponType == "Bolt")
 			{
+                
                 rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
                 Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
 				//set target tick for the future.
 				targettic += (int)boltTTT;
+
+                
+
 				if (IsReplay)
 				{
 					//read the event
 					target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+
+                    //because bullets don't need to be created during processing
+                    Fix16 rThis_distance = (target_event.Location - target_event.fireOnEvent.Location).Length;
+                    Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
+                    if (!target_event.IsHit) //jitter it!
+                    {
+                        // TODO - take into account firing ship's accuracy and target's evasion
+                        int accuracy = target_event.fireOnEvent.Weapon.weapon.Template.WeaponAccuracy;
+                        int jitterAmount = 0;
+                        if (accuracy < 50)
+                            jitterAmount = (int)System.Math.Pow(50 - accuracy, 2) / 50;
+                        if (jitterAmount < 5)
+                            jitterAmount = 5;
+                        if (jitterAmount > 30)
+                            jitterAmount = 30;
+                        //do *NOT* use ship prng here!!!! (since this is not done during normal processing, it'll cause differences, use any rand)
+                        Compass jitter = new Compass(RandomHelper.Range(-jitterAmount, jitterAmount), false);
+                        Compass bulletCompass = bulletVector.Compass;
+                        Compass offsetCompass = bulletCompass + jitter;
+                        bulletVector = offsetCompass.Point(bulletVector.Length);
+                    }
+                    CombatNode bullet = new CombatNode(attacker.cmbt_loc, bulletVector, -tempObjCounter, "BLT");
+                    target_event.BulletNode = bullet;
+                    FreshNodes.Add(bullet);
+                    if (target_event.IsHit)
+                    {
+                        bullet.deathTick = target_event.Tick;
+                    }
+                    else
+                    {
+                        bullet.deathTick = battletick + target_event.fireOnEvent.Weapon.maxRange;
+                    }
 				}
 				else
 				{
 					//*write* the event
 					target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
+                    int nothing = tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
 				}
 
 			}
@@ -661,7 +707,7 @@ namespace FrEee.Game.Objects.Combat2
 				var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
 				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				int damage = shot.Damage;
-				combatDamage(tick, target, weapon, damage, attacker.getDice());
+				combatDamage(battletick, target, weapon, damage, attacker.getDice());
 				if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
 					target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
 				if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
