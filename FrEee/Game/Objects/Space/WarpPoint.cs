@@ -55,11 +55,17 @@ namespace FrEee.Game.Objects.Space
 		public override void Redact(Empire emp)
 		{
 			// Don't let players see the target sector coordinates or star system name if it's not explored yet
-			var sys = Target.StarSystem;
-			if (!sys.ExploredByEmpires.Contains(emp))
+			if (Target != null)
 			{
-				Name = "Warp Point";
-				Target.Coordinates = new System.Drawing.Point();
+				var sys = Target.StarSystem;
+				if (sys != null)
+				{
+					if (!sys.ExploredByEmpires.Contains(emp))
+					{
+						Name = "Warp Point";
+						Target.Coordinates = new System.Drawing.Point();
+					}
+				}
 			}
 
 			var vis = CheckVisibility(emp);
