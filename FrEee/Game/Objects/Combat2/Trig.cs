@@ -113,10 +113,32 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns>distance of p2 ralitive to p1</returns>
+        //public static Fix16 distance(Point3d p1, Point3d p2)
+        //{
+        //    var d = p2 - p1;
+        //    return pythagC(d.X, d.Y);
+        //}
+
+        /// <summary>
+        /// distance between p1 and p2
+        /// should work with multiple dimensions.
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns>distance of p2 ralitive to p1</returns>
         public static Fix16 distance(Point3d p1, Point3d p2)
         {
             var d = p2 - p1;
-            return pythagC(d.X, d.Y);
+            Fix64 distance = 0;
+            foreach (Fix16 dimension in d.Point_List)
+            {
+                distance += (dimension * dimension);
+            }
+            if (distance < 0)
+                distance *= -1;
+            if (distance != 0)
+                distance = Fix64.Sqrt(distance);
+            return (Fix16)distance;
         }
 
         //public static Point3d vectorDistance(Point3d p1, Point3d p2)
