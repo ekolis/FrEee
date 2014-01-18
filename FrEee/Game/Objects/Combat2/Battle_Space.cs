@@ -62,6 +62,7 @@ namespace FrEee.Game.Objects.Combat2
 			ActualCombatants = new HashSet<ICombatant>(combatants);
 			//WorkingCombatants = new HashSet<ICombatant>();
 			CombatNodes = new HashSet<CombatNode>();
+            StartNodes = new HashSet<CombatNode>();
 			FreshNodes = new HashSet<CombatNode>();
 			DeadNodes = new HashSet<CombatNode>();
 
@@ -86,9 +87,7 @@ namespace FrEee.Game.Objects.Combat2
 				scopy.Owner = obj.Owner;
 				StartCombatants.Add(scopy);
                 CombatVehicle comObj = new CombatVehicle((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
-				CombatNodes.Add(comObj);
-               
-
+				StartNodes.Add(comObj);               
 			}
 
 			Fleets = new List<Fleet> { };
@@ -164,6 +163,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
 		/// </summary>
 		public ISet<CombatNode> CombatNodes { get; private set; }
+
+        /// <summary>
+        /// these are objects at the beginning of the combat.
+        /// </summary>
+        public ISet<CombatNode> StartNodes { get; private set; }
 
         /// <summary>
         /// objects go here when they're created during combat, so the replay can create the graphic ojects)
@@ -261,19 +265,22 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				Empires.Add(empire, new CombatEmpire());
 			}
-            foreach (CombatVehicle comObj in CombatObjects)
+            foreach (CombatObject comObj in StartNodes)
 			{
-				Empires[comObj.WorkingObject.Owner].ownships.Add(comObj);
+                if (comObj is CombatVehicle)
+                    Empires[((CombatVehicle)comObj).WorkingObject.Owner].ownships.Add(comObj);
 			}
-
+            CombatNodes = StartNodes;
 		}
 		private void ReplaySetup()
 		{
-            foreach (var shipObj in CombatVehicles)
+            foreach (CombatObject comObj in StartNodes)
 			{
-				shipObj.renewtoStart();
-				Empires[shipObj.StartVehicle.Owner].ownships.Add(shipObj);
+                comObj.renewtoStart();
+                if (comObj is CombatVehicle)
+                    Empires[((CombatVehicle)comObj).StartVehicle.Owner].ownships.Add(comObj);
 			}
+            CombatNodes = StartNodes;
 		}
 
 		public void SetUpPieces()
@@ -386,6 +393,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 CombatNodes.Remove(comNod);
                 DeadNodes.Remove(comNod);
+                
             }
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
@@ -442,7 +450,7 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
 
-        public void commandAI(CombatVehicle comVehic, int tick)
+        public void commandAI(CombatVehicle comVehic, int battletick)
         {
             //do AI decision stuff.
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
@@ -459,9 +467,9 @@ namespace FrEee.Game.Objects.Combat2
                     comVehic.weaponTarget = new List<CombatObject>();
                     comVehic.weaponTarget.Add(Empires[comVehic.WorkingObject.Owner].hostile[0]);
                 }
-                if (IsReplay && tick < 1000)
+                if (IsReplay && battletick < 1000)
                 {
-                    List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comVehic, tick).ToList<CombatEvent>();
+                    List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comVehic, battletick).ToList<CombatEvent>();
                     CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == comVehic.cmbt_loc);
                     comAI = "Location ";
                     if (locevnt != null)
@@ -469,9 +477,9 @@ namespace FrEee.Game.Objects.Combat2
                     else
                         comAI += "Not matched \r\n";
                 }
-                else if (!IsReplay && tick < 1000)
+                else if (!IsReplay && battletick < 1000)
                 {
-                    CombatLocationEvent locevnt = new CombatLocationEvent(tick, comVehic, comVehic.cmbt_loc);
+                    CombatLocationEvent locevnt = new CombatLocationEvent(battletick, comVehic, comVehic.cmbt_loc);
                     ReplayLog.Events.Add(locevnt);
                 }
 
@@ -479,14 +487,14 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-        private void missilefirecontrol(int tic_countr, CombatSeeker comSek)
+        private void missilefirecontrol(int battletick, CombatSeeker comSek)
         { 
             Fix16 locdistance = (comSek.cmbt_loc - comSek.weaponTarget[0].cmbt_loc).Length;
             if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
                 CombatTakeFireEvent evnt = comSek.seekertargethit;
                 evnt.IsHit = true;
-                evnt.Tick = tic_countr;
+                evnt.Tick = battletick;
                 
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
@@ -497,7 +505,7 @@ namespace FrEee.Game.Objects.Combat2
                     var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
                     int damage = shot.Damage;
-                    combatDamage(tic_countr, target, comSek.launcher, damage, comSek.getDice());
+                    combatDamage(battletick, target, comSek.launcher, damage, comSek.getDice());
                     if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
                         target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
@@ -507,7 +515,7 @@ namespace FrEee.Game.Objects.Combat2
                 DeadNodes.Add(comSek);
                 CombatNodes.Remove(comSek);                
             }
-            else if (tic_countr > comSek.deathTick)
+            else if (battletick > comSek.deathTick)
             {
                 DeadNodes.Add(comSek);
                 CombatNodes.Remove(comSek);

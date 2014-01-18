@@ -304,7 +304,8 @@ namespace FrEee.Game.Objects.Combat2
             this.cmbt_accel = new Point3d(0, 0, 0);
 		}
 
-		/// <summary>
+        #region fields & properties
+        /// <summary>
 		/// The object's current state.
 		/// </summary>
 		public ITargetable WorkingObject
@@ -343,7 +344,11 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 maxStrafeThrust { get; set; }
         public Fix16 maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
 
-		public PRNG getDice()
+        #endregion
+
+
+        #region methods & functions
+        public PRNG getDice()
 		{
 			return shipDice;
 		}
@@ -353,6 +358,15 @@ namespace FrEee.Game.Objects.Combat2
 			shipDice = new PRNG(seed);
 		}
 
+        public virtual void renewtoStart() 
+        {
+            this.cmbt_loc = new Point3d(0, 0, 0);
+            this.cmbt_vel = new Point3d(0, 0, 0);
+            this.cmbt_head = new Compass(0);
+            this.cmbt_att = new Compass(0);
+            this.cmbt_thrust = new Point3d(0, 0, 0);
+            this.cmbt_accel = new Point3d(0, 0, 0);
+        }
 
         public string debuginfo = "";
 
@@ -459,7 +473,8 @@ namespace FrEee.Game.Objects.Combat2
 		public virtual int handleShieldDamage(int damage) { return damage; }
 		public virtual int handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice) { return damage; }
 
-	}
+        #endregion
+    }
 
 	public class combatWaypoint
 	{
