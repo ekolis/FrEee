@@ -152,6 +152,31 @@ namespace FrEee.Game.Objects.Combat2
             //do nothing. this should not ever happen here.
         }
 
+        public override void helm()
+        {
+            combatWaypoint wpt = this.waypointTarget;
+            Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
+            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+
+            Fix16 acceleration = maxfowardThrust * cmbt_mass;
+            Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
+            Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
+            Fix16[] quad = GravMath.quadratic(acceleration, startV, distance);
+            Fix16 ttt;
+            if (quad[2] == 1)
+            {
+                ttt = Fix16.Min(quad[0], quad[1]);
+            }
+            else
+                ttt = quad[0];
+            Fix16 endV = startV + acceleration * ttt;
+
+            turnship(angletoturn, angletoWaypoint);
+
+            thrustship(angletoturn, true);            
+        }
+
 		public void ReplenishShields()
 		{
 			// seekers don't have shields

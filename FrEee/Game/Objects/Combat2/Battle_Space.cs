@@ -489,13 +489,15 @@ namespace FrEee.Game.Objects.Combat2
 
         private void missilefirecontrol(int battletick, CombatSeeker comSek)
         { 
-            Fix16 locdistance = (comSek.cmbt_loc - comSek.weaponTarget[0].cmbt_loc).Length;
+            Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
             if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
-                CombatTakeFireEvent evnt = comSek.seekertargethit;
-                evnt.IsHit = true;
-                evnt.Tick = battletick;
-                
+                if (!IsReplay)
+                {
+                    CombatTakeFireEvent evnt = comSek.seekertargethit;
+                    evnt.IsHit = true;
+                    evnt.Tick = battletick;
+                }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
                 if (target is CombatVehicle) 
@@ -612,7 +614,9 @@ namespace FrEee.Game.Objects.Combat2
                 CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
-                seeker.deathTick = battletick + weapon.maxRange_time;;
+                seeker.deathTick = battletick + weapon.maxRange_time;
+                seeker.cmbt_head = attacker.cmbt_head;
+                seeker.cmbt_att = attacker.cmbt_att;
                 FreshNodes.Add(seeker);
 
 				foreach (var emp in Empires.Values)
@@ -631,6 +635,7 @@ namespace FrEee.Game.Objects.Combat2
                 {
                     //read the event
                     target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                    target_event.BulletNode = seeker;
                 }
                 else
                 {
