@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Combat2
 			RefreshWeapons();
 		}
 
-		#region fields
+		#region fields & properties
 
 		/// <summary>
 		/// The vehicle's state at the start of combat.
@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.Combat2
 		#endregion
 
 		#region methods and functions
-		public void renewtoStart()
+		public override void renewtoStart()
 		{
 			var ship = StartVehicle.Copy();
 			ship.IsMemory = true;
@@ -64,18 +64,12 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			WorkingVehicle = ship;
-
-			this.cmbt_loc = new Point3d(0, 0, 0);
-			this.cmbt_vel = new Point3d(0, 0, 0);
-			this.cmbt_head = new Compass(0);
-			this.cmbt_att = new Compass(0);
-			this.cmbt_thrust = new Point3d(0, 0, 0);
-			this.cmbt_accel = new Point3d(0, 0, 0);
-
 			RefreshWeapons();
 
 			foreach (var w in weaponList)
 				w.nextReload = 1;
+
+            base.renewtoStart();
 		}
 
 		private void RefreshWeapons()

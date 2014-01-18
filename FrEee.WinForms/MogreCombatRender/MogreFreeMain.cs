@@ -73,13 +73,18 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		private void setup()
 		{
+            Console.WriteLine("Setting up combat Objects");
             battle.SetUpPieces();
+
+            Console.WriteLine("Setting up combat Rendering Entities");
 			foreach (CombatObject comObj in battle.CombatObjects)
 			{
                 CreateNewEntity(comObj);
 
                 do_graphics(comObj, comObj.cmbt_loc);
+                Console.Write(".");
 			}
+            Console.WriteLine("Done");
 		}
 
 
@@ -551,6 +556,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 			bool cont = true; // is combat continuing?
             var renderlocs = new SafeDictionary<CombatNode, Point3d>();
+            Console.WriteLine("starting Replay");
 			while (cont && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();

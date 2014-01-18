@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Combat2
             this.launcher = launcher;
         }
 
-        #region fields
+        #region fields & properties
         public CombatTakeFireEvent seekertargethit { get; set; }
 
         //the component that fired the missile.
@@ -145,7 +145,12 @@ namespace FrEee.Game.Objects.Combat2
 
         #endregion
 
-        #region methods and functions
+        #region methods & functions
+
+        public override void renewtoStart()
+        {
+            //do nothing. this should not ever happen here.
+        }
 
 		public void ReplenishShields()
 		{
