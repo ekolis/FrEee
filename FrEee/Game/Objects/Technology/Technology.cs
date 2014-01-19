@@ -21,7 +21,6 @@ namespace FrEee.Game.Objects.Technology
 		public Technology()
 		{
 			UnlockRequirements = new List<Requirement<Empire>>();
-			expectedResults = new Lazy<IEnumerable<IResearchable>>(() => GetExpectedResults(Empire.Current));
 		}
 
 		/// <summary>
@@ -201,19 +200,19 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
+		/// <summary>
+		/// Determines what an empire would unlock by researching the next level of this technology.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
 		public IEnumerable<IResearchable> GetExpectedResults(Empire emp)
 		{
-			var techs = emp.ResearchedTechnologies;
-			var techs2 = new SafeDictionary<Technology, int>();
-			foreach (var kvp in techs)
-				techs2.Add(kvp);
-			techs2[this]++;
-			var have = GetUnlockedItems(emp, techs);
-			var willHave = GetUnlockedItems(emp, techs2);
-			return willHave.Except(have);
+			var techs = new Dictionary<Technology, int>();
+			foreach (var kvp in emp.ResearchedTechnologies)
+				techs.Add(kvp.Key, kvp.Value);
+			techs[this]++;
+			return GetUnlockedItems(emp, techs);
 		}
-
-		private Lazy<IEnumerable<IResearchable>> expectedResults;
 
 		/// <summary>
 		/// Current empire's expected results for researching the next level of this tech.
@@ -225,36 +224,40 @@ namespace FrEee.Game.Objects.Technology
 			{
 				if (Empire.Current == null)
 					return Enumerable.Empty<IResearchable>();
-				return expectedResults.Value;
+				return GetExpectedResults(Empire.Current);
 			}
 		}
 
+		/// <summary>
+		/// Determines what would be unlocked by granting additional technology to an empire.
+		/// </summary>
+		/// <param name="emp">The empire.</param>
+		/// <param name="levels">The technology levels to grant.</param>
+		/// <returns>Newly unlocked items.</returns>
 		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
-			// create a "hypothetical" empire for testing out research
-			var empCopy = emp.CopyAndAssignNewID();
-			empCopy.ResearchedTechnologies = new NamedDictionary<Technology, int>();
-			foreach (var kvp in levels)
-				empCopy.ResearchedTechnologies[kvp.Key] = kvp.Value;
-			
-			foreach (var item in Galaxy.Current.Referrables.OfType<IResearchable>().Where(item => item.CheckVisibility(emp) >= Visibility.Fogged))
-			{
-				bool ok = true;
-				foreach (var req in item.UnlockRequirements)
-				{
-					if (!req.IsMetBy(empCopy))
-					{
-						// didn't meet the requirement
-						ok = false;
-						break;
-					}
-				}
-				if (ok)
-					yield return item;
-			}
+			// find out what the empire already knows
+			var oldItems = emp.UnlockedItems.ToArray();
 
-			// get rid of the hypothetical empire
-			empCopy.Dispose();
+			// save off the old levels so we can restore them
+			var oldLevels = new Dictionary<Technology, int>(emp.ResearchedTechnologies);
+
+			// set the new levels
+			foreach (var kvp in levels.ToArray())
+				emp.ResearchedTechnologies.Add(kvp);
+
+			// find out what the empire would know
+			emp.RefreshUnlockedItems();
+			var newItems = emp.UnlockedItems.ToArray();
+
+			// reset known levels
+			emp.ResearchedTechnologies.Clear();
+			foreach (var kvp in oldLevels)
+				emp.ResearchedTechnologies.Add(kvp);
+			emp.RefreshUnlockedItems();
+			
+			// return newly learned items
+			return newItems.Except(oldItems);
 		}
 
 		/// <summary>
