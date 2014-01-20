@@ -476,13 +476,15 @@ namespace FrEee.Utility
 					// no generic type? probably a list of objects?
 					itemType = typeof(object);
 				}
+				var parm = Expression.Parameter(typeof(object), "obj");
+				var lambdaAdder = Expression.Lambda(Expression.Call(
+						Expression.Constant(coll),
+						adder,
+						Expression.Convert(parm, itemType)), parm).Compile();
 				for (int i = 0; i < size; i++)
 				{
 					var item = Deserialize(r, itemType, context, log);
-					Expression.Lambda(Expression.Call(
-						Expression.Constant(coll),
-						adder,
-						Expression.Convert(Expression.Constant(item), itemType))).Compile().DynamicInvoke();
+					lambdaAdder.DynamicInvoke(item);
 				}
 				o = (IEnumerable)coll;
 
@@ -515,6 +517,7 @@ namespace FrEee.Utility
 						};
 						ObjectGraphContext.KnownProperties.Add(itemType, props);
 					}
+					// TODO - figure out how to optimize this so we're not generating and throwing away lots of compiled lambdas
 					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
 					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
 					var key = Deserialize(r, keyprop.PropertyType, context, log);
