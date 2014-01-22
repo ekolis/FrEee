@@ -231,6 +231,7 @@ namespace FrEee.Game.Objects.Combat2
                 //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
                 Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, this.cmbt_head.Radians));
                 this.cmbt_thrust += fowardthrust;
+                
             }
             else
             {

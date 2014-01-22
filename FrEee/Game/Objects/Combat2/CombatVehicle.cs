@@ -110,7 +110,7 @@ namespace FrEee.Game.Objects.Combat2
 			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
 			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-			Fix16 closingSpeed = GravMath.closingrate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+			Fix16 closingSpeed = GravMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
 
 			Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
 

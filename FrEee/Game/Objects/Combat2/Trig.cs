@@ -125,7 +125,8 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
-        /// <returns>distance of p2 ralitive to p1</returns>
+        /// <param name="onlyPos"
+        /// <returns>distance of p2 ralitive to p1, always positive</returns>
         public static Fix16 distance(Point3d p1, Point3d p2)
         {
             var d = p2 - p1;
@@ -136,8 +137,9 @@ namespace FrEee.Game.Objects.Combat2
             }
             if (distance < 0)
                 distance *= -1;
+                                                      
             if (distance != 0)
-                distance = Fix64.Sqrt(distance);
+                distance = Fix64.Sqrt(distance); 
             return (Fix16)distance;
         }
 
@@ -164,7 +166,14 @@ namespace FrEee.Game.Objects.Combat2
         /// <returns></returns>
         public static Fix16 dotProduct(Point3d p1, Point3d p2)
         {
-            return p1.X * p2.X + p1.Y * p2.Y + p1.Z * p2.Z;
+            //return p1.X * p2.X + p1.Y * p2.Y + p1.Z * p2.Z;
+            var difference = p2 * p1;
+            Fix16 product = 0;
+            foreach (Fix16 dimension in difference.Point_List)
+            {
+                product += (dimension * dimension);
+            }
+            return product;
         }
 
         /// <summary>
