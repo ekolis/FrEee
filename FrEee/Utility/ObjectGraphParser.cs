@@ -67,10 +67,10 @@ namespace FrEee.Utility
 			if (!type.IsValueType && type != typeof(string))
 				id = context.GetID(o);
 
-			if (!context.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.Contains(type))
 			{
 				// register type
-				context.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type);
 				context.AddProperties(type);
 			}
 
@@ -159,7 +159,7 @@ namespace FrEee.Utility
 		private void ParseObject(object o, ObjectGraphContext context)
 		{
 			var type = o.GetType();
-			var props = context.KnownProperties[type];
+			var props = ObjectGraphContext.KnownProperties[type];
 			foreach (var p in props)
 			{
 				// serialize field value
@@ -178,37 +178,41 @@ namespace FrEee.Utility
 	{
 		public ObjectGraphContext()
 		{
+			KnownObjects = new SafeDictionary<Type, IList<object>>();
+		}
+
+		static ObjectGraphContext()
+		{
 			KnownTypes = new List<Type>();
-			KnownProperties = new Dictionary<Type, IEnumerable<PropertyInfo>>();
-			KnownObjects = new Dictionary<Type, IList<object>>();
-			PropertyGetters = new Dictionary<PropertyInfo, Delegate>();
-			PropertySetters = new Dictionary<PropertyInfo, Delegate>();
+			KnownProperties = new SafeDictionary<Type, IEnumerable<PropertyInfo>>();
+			PropertyGetters = new SafeDictionary<PropertyInfo, Delegate>();
+			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
 		}
 
 		/// <summary>
 		/// Known data types.
 		/// </summary>
-		public IList<Type> KnownTypes { get; private set; }
+		public static IList<Type> KnownTypes { get; private set; }
 
 		/// <summary>
 		/// Known properties for each object type.
 		/// </summary>
-		public IDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; private set; }
+		public static SafeDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; private set; }
 
 		/// <summary>
 		/// Getters for properties.
 		/// </summary>
-		public IDictionary<PropertyInfo, Delegate> PropertyGetters { get; private set; }
+		public static SafeDictionary<PropertyInfo, Delegate> PropertyGetters { get; private set; }
 
 		/// <summary>
 		/// Setters for properties.
 		/// </summary>
-		public IDictionary<PropertyInfo, Delegate> PropertySetters { get; private set; }
+		public static SafeDictionary<PropertyInfo, Delegate> PropertySetters { get; private set; }
 
 		/// <summary>
 		/// The known objects, grouped by type. Their IDs are their indices in the lists.
 		/// </summary>
-		public IDictionary<Type, IList<object>> KnownObjects { get; private set; }
+		public SafeDictionary<Type, IList<object>> KnownObjects { get; private set; }
 
 		/// <summary>
 		/// Adds an object.
