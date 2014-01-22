@@ -20,17 +20,23 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void closingVector()
+        public void closingRate()
         {
             Point3d p1 = new Point3d(-10, 0, 0);
-            Point3d v1 = new Point3d(5, 5, 0);
+            Point3d v1 = new Point3d(5, 0, 0);
 
-            Point3d p2 = new Point3d(5, 15, 0);
-            Point3d v2 = new Point3d(-3, -3, 0);
+            Point3d p2 = new Point3d(10, 0, 0);
+            Point3d v2 = new Point3d(0, 0, 0);
 
-            Point3d result = new Point3d(8, 8, 0);
-            
-            //Assert.AreEqual(result, GravMath.closingVector(p1, v1, p2, v2));       
+            Fix16 result = 5;
+
+            Assert.AreEqual(result, GravMath.closingRate(p1, v1, p2, v2));       
         }
+
+        //[TestMethod]
+        //public void distance()
+        //{
+        //    Point3d p1 = new Point3d(
+        //}
     }
 }

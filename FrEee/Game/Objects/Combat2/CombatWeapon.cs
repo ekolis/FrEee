@@ -197,7 +197,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 seekerClosingSpeed_base(CombatObject attacker, CombatObject target)
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            Fix16 shotspeed_actual = shotspeed + GravMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
             return shotspeed_actual * Battle_Space.TickLength;
         }
 
@@ -218,7 +218,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 boltClosingSpeed(CombatObject attacker, CombatObject target)
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + GravMath.closingrate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            Fix16 shotspeed_actual = shotspeed + GravMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
             return shotspeed_actual * Battle_Space.TickLength;
         }
 

@@ -126,13 +126,14 @@ namespace FrEee.Game.Objects.Combat2
 
         /// <summary>
         /// the rate at which two points are aproaching each other as a scaler
+        /// velocity only. 
         /// </summary>
         /// <param name="p1">position 1</param>
         /// <param name="v1">velocity 1</param>
         /// <param name="p2">position 2</param>
         /// <param name="v2">velocity 2</param>
-        /// <returns></returns>
-        public static Fix16 closingrate(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
+        /// <returns>speed ms</returns>
+        public static Fix16 closingRate(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
         {
             Point3d v = v2 - v1;
             Point3d p = p1 - p2;
