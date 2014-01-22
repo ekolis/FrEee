@@ -61,9 +61,9 @@ namespace FrEee.Utility
 			// deal with nulls
 			if (o == null)
 			{
-				if (!context.KnownTypes.Contains(desiredType))
+				if (!ObjectGraphContext.KnownTypes.Contains(desiredType))
 				{
-					context.KnownTypes.Add(desiredType);
+					ObjectGraphContext.KnownTypes.Add(desiredType);
 					context.AddProperties(desiredType);
 				}
 				w.Write(desiredType.AssemblyQualifiedName);
@@ -77,10 +77,10 @@ namespace FrEee.Utility
 			if (!type.IsValueType && type != typeof(string))
 				id = context.GetID(o);
 
-			if (!context.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.Contains(type))
 			{
 				// register type
-				context.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type);
 				context.AddProperties(type);
 			}
 
@@ -238,17 +238,18 @@ namespace FrEee.Utility
 			{
 				if (isDict)
 				{
-					if (!context.KnownProperties.ContainsKey(itemType))
+					if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType) || !ObjectGraphContext.KnownProperties[itemType].Any())
 					{
 						var props = new PropertyInfo[]
 						{
 							itemType.GetProperty("Key"),
 							itemType.GetProperty("Value"),
 						};
-						context.KnownProperties.Add(itemType, props);
+						ObjectGraphContext.KnownProperties.Add(itemType, props);
 					}
-					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
-					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
+					
+					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
+					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
 					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
 					Serialize(context.GetObjectProperty(item, valprop), w, valprop.PropertyType, context, tabLevel + 1);
 				}
@@ -269,7 +270,7 @@ namespace FrEee.Utility
 
 			// serialize object type and field count
 			var type = o.GetType();
-			var props = context.KnownProperties[type];
+			var props = ObjectGraphContext.KnownProperties[type];
 			w.WriteLine("p" + props.Count() + ":");
 
 			foreach (var p in props)
@@ -475,13 +476,15 @@ namespace FrEee.Utility
 					// no generic type? probably a list of objects?
 					itemType = typeof(object);
 				}
+				var parm = Expression.Parameter(typeof(object), "obj");
+				var lambdaAdder = Expression.Lambda(Expression.Call(
+						Expression.Constant(coll),
+						adder,
+						Expression.Convert(parm, itemType)), parm).Compile();
 				for (int i = 0; i < size; i++)
 				{
 					var item = Deserialize(r, itemType, context, log);
-					Expression.Lambda(Expression.Call(
-						Expression.Constant(coll),
-						adder,
-						Expression.Convert(Expression.Constant(item), itemType))).Compile().DynamicInvoke();
+					lambdaAdder.DynamicInvoke(item);
 				}
 				o = (IEnumerable)coll;
 
@@ -505,17 +508,18 @@ namespace FrEee.Utility
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
 				for (int i = 0; i < size; i++)
 				{
-					if (!context.KnownProperties.ContainsKey(itemType))
+					if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType))
 					{
 						var props = new PropertyInfo[]
 						{
 							itemType.GetProperty("Key"),
 							itemType.GetProperty("Value"),
 						};
-						context.KnownProperties.Add(itemType, props);
+						ObjectGraphContext.KnownProperties.Add(itemType, props);
 					}
-					var keyprop = context.KnownProperties[itemType].Single(p => p.Name == "Key");
-					var valprop = context.KnownProperties[itemType].Single(p => p.Name == "Value");
+					// TODO - figure out how to optimize this so we're not generating and throwing away lots of compiled lambdas
+					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
+					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
 					var key = Deserialize(r, keyprop.PropertyType, context, log);
 					var val = Deserialize(r, valprop.PropertyType, context, log);
 					Expression.Lambda(
@@ -588,7 +592,7 @@ namespace FrEee.Utility
 				for (int i = 0; i < count; i++)
 				{
 					var pname = r.ReadTo(':', log).Trim();
-					var prop = context.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
 					if (prop != null && !prop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any())
 					{
 						if (type.IsValueType)
@@ -651,16 +655,16 @@ namespace FrEee.Utility
 			int typeID;
 			Type type;
 			if (int.TryParse(typename, out typeID))
-				type = context.KnownTypes[typeID];
+				type = ObjectGraphContext.KnownTypes[typeID];
 			else
 				type = Type.GetType(typename);
 			if (type == null)
 				throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");
 
-			if (!context.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.Contains(type))
 			{
 				// add to known types
-				context.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type);
 			}
 
 			// check type so we don't bother trying to create an object only to find it's the wrong type later
