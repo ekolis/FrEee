@@ -25,6 +25,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         [TestMethod]
         public void closingRate()
         {
+            //easy test
             Point3d p1 = new Point3d(-10, 0, 0);
             Point3d v1 = new Point3d(5, 0, 0);
 
@@ -33,7 +34,29 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Fix16 expectedResult = 5;
 
-            Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));       
+            Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));
+
+            //edge case, parrellel.
+            p1 = new Point3d(-10, 0, 0);
+            v1 = new Point3d(10, 0, 0);
+
+            p2 = new Point3d(10, 0, 0);
+            v2 = new Point3d(10, 0, 0);
+
+            expectedResult = 0;
+
+            Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));
+
+            //moving away from each other.
+            p1 = new Point3d(-10, 0, 0);
+            v1 = new Point3d(-10, 0, 0);
+
+            p2 = new Point3d(10, 0, 0);
+            v2 = new Point3d(0, 0, 0);
+
+            expectedResult = -10;
+
+            Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));
         }
 
         [TestMethod]
