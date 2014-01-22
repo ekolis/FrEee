@@ -661,7 +661,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Mogre.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="MogreCombatRender\Media\materials\textures\dirt01.jpg" />
     <Content Include="MogreCombatRender\Media\materials\textures\Fireball.000.png" />
