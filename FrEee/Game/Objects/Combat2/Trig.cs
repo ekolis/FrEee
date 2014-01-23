@@ -171,7 +171,7 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 product = 0;
             foreach (Fix16 dimension in difference.Point_List)
             {
-                product += (dimension * dimension);
+                product += dimension;
             }
             return product;
         }

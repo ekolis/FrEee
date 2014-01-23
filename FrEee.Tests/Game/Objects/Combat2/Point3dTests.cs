@@ -37,6 +37,17 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));
 
             //edge case, parrellel.
+            p1 = new Point3d(-0, -5, 0);
+            v1 = new Point3d(0, 0, 0);
+
+            p2 = new Point3d(0, 0, 0);
+            v2 = new Point3d(1, -1, 0);
+
+            expectedResult = 1;
+
+            Assert.AreEqual(expectedResult, GravMath.closingRate(p1, v1, p2, v2));
+
+            //edge case, parrellel.
             p1 = new Point3d(-10, 0, 0);
             v1 = new Point3d(10, 0, 0);
 
