@@ -126,7 +126,7 @@ namespace FrEee.Game.Objects.Combat2
 
         /// <summary>
         /// the rate at which two points are aproaching each other as a scaler
-        /// velocity only, currently dosn't return a neg number for objects moving away. 
+        /// velocity only.
         /// </summary>
         /// <param name="p1">position 1</param>
         /// <param name="v1">velocity 1</param>
@@ -135,10 +135,11 @@ namespace FrEee.Game.Objects.Combat2
         /// <returns>speed ms</returns>
         public static Fix16 closingRate(Point3d p1, Point3d v1, Point3d p2, Point3d v2)
         {
-            Point3d v = v1 - v2;
-            Point3d p = p1 - p2;
-            Fix16 closingrate = Fix16.Sqrt(Trig.dotProduct(v, (p / Trig.hypotinuse(p))));
-            return closingrate;
+            Point3d dV = v2 - v1;
+            Point3d dP = p1 - p2;
+            Fix16 dot = Trig.dotProduct(dV, (dP / dP.Length));
+
+            return dot;
         }
 
 
