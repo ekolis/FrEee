@@ -73,7 +73,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		private void setup()
 		{
-            Console.WriteLine("Setting up combat Objects");
+
             battle.SetUpPieces();
 
             Console.WriteLine("Setting up combat Rendering Entities");
@@ -560,7 +560,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			while (cont && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
-				
+                int interpolationcount = 0;
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
                     //foreach (CombatObject comObj in battle.CombatObjects)
@@ -573,9 +573,12 @@ namespace FrEee.WinForms.MogreCombatRender
 						renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
 						do_graphics(comNode, renderlocs[comNode]);
 					}
+                    interpolationcount++;
 					Application.DoEvents();
 				}
-
+#if DEBUG
+                Console.WriteLine("Interpol count is: " + interpolationcount);
+#endif
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
                     comObj.debuginfo = "";
@@ -833,8 +836,6 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
             try
             {
-
-
                 SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
 
                 node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
