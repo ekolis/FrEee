@@ -22,10 +22,29 @@ namespace FrEee.Game.Objects.Combat2
 
         public CombatWeapon(Component weapon)
         {
+#if DEBUG
+            Console.WriteLine("Creating New CombatWeapon");
+#endif
             this.weapon = weapon;
+#if DEBUG
+            Console.WriteLine("Getting Weapon Template WeaponInfo");
+#endif
             var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
+#if DEBUG
+            Console.WriteLine("Done");
+            Console.WriteLine("Getting Range info");
+#endif            
             int wpMaxR = wpninfo.MaxRange;
+#if DEBUG
+            Console.WriteLine("Done MaxRange");
+#endif
             int wpMinR = wpninfo.MinRange;
+#if DEBUG
+            Console.WriteLine("Done MinRange");
+#endif
+#if DEBUG
+            Console.WriteLine("done getting random info");
+#endif
             if (wpninfo.DisplayEffect.GetType() == typeof(Combat.BeamWeaponDisplayEffect))
             {
                 weaponType = "Beam";
@@ -43,6 +62,9 @@ namespace FrEee.Game.Objects.Combat2
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.SeekerWeaponDisplayEffect))
             {
+#if DEBUG
+                Console.WriteLine("CombatWeapon is a Seeker");
+#endif
                 SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
                 weaponType = "Seeker";
                 boltSpeed = 0; //seekers get launched at 0 speed. 
@@ -62,7 +84,9 @@ namespace FrEee.Game.Objects.Combat2
             double wpiReloadRate = wpninfo.ReloadRate;
             reloadRate = (Fix16)wpiReloadRate;
             nextReload = 1;
-
+#if DEBUG
+            Console.WriteLine("Done creating CombatWeapon");
+#endif
 
         }
 
