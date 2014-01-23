@@ -261,30 +261,83 @@ namespace FrEee.Game.Objects.Combat2
 
 		private void FirstSetup()
 		{
+#if DEBUG
+            Console.WriteLine("Beginning Processing Setup");
+            Console.WriteLine("Adding Empires");
+#endif
 			foreach (Empire empire in EmpiresArray.Where(e => !Empires.ContainsKey(e)))
 			{
 				Empires.Add(empire, new CombatEmpire());
+#if DEBUG
+                Console.Write(".");
+#endif
 			}
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
+#if DEBUG
+            Console.WriteLine("Creating IFF lists");
+#endif
             foreach (CombatObject comObj in StartNodes)
 			{
                 if (comObj is CombatVehicle)
-                    Empires[((CombatVehicle)comObj).WorkingObject.Owner].ownships.Add(comObj);
+                {
+#if DEBUG
+                    Console.WriteLine("Getting Empire for this ship");
+#endif
+                    Empire thisemp = ((CombatVehicle)comObj).StartVehicle.Owner;
+#if DEBUG
+                    Console.WriteLine("Done");
+#endif
+                    Empires[thisemp].ownships.Add(comObj);
+#if DEBUG
+                    Console.Write(".");
+#endif
+                }
 			}
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
             CombatNodes = StartNodes;
 		}
 		private void ReplaySetup()
 		{
+#if DEBUG
+            Console.WriteLine("Beginning Replay Setup");
+            Console.WriteLine("Creating IFF lists");
+#endif
             foreach (CombatObject comObj in StartNodes)
 			{
                 comObj.renewtoStart();
                 if (comObj is CombatVehicle)
-                    Empires[((CombatVehicle)comObj).StartVehicle.Owner].ownships.Add(comObj);
+                {
+#if DEBUG
+                    Console.WriteLine("Getting Empire for this ship");
+#endif
+                    Empire thisemp = ((CombatVehicle)comObj).StartVehicle.Owner;
+#if DEBUG
+                    Console.WriteLine("Done");
+#endif
+                    Empires[thisemp].ownships.Add(comObj);
+#if DEBUG
+                    Console.Write(".");
+#endif
+                }
+#if DEBUG
+                Console.Write(".");
+#endif
 			}
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
             CombatNodes = StartNodes;
 		}
 
 		public void SetUpPieces()
 		{
+#if DEBUG
+            Console.WriteLine("Setting up combat Objects");
+#endif
             tOC = 0;
 			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
 			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];

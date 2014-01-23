@@ -48,6 +48,10 @@ namespace FrEee.Game.Objects.Combat2
 		#region methods and functions
 		public override void renewtoStart()
 		{
+
+#if DEBUG
+            Console.WriteLine("renewtoStart for CombatVehcile");
+#endif
 			var ship = StartVehicle.Copy();
 			ship.IsMemory = true;
 			if (ship.Owner != StartVehicle.Owner)
@@ -56,12 +60,21 @@ namespace FrEee.Game.Objects.Combat2
 			// copy over the components individually so they can take damage without affecting the starting state
 			// TODO - deal with planets in combat
 			ship.Components.Clear();
+#if DEBUG
+            Console.WriteLine("copying components");
+#endif
 			foreach (var comp in (StartVehicle.Components))
 			{
 				var ccopy = comp.Copy();
 				ship.Components.Add(ccopy);
 				ccopy.Container = ship;
+#if DEBUG
+                Console.Write(".");
+#endif
 			}
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
 
 			WorkingVehicle = ship;
 			RefreshWeapons();
@@ -70,16 +83,28 @@ namespace FrEee.Game.Objects.Combat2
 				w.nextReload = 1;
 
             base.renewtoStart();
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
 		}
 
 		private void RefreshWeapons()
 		{
 			this.weaponList = new List<CombatWeapon>();
+#if DEBUG
+            Console.WriteLine("RefreshingWeapons");
+#endif
 			foreach (Component weapon in WorkingVehicle.Weapons)
 			{
 				CombatWeapon wpn = new CombatWeapon(weapon);
 				this.weaponList.Add(wpn);
+#if DEBUG
+                Console.Write(".");
+#endif
 			}
+#if DEBUG
+            Console.WriteLine("Done");
+#endif
 		}
 
 		/// <summary>

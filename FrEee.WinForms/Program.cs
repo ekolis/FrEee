@@ -36,7 +36,7 @@ namespace FrEee.WinForms
 				var stdout = File.OpenWrite("stdout.txt");
 				var swOut = new StreamWriter(stdout);
 				swOut.AutoFlush = true;
-				Console.SetOut(swOut);
+				//Console.SetOut(swOut);
 			}
 			catch (IOException)
 			{
