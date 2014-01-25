@@ -1,14 +1,9 @@
-Project Lead:
-	James Phillips (Combat Wombat)
+Ed "ekolis" Kolis - Co-Lead, Programmer
+James "Combat Wombat" Phillips - Co-Lead, Design
+Jon "se5a" Sorensen - Programmer
+Bill "Cioden" Gibbons - Artist
+Kevin "guttsy" Seitz - Programmer
 
-Programming:
-	Ed Kolis (ekolis)
-	Kevin Seitz (guttsy)
-	Jon Sorensen (se5a)
-
-Art:
-	James Phillips (Combat Wombat)
-	Cioden
 
 Special Thanks:
 	Aaron Hall - For creating Space Empires
