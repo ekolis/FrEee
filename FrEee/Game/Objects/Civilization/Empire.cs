@@ -671,6 +671,10 @@ namespace FrEee.Game.Objects.Civilization
 			if (obj.IsMemory)
 				throw new InvalidOperationException("Call UpdateMemory for the physical object, not the memory.");
 
+			// TODO - what happens if a ship/planet is captured by this empire? Then it needs to be updated...
+			if (obj.Owner == this)
+				return; // don't need to update empire's memory of its own objects!
+
 			// encounter empire if not yet encountered
 			if (obj.Owner != null && !EncounteredEmpires.Contains(obj.Owner))
 			{
