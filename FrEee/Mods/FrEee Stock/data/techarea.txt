@@ -1,0 +1,38 @@
+---------------------------------------------------------------------------------------
+TECH AREA DATA FILE - FrEee Stock
+---------------------------------------------------------------------------------------
+
+Name: 
+Group:
+Description:
+Maximum Level:
+Level Cost:
+Start Level:
+Raise Level:
+Racial Area:
+
+     Psychic
+     Religious
+     Temporal Knowledge
+     Crystallurgy
+     Organic Manipulation
+     Aerial Race
+     Cybernetic Race
+     Machine Intelligence
+     Heavy Gravity Race
+     Low Gravity Race
+     Zero Gravity Race
+
+  Hidden Areas:
+	Rock Natives
+	Gas Natives
+	Ice Natives
+	Nomadic
+
+Unique Area:
+Can Be Removed:
+Number of Tech Req:
+
+---------------------------------------------------------------------------------------
+*BEGIN*
+---------------------------------------------------------------------------------------
