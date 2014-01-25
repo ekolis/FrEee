@@ -61,7 +61,7 @@ Max Facilities Domed      := 10
 Max Population Domed      := 2667
 Max Cargo Spaces Domed    := 20000
 
-Name                      := LargeRingworld
+Name                      := Ringworld
 Physical Type             := Planet
 Stellar Size              := Huge
 Max Facilities            := 100

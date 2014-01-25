@@ -97,6 +97,7 @@ Grandpa
 Great King
 Halo Light
 Head Cheese
+Head Honcho
 Heretic
 High Citizen
 High Elder
@@ -194,6 +195,7 @@ Pope
 Praetor
 Premier
 President
+Pretender God
 Primal Lord
 Primary
 Primary King
