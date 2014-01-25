@@ -37,7 +37,7 @@ Planet Atmosphere    := Carbon Dioxide
 
 Physical Type        := Planet
 Picture Num          := 196
-Description          := Where flora abounds                                              It produces oxygen.                                             Except on this world. 
+Description          := Where flora abounds / It produces oxygen / Except on this world
 Planet Size          := Tiny
 Planet Physical Type := Ice
 Planet Atmosphere    := Carbon Dioxide
@@ -65,7 +65,7 @@ Planet Atmosphere    := Carbon Dioxide
 
 Physical Type        := Planet
 Picture Num          := 20
-Description          := So many poisons                                                   Such a small animal.                                          Beware of thungus.
+Description          := So many poisons / Such a small animal / Beware of thungus
 Planet Size          := Tiny
 Planet Physical Type := Rock
 Planet Atmosphere    := Carbon Dioxide
@@ -436,7 +436,7 @@ Planet Atmosphere    := Carbon Dioxide
 
 Physical Type        := Planet
 Picture Num          := 183
-Description          := Great unseen depths                                              Calling foolish explorers.                                     Someone has to try. 
+Description          := Great unseen depths / Calling foolish explorers / Someone has to try. 
 Planet Size          := Large
 Planet Physical Type := Gas Giant
 Planet Atmosphere    := Carbon Dioxide
@@ -751,7 +751,7 @@ Planet Atmosphere    := Hydrogen
 
 Physical Type        := Planet
 Picture Num          := 148
-Description          := Hydrogen will burn,                                                 But requires oxygen.                                          Mind your carry-on.
+Description          := Hydrogen will burn / But requires oxygen / Mind your carry-on.
 Planet Size          := Tiny
 Planet Physical Type := Ice
 Planet Atmosphere    := Hydrogen
@@ -975,7 +975,7 @@ Planet Atmosphere    := Hydrogen
 
 Physical Type        := Planet
 Picture Num          := 160
-Description          := What is this?  I did not order this.                         No, I do not want it.                                             Yes, you will have to take it back
+Description          := What is this? / I did not order this / No, I do not want it. Yes, you will have to take it back
 Planet Size          := Medium
 Planet Physical Type := Gas Giant
 Planet Atmosphere    := Hydrogen
@@ -1178,7 +1178,7 @@ Planet Atmosphere    := Hydrogen
 
 Physical Type        := Planet
 Picture Num          := 518
-Description          := This planet is large.                                            Hydrogen is very small.                                      You can do the math.
+Description          := This planet is large / Hydrogen is very small / You can do the math
 Planet Size          := Large
 Planet Physical Type := Gas Giant
 Planet Atmosphere    := Hydrogen
@@ -1570,7 +1570,7 @@ Planet Atmosphere    := Methane
 
 Physical Type        := Planet
 Picture Num          := 91
-Description          := This place is trouble.                                          You do not want to go here.                                 Trust me on this one.
+Description          := This place is trouble / You do not want to go here / Trust me on this one.
 Planet Size          := Small
 Planet Physical Type := Ice
 Planet Atmosphere    := Methane
@@ -2186,7 +2186,7 @@ Planet Atmosphere    := Methane
 
 Physical Type        := Planet
 Picture Num          := 520
-Description          := This place might look nice                                      But oxygen is caustic                                           Use Rustoleum
+Description          := This place might look nice / But oxygen is caustic / Use Rustoleum
 Planet Size          := Tiny
 Planet Physical Type := Gas Giant
 Planet Atmosphere    := Oxygen
@@ -4542,7 +4542,7 @@ Unusual              := 1
 
 Physical Type        := Warp Point
 Picture Num          := 343
-Description          := This red warp point has some unusual graviton emissions. 
+Description          := MoTher AlWays Said: / Be Wary Of Strange Warp Points / This One Is VerY
 Warp Point Size      := Large
 Warp Point One-Way   := 1
 Unusual              := 1
@@ -4569,7 +4569,7 @@ Unusual              := 1
 
 Physical Type        := Warp Point
 Picture Num          := 336
-Description          := Unusual red warp point which is barely perceptible by normal means. 
+Description          := Vortex in deep space / The unknown lurks beyond it / Who shall be bravest?
 Warp Point Size      := Small
 Unusual              := 1
 
