@@ -95,6 +95,8 @@ namespace FrEee.WinForms.Forms
 				foreach (Control ctl in pnlStats.Controls)
 					ctl.Visible = true;
 
+				Design.ClearAbilityCache();
+
 				txtSpaceFree.Text = Design.SpaceFree.Kilotons() + " / " + Design.Hull.Size.Kilotons();
 				resCostMin.Amount = Design.Cost[Resource.Minerals];
 				resCostOrg.Amount = Design.Cost[Resource.Organics];
