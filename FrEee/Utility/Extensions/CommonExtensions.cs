@@ -2402,5 +2402,10 @@ namespace FrEee.Utility.Extensions
 			// nothing found?
 			return null;
 		}
+
+		public static void ClearAbilityCache(this IAbilityObject o)
+		{
+			Galaxy.Current.AbilityCache.Remove(o);
+		}
 	}
 }
