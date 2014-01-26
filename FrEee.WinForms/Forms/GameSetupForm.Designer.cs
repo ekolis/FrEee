@@ -264,6 +264,7 @@
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
 			this.tabs.Size = new System.Drawing.Size(553, 573);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
+			this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
 			// 
@@ -2341,16 +2342,14 @@
 			// 
 			// ddlAllowedTrades
 			// 
+			this.ddlAllowedTrades.DisplayMember = "Name";
 			this.ddlAllowedTrades.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.ddlAllowedTrades.FormattingEnabled = true;
-			this.ddlAllowedTrades.Items.AddRange(new object[] {
-            "All",
-            "All but Technology",
-            "None"});
 			this.ddlAllowedTrades.Location = new System.Drawing.Point(164, 53);
 			this.ddlAllowedTrades.Name = "ddlAllowedTrades";
 			this.ddlAllowedTrades.Size = new System.Drawing.Size(152, 23);
 			this.ddlAllowedTrades.TabIndex = 28;
+			this.ddlAllowedTrades.ValueMember = "Value";
 			// 
 			// chkHumansVsAI
 			// 
