@@ -41,9 +41,8 @@ namespace FrEee.WinForms.Forms
 			foreach (StellarSize item in Enum.GetValues(typeof(StellarSize)))
 				ddlHomeworldSize.Items.Add(item);
 			// TODO - set step-amount for racial points spinbox to the greatest common factor of the mod's racial trait costs? or maybe based on aptitudes too?
-			foreach (AllowedTrades item in Enum.GetValues(typeof(AllowedTrades)))
-				ddlAllowedTrades.Items.Add(item);
-			ddlAllowedTrades.SelectedItem = AllowedTrades.All;
+			ddlAllowedTrades.DataSource = Enum.GetValues(typeof(AllowedTrades)).Cast<AllowedTrades>().Select(e => new { Name = e.ToSpacedString(), Value = e}).ToList();
+			ddlAllowedTrades.SelectedValue = AllowedTrades.All;
 
 			// initialize data
 			ddlGalaxyType_SelectedIndexChanged(ddlGalaxyType, new EventArgs());
@@ -205,7 +204,7 @@ namespace FrEee.WinForms.Forms
 				setup.VictoryConditions.Add(new PeaceVictoryCondition((int)spnVictoryPeace.Value));
 			setup.VictoryDelay = (int)spnVictoryDelay.Value;
 			setup.IsHumansVsAI = chkHumansVsAI.Checked;
-			setup.AllowedTrades = (AllowedTrades)ddlAllowedTrades.SelectedItem;
+			setup.AllowedTrades = (AllowedTrades)ddlAllowedTrades.SelectedValue;
 			setup.IsSurrenderAllowed = chkAllowSurrender.Checked;
 			setup.IsIntelligenceAllowed = chkAllowIntel.Checked;
 			setup.IsAnalysisAllowed = chkAllowAnalysis.Checked;
@@ -329,7 +328,7 @@ namespace FrEee.WinForms.Forms
 
 
 			chkHumansVsAI.Checked = setup.IsHumansVsAI;
-			ddlAllowedTrades.SelectedItem = setup.AllowedTrades;
+			ddlAllowedTrades.SelectedValue = setup.AllowedTrades;
 			chkAllowSurrender.Checked = setup.IsSurrenderAllowed;
 			chkAllowIntel.Checked = setup.IsIntelligenceAllowed;
 			chkAllowAnalysis.Checked = setup.IsAnalysisAllowed;
