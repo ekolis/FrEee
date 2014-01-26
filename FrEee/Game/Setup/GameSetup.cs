@@ -233,6 +233,8 @@ namespace FrEee.Game.Setup
 		{
 			gal.Name = GameName;
 
+			gal.AssignIDs();
+
 			// remove forbidden techs
 			foreach (var tname in ForbiddenTechnologyNames)
 				gal.Referrables.OfType<Technology>().Single(t => t.Name == tname).Dispose();
