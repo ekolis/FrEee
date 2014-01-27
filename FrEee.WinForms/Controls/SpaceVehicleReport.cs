@@ -201,12 +201,12 @@ namespace FrEee.WinForms.Controls
 				progFuel.Visible = false;
 
 				// damage
-				progShields.Maximum = vehicle.ShieldHitpoints;
-				progShields.Value = vehicle.Design.ShieldHitpoints;
-				progArmor.Maximum = vehicle.ArmorHitpoints;
-				progArmor.Value = vehicle.Design.ArmorHitpoints;
-				progHull.Maximum = vehicle.HullHitpoints;
-				progHull.Value = vehicle.Design.HullHitpoints;
+				progShields.Maximum = vehicle.Design.ShieldHitpoints;
+				progShields.Value = vehicle.ShieldHitpoints;
+				progArmor.Maximum = vehicle.Design.ArmorHitpoints;
+				progArmor.Value = vehicle.ArmorHitpoints;
+				progHull.Maximum = vehicle.Design.HullHitpoints;
+				progHull.Value = vehicle.HullHitpoints;
 
 				// orders and stuff
 				txtOrder.Text = vehicle.Orders.Any() ? vehicle.Orders.First().ToString() : "None";
