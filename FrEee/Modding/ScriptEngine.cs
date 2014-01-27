@@ -109,8 +109,9 @@ namespace FrEee.Modding
 			{
 				if (kvp.Value is IReferrable)
 					referrables.Add(kvp.Key, (IReferrable)kvp.Value);
-				else
+				else if (kvp.Value != Galaxy.Current)
 					genericObjects.Add(kvp.Key, kvp.Value);
+				// Galaxy.Current is dealt with separately
 			}
 
 			// Set injected variables
@@ -216,7 +217,7 @@ namespace FrEee.Modding
 				throw new ScriptException("Cannot evaluate a script containing newlines. Consider using CallFunction instead.");
 
 			var imports = new List<string>();
-			
+
 
 			var deserializers = new List<string>();
 			deserializers.Add("import clr;");
@@ -299,11 +300,12 @@ namespace FrEee.Modding
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
 				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
-				deserializers.Add("if (newGalaxy):");
-				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+				deserializers.Add("galaxy = Serializer.DeserializeFromString(_galaxy);");
 				foreach (var variable in variables.Keys)
 				{
-					if (variables[variable] is IReferrable)
+					if (variables[variable] == Galaxy.Current)
+						deserializers.Add(variable + " = galaxy;");
+					else if (variables[variable] is IReferrable)
 						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
 						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
@@ -311,10 +313,12 @@ namespace FrEee.Modding
 				}
 				foreach (var variable in readOnlyVariables.Keys)
 				{
-					if (readOnlyVariables[variable] is IReferrable)
-							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
-						else
-							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					if (readOnlyVariables[variable] == Galaxy.Current)
+						deserializers.Add(variable + " = galaxy;");
+					else if (readOnlyVariables[variable] is IReferrable)
+						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+					else
+						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 				}
 			}
 			var code =
@@ -324,7 +328,12 @@ namespace FrEee.Modding
 			var sc = new ScriptCode("runner", code, script.ExternalScripts.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
-			UpdateScope(variables);
+			var allVariables = new Dictionary<string, object>();
+			foreach (var v in variables)
+				allVariables.Add(v.Key, v.Value);
+			foreach (var v in readOnlyVariables)
+				allVariables.Add(v.Key, v.Value);
+			UpdateScope(allVariables);
 			try
 			{
 				compiledScript.Execute(scope);
