@@ -2316,7 +2316,7 @@ namespace FrEee.Utility.Extensions
 				if (item is IReferrable)
 					((IReferrable)item).Dispose();
 			}
-			foreach (var item in nu)
+			foreach (var item in nu.ToArray())
 			{
 				var oldItem = old.FindMatch(item, nu);
 				if (oldItem == null)
