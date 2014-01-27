@@ -110,7 +110,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var status = new Status();
 				var t = new Thread(new ThreadStart(() =>{
-					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
+					var mod = Mod.Load(pickerForm.ModPath, true, status, 0.5);
 					status.Message = "Backing up GAM file";
 					File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
 					status.Progress = 0.75;
