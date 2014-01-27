@@ -334,7 +334,7 @@ namespace FrEee.Modding
 				foreach (var v in variables)
 					allVariables.Add(v.Key, v.Value);
 			}
-			if (allVariables != null)
+			if (readOnlyVariables != null)
 			{
 				foreach (var v in readOnlyVariables)
 					allVariables.Add(v.Key, v.Value);
