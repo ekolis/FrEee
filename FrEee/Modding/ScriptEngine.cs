@@ -329,10 +329,16 @@ namespace FrEee.Modding
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
 			var allVariables = new Dictionary<string, object>();
-			foreach (var v in variables)
-				allVariables.Add(v.Key, v.Value);
-			foreach (var v in readOnlyVariables)
-				allVariables.Add(v.Key, v.Value);
+			if (variables != null)
+			{
+				foreach (var v in variables)
+					allVariables.Add(v.Key, v.Value);
+			}
+			if (allVariables != null)
+			{
+				foreach (var v in readOnlyVariables)
+					allVariables.Add(v.Key, v.Value);
+			}
 			UpdateScope(allVariables);
 			try
 			{
