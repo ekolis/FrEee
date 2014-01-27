@@ -54,6 +54,7 @@ namespace FrEee.Modding
 			{
 				new ModInfoLoader(path),
 				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
+				new ScriptLoader(path),
 				new AbilityRuleLoader(path),
 				new ModSettingsLoader(path),
 				new StellarObjectSizeLoader(path),
@@ -69,7 +70,6 @@ namespace FrEee.Modding
 				new GalaxyLoader(path),
 				new HappinessModelLoader(path),
 				new CultureLoader(path),
-				new ScriptLoader(path),
 				new EmpireAILoader(path),
 			};
 
@@ -266,6 +266,7 @@ namespace FrEee.Modding
 		public void Patch(Mod newMod)
 		{
 			newMod.Info.CopyTo(Info);
+			newMod.GlobalScript.CopyTo(GlobalScript);
 			StarSystemNames.Clear();
 			foreach (var n in newMod.StarSystemNames)
 				StarSystemNames.Add(n);
@@ -285,7 +286,6 @@ namespace FrEee.Modding
 			HappinessModels.Patch(newMod.HappinessModels);
 			Cultures.Patch(newMod.Cultures);
 			newMod.GameInitScript.CopyTo(GameInitScript);
-			newMod.GlobalScript.CopyTo(GlobalScript);
 			newMod.EndTurnScript.CopyTo(EndTurnScript);
 			EmpireAIs.Patch(newMod.EmpireAIs);
 		}
