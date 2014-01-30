@@ -31,7 +31,7 @@ namespace FrEee.Modding.Loaders
 
 				r.ModID = rec.Get<string>("ID", r);
 				r.Name = rec.Get<string>("Name", r, false);
-				r.Aliases = rec.GetMany<string>("Alias", r).Select(f => f.Value).ToList();
+				r.Aliases = new HashSet<string>(rec.GetMany<string>("Alias", r).Select(f => f.Value));
 				r.Targets = rec.Get<AbilityTargets>("Targets", r) ?? AbilityTargets.All;
 				r.Description = rec.Get<string>("Description", r);
 				for (int i = 1; i <= 2; i++)
