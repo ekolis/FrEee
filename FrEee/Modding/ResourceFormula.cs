@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FrEee.Modding
 {
-	public class ResourceFormula : SafeDictionary<Resource, Formula<int>>
+	public class ResourceFormula : SafeDictionary<string, Formula<int>>
 	{
 		/// <summary>
 		/// For serialization
@@ -86,6 +86,12 @@ namespace FrEee.Modding
 		{
 			get;
 			private set;
+		}
+
+		public Formula<int> this[Resource r]
+		{
+			get { return this[r.Name]; }
+			set { this[r.Name] = value; }
 		}
 	}		
 }
