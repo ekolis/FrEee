@@ -161,7 +161,7 @@ namespace FrEee.Game.Setup
 			{
 				int result = 0;
 				foreach (var t in PrimaryRace.Traits)
-					result += t.Cost;
+					result += t.Cost.Value;
 				result += PrimaryRace.Aptitudes.Sum(kvp => Aptitude.All.FindByName(kvp.Key).GetCost(kvp.Value));
 				return result;
 			}
