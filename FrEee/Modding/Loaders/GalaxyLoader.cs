@@ -105,10 +105,10 @@ namespace FrEee.Modding.Loaders
 					start++;
 
 					// silly Adamant Mod refers to the same star system type twice...
-					if (galtemp.StarSystemTemplateChances.ContainsKey(sst))
-						galtemp.StarSystemTemplateChances[sst] += chance;
+					if (galtemp.StarSystemTemplateChancesByName.ContainsKey(sst.Name))
+						galtemp.StarSystemTemplateChancesByName[sst.Name] += chance;
 					else
-						galtemp.StarSystemTemplateChances.Add(sst, chance);
+						galtemp.StarSystemTemplateChancesByName.Add(sst.Name, chance);
 
 
 					count++;

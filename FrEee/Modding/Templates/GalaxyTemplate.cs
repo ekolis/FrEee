@@ -23,7 +23,7 @@ namespace FrEee.Modding.Templates
 	{
 		public GalaxyTemplate()
 		{
-			StarSystemTemplateChances = new Dictionary<StarSystemTemplate, int>();
+			StarSystemTemplateChancesByName = new Dictionary<string, int>();
 		}
 
 		/// <summary>
@@ -60,7 +60,20 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// Chances for each type of star system to appear.
 		/// </summary>
-		public IDictionary<StarSystemTemplate, int> StarSystemTemplateChances { get; set; }
+		public IDictionary<string, int> StarSystemTemplateChancesByName { get; set; }
+
+		/// <summary>
+		/// Chances for each type of star system to appear.
+		/// </summary>
+		public IEnumerable<KeyValuePair<StarSystemTemplate, int>> StarSystemTemplateChances
+		{
+			get
+			{
+				return StarSystemTemplateChancesByName.Select(kvp => new KeyValuePair<StarSystemTemplate, int>(
+					Mod.Current.StarSystemTemplates.FindByName(kvp.Key),
+					kvp.Value));
+			}
+		}
 
 		/// <summary>
 		/// Setup parameters for the game.
