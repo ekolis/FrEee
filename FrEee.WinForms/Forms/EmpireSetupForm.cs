@@ -298,7 +298,7 @@ namespace FrEee.WinForms.Forms
 			{
 				int result = 0;
 				foreach (var t in raceTraitPicker.CheckedTraits)
-					result += t.Cost;
+					result += t.Cost.Value;
 				result += aptitudePicker.Cost;
 				return result;
 			}
