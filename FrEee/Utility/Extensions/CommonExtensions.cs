@@ -536,7 +536,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, int>> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			var num = RandomHelper.Next(total);
@@ -559,7 +559,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, long> src)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, long>> src)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			var num = RandomHelper.Next(total);
@@ -579,7 +579,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, double> src)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, double>> src)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			var num = RandomHelper.Next(total);
