@@ -10,7 +10,7 @@ namespace FrEee.Utility
 	/// Quantities of resources.
 	/// </summary>
 	[Serializable]
-	public class ResourceQuantity : NamedDictionary<Resource, int>, IComparable<ResourceQuantity>, IComparable
+	public class ResourceQuantity : SafeDictionary<string, int>, IComparable<ResourceQuantity>, IComparable
 	{
 		public static ResourceQuantity operator +(ResourceQuantity r1, ResourceQuantity r2)
 		{
@@ -53,7 +53,7 @@ namespace FrEee.Utility
 		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
 		/// </summary>
 		/// <param name="item"></param>
-		public override void Add(KeyValuePair<Resource, int> item)
+		public override void Add(KeyValuePair<string, int> item)
 		{
 			Add(item.Key, item.Value);
 		}
@@ -63,9 +63,30 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="key"></param>
 		/// <param name="value"></param>
-		public override void Add(Resource key, int value)
+		public override void Add(string key, int value)
 		{
 			this[key] += value;
+		}
+
+		public int this[Resource r]
+		{
+			get { return this[r.Name]; }
+			set { this[r.Name] = value; }
+		}
+
+		public bool Remove(Resource key)
+		{
+			return base.Remove(key.Name);
+		}
+
+		/// <summary>
+		/// Adds resources. Does not overwrite the existing value, but adds it to the existing value instead.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <param name="value"></param>
+		public void Add(Resource key, int value)
+		{
+			this[key.Name] = value;
 		}
 
 		/// <summary>
@@ -208,7 +229,7 @@ namespace FrEee.Utility
 				var pos = res.IndexOf(" ");
 				var amount = res.Substring(0, pos);
 				var resName = res.Substring(pos + 1);
-				q.Add(Resource.Find(resName), int.Parse(amount));
+				q.Add(resName, int.Parse(amount));
 			}
 			return q;
 		}
