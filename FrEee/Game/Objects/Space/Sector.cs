@@ -18,6 +18,14 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject
 	{
+		/// <summary>
+		/// For serialization
+		/// </summary>
+		public Sector()
+		{
+
+		}
+
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
 			StarSystem = starSystem;
