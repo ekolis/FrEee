@@ -289,7 +289,7 @@ namespace FrEee.WinForms.Forms
 				node.AddItemWithImage(v.Name, v, v.Icon);
 
 			foreach (var kvp in package.Resources.Where(kvp => kvp.Value != 0))
-				node.AddItemWithImage(kvp.Value.ToUnitString(true) + " " + kvp.Key, kvp.Key, kvp.Key.Icon);
+				node.AddItemWithImage(kvp.Value.ToUnitString(true) + " " + kvp.Key, kvp.Key, Resource.Find(kvp.Key).Icon);
 
 			foreach (var kvp in package.Technology)
 				node.AddItemWithImage(kvp.Key.Name + " level " + kvp.Value, kvp.Key, kvp.Key.Icon);
