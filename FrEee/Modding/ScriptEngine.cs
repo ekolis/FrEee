@@ -109,6 +109,8 @@ namespace FrEee.Modding
 			{
 				if (kvp.Value is IReferrable)
 					referrables.Add(kvp.Key, (IReferrable)kvp.Value);
+				else if (kvp.Value == null)
+					genericObjects.Add(kvp.Key, null);
 				else if (kvp.Value != Galaxy.Current)
 					genericObjects.Add(kvp.Key, kvp.Value);
 				// Galaxy.Current is dealt with separately
