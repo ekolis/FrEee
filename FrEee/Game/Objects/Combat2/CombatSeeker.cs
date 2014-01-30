@@ -9,7 +9,7 @@ using FrEee.Modding;
 using FixMath.NET;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Combat2
 {

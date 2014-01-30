@@ -812,6 +812,17 @@ namespace FrEee.Utility.Extensions
 		/// <exception cref="ArgumentException">if i is not from 1 to 26</exception>
 		public static char ToLetter(this int i)
 		{
+			return ToLetter((long)i);
+		}
+
+		/// <summary>
+		/// Gets a capital letter from the English alphabet.
+		/// </summary>
+		/// <param name="i">1 to 26</param>
+		/// <returns>A to Z</returns>
+		/// <exception cref="ArgumentException">if i is not from 1 to 26</exception>
+		public static char ToLetter(this long i)
+		{
 			if (i < 1 || i > 26)
 				throw new ArgumentException("Only 26 letters in the alphabet, can't get letter #" + i + ".", "i");
 			return (char)('A' + i - 1);
@@ -823,6 +834,16 @@ namespace FrEee.Utility.Extensions
 		/// <param name="i"></param>
 		/// <returns></returns>
 		public static string ToRomanNumeral(this int i)
+		{
+			return ToRomanNumeral((long)i);
+		}
+
+		/// <summary>
+		/// Gets a roman numeral.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public static string ToRomanNumeral(this long i)
 		{
 			// do we already know this?
 			if (!RomanNumeralCache.ContainsKey(i))
@@ -866,7 +887,7 @@ namespace FrEee.Utility.Extensions
 			Tuple.Create(1, "I"),
 		};
 
-		private static IDictionary<int, string> RomanNumeralCache = new Dictionary<int, string>();
+		private static IDictionary<long, string> RomanNumeralCache = new Dictionary<long, string>();
 
 		/// <summary>
 		/// Determines if a string can be parsed as an integer.

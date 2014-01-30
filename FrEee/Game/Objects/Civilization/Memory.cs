@@ -1,5 +1,5 @@
 ﻿using FrEee.Game.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections;

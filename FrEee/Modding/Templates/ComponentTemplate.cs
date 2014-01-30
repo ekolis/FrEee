@@ -4,7 +4,7 @@ using System.Drawing;
 using System.Linq;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;

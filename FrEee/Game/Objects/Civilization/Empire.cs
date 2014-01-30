@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Linq;
 using FrEee.Game.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using System.Collections.Generic;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
