@@ -7,7 +7,7 @@ using System.Drawing;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Space

@@ -8,7 +8,7 @@ using FrEee.Utility.Extensions;
 using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;

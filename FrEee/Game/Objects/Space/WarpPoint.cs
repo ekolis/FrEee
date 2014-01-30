@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
 

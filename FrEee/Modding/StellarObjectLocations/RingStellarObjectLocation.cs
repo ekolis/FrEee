@@ -7,7 +7,7 @@ using FrEee;
 using FrEee.Game;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Interfaces;
 

@@ -6,7 +6,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;

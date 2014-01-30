@@ -5,7 +5,7 @@ using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Modding;
 using Tech = FrEee.Game.Objects.Technology.Technology;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
