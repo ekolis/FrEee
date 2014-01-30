@@ -64,20 +64,27 @@ namespace FrEee.Utility
 
 		public static T DeserializeFromString<T>(string s)
 		{
-			var settings = new JsonSerializerSettings();
-			settings.TypeNameHandling = TypeNameHandling.Auto;
-			var resolver = new CustomContractResolver();
-			settings.ContractResolver = resolver;
-			return JsonConvert.DeserializeObject<T>(s, settings);
+			var tw = new MemoryTraceWriter();
+			try
+			{
+				var settings = new JsonSerializerSettings();
+				settings.TypeNameHandling = TypeNameHandling.Auto;
+				settings.TraceWriter = tw;
+				var resolver = new CustomContractResolver();
+				settings.ContractResolver = resolver;
+				return JsonConvert.DeserializeObject<T>(s, settings);
+			}
+			catch
+			{
+				// log JSON trace and rethrow
+				Console.Error.WriteLine(tw);
+				throw;
+			}
 		}
 
 		public static object DeserializeFromString(string s)
 		{
-			var settings = new JsonSerializerSettings();
-			settings.TypeNameHandling = TypeNameHandling.Auto;
-			var resolver = new CustomContractResolver();
-			settings.ContractResolver = resolver;
-			return JsonConvert.DeserializeObject(s, settings);
+			return DeserializeFromString<object>(s);
 		}
 
 		/// <summary>
