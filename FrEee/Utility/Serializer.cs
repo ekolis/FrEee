@@ -66,6 +66,8 @@ namespace FrEee.Utility
 		{
 			var settings = new JsonSerializerSettings();
 			settings.TypeNameHandling = TypeNameHandling.Auto;
+			var resolver = new CustomContractResolver();
+			settings.ContractResolver = resolver;
 			return JsonConvert.DeserializeObject<T>(s, settings);
 		}
 
@@ -73,6 +75,8 @@ namespace FrEee.Utility
 		{
 			var settings = new JsonSerializerSettings();
 			settings.TypeNameHandling = TypeNameHandling.Auto;
+			var resolver = new CustomContractResolver();
+			settings.ContractResolver = resolver;
 			return JsonConvert.DeserializeObject(s, settings);
 		}
 
@@ -86,6 +90,10 @@ namespace FrEee.Utility
 				: base()
 			{
 				DefaultMembersSearchFlags |= BindingFlags.NonPublic; // include non-public members
+
+				// fix hashsets
+				IgnoreSerializableAttribute = true;
+				IgnoreSerializableInterface = true;
 			}
 
 			public CustomContractResolver(bool shareCache)
