@@ -43,17 +43,17 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// For serialization, since JSON.NET can't handle dictionary keys of complex types.
 		/// </summary>
-		public ISet<Tuple<Race, long>> PopulationList
+		public ISet<RacePopulation> PopulationSet
 		{
 			get
 			{
-				return new HashSet<Tuple<Race, long>>(Population.Select(kvp => Tuple.Create(kvp.Key, kvp.Value)));
+				return new HashSet<RacePopulation>(Population.Select(kvp => new RacePopulation(kvp.Key, kvp.Value)));
 			}
 			set
 			{
 				Population.Clear();
-				foreach (var t in value)
-					Population.Add(t.Item1, t.Item2);
+				foreach (var rp in value)
+					Population.Add(rp.Race, rp.Population);
 			}
 		}
 

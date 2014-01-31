@@ -204,6 +204,7 @@
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Memory.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
+    <Compile Include="Game\Objects\Civilization\RacePopulation.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
     <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
