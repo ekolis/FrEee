@@ -84,21 +84,68 @@
           "Aptitudes": {
             "$id": "9",
             "$type": "FrEee.Utility.SafeDictionary`2[[System.String, mscorlib],[System.Int32, mscorlib]], FrEee.Core",
-            "Physical Strength": 100,
-            "Intelligence": 120,
-            "Cunning": 100,
-            "Environmental Resistance": 100,
-            "Reproduction": 100,
-            "Happiness": 100,
-            "Aggressiveness": 100,
-            "Defensiveness": 100,
-            "Political Savvy": 100,
-            "Mining Aptitude": 100,
-            "Farming Aptitude": 100,
-            "Refining Aptitude": 100,
-            "Construction Aptitude": 100,
-            "Repair Aptitude": 100,
-            "Maintenance Aptitude": 100
+            "$values": [
+              {
+                "Key": "Physical Strength",
+                "Value": 100
+              },
+              {
+                "Key": "Intelligence",
+                "Value": 120
+              },
+              {
+                "Key": "Cunning",
+                "Value": 100
+              },
+              {
+                "Key": "Environmental Resistance",
+                "Value": 100
+              },
+              {
+                "Key": "Reproduction",
+                "Value": 100
+              },
+              {
+                "Key": "Happiness",
+                "Value": 100
+              },
+              {
+                "Key": "Aggressiveness",
+                "Value": 100
+              },
+              {
+                "Key": "Defensiveness",
+                "Value": 100
+              },
+              {
+                "Key": "Political Savvy",
+                "Value": 100
+              },
+              {
+                "Key": "Mining Aptitude",
+                "Value": 100
+              },
+              {
+                "Key": "Farming Aptitude",
+                "Value": 100
+              },
+              {
+                "Key": "Refining Aptitude",
+                "Value": 100
+              },
+              {
+                "Key": "Construction Aptitude",
+                "Value": 100
+              },
+              {
+                "Key": "Repair Aptitude",
+                "Value": 100
+              },
+              {
+                "Key": "Maintenance Aptitude",
+                "Value": 100
+              }
+            ]
           },
           "ID": 0,
           "IsDisposed": false

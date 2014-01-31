@@ -37,25 +37,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The population of this colony, by race.
 		/// </summary>
-		[DoNotSerialize]
 		public SafeDictionary<Race, long> Population { get; private set; }
-
-		/// <summary>
-		/// For serialization, since JSON.NET can't handle dictionary keys of complex types.
-		/// </summary>
-		public ISet<RacePopulation> PopulationSet
-		{
-			get
-			{
-				return new HashSet<RacePopulation>(Population.Select(kvp => new RacePopulation(kvp.Key, kvp.Value)));
-			}
-			set
-			{
-				Population.Clear();
-				foreach (var rp in value)
-					Population.Add(rp.Race, rp.Population);
-			}
-		}
 
 		/// <summary>
 		/// This colony's construction queue.
