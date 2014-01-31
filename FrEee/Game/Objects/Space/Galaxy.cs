@@ -1196,8 +1196,10 @@ namespace FrEee.Game.Objects.Space
 
 		#endregion
 
+		[DoNotSerialize]
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 
+		[DoNotSerialize]
 		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 	}
 }
