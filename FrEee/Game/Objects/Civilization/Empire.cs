@@ -249,10 +249,29 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Technologies that have been researched by this empire and the levels they have been researched to.
 		/// </summary>
-		public NamedDictionary<Technology.Technology, int> ResearchedTechnologies
+		[DoNotSerialize]
+		public NamedDictionary<Tech, int> ResearchedTechnologies
 		{
 			get;
 			internal set;
+		}
+
+		public IDictionary<long, int> ResearchedTechnologiesByID
+		{
+			get
+			{
+				return ResearchedTechnologies.ToDictionary(kvp => kvp.Key.ID, kvp => kvp.Value);
+			}
+			set
+			{
+				ResearchedTechnologies.Clear();
+				foreach (var kvp in value)
+				{
+					var tech = Mod.Current.Technologies.SingleOrDefault(t => t.ID == kvp.Key);
+					if (tech != null) // if it's null, leave it out - can't have null keys
+						ResearchedTechnologies.Add(tech, kvp.Value);
+				}
+			}
 		}
 
 		/// <summary>
@@ -334,6 +353,24 @@ namespace FrEee.Game.Objects.Civilization
 			private set;
 		}
 
+		public IDictionary<long, int> AccumulatedResearchByID
+		{
+			get
+			{
+				return AccumulatedResearch.ToDictionary(kvp => kvp.Key.ID, kvp => kvp.Value);
+			}
+			set
+			{
+				AccumulatedResearch.Clear();
+				foreach (var kvp in value)
+				{
+					var tech = Mod.Current.Technologies.SingleOrDefault(t => t.ID == kvp.Key);
+					if (tech != null) // if it's null, leave it out - can't have null keys
+						AccumulatedResearch.Add(tech, kvp.Value);
+				}
+			}
+		}
+
 		/// <summary>
 		/// Research spending as a percentage of budget.
 		/// </summary>
@@ -341,6 +378,24 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			private set;
+		}
+
+		public IDictionary<long, int> ResearchSpendingByID
+		{
+			get
+			{
+				return ResearchSpending.ToDictionary(kvp => kvp.Key.ID, kvp => kvp.Value);
+			}
+			set
+			{
+				ResearchSpending.Clear();
+				foreach (var kvp in value)
+				{
+					var tech = Mod.Current.Technologies.SingleOrDefault(t => t.ID == kvp.Key);
+					if (tech != null) // if it's null, leave it out - can't have null keys
+						ResearchSpending.Add(tech, kvp.Value);
+				}
+			}
 		}
 
 		/// <summary>

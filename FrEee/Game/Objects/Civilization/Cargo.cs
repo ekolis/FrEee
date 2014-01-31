@@ -25,7 +25,25 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The population stored in cargo.
 		/// </summary>
+		[DoNotSerialize]
 		public SafeDictionary<Race, long> Population { get; set; }
+
+		/// <summary>
+		/// For serialization, since JSON.NET can't handle dictionary keys of complex types.
+		/// </summary>
+		public ISet<Tuple<Race, long>> PopulationList
+		{
+			get
+			{
+				return new HashSet<Tuple<Race, long>>(Population.Select(kvp => Tuple.Create(kvp.Key, kvp.Value)));
+			}
+			set
+			{
+				Population.Clear();
+				foreach (var t in value)
+					Population.Add(t.Item1, t.Item2);
+			}
+		}
 
 		/// <summary>
 		/// The units stored in cargo.
