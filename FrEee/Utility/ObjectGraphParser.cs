@@ -67,10 +67,10 @@ namespace FrEee.Utility
 			if (!type.IsValueType && type != typeof(string))
 				id = context.GetID(o);
 
-			if (!ObjectGraphContext.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
 			{
 				// register type
-				ObjectGraphContext.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
 				context.AddProperties(type);
 			}
 
@@ -183,7 +183,7 @@ namespace FrEee.Utility
 
 		static ObjectGraphContext()
 		{
-			KnownTypes = new List<Type>();
+			KnownTypes = new SafeDictionary<string, Type>();
 			KnownProperties = new SafeDictionary<Type, IEnumerable<PropertyInfo>>();
 			PropertyGetters = new SafeDictionary<PropertyInfo, Delegate>();
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
@@ -192,7 +192,7 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Known data types.
 		/// </summary>
-		public static IList<Type> KnownTypes { get; private set; }
+		public static IDictionary<string, Type> KnownTypes { get; private set; }
 
 		/// <summary>
 		/// Known properties for each object type.
@@ -222,8 +222,8 @@ namespace FrEee.Utility
 		public int Add(object o)
 		{
 			var type = o.GetType();
-			if (!KnownTypes.Contains(type))
-				KnownTypes.Add(type);
+			if (!KnownTypes.ContainsKey(type.AssemblyQualifiedName))
+				KnownTypes.Add(type.AssemblyQualifiedName, type);
 			if (!KnownObjects.ContainsKey(type))
 				KnownObjects.Add(type, new List<object>());
 			KnownObjects[type].Add(o);

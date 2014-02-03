@@ -61,9 +61,9 @@ namespace FrEee.Utility
 			// deal with nulls
 			if (o == null)
 			{
-				if (!ObjectGraphContext.KnownTypes.Contains(desiredType))
+				if (!ObjectGraphContext.KnownTypes.ContainsKey(desiredType.AssemblyQualifiedName))
 				{
-					ObjectGraphContext.KnownTypes.Add(desiredType);
+					ObjectGraphContext.KnownTypes.Add(desiredType.AssemblyQualifiedName, desiredType);
 					context.AddProperties(desiredType);
 				}
 				w.Write(desiredType.AssemblyQualifiedName);
@@ -77,10 +77,10 @@ namespace FrEee.Utility
 			if (!type.IsValueType && type != typeof(string))
 				id = context.GetID(o);
 
-			if (!ObjectGraphContext.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
 			{
 				// register type
-				ObjectGraphContext.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
 				context.AddProperties(type);
 			}
 
@@ -652,19 +652,30 @@ namespace FrEee.Utility
 
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
-			int typeID;
 			Type type;
-			if (int.TryParse(typename, out typeID))
-				type = ObjectGraphContext.KnownTypes[typeID];
-			else
-				type = Type.GetType(typename);
+			type = ObjectGraphContext.KnownTypes[typename];
+			if (type == null)
+			{
+				type = Type.GetType(typename,
+					assemblyName =>
+					{
+						return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == assemblyName.Name);
+					},
+					(assembly, typeName, caseInsensitive) =>
+					{
+						if (caseInsensitive)
+							return assembly.GetTypes().SingleOrDefault(t => t.FullName.Equals(typeName, StringComparison.InvariantCultureIgnoreCase));
+						else
+							return assembly.GetTypes().SingleOrDefault(t => t.FullName == typeName);
+					});
+			}
 			if (type == null)
 				throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");
 
-			if (!ObjectGraphContext.KnownTypes.Contains(type))
+			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
 			{
 				// add to known types
-				ObjectGraphContext.KnownTypes.Add(type);
+				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
 			}
 
 			// check type so we don't bother trying to create an object only to find it's the wrong type later
