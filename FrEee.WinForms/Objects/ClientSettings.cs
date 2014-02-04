@@ -188,6 +188,7 @@ namespace FrEee.WinForms.Objects
 			Instance = new ClientSettings();
 
 			InitializePlanetList();
+			InitializeShipList();
 		}
 
 		private static void InitializePlanetList()
