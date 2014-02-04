@@ -34,6 +34,8 @@ namespace FrEee.WinForms.Controls
 		public void Initialize()
 		{
 			GridConfigs = LoadGridConfigs();
+			if (GridConfigs == null)
+				GridConfigs = ResetGridConfigs();
 			CurrentGridConfig = LoadCurrentGridConfig();
 			BindTabs();
 			BindGrid(true);
