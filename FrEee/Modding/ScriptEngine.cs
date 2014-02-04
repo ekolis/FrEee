@@ -256,7 +256,7 @@ namespace FrEee.Modding
 			}
 			else
 			{
-				imports.Add("import " + Mod.Current.GlobalScript.ModuleName + ";");
+				imports.Add("from " + Mod.Current.GlobalScript.ModuleName + " import *;");
 				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression;
 				sc = new ScriptCode("expression", code, Mod.Current.GlobalScript);
 			}
