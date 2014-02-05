@@ -477,7 +477,7 @@ namespace FrEee.Game.Objects.Vehicles
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			foreach (var emp in Galaxy.Current.Empires)
+			foreach (var emp in Galaxy.Current.Empires.Where(e => e != null))
 				emp.KnownDesigns.Remove(this);
 		}
 
