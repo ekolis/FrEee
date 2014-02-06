@@ -1,0 +1,14 @@
+material KpiImp_frigateMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_FRIG.png
+                filtering trilinear
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+material KpiImp_lightcruiserMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_LCRU.png
+                filtering trilinear
+            }
+        }
+    }
+}

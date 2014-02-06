@@ -556,7 +556,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			bool cont = true; // is combat continuing?
             var renderlocs = new SafeDictionary<CombatNode, Point3d>();
             Console.WriteLine("starting Replay");
-			while (cont && mRoot != null && mRoot.RenderOneFrame())
+			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
 			{
 				physicsstopwatch.Restart();
                 int interpolationcount = 0;
@@ -842,7 +842,11 @@ namespace FrEee.WinForms.MogreCombatRender
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
                 node.Orientation = quat;
             }
-            catch { }
+            catch 
+            {
+                Console.Write("do_graphics broke while rendering object: ");
+                Console.WriteLine(comNode.strID);
+            }
 
 		}
 	}

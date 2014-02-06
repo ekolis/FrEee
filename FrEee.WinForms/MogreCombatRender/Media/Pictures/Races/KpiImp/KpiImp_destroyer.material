@@ -1,0 +1,14 @@
+material KpiImp_destroyerMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_DEST.png
+                filtering trilinear
+            }
+        }
+    }
+}
