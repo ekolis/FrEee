@@ -1,0 +1,14 @@
+material Ngrath_weaponplatformPDX1_-_Default
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Ngrath_WAP.png
+                filtering trilinear
+            }
+        }
+    }
+}

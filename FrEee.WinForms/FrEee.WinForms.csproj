@@ -117,6 +117,7 @@
       <DependentUpon>MogreCombatForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MogreCombatRender\CamaraMan.cs" />
+    <Compile Include="MogreCombatRender\Effects.cs" />
     <Compile Include="MogreCombatRender\MogreFreeMain.cs" />
     <Compile Include="Controls\StarSystemReport.cs">
       <SubType>UserControl</SubType>
@@ -174,6 +175,8 @@
     <Compile Include="Forms\ShipListForm.Designer.cs">
       <DependentUpon>ShipListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MogreCombatRender\ReplayComObjs.cs" />
+    <Compile Include="MogreCombatRender\ShipCfg.cs" />
     <Compile Include="MogreCombatRender\TranslateMogrePhys.cs" />
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">

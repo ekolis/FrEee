@@ -41,6 +41,12 @@ namespace FrEee.WinForms.MogreCombatRender
 		System.Diagnostics.Stopwatch physicsstopwatch = new System.Diagnostics.Stopwatch();
 
 		//Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
+
+        /// <summary>
+        /// dictionary containing meshname, scale, and effects.
+        /// </summary>
+        Dictionary<string,GfxObj> dict_GfxObjects = new Dictionary<string, GfxObj>();
+
 		private Battle_Space battle;
         
         private int SelectedComObj = 1;
@@ -474,46 +480,72 @@ namespace FrEee.WinForms.MogreCombatRender
 
         #endregion
 
-        private void CreateNewEntity(CombatObject obj)
-		{
-			Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
-			SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
-			float sizex = objEnt.BoundingBox.Size.x;
-			float sizey = objEnt.BoundingBox.Size.y;
-			float sizez = objEnt.BoundingBox.Size.z;
-			var desiredSize = (float)System.Math.Pow((double)obj.cmbt_mass, 1d / 3d);
-			float scalex = (desiredSize / sizex);
-			float scaley = (desiredSize / sizey);
-			float scalez = (desiredSize / sizez);
-			float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
-			objNode.AttachObject(objEnt);
-			objNode.Scale(scale, scale, scale);
-			objNode.Scale(10, 10, 10);
-			//do_graphics(obj); // set up initial position and orientation
-            //Entity objEn = mSceneMgr.CreateEntity(
-            //objNode.AttachObject()
+        //private void CreateNewEntity(CombatObject obj)
+        //{
+        //    Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
+        //    SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
+        //    float sizex = objEnt.BoundingBox.Size.x;
+        //    float sizey = objEnt.BoundingBox.Size.y;
+        //    float sizez = objEnt.BoundingBox.Size.z;
+        //    var desiredSize = (float)System.Math.Pow((double)obj.cmbt_mass, 1d / 3d);
+        //    float scalex = (desiredSize / sizex);
+        //    float scaley = (desiredSize / sizey);
+        //    float scalez = (desiredSize / sizez);
+        //    float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
+        //    objNode.AttachObject(objEnt);
+        //    objNode.Scale(scale, scale, scale);
+        //    objNode.Scale(10, 10, 10);
+        //    //do_graphics(obj); // set up initial position and orientation
+        //    //Entity objEn = mSceneMgr.CreateEntity(
+        //    //objNode.AttachObject()
 
-		}
+        //}
 
 
-        private void CreateNewEntity(CombatNode obj)
+        private GfxObj CreateGfxObj(CombatNode ComNode)
         {
-            
+            GfxObj gfxobj = new GfxObj();
+            string filestring;
+            if (ComNode is CombatVehicle)
+            {
+                CombatVehicle cv = (CombatVehicle)ComNode;
+                string path = cv.StartVehicle.Owner.ShipsetPath;
+                string hull = cv.StartVehicle.Hull.
+            }
+            gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<ShipCfg>(filestring);
+
+            return gfxobj; 
+        }
+
+        private void CreateNewEntity(CombatNode ComNode)
+        {
+            GfxObj gfxobj = dict_GfxObjects[ComNode.strID];
             try
             {
-                Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
-                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
-                float sizex = objEnt.BoundingBox.Size.x;
-                float sizey = objEnt.BoundingBox.Size.y;
-                float sizez = objEnt.BoundingBox.Size.z;
-                var desiredSize = 0.5f;
-                float scalex = (desiredSize / sizex);
-                float scaley = (desiredSize / sizey);
-                float scalez = (desiredSize / sizez);
-                float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
+                string meshname = gfxobj.gfxCfg.MainMesh.Name;
+
+
+
+                Entity objEnt = mSceneMgr.CreateEntity(ComNode.strID, meshname);
+                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(ComNode.strID);
                 objNode.AttachObject(objEnt);
-                objNode.Scale(scale, scale, scale);
-                objNode.Scale(10, 10, 10);
+                objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
+
+
+                //Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
+                //SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
+                //float sizex = objEnt.BoundingBox.Size.x;
+                //float sizey = objEnt.BoundingBox.Size.y;
+                //float sizez = objEnt.BoundingBox.Size.z;
+                //var desiredSize = 0.5f;
+                //float scalex = (desiredSize / sizex);
+                //float scaley = (desiredSize / sizey);
+                //float scalez = (desiredSize / sizez);
+                //float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
+                //objNode.AttachObject(objEnt);
+                //objNode.Scale(scale, scale, scale);
+                //objNode.Scale(10, 10, 10);
+                
             }
             catch 
             {
