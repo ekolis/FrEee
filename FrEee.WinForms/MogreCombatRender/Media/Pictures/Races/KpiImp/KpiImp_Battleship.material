@@ -1,0 +1,14 @@
+material KpiImp_BattleshipMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_BATT.png
+                filtering trilinear
+            }
+        }
+    }
+}

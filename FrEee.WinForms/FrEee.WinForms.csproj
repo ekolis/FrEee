@@ -80,11 +80,16 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Mogre">
-      <HintPath>MogreCombatRender\Mogre.dll</HintPath>
+    <Reference Include="Mogre, Version=1.7.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MogreCombatRender\lib\Mogre.dll</HintPath>
     </Reference>
-    <Reference Include="MOIS">
-      <HintPath>MogreCombatRender\MOIS.dll</HintPath>
+    <Reference Include="MOIS, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MogreCombatRender\lib\MOIS.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>MogreCombatRender\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -622,9 +627,6 @@
     <None Include="MogreCombatRender\Media\packs\cubemap.zip" />
     <None Include="MogreCombatRender\Media\packs\skybox.zip" />
     <None Include="MogreCombatRender\Media\Particles\explosion.particle" />
-    <None Include="plugins.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
     <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.Culture.datasource" />
@@ -643,9 +645,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="resources.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FrEee\FrEee.csproj">
@@ -660,32 +659,11 @@
     <Content Include="FrEee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Mogre.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="MogreCombatRender\Media\materials\textures\dirt01.jpg" />
     <Content Include="MogreCombatRender\Media\materials\textures\Fireball.000.png" />
     <Content Include="MogreCombatRender\Media\materials\textures\GreenSkin.jpg" />
     <Content Include="MogreCombatRender\Media\materials\textures\spheremap.png" />
     <Content Include="MogreCombatRender\Media\materials\textures\WeirdEye.png" />
-    <Content Include="MOIS.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="OgreMain.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Plugin_OctreeSceneManager.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Plugin_ParticleFX.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RenderSystem_Direct3D9.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="RenderSystem_GL.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MogreCombatRender\Media\materials\programs\" />
@@ -699,7 +677,11 @@ xcopy "$(ProjectDir)..\FrEee\Docs" "$(TargetDir)Docs\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Scripts" "$(TargetDir)Scripts\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Media" "$(TargetDir)MogreCombatRender\Media\" /y /e /s</PostBuildEvent>
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\lib\Ogrelib\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Ogrecfg\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Media" "$(TargetDir)" /y /e /s
+
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

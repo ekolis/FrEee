@@ -1,0 +1,14 @@
+material KpiImp_colonyshipMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_COLS.png
+                filtering trilinear
+            }
+        }
+    }
+}

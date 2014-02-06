@@ -1,0 +1,44 @@
+material KpiImp_troopMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_troopMaterial2
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_troopMaterial3
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_TROPl.png
+                filtering trilinear
+            }
+        }
+    }
+}
