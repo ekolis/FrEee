@@ -1449,6 +1449,21 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Gets a property value from an object using reflection.
+		/// If the property does not exist or the property value is not IComparable, returns an empty string.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		public static IComparable GetComparablePropertyValue(this object o, string propertyName)
+		{
+			var pval = GetPropertyValue(o, propertyName);
+			if (pval == null || !(pval is IComparable))
+				return "";
+			return (IComparable)pval;
+		}
+
+		/// <summary>
 		/// Sets a property value on an object using reflection.
 		/// </summary>
 		/// <param name="o"></param>
