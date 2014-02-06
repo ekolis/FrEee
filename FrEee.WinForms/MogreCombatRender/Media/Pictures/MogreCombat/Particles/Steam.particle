@@ -1,0 +1,53 @@
+particle_system Examples/Steam
+{
+	material Examples/Smoke
+	particle_width 35.0
+	particle_height 35.0
+	quota 500
+	cull_each true
+	sorted true
+	local_space false
+	iteration_interval 0.0
+	nonvisible_update_timeout 0.0
+	billboard_type point
+	billboard_origin center
+	billboard_rotation_type texcoord
+	point_rendering false
+	accurate_facing false
+
+	emitter Point
+	{
+		position 0.0 15.0 -15.0
+		direction 0.0 1.0 0.0
+		angle 35
+		emission_rate 3.16
+		velocity_min 50
+		velocity_max 80
+		time_to_live_min 4
+		time_to_live_max 4
+		duration_min 0
+		duration_max 0
+		repeat_delay_min 0
+		repeat_delay_max 0
+		colour_range_start 1 1 1 1
+		colour_range_end 1 1 1 1
+	}
+
+	affector ColourImage
+	{
+		image ./Textures/smokecolors3.png
+	}
+
+	affector Rotator
+	{
+		rotation_speed_range_start -60
+		rotation_speed_range_end 200
+		rotation_range_start 0
+		rotation_range_end 360
+	}
+
+	affector Scaler
+	{
+		rate 50
+	}
+}

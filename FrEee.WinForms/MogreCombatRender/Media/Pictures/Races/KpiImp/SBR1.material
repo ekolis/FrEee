@@ -1,0 +1,14 @@
+material SBR1Material1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_SSTA.png
+                filtering trilinear
+            }
+        }
+    }
+}

@@ -1,0 +1,14 @@
+material KpiImp_BaseShipHullMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_DRDN.png
+                filtering trilinear
+            }
+        }
+    }
+}
