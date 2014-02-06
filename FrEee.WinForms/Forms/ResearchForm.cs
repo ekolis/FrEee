@@ -273,7 +273,7 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			if (e.Button == System.Windows.Forms.MouseButtons.Left)
+			if (e.RowIndex >= 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
 				var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
 				TryAddTechToQueue(tech);
