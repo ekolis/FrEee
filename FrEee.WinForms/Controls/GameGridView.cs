@@ -169,13 +169,13 @@ namespace FrEee.WinForms.Controls
 				var gridCol = gridData.Columns.Cast<DataGridViewColumn>().SingleOrDefault(c => c.DataPropertyName == col.PropertyName);
 				if (col.Sort == Sort.Ascending)
 				{
-					sortedData = sortedData.ThenBy(p => p.GetPropertyValue(col.PropertyName));
+					sortedData = sortedData.ThenBy(p => p.GetComparablePropertyValue(col.PropertyName));
 					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
 						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
 				}
 				else if (col.Sort == Sort.Descending)
 				{
-					sortedData = sortedData.ThenByDescending(p => p.GetPropertyValue(col.PropertyName));
+					sortedData = sortedData.ThenByDescending(p => p.GetComparablePropertyValue(col.PropertyName));
 					if (gridCol != null && gridCol.SortMode != DataGridViewColumnSortMode.NotSortable)
 						gridCol.HeaderCell.SortGlyphDirection = SortOrder.Descending;
 				}
