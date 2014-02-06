@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
-    class ShipCfg
+    class GfxCfg
     {
         //public string MainMesh { get; set; }
         public MainMesh_Properties MainMesh { get; set; }

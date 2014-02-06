@@ -9,7 +9,7 @@ using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
-    class ShipEffects
+    class GfxEfx
     {
         /// <summary>
         /// keys: 
@@ -22,7 +22,7 @@ namespace FrEee.WinForms.MogreCombatRender
         /// </summary>
         public Dictionary<string, List<SceneNode>> nodesDict { get; private set;}
 
-        public ShipEffects(SceneManager sceneMgr, GfxObj gfxobj)
+        public GfxEfx(SceneManager sceneMgr, GfxObj gfxobj)
         {
             
             nodesDict = new Dictionary<string,List<SceneNode>>();

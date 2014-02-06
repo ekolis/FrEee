@@ -93,7 +93,6 @@ namespace FrEee.WinForms.MogreCombatRender
             Console.WriteLine("Done");
 		}
 
-
 		#region mogresetup
 
 		protected virtual void CreateCamera()
@@ -204,8 +203,6 @@ namespace FrEee.WinForms.MogreCombatRender
 			mViewport = mRenderWindow.AddViewport(mCamera);
 			mViewport.BackgroundColour = ColourValue.Black;
 			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
-
-
 
 
 			String resourceGroupName = "lines";
@@ -505,29 +502,41 @@ namespace FrEee.WinForms.MogreCombatRender
         private GfxObj CreateGfxObj(CombatNode ComNode)
         {
             GfxObj gfxobj = new GfxObj();
-            string filestring;
+            string filestring = "Default//Delta_Escort.cfg"; //needs to be a proper default shipset. 
             if (ComNode is CombatVehicle)
             {
                 CombatVehicle cv = (CombatVehicle)ComNode;
                 string path = cv.StartVehicle.Owner.ShipsetPath;
-                string hull = cv.StartVehicle.Hull.
-            }
-            gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<ShipCfg>(filestring);
+                IList<string> names = cv.StartVehicle.Hull.PictureNames;
+                bool exsists = false;
+                int i = 0;
+                while (!exsists && i < names.Count)
+                {
+                    string name = path + "_" + names[i] + ".cfg"; //
 
+                    if (System.IO.File.Exists(name))//check path to ensure correct.
+                    {
+                        filestring = name;
+                        exsists = true;
+                    }
+                    i++;
+                }
+            }
+
+            gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(filestring);
+            dict_GfxObjects.Add(ComNode.strID, gfxobj);
             return gfxobj; 
         }
 
-        private void CreateNewEntity(CombatNode ComNode)
+        private void CreateNewEntity(CombatNode comNode)
         {
-            GfxObj gfxobj = dict_GfxObjects[ComNode.strID];
+            GfxObj gfxobj = CreateGfxObj(comNode);
             try
             {
                 string meshname = gfxobj.gfxCfg.MainMesh.Name;
 
-
-
-                Entity objEnt = mSceneMgr.CreateEntity(ComNode.strID, meshname);
-                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(ComNode.strID);
+                Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
+                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
                 objNode.AttachObject(objEnt);
                 objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
 
