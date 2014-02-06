@@ -1,0 +1,14 @@
+material KpiImp_mineMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_Mine.png
+                filtering trilinear
+            }
+        }
+    }
+}

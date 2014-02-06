@@ -1,0 +1,14 @@
+material KpiImp_LightCarrierMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_LXCR.png
+                filtering trilinear
+            }
+        }
+    }
+}
