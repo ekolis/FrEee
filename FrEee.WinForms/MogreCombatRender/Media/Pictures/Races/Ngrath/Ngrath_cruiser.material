@@ -1,0 +1,14 @@
+material Ngrath_cruiserPDX1_-_Default
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Ngrath_CRU.png
+                filtering trilinear
+            }
+        }
+    }
+}

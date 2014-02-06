@@ -5,10 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using SpaceMath;
 using Newtonsoft.Json;
 
-namespace Mogreoids
+namespace FrEee.WinForms.MogreCombatRender
 {
     class ShipCfg
     {

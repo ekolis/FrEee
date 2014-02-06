@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
 using FixMath.NET;
+using FrEee.WinForms;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -128,6 +129,8 @@ namespace FrEee.Game.Objects.Combat2
 		public Fix16 maxfowardThrust { get; set; }
         public Fix16 maxStrafeThrust { get; set; }
         public Fix16 maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
+
+        
 
         #endregion
 
