@@ -502,7 +502,7 @@ namespace FrEee.WinForms.MogreCombatRender
         private GfxObj CreateGfxObj(CombatNode ComNode)
         {
             GfxObj gfxobj = new GfxObj();
-            string filestring = "Default//Delta_Escort.cfg"; //needs to be a proper default shipset. 
+            string filestring = "Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
             if (ComNode is CombatVehicle)
             {
                 CombatVehicle cv = (CombatVehicle)ComNode;
@@ -521,6 +521,14 @@ namespace FrEee.WinForms.MogreCombatRender
                     }
                     i++;
                 }
+            }
+            else if (ComNode is CombatSeeker)
+            {
+                filestring = "Pictures\\MogreCombat\\Projectiles\\Seeker.cfg";
+            }
+            else
+            {
+                filestring = "Pictures\\MogreCombat\\Projectiles\\Sabbot.cfg";
             }
 
             gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(filestring);
@@ -882,6 +890,9 @@ namespace FrEee.WinForms.MogreCombatRender
                 node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
                 node.Orientation = quat;
+
+                //particle effects for this object:
+                dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
             }
             catch 
             {
