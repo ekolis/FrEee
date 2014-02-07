@@ -809,7 +809,7 @@ Can Be Removed        := True
 
 Name                  := Plasma Torpedo
 Group                 := Weapons
-Description           := Slow but powerful plasma torpedo.
+Description           := Powerful quark-gluon plasma torpedo which is highly effective at close range.
 Maximum Level         := 1
 Level Cost            := 10000
 Start Level           := 0

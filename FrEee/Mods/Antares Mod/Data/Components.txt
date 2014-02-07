@@ -580,7 +580,7 @@ Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Engines
 Family                := Star Drive
-Roman Numeral         := 1
+Roman Numeral         := 2
 Custom Group          := 0
 Number of Tech Req    := 1
 Tech Area Req 1       := Nuclear Drive
@@ -607,7 +607,7 @@ Supply Amount Used    := 1
 Restrictions          := None
 General Group         := Weapons
 Family                := Bomb
-Roman Numeral         := 1
+Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Nuclear Bomb
 Tech Level Req        := 1
@@ -641,7 +641,7 @@ Supply Amount Used    := 1
 Restrictions          := None
 General Group         := Weapons
 Family                := Bomb
-Roman Numeral         := 1
+Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Nuclear Bomb
 Tech Level Req        := 1
@@ -672,7 +672,7 @@ Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Engines
 Family                := Star Drive
-Roman Numeral         := 2
+Roman Numeral         := 3
 Custom Group          := 0
 Number of Tech Req    := 1
 Tech Area Req 1       := Fusion Drive
@@ -699,11 +699,11 @@ Supply Amount Used    := 1
 Restrictions          := None
 General Group         := Weapons
 Family                := Bomb
-Roman Numeral         := 1
+Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Fusion Bomb
 Tech Level Req        := 1
-Tech Area Req         := Nuclear Bomb
+Tech Area Req         := Power
 Tech Level Req        := =2 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
@@ -733,11 +733,11 @@ Supply Amount Used    := 1
 Restrictions          := None
 General Group         := Weapons
 Family                := Bomb
-Roman Numeral         := 1
+Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Fusion Bomb
 Tech Level Req        := 1
-Tech Area Req         := Nuclear Bomb
+Tech Area Req         := Power
 Tech Level Req        := =2 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
@@ -790,7 +790,7 @@ Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Engines
 Family                := Star Drive
-Roman Numeral         := 2
+Roman Numeral         := 4
 Custom Group          := 0
 Number of Tech Req    := 1
 Tech Area Req         := Ion Drive
@@ -798,7 +798,7 @@ Tech Level Req        := 1
 Ability Type          := Standard Ship Movement
 Ability Val           := 200
 Ability Type          := Combat Movement
-Ability Val           := 1
+Ability Val           := 2
 Weapon Type           := None
 
 Parameter Name      := level
@@ -843,9 +843,9 @@ Description           := Reserve battery which allows shields to regenerate fast
 Pic Num               := 34
 Tonnage Space Taken   := =miniaturize(10, level)
 Tonnage Structure     := 1
-Tonnage Space Taken   := =miniaturize(10, level)
+Cost Minerals         := =miniaturize(10, level)
 Cost Organics         := 0
-Tonnage Space Taken   := =discount(50, level)
+Cost Radioactives     := =discount(50, level)
 Vehicle Type          := Ship, Base
 Supply Amount Used    := 0
 Restrictions          := None
@@ -861,7 +861,251 @@ Ability Type          := Shield Regeneration
 Ability Val           := 10
 Weapon Type           := None
 
-// TODO - antimatter drive, etc.
+Name                  := Antimatter Drive
+Description           := Drive powered by antimatter annihilation.
+Pic Num               := 10
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 25
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 5
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req         := Antimatter Drive
+Tech Level Req        := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 250
+Ability Type          := Combat Movement
+Ability Val           := 2
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Antimatter Torpedo +' + level.ToString()
+Description           := Torpedo containing an antimatter warhead.
+Pic Num               := 68
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(50, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Weapons
+Family                := Seeking Torpedo
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Antimatter Torpedo
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 25 25 25 25 25 25 25 25 25 25 25 25
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := amtorp.wav
+Weapon Family         := Seeking Torpedo
+Weapon Seeker Speed   := 12
+Weapon Seeker Dmg Res := 5
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Antimatter Bomb +' + level.ToString()
+Description           := Antimatter explosive dropped on planets.
+Pic Num               := 94
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(20, level)
+Vehicle Type          := Ship
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Antimatter Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets
+Weapon Damage At Rng  := 40 15 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Tactical Antimatter Bomb +' + level.ToString()
+Description           := Antimatter explosive dropped on planets or ships by fighters.
+Pic Num               := 94
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(15, level)
+Vehicle Type          := Fighter
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Antimatter Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets, Ships, Bases
+Weapon Damage At Rng  := 40 15 5 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Proton Torpedo +' + level.ToString()
+Description           := High-speed torpedo composed of an unstable element.
+Pic Num               := 254
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(100, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Weapons
+Family                := Direct Fire Torpedo
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Proton Torpedo
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =7 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 40 40 40 40 40 40 40 40 40 40 40 40
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 5
+Weapon Modifier       := +99
+Weapon Sound          := qtorp.wav
+Weapon Family         := Direct Fire Torpedo
+
+Name                  := Hyper Drive
+Description           := Drive powered by hyperspace folding.
+Pic Num               := 25
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 30
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 6
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req         := Hyper Drive
+Tech Level Req        := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 300
+Ability Type          := Combat Movement
+Ability Val           := 3
+Weapon Type           := None
+
+Name                  := Interphased Drive
+Description           := Drive powered by subspace phase manipulation.
+Pic Num               := 26
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 35
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := Star Drive
+Roman Numeral         := 7
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req         := Interphased Drive
+Tech Level Req        := 1
+Ability Type          := Standard Ship Movement
+Ability Val           := 350
+Ability Type          := Combat Movement
+Ability Val           := 3
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Plasma Torpedo +' + level.ToString()
+Description           := Powerful quark-gluon plasma torpedo which is highly effective at close range.
+Pic Num               := 69
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(150, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Weapons
+Family                := Seeking Torpedo
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Plasma Torpedo
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =8 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 120 110 100 90 80 70 60 50 40 30 20 10
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := plastorp.wav
+Weapon Family         := Seeking Torpedo
+Weapon Seeker Speed   := 12
+Weapon Seeker Dmg Res := 5
 
 Name                  := Space Yard I
 Description           := Ship construction component which can work on one ship at a time.
