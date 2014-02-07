@@ -192,12 +192,12 @@ namespace FrEee.WinForms.Forms
 
 		private void btnSpaceSimulator_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, the space combat simulator is not yet implemented.");
+			this.ShowChildForm(new CombatSimulatorForm(false));
 		}
 
 		private void btnGroundSimulator_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Sorry, the ground combat simulator is not yet implemented.");
+			this.ShowChildForm(new CombatSimulatorForm(true));
 		}
 	}
 }
