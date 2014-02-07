@@ -78,5 +78,61 @@ namespace FrEee.WinForms.MogreCombatRender
                 } 
             }
         }
+
+        public void set_effects(CombatNode comNode)
+        {
+            
+            if (comNode is CombatObject)
+            {
+                CombatObject comObj = (CombatObject)comNode;
+                if (comObj.cmbt_thrust.Compass.Degrees < 90 || comObj.cmbt_thrust.Compass.Degrees > 270)
+                {
+                    do_Emmitt("ForwardThrust_Effect", true);
+                    do_Emmitt("ReverseThrust_Effect", false);
+                }
+                else if (comObj.cmbt_thrust.Compass.Degrees > 90 && comObj.cmbt_thrust.Compass.Degrees < 270)
+                {
+                    do_Emmitt("ReverseThrust_Effect", true);
+                    do_Emmitt("ForwardThrust_Effect", false);
+                }
+                else
+                {
+                    do_Emmitt("ReverseThrust_Effect", false);
+                    do_Emmitt("ForwardThrust_Effect", false);
+                }
+
+                if (comObj.cmbt_thrust.Compass.Degrees > 0 && comObj.cmbt_thrust.Compass.Degrees < 180)
+                {
+                    do_Emmitt("StrafeRThrust_Effect", false);
+                    do_Emmitt("StrafeLThrust_Effect", true);
+                }
+                else if (comObj.cmbt_thrust.Compass.Degrees < 360 && comObj.cmbt_thrust.Compass.Degrees > 180)
+                {
+                    do_Emmitt("StrafeRThrust_Effect", true);
+                    do_Emmitt("StrafeLThrust_Effect", false);
+                }
+                else
+                {
+                    do_Emmitt("StrafeRThrust_Effect", false);
+                    do_Emmitt("StrafeLThrust_Effect", false);
+                }
+
+                //if (comObj.Rotating > 0)
+                //{
+                //    do_Emmitt("RotateRThrust_Effect", true);
+                //    do_Emmitt("RotateLThrust_Effect", false);
+                //}
+                //else if (comObj.Rotating < 0)
+                //{
+                //    do_Emmitt("RotateRThrust_Effect", false);
+                //    do_Emmitt("RotateLThrust_Effect", true);
+                //}
+                //else
+                //{
+                //    do_Emmitt("RotateRThrust_Effect", false);
+                //    do_Emmitt("RotateLThrust_Effect", false);
+                //}
+            }
+        }
     }
 }
