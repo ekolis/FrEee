@@ -31,7 +31,7 @@ namespace FrEee.Game.Objects.Commands
 		[DoNotSerialize]
 		public T Executor { get { return executor; } set { executor = value; } }
 
-		private Reference<T> executor { get; set; }
+		protected Reference<T> executor { get; set; }
 
 		public abstract void Execute();
 
