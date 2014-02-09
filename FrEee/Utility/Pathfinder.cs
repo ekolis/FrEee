@@ -78,14 +78,20 @@ namespace FrEee.Utility
 
 		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
 		{
+			// step 2a (do it here so we can return map if start or end is null): empty map with nodes, their costs, and previous-node references
+			var map = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+
+			// if we are nowhere or we're going nowhere, that's impossible!
+			if (start == null || end == null)
+				return map;
+
 			var startSys = start.StarSystem;
 
 			// pathfind!
 			// step 1: empty priority queue with cost to reach each node
 			var queue = new Dictionary<int, ISet<PathfinderNode<Sector>>>();
 
-			// step 2: empty set of previously visited nodes, along with costs and previous-node references
-			var map = new Dictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>>();
+			// step 2b: empty set of previously visited nodes			
 			var visited = new HashSet<Sector>();
 
 			// step 3: add start node and cost
