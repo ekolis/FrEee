@@ -27,8 +27,10 @@ namespace FrEee.Game.Objects.Commands
 		{
 			if (Order == null)
 				Issuer.Log.Add(new GenericLogMessage("The server attempted to remove a null order from " + Executor + ". Perhaps this order was not actually on the server yet; it was just added and removed this past turn. This is probably a game bug."));
-			if (Order.IsNew())
+			else if (Order.IsNew())
 				Issuer.Log.Add(new GenericLogMessage("The server attempted to remove an order from " + Executor + " that was not actually on the server; it was just added and removed this past turn. This is probably a game bug."));
+			else if (Executor == null)
+				Issuer.Log.Add(new GenericLogMessage("On your previous turn, you attempted to remove an order from an object with ID #" + executor.ID + ", but no such object exists. This is probably a game bug."));
 			else if (Issuer == Executor.Owner)
 			{
 				Executor.RemoveOrder(Order);
