@@ -506,13 +506,15 @@ namespace FrEee.WinForms.MogreCombatRender
             if (ComNode is CombatVehicle)
             {
                 CombatVehicle cv = (CombatVehicle)ComNode;
-                string path = cv.StartVehicle.Owner.ShipsetPath;
+                string racename = cv.StartVehicle.Owner.ShipsetPath;        
+                string path = "Pictures\\Races\\";
+                path += racename + "\\";       
                 IList<string> names = cv.StartVehicle.Hull.PictureNames;
                 bool exsists = false;
                 int i = 0;
                 while (!exsists && i < names.Count)
                 {
-                    string name = path + "_" + names[i] + ".cfg"; //
+                    string name = path + racename + "_" + names[i] + ".cfg"; //
 
                     if (System.IO.File.Exists(name))//check path to ensure correct.
                     {

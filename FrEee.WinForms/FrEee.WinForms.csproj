@@ -690,6 +690,7 @@ xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee\Scripts" "$(TargetDir)Scripts\" /y /e /s
 xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\lib\Ogrelib\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\MogrePlugins\*.*" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Ogrecfg\*.*" "$(TargetDir)" /y
 xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Media" "$(TargetDir)" /y /e /s
 
