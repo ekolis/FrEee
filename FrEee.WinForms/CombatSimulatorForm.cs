@@ -1,9 +1,11 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.MogreCombatRender;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -259,7 +261,9 @@ namespace FrEee.WinForms
 				MessageBox.Show("Only space vehicle designs can be added to the vehicle list.");
 				return;
 			}
-			CurrentEmpire.SpaceObjects.Add(new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate()));
+			var v = (SpaceVehicle)dsn.Instantiate();
+			v.Owner = CurrentEmpire.Empire;
+			CurrentEmpire.SpaceObjects.Add(new SimulatedSpaceObject(v));
 			BindSpaceObjectList();
 		}
 
@@ -310,7 +314,14 @@ namespace FrEee.WinForms
 
 		private void btnOK_Click(object sender, EventArgs e)
 		{
-			// TODO - run combat sim
+			// create battle with all our combatants
+			var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
+			
+			// simulate the battle
+			battle.Resolve();
+
+			// show the replay
+			MogreFreeMain replay = new MogreFreeMain(battle);
 		}
 
 		private void lstDesigns_MouseDoubleClick(object sender, MouseEventArgs e)
