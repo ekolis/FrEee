@@ -261,9 +261,12 @@ namespace FrEee.WinForms
 				MessageBox.Show("Only space vehicle designs can be added to the vehicle list.");
 				return;
 			}
-			var v = (SpaceVehicle)dsn.Instantiate();
+
+			// need to set owner *after* copying vehicle!
+			var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
+			var v = (SpaceVehicle)sv.SpaceObject;
 			v.Owner = CurrentEmpire.Empire;
-			CurrentEmpire.SpaceObjects.Add(new SimulatedSpaceObject(v));
+			CurrentEmpire.SpaceObjects.Add(sv);
 			BindSpaceObjectList();
 		}
 

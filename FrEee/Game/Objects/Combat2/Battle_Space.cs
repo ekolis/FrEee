@@ -370,7 +370,7 @@ namespace FrEee.Game.Objects.Combat2
 					}
 				}
 
-				int empindex = EmpiresArray.IndexOf(comObj.WorkingObject.Owner);
+				int empindex = EmpiresArray.IndexOf(comObj.StartVehicle.Owner);
 				comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
 				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
 				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));

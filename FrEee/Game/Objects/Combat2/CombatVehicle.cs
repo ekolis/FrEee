@@ -56,6 +56,7 @@ namespace FrEee.Game.Objects.Combat2
 			ship.IsMemory = true;
 			if (ship.Owner != StartVehicle.Owner)
 				ship.Owner.Dispose(); // don't need extra empires!
+			ship.Owner = StartVehicle.Owner;
 
 			// copy over the components individually so they can take damage without affecting the starting state
 			// TODO - deal with planets in combat
