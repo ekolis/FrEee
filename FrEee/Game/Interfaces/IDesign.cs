@@ -122,6 +122,8 @@ namespace FrEee.Game.Interfaces
 		int Iteration { get; set; }
 
 		IDesign Copy();
+
+		IVehicle Instantiate();
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable where T : IVehicle

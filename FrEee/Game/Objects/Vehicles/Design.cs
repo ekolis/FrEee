@@ -151,6 +151,11 @@ namespace FrEee.Game.Objects.Vehicles
 			return t;
 		}
 
+		IVehicle IDesign.Instantiate()
+		{
+			return Instantiate();
+		}
+
 		public VehicleTypes VehicleType
 		{
 			get
