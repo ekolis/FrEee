@@ -29,58 +29,54 @@
 		private void InitializeComponent()
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.panel6 = new System.Windows.Forms.Panel();
+			this.panel5 = new System.Windows.Forms.Panel();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.chkHideObsolete = new System.Windows.Forms.CheckBox();
 			this.chkForeign = new System.Windows.Forms.CheckBox();
 			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
-			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstDesigns = new System.Windows.Forms.ListView();
-			this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
 			this.lblQuantityUnit = new System.Windows.Forms.Label();
-			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
-			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.panel3 = new System.Windows.Forms.Panel();
-			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstEmpires = new System.Windows.Forms.ListView();
-			this.btnDuplicateEmpire = new FrEee.WinForms.Controls.GameButton();
 			this.panel4 = new System.Windows.Forms.Panel();
-			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
-			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
-			this.listView1 = new System.Windows.Forms.ListView();
-			this.panel5 = new System.Windows.Forms.Panel();
-			this.btnDuplicateVehicle = new FrEee.WinForms.Controls.GameButton();
-			this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
-			this.lstSpaceObjects = new System.Windows.Forms.ListView();
-			this.btnAddVehicle = new FrEee.WinForms.Controls.GameButton();
-			this.btnAddPlanet = new FrEee.WinForms.Controls.GameButton();
-			this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
-			this.btnRemoveVehicle = new FrEee.WinForms.Controls.GameButton();
-			this.panel6 = new System.Windows.Forms.Panel();
+			this.gamePanel6 = new FrEee.WinForms.Controls.GamePanel();
+			this.designReport = new FrEee.WinForms.Controls.DesignReport();
 			this.btnRemoveCargo = new FrEee.WinForms.Controls.GameButton();
 			this.btnAddUnit = new FrEee.WinForms.Controls.GameButton();
 			this.btnDuplicateCargo = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel5 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstCargo = new System.Windows.Forms.ListView();
-			this.gamePanel6 = new FrEee.WinForms.Controls.GamePanel();
-			this.designReport = new FrEee.WinForms.Controls.DesignReport();
-			this.designReport1 = new FrEee.WinForms.Controls.DesignReport();
+			this.btnRemoveSpaceObject = new FrEee.WinForms.Controls.GameButton();
+			this.btnAddPlanet = new FrEee.WinForms.Controls.GameButton();
+			this.btnAddVehicle = new FrEee.WinForms.Controls.GameButton();
+			this.btnDuplicateSpaceObject = new FrEee.WinForms.Controls.GameButton();
+			this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstSpaceObjects = new System.Windows.Forms.ListView();
+			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstDesigns = new System.Windows.Forms.ListView();
+			this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
+			this.btnOK = new FrEee.WinForms.Controls.GameButton();
+			this.btnDuplicateEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
+			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
+			this.lstEmpires = new System.Windows.Forms.ListView();
+			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.tableLayoutPanel1.SuspendLayout();
+			this.panel6.SuspendLayout();
+			this.panel5.SuspendLayout();
 			this.panel2.SuspendLayout();
-			this.gamePanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
-			this.gamePanel2.SuspendLayout();
 			this.panel4.SuspendLayout();
-			this.gamePanel3.SuspendLayout();
-			this.panel5.SuspendLayout();
-			this.gamePanel4.SuspendLayout();
-			this.panel6.SuspendLayout();
-			this.gamePanel5.SuspendLayout();
 			this.gamePanel6.SuspendLayout();
+			this.gamePanel5.SuspendLayout();
+			this.gamePanel4.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
+			this.gamePanel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -110,6 +106,31 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(1098, 654);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
+			// panel6
+			// 
+			this.panel6.Controls.Add(this.btnRemoveCargo);
+			this.panel6.Controls.Add(this.btnAddUnit);
+			this.panel6.Controls.Add(this.btnDuplicateCargo);
+			this.panel6.Controls.Add(this.gamePanel5);
+			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel6.Location = new System.Drawing.Point(714, 431);
+			this.panel6.Name = "panel6";
+			this.panel6.Size = new System.Drawing.Size(381, 196);
+			this.panel6.TabIndex = 22;
+			// 
+			// panel5
+			// 
+			this.panel5.Controls.Add(this.btnRemoveSpaceObject);
+			this.panel5.Controls.Add(this.btnAddPlanet);
+			this.panel5.Controls.Add(this.btnAddVehicle);
+			this.panel5.Controls.Add(this.btnDuplicateSpaceObject);
+			this.panel5.Controls.Add(this.gamePanel4);
+			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel5.Location = new System.Drawing.Point(714, 229);
+			this.panel5.Name = "panel5";
+			this.panel5.Size = new System.Drawing.Size(381, 196);
+			this.panel5.TabIndex = 21;
+			// 
 			// panel2
 			// 
 			this.panel2.Controls.Add(this.chkHideObsolete);
@@ -120,7 +141,7 @@
 			this.panel2.Location = new System.Drawing.Point(3, 27);
 			this.panel2.Name = "panel2";
 			this.tableLayoutPanel1.SetRowSpan(this.panel2, 3);
-			this.panel2.Size = new System.Drawing.Size(380, 597);
+			this.panel2.Size = new System.Drawing.Size(380, 600);
 			this.panel2.TabIndex = 18;
 			// 
 			// chkHideObsolete
@@ -134,6 +155,7 @@
 			this.chkHideObsolete.TabIndex = 8;
 			this.chkHideObsolete.Text = "Hide Obsolete";
 			this.chkHideObsolete.UseVisualStyleBackColor = true;
+			this.chkHideObsolete.CheckedChanged += new System.EventHandler(this.chkHideObsolete_CheckedChanged);
 			// 
 			// chkForeign
 			// 
@@ -144,6 +166,7 @@
 			this.chkForeign.TabIndex = 7;
 			this.chkForeign.Text = "Foreign Designs";
 			this.chkForeign.UseVisualStyleBackColor = true;
+			this.chkForeign.CheckedChanged += new System.EventHandler(this.chkForeign_CheckedChanged);
 			// 
 			// ddlVehicleType
 			// 
@@ -157,48 +180,7 @@
 			this.ddlVehicleType.Size = new System.Drawing.Size(377, 21);
 			this.ddlVehicleType.TabIndex = 6;
 			this.ddlVehicleType.ValueMember = "VehicleTypes";
-			// 
-			// gamePanel1
-			// 
-			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.gamePanel1.BackColor = System.Drawing.Color.Black;
-			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel1.Controls.Add(this.lstDesigns);
-			this.gamePanel1.ForeColor = System.Drawing.Color.White;
-			this.gamePanel1.Location = new System.Drawing.Point(3, 53);
-			this.gamePanel1.Name = "gamePanel1";
-			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(387, 544);
-			this.gamePanel1.TabIndex = 5;
-			// 
-			// lstDesigns
-			// 
-			this.lstDesigns.BackColor = System.Drawing.Color.Black;
-			this.lstDesigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstDesigns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colDesign,
-            this.colTotalCost});
-			this.lstDesigns.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstDesigns.ForeColor = System.Drawing.Color.White;
-			this.lstDesigns.FullRowSelect = true;
-			this.lstDesigns.Location = new System.Drawing.Point(3, 3);
-			this.lstDesigns.Name = "lstDesigns";
-			this.lstDesigns.Size = new System.Drawing.Size(379, 536);
-			this.lstDesigns.TabIndex = 1;
-			this.lstDesigns.UseCompatibleStateImageBehavior = false;
-			this.lstDesigns.View = System.Windows.Forms.View.Details;
-			// 
-			// colDesign
-			// 
-			this.colDesign.Text = "Design";
-			this.colDesign.Width = 125;
-			// 
-			// colTotalCost
-			// 
-			this.colTotalCost.Text = "Cost";
-			this.colTotalCost.Width = 50;
+			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
 			// 
 			// label2
 			// 
@@ -230,10 +212,10 @@
 			this.panel1.Controls.Add(this.btnCancel);
 			this.panel1.Controls.Add(this.btnOK);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(711, 627);
+			this.panel1.Location = new System.Drawing.Point(711, 630);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(387, 27);
+			this.panel1.Size = new System.Drawing.Size(387, 24);
 			this.panel1.TabIndex = 11;
 			// 
 			// lblQuantityUnit
@@ -244,249 +226,55 @@
 			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
 			this.lblQuantityUnit.TabIndex = 2;
 			// 
-			// btnCancel
-			// 
-			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnCancel.BackColor = System.Drawing.Color.Black;
-			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(178, 3);
-			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(100, 21);
-			this.btnCancel.TabIndex = 1;
-			this.btnCancel.Text = "Cancel";
-			this.btnCancel.UseVisualStyleBackColor = false;
-			// 
-			// btnOK
-			// 
-			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOK.BackColor = System.Drawing.Color.Black;
-			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(284, 3);
-			this.btnOK.Name = "btnOK";
-			this.btnOK.Size = new System.Drawing.Size(100, 21);
-			this.btnOK.TabIndex = 0;
-			this.btnOK.Text = "OK";
-			this.btnOK.UseVisualStyleBackColor = false;
-			// 
 			// panel3
 			// 
 			this.panel3.Controls.Add(this.panel4);
-			this.panel3.Controls.Add(this.btnDuplicateEmpire);
 			this.panel3.Controls.Add(this.gamePanel2);
 			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel3.Location = new System.Drawing.Point(714, 27);
 			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(381, 195);
+			this.panel3.Size = new System.Drawing.Size(381, 196);
 			this.panel3.TabIndex = 20;
-			// 
-			// gamePanel2
-			// 
-			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel2.BackColor = System.Drawing.Color.Black;
-			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel2.Controls.Add(this.lstEmpires);
-			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(3, 0);
-			this.gamePanel2.Name = "gamePanel2";
-			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(278, 195);
-			this.gamePanel2.TabIndex = 21;
-			// 
-			// lstEmpires
-			// 
-			this.lstEmpires.BackColor = System.Drawing.Color.Black;
-			this.lstEmpires.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstEmpires.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstEmpires.Location = new System.Drawing.Point(3, 3);
-			this.lstEmpires.Margin = new System.Windows.Forms.Padding(0);
-			this.lstEmpires.Name = "lstEmpires";
-			this.lstEmpires.Size = new System.Drawing.Size(270, 187);
-			this.lstEmpires.TabIndex = 0;
-			this.lstEmpires.UseCompatibleStateImageBehavior = false;
-			this.lstEmpires.View = System.Windows.Forms.View.List;
-			// 
-			// btnDuplicateEmpire
-			// 
-			this.btnDuplicateEmpire.BackColor = System.Drawing.Color.Black;
-			this.btnDuplicateEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDuplicateEmpire.Location = new System.Drawing.Point(293, 0);
-			this.btnDuplicateEmpire.Name = "btnDuplicateEmpire";
-			this.btnDuplicateEmpire.Size = new System.Drawing.Size(97, 24);
-			this.btnDuplicateEmpire.TabIndex = 22;
-			this.btnDuplicateEmpire.Text = "Duplicate";
-			this.btnDuplicateEmpire.UseVisualStyleBackColor = false;
 			// 
 			// panel4
 			// 
+			this.panel4.Controls.Add(this.btnDuplicateEmpire);
 			this.panel4.Controls.Add(this.btnRemoveEmpire);
-			this.panel4.Controls.Add(this.gameButton1);
 			this.panel4.Controls.Add(this.gamePanel3);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panel4.Location = new System.Drawing.Point(0, 0);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(381, 195);
+			this.panel4.Size = new System.Drawing.Size(381, 196);
 			this.panel4.TabIndex = 23;
 			// 
-			// gameButton1
+			// gamePanel6
 			// 
-			this.gameButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.gameButton1.BackColor = System.Drawing.Color.Black;
-			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton1.Location = new System.Drawing.Point(284, 0);
-			this.gameButton1.Name = "gameButton1";
-			this.gameButton1.Size = new System.Drawing.Size(97, 24);
-			this.gameButton1.TabIndex = 22;
-			this.gameButton1.Text = "Duplicate";
-			this.gameButton1.UseVisualStyleBackColor = false;
-			// 
-			// gamePanel3
-			// 
-			this.gamePanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.gamePanel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel3.BackColor = System.Drawing.Color.Black;
-			this.gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel3.Controls.Add(this.listView1);
-			this.gamePanel3.ForeColor = System.Drawing.Color.White;
-			this.gamePanel3.Location = new System.Drawing.Point(3, 0);
-			this.gamePanel3.Name = "gamePanel3";
-			this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel3.Size = new System.Drawing.Size(278, 195);
-			this.gamePanel3.TabIndex = 21;
+			this.gamePanel6.BackColor = System.Drawing.Color.Black;
+			this.gamePanel6.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.tableLayoutPanel1.SetColumnSpan(this.gamePanel6, 2);
+			this.gamePanel6.Controls.Add(this.designReport);
+			this.gamePanel6.ForeColor = System.Drawing.Color.White;
+			this.gamePanel6.Location = new System.Drawing.Point(389, 27);
+			this.gamePanel6.Name = "gamePanel6";
+			this.gamePanel6.Padding = new System.Windows.Forms.Padding(3);
+			this.tableLayoutPanel1.SetRowSpan(this.gamePanel6, 3);
+			this.gamePanel6.Size = new System.Drawing.Size(319, 600);
+			this.gamePanel6.TabIndex = 23;
 			// 
-			// listView1
+			// designReport
 			// 
-			this.listView1.BackColor = System.Drawing.Color.Black;
-			this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.listView1.Location = new System.Drawing.Point(3, 3);
-			this.listView1.Margin = new System.Windows.Forms.Padding(0);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(270, 187);
-			this.listView1.TabIndex = 0;
-			this.listView1.UseCompatibleStateImageBehavior = false;
-			this.listView1.View = System.Windows.Forms.View.List;
-			// 
-			// panel5
-			// 
-			this.panel5.Controls.Add(this.btnRemoveVehicle);
-			this.panel5.Controls.Add(this.btnAddPlanet);
-			this.panel5.Controls.Add(this.btnAddVehicle);
-			this.panel5.Controls.Add(this.btnDuplicateVehicle);
-			this.panel5.Controls.Add(this.gamePanel4);
-			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel5.Location = new System.Drawing.Point(714, 228);
-			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(381, 195);
-			this.panel5.TabIndex = 21;
-			// 
-			// btnDuplicateVehicle
-			// 
-			this.btnDuplicateVehicle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnDuplicateVehicle.BackColor = System.Drawing.Color.Black;
-			this.btnDuplicateVehicle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDuplicateVehicle.Location = new System.Drawing.Point(284, 0);
-			this.btnDuplicateVehicle.Name = "btnDuplicateVehicle";
-			this.btnDuplicateVehicle.Size = new System.Drawing.Size(97, 24);
-			this.btnDuplicateVehicle.TabIndex = 22;
-			this.btnDuplicateVehicle.Text = "Duplicate";
-			this.btnDuplicateVehicle.UseVisualStyleBackColor = false;
-			// 
-			// gamePanel4
-			// 
-			this.gamePanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel4.BackColor = System.Drawing.Color.Black;
-			this.gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.gamePanel4.Controls.Add(this.lstSpaceObjects);
-			this.gamePanel4.ForeColor = System.Drawing.Color.White;
-			this.gamePanel4.Location = new System.Drawing.Point(3, 0);
-			this.gamePanel4.Name = "gamePanel4";
-			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel4.Size = new System.Drawing.Size(278, 195);
-			this.gamePanel4.TabIndex = 21;
-			// 
-			// lstSpaceObjects
-			// 
-			this.lstSpaceObjects.BackColor = System.Drawing.Color.Black;
-			this.lstSpaceObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.lstSpaceObjects.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lstSpaceObjects.Location = new System.Drawing.Point(3, 3);
-			this.lstSpaceObjects.Margin = new System.Windows.Forms.Padding(0);
-			this.lstSpaceObjects.Name = "lstSpaceObjects";
-			this.lstSpaceObjects.Size = new System.Drawing.Size(270, 187);
-			this.lstSpaceObjects.TabIndex = 0;
-			this.lstSpaceObjects.UseCompatibleStateImageBehavior = false;
-			this.lstSpaceObjects.View = System.Windows.Forms.View.List;
-			// 
-			// btnAddVehicle
-			// 
-			this.btnAddVehicle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAddVehicle.BackColor = System.Drawing.Color.Black;
-			this.btnAddVehicle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnAddVehicle.Location = new System.Drawing.Point(284, 30);
-			this.btnAddVehicle.Name = "btnAddVehicle";
-			this.btnAddVehicle.Size = new System.Drawing.Size(97, 24);
-			this.btnAddVehicle.TabIndex = 23;
-			this.btnAddVehicle.Text = "Add Vehicle";
-			this.btnAddVehicle.UseVisualStyleBackColor = false;
-			// 
-			// btnAddPlanet
-			// 
-			this.btnAddPlanet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnAddPlanet.BackColor = System.Drawing.Color.Black;
-			this.btnAddPlanet.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnAddPlanet.Location = new System.Drawing.Point(284, 60);
-			this.btnAddPlanet.Name = "btnAddPlanet";
-			this.btnAddPlanet.Size = new System.Drawing.Size(97, 24);
-			this.btnAddPlanet.TabIndex = 24;
-			this.btnAddPlanet.Text = "Add Planet";
-			this.btnAddPlanet.UseVisualStyleBackColor = false;
-			// 
-			// btnRemoveEmpire
-			// 
-			this.btnRemoveEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRemoveEmpire.BackColor = System.Drawing.Color.Black;
-			this.btnRemoveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRemoveEmpire.Location = new System.Drawing.Point(284, 30);
-			this.btnRemoveEmpire.Name = "btnRemoveEmpire";
-			this.btnRemoveEmpire.Size = new System.Drawing.Size(97, 24);
-			this.btnRemoveEmpire.TabIndex = 23;
-			this.btnRemoveEmpire.Text = "Remove";
-			this.btnRemoveEmpire.UseVisualStyleBackColor = false;
-			// 
-			// btnRemoveVehicle
-			// 
-			this.btnRemoveVehicle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRemoveVehicle.BackColor = System.Drawing.Color.Black;
-			this.btnRemoveVehicle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRemoveVehicle.Location = new System.Drawing.Point(284, 90);
-			this.btnRemoveVehicle.Name = "btnRemoveVehicle";
-			this.btnRemoveVehicle.Size = new System.Drawing.Size(97, 24);
-			this.btnRemoveVehicle.TabIndex = 25;
-			this.btnRemoveVehicle.Text = "Remove";
-			this.btnRemoveVehicle.UseVisualStyleBackColor = false;
-			// 
-			// panel6
-			// 
-			this.panel6.Controls.Add(this.btnRemoveCargo);
-			this.panel6.Controls.Add(this.btnAddUnit);
-			this.panel6.Controls.Add(this.btnDuplicateCargo);
-			this.panel6.Controls.Add(this.gamePanel5);
-			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel6.Location = new System.Drawing.Point(714, 429);
-			this.panel6.Name = "panel6";
-			this.panel6.Size = new System.Drawing.Size(381, 195);
-			this.panel6.TabIndex = 22;
+			this.designReport.BackColor = System.Drawing.Color.Black;
+			this.designReport.Design = null;
+			this.designReport.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.designReport.ForeColor = System.Drawing.Color.White;
+			this.designReport.Location = new System.Drawing.Point(3, 3);
+			this.designReport.Name = "designReport";
+			this.designReport.Size = new System.Drawing.Size(317, 414);
+			this.designReport.TabIndex = 1;
 			// 
 			// btnRemoveCargo
 			// 
@@ -499,6 +287,7 @@
 			this.btnRemoveCargo.TabIndex = 25;
 			this.btnRemoveCargo.Text = "Remove";
 			this.btnRemoveCargo.UseVisualStyleBackColor = false;
+			this.btnRemoveCargo.Click += new System.EventHandler(this.btnRemoveCargo_Click);
 			// 
 			// btnAddUnit
 			// 
@@ -511,6 +300,7 @@
 			this.btnAddUnit.TabIndex = 23;
 			this.btnAddUnit.Text = "Add Unit";
 			this.btnAddUnit.UseVisualStyleBackColor = false;
+			this.btnAddUnit.Click += new System.EventHandler(this.btnAddUnit_Click);
 			// 
 			// btnDuplicateCargo
 			// 
@@ -523,6 +313,7 @@
 			this.btnDuplicateCargo.TabIndex = 22;
 			this.btnDuplicateCargo.Text = "Duplicate";
 			this.btnDuplicateCargo.UseVisualStyleBackColor = false;
+			this.btnDuplicateCargo.Click += new System.EventHandler(this.btnDuplicateCargo_Click);
 			// 
 			// gamePanel5
 			// 
@@ -537,7 +328,7 @@
 			this.gamePanel5.Location = new System.Drawing.Point(3, 0);
 			this.gamePanel5.Name = "gamePanel5";
 			this.gamePanel5.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel5.Size = new System.Drawing.Size(278, 195);
+			this.gamePanel5.Size = new System.Drawing.Size(278, 196);
 			this.gamePanel5.TabIndex = 21;
 			// 
 			// lstCargo
@@ -545,54 +336,244 @@
 			this.lstCargo.BackColor = System.Drawing.Color.Black;
 			this.lstCargo.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.lstCargo.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstCargo.ForeColor = System.Drawing.Color.White;
+			this.lstCargo.HideSelection = false;
 			this.lstCargo.Location = new System.Drawing.Point(3, 3);
 			this.lstCargo.Margin = new System.Windows.Forms.Padding(0);
 			this.lstCargo.Name = "lstCargo";
-			this.lstCargo.Size = new System.Drawing.Size(270, 187);
+			this.lstCargo.Size = new System.Drawing.Size(270, 188);
 			this.lstCargo.TabIndex = 0;
 			this.lstCargo.UseCompatibleStateImageBehavior = false;
 			this.lstCargo.View = System.Windows.Forms.View.List;
 			// 
-			// gamePanel6
+			// btnRemoveSpaceObject
 			// 
-			this.gamePanel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.btnRemoveSpaceObject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRemoveSpaceObject.BackColor = System.Drawing.Color.Black;
+			this.btnRemoveSpaceObject.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRemoveSpaceObject.Location = new System.Drawing.Point(284, 90);
+			this.btnRemoveSpaceObject.Name = "btnRemoveSpaceObject";
+			this.btnRemoveSpaceObject.Size = new System.Drawing.Size(97, 24);
+			this.btnRemoveSpaceObject.TabIndex = 25;
+			this.btnRemoveSpaceObject.Text = "Remove";
+			this.btnRemoveSpaceObject.UseVisualStyleBackColor = false;
+			this.btnRemoveSpaceObject.Click += new System.EventHandler(this.btnRemoveSpaceObject_Click);
+			// 
+			// btnAddPlanet
+			// 
+			this.btnAddPlanet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnAddPlanet.BackColor = System.Drawing.Color.Black;
+			this.btnAddPlanet.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnAddPlanet.Location = new System.Drawing.Point(284, 60);
+			this.btnAddPlanet.Name = "btnAddPlanet";
+			this.btnAddPlanet.Size = new System.Drawing.Size(97, 24);
+			this.btnAddPlanet.TabIndex = 24;
+			this.btnAddPlanet.Text = "Add Planet";
+			this.btnAddPlanet.UseVisualStyleBackColor = false;
+			this.btnAddPlanet.Click += new System.EventHandler(this.btnAddPlanet_Click);
+			// 
+			// btnAddVehicle
+			// 
+			this.btnAddVehicle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnAddVehicle.BackColor = System.Drawing.Color.Black;
+			this.btnAddVehicle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnAddVehicle.Location = new System.Drawing.Point(284, 30);
+			this.btnAddVehicle.Name = "btnAddVehicle";
+			this.btnAddVehicle.Size = new System.Drawing.Size(97, 24);
+			this.btnAddVehicle.TabIndex = 23;
+			this.btnAddVehicle.Text = "Add Vehicle";
+			this.btnAddVehicle.UseVisualStyleBackColor = false;
+			this.btnAddVehicle.Click += new System.EventHandler(this.btnAddVehicle_Click);
+			// 
+			// btnDuplicateSpaceObject
+			// 
+			this.btnDuplicateSpaceObject.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnDuplicateSpaceObject.BackColor = System.Drawing.Color.Black;
+			this.btnDuplicateSpaceObject.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDuplicateSpaceObject.Location = new System.Drawing.Point(284, 0);
+			this.btnDuplicateSpaceObject.Name = "btnDuplicateSpaceObject";
+			this.btnDuplicateSpaceObject.Size = new System.Drawing.Size(97, 24);
+			this.btnDuplicateSpaceObject.TabIndex = 22;
+			this.btnDuplicateSpaceObject.Text = "Duplicate";
+			this.btnDuplicateSpaceObject.UseVisualStyleBackColor = false;
+			this.btnDuplicateSpaceObject.Click += new System.EventHandler(this.btnDuplicateSpaceObject_Click);
+			// 
+			// gamePanel4
+			// 
+			this.gamePanel4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.gamePanel6.BackColor = System.Drawing.Color.Black;
-			this.gamePanel6.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.gamePanel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.tableLayoutPanel1.SetColumnSpan(this.gamePanel6, 2);
-			this.gamePanel6.Controls.Add(this.designReport1);
-			this.gamePanel6.Controls.Add(this.designReport);
-			this.gamePanel6.ForeColor = System.Drawing.Color.White;
-			this.gamePanel6.Location = new System.Drawing.Point(389, 27);
-			this.gamePanel6.Name = "gamePanel6";
-			this.gamePanel6.Padding = new System.Windows.Forms.Padding(3);
-			this.tableLayoutPanel1.SetRowSpan(this.gamePanel6, 3);
-			this.gamePanel6.Size = new System.Drawing.Size(319, 597);
-			this.gamePanel6.TabIndex = 23;
+			this.gamePanel4.BackColor = System.Drawing.Color.Black;
+			this.gamePanel4.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel4.Controls.Add(this.lstSpaceObjects);
+			this.gamePanel4.ForeColor = System.Drawing.Color.White;
+			this.gamePanel4.Location = new System.Drawing.Point(3, 0);
+			this.gamePanel4.Name = "gamePanel4";
+			this.gamePanel4.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel4.Size = new System.Drawing.Size(278, 196);
+			this.gamePanel4.TabIndex = 21;
 			// 
-			// designReport
+			// lstSpaceObjects
 			// 
-			this.designReport.BackColor = System.Drawing.Color.Black;
-			this.designReport.Design = null;
-			this.designReport.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.designReport.ForeColor = System.Drawing.Color.White;
-			this.designReport.Location = new System.Drawing.Point(3, 3);
-			this.designReport.Name = "designReport";
-			this.designReport.Size = new System.Drawing.Size(317, 414);
-			this.designReport.TabIndex = 1;
+			this.lstSpaceObjects.BackColor = System.Drawing.Color.Black;
+			this.lstSpaceObjects.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstSpaceObjects.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstSpaceObjects.ForeColor = System.Drawing.Color.White;
+			this.lstSpaceObjects.HideSelection = false;
+			this.lstSpaceObjects.Location = new System.Drawing.Point(3, 3);
+			this.lstSpaceObjects.Margin = new System.Windows.Forms.Padding(0);
+			this.lstSpaceObjects.Name = "lstSpaceObjects";
+			this.lstSpaceObjects.Size = new System.Drawing.Size(270, 188);
+			this.lstSpaceObjects.TabIndex = 0;
+			this.lstSpaceObjects.UseCompatibleStateImageBehavior = false;
+			this.lstSpaceObjects.View = System.Windows.Forms.View.List;
+			this.lstSpaceObjects.SelectedIndexChanged += new System.EventHandler(this.lstSpaceObjects_SelectedIndexChanged);
 			// 
-			// designReport1
+			// gamePanel1
 			// 
-			this.designReport1.BackColor = System.Drawing.Color.Black;
-			this.designReport1.Design = null;
-			this.designReport1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.designReport1.ForeColor = System.Drawing.Color.White;
-			this.designReport1.Location = new System.Drawing.Point(-62, 90);
-			this.designReport1.Name = "designReport1";
-			this.designReport1.Size = new System.Drawing.Size(317, 414);
-			this.designReport1.TabIndex = 2;
+			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.gamePanel1.BackColor = System.Drawing.Color.Black;
+			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.lstDesigns);
+			this.gamePanel1.ForeColor = System.Drawing.Color.White;
+			this.gamePanel1.Location = new System.Drawing.Point(3, 53);
+			this.gamePanel1.Name = "gamePanel1";
+			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel1.Size = new System.Drawing.Size(387, 547);
+			this.gamePanel1.TabIndex = 5;
+			// 
+			// lstDesigns
+			// 
+			this.lstDesigns.BackColor = System.Drawing.Color.Black;
+			this.lstDesigns.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstDesigns.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colDesign,
+            this.colTotalCost});
+			this.lstDesigns.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstDesigns.ForeColor = System.Drawing.Color.White;
+			this.lstDesigns.FullRowSelect = true;
+			this.lstDesigns.Location = new System.Drawing.Point(3, 3);
+			this.lstDesigns.Name = "lstDesigns";
+			this.lstDesigns.Size = new System.Drawing.Size(379, 539);
+			this.lstDesigns.TabIndex = 1;
+			this.lstDesigns.UseCompatibleStateImageBehavior = false;
+			this.lstDesigns.View = System.Windows.Forms.View.Details;
+			this.lstDesigns.SelectedIndexChanged += new System.EventHandler(this.lstDesigns_SelectedIndexChanged);
+			this.lstDesigns.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lstDesigns_MouseDoubleClick);
+			// 
+			// colDesign
+			// 
+			this.colDesign.Text = "Design";
+			this.colDesign.Width = 125;
+			// 
+			// colTotalCost
+			// 
+			this.colTotalCost.Text = "Cost";
+			this.colTotalCost.Width = 50;
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.BackColor = System.Drawing.Color.Black;
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCancel.Location = new System.Drawing.Point(178, 3);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(100, 18);
+			this.btnCancel.TabIndex = 1;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = false;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// btnOK
+			// 
+			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOK.BackColor = System.Drawing.Color.Black;
+			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOK.Location = new System.Drawing.Point(284, 3);
+			this.btnOK.Name = "btnOK";
+			this.btnOK.Size = new System.Drawing.Size(100, 18);
+			this.btnOK.TabIndex = 0;
+			this.btnOK.Text = "OK";
+			this.btnOK.UseVisualStyleBackColor = false;
+			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+			// 
+			// btnDuplicateEmpire
+			// 
+			this.btnDuplicateEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnDuplicateEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDuplicateEmpire.Location = new System.Drawing.Point(284, 3);
+			this.btnDuplicateEmpire.Name = "btnDuplicateEmpire";
+			this.btnDuplicateEmpire.Size = new System.Drawing.Size(97, 24);
+			this.btnDuplicateEmpire.TabIndex = 24;
+			this.btnDuplicateEmpire.Text = "Duplicate";
+			this.btnDuplicateEmpire.UseVisualStyleBackColor = false;
+			this.btnDuplicateEmpire.Click += new System.EventHandler(this.btnDuplicateEmpire_Click);
+			// 
+			// btnRemoveEmpire
+			// 
+			this.btnRemoveEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRemoveEmpire.BackColor = System.Drawing.Color.Black;
+			this.btnRemoveEmpire.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRemoveEmpire.Location = new System.Drawing.Point(284, 30);
+			this.btnRemoveEmpire.Name = "btnRemoveEmpire";
+			this.btnRemoveEmpire.Size = new System.Drawing.Size(97, 24);
+			this.btnRemoveEmpire.TabIndex = 23;
+			this.btnRemoveEmpire.Text = "Remove";
+			this.btnRemoveEmpire.UseVisualStyleBackColor = false;
+			this.btnRemoveEmpire.Click += new System.EventHandler(this.btnRemoveEmpire_Click);
+			// 
+			// gamePanel3
+			// 
+			this.gamePanel3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gamePanel3.BackColor = System.Drawing.Color.Black;
+			this.gamePanel3.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel3.Controls.Add(this.lstEmpires);
+			this.gamePanel3.ForeColor = System.Drawing.Color.White;
+			this.gamePanel3.Location = new System.Drawing.Point(3, 0);
+			this.gamePanel3.Name = "gamePanel3";
+			this.gamePanel3.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel3.Size = new System.Drawing.Size(278, 196);
+			this.gamePanel3.TabIndex = 21;
+			// 
+			// lstEmpires
+			// 
+			this.lstEmpires.BackColor = System.Drawing.Color.Black;
+			this.lstEmpires.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.lstEmpires.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.lstEmpires.ForeColor = System.Drawing.Color.White;
+			this.lstEmpires.HideSelection = false;
+			this.lstEmpires.Location = new System.Drawing.Point(3, 3);
+			this.lstEmpires.Margin = new System.Windows.Forms.Padding(0);
+			this.lstEmpires.Name = "lstEmpires";
+			this.lstEmpires.Size = new System.Drawing.Size(270, 188);
+			this.lstEmpires.TabIndex = 1;
+			this.lstEmpires.UseCompatibleStateImageBehavior = false;
+			this.lstEmpires.View = System.Windows.Forms.View.List;
+			this.lstEmpires.SelectedIndexChanged += new System.EventHandler(this.lstEmpires_SelectedIndexChanged);
+			// 
+			// gamePanel2
+			// 
+			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gamePanel2.BackColor = System.Drawing.Color.Black;
+			this.gamePanel2.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.gamePanel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel2.ForeColor = System.Drawing.Color.White;
+			this.gamePanel2.Location = new System.Drawing.Point(3, 0);
+			this.gamePanel2.Name = "gamePanel2";
+			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
+			this.gamePanel2.Size = new System.Drawing.Size(278, 196);
+			this.gamePanel2.TabIndex = 21;
 			// 
 			// CombatSimulatorForm
 			// 
@@ -606,20 +587,19 @@
 			this.Text = "Combat Simulator";
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
+			this.panel6.ResumeLayout(false);
+			this.panel5.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
-			this.gamePanel1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel3.ResumeLayout(false);
-			this.gamePanel2.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
-			this.gamePanel3.ResumeLayout(false);
-			this.panel5.ResumeLayout(false);
-			this.gamePanel4.ResumeLayout(false);
-			this.panel6.ResumeLayout(false);
-			this.gamePanel5.ResumeLayout(false);
 			this.gamePanel6.ResumeLayout(false);
+			this.gamePanel5.ResumeLayout(false);
+			this.gamePanel4.ResumeLayout(false);
+			this.gamePanel1.ResumeLayout(false);
+			this.gamePanel3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -643,18 +623,14 @@
 		private System.Windows.Forms.ColumnHeader colTotalCost;
 		private System.Windows.Forms.Panel panel3;
 		private Controls.GamePanel gamePanel2;
-		private System.Windows.Forms.ListView lstEmpires;
-		private Controls.GameButton btnDuplicateEmpire;
 		private System.Windows.Forms.Panel panel5;
 		private Controls.GameButton btnAddVehicle;
-		private Controls.GameButton btnDuplicateVehicle;
+		private Controls.GameButton btnDuplicateSpaceObject;
 		private Controls.GamePanel gamePanel4;
 		private System.Windows.Forms.ListView lstSpaceObjects;
 		private System.Windows.Forms.Panel panel4;
-		private Controls.GameButton gameButton1;
 		private Controls.GamePanel gamePanel3;
-		private System.Windows.Forms.ListView listView1;
-		private Controls.GameButton btnRemoveVehicle;
+		private Controls.GameButton btnRemoveSpaceObject;
 		private Controls.GameButton btnAddPlanet;
 		private Controls.GameButton btnRemoveEmpire;
 		private System.Windows.Forms.Panel panel6;
@@ -665,6 +641,7 @@
 		private System.Windows.Forms.ListView lstCargo;
 		private Controls.GamePanel gamePanel6;
 		private Controls.DesignReport designReport;
-		private Controls.DesignReport designReport1;
+		private System.Windows.Forms.ListView lstEmpires;
+		private Controls.GameButton btnDuplicateEmpire;
 	}
 }

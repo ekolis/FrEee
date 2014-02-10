@@ -62,6 +62,17 @@ namespace FrEee.WinForms.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Is a bound item selected in a listview?
+		/// </summary>
+		/// <param name="lv">The list view.</param>
+		/// <param name="item">A data bound item (NOT a ListViewItem, but its Tag value).</param>
+		/// <returns>true if the item is selected, otherwise false</returns>
+		public static bool HasItemSelected(this ListView lv, object item)
+		{
+			return lv.SelectedItems.Cast<ListViewItem>().Any(i => i.Tag == item);
+		}
+
+		/// <summary>
 		/// Creates image lists for a tree view and clears the items.
 		/// </summary>
 		public static void Initialize(this TreeView tv, int imageSize)
