@@ -87,7 +87,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			{
                 CreateNewEntity(comObj);
 
-                do_graphics(comObj, comObj.cmbt_loc);
+                //do_graphics(comObj, comObj.cmbt_loc);
                 Console.Write(".");
 			}
             Console.WriteLine("Done");
@@ -502,7 +502,7 @@ namespace FrEee.WinForms.MogreCombatRender
         private GfxObj CreateGfxObj(CombatNode ComNode)
         {
             GfxObj gfxobj = new GfxObj();
-            string filestring = "Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
+            string filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
             if (ComNode is CombatVehicle)
             {
                 CombatVehicle cv = (CombatVehicle)ComNode;
@@ -533,7 +533,19 @@ namespace FrEee.WinForms.MogreCombatRender
                 filestring = "Pictures\\MogreCombat\\Projectiles\\Sabbot.cfg";
             }
 
-            gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(filestring);
+            string jsonstring = System.IO.File.ReadAllText(filestring);
+            try
+            {
+                gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(jsonstring);
+            }
+            catch 
+            {
+                Console.Write("Deserialisation failed for obj: ");
+                Console.WriteLine(ComNode.strID);
+                Console.WriteLine("check " + filestring + " for errors");
+            }
+            gfxobj.IDName = ComNode.strID;
+            
             dict_GfxObjects.Add(ComNode.strID, gfxobj);
             return gfxobj; 
         }
@@ -548,6 +560,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
                 SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
                 objNode.AttachObject(objEnt);
+                gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj);
                 objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
 
 
@@ -893,14 +906,24 @@ namespace FrEee.WinForms.MogreCombatRender
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
                 node.Orientation = quat;
 
-                //particle effects for this object:
-                dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
+                try
+                {
+                    //particle effects for this object:
+                    dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
+                }
+                catch 
+                {
+                    Console.Write("do_graphics broke while doing effects for object: ");
+                    Console.WriteLine(comNode.strID);
+                }
+
             }
             catch 
             {
                 Console.Write("do_graphics broke while rendering object: ");
                 Console.WriteLine(comNode.strID);
             }
+
 
 		}
 	}
