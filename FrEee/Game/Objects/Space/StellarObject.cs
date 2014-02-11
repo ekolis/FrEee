@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -147,10 +148,11 @@ namespace FrEee.Game.Objects.Space
 			// You can always scan stellar objects you are in combat with.
 			if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.ActualCombatants.OfType<StellarObject>().Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
 
 			// TODO - cloaking
-			if (this.FindStarSystem() == null)
-				return Visibility.Unknown;
+
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any())
 			{
@@ -164,7 +166,7 @@ namespace FrEee.Game.Objects.Space
 				else
 					return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
+			var scanners = seers.Where(sobj => sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
