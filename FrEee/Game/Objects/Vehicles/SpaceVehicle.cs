@@ -195,13 +195,13 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (emp == Owner)
 				return Visibility.Owned;
-			if (this.FindStarSystem() == null)
+			if (this.FindStarSystem() == null && !IsMemory)
 				return Visibility.Unknown;
 
 			// You can always scan ships you are in combat with.
-			if (Battle.Current.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+			if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
-			if (Battle_Space.Current.Any(b => b.ActualCombatants.Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.ActualCombatants.Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// TODO - cloaking
@@ -216,7 +216,7 @@ namespace FrEee.Game.Objects.Vehicles
 				else
 					return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
+			var scanners = seers.Where(sobj => sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
 			if (scanners.Any())
 				return Visibility.Scanned;
 			return Visibility.Visible;
