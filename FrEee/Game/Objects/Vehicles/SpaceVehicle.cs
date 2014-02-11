@@ -195,14 +195,15 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (emp == Owner)
 				return Visibility.Owned;
-			if (this.FindStarSystem() == null && !IsMemory)
-				return Visibility.Unknown;
-
+		
 			// You can always scan ships you are in combat with.
 			if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.ActualCombatants.Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
+
+			if (this.FindStarSystem() == null)
+				return Visibility.Unknown;
 
 			// TODO - cloaking
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
