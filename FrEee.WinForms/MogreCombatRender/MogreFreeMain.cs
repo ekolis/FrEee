@@ -636,7 +636,8 @@ namespace FrEee.WinForms.MogreCombatRender
 						renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
 						do_graphics(comNode, renderlocs[comNode]);
 					}
-					mRoot.RenderOneFrame();
+					if (mRoot != null)
+						mRoot.RenderOneFrame();
                     interpolationcount++;
 					Application.DoEvents();
 				}
