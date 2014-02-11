@@ -148,7 +148,7 @@ namespace FrEee.Game.Objects.Space
 			// You can always scan stellar objects you are in combat with.
 			if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.ActualCombatants.OfType<StellarObject>().Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.OfType<StellarObject>().Contains(this) || b.ActualCombatants.OfType<StellarObject>().Contains(this)) && b.ActualCombatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// TODO - cloaking

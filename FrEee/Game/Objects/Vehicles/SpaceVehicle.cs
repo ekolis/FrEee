@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Vehicles
 			// You can always scan ships you are in combat with.
 			if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.ActualCombatants.Contains(this) && b.ActualCombatants.Any(c => c.Owner == emp)))
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.ActualCombatants.Contains(this) || b.StartCombatants.Contains(this)) && b.ActualCombatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			if (this.FindStarSystem() == null)

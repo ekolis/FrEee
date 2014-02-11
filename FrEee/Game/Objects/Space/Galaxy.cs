@@ -279,6 +279,11 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.Galaxy; }
 		}
 
+		/// <summary>
+		/// The battles which have taken place this turn.
+		/// </summary>
+		public ICollection<Battle_Space> Battles { get; private set; }
+
 		#endregion
 
 		#region Data Access
@@ -630,6 +635,7 @@ namespace FrEee.Game.Objects.Space
 			Current.didLastTick = false;
 
 			Battle.Previous.Clear();
+			Current.Battles = new HashSet<Battle_Space>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 
 			double progressPerOperation;
