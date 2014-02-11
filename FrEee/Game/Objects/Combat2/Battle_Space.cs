@@ -104,7 +104,6 @@ namespace FrEee.Game.Objects.Combat2
 		static Battle_Space()
 		{
 			Current = new HashSet<Battle_Space>();
-			Previous = new HashSet<Battle_Space>();
 		}
 
 		/// <summary>
@@ -126,7 +125,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// Any battles that have completed this turn.
 		/// </summary>
-		public static ICollection<Battle_Space> Previous { get; private set; }
+		public static ICollection<Battle_Space> Previous { get { return Galaxy.Current.Battles; } }
 
 		/// <summary>
 		/// The sector in which this battle took place.
@@ -931,9 +930,8 @@ namespace FrEee.Game.Objects.Combat2
 
 		public void Dispose()
 		{
-			// hmm, we're not actually STORING these battles anywhere in the galaxy apart from the log messages...
-			Battle_Space.Current.Remove(this);
-			Battle_Space.Previous.Remove(this);
+			Current.Remove(this);
+			Previous.Remove(this);
 			IsDisposed = true;
 		}
 
