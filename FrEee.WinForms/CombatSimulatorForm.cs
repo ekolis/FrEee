@@ -162,7 +162,7 @@ namespace FrEee.WinForms
 		{
 			public SimulatedSpaceObject(ICombatSpaceObject sobj)
 			{
-				SpaceObject = sobj.CopyAndAssignNewID();
+				SpaceObject = sobj;
 				Units = new HashSet<SimulatedUnit>();
 			}
 
@@ -186,7 +186,7 @@ namespace FrEee.WinForms
 		{
 			public SimulatedUnit(IUnit u)
 			{
-				Unit = u.CopyAndAssignNewID();
+				Unit = u;
 			}
 
 			public IUnit Unit { get; private set; }
