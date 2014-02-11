@@ -17,7 +17,7 @@ using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
 {
-	public class Battle_Space : INamed, ILocated, IPictorial
+	public class Battle_Space : INamed, ILocated, IPictorial, IFoggable
 	{
 		/// <summary>
 		/// Standard battlespace constructor.
@@ -874,6 +874,72 @@ namespace FrEee.Game.Objects.Combat2
 		public ITargetable FindActualCombatant(ITargetable c)
 		{
 			return ActualCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+		}
+
+		/// <summary>
+		/// Battles are visible to anyone who has a combatant in them; otherwise they're unknown.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			// TODO - "share combat logs" treaties?
+			return ActualCombatants.Any(c => c.Owner == emp) ? Visibility.Visible : Visibility.Unknown;
+		}
+
+		public void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else
+			{
+				// start combatants are memories but need to be redacted anyway
+				foreach (var memory in StartCombatants)
+					memory.Redact(emp);
+			}
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			// hmm, we're not actually STORING these battles anywhere in the galaxy apart from the log messages...
+			Battle_Space.Current.Remove(this);
+			Battle_Space.Previous.Remove(this);
+			IsDisposed = true;
+		}
+
+		public Empire Owner
+		{
+			get { return null; }
 		}
 	}
 }
