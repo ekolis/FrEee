@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NewtMath.f16;
+
 using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
@@ -339,14 +341,14 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             tOC = 0;
 			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
-			Point3d[] startpoints = new Point3d[EmpiresArray.Count()];
+			PointXd[] startpoints = new PointXd[EmpiresArray.Count()];
 
 			Compass angle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
 
 			for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
 			{
 				Fix16 angleoffset = angle.Radians * (Fix16)i;
-				startpoints[i] = new Point3d(Trig.sides_ab(startrange, angleoffset));
+				startpoints[i] = new PointXd(Trig.sides_ab(startrange, angleoffset));
 			}
 
 			if (!IsReplay)
@@ -370,9 +372,9 @@ namespace FrEee.Game.Objects.Combat2
 				}
 
 				int empindex = EmpiresArray.IndexOf(comObj.StartVehicle.Owner);
-				comObj.cmbt_loc = new Point3d(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + point3d(x,y,z)
-				//thiscomobj.cmbt_face = new Point3d(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
-				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new Point3d(0, 0, 0));
+				comObj.cmbt_loc = new PointXd(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
+				//thiscomobj.cmbt_face = new PointXd(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
+				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new PointXd(0, 0, 0));
 				comObj.cmbt_att = new Compass(0);
 				Fix16 speed = (Fix16)0;
 				if (comObj.WorkingObject is Vehicle)
@@ -482,12 +484,12 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		public Point3d SimNewtonianPhysics(CombatNode comObj)
+		public PointXd SimNewtonianPhysics(CombatNode comObj)
 		{
 			if (comObj is CombatObject)
 			{
 				CombatObject comObjo = (CombatObject)comObj;
-				comObjo.cmbt_accel = (GravMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
+				comObjo.cmbt_accel = (NMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
 				comObj.cmbt_vel += comObjo.cmbt_accel;
 			}
 
@@ -497,7 +499,7 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		public Point3d InterpolatePosition(CombatNode comObj, double fractionalTick)
+		public PointXd InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
@@ -715,7 +717,7 @@ namespace FrEee.Game.Objects.Combat2
 
                     //because bullets don't need to be created during processing
                     Fix16 rThis_distance = (target_event.Location - target_event.fireOnEvent.Location).Length;
-                    Point3d bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
+                    PointXd bulletVector = Trig.intermediatePoint(attacker.cmbt_loc, target_event.Location, rThis_distance);
                     if (!target_event.IsHit) //jitter it!
                     {
                         // TODO - take into account firing ship's accuracy and target's evasion

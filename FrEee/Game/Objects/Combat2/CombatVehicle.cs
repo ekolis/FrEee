@@ -11,6 +11,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
+using NewtMath.f16;
 using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
@@ -18,7 +19,7 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatVehicle : CombatObject
 	{
 		public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed, string IDPrefix = "SHP")
-			: base(working_v, new Point3d(0, 0, 0), new Point3d(0, 0, 0), start_v.ID, IDPrefix)
+			: base(working_v, new PointXd(0, 0, 0), new PointXd(0, 0, 0), start_v.ID, IDPrefix)
 		{
 			cmbt_mass = (Fix16)working_v.Size;
 			maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
@@ -126,17 +127,17 @@ namespace FrEee.Game.Objects.Combat2
 			combatWaypoint wpt = this.waypointTarget;
 			Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 			Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
-			Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+			PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 			//if (comObj.lastVectortoWaypoint != null)
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
 			timetoturn = angletoturn.Radians / this.maxRotate;
 			Fix16 oneEightytime = Fix16.Pi / this.maxRotate;
-			//Point3d offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
-			//Point3d combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
-			//Point3d distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
+			//PointXd offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
+			//PointXd combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
+			//PointXd distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
 			//double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
-			Fix16 closingSpeed = GravMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+			Fix16 closingSpeed = NMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
 
 			Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
 

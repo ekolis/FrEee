@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>FrEeeStrongName.snk</AssemblyOriginatorKeyFile>
@@ -83,6 +83,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="FixMath">
+      <HintPath>Game\Objects\Combat2\lib\FixMath.dll</HintPath>
+    </Reference>
     <Reference Include="IronPython">
       <HintPath>..\packages\IronPython.2.7.4\lib\Net40\IronPython.dll</HintPath>
     </Reference>
@@ -107,8 +110,11 @@
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\packages\IronPython.2.7.4\lib\Net40\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="NewtMath">
+      <HintPath>Game\Objects\Combat2\lib\NewtMath.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>Game\Objects\Combat2\FixedMath\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+      <HintPath>Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -208,18 +214,7 @@
     <Compile Include="Game\Objects\Combat2\CombatSeeker.cs" />
     <Compile Include="Game\Objects\Combat2\CombatVehicle.cs" />
     <Compile Include="Game\Objects\Combat2\CombatWeapon.cs" />
-    <Compile Include="Game\Objects\Combat2\Compass.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16SinLut.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix16Test.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64SinLut.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64TanLut.cs" />
-    <Compile Include="Game\Objects\Combat2\FixedMath\Fix64Tests.cs" />
-    <Compile Include="Game\Objects\Combat2\GravMath.cs" />
-    <Compile Include="Game\Objects\Combat2\Trig.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
-    <Compile Include="Game\Objects\Combat2\Point3d.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
     <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />

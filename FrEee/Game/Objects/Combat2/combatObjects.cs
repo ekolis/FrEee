@@ -11,6 +11,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
+using NewtMath.f16;
 using FixMath.NET;
 using FrEee.WinForms;
 
@@ -34,7 +35,7 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="position"> ship position this is fiired from </param>
         /// <param name="vector">direction this is going</param>
-        public CombatNode(Point3d position, Point3d vector, long ID, string IDPrefix)
+        public CombatNode(PointXd position, PointXd vector, long ID, string IDPrefix)
         {
             this.cmbt_loc = position;
             this.cmbt_vel = vector;
@@ -45,12 +46,12 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// location within the sector
         /// </summary>
-        public Point3d cmbt_loc { get; set; }
+        public PointXd cmbt_loc { get; set; }
 
         /// <summary>
         /// combat velocity
         /// </summary>
-        public Point3d cmbt_vel { get; set; }
+        public PointXd cmbt_vel { get; set; }
 
 
         /// <summary>
@@ -80,14 +81,14 @@ namespace FrEee.Game.Objects.Combat2
 	public class CombatObject : CombatNode
 	{
 
-        public CombatObject(ITargetable workingObject, Point3d position, Point3d vector, long ID, string IDprefix)
+        public CombatObject(ITargetable workingObject, PointXd position, PointXd vector, long ID, string IDprefix)
             : base(position, vector, ID, IDprefix)
         {
 			WorkingObject = workingObject;
             this.waypointTarget = new combatWaypoint();
             weaponTarget = new List<CombatObject>(1); //eventualy this should be something with the multiplex tracking component.
-            this.cmbt_thrust = new Point3d(0, 0, 0);
-            this.cmbt_accel = new Point3d(0, 0, 0);
+            this.cmbt_thrust = new PointXd(0, 0, 0);
+            this.cmbt_accel = new PointXd(0, 0, 0);
 		}
 
         #region fields & properties
@@ -108,18 +109,18 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public Compass cmbt_att { get; set; }
 
-		public Point3d cmbt_thrust { get; set; }
+		public PointXd cmbt_thrust { get; set; }
 
-        public Point3d cmbt_accel { get; set; }
+        public PointXd cmbt_accel { get; set; }
 
 		public Fix16 cmbt_mass { get; set; }
 
-		//public Point3d cmbt_maxThrust { get; set; }
-		//public Point3d cmbt_minThrust { get; set; }
+		//public PointXd cmbt_maxThrust { get; set; }
+		//public PointXd cmbt_minThrust { get; set; }
 
 
 		public combatWaypoint waypointTarget;
-		public Point3d lastVectortoWaypoint { get; set; }
+		public PointXd lastVectortoWaypoint { get; set; }
 		//public double lastDistancetoWaypoint { get; set; }
 
 		public List<CombatObject> weaponTarget { get; set; }
@@ -148,12 +149,12 @@ namespace FrEee.Game.Objects.Combat2
 
         public virtual void renewtoStart() 
         {
-            this.cmbt_loc = new Point3d(0, 0, 0);
-            this.cmbt_vel = new Point3d(0, 0, 0);
+            this.cmbt_loc = new PointXd(0, 0, 0);
+            this.cmbt_vel = new PointXd(0, 0, 0);
             this.cmbt_head = new Compass(0);
             this.cmbt_att = new Compass(0);
-            this.cmbt_thrust = new Point3d(0, 0, 0);
-            this.cmbt_accel = new Point3d(0, 0, 0);
+            this.cmbt_thrust = new PointXd(0, 0, 0);
+            this.cmbt_accel = new PointXd(0, 0, 0);
         }
 
         public string debuginfo = "";
@@ -164,13 +165,13 @@ namespace FrEee.Game.Objects.Combat2
             combatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
             Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
-            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+            PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
-            Fix16[] ttt = GravMath.quadratic(acceleration, startV, distance);
-
+            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);
+            
 
             turnship(angletoturn, angletoWaypoint);
 
@@ -231,20 +232,20 @@ namespace FrEee.Game.Objects.Combat2
                     thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angle.Degrees / (Fix16)0.9));
                 }
 
-                //Point3d fowardthrust = new Point3d(comObj.cmbt_face + thrustby);
-                Point3d fowardthrust = new Point3d(Trig.sides_ab(thrustby, this.cmbt_head.Radians));
+                //PointXd fowardthrust = new PointXd(comObj.cmbt_face + thrustby);
+                PointXd fowardthrust = new PointXd(Trig.sides_ab(thrustby, this.cmbt_head.Radians));
                 this.cmbt_thrust += fowardthrust;
                 
             }
             else
             {
                 //match velocity with waypoint
-                Point3d wayptvel = this.waypointTarget.cmbt_vel;
-                Point3d ourvel = this.cmbt_vel;
+                PointXd wayptvel = this.waypointTarget.cmbt_vel;
+                PointXd ourvel = this.cmbt_vel;
 
                 thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
 
-                Point3d fowardthrust = new Point3d(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
+                PointXd fowardthrust = new PointXd(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
 
             }
 
@@ -277,15 +278,15 @@ namespace FrEee.Game.Objects.Combat2
 	{
 		public combatWaypoint()
 		{
-			this.cmbt_loc = new Point3d(0, 0, 0);
-			this.cmbt_vel = new Point3d(0, 0, 0);
+			this.cmbt_loc = new PointXd(0, 0, 0);
+			this.cmbt_vel = new PointXd(0, 0, 0);
 		}
-		public combatWaypoint(Point3d cmbt_loc)
+		public combatWaypoint(PointXd cmbt_loc)
 		{
 			this.cmbt_loc = cmbt_loc;
-			this.cmbt_vel = new Point3d(0, 0, 0);
+			this.cmbt_vel = new PointXd(0, 0, 0);
 		}
-		public combatWaypoint(Point3d cmbt_loc, Point3d cmbt_vel)
+		public combatWaypoint(PointXd cmbt_loc, PointXd cmbt_vel)
 		{
 			this.cmbt_loc = cmbt_loc;
 			this.cmbt_vel = cmbt_vel;
@@ -300,12 +301,12 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// location within the sector
 		/// </summary>
-		public Point3d cmbt_loc { get; set; }
+		public PointXd cmbt_loc { get; set; }
 
 		/// <summary>
 		/// combat velocity
 		/// </summary>
-		public Point3d cmbt_vel { get; set; }
+		public PointXd cmbt_vel { get; set; }
 
 		/// <summary>
 		/// 

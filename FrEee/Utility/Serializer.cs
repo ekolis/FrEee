@@ -21,6 +21,13 @@ namespace FrEee.Utility
 	/// </summary>
 	public static class Serializer
 	{
+		static Serializer()
+		{
+			ReferencedAssemblies = LoadReferencedAssemblies().ToArray();
+		}
+
+		private static IEnumerable<Assembly> ReferencedAssemblies { get; set; }
+
 		public static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
 		{
 			var sw = new StreamWriter(s);
@@ -642,6 +649,28 @@ namespace FrEee.Utility
 			return o;
 		}
 
+		/// <summary>
+		/// Finds and loads all referenced assemblies from a given root assembly, recursively.
+		/// </summary>
+		/// <param name="rootAssembly">The root assembly. If not specified, Assembly.GetEntryAssembly() will be used.</param>
+		/// <param name="alreadyLoaded">Any already-loaded assemblies. Apparently built-in CLR assemblies are allowed to have circular references?</param>
+		/// <returns></returns>
+		private static IEnumerable<Assembly> LoadReferencedAssemblies(Assembly rootAssembly = null, ISet<Assembly> alreadyLoaded = null)
+		{
+			if (rootAssembly == null)
+				rootAssembly = Assembly.GetEntryAssembly();
+			if (alreadyLoaded == null)
+				alreadyLoaded = new HashSet<Assembly>();
+			alreadyLoaded.Add(rootAssembly);
+			foreach (var subAssemblyName in rootAssembly.GetReferencedAssemblies())
+			{
+				var subAssembly = Assembly.Load(subAssemblyName);
+				if (!alreadyLoaded.Contains(subAssembly))
+					LoadReferencedAssemblies(subAssembly, alreadyLoaded);
+			}
+			return alreadyLoaded;
+		}
+
 		public static object Deserialize(TextReader r, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			// set up our serialization context if we haven't already
@@ -657,10 +686,7 @@ namespace FrEee.Utility
 			if (type == null)
 			{
 				type = Type.GetType(typename,
-					assemblyName =>
-					{
-						return AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == assemblyName.Name);
-					},
+					assemblyName => ReferencedAssemblies.SingleOrDefault(a => a.GetName().Name == assemblyName.Name),
 					(assembly, typeName, caseInsensitive) =>
 					{
 						if (caseInsensitive)
