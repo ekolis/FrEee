@@ -6,17 +6,19 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
+using NewtMath.f16;
 using FixMath.NET;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility;
+
 
 namespace FrEee.Game.Objects.Combat2
 {
     public class CombatSeeker : CombatObject, ITargetable
     {
         public CombatSeeker(CombatObject attacker, CombatWeapon launcher, int ID)
-            : base(null, new Point3d(attacker.cmbt_loc), new Point3d(attacker.cmbt_vel), ID, "SKR")
+            : base(null, new PointXd(attacker.cmbt_loc), new PointXd(attacker.cmbt_vel), ID, "SKR")
         {
 			WorkingObject = this;
             SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)launcher.weapon.Template.ComponentTemplate.WeaponInfo;
@@ -29,8 +31,8 @@ namespace FrEee.Game.Objects.Combat2
             maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)wpnskrEvade * (Fix16)0.1);
             
 
-            cmbt_thrust = new Point3d(0, 0, 0);
-            cmbt_accel = new Point3d(0, 0, 0);
+            cmbt_thrust = new PointXd(0, 0, 0);
+            cmbt_accel = new PointXd(0, 0, 0);
 
             newDice(ID);
 
@@ -157,12 +159,12 @@ namespace FrEee.Game.Objects.Combat2
             combatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
             Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
-            Point3d vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+            PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
-            Fix16[] quad = GravMath.quadratic(acceleration, startV, distance);
+            Fix16[] quad = NMath.quadratic(acceleration, startV, distance);
             Fix16 ttt;
             if (quad[2] == 1)
             {

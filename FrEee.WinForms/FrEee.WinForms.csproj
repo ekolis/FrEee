@@ -80,6 +80,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="FixMath">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\FixMath.dll</HintPath>
+    </Reference>
     <Reference Include="Mogre, Version=1.7.1.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>MogreCombatRender\lib\Mogre.dll</HintPath>
@@ -88,8 +91,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>MogreCombatRender\lib\MOIS.dll</HintPath>
     </Reference>
+    <Reference Include="NewtMath">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\NewtMath.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>MogreCombatRender\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />

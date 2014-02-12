@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using FrEee.WinForms.Forms;
 
+using NewtMath.f16;
 using FixMath.NET;
 using FrEee.Utility;
 
@@ -626,7 +627,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			double cmdfreq_countr = 0;            
 
 			bool cont = true; // is combat continuing?
-            var renderlocs = new SafeDictionary<CombatNode, Point3d>();
+            var renderlocs = new SafeDictionary<CombatNode, PointXd>();
             Console.WriteLine("starting Replay");
 			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
 			{
@@ -669,7 +670,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				foreach (var comObj in battle.CombatObjects.ToArray())
 				{
                     //physicsmove objects. 
-                    Point3d renderloc = battle.SimNewtonianPhysics(comObj);
+                    PointXd renderloc = battle.SimNewtonianPhysics(comObj);
 				}
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
@@ -748,7 +749,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 
 
-        private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, Point3d> renderlocs) 
+        private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, PointXd> renderlocs) 
         {
             var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
             foreach (var comEvent in ourLogs)
@@ -822,7 +823,7 @@ namespace FrEee.WinForms.MogreCombatRender
             }
         }
 
-        private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, Point3d> renderlocs)
+        private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, PointXd> renderlocs)
         {
 
             SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
@@ -864,7 +865,7 @@ namespace FrEee.WinForms.MogreCombatRender
         
         }
 
-        private void do_lines(CombatObject comObj, Point3d renderloc)
+        private void do_lines(CombatObject comObj, PointXd renderloc)
         {
 
             //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
@@ -905,7 +906,7 @@ namespace FrEee.WinForms.MogreCombatRender
             //Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
         }
 
-        private void do_graphics(CombatNode comNode, Point3d renderloc)
+        private void do_graphics(CombatNode comNode, PointXd renderloc)
 		{
             try
             {

@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FrEee.Game.Objects.Combat2;
 
+using NewtMath.f16;
 namespace FrEee.Tests.Game.Objects.Combat2
 {
     [TestClass]
@@ -29,18 +30,18 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //this.waypointTarget = new combatWaypoint();
             //this.weaponTarget = new List<CombatObject>(1);//eventualy this should be something with the multiplex tracking component.
 
-            this.cmbt_thrust = new Point3d(0, 0, 0);
-            this.cmbt_accel = new Point3d(0, 0, 0);
+            this.cmbt_thrust = new PointXd(0, 0, 0);
+            this.cmbt_accel = new PointXd(0, 0, 0);
         }
         /// <summary>
         /// location within the sector
         /// </summary>
-        public Point3d cmbt_loc { get; set; }
+        public PointXd cmbt_loc { get; set; }
 
         /// <summary>
         /// between phys tic locations. 
         /// </summary>
-        public Point3d rndr_loc { get; set; }
+        public PointXd rndr_loc { get; set; }
 
         /// <summary>
         /// facing towards this point
@@ -61,11 +62,11 @@ namespace FrEee.Tests.Game.Objects.Combat2
         /// <summary>
         /// combat velocity
         /// </summary>
-        public Point3d cmbt_vel { get; set; }
+        public PointXd cmbt_vel { get; set; }
 
-        public Point3d cmbt_accel { get; set; }
+        public PointXd cmbt_accel { get; set; }
 
-        public Point3d cmbt_thrust { get; set; }
+        public PointXd cmbt_thrust { get; set; }
 
         public double cmbt_mass { get; set; }
 
