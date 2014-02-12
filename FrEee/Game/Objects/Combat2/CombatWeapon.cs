@@ -11,6 +11,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding;
 
+using NewtMath.f16;
 using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
@@ -207,7 +208,7 @@ namespace FrEee.Game.Objects.Combat2
             //Fix16 baseTimetoTarget = distance_toTarget / startV;
 
             //Fix16 deltaV = baseTimetoTarget
-            Fix16[] ttt = GravMath.quadratic(acceleration, startV, distance_toTarget);
+            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
             Fix16 TimetoTarget;
             if (ttt[2] == 1)
             {
@@ -221,7 +222,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 seekerClosingSpeed_base(CombatObject attacker, CombatObject target)
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + GravMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
             return shotspeed_actual * Battle_Space.TickLength;
         }
 
@@ -242,7 +243,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 boltClosingSpeed(CombatObject attacker, CombatObject target)
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + GravMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
             return shotspeed_actual * Battle_Space.TickLength;
         }
 

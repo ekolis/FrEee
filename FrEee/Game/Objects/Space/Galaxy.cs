@@ -39,6 +39,7 @@ namespace FrEee.Game.Objects.Space
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 			SharedAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
+			Battles = new HashSet<Battle_Space>();
 		}
 
 		public Galaxy(Mod mod)
