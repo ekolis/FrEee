@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using NewtMath.f16;
+
 namespace FrEee.Game.Objects.Combat2
 {
 	public class CombatReplayLog
@@ -50,8 +52,8 @@ namespace FrEee.Game.Objects.Combat2
 
 	public class CombatLocationEvent : CombatEvent
 	{
-		public Point3d Location { get; protected set; }
-		public CombatLocationEvent(int tick, CombatObject obj, Point3d cmbt_loc)
+		public PointXd Location { get; protected set; }
+		public CombatLocationEvent(int tick, CombatObject obj, PointXd cmbt_loc)
 			: base(tick, obj)
 		{
 			this.Location = cmbt_loc;
@@ -71,7 +73,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="loc"></param>
         /// <param name="weapon"></param>
         /// <param name="targetevent">the event for the target ship</param>
-		public CombatFireOnTargetEvent(int tick, CombatObject obj, Point3d loc, CombatWeapon weapon, CombatTakeFireEvent targetevent)
+		public CombatFireOnTargetEvent(int tick, CombatObject obj, PointXd loc, CombatWeapon weapon, CombatTakeFireEvent targetevent)
 			: base(tick, obj, loc)
 		{
 			this.Weapon = weapon;
@@ -90,13 +92,13 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="obj"></param>
         /// <param name="endpoint"></param>
         /// <param name="hit">whether this ship is hit or if the shot is a miss</param>
-		public CombatTakeFireEvent(int tick, CombatObject obj, Point3d endpoint, bool hit)
+		public CombatTakeFireEvent(int tick, CombatObject obj, PointXd endpoint, bool hit)
 			: base(tick, obj, endpoint)
 		{
 			this.IsHit = hit;
 		}
 
-        public void setLocation(Point3d location)
+        public void setLocation(PointXd location)
         {
             base.Location = location;
         }
@@ -107,7 +109,7 @@ namespace FrEee.Game.Objects.Combat2
 
     public class CombatDestructionEvent : CombatLocationEvent
     {
-        public CombatDestructionEvent(int tick, CombatObject obj, Point3d point)
+        public CombatDestructionEvent(int tick, CombatObject obj, PointXd point)
             : base(tick, obj, point)
         {}
     }
