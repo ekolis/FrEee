@@ -114,7 +114,15 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			ConfigFile cf = new ConfigFile();
 			cf.Load("resources.cfg", "\t:=", true);
-            
+
+            foreach (var empire in battle.EmpiresArray)
+            {
+                string racename = empire.ShipsetPath;
+                string path = "Pictures\\Races\\";
+                path += racename + "\\";
+                ResourceGroupManager.Singleton.AddResourceLocation(path, "FileSystem", "General");
+            }
+
 			var section = cf.GetSectionIterator();
 			while (section.MoveNext())
 			{
