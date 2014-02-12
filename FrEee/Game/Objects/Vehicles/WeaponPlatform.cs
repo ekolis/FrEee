@@ -59,8 +59,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (visibility < Visibility.Scanned)
 			{
 				// create fake design and clear component list
-				var d = new Design<SpaceVehicle>();
-				d.Hull = (IHull<SpaceVehicle>)Design.Hull;
+				var d = new Design<WeaponPlatform>();
+				d.Hull = (IHull<WeaponPlatform>)Design.Hull;
 				d.Owner = Design.Owner;
 				Design = d;
 				Components.Clear();
