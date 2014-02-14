@@ -23,10 +23,19 @@ namespace FrEee.Utility
 	{
 		static Serializer()
 		{
-			ReferencedAssemblies = LoadReferencedAssemblies().ToArray();
+			ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
+			ReferencedTypes = new Dictionary<Tuple<Assembly, string>, Type>();
+			foreach (var a in ReferencedAssemblies.Values)
+			{
+				foreach (var t in a.GetTypes())
+				{
+					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
+				}
+			}
 		}
 
-		private static IEnumerable<Assembly> ReferencedAssemblies { get; set; }
+		private static IDictionary<string, Assembly> ReferencedAssemblies { get; set; }
+		private static IDictionary<Tuple<Assembly, string>, Type> ReferencedTypes { get; set; }
 
 		public static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
 		{
@@ -254,7 +263,7 @@ namespace FrEee.Utility
 						};
 						ObjectGraphContext.KnownProperties.Add(itemType, props);
 					}
-					
+
 					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
 					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
 					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
@@ -686,13 +695,13 @@ namespace FrEee.Utility
 			if (type == null)
 			{
 				type = Type.GetType(typename,
-					assemblyName => ReferencedAssemblies.SingleOrDefault(a => a.GetName().Name == assemblyName.Name),
+					assemblyName => ReferencedAssemblies[assemblyName.Name],
 					(assembly, typeName, caseInsensitive) =>
 					{
 						if (caseInsensitive)
-							return assembly.GetTypes().SingleOrDefault(t => t.FullName.Equals(typeName, StringComparison.InvariantCultureIgnoreCase));
+							throw new NotSupportedException("Case insensitive type search is not supported.");
 						else
-							return assembly.GetTypes().SingleOrDefault(t => t.FullName == typeName);
+							return ReferencedTypes[Tuple.Create(assembly, typeName)];
 					});
 			}
 			if (type == null)
