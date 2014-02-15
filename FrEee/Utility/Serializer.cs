@@ -28,9 +28,7 @@ namespace FrEee.Utility
 			foreach (var a in ReferencedAssemblies.Values)
 			{
 				foreach (var t in a.GetTypes())
-				{
 					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
-				}
 			}
 		}
 
@@ -667,7 +665,7 @@ namespace FrEee.Utility
 		private static IEnumerable<Assembly> LoadReferencedAssemblies(Assembly rootAssembly = null, ISet<Assembly> alreadyLoaded = null)
 		{
 			if (rootAssembly == null)
-				rootAssembly = Assembly.GetEntryAssembly();
+				rootAssembly = Assembly.GetExecutingAssembly();
 			if (alreadyLoaded == null)
 				alreadyLoaded = new HashSet<Assembly>();
 			alreadyLoaded.Add(rootAssembly);
