@@ -884,42 +884,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
-                var vlist = Current.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle();
-				//foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle())
-                foreach (var v in vlist)
-				{
-					// mark system explored if not already
-					var sys = v.FindStarSystem();
-					if (sys == null)
-						continue; // space object is dead, or not done being built
-
-					bool didStuff = v.ExecuteOrders();
-					if (!sys.ExploredByEmpires.Contains(v.Owner))
-						sys.ExploredByEmpires.Add(v.Owner);
-
-					// update memory sight after movement
-					if (didStuff)
-					{
-						v.UpdateEmpireMemories();
-						if (v.StarSystem != null && v.Owner != null)
-						{
-							foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v))
-								v.Owner.UpdateMemory(sobj);
-						}
-					}
-
-					// check for battles
-					// TODO - alliances
-					var sector = v.FindSector();
-					if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
-					{
-						// resolve the battle
-						var battle = new Battle_Space(sector);
-						battle.Resolve();
-						foreach (var emp in battle.Empires.Keys)
-							emp.Log.Add(battle.CreateLogMessage(battle.Name));
-					}
-				}
+				Current.MoveShips();
 				Current.CurrentTick += Current.NextTickSize;
 				if (Current.CurrentTick >= 1d)
 				{
@@ -931,6 +896,7 @@ namespace FrEee.Game.Objects.Space
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
+			Current.MoveShips(); // last tick of the turn!
 
 			// construction queues
 			if (status != null)
@@ -1034,6 +1000,45 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			return missingPlrs;
+		}
+
+		private void MoveShips()
+		{
+			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !(sobj is Memory)).Shuffle();
+			foreach (var v in vlist)
+			{
+				// mark system explored if not already
+				var sys = v.FindStarSystem();
+				if (sys == null)
+					continue; // space object is dead, or not done being built
+
+				bool didStuff = v.ExecuteOrders();
+				if (!sys.ExploredByEmpires.Contains(v.Owner))
+					sys.ExploredByEmpires.Add(v.Owner);
+
+				// update memory sight after movement
+				if (didStuff)
+				{
+					v.UpdateEmpireMemories();
+					if (v.StarSystem != null && v.Owner != null)
+					{
+						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v))
+							v.Owner.UpdateMemory(sobj);
+					}
+				}
+
+				// check for battles
+				// TODO - alliances
+				var sector = v.FindSector();
+				if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
+				{
+					// resolve the battle
+					var battle = new Battle_Space(sector);
+					battle.Resolve();
+					foreach (var emp in battle.Empires.Keys)
+						emp.Log.Add(battle.CreateLogMessage(battle.Name));
+				}
+			}
 		}
 
 		/// <summary>
