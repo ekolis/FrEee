@@ -33,10 +33,10 @@ namespace FrEee.WinForms
 			Application.SetCompatibleTextRenderingDefault(false);
 			try
 			{
-				var stdout = File.OpenWrite("stdout.txt");
+				var stdout = new FileStream("stdout.txt", FileMode.Create);
 				var swOut = new StreamWriter(stdout);
 				swOut.AutoFlush = true;
-				//Console.SetOut(swOut);
+				Console.SetOut(swOut);
 			}
 			catch (IOException)
 			{
@@ -44,7 +44,7 @@ namespace FrEee.WinForms
 			}
 			try
 			{
-				var stderr = File.OpenWrite("stderr.txt");
+				var stderr = new FileStream("stderr.txt", FileMode.Create);
 				var swErr = new StreamWriter(stderr);
 				swErr.AutoFlush = true;
 				Console.SetError(swErr);
