@@ -648,7 +648,12 @@ namespace FrEee.Game.Objects.Combat2
 				return null;
 
 			// TODO - check range too
-			var tohit = Mod.Current.Settings.WeaponAccuracyPointBlank + weapon.weapon.Template.WeaponAccuracy + weapon.weapon.Container.Accuracy - target_icomobj.Evasion;
+			var tohit =
+				Mod.Current.Settings.WeaponAccuracyPointBlank // default weapon accuracy at point blank range
+				+ weapon.weapon.Template.WeaponAccuracy // weapon's intrinsic accuracy modifier
+				+ weapon.weapon.Container.Accuracy // firing ship's accuracy modifier
+				- target_icomobj.Evasion // target's evasion modifier
+			    - Sector.GetAbilityValue(target_icomobj.Owner, "Sector - Sensor Interference").ToInt(); // sector evasion modifier
 			// TODO - moddable min/max hit chances with per-weapon overrides
 			if (tohit > 99)
 				tohit = 99;
