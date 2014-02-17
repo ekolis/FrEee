@@ -813,19 +813,16 @@ namespace FrEee.Game.Objects.Combat2
 		{
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
+
+			// TODO - damage to planets and seekers
 			Vehicle targetV = (Vehicle)target.WorkingObject;
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
-			// TODO - worry about damage types, and make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
-
-            damage = target.handleShieldDamage(damage);
-
-            target.handleComponentDamage(damage, damageType, attackersdice);
+			targetV.TakeDamage(damageType, damage, attackersdice);
 
 			if (targetV.IsDestroyed)
 			{
-				//battle.LogTargetDeath(this);
 				targetV.Dispose();
                 target.deathTick = tick;
                 if (!IsReplay)
@@ -844,9 +841,6 @@ namespace FrEee.Game.Objects.Combat2
 						empire.friendly.Remove(target);
 				}
 			}
-
-			// update memory sight
-			targetV.UpdateEmpireMemories();
 		}
 
 
