@@ -206,50 +206,6 @@ namespace FrEee.Game.Objects.Combat2
 
 
 		}
-
-
-		public override int handleShieldDamage(int damage)
-		{
-
-			Vehicle thisV = (Vehicle)WorkingVehicle;
-			int shieldDmg = 0;
-			if (thisV.NormalShields > 0)
-			{
-				var dmg = Math.Min(damage, thisV.NormalShields);
-				thisV.NormalShields -= dmg;
-				damage -= dmg;
-				shieldDmg += dmg;
-			}
-			if (thisV.PhasedShields > 0)
-			{
-				var dmg = Math.Min(damage, thisV.PhasedShields);
-				thisV.NormalShields -= dmg;
-				damage -= dmg;
-				shieldDmg += dmg;
-			}
-			if (shieldDmg > 0)// && battle != null)
-			{
-				//battle.LogShieldDamage(this, shieldDmg);
-			}
-
-			return damage;
-		}
-
-		public override int handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice)
-		{
-			Vehicle thisV = (Vehicle)WorkingVehicle;
-			while (damage > 0 && !thisV.IsDestroyed)
-			{
-				var comps = thisV.Components.Where(c => c.Hitpoints > 0);
-				var armor = comps.Where(c => c.HasAbility("Armor"));
-				var internals = comps.Where(c => !c.HasAbility("Armor"));
-				var canBeHit = armor.Any() ? armor : internals;
-				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(attackersdice);
-
-				damage = comp.TakeDamage(damageType, damage, null);// battle);
-			}
-			return damage;
-		}
 		#endregion
 	}
 }
