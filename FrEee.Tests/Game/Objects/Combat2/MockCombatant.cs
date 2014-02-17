@@ -164,10 +164,25 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			set;
 		}
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
-			NormalShields = MaxNormalShields;
-			PhasedShields = MaxPhasedShields;
+			if (amount == null)
+			{
+				NormalShields = MaxNormalShields;
+				PhasedShields = MaxPhasedShields;
+			}
+			else
+			{
+				PhasedShields += amount.Value;
+				if (PhasedShields > MaxPhasedShields)
+				{
+					var overflow = PhasedShields - MaxPhasedShields;
+					PhasedShields = MaxPhasedShields;
+					NormalShields += overflow;
+					if (NormalShields > MaxNormalShields)
+						NormalShields = MaxNormalShields;
+				}
+			}
 		}
 
 		public int? Repair(int? amount = null)
