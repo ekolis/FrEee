@@ -219,7 +219,9 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			if (this.HasAbility("Scanner Jammer"))
 			{
-				var scanners = seers.Where(sobj => sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= Pathfinder.Pathfind(null, sobj.FindSector(), this.FindSector(), false, false, DijkstraMap).Count());
+				var scanners = seers.Where(sobj =>
+					sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates)
+					|| sobj.HasAbility("Long Range Scanner - System"));
 				if (scanners.Any())
 					return Visibility.Scanned;
 			}
