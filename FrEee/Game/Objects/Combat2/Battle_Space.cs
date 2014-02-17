@@ -653,7 +653,13 @@ namespace FrEee.Game.Objects.Combat2
 				+ weapon.weapon.Template.WeaponAccuracy // weapon's intrinsic accuracy modifier
 				+ weapon.weapon.Container.Accuracy // firing ship's accuracy modifier
 				- target_icomobj.Evasion // target's evasion modifier
-			    - Sector.GetAbilityValue(target_icomobj.Owner, "Sector - Sensor Interference").ToInt(); // sector evasion modifier
+				- Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt() // sector evasion modifier
+				+ Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt() // generic combat bonuses
+				- Sector.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - Sector").ToInt()
+				+ Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt()
+				- Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt()
+				+ attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt()
+				- target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			// TODO - moddable min/max hit chances with per-weapon overrides
 			if (tohit > 99)
 				tohit = 99;
