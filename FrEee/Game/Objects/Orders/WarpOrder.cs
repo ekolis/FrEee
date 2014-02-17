@@ -47,6 +47,21 @@ namespace FrEee.Game.Objects.Orders
 				{
 					// warp now!!!
 					here.Remove(sobj);
+
+					// warp point turbulence damage?
+					if (WarpPoint.HasAbility("Warp Point - Turbulence"))
+					{
+						var dmg = WarpPoint.GetAbilityValue("Warp Point - Turbulence").ToInt();
+						sobj.TakeDamage(new Combat.DamageType(), dmg, null);
+						if (sobj.IsDestroyed)
+						{
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + "."));
+							return;
+						}
+						else
+							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + dmg + " points of damage from turbulence when traversing " + WarpPoint + "."));
+					}
+
 					WarpPoint.Target.Place(sobj);
 					sobj.RefreshDijkstraMap();
 
