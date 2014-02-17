@@ -162,21 +162,14 @@ namespace FrEee.Game.Objects.Technology
 			// do nothing
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Combat.Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// TODO - take into account damage types
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
 			Hitpoints -= realDamage;
 			if (IsDestroyed)
-			{
-				battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage and is destroyed!"));
 				Dispose();
-			}
-			else
-			{
-				battle.Log.Add(this.CreateLogMessage(this + " takes " + realDamage + " points of damage!"));
-			}
 			return damage - realDamage;
 		}
 

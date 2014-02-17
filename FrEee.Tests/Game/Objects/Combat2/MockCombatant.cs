@@ -178,7 +178,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			return amount;
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// TODO - special damage types
 			var dmg = damage;

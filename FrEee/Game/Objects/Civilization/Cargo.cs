@@ -124,7 +124,7 @@ namespace FrEee.Game.Objects.Civilization
 			// do nothing
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			if (Population.Any() && Units.Any())
 			{
@@ -133,60 +133,51 @@ namespace FrEee.Game.Objects.Civilization
 				var coin = RandomHelper.Next(2);
 				int leftover;
 				if (coin == 0)
-					leftover = TakePopulationDamage(dmgType, damage, battle);
+					leftover = TakePopulationDamage(dmgType, damage, dice);
 				else
-					leftover = TakeUnitDamage(dmgType, damage, battle);
+					leftover = TakeUnitDamage(dmgType, damage, dice);
 				if (coin == 0)
-					return TakeUnitDamage(dmgType, leftover, battle);
+					return TakeUnitDamage(dmgType, leftover, dice);
 				else
-					return TakePopulationDamage(dmgType, damage, battle);
+					return TakePopulationDamage(dmgType, damage, dice);
 
 			}
 			else if (Population.Any())
-				return TakePopulationDamage(dmgType, damage, battle);
+				return TakePopulationDamage(dmgType, damage, dice);
 			else if (Units.Any())
-				return TakeUnitDamage(dmgType, damage, battle);
+				return TakeUnitDamage(dmgType, damage, dice);
 			else
 				return damage; // nothing to damage
 		}
 
-		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
+		private int TakePopulationDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
-			var killed = new SafeDictionary<Race, long>();
 			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
 			{
 				// pick a race and kill some population
-				var race = Population.PickWeighted();
+				var race = Population.PickWeighted(dice);
 				if (race == null)
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Population[race] -= popKilled;
-				killed[race] += popKilled;
 				inflicted += 1;
 			}
 			// clear population that was emptied out
 			foreach (var race in Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
 				Population.Remove(race);
-			if (battle != null)
-			{
-				foreach (var race in killed.Keys)
-				{
-					battle.LogPopulationDamage(race, killed[race]);
-				}
-			}
 			return damage - inflicted;
 		}
 
-		private int TakeUnitDamage(DamageType dmgType, int damage, Battle battle)
+		private int TakeUnitDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// units with more HP are more likely to get hit first, like with leaky armor
 			var units = Units.ToDictionary(u => u, u => u.MaxHitpoints);
 			while (units.Any() && damage > 0)
 			{
-				var u = units.PickWeighted();
-				damage = u.TakeDamage(dmgType, damage, battle);
+				var u = units.PickWeighted(dice);
+				damage = u.TakeDamage(dmgType, damage, dice);
 			}
 			return damage;
 		}
