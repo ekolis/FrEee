@@ -166,9 +166,12 @@ namespace FrEee.Game.Objects.Space
 				else
 					return Visibility.Unknown;
 			}
-			var scanners = seers.Where(sobj => sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
-			if (scanners.Any())
-				return Visibility.Scanned;
+			if (this.HasAbility("Scanner Jammer"))
+			{
+				var scanners = seers.Where(sobj => sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates));
+				if (scanners.Any())
+					return Visibility.Scanned;
+			}
 			return Visibility.Visible;
 		}
 
