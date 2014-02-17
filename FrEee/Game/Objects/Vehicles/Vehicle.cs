@@ -164,13 +164,22 @@ namespace FrEee.Game.Objects.Vehicles
 
 			while (damage > 0 && !IsDestroyed)
 			{
+				// save off damage counter for shield generation from damage ability
+				var sgfdStart = damage;
+				var sgfdAbility = this.GetAbilityValue("Shield Generation From Damage").ToInt();
+
 				var comps = Components.Where(c => c.Hitpoints > 0);
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
 				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(dice);
 				damage = comp.TakeDamage(damageType, damage, dice);
+				
+				// shield generation from damage
+				var sgfd = Math.Min(sgfdStart - damage, sgfdAbility);
+				ReplenishShields(sgfd);
 			}
+
 
 			if (IsDestroyed)
 				Dispose();
@@ -263,10 +272,25 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
-			NormalShields = MaxNormalShields;
-			PhasedShields = MaxPhasedShields;
+			if (amount == null)
+			{
+				NormalShields = MaxNormalShields;
+				PhasedShields = MaxPhasedShields;
+			}
+			else
+			{
+				PhasedShields += amount.Value;
+				if (PhasedShields > MaxPhasedShields)
+				{
+					var overflow = PhasedShields - MaxPhasedShields;
+					PhasedShields = MaxPhasedShields;
+					NormalShields += overflow;
+					if (NormalShields > MaxNormalShields)
+						NormalShields = MaxNormalShields;
+				}
+			}
 		}
 
 		public virtual void Dispose()
