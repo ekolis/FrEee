@@ -156,6 +156,12 @@ namespace FrEee.Game.Objects.Vehicles
 				damage -= dmg;
 				shieldDmg += dmg;
 			}
+
+			// emissive armor negates a certain amount of damage that penetrates the shields
+			// TODO - emissive should be ineffective vs. armor piercing damage
+			var emissive = this.GetAbilityValue("Emissive Armor").ToInt();
+			damage -= emissive;
+
 			while (damage > 0 && !IsDestroyed)
 			{
 				var comps = Components.Where(c => c.Hitpoints > 0);
