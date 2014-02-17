@@ -157,7 +157,7 @@ namespace FrEee.Game.Objects.Technology
 			get { return 0; }
 		}
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
 			// do nothing
 		}

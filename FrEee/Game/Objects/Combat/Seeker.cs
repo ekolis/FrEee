@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Combat
 			get { return 0; }
 		}
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
 			// do nothing, seekers don't have shields
 		}
