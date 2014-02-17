@@ -49,7 +49,8 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Replenishes normal and phased shields.
 		/// </summary>
-		void ReplenishShields();
+		/// <param name="amount">How many shields to replenish, or null to replenish all of them.</param>
+		void ReplenishShields(int? amount = null);
 
 		/// <summary>
 		/// Replenishes HP.

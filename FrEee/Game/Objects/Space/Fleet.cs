@@ -219,8 +219,10 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.Sum(sobj => sobj.MaxPhasedShields); }
 		}
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
+			if (amount != null)
+				throw new NotImplementedException("Can't replenish only some of a fleet's shields. Replenish individual ships' shields, or all of the fleet's shields.");
 			foreach (var sobj in Vehicles)
 				sobj.ReplenishShields();
 		}

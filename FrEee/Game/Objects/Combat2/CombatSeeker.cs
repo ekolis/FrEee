@@ -179,7 +179,7 @@ namespace FrEee.Game.Objects.Combat2
             thrustship(angletoturn, true);            
         }
 
-		public void ReplenishShields()
+		public void ReplenishShields(int? amount = null)
 		{
 			// seekers don't have shields
 		}
