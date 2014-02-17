@@ -665,6 +665,8 @@ namespace FrEee.Game.Objects.Combat2
 				tohit = 99;
 			if (tohit < 1)
 				tohit = 1;
+			if (weapon.weapon.Container.HasAbility("Weapons Always Hit"))
+				tohit = 100;
 
 			//bool hit = RandomHelper.Range(0, 99) < tohit;
 			PRNG dice = attacker.getDice();
