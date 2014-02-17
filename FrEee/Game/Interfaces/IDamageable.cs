@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Combat;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,9 +65,9 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		/// <param name="dmgType"></param>
 		/// <param name="damage"></param>
-		/// <param name="battle"></param>
+		/// <param name="dice"></param>
 		/// <returns>Leftover damage.</returns>
-		int TakeDamage(DamageType dmgType, int damage, Battle battle);
+		int TakeDamage(DamageType dmgType, int damage, PRNG dice = null);
 
 		/// <summary>
 		/// Is this object destroyed?

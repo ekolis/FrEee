@@ -103,7 +103,7 @@ namespace FrEee.Game.Objects.Combat
 						seekers.Remove(seeker);
 						Log.Add(seeker.CreateLogMessage(seeker + " detonates!"));
 						var shot = new Shot(seeker.Launcher, seeker.Target, 1);
-						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.WeaponInfo.GetDamage(shot), this);
+						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.WeaponInfo.GetDamage(shot), null);
 					}
 					else
 						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));

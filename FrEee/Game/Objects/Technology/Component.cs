@@ -98,7 +98,7 @@ namespace FrEee.Game.Objects.Technology
 			if (hit)
 			{
 				var shot = new Shot(this, defender, range);
-				defender.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+				defender.TakeDamage(Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, null);
 				if (defender.MaxNormalShields < defender.NormalShields)
 					defender.NormalShields = defender.MaxNormalShields;
 				if (defender.MaxPhasedShields < defender.PhasedShields)
@@ -178,14 +178,12 @@ namespace FrEee.Game.Objects.Technology
 			// nothing to do
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// TODO - take into account damage types
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
 			Hitpoints -= realDamage;
-			if (battle != null)
-				battle.LogComponentDamage(this, realDamage);
 			return damage - realDamage;
 		}
 

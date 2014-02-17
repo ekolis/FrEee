@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public int TakeDamage(DamageType damageType, int damage, Battle battle)
+		public int TakeDamage(DamageType damageType, int damage, PRNG dice = null)
 		{
 			if (IsDestroyed)
 				return damage; // she canna take any more!
@@ -156,23 +156,18 @@ namespace FrEee.Game.Objects.Vehicles
 				damage -= dmg;
 				shieldDmg += dmg;
 			}
-			if (shieldDmg > 0 && battle != null)
-				battle.LogShieldDamage(this, shieldDmg);
 			while (damage > 0 && !IsDestroyed)
 			{
 				var comps = Components.Where(c => c.Hitpoints > 0);
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
-				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted();
-				damage = comp.TakeDamage(damageType, damage, battle);
+				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(dice);
+				damage = comp.TakeDamage(damageType, damage, dice);
 			}
 
 			if (IsDestroyed)
-			{
-				battle.LogTargetDeath(this);
 				Dispose();
-			}
 
 			// update memory sight
 			this.UpdateEmpireMemories();

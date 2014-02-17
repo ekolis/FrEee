@@ -201,7 +201,7 @@ namespace FrEee.Game.Objects.Combat2
 			return 0;
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// TODO - damage types
 			if (damage > Hitpoints)

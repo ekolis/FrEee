@@ -342,7 +342,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, Battle battle)
+		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			if (Colony == null)
 				return damage; // uninhabited planets can't take damage
@@ -356,11 +356,11 @@ namespace FrEee.Game.Objects.Space
 			foreach (var num in order)
 			{
 				if (num == 0)
-					damage = TakePopulationDamage(dmgType, damage, battle);
+					damage = TakePopulationDamage(dmgType, damage, dice);
 				else if (num == 1)
-					damage = Cargo.TakeDamage(dmgType, damage, battle);
+					damage = Cargo.TakeDamage(dmgType, damage, dice);
 				else if (num == 2)
-					damage = TakeFacilityDamage(dmgType, damage, battle);
+					damage = TakeFacilityDamage(dmgType, damage, dice);
 			}
 
 			// if planet was completely glassed, remove the colony
@@ -373,20 +373,18 @@ namespace FrEee.Game.Objects.Space
 			return damage;
 		}
 
-		private int TakePopulationDamage(DamageType dmgType, int damage, Battle battle)
+		private int TakePopulationDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
-			var killed = new SafeDictionary<Race, long>();
 			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
 			{
 				// pick a race and kill some population
-				var race = Colony.Population.PickWeighted();
+				var race = Colony.Population.PickWeighted(dice);
 				if (race == null)
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
-				killed[race] += popKilled;
 				inflicted++;
 			}
 			// clear population that was emptied out
@@ -400,13 +398,13 @@ namespace FrEee.Game.Objects.Space
 			return damage - inflicted;
 		}
 
-		private int TakeFacilityDamage(DamageType dmgType, int damage, Battle battle)
+		private int TakeFacilityDamage(DamageType dmgType, int damage, PRNG dice = null)
 		{
 			// TODO - take into account damage types, and make sure we have facilities that are not immune to the damage type so we don't get stuck in an infinite loop
 			while (damage > 0 && Colony.Facilities.Any())
 			{
-				var facility = Colony.Facilities.ToDictionary(f => f, f => f.MaxHitpoints).PickWeighted();
-				damage = facility.TakeDamage(dmgType, damage, battle);
+				var facility = Colony.Facilities.ToDictionary(f => f, f => f.MaxHitpoints).PickWeighted(dice);
+				damage = facility.TakeDamage(dmgType, damage, dice);
 			}
 			return damage;
 		}

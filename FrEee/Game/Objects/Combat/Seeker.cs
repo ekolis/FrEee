@@ -95,18 +95,14 @@ namespace FrEee.Game.Objects.Combat
 			get { return Enumerable.Empty<Component>(); }
 		}
 
-		public int TakeDamage(DamageType damageType, int damage, Battle battle)
+		public int TakeDamage(DamageType damageType, int damage, PRNG dice = null)
 		{
 			// TODO - take into account damage types
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
-			battle.LogSeekerDamage(this, realDamage);
 			Hitpoints -= realDamage;
 			if (IsDestroyed)
-			{
-				battle.LogTargetDeath(this);
 				Dispose();
-			}
 			return damage - realDamage;
 		}
 

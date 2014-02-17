@@ -236,7 +236,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Fleets cannot take damage directly, so this method will throw a NotSupportedException.
 		/// </summary>
-		public int TakeDamage(Combat.DamageType dmgType, int damage, Combat.Battle battle)
+		public int TakeDamage(Combat.DamageType dmgType, int damage, PRNG dice = null)
 		{
 			throw new NotSupportedException("Fleets cannot take damage directly. Try assigning damage to the individual ships.");
 		}

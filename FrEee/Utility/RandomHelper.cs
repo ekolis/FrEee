@@ -7,7 +7,12 @@ namespace FrEee.Utility
 	/// </summary>
 	public static class RandomHelper
 	{
-		private static Random rng = new Random();
+		static RandomHelper()
+		{
+			PRNG = new PRNG((int)DateTime.Now.Ticks);
+		}
+
+		public static PRNG PRNG { get; private set; }
 
 		/// <summary>
 		/// Generates a random number >= 0 but less than the upper bound.
@@ -16,7 +21,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static int Next(int upper)
 		{
-			return rng.Next(upper);
+			return PRNG.Next(upper);
 		}
 
 		/// <summary>
@@ -26,7 +31,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static long Next(long upper)
 		{
-			return Next((int)(upper / (long)int.MaxValue / 4L)) * (long)int.MaxValue * 4L + Next((int)(upper % ((long)int.MaxValue))) * 2 + Next(2);
+			return PRNG.Next(upper);
 		}
 
 		/// <summary>
@@ -37,7 +42,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static int Range(int min, int max)
 		{
-			return rng.Next(min, max + 1);
+			return PRNG.Range(min, max);
 		}
 
 		/// <summary>
@@ -48,7 +53,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static long Range(long min, long max)
 		{
-			return Next(max - min + 1) + min;
+			return PRNG.Range(min, max);
 		}
 
 		/// <summary>
@@ -58,7 +63,7 @@ namespace FrEee.Utility
 		/// <returns></returns>
 		public static double Next(double upper)
 		{
-			return rng.NextDouble() * upper;
+			return PRNG.Next(upper);
 		}
 	}
 }

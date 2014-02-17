@@ -539,8 +539,10 @@ namespace FrEee.Utility.Extensions
 		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.Next(total);
-			if (prng != null)
+			int num;
+			if (prng == null)
+				num = RandomHelper.Next(total);
+			else
 				num = prng.Next(total);
 
 			int sofar = 0;
@@ -559,10 +561,14 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, long> src)
+		public static T PickWeighted<T>(this IDictionary<T, long> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.Next(total);
+			long num;
+			if (prng == null)
+				num = RandomHelper.Next(total);
+			else
+				num = prng.Next(total);
 			long sofar = 0;
 			foreach (var kvp in src)
 			{
@@ -579,10 +585,14 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, double> src)
+		public static T PickWeighted<T>(this IDictionary<T, double> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
-			var num = RandomHelper.Next(total);
+			double num;
+			if (prng == null)
+				num = RandomHelper.Next(total);
+			else
+				num = prng.Next(total);
 			double sofar = 0;
 			foreach (var kvp in src)
 			{
