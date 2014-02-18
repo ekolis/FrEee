@@ -704,7 +704,7 @@ Custom Group          := 0
 Tech Area Req         := Fusion Bomb
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =2 + level
+Tech Level Req        := =3 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Planets
@@ -738,7 +738,7 @@ Custom Group          := 0
 Tech Area Req         := Fusion Bomb
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =2 + level
+Tech Level Req        := =3 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Planets, Ships, Bases
@@ -772,7 +772,7 @@ Custom Group          := 0
 Tech Area Req         := Augmented Engines
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =2 + level
+Tech Level Req        := =3 + level
 Ability Type          := Combat Movement
 Ability Val           := 5
 Weapon Type           := None
@@ -822,7 +822,7 @@ Custom Group          := 0
 Tech Area Req         := Ion Pulse Cannon
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =3 + level
+Tech Level Req        := =4 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Ship, Base
@@ -856,7 +856,7 @@ Custom Group          := 0
 Tech Area Req         := Shield Capacitor
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =3 + level
+Tech Level Req        := =4 + level
 Ability Type          := Shield Regeneration
 Ability Val           := 10
 Weapon Type           := None
@@ -906,7 +906,7 @@ Custom Group          := 0
 Tech Area Req         := Antimatter Torpedo
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =4 + level
+Tech Level Req        := =5 + level
 Number of Abilities   := 0
 Weapon Type           := Seeking
 Weapon Target         := Ships\Planets
@@ -942,7 +942,7 @@ Custom Group          := 0
 Tech Area Req         := Antimatter Bomb
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =4 + level
+Tech Level Req        := =5 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Planets
@@ -965,7 +965,7 @@ Tonnage Space Taken   := =miniaturize(10, level)
 Tonnage Structure     := 1
 Cost Minerals         := =miniaturize(10, level)
 Cost Organics         := 0
-Cost Radioactives     := =discount(15, level)
+Cost Radioactives     := =discount(20, level)
 Vehicle Type          := Fighter
 Supply Amount Used    := 1
 Restrictions          := None
@@ -976,7 +976,7 @@ Custom Group          := 0
 Tech Area Req         := Antimatter Bomb
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =4 + level
+Tech Level Req        := =5 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Planets, Ships, Bases
@@ -1010,7 +1010,7 @@ Custom Group          := 0
 Tech Area Req         := Proton Torpedo
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =7 + level
+Tech Level Req        := =8 + level
 Number of Abilities   := 0
 Weapon Type           := Direct Fire
 Weapon Target         := Ships\Planets
@@ -1092,7 +1092,7 @@ Custom Group          := 0
 Tech Area Req         := Plasma Torpedo
 Tech Level Req        := 1
 Tech Area Req         := Power
-Tech Level Req        := =8 + level
+Tech Level Req        := =9 + level
 Number of Abilities   := 0
 Weapon Type           := Seeking
 Weapon Target         := Ships\Planets
@@ -1106,6 +1106,74 @@ Weapon Sound          := plastorp.wav
 Weapon Family         := Seeking Torpedo
 Weapon Seeker Speed   := 12
 Weapon Seeker Dmg Res := 5
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Neutronium Bomb +' + level.ToString()
+Description           := Degenerate matter explosive dropped on planets.
+Pic Num               := 91
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(25, level)
+Vehicle Type          := Ship
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Neutronium Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =9 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets
+Weapon Damage At Rng  := 60 30 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Tactical Neutronium Bomb +' + level.ToString()
+Description           := Degenerate matter explosive dropped on planets or ships by fighters.
+Pic Num               := 91
+Tonnage Space Taken   := =miniaturize(10, level)
+Tonnage Structure     := 1
+Cost Minerals         := =miniaturize(10, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(25, level)
+Vehicle Type          := Fighter
+Supply Amount Used    := 1
+Restrictions          := None
+General Group         := Weapons
+Family                := Bomb
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Neutronium Bomb
+Tech Level Req        := 1
+Tech Area Req         := Power
+Tech Level Req        := =9 + level
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Planets, Ships, Bases
+Weapon Damage At Rng  := 60 30 10 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 2
+Weapon Display Type   := Torp
+Weapon Display        := 20
+Weapon Modifier       := 0
+Weapon Sound          := plntnplm.wav
+Weapon Family         := Bomb
 
 Name                  := Space Yard I
 Description           := Ship construction component which can work on one ship at a time.
