@@ -1175,6 +1175,8 @@ Weapon Modifier       := 0
 Weapon Sound          := plntnplm.wav
 Weapon Family         := Bomb
 
+// TODO
+
 Name                  := Space Yard I
 Description           := Ship construction component which can work on one ship at a time.
 Pic Num               := 49
