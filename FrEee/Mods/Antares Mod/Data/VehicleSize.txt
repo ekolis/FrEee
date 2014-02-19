@@ -630,6 +630,30 @@ Requirement Pct Fighter Bays  := 0
 Requirement Pct Colony Mods   := 0
 Requirement Pct Cargo         := 0
 
+Name                          := Weapon Platform
+Short Name                    := Weapon Platform
+Description                   := Ground-based defensive platforms capable of firing into space to defend a colony.
+Code                          := WP
+Primary Bitmap Name           := WeapPlatformMedium
+Alternate Bitmap Name         := WeapPlatformMedium
+Vehicle Type                  := Weapon Platform
+Tonnage                       := 100
+Cost Minerals                 := 100
+Cost Organics                 := 0
+Cost Radioactives             := 100
+Engines Per Move              := 0
+Tech Area Req                 := Battleoids
+Tech Level Req                := 1
+Requirement Must Have Bridge  := False
+Requirement Can Have Aux Con  := False
+Requirement Min Life Support  := 0
+Requirement Min Crew Quarters := 0
+Requirement Uses Engines      := False
+Requirement Max Engines       := 0
+Requirement Pct Fighter Bays  := 0
+Requirement Pct Colony Mods   := 0
+Requirement Pct Cargo         := 0
+
 =======================================================================================
 *END*
 =======================================================================================

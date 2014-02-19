@@ -497,7 +497,7 @@ Can Be Removed        := True
 
 Name                  := Advanced City Planning
 Group                 := Civilian
-Description           := Techniques for increasing the population capacity of colonies.
+Description           := The ability to build arcologies, which increase population reproduction and happiness due to the excellent environmental conditions.
 Maximum Level         := 1
 Level Cost            := 6000
 Start Level           := 0
@@ -703,9 +703,9 @@ Tech Area Req         := Power
 Tech Level Req        := 5
 Can Be Removed        := True
 
-Name                  := Food Replicators
+Name                  := Matter Transmuter
 Group                 := Civilian
-Description           := Devices capable of transmuting inorganic matter into edible biomass.
+Description           := Devices capable of transmuting inorganic building materials into edible biomass, or vice versa.
 Maximum Level         := 1
 Level Cost            := 2750
 Start Level           := 0
