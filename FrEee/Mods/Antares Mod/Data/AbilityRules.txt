@@ -430,8 +430,8 @@ Value 2 Rule := Group
 
 Name := Resource Gen Modifier Planet - Radioactives
 Name := Resource Gen Modifier - Radioactives
-Alias := Resource Gen Modifier Planet - Currency
-Alias := Resource Gen Modifier - Currency
+Alias := Currency Gen Modifier Planet
+Alias := Currency Gen Modifier Planet
 Targets := Planet, SpaceVehicle, Component, Facility
 Description := Commercial income is changed by [%Amount1%]% on this planet or vehicle.
 Value 1 Rule := TakeHighest
@@ -453,7 +453,7 @@ Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Resource Gen Modifier System - Radioactives
-Alias := Resource Gen Modifier System - Currency
+Alias := Currency Gen Modifier System
 Targets := StarSystem, Planet, SpaceVehicle, Component, Facility
 Description := Commercial income is changed by [%Amount1%]% in this system.
 Value 1 Rule := TakeHighest
@@ -475,7 +475,7 @@ Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Resource Gen Modifier Empire - Radioactives
-Alias := Resource Gen Modifier Empire - Currency
+Alias := Currency Gen Modifier Empire
 Targets := Empire, Planet, SpaceVehicle, Component, Facility, Race
 Description := Commercial income is changed by [%Amount1%]% throughout the empire.
 Value 1 Rule := TakeHighest
