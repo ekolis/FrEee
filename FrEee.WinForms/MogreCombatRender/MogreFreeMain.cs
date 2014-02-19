@@ -306,6 +306,7 @@ namespace FrEee.WinForms.MogreCombatRender
                     battle.CombatNodes.Remove(comNode);
                 }
             }
+            mRoot.Dispose();
 			//throw new ShutdownException();
 		}
 
@@ -485,28 +486,6 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 
         #endregion
-
-        //private void CreateNewEntity(CombatObject obj)
-        //{
-        //    Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
-        //    SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
-        //    float sizex = objEnt.BoundingBox.Size.x;
-        //    float sizey = objEnt.BoundingBox.Size.y;
-        //    float sizez = objEnt.BoundingBox.Size.z;
-        //    var desiredSize = (float)System.Math.Pow((double)obj.cmbt_mass, 1d / 3d);
-        //    float scalex = (desiredSize / sizex);
-        //    float scaley = (desiredSize / sizey);
-        //    float scalez = (desiredSize / sizez);
-        //    float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
-        //    objNode.AttachObject(objEnt);
-        //    objNode.Scale(scale, scale, scale);
-        //    objNode.Scale(10, 10, 10);
-        //    //do_graphics(obj); // set up initial position and orientation
-        //    //Entity objEn = mSceneMgr.CreateEntity(
-        //    //objNode.AttachObject()
-
-        //}
-
 
         private GfxObj CreateGfxObj(CombatNode ComNode)
         {
