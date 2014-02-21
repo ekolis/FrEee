@@ -54,6 +54,8 @@ namespace FrEee.Game.Objects.Space
 
 		public override void Redact(Empire emp)
 		{
+			base.Redact(emp);
+
 			// Don't let players see the target sector coordinates or star system name if it's not explored yet
 			if (Target != null)
 			{
@@ -66,15 +68,6 @@ namespace FrEee.Game.Objects.Space
 						Target.Coordinates = new System.Drawing.Point();
 					}
 				}
-			}
-
-			var vis = CheckVisibility(emp);
-			if (vis < Visibility.Fogged)
-				Dispose();
-			else if (vis == Visibility.Fogged)
-			{
-				if (emp.Memory[ID] != null)
-					emp.Memory[ID].CopyToExceptID(this);
 			}
 		}
 
