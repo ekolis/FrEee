@@ -2417,7 +2417,7 @@ namespace FrEee.Utility.Extensions
 		public static IFoggable FindOriginalObject(this IFoggable f, Empire emp)
 		{
 			// not a memory? it is its own real object
-			if (!(f is Memory))
+			if (!(f.IsMemory))
 				return f;
 
 			// look for the real object
