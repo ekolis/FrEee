@@ -11,6 +11,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat2;
+using AutoMapper;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -190,9 +191,24 @@ namespace FrEee.Game.Objects.Space
 			get { return false; }
 		}
 
-		public Sector Sector
+		[DoNotSerialize]
+		[IgnoreMap]
+		public virtual Sector Sector
 		{
-			get { return this.FindSector(); }
+			get
+			{
+				return this.FindSector();
+			}
+			set
+			{
+				if (value == null)
+				{
+					if (Sector != null)
+						Sector.Remove(this);
+				}
+				else
+					value.Place(this);
+			}
 		}
 
 		public StarSystem StarSystem
