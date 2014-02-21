@@ -165,6 +165,7 @@
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IOwnable.cs" />
+    <Compile Include="Game\Interfaces\IOwnableAbilityObject.cs" />
     <Compile Include="Game\Interfaces\IPictorial.cs" />
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />

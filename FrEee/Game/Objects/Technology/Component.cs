@@ -19,6 +19,7 @@ namespace FrEee.Game.Objects.Technology
 {
 	/// <summary>
 	/// A component of a vehicle.
+	/// TODO - should Component implement IOwnable like Facility does?
 	/// </summary>
 	[Serializable]
 	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable

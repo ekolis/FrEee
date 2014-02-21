@@ -260,7 +260,7 @@ namespace FrEee.Utility.Extensions
 		public static bool HasAbility(this IAbilityObject obj, string abilityName, bool includeShared = true)
 		{
 			IEnumerable<Ability> abils;
-			if (includeShared)
+			if (includeShared && obj is IOwnableAbilityObject)
 				abils = obj.Abilities().Union(obj.SharedAbilities());
 			else
 				abils = obj.Abilities();
@@ -1041,50 +1041,63 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> SharedAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			// Unowned objects cannot have abilities shared to them.
-			if (!(obj is IOwnable))
-				yield break;
-			var owner = ((IOwnable)obj).Owner;
-			if (owner == null)
+			var ownable = obj as IOwnableAbilityObject;
+			if (ownable == null || ownable.Owner == null)
 				yield break;
 
-			foreach (var clause in owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
+			// update cache if necessary
+			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
 			{
-				var rule = clause.AbilityRule;
-				if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
+				var tuple = Tuple.Create(ownable, clause.Owner);
+				if (Empire.Current == null || !Galaxy.Current.TreatySharedAbilityCache.ContainsKey(tuple))
+					Galaxy.Current.TreatySharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
+			}
+
+			// get cached abilities
+			foreach (var keyTuple in Galaxy.Current.TreatySharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+			{
+				foreach (var abil in Galaxy.Current.TreatySharedAbilityCache[keyTuple])
+					yield return abil;
+			}
+		}
+
+		private static IEnumerable<Ability> FindSharedAbilities(this IOwnableAbilityObject obj, ShareAbilityClause clause)
+		{
+			var rule = clause.AbilityRule;
+			if (rule.CanTarget(obj.AbilityTarget))
+			{
+				if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
 				{
-					if (rule.CanTarget(AbilityTargets.Sector) && obj is ILocated)
+					var sector = ((ILocated)obj).Sector;
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						var sector = ((ILocated)obj).Sector;
-						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						foreach (var abil in sector.Abilities(emp))
 						{
-							foreach (var abil in sector.Abilities(emp, sourceFilter))
-							{
-								if (clause.AbilityRule == abil.Rule)
-									yield return abil;
-							}
+							if (rule == abil.Rule)
+								yield return abil;
 						}
 					}
-					else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
+				}
+				else if (rule.CanTarget(AbilityTargets.StarSystem) && obj is ILocated)
+				{
+					var sys = ((ILocated)obj).StarSystem;
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						var sys = ((ILocated)obj).StarSystem;
-						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						foreach (var abil in sys.Abilities(emp))
 						{
-							foreach (var abil in sys.Abilities(emp, sourceFilter))
-							{
-								if (clause.AbilityRule == abil.Rule)
-									yield return abil;
-							}
+							if (rule == abil.Rule)
+								yield return abil;
 						}
 					}
-					else if (rule.CanTarget(AbilityTargets.Galaxy))
+				}
+				else if (rule.CanTarget(AbilityTargets.Galaxy))
+				{
+					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
+						foreach (var abil in Galaxy.Current.Abilities(emp))
 						{
-							foreach (var abil in Galaxy.Current.Abilities(emp, sourceFilter))
-							{
-								if (clause.AbilityRule == abil.Rule)
-									yield return abil;
-							}
+							if (rule == abil.Rule)
+								yield return abil;
 						}
 					}
 				}

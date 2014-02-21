@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IAbilityObject, IConstructable, IOwnable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost
+	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost
 	{
 		public Facility(FacilityTemplate template)
 		{
