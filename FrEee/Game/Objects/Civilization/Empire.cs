@@ -130,7 +130,7 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				// shouldn't change except at turn processing...
-				if (grossIncome == null)
+				if (grossIncome == null || Empire.Current == null)
 				{
 					if (!ColonizedPlanets.Any())
 						grossIncome = new ResourceQuantity();
@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// shouldn't change except at turn processing...
 				// TODO - facility/unit maintenance?
-				if (maintenance == null)
+				if (maintenance == null || Empire.Current == null)
 					maintenance = OwnedSpaceObjects.OfType<SpaceVehicle>().Sum(v => v.MaintenanceCost);
 				return maintenance;
 			}
