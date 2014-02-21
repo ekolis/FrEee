@@ -828,23 +828,20 @@ namespace FrEee.Game.Objects.Space
 
 		[DoNotSerialize]
 		[IgnoreMap]
-		public new Sector Sector
+		public override Sector Sector
 		{
 			get
 			{
-				return this.FindSector();
+				return base.Sector;
 			}
 			set
 			{
-				if (value == null)
+				base.Sector = value;
+				if (Cargo != null)
 				{
-					if (Sector == null)
-						Sector.Remove(this);
+					foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
+						v.Sector = value;
 				}
-				else
-					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
-					v.Sector = value;
 			}
 		}
 
