@@ -9,7 +9,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A space or ground vehicle.
 	/// </summary>
-	public interface IVehicle : IConstructable, IAbilityObject, IReferrable, IDamageable, ICombatant
+	public interface IVehicle : IConstructable, IOwnableAbilityObject, IReferrable, IDamageable, ICombatant
 	{
 		/// <summary>
 		/// The design of this vehicle.

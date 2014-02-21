@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A colony on a planet.
 	/// </summary>
 	[Serializable]
-	public class Colony : IAbilityObject, IOwnable, IFoggable, IContainable<Planet>
+	public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>
 	{
 		public Colony()
 		{
