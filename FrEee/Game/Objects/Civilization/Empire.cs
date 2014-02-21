@@ -806,16 +806,30 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public ILookup<Empire, Clause> OfferedTreatyClauses
 		{
-			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver); }
+			get
+			{
+				if (Empire.Current == null || offeredTreatyClauses == null)
+					offeredTreatyClauses = Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver);
+				return offeredTreatyClauses;
+			}
 		}
+
+		private ILookup<Empire, Clause> offeredTreatyClauses;
 
 		/// <summary>
 		/// Any treaty clauses this empire is receiving from other empires.
 		/// </summary>
 		public ILookup<Empire, Clause> ReceivedTreatyClauses
 		{
-			get { return Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver); }
+			get
+			{
+				if (Empire.Current == null || receivedTreatyClauses == null)
+					receivedTreatyClauses = Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver);
+				return receivedTreatyClauses;
+			}
 		}
+
+		private ILookup<Empire, Clause> receivedTreatyClauses;
 
 		/// <summary>
 		/// Gets all the clauses in a treaty with another empire.
@@ -857,7 +871,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return this != other && !this.IsAllyOf(other, sys) && !this.IsEnemyOf(other, sys);
 		}
-		
+
 		public IEnumerable<IAbilityObject> Children
 		{
 			get { return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace); }
