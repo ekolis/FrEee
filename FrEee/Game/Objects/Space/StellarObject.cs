@@ -18,7 +18,8 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
-	 [Serializable] public abstract class StellarObject : IStellarObject
+	[Serializable]
+	public abstract class StellarObject : IStellarObject
 	{
 		public StellarObject()
 		{
@@ -44,7 +45,7 @@ namespace FrEee.Game.Objects.Space
 		/// A description of this stellar object.
 		/// </summary>
 		public string Description { get; set; }
-		 
+
 		/// <summary>
 		/// Name of the picture used to represent this stellar object, excluding the file extension.
 		/// PNG files will be searched first, then BMP.
@@ -56,7 +57,8 @@ namespace FrEee.Game.Objects.Space
 			get { return Pictures.GetIcon(this); }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}
@@ -71,23 +73,11 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public virtual Empire Owner { get { return null; } }
 
-		/// <summary>
-		/// Most stellar objects don't need to have any data redacted.
-		/// </summary>
-		/// <param name="galaxy"></param>
-		/// <param name="starSystem"></param>
-		/// <param name="visibility"></param>
-		public virtual void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility)
-		{
-			if (visibility == Visibility.Unknown)
-				throw new ArgumentException("If a stellar object is not visible at all, it should be removed from the player's savegame rather than redacted.", "visibility");
-		}
-
 		public override string ToString()
 		{
 			return Name;
 		}
-		 
+
 
 		public void Dispose()
 		{
@@ -169,7 +159,7 @@ namespace FrEee.Game.Objects.Space
 			}
 			if (this.HasAbility("Scanner Jammer"))
 			{
-				var scanners = seers.Where(sobj => 
+				var scanners = seers.Where(sobj =>
 					sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates)
 					|| sobj.HasAbility("Long Range Scanner - System"));
 				if (scanners.Any())
@@ -181,7 +171,22 @@ namespace FrEee.Game.Objects.Space
 		public long ID { get; set; }
 
 
-		public abstract void Redact(Empire emp);
+		/// <summary>
+		/// Removes any data from this stellar object that the specified empire should not see.
+		/// Disposes of the stellar object if it is invisible to the empire.
+		/// </summary>
+		/// <param name="emp"></param>
+		public virtual void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+			else if (vis == Visibility.Fogged)
+			{
+				if (emp.Memory[ID] != null)
+					emp.Memory[ID].CopyToExceptID(this);
+			}
+		}
 
 		/// <summary>
 		/// Stellar objects by default can't be idle, because they can't take orders or build stuff to begin with.
@@ -192,7 +197,8 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		[DoNotSerialize]
-		[IgnoreMap]
+
+
 		public virtual Sector Sector
 		{
 			get

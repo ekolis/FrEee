@@ -660,6 +660,8 @@ namespace FrEee.Game.Objects.Space
 
 		public override void Redact(Empire emp)
 		{
+			base.Redact(emp);
+
 			var vis = CheckVisibility(emp);
 
 			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
@@ -674,14 +676,6 @@ namespace FrEee.Game.Objects.Space
 
 			if (vis < Visibility.Owned)
 				Orders.Clear();
-
-			if (vis < Visibility.Fogged)
-				Dispose();
-			else if (vis == Visibility.Fogged)
-			{
-				if (emp.Memory[ID] != null)
-					emp.Memory[ID].CopyTo(this);
-			}
 		}
 
 		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }

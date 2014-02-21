@@ -43,6 +43,6 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		string PictureName { get; set; }
 
-		void Redact(Galaxy galaxy, StarSystem starSystem, Visibility visibility);
+		void Redact(Empire emp);
 	}
 }
