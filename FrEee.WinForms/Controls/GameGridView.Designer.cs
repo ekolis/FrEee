@@ -28,20 +28,49 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			this.gridData = new System.Windows.Forms.DataGridView();
 			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
-			this.gridData = new System.Windows.Forms.DataGridView();
 			this.pnlConfigEdit = new FrEee.WinForms.Controls.GamePanel();
 			this.btnReset = new FrEee.WinForms.Controls.GameButton();
 			this.btnColumns = new FrEee.WinForms.Controls.GameButton();
 			this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
 			this.label17 = new System.Windows.Forms.Label();
 			this.txtConfigName = new System.Windows.Forms.TextBox();
-			this.pnlConfigsBorder.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
+			this.pnlConfigsBorder.SuspendLayout();
 			this.pnlConfigEdit.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// gridData
+			// 
+			this.gridData.AllowUserToAddRows = false;
+			this.gridData.AllowUserToDeleteRows = false;
+			this.gridData.AllowUserToOrderColumns = true;
+			this.gridData.AllowUserToResizeRows = false;
+			this.gridData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.gridData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+			this.gridData.BackgroundColor = System.Drawing.Color.Black;
+			this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridData.Location = new System.Drawing.Point(103, 43);
+			this.gridData.Name = "gridData";
+			this.gridData.ReadOnly = true;
+			this.gridData.RowHeadersVisible = false;
+			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+			this.gridData.RowsDefaultCellStyle = dataGridViewCellStyle2;
+			this.gridData.RowTemplate.Height = 32;
+			this.gridData.RowTemplate.ReadOnly = true;
+			this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.gridData.Size = new System.Drawing.Size(584, 316);
+			this.gridData.TabIndex = 31;
+			this.gridData.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellMouseEnter);
+			this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
+			this.gridData.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridData_DataError);
+			this.gridData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_RowEnter);
+			this.gridData.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_RowLeave);
 			// 
 			// pnlConfigsBorder
 			// 
@@ -65,30 +94,6 @@
 			this.pnlConfigs.Name = "pnlConfigs";
 			this.pnlConfigs.Size = new System.Drawing.Size(86, 308);
 			this.pnlConfigs.TabIndex = 2;
-			// 
-			// gridData
-			// 
-			this.gridData.AllowUserToAddRows = false;
-			this.gridData.AllowUserToDeleteRows = false;
-			this.gridData.AllowUserToOrderColumns = true;
-			this.gridData.AllowUserToResizeRows = false;
-			this.gridData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.gridData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-			this.gridData.BackgroundColor = System.Drawing.Color.Black;
-			this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridData.Location = new System.Drawing.Point(103, 43);
-			this.gridData.Name = "gridData";
-			this.gridData.ReadOnly = true;
-			this.gridData.RowHeadersVisible = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
-			this.gridData.RowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.gridData.RowTemplate.Height = 32;
-			this.gridData.RowTemplate.ReadOnly = true;
-			this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridData.Size = new System.Drawing.Size(584, 316);
-			this.gridData.TabIndex = 31;
 			// 
 			// pnlConfigEdit
 			// 
@@ -120,6 +125,7 @@
 			this.btnReset.TabIndex = 30;
 			this.btnReset.Text = "Reset";
 			this.btnReset.UseVisualStyleBackColor = false;
+			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
 			// 
 			// btnColumns
 			// 
@@ -131,6 +137,7 @@
 			this.btnColumns.TabIndex = 29;
 			this.btnColumns.Text = "Columns";
 			this.btnColumns.UseVisualStyleBackColor = false;
+			this.btnColumns.Click += new System.EventHandler(this.btnColumns_Click);
 			// 
 			// btnDeleteConfig
 			// 
@@ -143,6 +150,7 @@
 			this.btnDeleteConfig.TabIndex = 28;
 			this.btnDeleteConfig.Text = "Delete";
 			this.btnDeleteConfig.UseVisualStyleBackColor = false;
+			this.btnDeleteConfig.Click += new System.EventHandler(this.btnDeleteConfig_Click);
 			// 
 			// label17
 			// 
@@ -160,6 +168,7 @@
 			this.txtConfigName.Name = "txtConfigName";
 			this.txtConfigName.Size = new System.Drawing.Size(100, 20);
 			this.txtConfigName.TabIndex = 25;
+			this.txtConfigName.TextChanged += new System.EventHandler(this.txtConfigName_TextChanged);
 			// 
 			// GameGridView
 			// 
@@ -172,8 +181,8 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "GameGridView";
 			this.Size = new System.Drawing.Size(690, 362);
-			this.pnlConfigsBorder.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.gridData)).EndInit();
+			this.pnlConfigsBorder.ResumeLayout(false);
 			this.pnlConfigEdit.ResumeLayout(false);
 			this.pnlConfigEdit.PerformLayout();
 			this.ResumeLayout(false);
