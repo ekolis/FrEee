@@ -1,6 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Utility;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.MogreCombatRender;
@@ -41,24 +42,28 @@ namespace FrEee.WinForms.Forms
 			// create grid config
 			var cfg = new GridConfig();
 			cfg.Name = "Default";
-			cfg.Columns.Add(new GridColumnConfig("EmpireName", "Empire", typeof(string), Color.White, Format.Raw, Sort.Ascending, 1));
-			cfg.Columns.Add(new GridColumnConfig("HullName", "Hull", typeof(string), Color.White, Format.Raw));
-			cfg.Columns.Add(new GridColumnConfig("HullSize", "Size", typeof(int), Color.White, Format.Kilotons, Sort.Descending, 2));
-			cfg.Columns.Add(new GridColumnConfig("StartCount", "Start #", typeof(int), Color.White, Format.UnitsBForBillions));
-			cfg.Columns.Add(new GridColumnConfig("StartHP", "Start HP", typeof(int), Color.White, Format.UnitsBForBillions));
-			cfg.Columns.Add(new GridColumnConfig("Losses", "Losses", typeof(int), Color.White, Format.UnitsBForBillions));
-			cfg.Columns.Add(new GridColumnConfig("Damage", "Damage", typeof(int), Color.White, Format.UnitsBForBillions));
+			cfg.Columns.Add(new GridColumnConfig("EmpireIcon", "Flag", typeof(DataGridViewImageColumn), Color.White, Format.Raw));
+			cfg.Columns.Add(new GridColumnConfig("EmpireName", "Empire", typeof(DataGridViewTextBoxColumn), Color.White, Format.Raw, Sort.Ascending, 1));
+			cfg.Columns.Add(new GridColumnConfig("HullIcon", "HullIcon", typeof(DataGridViewImageColumn), Color.White, Format.Raw));
+			cfg.Columns.Add(new GridColumnConfig("HullName", "Hull", typeof(DataGridViewTextBoxColumn), Color.White, Format.Raw));
+			cfg.Columns.Add(new GridColumnConfig("HullSize", "Size", typeof(DataGridViewTextBoxColumn), Color.White, Format.Kilotons, Sort.Descending, 2));
+			cfg.Columns.Add(new GridColumnConfig("StartCount", "Start #", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
+			cfg.Columns.Add(new GridColumnConfig("StartHP", "Start HP", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
+			cfg.Columns.Add(new GridColumnConfig("Losses", "Losses", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
+			cfg.Columns.Add(new GridColumnConfig("Damage", "Damage", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
 			grid.CurrentGridConfig = cfg;
 
 			// gather grid data
 			var data = new List<object>();
-			foreach (var group in Battle.StartCombatants.GroupBy(c => new { Empire = c.Owner, HullName = GetHullName(c), HullSize = GetHullSize(c) }))
+			foreach (var group in Battle.StartCombatants.GroupBy(c => new { Empire = c.Owner, HullIcon = GetHullIcon(c), HullName = GetHullName(c), HullSize = GetHullSize(c) }))
 			{
 				var count = group.Count();
 				var hp = group.Sum(c => c.ArmorHitpoints + c.HullHitpoints);
 				var item = new
 				{
+					EmpireIcon = group.Key.Empire.Icon,
 					EmpireName = group.Key.Empire.Name,
+					HullIcon = group.Key.HullIcon,
 					HullName = group.Key.HullName,
 					HullSize = group.Key.HullSize,
 					StartCount = count,
@@ -73,6 +78,20 @@ namespace FrEee.WinForms.Forms
 				data.Add(item);
 			}
 			grid.Data = data;
+			grid.Initialize();
+		}
+
+		/// <summary>
+		/// Gets the icon of a vehicle/design, or a generic icon if it's not a vehicle/design (e.g. if it's a planet).
+		/// </summary>
+		/// <param name="obj"></param>
+		private Image GetHullIcon(IOwnable obj)
+		{
+			if (obj is IVehicle)
+				return ((IVehicle)obj).Design.Hull.GetIcon(obj.Owner.ShipsetPath);
+			if (obj is IDesign)
+				return ((IDesign)obj).Hull.GetIcon(obj.Owner.ShipsetPath);
+			return Pictures.GetGenericImage(obj.GetType());
 		}
 
 		/// <summary>
