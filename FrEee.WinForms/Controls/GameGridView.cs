@@ -22,9 +22,6 @@ namespace FrEee.WinForms.Controls
 			DataType = typeof(object);
 			GridConfigs = new List<GridConfig>();
 			CurrentGridConfig = new GridConfig();
-			CreateDefaultGridConfig = () => new GridConfig();
-			LoadCurrentGridConfig = () => new GridConfig();
-			ResetGridConfigs = () => new List<GridConfig>();
 			gridData.AutoGenerateColumns = false;
 		}
 
@@ -33,10 +30,14 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		public void Initialize()
 		{
-			GridConfigs = LoadGridConfigs();
-			if (GridConfigs == null)
+			if (LoadGridConfigs != null)
+				GridConfigs = LoadGridConfigs();
+			if (GridConfigs == null && ResetGridConfigs != null)
 				GridConfigs = ResetGridConfigs();
-			CurrentGridConfig = LoadCurrentGridConfig();
+			if (LoadCurrentGridConfig != null)
+				CurrentGridConfig = LoadCurrentGridConfig();
+			if (CurrentGridConfig == null)
+				throw new NullReferenceException("A current grid config is required for the GameGridView.");
 			BindTabs();
 			BindGrid(true);
 		}
@@ -86,6 +87,8 @@ namespace FrEee.WinForms.Controls
 			pnlConfigs.Controls.Clear();
 
 			// add buttons for each existing config
+			if (GridConfigs == null)
+				GridConfigs = new List<GridConfig>();
 			foreach (var cfg in GridConfigs)
 			{
 				var btn = new GameButton();
