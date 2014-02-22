@@ -123,8 +123,9 @@ namespace FrEee.WinForms.Forms
 					}
                     else if (context is Battle_Space)
                     {
-						// TODO - just show a stats page and then show the replay from a button there
-                        MogreCombatRender.MogreFreeMain replay = new MogreCombatRender.MogreFreeMain((Battle_Space)context);
+						// show battle results
+						var form = new BattleResultsForm((Battle_Space)context);
+						this.ShowChildForm(form);
                     }
                     else if (context is IMessage)
                     {
