@@ -338,5 +338,33 @@ namespace FrEee.WinForms.Controls
 			}
 		}
 
+		private bool showConfigs = true;
+
+		/// <summary>
+		/// Show configuration options to the user?
+		/// </summary>
+		public bool ShowConfigs
+		{
+			get
+			{
+				return showConfigs;
+			}
+			set
+			{
+				showConfigs = value;
+				if (showConfigs)
+				{
+					pnlConfigEdit.Visible = true;
+					pnlConfigsBorder.Visible = true;
+					gridData.Dock = DockStyle.None;
+				}
+				else
+				{
+					pnlConfigEdit.Visible = false;
+					pnlConfigsBorder.Visible = false;
+					gridData.Dock = DockStyle.Fill;
+				}
+			}
+		}
 	}
 }
