@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;
+using FrEee.WinForms.Forms;
 using FrEee.WinForms.MogreCombatRender;
 using FrEee.WinForms.Utility.Extensions;
 using System;
@@ -323,8 +324,9 @@ namespace FrEee.WinForms
 			// simulate the battle
 			battle.Resolve();
 
-			// show the replay
-			MogreFreeMain replay = new MogreFreeMain(battle);
+			// show the results
+			var form = new BattleResultsForm(battle);
+			this.ShowChildForm(form);
 		}
 
 		private void lstDesigns_MouseDoubleClick(object sender, MouseEventArgs e)
