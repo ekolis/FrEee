@@ -44,7 +44,7 @@ namespace FrEee.WinForms.Forms
 			cfg.Name = "Default";
 			cfg.Columns.Add(new GridColumnConfig("EmpireIcon", "Flag", typeof(DataGridViewImageColumn), Color.White, Format.Raw));
 			cfg.Columns.Add(new GridColumnConfig("EmpireName", "Empire", typeof(DataGridViewTextBoxColumn), Color.White, Format.Raw, Sort.Ascending, 1));
-			cfg.Columns.Add(new GridColumnConfig("HullIcon", "HullIcon", typeof(DataGridViewImageColumn), Color.White, Format.Raw));
+			cfg.Columns.Add(new GridColumnConfig("HullIcon", "Icon", typeof(DataGridViewImageColumn), Color.White, Format.Raw));
 			cfg.Columns.Add(new GridColumnConfig("HullName", "Hull", typeof(DataGridViewTextBoxColumn), Color.White, Format.Raw));
 			cfg.Columns.Add(new GridColumnConfig("HullSize", "Size", typeof(DataGridViewTextBoxColumn), Color.White, Format.Kilotons, Sort.Descending, 2));
 			cfg.Columns.Add(new GridColumnConfig("StartCount", "Start #", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
@@ -55,7 +55,13 @@ namespace FrEee.WinForms.Forms
 
 			// gather grid data
 			var data = new List<object>();
-			foreach (var group in Battle.StartCombatants.GroupBy(c => new { Empire = c.Owner, HullIcon = GetHullIcon(c), HullName = GetHullName(c), HullSize = GetHullSize(c) }))
+			foreach (var group in Battle.StartCombatants.GroupBy(c => new CombatantInfo
+				{
+					Empire = c.Owner,
+					HullIcon = GetHullIcon(c),
+					HullName = GetHullName(c),
+					HullSize = GetHullSize(c)
+				}))
 			{
 				var count = group.Count();
 				var hp = group.Sum(c => c.ArmorHitpoints + c.HullHitpoints);
@@ -81,11 +87,32 @@ namespace FrEee.WinForms.Forms
 			grid.Initialize();
 		}
 
+		private class CombatantInfo
+		{
+			public Empire Empire { get; set; }
+			public Image HullIcon { get; set; }
+			public string HullName { get; set; }
+			public int HullSize { get; set; }
+
+			public override bool Equals(object obj)
+			{
+				if (!(obj is CombatantInfo))
+					return false;
+				var ci = (CombatantInfo)obj;
+				return Empire == ci.Empire && HullName == ci.HullName && HullSize == ci.HullSize;
+			}
+
+			public override int GetHashCode()
+			{
+				return Empire.GetHashCode() ^ HullName.GetHashCode() ^ HullSize.GetHashCode();
+			}
+		}
+
 		/// <summary>
 		/// Gets the icon of a vehicle/design, or a generic icon if it's not a vehicle/design (e.g. if it's a planet).
 		/// </summary>
 		/// <param name="obj"></param>
-		private Image GetHullIcon(IOwnable obj)
+		private static Image GetHullIcon(IOwnable obj)
 		{
 			if (obj is IVehicle)
 				return ((IVehicle)obj).Design.Hull.GetIcon(obj.Owner.ShipsetPath);
@@ -96,10 +123,9 @@ namespace FrEee.WinForms.Forms
 
 		/// <summary>
 		/// Gets the hull name of a vehicle/design, or the type name if it's not a vehicle/design (e.g. if it's a planet).
-		/// I guess you could confuse people by naming your planet "Destroyer" or something...
 		/// </summary>
 		/// <param name="obj"></param>
-		private string GetHullName(IOwnable obj)
+		private static string GetHullName(IOwnable obj)
 		{
 			if (obj is IVehicle)
 				return ((IVehicle)obj).Design.Hull.Name;
@@ -112,7 +138,7 @@ namespace FrEee.WinForms.Forms
 		/// Gets the hull size of a vehicle/design, or int.MaxValue if it's not a vehicle/design (e.g. if it's a planet).
 		/// </summary>
 		/// <param name="obj"></param>
-		private int GetHullSize(IOwnable obj)
+		private static int GetHullSize(IOwnable obj)
 		{
 			if (obj is IVehicle)
 				return ((IVehicle)obj).Design.Hull.Size;
