@@ -29,7 +29,7 @@ namespace FrEee.WinForms.Forms
 		private void BindEmpires()
 		{
 			lstEmpires.Initialize(128, 128);
-			foreach (var emp in Galaxy.Current.Empires)
+			foreach (var emp in Galaxy.Current.Empires.Except((Empire)null))
 			{
 				var item = lstEmpires.AddItemWithImage(null, emp.Name, emp, emp.Portrait);
 				if (emp == Empire.Current)
