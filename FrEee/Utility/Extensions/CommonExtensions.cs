@@ -1553,7 +1553,7 @@ namespace FrEee.Utility.Extensions
 
 			// transfer any-population
 			var anyPopLeft = delta.AnyPopulation;
-			foreach (var kvp in src.AllPopulation)
+			foreach (var kvp in src.AllPopulation.ToArray())
 			{
 				var amount = long.MaxValue;
 
