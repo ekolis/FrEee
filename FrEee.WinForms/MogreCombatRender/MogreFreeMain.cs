@@ -50,7 +50,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		private Battle_Space battle;
         
-        private int SelectedComObj = 1;
+        private int SelectedComObj = -1;
 
 		public MogreFreeMain(Battle_Space battle)
 		{
@@ -123,6 +123,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 path += racename + "\\";
                 ResourceGroupManager.Singleton.AddResourceLocation(path, "FileSystem", "General");
             }
+			ResourceGroupManager.Singleton.AddResourceLocation("Pictures\\Races\\Default\\", "FileSystem", "General");
 
 			var section = cf.GetSectionIterator();
 			while (section.MoveNext())
@@ -567,8 +568,9 @@ namespace FrEee.WinForms.MogreCombatRender
                 //objNode.Scale(10, 10, 10);
                 
             }
-            catch 
+            catch (Exception ex)
             {
+				Console.Error.WriteLine(ex);
             }
 
         }
@@ -577,6 +579,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
         public CombatVehicle selectedObj()
         {
+			if (SelectedComObj < 0)
+				return null;
             return battle.CombatVehicles.ToList<CombatVehicle>()[SelectedComObj]; 
         }
         public CombatObject selectNext()
@@ -821,27 +825,31 @@ namespace FrEee.WinForms.MogreCombatRender
         private void do_txt()
         {
             CombatVehicle comVehic = selectedObj();
-            Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.WorkingVehicle;
+			if (comVehic != null)
+			{
+				Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.WorkingVehicle;
 
-            string txt = ship.Name + "\r\n";
-            txt += "Location:\t" 
-                + comVehic.cmbt_loc.X.ToString() + "\r\n\t" 
-                + comVehic.cmbt_loc.Y.ToString() + "\r\n\t" 
-                + comVehic.cmbt_loc.Z.ToString() + "\r\n";
-            double speed = (double)Trig.hypotinuse(comVehic.cmbt_vel);
-            txt += "Speed:\t" + speed.ToString() + "\r\n";
-            txt += "Heading:\t" + comVehic.cmbt_head.Degrees.ToString() + "\r\n";
-            
-            txt += "\r\n";
-            
-            //Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comVehic.weaponTarget[0].icomobj_WorkingCopy;
-            //txt += "Target:\t" + tgtship.Name + "\r\n";
-            txt += "Distance\t" + Trig.hypotinuse(comVehic.cmbt_loc - comVehic.weaponTarget[0].cmbt_loc) + "\r\n";
+				string txt = ship.Name + "\r\n";
+				txt += "Location:\t"
+					+ comVehic.cmbt_loc.X.ToString() + "\r\n\t"
+					+ comVehic.cmbt_loc.Y.ToString() + "\r\n\t"
+					+ comVehic.cmbt_loc.Z.ToString() + "\r\n";
+				double speed = (double)Trig.hypotinuse(comVehic.cmbt_vel);
+				txt += "Speed:\t" + speed.ToString() + "\r\n";
+				txt += "Heading:\t" + comVehic.cmbt_head.Degrees.ToString() + "\r\n";
 
-            txt += comVehic.debuginfo;
+				txt += "\r\n";
 
-            form.updateText(txt);
-        
+				//Game.Objects.Vehicles.Ship tgtship = (Game.Objects.Vehicles.Ship)comVehic.weaponTarget[0].icomobj_WorkingCopy;
+				//txt += "Target:\t" + tgtship.Name + "\r\n";
+				txt += "Distance\t" + Trig.hypotinuse(comVehic.cmbt_loc - comVehic.weaponTarget[0].cmbt_loc) + "\r\n";
+
+				txt += comVehic.debuginfo;
+
+				form.updateText(txt);
+			}
+			else
+				form.updateText("Nothing selected");        
         }
 
         private void do_lines(CombatObject comObj, PointXd renderloc)
