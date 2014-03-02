@@ -70,26 +70,56 @@ namespace FrEee.Game.Objects.Combat2
 
 			foreach (ICombatant obj in combatants)
 			{
-				// TODO - deal with planets in combat
 				ICombatant copy = obj.Copy();
 				copy.IsMemory = true;
-				SpaceVehicle scopy = (SpaceVehicle)copy;
 
-				// copy over the components individually so they can take damage without affecting the starting state
-				scopy.Components.Clear();
-				foreach (var comp in ((SpaceVehicle)obj).Components)
+				if (obj is SpaceVehicle)
 				{
-					var ccopy = comp.Copy();
-					ccopy.Container = scopy;
-					scopy.Components.Add(ccopy);					
-				}
+					SpaceVehicle scopy = (SpaceVehicle)copy;
 
-				if (scopy.Owner != obj.Owner)
-					scopy.Owner.Dispose(); // don't need extra empires!
-				scopy.Owner = obj.Owner;
-				StartCombatants.Add(scopy);
-                CombatVehicle comObj = new CombatVehicle((SpaceVehicle)scopy, (SpaceVehicle)obj, battleseed);
-				StartNodes.Add(comObj);               
+					// copy over the components individually so they can take damage without affecting the starting state
+					scopy.Components.Clear();
+					foreach (var comp in ((SpaceVehicle)obj).Components)
+					{
+						var ccopy = comp.Copy();
+						ccopy.Container = scopy;
+						scopy.Components.Add(ccopy);
+					}
+
+					if (scopy.Owner != obj.Owner)
+						scopy.Owner.Dispose(); // don't need extra empires!
+					scopy.Owner = obj.Owner;
+					StartCombatants.Add(scopy);
+					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed);
+					StartNodes.Add(comObj);
+				}
+				else if (obj is Planet)
+				{
+					Planet pcopy = (Planet)copy;
+
+					// copy over the facilities individually so they can take damage without affecting the starting state
+					if (pcopy.Colony != null)
+					{
+						pcopy.Colony.Facilities.Clear();
+						foreach (var f in ((Planet)obj).Colony.Facilities)
+						{
+							var fcopy = f.Copy();
+							pcopy.Colony.Facilities.Add(fcopy);
+						}
+					}
+
+					if (pcopy.Owner != obj.Owner)
+						pcopy.Owner.Dispose(); // don't need extra empires!
+					if (pcopy.Colony != null)
+						pcopy.Colony.Owner = obj.Owner;
+					StartCombatants.Add(pcopy);
+					CombatPlanet comObj = new CombatPlanet(pcopy, (Planet)obj, battleseed);
+					StartNodes.Add(comObj);
+				}
+				else
+				{
+					Console.Error.WriteLine("Unknown ICombatant type found in " + this + ": " + obj.GetType());
+				}
 			}
 
 			Fleets = new List<Fleet> { };
@@ -578,16 +608,23 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
+		/// <summary>
+		/// TODO - move fire control to ControlledCombatObject
+		/// </summary>
+		/// <param name="tic_countr"></param>
+		/// <param name="comObj"></param>
         public void firecontrol(int tic_countr, CombatObject comObj)
         {
             if (comObj is CombatSeeker)
-            {//is a seeker 
+            {
+				//is a seeker 
                 missilefirecontrol(tic_countr, (CombatSeeker)comObj);
             }
-            else //is a ship.
+            else if (comObj is ControlledCombatObject)
             {
-                CombatVehicle comVeh = (CombatVehicle)comObj;
-                foreach (var weapon in comVeh.weaponList)
+				//is a ship, base, unit, or planet
+				ControlledCombatObject comVeh = (ControlledCombatObject)comObj;
+                foreach (var weapon in comVeh.Weapons)
                 {
                     Vehicle ship = (Vehicle)comVeh.WorkingObject;
                     //ship.Weapons
@@ -822,8 +859,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
 
-			// TODO - damage to planets and seekers
-			Vehicle targetV = (Vehicle)target.WorkingObject;
+			var targetV = target.WorkingObject;
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
