@@ -1,4 +1,4 @@
-﻿namespace FrEee.WinForms
+﻿namespace FrEee.WinForms.Forms
 {
 	partial class CombatSimulatorForm
 	{
