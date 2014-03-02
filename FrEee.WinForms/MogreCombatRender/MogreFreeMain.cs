@@ -513,6 +513,11 @@ namespace FrEee.WinForms.MogreCombatRender
                     i++;
                 }
             }
+			else if (ComNode is CombatPlanet)
+			{
+				// TODO - planet models
+				filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg";
+			}
             else if (ComNode is CombatSeeker)
             {
                 filestring = "Pictures\\MogreCombat\\Projectiles\\Seeker.cfg";
@@ -678,9 +683,9 @@ namespace FrEee.WinForms.MogreCombatRender
 
                 if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
                 {
-                    foreach (CombatVehicle comVehic in battle.CombatVehicles)
+                    foreach (var ccobj in battle.ControlledCombatObjects)
                     {
-                        battle.commandAI(comVehic, battletic);                        
+                        battle.commandAI(ccobj, battletic);                        
                     }
                     cmdfreq_countr = 0;
                 }

@@ -238,6 +238,18 @@ namespace FrEee.Game.Objects.Combat2
         }
 
 		/// <summary>
+		/// Combat nodes that represent controllable objects.
+		/// This includes vehicles and planets.
+		/// </summary>
+		public IEnumerable<ControlledCombatObject> ControlledCombatObjects
+		{
+			get
+			{
+				return CombatNodes.OfType<ControlledCombatObject>();
+			}
+		}
+
+		/// <summary>
 		/// the Fleets in this battle
 		/// </summary>
 		public ICollection<Fleet> Fleets { get; private set; }
@@ -311,12 +323,12 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             foreach (CombatObject comObj in StartNodes)
 			{
-                if (comObj is CombatVehicle)
+                if (comObj is ControlledCombatObject)
                 {
 #if DEBUG
                     Console.WriteLine("Getting Empire for this ship");
 #endif
-                    Empire thisemp = ((CombatVehicle)comObj).StartVehicle.Owner;
+                    Empire thisemp = ((ControlledCombatObject)comObj).StartCombatant.Owner;
 #if DEBUG
                     Console.WriteLine("Done");
 #endif
@@ -340,12 +352,12 @@ namespace FrEee.Game.Objects.Combat2
             foreach (CombatObject comObj in StartNodes)
 			{
                 comObj.renewtoStart();
-                if (comObj is CombatVehicle)
+				if (comObj is ControlledCombatObject)
                 {
 #if DEBUG
                     Console.WriteLine("Getting Empire for this ship");
 #endif
-                    Empire thisemp = ((CombatVehicle)comObj).StartVehicle.Owner;
+					Empire thisemp = ((ControlledCombatObject)comObj).StartCombatant.Owner;
 #if DEBUG
                     Console.WriteLine("Done");
 #endif
@@ -386,37 +398,37 @@ namespace FrEee.Game.Objects.Combat2
 			else
 				ReplaySetup();
 			//setup the game peices
-            foreach (var comObj in CombatVehicles)
+            foreach (var ccobj in ControlledCombatObjects)
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
-					var ship = comObj.WorkingObject;
+					var ship = ccobj.WorkingObject;
 					if (ship is ICombatant)
 					{
 						var c = (ICombatant)ship;
 						if (c.IsHostileTo(empire.Key))
-							empire.Value.hostile.Add(comObj);
+							empire.Value.hostile.Add(ccobj);
 						else if (c.Owner != empire.Key)
-							empire.Value.friendly.Add(comObj);
+							empire.Value.friendly.Add(ccobj);
 					}
 				}
 
-				int empindex = EmpiresArray.IndexOf(comObj.StartVehicle.Owner);
-				comObj.cmbt_loc = new PointXd(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
+				int empindex = EmpiresArray.IndexOf(ccobj.StartCombatant.Owner);
+				ccobj.cmbt_loc = new PointXd(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
 				//thiscomobj.cmbt_face = new PointXd(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
-				comObj.cmbt_head = new Compass(comObj.cmbt_loc, new PointXd(0, 0, 0));
-				comObj.cmbt_att = new Compass(0);
+				ccobj.cmbt_head = new Compass(ccobj.cmbt_loc, new PointXd(0, 0, 0));
+				ccobj.cmbt_att = new Compass(0);
 				Fix16 speed = (Fix16)0;
-				if (comObj.WorkingObject is Vehicle)
-					speed = ((Fix16)((Vehicle)comObj.WorkingObject).Speed) / (Fix16)2;
+				if (ccobj.WorkingObject is Vehicle)
+					speed = ((Fix16)((Vehicle)ccobj.WorkingObject).Speed) / (Fix16)2;
 				//thiscomobj.cmbt_vel = Trig.sides_ab(speed, (Trig.angleto(thiscomobj.cmbt_loc, thiscomobj.cmbt_face)));
-				comObj.cmbt_vel = Trig.sides_ab(speed, comObj.cmbt_head.Radians);
+				ccobj.cmbt_vel = Trig.sides_ab(speed, ccobj.cmbt_head.Radians);
 
-				comObj.newDice(battleseed);
+				ccobj.newDice(battleseed);
 
 			}
-            foreach (var comVehic in CombatVehicles)
-				commandAI(comVehic, 0);
+            foreach (var ccobj in ControlledCombatObjects)
+				commandAI(ccobj, 0);
 		}
 
 		public void Start()
@@ -461,9 +473,9 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
-                foreach (CombatVehicle comVeh in CombatVehicles)
+                foreach (ControlledCombatObject ccobj in ControlledCombatObjects)
 				{
-					commandAI(comVeh, tick);
+					commandAI(ccobj, tick);
 				}
 				cmdfreqCounter = 0;
 			}
@@ -483,7 +495,7 @@ namespace FrEee.Game.Objects.Combat2
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
             //TODO: check for alive missiles and bullets.
-			bool hostiles = CombatVehicles.Any(o => !o.WorkingObject.IsDestroyed && CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingObject.Owner)));
+			bool hostiles = ControlledCombatObjects.Any(o => !o.WorkingCombatant.IsDestroyed && ControlledCombatObjects.Any(o2 => !o2.WorkingCombatant.IsDestroyed && o.WorkingCombatant.IsHostileTo(o2.WorkingCombatant.Owner)));
 
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
@@ -534,27 +546,27 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
 
-        public void commandAI(CombatVehicle comVehic, int battletick)
+        public void commandAI(ControlledCombatObject ccobj, int battletick)
         {
             //do AI decision stuff.
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
-            if (comVehic.WorkingObject != null)
+            if (ccobj.WorkingObject != null)
             {
                 string comAI = "";
                 CombatObject tgtObj;
-                if (Empires[comVehic.WorkingObject.Owner].hostile.Any())
+                if (Empires[ccobj.WorkingObject.Owner].hostile.Any())
                 {
-                    tgtObj = Empires[comVehic.WorkingObject.Owner].hostile[0];
+                    tgtObj = Empires[ccobj.WorkingObject.Owner].hostile[0];
                     combatWaypoint wpt = new combatWaypoint(tgtObj);
-                    comVehic.waypointTarget = wpt;
+                    ccobj.waypointTarget = wpt;
                     //pick a primary target to fire apon from a list of enemy within weapon range
-                    comVehic.weaponTarget = new List<CombatObject>();
-                    comVehic.weaponTarget.Add(Empires[comVehic.WorkingObject.Owner].hostile[0]);
+                    ccobj.weaponTarget = new List<CombatObject>();
+                    ccobj.weaponTarget.Add(Empires[ccobj.WorkingObject.Owner].hostile[0]);
                 }
                 if (IsReplay && battletick < 1000)
                 {
-                    List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(comVehic, battletick).ToList<CombatEvent>();
-                    CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == comVehic.cmbt_loc);
+                    List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(ccobj, battletick).ToList<CombatEvent>();
+                    CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == ccobj.cmbt_loc);
                     comAI = "Location ";
                     if (locevnt != null)
                         comAI += "Does match \r\n";
@@ -563,11 +575,11 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 else if (!IsReplay && battletick < 1000)
                 {
-                    CombatLocationEvent locevnt = new CombatLocationEvent(battletick, comVehic, comVehic.cmbt_loc);
+                    CombatLocationEvent locevnt = new CombatLocationEvent(battletick, ccobj, ccobj.cmbt_loc);
                     ReplayLog.Events.Add(locevnt);
                 }
 
-                comVehic.debuginfo += comAI;
+                ccobj.debuginfo += comAI;
             }
         }
 
@@ -584,10 +596,10 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
-                if (target is CombatVehicle) 
+                if (target is ControlledCombatObject) 
                 {
-                    CombatVehicle comVehTgt = (CombatVehicle)target;
-                    var target_icomobj = comVehTgt.WorkingObject;
+					ControlledCombatObject ccTarget = (ControlledCombatObject)target;
+                    var target_icomobj = ccTarget.WorkingObject;
                     var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
                     int damage = shot.Damage;
@@ -609,7 +621,7 @@ namespace FrEee.Game.Objects.Combat2
         }
 
 		/// <summary>
-		/// TODO - move fire control to ControlledCombatObject
+		/// TODO - move fire control to CombatObject as an abstract method
 		/// </summary>
 		/// <param name="tic_countr"></param>
 		/// <param name="comObj"></param>
@@ -623,15 +635,13 @@ namespace FrEee.Game.Objects.Combat2
             else if (comObj is ControlledCombatObject)
             {
 				//is a ship, base, unit, or planet
-				ControlledCombatObject comVeh = (ControlledCombatObject)comObj;
-                foreach (var weapon in comVeh.Weapons)
+				ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+                foreach (var wpn in ccobj.Weapons)
                 {
-                    Vehicle ship = (Vehicle)comVeh.WorkingObject;
-                    //ship.Weapons
-                    CombatWeapon wpn = (CombatWeapon)weapon;
+					ICombatant ship = (ICombatant)ccobj.WorkingObject;
 
                     if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
-                        wpn.CanTarget(comVeh.weaponTarget[0].WorkingObject) && //if we CAN target 
+                        wpn.CanTarget(ccobj.weaponTarget[0].WorkingObject) && //if we CAN target 
                         tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
                     {
                         if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
@@ -641,7 +651,7 @@ namespace FrEee.Game.Objects.Combat2
                             //first create the event for the target ship
                             CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
                             //then create teh event for this ship firing on the target
-                            CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, weapon, targets_event);
+                            CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
                             targets_event.fireOnEvent = attack_event;
 
                             if (!IsReplay)
@@ -909,13 +919,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="c"></param>
 		/// <returns></returns>
-		public ITargetable FindWorkingCombatant(ITargetable c)
+		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
 			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
-            return CombatVehicles.SingleOrDefault(c2 => c2.ID == c.ID).WorkingObject;
+            return ControlledCombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).WorkingCombatant;
 		}
 
-		public ITargetable FindActualCombatant(ITargetable c)
+		public ICombatant FindActualCombatant(ICombatant c)
 		{
 			return ActualCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
 		}
