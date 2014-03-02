@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
 using FrEee.WinForms.MogreCombatRender;
@@ -273,8 +274,18 @@ namespace FrEee.WinForms.Forms
 
 		private void btnAddPlanet_Click(object sender, EventArgs e)
 		{
-			// TODO - planets in combat
-			MessageBox.Show("Sorry, planetary combat is not yet implemented.");
+			// TODO - let player choose a planet?
+			var template = Mod.Current.StellarObjectTemplates.OfType<Planet>().Where(p => p.Atmosphere == CurrentEmpire.Empire.PrimaryRace.NativeAtmosphere).PickRandom();
+			var planet = template.Instantiate();
+			planet.Name = "Planet";
+			var sim = new SimulatedSpaceObject(planet);
+			var simPlanet = (Planet)sim.SpaceObject;
+			simPlanet.Colony = new Colony();
+			simPlanet.Colony.Owner = CurrentEmpire.Empire;
+			// TODO - let player choose population?
+			simPlanet.Colony.Population.Add(CurrentEmpire.Empire.PrimaryRace, simPlanet.MaxPopulation);
+			CurrentEmpire.SpaceObjects.Add(sim);
+			BindSpaceObjectList();
 		}
 
 		private void btnRemoveSpaceObject_Click(object sender, EventArgs e)
