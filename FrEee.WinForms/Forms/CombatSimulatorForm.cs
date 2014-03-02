@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace FrEee.WinForms
+namespace FrEee.WinForms.Forms
 {
 	public partial class CombatSimulatorForm : Form
 	{
