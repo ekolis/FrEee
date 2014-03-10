@@ -55,7 +55,7 @@ namespace FrEee.WinForms.Forms
 
 			// gather grid data
 			var data = new List<object>();
-			foreach (var group in Battle.StartCombatants.GroupBy(c => new CombatantInfo
+			foreach (var group in Battle.StartCombatants.Values.GroupBy(c => new CombatantInfo
 				{
 					Empire = c.Owner,
 					HullIcon = GetHullIcon(c),
