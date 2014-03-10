@@ -60,8 +60,8 @@ namespace FrEee.Game.Objects.Combat2
 			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 
-			StartCombatants = new HashSet<ICombatant>();
-			ActualCombatants = new HashSet<ICombatant>(combatants);
+			StartCombatants = new Dictionary<long, ICombatant>();
+			ActualCombatants = combatants.ToDictionary(c => c.ID);
 			//WorkingCombatants = new HashSet<ICombatant>();
 			CombatNodes = new HashSet<CombatNode>();
             StartNodes = new HashSet<CombatNode>();
@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Combat2
 					if (scopy.Owner != obj.Owner)
 						scopy.Owner.Dispose(); // don't need extra empires!
 					scopy.Owner = obj.Owner;
-					StartCombatants.Add(scopy);
+					StartCombatants.Add(scopy.ID, scopy);
 					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed);
 					StartNodes.Add(comObj);
 				}
@@ -112,7 +112,7 @@ namespace FrEee.Game.Objects.Combat2
 						pcopy.Owner.Dispose(); // don't need extra empires!
 					if (pcopy.Colony != null)
 						pcopy.Colony.Owner = obj.Owner;
-					StartCombatants.Add(pcopy);
+					StartCombatants.Add(pcopy.ID, pcopy);
 					CombatPlanet comObj = new CombatPlanet(pcopy, (Planet)obj, battleseed);
 					StartNodes.Add(comObj);
 				}
@@ -178,17 +178,12 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The combatants at the start of this battle.
 		/// </summary>
-		public ISet<ICombatant> StartCombatants { get; private set; }
-
-		/// <summary>
-		/// The working list of combatants in this battle.
-		/// </summary>
-		//public ISet<ICombatant> WorkingCombatants { get; private set; }
+		public IDictionary<long, ICombatant> StartCombatants { get; private set; }
 
 		/// <summary>
 		/// The REAL combatants objects.
 		/// </summary>
-		public ISet<ICombatant> ActualCombatants { get; private set; }
+		public IDictionary<long, ICombatant> ActualCombatants { get; private set; }
 
 		/// <summary>
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
@@ -911,7 +906,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public ICombatant FindStartCombatant(ICombatant c)
 		{
-			return StartCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+			return StartCombatants[c.ID];
 		}
 
 		/// <summary>
@@ -921,13 +916,12 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns></returns>
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
-			//return WorkingCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
             return ControlledCombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).WorkingCombatant;
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)
 		{
-			return ActualCombatants.SingleOrDefault(c2 => c2.ID == c.ID);
+			return ActualCombatants[c.ID];
 		}
 
 		/// <summary>
@@ -938,7 +932,7 @@ namespace FrEee.Game.Objects.Combat2
 		public Visibility CheckVisibility(Empire emp)
 		{
 			// TODO - "share combat logs" treaties?
-			return ActualCombatants.Any(c => c.Owner == emp) ? Visibility.Visible : Visibility.Unknown;
+			return ActualCombatants.Values.Any(c => c.Owner == emp) ? Visibility.Visible : Visibility.Unknown;
 		}
 
 		public void Redact(Empire emp)
@@ -949,7 +943,7 @@ namespace FrEee.Game.Objects.Combat2
 			else
 			{
 				// start combatants are memories but need to be redacted anyway
-				foreach (var memory in StartCombatants)
+				foreach (var memory in StartCombatants.Values)
 					memory.Redact(emp);
 			}
 		}
