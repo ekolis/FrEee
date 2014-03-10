@@ -546,6 +546,11 @@ namespace FrEee.Game.Objects.Space
 			var idmap = new Dictionary<long, long>();
 			foreach (var cmd in cmds)
 			{
+				if (cmd.NewReferrables.Any(r => r.IsDisposed))
+				{
+					emp.Log.Add(new GenericLogMessage("Command \"" + cmd + "\" contained a reference to deleted object \"" + cmd.NewReferrables.First(r => r.IsDisposed) + "\" and will be ignored. This may be a game bug."));
+					continue;
+				}
 				emp.Commands.Add(cmd);
 				foreach (var r in cmd.NewReferrables)
 				{
