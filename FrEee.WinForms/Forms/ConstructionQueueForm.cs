@@ -69,7 +69,51 @@ namespace FrEee.WinForms.Forms
 			ClearDetails();
 		}
 
-		private void BindQueueListView()
+		/// <summary>
+		/// Finds the number of orders directly above this order that have the same template as the item directly above.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public int FindSameItemsCountAbove(IConstructionOrder o)
+		{
+			var pos = ConstructionQueue.Orders.IndexOf(o);
+			int num = 0;
+			IConstructionTemplate t = null;
+			for (var i = pos - 1; i >= 0; i--)
+			{
+				if (t == null)
+					t = ConstructionQueue.Orders[i].Template;
+				if (ConstructionQueue.Orders[i].Template == t)
+					num++;
+				else
+					break;
+			}
+			return num;
+		}
+
+		/// <summary>
+		/// Finds the number of orders directly below this order that have the same template as the item directly above.
+		/// </summary>
+		/// <param name="o"></param>
+		/// <returns></returns>
+		public int FindSameItemsCountBelow(IConstructionOrder o)
+		{
+			var pos = ConstructionQueue.Orders.IndexOf(o);
+			int num = 0;
+			IConstructionTemplate t = null;
+			for (var i = pos + 1; i < ConstructionQueue.Orders.Count; i++)
+			{
+				if (t == null)
+					t = ConstructionQueue.Orders[i].Template;
+				if (ConstructionQueue.Orders[i].Template == t)
+					num++;
+				else
+					break;
+			}
+			return num;
+		}
+
+		private void BindQueueListView(IEnumerable<IConstructionOrder> selected = null)
 		{
 			lstQueue.Items.Clear();
 			var il = new ImageList();
@@ -84,6 +128,7 @@ namespace FrEee.WinForms.Forms
 			double totalMin = 0d, totalOrg = 0d, totalRad = 0d;
 			var orders = new List<IConstructionOrder>();
 			var rate = ConstructionQueue.Rate;
+			ListViewItem item;
 			foreach (var order in ConstructionQueue.Orders)
 			{
 				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)rate[res]));
@@ -92,16 +137,16 @@ namespace FrEee.WinForms.Forms
 				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
 				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];
 				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)rate[res]);
-				if (order.Template == lastTemplate)
+				if (!chkExpanded.Checked && order.Template == lastTemplate)
 				{
-					// building same as previous item
+					// building same as previous item, and using condensed view
 					count++;
 					orders.Add(order);
 					totalMin += minprogress;
 					totalOrg += orgprogress;
 					totalRad += radprogress;
 					lstQueue.Items.RemoveAt(lstQueue.Items.Count - 1);
-					var item = new ListViewItem(count + "x " + order.Template.Name);
+					item = new ListViewItem(count + "x " + order.Template.Name);
 					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalMin) ? "-" :
@@ -127,14 +172,14 @@ namespace FrEee.WinForms.Forms
 				}
 				else
 				{
-					// building something different
+					// building something different, or using expanded view
 					count = 1;
-					orders.Clear();
+					orders = new List<IConstructionOrder>();
 					orders.Add(order);
 					totalMin = minprogress;
 					totalOrg = orgprogress;
 					totalRad = radprogress;
-					var item = new ListViewItem(order.Template.Name);
+					item = new ListViewItem(order.Template.Name);
 					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
@@ -147,6 +192,8 @@ namespace FrEee.WinForms.Forms
 					i++;
 					firstEta = eta;
 				}
+				if (selected != null && selected.Intersect(orders).Any())
+					item.Selected = true;
 				prevCost += remainingCost;
 				lastTemplate = order.Template;
 			}
@@ -455,76 +502,92 @@ namespace FrEee.WinForms.Forms
 
 		private void btnUp_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrderIndex > 0)
+			var sel = SelectedOrders.ToArray();
+			int delta;
+			if (chkExpanded.Checked)
+				delta = -1;
+			else
+				delta = -FindSameItemsCountAbove(sel.First());
+			foreach (var order in sel)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, -1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
-				BindQueueListView();
 			}
+			BindQueueListView(sel);
 		}
 
 		private void btnTop_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrderIndex > 0)
+			var sel = SelectedOrders.ToArray();
+			foreach (var item in sel.Select(o => new {Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o)}))
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, -SelectedOrderIndex);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
-				BindQueueListView();
 			}
+			BindQueueListView(sel);
 		}
 
 		private void btnDown_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
+			var sel = SelectedOrders.ToArray();
+			int delta;
+			if (chkExpanded.Checked)
+				delta = 1;
+			else
+				delta = FindSameItemsCountBelow(sel.Last()) + sel.Count() - 1;
+			foreach (var order in sel)
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, 1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
-				BindQueueListView();
 			}
+			BindQueueListView(sel);
 		}
 
 		private void btnBottom_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrderIndex >= 0 && SelectedOrderIndex < ConstructionQueue.Orders.Count - 1)
+			var sel = SelectedOrders.ToArray();
+			foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = ConstructionQueue.Orders.Count() }))
 			{
-				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, SelectedOrder, ConstructionQueue.Orders.Count - SelectedOrderIndex - 1);
+				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
-				BindQueueListView();
 			}
+			BindQueueListView(sel);
 		}
 
-		public IConstructionOrder SelectedOrder
+		/// <summary>
+		/// The queued orders that are selected by the player.
+		/// </summary>
+		public IEnumerable<IConstructionOrder> SelectedOrders
 		{
 			get
 			{
-				if (lstQueue.SelectedItems.Count == 1)
-					return (IConstructionOrder)lstQueue.SelectedItems[0].Tag;
-				return null;
-			}
-		}
-
-		public int SelectedOrderIndex
-		{
-			get
-			{
-				if (lstQueue.SelectedIndices.Count == 1)
-					return lstQueue.SelectedIndices[0];
-				return -1;
+				foreach (ListViewItem item in lstQueue.SelectedItems)
+				{
+					if (item.Tag is IConstructionOrder)
+						yield return (IConstructionOrder)item.Tag;
+					else if (item.Tag is IEnumerable<IConstructionOrder>)
+					{
+						foreach (var o in (IEnumerable<IConstructionOrder>)item.Tag)
+							yield return o;
+					}
+				}
 			}
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrder != null)
-				RemoveOrder(SelectedOrder);
+			foreach (var o in SelectedOrders)
+				RemoveOrder(o, false);
+			BindQueueListView();
+			
 		}
 
 		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -649,6 +712,11 @@ namespace FrEee.WinForms.Forms
 				shiftPressed = false;
 			else if (e.KeyCode == Keys.Control)
 				ctrlPressed = false;
+		}
+
+		private void chkExpanded_CheckedChanged(object sender, EventArgs e)
+		{
+			BindQueueListView(SelectedOrders.ToArray());
 		}
 	}
 }

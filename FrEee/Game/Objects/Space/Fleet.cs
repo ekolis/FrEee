@@ -448,9 +448,10 @@ namespace FrEee.Game.Objects.Space
 			Orders.Remove(o);
 			if (newpos < 0)
 				newpos = 0;
-			if (newpos > Orders.Count)
-				newpos = Orders.Count;
-			Orders.Insert(newpos, o);
+			if (newpos >= Orders.Count)
+				Orders.Add(o);
+			else
+				Orders.Insert(newpos, o);
 		}
 
 		public bool ExecuteOrders()
