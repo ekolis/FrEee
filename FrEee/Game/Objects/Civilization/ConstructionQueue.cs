@@ -332,10 +332,11 @@ namespace FrEee.Game.Objects.Civilization
 			var newpos = Orders.IndexOf(o) + delta;
 			if (newpos < 0)
 				newpos = 0;
-			if (newpos > Orders.Count)
-				newpos = Orders.Count;
 			Orders.Remove(o);
-			Orders.Insert(newpos, o);
+			if (newpos >= Orders.Count)
+				Orders.Add(o);
+			else
+				Orders.Insert(newpos, o);
 		}
 
 		public void Dispose()

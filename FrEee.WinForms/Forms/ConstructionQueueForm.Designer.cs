@@ -76,6 +76,7 @@
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
+			this.chkExpanded = new System.Windows.Forms.CheckBox();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -309,6 +310,7 @@
 			this.lstQueue.ForeColor = System.Drawing.Color.White;
 			this.lstQueue.FullRowSelect = true;
 			this.lstQueue.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+			this.lstQueue.HideSelection = false;
 			this.lstQueue.HoverSelection = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
@@ -442,6 +444,7 @@
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
 			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
+			this.gameTabControl1.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabIndex = 1;
 			// 
@@ -642,12 +645,24 @@
 			this.txtFacilitySlotsFree.TabIndex = 26;
 			this.txtFacilitySlotsFree.Text = "Facility Slots Free:";
 			// 
+			// chkExpanded
+			// 
+			this.chkExpanded.AutoSize = true;
+			this.chkExpanded.Location = new System.Drawing.Point(597, 62);
+			this.chkExpanded.Name = "chkExpanded";
+			this.chkExpanded.Size = new System.Drawing.Size(100, 17);
+			this.chkExpanded.TabIndex = 27;
+			this.chkExpanded.Text = "Expanded View";
+			this.chkExpanded.UseVisualStyleBackColor = true;
+			this.chkExpanded.CheckedChanged += new System.EventHandler(this.chkExpanded_CheckedChanged);
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.ClientSize = new System.Drawing.Size(880, 486);
+			this.Controls.Add(this.chkExpanded);
 			this.Controls.Add(this.txtFacilitySlotsFree);
 			this.Controls.Add(this.txtCargoStorageFree);
 			this.Controls.Add(this.btnDelete);
@@ -743,5 +758,6 @@
 		private System.Windows.Forms.ListView lstUpgrades;
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
+		private System.Windows.Forms.CheckBox chkExpanded;
 	}
 }
