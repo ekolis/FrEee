@@ -248,7 +248,19 @@ Tonnage Structure Percent      := 50
 Supply Percent                 := 100
 Comp Family Requirement        := Beam
 Vehicle Type                   := Ship, Base
-Tech Area Req                  := Megafluxers
+Tech Area Req                  := Hyper-X Capacitors
+Tech Level Req                 := 1
+
+Long Name                      := Microlite Construction
+Short Name                     := Microlite
+Description                    := Advanced materials technology which reduces the construction cost of a component.
+Code                           := MC
+Cost Percent                   := 50
+Tonnage Percent                := 100
+Tonnage Structure Percent      := 80
+Supply Percent                 := 100
+Vehicle Type                   := Ship, Base
+Tech Area Req                  := Microlite Construction
 Tech Level Req                 := 1
 
 // TODO

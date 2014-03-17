@@ -57,6 +57,8 @@ Number of Tech Req:
 
 Tech Area Req #, Tech Level Req #:
   The tech area and level required.
+  
+TODO - make sure weapons-type tech areas have enough levels for the modifiers that require extra levels of theoretical techs
 
 =======================================================================================
 *BEGIN*
@@ -885,7 +887,7 @@ Tech Area Req         := Chemistry
 Tech Level Req        := 2
 Can Be Removed        := True
 
-Name                  := Tritanium Armor
+Name                  := Tri-Titanium Armor
 Group                 := Defenses
 Description           := Dense metallic armor placed on the exterior of a ship to prevent damage.
 Maximum Level         := 1
@@ -1296,7 +1298,7 @@ Can Be Removed        := True
 
 Name                  := Emissions Guidance System
 Group                 := Weapons
-Description           := Missile enhancement designed to specifically target a ship's engines.
+Description           := Missile enhancement designed to specifically target a ship's engines and other weak points, bypassing armor.
 Maximum Level         := 1
 Level Cost            := 1500
 Start Level           := 0
