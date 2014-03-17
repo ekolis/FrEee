@@ -30,6 +30,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// The empire that is offering something in this clause.
 		/// </summary>
+		[DoNotSerialize]
 		public Empire Giver { get { return giver; } set { giver = value; } }
 		
 		private Reference<Empire> receiver { get; set; }
@@ -37,6 +38,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// <summary>
 		/// The empire that is receiving a benefit from this clause.
 		/// </summary>
+		[DoNotSerialize]
 		public Empire Receiver { get { return receiver; } set { receiver = value; } }
 
 		/// <summary>
