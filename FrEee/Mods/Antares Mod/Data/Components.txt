@@ -459,7 +459,7 @@ Cost Radioactives     := 50
 Vehicle Type          := Ship, Base
 Supply Amount Used    := 5
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Special
 Family                := Troop Pods
 Roman Numeral         := 0
 Custom Group          := 0
@@ -469,8 +469,6 @@ Tech Level Req        := 1
 Ability Type          := Boarding Attack
 Ability Val           := 20
 Weapon Type           := None
-
-// TODO - fast missile racks versions of missiles, once I get to missiles
 
 Name                  := Advanced Damage Control
 Description           := Repair systems capable of fixing damage in deep space, without a shipyard.
@@ -504,7 +502,7 @@ Cost Radioactives     := 30
 Vehicle Type          := Ship, Base
 Supply Amount Used    := 5
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Special
 Family                := Troop Pods
 Roman Numeral         := 0
 Custom Group          := 0
@@ -549,7 +547,7 @@ Cost Radioactives     := 100
 Vehicle Type          := Mine
 Supply Amount Used    := 0
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Warhead
 Family                := Artemis Warhead Cluster
 Roman Numeral         := 0
 Custom Group          := 0
@@ -605,7 +603,7 @@ Cost Radioactives     := =discount(10, level)
 Vehicle Type          := Ship
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -639,7 +637,7 @@ Cost Radioactives     := =discount(10, level)
 Vehicle Type          := Fighter
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -697,7 +695,7 @@ Cost Radioactives     := =discount(15, level)
 Vehicle Type          := Ship
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -731,7 +729,7 @@ Cost Radioactives     := =discount(15, level)
 Vehicle Type          := Fighter
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -815,7 +813,7 @@ Cost Radioactives     := =miniaturize(50, level)
 Vehicle Type          := Ship, Base, Weapon Platform
 Supply Amount Used    := 5
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Direct Fire
 Family                := Ion Pulse Cannon
 Roman Numeral         := =level
 Custom Group          := 0
@@ -899,7 +897,7 @@ Cost Radioactives     := =discount(50, level)
 Vehicle Type          := Ship, Base, Weapon Platform
 Supply Amount Used    := 10
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Seeking
 Family                := Seeking Torpedo
 Roman Numeral         := =level
 Custom Group          := 0
@@ -935,7 +933,7 @@ Cost Radioactives     := =discount(20, level)
 Vehicle Type          := Ship
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -969,7 +967,7 @@ Cost Radioactives     := =discount(20, level)
 Vehicle Type          := Fighter
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -1003,7 +1001,7 @@ Cost Radioactives     := =discount(100, level)
 Vehicle Type          := Ship, Base, Weapon Platform
 Supply Amount Used    := 10
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Direct Fire
 Family                := Direct Fire Torpedo
 Roman Numeral         := =level
 Custom Group          := 0
@@ -1085,7 +1083,7 @@ Cost Radioactives     := =discount(150, level)
 Vehicle Type          := Ship, Base, Weapon Platform
 Supply Amount Used    := 10
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Seeking
 Family                := Seeking Torpedo
 Roman Numeral         := =level
 Custom Group          := 0
@@ -1121,7 +1119,7 @@ Cost Radioactives     := =discount(25, level)
 Vehicle Type          := Ship
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -1155,7 +1153,7 @@ Cost Radioactives     := =discount(25, level)
 Vehicle Type          := Fighter
 Supply Amount Used    := 1
 Restrictions          := None
-General Group         := Weapons
+General Group         := Weapons - Bomb
 Family                := Bomb
 Roman Numeral         := =level
 Custom Group          := 0
@@ -1175,7 +1173,864 @@ Weapon Modifier       := 0
 Weapon Sound          := plntnplm.wav
 Weapon Family         := Bomb
 
-// TODO
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(50, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Missile
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =1 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Fast Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead. Modified with improved thrusters for enhanced speed.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(40, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Fast Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =2 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Fast Missile
+Weapon Seeker Speed   := 7
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Armored Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead. Modified with heavy armor for improved durability.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(40, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Armored Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =2 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Armored Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 3
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='MIRV Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead. Modified with multiple warheads for improved damage.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(40, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(40, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(60, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 100
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := MIRV Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =3 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := MIRV Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Quick Load Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead. Launcher is designed for rapid loading.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(40, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Quick Load Missile
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Fast Missile Racks
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =3 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 0.5
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Quick Load Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='EMG Nuclear Missile +' + level.ToString()
+Description           := Missile with a nuclear fission warhead. Modified with advanced tracking systems to find weak points in ships' armor.
+Pic Num               := 67
+Tonnage Space Taken   := =miniaturize(80, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(80, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(120, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := EMG Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Nuclear Missile
+Tech Level Req        := 1
+Tech Area Req         := Emissions Guidance System
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =3 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8 8
+Weapon Damage Type    := Skips Armor
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := EMG Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Name                  := Standard Fuel Cell
+Description           := Chemical reactor and capacitor based energy storage which provides power for a space vehicle.
+Pic Num               := 117
+Tonnage Space Taken   := 1
+Tonnage Structure     := 1
+Cost Minerals         := 1
+Cost Organics         := 1
+Cost Radioactives     := 2
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fuel Cell
+Roman Numeral         := 1
+Custom Group          := 0
+Tech Area Req         := Standard Fuel Cells
+Tech Level Req        := 1
+Ability Type          := Supply Storage
+Ability Val           := 400
+Weapon Type           := None
+
+Name                  := Light Titanium Armor
+Description           := Standard metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 28
+Tonnage Space Taken   := 1
+Tonnage Structure     := 5
+Cost Minerals         := 1
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base, Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Armor
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Titanium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+Name                  := Heavy Titanium Armor
+Description           := Standard metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 30
+Tonnage Space Taken   := 10
+Tonnage Structure     := 100
+Cost Minerals         := 10
+Cost Organics         := 0
+Cost Radioactives     := 1
+Vehicle Type          := Ship, Base, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Heavy Armor
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Titanium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+Name                  := Deuterium Fuel Cell
+Description           := Nuclear fusion reactor and hydrogen fuel cell based energy storage which provides power for a space vehicle.
+Pic Num               := 117
+Tonnage Space Taken   := 1
+Tonnage Structure     := 1
+Cost Minerals         := 1
+Cost Organics         := 1
+Cost Radioactives     := 3
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fuel Cell
+Roman Numeral         := 2
+Custom Group          := 0
+Tech Area Req         := Deuterium Fuel Cells
+Tech Level Req        := 1
+Ability Type          := Supply Storage
+Ability Val           := 600
+Weapon Type           := None
+
+Name                  := Light Tri-Titanium Armor
+Description           := Dense metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 28
+Tonnage Space Taken   := 1
+Tonnage Structure     := 10
+Cost Minerals         := 1
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base, Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Armor
+Roman Numeral         := 2
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Tri-Titanium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+Name                  := Heavy Tri-Titanium Armor
+Description           := Dense metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 30
+Tonnage Space Taken   := 10
+Tonnage Structure     := 200
+Cost Minerals         := 10
+Cost Organics         := 0
+Cost Radioactives     := 4
+Vehicle Type          := Ship, Base, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Heavy Armor
+Roman Numeral         := 2
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Tri-Titanium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(40, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Missile
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =3 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Fast Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile. Modified with improved thrusters for enhanced speed.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(55, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Fast Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Fast Missile
+Weapon Seeker Speed   := 7
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Armored Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile. Modified with heavy armor for improved durability.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(55, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Armored Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Armored Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 3
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='MIRV Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile. Modified with multiple warheads for improved damage.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(40, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(40, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(80, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 100
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := MIRV Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =5 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56 56
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := MIRV Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Quick Load Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile. Launcher is designed for rapid loading.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(55, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Quick Load Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Fast Missile Racks
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =5 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 0.5
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Quick Load Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='EMG Merculite Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile. Modified with advanced tracking systems to find weak points in ships' armor.
+Pic Num               := 93
+Tonnage Space Taken   := =miniaturize(80, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(80, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(160, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := EMG Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Merculite Missile
+Tech Level Req        := 1
+Tech Area Req         := Emissions Guidance System
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =5 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14 14
+Weapon Damage Type    := Skips Armor
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := EMG Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Pulson Missile +' + level.ToString()
+Description           := Hybrid chemical/nuclear missile.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(20, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(20, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(60, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Missile
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =4 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Fast Pulson Missile +' + level.ToString()
+Description           := Powerful missile with an exotic-matter warhead. Modified with improved thrusters for enhanced speed.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(80, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Fast Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =5 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Fast Missile
+Weapon Seeker Speed   := 7
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Armored Pulson Missile +' + level.ToString()
+Description           := Powerful missile with an exotic-matter warhead. Modified with heavy armor for improved durability.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(80, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 60
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Armored Missile
+Roman Numeral         := =level + 10
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =5 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Armored Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 3
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='MIRV Pulson Missile +' + level.ToString()
+Description           := Powerful missile with an exotic-matter warhead. Modified with multiple warheads for improved damage.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(40, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(40, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(120, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 100
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := MIRV Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =6 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80 80
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := MIRV Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='Quick Load Pulson Missile +' + level.ToString()
+Description           := Powerful missile with an exotic-matter warhead. Launcher is designed for rapid loading.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(25, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(25, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(80, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := Quick Load Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Fast Missile Racks
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =6 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 0.5
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := Quick Load Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Parameter Name      := level
+Parameter Minimum   := 0
+Parameter Maximum   := 5
+Name                  := ='EMG Pulson Missile +' + level.ToString()
+Description           := Powerful missile with an exotic-matter warhead. Modified with advanced tracking systems to find weak points in ships' armor.
+Pic Num               := 72
+Tonnage Space Taken   := =miniaturize(80, level)
+Tonnage Structure     := 2
+Cost Minerals         := =miniaturize(80, level)
+Cost Organics         := 0
+Cost Radioactives     := =discount(240, level)
+Vehicle Type          := Ship, Base, Weapon Platform
+Supply Amount Used    := 50
+Restrictions          := None
+General Group         := Weapons - Seeking
+Family                := EMG Missile
+Roman Numeral         := =level + 20
+Custom Group          := 0
+Tech Area Req         := Pulson Missile
+Tech Level Req        := 1
+Tech Area Req         := Emissions Guidance System
+Tech Level Req        := 1
+Tech Area Req         := Chemistry
+Tech Level Req        := =6 + level
+Number of Abilities   := 0
+Weapon Type           := Seeking
+Weapon Target         := Ships\Planets
+Weapon Damage At Rng  := 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+Weapon Damage Type    := Skips Armor
+Weapon Reload Rate    := 1
+Weapon Display Type   := Seeker
+Weapon Display        := 1
+Weapon Modifier       := 0
+Weapon Sound          := capshpms.wav
+Weapon Family         := EMG Missile
+Weapon Seeker Speed   := 4
+Weapon Seeker Dmg Res := 1
+
+Name                  := Iridium Fuel Cell
+Description           := Phased energy reactor and subspace based energy storage which provides power for a space vehicle.
+Pic Num               := 117
+Tonnage Space Taken   := 1
+Tonnage Structure     := 1
+Cost Minerals         := 1
+Cost Organics         := 1
+Cost Radioactives     := 5
+Vehicle Type          := Ship, Fighter
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fuel Cell
+Roman Numeral         := 3
+Custom Group          := 0
+Tech Area Req         := Iridium Fuel Cells
+Tech Level Req        := 1
+Ability Type          := Supply Storage
+Ability Val           := 900
+Weapon Type           := None
+
+Name                  := Light Zortrium Armor
+Description           := Transuranic metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 28
+Tonnage Space Taken   := 1
+Tonnage Structure     := 20
+Cost Minerals         := 1
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base, Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Armor
+Roman Numeral         := 4
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Zortrium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+Name                  := Heavy Zortrium Armor
+Description           := Transuranic metallic armor placed on the exterior of a ship to prevent damage.
+Pic Num               := 30
+Tonnage Space Taken   := 10
+Tonnage Structure     := 400
+Cost Minerals         := 10
+Cost Organics         := 0
+Cost Radioactives     := 16
+Vehicle Type          := Ship, Base, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Heavy Armor
+Roman Numeral         := 4
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Zortrium Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability Type          := Armor
+Weapon Type           := None
+
+// TODO - chemistry techs from Zeon Missile onward
+
+// TODO - remaining tech fields
 
 Name                  := Space Yard I
 Description           := Ship construction component which can work on one ship at a time.
