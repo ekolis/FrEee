@@ -883,5 +883,16 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Gets the memory of an object.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public T Recall<T>(T obj) where T : IFoggable
+		{
+			return (T)Memory[obj.ID];
+		}
 	}
 }
