@@ -219,7 +219,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Formula<int> WeaponMinRange
+		public int WeaponMinRange
 		{
 			get
 			{
@@ -232,7 +232,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public Formula<int> WeaponMaxRange
+		public int WeaponMaxRange
 		{
 			get
 			{
