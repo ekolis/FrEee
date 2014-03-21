@@ -103,7 +103,7 @@ namespace FrEee.WinForms.Controls
 					{
 						ShowRow(2);
 						var swpn = (SeekingWeaponInfo)weapon;
-						txtSeekerSpeed.Text = swpn.SeekerSpeed + " squares / round";
+						txtSeekerSpeed.Text = swpn.SeekerSpeed + " km/s²";
 						txtSeekerDurability.Text = swpn.SeekerDurability + " HP";
 					}
 					else
