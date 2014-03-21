@@ -95,7 +95,7 @@ namespace FrEee.WinForms.Controls
 					if (weapon.WeaponType.IsDirectFire())
 					{
 						ShowRow(1);
-						txtAccuracy.Text = Component.Template.WeaponAccuracy.ToString("0:+#;-#;0") + "%"; // show plus sign on positive numbers
+						txtAccuracy.Text = Component.Template.WeaponAccuracy.ToString("+#;-#;0") + "%"; // show plus sign on positive numbers
 					}
 					else
 						HideRow(1);
