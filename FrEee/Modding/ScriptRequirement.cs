@@ -24,5 +24,10 @@ namespace FrEee.Modding
 		{
 			return Formula.Evaluate(obj);
 		}
+
+		public override bool IsStrict
+		{
+			get { return false; }
+		}
 	}
 }

@@ -304,5 +304,10 @@ namespace FrEee.WinForms.Forms
 				hasChanged = true;
 			}
 		}
+
+		private void btnTree_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new TechTreeForm());
+		}
 	}
 }

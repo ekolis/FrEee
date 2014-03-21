@@ -60,6 +60,7 @@
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
 			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.txtTechDiscription = new System.Windows.Forms.Label();
+			this.btnTree = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
@@ -137,6 +138,7 @@
 			this.Progress.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
 			this.Progress.DataPropertyName = "Progress";
 			this.Progress.HeaderText = "Progress";
+			this.Progress.MinimumWidth = 100;
 			this.Progress.Name = "Progress";
 			this.Progress.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Eta;
 			this.Progress.ReadOnly = true;
@@ -146,6 +148,7 @@
 			this.Spending.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
 			this.Spending.DataPropertyName = "Spending";
 			this.Spending.HeaderText = "Spending";
+			this.Spending.MinimumWidth = 100;
 			this.Spending.Name = "Spending";
 			this.Spending.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Percentage;
 			this.Spending.ReadOnly = true;
@@ -371,6 +374,7 @@
 			this.dataGridViewProgressColumn1.BarColor = System.Drawing.Color.Silver;
 			this.dataGridViewProgressColumn1.DataPropertyName = "Progress";
 			this.dataGridViewProgressColumn1.HeaderText = "Progress";
+			this.dataGridViewProgressColumn1.MinimumWidth = 100;
 			this.dataGridViewProgressColumn1.Name = "dataGridViewProgressColumn1";
 			// 
 			// btnCancel
@@ -379,11 +383,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
-			this.tableLayoutPanel1.SetColumnSpan(this.btnCancel, 2);
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(629, 531);
+			this.btnCancel.Location = new System.Drawing.Point(671, 531);
 			this.btnCancel.Name = "btnCancel";
-			this.btnCancel.Size = new System.Drawing.Size(135, 39);
+			this.btnCancel.Size = new System.Drawing.Size(93, 39);
 			this.btnCancel.TabIndex = 25;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = false;
@@ -426,12 +429,13 @@
 			this.tableLayoutPanel1.Controls.Add(this.btnAddToQueue, 3, 6);
 			this.tableLayoutPanel1.Controls.Add(this.btnClear, 6, 8);
 			this.tableLayoutPanel1.Controls.Add(this.btnDelete, 6, 9);
-			this.tableLayoutPanel1.Controls.Add(this.btnSave, 3, 10);
-			this.tableLayoutPanel1.Controls.Add(this.btnCancel, 5, 10);
+			this.tableLayoutPanel1.Controls.Add(this.btnCancel, 6, 10);
 			this.tableLayoutPanel1.Controls.Add(this.gridQueues, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.lblSpending, 3, 2);
 			this.tableLayoutPanel1.Controls.Add(this.txtTechDiscription, 3, 1);
 			this.tableLayoutPanel1.Controls.Add(this.lblPoints, 0, 0);
+			this.tableLayoutPanel1.Controls.Add(this.btnTree, 4, 10);
+			this.tableLayoutPanel1.Controls.Add(this.btnSave, 3, 10);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -447,6 +451,8 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(759, 573);
 			this.tableLayoutPanel1.TabIndex = 27;
 			// 
@@ -508,6 +514,21 @@
 			this.txtTechDiscription.TabIndex = 27;
 			this.txtTechDiscription.Text = "(No Technology)";
 			// 
+			// btnTree
+			// 
+			this.btnTree.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnTree.BackColor = System.Drawing.Color.Black;
+			this.btnTree.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTree.Location = new System.Drawing.Point(629, 531);
+			this.btnTree.Name = "btnTree";
+			this.btnTree.Size = new System.Drawing.Size(36, 39);
+			this.btnTree.TabIndex = 28;
+			this.btnTree.Text = "Tree";
+			this.btnTree.UseVisualStyleBackColor = false;
+			this.btnTree.Click += new System.EventHandler(this.btnTree_Click);
+			// 
 			// ResearchForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -565,6 +586,7 @@
         private Controls.GameButton btnDelete;
         private Controls.GameButton btnSave;
         private System.Windows.Forms.Label txtTechDiscription;
+		private Controls.GameButton btnTree;
 
 	}
 }
