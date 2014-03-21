@@ -90,7 +90,7 @@ namespace FrEee.WinForms.Controls
 					ShowRow(3);
 					txtWeaponType.Text = Component.Template.ComponentTemplate.WeaponType.ToSpacedString();
 					txtTargets.Text = weapon.Targets.ToSpacedString();
-					txtReload.Text = weapon.ReloadRate.ToString() + " rounds";
+					txtReload.Text = weapon.ReloadRate.ToString() + " seconds";
 					txtDamageType.Text = weapon.DamageType.Name;
 					if (weapon.WeaponType.IsDirectFire())
 					{
