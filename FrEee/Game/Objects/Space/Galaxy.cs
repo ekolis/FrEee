@@ -957,6 +957,8 @@ namespace FrEee.Game.Objects.Space
 				emp.Commands.Clear();
 
 			// clear completed orders
+			foreach (var order in Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null))
+				order.IsComplete = true;
 			foreach (var order in Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
 				order.Dispose();
 

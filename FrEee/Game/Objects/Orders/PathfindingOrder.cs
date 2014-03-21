@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	public abstract class PathfindingOrder<T>
-		: IMovementOrder<T> where T : IMobileSpaceObject
+		: IMovementOrder<T>, IPathfindingOrder where T : IMobileSpaceObject
 	{
 		protected PathfindingOrder(ISpaceObject target, bool avoidEnemies)
 		{
@@ -103,13 +103,14 @@ namespace FrEee.Game.Objects.Orders
 		/// Finds the path for executing this order.
 		/// </summary>
 		/// <param name="sobj">The space object executing the order.</param>
+		/// <param name="start">The start location (need not be the current location, in case there are prior orders queued).</param>
 		/// <returns></returns>
 		public abstract IEnumerable<Sector> Pathfind(IMobileSpaceObject me, Sector start);
 
 		public bool IsComplete
 		{
 			get;
-			private set;
+			set;
 		}
 
 		public void Dispose()
@@ -191,8 +192,10 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(T sobj)
 		{
 			// TODO - movement logs
-			if (sobj.FindSector() == KnownTarget.FindSector())
-				IsComplete = true;
+			if (KnownTarget == null)
+				IsComplete = true; // target is known to be dead
+			else if (sobj.FindSector() == KnownTarget.FindSector())
+				IsComplete = true; // we've arrived at the target
 			else
 			{
 				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
