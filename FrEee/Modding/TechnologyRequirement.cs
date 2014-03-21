@@ -27,5 +27,10 @@ namespace FrEee.Modding
 		{
 			return obj.ResearchedTechnologies[Technology] >= Level;
 		}
+
+		public override bool IsStrict
+		{
+			get { return true; }
+		}
 	}
 }

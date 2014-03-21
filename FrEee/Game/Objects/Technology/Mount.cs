@@ -207,5 +207,10 @@ namespace FrEee.Game.Objects.Technology
 		public string ModID { get; set; }
 
 		public bool IsDisposed { get; set; }
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

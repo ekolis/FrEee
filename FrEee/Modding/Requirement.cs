@@ -19,5 +19,11 @@ namespace FrEee.Modding
 		public abstract bool IsMetBy(T obj);
 
 		public Formula<string> Description { get; set; }
+
+		/// <summary>
+		/// Is this a "strict" requirement?
+		/// Non-strict requirements are not counted as prerequisites for purposes of finding the "root" items of the tech tree.
+		/// </summary>
+		public abstract bool IsStrict { get; }
 	}
 }

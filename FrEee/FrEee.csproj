@@ -179,6 +179,7 @@
     <Compile Include="Game\Interfaces\IStellarObject.cs" />
     <Compile Include="Game\Interfaces\ITargetable.cs" />
     <Compile Include="Game\Interfaces\IUnit.cs" />
+    <Compile Include="Game\Interfaces\IUnlockable.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
     <Compile Include="Game\Objects\AI\AI.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="Modding\StellarObjectLocations\SameAsStellarObjectLocation.cs" />
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
+    <Compile Include="Modding\EmpireTraitRequirement.cs" />
     <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
     <Compile Include="Utility\PRNG.cs" />

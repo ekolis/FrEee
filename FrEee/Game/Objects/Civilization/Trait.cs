@@ -5,6 +5,7 @@ using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -14,7 +15,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A trait that grants abilities to an empire or race.
 	/// </summary>
 	[Serializable]
-	public class Trait : IModObject, IAbilityObject
+	public class Trait : IModObject, IAbilityObject, IUnlockable
 	{
 		public Trait()
 		{
@@ -87,5 +88,33 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			// nothing to do
 		}
+
+		public IList<Requirement<Empire>> UnlockRequirements
+		{
+			get
+			{ 
+				var list = new List<Requirement<Empire>>();
+				foreach (var t in RequiredTraits)
+					list.Add(new EmpireTraitRequirement(t, true));
+				foreach (var t in RestrictedTraits)
+					list.Add(new EmpireTraitRequirement(t, false));
+				return list;
+			}
+		}
+
+		public string ResearchGroup
+		{
+			get { return "Trait"; }
+		}
+
+		/// <summary>
+		/// TODO - trait pictures
+		/// </summary>
+		public Image Portrait { get { return null; } }
+
+		/// <summary>
+		/// TODO - trait pictures
+		/// </summary>
+		public Image Icon { get { return null; } }
 	}
 }
