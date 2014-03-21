@@ -15,6 +15,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Controls;
+using TechReq = FrEee.Modding.TechnologyRequirement;
 
 namespace FrEee.WinForms.Forms
 {
@@ -64,7 +66,7 @@ namespace FrEee.WinForms.Forms
 					var trait = (Trait)Context;
 					lblDetailsHeader.Text = trait.Name;
 					var lblInfo = new Label();
-					lblInfo.Text = trait.Description;
+					lblInfo.Text = "Cost: " + trait.Cost + " racial points\n" + trait.Description;
 					lblInfo.Dock = DockStyle.Fill;
 					pnlDetails.Controls.Add(lblInfo);
 
@@ -80,25 +82,78 @@ namespace FrEee.WinForms.Forms
 							lstUnlocks.AddItemWithImage(tech.ResearchGroup, tech.Name, tech, tech.Icon);
 					}
 				}
-				else if (Context is Technology)
+				else
 				{
-					// display technology
-				}
-				else if (Context is IHull)
-				{
-					// display hull
-				}
-				else if (Context is ComponentTemplate)
-				{
-					// display component
-				}
-				else if (Context is Mount)
-				{
-					// display mount
-				}
-				else if (Context is FacilityTemplate)
-				{
-					// display facility
+					foreach (var req in Context.UnlockRequirements)
+					{
+						if (req is TechReq)
+						{
+							var tr = (TechReq)req;
+							lstRequired.AddItemWithImage(tr.Technology.ResearchGroup, tr.Technology.Name + " L" + tr.Level, tr.Technology, tr.Technology.Icon);
+						}
+						else if (req is EmpireTraitRequirement)
+						{
+							var tr = (EmpireTraitRequirement)req;
+							lstRequired.AddItemWithImage(tr.Trait.ResearchGroup, tr.Trait.Name, tr.Trait, tr.Trait.Icon);
+						}
+						else
+							lstRequired.AddItemWithImage("Miscellaneous", req.Description, req, null);
+					}
+
+					if (Context is Technology)
+					{
+						// display technology
+						var tech = (Technology)Context;
+						lblDetailsHeader.Text = tech.Name;
+						var lblInfo = new Label();
+						lblInfo.Text = "First Level: " + tech.LevelCost + "\n" + tech.Description;
+						lblInfo.Dock = DockStyle.Fill;
+						pnlDetails.Controls.Add(lblInfo);
+
+						// display what's unlocked
+						// note: this won't catch scripted unlocks!
+						var unlocks = AllItems.Where(u => u.UnlockRequirements.OfType<TechReq>().Any(r => r.Technology == tech)).Select(u => new { Item = u, Level = u.UnlockRequirements.OfType<TechReq>().Where(r => r.Technology == tech).Max(r => r.Level)});
+						foreach (var unlock in unlocks)
+							lstUnlocks.AddItemWithImage(unlock.Item.ResearchGroup, "L" + unlock.Level + ": " + unlock.Item.Name, unlock.Item, unlock.Item.Icon);
+					}
+					else if (Context is IHull)
+					{
+						// display hull
+						var hull = (IHull)Context;
+						lblDetailsHeader.Text = hull.Name;
+						// TODO - hull report
+						var lblInfo = new Label();
+						lblInfo.Text = hull.Size.Kilotons() + " " + hull.VehicleTypeName + " hull\n" + hull.Description;
+						lblInfo.Dock = DockStyle.Fill;
+						pnlDetails.Controls.Add(lblInfo);
+					}
+					else if (Context is ComponentTemplate)
+					{
+						// display component
+						var ct = (ComponentTemplate)Context;
+						lblDetailsHeader.Text = ct.Name;
+						var report = new ComponentReport(ct);
+						report.Dock = DockStyle.Fill;
+						pnlDetails.Controls.Add(report);
+					}
+					else if (Context is Mount)
+					{
+						// display mount
+						var m = (Mount)Context;
+						lblDetailsHeader.Text = m.Name;
+						var report = new MountReport(m);
+						report.Dock = DockStyle.Fill;
+						pnlDetails.Controls.Add(report);
+					}
+					else if (Context is FacilityTemplate)
+					{
+						// display facility
+						var ft = (FacilityTemplate)Context;
+						lblDetailsHeader.Text = ft.Name;
+						var report = new FacilityReport(ft);
+						report.Dock = DockStyle.Fill;
+						pnlDetails.Controls.Add(report);
+					}
 				}
 			}
 		}
@@ -160,7 +215,8 @@ namespace FrEee.WinForms.Forms
 			if (item != null)
 			{
 				var u = (IUnlockable)item.Tag;
-				Bind(u);
+				if (u != null)
+					Bind(u);
 			}
 		}
 

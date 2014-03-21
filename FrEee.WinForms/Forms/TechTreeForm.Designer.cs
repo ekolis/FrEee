@@ -69,7 +69,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(682, 634);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(953, 634);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// gamePanel2
@@ -80,7 +80,7 @@
 			this.gamePanel2.Controls.Add(this.lstUnlocks);
 			this.gamePanel2.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.gamePanel2.ForeColor = System.Drawing.Color.White;
-			this.gamePanel2.Location = new System.Drawing.Point(485, 55);
+			this.gamePanel2.Location = new System.Drawing.Point(756, 55);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
 			this.gamePanel2.Size = new System.Drawing.Size(194, 576);
@@ -149,7 +149,7 @@
 			this.ddlItems.FormattingEnabled = true;
 			this.ddlItems.Location = new System.Drawing.Point(203, 3);
 			this.ddlItems.Name = "ddlItems";
-			this.ddlItems.Size = new System.Drawing.Size(276, 21);
+			this.ddlItems.Size = new System.Drawing.Size(547, 21);
 			this.ddlItems.TabIndex = 4;
 			this.ddlItems.SelectedIndexChanged += new System.EventHandler(this.ddlItems_SelectedIndexChanged);
 			// 
@@ -177,7 +177,7 @@
 			// 
 			this.lblUnlocks.AutoSize = true;
 			this.lblUnlocks.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblUnlocks.Location = new System.Drawing.Point(485, 32);
+			this.lblUnlocks.Location = new System.Drawing.Point(756, 32);
 			this.lblUnlocks.Name = "lblUnlocks";
 			this.lblUnlocks.Size = new System.Drawing.Size(46, 13);
 			this.lblUnlocks.TabIndex = 2;
@@ -205,7 +205,7 @@
 			this.pnlDetails.Location = new System.Drawing.Point(203, 55);
 			this.pnlDetails.Name = "pnlDetails";
 			this.pnlDetails.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlDetails.Size = new System.Drawing.Size(276, 576);
+			this.pnlDetails.Size = new System.Drawing.Size(547, 576);
 			this.pnlDetails.TabIndex = 6;
 			// 
 			// btlReset
@@ -213,7 +213,7 @@
 			this.btlReset.BackColor = System.Drawing.Color.Black;
 			this.btlReset.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.btlReset.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btlReset.Location = new System.Drawing.Point(485, 3);
+			this.btlReset.Location = new System.Drawing.Point(756, 3);
 			this.btlReset.Name = "btlReset";
 			this.btlReset.Size = new System.Drawing.Size(194, 26);
 			this.btlReset.TabIndex = 9;
@@ -226,7 +226,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(682, 634);
+			this.ClientSize = new System.Drawing.Size(953, 634);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.Name = "TechTreeForm";
 			this.Text = "Tech Tree";
