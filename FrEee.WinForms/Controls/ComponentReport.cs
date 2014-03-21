@@ -113,7 +113,7 @@ namespace FrEee.WinForms.Controls
 					for (int r = 0; r <= Math.Max(Component.Template.WeaponMaxRange, 20); r++)
 					{
 						var shot = new Shot(component, null, r);
-						dmglist.Add(Component.Template.WeaponDamage.Evaluate(new Dictionary<string, object>{{"range", r}}));
+						dmglist.Add(Component.Template.WeaponDamage.Evaluate(shot));
 					}
 					damageGraph.Title = "Range: " + weapon.MinRange + " - " + weapon.MaxRange;
 					damageGraph.DataPoints = dmglist.Select(d => (double)d);
