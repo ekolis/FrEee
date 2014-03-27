@@ -7,7 +7,7 @@ def miniaturize(size, level):
 
 # Reduces the cost of a component to one quarter at max level.
 def discount(cost, level):
-	return interpolate(level, 0, 5, size, size / 4);
+	return interpolate(level, 0, 5, cost, cost / 4);
 
 # Linearly interpolates a Y value based on an X value and ranges for X and Y.
 def interpolate(x, x1, x2, y1, y2):
