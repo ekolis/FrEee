@@ -74,7 +74,7 @@ namespace FrEee.WinForms.Controls
 					var rect = new RectangleF(xpos - size.Width / 2f, graphBounds.Bottom, size.Width, size.Height);
 					g.DrawString(i.ToString(), Font, brush, rect, sfTop);
 					var val = DataPoints.ElementAt(i);
-					var ypos = (float)(graphBounds.Bottom - graphBounds.Height * val / max);
+					var ypos = (float)(graphBounds.Bottom - graphBounds.Height * val / (double.IsNaN(max) ? 1 : max));
 					if (i > 0)
 						g.DrawLine(pen, lastXpos, lastYpos, xpos, ypos);
 					lastXpos = xpos;
