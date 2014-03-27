@@ -78,9 +78,9 @@ namespace FrEee.WinForms.Forms
 					foreach (var unlock in unlocks)
 						lstUnlocks.AddItemWithImage(unlock.ResearchGroup, unlock.Name, unlock, unlock.Icon);
 					// HACK - racial tech requirements are special
-					if (trait.GetAbilityValue("Tech Area") != null)
+					foreach (var a in trait.Abilities.Where(a => a.Rule.Name == "Tech Area"))
 					{
-						foreach (var tech in Mod.Current.Technologies.Where(t => t.RacialTechID == trait.GetAbilityValue("Tech Area")))
+						foreach (var tech in Mod.Current.Technologies.Where(t => t.RacialTechID == a.Value1))
 							lstUnlocks.AddItemWithImage(tech.ResearchGroup, tech.Name, tech, tech.Icon);
 					}
 				}
