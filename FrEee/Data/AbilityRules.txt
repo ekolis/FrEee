@@ -1159,6 +1159,10 @@ Name := Tech Area
 Targets := Trait, Race, Empire
 Description := Empire gains access to the [%Amount1%] racial tech.
 
+Name := Population Emotionless
+Targets := Trait, Race, Planet, Facility, Vehicle
+Description := Population does not grow angry or happy.
+
 Name := Breakthrough Chance
 Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
 Description := The chance of a research breakthrough in this empire is modified by [%Amount1%].
