@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Forms
 					// display what's unlocked
 					// note: this won't catch scripted unlocks!
 					var unlocks = AllItems.Where(u => u.UnlockRequirements.OfType<EmpireTraitRequirement>().Any(r => r.RequiredOrForbidden && r.Trait == trait));
-					foreach (var unlock in unlocks)
+					foreach (var unlock in unlocks.OrderBy(u => u.UnlockRequirements.Count()))
 						lstUnlocks.AddItemWithImage(unlock.ResearchGroup, unlock.Name, unlock, unlock.Icon);
 					// HACK - racial tech requirements are special
 					foreach (var a in trait.Abilities.Where(a => a.Rule.Name == "Tech Area"))
@@ -169,7 +169,7 @@ namespace FrEee.WinForms.Forms
 							else
 								return null;
 						}).Where(u => u != null);
-						foreach (var unlock in unlocks)
+						foreach (var unlock in unlocks.OrderBy(u => u.Level).ThenBy(u => u.Others.Count()))
 						{
 							string suffix;
 							if (unlock.Others.Count() == 0)
