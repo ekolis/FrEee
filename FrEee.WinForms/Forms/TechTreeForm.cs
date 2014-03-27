@@ -47,6 +47,8 @@ namespace FrEee.WinForms.Forms
 			lstRequired.Initialize(16, 16);
 			lstUnlocks.Initialize(32, 32);
 
+			Cursor = Cursors.WaitCursor;
+
 			if (Context == null)
 			{
 				// display all items with no strict prereqs
@@ -210,6 +212,8 @@ namespace FrEee.WinForms.Forms
 					}
 				}
 			}
+
+			Cursor = Cursors.Default;
 		}
 
 		private void ddlType_SelectedIndexChanged(object sender, EventArgs e)
