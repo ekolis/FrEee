@@ -125,9 +125,50 @@ namespace FrEee.WinForms.Forms
 
 						// display what's unlocked
 						// note: this won't catch scripted unlocks!
-						var unlocks = AllItems.Where(u => u.UnlockRequirements.OfType<TechReq>().Any(r => r.Technology == tech)).Select(u => new { Item = u, Level = u.UnlockRequirements.OfType<TechReq>().Where(r => r.Technology == tech).Max(r => r.Level)});
+						var unlocks = AllItems.Select(u =>
+						{
+							var req = u.UnlockRequirements.OfType<TechReq>().Where(r => r.Technology == tech).WithMax(r => r.Level).FirstOrDefault();
+							if (req != null)
+								return new
+								{
+									Item = u,
+									Level = req.Level,
+									Others = u.UnlockRequirements.Except(req),
+									Traits = Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID))
+								};
+							else
+								return null;
+						}).Where(u => u != null);
 						foreach (var unlock in unlocks)
-							lstUnlocks.AddItemWithImage(unlock.Item.ResearchGroup, "L" + unlock.Level + ": " + unlock.Item.Name, unlock.Item, unlock.Item.Icon);
+						{
+							string suffix;
+							if (unlock.Others.Count() == 0)
+							{
+								if (unlock.Traits.Count() == 0)
+									suffix = "";
+								else
+									suffix = " (with " + string.Join(" or ", unlock.Traits.Select(t => t.Name).ToArray());
+							}
+							else if (unlock.Others.Count() == 1 && unlock.Others.Single() is TechReq)
+							{
+								var other = (TechReq)unlock.Others.Single();
+								if (unlock.Traits.Count() == 0)
+									suffix = " (with " + other.Technology + " L" + other.Level + ")";
+								else
+									suffix = " (with " + string.Join(" or ", unlock.Traits.Select(t => t.Name).ToArray() + ", and " + other.Technology + " L" + other.Level);
+							}
+							else if (unlock.Others.Count() == 1 && unlock.Others.Single() is EmpireTraitRequirement)
+							{
+								var other = (EmpireTraitRequirement)unlock.Others.Single();
+								if (unlock.Traits.Count() == 0)
+									suffix = " (with " + other.Trait + ")";
+								else
+									suffix = " (with " + other.Trait + ", and " + unlock.Traits.Select(t => t.Name).ToArray();
+							}
+							else
+								suffix = " (with " + unlock.Others.Count() + " other requirements";
+							lstUnlocks.AddItemWithImage("L" + unlock.Level, unlock.Item.Name + suffix, unlock.Item, unlock.Item.Icon);
+						}
 					}
 					else if (Context is IHull)
 					{
