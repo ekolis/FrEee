@@ -84,14 +84,14 @@ namespace FrEee.Modding.Loaders
 		{
 			var dict = new Dictionary<AbilityRule, IDictionary<int, Formula<int>>>();
 			int count = 0;
-			int start = 0;
+			int start = -1;
 			while (true)
 			{
 				count++;
 				AbilityRule abilRule;
 				var vals = new Dictionary<int, Formula<int>>();
 
-				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start, true);
+				var nameField = rec.FindField(new string[] { "Ability " + count + " " + what + " Type", "Ability " + what + " Type" }, ref start, false, start + 1, true);
 				if (nameField == null)
 					break; // no more abilities
 
@@ -107,7 +107,7 @@ namespace FrEee.Modding.Loaders
 							"Ability " + count + " " + what,
 							"Ability " + what + " " + vcount,
 							"Ability " + what
-						}, ref start, false, start, true);
+						}, ref start, false, start + 1);
 
 					if (valField == null)
 						break; // no more values
