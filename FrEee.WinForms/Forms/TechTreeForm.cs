@@ -110,6 +110,19 @@ namespace FrEee.WinForms.Forms
 						lblInfo.Dock = DockStyle.Fill;
 						pnlDetails.Controls.Add(lblInfo);
 
+						// display racial trait prereqs
+						if (tech.RacialTechID != null && tech.RacialTechID.Trim() != "0")
+						{
+							var traits = Mod.Current.Traits.Where(t => t.Abilities.Any(a => a.Rule != null && a.Rule.Name == "Tech Area" && a.Value1 == tech.RacialTechID));
+							if (traits.Count() == 1)
+							{
+								var trait = traits.Single();
+								lstRequired.AddItemWithImage(trait.ResearchGroup, trait.Name, trait, trait.Icon);
+							}
+							else if (traits.Count() > 1)
+								lstRequired.AddItemWithImage(traits.First().ResearchGroup, string.Join(" or ", traits.Select(t => t.Name).ToArray()), traits, null);
+						}
+
 						// display what's unlocked
 						// note: this won't catch scripted unlocks!
 						var unlocks = AllItems.Where(u => u.UnlockRequirements.OfType<TechReq>().Any(r => r.Technology == tech)).Select(u => new { Item = u, Level = u.UnlockRequirements.OfType<TechReq>().Where(r => r.Technology == tech).Max(r => r.Level)});
