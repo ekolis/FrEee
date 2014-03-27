@@ -22,11 +22,17 @@ namespace FrEee.Modding.Loaders
 			{
 				count++;
 
-				var abilname = rec.Get<string>(new string[] { "Ability " + count + " Type", "Ability Type" }, obj);
-				if (abilname == null)
-					break; // no more abilities
-
 				var abil = new Ability(obj);
+
+				var nfield = rec.FindField(new string[]
+						{
+							"Ability " + count + " Type",
+							"Ability Type"
+						}, ref index, false, index + 1);
+				if (nfield == null)
+					break; // no more abilities
+				var abilname = nfield.CreateFormula<string>(abil).Value;
+
 				var rules = Mod.Current.AbilityRules.Where(r => r.Matches(abilname));
 				if (rules.Count() > 1)
 				{
@@ -45,20 +51,22 @@ namespace FrEee.Modding.Loaders
 				abil.Description = rec.Get<string>(new string[] { "Ability " + count + " Descr", "Ability Descr" }, obj);
 
 				int valnum = 0;
+				int idx = -1;
 				while (true)
 				{
 					valnum++;
 
-					var val = rec.Get<string>(new string[]
+					var vfield = rec.FindField(new string[]
 						{
 							"Ability " + count + " Val " + valnum,
 							"Ability " + count + " Val",
 							"Ability Val " + valnum,
 							"Ability Val"
-						}, obj);
-					if (val == null)
+						}, ref idx, false, idx + 1);
+					if (vfield == null)
 						break;
-					abil.Values.Add(val);
+					var val = vfield.CreateFormula<string>(abil);
+					abil.Values.Add(val.Value);
 				}
 
 				yield return abil;

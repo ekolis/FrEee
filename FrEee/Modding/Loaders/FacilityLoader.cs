@@ -50,7 +50,7 @@ namespace FrEee.Modding.Loaders
 
 				// TODO - build and use requirements
 
-				foreach (var abil in AbilityLoader.Load(Filename, rec, f))
+				foreach (var abil in AbilityLoader.Load(Filename, rec, f).ToArray())
 					f.Abilities.Add(abil);
 			}
 		}
