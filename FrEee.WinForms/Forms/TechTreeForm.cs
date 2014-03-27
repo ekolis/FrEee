@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 					var trait = (Trait)Context;
 					lblDetailsHeader.Text = trait.Name;
 					var lblInfo = new Label();
-					lblInfo.Text = "Cost: " + trait.Cost + " racial points\n" + trait.Description;
+					lblInfo.Text = "Cost: " + trait.Cost.Value.ToUnitString(true) + " racial points\n" + trait.Description;
 					lblInfo.Dock = DockStyle.Fill;
 					pnlDetails.Controls.Add(lblInfo);
 
@@ -106,7 +106,7 @@ namespace FrEee.WinForms.Forms
 						var tech = (Technology)Context;
 						lblDetailsHeader.Text = tech.Name;
 						var lblInfo = new Label();
-						lblInfo.Text = "First Level: " + tech.LevelCost + "\n" + tech.Description;
+						lblInfo.Text = "First Level: " + tech.LevelCost.ToUnitString(true) + " research points\n" + tech.Description;
 						lblInfo.Dock = DockStyle.Fill;
 						pnlDetails.Controls.Add(lblInfo);
 
