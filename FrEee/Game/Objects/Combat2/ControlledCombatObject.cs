@@ -134,5 +134,58 @@ namespace FrEee.Game.Objects.Combat2
 		/// Refreshes the list of available weapons that this combat object can fire.
 		/// </summary>
 		protected abstract void RefreshWeapons();
+
+        /// <summary>
+        /// attempt to move firecontrol to the combatObject
+        /// </summary>
+        /// <param name="tic_countr"></param>
+        /// <param name="IsReplay"></param>
+        /// <param name="ReplayLog"></param>
+        /*
+        public override void firecontrol(int tic_countr, bool IsReplay, CombatReplayLog ReplayLog)
+        {
+            //is a ship, base, unit, or planet
+            //ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+            foreach (var wpn in Weapons)
+            {
+                ICombatant ship = (ICombatant)WorkingObject;
+
+                if (weaponTarget.Count() > 0 && //if there ARE targets
+                    wpn.CanTarget(weaponTarget[0].WorkingObject) && //if we CAN target 
+                    tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
+                {
+                    if (wpn.isinRange(this, weaponTarget[0]))
+                    {
+                        //this function figures out if there's a hit, deals the damage, and creates an event.
+
+                        //first create the event for the target ship
+                        CombatTakeFireEvent targets_event = FireWeapon(tic_countr, this, wpn, weaponTarget[0]);
+                        //then create teh event for this ship firing on the target
+                        CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, this, cmbt_loc, wpn, targets_event);
+                        targets_event.fireOnEvent = attack_event;
+
+                        if (!IsReplay)
+                        {
+                            ReplayLog.Events.Add(targets_event);
+                            ReplayLog.Events.Add(attack_event);
+                        }
+
+                    }
+                }
+            }
+            //update any events where this ship has taken fire, and set the location. 
+            if (!IsReplay)
+            {
+                foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(this, tic_countr))
+                {
+                    if (comevnt.GetType() == typeof(CombatTakeFireEvent))
+                    {
+                        CombatTakeFireEvent takefire = (CombatTakeFireEvent)comevnt;
+                        takefire.setLocation(cmbt_loc);
+                    }
+                }
+            }
+        }
+        */
 	}
 }
