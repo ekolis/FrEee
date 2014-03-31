@@ -231,6 +231,50 @@ namespace FrEee.Game.Objects.Combat2
 			return TakeDamage(damageType, damage, null);
 		}
 
+        /// <summary>
+        /// was missilefirecontrol in battlespace.
+        /// </summary>
+        /// <param name="battletick"></param>
+        /// <param name="comSek"></param>
+        /*
+        public override void firecontrol(int battletick)
+        {
+            Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
+            if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
+            {
+                if (!IsReplay)
+                {
+                    CombatTakeFireEvent evnt = comSek.seekertargethit;
+                    evnt.IsHit = true;
+                    evnt.Tick = battletick;
+                }
+                Component launcher = comSek.launcher.weapon;
+                CombatObject target = comSek.weaponTarget[0];
+                if (target is ControlledCombatObject)
+                {
+                    ControlledCombatObject ccTarget = (ControlledCombatObject)target;
+                    var target_icomobj = ccTarget.WorkingObject;
+                    var shot = new Combat.Shot(launcher, target_icomobj, 0);
+                    //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+                    int damage = shot.Damage;
+                    combatDamage(battletick, target, comSek.launcher, damage, comSek.getDice());
+                    if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                        target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+                    if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                        target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+                }
+
+                DeadNodes.Add(comSek);
+                CombatNodes.Remove(comSek);
+            }
+            else if (battletick > comSek.deathTick)
+            {
+                DeadNodes.Add(comSek);
+                CombatNodes.Remove(comSek);
+            }
+        }
+         */
+
         #endregion
 	}
 }
