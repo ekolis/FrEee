@@ -937,6 +937,8 @@ namespace FrEee.Utility
 		{
 			if (src == null)
 				return null;
+			if (scale == 1d)
+				return (Image)src.Clone();
 			var scaled = src.Resize((int)Math.Ceiling(Math.Max(src.Width, src.Height) * scale));
 			var result = new Bitmap(src.Width, src.Height);
 			var g = Graphics.FromImage(result);
