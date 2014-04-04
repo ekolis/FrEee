@@ -32,7 +32,6 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlanetListForm));
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
@@ -603,20 +602,24 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.grid.BackColor = System.Drawing.Color.Black;
 			this.tableLayoutPanel1.SetColumnSpan(this.grid, 3);
-			this.grid.CreateDefaultGridConfig = ((System.Func<FrEee.WinForms.DataGridView.GridConfig>)(resources.GetObject("grid.CreateDefaultGridConfig")));
-			this.grid.CurrentGridConfig = ((FrEee.WinForms.DataGridView.GridConfig)(resources.GetObject("grid.CurrentGridConfig")));
+			this.grid.CreateDefaultGridConfig = null;
+			this.grid.CurrentGridConfig = null;
 			this.grid.Data = new object[0];
+			this.grid.DataType = typeof(object);
 			this.grid.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.grid.ForeColor = System.Drawing.Color.White;
-			this.grid.GridConfigs = ((System.Collections.Generic.ICollection<FrEee.WinForms.DataGridView.GridConfig>)(resources.GetObject("grid.GridConfigs")));
-			this.grid.LoadCurrentGridConfig = ((System.Func<FrEee.WinForms.DataGridView.GridConfig>)(resources.GetObject("grid.LoadCurrentGridConfig")));
+			this.grid.GridConfigs = null;
+			this.grid.LoadCurrentGridConfig = null;
+			this.grid.LoadGridConfigs = null;
 			this.grid.Location = new System.Drawing.Point(3, 203);
 			this.grid.Name = "grid";
-			this.grid.ResetGridConfigs = ((System.Func<System.Collections.Generic.ICollection<FrEee.WinForms.DataGridView.GridConfig>>)(resources.GetObject("grid.ResetGridConfigs")));
+			this.grid.ResetGridConfigs = null;
+			this.grid.ShowConfigs = true;
 			this.grid.Size = new System.Drawing.Size(1154, 531);
 			this.grid.TabIndex = 23;
 			this.grid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowEnter);
 			this.grid.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowLeave);
+			this.grid.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDoubleClick);
 			// 
 			// PlanetListForm
 			// 

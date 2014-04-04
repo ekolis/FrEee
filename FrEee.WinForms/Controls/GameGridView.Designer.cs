@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridData = new System.Windows.Forms.DataGridView();
 			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
@@ -59,8 +59,8 @@
 			this.gridData.Name = "gridData";
 			this.gridData.ReadOnly = true;
 			this.gridData.RowHeadersVisible = false;
-			dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
-			this.gridData.RowsDefaultCellStyle = dataGridViewCellStyle2;
+			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+			this.gridData.RowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.gridData.RowTemplate.Height = 32;
 			this.gridData.RowTemplate.ReadOnly = true;
 			this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -71,6 +71,7 @@
 			this.gridData.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridData_DataError);
 			this.gridData.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_RowEnter);
 			this.gridData.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_RowLeave);
+			this.gridData.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.gridData_MouseDoubleClick);
 			// 
 			// pnlConfigsBorder
 			// 

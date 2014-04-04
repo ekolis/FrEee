@@ -35,6 +35,7 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
+			this.txtAlienShips = new System.Windows.Forms.Label();
 			this.label9 = new System.Windows.Forms.Label();
 			this.txtAllyShips = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@ namespace FrEee.WinForms.Forms
 			this.label3 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.grid = new FrEee.WinForms.Controls.GameGridView();
-			this.txtAlienShips = new System.Windows.Forms.Label();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
 			this.SuspendLayout();
@@ -124,6 +124,18 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlHeader.Size = new System.Drawing.Size(244, 194);
 			this.pnlHeader.TabIndex = 0;
+			// 
+			// txtAlienShips
+			// 
+			this.txtAlienShips.AutoSize = true;
+			this.txtAlienShips.Location = new System.Drawing.Point(183, 54);
+			this.txtAlienShips.MaximumSize = new System.Drawing.Size(30, 30);
+			this.txtAlienShips.MinimumSize = new System.Drawing.Size(30, 0);
+			this.txtAlienShips.Name = "txtAlienShips";
+			this.txtAlienShips.Size = new System.Drawing.Size(30, 13);
+			this.txtAlienShips.TabIndex = 43;
+			this.txtAlienShips.Text = "0";
+			this.txtAlienShips.TextAlign = System.Drawing.ContentAlignment.TopRight;
 			// 
 			// label9
 			// 
@@ -356,22 +368,12 @@ namespace FrEee.WinForms.Forms
 			this.grid.Location = new System.Drawing.Point(3, 203);
 			this.grid.Name = "grid";
 			this.grid.ResetGridConfigs = null;
+			this.grid.ShowConfigs = true;
 			this.grid.Size = new System.Drawing.Size(1154, 531);
 			this.grid.TabIndex = 23;
 			this.grid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowEnter);
 			this.grid.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowLeave);
-			// 
-			// txtAlienShips
-			// 
-			this.txtAlienShips.AutoSize = true;
-			this.txtAlienShips.Location = new System.Drawing.Point(183, 54);
-			this.txtAlienShips.MaximumSize = new System.Drawing.Size(30, 30);
-			this.txtAlienShips.MinimumSize = new System.Drawing.Size(30, 0);
-			this.txtAlienShips.Name = "txtAlienShips";
-			this.txtAlienShips.Size = new System.Drawing.Size(30, 13);
-			this.txtAlienShips.TabIndex = 43;
-			this.txtAlienShips.Text = "0";
-			this.txtAlienShips.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.grid.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDoubleClick);
 			// 
 			// ShipListForm
 			// 

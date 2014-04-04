@@ -115,5 +115,18 @@ namespace FrEee.WinForms.Forms
 		{
 			galaxyView.SelectedStarSystem = null;
 		}
+
+		private void grid_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				var sobj = (ISpaceObject)grid.SelectedItem;
+				if (sobj != null)
+				{
+					GameForm.Instance.SelectSpaceObject(sobj);
+					Close();
+				}
+			}
+		}
 	}
 }

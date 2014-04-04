@@ -35,9 +35,14 @@ namespace FrEee.WinForms.Forms
 		/// <param name="hostView">Is this the host viewing a player's view? If so, we shouldn't attempt to process the turn after he clicks End Turn, even if the game is single player.</param>
 		public GameForm(bool hostView)
 		{
+			if (Instance != null)
+				throw new InvalidOperationException("Only one game form allowed.");
 			InitializeComponent();
 			this.hostView = hostView;
+			Instance = this;
 		}
+
+		public static GameForm Instance { get; private set; }
 
 		private bool hostView;
 
