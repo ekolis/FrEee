@@ -662,17 +662,21 @@ namespace FrEee.WinForms.Forms
 
 		public void SelectSpaceObject(ISpaceObject sobj)
 		{
-			var lookup = Galaxy.Current.FindSpaceObjects<ISpaceObject>(sobj2 => sobj2 == sobj);
-			if (lookup.Any())
+			if (sobj != null)
 			{
-				SelectStarSystem(lookup.First().StarSystem);
-				SelectSector(lookup.First().Sector.Coordinates);
+				SelectStarSystem(sobj.StarSystem);
+				SelectSector(sobj.Sector.Coordinates);
 				pnlDetailReport.Controls.Clear();
 				var rpt = CreateSpaceObjectReport(sobj);
 				if (rpt != null)
 					rpt.Dock = DockStyle.Fill;
 				pnlDetailReport.Controls.Add(rpt);
 				SelectedSpaceObject = sobj;
+			}
+			else
+			{
+				pnlDetailReport.Controls.Clear();
+				SelectedSpaceObject = null;
 			}
 		}
 
@@ -1236,8 +1240,8 @@ namespace FrEee.WinForms.Forms
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
 			if (!idle.Any())
-				return;
-			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.First())
+				SelectSpaceObject(null);
+			else if (SelectedSpaceObject == null || SelectedSpaceObject == idle.First())
 				SelectSpaceObject(idle.Last());
 			else
 				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) - 1));
@@ -1247,8 +1251,8 @@ namespace FrEee.WinForms.Forms
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
 			if (!idle.Any())
-				return;
-			if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
+				SelectSpaceObject(null);
+			else if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
 				SelectSpaceObject(idle.First());
 			else
 				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) + 1));
