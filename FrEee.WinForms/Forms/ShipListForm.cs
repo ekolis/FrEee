@@ -53,7 +53,7 @@ namespace FrEee.WinForms.Forms
 			resMaintenanceRad.Amount = ourShips.Sum(s => s.MaintenanceCost[Resource.Radioactives]);
 			
 			// show ship/fleet/unit data
-			grid.Data = sobjs.ToArray();
+			grid.Data = sobjs.Where(o => o.Container == null).ToArray();
 			grid.CreateDefaultGridConfig = ClientSettings.CreateDefaultShipListConfig;
 			grid.LoadCurrentGridConfig = () => ClientSettings.Instance.CurrentShipListConfig;
 			grid.LoadGridConfigs = () => ClientSettings.Instance.ShipListConfigs;
