@@ -369,5 +369,10 @@ namespace FrEee.WinForms.Controls
 				}
 			}
 		}
+
+		private void gridData_MouseDoubleClick(object sender, MouseEventArgs e)
+		{
+			OnMouseDoubleClick(e);
+		}
 	}
 }
