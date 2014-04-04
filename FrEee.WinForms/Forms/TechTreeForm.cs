@@ -30,6 +30,14 @@ namespace FrEee.WinForms.Forms
 			Bind();
 		}
 
+		public TechTreeForm(IUnlockable u)
+		{
+			InitializeComponent();
+			BindTypes();
+			BindItems();
+			Bind(u);
+		}
+
 		/// <summary>
 		/// The current contextual item.
 		/// </summary>
