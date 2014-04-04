@@ -58,9 +58,9 @@
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.btnClear = new FrEee.WinForms.Controls.GameButton();
 			this.btnDelete = new FrEee.WinForms.Controls.GameButton();
-			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.txtTechDiscription = new System.Windows.Forms.Label();
 			this.btnTree = new FrEee.WinForms.Controls.GameButton();
+			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
@@ -368,6 +368,7 @@
 			this.lstResults.TabIndex = 10;
 			this.lstResults.UseCompatibleStateImageBehavior = false;
 			this.lstResults.View = System.Windows.Forms.View.List;
+			this.lstResults.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lstResults_MouseClick);
 			// 
 			// dataGridViewProgressColumn1
 			// 
@@ -486,22 +487,6 @@
 			this.btnDelete.UseVisualStyleBackColor = false;
 			this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
 			// 
-			// btnSave
-			// 
-			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnSave.BackColor = System.Drawing.Color.Black;
-			this.tableLayoutPanel1.SetColumnSpan(this.btnSave, 2);
-			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSave.Location = new System.Drawing.Point(503, 531);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(120, 39);
-			this.btnSave.TabIndex = 24;
-			this.btnSave.Text = "Save";
-			this.btnSave.UseVisualStyleBackColor = false;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-			// 
 			// txtTechDiscription
 			// 
 			this.txtTechDiscription.AutoSize = true;
@@ -528,6 +513,22 @@
 			this.btnTree.Text = "Tree";
 			this.btnTree.UseVisualStyleBackColor = false;
 			this.btnTree.Click += new System.EventHandler(this.btnTree_Click);
+			// 
+			// btnSave
+			// 
+			this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnSave.BackColor = System.Drawing.Color.Black;
+			this.tableLayoutPanel1.SetColumnSpan(this.btnSave, 2);
+			this.btnSave.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSave.Location = new System.Drawing.Point(503, 531);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(120, 39);
+			this.btnSave.TabIndex = 24;
+			this.btnSave.Text = "Save";
+			this.btnSave.UseVisualStyleBackColor = false;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// ResearchForm
 			// 

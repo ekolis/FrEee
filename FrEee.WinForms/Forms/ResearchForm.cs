@@ -1,4 +1,5 @@
-﻿using FrEee.Game.Objects.Civilization;
+﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Commands;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
@@ -308,6 +309,16 @@ namespace FrEee.WinForms.Forms
 		private void btnTree_Click(object sender, EventArgs e)
 		{
 			this.ShowChildForm(new TechTreeForm());
+		}
+
+		private void lstResults_MouseClick(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Right)
+			{
+				var u = lstResults.SelectedItems.Cast<ListViewItem>().Select(i => i.Tag).Cast<IUnlockable>().SingleOrDefault();
+				if (u != null)
+					this.ShowChildForm(new TechTreeForm(u));
+			}
 		}
 	}
 }
