@@ -72,4 +72,23 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         }
     }
+
+    class UCData_NearestComObj_Base : UserControlFunctObj
+    {
+        public UCData_NearestComObj_Base(StratMainForm parent, Canvasdata canvasdata, Type[] inputs, Type output)
+            : base("Nearest", parent, canvasdata, inputs, output)
+        {
+            //CombatObject from = inputs[0]; //this won't work here, I'm an abstraction level above this... I think.
+        }
+    }
+
+    class UCData_NearestComObj : UCData_NearestComObj_Base
+    {
+        public UCData_NearestComObj(StratMainForm parent, Canvasdata canvasdata)
+            : base(parent, canvasdata, new Type[2] { typeof(CombatObject), typeof(List<CombatObject>) }, typeof(CombatObject))
+        {
+
+
+        }
+    }
 }
