@@ -26,7 +26,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCData_NearestEnemy nearenme = new UCData_NearestEnemy(parent, canvasdata);
             UCData_EnemyShips nmeshps = new UCData_EnemyShips(parent, canvasdata);
             UCData_FrendlyShips frndshps = new UCData_FrendlyShips(parent, canvasdata);
-
+            UCData_NearestComObj nearObj = new UCData_NearestComObj(parent, canvasdata);
+            functItems.Add(nearObj.name, nearObj);
             functItems.Add(functloc.name, functloc);
             functItems.Add(functvel.name, functvel);
             functItems.Add(datathis.name, datathis);
