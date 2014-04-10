@@ -39,9 +39,13 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
-			if (cmd != null)
-				Owner.Commands.Remove(cmd);
+			if (Owner != null)
+			{
+				// HACK - how could a diplomatic message have no owner?
+				var cmd = Owner.Commands.OfType<SendMessageCommand>().SingleOrDefault(c => c.Message == this);
+				if (cmd != null)
+					Owner.Commands.Remove(cmd);
+			}
 		}
 
 		private Reference<Empire> owner {get; set;}
