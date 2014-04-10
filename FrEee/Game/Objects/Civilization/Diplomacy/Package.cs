@@ -181,6 +181,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			var errors = Errors.ToArray();
 			if (errors.Any())
 				throw new Exception("Attempting to transfer an invalid package (" + this + "): " + errors.First());
+			foreach (var c in TreatyClauses)
+				c.IsInEffect = true;
 			foreach (var p in Planets)
 				p.Colony.Owner = target;
 			foreach (var v in Vehicles)
