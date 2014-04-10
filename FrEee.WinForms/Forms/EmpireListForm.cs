@@ -13,6 +13,7 @@ using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Commands;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 
 namespace FrEee.WinForms.Forms
 {
@@ -61,13 +62,34 @@ namespace FrEee.WinForms.Forms
 				if (emp == Empire.Current)
 				{
 					txtTreaty.Text = "Self";
-					txtTreaty.ForeColor = Color.Green;
+					txtTreaty.ForeColor = Color.CornflowerBlue;
 				}
 				else
 				{
-					// TODO - diplomacy
-					txtTreaty.Text = "None";
-					txtTreaty.ForeColor = Color.Yellow;
+					var treaty = Empire.Current.GetTreaty(emp);
+					var giving = treaty.Where(c => c.Giver == Empire.Current);
+					var receiving = treaty.Where(c => c.Receiver == Empire.Current);
+					if (!treaty.Any())
+					{
+						txtTreaty.Text = "None";
+						txtTreaty.ForeColor = Color.Yellow;
+					}
+					else if (!giving.Any())
+					{
+						txtTreaty.Text = "Receiving " + string.Join(", ", receiving.Select(c => c.ToString()).ToArray());
+						txtTreaty.ForeColor = Color.Green;
+					}
+					else if (!receiving.Any())
+					{
+						txtTreaty.Text = "Giving " + string.Join(", ", giving.Select(c => c.ToString()).ToArray());
+						txtTreaty.ForeColor = Color.LightGray;
+					}
+					else
+					{
+						// TODO - display mutual treaty elements more simply (e.g. "Mutual Cooperative Research")
+						txtTreaty.Text = "Trading " + string.Join(", ", giving.Select(c => c.ToString()).ToArray()) + " for " + string.Join(", ", receiving.Select(c => c.ToString()).ToArray());
+						txtTreaty.ForeColor = Color.White;
+					}
 				}
 
 				// budget
