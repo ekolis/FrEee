@@ -218,6 +218,7 @@
     <Compile Include="Game\Objects\Combat2\CombatVehicle.cs" />
     <Compile Include="Game\Objects\Combat2\CombatWeapon.cs" />
     <Compile Include="Game\Objects\Combat2\ControlledCombatObject.cs" />
+    <Compile Include="Game\Objects\Combat2\StrategyObjects.cs" />
     <Compile Include="Game\Objects\Combat\Battle.cs" />
     <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
