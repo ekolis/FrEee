@@ -61,7 +61,7 @@ namespace FrEee.Game.Objects.Orders
 				// apply build rate
 				var costLeft = Item.Cost - Item.ConstructionProgress;
 				var spending = ResourceQuantity.Min(costLeft, queue.UnspentRate);
-				if (spending > queue.Owner.StoredResources)
+				if (!(spending <= queue.Owner.StoredResources))
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
 					Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was delayed due to lack of resources."));
