@@ -117,7 +117,10 @@ namespace FrEee.Game.Objects.Combat2
 
 		//public PointXd cmbt_maxThrust { get; set; }
 		//public PointXd cmbt_minThrust { get; set; }
+        
+        public CombatEmpire empire { get; set; }
 
+        public StrategyObjects strategy { get; set; }
 
 		public combatWaypoint waypointTarget;
 		public PointXd lastVectortoWaypoint { get; set; }
