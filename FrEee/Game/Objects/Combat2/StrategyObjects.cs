@@ -38,8 +38,7 @@ namespace FrEee.Game.Objects.Combat2
     {
         public StragegyObject_Default()
             : base()
-        {
-            List<StrategyBaseObj> waypointBlocks = new List<StrategyBaseObj>();
+        {          
             StrategyWayPoint wpnt = new StrategyWayPoint();
             StrategyClosest closest1 = new StrategyClosest(null, null);  
             StrategyThisObj thisobj = new StrategyThisObj(); 
@@ -52,13 +51,22 @@ namespace FrEee.Game.Objects.Combat2
 
             closest1.inputLnks[0] = thisobj;
             closest1.inputLnks[1] = thisobjEnemys;
-            closest1.outputLnks = new StrategyBaseObj[] { enloc, envel  };
+            closest1.outputLnks.Add(enloc);
+            closest1.outputLnks.Add(envel);
 
             enloc.inputLnks[0] = closest1;
-            enloc.outputLnks[0] = wpnt;
+            enloc.outputLnks.Add(wpnt);
 
             envel.inputLnks[0] = closest1;
-            envel.outputLnks[0] = wpnt;
+            envel.outputLnks.Add(wpnt);
+
+
+
+
+            waypointObjs = new StrategyBaseObj[4] { wpnt, closest1, enloc, envel };
+
+            targetObjs = new StrategyBaseObj[1] { closest1 };
+
 
         }
     }
@@ -76,7 +84,7 @@ namespace FrEee.Game.Objects.Combat2
 
         protected Object output = null;
         protected Type outputType;
-        public StrategyBaseObj[] outputLnks { get; set; }
+        public List<StrategyBaseObj> outputLnks { get; set; }
 
         public StrategyBaseObj(Type[] inputtypes, Type outputtype)
         {
@@ -93,6 +101,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             this.inputtypes = inputtypes;
             this.outputType = outputtype;
+            outputLnks = new List<StrategyBaseObj>();
         }
 
         /// <summary>
@@ -112,14 +121,14 @@ namespace FrEee.Game.Objects.Combat2
 
         public virtual void calc(CombatObject comObj)
         {
-            for(int i = 0; i< inputLnks.Length; i++)
+            for(int i = 0; i < inputLnks.Length; i++)
             {
                 StrategyBaseObj lnk = inputLnks[i];
                 if (lnk.output == null)
                 {
-                    lnk.calc(comObj);
-                    inputs[i] = lnk.output;
+                    lnk.calc(comObj);                   
                 }
+                inputs[i] = lnk.output;
             }
         }
         
