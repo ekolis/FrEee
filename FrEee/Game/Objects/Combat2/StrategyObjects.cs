@@ -9,12 +9,12 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class StrategyObjects
     {
-        protected StrategyBaseObj[] waypointObjs {get;set;}
-        protected StrategyBaseObj[] targetObjs {get;set;}
-
+        protected StrategyBaseBlock[] waypointObjs {get;set;}
+        protected StrategyBaseBlock[] targetObjs {get;set;}
+        
         public StrategyObjects()
         {}
-        public StrategyObjects(StrategyBaseObj[] waypointstratObjs, StrategyBaseObj[] targetstratObjs)
+        public StrategyObjects(StrategyBaseBlock[] waypointstratObjs, StrategyBaseBlock[] targetstratObjs)
         {
             this.waypointObjs = waypointstratObjs;
             this.targetObjs = targetstratObjs;
@@ -63,45 +63,50 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-            waypointObjs = new StrategyBaseObj[4] { wpnt, closest1, enloc, envel };
+            waypointObjs = new StrategyBaseBlock[4] { wpnt, closest1, enloc, envel };
 
-            targetObjs = new StrategyBaseObj[1] { closest1 };
+            targetObjs = new StrategyBaseBlock[1] { closest1 };
 
 
         }
     }
 
-    public class StrategyBaseObj
+    public class StrategyBaseBlock
     {
         protected Object[] inputs;
-        protected Type[] inputtypes;
+        public Type[] inputtypes { get; protected set; }
 
+        /// <summary>
+        /// the string name of this strategy object. 
+        /// </summary>
+        public string name { get; protected set; }
+        
         /// <summary>
         /// the linked input strategy objecs.
         /// </summary>
-        public StrategyBaseObj[] inputLnks { get; set; }
-        protected bool hasvalidInputs = false;
+        public StrategyBaseBlock[] inputLnks { get; set; }
 
         protected Object output = null;
-        protected Type outputType;
-        public List<StrategyBaseObj> outputLnks { get; set; }
+        public Type outputType { get; protected set; }
+        public List<StrategyBaseBlock> outputLnks { get; set; }
 
-        public StrategyBaseObj(Type[] inputtypes, Type outputtype)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="inputtypes">the types of inputs this block will receve as an array.</param>
+        /// <param name="outputtype">the return type of this block</param>
+        public StrategyBaseBlock(Type[] inputtypes, Type outputtype)
         {
 
-            //List<Object> inputlist = new List<object>();
-            //for (int i = 0; i < inputtypes.Length; i++)
-            //{
-            //    inputlist.Add(null);
-            //}
             if (inputtypes != null)
             {
                 this.inputs = new object[inputtypes.Length]; //inputlist.ToArray();
-                this.inputLnks = new StrategyBaseObj[inputtypes.Length];
+                this.inputLnks = new StrategyBaseBlock[inputtypes.Length];
             }
             this.inputtypes = inputtypes;
             this.outputType = outputtype;
-            outputLnks = new List<StrategyBaseObj>();
+            outputLnks = new List<StrategyBaseBlock>();
         }
 
         /// <summary>
@@ -123,7 +128,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             for(int i = 0; i < inputLnks.Length; i++)
             {
-                StrategyBaseObj lnk = inputLnks[i];
+                StrategyBaseBlock lnk = inputLnks[i];
                 if (lnk.output == null)
                 {
                     lnk.calc(comObj);                   
@@ -134,11 +139,11 @@ namespace FrEee.Game.Objects.Combat2
         
     }
 
-    public class StrategyWayPoint : StrategyBaseObj
+    public class StrategyWayPoint : StrategyBaseBlock
     {
         public StrategyWayPoint():base(new Type[2]{typeof(PointXd), typeof(PointXd)}, typeof(combatWaypoint))
         {
-            
+            name = "Waypoint";
         }
         public override void calc(CombatObject comObj)
         {
@@ -147,10 +152,11 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyLocdata : StrategyBaseObj
+    public class StrategyLocdata : StrategyBaseBlock
     {
         public StrategyLocdata() : base(new Type[1] { typeof(CombatObject) }, typeof(PointXd)) 
         {
+            name = "Location";
         }
         public override void calc(CombatObject comObj)
         {
@@ -160,11 +166,12 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyVeldata : StrategyBaseObj
+    public class StrategyVeldata : StrategyBaseBlock
     {
         public StrategyVeldata()
             : base(new Type[1] { typeof(CombatObject) }, typeof(PointXd))
         {
+            name = "Velocity";
         }
         public override void calc(CombatObject comObj)
         {
@@ -174,11 +181,12 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyMassdata : StrategyBaseObj
+    public class StrategyMassdata : StrategyBaseBlock
     {
         public StrategyMassdata()
             : base(new Type[1] { typeof(CombatObject) }, typeof(Fix16))
         {
+            name = "Mass";
         }
         public override void calc(CombatObject comObj)
         {
@@ -188,7 +196,7 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyComObj : StrategyBaseObj
+    public class StrategyComObj : StrategyBaseBlock
     {
         public StrategyComObj()
             : base(new Type[1] { typeof(CombatObject) }, typeof(CombatObject))
@@ -197,11 +205,13 @@ namespace FrEee.Game.Objects.Combat2
 
     }
 
-    public class StrategyThisObj : StrategyBaseObj
+    public class StrategyThisObj : StrategyBaseBlock
     {
         public StrategyThisObj()
             : base(null, typeof(CombatObject))
-        { }
+        {
+            name = "This";
+        }
 
         public override void calc(CombatObject comObj)
         {
@@ -210,11 +220,13 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyThisEnemys : StrategyBaseObj
+    public class StrategyThisEnemys : StrategyBaseBlock
     {
         public StrategyThisEnemys()
             : base(null, typeof(List<CombatObject>))
-        { }
+        {
+            name = "Enemeys of This";
+        }
 
         public override void calc(CombatObject comObj)
         {
@@ -223,12 +235,13 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    public class StrategyClosest:StrategyBaseObj
+    public class StrategyClosest:StrategyBaseBlock
     {
         Type filter = typeof(CombatObject);
         public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
             base (new Type[2]{typeof(CombatObject), typeof(List<CombatObject>)}, typeof(CombatObject))
         {
+            name = "Closest Object to:";
             if (filter != null)
             {
                 this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
