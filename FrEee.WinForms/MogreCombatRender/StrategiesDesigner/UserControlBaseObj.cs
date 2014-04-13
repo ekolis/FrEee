@@ -28,9 +28,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             InitializeComponent();
             this.Name = name;
             this.lbl_FunctName.Text = name;
-
+            this.Height = 20;
             this.parentForm = parentForm;
-            this.canvasdata = canvasdata;           
+            this.canvasdata = canvasdata;
+            RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
+            this.TableLayoutPanel1.RowStyles[0] = style0;
         }
 
         public string name
