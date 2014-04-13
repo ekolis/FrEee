@@ -162,6 +162,14 @@ namespace FrEee.Game.Objects.Combat2
 
         public string debuginfo = "";
 
+        public void calcWaypoint()
+        {
+            this.waypointTarget = this.strategy.calcWaypiont(this);
+        }
+        public void calcWpnTarget()
+        {
+            this.weaponTarget = new List<CombatObject>(){this.strategy.calcTarget(this)};
+        }
 
         public virtual void helm()
         {

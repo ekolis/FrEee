@@ -411,7 +411,7 @@ namespace FrEee.Game.Objects.Combat2
 				int empindex = EmpiresArray.IndexOf(ccobj.StartCombatant.Owner);
                 
                 ccobj.empire = Empires[ccobj.StartCombatant.Owner];
-                //ccobj.strategy = new StragegyObject_Default();
+                ccobj.strategy = new StragegyObject_Default();
 
 				ccobj.cmbt_loc = new PointXd(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
 				//thiscomobj.cmbt_face = new PointXd(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
@@ -552,15 +552,19 @@ namespace FrEee.Game.Objects.Combat2
             if (ccobj.WorkingObject != null)
             {
                 string comAI = "";
-                CombatObject tgtObj;
+                //CombatObject tgtObj;
                 if (Empires[ccobj.WorkingObject.Owner].hostile.Any())
                 {
+                    /*old
                     tgtObj = Empires[ccobj.WorkingObject.Owner].hostile[0];
                     combatWaypoint wpt = new combatWaypoint(tgtObj);
                     ccobj.waypointTarget = wpt;
                     //pick a primary target to fire apon from a list of enemy within weapon range
                     ccobj.weaponTarget = new List<CombatObject>();
                     ccobj.weaponTarget.Add(Empires[ccobj.WorkingObject.Owner].hostile[0]);
+                     * */
+                    ccobj.calcWaypoint();
+                    ccobj.calcWpnTarget();
                 }
                 if (IsReplay && battletick < 1000)
                 {
