@@ -22,8 +22,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.stratblock = stratblock;
             InitializeComponent();
 
-            //int i = 0;
-            //foreach (StrategyBaseBlock input in stratblock.inputtypes)
+            
+            RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
+            this.TableLayoutPanel1.RowStyles[0] = style0;
+
             if (stratblock.inputtypes != null)
             {
                 for (int i = 0; i < stratblock.inputtypes.Length; i++)
@@ -35,8 +37,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                     linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
                     this.TableLayoutPanel1.RowCount += 1;
-                    RowStyle style = new RowStyle(SizeType.Absolute, 24);
-                    this.TableLayoutPanel1.RowStyles.Add(style);
+                    RowStyle style1 = new RowStyle(SizeType.Absolute, 24);
+                    this.TableLayoutPanel1.RowStyles.Add(style1);
 
                     this.TableLayoutPanel1.SetRow(linkinp, TableLayoutPanel1.RowCount - 1);
                     this.TableLayoutPanel1.SetColumn(linkinp, 0);
@@ -45,9 +47,16 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                     this.TableLayoutPanel1.Controls.Add(linkinp);
                 }
             }
+            else 
+            {
+                RowStyle style1 = new RowStyle(SizeType.Absolute, 24);
+                this.TableLayoutPanel1.RowStyles.Add(style1);
+                this.Height += 24;
+            }
 
             UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock.outputType);
-            //linkout.Text = output.Name;
+
+            linkout.Text = stratblock.outputType.Name;
             linkout.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             linkout.Anchor = AnchorStyles.Right;
             this.TableLayoutPanel1.SetRow(linkout, 1);
