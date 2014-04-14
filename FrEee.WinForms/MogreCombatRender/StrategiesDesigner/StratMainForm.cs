@@ -11,7 +11,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Technology;
 using FrEee.WinForms.Forms;
-
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
@@ -58,7 +58,13 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             //foreach level of multiplex tracking, add a target and list of weapons accociated with that target. 
             //weapons can be dragged between the lists to set up different weapon groups.
             //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
-            int mplx = 2;
+
+            int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
+            if (mplx == null)
+                mplx = 1;
+            else
+                mplx = Math.Max(mplx, 1);
+            
             for (int i = 1; i <= mplx; i++)
             {
                 ListBox lb = new ListBox();
