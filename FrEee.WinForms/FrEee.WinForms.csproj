@@ -229,26 +229,12 @@
     <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.Designer.cs">
       <DependentUpon>funclist.cs</DependentUpon>
     </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\funcs.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\funcs.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.Designer.cs">
       <DependentUpon>StratMainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlDataObj.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlDataObj.Designer.cs">
-      <DependentUpon>UserControlDataObj.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlFunctObj.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlFunctObj.Designer.cs">
-      <DependentUpon>UserControlFunctObj.cs</DependentUpon>
     </Compile>
     <Compile Include="MogreCombatRender\TranslateMogrePhys.cs" />
     <Compile Include="Objects\ClientSettings.cs" />
@@ -700,9 +686,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\StratMainForm.resx">
       <DependentUpon>StratMainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UserControlFunctObj.resx">
-      <DependentUpon>UserControlFunctObj.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

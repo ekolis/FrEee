@@ -8,6 +8,7 @@ using NewtMath.f16;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
+    /*
     class UCFunct_Loc:UserControlFunctObj
     {
         public UCFunct_Loc(StratMainForm parent, Canvasdata canvasdata)
@@ -90,5 +91,5 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
 
         }
-    }
+    }*/
 }

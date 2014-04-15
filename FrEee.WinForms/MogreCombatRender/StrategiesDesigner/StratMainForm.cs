@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Technology;
 using FrEee.WinForms.Forms;
 using FrEee.Utility.Extensions;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
@@ -32,8 +33,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             canvasdata = new Canvasdata(1, pBx.Width, pBx.Height, canvasloc);
             this.design = design;
 
+            StrategyWayPoint waypointblock = new StrategyWayPoint();
+
             Type typHloc = typeof(NewtMath.f16.PointXd);
-            UCLinkObj linkHloc = new UCLinkObj(this, null, typHloc);
+            UCLinkObj linkHloc = new UCLinkObj(this, null, waypointblock, true, 0);
             linkHloc.CheckAlign = ContentAlignment.MiddleLeft;
             linkHloc.Text = "Location";
             tableLayoutPanel1.SetColumn(linkHloc, 2);           
@@ -42,7 +45,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.Controls.Add(linkHloc);
 
             Type typHvel = typeof(NewtMath.f16.PointXd);
-            UCLinkObj linkHvel = new UCLinkObj(this, null, typHvel);
+            UCLinkObj linkHvel = new UCLinkObj(this, null, waypointblock, true, 1);
             linkHvel.CheckAlign = ContentAlignment.MiddleLeft;
             linkHvel.Text = "Velocity";          
             tableLayoutPanel1.SetColumn(linkHvel, 2);
@@ -50,26 +53,25 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.SetRow(linkHvel, 2);         
             tableLayoutPanel1.Controls.Add(linkHvel);
 
-            List<Component> weapons = new List<Component>();
-            //weapons = design.Components.Where(c => c.Template.ComponentTemplate.WeaponInfo != null); //this doesnt work or something.
-
-            //listBox1.DataSource = weapons;
+            //List<MountedComponentTemplate> weapons = new List<MountedComponentTemplate>();
+            IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); //this doesnt work or something.
+           
+            
 
             //foreach level of multiplex tracking, add a target and list of weapons accociated with that target. 
             //weapons can be dragged between the lists to set up different weapon groups.
             //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
-            if (mplx == null)
-                mplx = 1;
-            else
-                mplx = Math.Max(mplx, 1);
+            mplx = Math.Max(mplx, 1);
             
             for (int i = 1; i <= mplx; i++)
             {
                 ListBox lb = new ListBox();
-                Type typTgt = typeof(Game.Objects.Combat2.CombatObject);
-                UCLinkObj linkTgt = new UCLinkObj(this, null, typTgt);
+                lb.DataSource = weapons.ToList();
+                //Type typTgt = typeof(Game.Objects.Combat2.CombatObject);
+                StrategyComObj tgt = new StrategyComObj();
+                UCLinkObj linkTgt = new UCLinkObj(this, null, tgt, true, 0);
                 linkTgt.CheckAlign = ContentAlignment.MiddleLeft;
                 linkTgt.Text = "Target Object";
                 tableLayoutPanel1.RowCount += 2;
@@ -166,16 +168,24 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             
             foreach (UCLinkObj linkobj in linkObjs)
             {
-                if (linkobj.linkedTo != null && linkobj.CheckAlign == ContentAlignment.MiddleRight) //don't draw lines if null, 
-                    //and only draw lines from output objects(not back again, or that'd be drawing a line where we've already done one)
+                
+                if (linkobj.linkedTo[0] != null && linkobj.CheckAlign == ContentAlignment.MiddleLeft) //don't draw lines if null, 
+                    //and only draw lines from input objects(not back again, or that'd be drawing a line where we've already done one)
                 {
                     Pen linkline = new Pen(Color.Blue, 2);
                     Point pt1 = linkobj.drawLoc;//canvasdata.canvasLocation(linkobj.drawLoc);
-                    Point pt2 = linkobj.linkedTo.drawLoc;//canvasdata.canvasLocation(linkobj.linkedTo.drawLoc);
+                    Point pt2 = linkobj.linkedTo[0].drawLoc;//canvasdata.canvasLocation(linkobj.linkedTo.drawLoc);
                     g.DrawLine(linkline, pt1, pt2);
                 }
             }
             
+        }
+
+        private void btn_SaveStrategy_Click(object sender, EventArgs e)
+        {
+            StrategyObjects stratobj = new StrategyObjects();
+            
+
         }
 
     }

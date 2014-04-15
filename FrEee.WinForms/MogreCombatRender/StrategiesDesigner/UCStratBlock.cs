@@ -12,7 +12,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
     public partial class UCStratBlock : UserControlBaseObj
     {
-        StrategyBaseBlock stratblock;
+        public StrategyBaseBlock stratblock { get; protected set; }
         
         public UCStratBlock() : base() { }
 
@@ -31,7 +31,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 for (int i = 0; i < stratblock.inputtypes.Length; i++)
                 {
 
-                    UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock.inputtypes[i]);
+                    UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock, true, i);
 
                     linkinp.Text = stratblock.inputtypes[i].Name;
                     linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -54,7 +54,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 this.Height += 24;
             }
 
-            UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock.outputType);
+            UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock, false, 0);
 
             linkout.Text = stratblock.outputType.Name;
             linkout.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -64,6 +64,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.TableLayoutPanel1.SetColumnSpan(linkout, 2);
             this.TableLayoutPanel1.Controls.Add(linkout);
             
+        }
+
+        public void link(int myinputIndex, StrategyBaseBlock otherBlock)
+        {
+            this.stratblock.makelink(myinputIndex, otherBlock);
         }
     }
 }

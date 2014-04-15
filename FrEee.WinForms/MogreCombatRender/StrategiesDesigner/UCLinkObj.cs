@@ -7,44 +7,55 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using FrEee.Game.Objects.Combat2;
+
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
     public partial class UCLinkObj : UserControl
     {
         Type datatype;
-        UCLinkObj linkedto = null;
+        List<UCLinkObj> linkedto = new List<UCLinkObj>();
         StratMainForm parentform;
         UserControlBaseObj parentUC;
-
+        StrategyBaseBlock strategyblock;
+        int linkdex = 0;
+        bool isinput;
         Point offset = new Point(10, 0);
         Canvasdata canvasdata;
         Point loc = new Point(0, 0);
 
         Point drawloc = new Point(0, 0);
 
-        public UCLinkObj()
-        {
-            InitializeComponent();
-        }
 
-        public UCLinkObj(StratMainForm parentForm, UserControlBaseObj parentUC, Type datatype)
+
+        public UCLinkObj(StratMainForm parentForm, UserControlBaseObj parentUC, StrategyBaseBlock strategyblock, bool isinput, int linkindex)
         {
             InitializeComponent();
+            linkedto.Add(null);
+            this.linkdex = linkindex;
             this.parentform = parentForm;
-            this.datatype = datatype;
+            this.strategyblock = strategyblock;
+            this.isinput = isinput;
+            if (isinput)
+                this.datatype = strategyblock.inputtypes[linkdex];
+            else
+                this.datatype = strategyblock.outputType;
             this.parentUC = parentUC;
             parentForm.links.Add(this);
             setoffset();
         }
 
-        
+        public UCLinkObj()
+        {
+            InitializeComponent();
+        }
 
         public Type dataType
         {
             get { return this.datatype; }           
         }
 
-        public UCLinkObj linkedTo
+        public List<UCLinkObj> linkedTo
         {
             get { return this.linkedto; }
             set { this.linkedto = value; }
@@ -75,11 +86,13 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void setoffset()
         {
-            this.offset.Y = this.Height / 2;
+            this.offset.Y = this.Height / 2 -3;
+            if (this.parentUC == null)
+                this.offset.Y -= 37;
             if (CheckAlign == ContentAlignment.MiddleRight)
-                offset.X = this.Width - 10;
+                offset.X = this.Width + 2;
             else if (CheckAlign == ContentAlignment.MiddleLeft)
-                offset.X = 10; 
+                offset.X = -2; 
         }
         
         private void checkBox1_MouseDown(object sender, MouseEventArgs e)
@@ -99,8 +112,34 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
             if (linkattempt.dataType == this.dataType)
             {
-                linkedTo = linkattempt;
-                linkattempt.linkedto = this;
+                //linkedTo = linkattempt;
+                //linkattempt.linkedto = this;
+                
+
+                if (isinput)
+                {
+                    this.strategyblock.makelink(linkdex, linkattempt.strategyblock);
+                    linkedto[0] = linkattempt;
+                    if (!linkattempt.linkedto.Contains(this))
+                    {
+                        if (linkattempt.linkedto.Contains(null))
+                            linkattempt.linkedto[0] = this;
+                        else
+                            linkattempt.linkedto.Add(this);
+                    }
+                }
+                else
+                {
+                    linkattempt.strategyblock.makelink(linkattempt.linkdex, this.strategyblock);
+                    linkattempt.linkedto[0] = this;
+                    if (!this.linkedto.Contains(linkattempt))
+                    {
+                        if (this.linkedto.Contains(null))
+                            this.linkedto[0] = linkattempt;
+                        else
+                            this.linkedto.Add(linkattempt);
+                    }
+                }
                 this.Checked = true;
                 linkattempt.Checked = true;
                 parentform.refreshlines();
