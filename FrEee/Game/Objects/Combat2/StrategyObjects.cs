@@ -117,6 +117,35 @@ namespace FrEee.Game.Objects.Combat2
             get { return this.inputs; }
         }
 
+        /// <summary>
+        /// links thisblock to another blocks output.
+        /// currently does nothing if the otherblocks output Type does not equal this inputs index Type.
+        /// </summary>
+        /// <param name="myinputIndx">the input link</param>
+        /// <param name="otherblock">the other block</param>
+        public void makelink(int myinputIndx, StrategyBaseBlock otherblock)
+        {
+            if (inputtypes[myinputIndx] == otherblock.outputType)
+            {
+                this.inputLnks[myinputIndx] = otherblock;
+                if (!otherblock.outputLnks.Contains(this))
+                    otherblock.outputLnks.Add(this);
+            }
+            else
+            {
+                //throw an exception? 
+            }
+        }
+
+        public void breaklink(int myinputIndx)
+        {
+            StrategyBaseBlock otherblock = this.inputLnks[myinputIndx];            
+            int dex = otherblock.outputLnks.FindIndex(item => item == this);
+
+            otherblock.outputLnks[dex] = null;
+            this.inputLnks[myinputIndx] = null;            
+        }
+
         public Object getOutput(CombatObject comObj)
         {
             if (output == null)
