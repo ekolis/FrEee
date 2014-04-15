@@ -116,10 +116,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 //linkattempt.linkedto = this;
                 
 
-                if (isinput)
+                if (this.isinput)
                 {
                     this.strategyblock.makelink(linkdex, linkattempt.strategyblock);
                     linkedto[0] = linkattempt;
+                    
                     if (!linkattempt.linkedto.Contains(this))
                     {
                         if (linkattempt.linkedto.Contains(null))

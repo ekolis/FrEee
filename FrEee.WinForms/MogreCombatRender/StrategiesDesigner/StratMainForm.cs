@@ -23,6 +23,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         //Canvasdata canvasdataFC;
         //Point canvaslocFC;
         IDesign design;
+        StrategyWayPoint waypointblock = new StrategyWayPoint();
+        List<StrategyComObj> tgtlist = new List<StrategyComObj>();
 
         List<UCLinkObj> linkObjs = new List<UCLinkObj>();
 
@@ -32,9 +34,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             canvasloc = new Point((pBx.Width / 2) * -1, pBx.Height / 2);
             canvasdata = new Canvasdata(1, pBx.Width, pBx.Height, canvasloc);
             this.design = design;
-
-            StrategyWayPoint waypointblock = new StrategyWayPoint();
-
+            
             Type typHloc = typeof(NewtMath.f16.PointXd);
             UCLinkObj linkHloc = new UCLinkObj(this, null, waypointblock, true, 0);
             linkHloc.CheckAlign = ContentAlignment.MiddleLeft;
@@ -71,6 +71,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 lb.DataSource = weapons.ToList();
                 //Type typTgt = typeof(Game.Objects.Combat2.CombatObject);
                 StrategyComObj tgt = new StrategyComObj();
+                tgtlist.Add(tgt);
                 UCLinkObj linkTgt = new UCLinkObj(this, null, tgt, true, 0);
                 linkTgt.CheckAlign = ContentAlignment.MiddleLeft;
                 linkTgt.Text = "Target Object";
@@ -183,10 +184,17 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
-            StrategyObjects stratobj = new StrategyObjects();
-            
-
+            StrategyObjects stratobj = new StrategyObjects(waypointblock, tgtlist.ToArray());
+            List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
+            List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
+            List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
+            blocks1 = waypointblock.getlistoflinks();
+            foreach (StrategyBaseBlock linkedblock in tgtlist)
+            {
+                blocks2 = linkedblock.getlistoflinks();
+                blocks = blocks1.Union(blocks2).ToList();
+            }
+            stratobj.blocks = blocks.ToArray();           
         }
-
     }
 }

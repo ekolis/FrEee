@@ -9,20 +9,21 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class StrategyObjects
     {
-        protected StrategyBaseBlock[] waypointObjs {get;set;}
+        protected StrategyBaseBlock waypointObj {get;set;}
         protected StrategyBaseBlock[] targetObjs {get;set;}
+        public StrategyBaseBlock[] blocks { get; set; }
         
         public StrategyObjects()
         {}
-        public StrategyObjects(StrategyBaseBlock[] waypointstratObjs, StrategyBaseBlock[] targetstratObjs)
+        public StrategyObjects(StrategyBaseBlock waypointstratObj, StrategyBaseBlock[] targetstratObjs)
         {
-            this.waypointObjs = waypointstratObjs;
+            this.waypointObj = waypointstratObj;
             this.targetObjs = targetstratObjs;
         }
 
         public combatWaypoint calcWaypiont(CombatObject comObj)
         {
-            combatWaypoint wp = (combatWaypoint)waypointObjs[0].getOutput(comObj);  
+            combatWaypoint wp = (combatWaypoint)waypointObj.getOutput(comObj);  
             return wp;
         }
 
@@ -62,8 +63,8 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-
-            waypointObjs = new StrategyBaseBlock[4] { wpnt, closest1, enloc, envel };
+            waypointObj = wpnt;
+            blocks = new StrategyBaseBlock[3] { closest1, enloc, envel };
 
             targetObjs = new StrategyBaseBlock[1] { closest1 };
 
@@ -144,6 +145,28 @@ namespace FrEee.Game.Objects.Combat2
 
             otherblock.outputLnks[dex] = null;
             this.inputLnks[myinputIndx] = null;            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public List<StrategyBaseBlock> getlistoflinks()
+        {
+            List<StrategyBaseBlock> links = new List<StrategyBaseBlock>();
+            List<StrategyBaseBlock> links1 = new List<StrategyBaseBlock>();
+            List<StrategyBaseBlock> links2 = new List<StrategyBaseBlock>();
+            if (this.inputLnks != null)
+            {
+                foreach (StrategyBaseBlock lnk in this.inputLnks)
+                {
+                    links1.Add(lnk);
+                    links2 = lnk.getlistoflinks();
+                    links = links1.Union(links2).ToList();
+
+                }
+            }
+            return links;
         }
 
         public Object getOutput(CombatObject comObj)
@@ -261,6 +284,38 @@ namespace FrEee.Game.Objects.Combat2
         {
             //base.calc(comObj); dont need this, should be at the top of the chain - no inputs.
             output = comObj.empire.hostile;
+        }
+    }
+
+    public class StrategyThisEmpireObj : StrategyBaseBlock
+    {
+        public StrategyThisEmpireObj()
+            : base(null, typeof(List<CombatObject>))
+        {
+            name = "Objects in This Empire";
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            //base.calc(comObj); dont need this, should be at the top of the chain - no inputs.
+            output = comObj.empire.ownships;
+        }
+    }
+
+    public class StrategyRange : StrategyBaseBlock
+    {
+        public StrategyRange()
+            : base(new Type[2] { typeof(CombatObject), typeof(CombatObject) }, typeof(Fix16))
+        {
+            name = "Range";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            CombatObject obj0 = (CombatObject)inputs[0];
+            CombatObject obj1 = (CombatObject)inputs[1];
+
+            output = Trig.distance(obj0.cmbt_loc, obj1.cmbt_loc);
         }
     }
 
