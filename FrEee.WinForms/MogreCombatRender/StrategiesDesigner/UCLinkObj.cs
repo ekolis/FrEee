@@ -43,6 +43,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.parentUC = parentUC;
             parentForm.links.Add(this);
             setoffset();
+            this.Dock = DockStyle.Fill;
         }
 
         public UCLinkObj()

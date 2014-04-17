@@ -15,7 +15,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
     public partial class UCWaypoint : UserControlBaseObj
     {
         List<MountedComponentTemplate> weapons { get; set; }
-        StrategyWayPoint wpnt { get; set; }
+        public StrategyWayPoint wpnt { get; set; }
 
         public UCWaypoint(StratMainForm ParentForm, Canvasdata canvasdata)
             : base("WayPoint", ParentForm, canvasdata)
@@ -26,7 +26,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
 
             wpnt = new StrategyWayPoint();
-
+            this.GameTableLayoutPanel1.ColumnCount = 1;
+            
             for (int i = 0; i < wpnt.inputtypes.Length; i++)
             {
 
@@ -41,7 +42,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
                 this.GameTableLayoutPanel1.SetRow(linkinp, GameTableLayoutPanel1.RowCount - 1);
                 this.GameTableLayoutPanel1.SetColumn(linkinp, 0);
-                this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 2);
+                //this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 2);
                 this.Height += 24;
                 this.GameTableLayoutPanel1.Controls.Add(linkinp);
             }
