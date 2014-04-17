@@ -15,7 +15,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
     public partial class UCFireControlTarget : UserControlBaseObj
     {
         public List<MountedComponentTemplate> weapons { get; set; }
-        StrategyComObj tgt { get; set; }
+        public StrategyComObj tgt { get; set; }
 
         public UCFireControlTarget(StratMainForm ParentForm, Canvasdata canvasdata)
             : base("FireControl", ParentForm, canvasdata)
@@ -48,6 +48,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             GameTableLayoutPanel1.SetRow(linkTgt, 1);
             GameTableLayoutPanel1.SetColumn(linkTgt, 0);
             GameTableLayoutPanel1.SetColumnSpan(linkTgt, 2);
+            
 
             GameTableLayoutPanel1.SetRow(lb, 2);
             GameTableLayoutPanel1.SetColumn(lb, 0);
