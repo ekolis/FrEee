@@ -121,9 +121,15 @@ namespace FrEee.Game.Interfaces
 
 		int Iteration { get; set; }
 
+        /// <summary>
+        /// The Strategy this design uses in combat. 
+        /// </summary>
+        FrEee.Game.Objects.Combat2.StrategyObject Strategy { get; set; }
+
 		IDesign Copy();
 
 		IVehicle Instantiate();
+
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable where T : IVehicle

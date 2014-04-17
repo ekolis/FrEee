@@ -26,6 +26,7 @@ namespace FrEee.Game.Objects.Combat2
 			maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
 			maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
 			maxRotate = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
+            strategy = start_v.Design.Strategy;
 		}
 
 		#region fields & properties
@@ -39,6 +40,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// The current state of the vehicle.
 		/// </summary>
 		public Vehicle WorkingVehicle { get { return (Vehicle)WorkingObject; } private set { WorkingObject = value; } }
+
 
 		#endregion
 

@@ -7,15 +7,15 @@ using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class StrategyObjects
+    public class StrategyObject
     {
         protected StrategyBaseBlock waypointObj {get;set;}
         protected StrategyBaseBlock[] targetObjs {get;set;}
         public StrategyBaseBlock[] blocks { get; set; }
         
-        public StrategyObjects()
+        public StrategyObject()
         {}
-        public StrategyObjects(StrategyBaseBlock waypointstratObj, StrategyBaseBlock[] targetstratObjs)
+        public StrategyObject(StrategyBaseBlock waypointstratObj, StrategyBaseBlock[] targetstratObjs)
         {
             this.waypointObj = waypointstratObj;
             this.targetObjs = targetstratObjs;
@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Combat2
 
     }
 
-    public class StragegyObject_Default:StrategyObjects
+    public class StragegyObject_Default:StrategyObject
     {
         public StragegyObject_Default()
             : base()
@@ -323,7 +323,7 @@ namespace FrEee.Game.Objects.Combat2
     {
         Type filter = typeof(CombatObject);
         public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
-            base (new Type[2]{typeof(CombatObject), typeof(List<CombatObject>)}, typeof(CombatObject))
+            base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(Type)}, typeof(CombatObject))
         {
             name = "Closest Object to:";
             if (filter != null)
@@ -354,6 +354,29 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 output = closest;
             }
+        }
+    }
+
+    public class StrategyWeapons : StrategyBaseBlock
+    {
+        Type filter = typeof(CombatWeapon);
+        public StrategyWeapons(CombatObject fromObj, Type filter = null) :
+            base(new Type[2] { typeof(CombatObject), typeof(CombatWeapon) }, typeof(List<CombatWeapon>))
+        {
+            name = "List of Weapons";
+            if (filter != null)
+            {
+                this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
+            }
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            
+            ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+            List<CombatWeapon> comWpn = ccobj.Weapons.ToList();
+
         }
     }
 }

@@ -89,6 +89,7 @@ namespace FrEee.Game.Objects.Combat2
             weaponTarget = new List<CombatObject>(1); //eventualy this should be something with the multiplex tracking component.
             this.cmbt_thrust = new PointXd(0, 0, 0);
             this.cmbt_accel = new PointXd(0, 0, 0);
+            
 		}
 
         #region fields & properties
@@ -120,7 +121,7 @@ namespace FrEee.Game.Objects.Combat2
         
         public CombatEmpire empire { get; set; }
 
-        public StrategyObjects strategy { get; set; }
+        public StrategyObject strategy { get; set; }
 
 		public combatWaypoint waypointTarget;
 		public PointXd lastVectortoWaypoint { get; set; }
