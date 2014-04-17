@@ -312,7 +312,7 @@ Tonnage Structure     := 1
 Cost Minerals         := 1
 Cost Organics         := 0
 Cost Radioactives     := 5
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Vehicle Control
@@ -332,7 +332,7 @@ Tonnage Structure     := 1
 Cost Minerals         := 1
 Cost Organics         := 5
 Cost Radioactives     := 2
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Vehicle Control
@@ -359,7 +359,7 @@ Tonnage Structure     := 1
 Cost Minerals         := =miniaturize(10, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(10, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 1
 Restrictions          := None
 General Group         := Defenses
@@ -415,7 +415,7 @@ Tonnage Structure     := 1000
 Cost Minerals         := 500
 Cost Organics         := 0
 Cost Radioactives     := 250
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := 1
 General Group         := Defenses
@@ -434,7 +434,7 @@ Tonnage Structure     := 1
 Cost Minerals         := 10
 Cost Organics         := 0
 Cost Radioactives     := 20
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Miscellaneous
@@ -456,7 +456,7 @@ Tonnage Structure     := 1
 Cost Minerals         := 20
 Cost Organics         := 5
 Cost Radioactives     := 50
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 5
 Restrictions          := None
 General Group         := Weapons - Special
@@ -478,7 +478,7 @@ Tonnage Structure     := 2
 Cost Minerals         := 30
 Cost Organics         := 0
 Cost Radioactives     := 20
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Repair
@@ -499,7 +499,7 @@ Tonnage Structure     := 1
 Cost Minerals         := 10
 Cost Organics         := 2
 Cost Radioactives     := 30
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 5
 Restrictions          := None
 General Group         := Weapons - Special
@@ -521,7 +521,7 @@ Tonnage Structure     := 2
 Cost Minerals         := 30
 Cost Organics         := 0
 Cost Radioactives     := 50
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Repair
@@ -810,7 +810,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =miniaturize(50, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 5
 Restrictions          := None
 General Group         := Weapons - Direct Fire
@@ -844,7 +844,7 @@ Tonnage Structure     := 1
 Cost Minerals         := =miniaturize(10, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(50, level)
-Vehicle Type          := Ship, Base
+Vehicle Type          := Ship\Base
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Shields
@@ -894,7 +894,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(50, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -998,7 +998,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(100, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Weapons - Direct Fire
@@ -1080,7 +1080,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(150, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 10
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1184,7 +1184,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(50, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1220,7 +1220,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(40, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1256,7 +1256,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(40, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1292,7 +1292,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(40, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(60, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 100
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1328,7 +1328,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(40, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1366,7 +1366,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(80, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(120, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1422,7 +1422,7 @@ Tonnage Structure     := 5
 Cost Minerals         := 1
 Cost Organics         := 0
 Cost Radioactives     := 0
-Vehicle Type          := Ship, Base, Fighter, Troop
+Vehicle Type          := Ship\Base, Fighter, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
@@ -1444,7 +1444,7 @@ Tonnage Structure     := 100
 Cost Minerals         := 10
 Cost Organics         := 0
 Cost Radioactives     := 1
-Vehicle Type          := Ship, Base, Troop
+Vehicle Type          := Ship\Base, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
@@ -1487,7 +1487,7 @@ Tonnage Structure     := 10
 Cost Minerals         := 1
 Cost Organics         := 0
 Cost Radioactives     := 0
-Vehicle Type          := Ship, Base, Fighter, Troop
+Vehicle Type          := Ship\Base, Fighter, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
@@ -1509,7 +1509,7 @@ Tonnage Structure     := 200
 Cost Minerals         := 10
 Cost Organics         := 0
 Cost Radioactives     := 4
-Vehicle Type          := Ship, Base, Troop
+Vehicle Type          := Ship\Base, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
@@ -1534,7 +1534,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(40, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1570,7 +1570,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(55, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1606,7 +1606,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(55, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1642,7 +1642,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(40, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(80, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 100
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1678,7 +1678,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(55, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1716,7 +1716,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(80, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(160, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1754,7 +1754,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(20, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(60, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1790,7 +1790,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(80, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1826,7 +1826,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(80, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 60
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1862,7 +1862,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(40, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(120, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 100
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1898,7 +1898,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(25, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(80, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1936,7 +1936,7 @@ Tonnage Structure     := 2
 Cost Minerals         := =miniaturize(80, level)
 Cost Organics         := 0
 Cost Radioactives     := =discount(240, level)
-Vehicle Type          := Ship, Base, Weapon Platform
+Vehicle Type          := Ship\Base\WeaponPlatform
 Supply Amount Used    := 50
 Restrictions          := None
 General Group         := Weapons - Seeking
@@ -1992,7 +1992,7 @@ Tonnage Structure     := 20
 Cost Minerals         := 1
 Cost Organics         := 0
 Cost Radioactives     := 0
-Vehicle Type          := Ship, Base, Fighter, Troop
+Vehicle Type          := Ship\Base, Fighter, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
@@ -2014,7 +2014,7 @@ Tonnage Structure     := 400
 Cost Minerals         := 10
 Cost Organics         := 0
 Cost Radioactives     := 16
-Vehicle Type          := Ship, Base, Troop
+Vehicle Type          := Ship\Base, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Defenses
