@@ -2445,5 +2445,12 @@ namespace FrEee.Utility.Extensions
 		{
 			Galaxy.Current.AbilityCache.Remove(o);
 		}
+
+		public static string ToSafeString(this object o)
+		{
+			if (o == null)
+				return null;
+			return o.ToString();
+		}
 	}
 }

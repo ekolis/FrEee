@@ -24,6 +24,7 @@ namespace FrEee.WinForms
 		/// 2 for missing GAM or PLR file specified to load
 		/// 3 for crash
 		/// 4 for missing mod to load when patching
+		/// 5 for errors in mod to load when patching
 		/// 1xxx for missing PLR file for player xxx when running in "safe processing" mode
 		/// </summary>
 		[STAThread]
@@ -255,6 +256,8 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					}
 					mod = Mod.Load(modFolder, false);
 				}
+				if (Mod.Errors.Any())
+					return 5;
 				Console.WriteLine("Patching mod...");
 				Galaxy.Current.Mod.Patch(mod);
 				Console.WriteLine("Saving game...");

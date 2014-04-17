@@ -62,6 +62,16 @@ namespace FrEee.WinForms.Forms
 					{
 						status.Message = "Loading mod";
 						Mod.Load(null, true, status, 0.5);
+						if (Mod.Errors.Any())
+						{
+							Action a = delegate()
+							{
+								var doOrDie = this.ShowChildForm(new ModErrorsForm());
+								if (doOrDie == DialogResult.Cancel)
+									Close();
+							};
+							this.Invoke(a);
+						}
 					}
 					status.Message = "Setting up game";
 					var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
@@ -181,6 +191,12 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Message = "Loading mod";
 					Mod.Load(modPath, true, status, 1d);
+					if (Mod.Errors.Any())
+					{
+						var doOrDie = this.ShowChildForm(new ModErrorsForm());
+						if (doOrDie == DialogResult.Cancel)
+							Close();
+					}
 				}
 				catch (Exception ex)
 				{

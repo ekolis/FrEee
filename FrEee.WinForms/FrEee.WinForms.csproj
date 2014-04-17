@@ -131,6 +131,12 @@
     <Compile Include="Forms\BattleResultsForm.Designer.cs">
       <DependentUpon>BattleResultsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ModErrorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModErrorsForm.Designer.cs">
+      <DependentUpon>ModErrorsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\MogreCombatForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -630,6 +636,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FleetTransferForm.resx">
       <DependentUpon>FleetTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModErrorsForm.resx">
+      <DependentUpon>ModErrorsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MogreCombatForm.resx">
       <DependentUpon>MogreCombatForm.cs</DependentUpon>

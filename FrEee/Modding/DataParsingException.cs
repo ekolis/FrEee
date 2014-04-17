@@ -15,7 +15,7 @@ namespace FrEee.Modding
 		public Field Field { get; private set; }
 
 		public DataParsingException(string message, string filename, Record record = null, Field field = null)
-			: base(message + "\nIn data file: " + filename + "\nIn record: " + record + "\nIn field: " + field)
+			: base(message)
 		{
 			Filename = filename;
 			Record = record;
@@ -23,7 +23,7 @@ namespace FrEee.Modding
 		}
 
 		public DataParsingException(string message, Exception inner, string filename, Record record = null, Field field = null)
-			: base(message + "\nIn data file: " + filename + "\nIn record: " + record + "\nIn field: " + field, inner)
+			: base(message)
 		{
 			Filename = filename;
 			Record = record;
