@@ -191,12 +191,15 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Message = "Loading mod";
 					Mod.Load(modPath, true, status, 1d);
-					if (Mod.Errors.Any())
-					{
-						var doOrDie = this.ShowChildForm(new ModErrorsForm());
-						if (doOrDie == DialogResult.Cancel)
-							Close();
-					}
+					this.Invoke(new Action(delegate()
+						{
+							if (Mod.Errors.Any())
+							{
+								var doOrDie = this.ShowChildForm(new ModErrorsForm());
+								if (doOrDie == DialogResult.Cancel)
+									Close();
+							}
+						}));
 				}
 				catch (Exception ex)
 				{
