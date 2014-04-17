@@ -27,9 +27,11 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			{
 				var hasLevels = Receiver.ResearchedTechnologies[tech];
 				var hasProgress = Receiver.ResearchProgress.SingleOrDefault(p => p.Item == tech);
+				var hasAmount = hasProgress == null ? 0 : hasProgress.Value;
 				var giveLevels = Giver.ResearchedTechnologies[tech];
 				var giveProgress = Giver.ResearchProgress.SingleOrDefault(p => p.Item == tech);
-				if (giveProgress != null && giveLevels > hasLevels || giveLevels == hasLevels && giveProgress.Value > (hasProgress == null ? 0 : hasProgress.Value))
+				var giveAmount = giveProgress == null ? 0 : hasProgress.Value;
+				if (giveLevels > hasLevels || giveLevels == hasLevels && giveAmount > hasAmount)
 				{
 					if (RandomHelper.Next(100d) < Mod.Current.Settings.CooperativeResearchBreakthroughChance)
 					{
@@ -39,7 +41,6 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 						if (hasProgress == null)
 						{
 							// create a progress object so we can track progress on the learned tech
-							hasProgress = new Progress<Tech>(tech, 0, tech.GetNextLevelCost(Receiver));
 							Receiver.Research(tech, 0);
 							hasProgress = Receiver.ResearchProgress.Single(p => p.Item == tech);
 						}
