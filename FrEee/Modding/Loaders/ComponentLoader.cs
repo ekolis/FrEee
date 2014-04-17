@@ -143,7 +143,12 @@ namespace FrEee.Modding.Loaders
 								w.MaxRange = w.MinRange + lastNonzero - 1;
 								var dict = new Dictionary<int, int>();
 								for (int i = firstNonzero; i <= lastNonzero - firstNonzero; i++)
-									dict.Add(i + w.MinRange.Value, dmg[i]);
+								{
+									if (dmg.Count > i)
+										dict.Add(i + w.MinRange.Value, dmg[i]);
+									else
+										w.MaxRange = (int)w.MaxRange - 1;
+								}
 								if (firstNonzero > lastNonzero)
 									w.Damage = 0;
 								else
