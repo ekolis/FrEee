@@ -58,6 +58,7 @@ namespace FrEee.WinForms.Forms
 			{
 				try
 				{
+					bool doOrDie = true;
 					if (Mod.Current == null)
 					{
 						status.Message = "Loading mod";
@@ -66,28 +67,29 @@ namespace FrEee.WinForms.Forms
 						{
 							Action a = delegate()
 							{
-								var doOrDie = this.ShowChildForm(new ModErrorsForm());
-								if (doOrDie == DialogResult.Cancel)
-									Close();
+								doOrDie = this.ShowChildForm(new ModErrorsForm()) == System.Windows.Forms.DialogResult.OK;
 							};
 							this.Invoke(a);
 						}
 					}
-					status.Message = "Setting up game";
-					var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
-					warnings = setup.Warnings.ToArray();
-					if (warnings.Any())
-						MessageBox.Show(warnings.First(), "Game Setup Error");
-					else
+					if (doOrDie)
 					{
-						// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
+						status.Message = "Setting up game";
+						var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
+						warnings = setup.Warnings.ToArray();
+						if (warnings.Any())
+							MessageBox.Show(warnings.First(), "Game Setup Error");
+						else
+						{
+							// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
 
-						status.Message = "Setting up galaxy";
-						Galaxy.Initialize(setup, status, 1.0);
-						var name = Galaxy.Current.Name;
-						var turn = Galaxy.Current.TurnNumber;
-						status.Message = "Loading game";
-						Galaxy.Load(name + "_" + turn + "_0001.gam");
+							status.Message = "Setting up galaxy";
+							Galaxy.Initialize(setup, status, 1.0);
+							var name = Galaxy.Current.Name;
+							var turn = Galaxy.Current.TurnNumber;
+							status.Message = "Loading game";
+							Galaxy.Load(name + "_" + turn + "_0001.gam");
+						}
 					}
 				}
 				catch (Exception ex)
@@ -194,11 +196,7 @@ namespace FrEee.WinForms.Forms
 					this.Invoke(new Action(delegate()
 						{
 							if (Mod.Errors.Any())
-							{
-								var doOrDie = this.ShowChildForm(new ModErrorsForm());
-								if (doOrDie == DialogResult.Cancel)
-									Close();
-							}
+								this.ShowChildForm(new ModErrorsForm());
 						}));
 				}
 				catch (Exception ex)
