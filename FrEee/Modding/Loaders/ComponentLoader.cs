@@ -133,7 +133,8 @@ namespace FrEee.Modding.Loaders
 								dmgstr = dmgfield.Value;
 								var dmg = dmgstr.Split(' ').Select(s => int.Parse(s)).ToList();
 								int firstNonzero = w.MinRange;
-								while (dmg.Count > 0 && firstNonzero < dmg.Count && dmg[firstNonzero] == 0)									firstNonzero++;
+								while (dmg.Count > 0 && firstNonzero < dmg.Count && dmg[firstNonzero] == 0)
+									firstNonzero++;
 								int lastNonzero = w.MaxRange - w.MinRange;
 								while (dmg.Count > lastNonzero && dmg[lastNonzero] == 0)
 									lastNonzero--;
