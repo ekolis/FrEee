@@ -477,6 +477,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int Iteration { get; set; }
 
+        public Combat2.StrategyObject Strategy { get; set; }
+
 		public void Dispose()
 		{
 			if (IsDisposed)

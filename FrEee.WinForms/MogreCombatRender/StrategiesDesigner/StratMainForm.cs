@@ -184,7 +184,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
-            StrategyObjects stratobj = new StrategyObjects(waypointblock, tgtlist.ToArray());
+            StrategyObject stratobj = new StrategyObject(waypointblock, tgtlist.ToArray());
             List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
@@ -194,7 +194,9 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 blocks2 = linkedblock.getlistoflinks();
                 blocks = blocks1.Union(blocks2).ToList();
             }
-            stratobj.blocks = blocks.ToArray();           
+            stratobj.blocks = blocks.ToArray();
+
+            design.Strategy = stratobj;
         }
     }
 }
