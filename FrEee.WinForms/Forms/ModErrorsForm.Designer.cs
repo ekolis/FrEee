@@ -30,18 +30,19 @@
 		{
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstFiles = new System.Windows.Forms.ListView();
+			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstErrors = new System.Windows.Forms.ListView();
+			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.pnlDetails = new FrEee.WinForms.Controls.GamePanel();
+			this.lblField = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
+			this.lblRecord = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.lblNoErrors = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.lblRecord = new System.Windows.Forms.Label();
-			this.lblField = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.lblMessage = new System.Windows.Forms.Label();
 			this.gamePanel1.SuspendLayout();
 			this.gamePanel2.SuspendLayout();
 			this.pnlDetails.SuspendLayout();
@@ -78,6 +79,10 @@
 			this.lstFiles.View = System.Windows.Forms.View.Details;
 			this.lstFiles.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstFiles_ItemSelectionChanged);
 			// 
+			// columnHeader1
+			// 
+			this.columnHeader1.Width = 188;
+			// 
 			// gamePanel2
 			// 
 			this.gamePanel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -90,7 +95,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(214, 12);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(380, 337);
+			this.gamePanel2.Size = new System.Drawing.Size(380, 278);
 			this.gamePanel2.TabIndex = 2;
 			// 
 			// lstErrors
@@ -103,11 +108,15 @@
 			this.lstErrors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
 			this.lstErrors.Location = new System.Drawing.Point(3, 3);
 			this.lstErrors.Name = "lstErrors";
-			this.lstErrors.Size = new System.Drawing.Size(372, 329);
+			this.lstErrors.Size = new System.Drawing.Size(372, 270);
 			this.lstErrors.TabIndex = 1;
 			this.lstErrors.UseCompatibleStateImageBehavior = false;
 			this.lstErrors.View = System.Windows.Forms.View.Details;
 			this.lstErrors.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.lstErrors_ItemSelectionChanged);
+			// 
+			// columnHeader2
+			// 
+			this.columnHeader2.Width = 368;
 			// 
 			// pnlDetails
 			// 
@@ -115,16 +124,53 @@
 			this.pnlDetails.BackColor = System.Drawing.Color.Black;
 			this.pnlDetails.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlDetails.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlDetails.Controls.Add(this.lblMessage);
 			this.pnlDetails.Controls.Add(this.lblField);
 			this.pnlDetails.Controls.Add(this.label3);
 			this.pnlDetails.Controls.Add(this.lblRecord);
 			this.pnlDetails.Controls.Add(this.label1);
 			this.pnlDetails.ForeColor = System.Drawing.Color.White;
-			this.pnlDetails.Location = new System.Drawing.Point(214, 355);
+			this.pnlDetails.Location = new System.Drawing.Point(214, 296);
 			this.pnlDetails.Name = "pnlDetails";
 			this.pnlDetails.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlDetails.Size = new System.Drawing.Size(380, 98);
+			this.pnlDetails.Size = new System.Drawing.Size(380, 157);
 			this.pnlDetails.TabIndex = 4;
+			// 
+			// lblField
+			// 
+			this.lblField.AutoSize = true;
+			this.lblField.Location = new System.Drawing.Point(18, 132);
+			this.lblField.Name = "lblField";
+			this.lblField.Size = new System.Drawing.Size(50, 13);
+			this.lblField.TabIndex = 3;
+			this.lblField.Text = "Field Info";
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(5, 119);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(32, 13);
+			this.label3.TabIndex = 2;
+			this.label3.Text = "Field:";
+			// 
+			// lblRecord
+			// 
+			this.lblRecord.AutoSize = true;
+			this.lblRecord.Location = new System.Drawing.Point(19, 88);
+			this.lblRecord.Name = "lblRecord";
+			this.lblRecord.Size = new System.Drawing.Size(63, 13);
+			this.lblRecord.TabIndex = 1;
+			this.lblRecord.Text = "Record Info";
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(6, 75);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(45, 13);
+			this.label1.TabIndex = 0;
+			this.label1.Text = "Record:";
 			// 
 			// btnOK
 			// 
@@ -160,49 +206,13 @@
 			this.lblNoErrors.TabIndex = 7;
 			this.lblNoErrors.Text = "No Errors";
 			// 
-			// label1
+			// lblMessage
 			// 
-			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(7, 7);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(45, 13);
-			this.label1.TabIndex = 0;
-			this.label1.Text = "Record:";
-			// 
-			// lblRecord
-			// 
-			this.lblRecord.AutoSize = true;
-			this.lblRecord.Location = new System.Drawing.Point(20, 20);
-			this.lblRecord.Name = "lblRecord";
-			this.lblRecord.Size = new System.Drawing.Size(63, 13);
-			this.lblRecord.TabIndex = 1;
-			this.lblRecord.Text = "Record Info";
-			// 
-			// lblField
-			// 
-			this.lblField.AutoSize = true;
-			this.lblField.Location = new System.Drawing.Point(19, 64);
-			this.lblField.Name = "lblField";
-			this.lblField.Size = new System.Drawing.Size(50, 13);
-			this.lblField.TabIndex = 3;
-			this.lblField.Text = "Field Info";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(6, 51);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(32, 13);
-			this.label3.TabIndex = 2;
-			this.label3.Text = "Field:";
-			// 
-			// columnHeader1
-			// 
-			this.columnHeader1.Width = 188;
-			// 
-			// columnHeader2
-			// 
-			this.columnHeader2.Width = 368;
+			this.lblMessage.Location = new System.Drawing.Point(6, 3);
+			this.lblMessage.Name = "lblMessage";
+			this.lblMessage.Size = new System.Drawing.Size(369, 72);
+			this.lblMessage.TabIndex = 4;
+			this.lblMessage.Text = "Message";
 			// 
 			// ModErrorsForm
 			// 
@@ -246,5 +256,6 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ColumnHeader columnHeader2;
+		private System.Windows.Forms.Label lblMessage;
 	}
 }
