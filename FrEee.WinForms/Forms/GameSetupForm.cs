@@ -743,5 +743,15 @@ namespace FrEee.WinForms.Forms
 				BindEmpires();
 			}
 		}
+
+		private void GameSetupForm_Load(object sender, EventArgs e)
+		{
+			if (Mod.Errors.Any())
+			{
+				var doOrDie = this.ShowChildForm(new ModErrorsForm());
+				if (doOrDie == DialogResult.Cancel)
+					Close();
+			}
+		}
 	}
 }

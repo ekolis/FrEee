@@ -2459,6 +2459,7 @@
 			this.Name = "GameSetupForm";
 			this.ShowInTaskbar = false;
 			this.Text = "Game Setup";
+			this.Load += new System.EventHandler(this.GameSetupForm_Load);
 			this.tabs.ResumeLayout(false);
 			this.tabGalaxy.ResumeLayout(false);
 			this.tabGalaxy.PerformLayout();
