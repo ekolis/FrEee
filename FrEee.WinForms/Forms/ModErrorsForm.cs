@@ -75,6 +75,7 @@ namespace FrEee.WinForms.Forms
 			if (SelectedError != null)
 			{
 				pnlDetails.Visible = true;
+				lblMessage.Text = SelectedError.Message;
 				lblRecord.Text = SelectedError.Record.ToSafeString();
 				lblField.Text = SelectedError.Field.ToSafeString();
 			}
