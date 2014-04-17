@@ -205,6 +205,12 @@
     <Compile Include="MogreCombatRender\GfxObj.cs" />
     <Compile Include="MogreCombatRender\GfxCfg.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\Canvasdata.cs" />
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.Designer.cs">
+      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
+    </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -216,6 +222,12 @@
     </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.Designer.cs">
       <DependentUpon>UCStratBlock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.Designer.cs">
+      <DependentUpon>UCWaypoint.cs</DependentUpon>
     </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.cs">
       <SubType>UserControl</SubType>

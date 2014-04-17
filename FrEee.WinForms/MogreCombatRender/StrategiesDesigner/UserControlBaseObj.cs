@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
@@ -32,16 +33,16 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.parentForm = parentForm;
             this.canvasdata = canvasdata;
             RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
-            this.TableLayoutPanel1.RowStyles[0] = style0;
+            this.gameTableLayoutPanel1.RowStyles[0] = style0;
         }
 
         public string name
         { get { return this.Name; } }
 
-        protected TableLayoutPanel TableLayoutPanel1
+        protected GameTableLayoutPanel GameTableLayoutPanel1
         {
-            get { return tableLayoutPanel1; }
-            set { tableLayoutPanel1 = value; }
+            get { return gameTableLayoutPanel1; }
+            set { gameTableLayoutPanel1 = value; }
         }
 
         protected void UserControl_System_MouseDown(object sender, MouseEventArgs e)
