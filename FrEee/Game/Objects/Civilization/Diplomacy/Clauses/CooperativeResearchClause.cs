@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 				var hasAmount = hasProgress == null ? 0 : hasProgress.Value;
 				var giveLevels = Giver.ResearchedTechnologies[tech];
 				var giveProgress = Giver.ResearchProgress.SingleOrDefault(p => p.Item == tech);
-				var giveAmount = giveProgress == null ? 0 : hasProgress.Value;
+				var giveAmount = giveProgress == null ? 0 : giveProgress.Value;
 				if (giveLevels > hasLevels || giveLevels == hasLevels && giveAmount > hasAmount)
 				{
 					if (RandomHelper.Next(100d) < Mod.Current.Settings.CooperativeResearchBreakthroughChance)
