@@ -110,23 +110,25 @@ namespace FrEee.WinForms.Forms
 			{
 				var status = new Status();
 				var t = new Thread(new ThreadStart(() =>{
+					bool doOrDie = true;
 					var mod = Mod.Load(pickerForm.ModPath, true, status, 0.5);
 					if (Mod.Errors.Any())
+						doOrDie = this.ShowChildForm(new ModErrorsForm()) == DialogResult.OK;
+					if (doOrDie)
 					{
-						var doOrDie = this.ShowChildForm(new ModErrorsForm());
-						if (doOrDie == DialogResult.Cancel)
-						{
-							Close();
-							Thread.CurrentThread.Abort();
-						}
+						status.Message = "Backing up GAM file";
+						File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
+						status.Progress = 0.75;
+						status.Message = "Patching mod";
+						Galaxy.Current.Mod.Patch(mod);
+						Galaxy.SaveAll();
+						status.Progress = 1d;
 					}
-					status.Message = "Backing up GAM file";
-					File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
-					status.Progress = 0.75;
-					status.Message = "Patching mod";
-					Galaxy.Current.Mod.Patch(mod);
-					Galaxy.SaveAll();
-					status.Progress = 1d;
+					else
+					{
+						status.Message = "Aborting";
+						status.Progress = 1d;
+					}
 				}));
 				this.ShowChildForm(new StatusForm(t, status));
 			}
