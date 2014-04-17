@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new FrEee.WinForms.Controls.GameTableLayoutPanel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.pBx = new System.Windows.Forms.PictureBox();
             this.btnAddBlock = new FrEee.WinForms.Controls.GameButton();
             this.btn_SaveStrategy = new FrEee.WinForms.Controls.GameButton();
@@ -40,47 +38,24 @@
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 4;
+            this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 82F));
-            this.tableLayoutPanel1.Controls.Add(this.label3, 3, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label2, 3, 3);
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanel1.Controls.Add(this.pBx, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnAddBlock, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.btn_SaveStrategy, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 96F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(669, 427);
             this.tableLayoutPanel1.TabIndex = 0;
             this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label3.Location = new System.Drawing.Point(590, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 32);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "WayPoint";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(590, 88);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 13);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "FireControl";
             // 
             // pBx
             // 
@@ -89,8 +64,8 @@
             this.pBx.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pBx.Location = new System.Drawing.Point(3, 35);
             this.pBx.Name = "pBx";
-            this.tableLayoutPanel1.SetRowSpan(this.pBx, 3);
-            this.pBx.Size = new System.Drawing.Size(561, 389);
+            this.tableLayoutPanel1.SetRowSpan(this.pBx, 2);
+            this.pBx.Size = new System.Drawing.Size(567, 389);
             this.pBx.TabIndex = 6;
             this.pBx.TabStop = false;
             // 
@@ -122,12 +97,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(669, 427);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.Name = "StratMainForm";
             this.Text = "StratMainForm";
+            this.Resize += new System.EventHandler(this.StratMainForm_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBx)).EndInit();
             this.ResumeLayout(false);
 
@@ -137,10 +114,8 @@
 
         //private FrEee.WinForms.Controls.GameTableLayoutPanel
         private FrEee.WinForms.Controls.GameTableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.Label label2;
         private FrEee.WinForms.Controls.GameButton btnAddBlock;
         private System.Windows.Forms.PictureBox pBx;
-        private System.Windows.Forms.Label label3;
         private Controls.GameButton btn_SaveStrategy;
     }
 }

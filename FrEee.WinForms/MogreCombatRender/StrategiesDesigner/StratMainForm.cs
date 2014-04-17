@@ -34,7 +34,15 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             canvasloc = new Point((pBx.Width / 2) * -1, pBx.Height / 2);
             canvasdata = new Canvasdata(1, pBx.Width, pBx.Height, canvasloc);
             this.design = design;
-            
+
+            UCWaypoint wpnt = new UCWaypoint(this, canvasdata);
+            tableLayoutPanel1.SetColumn(wpnt, 2);
+            tableLayoutPanel1.SetRow(wpnt, 0);
+            tableLayoutPanel1.SetRowSpan(wpnt, 2);
+            tableLayoutPanel1.Controls.Add(wpnt);
+            wpnt.Name = "WayPoint";
+            wpnt.Dock = DockStyle.Fill;
+            /*old code
             Type typHloc = typeof(NewtMath.f16.PointXd);
             UCLinkObj linkHloc = new UCLinkObj(this, null, waypointblock, true, 0);
             linkHloc.CheckAlign = ContentAlignment.MiddleLeft;
@@ -52,6 +60,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.SetColumnSpan(linkHvel, 2);
             tableLayoutPanel1.SetRow(linkHvel, 2);         
             tableLayoutPanel1.Controls.Add(linkHvel);
+            */
 
             //List<MountedComponentTemplate> weapons = new List<MountedComponentTemplate>();
             IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); //this doesnt work or something.
@@ -63,10 +72,27 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
-            mplx = Math.Max(mplx, 1);
+            mplx = Math.Max(mplx, 5);
             
             for (int i = 1; i <= mplx; i++)
             {
+                UCFireControlTarget linkTgt = new UCFireControlTarget(this, canvasdata);
+                linkTgt.weapons = weapons.ToList();
+                linkTgt.Text = "Target Object";
+                tableLayoutPanel1.RowCount += 2;
+                while (tableLayoutPanel1.RowStyles.Count < tableLayoutPanel1.RowCount)
+                {
+                    RowStyle rowstyle = new RowStyle(SizeType.Absolute, 24);
+                    tableLayoutPanel1.RowStyles.Add(rowstyle);
+                }
+                tableLayoutPanel1.SetRow(linkTgt, 1 + i * 2);
+                tableLayoutPanel1.SetColumn(linkTgt, 2);
+                tableLayoutPanel1.SetRowSpan(linkTgt, 2);
+                tableLayoutPanel1.Controls.Add(linkTgt);
+                tableLayoutPanel1.SetRowSpan(pBx, tableLayoutPanel1.GetRowSpan(pBx) + 2);
+                tableLayoutPanel1.RowStyles[tableLayoutPanel1.RowCount-1].Height = 96;
+                ///oldcode
+                /*
                 ListBox lb = new ListBox();
                 lb.DataSource = weapons.ToList();
                 //Type typTgt = typeof(Game.Objects.Combat2.CombatObject);
@@ -98,6 +124,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
                 tableLayoutPanel1.Controls.Add(linkTgt);
                 tableLayoutPanel1.Controls.Add(lb);
+                */
 
             }
             
@@ -197,6 +224,29 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             stratobj.blocks = blocks.ToArray();
 
             design.Strategy = stratobj;
+        }
+
+        private void StratMainForm_Resize(object sender, EventArgs e)
+        {
+            int tgtrowsheight = 96;
+            int minsize = tgtrowsheight + (int)(tableLayoutPanel1.RowStyles[0].Height + tableLayoutPanel1.RowStyles[1].Height + tableLayoutPanel1.RowStyles[2].Height);            
+            int numtgtrows = tgtlist.Count;
+            if (numtgtrows * tgtrowsheight > minsize)
+            {
+                for (int i = 0; i < tgtlist.Count; i++)
+                {
+                    tableLayoutPanel1.RowStyles[i + 3].SizeType = SizeType.Percent;
+                    tableLayoutPanel1.RowStyles[i + 3].Height = 100;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < tgtlist.Count; i++)
+                {
+                    tableLayoutPanel1.RowStyles[i + 3].SizeType = SizeType.Absolute;
+                    tableLayoutPanel1.RowStyles[i + 3].Height = tgtrowsheight;
+                }
+            }
         }
     }
 }
