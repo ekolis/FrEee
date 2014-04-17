@@ -373,7 +373,7 @@ Tech Level Req        := =2+level
 Ability Type          := Point-Defense
 Weapon Type           := Point-Defense
 Weapon Target         := Seekers
-Weapon Damage         := 10
+Weapon Damage         := ==10
 Weapon Damage Type    := Normal
 Maximum Range         := 15
 Weapon Reload Rate    := 1
