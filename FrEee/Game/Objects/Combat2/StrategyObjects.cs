@@ -33,6 +33,21 @@ namespace FrEee.Game.Objects.Combat2
             CombatObject tgt = (CombatObject)targetObjs[0].getOutput(comObj);     
             return tgt;
         }
+        public int numberOfTargetStrategies()
+        {
+            return this.targetObjs.Count();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="comObj">this comObj</param>
+        /// <param name="index">the weapongroup index</param>
+        /// <returns></returns>
+        public CombatObject targetforgroup(CombatObject comObj, int index)
+        {
+            return (CombatObject)targetObjs[index].getOutput(comObj);
+        }
     }
 
     public class StragegyObject_Default:StrategyObject

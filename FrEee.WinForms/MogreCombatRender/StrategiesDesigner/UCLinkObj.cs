@@ -17,7 +17,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         List<UCLinkObj> linkedto = new List<UCLinkObj>();
         StratMainForm parentform;
         UserControlBaseObj parentUC;
-        StrategyBaseBlock strategyblock;
+        public StrategyBaseBlock strategyblock { get; private set; }
         int linkdex = 0;
         bool isinput;
         Point offset = new Point(10, 0);

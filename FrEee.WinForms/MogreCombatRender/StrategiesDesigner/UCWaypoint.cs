@@ -27,7 +27,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
             wpnt = new StrategyWayPoint();
             this.GameTableLayoutPanel1.ColumnCount = 1;
-            
+            GameTableLayoutPanel1.ColumnCount = 1;
+            GameTableLayoutPanel1.SetColumnSpan(lbl_FunctName, 1);
+            GameTableLayoutPanel1.SetRow(lbl_FunctName, 0);
+            GameTableLayoutPanel1.SetColumn(lbl_FunctName, 0);
+
             for (int i = 0; i < wpnt.inputtypes.Length; i++)
             {
 
@@ -42,7 +46,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
                 this.GameTableLayoutPanel1.SetRow(linkinp, GameTableLayoutPanel1.RowCount - 1);
                 this.GameTableLayoutPanel1.SetColumn(linkinp, 0);
-                //this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 2);
+                this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 1);
                 this.Height += 24;
                 this.GameTableLayoutPanel1.Controls.Add(linkinp);
             }

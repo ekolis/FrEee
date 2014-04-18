@@ -70,6 +70,7 @@
             this.lbl_FunctName.AutoSize = true;
             this.gameTableLayoutPanel1.SetColumnSpan(this.lbl_FunctName, 2);
             this.lbl_FunctName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lbl_FunctName.ForeColor = System.Drawing.Color.CornflowerBlue;
             this.lbl_FunctName.Location = new System.Drawing.Point(23, 0);
             this.lbl_FunctName.Name = "lbl_FunctName";
             this.lbl_FunctName.Size = new System.Drawing.Size(140, 18);
@@ -98,8 +99,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label lbl_FunctName;
         private FrEee.WinForms.Controls.GameTableLayoutPanel gameTableLayoutPanel1;
         private Controls.GamePanel gamePanel1;
+        protected System.Windows.Forms.Label lbl_FunctName;
     }
 }
