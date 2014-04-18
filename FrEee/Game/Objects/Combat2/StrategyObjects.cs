@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using NewtMath.f16;
 using FixMath.NET;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Game.Objects.Combat2
 {
-    public class StrategyObject
+    public class StrategyObject : IPromotable, IFoggable
     {
         protected StrategyBaseBlock waypointObj {get;set;}
         protected StrategyBaseBlock[] targetObjs {get;set;}
@@ -48,7 +52,78 @@ namespace FrEee.Game.Objects.Combat2
         {
             return (CombatObject)targetObjs[index].getOutput(comObj);
         }
-    }
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// Strategies don't reference other client-side promotable objects, so nothing to do here.
+			// Well there are the strategy blocks, but those aren't actually referrables to begin with...
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			Galaxy.Current.UnassignID(this);
+			IsDisposed = true;
+		}
+
+		public Empire Owner
+		{
+			get;
+			set;
+		}
+
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Owned;
+			else
+			{
+				var designsUsingThis = Galaxy.Current.Referrables.OfType<IDesign>().Where(d => d.Strategy == this && d.CheckVisibility(emp) >= Visibility.Scanned);
+				if (!designsUsingThis.Any())
+					return Visibility.Unknown;
+				var vehiclesUsingThis = Galaxy.Current.Referrables.OfType<IVehicle>().Join(designsUsingThis, v => v.Design, d => d, (v, d) => v).Where(v => v.CheckVisibility(emp) >= Visibility.Scanned);
+				if (!vehiclesUsingThis.Any())
+					return Visibility.Unknown; // other player might have changed strategy of design
+				return Visibility.Scanned;
+			}
+		}
+
+		public void Redact(Empire emp)
+		{
+			var vis = CheckVisibility(emp);
+			if (vis < Visibility.Fogged)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			// TODO - should strategies ever be obsolete memories?
+			return false;
+		}
+	}
 
     public class StragegyObject_Default:StrategyObject
     {
