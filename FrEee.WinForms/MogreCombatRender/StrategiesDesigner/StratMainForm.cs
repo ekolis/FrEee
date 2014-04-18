@@ -25,7 +25,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         IDesign design;
         StrategyWayPoint waypointblock = new StrategyWayPoint();
         List<UCFireControlTarget> firectrllist = new List<UCFireControlTarget>();
-
+        Dictionary<int, MountedComponentTemplate> dic_weapons = new Dictionary<int, MountedComponentTemplate>();
         List<UCLinkObj> linkObjs = new List<UCLinkObj>();
 
         public StratMainForm(IDesign design)
@@ -70,7 +70,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             */
 
             //List<MountedComponentTemplate> weapons = new List<MountedComponentTemplate>();
-            IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); //this doesnt work or something.
+            IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); 
+            for(int i = 0;i<weapons.Count();i++)
+            {
+                dic_weapons.Add(i, weapons.ToArray()[i]);
+            }
            
             //foreach level of multiplex tracking, add a target and list of weapons accociated with that target. 
             //weapons can be dragged between the lists to set up different weapon groups.
@@ -138,7 +142,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 loadstrategy(design.Strategy);
             else
             {
-                firectrllist[0].Weapons = weapons.ToList();
+                firectrllist[0].Weapons = dic_weapons;
             }      
         }
 
@@ -188,7 +192,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         { 
             pBx.Invalidate();
             //pBx_FireCtrl.Invalidate();
-            
         }
 
         public void refreshlines()
@@ -223,7 +226,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                     g.DrawLine(linkline, pt1, pt2);
                 }
             }
-            
         }
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
