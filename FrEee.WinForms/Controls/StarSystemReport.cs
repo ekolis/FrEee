@@ -70,7 +70,9 @@ namespace FrEee.WinForms.Controls
 				txtUncolonizedPlanets.Text = uncolonizedCount.ToString();
 				var breathableUsCount = uncolonized.Where(p => p.Atmosphere == Empire.Current.PrimaryRace.NativeAtmosphere).Count(); 
 				txtBreathableUs.Text = breathableUsCount.ToString();
-				var otherAtmospheres = Empire.Current.ColonizedPlanets.SelectMany(p => p.Colony.Population).Select(kvp => kvp.Key.NativeAtmosphere).Distinct().Where(a => a != Empire.Current.PrimaryRace.NativeAtmosphere).Union(Empire.Current.OwnedSpaceObjects.OfType<ICargoContainer>().SelectMany(sobj => sobj.Cargo.Population.Keys.Select(r => r.NativeAtmosphere)).Distinct());
+				var otherAtmospheres = Empire.Current.ColonizedPlanets.SelectMany(p => p.Colony.Population).Select(kvp => kvp.Key.NativeAtmosphere)
+					.Union(Empire.Current.OwnedSpaceObjects.OfType<ICargoContainer>().SelectMany(sobj => sobj.Cargo.Population.Keys.Select(r => r.NativeAtmosphere))
+					.Distinct()).Where(a => a != Empire.Current.PrimaryRace.NativeAtmosphere);
 				var breathableOthersCount = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count();
 				txtBreathableOthers.Text = breathableOthersCount.ToString();
 				txtNonbreathable.Text = (uncolonizedCount - breathableUsCount - breathableOthersCount).ToString();
