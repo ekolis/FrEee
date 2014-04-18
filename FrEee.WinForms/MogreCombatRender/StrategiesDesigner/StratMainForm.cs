@@ -34,7 +34,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             canvasloc = new Point((pBx.Width / 2) * -1, pBx.Height / 2);
             canvasdata = new Canvasdata(1, pBx.Width, pBx.Height, canvasloc);
             this.design = design;
-
+            this.Text = "Strategy for: \"" + design.Name + "\"";
             UCWaypoint wpnt = new UCWaypoint(this, canvasdata);
             this.waypointblock = wpnt.wpnt;
             tableLayoutPanel1.SetColumn(wpnt, 2);
