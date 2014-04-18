@@ -81,6 +81,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             if (ischecked)
             {
                 this.gamePictureBox1.Image = FrEee.WinForms.Properties.Resources.check_ethernet_checked;
+                if (checkAlign == ContentAlignment.MiddleRight)
+                    gamePictureBox1.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                
+
             }
             else 
             {
@@ -98,6 +102,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 gameTableLayoutPanel1.ColumnStyles[1].Width = 100;
                 gameTableLayoutPanel1.SetColumn(gamePictureBox1, 0);
                 gameTableLayoutPanel1.SetColumn(label1, 1);
+                gamePictureBox1.Image.RotateFlip(RotateFlipType.RotateNoneFlipX);
             }
             else if (checkAlign == ContentAlignment.MiddleRight)
             {
@@ -107,6 +112,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 gameTableLayoutPanel1.ColumnStyles[1].Width = 20;
                 gameTableLayoutPanel1.SetColumn(gamePictureBox1, 1);
                 gameTableLayoutPanel1.SetColumn(label1, 0);
+                gamePictureBox1.Image.RotateFlip(RotateFlipType.RotateNoneFlipNone);
             }
         }
 

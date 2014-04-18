@@ -37,7 +37,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             linkTgt.CheckAlign = ContentAlignment.MiddleLeft;
             linkTgt.Text = "Target Object";
 
-
             this.GameTableLayoutPanel1.RowCount = 1;
             while (GameTableLayoutPanel1.RowStyles.Count > 1)
                 GameTableLayoutPanel1.RowStyles.RemoveAt(1);
