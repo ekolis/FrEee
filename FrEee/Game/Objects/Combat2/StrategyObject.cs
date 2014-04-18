@@ -8,6 +8,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -20,7 +21,7 @@ namespace FrEee.Game.Objects.Combat2
         // TODO - weapons lists can't be combat weapons for a strategy, because strategies are shared between ships, and combat weapons belong to a single ship
         // maybe we need some sort of indexing, like "large mount depleted uranium cannon #1", a la Vectac?
         // or we could simplify a bit and assign weapons based on their template, so you have to assign ALL of your "large mount depleted uranium cannon"'s to the same firing group?
-        public List<List<CombatWeapon>> weaponslists { get; set; }
+        public List<Dictionary<int, MountedComponentTemplate>> weaponslists { get; set; }
 
         public StrategyObject()
         { }

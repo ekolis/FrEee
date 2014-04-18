@@ -230,12 +230,17 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
+            
             List<StrategyBaseBlock> targetblocks = new List<StrategyBaseBlock>();
+            List<Dictionary<int, MountedComponentTemplate>> wpnlist = new List<Dictionary<int, MountedComponentTemplate>>();
             foreach (UCFireControlTarget fc in firectrllist)
             {
                 targetblocks.Add(fc.linkTgt.strategyblock);
+                wpnlist.Add(fc.Weapons);
+                
             }
             StrategyObject stratobj = new StrategyObject(waypointblock, targetblocks.ToArray());
+            stratobj.weaponslists = wpnlist;
             List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
@@ -246,7 +251,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 blocks = blocks1.Union(blocks2).ToList();
             }
             stratobj.blocks = blocks.ToArray();
-
+            
             design.Strategy = stratobj;
         }
 
