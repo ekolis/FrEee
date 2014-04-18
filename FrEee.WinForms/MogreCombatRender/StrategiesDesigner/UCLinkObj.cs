@@ -47,6 +47,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             setoffset();
             setAlign();
             this.Dock = DockStyle.Fill;
+			gamePictureBox1.AllowDrop = true;
         }
 
         public UCLinkObj()
