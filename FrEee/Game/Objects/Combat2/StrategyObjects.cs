@@ -12,6 +12,7 @@ namespace FrEee.Game.Objects.Combat2
         protected StrategyBaseBlock waypointObj {get;set;}
         protected StrategyBaseBlock[] targetObjs {get;set;}
         public StrategyBaseBlock[] blocks { get; set; }
+        public List<List<CombatWeapon>> weaponslists { get; set; }
         
         public StrategyObject()
         {}
@@ -32,7 +33,6 @@ namespace FrEee.Game.Objects.Combat2
             CombatObject tgt = (CombatObject)targetObjs[0].getOutput(comObj);     
             return tgt;
         }
-
     }
 
     public class StragegyObject_Default:StrategyObject
@@ -61,14 +61,10 @@ namespace FrEee.Game.Objects.Combat2
             envel.inputLnks[0] = closest1;
             envel.outputLnks.Add(wpnt);
 
-
-
             waypointObj = wpnt;
             blocks = new StrategyBaseBlock[3] { closest1, enloc, envel };
 
             targetObjs = new StrategyBaseBlock[1] { closest1 };
-
-
         }
     }
 
@@ -126,7 +122,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="otherblock">the other block</param>
         public void makelink(int myinputIndx, StrategyBaseBlock otherblock)
         {
-            if (inputtypes[myinputIndx] == otherblock.outputType)
+            if (inputtypes != null && inputtypes[myinputIndx] == otherblock.outputType)
             {
                 this.inputLnks[myinputIndx] = otherblock;
                 if (!otherblock.outputLnks.Contains(this))
@@ -187,8 +183,7 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 inputs[i] = lnk.output;
             }
-        }
-        
+        }       
     }
 
     public class StrategyWayPoint : StrategyBaseBlock
@@ -292,7 +287,7 @@ namespace FrEee.Game.Objects.Combat2
         public StrategyThisEmpireObj()
             : base(null, typeof(List<CombatObject>))
         {
-            name = "Objects in This Empire";
+            name = "Our Objects";
         }
 
         public override void calc(CombatObject comObj)

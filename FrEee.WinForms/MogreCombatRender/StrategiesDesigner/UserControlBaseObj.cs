@@ -18,7 +18,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         Point offset = new Point(10, 10);
         Canvasdata canvasdata;
         Point loc = new Point(0, 0);
-
+         
         public UserControlBaseObj()
         {
             InitializeComponent();

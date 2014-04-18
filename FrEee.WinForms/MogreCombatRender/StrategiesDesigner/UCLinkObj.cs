@@ -26,7 +26,9 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         Point drawloc = new Point(0, 0);
 
+        bool ischecked = false;
 
+        ContentAlignment checkAlign = ContentAlignment.MiddleLeft;
 
         public UCLinkObj(StratMainForm parentForm, UserControlBaseObj parentUC, StrategyBaseBlock strategyblock, bool isinput, int linkindex)
         {
@@ -43,6 +45,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.parentUC = parentUC;
             parentForm.links.Add(this);
             setoffset();
+            setAlign();
             this.Dock = DockStyle.Fill;
         }
 
@@ -64,23 +67,62 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         public bool Checked
         {
-            get { return this.checkBox1.Checked; }
-            set { this.checkBox1.Checked = value; }
-            
+            get { return this.ischecked; }
+            set 
+            { 
+                this.ischecked = value;
+                setpicture();
+            }           
         }
 
-        public string Text
+        void setpicture()
         {
-            get { return this.checkBox1.Text; }
-            set { this.checkBox1.Text = value; }
+            if (ischecked)
+            {
+                this.gamePictureBox1.Image = FrEee.WinForms.Properties.Resources.check_ethernet_checked;
+            }
+            else 
+            {
+                this.gamePictureBox1.Image = FrEee.WinForms.Properties.Resources.check_ethernet_clear;
+            }
+        }
+
+        void setAlign()
+        {
+            if (checkAlign == ContentAlignment.MiddleLeft)
+            {
+                gameTableLayoutPanel1.ColumnStyles[0].SizeType = SizeType.Absolute;
+                gameTableLayoutPanel1.ColumnStyles[0].Width = 20;              
+                gameTableLayoutPanel1.ColumnStyles[1].SizeType = SizeType.Percent;
+                gameTableLayoutPanel1.ColumnStyles[1].Width = 100;
+                gameTableLayoutPanel1.SetColumn(gamePictureBox1, 0);
+                gameTableLayoutPanel1.SetColumn(label1, 1);
+            }
+            else if (checkAlign == ContentAlignment.MiddleRight)
+            {
+                gameTableLayoutPanel1.ColumnStyles[0].SizeType = SizeType.Percent;
+                gameTableLayoutPanel1.ColumnStyles[0].Width = 100;
+                gameTableLayoutPanel1.ColumnStyles[1].SizeType = SizeType.Absolute;
+                gameTableLayoutPanel1.ColumnStyles[1].Width = 20;
+                gameTableLayoutPanel1.SetColumn(gamePictureBox1, 1);
+                gameTableLayoutPanel1.SetColumn(label1, 0);
+            }
+        }
+
+
+        public override string Text
+        {
+            get { return this.label1.Text; }
+            set { this.label1.Text = value; }
         }
 
         public System.Drawing.ContentAlignment CheckAlign
         {
-            get { return this.checkBox1.CheckAlign; }
+            get { return this.checkAlign; }
             set 
-            { 
-                this.checkBox1.CheckAlign = value;
+            {
+                this.checkAlign = value;
+                setAlign();
                 setoffset();
             }
         }
@@ -98,7 +140,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         
         private void checkBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            this.Checked = true;  
+            //this.Checked = true;  
             this.DoDragDrop(this, DragDropEffects.All);
         }
 
@@ -110,48 +152,48 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         private void checkBox1_DragDrop(object sender, DragEventArgs e)
         {
             UCLinkObj linkattempt = (UCLinkObj)e.Data.GetData(typeof(UCLinkObj));
-
-            if (linkattempt.dataType == this.dataType)
+            if (linkattempt != null)
             {
-                //linkedTo = linkattempt;
-                //linkattempt.linkedto = this;
-                
-
-                if (this.isinput)
+                if (linkattempt.dataType == this.dataType)
                 {
-                    this.strategyblock.makelink(linkdex, linkattempt.strategyblock);
-                    linkedto[0] = linkattempt;
-                    
-                    if (!linkattempt.linkedto.Contains(this))
+                    //linkedTo = linkattempt;
+                    //linkattempt.linkedto = this;
+
+                    if (this.isinput)
                     {
-                        if (linkattempt.linkedto.Contains(null))
-                            linkattempt.linkedto[0] = this;
-                        else
-                            linkattempt.linkedto.Add(this);
+                        this.strategyblock.makelink(linkdex, linkattempt.strategyblock);
+                        linkedto[0] = linkattempt;
+
+                        if (!linkattempt.linkedto.Contains(this))
+                        {
+                            if (linkattempt.linkedto.Contains(null))
+                                linkattempt.linkedto[0] = this;
+                            else
+                                linkattempt.linkedto.Add(this);
+                        }
                     }
+                    else
+                    {
+                        linkattempt.strategyblock.makelink(linkattempt.linkdex, this.strategyblock);
+                        linkattempt.linkedto[0] = this;
+                        if (!this.linkedto.Contains(linkattempt))
+                        {
+                            if (this.linkedto.Contains(null))
+                                this.linkedto[0] = linkattempt;
+                            else
+                                this.linkedto.Add(linkattempt);
+                        }
+                    }
+                    this.Checked = true;
+                    linkattempt.Checked = true;
+                    parentform.refreshlines();
                 }
                 else
                 {
-                    linkattempt.strategyblock.makelink(linkattempt.linkdex, this.strategyblock);
-                    linkattempt.linkedto[0] = this;
-                    if (!this.linkedto.Contains(linkattempt))
-                    {
-                        if (this.linkedto.Contains(null))
-                            this.linkedto[0] = linkattempt;
-                        else
-                            this.linkedto.Add(linkattempt);
-                    }
+                    linkattempt.Checked = false;
+                    this.Checked = false;
                 }
-                this.Checked = true;
-                linkattempt.Checked = true;
-                parentform.refreshlines();
             }
-            else
-            {
-                linkattempt.Checked = false;
-                this.checkBox1.Checked = false;
-            }
-
         }
 
         private void checkBox1_DragEnter(object sender, DragEventArgs e)
