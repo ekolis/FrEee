@@ -24,7 +24,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         //Point canvaslocFC;
         IDesign design;
         StrategyWayPoint waypointblock = new StrategyWayPoint();
-        List<StrategyComObj> tgtblockslist = new List<StrategyComObj>();
+        List<UCFireControlTarget> firectrllist = new List<UCFireControlTarget>();
 
         List<UCLinkObj> linkObjs = new List<UCLinkObj>();
 
@@ -41,6 +41,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.SetRow(wpnt, 1);
             tableLayoutPanel1.SetRowSpan(wpnt, 2);
             tableLayoutPanel1.Controls.Add(wpnt);
+
+            tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 68);
             wpnt.Name = "WayPoint";
             wpnt.Dock = DockStyle.Fill;
            
@@ -75,24 +77,25 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
-            mplx = Math.Max(mplx, 1);
+            mplx = Math.Max(mplx, 2);
             
             for (int i = 1; i <= mplx; i++)
             {
-                UCFireControlTarget linkTgt = new UCFireControlTarget(this, canvasdata);
-                tgtblockslist.Add(linkTgt.tgt);
-                linkTgt.weapons = weapons.ToList();
-                linkTgt.Text = "Target Object";
+                UCFireControlTarget ucFireCtrl = new UCFireControlTarget(this, canvasdata);
+                firectrllist.Add(ucFireCtrl);
+                
+                //linkTgt.weapons = weapons.ToList();
+                ucFireCtrl.Text = "Target Object";
                 tableLayoutPanel1.RowCount += 2;
                 while (tableLayoutPanel1.RowStyles.Count < tableLayoutPanel1.RowCount)
                 {
                     RowStyle rowstyle = new RowStyle(SizeType.Absolute, 24);
                     tableLayoutPanel1.RowStyles.Add(rowstyle);
                 }
-                tableLayoutPanel1.SetRow(linkTgt, 1 + i * 2);
-                tableLayoutPanel1.SetColumn(linkTgt, 2);
-                tableLayoutPanel1.SetRowSpan(linkTgt, 2);
-                tableLayoutPanel1.Controls.Add(linkTgt);
+                tableLayoutPanel1.SetRow(ucFireCtrl, 1 + i * 2);
+                tableLayoutPanel1.SetColumn(ucFireCtrl, 2);
+                tableLayoutPanel1.SetRowSpan(ucFireCtrl, 2);
+                tableLayoutPanel1.Controls.Add(ucFireCtrl);
                 tableLayoutPanel1.SetRowSpan(pBx, tableLayoutPanel1.GetRowSpan(pBx) + 2);
                 tableLayoutPanel1.RowStyles[tableLayoutPanel1.RowCount-1].Height = 96;
                 
@@ -131,7 +134,17 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 tableLayoutPanel1.Controls.Add(lb);
                 */
             }
-            
+            if (design.Strategy != null)
+                loadstrategy(design.Strategy);
+            else
+            {
+                firectrllist[0].Weapons = weapons.ToList();
+            }      
+        }
+
+        private void loadstrategy(StrategyObject strategy)
+        { 
+
         }
 
         public List<UCLinkObj> links
@@ -215,12 +228,17 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
-            StrategyObject stratobj = new StrategyObject(waypointblock, tgtblockslist.ToArray());
+            List<StrategyBaseBlock> targetblocks = new List<StrategyBaseBlock>();
+            foreach (UCFireControlTarget fc in firectrllist)
+            {
+                targetblocks.Add(fc.linkTgt.strategyblock);
+            }
+            StrategyObject stratobj = new StrategyObject(waypointblock, targetblocks.ToArray());
             List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
             blocks1 = waypointblock.getlistoflinks();
-            foreach (StrategyBaseBlock linkedblock in tgtblockslist)
+            foreach (StrategyBaseBlock linkedblock in targetblocks)
             {
                 blocks2 = linkedblock.getlistoflinks();
                 blocks = blocks1.Union(blocks2).ToList();
@@ -234,10 +252,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         {
             int tgtrowsheight = 96;
             int minsize = tgtrowsheight + (int)(tableLayoutPanel1.RowStyles[0].Height + tableLayoutPanel1.RowStyles[1].Height + tableLayoutPanel1.RowStyles[2].Height);            
-            int numtgtrows = tgtblockslist.Count;
+            int numtgtrows = firectrllist.Count;
             if (numtgtrows * tgtrowsheight > minsize)
             {
-                for (int i = 0; i < tgtblockslist.Count; i++)
+                for (int i = 0; i < firectrllist.Count; i++)
                 {
                     tableLayoutPanel1.RowStyles[i + 3].SizeType = SizeType.Percent;
                     tableLayoutPanel1.RowStyles[i + 3].Height = 100;
@@ -245,7 +263,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             }
             else
             {
-                for (int i = 0; i < tgtblockslist.Count; i++)
+                for (int i = 0; i < firectrllist.Count; i++)
                 {
                     tableLayoutPanel1.RowStyles[i + 3].SizeType = SizeType.Absolute;
                     tableLayoutPanel1.RowStyles[i + 3].Height = tgtrowsheight;

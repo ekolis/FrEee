@@ -639,30 +639,39 @@ namespace FrEee.Game.Objects.Combat2
             {
 				//is a ship, base, unit, or planet
 				ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
-                foreach (var wpn in ccobj.Weapons)
+
+                for (int i = 0; i < ccobj.strategy.numberOfTargetStrategies(); i++)
                 {
-					ICombatant ship = (ICombatant)ccobj.WorkingObject;
+                    CombatObject targetObject = ccobj.strategy.targetforgroup(ccobj, i);
+                    List<CombatWeapon> wpnsforthistarget = ccobj.strategy.weaponslists[i];
 
-                    if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
-                        wpn.CanTarget(ccobj.weaponTarget[0].WorkingObject) && //if we CAN target 
-                        tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
+
+                    foreach (CombatWeapon wpn in wpnsforthistarget)
                     {
-                        if (wpn.isinRange(comObj, comObj.weaponTarget[0]))
+                        //var wpn = ccobj.Weapons.ToList()[i];
+                        ICombatant ship = (ICombatant)ccobj.WorkingObject;
+
+                        if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
+                            wpn.CanTarget(targetObject.WorkingObject) && //if we CAN target 
+                            tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
                         {
-                            //this function figures out if there's a hit, deals the damage, and creates an event.
-
-                            //first create the event for the target ship
-                            CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, comObj.weaponTarget[0]);
-                            //then create teh event for this ship firing on the target
-                            CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
-                            targets_event.fireOnEvent = attack_event;
-
-                            if (!IsReplay)
+                            if (wpn.isinRange(comObj, targetObject))//weaponTarget[i] should match the 
                             {
-                                ReplayLog.Events.Add(targets_event);
-                                ReplayLog.Events.Add(attack_event);
-                            }
+                                //this function figures out if there's a hit, deals the damage, and creates an event.
 
+                                //first create the event for the target ship
+                                CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
+                                //then create teh event for this ship firing on the target
+                                CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
+                                targets_event.fireOnEvent = attack_event;
+
+                                if (!IsReplay)
+                                {
+                                    ReplayLog.Events.Add(targets_event);
+                                    ReplayLog.Events.Add(attack_event);
+                                }
+
+                            }
                         }
                     }
                 }
