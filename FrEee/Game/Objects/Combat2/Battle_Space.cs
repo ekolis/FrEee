@@ -639,12 +639,15 @@ namespace FrEee.Game.Objects.Combat2
             {
 				//is a ship, base, unit, or planet
 				ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+                List<CombatWeapon> allweapons = ccobj.Weapons.ToList();
 
                 for (int i = 0; i < ccobj.strategy.numberOfTargetStrategies(); i++)
                 {
                     CombatObject targetObject = ccobj.strategy.targetforgroup(ccobj, i);
-                    List<CombatWeapon> wpnsforthistarget = ccobj.strategy.weaponslists[i];
-
+                    List<int> wpnindexesthistarget = ccobj.strategy.weaponslists[i].Keys.ToList();
+                    List<CombatWeapon> wpnsforthistarget = new List<CombatWeapon>();
+                    foreach(int wpndex in wpnindexesthistarget)
+                        wpnindexesthistarget.Add(wpndex);
 
                     foreach (CombatWeapon wpn in wpnsforthistarget)
                     {
