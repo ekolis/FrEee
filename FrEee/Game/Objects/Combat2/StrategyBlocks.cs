@@ -101,9 +101,12 @@ namespace FrEee.Game.Objects.Combat2
             {
                 foreach (StrategyBaseBlock lnk in this.inputLnks)
                 {
-                    links1.Add(lnk);
-                    links2 = lnk.getlistoflinks();
-                    links = links1.Union(links2).ToList();
+                    if (lnk != null)
+                    {
+                        links1.Add(lnk);
+                        links2 = lnk.getlistoflinks();
+                        links = links1.Union(links2).ToList();
+                    }
 
                 }
             }
