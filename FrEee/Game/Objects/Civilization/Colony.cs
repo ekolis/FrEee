@@ -70,7 +70,6 @@ namespace FrEee.Game.Objects.Civilization
 				if (ConstructionQueue != null)
 				{
 					ConstructionQueue.Orders.Clear();
-					ConstructionQueue.Rate.Clear();
 					ConstructionQueue.UnspentRate.Clear();
 				}
 
