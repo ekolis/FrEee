@@ -14,7 +14,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
     public partial class UCFireControlTarget : UserControlBaseObj
     {
-        List<MountedComponentTemplate> weapons;
+        Dictionary<int, MountedComponentTemplate> weapons;
         public StrategyComObj tgt { get; set; }
         public UCLinkObj linkTgt { get; set; }
         public ListBox lbx_wpns = new ListBox();
@@ -24,8 +24,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         {
             InitializethisComponent();
             
-            weapons = new List<MountedComponentTemplate>();
-            lbx_wpns.DataSource = weapons;
+            weapons = new Dictionary<int, MountedComponentTemplate>();
+            //lbx_wpns.DataSource = weapons;
 
             lbx_wpns.AllowDrop = true;
 
@@ -65,9 +65,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             RowStyle style_lb = new RowStyle(SizeType.Percent, 100);
             this.GameTableLayoutPanel1.RowStyles[2] = style_lb;
 
-
             this.Dock = DockStyle.Fill;
-
         }
 
         private void InitializethisComponent()
@@ -78,7 +76,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             InitializeComponent();
         }
 
-        public List<MountedComponentTemplate> Weapons
+        public Dictionary<int, MountedComponentTemplate> Weapons
         {
             get { return this.weapons; }
             set
@@ -91,7 +89,12 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         public void updateWpnLst()
         {
             this.lbx_wpns.DataSource = null;
-            this.lbx_wpns.DataSource = this.weapons;
+            if (this.weapons.Count > 0)
+            {
+                this.lbx_wpns.DataSource = new BindingSource(this.weapons, null);
+                this.lbx_wpns.DisplayMember = "Value";
+                this.lbx_wpns.ValueMember = "Key";
+            }
         }
 
         private void lb_MouseDown(object sender, MouseEventArgs e)
@@ -99,7 +102,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             int itemindex = lbx_wpns.IndexFromPoint(e.X, e.Y);
             if( itemindex >=0 && itemindex < lbx_wpns.Items.Count)
             {
-                object[] data = new object[]{this, lbx_wpns.Items[itemindex]};
+                var kvp = (KeyValuePair<int, MountedComponentTemplate>)lbx_wpns.Items[itemindex];
+                object[] data = new object[]{this, kvp};
                 this.DoDragDrop(data, DragDropEffects.Move);
             }
         }
@@ -113,15 +117,13 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         {
             object[] data = (object[])e.Data.GetData(typeof(object[]));
             UCFireControlTarget from = (UCFireControlTarget)data[0];
-            MountedComponentTemplate wpn = (MountedComponentTemplate)data[1];
+            KeyValuePair<int, MountedComponentTemplate> wpnkvp = (KeyValuePair<int, MountedComponentTemplate>)data[1];
 
-            if (wpn != null)
-            {
-                this.weapons.Add(wpn);
-                this.updateWpnLst();
-                from.weapons.Remove(wpn);
-                from.updateWpnLst();                
-            }
+            this.weapons.Add(wpnkvp.Key, wpnkvp.Value);
+            this.updateWpnLst();
+            from.weapons.Remove(wpnkvp.Key);
+            from.updateWpnLst();                
+            
         }
     }
 }
