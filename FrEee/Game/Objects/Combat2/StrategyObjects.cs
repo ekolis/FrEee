@@ -166,6 +166,7 @@ namespace FrEee.Game.Objects.Combat2
     {
         protected Object[] inputs;
         public Type[] inputtypes { get; protected set; }
+		public object[] DefaultValues { get; protected set; }
 
         /// <summary>
         /// the string name of this strategy object. 
@@ -187,7 +188,7 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="inputtypes">the types of inputs this block will receve as an array.</param>
         /// <param name="outputtype">the return type of this block</param>
-        public StrategyBaseBlock(Type[] inputtypes, Type outputtype)
+        public StrategyBaseBlock(Type[] inputtypes, object[] defaultValues, Type outputtype)
         {
 
             if (inputtypes != null)
@@ -196,6 +197,7 @@ namespace FrEee.Game.Objects.Combat2
                 this.inputLnks = new StrategyBaseBlock[inputtypes.Length];
             }
             this.inputtypes = inputtypes;
+			DefaultValues = defaultValues;
             this.outputType = outputtype;
             outputLnks = new List<StrategyBaseBlock>();
         }
@@ -271,18 +273,23 @@ namespace FrEee.Game.Objects.Combat2
             for(int i = 0; i < inputLnks.Length; i++)
             {
                 StrategyBaseBlock lnk = inputLnks[i];
-                if (lnk.output == null)
-                {
-                    lnk.calc(comObj);                   
-                }
-                inputs[i] = lnk.output;
+				if (lnk == null)
+					inputs[i] = DefaultValues[i];
+                else	
+				{
+					if (lnk.output == null)
+					{
+						lnk.calc(comObj);                   
+					}
+					inputs[i] = lnk.output;
+				}
             }
         }       
     }
 
     public class StrategyWayPoint : StrategyBaseBlock
     {
-        public StrategyWayPoint():base(new Type[2]{typeof(PointXd), typeof(PointXd)}, typeof(combatWaypoint))
+        public StrategyWayPoint():base(new Type[2]{typeof(PointXd), typeof(PointXd)}, new object[]{new PointXd(), new PointXd()}, typeof(combatWaypoint))
         {
             name = "Waypoint";
         }
@@ -295,7 +302,7 @@ namespace FrEee.Game.Objects.Combat2
 
     public class StrategyLocdata : StrategyBaseBlock
     {
-        public StrategyLocdata() : base(new Type[1] { typeof(CombatObject) }, typeof(PointXd)) 
+        public StrategyLocdata() : base(new Type[1] { typeof(CombatObject) }, new object[]{null}, typeof(PointXd)) 
         {
             name = "Location";
         }
@@ -310,7 +317,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyVeldata : StrategyBaseBlock
     {
         public StrategyVeldata()
-            : base(new Type[1] { typeof(CombatObject) }, typeof(PointXd))
+            : base(new Type[1] { typeof(CombatObject) }, new object[]{null}, typeof(PointXd))
         {
             name = "Velocity";
         }
@@ -325,7 +332,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyMassdata : StrategyBaseBlock
     {
         public StrategyMassdata()
-            : base(new Type[1] { typeof(CombatObject) }, typeof(Fix16))
+            : base(new Type[1] { typeof(CombatObject) }, new object[]{null}, typeof(Fix16))
         {
             name = "Mass";
         }
@@ -340,7 +347,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyComObj : StrategyBaseBlock
     {
         public StrategyComObj()
-            : base(new Type[1] { typeof(CombatObject) }, typeof(CombatObject))
+            : base(new Type[1] { typeof(CombatObject) }, new object[]{null}, typeof(CombatObject))
         {
         }
 
@@ -349,7 +356,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisObj : StrategyBaseBlock
     {
         public StrategyThisObj()
-            : base(null, typeof(CombatObject))
+            : base(null, null, typeof(CombatObject))
         {
             name = "This";
         }
@@ -364,7 +371,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisEnemys : StrategyBaseBlock
     {
         public StrategyThisEnemys()
-            : base(null, typeof(List<CombatObject>))
+            : base(null, null, typeof(List<CombatObject>))
         {
             name = "Enemeys of This";
         }
@@ -379,7 +386,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisEmpireObj : StrategyBaseBlock
     {
         public StrategyThisEmpireObj()
-            : base(null, typeof(List<CombatObject>))
+            : base(null, null, typeof(List<CombatObject>))
         {
             name = "Our Objects";
         }
@@ -394,7 +401,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyRange : StrategyBaseBlock
     {
         public StrategyRange()
-            : base(new Type[2] { typeof(CombatObject), typeof(CombatObject) }, typeof(Fix16))
+            : base(new Type[2] { typeof(CombatObject), typeof(CombatObject) }, new object[]{null, null}, typeof(Fix16))
         {
             name = "Range";
         }
@@ -412,13 +419,13 @@ namespace FrEee.Game.Objects.Combat2
     {
         Type filter = typeof(CombatObject);
         public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
-            base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(Type)}, typeof(CombatObject))
+            base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(Type)}, new object[]{null, new List<CombatObject>(), typeof(CombatObject)}, typeof(CombatObject))
         {
             name = "Closest Object to:";
-            if (filter != null)
-            {
-                this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
-            }
+			if (filter != null)
+				this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
+			else
+				this.filter = typeof(CombatObject);
         }
 
         public override void calc(CombatObject comObj)
@@ -435,7 +442,7 @@ namespace FrEee.Game.Objects.Combat2
                 foreach (CombatObject othercomObj in comObjects)
                 {
                     Fix16 thisdist = NewtMath.f16.Trig.distance(thisObj.cmbt_loc, othercomObj.cmbt_loc);
-                    if (closest.GetType() == filter && thisdist < distance)
+                    if (filter.IsAssignableFrom(closest.GetType()) && thisdist < distance)
                     {
                         distance = thisdist;
                         closest = othercomObj;
@@ -450,7 +457,7 @@ namespace FrEee.Game.Objects.Combat2
     {
         Type filter = typeof(CombatWeapon);
         public StrategyWeapons(CombatObject fromObj, Type filter = null) :
-            base(new Type[2] { typeof(CombatObject), typeof(CombatWeapon) }, typeof(List<CombatWeapon>))
+            base(new Type[2] { typeof(CombatObject), typeof(CombatWeapon) }, new object[]{null, null}, typeof(List<CombatWeapon>))
         {
             name = "List of Weapons";
             if (filter != null)
