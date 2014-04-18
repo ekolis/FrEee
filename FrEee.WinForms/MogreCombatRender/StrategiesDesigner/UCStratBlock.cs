@@ -22,7 +22,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.stratblock = stratblock;
             InitializeComponent();
 
-            
+            this.Name = stratblock.name;
             RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
             this.GameTableLayoutPanel1.RowStyles[0] = style0;
 

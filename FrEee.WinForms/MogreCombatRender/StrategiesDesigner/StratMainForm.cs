@@ -43,6 +43,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.Controls.Add(wpnt);
             wpnt.Name = "WayPoint";
             wpnt.Dock = DockStyle.Fill;
+           
+            
+            
+            
             /*old code
             Type typHloc = typeof(NewtMath.f16.PointXd);
             UCLinkObj linkHloc = new UCLinkObj(this, null, waypointblock, true, 0);
@@ -66,14 +70,12 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             //List<MountedComponentTemplate> weapons = new List<MountedComponentTemplate>();
             IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); //this doesnt work or something.
            
-            
-
             //foreach level of multiplex tracking, add a target and list of weapons accociated with that target. 
             //weapons can be dragged between the lists to set up different weapon groups.
             //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
-            mplx = Math.Max(mplx, 5);
+            mplx = Math.Max(mplx, 1);
             
             for (int i = 1; i <= mplx; i++)
             {
@@ -93,6 +95,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 tableLayoutPanel1.Controls.Add(linkTgt);
                 tableLayoutPanel1.SetRowSpan(pBx, tableLayoutPanel1.GetRowSpan(pBx) + 2);
                 tableLayoutPanel1.RowStyles[tableLayoutPanel1.RowCount-1].Height = 96;
+                
                 ///oldcode
                 /*
                 ListBox lb = new ListBox();
@@ -127,7 +130,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 tableLayoutPanel1.Controls.Add(linkTgt);
                 tableLayoutPanel1.Controls.Add(lb);
                 */
-
             }
             
         }

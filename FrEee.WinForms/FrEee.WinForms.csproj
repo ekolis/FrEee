@@ -247,7 +247,6 @@
     <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.Designer.cs">
       <DependentUpon>funclist.cs</DependentUpon>
     </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\funcs.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -696,8 +695,14 @@
     <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.resx">
+      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.resx">
       <DependentUpon>UCLinkObj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.resx">
+      <DependentUpon>UCStratBlock.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.resx">
       <DependentUpon>UserControlBaseObj.cs</DependentUpon>
@@ -751,6 +756,8 @@
     <Content Include="FrEee.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\check_ethernet_clear.bmp" />
+    <None Include="Resources\check_ethernet_checked.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MogreCombatRender\Media\" />
