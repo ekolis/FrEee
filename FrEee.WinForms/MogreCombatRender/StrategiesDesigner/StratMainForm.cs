@@ -38,7 +38,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCWaypoint wpnt = new UCWaypoint(this, canvasdata);
             this.waypointblock = wpnt.wpnt;
             tableLayoutPanel1.SetColumn(wpnt, 2);
-            tableLayoutPanel1.SetRow(wpnt, 0);
+            tableLayoutPanel1.SetRow(wpnt, 1);
             tableLayoutPanel1.SetRowSpan(wpnt, 2);
             tableLayoutPanel1.Controls.Add(wpnt);
             wpnt.Name = "WayPoint";
