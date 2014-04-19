@@ -28,24 +28,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
             if (stratblock.inputtypes != null)
             {
-                for (int i = 0; i < stratblock.inputtypes.Length; i++)
-                {
-
-                    UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock, true, i);
-
-                    linkinp.Text = stratblock.inputtypes[i].Name;
-                    linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
-
-                    this.GameTableLayoutPanel1.RowCount += 1;
-                    RowStyle style1 = new RowStyle(SizeType.Absolute, 24);
-                    this.GameTableLayoutPanel1.RowStyles.Add(style1);
-
-                    this.GameTableLayoutPanel1.SetRow(linkinp, GameTableLayoutPanel1.RowCount - 1);
-                    this.GameTableLayoutPanel1.SetColumn(linkinp, 0);
-                    this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 2);
-                    this.Height += 24;
-                    this.GameTableLayoutPanel1.Controls.Add(linkinp);
-                }
+                createInputs(parentForm);
             }
             else 
             {
@@ -53,7 +36,33 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 this.GameTableLayoutPanel1.RowStyles.Add(style1);
                 this.Height += 24;
             }
+            createOutputs(parentForm);
+        }
 
+        protected virtual void createInputs(StratMainForm parentForm)
+        {
+            for (int i = 0; i < stratblock.inputtypes.Length; i++)
+            {
+
+                UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock, true, i);
+
+                linkinp.Text = stratblock.inputtypes[i].Name;
+                linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
+
+                this.GameTableLayoutPanel1.RowCount += 1;
+                RowStyle style1 = new RowStyle(SizeType.Absolute, 24);
+                this.GameTableLayoutPanel1.RowStyles.Add(style1);
+
+                this.GameTableLayoutPanel1.SetRow(linkinp, GameTableLayoutPanel1.RowCount - 1);
+                this.GameTableLayoutPanel1.SetColumn(linkinp, 0);
+                this.GameTableLayoutPanel1.SetColumnSpan(linkinp, 2);
+                this.Height += 24;
+                this.GameTableLayoutPanel1.Controls.Add(linkinp);
+            }
+        }
+
+        protected void createOutputs(StratMainForm parentForm)
+        {
             UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock, false, 0);
 
             linkout.Text = stratblock.outputType.Name;
@@ -63,7 +72,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.GameTableLayoutPanel1.SetColumn(linkout, 2);
             this.GameTableLayoutPanel1.SetColumnSpan(linkout, 2);
             this.GameTableLayoutPanel1.Controls.Add(linkout);
-            
         }
 
         public void link(int myinputIndex, StrategyBaseBlock otherBlock)

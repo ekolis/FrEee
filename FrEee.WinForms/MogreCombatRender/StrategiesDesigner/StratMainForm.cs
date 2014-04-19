@@ -45,31 +45,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             tableLayoutPanel1.RowStyles[1] = new RowStyle(SizeType.Absolute, 68);
             wpnt.Name = "WayPoint";
             wpnt.Dock = DockStyle.Fill;
-           
-            
-            
-            
-            /*old code
-            Type typHloc = typeof(NewtMath.f16.PointXd);
-            UCLinkObj linkHloc = new UCLinkObj(this, null, waypointblock, true, 0);
-            linkHloc.CheckAlign = ContentAlignment.MiddleLeft;
-            linkHloc.Text = "Location";
-            tableLayoutPanel1.SetColumn(linkHloc, 2);           
-            tableLayoutPanel1.SetColumnSpan(linkHloc, 2);
-            tableLayoutPanel1.SetRow(linkHloc, 1);
-            tableLayoutPanel1.Controls.Add(linkHloc);
 
-            Type typHvel = typeof(NewtMath.f16.PointXd);
-            UCLinkObj linkHvel = new UCLinkObj(this, null, waypointblock, true, 1);
-            linkHvel.CheckAlign = ContentAlignment.MiddleLeft;
-            linkHvel.Text = "Velocity";          
-            tableLayoutPanel1.SetColumn(linkHvel, 2);
-            tableLayoutPanel1.SetColumnSpan(linkHvel, 2);
-            tableLayoutPanel1.SetRow(linkHvel, 2);         
-            tableLayoutPanel1.Controls.Add(linkHvel);
-            */
-
-            //List<MountedComponentTemplate> weapons = new List<MountedComponentTemplate>();
             IEnumerable<MountedComponentTemplate> weapons = design.Components.Where(c => c.ComponentTemplate.WeaponInfo != null); 
             for(int i = 0;i<weapons.Count();i++)
             {
@@ -78,7 +54,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
            
             //foreach level of multiplex tracking, add a target and list of weapons accociated with that target. 
             //weapons can be dragged between the lists to set up different weapon groups.
-            //ie one group migth be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
+            //ie one group might be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
             mplx = Math.Max(mplx, 2);
@@ -103,40 +79,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 tableLayoutPanel1.SetRowSpan(pBx, tableLayoutPanel1.GetRowSpan(pBx) + 2);
                 tableLayoutPanel1.RowStyles[tableLayoutPanel1.RowCount-1].Height = 96;
                 
-                ///oldcode
-                /*
-                ListBox lb = new ListBox();
-                lb.DataSource = weapons.ToList();
-                //Type typTgt = typeof(Game.Objects.Combat2.CombatObject);
-                StrategyComObj tgt = new StrategyComObj();
-                tgtlist.Add(tgt);
-                UCLinkObj linkTgt = new UCLinkObj(this, null, tgt, true, 0);
-                linkTgt.CheckAlign = ContentAlignment.MiddleLeft;
-                linkTgt.Text = "Target Object";
-                tableLayoutPanel1.RowCount += 2;
-                
-                while (tableLayoutPanel1.RowStyles.Count < tableLayoutPanel1.RowCount)
-                { 
-                    RowStyle rowstyle = new RowStyle(SizeType.Absolute, 24); 
-                    tableLayoutPanel1.RowStyles.Add(rowstyle); 
-                }
-                tableLayoutPanel1.RowStyles[2 + i * 2].Height = 24;
-                tableLayoutPanel1.RowStyles[3 + i * 2].Height = 48;
-
-                tableLayoutPanel1.SetRowSpan(pBx, tableLayoutPanel1.GetRowSpan(pBx) + 2);
-                
-                tableLayoutPanel1.SetRow(linkTgt, 2 + i * 2);
-                tableLayoutPanel1.SetColumn(linkTgt, 2);
-                tableLayoutPanel1.SetColumnSpan(linkTgt, 2);
-
-                tableLayoutPanel1.SetRow(lb, 3 + i * 2);
-                tableLayoutPanel1.SetColumn(lb, 2);
-                tableLayoutPanel1.SetColumnSpan(lb, 2);
-                lb.Dock = DockStyle.Fill;
-
-                tableLayoutPanel1.Controls.Add(linkTgt);
-                tableLayoutPanel1.Controls.Add(lb);
-                */
             }
             if (design.Strategy != null)
                 loadstrategy(design.Strategy);
@@ -277,5 +219,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 }
             }
         }
+
+
     }
 }

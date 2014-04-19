@@ -105,6 +105,7 @@
             this.Text = "StratMainForm";
             this.Resize += new System.EventHandler(this.StratMainForm_Resize);
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBx)).EndInit();
             this.ResumeLayout(false);
 
@@ -117,5 +118,6 @@
         private FrEee.WinForms.Controls.GameButton btnAddBlock;
         private System.Windows.Forms.PictureBox pBx;
         private Controls.GameButton btn_SaveStrategy;
+
     }
 }

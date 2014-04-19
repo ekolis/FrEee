@@ -229,6 +229,12 @@
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.Designer.cs">
       <DependentUpon>UCStratBlock.cs</DependentUpon>
     </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.Designer.cs">
+      <DependentUpon>UCStrat_Userinput.cs</DependentUpon>
+    </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.cs">
       <SubType>UserControl</SubType>
     </Compile>
