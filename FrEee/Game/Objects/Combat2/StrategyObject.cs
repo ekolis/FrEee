@@ -136,7 +136,7 @@ namespace FrEee.Game.Objects.Combat2
             : base()
         {
             StrategyWayPoint wpnt = new StrategyWayPoint();
-            StrategyClosest closest1 = new StrategyClosest(null, null);
+            StrategyClosest closest1 = new StrategyClosest();//(null, null);
             StrategyThisObj thisobj = new StrategyThisObj();
             StrategyThisEnemys thisobjEnemys = new StrategyThisEnemys();
             StrategyLocdata enloc = new StrategyLocdata();
@@ -160,6 +160,13 @@ namespace FrEee.Game.Objects.Combat2
             blocks = new StrategyBaseBlock[3] { closest1, enloc, envel };
 
             targetObjs = new StrategyBaseBlock[1] { closest1 };
+
+            weaponslists = new List<Dictionary<int, MountedComponentTemplate>>();
+            Dictionary<int, MountedComponentTemplate> wpnsinFC0 = new Dictionary<int,MountedComponentTemplate>();
+            for(int i = 0; i < 10; i++)
+                wpnsinFC0.Add(i, null);
+            
+            weaponslists.Add(wpnsinFC0);
         }
     }
 }

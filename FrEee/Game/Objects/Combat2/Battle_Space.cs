@@ -646,8 +646,11 @@ namespace FrEee.Game.Objects.Combat2
                     CombatObject targetObject = ccobj.strategy.targetforgroup(ccobj, i);
                     List<int> wpnindexesthistarget = ccobj.strategy.weaponslists[i].Keys.ToList();
                     List<CombatWeapon> wpnsforthistarget = new List<CombatWeapon>();
-                    foreach(int wpndex in wpnindexesthistarget)
-                        wpnindexesthistarget.Add(wpndex);
+                    foreach (int wpndex in wpnindexesthistarget)
+                    {
+                        if ( wpndex < allweapons.Count)//handling a case where a strategy might have more wpns than this ship does. 
+                            wpnsforthistarget.Add(allweapons[wpndex]);
+                    }
 
                     foreach (CombatWeapon wpn in wpnsforthistarget)
                     {

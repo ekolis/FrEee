@@ -270,14 +270,15 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyClosest:StrategyBaseBlock
     {
         Type filter = typeof(CombatObject);
-        public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
+        //public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
+        public StrategyClosest():
             base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(Type)}, new object[]{null, new List<CombatObject>(), typeof(CombatObject)}, typeof(CombatObject))
         {
             name = "Closest Object to:";
-			if (filter != null)
-				this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
-			else
-				this.filter = typeof(CombatObject);
+            //if (filter != null)
+            //    this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
+            //else
+            //    this.filter = typeof(CombatObject);
         }
 
         public override void calc(CombatObject comObj)
@@ -308,14 +309,16 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyWeapons : StrategyBaseBlock
     {
         Type filter = typeof(CombatWeapon);
-        public StrategyWeapons(CombatObject fromObj, Type filter = null) :
+
+        //public StrategyWeapons(CombatObject fromObj, Type filter = null) :
+        public StrategyWeapons():
             base(new Type[2] { typeof(CombatObject), typeof(CombatWeapon) }, new object[]{null, null}, typeof(List<CombatWeapon>))
         {
             name = "List of Weapons";
-            if (filter != null)
-            {
-                this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
-            }
+            //if (filter != null)
+            //{
+            //    this.filter = filter; //because I cant do Type filter = typeof() in the constuctor perameters.
+            //}
         }
 
         public override void calc(CombatObject comObj)
@@ -327,4 +330,24 @@ namespace FrEee.Game.Objects.Combat2
 
         }
     }
+
+    public class Strategyinput_fix16 : StrategyBaseBlock
+    {
+        public Fix16 inputnum { get; set; }
+        public Strategyinput_fix16()
+            : base(new Type[1]{typeof(Fix16)}, null, typeof(Fix16))
+        {
+            name = "Input";
+            inputnum = 0;
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            //base.calc(comObj); dont need this, should be at the top of the chain - no inputs.
+            output = inputnum;
+        }
+    }
+
+    //public class StrategyWeaponRange : StrategyBaseBlock
+
 }
