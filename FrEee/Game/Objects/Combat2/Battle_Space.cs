@@ -56,7 +56,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			int moduloID = (int)(Sector.StarSystem.ID % 100000);
 			this.battleseed = (int)(moduloID / stardate * 10);
-
+            
 			EmpiresArray = combatants.Select(c => c.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Empires = new Dictionary<Empire, CombatEmpire> { };
 

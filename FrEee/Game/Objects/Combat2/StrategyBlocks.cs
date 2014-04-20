@@ -348,6 +348,12 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-    //public class StrategyWeaponRange : StrategyBaseBlock
+    public class StrategyWeaponRange : StrategyBaseBlock
+    {
+        public StrategyWeaponRange() : base(new Type[1] { typeof(List<CombatWeapon>) }, null, typeof(Fix16)) 
+        {
+ 
+        }
+    }
 
 }

@@ -1,11 +1,25 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using FrEee.Game.Objects.Combat2;
-using FrEee.Game.Objects.Vehicles;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Space;
-using System.Drawing;
+
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects;
+
+using FrEee.Modding;
+using FrEee.Utility.Extensions;
+
+using System.Collections.Generic;
+using System.ComponentModel;
+
+using System.Drawing;
+using System.Linq;
+using System.Text;
+
+
 
 using FixMath.NET;
 
@@ -14,7 +28,22 @@ namespace FrEee.Tests.Game.Objects.Combat2
     [TestClass]
     public class Battle_SpaceTests
     {
-        
+        private HashSet<SimulatedEmpire> Empires { get; set; }
+
+        private SimulatedEmpire CurrentEmpire { get; set; }
+
+        private SimulatedSpaceObject CurrentSpaceObject { get; set; }
+
+        [TestMethod]
+        public void simulateBattle()
+        {
+            Sector Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
+            Empires = new HashSet<SimulatedEmpire>(Galaxy.Current.Empires.Except((Empire)null).Select(e => new SimulatedEmpire(e)));
+            //var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
+        }
+
+
+
         //[TestMethod]
         //public void turnship()
         //{
