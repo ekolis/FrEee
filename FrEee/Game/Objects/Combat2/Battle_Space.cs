@@ -32,8 +32,8 @@ namespace FrEee.Game.Objects.Combat2
 				throw new ArgumentNullException("location", "Battles require a sector location.");
 			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
 		}
-
-		/// <summary>
+       
+        /// <summary>
 		/// Battlespace constructor for unit tests (doesn't need a sector; will create a fake sector).
 		/// </summary>
 		/// <param name="combatants"></param>
@@ -138,7 +138,9 @@ namespace FrEee.Game.Objects.Combat2
 			Current = new HashSet<Battle_Space>();
 		}
 
-		/// <summary>
+
+        #region fields & properties
+        /// <summary>
 		/// whether or not this is a processing(false) or a replay(true)
 		/// </summary>
 		public bool IsReplay { get; set; }
@@ -297,7 +299,9 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
-		private void FirstSetup()
+        #endregion
+
+        private void FirstSetup()
 		{
 #if DEBUG
             Console.WriteLine("Beginning Processing Setup");
