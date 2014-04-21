@@ -1,0 +1,56 @@
+﻿<Window x:Class="FrEee.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="FrEee"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Style="{StaticResource FrEeeWindowStyle}"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Image Width="400"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Source="{StaticResource SplashImageSource}"
+               Stretch="Uniform" />
+
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Margin="0,5">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource ButtonLargeStyle}" TargetType="Button">
+                        <Setter Property="Margin" Value="10,5" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Command="{Binding ModsCommand}" Content="Mods" />
+                <Button Command="{Binding NewCommand}" Content="New" />
+                <Button Command="{Binding QuickstartCommand}" Content="Quickstart" />
+                <Button Command="{Binding ResumeCommand}" Content="Resume" />
+                <Button Command="{Binding LoadCommand}" Content="Load" />
+                <Button Command="{Binding ScenarioCommand}" Content="Scenario" />
+            </StackPanel>
+
+            <StackPanel Grid.Row="1" Margin="0,5">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource ButtonLargeStyle}" TargetType="Button">
+                        <Setter Property="Margin" Value="10,5" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Command="{Binding CreditsCommand}" Content="Credits" />
+                <Button Command="{Binding QuitCommand}" Content="Quit" />
+            </StackPanel>
+        </Grid>
+
+
+    </Grid>
+</Window>
