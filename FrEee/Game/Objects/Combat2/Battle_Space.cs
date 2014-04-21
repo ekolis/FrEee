@@ -28,9 +28,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="isreplay"></param>
 		public Battle_Space(Sector location)
 		{
-			if (location == null)
-				throw new ArgumentNullException("location", "Battles require a sector location.");
-			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+            if (location == null)
+                throw new ArgumentNullException("location", "Battles require a sector location.");
+            else
+            {
+                this.Sector = location;
+                Initialize(location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+            }
 		}
        
         /// <summary>
@@ -40,17 +44,14 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="isreplay"></param>
 		public Battle_Space(IEnumerable<ICombatant> combatants)
 		{
-			Initialize(null, combatants);
+            this.Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
+			Initialize(combatants);
+            
 		}
 
-		private void Initialize(Sector sector, IEnumerable<ICombatant> combatants)
+		private void Initialize(IEnumerable<ICombatant> combatants)
 		{
-			if (sector != null)
-				Sector = sector;
-			else
-				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
-
-
+				
 			double stardate = Galaxy.Current.Timestamp;
 			int starday = (int)(Galaxy.Current.CurrentTick * 10);
 
