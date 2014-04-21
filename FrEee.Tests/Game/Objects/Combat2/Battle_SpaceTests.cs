@@ -57,9 +57,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
         [TestMethod]
         public void turnship()
         {
-            var gal = new Galaxy(); // always need one of these...
-            var sys = new StarSystem(1);
-            var emp = new Empire();
+            Galaxy gal = new Galaxy(); // always need one of these...
+            StarSystem sys = new StarSystem(1);
+            Sector location = new Sector(sys, new System.Drawing.Point());
+            Empire emp = new Empire();
+
+
             var combatant = new MockCombatant(emp);
             //var vCombatant = MockCombatant;
             var testComObj = new CombatObject(combatant, new PointXd(), new PointXd(), 42, "SHP");
@@ -70,13 +73,21 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_accel = new PointXd(0, 0, 0);
             testComObj.maxStrafeThrust = (Fix16)0;
             var combatants = new ICombatant[] { combatant };
-            var battle = new Battle_Space(combatants);
+
+            foreach (ISpaceObject ispobj in (combatants))
+            {
+                location.Place(ispobj);
+            }
+
+            var battle = new Battle_Space(location);
             //battle.WorkingCombatants.Add(combatant);
-            battle.CombatNodes.Add(testComObj);
+            battle.StartNodes.Add(testComObj);
+
+            Console.WriteLine("doing battle.start from test");
 
             battle.Start();
 
-            int tick = 1, cmdFreqCounter = 0;
+            int tick = 0, cmdFreqCounter = 0;
 
             Compass wpCompass = new Compass();
 
