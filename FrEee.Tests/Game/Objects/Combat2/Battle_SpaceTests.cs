@@ -28,17 +28,17 @@ namespace FrEee.Tests.Game.Objects.Combat2
     [TestClass]
     public class Battle_SpaceTests
     {
-        private HashSet<SimulatedEmpire> Empires { get; set; }
+        //private HashSet<SimulatedEmpire> Empires { get; set; }
 
-        private SimulatedEmpire CurrentEmpire { get; set; }
+        //private SimulatedEmpire CurrentEmpire { get; set; }
 
-        private SimulatedSpaceObject CurrentSpaceObject { get; set; }
+        //private SimulatedSpaceObject CurrentSpaceObject { get; set; }
 
-        Galaxy gal = new Galaxy(); // always need one of these...
-        StarSystem sys = new StarSystem(1);
-        Sector sector; 
-        Empire emp = new Empire();
-        MockCombatant combatant;
+        //Galaxy gal = new Galaxy(); // always need one of these...
+        //StarSystem sys = new StarSystem(1);
+        //Sector sector; 
+        //Empire emp = new Empire();
+        //MockCombatant combatant;
 
 //        [TestMethod]
         //public void simulateBattle()
@@ -64,7 +64,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //var vCombatant = MockCombatant;
             var testComObj = new CombatObject(combatant, new PointXd(), new PointXd(), 42, "SHP");
             //var testComObj = new CombatVehicle(combatant, combatant, 1);
-            
+
             var spinrate = new Compass(5, false);
             testComObj.maxRotate = spinrate.Radians;
             testComObj.cmbt_accel = new PointXd(0, 0, 0);
