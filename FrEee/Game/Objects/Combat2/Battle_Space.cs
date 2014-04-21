@@ -339,7 +339,7 @@ namespace FrEee.Game.Objects.Combat2
                 }
 			}
 #if DEBUG
-            Console.WriteLine("Done");
+            Console.WriteLine("Done Initial Setup");
 #endif
             CombatNodes = StartNodes;
 		}
@@ -433,6 +433,10 @@ namespace FrEee.Game.Objects.Combat2
 			}
             foreach (var ccobj in ControlledCombatObjects)
 				commandAI(ccobj, 0);
+
+#if DEBUG
+            Console.WriteLine("Done setting up combat Objects");
+#endif
 		}
 
 		public void Start()
@@ -462,12 +466,20 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>True if the battle should continue; false if it should end.</returns>
 		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
 		{
+#if DEBUG
+            Console.WriteLine("ProcessingTick " + tick.ToString());
+#endif
 			//unleash the dogs of war!
 			foreach (var comObj in CombatObjects)
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
 			foreach (var comObj in CombatObjects)
-				comObj.helm(); //heading and thrust
+            {				
+#if DEBUG
+                Console.WriteLine("comObj.helm");
+#endif
+                comObj.helm(); //heading and thrust
+            }
 
 			foreach (var comObj in CombatObjects.ToArray())
 				firecontrol(tick, comObj); //fire ready weapons.
