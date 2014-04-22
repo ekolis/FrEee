@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using Newtonsoft.Json;
 
 namespace FrEee.Utility
 {
@@ -13,6 +14,7 @@ namespace FrEee.Utility
 	/// </summary>
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
+	[JsonArray]
 	public class NamedDictionary<TKey, TValue> : SafeDictionary<TKey, TValue>
 		where TKey : INamed
 	{

@@ -35,6 +35,7 @@ namespace FrEee.Utility
 			var js = new JsonSerializer();
 			js.PreserveReferencesHandling = PreserveReferencesHandling.All;
 			js.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+			js.ObjectCreationHandling = ObjectCreationHandling.Reuse;
 			js.Formatting = Formatting.Indented;
 			js.TypeNameHandling = TypeNameHandling.All;
 			js.TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Simple;
@@ -70,6 +71,7 @@ namespace FrEee.Utility
 				var settings = new JsonSerializerSettings();
 				settings.TypeNameHandling = TypeNameHandling.Auto;
 				settings.TraceWriter = tw;
+				settings.ObjectCreationHandling = ObjectCreationHandling.Reuse;
 				var resolver = new CustomContractResolver();
 				settings.ContractResolver = resolver;
 				return JsonConvert.DeserializeObject<T>(s, settings);
