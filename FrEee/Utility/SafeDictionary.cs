@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using FrEee.Utility.Extensions;
+using Newtonsoft.Json;
 
 namespace FrEee.Utility
 {
@@ -12,6 +13,7 @@ namespace FrEee.Utility
 	/// <typeparam name="TKey"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
 	[Serializable]
+	[JsonArray]
 	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();

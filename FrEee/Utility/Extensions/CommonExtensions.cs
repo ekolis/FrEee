@@ -536,7 +536,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, int> src, PRNG prng = null)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, int>> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			int num;
@@ -561,7 +561,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, long> src, PRNG prng = null)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, long> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			long num;
@@ -585,7 +585,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IDictionary<T, double> src, PRNG prng = null)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, double>> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			double num;
@@ -822,6 +822,17 @@ namespace FrEee.Utility.Extensions
 		/// <exception cref="ArgumentException">if i is not from 1 to 26</exception>
 		public static char ToLetter(this int i)
 		{
+			return ToLetter((long)i);
+		}
+
+		/// <summary>
+		/// Gets a capital letter from the English alphabet.
+		/// </summary>
+		/// <param name="i">1 to 26</param>
+		/// <returns>A to Z</returns>
+		/// <exception cref="ArgumentException">if i is not from 1 to 26</exception>
+		public static char ToLetter(this long i)
+		{
 			if (i < 1 || i > 26)
 				throw new ArgumentException("Only 26 letters in the alphabet, can't get letter #" + i + ".", "i");
 			return (char)('A' + i - 1);
@@ -833,6 +844,16 @@ namespace FrEee.Utility.Extensions
 		/// <param name="i"></param>
 		/// <returns></returns>
 		public static string ToRomanNumeral(this int i)
+		{
+			return ToRomanNumeral((long)i);
+		}
+
+		/// <summary>
+		/// Gets a roman numeral.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <returns></returns>
+		public static string ToRomanNumeral(this long i)
 		{
 			// do we already know this?
 			if (!RomanNumeralCache.ContainsKey(i))
@@ -876,7 +897,7 @@ namespace FrEee.Utility.Extensions
 			Tuple.Create(1, "I"),
 		};
 
-		private static IDictionary<int, string> RomanNumeralCache = new Dictionary<int, string>();
+		private static IDictionary<long, string> RomanNumeralCache = new Dictionary<long, string>();
 
 		/// <summary>
 		/// Determines if a string can be parsed as an integer.

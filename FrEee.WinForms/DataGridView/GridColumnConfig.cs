@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using FrEee.Utility;
 using AutoMapper;
+using Newtonsoft.Json;
 
 namespace FrEee.WinForms.DataGridView
 {

@@ -7,7 +7,7 @@ using System.Drawing;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Enumerations;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.Game.Objects.Space
@@ -18,6 +18,14 @@ namespace FrEee.Game.Objects.Space
 	[Serializable]
 	public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject
 	{
+		/// <summary>
+		/// For serialization
+		/// </summary>
+		public Sector()
+		{
+
+		}
+
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
 			StarSystem = starSystem;

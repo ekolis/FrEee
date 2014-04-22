@@ -14,6 +14,14 @@ namespace FrEee.Modding
 	public class Script
 	{
 		/// <summary>
+		/// For serialization.
+		/// </summary>
+		public Script()
+		{
+
+		}
+
+		/// <summary>
 		/// Creates a script.
 		/// </summary>
 		/// <param name="text"></param>

@@ -3,7 +3,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding.Templates;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;

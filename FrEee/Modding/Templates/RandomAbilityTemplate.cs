@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Templates
