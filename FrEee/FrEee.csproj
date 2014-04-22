@@ -114,6 +114,11 @@
       <HintPath>Game\Objects\Combat2\lib\NewtMath.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>Game\Objects\Combat2\FixedMath\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
       <HintPath>Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -209,6 +214,7 @@
     <Compile Include="Game\Objects\Civilization\EmpireStatus.cs" />
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
+    <Compile Include="Game\Objects\Civilization\RacePopulation.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
     <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
     <Compile Include="Game\Objects\Combat2\combatObjects.cs" />

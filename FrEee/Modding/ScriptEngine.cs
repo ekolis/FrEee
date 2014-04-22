@@ -13,7 +13,7 @@ using IronPython.Compiler;
 using Microsoft.Scripting.Hosting;
 using System.Reflection;
 using System.Data;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using Microsoft.Scripting.Runtime;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;

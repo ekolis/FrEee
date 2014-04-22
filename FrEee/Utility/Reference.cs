@@ -18,6 +18,11 @@ namespace FrEee.Utility
 	[Serializable]
 	public class Reference<T> : IReference<T>, IPromotable where T : IReferrable
 	{
+		public Reference()
+		{
+			// let it be null
+		}
+
 		public Reference(T t)
 		{
 			if (Galaxy.Current == null)

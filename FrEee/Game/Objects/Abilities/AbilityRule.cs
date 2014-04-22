@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
@@ -33,7 +33,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// Aliases for this ability's name.
 		/// These must not be aliases or names of other abilities.
 		/// </summary>
-		public ICollection<string> Aliases { get; set; }
+		public ISet<string> Aliases { get; set; }
 
 		/// <summary>
 		/// Valid targets for this ability.

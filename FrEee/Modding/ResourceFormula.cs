@@ -1,7 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility.Extensions;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 
 namespace FrEee.Modding
 {
-	public class ResourceFormula : SafeDictionary<Resource, Formula<int>>
+	public class ResourceFormula : SafeDictionary<string, Formula<int>>
 	{
 		/// <summary>
 		/// For serialization
@@ -86,6 +86,12 @@ namespace FrEee.Modding
 		{
 			get;
 			private set;
+		}
+
+		public Formula<int> this[Resource r]
+		{
+			get { return this[r.Name]; }
+			set { this[r.Name] = value; }
 		}
 	}		
 }

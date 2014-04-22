@@ -5,7 +5,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;

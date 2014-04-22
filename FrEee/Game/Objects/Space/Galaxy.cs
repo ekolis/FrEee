@@ -8,7 +8,7 @@ using FrEee.Utility.Extensions;
 using System.Threading.Tasks;
 using FrEee.Modding;
 using System.Drawing;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
@@ -1219,6 +1219,10 @@ namespace FrEee.Game.Objects.Space
 		/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
 		/// TODO - rename to CommonAbilityCache once the test game is over
 		/// </summary>
+		[DoNotSerialize]
+		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
+
+		[DoNotSerialize]
 		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 
 		/// <summary>

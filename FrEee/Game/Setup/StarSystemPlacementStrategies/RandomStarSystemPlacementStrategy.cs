@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Space;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Interfaces;
 using FrEee.Game.Interfaces;

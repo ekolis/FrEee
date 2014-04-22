@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
-using FrEee.Utility;
+using FrEee.Utility; using Newtonsoft.Json;
 using FrEee.Modding.Enumerations;
 
 namespace FrEee.Modding.Loaders
