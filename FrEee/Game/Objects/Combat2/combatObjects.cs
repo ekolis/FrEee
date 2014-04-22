@@ -133,7 +133,11 @@ namespace FrEee.Game.Objects.Combat2
 
 		public Fix16 maxfowardThrust { get; set; }
         public Fix16 maxStrafeThrust { get; set; }
-        public Fix16 maxRotate { get; set; } // TODO - make maxRotate a compass so we don't get confused between radians and degrees
+
+        /// <summary>
+        /// how far this object can rotate each tick.
+        /// </summary>
+        public Compass maxRotate { get; set; } 
 
         
 
@@ -182,8 +186,7 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
-            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);
-            
+            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);            
 
             turnship(angletoturn, angletoWaypoint);
 
@@ -195,35 +198,34 @@ namespace FrEee.Game.Objects.Combat2
         {
             if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
             {
-                if (angletoturn.Radians > this.maxRotate)
+                if (angletoturn.Radians > this.maxRotate.Radians)
                 {
                     //comObj.cmbt_face += comObj.Rotate;
-                    this.cmbt_head.Radians += this.maxRotate;
+                    this.cmbt_head += this.maxRotate;
                 }
                 else
                 {
                     //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
-                    this.cmbt_head.Degrees += angletoturn.Degrees;
+                    this.cmbt_head += angletoturn;
                 }
             }
             else //turn counterclockwise
             {
-                if (((Fix16)360 - angletoturn.Radians) > this.maxRotate)
+                if (((Fix16)360 - angletoturn.Radians) > this.maxRotate.Radians)
                 {
                     //comObj.cmbt_face -= comObj.maxRotate;
-                    this.cmbt_head.Radians -= this.maxRotate;
+                    this.cmbt_head -= this.maxRotate;
                 }
                 else
                 {
                     //comObj.cmbt_face = comObj.waypointTarget.cmbt_loc;
                     // subtract 360 minus the angle
-                    this.cmbt_head.Degrees += angletoturn.Degrees;
+                    this.cmbt_head += angletoturn;
                 }
             }
         }
 
  
-
         protected void thrustship(Compass angletoturn, bool? thrustToWaypoint)
         {
             this.cmbt_thrust.ZEROIZE();

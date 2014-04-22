@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Combat2
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
             maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001;
             maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
-            maxRotate = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)wpnskrEvade * (Fix16)0.1);
+            maxRotate.Radians = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)wpnskrEvade * (Fix16)0.1);
             
 
             cmbt_thrust = new PointXd(0, 0, 0);
