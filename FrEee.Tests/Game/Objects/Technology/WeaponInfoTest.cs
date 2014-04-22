@@ -6,6 +6,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Loaders;
 using FrEee.Modding;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Tests.Game.Objects.Technology
 {
@@ -15,6 +16,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 	[TestClass]
 	public class WeaponInfoTest
 	{
+        Galaxy gal = new Galaxy();
 		/// <summary>
 		/// Tests non-formula damage values.
 		/// </summary>

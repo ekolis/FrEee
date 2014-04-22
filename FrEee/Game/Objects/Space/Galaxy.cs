@@ -578,12 +578,12 @@ namespace FrEee.Game.Objects.Space
 
 		public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-			return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
 		}
 
 		public static string GetGameSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-			return Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", empireNumber < 1 ?
+            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", empireNumber < 1 ?
 				String.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
 				String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
 		}
