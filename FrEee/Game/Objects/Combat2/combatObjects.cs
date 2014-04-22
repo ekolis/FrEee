@@ -186,8 +186,7 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
-            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);
-            
+            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);            
 
             turnship(angletoturn, angletoWaypoint);
 
@@ -227,7 +226,6 @@ namespace FrEee.Game.Objects.Combat2
         }
 
  
-
         protected void thrustship(Compass angletoturn, bool? thrustToWaypoint)
         {
             this.cmbt_thrust.ZEROIZE();
