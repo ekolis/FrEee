@@ -13,13 +13,27 @@ namespace FrEee.Wpf.ViewModels
         private DelegateCommand _modsCommand;
         public DelegateCommand ModsCommand
         {
-            get { return _modsCommand ?? (_modsCommand = new DelegateCommand(() => MessageBox.Show("Not Implemented"))); }
+            get
+            {
+                return _modsCommand ?? (_modsCommand = new DelegateCommand(() =>
+                {
+                    // Temporary, need something more elegant :)
+                    ServiceLocator.GetInstance<IRegionManager>().RequestNavigate(RegionNames.MainMenuRegion, ViewNames.SelectModView);
+                }));
+            }
         }
 
         private DelegateCommand _newCommand;
         public DelegateCommand NewCommand
         {
-            get { return _newCommand ?? (_newCommand = new DelegateCommand(() => MessageBox.Show("Not Implemented"))); }
+            get
+            {
+                return _newCommand ?? (_newCommand = new DelegateCommand(() =>
+                {
+                    // Temporary, need something more elegant :)
+                    ServiceLocator.GetInstance<IRegionManager>().RequestNavigate(RegionNames.MainMenuRegion, ViewNames.GameSetupView);
+                }));
+            }
         }
 
         private DelegateCommand _quickstartCommand;
@@ -56,7 +70,14 @@ namespace FrEee.Wpf.ViewModels
         private DelegateCommand _creditsCommand;
         public DelegateCommand CreditsCommand
         {
-            get { return _creditsCommand ?? (_creditsCommand = new DelegateCommand(() => MessageBox.Show("Not Implemented"))); }
+            get
+            {
+                return _creditsCommand ?? (_creditsCommand = new DelegateCommand(() =>
+                {
+                    // Temporary, need something more elegant :)
+                    ServiceLocator.GetInstance<IRegionManager>().RequestNavigate(RegionNames.MainMenuRegion, ViewNames.CreditsView);
+                }));
+            }
         }
 
         private DelegateCommand _quitCommand;
