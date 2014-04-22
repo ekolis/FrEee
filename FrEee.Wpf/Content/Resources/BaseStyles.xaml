@@ -9,6 +9,15 @@
         <Setter Property="Foreground" Value="CornflowerBlue" />
         <Setter Property="BorderBrush" Value="CornflowerBlue" />
         <Setter Property="Background" Value="Transparent" />
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Opacity="0.3" Color="CornflowerBlue" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="ButtonSmallStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
