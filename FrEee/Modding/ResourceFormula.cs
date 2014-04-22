@@ -9,12 +9,13 @@ using System.Text;
 
 namespace FrEee.Modding
 {
+	[JsonArray]
 	public class ResourceFormula : SafeDictionary<string, Formula<int>>
 	{
 		/// <summary>
 		/// For serialization
 		/// </summary>
-		private ResourceFormula()
+		public ResourceFormula()
 		{
 		}
 
