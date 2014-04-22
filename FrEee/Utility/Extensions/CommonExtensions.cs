@@ -561,7 +561,7 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, long> src, PRNG prng = null)
+		public static T PickWeighted<T>(this IEnumerable<KeyValuePair<T, long>> src, PRNG prng = null)
 		{
 			var total = src.Sum(kvp => kvp.Value);
 			long num;
@@ -1016,7 +1016,7 @@ namespace FrEee.Utility.Extensions
 			if (filter == null && Empire.Current != null)
 			{
 				// use the cache
-				var cached = Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)];
+				var cached = Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)];
 				if (cached != null)
 				{
 					if (cached.Any())
@@ -1041,7 +1041,7 @@ namespace FrEee.Utility.Extensions
 
 			// cache abilities if we can
 			if (filter == null && Empire.Current != null)
-				Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
+				Galaxy.Current.CommonAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
 
 			return result;
 		}
@@ -1070,14 +1070,14 @@ namespace FrEee.Utility.Extensions
 			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
 			{
 				var tuple = Tuple.Create(ownable, clause.Owner);
-				if (Empire.Current == null || !Galaxy.Current.TreatySharedAbilityCache.ContainsKey(tuple))
-					Galaxy.Current.TreatySharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
+				if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
+					Galaxy.Current.SharedAbilityCache[tuple] = FindSharedAbilities(ownable, clause).ToArray();
 			}
 
 			// get cached abilities
-			foreach (var keyTuple in Galaxy.Current.TreatySharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
+			foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
 			{
-				foreach (var abil in Galaxy.Current.TreatySharedAbilityCache[keyTuple])
+				foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
 					yield return abil;
 			}
 		}
