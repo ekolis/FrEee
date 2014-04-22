@@ -26,9 +26,9 @@ namespace FrEee.Modding.Loaders
 		{
 			string empsFolder;
 			if (ModPath == null)
-				empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races");
+                empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Pictures", "Races");
 			else
-				empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), ModPath, "Pictures", "Races");
+                empsFolder = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ModPath, "Pictures", "Races");
 			if (Directory.Exists(empsFolder))
 			{
 				foreach (var empFolder in Directory.GetDirectories(empsFolder))
