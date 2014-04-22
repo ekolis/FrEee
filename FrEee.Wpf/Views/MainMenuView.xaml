@@ -1,31 +1,47 @@
 ﻿<views:FrEeeViewBase x:Class="FrEee.Wpf.Views.MainMenuView"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:views="clr-namespace:FrEee.Wpf.Views">
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                     xmlns:regions="http://www.codeplex.com/CompositeWPF"
+                     xmlns:views="clr-namespace:FrEee.Wpf.Views"
+                     xmlns:wpf="clr-namespace:FrEee.Wpf">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
 
-        <Image Width="400"
+        <Image Grid.Column="0"
+               Width="400"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
                Source="{StaticResource SplashImageSource}"
                Stretch="Uniform" />
 
-        <Grid Grid.Column="1">
+        <ContentControl Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="10"
+                        Style="{StaticResource RegionStyle}"
+                        regions:RegionManager.RegionName="{x:Static wpf:RegionNames.MainMenuRegion}" />
+
+        <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <StackPanel Margin="0,5">
-                <StackPanel.Resources>
+            <UniformGrid Margin="5,0" Columns="8">
+                <UniformGrid.Resources>
                     <Style BasedOn="{StaticResource ButtonLargeStyle}" TargetType="Button">
-                        <Setter Property="Margin" Value="10,5" />
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="MinWidth" Value="80" />
+                        <Setter Property="HorizontalAlignment" Value="Stretch" />
                     </Style>
-                </StackPanel.Resources>
+                </UniformGrid.Resources>
 
                 <Button Command="{Binding ModsCommand}" Content="Mods" />
                 <Button Command="{Binding NewCommand}" Content="New" />
@@ -33,18 +49,9 @@
                 <Button Command="{Binding ResumeCommand}" Content="Resume" />
                 <Button Command="{Binding LoadCommand}" Content="Load" />
                 <Button Command="{Binding ScenarioCommand}" Content="Scenario" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Margin="0,5">
-                <StackPanel.Resources>
-                    <Style BasedOn="{StaticResource ButtonLargeStyle}" TargetType="Button">
-                        <Setter Property="Margin" Value="10,5" />
-                    </Style>
-                </StackPanel.Resources>
-
                 <Button Command="{Binding CreditsCommand}" Content="Credits" />
                 <Button Command="{Binding QuitCommand}" Content="Quit" />
-            </StackPanel>
+            </UniformGrid>
         </Grid>
     </Grid>
 </views:FrEeeViewBase>

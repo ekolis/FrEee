@@ -1,0 +1,49 @@
+﻿<views:FrEeeViewBase x:Class="FrEee.Wpf.Views.CreditsView"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:views="clr-namespace:FrEee.Wpf.Views"
+                     d:DesignHeight="486"
+                     d:DesignWidth="542"
+                     mc:Ignorable="d">
+    <FlowDocumentScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Disabled">
+        <FlowDocument Background="White">
+            <FlowDocument.Resources>
+                <Style TargetType="Paragraph">
+                    <Setter Property="TextAlignment" Value="Left" />
+                </Style>
+            </FlowDocument.Resources>
+            <Paragraph>
+                Ed &quot;ekolis&quot; Kolis - Co-Lead, Programmer
+                <LineBreak />
+                James &quot;Combat Wombat&quot; Phillips - Co-Lead, Design
+                <LineBreak />
+                Jon &quot;se5a&quot; Sorensen - Programmer
+                <LineBreak />
+                Bill &quot;Cioden&quot; Gibbons - Artist
+                <LineBreak />
+                Kevin &quot;guttsy&quot; Seitz - Programmer
+            </Paragraph>
+            <Paragraph Margin="0">Special Thanks:</Paragraph>
+            <List Margin="0">
+                <ListItem>
+                    <Paragraph>Aaron Hall - for creating Space Empires</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>Nick Dumas (Suicide Junkie) - for suggesting the title, and general tricky math help.</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>NASA - for a nifty galaxy map background.</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>All the denizens of #spaceempires and spaceempires.net - for their continued support.</Paragraph>
+                </ListItem>
+                <ListItem>
+                    <Paragraph>Asik for his FixedMath library https://github.com/asik/FixedMath.Net</Paragraph>
+                </ListItem>
+            </List>
+            <Paragraph>FrEee is licensed under a Creative Commons Attribution Noncommercial License.</Paragraph>
+        </FlowDocument>
+    </FlowDocumentScrollViewer>
+</views:FrEeeViewBase>
