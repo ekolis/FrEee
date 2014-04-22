@@ -26,7 +26,7 @@ namespace FrEee.Game.Objects.Combat2
 			cmbt_mass = Fix16.MaxValue;
 			maxfowardThrust = 0;
 			maxStrafeThrust = 0;
-			maxRotate = 0;
+			maxRotate.Radians = 0;
 		}
 
 		#region fields & properties
