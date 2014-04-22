@@ -1,4 +1,4 @@
-﻿<Window x:Class="FrEee.Wpf.MainWindow"
+﻿<Window x:Class="FrEee.Wpf.Views.MainMenuWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="FrEee"
