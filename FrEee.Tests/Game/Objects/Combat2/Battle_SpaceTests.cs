@@ -67,7 +67,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj = new CombatObject(combatant, new PointXd(), new PointXd(), 42, "SHP");
        
             spinrate = new Compass(5, false);
-            testComObj.maxRotate = spinrate.Radians;
+            testComObj.maxRotate = spinrate;
             testComObj.cmbt_accel = new PointXd(0, 0, 0);
             testComObj.maxStrafeThrust = (Fix16)0;
             ICombatant[] combatants = new ICombatant[] { combatant };
@@ -249,7 +249,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             // ship should rotate to face waypoint
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = new Compass(0, false);
-            wpCompass.Degrees = testComObj.maxRotate / (Fix16)2;
+            wpCompass.Degrees = testComObj.maxRotate.Degrees / (Fix16)2;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
