@@ -94,18 +94,17 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(0, false);
-            Compass wpCompass = new Compass(90, false);
-            Compass endHeading = new Compass(startHeading.Radians + spinrate.Radians);
+            Compass wpCompass = new Compass();
+
             // test 0 ship heading 0 waypoint at 90
             // ship should rotate positive by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-            
+            testComObj.cmbt_head = new Compass(0, false);
+            wpCompass.Degrees = (Fix16)90;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                endHeading.Degrees,
+                Fix16.Min(spinrate.Degrees, wpCompass.Degrees),
                 testComObj.cmbt_head.Degrees);
         }
         [TestMethod]
@@ -119,19 +118,17 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(0, false);
-            Compass wpCompass = new Compass(180, false);
-            Compass endHeading = new Compass(startHeading.Radians - spinrate.Radians);
+            Compass wpCompass = new Compass();
             // test 1 ship heading 0 waypoint at 180
             // ship should rotate either direction by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-
+            testComObj.cmbt_head = new Compass(0, false);
+            wpCompass.Degrees = (Fix16)180;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                endHeading.Degrees,
-                testComObj.cmbt_head.Degrees);
+                Fix16.Min(spinrate.Degrees, (Fix16)180),
+                Fix16.Abs(testComObj.cmbt_head.Degrees));
         }
 
         [TestMethod]
@@ -145,21 +142,19 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(0, false);
-            Compass wpCompass = new Compass(270, false);
-            Compass endHeading = new Compass(startHeading.Radians - spinrate.Radians);
+            Compass wpCompass = new Compass();
             //test 2 ship heading 0 waypoint at 270
             // ship should rotate negative by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-
+            testComObj.cmbt_head = new Compass(0, false);
+            wpCompass.Degrees = (Fix16)270;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             //Assert.AreEqual(
             //    Compass.NormalizeDegrees(Fix16.Max((Fix16)360 - spinrate.Degrees, (Fix16)270)),
             //    testComObj.cmbt_head.Degrees);
             Assert.AreEqual(
-                endHeading.Degrees,
+                Fix16.Min(spinrate.Degrees, wpCompass.Degrees),
                 testComObj.cmbt_head.Degrees);
         }
 
@@ -174,18 +169,16 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(180, false);
-            Compass wpCompass = new Compass(90, false);
-            Compass endHeading = new Compass(startHeading.Radians - spinrate.Radians);
+            Compass wpCompass = new Compass();
             // test 3 ship heading 180 waypoint at 90
             // ship should rotate negative by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-
+            testComObj.cmbt_head = new Compass(180, false);
+            wpCompass.Degrees = (Fix16)90;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                endHeading.Degrees,
+                Compass.NormalizeDegrees(Fix16.Max((Fix16)180 - spinrate.Degrees, (Fix16)90)),
                 testComObj.cmbt_head.Degrees);
         }
 
@@ -200,21 +193,19 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(180, false);
-            Compass wpCompass = new Compass(0, false);
-            Compass endHeading = new Compass(startHeading.Radians + spinrate.Radians);
+            Compass wpCompass = new Compass();
             // test 4 ship heading 180 waypoint at 0
             // ship should rotate either direction by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-    
+            testComObj.cmbt_head = new Compass(180, false);
+            wpCompass.Degrees = (Fix16)0;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             //Assert.AreEqual(
             //    spinrate.Degrees,
             //    Fix16.Abs(testComObj.cmbt_head - (Fix16)180));
             Assert.AreEqual(
-                endHeading.Degrees,
+                Compass.NormalizeDegrees((Fix16)180 - spinrate.Degrees),
                 testComObj.cmbt_head.Degrees);
         }
 
@@ -229,17 +220,16 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(180, false);
-            Compass wpCompass = new Compass(270, false);
-            Compass endHeading = new Compass(startHeading.Radians + spinrate.Radians);
+            Compass wpCompass = new Compass();
             // test 5 ship heading 180 waypoint at 270
             // ship should rotate positive by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = new Compass(180, false);
+            wpCompass.Degrees = (Fix16)270;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                endHeading.Degrees,
+                Compass.NormalizeDegrees(Fix16.Min((Fix16)180 + spinrate.Degrees, (Fix16)270)),
                 testComObj.cmbt_head.Degrees);
         }
 
@@ -254,18 +244,16 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             int tick = 0, cmdFreqCounter = 0;
 
-            Compass startHeading = new Compass(0, false);
-            Compass wpCompass = new Compass(spinrate.Degrees / 2, false);
-            Compass endHeading = new Compass(wpCompass.Radians);
+            Compass wpCompass = new Compass();
             // test 6 ship heading 0 waypoint at half turn rate
             // ship should rotate to face waypoint
             testComObj.cmbt_loc = new PointXd();
-            testComObj.cmbt_head = new Compass(startHeading.Radians);
-
+            testComObj.cmbt_head = new Compass(0, false);
+            wpCompass.Degrees = testComObj.maxRotate.Degrees / (Fix16)2;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                endHeading.Degrees,
+                wpCompass.Degrees,
                 testComObj.cmbt_head.Degrees);
 
             battle.End();
