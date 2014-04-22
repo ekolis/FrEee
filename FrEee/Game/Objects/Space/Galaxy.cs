@@ -38,8 +38,7 @@ namespace FrEee.Game.Objects.Space
 			referrables = new Dictionary<long, IReferrable>();
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
-			SharedAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
-			TreatySharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();			
+			SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();			
 			Battles = new HashSet<Battle_Space>();
 		}
 
@@ -1213,22 +1212,19 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Cache of abilities belonging to game objects.
 		/// </summary>
+		[DoNotSerialize]
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 
 		/// <summary>
-		/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
-		/// TODO - rename to CommonAbilityCache once the test game is over
+		/// Cache of abilities belonging to game objects that can have different abilities per empire.
 		/// </summary>
 		[DoNotSerialize]
-		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
-
-		[DoNotSerialize]
-		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
 
 		/// <summary>
 		/// Cache of abilities that are shared to empires from other objects due to treaties.
-		/// TODO - rename to SharedAbilityCache once the test game is over
 		/// </summary>
-		internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> TreatySharedAbilityCache { get; private set; }
+		[DoNotSerialize]
+		internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 	}
 }
