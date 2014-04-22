@@ -56,8 +56,8 @@ namespace FrEee.Game.Objects.Combat2
 			//if (comObj.lastVectortoWaypoint != null)
 			//    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-			timetoturn = angletoturn.Radians / this.maxRotate;
-			Fix16 oneEightytime = Fix16.Pi / this.maxRotate;
+			timetoturn = angletoturn.Radians / this.maxRotate.Radians;
+			Fix16 oneEightytime = Fix16.Pi / this.maxRotate.Radians;
 			//PointXd offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
 			//PointXd combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
 			//PointXd distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
