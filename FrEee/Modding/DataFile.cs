@@ -22,13 +22,14 @@ namespace FrEee.Modding
 		 {
 			 // TODO - fall back on stock data when mod data not found
 			 var datapath = modpath == null ? "Data" : Path.Combine("Mods", modpath, "Data");
-			 var filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), datapath, filename);
+                   
+             var filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), datapath, filename);
 			 if (File.Exists(filepath))
 				 return new DataFile(File.ReadAllText(filepath));
 			 // got here? then try the stock data file instead if we were loading a mod
 			 if (modpath != null)
 			 {
-				 filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data", filename);
+                 filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", filename);
 				 if (File.Exists(filepath))
 					 return new DataFile(File.ReadAllText(filepath));
 			 }

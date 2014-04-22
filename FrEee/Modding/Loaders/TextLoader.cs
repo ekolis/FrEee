@@ -24,9 +24,9 @@ namespace FrEee.Modding.Loaders
 			var dest = DestinationGetter(mod);
 			string filepath;
 			if (ModPath == null)
-				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data", FileName);
+                filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", FileName);
 			else
-				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Mods", ModPath, "Data", FileName);
+                filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", ModPath, "Data", FileName);
 			if (File.Exists(filepath))
 			{
 				foreach (var s in File.ReadAllLines(filepath))
@@ -34,7 +34,7 @@ namespace FrEee.Modding.Loaders
 			}
 			else if (ModPath != null)
 			{
-				filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Data", FileName);
+                filepath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Data", FileName);
 				if (File.Exists(filepath))
 				{
 					foreach (var s in File.ReadAllLines(filepath))
