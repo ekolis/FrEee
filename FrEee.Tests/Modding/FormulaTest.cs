@@ -7,6 +7,7 @@ using FrEee.Modding.Loaders;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Modding.Enumerations;
 
 namespace FrEee.Tests.Modding
@@ -65,6 +66,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 		public void DynamicFormula()
 		{
 			var gal = new Galaxy();
+            Empire emp = new Empire();
 			Mod.Current = new Mod();
 			var armor = new ComponentTemplate();
 			armor.Size = 10;
@@ -86,7 +88,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
 			design.Hull = hull;
 			design.Components.Add(mct);
 			mct.Container = design;
-
+            design.Owner = emp;
 			Assert.AreEqual<int>(30, armor.Durability); // 10 * 3
 			Assert.AreEqual(mct.Durability, 60); // 30 * 200%
 			Assert.AreEqual(15, mct.Size); // 10 * 150%
