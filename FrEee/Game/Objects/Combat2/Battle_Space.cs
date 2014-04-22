@@ -28,9 +28,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="isreplay"></param>
 		public Battle_Space(Sector location)
 		{
-			if (location == null)
-				throw new ArgumentNullException("location", "Battles require a sector location.");
-			Initialize(location, location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+            if (location == null)
+                throw new ArgumentNullException("location", "Battles require a sector location.");
+            else
+            {
+                this.Sector = location;
+                Initialize(location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+            }
 		}
        
         /// <summary>
@@ -40,17 +44,14 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="isreplay"></param>
 		public Battle_Space(IEnumerable<ICombatant> combatants)
 		{
-			Initialize(null, combatants);
+            this.Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
+			Initialize(combatants);
+            
 		}
 
-		private void Initialize(Sector sector, IEnumerable<ICombatant> combatants)
+		private void Initialize(IEnumerable<ICombatant> combatants)
 		{
-			if (sector != null)
-				Sector = sector;
-			else
-				Sector = new Sector(new StarSystem(0), new System.Drawing.Point());
-
-
+				
 			double stardate = Galaxy.Current.Timestamp;
 			int starday = (int)(Galaxy.Current.CurrentTick * 10);
 
@@ -338,7 +339,7 @@ namespace FrEee.Game.Objects.Combat2
                 }
 			}
 #if DEBUG
-            Console.WriteLine("Done");
+            Console.WriteLine("Done Initial Setup");
 #endif
             CombatNodes = StartNodes;
 		}
@@ -432,6 +433,10 @@ namespace FrEee.Game.Objects.Combat2
 			}
             foreach (var ccobj in ControlledCombatObjects)
 				commandAI(ccobj, 0);
+
+#if DEBUG
+            Console.WriteLine("Done setting up combat Objects");
+#endif
 		}
 
 		public void Start()
@@ -461,12 +466,20 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>True if the battle should continue; false if it should end.</returns>
 		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
 		{
+#if DEBUG
+            Console.WriteLine("ProcessingTick " + tick.ToString());
+#endif
 			//unleash the dogs of war!
 			foreach (var comObj in CombatObjects)
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
 			foreach (var comObj in CombatObjects)
-				comObj.helm(); //heading and thrust
+            {				
+#if DEBUG
+                Console.WriteLine("comObj.helm");
+#endif
+                comObj.helm(); //heading and thrust
+            }
 
 			foreach (var comObj in CombatObjects.ToArray())
 				firecontrol(tick, comObj); //fire ready weapons.

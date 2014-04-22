@@ -21,7 +21,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 	/// <summary>
 	/// A mock combatant, used for testing.
 	/// </summary>
-	public class MockCombatant : ICombatant
+	public class MockCombatant : ICombatant, ISpaceObject
 	{
 		public MockCombatant(Empire owner)
 		{
@@ -309,5 +309,56 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		}
 
 		public string Name { get; set; }
-	}
+
+
+        public ConstructionQueue ConstructionQueue
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool CanBeInFleet
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public int SupplyStorage
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool HasInfiniteSupplies
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool CanWarp
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool IsIdle
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IEnumerable<Ability> IntrinsicAbilities
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IEnumerable<IAbilityObject> Children
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IAbilityObject Parent
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public AbilityTargets AbilityTarget
+        {
+            get { throw new NotImplementedException(); }
+        }
+    }
 }
