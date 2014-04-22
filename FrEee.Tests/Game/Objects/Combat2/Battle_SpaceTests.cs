@@ -84,7 +84,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship()
+        public void turnship0()
         {
             setupbattle();
 
@@ -104,7 +104,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
-                Fix16.Min(spinrate.Degrees, (Fix16)90),
+                Fix16.Min(spinrate.Degrees, wpCompass.Degrees),
                 testComObj.cmbt_head.Degrees);
         }
         [TestMethod]
@@ -150,8 +150,11 @@ namespace FrEee.Tests.Game.Objects.Combat2
             wpCompass.Degrees = (Fix16)270;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            //Assert.AreEqual(
+            //    Compass.NormalizeDegrees(Fix16.Max((Fix16)360 - spinrate.Degrees, (Fix16)270)),
+            //    testComObj.cmbt_head.Degrees);
             Assert.AreEqual(
-                Compass.NormalizeDegrees(Fix16.Max((Fix16)360 - spinrate.Degrees, (Fix16)270)),
+                Fix16.Min(spinrate.Degrees, wpCompass.Degrees),
                 testComObj.cmbt_head.Degrees);
         }
 
@@ -198,9 +201,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
             wpCompass.Degrees = (Fix16)0;
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            //Assert.AreEqual(
+            //    spinrate.Degrees,
+            //    Fix16.Abs(testComObj.cmbt_head - (Fix16)180));
             Assert.AreEqual(
-                spinrate.Degrees,
-                Fix16.Abs(testComObj.cmbt_head - (Fix16)180));
+                Compass.NormalizeDegrees((Fix16)180 - spinrate.Degrees),
+                testComObj.cmbt_head.Degrees);
         }
 
         [TestMethod]
