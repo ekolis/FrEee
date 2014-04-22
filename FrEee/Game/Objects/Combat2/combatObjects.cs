@@ -130,8 +130,13 @@ namespace FrEee.Game.Objects.Combat2
 		public List<CombatObject> weaponTarget { get; set; }
 
 
-
+        /// <summary>
+        /// neutons of thrust
+        /// </summary>
 		public Fix16 maxfowardThrust { get; set; }
+        /// <summary>
+        /// neutons of side thrust
+        /// </summary>
         public Fix16 maxStrafeThrust { get; set; }
 
         /// <summary>
