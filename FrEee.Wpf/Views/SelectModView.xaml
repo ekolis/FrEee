@@ -7,26 +7,95 @@
                      d:DesignHeight="486"
                      d:DesignWidth="542"
                      mc:Ignorable="d">
-
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="3*" />
-        </Grid.ColumnDefinitions>
+        
+        <TextBlock Style="{StaticResource TxtPageHeader}" Text="Installed Mods"></TextBlock>
 
-        <ListBox Margin="0,0,5,0" />
+        <ListBox Grid.Row="1"
+                 Background="Transparent"
+                 ItemsSource="{Binding ModInfos}"
+                 SelectedItem="{Binding SelectedModInfo}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource TxtSectionHeader}" Text="{Binding Name}" />
 
-        <TextBlock Grid.Row="0"
-                   Grid.Column="1"
-                   Foreground="White"
-                   Text="ModInfo" />
+                        <Grid Margin="20,5,0,0" VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="1"
-                    Grid.ColumnSpan="2"
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Version: " />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Folder: " />
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Author: " />
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Email: " />
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Website: " />
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="0"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="Description: " />
+
+                            <TextBlock Grid.Row="0"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Version}" />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Folder}" />
+                            <TextBlock Grid.Row="2"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Author}" />
+                            <TextBlock Grid.Row="3"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Email}" />
+                            <TextBlock Grid.Row="4"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Website}" />
+                            <TextBlock Grid.Row="5"
+                                       Grid.Column="1"
+                                       Style="{StaticResource BaseTextBlockStyle}"
+                                       Text="{Binding Description}"
+                                       TextWrapping="Wrap" />
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="2"
                     Margin="0,5,0,0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
@@ -35,3 +104,4 @@
         </StackPanel>
     </Grid>
 </views:FrEeeViewBase>
+
