@@ -5,6 +5,19 @@
         <Setter Property="IsTabStop" Value="False" />
     </Style>
 
+    <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="TxtPageHeader" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="28pt" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+
+    <Style x:Key="TxtSectionHeader" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="20pt" />
+    </Style>
+
     <Style x:Key="ButtonBaseStyle" TargetType="Button">
         <Setter Property="Foreground" Value="CornflowerBlue" />
         <Setter Property="BorderBrush" Value="CornflowerBlue" />
@@ -35,4 +48,5 @@
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+
 </ResourceDictionary>
