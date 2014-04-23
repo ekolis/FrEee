@@ -33,7 +33,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ButtonSmallStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
+    <Style x:Key="ButtonShortStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
         <Setter Property="Padding" Value="10,3" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="MinHeight" Value="20" />
@@ -41,12 +41,15 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="ButtonLargeStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
+    <Style x:Key="ButtonStandardStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
         <Setter Property="Padding" Value="10,3" />
-        <Setter Property="MinWidth" Value="150" />
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
+    </Style>
+
+    <Style x:Key="ButtonStandardWideStyle" BasedOn="{StaticResource ButtonStandardStyle}" TargetType="Button">
+        <Setter Property="MinWidth" Value="150" />
     </Style>
 
 </ResourceDictionary>
