@@ -99,6 +99,7 @@
     <Compile Include="Views\CreditsView.xaml.cs">
       <DependentUpon>CreditsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrEeeWindowBase.cs" />
     <Compile Include="Views\SelectModView.xaml.cs">
       <DependentUpon>SelectModView.xaml</DependentUpon>
     </Compile>
@@ -210,7 +211,9 @@
       <Name>FrEee</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Events\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

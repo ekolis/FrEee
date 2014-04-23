@@ -30,8 +30,49 @@
                Width="400"
                HorizontalAlignment="Center"
                VerticalAlignment="Center"
+               RenderTransformOrigin="0.5,0.5"
                Source="{StaticResource SplashImageSource}"
-               Stretch="Uniform" />
+               Stretch="Uniform">
+            <Image.RenderTransform>
+                <ScaleTransform />
+            </Image.RenderTransform>
+            <Image.Style>
+                <Style TargetType="Image">
+                    <Style.Triggers>
+                        <EventTrigger RoutedEvent="Loaded">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Duration="0:0:3"
+                                                     From="0.75"
+                                                     Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleX)"
+                                                     To="1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <ExponentialEase EasingMode="EaseOut" Exponent="4" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation Duration="0:0:3"
+                                                     From="0.75"
+                                                     Storyboard.TargetProperty="(Image.RenderTransform).(ScaleTransform.ScaleY)"
+                                                     To="1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <ExponentialEase EasingMode="EaseOut" Exponent="4" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                    <DoubleAnimation Duration="0:0:1"
+                                                     From="0"
+                                                     Storyboard.TargetProperty="(Image.Opacity)"
+                                                     To="1">
+                                        <DoubleAnimation.EasingFunction>
+                                            <ExponentialEase EasingMode="EaseOut" Exponent="3" />
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Image.Style>
+        </Image>
 
         <ContentControl x:Name="MainMenuRegion"
                         Grid.Row="0"
