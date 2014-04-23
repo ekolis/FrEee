@@ -13,8 +13,8 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <TextBlock Style="{StaticResource TxtPageHeader}" Text="Installed Mods"></TextBlock>
+
+        <TextBlock Style="{StaticResource TxtPageHeader}" Text="Installed Mods" />
 
         <ListBox Grid.Row="1"
                  Background="Transparent"
@@ -99,8 +99,14 @@
                     Margin="0,5,0,0"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Margin="0,0,5,0" Content="Cancel" Style="{StaticResource ButtonSmallStyle}" />
-            <Button Content="Load" Style="{StaticResource ButtonSmallStyle}" />
+            <Button Margin="0,0,5,0"
+                    Command="{Binding CancelCommand}"
+                    Content="Cancel"
+                    Style="{StaticResource ButtonSmallStyle}" />
+            <Button Command="{Binding LoadModCommand}"
+                    Content="Load"
+                    IsDefault="True"
+                    Style="{StaticResource ButtonSmallStyle}" />
         </StackPanel>
     </Grid>
 </views:FrEeeViewBase>

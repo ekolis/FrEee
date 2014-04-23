@@ -1,12 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Regions;
 
 namespace FrEee.Wpf.ViewModels
@@ -36,6 +38,8 @@ namespace FrEee.Wpf.ViewModels
                     ModInfos.Add(mod.Info);
                 }
             }
+
+            SelectedModInfo = ModInfos.FirstOrDefault();
         }
 
         private ObservableCollection<ModInfo> _modInfos;
@@ -49,7 +53,38 @@ namespace FrEee.Wpf.ViewModels
         public ModInfo SelectedModInfo
         {
             get { return _selectedModInfo; }
-            set { _selectedModInfo = value; OnPropertyChanged(); }
+            set
+            {
+                _selectedModInfo = value;
+                OnPropertyChanged();
+                LoadModCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private DelegateCommand _loadModCommand;
+        public DelegateCommand LoadModCommand
+        {
+            get
+            {
+                return _loadModCommand ?? (_loadModCommand = new DelegateCommand(() =>
+                {
+
+                }, () => SelectedModInfo != null));
+            }
+        }
+
+        private DelegateCommand _cancelCommand;
+        public DelegateCommand CancelCommand
+        {
+            get
+            {
+                return _cancelCommand ?? (_cancelCommand = new DelegateCommand(() =>
+                {
+                    // Temporary, need something more elegant :)
+                    var region = ServiceLocator.GetInstance<IRegionManager>().Regions[RegionNames.MainMenuRegion];
+                    region.Deactivate(region.ActiveViews.First());
+                }));
+            }
         }
     }
 }
