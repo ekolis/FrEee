@@ -1,4 +1,5 @@
-﻿using FrEee.Wpf.Views;
+﻿using FrEee.Modding;
+using FrEee.Wpf.Views;
 using Microsoft.Practices.Prism.Commands;
 using System.ComponentModel.Composition;
 using System.Windows;

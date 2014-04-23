@@ -48,7 +48,7 @@
 
             <UniformGrid Margin="5,0" Columns="8">
                 <UniformGrid.Resources>
-                    <Style BasedOn="{StaticResource ButtonLargeStyle}" TargetType="Button">
+                    <Style BasedOn="{StaticResource ButtonStandardWideStyle}" TargetType="Button">
                         <Setter Property="Margin" Value="5" />
                         <Setter Property="MinWidth" Value="80" />
                         <Setter Property="HorizontalAlignment" Value="Stretch" />

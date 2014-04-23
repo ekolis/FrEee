@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
@@ -24,8 +25,10 @@ namespace FrEee.Wpf.ViewModels
             var stock = new Mod();
             var loader = new ModInfoLoader(null);
             loader.Load(stock);
-            ModInfos = new ObservableCollection<ModInfo>();
-            ModInfos.Add(stock.Info);
+            var mods = new Collection<ModInfo>
+            {
+                stock.Info
+            };
 
             // TODO abstract directories away
             if (Directory.Exists("Mods"))
@@ -35,55 +38,47 @@ namespace FrEee.Wpf.ViewModels
                     loader.ModPath = Path.GetFileName(folder);
                     var mod = new Mod();
                     loader.Load(mod);
-                    ModInfos.Add(mod.Info);
+                    mods.Add(mod.Info);
                 }
             }
 
-            SelectedModInfo = ModInfos.FirstOrDefault();
+            // Maintain referential integrity for the sake of figuring out which mod is active.
+            LoadedModInfo = Mod.Current != null ? mods.Single(mod => mod.Folder == Mod.Current.Info.Folder) : null;
+            ModInfos = new ObservableCollection<ModInfo>(mods.OrderBy(m => LoadedModInfo != null && m.Folder == LoadedModInfo.Folder).ThenBy(m => m.Name));
         }
 
         private ObservableCollection<ModInfo> _modInfos;
         public ObservableCollection<ModInfo> ModInfos
         {
             get { return _modInfos; }
-            set { _modInfos = value; OnPropertyChanged(); }
-        }
-
-        private ModInfo _selectedModInfo;
-        public ModInfo SelectedModInfo
-        {
-            get { return _selectedModInfo; }
             set
             {
-                _selectedModInfo = value;
+                _modInfos = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ModInfo _loadedModInfo;
+        public ModInfo LoadedModInfo
+        {
+            get { return _loadedModInfo; }
+            set
+            {
+                _loadedModInfo = value;
                 OnPropertyChanged();
                 LoadModCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private DelegateCommand _loadModCommand;
-        public DelegateCommand LoadModCommand
+        private DelegateCommand<ModInfo> _loadModCommand;
+        public DelegateCommand<ModInfo> LoadModCommand
         {
             get
             {
-                return _loadModCommand ?? (_loadModCommand = new DelegateCommand(() =>
+                return _loadModCommand ?? (_loadModCommand = new DelegateCommand<ModInfo>(mod =>
                 {
-
-                }, () => SelectedModInfo != null));
-            }
-        }
-
-        private DelegateCommand _cancelCommand;
-        public DelegateCommand CancelCommand
-        {
-            get
-            {
-                return _cancelCommand ?? (_cancelCommand = new DelegateCommand(() =>
-                {
-                    // Temporary, need something more elegant :)
-                    var region = ServiceLocator.GetInstance<IRegionManager>().Regions[RegionNames.MainMenuRegion];
-                    region.Deactivate(region.ActiveViews.First());
-                }));
+                    LoadedModInfo = mod;
+                }, mod => mod != null));
             }
         }
     }
