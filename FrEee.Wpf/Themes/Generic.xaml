@@ -4,7 +4,6 @@
         <Setter Property="Background" Value="Black" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
-        <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="views:FrEeeViewBase">
