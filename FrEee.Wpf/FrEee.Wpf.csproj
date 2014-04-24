@@ -86,6 +86,7 @@
     </ApplicationDefinition>
     <Compile Include="Controllers\FrEeeViewController.cs" />
     <Compile Include="Converters\ReferentialEqualityConverter.cs" />
+    <Compile Include="Services\FilesystemService.cs" />
     <Compile Include="ViewModels\SelectModViewModel.cs" />
     <Compile Include="ViewModels\GameSetupViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
@@ -213,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
