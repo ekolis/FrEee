@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -48,8 +49,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
             hull.Size = 100;
             Mod.Current.Hulls.Add(hull);
             Galaxy.Current.AssignID(hull);
-
             
+
+
+            string data;
+            DataFile df;
+            ComponentLoader loader;
+            Mod mod = new Mod();
 
             var armor = new ComponentTemplate();
             armor.Size = 10;
@@ -81,8 +87,46 @@ namespace FrEee.Tests.Game.Objects.Combat2
             components.Add("CQ", crewQuarters);
 
             var engine = new ComponentTemplate();
-            engine.Size = 10;
-            engine.Durability = 10;
+            data =
+@"*BEGIN*
+
+Name                  := Ion Engine I
+Description           := Standard Ion Engine for sub-light inter-system travel.
+Pic Num               := 9
+Tonnage Space Taken   := 10
+Tonnage Structure     := 20
+Cost Minerals         := 200
+Cost Organics         := 0
+Cost Radioactives     := 50
+Vehicle Type          := Ship\Base\Drone
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := 9
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Propulsion
+Tech Level Req 1      := 1
+Number of Abilities   := 3
+Ability 1 Type        := Standard Ship Movement
+Ability 1 Descr       := Generates 1 standard movement.
+Ability 1 Val 1       := 1
+Ability 1 Val 2       := 0
+Ability 2 Type        := Supply Storage
+Ability 2 Descr       := Can store 500 units of supply.
+Ability 2 Val 1       := 500
+Ability 2 Val 2       := 0
+Ability 3 Type        := Movement Bonus
+Ability 3 Descr       := 
+Ability 3 Val 1       := 0
+Ability 3 Val 2       := 0
+Weapon Type           := None";
+            df = new DataFile(data);
+            loader = new ComponentLoader("Test Mod");
+            loader.DataFile = df;            
+            loader.Load(mod);
+            engine = mod.ComponentTemplates.Single();
             Ability engmove = new Ability(engine);
             
             Mod.Current.ComponentTemplates.Add(engine);
@@ -90,8 +134,44 @@ namespace FrEee.Tests.Game.Objects.Combat2
             components.Add("Engn", engine);
 
             var cannon = new ComponentTemplate();
-            cannon.Size = 10;
-            cannon.Durability = 10;
+            data =
+@"*BEGIN*
+
+Name                  := Depleted Uranium Cannon I
+Description           := Medium range cannon which fires large depleted uranium shells.
+Pic Num               := 98
+Tonnage Space Taken   := 30
+Tonnage Structure     := 30
+Cost Minerals         := 100
+Cost Organics         := 0
+Cost Radioactives     := 5
+Vehicle Type          := Ship\Base\Sat\WeapPlat\Drone
+Supply Amount Used    := 2
+Restrictions          := None
+General Group         := Weapons
+Family                := 2027
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Projectile Weapons
+Tech Level Req 1      := 1
+Number of Abilities   := 0
+Weapon Type           := Direct Fire
+Weapon Target         := Ships\Planets\Ftr\Sat\Drone
+Weapon Damage At Rng  := 20 20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+Weapon Damage Type    := Normal
+Weapon Reload Rate    := 1
+Weapon Display Type   := Torp
+Weapon Display        := 19
+Weapon Modifier       := 0
+Weapon Sound          := uranc.wav
+Weapon Family         := 25";
+            df = new DataFile(data);
+            loader = new ComponentLoader("Test Mod");
+            loader.DataFile = df;
+            
+            loader.Load(mod);
+            cannon = mod.ComponentTemplates.Single();
             Mod.Current.ComponentTemplates.Add(cannon);
             Galaxy.Current.AssignID(cannon);
             components.Add("Wpn_DF", cannon);
