@@ -15,7 +15,7 @@ using FrEee.Game.Objects;
 using FrEee.Modding.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat2;
-
+using FrEee.Utility.Extensions;
 namespace FrEee.Tests.Game.Objects.Combat2
 {
 
@@ -44,6 +44,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             empires[0].Empire.Culture = new Culture();
             Mod.Current = new Mod();
 
+            var mod = Mod.Load(null);
+
             //createhull
             hull = new Hull<Ship>();
             hull.Size = 100;
@@ -55,7 +57,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             string data;
             DataFile df;
             ComponentLoader loader;
-            Mod mod = new Mod();
+            //Mod mod = new Mod();
 
             var armor = new ComponentTemplate();
             armor.Size = 10;
@@ -64,129 +66,32 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Galaxy.Current.AssignID(armor);
             components.Add("AMR", armor);
 
-            var bridge = new ComponentTemplate();
-            bridge.Size = 10;
-            bridge.Durability = 10;
-            Ability CnC = new Ability(bridge);
-            Mod.Current.ComponentTemplates.Add(bridge);
+            ComponentTemplate bridge = mod.ComponentTemplates.FindByName("Bridge");
             Galaxy.Current.AssignID(bridge);
             components.Add("BDG", bridge);
 
-            var lifesuport = new ComponentTemplate();
-            lifesuport.Size = 10;
-            lifesuport.Durability = 10;
-            Mod.Current.ComponentTemplates.Add(lifesuport);
+
+            var lifesuport = mod.ComponentTemplates.FindByName("Life Support");
             Galaxy.Current.AssignID(lifesuport);
             components.Add("LS", lifesuport);
 
-            var crewQuarters = new ComponentTemplate();
-            crewQuarters.Size = 10;
-            crewQuarters.Durability = 10;
-            Mod.Current.ComponentTemplates.Add(crewQuarters);
+            var crewQuarters = mod.ComponentTemplates.FindByName("Crew Quarters");
             Galaxy.Current.AssignID(crewQuarters);
             components.Add("CQ", crewQuarters);
 
-            var engine = new ComponentTemplate();
-            data =
-@"*BEGIN*
-
-Name                  := Ion Engine I
-Description           := Standard Ion Engine for sub-light inter-system travel.
-Pic Num               := 9
-Tonnage Space Taken   := 10
-Tonnage Structure     := 20
-Cost Minerals         := 200
-Cost Organics         := 0
-Cost Radioactives     := 50
-Vehicle Type          := Ship\Base\Drone
-Supply Amount Used    := 10
-Restrictions          := None
-General Group         := Engines
-Family                := 9
-Roman Numeral         := 1
-Custom Group          := 0
-Number of Tech Req    := 1
-Tech Area Req 1       := Propulsion
-Tech Level Req 1      := 1
-Number of Abilities   := 3
-Ability 1 Type        := Standard Ship Movement
-Ability 1 Descr       := Generates 1 standard movement.
-Ability 1 Val 1       := 1
-Ability 1 Val 2       := 0
-Ability 2 Type        := Supply Storage
-Ability 2 Descr       := Can store 500 units of supply.
-Ability 2 Val 1       := 500
-Ability 2 Val 2       := 0
-Ability 3 Type        := Movement Bonus
-Ability 3 Descr       := 
-Ability 3 Val 1       := 0
-Ability 3 Val 2       := 0
-Weapon Type           := None";
-            df = new DataFile(data);
-            loader = new ComponentLoader("Test Mod");
-            loader.DataFile = df;            
-            loader.Load(mod);
-            engine = mod.ComponentTemplates.Single();
-            Ability engmove = new Ability(engine);
-            
-            Mod.Current.ComponentTemplates.Add(engine);
+            var engine = mod.ComponentTemplates.FindByName("Ion Engine I");
             Galaxy.Current.AssignID(engine);
             components.Add("Engn", engine);
 
-            var cannon = new ComponentTemplate();
-            data =
-@"*BEGIN*
-
-Name                  := Depleted Uranium Cannon I
-Description           := Medium range cannon which fires large depleted uranium shells.
-Pic Num               := 98
-Tonnage Space Taken   := 30
-Tonnage Structure     := 30
-Cost Minerals         := 100
-Cost Organics         := 0
-Cost Radioactives     := 5
-Vehicle Type          := Ship\Base\Sat\WeapPlat\Drone
-Supply Amount Used    := 2
-Restrictions          := None
-General Group         := Weapons
-Family                := 2027
-Roman Numeral         := 1
-Custom Group          := 0
-Number of Tech Req    := 1
-Tech Area Req 1       := Projectile Weapons
-Tech Level Req 1      := 1
-Number of Abilities   := 0
-Weapon Type           := Direct Fire
-Weapon Target         := Ships\Planets\Ftr\Sat\Drone
-Weapon Damage At Rng  := 20 20 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-Weapon Damage Type    := Normal
-Weapon Reload Rate    := 1
-Weapon Display Type   := Torp
-Weapon Display        := 19
-Weapon Modifier       := 0
-Weapon Sound          := uranc.wav
-Weapon Family         := 25";
-            df = new DataFile(data);
-            loader = new ComponentLoader("Test Mod");
-            loader.DataFile = df;
-            
-            loader.Load(mod);
-            cannon = mod.ComponentTemplates.Single();
-            Mod.Current.ComponentTemplates.Add(cannon);
+            var cannon = mod.ComponentTemplates.FindByName("Depleted Uranium Cannon I");
             Galaxy.Current.AssignID(cannon);
             components.Add("Wpn_DF", cannon);
 
-            var laser = new ComponentTemplate();
-            laser.Size = 10;
-            laser.Durability = 10;
-            Mod.Current.ComponentTemplates.Add(laser);
+            var laser = mod.ComponentTemplates.FindByName("Anti - Proton Beam I");
             Galaxy.Current.AssignID(laser);
             components.Add("Wpn_BEAM", laser);
 
-            var missleLauncher = new ComponentTemplate();
-            missleLauncher.Size = 10;
-            missleLauncher.Durability = 10;
-            Mod.Current.ComponentTemplates.Add(missleLauncher);
+            var missleLauncher = mod.ComponentTemplates.FindByName("Capital Ship Missile I");
             Galaxy.Current.AssignID(missleLauncher);
             components.Add("Wpn_SK", missleLauncher);
 
