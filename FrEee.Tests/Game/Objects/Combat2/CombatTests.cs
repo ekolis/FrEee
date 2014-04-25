@@ -47,22 +47,21 @@ namespace FrEee.Tests.Game.Objects.Combat2
             var mod = Mod.Load(null);
 
             //createhull
-            hull = new Hull<Ship>();
-            hull.Size = 100;
-            Mod.Current.Hulls.Add(hull);
+            //hull = new Hull<Ship>();
+            //hull.Size = 100;
+            //Mod.Current.Hulls.Add(hull);
+            //Galaxy.Current.AssignID(hull);
+            hull = (Hull<Ship>)mod.Hulls.FindByName("Escort");
             Galaxy.Current.AssignID(hull);
-            
 
+            //var armor = new ComponentTemplate();
+            //armor.Size = 10;
+            //armor.Durability = new Formula<int>(armor, "self.Size * 3", FormulaType.Dynamic);
+            //Mod.Current.ComponentTemplates.Add(armor);
+            //Galaxy.Current.AssignID(armor);
+            //components.Add("AMR", armor);
 
-            string data;
-            DataFile df;
-            ComponentLoader loader;
-            //Mod mod = new Mod();
-
-            var armor = new ComponentTemplate();
-            armor.Size = 10;
-            armor.Durability = new Formula<int>(armor, "self.Size * 3", FormulaType.Dynamic);
-            Mod.Current.ComponentTemplates.Add(armor);
+            ComponentTemplate armor = mod.ComponentTemplates.FindByName("Armor I");
             Galaxy.Current.AssignID(armor);
             components.Add("AMR", armor);
 
@@ -141,6 +140,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
                 design.Components.Add(mct);
 
             design.Hull = hull;
+            design.Strategy = new StragegyObject_Default();
             designs.Add(design);
         }
 
