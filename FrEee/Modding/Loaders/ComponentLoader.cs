@@ -132,15 +132,13 @@ namespace FrEee.Modding.Loaders
 							{
 								dmgstr = dmgfield.Value;
 								var dmg = dmgstr.Split(' ').Select(s => int.Parse(s)).ToList();
-								int firstNonzero = w.MinRange;
+								int firstNonzero = 0;
 								while (dmg.Count > 0 && firstNonzero < dmg.Count && dmg[firstNonzero] == 0)
 									firstNonzero++;
 								int lastNonzero = w.MaxRange - w.MinRange;
 								while (dmg.Count > lastNonzero && dmg[lastNonzero] == 0)
 									lastNonzero--;
-								if (dmg.Count > lastNonzero && dmg[lastNonzero] > 0)
-									lastNonzero++;
-								w.MaxRange = w.MinRange + lastNonzero - 1;
+								w.MaxRange = w.MinRange + lastNonzero;
 								var dict = new Dictionary<int, int>();
 								for (int i = firstNonzero; i <= lastNonzero - firstNonzero; i++)
 								{

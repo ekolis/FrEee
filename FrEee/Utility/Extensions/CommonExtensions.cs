@@ -2173,7 +2173,7 @@ namespace FrEee.Utility.Extensions
 			var formula = "***";
 			foreach (var kvp in sorted)
 				formula = formula.Replace("***", kvp.Value.ToStringInvariant() + " if " + variableName + " <= " + kvp.Key + " else (***)");
-			formula = formula.Replace("(***)", defaultValue.ToStringInvariant());
+			formula = formula.Replace("***", defaultValue.ToStringInvariant());
 			return new Formula<TValue>(context, formula, FormulaType.Dynamic);
 		}
 
