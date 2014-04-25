@@ -207,7 +207,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <returns></returns>
 		public IEnumerable<IResearchable> GetExpectedResults(Empire emp)
 		{
-			var techs = new Dictionary<Technology, int>();
+			var techs = new SafeDictionary<Technology, int>();
 			foreach (var kvp in emp.ResearchedTechnologies)
 				techs.Add(kvp.Key, kvp.Value);
 			techs[this]++;
