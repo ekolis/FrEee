@@ -30,7 +30,7 @@ Parameter Minimum := 3
 Parameter Maximum := 5
 Parameter Name := warhead
 Parameter Maximum := 5
-Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + str(speed)";
+Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()";
 
 			var metarec = new MetaRecord(data.Split('\n'));
 
