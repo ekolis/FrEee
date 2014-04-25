@@ -975,23 +975,23 @@ Alias := Create Constructed Planet - Star
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a star.
 
-Alias := Create Constructed Planet - Planet
+Name := Create Constructed Planet - Planet
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a planet.
 
-Alias := Create Constructed Planet - Storm
+Name := Create Constructed Planet - Storm
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a storm.
 
-Alias := Create Constructed Planet - Warp Point
+Name := Create Constructed Planet - Warp Point
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a warp point.
 
-Alias := Create Constructed Planet - Asteroids
+Name := Create Constructed Planet - Asteroids
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from an asteroid field.
 
-Alias := Create Constructed Planet - Space
+Name := Create Constructed Planet - Space
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] in deep space.
 
