@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Empire Owner
 		{
-			get { return Vehicles.Select(v => v.Owner).SingleOrDefault() ?? Empire.Current; }
+			get { return Vehicles.Select(v => v.Owner).Distinct().SingleOrDefault() ?? Empire.Current; }
 		}
 
 		/// <summary>
