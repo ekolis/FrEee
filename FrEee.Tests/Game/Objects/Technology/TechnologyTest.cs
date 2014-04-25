@@ -22,7 +22,9 @@ namespace FrEee.Tests.Game.Objects.Technology
 			var mod = Mod.Load(null);
 			var tech = mod.Technologies.FindByName("Ice Planet Colonization");
 			tech.LevelCost = 500000; // in case the mod changes
+			tech.MaximumLevel = 5; // so we can actually test getting past level 1
 			var gal = new Galaxy(mod);
+			// TODO - set research cost formula?
 			var emp = new Empire();
 			gal.Empires.Add(emp);
 			emp.BonusResearch = 1500000;
