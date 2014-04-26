@@ -1,4 +1,5 @@
-﻿using FrEee.Utility.Extensions;
+﻿using System;
+using FrEee.Utility.Extensions;
 
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Vehicles;
@@ -173,7 +174,9 @@ namespace FrEee.Game.Objects.Combat2
             else
                 ttt = quad[0];
             Fix16 endV = startV + acceleration * ttt;
-
+#if DEBUG
+            Console.WriteLine("seeker ttt: " + ttt);
+#endif
             turnship(angletoturn, angletoWaypoint);
 
             thrustship(angletoturn, true);            
