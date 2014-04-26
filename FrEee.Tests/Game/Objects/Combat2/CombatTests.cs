@@ -101,9 +101,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             //create designs and ships
             testdesign0(empires[0].Empire);
-            testship0(empires[0], designs[0], 01);
+            testship0(empires[0], designs[0], 1);
             testdesign0(empires[1].Empire);
-            testship0(empires[1], designs[0], 02);
+            testship0(empires[1], designs[0], 2);
 
         }
 
@@ -180,7 +180,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
             }
 
             Battle_Space battle = new Battle_Space(location);
+
+            
+
             battle.Resolve();
+            Assert.AreNotEqual(battle.StartCombatants[1], battle.ActualCombatants[1]);
+            Assert.AreNotEqual(battle.StartCombatants[2], battle.ActualCombatants[2]);
             //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
 
             

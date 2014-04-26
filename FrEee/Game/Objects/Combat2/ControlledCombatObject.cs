@@ -16,7 +16,9 @@ namespace FrEee.Game.Objects.Combat2
 		protected ControlledCombatObject(ICombatant start, ICombatant working, PointXd position, PointXd vector, int battleseed, string IDprefix)
 			: base(working, position, vector, start.ID, IDprefix)
 		{
-			StartCombatant = working;
+			//StartCombatant = working; wtf?
+            StartCombatant = start;
+            WorkingCombatant = working;
 			newDice(battleseed);
 			RefreshWeapons();
 		}

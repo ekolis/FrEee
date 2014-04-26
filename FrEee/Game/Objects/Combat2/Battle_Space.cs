@@ -278,11 +278,16 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		public static readonly int CommandFrequencyTicks = CommandFrequencySeconds * TicksPerSecond;
 
-        int tOC = 0;
+        private int tOC = 0;
         private int tempObjCounter
         {
             get
-            { return tOC++; }
+            {
+#if DEBUG
+                Console.WriteLine("TempObjCounter :" + tOC);
+#endif
+                return tOC++;            
+            }
         }
 
 		/// <summary>
@@ -381,7 +386,7 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
             Console.WriteLine("Setting up combat Objects");
 #endif
-            tOC = 0;
+            tOC = 0; //reset temp object counter.
 			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
 			PointXd[] startpoints = new PointXd[EmpiresArray.Count()];
 
@@ -436,6 +441,9 @@ namespace FrEee.Game.Objects.Combat2
 
 #if DEBUG
             Console.WriteLine("Done setting up combat Objects");
+            Console.WriteLine("CNodes :" + CombatNodes.Count());
+            Console.WriteLine("FNodes :" + FreshNodes.Count());
+            Console.WriteLine("DNodes :" + DeadNodes.Count());        
 #endif
 		}
 
@@ -502,7 +510,7 @@ namespace FrEee.Game.Objects.Combat2
                 CombatNodes.Add(comNod);
                 FreshNodes.Remove(comNod);
 #if DEBUG
-                Console.WriteLine("adding obj to combatNodes from fresh");
+                Console.WriteLine("adding " + comNod.strID + " to combatNodes from fresh");
 #endif
             }
             foreach (CombatNode comNod in DeadNodes.ToArray())
@@ -578,6 +586,17 @@ namespace FrEee.Game.Objects.Combat2
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
             if (ccobj.WorkingObject != null)
             {
+
+                int hp1 = ccobj.WorkingCombatant.Hitpoints;
+                int hp2 = ccobj.WorkingObject.Hitpoints;
+                int hp3 = ccobj.WorkingObject.HullHitpoints;
+                int hp4 = ccobj.StartCombatant.Hitpoints;
+                int hp5 = ccobj.StartCombatant.HullHitpoints;
+#if DEBUG
+                Console.WriteLine(ccobj.WorkingCombatant.Name);
+                Console.WriteLine("hp = " + hp1 + ", " + hp2 + ", " + hp3 + ", " + hp4 + ", " + hp5);
+                
+#endif
                 string comAI = "";
                 //CombatObject tgtObj;
                 if (Empires[ccobj.WorkingObject.Owner].hostile.Any())
@@ -615,11 +634,13 @@ namespace FrEee.Game.Objects.Combat2
 
         private void missilefirecontrol(int battletick, CombatSeeker comSek)
         {
+            Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
 #if DEBUG
             Console.WriteLine("firecontrol for: " + comSek.strID);
             Console.WriteLine("Targeting " + comSek.weaponTarget[0].strID);
+            Console.WriteLine("Rangettgt " + locdistance);
 #endif
-            Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
+            
             if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
 #if DEBUG
@@ -633,7 +654,7 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
-                if (target is ControlledCombatObject) 
+                if (target is ControlledCombatObject) //TODO handle seekers and other objects as seeker targets.
                 {
 					ControlledCombatObject ccTarget = (ControlledCombatObject)target;
                     var target_icomobj = ccTarget.WorkingObject;
@@ -836,7 +857,7 @@ namespace FrEee.Game.Objects.Combat2
                 seeker.cmbt_att = attacker.cmbt_att;
                 FreshNodes.Add(seeker);
 #if DEBUG
-                Console.WriteLine("Seeker added to FreshNodes");
+                Console.WriteLine("Seeker " + seeker.strID + " added to FreshNodes");
 #endif
 				foreach (var emp in Empires.Values)
 				{
@@ -916,7 +937,7 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					//*write* the event
 					target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
-                    int nothing = tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
+                    int nothing = -tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
 				}
 
 			}
