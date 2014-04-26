@@ -33,13 +33,13 @@ namespace FrEee.Game.Objects.Combat2
 
         public combatWaypoint calcWaypiont(CombatObject comObj)
         {
-            combatWaypoint wp = (combatWaypoint)waypointObj.getOutput(comObj);
+            combatWaypoint wp = (combatWaypoint)waypointObj.getNewOutput(comObj);
             return wp;
         }
 
         public CombatObject calcTarget(CombatObject comObj)
         {
-            CombatObject tgt = (CombatObject)targetObjs[0].getOutput(comObj);
+            CombatObject tgt = (CombatObject)targetObjs[0].getNewOutput(comObj);
             return tgt;
         }
         public int numberOfTargetStrategies()

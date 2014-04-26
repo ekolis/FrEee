@@ -153,6 +153,7 @@ namespace FrEee.Game.Objects.Combat2
         #region methods & functions
         public PRNG getDice()
 		{
+
 			return shipDice;
 		}
 		public void newDice(int battleseed)

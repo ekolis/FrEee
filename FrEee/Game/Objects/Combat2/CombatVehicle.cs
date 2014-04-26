@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Combat2
 				ship.Components.Add(ccopy);
 				ccopy.Container = ship;
 #if DEBUG
-                Console.Write(".");
+                Console.Write(ccopy.Name);
 #endif
 			}
 #if DEBUG
