@@ -63,7 +63,9 @@ namespace FrEee.WinForms.MogreCombatRender
         /// <param name="doornot">if null or not assigned, will switch off if on and on if off</param>
         public void do_Emmitt(string keyname, bool? doornot = null)
         {
-            List<SceneNode> nodes = nodesDict[keyname];
+            List<SceneNode> nodes = new List<SceneNode>();
+            if(nodesDict.ContainsKey(keyname))
+                nodes.AddRange(nodesDict[keyname]);
             foreach (SceneNode node in nodes)
             {
                 SceneNode.ObjectIterator iterator = node.GetAttachedObjectIterator();
