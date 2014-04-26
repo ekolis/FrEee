@@ -648,9 +648,13 @@ namespace FrEee.WinForms.MogreCombatRender
 				foreach (var comObj in battle.CombatObjects.ToArray())
                     comObj.debuginfo = "";
 
-				foreach (var comObj in battle.CombatObjects.ToArray())
-					comObj.helm(); //heading and thrust
-
+                foreach (var comObj in battle.CombatObjects.ToArray())
+                {	
+#if DEBUG
+                    Console.WriteLine("comObj.helm " + comObj.strID);
+#endif
+                    comObj.helm(); //heading and thrust
+                }
 				foreach (var comObj in battle.CombatObjects.ToArray())
 				{
                     //firecontrol, these get logged, but we still need to run through it
@@ -698,22 +702,20 @@ namespace FrEee.WinForms.MogreCombatRender
                     CreateNewEntity(comNod);
                     battle.CombatNodes.Add(comNod);
                     battle.FreshNodes.Remove(comNod);
+#if DEBUG
+                    Console.WriteLine("adding obj to combatNodes from fresh");
+#endif
                 }
-                foreach (CombatNode comNod in battle.DeadNodes.ToArray())
+                foreach (CombatNode comNode in battle.DeadNodes.ToArray())
                 {
-                    disposeObj(comNod, renderlocs);
+                    disposeObj(comNode, renderlocs);
+                    battle.CombatNodes.Remove(comNode);
+                    battle.DeadNodes.Remove(comNode);
+#if DEBUG
+                    Console.WriteLine("disposing obj from deadNodes");
+#endif
                 }
 
-				bool ships_persuing = true; // TODO - check if ships are actually pursuing
-				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-                bool hostiles = true;// battle.CombatVehicles.Any(o => !o.WorkingVehicle.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingVehicle.Owner)));
-
-                //if (!ships_persuing && !ships_inrange)
-                //    cont = false;
-                //else if (!hostiles)
-                //    cont = false;
-                //else if (battletic > 10000) // TODO - put max battle tick in Settings.txt or something
-                //    cont = false;
                 if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
                     cont = false;
                 else
@@ -828,8 +830,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
             //remove from the list of game nodes.
             renderlocs.Remove(comNode); 
-            battle.CombatNodes.Remove(comNode);
-            battle.DeadNodes.Remove(comNode);
+
         }
 
         private void do_txt()

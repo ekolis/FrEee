@@ -27,16 +27,18 @@ namespace FrEee.Game.Objects.Combat2
             cmbt_mass = (Fix16)Hitpoints;//(Fix16)s.MaxHitpoints; // sure why not?
             int wpnskrspd = skrinfo.SeekerSpeed;
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
-            maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001;
-            maxStrafeThrust = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
-            maxRotate.Radians = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.001) / ((Fix16)12 - (Fix16)wpnskrEvade * (Fix16)0.1);
+            maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.15;
+            maxStrafeThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1 / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
+            maxRotate.Radians = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1) / ((Fix16)1200 - (Fix16)wpnskrEvade * (Fix16)0.1);
             
 
             cmbt_thrust = new PointXd(0, 0, 0);
             cmbt_accel = new PointXd(0, 0, 0);
 
             newDice(ID);
-
+#if DEBUG
+            Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
+#endif
             this.launcher = launcher;
         }
 
