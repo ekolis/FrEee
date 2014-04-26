@@ -40,11 +40,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
             empires.Add(new SimulatedEmpire(new Empire()));
             empires[0].Empire.Name = "TestEmpOne";
             empires[0].Empire.Culture = new Culture();
-            //empires[0].Empire. set CombatModifier for empires. 
+            empires[0].Empire.PrimaryRace = new Race();
             empires[1].Empire.Name = "TestEmpTwo";
             empires[1].Empire.Culture = new Culture();
+            empires[1].Empire.PrimaryRace = new Race();
             Mod.Current = new Mod();
-
+            
             var mod = Mod.Load(null);
 
             //createhull
