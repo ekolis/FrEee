@@ -474,10 +474,10 @@ namespace FrEee.Game.Objects.Combat2
 			foreach (var comObj in CombatObjects)
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
-			foreach (var comObj in CombatObjects)
+			foreach (var comObj in CombatObjects.ToArray())
             {				
 #if DEBUG
-                Console.WriteLine("comObj.helm");
+                Console.WriteLine("comObj.helm " + comObj.strID);
 #endif
                 comObj.helm(); //heading and thrust
             }
@@ -501,11 +501,17 @@ namespace FrEee.Game.Objects.Combat2
             {                
                 CombatNodes.Add(comNod);
                 FreshNodes.Remove(comNod);
+#if DEBUG
+                Console.WriteLine("adding obj to combatNodes from fresh");
+#endif
             }
             foreach (CombatNode comNod in DeadNodes.ToArray())
             {
                 CombatNodes.Remove(comNod);
                 DeadNodes.Remove(comNod);
+#if DEBUG
+                Console.WriteLine("disposing obj from deadNodes");
+#endif
                 
             }
 
@@ -553,7 +559,10 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
-
+#if DEBUG
+            Console.WriteLine(comObj.strID + " Loc " + comObj.cmbt_loc);
+            Console.WriteLine(comObj.strID + " Vel " + comObj.cmbt_vel);
+#endif
 			return comObj.cmbt_loc;
 		}
 
@@ -608,6 +617,7 @@ namespace FrEee.Game.Objects.Combat2
         {
 #if DEBUG
             Console.WriteLine("firecontrol for: " + comSek.strID);
+            Console.WriteLine("Targeting " + comSek.weaponTarget[0].strID);
 #endif
             Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
             if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
@@ -681,7 +691,7 @@ namespace FrEee.Game.Objects.Combat2
                     List<int> wpnindexesthistarget = ccobj.strategy.weaponslists[i].Keys.ToList();
                     List<CombatWeapon> wpnsforthistarget = new List<CombatWeapon>();
 #if DEBUG
-                    Console.WriteLine("Target: " + targetObject.WorkingObject.ID);
+                    Console.WriteLine("Target: " + targetObject.strID);
 #endif
                     foreach (int wpndex in wpnindexesthistarget)
                     {
@@ -825,7 +835,9 @@ namespace FrEee.Game.Objects.Combat2
                 seeker.cmbt_head = attacker.cmbt_head;
                 seeker.cmbt_att = attacker.cmbt_att;
                 FreshNodes.Add(seeker);
-
+#if DEBUG
+                Console.WriteLine("Seeker added to FreshNodes");
+#endif
 				foreach (var emp in Empires.Values)
 				{
 					if (emp.ownships.Contains(attacker))
