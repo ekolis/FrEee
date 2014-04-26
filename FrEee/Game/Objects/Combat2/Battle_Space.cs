@@ -713,6 +713,52 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
+        int to_hit(Sector sector, CombatObject attacker, CombatWeapon weapon, CombatObject target)
+        {
+
+            //// TODO - check range too
+            //var tohit =
+            //    Mod.Current.Settings.WeaponAccuracyPointBlank // default weapon accuracy at point blank range
+            //    + weapon.weapon.Template.WeaponAccuracy // weapon's intrinsic accuracy modifier
+            //    + weapon.weapon.Container.Accuracy // firing ship's accuracy modifier
+            //    - target_icomobj.Evasion // target's evasion modifier
+            //    - Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt() // sector evasion modifier
+            //    + Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt() // generic combat bonuses
+            //    - Sector.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - Sector").ToInt()
+            //    + Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt()
+            //    - Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt()
+            //    + attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt()
+            //    - target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+            //// TODO - moddable min/max hit chances with per-weapon overrides
+            int wpn_Accu_blankrng = Mod.Current.Settings.WeaponAccuracyPointBlank;
+            int wpn_AccuMod = weapon.weapon.Template.WeaponAccuracy; // weapon's intrinsic accuracy modifier
+            int atkr_AccuMod = weapon.weapon.Container.Accuracy; // firing ship's accuracy modifier
+            int tgt_EvdMod = target.WorkingObject.Evasion; // target's evasion modifier
+            int tgt_SectEvdMod = Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt(); // sector evasion modifier
+            int atkr_SectComMod = Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt(); // generic combat bonuses
+			int tgt_SectComMod =  Sector.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - Sector").ToInt();
+            int atkr_SysComMod = Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt();
+			int tgt_SysComMod = Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt();
+		    int atkr_EmpComMod = attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+            int tgt_EmpComMod = target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+
+            int total =
+                wpn_Accu_blankrng
+                + wpn_AccuMod
+                + atkr_AccuMod
+                - tgt_EvdMod
+                - tgt_SectEvdMod
+                + atkr_SectComMod
+                - tgt_SectComMod
+                + atkr_SysComMod
+                - tgt_SysComMod
+                + atkr_EmpComMod
+                - tgt_EmpComMod;
+
+            return total;
+
+        }
+
 		public CombatTakeFireEvent FireWeapon(int battletick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
@@ -728,21 +774,8 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (!weapon.CanTarget(target_icomobj))
 				return null;
+            int tohit = this.to_hit(Sector, attacker, weapon, target);
 
-			// TODO - check range too
-			var tohit =
-				Mod.Current.Settings.WeaponAccuracyPointBlank // default weapon accuracy at point blank range
-				+ weapon.weapon.Template.WeaponAccuracy // weapon's intrinsic accuracy modifier
-				+ weapon.weapon.Container.Accuracy // firing ship's accuracy modifier
-				- target_icomobj.Evasion // target's evasion modifier
-				- Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt() // sector evasion modifier
-				+ Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt() // generic combat bonuses
-				- Sector.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - Sector").ToInt()
-				+ Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt()
-				- Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt()
-				+ attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt()
-				- target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
-			// TODO - moddable min/max hit chances with per-weapon overrides
 			if (tohit > 99)
 				tohit = 99;
 			if (tohit < 1)

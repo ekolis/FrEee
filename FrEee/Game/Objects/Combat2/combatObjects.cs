@@ -89,6 +89,7 @@ namespace FrEee.Game.Objects.Combat2
             weaponTarget = new List<CombatObject>(1); //eventualy this should be something with the multiplex tracking component.
             this.cmbt_thrust = new PointXd(0, 0, 0);
             this.cmbt_accel = new PointXd(0, 0, 0);
+            this.maxRotate = new Compass(0);
             
 		}
 

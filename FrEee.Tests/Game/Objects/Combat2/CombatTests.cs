@@ -40,8 +40,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
             empires.Add(new SimulatedEmpire(new Empire()));
             empires[0].Empire.Name = "TestEmpOne";
             empires[0].Empire.Culture = new Culture();
+            //empires[0].Empire. set CombatModifier for empires. 
             empires[1].Empire.Name = "TestEmpTwo";
-            empires[0].Empire.Culture = new Culture();
+            empires[1].Empire.Culture = new Culture();
             Mod.Current = new Mod();
 
             var mod = Mod.Load(null);
@@ -96,9 +97,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             //create designs and ships
             testdesign0(empires[0].Empire);
-            testship0(empires[0], designs[0]);
+            testship0(empires[0], designs[0], 01);
             testdesign0(empires[1].Empire);
-            testship0(empires[1], designs[0]);
+            testship0(empires[1], designs[0], 02);
 
         }
 
@@ -144,11 +145,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
             designs.Add(design);
         }
 
-        public void testship0(SimulatedEmpire emp, Design<Ship> dsn)
+        public void testship0(SimulatedEmpire emp, Design<Ship> dsn, int staticID)
         {
             var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
+            sv.SpaceObject.ID = staticID;
             var v = (SpaceVehicle)sv.SpaceObject;
             v.Owner = emp.Empire;
+
             emp.SpaceObjects.Add(sv);
             //BindSpaceObjectList();
             ships.Add(v);
@@ -173,6 +176,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             }
 
             Battle_Space battle = new Battle_Space(location);
+            battle.Resolve();
         }
     }
 }
