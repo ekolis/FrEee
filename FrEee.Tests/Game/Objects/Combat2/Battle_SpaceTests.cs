@@ -267,7 +267,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
 
-            battle.End();
+            battle.End(tick);
         }
     }
 }

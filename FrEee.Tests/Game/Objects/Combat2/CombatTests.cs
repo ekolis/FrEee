@@ -16,6 +16,9 @@ using FrEee.Modding.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Utility.Extensions;
+
+//using FrEee.WinForms.MogreCombatRender;
+
 namespace FrEee.Tests.Game.Objects.Combat2
 {
 
@@ -178,6 +181,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Battle_Space battle = new Battle_Space(location);
             battle.Resolve();
+            //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
+
+            
         }
     }
 }

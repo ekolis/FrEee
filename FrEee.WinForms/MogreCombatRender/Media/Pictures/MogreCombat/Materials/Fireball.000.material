@@ -10,7 +10,7 @@ material Particles/Fireball.000
 
 			texture_unit
 			{
-				texture ./Textures/Fireball.000.png
+				texture Fireball.000.png
 			}
 		}
 	}
