@@ -913,7 +913,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
                 node.Orientation = quat;
 
-                
+                dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
                 try
                 {
                     //particle effects for this object:
@@ -924,7 +924,6 @@ namespace FrEee.WinForms.MogreCombatRender
                     Console.Write("do_graphics broke while doing effects for object: ");
                     Console.WriteLine(comNode.strID);
                 }
-
             }
             catch 
             {

@@ -266,9 +266,11 @@ namespace FrEee.Game.Objects.Combat2
                 thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
 
                 PointXd fowardthrust = new PointXd(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
-
+                this.cmbt_thrust += fowardthrust;
             }
-
+#if DEBUG
+            Console.WriteLine("Thrust By " + thrustby);
+#endif
         }
 
         protected void strafeship(bool? thrustToWaypoint)
