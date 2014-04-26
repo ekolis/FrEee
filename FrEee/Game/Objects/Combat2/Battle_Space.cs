@@ -447,9 +447,10 @@ namespace FrEee.Game.Objects.Combat2
 			SetUpPieces();
 		}
 
-		public void End()
+		public void End(int tick)
 		{
 			//end combat
+            ReplayLog.Events.Add(new CombatEndBattleEvent(tick));
 			Current.Remove(this);
 			Previous.Add(this);
 
@@ -538,7 +539,7 @@ namespace FrEee.Game.Objects.Combat2
 				// keep on truckin'
 			}
 
-			End();
+			End(tick);
 		}
 
 
@@ -604,10 +605,16 @@ namespace FrEee.Game.Objects.Combat2
         }
 
         private void missilefirecontrol(int battletick, CombatSeeker comSek)
-        { 
+        {
+#if DEBUG
+            Console.WriteLine("firecontrol for: " + comSek.strID);
+#endif
             Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
             if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
+#if DEBUG
+                Console.WriteLine("ProxDetonation!");
+#endif
                 if (!IsReplay)
                 {
                     CombatTakeFireEvent evnt = comSek.seekertargethit;
@@ -628,6 +635,7 @@ namespace FrEee.Game.Objects.Combat2
                         target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
                         target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+
                 }
 
                 DeadNodes.Add(comSek);
@@ -635,6 +643,9 @@ namespace FrEee.Game.Objects.Combat2
             }
             else if (battletick > comSek.deathTick)
             {
+#if DEBUG
+                Console.WriteLine("Out of Juice!");
+#endif
                 DeadNodes.Add(comSek);
                 CombatNodes.Remove(comSek);
             }
@@ -647,6 +658,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="comObj"></param>
         public void firecontrol(int tic_countr, CombatObject comObj)
         {
+
             if (comObj is CombatSeeker)
             {
 				//is a seeker 
@@ -654,8 +666,13 @@ namespace FrEee.Game.Objects.Combat2
             }
             else if (comObj is ControlledCombatObject)
             {
+
 				//is a ship, base, unit, or planet
 				ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+#if DEBUG
+            Console.WriteLine("firecontrol for: " + ccobj.WorkingCombatant.Name);
+#endif
+
                 List<CombatWeapon> allweapons = ccobj.Weapons.ToList();
 
                 for (int i = 0; i < ccobj.strategy.numberOfTargetStrategies(); i++)
@@ -663,6 +680,9 @@ namespace FrEee.Game.Objects.Combat2
                     CombatObject targetObject = ccobj.strategy.targetforgroup(ccobj, i);
                     List<int> wpnindexesthistarget = ccobj.strategy.weaponslists[i].Keys.ToList();
                     List<CombatWeapon> wpnsforthistarget = new List<CombatWeapon>();
+#if DEBUG
+                    Console.WriteLine("Target: " + targetObject.WorkingObject.ID);
+#endif
                     foreach (int wpndex in wpnindexesthistarget)
                     {
                         if ( wpndex < allweapons.Count)//handling a case where a strategy might have more wpns than this ship does. 
@@ -671,6 +691,9 @@ namespace FrEee.Game.Objects.Combat2
 
                     foreach (CombatWeapon wpn in wpnsforthistarget)
                     {
+#if DEBUG
+                        Console.WriteLine("Weapon: " + wpn.weapon.Name);
+#endif
                         //var wpn = ccobj.Weapons.ToList()[i];
                         ICombatant ship = (ICombatant)ccobj.WorkingObject;
 
@@ -681,7 +704,9 @@ namespace FrEee.Game.Objects.Combat2
                             if (wpn.isinRange(comObj, targetObject))//weaponTarget[i] should match the 
                             {
                                 //this function figures out if there's a hit, deals the damage, and creates an event.
-
+#if DEBUG
+                                Console.WriteLine("Fire Weapon!");
+#endif
                                 //first create the event for the target ship
                                 CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
                                 //then create teh event for this ship firing on the target
@@ -945,6 +970,9 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (targetV.IsDestroyed)
 			{
+#if DEBUG
+                Console.WriteLine(target.strID + " is destroyed!");
+#endif
 				targetV.Dispose();
                 target.deathTick = tick;
                 if (!IsReplay)

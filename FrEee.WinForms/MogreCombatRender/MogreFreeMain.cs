@@ -19,7 +19,7 @@ using FrEee.Utility;
 namespace FrEee.WinForms.MogreCombatRender
 {
 	class ShutdownException : Exception { }
-	class MogreFreeMain
+	public class MogreFreeMain
 	{
 		private static int tickcounter = 0; //the tick age of the game.
 		private Root mRoot;
@@ -619,6 +619,9 @@ namespace FrEee.WinForms.MogreCombatRender
             Console.WriteLine("starting Replay");
 			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
 			{
+#if DEBUG
+                Console.WriteLine("ReplayingTick: " + battletic);
+#endif
 				physicsstopwatch.Restart();
                 int interpolationcount = 0;
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
@@ -703,16 +706,18 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				bool ships_persuing = true; // TODO - check if ships are actually pursuing
 				bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-                bool hostiles = battle.CombatVehicles.Any(o => !o.WorkingVehicle.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingVehicle.Owner)));
+                bool hostiles = true;// battle.CombatVehicles.Any(o => !o.WorkingVehicle.IsDestroyed && battle.CombatVehicles.Any(o2 => !o2.WorkingVehicle.IsDestroyed && o.WorkingVehicle.IsHostileTo(o2.WorkingVehicle.Owner)));
 
-				if (!ships_persuing && !ships_inrange)
-					cont = false;
-				else if (!hostiles)
-					cont = false;
-				else if (battletic > 10000) // TODO - put max battle tick in Settings.txt or something
-					cont = false;
-				else
-					cont = true;
+                //if (!ships_persuing && !ships_inrange)
+                //    cont = false;
+                //else if (!hostiles)
+                //    cont = false;
+                //else if (battletic > 10000) // TODO - put max battle tick in Settings.txt or something
+                //    cont = false;
+                if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
+                    cont = false;
+                else
+                    cont = true;
 
                 do_txt();
                 cmdfreq_countr++;
@@ -908,12 +913,13 @@ namespace FrEee.WinForms.MogreCombatRender
                 Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
                 node.Orientation = quat;
 
+                
                 try
                 {
                     //particle effects for this object:
                     dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
                 }
-                catch 
+                catch
                 {
                     Console.Write("do_graphics broke while doing effects for object: ");
                     Console.WriteLine(comNode.strID);
