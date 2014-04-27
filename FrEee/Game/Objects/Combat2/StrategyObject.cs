@@ -31,6 +31,13 @@ namespace FrEee.Game.Objects.Combat2
             this.targetObjs = targetstratObjs;
         }
 
+        public void renewtostart()
+        {
+            waypointObj.zeroize();
+            foreach (StrategyBaseBlock tgtblok in targetObjs)
+                tgtblok.zeroize();
+        }
+
         public combatWaypoint calcWaypiont(CombatObject comObj)
         {
             combatWaypoint wp = (combatWaypoint)waypointObj.getNewOutput(comObj);

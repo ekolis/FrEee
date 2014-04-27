@@ -127,18 +127,27 @@ namespace FrEee.Game.Objects.Combat2
             return this.output;
         }
 
-        public void reCalc(CombatObject comObj)
+        public void zeroize()
         {
-            for (int i = 0; i < inputLnks.Length; i++)
+            if (inputLnks != null)
             {
-                StrategyBaseBlock lnk = inputLnks[i];
-                if (lnk != null)
+                for (int i = 0; i < inputLnks.Length; i++)
                 {
-                    lnk.output = null;
-                    lnk = null;
-                    inputs[i] = null;
+                    StrategyBaseBlock lnk = inputLnks[i];
+                    if (lnk != null)
+                    {
+                        lnk.zeroize();
+                        lnk = null;
+                        output = null;
+                        inputs[i] = null;
+                    }
                 }
             }
+        }
+
+        public void reCalc(CombatObject comObj)
+        {
+            zeroize();
             calc(comObj);
         }
 

@@ -26,7 +26,10 @@ namespace FrEee.Game.Objects.Combat2
 			maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
 			maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
 			maxRotate.Radians = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
-            strategy = start_v.Design.Strategy;
+            if (start_v.Design.Strategy == null)
+                strategy = new StragegyObject_Default();
+            else
+                strategy = start_v.Design.Strategy;
 #if DEBUG
             Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
 #endif
