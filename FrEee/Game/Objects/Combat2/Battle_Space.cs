@@ -596,6 +596,11 @@ namespace FrEee.Game.Objects.Combat2
                 Console.WriteLine(ccobj.WorkingCombatant.Name);
                 Console.WriteLine("hp = " + hp1 + ", " + hp2 + ", " + hp3 + ", " + hp4 + ", " + hp5);
                 
+                Vehicle startV = (Vehicle)ccobj.StartCombatant;
+                foreach (Component comp in startV.Components)
+                {
+                    Console.WriteLine(comp.Name + " container " + comp.Container);
+                }
 #endif
                 string comAI = "";
                 //CombatObject tgtObj;
@@ -797,9 +802,10 @@ namespace FrEee.Game.Objects.Combat2
             //    + attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt()
             //    - target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
             //// TODO - moddable min/max hit chances with per-weapon overrides
+            Vehicle vehicle = (Vehicle)attacker.WorkingObject;
             int wpn_Accu_blankrng = Mod.Current.Settings.WeaponAccuracyPointBlank;
             int wpn_AccuMod = weapon.weapon.Template.WeaponAccuracy; // weapon's intrinsic accuracy modifier
-            int atkr_AccuMod = weapon.weapon.Container.Accuracy; // firing ship's accuracy modifier
+            int atkr_AccuMod = vehicle.Accuracy;//weapon.weapon.Container.Accuracy; // firing ship's accuracy modifier
             int tgt_EvdMod = target.WorkingObject.Evasion; // target's evasion modifier
             int tgt_SectEvdMod = Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt(); // sector evasion modifier
             int atkr_SectComMod = Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt(); // generic combat bonuses
