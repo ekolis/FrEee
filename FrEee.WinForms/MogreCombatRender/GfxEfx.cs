@@ -134,6 +134,7 @@ namespace FrEee.WinForms.MogreCombatRender
                 //    do_Emmitt("RotateRThrust_Effect", false);
                 //    do_Emmitt("RotateLThrust_Effect", false);
                 //}
+
             }
         }
     }

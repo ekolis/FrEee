@@ -662,12 +662,13 @@ namespace FrEee.WinForms.MogreCombatRender
                     battle.firecontrol(battletic, comObj);
 				}
 
-				foreach (var comObj in battle.CombatObjects.ToArray())
+				foreach (var comNode in battle.CombatNodes.ToArray())
 				{
                     //physicsmove objects. 
-                    PointXd renderloc = battle.SimNewtonianPhysics(comObj);
-                    renderlocs[comObj] = renderloc;
+                    PointXd renderloc = battle.SimNewtonianPhysics(comNode);
+                    renderlocs[comNode] = renderloc;
 				}
+
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
                     do_graphics(comObj, renderlocs[comObj]);
