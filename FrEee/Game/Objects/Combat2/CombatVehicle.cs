@@ -53,13 +53,17 @@ namespace FrEee.Game.Objects.Combat2
 
 #if DEBUG
             Console.WriteLine("renewtoStart for CombatVehcile");
+            Console.WriteLine(this.strID);
+            Console.WriteLine(StartVehicle.Name);
 #endif
-			var ship = StartVehicle.Copy();
+            Vehicle ship = StartVehicle.Copy();
 			ship.IsMemory = true;
 			if (ship.Owner != StartVehicle.Owner)
 				ship.Owner.Dispose(); // don't need extra empires!
 			ship.Owner = StartVehicle.Owner;
-
+#if DEBUG
+            Console.WriteLine(ship.Name);
+#endif
 			// copy over the components individually so they can take damage without affecting the starting state
 			ship.Components.Clear();
 #if DEBUG
@@ -71,7 +75,8 @@ namespace FrEee.Game.Objects.Combat2
 				ship.Components.Add(ccopy);
 				ccopy.Container = ship;
 #if DEBUG
-                Console.Write(ccopy.Name);
+                Console.WriteLine(ccopy.Name);
+                Console.WriteLine("Container is " + ccopy.Container);
 #endif
 			}
 #if DEBUG
@@ -101,7 +106,7 @@ namespace FrEee.Game.Objects.Combat2
 				CombatWeapon wpn = new CombatWeapon(weapon);
 				weapons.Add(wpn);
 #if DEBUG
-                Console.Write(".");
+                Console.Write("Weapn Conatiner " + wpn.weapon.Container);
 #endif
 			}
 			Weapons = weapons;

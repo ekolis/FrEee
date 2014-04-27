@@ -666,6 +666,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
                     //physicsmove objects. 
                     PointXd renderloc = battle.SimNewtonianPhysics(comObj);
+                    renderlocs[comObj] = renderloc;
 				}
 
 				foreach (var comObj in battle.CombatObjects.ToArray())

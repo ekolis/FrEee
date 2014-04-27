@@ -612,6 +612,12 @@ namespace FrEee.Game.Objects.Combat2
                     ccobj.calcWaypoint();
                     ccobj.calcWpnTarget();
                 }
+                else 
+                {
+#if DEBUG
+                    Console.WriteLine(ccobj.WorkingCombatant.Name + " Has no hostile Targets");
+#endif
+                }
                 if (IsReplay && battletick < 1000)
                 {
                     List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(ccobj, battletick).ToList<CombatEvent>();
@@ -737,6 +743,11 @@ namespace FrEee.Game.Objects.Combat2
                                 //this function figures out if there's a hit, deals the damage, and creates an event.
 #if DEBUG
                                 Console.WriteLine("Fire Weapon!");
+
+                                if(wpn.weapon.Container == null)
+                                    Console.WriteLine(wpn.weapon.Name + " Has Null Container!!!");
+                                else
+                                    Console.WriteLine(wpn.weapon.Name + " Has Container.");
 #endif
                                 //first create the event for the target ship
                                 CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
