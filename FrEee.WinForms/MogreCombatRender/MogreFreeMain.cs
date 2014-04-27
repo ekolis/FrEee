@@ -713,6 +713,14 @@ namespace FrEee.WinForms.MogreCombatRender
                     disposeObj(comNode, renderlocs);
                     battle.CombatNodes.Remove(comNode);
                     battle.DeadNodes.Remove(comNode);
+                    if (comNode is CombatObject)
+                    {
+
+                        foreach (CombatEmpire emp in battle.Empires.Values)
+                        {
+                            emp.removeComObj((CombatObject)comNode);
+                        }
+                    }
 #if DEBUG
                     Console.WriteLine("disposing obj from deadNodes");
 #endif

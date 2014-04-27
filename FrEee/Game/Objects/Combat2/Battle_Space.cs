@@ -352,8 +352,13 @@ namespace FrEee.Game.Objects.Combat2
 		{
 #if DEBUG
             Console.WriteLine("Beginning Replay Setup");
+
             Console.WriteLine("Creating IFF lists");
 #endif
+            foreach (CombatEmpire emp in Empires.Values)
+            {
+                
+            }
             foreach (CombatObject comObj in StartNodes)
 			{
                 comObj.renewtoStart();
@@ -517,6 +522,14 @@ namespace FrEee.Game.Objects.Combat2
             {
                 CombatNodes.Remove(comNod);
                 DeadNodes.Remove(comNod);
+                if (comNod is CombatObject)
+                {
+                    
+                    foreach (CombatEmpire emp in Empires.Values)
+                    {
+                        emp.removeComObj((CombatObject)comNod);
+                    }
+                }
 #if DEBUG
                 Console.WriteLine("disposing obj from deadNodes");
 #endif
