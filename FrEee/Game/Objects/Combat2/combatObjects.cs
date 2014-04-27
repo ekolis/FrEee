@@ -24,7 +24,23 @@ namespace FrEee.Game.Objects.Combat2
 		public List<CombatObject> neutral = new List<CombatObject>(); //not currently used.
 		public List<CombatObject> hostile = new List<CombatObject>();
 		public CombatEmpire()
-		{ }
+		{ 
+        }
+        public void renewtostart()
+        {
+            ownships = new List<CombatObject>();
+            friendly = new List<CombatObject>();
+            neutral = new List<CombatObject>(); //not currently used.
+            hostile = new List<CombatObject>();
+        }
+        public void removeComObj(CombatObject comObj)
+        {
+            ownships.Remove(comObj);
+            friendly.Remove(comObj);
+            neutral.Remove(comObj);
+            hostile.Remove(comObj);
+        }
+        //todo add ComObj and check hostility etc.
 	}
 
 
