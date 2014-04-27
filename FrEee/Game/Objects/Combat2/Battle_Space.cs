@@ -844,7 +844,7 @@ namespace FrEee.Game.Objects.Combat2
 			
 			var target_icomobj = target.WorkingObject;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
-
+            Vehicle attkVeh = (Vehicle)attacker.WorkingObject;
 			if (!weapon.CanTarget(target_icomobj))
 				return null;
             int tohit = this.to_hit(Sector, attacker, weapon, target);
@@ -853,7 +853,7 @@ namespace FrEee.Game.Objects.Combat2
 				tohit = 99;
 			if (tohit < 1)
 				tohit = 1;
-			if (weapon.weapon.Container.HasAbility("Weapons Always Hit"))
+            if (attkVeh.HasAbility("Weapons Always Hit"))//weapon.weapon.Container.HasAbility("Weapons Always Hit"))
 				tohit = 100;
 
 			//bool hit = RandomHelper.Range(0, 99) < tohit;
