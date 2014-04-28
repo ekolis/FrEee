@@ -85,6 +85,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controllers\FrEeeViewController.cs" />
+    <Compile Include="Converters\ReferentialEqualityConverter.cs" />
+    <Compile Include="Services\FilesystemService.cs" />
     <Compile Include="ViewModels\SelectModViewModel.cs" />
     <Compile Include="ViewModels\GameSetupViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Views\CreditsView.xaml.cs">
       <DependentUpon>CreditsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\FrEeeWindowBase.cs" />
     <Compile Include="Views\SelectModView.xaml.cs">
       <DependentUpon>SelectModView.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <Project>{e19a4330-ce19-45d6-bcfc-375e065ef041}</Project>
       <Name>FrEee</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Events\" />
+    <Folder Include="Utilities\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

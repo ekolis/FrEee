@@ -1,8 +1,12 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:FrEee.Wpf.Converters">
+    
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Brushes.xaml" />
         <ResourceDictionary Source="Images.xaml" />
         <ResourceDictionary Source="BaseStyles.xaml" />
         <ResourceDictionary Source="ControlTemplates.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    
+    <converters:ReferentialEqualityConverter x:Key="ReferentialEqualityConverter" />
 </ResourceDictionary>
