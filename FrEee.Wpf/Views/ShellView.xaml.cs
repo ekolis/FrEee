@@ -5,7 +5,7 @@ using FrEee.Wpf.ViewModels;
 namespace FrEee.Wpf.Views
 {
     [Export]
-    public partial class ShellView : Window
+    public partial class ShellView : FrEeeWindowBase
     {
         public ShellView()
         {

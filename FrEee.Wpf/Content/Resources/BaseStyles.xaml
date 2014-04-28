@@ -5,6 +5,19 @@
         <Setter Property="IsTabStop" Value="False" />
     </Style>
 
+    <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="White" />
+    </Style>
+
+    <Style x:Key="TxtPageHeader" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="28pt" />
+        <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+
+    <Style x:Key="TxtSectionHeader" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="20pt" />
+    </Style>
+
     <Style x:Key="ButtonBaseStyle" TargetType="Button">
         <Setter Property="Foreground" Value="CornflowerBlue" />
         <Setter Property="BorderBrush" Value="CornflowerBlue" />
@@ -20,7 +33,7 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="ButtonSmallStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
+    <Style x:Key="ButtonShortStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
         <Setter Property="Padding" Value="10,3" />
         <Setter Property="MinWidth" Value="80" />
         <Setter Property="MinHeight" Value="20" />
@@ -28,11 +41,15 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
-    <Style x:Key="ButtonLargeStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
+    <Style x:Key="ButtonStandardStyle" BasedOn="{StaticResource ButtonBaseStyle}" TargetType="Button">
         <Setter Property="Padding" Value="10,3" />
-        <Setter Property="MinWidth" Value="150" />
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
+
+    <Style x:Key="ButtonStandardWideStyle" BasedOn="{StaticResource ButtonStandardStyle}" TargetType="Button">
+        <Setter Property="MinWidth" Value="150" />
+    </Style>
+
 </ResourceDictionary>

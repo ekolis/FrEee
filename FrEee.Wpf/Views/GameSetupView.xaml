@@ -35,16 +35,16 @@
             <Button Grid.Column="0"
                     Margin="0,0,5,0"
                     Content="Load Setup"
-                    Style="{StaticResource ButtonSmallStyle}" />
+                    Style="{StaticResource ButtonShortStyle}" />
             <Button Grid.Column="1"
                     Margin="0,0,5,0"
                     Content="Save Setup"
-                    Style="{StaticResource ButtonSmallStyle}" />
+                    Style="{StaticResource ButtonShortStyle}" />
             <Button Grid.Column="3"
                     Margin="0,0,5,0"
                     Content="Cancel"
-                    Style="{StaticResource ButtonSmallStyle}" />
-            <Button Grid.Column="4" Content="Start" Style="{StaticResource ButtonSmallStyle}" />
+                    Style="{StaticResource ButtonShortStyle}" />
+            <Button Grid.Column="4" Content="Start" Style="{StaticResource ButtonShortStyle}" />
         </Grid>
     </Grid>
 </views:FrEeeViewBase>
