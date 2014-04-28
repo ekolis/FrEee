@@ -677,6 +677,8 @@ namespace FrEee.WinForms.MogreCombatRender
                 {
 					if (comNode.deathTick <= battletic)
 					{
+                        battle.CombatNodes.Remove(comNode);
+                        battle.DeadNodes.Remove(comNode);
 						disposeObj(comNode, renderlocs);
 					}
 					else
@@ -722,7 +724,7 @@ namespace FrEee.WinForms.MogreCombatRender
                         }
                     }
 #if DEBUG
-                    Console.WriteLine("disposing obj from deadNodes");
+                    Console.WriteLine("disposing " + comNode.strID);
 #endif
                 }
 
