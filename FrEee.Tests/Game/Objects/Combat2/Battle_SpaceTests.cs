@@ -69,7 +69,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
             spinrate = new Compass(5, false);
             testComObj.maxRotate = spinrate;
             testComObj.cmbt_accel = new PointXd(0, 0, 0);
+            testComObj.maxfowardThrust = 100;
             testComObj.maxStrafeThrust = (Fix16)0;
+            testComObj.cmbt_mass = 100;
             ICombatant[] combatants = new ICombatant[] { combatant };
 
             foreach (ISpaceObject ispobj in (combatants))
@@ -269,5 +271,96 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             battle.End(tick);
         }
+
+
+        [TestMethod]
+        public void ThrustShip0()
+        {
+            setupbattle();
+
+            Console.WriteLine("Thrust test 0");
+
+            battle.Start();
+
+            int tick = 0, cmdFreqCounter = 0;
+            Compass startHeading = new Compass(0, false);
+            Compass angletoTurn = new Compass(0, false);
+            PointXd expectedResult = new PointXd(0, 100, 0);
+            bool toWaypoint = true;
+            // Ship heading 0 Angle to turn 0
+            // ship should thrust 100%
+            testComObj.cmbt_loc = new PointXd(0,0,0);
+            testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            
+            //testComObj.thrustship(angletoTurn, toWaypoint);       <---this is private, can't test like this...     
+            Assert.AreEqual(expectedResult, testComObj.cmbt_thrust);
+
+            battle.End(tick);
+        }
+
+        [TestMethod]
+        public void physicsTest0()
+        {
+            setupbattle();
+
+            Console.WriteLine("Physics test 0: thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s ");
+
+            battle.Start();
+
+            int tick = 0, cmdFreqCounter = 0;
+            Compass startHeading = new Compass(0, false);
+            Compass angletoTurn = new Compass(0, false);
+            PointXd expectedResult = new PointXd(0, 1, 0);
+
+
+            testComObj.cmbt_loc = new PointXd(0, 0, 0);
+            testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.cmbt_thrust = new PointXd(0, 100, 0); 
+
+            //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s 
+
+
+            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
+
+            battle.SimNewtonianPhysics(testComObj);
+
+            Assert.AreEqual(expectedResult, testComObj.cmbt_accel);
+
+            battle.End(tick);
+        }
+
+        [TestMethod]
+        public void physicsTest1()
+        {
+            setupbattle();
+
+            Console.WriteLine("Thrust test 1");
+
+            battle.Start();
+
+            int tick = 0, cmdFreqCounter = 0;
+            Compass startHeading = new Compass(0, false);
+            Compass angletoTurn = new Compass(0, false);
+            PointXd expectedResult = new PointXd(0, 50, 0); //0.5 * 1 * (100 / 10)^2 = 50
+
+
+            testComObj.cmbt_loc = new PointXd(0, 0, 0);
+            testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.cmbt_thrust = new PointXd(0, 100, 0);
+
+            //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s 
+
+
+            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            for (int i = 0; i < 100; i++)
+            {
+                battle.SimNewtonianPhysics(testComObj); //run ten times to get ten seconds/ticks. 
+            }           
+            Assert.AreEqual(expectedResult, testComObj.cmbt_loc);
+
+            battle.End(tick);
+        }
+
     }
 }
