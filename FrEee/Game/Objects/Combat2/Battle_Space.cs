@@ -575,13 +575,17 @@ namespace FrEee.Game.Objects.Combat2
 			if (comObj is CombatObject)
 			{
 				CombatObject comObjo = (CombatObject)comObj;
-				comObjo.cmbt_accel = (NMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
-				comObj.cmbt_vel += comObjo.cmbt_accel;
+                comObjo.cmbt_accel = (NMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
+                comObjo.cmbt_vel += comObjo.cmbt_accel * (Fix16)TickLength;
+#if DEBUG                
+                Console.WriteLine(comObj.strID + " Acc " + comObjo.cmbt_accel);
+#endif
 			}
 
 			comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
 #if DEBUG
             Console.WriteLine(comObj.strID + " Loc " + comObj.cmbt_loc);
+
             Console.WriteLine(comObj.strID + " Vel " + comObj.cmbt_vel);
 #endif
 			return comObj.cmbt_loc;
