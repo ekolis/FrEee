@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Combat2
         public PointXd cmbt_loc { get; set; }
 
         /// <summary>
-        /// combat velocity
+        /// m/s combat velocity
         /// </summary>
         public PointXd cmbt_vel { get; set; }
 
@@ -129,7 +129,11 @@ namespace FrEee.Game.Objects.Combat2
 
 		public PointXd cmbt_thrust { get; set; }
 
+        /// <summary>
+        /// in meters per second.
+        /// </summary>
         public PointXd cmbt_accel { get; set; }
+
 
 		public Fix16 cmbt_mass { get; set; }
 
