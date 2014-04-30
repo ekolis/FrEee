@@ -541,7 +541,7 @@ namespace FrEee.Game.Objects.Space
 
 		private void LoadCommands(Empire emp, IList<ICommand> cmds)
 		{
-			cmds = cmds.Where(cmd => cmd != null).ToList(); // HACK - why would we have null commands in a plr file?!
+			cmds = cmds.Where(cmd => cmd != null).Distinct().ToList(); // HACK - why would we have null/duplicate commands in a plr file?!
 			emp.Commands.Clear();
 			var idmap = new Dictionary<long, long>();
 			foreach (var cmd in cmds)
