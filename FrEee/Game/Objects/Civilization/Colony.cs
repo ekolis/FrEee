@@ -161,7 +161,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				var merchants = Population.Where(kvp => kvp.Key.HasAbility("No Spaceports")).Sum(kvp => kvp.Value);
 				var totalPop = Population.Sum(kvp => kvp.Value);
-				var ratio = (double)merchants * (double)totalPop;
+				var ratio = (double)merchants / (double)totalPop;
 				return ratio;
 			}
 		}
