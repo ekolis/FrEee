@@ -57,7 +57,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         Battle_Space battle;
         Compass spinrate;
 
-        public void setupbattle()
+        public void Combat_setupbattle()
         {                        
             Sector location = new Sector(sys, new System.Drawing.Point());
             Empire emp = new Empire();
@@ -86,9 +86,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship0()
+        public void Combat_turnship0()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -111,9 +111,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
                 testComObj.cmbt_head.Degrees);
         }
         [TestMethod]
-        public void turnship1()
+        public void Combat_turnship1()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -137,9 +137,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship2()
+        public void Combat_turnship2()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -166,9 +166,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship3()
+        public void Combat_turnship3()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -192,9 +192,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship4()
+        public void Combat_turnship4()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -221,9 +221,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship5()
+        public void Combat_turnship5()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -246,9 +246,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void turnship6()
+        public void Combat_turnship6()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("doing battle.start from test");
 
@@ -274,9 +274,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
 
         [TestMethod]
-        public void ThrustShip0()
+        public void Combat_ThrustShip0()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("Thrust test 0");
 
@@ -300,9 +300,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void physicsTest0()
+        public void Combat_physicsTest0()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("Physics test 0: thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s ");
 
@@ -331,9 +331,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
         }
 
         [TestMethod]
-        public void physicsTest1()
+        public void Combat_physicsTest1()
         {
-            setupbattle();
+            Combat_setupbattle();
 
             Console.WriteLine("Thrust test 1");
 
@@ -355,7 +355,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
             for (int i = 0; i < 100; i++)
             {
-                battle.SimNewtonianPhysics(testComObj); //run ten times to get ten seconds/ticks. 
+                battle.SimNewtonianPhysics(testComObj); //run 100 times to get 10 simseconds. 
             }           
             Assert.AreEqual(expectedResult, testComObj.cmbt_loc);
 

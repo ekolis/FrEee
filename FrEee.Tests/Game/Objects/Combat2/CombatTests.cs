@@ -167,7 +167,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
     {
 
         [TestMethod]
-        public void BattleSpace_Combat()
+        public void Combat_CheckCopies()
         {
             testships testships = new testships();
             StarSystem sys = new StarSystem(1);
