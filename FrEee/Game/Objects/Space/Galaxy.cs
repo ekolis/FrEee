@@ -645,6 +645,9 @@ namespace FrEee.Game.Objects.Space
 			Current.Battles = new HashSet<Battle_Space>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 
+			// We can enable the ability cache here because space objects aren't changing state yet.
+			Current.EnableAbilityCache();
+
 			double progressPerOperation;
 			if (status == null)
 				progressPerOperation = 0d;
@@ -698,6 +701,7 @@ namespace FrEee.Game.Objects.Space
             //end-debugstuff
 
 			// reproduction and population replacement from cargo
+			Current.DisableAbilityCache(); // population quantity can affect abilities
 			if (status != null)
 				status.Message = "Growing population";
 			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
@@ -747,6 +751,7 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			// resource generation
+			Current.EnableAbilityCache(); // resource generation doesn't affect abilities or empire maintenance
 			if (status != null)
 				status.Message = "Generating resources";
 			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Owner != null))
@@ -881,6 +886,7 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			// ship movement
+			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
@@ -941,6 +947,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
+			Current.EnableAbilityCache(); // nothing past this point should affect abilities
 			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
 				sobj.ReplenishShields();
 
@@ -1209,6 +1216,39 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		#endregion
+
+		/// <summary>
+		/// Is the ability cache enabled?
+		/// Always enabled on the client side; only when a flag is set on the server side.
+		/// </summary>
+		public bool IsAbilityCacheEnabled
+		{
+			get
+			{
+				return Empire.Current != null || isAbilityCacheEnabled;
+			}
+		}
+
+		private bool isAbilityCacheEnabled;
+
+		/// <summary>
+		/// Enables the server side ability cache.
+		/// </summary>
+		public void EnableAbilityCache()
+		{
+			isAbilityCacheEnabled = true;
+		}
+
+		/// <summary>
+		/// Disables the server side ability cache.
+		/// </summary>
+		private void DisableAbilityCache()
+		{
+			isAbilityCacheEnabled = false;
+			AbilityCache.Clear();
+			SharedAbilityCache.Clear();
+			TreatySharedAbilityCache.Clear();
+		}
 
 		/// <summary>
 		/// Cache of abilities belonging to game objects.

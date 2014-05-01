@@ -992,7 +992,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static string GetAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
-			if (filter == null && Empire.Current != null)
+			if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
 			{
 				// use the cache
 				var cached = Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)];
@@ -1019,7 +1019,7 @@ namespace FrEee.Utility.Extensions
 				result = abils.First().Values[index - 1];
 
 			// cache abilities if we can
-			if (filter == null && Empire.Current != null)
+			if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
 				Galaxy.Current.SharedAbilityCache[Tuple.Create(obj, emp)] = abils.ToArray();
 
 			return result;
@@ -2278,7 +2278,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			if (sourceFilter == null && Empire.Current != null)
+			if (sourceFilter == null && Galaxy.Current.IsAbilityCacheEnabled)
 			{
 				// use the ability cache
 				if (Galaxy.Current.AbilityCache[obj] == null)
