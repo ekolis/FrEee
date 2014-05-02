@@ -8,13 +8,14 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Combat2
 {
     public class StrategyBaseBlock
     {
         protected Object[] inputs;
-        public Type[] inputtypes { get; protected set; }
+        public SafeType[] inputtypes { get; protected set; }
 		public object[] DefaultValues { get; protected set; }
 
         /// <summary>
@@ -28,7 +29,7 @@ namespace FrEee.Game.Objects.Combat2
         public StrategyBaseBlock[] inputLnks { get; set; }
 
         protected Object output = null;
-        public Type outputType { get; protected set; }
+        public SafeType outputType { get; protected set; }
         public List<StrategyBaseBlock> outputLnks { get; set; }
 
 
@@ -37,16 +38,16 @@ namespace FrEee.Game.Objects.Combat2
         /// </summary>
         /// <param name="inputtypes">the types of inputs this block will receve as an array.</param>
         /// <param name="outputtype">the return type of this block</param>
-        public StrategyBaseBlock(Type[] inputtypes, object[] defaultValues, Type outputtype)
+        public StrategyBaseBlock(IEnumerable<Type> inputtypes, IEnumerable<object> defaultValues, Type outputtype)
         {
 
             if (inputtypes != null)
             {
-                this.inputs = new object[inputtypes.Length]; //inputlist.ToArray();
-                this.inputLnks = new StrategyBaseBlock[inputtypes.Length];
+                this.inputs = new object[inputtypes.Count()]; //inputlist.ToArray();
+                this.inputLnks = new StrategyBaseBlock[inputtypes.Count()];
             }
-            this.inputtypes = inputtypes;
-			DefaultValues = defaultValues;
+            this.inputtypes = inputtypes.Select(t => (SafeType)t).ToArray();
+			DefaultValues = defaultValues.ToArray();
             this.outputType = outputtype;
             outputLnks = new List<StrategyBaseBlock>();
         }
@@ -239,7 +240,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisObj : StrategyBaseBlock
     {
         public StrategyThisObj()
-            : base(null, null, typeof(CombatObject))
+            : base(new Type[0], new object[0], typeof(CombatObject))
         {
             name = "This";
         }
@@ -254,7 +255,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisEnemys : StrategyBaseBlock
     {
         public StrategyThisEnemys()
-            : base(null, null, typeof(List<CombatObject>))
+			: base(new Type[0], new object[0], typeof(List<CombatObject>))
         {
             name = "Enemeys of This";
         }
@@ -269,7 +270,7 @@ namespace FrEee.Game.Objects.Combat2
     public class StrategyThisEmpireObj : StrategyBaseBlock
     {
         public StrategyThisEmpireObj()
-            : base(null, null, typeof(List<CombatObject>))
+			: base(new Type[0], new object[0], typeof(List<CombatObject>))
         {
             name = "Our Objects";
         }
@@ -303,7 +304,7 @@ namespace FrEee.Game.Objects.Combat2
         Type filter = typeof(CombatObject);
         //public StrategyClosest(CombatObject fromObj, List<CombatObject> comObjList, Type filter = null):
         public StrategyClosest():
-            base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(Type)}, new object[]{null, new List<CombatObject>(), typeof(CombatObject)}, typeof(CombatObject))
+            base (new Type[3]{typeof(CombatObject), typeof(List<CombatObject>), typeof(SafeType)}, new object[]{null, new List<CombatObject>(), new SafeType(typeof(CombatObject))}, typeof(CombatObject))
         {
             name = "Closest Object to:";
             //if (filter != null)
