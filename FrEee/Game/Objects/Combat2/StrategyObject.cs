@@ -85,6 +85,8 @@ namespace FrEee.Game.Objects.Combat2
 
         public void Dispose()
         {
+			if (IsDisposed)
+				return;
             Galaxy.Current.UnassignID(this);
             IsDisposed = true;
         }
