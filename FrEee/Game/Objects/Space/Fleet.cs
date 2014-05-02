@@ -664,6 +664,8 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
+			if (StarSystem == null)
+				return Timestamp < Galaxy.Current.Timestamp - 1;
 			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 

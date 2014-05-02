@@ -280,7 +280,8 @@ namespace FrEee.Utility
 
 		public void SetObjectProperty(object obj, PropertyInfo prop, object val)
 		{
-			AddProperties(obj.GetType());
+			if (obj is Type)
+				throw new InvalidOperationException("Cannot set properties on an object of type System.Type.");
 			// lambda expressions don't seem to work on structs
 			if (obj.GetType().IsValueType)
 				prop.SetValue(obj, val, new object[] { });
