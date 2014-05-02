@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Space
 			ancestors.Add(this);
 			foreach (var sobj in Vehicles.ToArray())
 			{
-				if (sobj.Owner != Owner || (sobj is Fleet && ancestors.Contains((Fleet)sobj)) || sobj.Sector != Sector || sobj.IsDestroyed)
+				if (sobj == null || sobj.Owner != Owner || (sobj is Fleet && ancestors.Contains((Fleet)sobj)) || sobj.Sector != Sector || sobj.IsDestroyed)
 					Vehicles.Remove(sobj);
 				else if (sobj is Fleet)
 					((Fleet)sobj).Validate(ancestors);
@@ -153,7 +153,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Empire Owner
 		{
-			get { return Vehicles.Select(v => v.Owner).Distinct().SingleOrDefault() ?? Empire.Current; }
+			get { return Vehicles.Where(v => v != null).Select(v => v.Owner).Distinct().SingleOrDefault() ?? Empire.Current; }
 		}
 
 		/// <summary>
@@ -396,11 +396,14 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (!Vehicles.Any())
 				return Visibility.Unknown;
-			return Vehicles.Max(sobj => sobj.CheckVisibility(emp));
+			return Vehicles.Where(v => v != null).Max(sobj => sobj.CheckVisibility(emp));
 		}
 
 		public void Redact(Empire emp)
 		{
+			// HACK - check for null (destroyed?) vehicles
+			Validate();
+
 			var vis = CheckVisibility(emp);
 
 			// Can't see names of alien fleets
