@@ -874,7 +874,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// validate fleets
-			foreach (var f in Current.Referrables.OfType<Fleet>())
+			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
 				f.Validate();
 
 			// replenish shields
@@ -909,6 +909,10 @@ namespace FrEee.Game.Objects.Space
 					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
 			Current.MoveShips(); // last tick of the turn!
+
+			// validate fleets again (ships might have been destroyed)
+			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
+				f.Validate();
 
 			// construction queues
 			if (status != null)
