@@ -316,8 +316,6 @@ namespace FrEee.WinForms.Forms
 				return;
 			}
 
-			btnFleetTransfer.Visible = sector.SpaceObjects.OfType<SpaceVehicle>().Any(v => v.Owner == Empire.Current);
-
 			if (sector.SpaceObjects.Any())
 			{
 				// add new report
@@ -846,12 +844,12 @@ namespace FrEee.WinForms.Forms
 				// show/hide command buttons
 				if (value == null || value.Owner != Empire.Current)
 				{
-					// can't issue commands to objects we don't own
-					foreach (GameButton btn in pnlSubCommands.Controls)
+					// can't issue commands to objects we don't own, though we can issue fleet transfer commands
+					foreach (GameButton btn in pnlSubCommands.Controls.Cast<Control>().Except(btnFleetTransfer))
 						btn.Visible = false;
 
 					// fleet transfer button is special, it can be selected even with no space object selected
-					btnFleetTransfer.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<SpaceVehicle>().Any(v => v.Owner == Empire.Current);
+					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 				}
 				else
 				{
@@ -864,7 +862,7 @@ namespace FrEee.WinForms.Forms
 					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
-					btnFleetTransfer.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<SpaceVehicle>().Any(v => v.Owner == Empire.Current);
+					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
 			}
@@ -1085,12 +1083,25 @@ namespace FrEee.WinForms.Forms
 
 		private void ShowFleetTransferForm()
 		{
-			if (starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.OfType<SpaceVehicle>().Any(v => v.Owner == Empire.Current))
+			if (IsFleetTransferOperationValid)
 			{
 				var form = new FleetTransferForm(starSystemView.SelectedSector);
 				this.ShowChildForm(form);
 				BindReport();
 				starSystemView.Invalidate();
+			}
+		}
+
+		/// <summary>
+		/// Can the "fleet transfer" button be clicked now?
+		/// </summary>
+		private bool IsFleetTransferOperationValid
+		{
+			get
+			{
+				return starSystemView.SelectedSector != null &&
+					starSystemView.SelectedSector.SpaceObjects.OfType<IMobileSpaceObject>().Any(
+					v => v.Owner == Empire.Current && (v.CanBeInFleet || v is Fleet));
 			}
 		}
 
