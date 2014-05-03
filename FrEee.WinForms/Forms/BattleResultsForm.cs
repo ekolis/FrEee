@@ -53,6 +53,9 @@ namespace FrEee.WinForms.Forms
 			cfg.Columns.Add(new GridColumnConfig("Damage", "Damage", typeof(DataGridViewTextBoxColumn), Color.White, Format.UnitsBForBillions));
 			grid.CurrentGridConfig = cfg;
 
+			// run through sim to get stats
+			Battle.Resolve();
+
 			// gather grid data
 			var data = new List<object>();
 			foreach (var group in Battle.StartCombatants.Values.GroupBy(c => new CombatantInfo
@@ -74,10 +77,10 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(c => Battle.FindActualCombatant(c).IsDestroyed),
+					Losses = group.Count(c => Battle.FindWorkingCombatant(c).IsDestroyed),
 					Damage = hp - group.Sum(c =>
 						{
-							var ac = (ICombatant)Battle.FindActualCombatant(c);
+							var ac = (ICombatant)Battle.FindWorkingCombatant(c);
 							return ac.ArmorHitpoints + ac.HullHitpoints;
 						})
 				};
