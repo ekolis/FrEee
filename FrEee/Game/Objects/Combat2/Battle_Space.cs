@@ -1084,7 +1084,18 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns></returns>
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
-            return ControlledCombatObjects.SingleOrDefault(c2 => c2.ID == c.ID).WorkingCombatant;
+			var o = ControlledCombatObjects.SingleOrDefault(
+				c2 => c2.ID == c.ID ||
+					(Empire.Current != null && 
+					(c.IsMemory &&
+					Empire.Current.Memory.ContainsKey(c2.ID) &&
+					Empire.Current.Memory[c2.ID].ID == c.ID)
+					||
+					(c2.StartCombatant.IsMemory &&
+					Empire.Current.Memory.ContainsKey(c.ID) &&
+					Empire.Current.Memory[c.ID].ID == c2.ID)
+					);
+			return o.WorkingCombatant;
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)
