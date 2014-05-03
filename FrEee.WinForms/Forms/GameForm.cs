@@ -1317,5 +1317,10 @@ namespace FrEee.WinForms.Forms
 			BindReport();
 			SetUpResourceDisplay();
 		}
+
+		private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			Instance = null;
+		}
 	}
 }
