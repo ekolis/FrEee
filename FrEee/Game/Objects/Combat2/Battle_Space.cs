@@ -1077,25 +1077,16 @@ namespace FrEee.Game.Objects.Combat2
 			return StartCombatants[c.ID];
 		}
 
-		/// <summary>
-		/// I *think* the id will work here now... the ID for the *comObjs* *Should* stay the same. 
-		/// </summary>
-		/// <param name="c"></param>
-		/// <returns></returns>
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
-			var o = ControlledCombatObjects.SingleOrDefault(
-				c2 => c2.ID == c.ID ||
-					(Empire.Current != null &&
-					(c.IsMemory &&
-					Empire.Current.Memory.ContainsKey(c2.ID) &&
-					Empire.Current.Memory[c2.ID].ID == c.ID)
-					||
-					(c2.StartCombatant.IsMemory &&
-					Empire.Current.Memory.ContainsKey(c.ID) &&
-					Empire.Current.Memory[c.ID].ID == c2.ID)
-					));
-			return o.WorkingCombatant;
+			foreach (var n in CombatNodes.OfType<ControlledCombatObject>())
+			{
+				if (n.StartCombatant == c)
+					return n.WorkingCombatant;
+				if (n.WorkingCombatant == c)
+					return c;
+			}
+			throw new ArgumentException("Can't find working combatant for " + c + ".");
 		}
 
 		public ICombatant FindActualCombatant(ICombatant c)
