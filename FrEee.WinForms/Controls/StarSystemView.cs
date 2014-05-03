@@ -236,7 +236,9 @@ namespace FrEee.WinForms.Controls
 								{
 									// draw empire insignia and space object count
 									var owner = g.Key;
-									var count = g.Count();
+									var fleetedCount = g.OfType<Fleet>().Sum(f => f.LeafVehicles.Count());
+									var unfleetedCount = g.Except(g.OfType<Fleet>()).Count();
+									var count = fleetedCount + unfleetedCount;
 									var aspect = owner.Icon;
 									if (owner.Icon != null)
 									{
