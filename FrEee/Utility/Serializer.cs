@@ -23,8 +23,9 @@ namespace FrEee.Utility
 	{
 		public static void Serialize<T>(T o, Stream s, ObjectGraphContext context = null, int tabLevel = 0)
 		{
-			var sw = new StreamWriter(s);
+			var sw = new StreamWriter(new BufferedStream(s));
 			Serialize(o, sw, context);
+			sw.Flush();
 		}
 
 		public static void Serialize<T>(T o, TextWriter w, ObjectGraphContext context = null, int tabLevel = 0)
@@ -300,7 +301,7 @@ namespace FrEee.Utility
 
 		public static T Deserialize<T>(Stream s, ObjectGraphContext context = null)
 		{
-			var sr = new StreamReader(s);
+			var sr = new StreamReader(new BufferedStream(s));
 			var result = Deserialize<T>(sr, context);
 			return result;
 		}
