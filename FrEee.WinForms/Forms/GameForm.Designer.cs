@@ -621,6 +621,7 @@ namespace FrEee.WinForms.Forms
 			this.searchBox.StarSystem = null;
 			this.searchBox.TabIndex = 0;
 			this.searchBox.TabStop = false;
+			this.searchBox.ObjectSelected += new FrEee.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
 			// 
 			// pnlSystemTabs
 			// 
