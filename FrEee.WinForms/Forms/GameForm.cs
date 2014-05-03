@@ -418,6 +418,7 @@ namespace FrEee.WinForms.Forms
 			{
 				var r = new FleetReport((Fleet)sobj);
 				r.OrdersChanged += VehicleFleetReport_OrdersChanged;
+				return r;
 			}
 			return null;
 		}
