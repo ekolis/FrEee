@@ -643,9 +643,9 @@ namespace FrEee.Game.Objects.Combat2
                 if (IsReplay && battletick < 1000)
                 {
                     List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(ccobj, battletick).ToList<CombatEvent>();
-                    CombatLocationEvent locevnt = evnts.OfType<CombatLocationEvent>().SingleOrDefault(e => e.Location == ccobj.cmbt_loc);
+                    var locevnts = evnts.OfType<CombatLocationEvent>().Where(e => e.Object == ccobj && e.Tick == battletick);
                     comAI = "Location ";
-                    if (locevnt != null)
+                    if (locevnts.Any() && locevnts.All(le => le.Location == ccobj.cmbt_loc))
                         comAI += "Does match \r\n";
                     else
                         comAI += "Not matched \r\n";
