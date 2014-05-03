@@ -83,6 +83,8 @@ namespace FrEee.WinForms.MogreCombatRender
 
             battle.SetUpPieces();
 
+			dict_GfxObjects.Clear();
+
             Console.WriteLine("Setting up combat Rendering Entities");
 			foreach (CombatObject comObj in battle.CombatObjects)
 			{
@@ -539,8 +541,11 @@ namespace FrEee.WinForms.MogreCombatRender
                 Console.WriteLine("check " + filestring + " for errors");
             }
             gfxobj.IDName = ComNode.strID;
-            
-            dict_GfxObjects.Add(ComNode.strID, gfxobj);
+
+			if (dict_GfxObjects.ContainsKey(ComNode.strID))
+				dict_GfxObjects[ComNode.strID] = gfxobj;
+			else
+				dict_GfxObjects.Add(ComNode.strID, gfxobj);
             return gfxobj; 
         }
 
