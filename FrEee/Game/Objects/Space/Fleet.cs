@@ -358,7 +358,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Speed > 0 && !Orders.Any() || ConstructionQueues.Any(q => q.Eta < 1);
+				return Speed > 0 && !Orders.Any() && Container == null || ConstructionQueues.Any(q => q.Eta < 1);
 			}
 		}
 
