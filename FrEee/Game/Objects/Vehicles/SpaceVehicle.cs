@@ -269,7 +269,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return (Speed > 0 && !Orders.Any()) || (ConstructionQueue != null && ConstructionQueue.IsIdle);
+				return (Speed > 0 && !Orders.Any() && Container == null) || (ConstructionQueue != null && ConstructionQueue.IsIdle);
 			}
 		}
 

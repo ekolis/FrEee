@@ -51,7 +51,7 @@ namespace FrEee.Game.Interfaces
 
 		/// <summary>
 		/// Is this space object idle?
-		/// Space objects are idle if they have no orders (but they have speed greater than zero) or their construction queue has a fractional ETA less than 1.
+		/// Space objects are idle if they have no orders (but they have speed greater than zero, and are not in a fleet) or their construction queue has a fractional ETA less than 1.
 		/// </summary>
 		bool IsIdle { get; }
 	}
