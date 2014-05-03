@@ -1064,12 +1064,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public System.Drawing.Image Icon
 		{
-			get { return StartCombatants.OfType<ISpaceObject>().Largest().Icon; }
+			get { return StartCombatants.Values.OfType<ISpaceObject>().Largest().Icon; }
 		}
 
 		public System.Drawing.Image Portrait
 		{
-			get { return StartCombatants.OfType<ISpaceObject>().Largest().Portrait; }
+			get { return StartCombatants.Values.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 
 		public ICombatant FindStartCombatant(ICombatant c)
