@@ -255,6 +255,19 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
+		/// <summary>
+		/// Computes the efficiency of a thruster thrusting in a direction.
+		/// </summary>
+		/// <param name="angleOffCenter"></param>
+		/// <returns></returns>
+		private Fix16 GetThrustEfficiency(Compass angleOffCenter)
+		{
+			angleOffCenter.Radians = Math.Abs(angleOffCenter.Radians);
+			if (angleOffCenter.Degrees >= 90)
+				return Fix16.Zero; // can't thrust sideways or backwards!
+			return Fix16.Cos(angleOffCenter.Radians);
+		}
+
  
         protected void thrustship(Compass angletoturn, bool? thrustToWaypoint)
         {
@@ -267,13 +280,13 @@ namespace FrEee.Game.Objects.Combat2
                 if (angletoturn.Degrees >= (Fix16)0 && angletoturn.Degrees < (Fix16)90)
                 {
 
-                    thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
+					thrustby = (Fix16)this.maxfowardThrust * GetThrustEfficiency(angletoturn);
                 }
                 else if (angletoturn.Degrees > (Fix16)270 && angletoturn.Degrees < (Fix16)360)
                 {
                     Compass angle = new Compass((Fix16)360 - angletoturn.Degrees);
                     angle.normalize();
-                    thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angle.Degrees / (Fix16)0.9));
+					thrustby = (Fix16)this.maxfowardThrust * GetThrustEfficiency(angletoturn);
                 }
 
                 //PointXd fowardthrust = new PointXd(comObj.cmbt_face + thrustby);
@@ -287,7 +300,7 @@ namespace FrEee.Game.Objects.Combat2
                 PointXd wayptvel = this.waypointTarget.cmbt_vel;
                 PointXd ourvel = this.cmbt_vel;
 
-                thrustby = (Fix16)this.maxfowardThrust / (Fix16.Max((Fix16)1, angletoturn.Degrees / (Fix16)0.9));
+				thrustby = (Fix16)this.maxfowardThrust * GetThrustEfficiency(angletoturn);
 
                 PointXd fowardthrust = new PointXd(Trig.intermediatePoint(ourvel, wayptvel, thrustby));
                 this.cmbt_thrust += fowardthrust;
@@ -308,9 +321,15 @@ namespace FrEee.Game.Objects.Combat2
             {
                 this.cmbt_thrust = Trig.intermediatePoint(this.cmbt_loc, this.waypointTarget.cmbt_loc, -this.maxStrafeThrust);
             }
-            else // TODO - if null, we want to just match velocity
+            else 
             {
-                //comObj.cmbt_thrust = Trig.
+				// if null, we need to match both location and velocity
+				var vectorToTarget = waypointTarget.cmbt_loc - cmbt_loc;
+				var thrustToMatchLocation = Math.Min(this.maxStrafeThrust, vectorToTarget.Length);
+				var deltaV = NMath.closingRate(cmbt_loc, cmbt_vel, waypointTarget.cmbt_loc, waypointTarget.cmbt_vel);
+				var thrustToMatchVelocity = -deltaV;
+				var amountToThrust = thrustToMatchLocation + thrustToMatchVelocity;
+				this.cmbt_thrust = Trig.intermediatePoint(this.cmbt_loc, this.waypointTarget.cmbt_loc, amountToThrust);
             }
         }
 
