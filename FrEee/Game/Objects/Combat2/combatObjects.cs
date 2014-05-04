@@ -308,7 +308,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 this.cmbt_thrust = Trig.intermediatePoint(this.cmbt_loc, this.waypointTarget.cmbt_loc, -this.maxStrafeThrust);
             }
-            else //if null
+            else // TODO - if null, we want to just match velocity
             {
                 //comObj.cmbt_thrust = Trig.
             }
