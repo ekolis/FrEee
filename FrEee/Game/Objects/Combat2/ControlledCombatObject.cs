@@ -81,29 +81,28 @@ namespace FrEee.Game.Objects.Combat2
 			bool? thrustToWaypoint = true;
 			string helmdo = "";
 
-			if (closingSpeed > (Fix16)0) //getting closer
+			if (closingSpeed > (Fix16)0) //getting closer?
 			{
-				if (distance <= nominaldistance)  //close to the waypoint.
+				if (distance <= nominaldistance)  // close to the waypoint (within strafe thrust range)
 				{
-					thrustToWaypoint = null;//should attempt to match speed
+					thrustToWaypoint = null; // should attempt to match speed using strafe thrust
 				}
-				if (timetowpt <= timetokill_ClosingSpeed + oneEightytime)//if/when we're going to overshoot teh waypoint.
+				if (timetowpt <= timetokill_ClosingSpeed + oneEightytime) // if/when we're going to overshoot the waypoint.
 				{
 					if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
 					{
-
-						thrustToWaypoint = false;
+						thrustToWaypoint = false; // thrust AWAY from the waypoint! slow down!
 					}
 					else
-					{ //use strafe thrust to get close to the waypoint. 
-
+					{
 						helmdo = "null" + "\r\n";
-						thrustToWaypoint = null; //else match speed and use thrusters to get closer
+						thrustToWaypoint = null; // driiift! iiiin! spaaaace! should use only strafe thrust to match speed
 					}
 				}
 			}
 			else
 			{
+				// getting farther away or maintaining distance, just thrust toward the target
 			}
 
 			if (thrustToWaypoint == false)
