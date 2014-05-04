@@ -27,7 +27,9 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
-			if (Issuer == Executor.Owner)
+			if (Executor == null)
+				Issuer.Log.Add(new GenericLogMessage("Attempted to add an order to nonexistent object with ID=" + executor.ID + ". This is probably a game bug."));
+			else if (Issuer == Executor.Owner)
 			{
 				if (Order is IConstructionOrder && ((IConstructionOrder)Order).Item != null)
 					Issuer.Log.Add(new GenericLogMessage("You cannot add a construction order with a prefabricated construction item!"));
