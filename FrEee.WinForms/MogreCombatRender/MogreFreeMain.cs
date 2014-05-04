@@ -34,7 +34,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		protected CameraMan mCameraMan;
 
 		private MogreCombatForm form;
-        private float replaySpeed = 1f;
+		private float replaySpeed = 1f;
 
 		//protected RaySceneQuery mRaySceneQuery = null;      // The ray scene query pointer
 		protected SceneNode mNode_lines = null;
@@ -43,20 +43,20 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		//Dictionary<string, CombatObject> renderObjects = new Dictionary<string, CombatObject>();
 
-        /// <summary>
-        /// dictionary containing meshname, scale, and effects.
-        /// </summary>
-        Dictionary<string,GfxObj> dict_GfxObjects = new Dictionary<string, GfxObj>();
+		/// <summary>
+		/// dictionary containing meshname, scale, and effects.
+		/// </summary>
+		Dictionary<string, GfxObj> dict_GfxObjects = new Dictionary<string, GfxObj>();
 
 		private Battle_Space battle;
-        
-        private int SelectedComObj = -1;
+
+		private int SelectedComObj = -1;
 
 		public MogreFreeMain(Battle_Space battle)
 		{
 			this.battle = battle;
-            battle.IsReplay = true;
-			
+			battle.IsReplay = true;
+
 
 			try
 			{
@@ -70,9 +70,9 @@ namespace FrEee.WinForms.MogreCombatRender
 				CreateScene();
 				InitializeInput();
 				CreateFrameListeners();
-                
-                setup();
-                ProcessTick();
+
+				setup();
+				ProcessTick();
 
 			}
 			catch (OperationCanceledException) { }
@@ -81,19 +81,19 @@ namespace FrEee.WinForms.MogreCombatRender
 		private void setup()
 		{
 
-            battle.SetUpPieces();
+			battle.SetUpPieces();
 
 			dict_GfxObjects.Clear();
 
-            Console.WriteLine("Setting up combat Rendering Entities");
+			Console.WriteLine("Setting up combat Rendering Entities");
 			foreach (CombatObject comObj in battle.CombatObjects)
 			{
-                CreateNewEntity(comObj);
+				CreateNewEntity(comObj);
 
-                //do_graphics(comObj, comObj.cmbt_loc);
-                Console.Write(".");
+				//do_graphics(comObj, comObj.cmbt_loc);
+				Console.Write(".");
 			}
-            Console.WriteLine("Done");
+			Console.WriteLine("Done");
 		}
 
 		#region mogresetup
@@ -118,13 +118,13 @@ namespace FrEee.WinForms.MogreCombatRender
 			ConfigFile cf = new ConfigFile();
 			cf.Load("resources.cfg", "\t:=", true);
 
-            foreach (var empire in battle.EmpiresArray)
-            {
-                string racename = empire.ShipsetPath;
-                string path = "Pictures\\Races\\";
-                path += racename + "\\";
-                ResourceGroupManager.Singleton.AddResourceLocation(path, "FileSystem", "General");
-            }
+			foreach (var empire in battle.EmpiresArray)
+			{
+				string racename = empire.ShipsetPath;
+				string path = "Pictures\\Races\\";
+				path += racename + "\\";
+				ResourceGroupManager.Singleton.AddResourceLocation(path, "FileSystem", "General");
+			}
 			ResourceGroupManager.Singleton.AddResourceLocation("Pictures\\Races\\Default\\", "FileSystem", "General");
 
 			var section = cf.GetSectionIterator();
@@ -161,12 +161,12 @@ namespace FrEee.WinForms.MogreCombatRender
 		void form_Resize(object sender, EventArgs e)
 		{
 			mRenderWindow.WindowMovedOrResized();
-			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;            
+			mCamera.AspectRatio = (float)mViewport.ActualWidth / mViewport.ActualHeight;
 		}
 
 		void form_Disposed(object sender, EventArgs e)
 		{
-            Shutdown();
+			Shutdown();
 			mRoot.Dispose();
 			mRoot = null;
 		}
@@ -242,40 +242,40 @@ namespace FrEee.WinForms.MogreCombatRender
 			moMaterialgreen.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 0);
 			moMaterialgreen.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 0);
 			moMaterialgreen.Dispose();  // dispose pointer, not the material
-            MaterialPtr moMaterialpurple = MaterialManager.Singleton.Create("line_purple", resourceGroupName);
-            moMaterialpurple.ReceiveShadows = false;
-            moMaterialpurple.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialpurple.GetTechnique(0).GetPass(0).SetDiffuse(1, 0, 1, 0);
-            moMaterialpurple.GetTechnique(0).GetPass(0).SetAmbient(1, 0, 1);
-            moMaterialpurple.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 0, 1);
-            moMaterialpurple.Dispose();  // dispose pointer, not the material
-            MaterialPtr moMaterialyellow = MaterialManager.Singleton.Create("line_yellow", resourceGroupName);
-            moMaterialyellow.ReceiveShadows = false;
-            moMaterialyellow.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialyellow.GetTechnique(0).GetPass(0).SetDiffuse(1, 1, 0, 0);
-            moMaterialyellow.GetTechnique(0).GetPass(0).SetAmbient(1, 1, 0);
-            moMaterialyellow.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 1, 0);
-            moMaterialyellow.Dispose();  // dispose pointer, not the material
-            MaterialPtr moMaterialcyan = MaterialManager.Singleton.Create("line_cyan", resourceGroupName);
-            moMaterialcyan.ReceiveShadows = false;
-            moMaterialcyan.GetTechnique(0).SetLightingEnabled(true);
-            moMaterialcyan.GetTechnique(0).GetPass(0).SetDiffuse(0, 1, 1, 0);
-            moMaterialcyan.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 1);
-            moMaterialcyan.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 1);
-            moMaterialcyan.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialpurple = MaterialManager.Singleton.Create("line_purple", resourceGroupName);
+			moMaterialpurple.ReceiveShadows = false;
+			moMaterialpurple.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialpurple.GetTechnique(0).GetPass(0).SetDiffuse(1, 0, 1, 0);
+			moMaterialpurple.GetTechnique(0).GetPass(0).SetAmbient(1, 0, 1);
+			moMaterialpurple.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 0, 1);
+			moMaterialpurple.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialyellow = MaterialManager.Singleton.Create("line_yellow", resourceGroupName);
+			moMaterialyellow.ReceiveShadows = false;
+			moMaterialyellow.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialyellow.GetTechnique(0).GetPass(0).SetDiffuse(1, 1, 0, 0);
+			moMaterialyellow.GetTechnique(0).GetPass(0).SetAmbient(1, 1, 0);
+			moMaterialyellow.GetTechnique(0).GetPass(0).SetSelfIllumination(1, 1, 0);
+			moMaterialyellow.Dispose();  // dispose pointer, not the material
+			MaterialPtr moMaterialcyan = MaterialManager.Singleton.Create("line_cyan", resourceGroupName);
+			moMaterialcyan.ReceiveShadows = false;
+			moMaterialcyan.GetTechnique(0).SetLightingEnabled(true);
+			moMaterialcyan.GetTechnique(0).GetPass(0).SetDiffuse(0, 1, 1, 0);
+			moMaterialcyan.GetTechnique(0).GetPass(0).SetAmbient(0, 1, 1);
+			moMaterialcyan.GetTechnique(0).GetPass(0).SetSelfIllumination(0, 1, 1);
+			moMaterialcyan.Dispose();  // dispose pointer, not the material
 
 			mNode_lines = mSceneMgr.RootSceneNode.CreateChildSceneNode(" ", Vector3.ZERO);
-            mNode_lines.Position = new Vector3(0, 0, 0);
+			mNode_lines.Position = new Vector3(0, 0, 0);
 			mSceneMgr.AmbientLight = new ColourValue(0.5f, 0.5f, 0.5f);
 
 			Light l = mSceneMgr.CreateLight("MainLight");
 			l.Position = new Vector3(0, 0, 5000);
 
-            ParticleSystem explosionParticle = mSceneMgr.CreateParticleSystem("Explosion", "Explosion");
+			ParticleSystem explosionParticle = mSceneMgr.CreateParticleSystem("Explosion", "Explosion");
 
 
-            //SceneNode particleNode = mSceneMgr.RootSceneNode.CreateChildSceneNode("Particle");
-            //particleNode.AttachObject(explosionParticle);
+			//SceneNode particleNode = mSceneMgr.RootSceneNode.CreateChildSceneNode("Particle");
+			//particleNode.AttachObject(explosionParticle);
 
 		}
 
@@ -302,19 +302,19 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		protected void Shutdown()
 		{
-            foreach (CombatNode comNode in battle.CombatNodes.ToArray())
-            {
-                if (comNode.ID < -1)
-                {
-                    battle.CombatNodes.Remove(comNode);
-                }
-            }
-            mRoot.Dispose();
+			foreach (CombatNode comNode in battle.CombatNodes.ToArray())
+			{
+				if (comNode.ID < -1)
+				{
+					battle.CombatNodes.Remove(comNode);
+				}
+			}
+			mRoot.Dispose();
 			//throw new ShutdownException();
 		}
 
-        #region input control
-        protected bool OnKeyPressed(MOIS.KeyEvent evt)
+		#region input control
+		protected bool OnKeyPressed(MOIS.KeyEvent evt)
 		{
 			switch (evt.key)
 			{
@@ -322,14 +322,14 @@ namespace FrEee.WinForms.MogreCombatRender
 				case MOIS.KeyCode.KC_UP:
 					//shiplist[0].Thrusting = 1;
 					//mCameraMan.GoingForward = true;
-                    mCameraMan.GoingUp = true;
+					mCameraMan.GoingUp = true;
 					break;
 
 				case MOIS.KeyCode.KC_S:
 				case MOIS.KeyCode.KC_DOWN:
 					//shiplist[0].Thrusting = -1;
 					//mCameraMan.GoingBack = true;
-                    mCameraMan.GoingDown = true;
+					mCameraMan.GoingDown = true;
 					break;
 
 				case MOIS.KeyCode.KC_A:
@@ -345,17 +345,17 @@ namespace FrEee.WinForms.MogreCombatRender
 					break;
 
 				case MOIS.KeyCode.KC_E:
-                    break;
+					break;
 
 				case MOIS.KeyCode.KC_PGUP:
-                    replaySpeed *= 2f;
+					replaySpeed *= 2f;
 					break;
 
 				case MOIS.KeyCode.KC_Q:
-                    break;
+					break;
 
 				case MOIS.KeyCode.KC_PGDOWN:
-                    replaySpeed *= 0.5f;
+					replaySpeed *= 0.5f;
 					break;
 
 				case MOIS.KeyCode.KC_SPACE:
@@ -370,13 +370,13 @@ namespace FrEee.WinForms.MogreCombatRender
 					mCameraMan.FastMove = true;
 					break;
 
-                case MOIS.KeyCode.KC_LBRACKET:
-                    selectPrev();                    
-                    break;
+				case MOIS.KeyCode.KC_LBRACKET:
+					selectPrev();
+					break;
 
-                case MOIS.KeyCode.KC_RBRACKET:
-                    selectNext();  
-                    break;
+				case MOIS.KeyCode.KC_RBRACKET:
+					selectNext();
+					break;
 
 				case MOIS.KeyCode.KC_T:
 					//CycleTextureFilteringMode();
@@ -412,14 +412,14 @@ namespace FrEee.WinForms.MogreCombatRender
 				case MOIS.KeyCode.KC_UP:
 
 					//mCameraMan.GoingForward = false;
-                    mCameraMan.GoingUp = false;
+					mCameraMan.GoingUp = false;
 					break;
 
 				case MOIS.KeyCode.KC_S:
 				case MOIS.KeyCode.KC_DOWN:
 
 					//mCameraMan.GoingBack = false;
-                    mCameraMan.GoingDown = false;
+					mCameraMan.GoingDown = false;
 					break;
 
 				case MOIS.KeyCode.KC_A:
@@ -488,154 +488,154 @@ namespace FrEee.WinForms.MogreCombatRender
 			return true;
 		}
 
-        #endregion
+		#endregion
 
-        private GfxObj CreateGfxObj(CombatNode ComNode)
-        {
-            GfxObj gfxobj = new GfxObj();
-            string filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
-            if (ComNode is CombatVehicle)
-            {
-                CombatVehicle cv = (CombatVehicle)ComNode;
-                string racename = cv.StartVehicle.Owner.ShipsetPath;        
-                string path = "Pictures\\Races\\";
-                path += racename + "\\";       
-                IList<string> names = cv.StartVehicle.Hull.PictureNames;
-                bool exsists = false;
-                int i = 0;
-                while (!exsists && i < names.Count)
-                {
-                    string name = path + racename + "_" + names[i] + ".cfg"; //
+		private GfxObj CreateGfxObj(CombatNode ComNode)
+		{
+			GfxObj gfxobj = new GfxObj();
+			string filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
+			if (ComNode is CombatVehicle)
+			{
+				CombatVehicle cv = (CombatVehicle)ComNode;
+				string racename = cv.StartVehicle.Owner.ShipsetPath;
+				string path = "Pictures\\Races\\";
+				path += racename + "\\";
+				IList<string> names = cv.StartVehicle.Hull.PictureNames;
+				bool exsists = false;
+				int i = 0;
+				while (!exsists && i < names.Count)
+				{
+					string name = path + racename + "_" + names[i] + ".cfg"; //
 
-                    if (System.IO.File.Exists(name))//check path to ensure correct.
-                    {
-                        filestring = name;
-                        exsists = true;
-                    }
-                    i++;
-                }
-            }
+					if (System.IO.File.Exists(name))//check path to ensure correct.
+					{
+						filestring = name;
+						exsists = true;
+					}
+					i++;
+				}
+			}
 			else if (ComNode is CombatPlanet)
 			{
 				// TODO - planet models
 				filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg";
 			}
-            else if (ComNode is CombatSeeker)
-            {
-                filestring = "Pictures\\MogreCombat\\Projectiles\\Seeker.cfg";
-            }
-            else
-            {
-                filestring = "Pictures\\MogreCombat\\Projectiles\\Sabbot.cfg";
-            }
+			else if (ComNode is CombatSeeker)
+			{
+				filestring = "Pictures\\MogreCombat\\Projectiles\\Seeker.cfg";
+			}
+			else
+			{
+				filestring = "Pictures\\MogreCombat\\Projectiles\\Sabbot.cfg";
+			}
 
-            string jsonstring = System.IO.File.ReadAllText(filestring);
-            try
-            {
-                gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(jsonstring);
-            }
-            catch 
-            {
-                Console.Write("Deserialisation failed for obj: ");
-                Console.WriteLine(ComNode.strID);
-                Console.WriteLine("check " + filestring + " for errors");
-            }
-            gfxobj.IDName = ComNode.strID;
+			string jsonstring = System.IO.File.ReadAllText(filestring);
+			try
+			{
+				gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(jsonstring);
+			}
+			catch
+			{
+				Console.Write("Deserialisation failed for obj: ");
+				Console.WriteLine(ComNode.strID);
+				Console.WriteLine("check " + filestring + " for errors");
+			}
+			gfxobj.IDName = ComNode.strID;
 
 			if (dict_GfxObjects.ContainsKey(ComNode.strID))
 				dict_GfxObjects[ComNode.strID] = gfxobj;
 			else
 				dict_GfxObjects.Add(ComNode.strID, gfxobj);
-            return gfxobj; 
-        }
+			return gfxobj;
+		}
 
-        private void CreateNewEntity(CombatNode comNode)
-        {
-            GfxObj gfxobj = CreateGfxObj(comNode);
-            try
-            {
-                string meshname = gfxobj.gfxCfg.MainMesh.Name;
+		private void CreateNewEntity(CombatNode comNode)
+		{
+			GfxObj gfxobj = CreateGfxObj(comNode);
+			try
+			{
+				string meshname = gfxobj.gfxCfg.MainMesh.Name;
 
-                Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
-                SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
-                objNode.AttachObject(objEnt);
-                gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj);
-                objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
+				Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
+				SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
+				objNode.AttachObject(objEnt);
+				gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj);
+				objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
 
 
-                //Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
-                //SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
-                //float sizex = objEnt.BoundingBox.Size.x;
-                //float sizey = objEnt.BoundingBox.Size.y;
-                //float sizez = objEnt.BoundingBox.Size.z;
-                //var desiredSize = 0.5f;
-                //float scalex = (desiredSize / sizex);
-                //float scaley = (desiredSize / sizey);
-                //float scalez = (desiredSize / sizez);
-                //float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
-                //objNode.AttachObject(objEnt);
-                //objNode.Scale(scale, scale, scale);
-                //objNode.Scale(10, 10, 10);
-                
-            }
-            catch (Exception ex)
-            {
+				//Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
+				//SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(obj.strID);
+				//float sizex = objEnt.BoundingBox.Size.x;
+				//float sizey = objEnt.BoundingBox.Size.y;
+				//float sizez = objEnt.BoundingBox.Size.z;
+				//var desiredSize = 0.5f;
+				//float scalex = (desiredSize / sizex);
+				//float scaley = (desiredSize / sizey);
+				//float scalez = (desiredSize / sizez);
+				//float scale = System.Math.Min(System.Math.Min(scalex, scaley), scalez);
+				//objNode.AttachObject(objEnt);
+				//objNode.Scale(scale, scale, scale);
+				//objNode.Scale(10, 10, 10);
+
+			}
+			catch (Exception ex)
+			{
 				Console.Error.WriteLine(ex);
-            }
+			}
 
-        }
+		}
 
 		#endregion
 
-        public CombatVehicle selectedObj()
-        {
+		public CombatVehicle selectedObj()
+		{
 			if (SelectedComObj < 0)
 				return null;
-            return battle.CombatVehicles.ToList<CombatVehicle>()[SelectedComObj]; 
-        }
-        public CombatObject selectNext()
-        {
-            SelectedComObj++;
-            if (SelectedComObj == battle.CombatObjects.Count())
-            {
-                SelectedComObj = 0;
-            }
-            return selectedObj();
-        }
-        public CombatObject selectPrev()
-        {
-            SelectedComObj--;
-            if (SelectedComObj == -1)
-            {
-                SelectedComObj = battle.CombatObjects.Count()-1;
-            }
-            return selectedObj();
-        }
-
-        
-        
-        private void ProcessTick()
+			return battle.CombatVehicles.ToList<CombatVehicle>()[SelectedComObj];
+		}
+		public CombatObject selectNext()
 		{
-            int battletic = 0;			
-			double cmdfreq_countr = 0;            
+			SelectedComObj++;
+			if (SelectedComObj == battle.CombatObjects.Count())
+			{
+				SelectedComObj = 0;
+			}
+			return selectedObj();
+		}
+		public CombatObject selectPrev()
+		{
+			SelectedComObj--;
+			if (SelectedComObj == -1)
+			{
+				SelectedComObj = battle.CombatObjects.Count() - 1;
+			}
+			return selectedObj();
+		}
+
+
+
+		private void ProcessTick()
+		{
+			int battletic = 0;
+			double cmdfreq_countr = 0;
 
 			bool cont = true; // is combat continuing?
-            var renderlocs = new SafeDictionary<CombatNode, PointXd>();
-            Console.WriteLine("starting Replay");
+			var renderlocs = new SafeDictionary<CombatNode, PointXd>();
+			Console.WriteLine("starting Replay");
 			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
 			{
 #if DEBUG
-                Console.WriteLine("ReplayingTick: " + battletic);
+				Console.WriteLine("ReplayingTick: " + battletic);
 #endif
 				physicsstopwatch.Restart();
-                int interpolationcount = 0;
+				int interpolationcount = 0;
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
-                    //foreach (CombatObject comObj in battle.CombatObjects)
-                    //{
-                    //    renderlocs[comObj] = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
-                    //    do_graphics(comObj, renderlocs[comObj]);
-                    //}
+					//foreach (CombatObject comObj in battle.CombatObjects)
+					//{
+					//    renderlocs[comObj] = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+					//    do_graphics(comObj, renderlocs[comObj]);
+					//}
 					foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
 					{
 						renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
@@ -643,216 +643,216 @@ namespace FrEee.WinForms.MogreCombatRender
 					}
 					if (mRoot != null)
 						mRoot.RenderOneFrame();
-                    interpolationcount++;
+					interpolationcount++;
 					Application.DoEvents();
 				}
 #if DEBUG
-                Console.WriteLine("Interpol count is: " + interpolationcount);
+				Console.WriteLine("Interpol count is: " + interpolationcount);
 #endif
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
-                    comObj.debuginfo = "";
+					comObj.debuginfo = "";
 
-                foreach (var comObj in battle.CombatObjects.ToArray())
-                {	
-#if DEBUG
-                    Console.WriteLine("comObj.helm " + comObj.strID);
-#endif
-                    comObj.helm(); //heading and thrust
-                }
 				foreach (var comObj in battle.CombatObjects.ToArray())
 				{
-                    //firecontrol, these get logged, but we still need to run through it
-                    //so that prng.next happens, and damage is done.
-                    battle.firecontrol(battletic, comObj);
+#if DEBUG
+					Console.WriteLine("comObj.helm " + comObj.strID);
+#endif
+					comObj.helm(); //heading and thrust
+				}
+				foreach (var comObj in battle.CombatObjects.ToArray())
+				{
+					//firecontrol, these get logged, but we still need to run through it
+					//so that prng.next happens, and damage is done.
+					battle.firecontrol(battletic, comObj);
 				}
 
 				foreach (var comNode in battle.CombatNodes.ToArray())
 				{
-                    //physicsmove objects. 
-                    PointXd renderloc = battle.SimNewtonianPhysics(comNode);
-                    renderlocs[comNode] = renderloc;
+					//physicsmove objects. 
+					PointXd renderloc = battle.SimNewtonianPhysics(comNode);
+					renderlocs[comNode] = renderloc;
 				}
 
 
 				foreach (var comObj in battle.CombatObjects.ToArray())
-                    do_graphics(comObj, renderlocs[comObj]);
-                  
-                foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject)).ToArray()) //update bullet and explosion objects.
-                {
+					do_graphics(comObj, renderlocs[comObj]);
+
+				foreach (CombatNode comNode in battle.CombatNodes.Where(n => !(n is CombatObject)).ToArray()) //update bullet and explosion objects.
+				{
 					if (comNode.deathTick <= battletic)
 					{
-                        battle.CombatNodes.Remove(comNode);
-                        battle.DeadNodes.Remove(comNode);
+						battle.CombatNodes.Remove(comNode);
+						battle.DeadNodes.Remove(comNode);
 						disposeObj(comNode, renderlocs);
 					}
 					else
 					{
 						renderlocs[comNode] = battle.SimNewtonianPhysics(comNode);
 						do_graphics(comNode, renderlocs[comNode]);
-					}                    
-                }
+					}
+				}
 
-                //readlogs, create and dispose of bullets.
+				//readlogs, create and dispose of bullets.
 				foreach (var comObj in battle.CombatObjects.ToArray())
 					readlogs(comObj, battletic, renderlocs);
 
-                if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
-                {
-                    foreach (var ccobj in battle.ControlledCombatObjects)
-                    {
-                        battle.commandAI(ccobj, battletic);                        
-                    }
-                    cmdfreq_countr = 0;
-                }
+				if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
+				{
+					foreach (var ccobj in battle.ControlledCombatObjects)
+					{
+						battle.commandAI(ccobj, battletic);
+					}
+					cmdfreq_countr = 0;
+				}
 
-                foreach (CombatNode comNod in battle.FreshNodes.ToArray())
-                {
-                    CreateNewEntity(comNod);
-                    battle.CombatNodes.Add(comNod);
-                    battle.FreshNodes.Remove(comNod);
+				foreach (CombatNode comNod in battle.FreshNodes.ToArray())
+				{
+					CreateNewEntity(comNod);
+					battle.CombatNodes.Add(comNod);
+					battle.FreshNodes.Remove(comNod);
 #if DEBUG
-                    Console.WriteLine("adding obj to combatNodes from fresh");
+					Console.WriteLine("adding obj to combatNodes from fresh");
 #endif
-                }
-                foreach (CombatNode comNode in battle.DeadNodes.ToArray())
-                {
-                    disposeObj(comNode, renderlocs);
-                    battle.CombatNodes.Remove(comNode);
-                    battle.DeadNodes.Remove(comNode);
-                    if (comNode is CombatObject)
-                    {
+				}
+				foreach (CombatNode comNode in battle.DeadNodes.ToArray())
+				{
+					disposeObj(comNode, renderlocs);
+					battle.CombatNodes.Remove(comNode);
+					battle.DeadNodes.Remove(comNode);
+					if (comNode is CombatObject)
+					{
 
-                        foreach (CombatEmpire emp in battle.Empires.Values)
-                        {
-                            emp.removeComObj((CombatObject)comNode);
-                        }
-                    }
+						foreach (CombatEmpire emp in battle.Empires.Values)
+						{
+							emp.removeComObj((CombatObject)comNode);
+						}
+					}
 #if DEBUG
-                    Console.WriteLine("disposing " + comNode.strID);
+					Console.WriteLine("disposing " + comNode.strID);
 #endif
-                }
+				}
 
-                if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
-                    cont = false;
-                else
-                    cont = true;
+				if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
+					cont = false;
+				else
+					cont = true;
 
-                do_txt();
-                cmdfreq_countr++;
-                battletic++;
+				do_txt();
+				cmdfreq_countr++;
+				battletic++;
 
 				Application.DoEvents();
 			}
 
-            //might as well keep rendering after the battle is over.
-            bool loopafterbattle = true;
-            while (loopafterbattle && mRoot != null && mRoot.RenderOneFrame())
-            {
-                foreach (CombatNode comNode in battle.CombatNodes)
-                {
-                    
-                    do_graphics(comNode, renderlocs[comNode]);
-                    
-                }
-                do_txt();
-                Application.DoEvents();
-            }
+			//might as well keep rendering after the battle is over.
+			bool loopafterbattle = true;
+			while (loopafterbattle && mRoot != null && mRoot.RenderOneFrame())
+			{
+				foreach (CombatNode comNode in battle.CombatNodes)
+				{
+
+					do_graphics(comNode, renderlocs[comNode]);
+
+				}
+				do_txt();
+				Application.DoEvents();
+			}
 		}
 
 
-        private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, PointXd> renderlocs) 
-        {
-            var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
-            foreach (var comEvent in ourLogs)
-            {
-                if (comEvent is CombatFireOnTargetEvent)
-                {
-                    
-                    // TODO - if type projectile, create whatever sprite and render it flying towards target.
-                    // or if type beam, draw a beam sprite
-                    // seekers should really be their own event type, spawning new combat objects that track enemies
-                    CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;                    
-                    var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+		private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, PointXd> renderlocs)
+		{
+			var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
+			foreach (var comEvent in ourLogs)
+			{
+				if (comEvent is CombatFireOnTargetEvent)
+				{
 
-                    Console.WriteLine(comObj.strID + " Fires on " + fireEvent.TakeFireEvent.Object.strID);
-                    Console.WriteLine("With it's " + fireEvent.Weapon.weapon.Name);
+					// TODO - if type projectile, create whatever sprite and render it flying towards target.
+					// or if type beam, draw a beam sprite
+					// seekers should really be their own event type, spawning new combat objects that track enemies
+					CombatFireOnTargetEvent fireEvent = (CombatFireOnTargetEvent)comEvent;
+					var wpninfo = fireEvent.Weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+
+					Console.WriteLine(comObj.strID + " Fires on " + fireEvent.TakeFireEvent.Object.strID);
+					Console.WriteLine("With it's " + fireEvent.Weapon.weapon.Name);
 
 
-                    if (fireEvent.Location == comObj.cmbt_loc)
-                    {
-                    }
-                    else
-                    {
-                        //Point3d difference = fireEvent.Location - comObj.cmbt_loc;
-                        //Console.WriteLine("Desync at tick: " + battletic);
-                        //Console.WriteLine("Loc difference of: " + difference.ToString());
-                    }
-                    if (fireEvent.Weapon.weaponType == "Seeker")
-                    { 
-                    }
-                    else if (fireEvent.Weapon.weaponType == "Bolt")
-                    {                       
-                    }
-                    else if (fireEvent.Weapon.weaponType == "Beam")
-                    {
-                    }
-                }
-                else if (comEvent is CombatTakeFireEvent)
-                {
-                    // TODO - kersplosions
-                    CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
-                    if (takefireEvent.IsHit)
-                    {
-                        Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Hits it's target!" );
-                    }
-                    else
-                    {
-                        Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Misses it's target!");
-                    }
-                }
-                else if (comEvent is CombatDestructionEvent)
-                {
-                    // - kersplosions and removal of model. 
-                    string IDName = comEvent.Object.strID;
-                    SceneNode node = mSceneMgr.GetSceneNode(IDName);
-                    ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");               
-                    node.AttachObject(expl);                    
-                }
-                else if (comEvent is CombatLocationEvent)
-                {
-                    CombatLocationEvent locEvent = (CombatLocationEvent)comEvent;
-                    if (locEvent.Location == comObj.cmbt_loc)
-                    {
-                    }
-                    else
-                    {
-                        //Point3d difference = locEvent.Location - comObj.cmbt_loc;
-                        //Console.WriteLine("Desync at tick: " + battletic);
-                        //Console.WriteLine("Loc difference of: " + difference.ToString());
-                    }
-                }
-            }
-        }
+					if (fireEvent.Location == comObj.cmbt_loc)
+					{
+					}
+					else
+					{
+						//Point3d difference = fireEvent.Location - comObj.cmbt_loc;
+						//Console.WriteLine("Desync at tick: " + battletic);
+						//Console.WriteLine("Loc difference of: " + difference.ToString());
+					}
+					if (fireEvent.Weapon.weaponType == "Seeker")
+					{
+					}
+					else if (fireEvent.Weapon.weaponType == "Bolt")
+					{
+					}
+					else if (fireEvent.Weapon.weaponType == "Beam")
+					{
+					}
+				}
+				else if (comEvent is CombatTakeFireEvent)
+				{
+					// TODO - kersplosions
+					CombatTakeFireEvent takefireEvent = (CombatTakeFireEvent)comEvent;
+					if (takefireEvent.IsHit)
+					{
+						Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Hits it's target!");
+					}
+					else
+					{
+						Console.WriteLine(takefireEvent.fireOnEvent.Weapon.weapon.Name + " Misses it's target!");
+					}
+				}
+				else if (comEvent is CombatDestructionEvent)
+				{
+					// - kersplosions and removal of model. 
+					string IDName = comEvent.Object.strID;
+					SceneNode node = mSceneMgr.GetSceneNode(IDName);
+					ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");
+					node.AttachObject(expl);
+				}
+				else if (comEvent is CombatLocationEvent)
+				{
+					CombatLocationEvent locEvent = (CombatLocationEvent)comEvent;
+					if (locEvent.Location == comObj.cmbt_loc)
+					{
+					}
+					else
+					{
+						//Point3d difference = locEvent.Location - comObj.cmbt_loc;
+						//Console.WriteLine("Desync at tick: " + battletic);
+						//Console.WriteLine("Loc difference of: " + difference.ToString());
+					}
+				}
+			}
+		}
 
-        private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, PointXd> renderlocs)
-        {
+		private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, PointXd> renderlocs)
+		{
 
-            SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
-            Entity objEnt = mSceneMgr.GetEntity(comNode.strID);
+			SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
+			Entity objEnt = mSceneMgr.GetEntity(comNode.strID);
 			mSceneMgr.DestroySceneNode(node);
 			mSceneMgr.DestroyEntity(objEnt);
-            objEnt.Dispose();
-            node.Dispose();
+			objEnt.Dispose();
+			node.Dispose();
 
-            //remove from the list of game nodes.
-            renderlocs.Remove(comNode); 
+			//remove from the list of game nodes.
+			renderlocs.Remove(comNode);
 
-        }
+		}
 
-        private void do_txt()
-        {
-            CombatVehicle comVehic = selectedObj();
+		private void do_txt()
+		{
+			CombatVehicle comVehic = selectedObj();
 			if (comVehic != null)
 			{
 				Game.Objects.Vehicles.Ship ship = (Game.Objects.Vehicles.Ship)comVehic.WorkingVehicle;
@@ -877,77 +877,68 @@ namespace FrEee.WinForms.MogreCombatRender
 				form.updateText(txt);
 			}
 			else
-				form.updateText("Nothing selected");        
-        }
+				form.updateText("Nothing selected");
+		}
 
-        private void do_lines(CombatObject comObj, PointXd renderloc)
-        {
-
-            //mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
-            //ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
-            //mNode_lines.AttachObject(toWaypointLine);
-            //toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toWaypointLine.Position(node.Position);
-            ////toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
-            //toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
-            //toWaypointLine.End();
-
-
-            //mSceneMgr.DestroyManualObject("forceLine" + IDName);
-            //ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
-            ////forceLine.
-            //mNode_lines.AttachObject(forceLine);
-            //forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //forceLine.Position(node.Position);
-            //forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
-            //forceLine.End();
-
-            //mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
-            //ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
-            //node.AttachObject(toTargetLine);
-            //toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //toTargetLine.Position(new Vector3(0, 0, 0));
-            //toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
-            //toTargetLine.End();
-
-
-            //mSceneMgr.DestroyManualObject("forceLine2" + IDName);
-            //ManualObject forceLine2 = mSceneMgr.CreateManualObject("forceLine2" + IDName);
-            //node.AttachObject(forceLine2);
-            //forceLine2.Begin("line_red", RenderOperation.OperationTypes.OT_LINE_LIST);
-            //forceLine2.Position(new Vector3(0, 0, 0));
-            //forceLine2.Position(forceVec2);
-            //forceLine2.End();
-            //Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
-        }
-
-        private void do_graphics(CombatNode comNode, PointXd renderloc)
+		private void do_lines(CombatObject comObj, PointXd renderloc)
 		{
-            try
-            {
-                SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
 
-                node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
-                Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
-                node.Orientation = quat;
+			//mSceneMgr.DestroyManualObject("toWaypointLine" + IDName);
+			//ManualObject toWaypointLine = mSceneMgr.CreateManualObject("toWaypointLine" + IDName);
+			//mNode_lines.AttachObject(toWaypointLine);
+			//toWaypointLine.Begin("line_purple", RenderOperation.OperationTypes.OT_LINE_LIST);
+			//toWaypointLine.Position(node.Position);
+			////toWaypointLine.Position(new Vector3((float)comObj.waypointTarget.cmbt_loc.X, (float)comObj.waypointTarget.cmbt_loc.Y, (float)comObj.waypointTarget.cmbt_loc.Z));
+			//toWaypointLine.Position(TranslateMogrePhys.smVector_mVector3_xyz(comObj.waypointTarget.cmbt_loc));
+			//toWaypointLine.End();
 
-                dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
-                try
-                {
-                    //particle effects for this object:
-                    dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
-                }
-                catch
-                {
-                    Console.Write("do_graphics broke while doing effects for object: ");
-                    Console.WriteLine(comNode.strID);
-                }
-            }
-            catch 
-            {
-                Console.Write("do_graphics broke while rendering object: ");
-                Console.WriteLine(comNode.strID);
-            }
+
+			//mSceneMgr.DestroyManualObject("forceLine" + IDName);
+			//ManualObject forceLine = mSceneMgr.CreateManualObject("forceLine" + IDName);
+			////forceLine.
+			//mNode_lines.AttachObject(forceLine);
+			//forceLine.Begin("line_blue", RenderOperation.OperationTypes.OT_LINE_LIST);
+			//forceLine.Position(node.Position);
+			//forceLine.Position(node.Position + (TranslateMogrePhys.smVector_mVector3_xyz(comObj.cmbt_thrust)));
+			//forceLine.End();
+
+			//mSceneMgr.DestroyManualObject("toTargetLine" + IDName);
+			//ManualObject toTargetLine = mSceneMgr.CreateManualObject("toTargetLine" + IDName);
+			//node.AttachObject(toTargetLine);
+			//toTargetLine.Begin("line_yellow", RenderOperation.OperationTypes.OT_LINE_LIST);
+			//toTargetLine.Position(new Vector3(0, 0, 0));
+			//toTargetLine.Position(new Vector3((float)comObj.waypointTarget.comObj.cmbt_loc.X, (float)comObj.waypointTarget.comObj.cmbt_loc.Y, (float)comObj.waypointTarget.comObj.cmbt_loc.Z));
+			//toTargetLine.End();
+
+
+			//mSceneMgr.DestroyManualObject("forceLine2" + IDName);
+			//ManualObject forceLine2 = mSceneMgr.CreateManualObject("forceLine2" + IDName);
+			//node.AttachObject(forceLine2);
+			//forceLine2.Begin("line_red", RenderOperation.OperationTypes.OT_LINE_LIST);
+			//forceLine2.Position(new Vector3(0, 0, 0));
+			//forceLine2.Position(forceVec2);
+			//forceLine2.End();
+			//Console.Out.WriteLine(obj.waypointTarget.comObj.cmbt_loc.ToString());
+		}
+
+		private void do_graphics(CombatNode comNode, PointXd renderloc)
+		{
+			try
+			{
+				SceneNode node = mSceneMgr.GetSceneNode(comNode.strID);
+
+				node.Position = new Vector3((float)renderloc.X, (float)renderloc.Y, (float)renderloc.Z);
+				Quaternion quat = new Quaternion((float)comNode.cmbt_head.Radians, Vector3.NEGATIVE_UNIT_Z);
+				node.Orientation = quat;
+
+				dict_GfxObjects[comNode.strID].gfxEfct.set_effects(comNode);
+			}
+			catch (Exception ex)
+			{
+				Console.Write("do_graphics broke while rendering object: ");
+				Console.WriteLine(comNode.strID);
+				Console.WriteLine(ex.GetType() + ": " + ex.Message);
+			}
 
 
 		}
