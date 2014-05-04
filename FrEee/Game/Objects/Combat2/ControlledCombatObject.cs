@@ -72,8 +72,7 @@ namespace FrEee.Game.Objects.Combat2
 			Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (this.maxStrafeThrust / this.cmbt_mass);
 			Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass);
 
-
-			Fix16 distance = Trig.distance(this.waypointTarget.cmbt_loc, this.cmbt_loc);
+			Fix16 distance = vectortowaypoint.Length;
 
 
 			Fix16 nominaldistance = this.maxStrafeThrust;
