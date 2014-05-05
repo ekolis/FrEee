@@ -11,9 +11,9 @@ namespace FrEee.Game.Objects.Combat2
 	/// <summary>
 	/// A combat object which can be controlled by an empire.
 	/// </summary>
-	public abstract class ControlledCombatObject : CombatObject
+	public abstract class CombatControlledObject : CombatObject
 	{
-		protected ControlledCombatObject(ICombatant start, ICombatant working, PointXd position, PointXd vector, int battleseed, string IDprefix)
+		protected CombatControlledObject(ICombatant start, ICombatant working, PointXd position, PointXd vector, int battleseed, string IDprefix)
 			: base(working, position, vector, start.ID, IDprefix)
 		{
 			//StartCombatant = working; wtf?
