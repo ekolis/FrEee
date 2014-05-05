@@ -1246,7 +1246,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Disables the server side ability cache.
 		/// </summary>
-		private void DisableAbilityCache()
+		public void DisableAbilityCache()
 		{
 			isAbilityCacheEnabled = false;
 			AbilityCache.Clear();
