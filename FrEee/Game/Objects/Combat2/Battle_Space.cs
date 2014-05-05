@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			foreach (ICombatant obj in combatants)
 			{
-				ICombatant copy = obj.Copy();
+                ICombatant copy = obj.CopyAndAssignNewID();//obj.Copy();
 				copy.IsMemory = true;
 
 				if (obj is SpaceVehicle)
@@ -90,8 +90,8 @@ namespace FrEee.Game.Objects.Combat2
 					if (scopy.Owner != obj.Owner)
 						scopy.Owner.Dispose(); // don't need extra empires!
 					scopy.Owner = obj.Owner;
-					StartCombatants.Add(scopy.ID, scopy);
-					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed);
+                    StartCombatants.Add(obj.ID, scopy);
+					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed, obj.ID);
 					StartNodes.Add(comObj);
 				}
 				else if (obj is Planet)
@@ -113,8 +113,8 @@ namespace FrEee.Game.Objects.Combat2
 						pcopy.Owner.Dispose(); // don't need extra empires!
 					if (pcopy.Colony != null)
 						pcopy.Colony.Owner = obj.Owner;
-					StartCombatants.Add(pcopy.ID, pcopy);
-					CombatPlanet comObj = new CombatPlanet(pcopy, (Planet)obj, battleseed);
+                    StartCombatants.Add(obj.ID, pcopy);
+					CombatPlanet comObj = new CombatPlanet(pcopy, (Planet)obj, battleseed, obj.ID);
 					StartNodes.Add(comObj);
 				}
 				else
@@ -239,11 +239,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// Combat nodes that represent controllable objects.
 		/// This includes vehicles and planets.
 		/// </summary>
-		public IEnumerable<ControlledCombatObject> ControlledCombatObjects
+		public IEnumerable<CombatControlledObject> ControlledCombatObjects
 		{
 			get
 			{
-				return CombatNodes.OfType<ControlledCombatObject>();
+				return CombatNodes.OfType<CombatControlledObject>();
 			}
 		}
 
@@ -328,12 +328,12 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             foreach (CombatObject comObj in StartNodes)
 			{
-                if (comObj is ControlledCombatObject)
+                if (comObj is CombatControlledObject)
                 {
 #if DEBUG
                     Console.WriteLine("Getting Empire for this ship");
 #endif
-                    Empire thisemp = ((ControlledCombatObject)comObj).StartCombatant.Owner;
+                    Empire thisemp = ((CombatControlledObject)comObj).StartCombatant.Owner;
 #if DEBUG
                     Console.WriteLine("Done");
 #endif
@@ -348,6 +348,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             CombatNodes = StartNodes;
 		}
+
 		private void ReplaySetup()
 		{
 #if DEBUG
@@ -362,12 +363,12 @@ namespace FrEee.Game.Objects.Combat2
             foreach (CombatObject comObj in StartNodes)
 			{
                 comObj.renewtoStart();
-				if (comObj is ControlledCombatObject)
+				if (comObj is CombatControlledObject)
                 {
 #if DEBUG
                     Console.WriteLine("Getting Empire for this ship");
 #endif
-					Empire thisemp = ((ControlledCombatObject)comObj).StartCombatant.Owner;
+					Empire thisemp = ((CombatControlledObject)comObj).StartCombatant.Owner;
 #if DEBUG
                     Console.WriteLine("Done");
 #endif
@@ -503,7 +504,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
-                foreach (ControlledCombatObject ccobj in ControlledCombatObjects)
+                foreach (CombatControlledObject ccobj in ControlledCombatObjects)
 				{
 					commandAI(ccobj, tick);
 				}
@@ -597,7 +598,7 @@ namespace FrEee.Game.Objects.Combat2
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
 		}
 
-        public void commandAI(ControlledCombatObject ccobj, int battletick)
+        public void commandAI(CombatControlledObject ccobj, int battletick)
         {
             //do AI decision stuff.
             //pick a primary target to persue, use AI script from somewhere.  this could also be a formate point. and could be a vector rather than a static point. 
@@ -682,9 +683,9 @@ namespace FrEee.Game.Objects.Combat2
                 }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
-                if (target is ControlledCombatObject) //TODO handle seekers and other objects as seeker targets.
+                if (target is CombatControlledObject) //TODO handle seekers and other objects as seeker targets.
                 {
-					ControlledCombatObject ccTarget = (ControlledCombatObject)target;
+					CombatControlledObject ccTarget = (CombatControlledObject)target;
                     var target_icomobj = ccTarget.WorkingObject;
                     var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
@@ -723,11 +724,11 @@ namespace FrEee.Game.Objects.Combat2
 				//is a seeker 
                 missilefirecontrol(tic_countr, (CombatSeeker)comObj);
             }
-            else if (comObj is ControlledCombatObject)
+            else if (comObj is CombatControlledObject)
             {
 
 				//is a ship, base, unit, or planet
-				ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+				CombatControlledObject ccobj = (CombatControlledObject)comObj;
 #if DEBUG
             Console.WriteLine("firecontrol for: " + ccobj.WorkingCombatant.Name);
 #endif
@@ -1079,7 +1080,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public ICombatant FindWorkingCombatant(ICombatant c)
 		{
-			foreach (var n in CombatNodes.OfType<ControlledCombatObject>())
+			foreach (var n in CombatNodes.OfType<CombatControlledObject>())
 			{
 				if (n.StartCombatant == c)
 					return n.WorkingCombatant;

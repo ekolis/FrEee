@@ -17,12 +17,22 @@ using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Combat2
 {
-	public class CombatPlanet : ControlledCombatObject
+	public class CombatPlanet : CombatControlledObject
 	{
-		public CombatPlanet(Planet start, Planet working, int battleseed, string IDPrefix = "PLN")
+        /// <summary>
+        /// use this constructor when creating a 'Start' combatPlanet.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="working"></param>
+        /// <param name="battleseed"></param>
+        /// <param name="OrigionalID"></param>
+        /// <param name="IDPrefix"></param>
+		public CombatPlanet(Planet start, Planet working, int battleseed, long OrigionalID, string IDPrefix = "PLN")
 			: base(start, working, new PointXd(0, 0, 0), new PointXd(0, 0, 0), battleseed, IDPrefix)
 		{
-			// TODO - planets that can move in combat?
+            ID = OriginalID;
+			// TODO - planets that can move in combat? 
+            //- I don't think there's much point in allowing planets to move in combat. combat shouldnt be long enough that it would make any noticible difference. 
 			cmbt_mass = Fix16.MaxValue;
 			maxfowardThrust = 0;
 			maxStrafeThrust = 0;

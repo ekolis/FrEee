@@ -357,7 +357,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             base.calc(comObj);
             
-            ControlledCombatObject ccobj = (ControlledCombatObject)comObj;
+            CombatControlledObject ccobj = (CombatControlledObject)comObj;
             List<CombatWeapon> comWpn = ccobj.Weapons.ToList();
 
         }

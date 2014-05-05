@@ -16,24 +16,53 @@ using FixMath.NET;
 
 namespace FrEee.Game.Objects.Combat2
 {
-	public class CombatVehicle : ControlledCombatObject
+	public class CombatVehicle : CombatControlledObject
 	{
-		public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed, string IDPrefix = "SHP")
-			: base(start_v, working_v, new PointXd(0, 0, 0), new PointXd(0, 0, 0), battleseed, IDPrefix)
-		{
-			// TODO - don't some mods have vehicles >32MT?
-			cmbt_mass = (Fix16)working_v.Size;
-			maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
-			maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
-			maxRotate.Radians = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
+        /// <summary>
+        /// use this constructor for creating an 'Start' combat Object.
+        /// </summary>
+        /// <param name="start_v"></param>
+        /// <param name="working_v"></param>
+        /// <param name="battleseed"></param>
+        /// <param name="OrigionalID">this should be the FrEee ID for the origional Vehicle</param>
+        /// <param name="IDPrefix"></param>
+        public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed, long OrigionalID, string IDPrefix = "SHP")
+            : base(start_v, working_v, new PointXd(0, 0, 0), new PointXd(0, 0, 0), battleseed, IDPrefix)
+        {
+            this.ID = OrigionalID;
+            // TODO - don't some mods have vehicles >32MT?
+            cmbt_mass = (Fix16)working_v.Size;
+            maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
+            maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
+            maxRotate.Radians = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
             if (start_v.Design.Strategy == null)
                 strategy = new StragegyObject_Default();
             else
                 strategy = start_v.Design.Strategy;
 #if DEBUG
+            Console.WriteLine("Created new CombatVehicle with ID " + ID);
             Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
 #endif
-		}
+        }
+
+//        public CombatVehicle(Vehicle start_v, Vehicle working_v, int battleseed, string IDPrefix = "SHP")
+//            : base(start_v, working_v, new PointXd(0, 0, 0), new PointXd(0, 0, 0), battleseed, IDPrefix)
+//        {
+//            // TODO - don't some mods have vehicles >32MT?
+//            cmbt_mass = (Fix16)working_v.Size;
+//            maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
+//            maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
+//            maxRotate.Radians = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)12000 - (Fix16)working_v.Evasion * (Fix16)0.1);
+//            if (start_v.Design.Strategy == null)
+//                strategy = new StragegyObject_Default();
+//            else
+//                strategy = start_v.Design.Strategy;
+//#if DEBUG
+//            Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
+//#endif
+//        }
+
+
 
 		#region fields & properties
 
