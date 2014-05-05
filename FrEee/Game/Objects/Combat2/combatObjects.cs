@@ -223,7 +223,15 @@ namespace FrEee.Game.Objects.Combat2
             thrustship(angletoturn, true);
         }
 
-
+        /// <summary>
+        /// for testing. 
+        /// </summary>
+        /// <param name="angletoturn"></param>
+        /// <param name="angleToTarget"></param>
+        public void testTurnShip(Compass angletoturn, Compass angleToTarget)
+        {
+            turnship(angletoturn, angleToTarget);
+        }
         protected void turnship(Compass angletoturn, Compass angleToTarget)
         {
             if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
@@ -268,6 +276,15 @@ namespace FrEee.Game.Objects.Combat2
 			return Fix16.Cos(angleOffCenter.Radians);
 		}
 
+        /// <summary>
+        /// for testing. 
+        /// </summary>
+        /// <param name="angletoturn"></param>
+        /// <param name="thrustToWaypoint"></param>
+        public void testThrustShip(Compass angletoturn, bool? thrustToWaypoint)
+        {
+            thrustship(angletoturn, thrustToWaypoint);
+        }
  
         protected void thrustship(Compass angletoturn, bool? thrustToWaypoint)
         {

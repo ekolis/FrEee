@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="battleseed"></param>
         /// <param name="OrigionalID"></param>
         /// <param name="IDPrefix"></param>
-		public CombatPlanet(Planet start, Planet working, int battleseed, long OrigionalID, string IDPrefix = "PLN")
+        public CombatPlanet(Planet start, Planet working, int battleseed, long OriginalID, string IDPrefix = "PLN")
 			: base(start, working, new PointXd(0, 0, 0), new PointXd(0, 0, 0), battleseed, IDPrefix)
 		{
             ID = OriginalID;
