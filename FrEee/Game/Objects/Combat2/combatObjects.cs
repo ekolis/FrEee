@@ -145,7 +145,7 @@ namespace FrEee.Game.Objects.Combat2
         public StrategyObject strategy { get; set; }
 
 		public combatWaypoint waypointTarget;
-		public PointXd lastVectortoWaypoint { get; set; }
+		//public PointXd lastVectortoWaypoint { get; set; }
 		//public double lastDistancetoWaypoint { get; set; }
 
 		public List<CombatObject> weaponTarget { get; set; }
@@ -210,8 +210,13 @@ namespace FrEee.Game.Objects.Combat2
         {
             combatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
-            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
-            PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+
+            Object[] nav = Nav(angletoWaypoint);
+            Compass angletoturn = (Compass)nav[0];
+            bool thrustToWaypoint = (bool)nav[1];
+
+            
+            //PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
@@ -222,6 +227,20 @@ namespace FrEee.Game.Objects.Combat2
 
             thrustship(angletoturn, true);
         }
+
+        protected virtual Object[] Nav(Compass angletoWaypoint)
+        {
+            Compass angletoturn = new Compass();
+            bool thrustTowards = true;
+
+            angletoturn.Degrees = angletoWaypoint.Degrees - this.cmbt_head.Degrees;
+
+            Object[] nav = new Object[2];
+            nav[0] = angletoturn;
+            nav[1] = thrustTowards;
+            return nav;
+        }
+        
 
         /// <summary>
         /// for testing. 
