@@ -576,10 +576,12 @@ namespace FrEee.WinForms.MogreCombatRender
 				//objNode.AttachObject(objEnt);
 				//objNode.Scale(scale, scale, scale);
 				//objNode.Scale(10, 10, 10);
+                Console.WriteLine("OgreEntity Created: " + comNode.strID);
 
 			}
 			catch (Exception ex)
 			{
+                Console.WriteLine("OgreEntity creation failed for " + comNode.strID);
 				Console.Error.WriteLine(ex);
 			}
 
@@ -706,13 +708,16 @@ namespace FrEee.WinForms.MogreCombatRender
 					cmdfreq_countr = 0;
 				}
 
-				foreach (CombatNode comNod in battle.FreshNodes.ToArray())
+				foreach (CombatNode comNode in battle.FreshNodes.ToArray())
 				{
-					CreateNewEntity(comNod);
-					battle.CombatNodes.Add(comNod);
-					battle.FreshNodes.Remove(comNod);
+					CreateNewEntity(comNode);
+					battle.CombatNodes.Add(comNode);
+					battle.FreshNodes.Remove(comNode);
+                    renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+                    
+                    
 #if DEBUG
-					Console.WriteLine("adding obj to combatNodes from fresh");
+                    Console.WriteLine("added " + comNode.strID + " to CombatNodes from FreshNodes");
 #endif
 				}
 				foreach (CombatNode comNode in battle.DeadNodes.ToArray())
@@ -939,8 +944,6 @@ namespace FrEee.WinForms.MogreCombatRender
 				Console.WriteLine(comNode.strID);
 				Console.WriteLine(ex.GetType() + ": " + ex.Message);
 			}
-
-
 		}
 	}
 }
