@@ -313,8 +313,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoTurn = new Compass(180, false);
             PointXd expectedResult = new PointXd(0, 0, 0);
             bool toWaypoint = false;
-            // Ship heading 0 Angle to turn 0
-            // ship should thrust 100%
+            // Ship heading 0 Angle to turn 180
+            // ship should thrust 0%
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
@@ -339,15 +339,48 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoTurn = new Compass(45, false);
             PointXd expectedResult = new PointXd(0, 70.70159912109375, 0);
             bool toWaypoint = true;
-            // Ship heading 0 Angle to turn 0
-            // ship should thrust 100%
+            // Ship heading 0 Angle to turn 45
+            // ship should thrust 70.70159912109375%
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
-            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
 
             testComObj.testThrustShip(angletoTurn, toWaypoint);
             Assert.AreEqual(expectedResult, testComObj.cmbt_thrust);
 
+            battle.End(tick);
+        }
+
+        [TestMethod]
+        public void Combat_Helm0()
+        {
+            Combat_setupbattle();
+
+            Console.WriteLine("Helm test 0");
+
+            battle.Start();
+
+            int tick = 0, cmdFreqCounter = 0;
+            Compass startHeading = new Compass(0, false);     
+            
+            PointXd waypntloc = new PointXd(0, 1000, 0);
+            PointXd waypndVel = new PointXd(0, 1000, 0);
+            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+
+            PointXd expectedThrustResult = new PointXd(0, 100, 0);
+            Compass expectedHeading = new Compass(startHeading.Degrees + spinrate.Degrees, false);
+
+            // Ship heading 0 Angle to turn 0
+            // ship should thrust 100%
+            testComObj.cmbt_loc = new PointXd(0, 0, 0);
+            testComObj.cmbt_vel = new PointXd(0, 0, 0);
+            testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
+
+            testComObj.helm();
+            Assert.AreEqual(expectedThrustResult, testComObj.cmbt_thrust);
+            Assert.AreEqual(
+                expectedHeading.Degrees,
+                testComObj.cmbt_head.Degrees);
             battle.End(tick);
         }
 
