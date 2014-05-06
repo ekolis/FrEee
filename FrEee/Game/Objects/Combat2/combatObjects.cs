@@ -227,6 +227,10 @@ namespace FrEee.Game.Objects.Combat2
             thrustship(angletoturn, true);
         }
 
+        public Tuple<Compass, bool> testNav(Compass angletoWaypoint)
+        {
+            return Nav(angletoWaypoint);
+        }
         protected virtual Tuple<Compass, bool> Nav(Compass angletoWaypoint)
         {
             Compass angletoturn = new Compass();
