@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Combat2
 			//this.lastVectortoWaypoint = vectortowaypoint;
 		}
 
-        protected virtual Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        protected override Tuple<Compass, bool> Nav(Compass angletoWaypoint)
         {
             Compass angletoturn = new Compass();
             bool thrustTowards = true;
