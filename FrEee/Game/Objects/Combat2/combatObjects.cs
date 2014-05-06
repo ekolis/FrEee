@@ -270,10 +270,10 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns></returns>
 		private Fix16 GetThrustEfficiency(Compass angleOffCenter)
 		{
-			angleOffCenter.Radians = Math.Abs(angleOffCenter.Radians);
-			if (angleOffCenter.Degrees >= 90)
+            Fix16 OAC = Fix16.Abs(angleOffCenter.Degrees);//Compass OAC = new Compass(Math.Abs(angleOffCenter.Radians));
+            if (OAC >= 90)
 				return Fix16.Zero; // can't thrust sideways or backwards!
-			return Fix16.Cos(angleOffCenter.Radians);
+            return Fix16.Cos(OAC * (Fix16.Pi / (Fix16)180));
 		}
 
         /// <summary>

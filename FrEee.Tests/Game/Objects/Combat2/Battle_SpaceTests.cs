@@ -304,7 +304,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("Thrust test 0");
+            Console.WriteLine("Thrust test 1");
 
             battle.Start();
 
@@ -330,14 +330,14 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("Thrust test 0");
+            Console.WriteLine("Thrust test 2");
 
             battle.Start();
 
             int tick = 0, cmdFreqCounter = 0;
             Compass startHeading = new Compass(0, false);
             Compass angletoTurn = new Compass(45, false);
-            PointXd expectedResult = new PointXd(0, 0, 0);
+            PointXd expectedResult = new PointXd(0, 70.70159912109375, 0);
             bool toWaypoint = true;
             // Ship heading 0 Angle to turn 0
             // ship should thrust 100%
