@@ -54,7 +54,7 @@ namespace FrEee.WinForms.Forms
 			grid.CurrentGridConfig = cfg;
 
 			// run through sim to get stats
-			Battle.Resolve();
+			//Battle.Resolve();
 
 			// gather grid data
 			var data = new List<object>();
