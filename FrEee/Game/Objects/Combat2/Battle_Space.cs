@@ -471,6 +471,7 @@ namespace FrEee.Game.Objects.Combat2
 			// delete leftover seekers that were en route when combat ended
 			foreach (var seeker in CombatNodes.OfType<CombatSeeker>().ToArray())
 				CombatNodes.Remove(seeker);
+            IsReplay = true;
 		}
 
 		/// <summary>
