@@ -159,14 +159,31 @@ namespace FrEee.Game.Objects.Combat2
 
         public override void helm()
         {
-            combatWaypoint wpt = this.waypointTarget;
+            
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
-            Compass angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+
+            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Compass angletoturn = nav.Item1;
+            bool thrustToWaypoint = nav.Item2;
+
+            turnship(angletoturn, angletoWaypoint);
+
+            thrustship(angletoturn, true);            
+        }
+
+        protected override Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        {          
+            Compass angletoturn = new Compass();
+            bool thrustTowards = true;
+            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
+
+            combatWaypoint wpt = this.waypointTarget;
+            angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
-			Fix16 distance = vectortowaypoint.Length;
+            Fix16 distance = vectortowaypoint.Length;
             Fix16[] quad = NMath.quadratic(acceleration, startV, distance);
             Fix16 ttt;
             if (quad[2] == 1)
@@ -179,9 +196,8 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
             Console.WriteLine("seeker ttt: " + ttt);
 #endif
-            turnship(angletoturn, angletoWaypoint);
 
-            thrustship(angletoturn, true);            
+            return nav;
         }
 
 		public void ReplenishShields(int? amount = null)

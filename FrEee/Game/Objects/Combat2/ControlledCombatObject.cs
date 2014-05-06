@@ -48,9 +48,9 @@ namespace FrEee.Game.Objects.Combat2
 
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
-            Object[] nav = Nav(angletoWaypoint);
-            Compass angletoturn = (Compass)nav[0];
-            bool thrustToWaypoint = (bool)nav[1];
+            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Compass angletoturn = nav.Item1;
+            bool thrustToWaypoint = nav.Item2;
 
 			turnship(angletoturn, angletoWaypoint);
 
@@ -59,13 +59,11 @@ namespace FrEee.Game.Objects.Combat2
 			//this.lastVectortoWaypoint = vectortowaypoint;
 		}
 
-        protected override Object[] Nav(Compass angletoWaypoint)
+        protected virtual Tuple<Compass, bool> Nav(Compass angletoWaypoint)
         {
             Compass angletoturn = new Compass();
             bool thrustTowards = true;
-
-
-
+            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
 
             this.debuginfo += "HelmInfo:" + "\r\n";
             var ship = this.WorkingCombatant;
@@ -145,12 +143,6 @@ namespace FrEee.Game.Objects.Combat2
             this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
             this.debuginfo += helmdo + "\r\n";
 
-
-
-
-            Object[] nav = new Object[2];
-            nav[0] = angletoturn;
-            nav[1] = thrustTowards;
             return nav;
         }
 
