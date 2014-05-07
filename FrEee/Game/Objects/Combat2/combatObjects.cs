@@ -145,7 +145,9 @@ namespace FrEee.Game.Objects.Combat2
         public StrategyObject strategy { get; set; }
 
 		public combatWaypoint waypointTarget;
-		//public PointXd lastVectortoWaypoint { get; set; }
+
+		// TODO - remove this property after the end of the PBW game (it still needs to be in here for deserialization)
+		private PointXd lastVectortoWaypoint { get; set; }
 		//public double lastDistancetoWaypoint { get; set; }
 
 		public List<CombatObject> weaponTarget { get; set; }
