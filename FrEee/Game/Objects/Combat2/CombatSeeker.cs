@@ -252,12 +252,12 @@ namespace FrEee.Game.Objects.Combat2
 			return TakeDamage(damageType, damage, null);
 		}
 
-        /// <summary>
+        /*/// <summary>
         /// was missilefirecontrol in battlespace.
         /// </summary>
         /// <param name="battletick"></param>
         /// <param name="comSek"></param>
-        /*
+
         public override void firecontrol(int battletick)
         {
             Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);

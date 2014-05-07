@@ -48,7 +48,7 @@ namespace FrEee.WinForms.Controls
 				{
 					return Resource == null ? null : Resource.Icon;
 				}
-				catch (NullReferenceException ex)
+				catch (NullReferenceException)
 				{
 					// HACK - stupid forms designer thinks it's null and not null at the same time, WTF?!
 					var icon = new Bitmap(1, 1);

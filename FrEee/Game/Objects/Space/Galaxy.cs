@@ -462,7 +462,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		/// <param name="gameName"></param>
 		/// <param name="turnNumber"></param>
-		/// <param param name="playerNumber"></param>
+		/// <param name="playerNumber"></param>
 		public static void Load(string gameName, int turnNumber, int playerNumber)
 		{
 			Load(gameName + "_" + turnNumber + "_" + playerNumber.ToString("d4") + FrEeeConstants.SaveGameExtension);

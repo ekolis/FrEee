@@ -99,7 +99,7 @@ namespace FrEee.WinForms.Forms
 			{
 				ClientSettings.Load();
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				MessageBox.Show("Error loading client settings. Resetting to defaults.");
 				ClientSettings.Initialize();
@@ -878,18 +878,18 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new PlanetListForm());
 				else if (e.KeyCode == Keys.E)
 					this.ShowChildForm(new EmpireListForm());
-				else if (e.KeyCode == Keys.O)
-					; // TODO - empire status screen
-				else if (e.KeyCode == Keys.S)
-					this.ShowChildForm(new ShipListForm());
-				else if (e.KeyCode == Keys.Q)
-					ShowConstructionQueueListForm();
-				else if (e.KeyCode == Keys.L)
-					this.ShowChildForm(new LogForm(this));
-				else if (e.KeyCode == Keys.R)
-					ShowResearchForm();
-				else if (e.KeyCode == Keys.Tab)
-					btnPrevIdle_Click(this, new EventArgs());
+                else if (e.KeyCode == Keys.O)
+                    { } // TODO - empire status screen
+                else if (e.KeyCode == Keys.S)
+                    this.ShowChildForm(new ShipListForm());
+                else if (e.KeyCode == Keys.Q)
+                    ShowConstructionQueueListForm();
+                else if (e.KeyCode == Keys.L)
+                    this.ShowChildForm(new LogForm(this));
+                else if (e.KeyCode == Keys.R)
+                    ShowResearchForm();
+                else if (e.KeyCode == Keys.Tab)
+                    btnPrevIdle_Click(this, new EventArgs());
 			}
 			else
 			{

@@ -379,7 +379,7 @@ namespace FrEee.Game.Objects.Combat2
         {
         }
 
-        /// <summary>
+        /*/// <summary>
         /// attempt at adding this to the combatObject. it's not working too well though.
         /// </summary>
         /// <param name="battletick"></param>
@@ -388,7 +388,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <param name="Sector"></param>
         /// <param name="IsReplay"></param>
         /// <returns></returns>
-        /*
+
         public CombatTakeFireEvent FireWeapon(int battletick, CombatObject attacker, CombatWeapon weapon, Space.Sector Sector, bool IsReplay)
         {
             var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;

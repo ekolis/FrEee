@@ -151,13 +151,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		protected abstract void RefreshWeapons();
 
-        /// <summary>
+        /*/// <summary>
         /// attempt to move firecontrol to the combatObject
         /// </summary>
         /// <param name="tic_countr"></param>
         /// <param name="IsReplay"></param>
         /// <param name="ReplayLog"></param>
-        /*
+
         public override void firecontrol(int tic_countr, bool IsReplay, CombatReplayLog ReplayLog)
         {
             //is a ship, base, unit, or planet

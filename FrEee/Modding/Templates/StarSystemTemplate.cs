@@ -94,7 +94,7 @@ namespace FrEee.Modding.Templates
 				{
 					pos = loc.Resolve(sys);
 				}
-				catch (Exception ex)
+				catch (Exception)
 				{
 					// Can't place this space object because there is no room for it
 					// So just skip it

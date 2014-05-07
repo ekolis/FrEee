@@ -27,8 +27,6 @@ namespace FrEee.Modding.Loaders
 				var m = new Mount();
 				mod.Mounts.Add(m);
 
-				int index = -1;
-
 				m.ModID = rec.Get<string>("ID", m);
 				m.Name = rec.Get<string>("Long Name", m);
 				m.ShortName = rec.Get<string>("Short Name", m) ?? m.Name; // default to long name

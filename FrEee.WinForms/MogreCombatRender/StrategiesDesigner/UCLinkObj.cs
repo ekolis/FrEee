@@ -21,7 +21,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         int linkdex = 0;
         bool isinput;
         Point offset = new Point(10, 0);
-        Canvasdata canvasdata;
+        //Canvasdata canvasdata;
         Point loc = new Point(0, 0);
 
         Point drawloc = new Point(0, 0);

@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 			{
 				Process.Start(txtWebsite.Text);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				MessageBox.Show("Could not launch " + txtWebsite.Text + ".");
 			}

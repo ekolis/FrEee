@@ -154,7 +154,7 @@ namespace FrEee.WinForms.Forms
 							{
 								var fs = File.Open(savefile, FileMode.Open);
 							}
-							catch (IOException ex)
+							catch (IOException)
 							{
 								MessageBox.Show("Could not load " + savefile + ". Attempting to recreate player view.");
 								Galaxy.Current.CurrentEmpire = emp;
