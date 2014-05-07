@@ -27,8 +27,6 @@ namespace FrEee.Modding.Loaders
 				return;
 			}
 
-			int index = -1;
-
 			var settings = new ModSettings();
 			mod.Settings = settings;
 

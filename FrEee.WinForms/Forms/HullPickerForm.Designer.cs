@@ -183,7 +183,7 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.ComboBox ddlVehicleType;
 		private Controls.GameButton btnOk;
 		private Controls.GameButton btnCancel;
-		private System.Windows.Forms.DataGridViewImageColumn Icon;
+		//private System.Windows.Forms.DataGridViewImageColumn Icon;
 		private System.Windows.Forms.ListView lstAbilities;
 		private System.Windows.Forms.ColumnHeader columnHeader1;
 		private System.Windows.Forms.ListView lstHulls;

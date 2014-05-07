@@ -29,14 +29,9 @@ namespace FrEee.Utility
 			bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
 			if (!cacheEnabled)
 				Galaxy.Current.EnableAbilityCache();
-			if (end == null)
-				return Enumerable.Empty<Sector>();
-			if (end.StarSystem == null)
+            if (end == null || end.StarSystem == null || start == end)
 				return Enumerable.Empty<Sector>();
 			if (me != null && me.Speed < 1)
-				return Enumerable.Empty<Sector>();
-
-			if (start == end)
 				return Enumerable.Empty<Sector>();
 
 			if (map == null)
@@ -64,21 +59,19 @@ namespace FrEee.Utility
 				var target = reverseMap.Keys.Join(map.Keys, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
 				if (target == null)
 					return Enumerable.Empty<Sector>(); // can't go anywhere
-				else
+
+				// go to the closest point
+				var nodes = new List<PathfinderNode<Sector>>();
+				var node = map.Keys.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
+				while (node != null)
 				{
-					// go to the closest point
-					var nodes = new List<PathfinderNode<Sector>>();
-					var node = map.Keys.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
-					while (node != null)
-					{
-						nodes.Add(node);
-						node = node.PreviousNode;
-					}
-					return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
+					nodes.Add(node);
+					node = node.PreviousNode;
 				}
+                if (!cacheEnabled)
+                    Galaxy.Current.DisableAbilityCache();
+				return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 			}
-			if (!cacheEnabled)
-				Galaxy.Current.DisableAbilityCache();
 		}
 
 		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)

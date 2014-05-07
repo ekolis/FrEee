@@ -21,7 +21,7 @@ namespace FrEee.WinForms.MogreCombatRender
 	class ShutdownException : Exception { }
 	public class MogreFreeMain
 	{
-		private static int tickcounter = 0; //the tick age of the game.
+		//private static int tickcounter = 0; //the tick age of the game.
 		private Root mRoot;
 		private RenderWindow mRenderWindow;
 		private SceneManager mSceneMgr;

@@ -25,8 +25,6 @@ namespace FrEee.Modding.Loaders
 				var h = new HappinessModel();
 				mod.HappinessModels.Add(h);
 
-				int index = -1;
-
 				h.ModID = rec.Get<string>("ID", h);
 				h.Name = rec.Get<string>("Name", h);
 				h.Description = rec.Get<string>("Description", h);
