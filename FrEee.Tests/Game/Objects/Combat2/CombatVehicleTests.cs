@@ -170,6 +170,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.waypointTarget = waypoint;
+
             Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
@@ -198,6 +200,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.waypointTarget = waypoint;
+
             Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
@@ -219,14 +223,16 @@ namespace FrEee.Tests.Game.Objects.Combat2
             PointXd waypndVel = new PointXd(0, 0, 0);
             combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
 
-            bool expectedToWaypoint = false;
+            bool expectedThrustToWaypoint = false;
             Compass expectedHeading = new Compass(180, false);
-            Tuple<Compass, bool> expectednav = new Tuple<Compass, bool>(expectedHeading, expectedToWaypoint);
+            Tuple<Compass, bool> expectednav = new Tuple<Compass, bool>(expectedHeading, expectedThrustToWaypoint);
             CombatVehicle testComObj = battle.CombatVehicles.ToArray()[0];
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 5, 0);
             testComObj.maxRotate = new Compass(45, false);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.waypointTarget = waypoint;
+
             Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
