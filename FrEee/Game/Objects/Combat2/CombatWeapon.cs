@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Bolt";
 
-                boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
+                boltSpeed = (Fix16)wpMaxR * (Fix16)1000 / (Fix16)(Battle_Space.TicksPerSecond); // convert from meters per second to meters per tick
                 maxRange_time = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
@@ -223,7 +223,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
             Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-            return shotspeed_actual * Battle_Space.TickLength;
+            return shotspeed_actual / Battle_Space.TicksPerSecond;
         }
 
         private bool bolt_isinRange(CombatObject attacker, CombatObject target)
@@ -244,7 +244,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
             Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-            return shotspeed_actual * Battle_Space.TickLength;
+            return shotspeed_actual / Battle_Space.TicksPerSecond;
         }
 
         public Fix16 boltTimeToTarget(CombatObject attacker, CombatObject target)

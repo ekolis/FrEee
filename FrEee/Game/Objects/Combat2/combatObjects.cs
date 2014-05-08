@@ -258,7 +258,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
             {
-                if (angletoturn.Radians > this.maxRotate.Radians)
+                if (angletoturn.Degrees > this.maxRotate.Degrees)
                 {
                     //comObj.cmbt_face += comObj.Rotate;
                     this.cmbt_head += this.maxRotate;
@@ -271,7 +271,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             else //turn counterclockwise
             {
-                if (((Fix16)360 - angletoturn.Radians) > this.maxRotate.Radians)
+                if (((Fix16)360 - angletoturn.Degrees) > this.maxRotate.Degrees)
                 {
                     //comObj.cmbt_face -= comObj.maxRotate;
                     this.cmbt_head -= this.maxRotate;

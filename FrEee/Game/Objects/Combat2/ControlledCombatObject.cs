@@ -78,24 +78,32 @@ namespace FrEee.Game.Objects.Combat2
             //if (comObj.lastVectortoWaypoint != null)
             //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-            timetoturn = angletoturn.Radians / this.maxRotate.Radians;
-            Fix16 oneEightytime = Fix16.Pi / this.maxRotate.Radians;
+            timetoturn = (angletoturn.Degrees / this.maxRotate.Degrees) * Battle_Space.TicksPerSecond; //convert to seconds
+            Fix16 oneEightytime = (Fix16.Pi / this.maxRotate.Radians) * Battle_Space.TicksPerSecond; //convert to seconds
             //PointXd offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
             //PointXd combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
             //PointXd distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
             //double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
             Fix16 closingSpeed = NMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
 
-            Fix16 myspeed = Trig.hypotinuse(this.cmbt_vel);
+            Fix16 myspeed = this.cmbt_vel.Length; //seconds
 
-            Fix16 timetokill_ClosingSpeed = closingSpeed / (this.maxfowardThrust / this.cmbt_mass); //t = v / a
-            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / (this.maxStrafeThrust / this.cmbt_mass);
-            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass);
+            Fix16 maxFowardAcceleration = this.maxfowardThrust / this.cmbt_mass; //seconds
 
+            Fix16 timetokill_ClosingSpeed = closingSpeed / maxFowardAcceleration; //t = v / a in seconds. 
+            
+
+            Fix16 maxStrafeAcceleration = this.maxStrafeThrust / this.cmbt_mass;
+
+            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / maxStrafeAcceleration; //in seconds. 
+            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass); //in seconds. 
+            
+            Fix16 timetokill_ClosingSpeed_strafe = closingSpeed / maxFowardAcceleration;
             Fix16 distance = vectortowaypoint.Length;
 
 
-            Fix16 nominaldistance = this.maxStrafeThrust;
+            Fix16 nominaldistance = maxStrafeAcceleration * strafetimetokill_ClosingSpeed; //this.maxStrafeThrust; (I think this should be acceleration, not thrust. 
+            //Fix16 nominaltime = strafetimetokill_ClosingSpeed
             Fix16 timetowpt = distance / closingSpeed;
 
             bool? thrustToWaypoint = true;

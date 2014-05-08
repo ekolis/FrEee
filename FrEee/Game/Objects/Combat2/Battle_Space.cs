@@ -258,7 +258,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		/// <summary>
 		/// Combat sim temporal resolution.
-		/// One SE4 combat round is taken to be one second.
+		/// physics gets calculated every tick. 
 		/// </summary>
 		public const int TicksPerSecond = 10;
 
@@ -578,13 +578,13 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				CombatObject comObjo = (CombatObject)comObj;
                 comObjo.cmbt_accel = (NMath.accelVector(comObjo.cmbt_mass, comObjo.cmbt_thrust));
-                comObjo.cmbt_vel += comObjo.cmbt_accel * (Fix16)TickLength;
+                comObjo.cmbt_vel += comObjo.cmbt_accel / TicksPerSecond;
 #if DEBUG                
                 Console.WriteLine(comObj.strID + " Acc " + comObjo.cmbt_accel);
 #endif
 			}
 
-			comObj.cmbt_loc += comObj.cmbt_vel * (Fix16)TickLength;
+            comObj.cmbt_loc += comObj.cmbt_vel / TicksPerSecond;
 #if DEBUG
             Console.WriteLine(comObj.strID + " Loc " + comObj.cmbt_loc);
 
@@ -594,6 +594,12 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
+        /// <summary>
+        /// this is to make animation/ship movement smoother, and should not affect the physics in any way.
+        /// </summary>
+        /// <param name="comObj"></param>
+        /// <param name="fractionalTick"></param>
+        /// <returns></returns>
 		public PointXd InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
 			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
