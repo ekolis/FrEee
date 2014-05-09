@@ -48,9 +48,9 @@ namespace FrEee.Game.Objects.Combat2
 
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
-            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = Nav(angletoWaypoint);
             Compass angletoturn = nav.Item1;
-            bool thrustToWaypoint = nav.Item2;
+            bool? thrustToWaypoint = nav.Item2;
 
 			turnship(angletoturn, angletoWaypoint);
 
@@ -59,11 +59,11 @@ namespace FrEee.Game.Objects.Combat2
 			//this.lastVectortoWaypoint = vectortowaypoint;
 		}
 
-        protected override Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        protected override Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {
             Compass angletoturn = new Compass();
-            bool thrustTowards = true;
-            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
+            bool? thrustToWaypoint = true;
+            
 
             this.debuginfo += "HelmInfo:" + "\r\n";
             var ship = this.WorkingCombatant;
@@ -78,8 +78,8 @@ namespace FrEee.Game.Objects.Combat2
             //if (comObj.lastVectortoWaypoint != null)
             //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
-            timetoturn = (angletoturn.Degrees / this.maxRotate.Degrees) * Battle_Space.TicksPerSecond; //convert to seconds
-            Fix16 oneEightytime = (Fix16.Pi / this.maxRotate.Radians) * Battle_Space.TicksPerSecond; //convert to seconds
+            timetoturn = (angletoturn.Degrees / this.maxRotate.Degrees); // seconds
+            Fix16 oneEightytime = (180 / this.maxRotate.Degrees); // seconds
             //PointXd offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
             //PointXd combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
             //PointXd distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
@@ -95,29 +95,28 @@ namespace FrEee.Game.Objects.Combat2
 
             Fix16 maxStrafeAcceleration = this.maxStrafeThrust / this.cmbt_mass;
 
-            Fix16 strafetimetokill_ClosingSpeed = closingSpeed / maxStrafeAcceleration; //in seconds. 
+            Fix16 timetokill_ClosingSpeed_strafe = closingSpeed / maxStrafeAcceleration; //in seconds. 
             Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass); //in seconds. 
             
-            Fix16 timetokill_ClosingSpeed_strafe = closingSpeed / maxFowardAcceleration;
             Fix16 distance = vectortowaypoint.Length;
 
 
-            Fix16 nominaldistance = maxStrafeAcceleration * strafetimetokill_ClosingSpeed; //this.maxStrafeThrust; (I think this should be acceleration, not thrust. 
+            Fix16 nominaldistance = maxStrafeAcceleration * timetokill_ClosingSpeed_strafe; //this.maxStrafeThrust; (I think this should be acceleration, not thrust. 
             //Fix16 nominaltime = strafetimetokill_ClosingSpeed
             Fix16 timetowpt = distance / closingSpeed;
 
-            bool? thrustToWaypoint = true;
+            
             string helmdo = "";
 
             if (closingSpeed > (Fix16)0) //getting closer?
             {
-                if (distance <= nominaldistance)  // close to the waypoint (within strafe thrust range)
+                if (timetowpt <= timetokill_ClosingSpeed_strafe)  // close to the waypoint (within strafe thrust range)
                 {
                     thrustToWaypoint = null; // should attempt to match speed using strafe thrust
                 }
                 if (timetowpt <= timetokill_ClosingSpeed + oneEightytime) // if/when we're going to overshoot the waypoint.
                 {
-                    if (timetowpt < strafetimetokill_ClosingSpeed) //if time to waypoint is less than time to kill speed with strafe thrusters
+                    if (timetowpt < timetokill_ClosingSpeed_strafe) //if time to waypoint is less than time to kill speed with strafe thrusters
                     {
                         thrustToWaypoint = false; // thrust AWAY from the waypoint! slow down!
                     }
@@ -130,7 +129,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             else
             {
-                // getting farther away or maintaining distance, just thrust toward the target
+                thrustToWaypoint = true;// getting farther away or maintaining distance, just thrust toward the target
             }
 
             if (thrustToWaypoint == false)
@@ -145,13 +144,13 @@ namespace FrEee.Game.Objects.Combat2
             }
 
             this.debuginfo += "timetowpt:\t" + timetowpt.ToString() + "\r\n";
-            this.debuginfo += "strafetime:\t" + strafetimetokill_ClosingSpeed.ToString() + "\r\n";
+            this.debuginfo += "strafetime:\t" + timetokill_ClosingSpeed_strafe.ToString() + "\r\n";
             this.debuginfo += "speedkilltime:\t" + timetokill_ClosingSpeed.ToString() + "\r\n";
             this.debuginfo += "180time:\t" + oneEightytime.ToString() + "\r\n";
             this.debuginfo += "ThrustTo:\t" + thrustToWaypoint.ToString() + "\r\n";
             this.debuginfo += helmdo + "\r\n";
 
-            return nav;
+            return new Tuple<Compass, bool?>(angletoturn, thrustToWaypoint);
         }
 
 		/// <summary>

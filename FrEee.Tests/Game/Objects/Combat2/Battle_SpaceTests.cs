@@ -90,15 +90,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("doing battle.start from test");
-
             battle.Start();
 
             int tick = 0, cmdFreqCounter = 0;
 
             Compass startHeading = new Compass(0, false);
             Compass wpCompass = new Compass(90, false);
-            Compass endHeading = new Compass(startHeading.Degrees + spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees + (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
             // test 0 ship heading 0 waypoint at 90
             // ship should rotate positive by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
@@ -115,15 +113,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("doing battle.start from test");
-
             battle.Start();
 
             int tick = 0, cmdFreqCounter = 0;
 
             Compass startHeading = new Compass(0, false);
             Compass wpCompass = new Compass(180, false);
-            Compass endHeading = new Compass(startHeading.Degrees - spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees - (spinrate.Degrees/Battle_Space.TicksPerSecond), false);
             // test 1 ship heading 0 waypoint at 180
             // ship should rotate either direction by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
@@ -149,7 +145,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Compass startHeading = new Compass(0, false);
             Compass wpCompass = new Compass(270, false);
-            Compass endHeading = new Compass(startHeading.Degrees - spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees - (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
             //test 2 ship heading 0 waypoint at 270
             // ship should rotate negative by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
@@ -178,7 +174,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Compass startHeading = new Compass(180, false);
             Compass wpCompass = new Compass(90, false);
-            Compass endHeading = new Compass(startHeading.Degrees - spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees - (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
             // test 3 ship heading 180 waypoint at 90
             // ship should rotate negative by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
@@ -205,7 +201,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Compass startHeading = new Compass(180, false);
             Compass wpCompass = new Compass(0, false);
-            Compass endHeading = new Compass(startHeading.Degrees + spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees + (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
             // test 4 ship heading 180 waypoint at 0
             // ship should rotate either direction by turn rate but not past waypoint
             testComObj.cmbt_loc = new PointXd();
@@ -235,7 +231,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Compass startHeading = new Compass(180, false);
             Compass wpCompass = new Compass(270, false);
-            Compass endHeading = new Compass(startHeading.Degrees + spinrate.Degrees, false);
+            Compass endHeading = new Compass(startHeading.Degrees + (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
             // test 5 ship heading 180 waypoint at 270
             // ship should rotate positive by turn rate but not more than the spinrate.
             testComObj.cmbt_loc = new PointXd();
@@ -369,7 +365,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
 
             PointXd expectedThrustResult = new PointXd(0, 100, 0);
-            Compass expectedHeading = new Compass(startHeading.Degrees + spinrate.Degrees, false);
+            Compass expectedHeading = new Compass(startHeading.Degrees);// + (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
 
             // Ship heading 0 Angle to turn 0
             // ship should thrust 100%
@@ -408,7 +404,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
-            Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
@@ -431,12 +427,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             bool expectedToWaypoint = true;
             Compass expectedHeading = new Compass(180, false);
-            Tuple<Compass, bool> expectednav = new Tuple<Compass, bool>(expectedHeading, expectedToWaypoint);
+            Tuple<Compass, bool?> expectednav = new Tuple<Compass, bool?>(expectedHeading, expectedToWaypoint);
 
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
-            Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
@@ -447,7 +443,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("Physics test 0: thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s ");
+            Console.WriteLine("Physics test 0: thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s/s ");
 
             battle.Start();
 
@@ -477,27 +473,48 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             Combat_setupbattle();
 
-            Console.WriteLine("Thrust test 1");
 
             battle.Start();
 
 
             Compass startHeading = new Compass(0, false);
             Compass angletoTurn = new Compass(0, false);
-            PointXd expectedResult = new PointXd(0, 50, 0); //0.5 * 1 * (100 / 10)^2 = 50
-
+            Fix16 t = (Fix16)1 / Battle_Space.TicksPerSecond;
+            PointXd expectedResult = new PointXd(0, 0.5 * 1 * t * t, 0);
+            // (1/2 * a * t^2) = (0.5 * a * t * t) = 0.5 * 1 * t * t)
 
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             testComObj.cmbt_thrust = new PointXd(0, 100, 0);
 
-            //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s 
+            //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s/s 
 
+            battle.SimNewtonianPhysics(testComObj); 
+            battle.End(1);
+            Assert.AreEqual(expectedResult, testComObj.cmbt_loc);
+        }
 
-            //battle.ProcessTick(ref tick, ref cmdFreqCounter);
-            for (int i = 0; i < 100; i++)
+        [TestMethod]
+        public void Combat_physicsTest2()
+        {
+            Combat_setupbattle();
+
+            battle.Start();
+
+            Compass startHeading = new Compass(0, false);
+            Compass angletoTurn = new Compass(0, false);
+            PointXd expectedResult = new PointXd(0, 0.5, 0); 
+            // (1/2 * a * t^2) = (0.5 * a * t * t) = 0.5 * 1 * 1 * 1)
+
+            testComObj.cmbt_loc = new PointXd(0, 0, 0);
+            testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+            testComObj.cmbt_thrust = new PointXd(0, 100, 0);
+
+            //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s/s 
+
+            for (int i = 0; i < Battle_Space.TicksPerSecond; i++)
             {
-                battle.SimNewtonianPhysics(testComObj); //run 100 times to get 10 simseconds. 
+                battle.SimNewtonianPhysics(testComObj); //run * TicksPerSecond to get 1 simsecond. 
             }
             battle.End(1);
             Assert.AreEqual(expectedResult, testComObj.cmbt_loc);

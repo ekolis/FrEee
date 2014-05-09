@@ -172,7 +172,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             testComObj.waypointTarget = waypoint;
 
-            Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
@@ -202,7 +202,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             testComObj.waypointTarget = waypoint;
 
-            Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
@@ -229,11 +229,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
             CombatVehicle testComObj = battle.CombatVehicles.ToArray()[0];
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 5, 0);
+            testComObj.maxfowardThrust = 150;
+            testComObj.maxStrafeThrust = 37.5;
             testComObj.maxRotate = new Compass(45, false);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             testComObj.waypointTarget = waypoint;
 
-            Tuple<Compass, bool> nav = testComObj.testNav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
             battle.End(1);
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
