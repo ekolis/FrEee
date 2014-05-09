@@ -162,20 +162,20 @@ namespace FrEee.Game.Objects.Combat2
             
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
-            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = Nav(angletoWaypoint);
             Compass angletoturn = nav.Item1;
-            bool thrustToWaypoint = nav.Item2;
+            bool? thrustToWaypoint = nav.Item2;
 
             turnship(angletoturn, angletoWaypoint);
 
             thrustship(angletoturn, true);            
         }
 
-        protected override Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        protected override Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {          
             Compass angletoturn = new Compass();
-            bool thrustTowards = true;
-            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
+            bool? thrustTowards = true;
+            Tuple<Compass, bool?> nav = new Tuple<Compass, bool?>(angletoturn, thrustTowards);
 
             combatWaypoint wpt = this.waypointTarget;
             angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
