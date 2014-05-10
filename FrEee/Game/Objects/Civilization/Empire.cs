@@ -448,7 +448,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return Galaxy.Current.Referrables.OfType<Technology.Technology>().Where(
+				return Mod.Current.Technologies.Where(
 					t => HasUnlocked(t) && ResearchedTechnologies[t] < t.MaximumLevel);
 			}
 		}
