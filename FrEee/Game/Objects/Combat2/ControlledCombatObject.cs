@@ -104,7 +104,9 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 nominaldistance = maxStrafeAcceleration * timetokill_ClosingSpeed_strafe; //this.maxStrafeThrust; (I think this should be acceleration, not thrust. 
             //Fix16 nominaltime = strafetimetokill_ClosingSpeed
             Fix16 timetowpt = distance / closingSpeed;
-
+#if DEBUG
+            Console.WriteLine("timetowpt: " + timetowpt);
+#endif
             
             string helmdo = "";
 

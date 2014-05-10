@@ -627,7 +627,8 @@ namespace FrEee.WinForms.MogreCombatRender
 			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
 			{
 #if DEBUG
-				Console.WriteLine("ReplayingTick: " + battletic);
+				Console.WriteLine("Replay Processing: ");
+                Console.WriteLine("Tick: " + battletic);
 #endif
 				physicsstopwatch.Restart();
 				int interpolationcount = 0;
