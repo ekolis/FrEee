@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Bolt";
 
-                boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
+                boltSpeed = (Fix16)wpMaxR * (Fix16)100; 
                 maxRange_time = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
@@ -71,7 +71,7 @@ namespace FrEee.Game.Objects.Combat2
                 boltSpeed = 0; //seekers get launched at 0 speed. 
                 int mass = seekerinfo.SeekerDurability; // sure why not?
                 int wpnskrspd = seekerinfo.SeekerSpeed;
-                Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
+                //Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
 
                 //boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
                 maxRange_time = (Fix16)wpMaxR; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
@@ -112,7 +112,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 reloadRate { get; private set; }
 
         /// <summary>
-        /// if a bolt, what is it's speed if fired at rest?
+        /// if a bolt, what is it's speed if fired at rest? in m/s
         /// </summary>
         public Fix16 boltSpeed { get; private set; }
 
@@ -190,40 +190,10 @@ namespace FrEee.Game.Objects.Combat2
         {
             bool isinRange = false;
             Fix16 TickLength = Battle_Space.TickLength;
-            if (seekerTimeToTarget(attacker, target) < maxRange_time)
+            Fix16 seekerTimeToTarget = CombatSeeker.seekerTimeToTarget(attacker, target, (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo);
+            if (seekerTimeToTarget < maxRange_time)
                 isinRange = true;
             return isinRange;
-        }
-
-        public Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target)
-        {
-            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-            SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
-            int mass = seekerinfo.SeekerDurability; // sure why not?
-            int wpnskrspd = seekerinfo.SeekerSpeed;
-            Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
-            Fix16 acceleration = Thrust * mass;
-            Fix16 startV = seekerClosingSpeed_base(attacker, target);
-            //Fix16 endV = ???
-            //Fix16 baseTimetoTarget = distance_toTarget / startV;
-
-            //Fix16 deltaV = baseTimetoTarget
-            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
-            Fix16 TimetoTarget;
-            if (ttt[2] == 1)
-            {
-                TimetoTarget = Fix16.Min(ttt[0], ttt[1]);
-            }
-            else
-                TimetoTarget = ttt[0];
-            return TimetoTarget;
-        }
-
-        public Fix16 seekerClosingSpeed_base(CombatObject attacker, CombatObject target)
-        {
-            Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
-            Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-            return shotspeed_actual * Battle_Space.TickLength;
         }
 
         private bool bolt_isinRange(CombatObject attacker, CombatObject target)
@@ -240,13 +210,25 @@ namespace FrEee.Game.Objects.Combat2
             return isinRange;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="target"></param>
+        /// <returns>speed in meters per second</returns>
         public Fix16 boltClosingSpeed(CombatObject attacker, CombatObject target)
         {
             Fix16 shotspeed = boltSpeed; //speed of bullet when ship is at standstill
             Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
-            return shotspeed_actual * Battle_Space.TickLength;
+            return shotspeed_actual;// / Battle_Space.TicksPerSecond;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="target"></param>
+        /// <returns>t in seconds</returns>
         public Fix16 boltTimeToTarget(CombatObject attacker, CombatObject target)
         {
             Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);

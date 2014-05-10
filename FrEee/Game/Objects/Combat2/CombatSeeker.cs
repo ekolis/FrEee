@@ -25,11 +25,11 @@ namespace FrEee.Game.Objects.Combat2
             SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)launcher.weapon.Template.ComponentTemplate.WeaponInfo;
 			Hitpoints = MaxHitpoints = skrinfo.SeekerDurability;
             cmbt_mass = (Fix16)Hitpoints;//(Fix16)s.MaxHitpoints; // sure why not?
-            int wpnskrspd = skrinfo.SeekerSpeed;
-            int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
-            maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.15;
-            maxStrafeThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1 / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
-            maxRotate.Radians = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1) / ((Fix16)1200 - (Fix16)wpnskrEvade * (Fix16)0.1);
+            
+            
+            maxfowardThrust = calcFowardThrust(skrinfo);
+            maxStrafeThrust = calcStrafeThrust(skrinfo);
+            maxRotate = calcRotate(skrinfo);
             
 
             cmbt_thrust = new PointXd(0, 0, 0);
@@ -40,6 +40,61 @@ namespace FrEee.Game.Objects.Combat2
             Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
 #endif
             this.launcher = launcher;
+        }
+
+        public static Fix16 calcFowardThrust(SeekingWeaponInfo skrinfo)
+        {
+            int wpnskrspd = skrinfo.SeekerSpeed;
+            int mass = skrinfo.SeekerDurability;
+            return (Fix16)wpnskrspd * mass * (Fix16)10.0;
+        }
+        public static Fix16 calcStrafeThrust(SeekingWeaponInfo skrinfo)
+        {
+            int wpnskrspd = skrinfo.SeekerSpeed;
+            int mass = skrinfo.SeekerDurability;
+            int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
+            return (Fix16)wpnskrspd * mass * (Fix16)5.0 / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
+        }
+        public static Compass calcRotate(SeekingWeaponInfo skrinfo)
+        {
+            int wpnskrspd = skrinfo.SeekerSpeed;
+            int mass = skrinfo.SeekerDurability;
+            int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
+            return new Compass((Fix16)wpnskrspd * mass * (Fix16)0.1 / ((Fix16)2.5 - (Fix16)wpnskrEvade * (Fix16)0.01), false);
+        }
+
+        public static Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target, SeekingWeaponInfo seekerinfo)
+        {
+            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            //SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
+            int mass = seekerinfo.SeekerDurability; // sure why not?
+            int wpnskrspd = seekerinfo.SeekerSpeed;
+            Fix16 Thrust = calcFowardThrust(seekerinfo);
+            Fix16 acceleration = Thrust * mass;
+            Fix16 startV = seekerClosingSpeed_base(attacker, target);
+            //Fix16 endV = ???
+            //Fix16 baseTimetoTarget = distance_toTarget / startV;
+
+            //Fix16 deltaV = baseTimetoTarget
+            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
+            Fix16 TimetoTarget;
+            if (ttt[2] == 1)
+            {
+                TimetoTarget = Fix16.Min(ttt[0], ttt[1]);
+            }
+            else
+                TimetoTarget = ttt[0];
+#if DEBUG
+            Console.WriteLine("SeekerTimeToTarget = " + TimetoTarget);
+#endif
+            return TimetoTarget;
+        }
+
+        public static Fix16 seekerClosingSpeed_base(CombatObject attacker, CombatObject target)
+        {
+            Fix16 shotspeed = 0;// boltSpeed; //speed of bullet when ship is at standstill (0 for seekers)
+            Fix16 shotspeed_actual = shotspeed + NMath.closingRate(attacker.cmbt_loc, attacker.cmbt_vel, target.cmbt_loc, target.cmbt_vel);
+            return shotspeed_actual;
         }
 
         #region fields & properties
@@ -162,28 +217,33 @@ namespace FrEee.Game.Objects.Combat2
             
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
-            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = Nav(angletoWaypoint);
             Compass angletoturn = nav.Item1;
-            bool thrustToWaypoint = nav.Item2;
+            bool? thrustToWaypoint = nav.Item2;
 
             turnship(angletoturn, angletoWaypoint);
 
             thrustship(angletoturn, true);            
         }
 
-        protected override Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        protected override Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {          
             Compass angletoturn = new Compass();
-            bool thrustTowards = true;
-            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
-
+            bool? thrustTowards = true;
+     
             combatWaypoint wpt = this.waypointTarget;
-            angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+            angletoturn = new Compass(angletoWaypoint.Degrees - this.cmbt_head.Degrees, false);
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
-            Fix16 acceleration = maxfowardThrust * cmbt_mass;
+            //this stuff doesn't actualy do anything yet:
+            Fix16 acceleration = maxfowardThrust / cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = vectortowaypoint.Length;
+
+            Fix16 closingSpeed = NMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+            Fix16 timetowpt = distance / closingSpeed;
+            
+            
             Fix16[] quad = NMath.quadratic(acceleration, startV, distance);
             Fix16 ttt;
             if (quad[2] == 1)
@@ -193,11 +253,14 @@ namespace FrEee.Game.Objects.Combat2
             else
                 ttt = quad[0];
             Fix16 endV = startV + acceleration * ttt;
+            //above doesn't actualy do anything yet. 
 #if DEBUG
             Console.WriteLine("seeker ttt: " + ttt);
+            Console.WriteLine("timetowpt: " + timetowpt);
+            Console.WriteLine("seeker distance: " + distance);
 #endif
 
-            return nav;
+            return new Tuple<Compass, bool?>(angletoturn, thrustTowards);
         }
 
 		public void ReplenishShields(int? amount = null)
@@ -251,6 +314,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			return TakeDamage(damageType, damage, null);
 		}
+
 
         /*/// <summary>
         /// was missilefirecontrol in battlespace.

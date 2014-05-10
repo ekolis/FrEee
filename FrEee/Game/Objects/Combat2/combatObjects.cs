@@ -163,7 +163,7 @@ namespace FrEee.Game.Objects.Combat2
         public Fix16 maxStrafeThrust { get; set; }
 
         /// <summary>
-        /// how far this object can rotate each tick.
+        /// how far this object can rotate each second.
         /// </summary>
         public Compass maxRotate { get; set; } 
 
@@ -213,9 +213,9 @@ namespace FrEee.Game.Objects.Combat2
             combatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
-            Tuple<Compass, bool> nav = Nav(angletoWaypoint);
+            Tuple<Compass, bool?> nav = Nav(angletoWaypoint);
             Compass angletoturn = nav.Item1;
-            bool thrustToWaypoint = nav.Item2;
+            bool? thrustToWaypoint = nav.Item2;
             
             //PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
@@ -229,19 +229,18 @@ namespace FrEee.Game.Objects.Combat2
             thrustship(angletoturn, true);
         }
 
-        public Tuple<Compass, bool> testNav(Compass angletoWaypoint)
+        public Tuple<Compass, bool?> testNav(Compass angletoWaypoint)
         {
             return Nav(angletoWaypoint);
         }
-        protected virtual Tuple<Compass, bool> Nav(Compass angletoWaypoint)
+        protected virtual Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {
             Compass angletoturn = new Compass();
-            bool thrustTowards = true;
-            Tuple<Compass, bool> nav = new Tuple<Compass, bool>(angletoturn, thrustTowards);
+            bool thrustTowards = true;          
 
             angletoturn.Degrees = angletoWaypoint.Degrees - this.cmbt_head.Degrees;
 
-            return nav;
+            return new Tuple<Compass, bool?>(angletoturn, thrustTowards);
         }
         
 
@@ -256,12 +255,13 @@ namespace FrEee.Game.Objects.Combat2
         }
         protected void turnship(Compass angletoturn, Compass angleToTarget)
         {
+            //Compass angletoturn = new Compass(angletoturn.Degrees / Battle_Space.TicksPerSecond, false);
             if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
             {
-                if (angletoturn.Radians > this.maxRotate.Radians)
+                if (angletoturn.Degrees > this.maxRotate.Degrees)
                 {
                     //comObj.cmbt_face += comObj.Rotate;
-                    this.cmbt_head += this.maxRotate;
+                    this.cmbt_head.Degrees += this.maxRotate.Degrees / Battle_Space.TicksPerSecond;
                 }
                 else
                 {
@@ -271,10 +271,10 @@ namespace FrEee.Game.Objects.Combat2
             }
             else //turn counterclockwise
             {
-                if (((Fix16)360 - angletoturn.Radians) > this.maxRotate.Radians)
+                if (((Fix16)360 - angletoturn.Degrees) > this.maxRotate.Degrees)
                 {
                     //comObj.cmbt_face -= comObj.maxRotate;
-                    this.cmbt_head -= this.maxRotate;
+                    this.cmbt_head.Degrees -= this.maxRotate.Degrees / Battle_Space.TicksPerSecond;
                 }
                 else
                 {
