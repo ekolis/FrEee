@@ -221,7 +221,7 @@ namespace FrEee.Game.Objects.Combat2
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
-            Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc);
+            Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc); // XXX - why is distance between (0,0,0) and (0,1000,0) equal to 181 in Combat_Helm0 test?!
             Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);            
 
             turnship(angletoturn, angletoWaypoint);
@@ -292,8 +292,14 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns></returns>
 		private Fix16 GetThrustEfficiency(Compass angleOffCenter)
 		{
-            Fix16 OAC = Fix16.Abs(angleOffCenter.Degrees);//Compass OAC = new Compass(Math.Abs(angleOffCenter.Radians));
-            if (OAC >= 90)
+			Fix16 OAC = Fix16.Abs(angleOffCenter.Degrees);//Compass OAC = new Compass(Math.Abs(angleOffCenter.Radians));
+
+			// normalize to range of -180 to +180
+			OAC = Compass.NormalizeDegrees(OAC);
+			if (OAC > 180)
+				OAC -= 360;
+
+            if (Math.Abs(OAC) >= 90)
 				return Fix16.Zero; // can't thrust sideways or backwards!
             return Fix16.Cos(OAC * (Fix16.Pi / (Fix16)180));
 		}

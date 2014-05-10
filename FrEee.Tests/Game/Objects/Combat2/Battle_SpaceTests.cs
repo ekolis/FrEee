@@ -372,6 +372,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd(0, 0, 0);
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
+			testComObj.waypointTarget = waypoint;
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
 
             testComObj.helm();
