@@ -17,6 +17,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Utility.Extensions;
 
+using NewtMath.f16;
 //using FrEee.WinForms.MogreCombatRender;
 
 namespace FrEee.Tests.Game.Objects.Combat2
@@ -25,10 +26,9 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
 
 
-
     public class testships
     {
-        Galaxy gal = new Galaxy();
+        //Galaxy gal = new Galaxy();
         public List<SimulatedEmpire> empires = new List<SimulatedEmpire>();
         List<Design<Ship>> designs = new List<Design<Ship>>();
         public List<SpaceVehicle> ships = new List<SpaceVehicle>();
@@ -100,16 +100,15 @@ namespace FrEee.Tests.Game.Objects.Combat2
             components.Add("Wpn_SK", missleLauncher);
 
             //create designs and ships
-            testdesign0(empires[0].Empire);
-            testship0(empires[0], designs[0], 1);
-            testdesign0(empires[1].Empire);
-            testship0(empires[1], designs[0], 2);
+            designs.Add(testdesign0(empires[0].Empire));
+            ships.Add(testship0(empires[0], designs[0], 1));
+            designs.Add(testdesign0(empires[1].Empire));
+            ships.Add(testship0(empires[1], designs[0], 2));
 
         }
 
         public List<MountedComponentTemplate> genericlistofcomponents(Design<Ship> design)
-        {
-    
+        {    
             List<MountedComponentTemplate> mctlist = new List<MountedComponentTemplate>();
             mctlist.Add(new MountedComponentTemplate(design, components["BDG"], null));
             mctlist.Add(new MountedComponentTemplate(design, components["LS"], null));
@@ -120,16 +119,16 @@ namespace FrEee.Tests.Game.Objects.Combat2
             mctlist.Add(new MountedComponentTemplate(design, components["Engn"], null));
             mctlist.Add(new MountedComponentTemplate(design, components["Engn"], null));
 
-
             return mctlist;
         }
 
-        public void testdesign0(Empire emp)
+        public Design<Ship> testdesign0(Empire emp)
         {
             var design = new Design<Ship>();
             
             designs.Add(design);
-            
+
+            //gal.AssignID(design);
             Galaxy.Current.AssignID(design);
             design.Owner = emp;
 
@@ -146,10 +145,11 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             design.Hull = hull;
             design.Strategy = new StragegyObject_Default();
-            designs.Add(design);
+            //designs.Add(design);
+            return design;
         }
 
-        public void testship0(SimulatedEmpire emp, Design<Ship> dsn, int staticID)
+        public SpaceVehicle testship0(SimulatedEmpire emp, Design<Ship> dsn, int staticID)
         {
             var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
             sv.SpaceObject.ID = staticID;
@@ -157,8 +157,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             v.Owner = emp.Empire;
 
             emp.SpaceObjects.Add(sv);
-            //BindSpaceObjectList();
-            ships.Add(v);
+
+            return v;
         }
     }
 
@@ -169,6 +169,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
         [TestMethod]
         public void Combat_CheckCopies()
         {
+            Galaxy gal = new Galaxy();
             testships testships = new testships();
             StarSystem sys = new StarSystem(1);
             Sector location = new Sector(sys, new System.Drawing.Point());
@@ -190,5 +191,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             
         }
+
+
     }
 }
