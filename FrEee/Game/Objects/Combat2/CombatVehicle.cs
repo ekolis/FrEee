@@ -32,8 +32,8 @@ namespace FrEee.Game.Objects.Combat2
             this.ID = OrigionalID;
             // TODO - don't some mods have vehicles >32MT?
             cmbt_mass = (Fix16)working_v.Size;
-            maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1;
-            maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
+            maxfowardThrust = (Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.5;
+            maxStrafeThrust = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.5) / ((Fix16)4 - (Fix16)working_v.Evasion * (Fix16)0.01);
             maxRotate.Degrees = ((Fix16)working_v.Speed * this.cmbt_mass * (Fix16)0.1) / ((Fix16)2.5 - (Fix16)working_v.Evasion * (Fix16)0.01);
             if (start_v.Design.Strategy == null)
                 strategy = new StragegyObject_Default();
