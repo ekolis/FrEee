@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Combat2
             cmbt_mass = (Fix16)Hitpoints;//(Fix16)s.MaxHitpoints; // sure why not?
             int wpnskrspd = skrinfo.SeekerSpeed;
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
-            maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.15;
+            maxfowardThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.2;
             maxStrafeThrust = (Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1 / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
             maxRotate.Degrees = ((Fix16)wpnskrspd * this.cmbt_mass * (Fix16)0.1) / ((Fix16)2.5 - (Fix16)wpnskrEvade * (Fix16)0.01);
             
@@ -175,13 +175,12 @@ namespace FrEee.Game.Objects.Combat2
         {          
             Compass angletoturn = new Compass();
             bool? thrustTowards = true;
-            Tuple<Compass, bool?> nav = new Tuple<Compass, bool?>(angletoturn, thrustTowards);
-
+     
             combatWaypoint wpt = this.waypointTarget;
-            angletoturn = new Compass(angletoWaypoint.Radians - this.cmbt_head.Radians);
+            angletoturn = new Compass(angletoWaypoint.Degrees - this.cmbt_head.Degrees);
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
-            Fix16 acceleration = maxfowardThrust * cmbt_mass;
+            Fix16 acceleration = maxfowardThrust / cmbt_mass;
             Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = vectortowaypoint.Length;
             Fix16[] quad = NMath.quadratic(acceleration, startV, distance);
@@ -197,7 +196,7 @@ namespace FrEee.Game.Objects.Combat2
             Console.WriteLine("seeker ttt: " + ttt);
 #endif
 
-            return nav;
+            return new Tuple<Compass, bool?>(angletoturn, thrustTowards);
         }
 
 		public void ReplenishShields(int? amount = null)
