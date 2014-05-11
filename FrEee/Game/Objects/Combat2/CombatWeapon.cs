@@ -189,7 +189,6 @@ namespace FrEee.Game.Objects.Combat2
         private bool seeker_isinRange(CombatObject attacker, CombatObject target)
         {
             bool isinRange = false;
-            Fix16 TickLength = Battle_Space.TickLength;
             Fix16 seekerTimeToTarget = CombatSeeker.seekerTimeToTarget(attacker, target, (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo);
             if (seekerTimeToTarget < maxRange_time)
                 isinRange = true;
@@ -199,13 +198,11 @@ namespace FrEee.Game.Objects.Combat2
         private bool bolt_isinRange(CombatObject attacker, CombatObject target)
         {
             bool isinRange = false;
-            Fix16 TickLength = Battle_Space.TickLength;
             Fix16 boltTTT = boltTimeToTarget(attacker, target);
             //remember, maxRange is bolt lifetime in seconds 
-            if (boltTTT <= maxRange / TickLength && boltTTT >= minRange / TickLength)
+            if (boltTTT <= maxRange && boltTTT >= minRange)
             {
                 isinRange = true;
-                //weaponRangeinfo += "Range for Projectile is good \r\n";
             }
             return isinRange;
         }
