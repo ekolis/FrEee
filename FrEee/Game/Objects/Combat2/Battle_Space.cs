@@ -603,7 +603,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <returns></returns>
 		public PointXd InterpolatePosition(CombatNode comObj, double fractionalTick)
 		{
-			return comObj.cmbt_loc + comObj.cmbt_vel * (Fix16)fractionalTick;
+			return comObj.cmbt_loc + comObj.cmbt_vel / TicksPerSecond * (Fix16)fractionalTick;
 		}
 
         public void commandAI(CombatControlledObject ccobj, int battletick)
@@ -613,21 +613,21 @@ namespace FrEee.Game.Objects.Combat2
             if (ccobj.WorkingObject != null)
             {
 
-                int hp1 = ccobj.WorkingCombatant.Hitpoints;
-                int hp2 = ccobj.WorkingObject.Hitpoints;
-                int hp3 = ccobj.WorkingObject.HullHitpoints;
-                int hp4 = ccobj.StartCombatant.Hitpoints;
-                int hp5 = ccobj.StartCombatant.HullHitpoints;
-#if DEBUG
-                Console.WriteLine(ccobj.WorkingCombatant.Name);
-                Console.WriteLine("hp = " + hp1 + ", " + hp2 + ", " + hp3 + ", " + hp4 + ", " + hp5);
+//                int hp1 = ccobj.WorkingCombatant.Hitpoints;
+//                int hp2 = ccobj.WorkingObject.Hitpoints;
+//                int hp3 = ccobj.WorkingObject.HullHitpoints;
+//                int hp4 = ccobj.StartCombatant.Hitpoints;
+//                int hp5 = ccobj.StartCombatant.HullHitpoints;
+//#if DEBUG
+//                Console.WriteLine(ccobj.WorkingCombatant.Name);
+//                Console.WriteLine("hp = " + hp1 + ", " + hp2 + ", " + hp3 + ", " + hp4 + ", " + hp5);
                 
-                Vehicle startV = (Vehicle)ccobj.StartCombatant;
-                foreach (Component comp in startV.Components)
-                {
-                    Console.WriteLine(comp.Name + " container " + comp.Container);
-                }
-#endif
+//                Vehicle startV = (Vehicle)ccobj.StartCombatant;
+//                foreach (Component comp in startV.Components)
+//                {
+//                    Console.WriteLine(comp.Name + " container " + comp.Container);
+//                }
+//#endif
                 string comAI = "";
                 //CombatObject tgtObj;
                 if (Empires[ccobj.WorkingObject.Owner].hostile.Any())
