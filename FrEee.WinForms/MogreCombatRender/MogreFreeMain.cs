@@ -634,11 +634,6 @@ namespace FrEee.WinForms.MogreCombatRender
 				int interpolationcount = 0;
 				while (physicsstopwatch.ElapsedMilliseconds < (100 / replaySpeed))
 				{
-					//foreach (CombatObject comObj in battle.CombatObjects)
-					//{
-					//    renderlocs[comObj] = battle.InterpolatePosition(comObj, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
-					//    do_graphics(comObj, renderlocs[comObj]);
-					//}
 					foreach (CombatNode comNode in battle.CombatNodes) //update bullet and explosion objects.
 					{
 						renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
