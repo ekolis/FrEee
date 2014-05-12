@@ -23,6 +23,9 @@ namespace FrEee.WinForms.Forms
 			InitializeComponent();
 
 			Bind(battle);
+
+            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+            catch { }
 		}
 
 		/// <summary>
