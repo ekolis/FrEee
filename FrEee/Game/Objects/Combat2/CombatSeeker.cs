@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Combat2
 			WorkingObject = this;
             SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)launcher.weapon.Template.ComponentTemplate.WeaponInfo;
 			Hitpoints = MaxHitpoints = skrinfo.SeekerDurability;
-            cmbt_mass = (Fix16)Hitpoints;//(Fix16)s.MaxHitpoints; // sure why not?
+            cmbt_mass = (Fix16)Hitpoints * 0.1;//(Fix16)s.MaxHitpoints; // sure why not?
             
             
             maxfowardThrust = calcFowardThrust(skrinfo);
@@ -45,35 +45,37 @@ namespace FrEee.Game.Objects.Combat2
         public static Fix16 calcFowardThrust(SeekingWeaponInfo skrinfo)
         {
             int wpnskrspd = skrinfo.SeekerSpeed;
-            int mass = skrinfo.SeekerDurability;
+            int mass = skrinfo.SeekerDurability * 0.1;
             return (Fix16)wpnskrspd * mass * (Fix16)10.0;
         }
         public static Fix16 calcStrafeThrust(SeekingWeaponInfo skrinfo)
         {
             int wpnskrspd = skrinfo.SeekerSpeed;
-            int mass = skrinfo.SeekerDurability;
+            int mass = skrinfo.SeekerDurability * 0.1;
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
             return (Fix16)wpnskrspd * mass * (Fix16)5.0 / ((Fix16)4 - (Fix16)wpnskrEvade * (Fix16)0.01);
         }
         public static Compass calcRotate(SeekingWeaponInfo skrinfo)
         {
             int wpnskrspd = skrinfo.SeekerSpeed;
-            int mass = skrinfo.SeekerDurability;
+            int mass = skrinfo.SeekerDurability * 0.1;
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
             return new Compass((Fix16)wpnskrspd * mass * (Fix16)0.1 / ((Fix16)2.5 - (Fix16)wpnskrEvade * (Fix16)0.01), false);
         }
 
         public static Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target, SeekingWeaponInfo seekerinfo)
         {
-            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            //Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            PointXd px = new PointXd(attacker.cmbt_loc - target.cmbt_loc);
+            Fix16 distance_toTarget = px.Length;
             //SeekingWeaponInfo seekerinfo = (SeekingWeaponInfo)weapon.Template.ComponentTemplate.WeaponInfo;
-            int mass = seekerinfo.SeekerDurability; // sure why not?
+            int mass = seekerinfo.SeekerDurability * 0.1; // sure why not?
             int wpnskrspd = seekerinfo.SeekerSpeed;
             Fix16 Thrust = calcFowardThrust(seekerinfo);
             Fix16 acceleration = Thrust * mass;
             Fix16 startV = seekerClosingSpeed_base(attacker, target);
             //Fix16 endV = ???
-            //Fix16 baseTimetoTarget = distance_toTarget / startV;
+            Fix16 baseTimetoTarget = distance_toTarget / startV;
 
             //Fix16 deltaV = baseTimetoTarget
             Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
