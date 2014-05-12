@@ -79,6 +79,16 @@ Loop %ArrayCount%
     ControlSetText, TEdit2, %meshfilepath%, Ogre Mesh Exporter 
     ControlSetText, TEdit1, %meshfile%, Ogre Mesh Exporter 
     ControlClick, TPanel6, Ogre Mesh Exporter, OK
+    
+    FileAppend,
+    (
+    {
+    "MainMesh": {
+        "Name" : "%meshfile%.mesh",
+        "Scale" : [1.0,1.0,1.0]
+    },
+    }
+    ), %exportFolder%\%meshfile%.cfg
 }
 
     
