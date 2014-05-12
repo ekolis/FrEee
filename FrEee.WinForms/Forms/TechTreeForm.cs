@@ -28,6 +28,9 @@ namespace FrEee.WinForms.Forms
 			BindTypes();
 			BindItems();
 			Bind();
+
+            try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+            catch { }
 		}
 
 		public TechTreeForm(IUnlockable u)
