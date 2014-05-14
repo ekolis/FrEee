@@ -150,12 +150,18 @@ namespace FrEee.WinForms.MogreCombatRender
 			mRoot.Initialise(false, "Main Ogre Window");
 			NameValuePairList misc = new NameValuePairList();
 			form = new MogreCombatForm(battle);
+			form.FormClosed += form_FormClosed;
 			misc["externalWindowHandle"] = form.Handle.ToString();
 			mRenderWindow = mRoot.CreateRenderWindow("Main RenderWindow", 800, 600, false, misc);
 			form.Size = new Size(800, 600);
 			form.Disposed += form_Disposed;
 			form.Resize += form_Resize;
 			form.Show();
+		}
+
+		void form_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			form.Dispose();
 		}
 
 		void form_Resize(object sender, EventArgs e)
@@ -167,8 +173,6 @@ namespace FrEee.WinForms.MogreCombatRender
 		void form_Disposed(object sender, EventArgs e)
 		{
 			Shutdown();
-			mRoot.Dispose();
-			mRoot = null;
 		}
 
 		private void InitializeResources()
@@ -309,7 +313,8 @@ namespace FrEee.WinForms.MogreCombatRender
 					battle.CombatNodes.Remove(comNode);
 				}
 			}
-			mRoot.Dispose();
+			if (mRoot != null)
+				mRoot.Dispose();
 			//throw new ShutdownException();
 		}
 
@@ -624,7 +629,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			bool cont = true; // is combat continuing?
 			var renderlocs = new SafeDictionary<CombatNode, PointXd>();
 			Console.WriteLine("starting Replay");
-			while (cont)// && mRoot != null && mRoot.RenderOneFrame())
+			while (cont && !form.IsDisposed)// && mRoot != null && mRoot.RenderOneFrame())
 			{
 #if DEBUG
 				Console.WriteLine("Replay Processing: ");
@@ -748,7 +753,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 			//might as well keep rendering after the battle is over.
 			bool loopafterbattle = true;
-			while (loopafterbattle && mRoot != null && mRoot.RenderOneFrame())
+			while (loopafterbattle && !form.IsDisposed && mRoot != null && mRoot.RenderOneFrame())
 			{
 				foreach (CombatNode comNode in battle.CombatNodes)
 				{
