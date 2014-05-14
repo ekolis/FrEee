@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Combat2
     public class CombatNode
     {
         /// <summary>
-        /// for creating bullets. & other non AI or acelerating things. used by the renderer to move and display.
+        /// for creating bullets and other non AI or acelerating things. used by the renderer to move and display.
         /// </summary>
         /// <param name="position"> ship position this is fiired from </param>
         /// <param name="vector">direction this is going</param>
