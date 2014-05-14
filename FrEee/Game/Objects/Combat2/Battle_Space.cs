@@ -866,6 +866,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public CombatTakeFireEvent FireWeapon(int battletick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
+#if DEBUG
+            Console.WriteLine("FireWeapon/TakeFireEvent");
+            Console.WriteLine(attacker.WorkingObject);
+            Console.WriteLine(weapon.weapon.Name);
+            Console.WriteLine(target.WorkingObject);
+#endif
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 rangeForDamageCalcs = (Fix16)0;
 			Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
@@ -901,7 +907,7 @@ namespace FrEee.Game.Objects.Combat2
                 CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
                 seeker.waypointTarget = new combatWaypoint(target);
                 seeker.weaponTarget = new List<CombatObject>() { target};
-                seeker.deathTick = battletick * TicksPerSecond + weapon.maxRange_time;
+                seeker.deathTick = battletick + weapon.maxRange_time * TicksPerSecond;
                 seeker.cmbt_head = attacker.cmbt_head;
                 seeker.cmbt_att = attacker.cmbt_att;
                 FreshNodes.Add(seeker);
