@@ -817,7 +817,8 @@ namespace FrEee.WinForms.MogreCombatRender
 					// - kersplosions and removal of model. 
 					string IDName = comEvent.Object.strID;
 					SceneNode node = mSceneMgr.GetSceneNode(IDName);
-					ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");
+                    ParticleSystem expl = mSceneMgr.CreateParticleSystem("EXP_" + IDName, "Explosion");
+					//ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");
 					node.AttachObject(expl);
 				}
 				else if (comEvent is CombatLocationEvent)
