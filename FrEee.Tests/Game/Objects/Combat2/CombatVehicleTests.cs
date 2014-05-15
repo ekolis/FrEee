@@ -318,6 +318,57 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
 
+        [TestMethod]
+        public void Combat_ReplayTest01()
+        {
+
+            setupEnvironment1();
+
+            battle.Start();
+            
+            CombatObject battlecomobj = battle.CombatObjects.ToArray()[0];
+
+            PointXd loc1 = new PointXd(battlecomobj.cmbt_loc);
+            long diceit1 = battlecomobj.getDice().Iteration;
+            int numenemies1 = battlecomobj.empire.ownships.Count();
+            battle.Resolve(); 
+                        
+            battle.SetUpPieces();
+
+            PointXd loc2 = new PointXd(battlecomobj.cmbt_loc);
+            long diceit2 = battlecomobj.getDice().Iteration;
+            int numenemies2 = battlecomobj.empire.ownships.Count();
+            Assert.AreEqual(loc1, loc2);
+            Assert.AreEqual(diceit1, diceit2);
+            Assert.AreEqual(numenemies1, numenemies2);
+        }
+
+        [TestMethod]
+        public void Combat_ReplayTest02()
+        {
+
+            setupEnvironment1();
+
+            battle.Start();
+            battle.Resolve();          
+            CombatObject battlecomobj = battle.CombatObjects.ToArray()[0];
+
+            PointXd loc1 = new PointXd(battlecomobj.cmbt_loc);
+            long diceit1 = battlecomobj.getDice().Iteration;
+            int numenemies1 = battlecomobj.empire.ownships.Count();
+
+            battle.SetUpPieces(); //this should be replay setup now.
+
+            PointXd loc2 = new PointXd(battlecomobj.cmbt_loc);
+            long diceit2 = battlecomobj.getDice().Iteration;
+            int numenemies2 = battlecomobj.empire.ownships.Count();
+
+            Assert.AreEqual(true, battle.IsReplay);
+            Assert.AreNotEqual(loc1, loc2);
+            Assert.AreNotEqual(diceit1, diceit2);
+            Assert.AreNotEqual(numenemies1, numenemies2);
+
+        }
     }
 
 
