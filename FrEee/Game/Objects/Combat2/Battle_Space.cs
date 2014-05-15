@@ -358,7 +358,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             foreach (CombatEmpire emp in Empires.Values)
             {
-                
+                emp.renewtostart();
             }
             foreach (CombatObject comObj in StartNodes)
 			{
