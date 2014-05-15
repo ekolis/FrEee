@@ -72,20 +72,22 @@ namespace FrEee.Game.Objects.Combat2
             int mass = seekerinfo.SeekerDurability * 0.1; // sure why not?
             int wpnskrspd = seekerinfo.SeekerSpeed;
             Fix16 Thrust = calcFowardThrust(seekerinfo);
-            Fix16 acceleration = Thrust * mass;
+            Fix16 acceleration = Thrust * mass * -1; //*-1 because we should be accelerating towards the target, not away. 
             Fix16 startV = seekerClosingSpeed_base(attacker, target);
             //Fix16 endV = ???
             Fix16 baseTimetoTarget = distance_toTarget / startV;
 
             //Fix16 deltaV = baseTimetoTarget
-            Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
+            //Fix16[] ttt = NMath.quadratic(acceleration, startV, distance_toTarget);
+            Fix64[] ttt2 = NMath.quadratic64(acceleration, startV, distance_toTarget);
+            
             Fix16 TimetoTarget;
-            if (ttt[2] == 1)
+            if (ttt2[2] == 1)
             {
-                TimetoTarget = Fix16.Min(ttt[0], ttt[1]);
+                TimetoTarget = Fix16.Max((Fix16)ttt2[0], (Fix16)ttt2[1]);
             }
             else
-                TimetoTarget = ttt[0];
+                TimetoTarget = (Fix16)ttt2[0];
 #if DEBUG
             Console.WriteLine("SeekerTimeToTarget = " + TimetoTarget);
 #endif
