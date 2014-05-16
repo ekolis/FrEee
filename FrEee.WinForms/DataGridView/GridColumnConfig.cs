@@ -47,7 +47,12 @@ namespace FrEee.WinForms.DataGridView
 		[IgnoreMap]
 		public Type ColumnType
 		{
-			get { return Type.GetType(columnTypeName); }
+			get
+			{
+				if (columnTypeName == null)
+					return null;
+				return Type.GetType(columnTypeName);
+			}
 			set
 			{
 				if (!typeof(DataGridViewColumn).IsAssignableFrom(value))
