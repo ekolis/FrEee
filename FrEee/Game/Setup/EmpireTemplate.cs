@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.AI;
 using FrEee.Game.Objects.Civilization;
@@ -82,7 +82,7 @@ namespace FrEee.Game.Setup
 		/// The empire's culture.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public Culture Culture
 		{
 			get { return Mod.Current.Cultures.SingleOrDefault(c => c.Name == CultureName); }
