@@ -220,8 +220,8 @@ namespace FrEee.Game.Objects.Combat2
             //PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
             Fix16 acceleration = maxfowardThrust * cmbt_mass;
-            Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
-            Fix16 distance = Trig.distance(cmbt_loc, wpt.cmbt_loc); // XXX - why is distance between (0,0,0) and (0,1000,0) equal to 181 in Combat_Helm0 test?!
+            Fix16 startV = NMath.distance(cmbt_vel, wpt.cmbt_vel);
+            Fix16 distance = NMath.distance(cmbt_loc, wpt.cmbt_loc); // XXX - why is distance between (0,0,0) and (0,1000,0) equal to 181 in Combat_Helm0 test?!
             Fix16[] ttt = NMath.quadratic(acceleration, startV, distance);            
 
             turnship(angletoturn, angletoWaypoint);

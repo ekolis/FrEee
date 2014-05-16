@@ -241,27 +241,30 @@ namespace FrEee.Game.Objects.Combat2
 
             //this stuff doesn't actualy do anything yet:
             Fix16 acceleration = maxfowardThrust / cmbt_mass;
-            Fix16 startV = Trig.distance(cmbt_vel, wpt.cmbt_vel);
+            Fix16 startSpeed = NMath.distance(cmbt_vel, wpt.cmbt_vel);
             Fix16 distance = vectortowaypoint.Length;
 
             Fix16 closingSpeed = NMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
             Fix16 timetowpt = distance / closingSpeed;
-            
-            
-            Fix16[] quad = NMath.quadratic(acceleration, startV, distance);
-            Fix16 ttt;
-            if (quad[2] == 1)
+
+
+            Fix64[] ttt2 = NMath.quadratic64(acceleration, startSpeed, distance);
+
+            Fix16 TimetoTarget;
+            if (ttt2[2] == 1)
             {
-                ttt = Fix16.Min(quad[0], quad[1]);
+                TimetoTarget = Fix16.Max((Fix16)ttt2[0], (Fix16)ttt2[1]);
             }
             else
-                ttt = quad[0];
-            Fix16 endV = startV + acceleration * ttt;
+                TimetoTarget = (Fix16)ttt2[0];
+            Fix16 endV = startSpeed + acceleration * TimetoTarget;
             //above doesn't actualy do anything yet. 
 #if DEBUG
-            Console.WriteLine("seeker ttt: " + ttt);
+            Console.WriteLine("seeker ttt: " + TimetoTarget);
             Console.WriteLine("timetowpt: " + timetowpt);
             Console.WriteLine("seeker distance: " + distance);
+            Console.WriteLine("seeker startV: " + startSpeed);
+            Console.WriteLine("seeker endV: " + endV);
 #endif
 
             return new Tuple<Compass, bool?>(angletoturn, thrustTowards);
