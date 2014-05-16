@@ -209,7 +209,7 @@ namespace FrEee.Utility.Extensions
 							var sv = sp.GetValue(source, null);
 							if (sv == null)
 								tp.SetValue(target, null, null);
-							else if (sv.GetType().IsPrimitive || sv is string)
+							else if (sv.GetType().IsValueType || sv is string)
 							{
 								tp.SetValue(target, sv, null);
 							}
