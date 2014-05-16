@@ -80,9 +80,6 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="FixMath">
       <HintPath>Game\Objects\Combat2\lib\FixMath.dll</HintPath>
     </Reference>
@@ -115,6 +112,9 @@
     </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="Omu.ValueInjecter">
+      <HintPath>..\packages\valueinjecter.2.3.3\lib\net35\Omu.ValueInjecter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

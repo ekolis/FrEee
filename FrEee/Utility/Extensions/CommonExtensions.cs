@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
-using AutoMapper;
+using Omu.ValueInjecter;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Space;
@@ -153,7 +153,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (src.GetType() != dest.GetType())
 				throw new Exception("Can only copy objects onto objects of the same type.");
-			var type = src.GetType();
+			/*var type = src.GetType();
 			if (!mappedTypes.Contains(type))
 			{
 				mappedTypes.Add(type);
@@ -161,13 +161,69 @@ namespace FrEee.Utility.Extensions
 				var map = creator.Invoke(null, new object[0]);
 				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyAndNonSerializableProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
 				map = ignorer.Invoke(null, new object[] { map });
-				/*var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
+				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
 				var actionType = typeof(Action<,>).MakeGenericType(type, type);
 				afterMap.Invoke(map, new object[]{
 					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
-				});*/
+				});
+			}*/
+			dest.InjectFrom(new OnlySafePropertiesInjection(), src);
+		}
+
+		private class OnlySafePropertiesInjection : ConventionInjection
+		{
+			protected override bool Match(ConventionInfo c)
+			{
+				return
+					c.SourceProp.Name == c.TargetProp.Name &&
+					c.Source.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name)) &&
+					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
-			Mapper.Map(src, dest, type, type);
+
+			private bool PropertyMatches(PropertyInfo p, string name)
+			{
+				return
+				   p.Name == name // it's the right property
+					   && p.GetSetMethod(true) != null // has a getter, whether public or private
+					   && p.GetSetMethod(true) != null // has a setter, whether public or private
+					   && p.GetIndexParameters().Length == 0 // lacks index parameters
+					   && !p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(); // doesn't have "do not copy" attribute
+			}
+
+			protected override void Inject(object source, object target)
+			{
+				foreach (var sp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0))
+				{
+					var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
+					if (tp != null)
+					{
+						var c = new ConventionInfo
+						{
+							Source = new ConventionInfo.TypeInfo { Type = sp.DeclaringType },
+							SourceProp = new ConventionInfo.PropInfo { Name = sp.Name },
+							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
+							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
+						};
+						if (Match(c))
+						{
+							var sv = sp.GetValue(source, null);
+							if (sv == null)
+								tp.SetValue(target, null, null);
+							else if (sv.GetType().IsPrimitive || sv is string)
+							{
+								tp.SetValue(target, sv, null);
+							}
+							else
+							{
+								// do sub object mapping
+								var tv = sv.GetType().Instantiate();
+								Map(sv, tv);
+								tp.SetValue(target, tv, null);
+							}
+						}
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -186,7 +242,7 @@ namespace FrEee.Utility.Extensions
 			dest.ID = id;
 		}
 
-		// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
+		/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
 		private static IMappingExpression<T, T> IgnoreReadOnlyAndNonSerializableProperties<T>(this IMappingExpression<T, T> expression)
 		{
 			var type = typeof(T);
@@ -211,7 +267,7 @@ namespace FrEee.Utility.Extensions
 			foreach (var property in existingMaps.GetPropertyMaps().Where(pm => ((PropertyInfo)pm.DestinationProperty.MemberInfo).Name == "ID"))
 				expression.ForMember(property.DestinationProperty.Name, opt => opt.Ignore());
 			return expression;
-		}
+		}*/
 
 		private static List<Type> mappedTypes = new List<Type>();
 
