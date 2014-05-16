@@ -874,7 +874,8 @@ namespace FrEee.Game.Objects.Combat2
 #endif
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 rangeForDamageCalcs = (Fix16)0;
-			Fix16 rangetotarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 rangetotarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);//Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+
 			int targettic = battletick;
 
 			//reset the weapon nextReload.

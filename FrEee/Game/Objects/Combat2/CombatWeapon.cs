@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             bool inrange = false;
             var wpninfo = weapon.Template.ComponentTemplate.WeaponInfo;
-            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 distance_toTarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);
 
             string weaponRangeinfo = "RangeInfo:\r\n ";
 
@@ -228,7 +228,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <returns>t in seconds</returns>
         public Fix16 boltTimeToTarget(CombatObject attacker, CombatObject target)
         {
-            Fix16 distance_toTarget = Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
+            Fix16 distance_toTarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);
             Fix16 boltTimetoTarget = distance_toTarget / boltClosingSpeed(attacker, target);
             return boltTimetoTarget;
         }

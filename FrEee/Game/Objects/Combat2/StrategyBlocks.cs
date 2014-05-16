@@ -295,7 +295,7 @@ namespace FrEee.Game.Objects.Combat2
             CombatObject obj0 = (CombatObject)inputs[0];
             CombatObject obj1 = (CombatObject)inputs[1];
 
-            output = Trig.distance(obj0.cmbt_loc, obj1.cmbt_loc);
+            output = NMath.distance(obj0.cmbt_loc, obj1.cmbt_loc);
         }
     }
 
@@ -326,7 +326,7 @@ namespace FrEee.Game.Objects.Combat2
                 
                 foreach (CombatObject othercomObj in comObjects)
                 {
-                    Fix16 thisdist = NewtMath.f16.Trig.distance(thisObj.cmbt_loc, othercomObj.cmbt_loc);
+                    Fix16 thisdist = NewtMath.f16.NMath.distance(thisObj.cmbt_loc, othercomObj.cmbt_loc);
                     if (filter.IsAssignableFrom(closest.GetType()) && thisdist < distance)
                     {
                         distance = thisdist;

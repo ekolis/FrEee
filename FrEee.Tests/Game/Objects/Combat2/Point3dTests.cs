@@ -78,7 +78,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             PointXd p2 = new PointXd(0, 10, 0);
             Fix16 expectedResult = 10;
 
-            Assert.AreEqual(expectedResult, Trig.distance(p1, p2));
+            Assert.AreEqual(expectedResult, NMath.distance(p1, p2));
 
         }
     }
