@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -306,7 +306,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public int Hitpoints
 		{
 			get
@@ -407,7 +407,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Resource cost per turn to maintain this vehicle.
 		/// </summary>
-		[IgnoreMap]
+		
 		public ResourceQuantity MaintenanceCost
 		{
 			get

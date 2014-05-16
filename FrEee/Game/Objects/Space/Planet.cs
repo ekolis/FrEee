@@ -14,7 +14,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Vehicles;
 using System.IO;
-using AutoMapper;
+
 
 namespace FrEee.Game.Objects.Space
 {
@@ -624,7 +624,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
 		/// </summary>
-		[IgnoreMap]
+		
 		public IDictionary<Race, long> PopulationChangePerTurnPerRace
 		{
 			get
@@ -822,7 +822,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public override Sector Sector
 		{
 			get

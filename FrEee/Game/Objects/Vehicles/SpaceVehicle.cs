@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -360,7 +360,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public override Sector Sector
 		{
 			get

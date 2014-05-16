@@ -11,7 +11,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat2;
-using AutoMapper;
+
 
 namespace FrEee.Game.Objects.Space
 {

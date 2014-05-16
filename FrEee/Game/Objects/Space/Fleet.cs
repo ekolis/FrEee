@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -620,7 +620,7 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public Sector Sector
 		{
 			get

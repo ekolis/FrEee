@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
@@ -129,7 +129,7 @@ namespace FrEee.Game.Objects.Technology
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public int NormalShields
 		{
 			get
@@ -146,7 +146,7 @@ namespace FrEee.Game.Objects.Technology
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public int PhasedShields
 		{
 			get

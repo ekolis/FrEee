@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using FrEee.Utility;
-using AutoMapper;
+
 
 namespace FrEee.WinForms.DataGridView
 {
@@ -44,7 +44,7 @@ namespace FrEee.WinForms.DataGridView
 		/// The type of data grid view column to use.
 		/// </summary>
 		[DoNotSerialize]
-		[IgnoreMap]
+		
 		public Type ColumnType
 		{
 			get
