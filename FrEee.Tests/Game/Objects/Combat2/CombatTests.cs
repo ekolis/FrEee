@@ -201,6 +201,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			// setup
 			Galaxy gal = new Galaxy();
 			testships testships = new testships();
+			gal.Empires.Add(testships.empires[0].Empire);
+			gal.Empires.Add(testships.empires[1].Empire);
 			StarSystem sys = new StarSystem(1);
 			gal.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new System.Drawing.Point()));
 			Sector location = new Sector(sys, new System.Drawing.Point());
