@@ -521,8 +521,8 @@ namespace FrEee.Game.Objects.Vehicles
 			// do we already know the design? or did we engage in combat with it this turn?
 			// TODO - "battle manager" so we're not tied to a specific combat implementation
 			else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
-				b.ActualCombatants.OfType<IVehicle>().Any(v => v.Owner == emp) &&
-				b.ActualCombatants.OfType<IVehicle>().Any(v => v.Design == this)))
+				b.ActualCombatants.Values.OfType<IVehicle>().Any(v => v.Owner == emp) &&
+				b.ActualCombatants.Values.OfType<IVehicle>().Any(v => v.Design == this)))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
