@@ -222,7 +222,7 @@ namespace FrEee.Utility.Extensions
 				knownObjects.Add(source);
 			}
 
-			private object CopyObject(object source, object sv)
+			private object CopyObject(object parent, object sv)
 			{
 				if (sv == null)
 					return null;
@@ -256,10 +256,10 @@ namespace FrEee.Utility.Extensions
 				else
 				{
 					// do sub object mapping
-					knownObjects.Add(source);
+					knownObjects.Add(parent);
 					var tv = sv.GetType().Instantiate();
 					Map(sv, tv);
-					knownObjects.Remove(source);
+					knownObjects.Remove(parent);
 					return tv;
 				}
 			}
