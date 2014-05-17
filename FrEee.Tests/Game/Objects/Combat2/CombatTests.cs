@@ -209,11 +209,22 @@ namespace FrEee.Tests.Game.Objects.Combat2
 				location.Place(ship);
 			}
 
+			// make sure there are *two* designs
+			var originalDesigns = gal.Referrables.OfType<IDesign>().ToArray();
+			Assert.AreEqual(2, originalDesigns.Count());
+
 			// process turn
 			Galaxy.ProcessTurn(false);
 
 			// was there a battle?
 			Assert.AreEqual(1, gal.Battles.Count);
+
+			// make sure there are still two designs
+			var finalDesigns = gal.Referrables.OfType<IDesign>().ToArray();
+			Assert.AreEqual(2, finalDesigns.Count());
+
+			// make sure they are the *same* designs
+			Assert.IsTrue(originalDesigns.SequenceEqual(finalDesigns), "Original designs must match final designs.");
 
 			// did we learn designs?
 			Assert.AreEqual(2, gal.Empires[0].KnownDesigns.Count);
