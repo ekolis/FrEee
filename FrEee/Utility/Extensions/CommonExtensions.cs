@@ -213,6 +213,14 @@ namespace FrEee.Utility.Extensions
 							{
 								tp.SetValue(target, sv, null);
 							}
+							else if (sv.GetType().IsArray)
+							{
+								// do sub object mapping
+								Array tv = (Array)((Array)sv).Clone();
+								Array.Clear(tv, 0, tv.Length);
+								Map(sv, tv);
+								tp.SetValue(target, tv, null);
+							}
 							else
 							{
 								// do sub object mapping
