@@ -38,10 +38,11 @@ namespace FrEee.Game.Objects.Combat2
             if (start_v.Design.Strategy == null)
                 strategy = new StragegyObject_Default();
             else
-                strategy = start_v.Design.Strategy;
+                strategy = start_v.Design.Strategy.Copy();
 #if DEBUG
             Console.WriteLine("Created new CombatVehicle with ID " + ID);
             Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
+            //Console.WriteLine("Strategy: " + strategy
 #endif
         }
 
@@ -122,7 +123,14 @@ namespace FrEee.Game.Objects.Combat2
 				w.nextReload = 1;
 
             base.renewtoStart();
+
+            SpaceVehicle start_v = (SpaceVehicle)this.StartCombatant;
+            if (start_v.Design.Strategy == null)
+                strategy = new StragegyObject_Default();
+            else
+                strategy = start_v.Design.Strategy.Copy();
 #if DEBUG
+
             Console.WriteLine("Done");
 #endif
 		}

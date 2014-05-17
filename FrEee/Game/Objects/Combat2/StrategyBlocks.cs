@@ -319,11 +319,11 @@ namespace FrEee.Game.Objects.Combat2
             List<CombatObject> comObjects = (List<CombatObject>)inputs[1];
             CombatObject thisObj = (CombatObject)inputs[0];
             Fix16 distance = Fix16.MaxValue;
-            CombatObject closest = comObjects[0];
+            
 
-            if (comObjects != null)
+            if (comObjects != null && comObjects.Count > 0)
             {
-                
+                CombatObject closest = comObjects[0];
                 foreach (CombatObject othercomObj in comObjects)
                 {
                     Fix16 thisdist = NewtMath.f16.NMath.distance(thisObj.cmbt_loc, othercomObj.cmbt_loc);

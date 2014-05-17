@@ -393,27 +393,32 @@ namespace FrEee.Game.Objects.Combat2
             Console.WriteLine("Setting up combat Objects");
 #endif
             tOC = 0; //reset temp object counter.
-			Fix16 startrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
-			PointXd[] startpoints = new PointXd[EmpiresArray.Count()];
 
-			Compass angle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
-
-			for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
-			{
-				Fix16 angleoffset = angle.Radians * (Fix16)i;
-				startpoints[i] = new PointXd(Trig.sides_ab(startrange, angleoffset));
-			}
 
 			if (!IsReplay)
 				FirstSetup();
 			else
 				ReplaySetup();
-			//setup the game peices
-            foreach (var ccobj in ControlledCombatObjects)
+
+			//setup the game peice locations
+
+            //sides start this distance from the center of the combat arena. 
+            Fix16 empstartrange = (Fix16)1500; //TODO check longest range weapon. startrange should be half this. (half? shouldn't it be a bit MORE than max range?) - no, since this is a radius.
+            PointXd[] empstartpoints = new PointXd[EmpiresArray.Count()];
+
+            Compass empstartangle = new Compass((Fix16)360 / (Fix16)EmpiresArray.Count(), false);
+
+            for (int i = 0; i <= EmpiresArray.Count() - 1; i++)
+            {
+                Fix16 angleoffset = empstartangle.Radians * (Fix16)i;
+                empstartpoints[i] = new PointXd(Trig.sides_ab(empstartrange, angleoffset));
+            }
+
+            foreach (CombatControlledObject ccobj in ControlledCombatObjects)
 			{
 				foreach (KeyValuePair<Empire, CombatEmpire> empire in Empires)
 				{
-					var ship = ccobj.WorkingObject;
+					ITargetable ship = ccobj.WorkingObject;
 					if (ship is ICombatant)
 					{
 						var c = (ICombatant)ship;
@@ -427,11 +432,22 @@ namespace FrEee.Game.Objects.Combat2
 				int empindex = EmpiresArray.IndexOf(ccobj.StartCombatant.Owner);
                 
                 ccobj.empire = Empires[ccobj.StartCombatant.Owner];
-                ccobj.strategy = new StragegyObject_Default();
+                //ccobj.strategy = new StragegyObject_Default();
 
-				ccobj.cmbt_loc = new PointXd(startpoints[empindex]); //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
+
+                int numobjs = ccobj.empire.ownships.Count;
+                
+                PointXd fleetloc = new PointXd(empstartpoints[empindex]);
+                Compass fleetheading = new Compass(fleetloc, new PointXd(0, 0, 0));
+
+                int distancebetweenships = 250 * ccobj.empire.ownships.IndexOf(ccobj);
+                Compass posanglefromfleetheading = new Compass(90, false);
+
+                PointXd shiploc = Trig.sides_ab(distancebetweenships, fleetheading.Degrees - posanglefromfleetheading.Degrees);
+
+                ccobj.cmbt_loc = fleetloc + shiploc; //todo add offeset from this for each ship put in a formation (atm this is just all ships in one position) ie + PointXd(x,y,z)
 				//thiscomobj.cmbt_face = new PointXd(0, 0, 0); // todo have the ships face the other fleet if persuing or towards the sector they were heading if not persuing. 
-				ccobj.cmbt_head = new Compass(ccobj.cmbt_loc, new PointXd(0, 0, 0));
+                ccobj.cmbt_head = new Compass(fleetheading.Degrees, false);
 				ccobj.cmbt_att = new Compass(0);
 				Fix16 speed = (Fix16)0;
 				if (ccobj.WorkingObject is Vehicle)
@@ -443,7 +459,9 @@ namespace FrEee.Game.Objects.Combat2
 
 			}
             foreach (var ccobj in ControlledCombatObjects)
-				commandAI(ccobj, 0);
+            {
+                commandAI(ccobj, 0);
+            }
 
 #if DEBUG
             Console.WriteLine("Done setting up combat Objects");
