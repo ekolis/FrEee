@@ -211,40 +211,57 @@ namespace FrEee.Utility.Extensions
 							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
 							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
 						};
-						if (Match(c))
+						if (Match(c) && !knownObjects.Contains(source))
 						{
 							var sv = sp.GetValue(source, null);
-							if (sv == null)
-								tp.SetValue(target, null, null);
-							else if (sv.GetType().IsValueType || sv is string)
-							{
-								tp.SetValue(target, sv, null);
-							}
-							else if (sv.GetType().IsArray)
-							{
-								// do sub object mapping
-								Array tv = (Array)((Array)sv).Clone();
-								Array.Clear(tv, 0, tv.Length);
-								Map(sv, tv);
-								tp.SetValue(target, tv, null);
-							}
-							else if (!knownObjects.Contains(source))
-							{
-								// do sub object mapping
-								knownObjects.Add(source);
-								var tv = sv.GetType().Instantiate();
-								Map(sv, tv);
-								tp.SetValue(target, tv, null);
-								knownObjects.Remove(source);
-							}
-							else
-							{
-								// otherwise object has already been mapped, so skip it to avoid stack overflow
-							}
+							var tv = CopyObject(source, sv);
+							sp.SetValue(target, tv, null);
 						}
 					}
 				}
 				knownObjects.Add(source);
+			}
+
+			private object CopyObject(object source, object sv)
+			{
+				if (sv == null)
+					return null;
+				else if (sv.GetType().IsValueType || sv is string)
+					return sv;
+				else if (sv.GetType().IsArray)
+				{
+					// do sub object mapping
+					var sa = (Array)sv;
+					Array ta = (Array)sa.Clone();
+					Array.Clear(ta, 0, ta.Length); // no references to original objects!
+					for (var i = 0; i < ta.Length; i++)
+					{
+						var sitem = sa.Cast<object>().ElementAt(i);
+						if (sitem != null)
+						{
+							var titem = CopyObject(sv, sitem);
+							if (ta.Rank == 1)
+								ta.SetValue(titem, i);
+							else if (ta.Rank == 2)
+							{
+								var width = ta.GetLength(0);
+								ta.SetValue(titem, i / width, i % width);
+							}
+							else
+								throw new InvalidOperationException("Arrays with more than 2 dimensions are not supported.");
+						}
+					}
+					return ta;
+				}
+				else
+				{
+					// do sub object mapping
+					knownObjects.Add(source);
+					var tv = sv.GetType().Instantiate();
+					Map(sv, tv);
+					knownObjects.Remove(source);
+					return tv;
+				}
 			}
 		}
 
