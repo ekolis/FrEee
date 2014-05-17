@@ -5,14 +5,6 @@ using FrEee.Game.Objects.Combat2;
 using NewtMath.f16;
 namespace FrEee.Tests.Game.Objects.Combat2
 {
-    [TestClass]
-    public class CombatObjectTests
-    {
-        [TestMethod]
-        public void TestMethod1()
-        {
-        }
-    }
 
     public class CombatTestObject //: CombatObject
     {
