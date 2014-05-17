@@ -660,6 +660,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNewTab.TabStop = false;
 			this.btnNewTab.Text = "(New Tab)";
 			this.btnNewTab.UseVisualStyleBackColor = false;
+            this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
 			// 
 			// pnlSubCommands
 			// 
