@@ -25,6 +25,7 @@ using FrEee.Modding.Interfaces;
 using FrEee.Modding.Enumerations;
 using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
+using NewtMath.f16; // TODO -remove this, just for testing
 
 namespace FrEee.Utility.Extensions
 {
@@ -215,6 +216,8 @@ namespace FrEee.Utility.Extensions
 						{
 							var sv = sp.GetValue(source, null);
 							var tv = CopyObject(source, sv);
+							if (sp.Name == "X")
+							{ }
 							sp.SetValue(target, tv, null);
 						}
 					}
@@ -226,7 +229,8 @@ namespace FrEee.Utility.Extensions
 			{
 				if (sv == null)
 					return null;
-				else if (sv.GetType().IsValueType || sv is string)
+				var type = sv.GetType();
+				if (sv.GetType().IsValueType || sv is string)
 					return sv;
 				else if (sv.GetType().IsArray)
 				{
@@ -239,7 +243,7 @@ namespace FrEee.Utility.Extensions
 						var sitem = sa.Cast<object>().ElementAt(i);
 						if (sitem != null)
 						{
-							var titem = CopyObject(sv, sitem);
+							var titem = CopyObject(parent, sitem);
 							if (ta.Rank == 1)
 								ta.SetValue(titem, i);
 							else if (ta.Rank == 2)
@@ -252,6 +256,41 @@ namespace FrEee.Utility.Extensions
 						}
 					}
 					return ta;
+				}
+				else if (typeof(IEnumerable).IsAssignableFrom(type))
+				{
+					var sc = (IEnumerable)sv;
+					var tc = sv.GetType().Instantiate();
+					if (type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1).Any())
+					{
+						// collection
+						var adder = type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1).Single();
+						foreach (var si in sc)
+						{
+							// copy object and add to collection
+							var ti = CopyObject(parent, si);
+							adder.Invoke(tc, new object[] { ti });
+						}
+					}
+					else if (type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 2).Any())
+					{
+						// dictionary
+						var adder = type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 2).Single();
+						foreach (var skvp in sc)
+						{
+							// copy key-value pair and add to collection
+							var sk = skvp.GetPropertyValue("Key");
+							var skv = skvp.GetPropertyValue("Value");
+							var tk = CopyObject(parent, sk);
+							var tkv = CopyObject(parent, skv);
+							adder.Invoke(tc, new object[] { tk, tkv });
+						}
+					}
+					else
+					{
+						throw new ArgumentException("Unknown enumerable type " + type + "; must be string/array/collection/dictionary.");
+					}
+					return tc;
 				}
 				else
 				{
