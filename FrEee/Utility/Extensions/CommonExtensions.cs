@@ -172,6 +172,13 @@ namespace FrEee.Utility.Extensions
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
+			public OnlySafePropertiesInjection(IEnumerable<object> known = null)
+			{
+				knownObjects = known == null ? new HashSet<object>() : new HashSet<object>(known);
+			}
+
+			private ICollection<object> knownObjects;
+
 			protected override bool Match(ConventionInfo c)
 			{
 				return
@@ -221,15 +228,18 @@ namespace FrEee.Utility.Extensions
 								Map(sv, tv);
 								tp.SetValue(target, tv, null);
 							}
-							else
+							else if (!knownObjects.Contains(source))
 							{
 								// do sub object mapping
+								knownObjects.Add(source);
 								var tv = sv.GetType().Instantiate();
 								Map(sv, tv);
 								tp.SetValue(target, tv, null);
-							}
+								knownObjects.Remove(source);
+							} // otherwise object has already been mapped, so skip it to avoid stack overflow
 						}
 					}
+					knownObjects.Add(source);
 				}
 			}
 		}
