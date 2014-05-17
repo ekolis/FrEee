@@ -78,6 +78,10 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					SpaceVehicle scopy = (SpaceVehicle)copy;
 
+					// delete the copied design
+					scopy.Design.Dispose();
+					scopy.Design = ((SpaceVehicle)obj).Design;
+
 					// copy over the components individually so they can take damage without affecting the starting state
 					scopy.Components.Clear();
 					foreach (var comp in ((SpaceVehicle)obj).Components)
