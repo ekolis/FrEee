@@ -726,11 +726,21 @@ namespace FrEee.WinForms.Forms
 
 		private void RemoveTab(FlowLayoutPanel tab)
 		{
+            // if currentTab is removed, select previous one. If it does not exist select next one. If does not exist or is the new tab button, create it and select it
 			if (currentTab == tab)
 			{
-				galaxyView.SelectedStarSystem = null;
-				starSystemView.StarSystem = null;
-				currentTab = null;
+                var nextTabIndexToSelect = pnlTabs.Controls.IndexOf(tab) - 1;
+                if (nextTabIndexToSelect < 0)
+                    nextTabIndexToSelect = 1;
+
+                if (nextTabIndexToSelect > pnlTabs.Controls.Count || !(pnlTabs.Controls[nextTabIndexToSelect] is FlowLayoutPanel))
+                {
+                    SelectTab(AddTab());
+                }
+                else
+                {
+                    SelectTab(pnlTabs.Controls[nextTabIndexToSelect] as FlowLayoutPanel);
+                }
 			}
 			pnlTabs.Controls.Remove(tab);
 		}
