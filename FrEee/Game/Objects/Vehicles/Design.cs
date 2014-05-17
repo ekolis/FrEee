@@ -17,6 +17,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Abilities;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
+using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -517,7 +518,9 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			else if (emp.KnownDesigns.Contains(this))
+			// do we already know the design? or did we engage in combat with it this turn?
+			// TODO - "battle manager" so we're not tied to a specific combat implementation
+			else if (emp.KnownDesigns.Contains(this) || Battle_Space.Current.Any(b => b.ActualCombatants.OfType<IVehicle>().Any(v => v.Owner == emp) && b.ActualCombatants.OfType<IVehicle>().Any(v => v.Design == this))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
