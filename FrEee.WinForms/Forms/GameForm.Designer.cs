@@ -648,6 +648,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlTabs.Name = "pnlTabs";
 			this.pnlTabs.Size = new System.Drawing.Size(137, 634);
 			this.pnlTabs.TabIndex = 0;
+            this.pnlTabs.DoubleClick += new System.EventHandler(this.btnNewTab_Click);
 			// 
 			// btnNewTab
 			// 
