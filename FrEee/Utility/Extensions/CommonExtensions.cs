@@ -173,12 +173,16 @@ namespace FrEee.Utility.Extensions
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			public OnlySafePropertiesInjection(IEnumerable<object> known = null)
+			public OnlySafePropertiesInjection(IDictionary<object, object> known = null)
 			{
-				knownObjects = known == null ? new HashSet<object>() : new HashSet<object>(known);
+				if (known != null)
+				{
+					foreach (var kvp in known)
+						knownObjects.Add(kvp);
+				}
 			}
 
-			private ICollection<object> knownObjects;
+			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object,object>();
 
 			protected override bool Match(ConventionInfo c)
 			{
@@ -212,23 +216,31 @@ namespace FrEee.Utility.Extensions
 							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
 							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
 						};
-						if (Match(c) && !knownObjects.Contains(source))
+						if (Match(c))
 						{
 							var sv = sp.GetValue(source, null);
-							var tv = CopyObject(source, sv);
-							if (sp.Name == "X")
-							{ }
-							sp.SetValue(target, tv, null);
+							if (sv == null)
+								sp.SetValue(target, null, null);
+							else if (!knownObjects.ContainsKey(sv))
+							{
+								var tv = CopyObject(source, sv);
+								sp.SetValue(target, tv, null);
+							}
+							else
+								sp.SetValue(target, knownObjects[sv], null);
 						}
 					}
 				}
-				knownObjects.Add(source);
+				if (!knownObjects.ContainsKey(source))
+					knownObjects.Add(source, target);
 			}
 
 			private object CopyObject(object parent, object sv)
 			{
 				if (sv == null)
 					return null;
+				if (knownObjects.ContainsKey(sv))
+					return knownObjects[sv];
 				var type = sv.GetType();
 				if (sv.GetType().IsValueType || sv is string)
 					return sv;
@@ -243,7 +255,7 @@ namespace FrEee.Utility.Extensions
 						var sitem = sa.Cast<object>().ElementAt(i);
 						if (sitem != null)
 						{
-							var titem = CopyObject(parent, sitem);
+							var titem = CopyObject(sv, sitem);
 							if (ta.Rank == 1)
 								ta.SetValue(titem, i);
 							else if (ta.Rank == 2)
@@ -268,7 +280,7 @@ namespace FrEee.Utility.Extensions
 						foreach (var si in sc)
 						{
 							// copy object and add to collection
-							var ti = CopyObject(parent, si);
+							var ti = CopyObject(sv, si);
 							adder.Invoke(tc, new object[] { ti });
 						}
 					}
@@ -281,8 +293,8 @@ namespace FrEee.Utility.Extensions
 							// copy key-value pair and add to collection
 							var sk = skvp.GetPropertyValue("Key");
 							var skv = skvp.GetPropertyValue("Value");
-							var tk = CopyObject(parent, sk);
-							var tkv = CopyObject(parent, skv);
+							var tk = CopyObject(sv, sk);
+							var tkv = CopyObject(sv, skv);
 							adder.Invoke(tc, new object[] { tk, tkv });
 						}
 					}
@@ -295,8 +307,8 @@ namespace FrEee.Utility.Extensions
 				else
 				{
 					// do sub object mapping
-					knownObjects.Add(parent);
 					var tv = sv.GetType().Instantiate();
+					knownObjects.Add(sv, tv);
 					Map(sv, tv);
 					knownObjects.Remove(parent);
 					return tv;
