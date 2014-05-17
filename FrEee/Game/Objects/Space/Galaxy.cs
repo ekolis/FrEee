@@ -973,6 +973,16 @@ namespace FrEee.Game.Objects.Space
 			foreach (var order in Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
 				order.Dispose();
 
+			// update known designs
+			foreach (var emp in Current.Empires)
+			{
+				foreach (var design in Current.Referrables.OfType<IDesign>())
+				{
+					if (design.CheckVisibility(emp) >= Visibility.Scanned && !emp.KnownDesigns.Contains(design))
+						emp.KnownDesigns.Add(design);
+				}
+			}
+
 			// clear obsolete sensor ghosts
 			foreach (var emp in Current.Empires)
 			{

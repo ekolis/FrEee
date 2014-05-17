@@ -14,7 +14,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
-		IDesign Design { get; }
+		IDesign Design { get; set; }
 
 		/// <summary>
 		/// Cost to maintain this vehicle per turn.
