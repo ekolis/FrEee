@@ -29,7 +29,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
     public class testships
     {
         //Galaxy gal = new Galaxy();
-        public List<SimulatedEmpire> empires = new List<SimulatedEmpire>();
+        public List<Empire> empires = new List<Empire>();
         List<Design<Ship>> designs = new List<Design<Ship>>();
         public List<SpaceVehicle> ships = new List<SpaceVehicle>();
         Hull<Ship> hull;
@@ -39,14 +39,14 @@ namespace FrEee.Tests.Game.Objects.Combat2
         public testships()
         {
 
-            empires.Add(new SimulatedEmpire(new Empire()));
-            empires.Add(new SimulatedEmpire(new Empire()));
-            empires[0].Empire.Name = "TestEmpOne";
-            empires[0].Empire.Culture = new Culture();
-            empires[0].Empire.PrimaryRace = new Race();
-            empires[1].Empire.Name = "TestEmpTwo";
-            empires[1].Empire.Culture = new Culture();
-            empires[1].Empire.PrimaryRace = new Race();
+			empires.Add(new Empire());
+            empires.Add(new Empire());
+            empires[0].Name = "TestEmpOne";
+            empires[0].Culture = new Culture();
+            empires[0].PrimaryRace = new Race();
+            empires[1].Name = "TestEmpTwo";
+            empires[1].Culture = new Culture();
+            empires[1].PrimaryRace = new Race();
             Mod.Current = new Mod();
             
             var mod = Mod.Load(null);
@@ -100,10 +100,10 @@ namespace FrEee.Tests.Game.Objects.Combat2
             components.Add("Wpn_SK", missleLauncher);
 
             //create designs and ships
-            designs.Add(testdesign0(empires[0].Empire));
-            ships.Add(testship0(empires[0], designs[0], 1));
-            designs.Add(testdesign0(empires[1].Empire));
-            ships.Add(testship0(empires[1], designs[1], 2));
+            designs.Add(testdesign0(empires[0]));
+            ships.Add(testship0(empires[0], designs[0]));
+            designs.Add(testdesign0(empires[1]));
+            ships.Add(testship0(empires[1], designs[1]));
 
         }
 
@@ -149,16 +149,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
             return design;
         }
 
-        public SpaceVehicle testship0(SimulatedEmpire emp, Design<Ship> dsn, int staticID)
+        public SpaceVehicle testship0(Empire emp, Design<Ship> dsn)
         {
-            var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
-            sv.SpaceObject.ID = staticID;
-            var v = (SpaceVehicle)sv.SpaceObject;
-            v.Owner = emp.Empire;
+			var sv = dsn.Instantiate();
+            sv.Owner = emp;
 
-            emp.SpaceObjects.Add(sv);
-
-            return v;
+            return sv;
         }
     }
 
@@ -201,8 +197,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			// setup
 			Galaxy gal = new Galaxy();
 			testships testships = new testships();
-			gal.Empires.Add(testships.empires[0].Empire);
-			gal.Empires.Add(testships.empires[1].Empire);
+			gal.Empires.Add(testships.empires[0]);
+			gal.Empires.Add(testships.empires[1]);
 			StarSystem sys = new StarSystem(1);
 			gal.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new System.Drawing.Point()));
 			Sector location = new Sector(sys, new System.Drawing.Point());
