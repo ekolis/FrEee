@@ -236,11 +236,15 @@ namespace FrEee.Utility.Extensions
 								Map(sv, tv);
 								tp.SetValue(target, tv, null);
 								knownObjects.Remove(source);
-							} // otherwise object has already been mapped, so skip it to avoid stack overflow
+							}
+							else
+							{
+								// otherwise object has already been mapped, so skip it to avoid stack overflow
+							}
 						}
 					}
-					knownObjects.Add(source);
 				}
+				knownObjects.Add(source);
 			}
 		}
 
