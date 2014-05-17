@@ -103,7 +103,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             designs.Add(testdesign0(empires[0].Empire));
             ships.Add(testship0(empires[0], designs[0], 1));
             designs.Add(testdesign0(empires[1].Empire));
-            ships.Add(testship0(empires[1], designs[0], 2));
+            ships.Add(testship0(empires[1], designs[1], 2));
 
         }
 
@@ -192,6 +192,34 @@ namespace FrEee.Tests.Game.Objects.Combat2
             
         }
 
+		/// <summary>
+		/// Tests whether empires can learn designs by engaging in combat.
+		/// </summary>
+		[TestMethod]
+		public void Combat_LearnDesigns()
+		{
+			// setup
+			Galaxy gal = new Galaxy();
+			testships testships = new testships();
+			StarSystem sys = new StarSystem(1);
+			gal.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new System.Drawing.Point()));
+			Sector location = new Sector(sys, new System.Drawing.Point());
+			List<SpaceVehicle> ships = testships.ships;
 
+			foreach (SpaceVehicle ship in ships)
+			{
+				location.Place(ship);
+			}
+
+			// process turn
+			Galaxy.ProcessTurn(false);
+
+			// was there a battle?
+			Assert.AreEqual(1, gal.Battles.Count);
+
+			// did we learn designs?
+			Assert.AreEqual(2, gal.Empires[0].KnownDesigns.Count);
+			Assert.AreEqual(2, gal.Empires[1].KnownDesigns.Count);
+		}
     }
 }

@@ -87,7 +87,7 @@ namespace FrEee.Game.Objects.Combat2
 						scopy.Components.Add(ccopy);
 					}
 
-					if (scopy.Owner != obj.Owner)
+					if (scopy.Owner != obj.Owner && scopy.Owner != null)
 						scopy.Owner.Dispose(); // don't need extra empires!
 					scopy.Owner = obj.Owner;
                     StartCombatants.Add(obj.ID, scopy);
