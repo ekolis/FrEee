@@ -521,8 +521,8 @@ namespace FrEee.Game.Objects.Vehicles
 			// do we already know the design? or did we engage in combat with it this turn?
 			// TODO - "battle manager" so we're not tied to a specific combat implementation
 			else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
-				b.ActualCombatants.Values.OfType<IVehicle>().Any(v => v.Owner == emp) &&
-				b.ActualCombatants.Values.OfType<IVehicle>().Any(v => v.Design == this)))
+				b.StartCombatants.Values.OfType<IVehicle>().Any(v => v.Owner == emp) &&
+				b.StartCombatants.Values.OfType<IVehicle>().Any(v => v.Design == this)))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}
@@ -604,5 +604,15 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public IEnumerable<T> Vehicles
+		{
+			get { return Galaxy.Current.Referrables.OfType<T>().Where(v => v.Design == this); }
+		}
+
+		public IEnumerable<T> RealVehicles
+		{
+			get { return Vehicles.Where(v => !v.IsMemory); }
+		}
 	}
 }
