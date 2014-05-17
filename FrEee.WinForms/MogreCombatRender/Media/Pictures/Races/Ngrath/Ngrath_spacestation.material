@@ -1,0 +1,14 @@
+material Ngrath_spacestationngrt_spst
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Ngrath_SPST.png
+                filtering trilinear
+            }
+        }
+    }
+}

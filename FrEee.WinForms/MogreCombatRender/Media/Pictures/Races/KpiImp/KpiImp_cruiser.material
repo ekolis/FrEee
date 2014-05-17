@@ -1,0 +1,14 @@
+material KpiImp_cruiserMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_CRUR.png
+                filtering trilinear
+            }
+        }
+    }
+}

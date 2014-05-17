@@ -1,0 +1,14 @@
+material KpiImp_escortMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_ESCT.png
+                filtering trilinear
+            }
+        }
+    }
+}

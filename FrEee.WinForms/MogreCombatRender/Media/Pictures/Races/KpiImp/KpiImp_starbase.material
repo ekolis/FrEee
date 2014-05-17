@@ -1,0 +1,14 @@
+material KpiImp_starbaseMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+material KpiImp_satelliteMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_satelliteMaterial2
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_satelliteMaterial3
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_satelliteMaterial4
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}
+
+material KpiImp_satelliteMaterial5
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture color.bmp
+                filtering trilinear
+            }
+        }
+    }
+}

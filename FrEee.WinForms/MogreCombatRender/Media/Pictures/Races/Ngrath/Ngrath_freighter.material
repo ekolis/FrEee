@@ -1,0 +1,14 @@
+material Ngrath_freighterPDX1_-_Default
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Ngrath_FRGT.png
+                filtering trilinear
+            }
+        }
+    }
+}

@@ -1,0 +1,794 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0EE6CCB3-0A56-4353-B9D1-6D2D6C5737A3}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrEee.WinForms</RootNamespace>
+    <AssemblyName>FrEee</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>FrEee.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>FrEee.WinForms.Program</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="FixMath">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\FixMath.dll</HintPath>
+    </Reference>
+    <Reference Include="Mogre, Version=1.7.1.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MogreCombatRender\lib\Mogre.dll</HintPath>
+    </Reference>
+    <Reference Include="MOIS, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>MogreCombatRender\lib\MOIS.dll</HintPath>
+    </Reference>
+    <Reference Include="NewtMath">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\NewtMath.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>MogreCombatRender\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.framework">
+      <HintPath>..\FrEee\Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Forms\CombatSimulatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CombatSimulatorForm.Designer.cs">
+      <DependentUpon>CombatSimulatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GameGridView.Designer.cs">
+      <DependentUpon>GameGridView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\BattleResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\BattleResultsForm.Designer.cs">
+      <DependentUpon>BattleResultsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModErrorsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModErrorsForm.Designer.cs">
+      <DependentUpon>ModErrorsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MogreCombatForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MogreCombatForm.Designer.cs">
+      <DependentUpon>MogreCombatForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TechTreeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TechTreeForm.Designer.cs">
+      <DependentUpon>TechTreeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\CamaraMan.cs" />
+    <Compile Include="MogreCombatRender\GfxEfx.cs" />
+    <Compile Include="MogreCombatRender\MogreFreeMain.cs" />
+    <Compile Include="Controls\StarSystemReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StarSystemReport.Designer.cs">
+      <DependentUpon>StarSystemReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\MountReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\MountReport.Designer.cs">
+      <DependentUpon>MountReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FleetReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FleetReport.Designer.cs">
+      <DependentUpon>FleetReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EmpireReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\EmpireReport.Designer.cs">
+      <DependentUpon>EmpireReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResourceQuantityDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceQuantityDisplay.Designer.cs">
+      <DependentUpon>ResourceQuantityDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridView\Filter.cs" />
+    <Compile Include="DataGridView\Format.cs" />
+    <Compile Include="Forms\CultureComparisonForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CultureComparisonForm.Designer.cs">
+      <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DiplomacyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DiplomacyForm.Designer.cs">
+      <DependentUpon>DiplomacyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmpireListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmpireListForm.Designer.cs">
+      <DependentUpon>EmpireListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ShipListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ShipListForm.Designer.cs">
+      <DependentUpon>ShipListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\GfxObj.cs" />
+    <Compile Include="MogreCombatRender\GfxCfg.cs" />
+    <Compile Include="MogreCombatRender\StrategiesDesigner\Canvasdata.cs" />
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.Designer.cs">
+      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.Designer.cs">
+      <DependentUpon>UCLinkObj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.Designer.cs">
+      <DependentUpon>UCStratBlock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.Designer.cs">
+      <DependentUpon>UCStrat_Userinput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.Designer.cs">
+      <DependentUpon>UCWaypoint.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.Designer.cs">
+      <DependentUpon>UserControlBaseObj.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.Designer.cs">
+      <DependentUpon>funclist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.Designer.cs">
+      <DependentUpon>StratMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MogreCombatRender\TranslateMogrePhys.cs" />
+    <Compile Include="Objects\ClientSettings.cs" />
+    <Compile Include="Controls\AbilityTreeView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AbilityTreeView.Designer.cs">
+      <DependentUpon>AbilityTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AptitudePicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AptitudePicker.Designer.cs">
+      <DependentUpon>AptitudePicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AsteroidFieldReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AsteroidFieldReport.Designer.cs">
+      <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Cargolist.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Cargolist.Designer.cs">
+      <DependentUpon>Cargolist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ComponentReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ComponentReport.Designer.cs">
+      <DependentUpon>ComponentReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FacilityReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\FacilityReport.Designer.cs">
+      <DependentUpon>FacilityReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LineGraph.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\LineGraph.Designer.cs">
+      <DependentUpon>LineGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WarpPointReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\WarpPointReport.Designer.cs">
+      <DependentUpon>WarpPointReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DesignReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\DesignReport.Designer.cs">
+      <DependentUpon>DesignReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GalaxyView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GalaxyView.Designer.cs">
+      <DependentUpon>GalaxyView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GameButton.Designer.cs">
+      <DependentUpon>GameButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GamePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GamePanel.Designer.cs">
+      <DependentUpon>GamePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GamePictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GamePictureBox.Designer.cs">
+      <DependentUpon>GamePictureBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameProgressBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\GameProgressBar.Designer.cs">
+      <DependentUpon>GameProgressBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameTabControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GameTabControl.Designer.cs">
+      <DependentUpon>GameTabControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GameTableLayoutPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\GameTableLayoutPanel.Designer.cs">
+      <DependentUpon>GameTableLayoutPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\Pager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\Pager.Designer.cs">
+      <DependentUpon>Pager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlanetReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\PlanetReport.Designer.cs">
+      <DependentUpon>PlanetReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ResourceDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\ResourceDisplay.Designer.cs">
+      <DependentUpon>ResourceDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SpaceVehicleReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SpaceVehicleReport.Designer.cs">
+      <DependentUpon>SpaceVehicleReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\SearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\SearchBox.Designer.cs">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StarReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StarReport.Designer.cs">
+      <DependentUpon>StarReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StarSystemView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\StarSystemView.Designer.cs">
+      <DependentUpon>StarSystemView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StormReport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\StormReport.Designer.cs">
+      <DependentUpon>StormReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TraitPicker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\TraitPicker.Designer.cs">
+      <DependentUpon>TraitPicker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataGridView\DataGridViewProgressCell.cs" />
+    <Compile Include="DataGridView\DataGridViewProgressColumn.cs" />
+    <Compile Include="DataGridView\GridColumnConfig.cs" />
+    <Compile Include="DataGridView\Sort.cs" />
+    <Compile Include="Forms\CargoTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\CargoTransferForm.Designer.cs">
+      <DependentUpon>CargoTransferForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConstructionQueueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConstructionQueueForm.Designer.cs">
+      <DependentUpon>ConstructionQueueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ConstructionQueueListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ConstructionQueueListForm.Designer.cs">
+      <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\EmpireSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\EmpireSetupForm.Designer.cs">
+      <DependentUpon>EmpireSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FleetTransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FleetTransferForm.Designer.cs">
+      <DependentUpon>FleetTransferForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HostConsoleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HostConsoleForm.Designer.cs">
+      <DependentUpon>HostConsoleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ModPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ModPickerForm.Designer.cs">
+      <DependentUpon>ModPickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MountPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MountPickerForm.Designer.cs">
+      <DependentUpon>MountPickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\DesignListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DesignListForm.Designer.cs">
+      <DependentUpon>DesignListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GameForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameForm.Designer.cs">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GameSetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameSetupForm.Designer.cs">
+      <DependentUpon>GameSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HullPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HullPickerForm.Designer.cs">
+      <DependentUpon>HullPickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainMenuForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainMenuForm.Designer.cs">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\PlanetListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PlanetListForm.Designer.cs">
+      <DependentUpon>PlanetListForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\StatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\StatusForm.Designer.cs">
+      <DependentUpon>StatusForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\ResearchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ResearchForm.Designer.cs">
+      <DependentUpon>ResearchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SearchBoxResultsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SearchBoxResultsForm.Designer.cs">
+      <DependentUpon>SearchBoxResultsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\SpaceObjectPickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\SpaceObjectPickerForm.Designer.cs">
+      <DependentUpon>SpaceObjectPickerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\VehicleDesignForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\VehicleDesignForm.Designer.cs">
+      <DependentUpon>VehicleDesignForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IBindable.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\Extensions\GuiExtensions.cs" />
+    <Compile Include="DataGridView\GridConfig.cs" />
+    <EmbeddedResource Include="Forms\CombatSimulatorForm.resx">
+      <DependentUpon>CombatSimulatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AbilityTreeView.resx">
+      <DependentUpon>AbilityTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AptitudePicker.resx">
+      <DependentUpon>AptitudePicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AsteroidFieldReport.resx">
+      <DependentUpon>AsteroidFieldReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Cargolist.resx">
+      <DependentUpon>Cargolist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ComponentReport.resx">
+      <DependentUpon>ComponentReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GameGridView.resx">
+      <DependentUpon>GameGridView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StarSystemReport.resx">
+      <DependentUpon>StarSystemReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\MountReport.resx">
+      <DependentUpon>MountReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FleetReport.resx">
+      <DependentUpon>FleetReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\EmpireReport.resx">
+      <DependentUpon>EmpireReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FacilityReport.resx">
+      <DependentUpon>FacilityReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceQuantityDisplay.resx">
+      <DependentUpon>ResourceQuantityDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\WarpPointReport.resx">
+      <DependentUpon>WarpPointReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DesignReport.resx">
+      <DependentUpon>DesignReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GameProgressBar.resx">
+      <DependentUpon>GameProgressBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Pager.resx">
+      <DependentUpon>Pager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\PlanetReport.resx">
+      <DependentUpon>PlanetReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ResourceDisplay.resx">
+      <DependentUpon>ResourceDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SpaceVehicleReport.resx">
+      <DependentUpon>SpaceVehicleReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\SearchBox.resx">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StarReport.resx">
+      <DependentUpon>StarReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StormReport.resx">
+      <DependentUpon>StormReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\TraitPicker.resx">
+      <DependentUpon>TraitPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\BattleResultsForm.resx">
+      <DependentUpon>BattleResultsForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CargoTransferForm.resx">
+      <DependentUpon>CargoTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConstructionQueueForm.resx">
+      <DependentUpon>ConstructionQueueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ConstructionQueueListForm.resx">
+      <DependentUpon>ConstructionQueueListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CultureComparisonForm.resx">
+      <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DiplomacyForm.resx">
+      <DependentUpon>DiplomacyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmpireListForm.resx">
+      <DependentUpon>EmpireListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\EmpireSetupForm.resx">
+      <DependentUpon>EmpireSetupForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FleetTransferForm.resx">
+      <DependentUpon>FleetTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModErrorsForm.resx">
+      <DependentUpon>ModErrorsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MogreCombatForm.resx">
+      <DependentUpon>MogreCombatForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HostConsoleForm.resx">
+      <DependentUpon>HostConsoleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ModPickerForm.resx">
+      <DependentUpon>ModPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MountPickerForm.resx">
+      <DependentUpon>MountPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DesignListForm.resx">
+      <DependentUpon>DesignListForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameForm.resx">
+      <DependentUpon>GameForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameSetupForm.resx">
+      <DependentUpon>GameSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HullPickerForm.resx">
+      <DependentUpon>HullPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainMenuForm.resx">
+      <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ShipListForm.resx">
+      <DependentUpon>ShipListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PlanetListForm.resx">
+      <DependentUpon>PlanetListForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\StatusForm.resx">
+      <DependentUpon>StatusForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ResearchForm.resx">
+      <DependentUpon>ResearchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SearchBoxResultsForm.resx">
+      <DependentUpon>SearchBoxResultsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\SpaceObjectPickerForm.resx">
+      <DependentUpon>SpaceObjectPickerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TechTreeForm.resx">
+      <DependentUpon>TechTreeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
+      <DependentUpon>VehicleDesignForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.resx">
+      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.resx">
+      <DependentUpon>UCLinkObj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.resx">
+      <DependentUpon>UCStratBlock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.resx">
+      <DependentUpon>UserControlBaseObj.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\funclist.resx">
+      <DependentUpon>funclist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\StratMainForm.resx">
+      <DependentUpon>StratMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\DataSources\FrEee.Game.Interfaces.IHull.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.ConstructionQueue.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.Culture.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Civilization.EmpireStatus.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Mount.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Objects.Technology.Technology.datasource" />
+    <None Include="Properties\DataSources\FrEee.Game.Setup.WarpPointPlacementStrategies.WarpPointPlacementStrategy.datasource" />
+    <None Include="Properties\DataSources\FrEee.Modding.StellarObjectSize.datasource" />
+    <None Include="Properties\DataSources\FrEee.Modding.Templates.GalaxyTemplate.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FrEee\FrEee.csproj">
+      <Project>{E19A4330-CE19-45D6-BCFC-375E065EF041}</Project>
+      <Name>FrEee</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FrEee.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\check_ethernet_clear.bmp" />
+    <None Include="Resources\check_ethernet_checked.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MogreCombatRender\Media\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(TargetDir)GameSetups\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Docs" "$(TargetDir)Docs\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee\Scripts" "$(TargetDir)Scripts\" /y /e /s
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\lib\Ogrelib\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\MogrePlugins\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Ogrecfg\*.*" "$(TargetDir)" /y
+xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Media" "$(TargetDir)" /y /e /s
+
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

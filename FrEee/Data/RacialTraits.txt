@@ -1,0 +1,224 @@
+=======================================================================================
+RACIAL TRAITS DATA FILE
+=======================================================================================
+
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+Name                  := Advanced Power Conservation
+Description           := Supply usage by all space vehicles is reduced by 25%. 
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Supply Cost
+Value 1               := -25
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Mechanoids
+Description           := Planets are not affected by plagues.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := No Plagues
+Value 1               := 0
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Lucky
+Description           := Half the chance for bad events.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Luck
+Value 1               := -50
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Natural Merchants
+Description           := Systems do not require spaceports to get resources to the Empire.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := No Spaceports
+Value 1               := 0
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Propulsion Experts
+Description           := All space vehicles get 1 additional movement point.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Vehicle Speed
+Value 1               := 1
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Ancient Race
+Description           := Empire has seen the entire galaxy at the start of the game.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Galaxy Seen
+Value 1               := 0
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Advanced Storage Techniques
+Description           := Planets can store 120% of normal capacity.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Planet Storage Space
+Value 1               := 20
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Hardy Industrialists
+Description           := Planetary Space Yards produce at 125% of their normal rate.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1000
+Trait Type            := Planetary SY Rate
+Value 1               := 25
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Psychic
+Description           := Gains access to the Psychic Technology Tree.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1500
+Trait Type            := Tech Area
+Value 1               := 1
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Deeply Religious
+Description           := Gains access to the Applied Religion Technology Tree.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1500
+Trait Type            := Tech Area
+Value 1               := 2
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Temporal Knowledge
+Description           := Gains access to the Temporal Technology Tree.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1500
+Trait Type            := Tech Area
+Value 1               := 3
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Crystallurgy
+Description           := Gains access to the Crystallurgy Technology Tree.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1500
+Trait Type            := Tech Area
+Value 1               := 4
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Organic Manipulation
+Description           := Gains access to the Organic Technology Tree.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 1500
+Trait Type            := Tech Area
+Value 1               := 5
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+Name                  := Emotionless
+Description           := Populations do not grow angry or happy.
+Pic Num               := 0
+General Type          := Advantage
+Cost                  := 3000
+Trait Type            := Population Emotionless
+Value 1               := 0
+Value 2               := 0
+Required Trait 1      := None
+Required Trait 2      := None
+Required Trait 3      := None
+Restricted Trait 1    := None
+Restricted Trait 2    := None
+Restricted Trait 3    := None
+
+=======================================================================================
+*END*
+=======================================================================================
+

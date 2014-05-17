@@ -1,0 +1,14 @@
+material Ngrath_colonyshipPDX1_-_Default
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture Ngrath_COL.png
+                filtering trilinear
+            }
+        }
+    }
+}

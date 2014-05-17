@@ -1,0 +1,8 @@
+syntax: glob
+bin
+obj
+*.suo
+Thumbs.db
+*.csproj.user
+*.userprefs
+packages/

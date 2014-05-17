@@ -1,0 +1,14 @@
+material KpiImp_BaseShipRingMaterial1
+{
+    technique
+    {
+        pass
+        {
+            texture_unit
+            {
+                texture KpiImp_SSTA.png
+                filtering trilinear
+            }
+        }
+    }
+}
