@@ -91,5 +91,10 @@ namespace FrEee.Utility
 		{
 			return new SafeType(t);
 		}
+
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }
