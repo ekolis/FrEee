@@ -126,7 +126,6 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             var design = new Design<Ship>();
             
-            designs.Add(design);
 
             //gal.AssignID(design);
             Galaxy.Current.AssignID(design);
