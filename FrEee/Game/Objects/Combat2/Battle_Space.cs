@@ -706,7 +706,7 @@ namespace FrEee.Game.Objects.Combat2
             //Console.WriteLine("Rangettgt " + locdistance3);
 #endif
             
-            if (locdistance <= comSek.cmbt_vel.Length)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
+            if (locdistance <= comSek.cmbt_vel.Length / TicksPerSecond)//erm, I think? (if we're as close as we're going to get in one tick) could screw up at high velocities.
             {
 #if DEBUG
                 Console.WriteLine("ProxDetonation!");
