@@ -723,10 +723,10 @@ namespace FrEee.Game.Objects.Combat2
                 {
 					CombatControlledObject ccTarget = (CombatControlledObject)target;
                     var target_icomobj = ccTarget.WorkingObject;
-                    var shot = new Combat.Shot(launcher, target_icomobj, 0);
+                    //var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
-                    int damage = shot.Damage;
-                    combatDamage(battletick, target, comSek.launcher, damage, comSek.getDice());
+                    //int damage = shot.Damage;
+                    combatDamage(battletick, target, comSek.launcher, 0, comSek.getDice());
                     if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
                         target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
@@ -923,9 +923,9 @@ namespace FrEee.Game.Objects.Combat2
             else
             {
                 //*write* the event
-                target_event = new CombatTakeFireEvent(tick, target, target.cmbt_loc, false);
+                target_event = new CombatTakeFireEvent(tick, target, target.cmbt_loc, false); //false since we don't know if it's going to hit yet.
                 target_event.BulletNode = seeker;
-                seeker.seekertargethit = target_event;
+                seeker.seekertargethit = target_event; //seeker stores a link to the event so we can flag the event has having hit the ship later.
             }
 
             return target_event;
@@ -935,7 +935,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             CombatTakeFireEvent target_event = null;
 
-            int rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
+           
             Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
             //set target tick for the future.
             int targettic = tick + (int)boltTTT;
@@ -998,8 +998,8 @@ namespace FrEee.Game.Objects.Combat2
             }
             else
             { //write the event.
-                Fix16 rangetotarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);//Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
-                int rangeForDamageCalcs = rangetotarget / (Fix16)1000;
+                
+                
                 target_event = new CombatTakeFireEvent(targettick, target, target.cmbt_loc, hit);
             }
             return target_event;
@@ -1015,7 +1015,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
 			var wpninfo = weapon.weapon.Template.ComponentTemplate.WeaponInfo;
 			Fix16 rangeForDamageCalcs = (Fix16)0;
-            
+            Fix16 rangetotarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);//Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
 
 			int targettic = battletick;
 
@@ -1050,25 +1050,28 @@ namespace FrEee.Game.Objects.Combat2
 			else if (weapon.weaponType == "Bolt")
 			{
                 target_event = FireBolt(battletick, attacker, weapon, target, hit);
+                rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
 			}
 
 			else //not bolt, should be a beam.
 			{
                 target_event = FireBeam(battletick, attacker, weapon, target, hit);
+                rangeForDamageCalcs = rangetotarget / (Fix16)1000;
 			}
 
 			rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
 
-			if (hit && !target_icomobj.IsDestroyed)
+			if (hit && !target_icomobj.IsDestroyed && weapon.weaponType != "Seeker")
 			{
-				var shot = new Combat.Shot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
-				//defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
-				int damage = shot.Damage;
-				combatDamage(battletick, target, weapon, damage, attacker.getDice());
-				if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
-					target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
-				if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
-					target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
+                combatDamage(battletick, target, weapon, rangeForDamageCalcs, attacker.getDice());
+                //var shot = new CombatShot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
+                ////defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+                //int damage = shot.Damage;
+                //combatDamage(battletick, target, weapon, damage, attacker.getDice());
+                //if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                //    target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+                //if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                //    target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
 				//if (defender.IsDestroyed)
 				//battle.LogTargetDeath(defender);
 			}
@@ -1094,8 +1097,17 @@ namespace FrEee.Game.Objects.Combat2
             return rangeForDamageCalcs;
         }
 
-		private void combatDamage(int tick, CombatObject target, CombatWeapon weapon, int damage, PRNG attackersdice)
+		private void combatDamage(int tick, CombatObject target, CombatWeapon weapon, int rangeForDamageCalcs, PRNG attackersdice)
 		{
+            var target_icomobj = target.WorkingObject;
+            var shot = new CombatShot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
+            //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
+            int damage = shot.Damage;
+            //combatDamage(battletick, target, weapon, damage, attacker.getDice());
+            if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
+                target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
+            if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
+                target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
 
 			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
 
