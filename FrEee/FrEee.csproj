@@ -215,6 +215,7 @@
     <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
     <Compile Include="Game\Objects\Combat2\CombatSeeker.cs" />
     <Compile Include="Game\Objects\Combat2\CombatPlanet.cs" />
+    <Compile Include="Game\Objects\Combat2\CombatShot.cs" />
     <Compile Include="Game\Objects\Combat2\CombatVehicle.cs" />
     <Compile Include="Game\Objects\Combat2\CombatWeapon.cs" />
     <Compile Include="Game\Objects\Combat2\ControlledCombatObject.cs" />

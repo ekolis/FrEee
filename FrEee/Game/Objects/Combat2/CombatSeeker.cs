@@ -106,6 +106,10 @@ namespace FrEee.Game.Objects.Combat2
         }
 
         #region fields & properties
+
+        /// <summary>
+        /// seekeer stores this so it can flip it to being a hit or not. 
+        /// </summary>
         public CombatTakeFireEvent seekertargethit { get; set; }
 
         //the component that fired the missile.
