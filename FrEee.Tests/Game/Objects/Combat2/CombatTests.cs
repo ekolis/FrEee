@@ -180,6 +180,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             
 
             battle.Resolve();
+            
             Assert.AreNotEqual(battle.StartCombatants[1], battle.ActualCombatants[1]);
             Assert.AreNotEqual(battle.StartCombatants[2], battle.ActualCombatants[2]);
             //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
