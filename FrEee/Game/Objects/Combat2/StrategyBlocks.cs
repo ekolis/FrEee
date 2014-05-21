@@ -368,7 +368,7 @@ namespace FrEee.Game.Objects.Combat2
 	{
 		public Fix16 inputnum { get; set; }
 		public Strategyinput_fix16()
-			: base(new Type[1] { typeof(Fix16) }, null, typeof(Fix16))
+			: base(new Type[1] { typeof(Fix16) }, new object[] {null}, typeof(Fix16))
 		{
 			name = "Input";
 			inputnum = 0;
