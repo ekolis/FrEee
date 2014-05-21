@@ -525,7 +525,7 @@ Can Be Removed        := True
 
 Name                  := Doom Star Construction
 Group                 := Hulls
-Description           := "...Did that asteroid just SHOOT at us?"
+Description           := ...Did that asteroid just SHOOT at us?
 Maximum Level         := 1
 Level Cost            := 7500
 Start Level           := 0
