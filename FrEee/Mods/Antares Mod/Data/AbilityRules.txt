@@ -988,23 +988,23 @@ Alias := Create Constructed Planet - Star
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a star.
 
-Alias := Create Constructed Planet - Planet
+Name := Create Constructed Planet - Planet
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a planet.
 
-Alias := Create Constructed Planet - Storm
+Name := Create Constructed Planet - Storm
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a storm.
 
-Alias := Create Constructed Planet - Warp Point
+Name := Create Constructed Planet - Warp Point
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a warp point.
 
-Alias := Create Constructed Planet - Asteroids
+Name := Create Constructed Planet - Asteroids
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from an asteroid field.
 
-Alias := Create Constructed Planet - Space
+Name := Create Constructed Planet - Space
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] in deep space.
 
@@ -1125,57 +1125,61 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Supply Cost
-Targets := Race, Empire
+Targets := Trait, Race, Empire
 Description := Vehicle supply usage is modified by [%Amount1%]%.
 Value 1 Rule := TakeLowest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := No Plagues
-Targets := Race
+Targets := Trait, Race
 Description := The race's population is immune to plagues.
 
 Name := Luck
-Targets := Race, Empire, Planet, Facility, Vehicle, Component
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
 Description := The chance of a bad random event occurring in this empire is changed by [%Amount1%].
 Value 1 Rule := Add
 Value 2 Rule := TakeLowest
 
 Name := No Spaceports
-Targets := Race, Planet
+Targets := Trait, Race, Planet
 Description := Colonies containing this race's population do not require spaceports to gather resources and points.
 
 Name := Vehicle Speed
-Targets := Race, Empire, Planet, Facility, Vehicle, Component
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
 Description := The speed of this empire's vehicles is modified by [%Amount1%].
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Galaxy Seen
-Targets := Race, Empire
+Targets := Trait, Race, Empire
 Description := The empire has prior knowledge of the entire galaxy at the start of the game.
 
 Name := Planet Storage Space
-Targets := Race, Empire, Planet, Facility
+Targets := Trait, Race, Empire, Planet, Facility
 Description := Colonies' facility, cargo, and population storage space is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Planetary SY Rate
-Targets := Race, Empire, Planet
+Targets := Trait, Race, Empire, Planet
 Description := Planetary space yards' construction rate is modified by [%Amount1%]%.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Tech Area
-Targets := Race, Empire
+Targets := Trait, Race, Empire
 Description := Empire gains access to the [%Amount1%] racial tech.
 
+Name := Population Emotionless
+Targets := Trait, Race, Planet, Facility, Vehicle
+Description := Population does not grow angry or happy.
+
 Name := Breakthrough Chance
-Targets := Race, Empire, Planet, Facility, Vehicle, Component
+Targets := Trait, Race, Empire, Planet, Facility, Vehicle, Component
 Description := The chance of a research breakthrough in this empire is modified by [%Amount1%].
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
