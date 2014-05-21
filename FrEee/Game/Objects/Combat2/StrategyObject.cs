@@ -156,6 +156,7 @@ namespace FrEee.Game.Objects.Combat2
 
             closest1.inputLnks[0] = thisobj;
             closest1.inputLnks[1] = thisobjEnemys;
+            //closest1.inputLnks[2] = typeof(CombatControlledObject);
             closest1.outputLnks.Add(enloc);
             closest1.outputLnks.Add(envel);
 
