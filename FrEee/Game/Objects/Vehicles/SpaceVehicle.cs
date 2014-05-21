@@ -192,6 +192,7 @@ namespace FrEee.Game.Objects.Vehicles
 			this.UpdateEmpireMemories();
 		}
 
+		// TODO - refactor this method's code into an extension method on ISpaceObject since it's duplicated on StellarObject
 		public override Visibility CheckVisibility(Empire emp)
 		{
 			if (emp == Owner)
@@ -206,9 +207,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (this.FindStarSystem() == null)
 				return Visibility.Unknown;
 
-			// TODO - cloaking
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
-			if (!seers.Any())
+			if (!seers.Any() || this.IsHiddenFrom(emp))
 			{
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())

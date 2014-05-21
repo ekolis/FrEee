@@ -2598,5 +2598,39 @@ namespace FrEee.Utility.Extensions
 				return null;
 			return o.ToString();
 		}
+
+		/// <summary>
+		/// Is this space object hidden from view of an empire due to cloaking?
+		/// Space objects are hidden from view if they have at least one cloaking ability, and
+		/// all cloaking abilities they possess outrank the appropriate sensors possessed by the empire in the system.
+		/// However a space object must possess at least one cloaking ability to actually be cloaked.
+		/// </summary>
+		/// <remarks>
+		/// Unlike in SE4, where cloaks must outrank sensors in five specific sight types,
+		/// in FrEee, sight types are just custom strings in the data files, so cloaks must only outrank sensors
+		/// in sight types that the viewing empire actually possesses in the system.
+		/// Thus, a level 2 temporal cloak will hide you from enemy sight on its own, even if you don't have a
+		/// level 2 psychic cloak or a level 2 foobar cloak or whatever. However if the enemy has a level 2 temporal
+		/// sensor, or a level 1 sensor of any type but temporal, then they can see you.
+		/// </remarks>
+		/// <param name="sobj"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static bool IsHiddenFrom(this ISpaceObject sobj, Empire emp)
+		{
+			var sys = sobj.StarSystem;
+			var sensors = sys.Abilities(emp).Where(a => a.Rule.Name == "Sensor Level");
+			var cloaks = sobj.Abilities().Where(a => a.Rule.Name == "Cloak Level");
+			var joined = from sensor in sensors
+						 join cloak in cloaks on sensor.Value1.Value equals cloak.Value1.Value into gj
+						 from subcloak in gj.DefaultIfEmpty()
+						 select new
+						 {
+							 SightType = sensor.Value1.Value,
+							 SensorLevel = sensor.Value2.Value.ToInt(),
+							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
+						 };
+			return cloaks.Any() && joined.All(j => j.CloakLevel > j.SensorLevel);
+		}
 	}
 }
