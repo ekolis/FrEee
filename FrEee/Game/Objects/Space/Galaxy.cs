@@ -100,6 +100,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The mod being played.
 		/// </summary>
+		[SerializationPriority(1)]
 		public Mod Mod { get; set; }
 
 		/// <summary>
@@ -1075,6 +1076,7 @@ namespace FrEee.Game.Objects.Space
 		/// using a Reference object instead of passing whole objects around.
 		/// Stuff needs to be registered to be found though!
 		/// </summary>
+		[SerializationPriority(2)]
 		internal IDictionary<long, IReferrable> referrables { get; set; }
 
 		public IReferrable GetReferrable(long key)

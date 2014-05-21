@@ -266,6 +266,14 @@ namespace FrEee.Utility
 			w.WriteLine(";");
 		}
 
+		private static int GetSerializationPriority(PropertyInfo p)
+		{
+			var atts = p.GetCustomAttributes(true).OfType<SerializationPriorityAttribute>();
+			if (atts.Any())
+				return atts.Min(att => att.Priority);
+			return int.MaxValue;
+		}
+
 		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
 			var tabs = new string('\t', tabLevel);
@@ -276,7 +284,7 @@ namespace FrEee.Utility
 			var props = ObjectGraphContext.KnownProperties[type];
 			w.WriteLine("p" + props.Count() + ":");
 
-			foreach (var p in props)
+			foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
 			{
 				// serialize property name and value
 				try
@@ -743,5 +751,16 @@ namespace FrEee.Utility
 	public sealed class DoNotSerializeAttribute : DoNotCopyAttribute
 	{
 
+	}
+
+	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+	public sealed class SerializationPriorityAttribute : Attribute
+	{
+		public int Priority { get; private set; }
+
+		public SerializationPriorityAttribute(int priority)
+		{
+			Priority = priority;
+		}
 	}
 }
