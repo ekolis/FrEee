@@ -128,6 +128,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public virtual bool CanWarp { get { return false; } }
 
+		// TODO - refactor this method's code into an extension method on ISpaceObject since it's duplicated on SpaceVehicle
 		public Visibility CheckVisibility(Empire emp)
 		{
 			if (this.FindStarSystem() == null)
@@ -142,10 +143,9 @@ namespace FrEee.Game.Objects.Space
 			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.OfType<StellarObject>().Contains(this) || b.ActualCombatants.OfType<StellarObject>().Contains(this)) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
-			// TODO - cloaking
-
+			// do we have anything that can see it?
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
-			if (!seers.Any())
+			if (!seers.Any() || this.IsHiddenFrom(emp))
 			{
 				if (Galaxy.Current.OmniscientView)
 					return Visibility.Visible;
