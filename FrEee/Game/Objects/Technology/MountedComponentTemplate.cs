@@ -100,7 +100,7 @@ namespace FrEee.Game.Objects.Technology
 						{
 							Rule = a.Rule,
 							Values = new List<Formula<string>>(a.Values),
-							Description = a.Description.Evaluate(this),
+							Description = (a.Description ?? a.Rule.Description).Evaluate(this),
 						};
 						if (Mount != null)
 						{
