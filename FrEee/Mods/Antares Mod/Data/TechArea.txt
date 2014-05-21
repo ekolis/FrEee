@@ -1006,7 +1006,7 @@ Can Be Removed        := True
 
 Name                  := Zeon Missile
 Group                 := Weapons
-Description           := "They said noble gases couldn't be radioactive. Boy, were they wrong..."
+Description           := They said noble gases couldn't be radioactive. Boy, were they wrong...
 Maximum Level         := 1
 Level Cost            := 4500
 Start Level           := 0
