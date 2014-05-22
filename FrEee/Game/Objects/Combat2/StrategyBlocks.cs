@@ -318,7 +318,8 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			base.calc(comObj);
 			List<CombatObject> comObjects = (List<CombatObject>)inputs[1];
-			CombatObject thisObj = (CombatObject)inputs[0];
+            CombatObject thisObj = (CombatObject)inputs[0];
+            filter = inputs[2].GetType(); 
 			Fix16 distance = Fix16.MaxValue;
 
 
@@ -380,6 +381,23 @@ namespace FrEee.Game.Objects.Combat2
 			output = inputnum;
 		}
 	}
+
+    public class Strategyinput_Types : StrategyBaseBlock
+    {
+        public SafeType inputtype { get; set; }
+        public Strategyinput_Types()
+            : base(new Type[1] { typeof(SafeType) }, new object[] { typeof(CombatControlledObject) }, typeof(SafeType))
+        {
+            name = "Type";
+            inputtype = typeof(CombatControlledObject);
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            //base.calc(comObj); dont need this, should be at the top of the chain - no inputs.
+            output = inputtype;
+        }
+    }
 
 	public class StrategyWeaponRange : StrategyBaseBlock
 	{
