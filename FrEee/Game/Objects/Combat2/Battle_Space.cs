@@ -714,9 +714,8 @@ namespace FrEee.Game.Objects.Combat2
                 CombatTakeFireEvent evnt = comSek.seekertargethit;
                 if (!IsReplay)
                 {
-                    
                     evnt.IsHit = true;
-                    evnt.Tick = battletick;
+                    evnt.Tick = battletick; //update the tick to where the hit occurs. 
                 }
                 else if (!evnt.IsHit || evnt.Tick != battletick)
                 {
@@ -814,19 +813,16 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
                                 Console.WriteLine("Fire Weapon!");
 
-                                if(wpn.weapon.Container == null)
-                                    Console.WriteLine(wpn.weapon.Name + " Has Null Container!!!");
-                                else
-                                    Console.WriteLine(wpn.weapon.Name + " Has Container.");
 #endif
                                 //first create the event for the target ship
                                 CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
                                 //then create teh event for this ship firing on the target
                                 CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
-                                targets_event.fireOnEvent = attack_event;
+                                
 
                                 if (!IsReplay)
                                 {
+                                    targets_event.fireOnEvent = attack_event;
                                     ReplayLog.Events.Add(targets_event);
                                     ReplayLog.Events.Add(attack_event);
                                 }
@@ -901,7 +897,8 @@ namespace FrEee.Game.Objects.Combat2
         private CombatTakeFireEvent FireSeeker(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
         {
             CombatTakeFireEvent target_event = null;
-            //int targettick = tick; //err.. not sure about this. this right here might be wrong. 
+            SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)weapon.weapon.Template.ComponentTemplate.WeaponInfo;
+            int targettick = tick + (int)CombatSeeker.seekerTimeToTarget(attacker, target, skrinfo) * TicksPerSecond; 
             //create seeker and node.
             CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
             seeker.waypointTarget = new combatWaypoint(target);
@@ -927,14 +924,24 @@ namespace FrEee.Game.Objects.Combat2
 
             if (IsReplay)
             {
-                //read the event this is really just to detect desynchs... checking elsewhere now. 
+#if DEBUG
+                Console.WriteLine("Tick: " + targettick);
+#endif
+                //read the event 
                 //target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                List<CombatFireOnTargetEvent> atkrevnts = ReplayLog.EventsForObjectAtTick(attacker, tick).OfType<CombatFireOnTargetEvent>().ToList<CombatFireOnTargetEvent>();
+                target_event = atkrevnts[0].TakeFireEvent; //need to check which in the list here is the correct event, since ships with multiple weapons will have multiple events here. 
                 //target_event.BulletNode = seeker;
+                seeker.seekertargethit = target_event; //need to link the seeker and the event. (since the seeker object does not get carried over between processing and replay, but gets re-created)
             }
             else
             {
+#if DEBUG
+                Console.WriteLine("Tick: " + targettick);
+#endif
                 //*write* the event
-                target_event = new CombatTakeFireEvent(tick, target, target.cmbt_loc, false); //false since we don't know if it's going to hit yet.
+                //the tick gets updated if there's an acutal hit by the seeker fire control
+                target_event = new CombatTakeFireEvent(targettick, target, target.cmbt_loc, false); //false since we don't know if it's going to hit yet.
                 target_event.BulletNode = seeker;
                 seeker.seekertargethit = target_event; //seeker stores a link to the event so we can flag the event has having hit the ship later.
             }

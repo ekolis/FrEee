@@ -80,7 +80,8 @@ namespace FrEee.Game.Objects.Combat2
 			this.TakeFireEvent = targetevent;
 		}
 	}
-	public class CombatTakeFireEvent : CombatLocationEvent
+
+    public class CombatTakeFireEvent : CombatLocationEvent
 	{
 		public bool IsHit { get; set; }
         public CombatNode BulletNode { get; set; }
