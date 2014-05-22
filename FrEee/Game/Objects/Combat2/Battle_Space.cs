@@ -896,8 +896,8 @@ namespace FrEee.Game.Objects.Combat2
             seeker.waypointTarget = new combatWaypoint(target);
             seeker.weaponTarget = new List<CombatObject>() { target };
             seeker.deathTick = tick + weapon.maxRange_time * TicksPerSecond;
-            seeker.cmbt_head = attacker.cmbt_head;
-            seeker.cmbt_att = attacker.cmbt_att;
+            seeker.cmbt_head = new Compass(attacker.cmbt_head.Degrees, false);
+            seeker.cmbt_att = new Compass(attacker.cmbt_att.Degrees, false);
             FreshNodes.Add(seeker);
 #if DEBUG
             Console.WriteLine("Seeker " + seeker.strID + " added to FreshNodes");
@@ -916,9 +916,9 @@ namespace FrEee.Game.Objects.Combat2
 
             if (IsReplay)
             {
-                //read the event
+                //read the event this is really just to detect desynchs...
                 target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
-                target_event.BulletNode = seeker;
+                //target_event.BulletNode = seeker;
             }
             else
             {
