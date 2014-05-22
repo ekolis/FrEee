@@ -26,7 +26,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
             this.GameTableLayoutPanel1.RowStyles[0] = style0;
 
-            if (stratblock.inputtypes != null)
+            if (stratblock.inputtypes.Count() > 0)
             {
                 createInputs(parentForm);
             }
@@ -46,7 +46,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
                 UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock, true, i);
 
-                linkinp.Text = stratblock.inputtypes[i].Name;
+                linkinp.Text = linkinp.dataType.Name;//stratblock.inputtypes[i].Name;
                 linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
                 this.GameTableLayoutPanel1.RowCount += 1;
@@ -65,7 +65,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         {
             UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock, false, 0);
 
-            linkout.Text = stratblock.outputType.Name;
+            linkout.Text = linkout.dataType.Name;//stratblock.outputType.Name;
             linkout.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             linkout.Anchor = AnchorStyles.Right;
             this.GameTableLayoutPanel1.SetRow(linkout, 1);
