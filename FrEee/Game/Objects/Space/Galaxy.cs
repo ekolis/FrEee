@@ -19,6 +19,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -39,7 +40,9 @@ namespace FrEee.Game.Objects.Space
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
 			SharedAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
-			TreatySharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();			
+			TreatySharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
+			GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<Battle_Space>();
 		}
 
@@ -646,6 +649,9 @@ namespace FrEee.Game.Objects.Space
 			Current.Battles = new HashSet<Battle_Space>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 
+			Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+			Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
+
 			// We can enable the ability cache here because space objects aren't changing state yet.
 			Current.EnableAbilityCache();
 
@@ -690,6 +696,10 @@ namespace FrEee.Game.Objects.Space
 				return missingPlrs;
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			// clear treaty clause cache (empires might have added treaties)
+			Current.GivenTreatyClauseCache.Clear();
+			Current.ReceivedTreatyClauseCache.Clear();
 
 			// advance turn number
 			Current.TurnNumber++;
@@ -812,7 +822,7 @@ namespace FrEee.Game.Objects.Space
 				}
 
 				// perform treaty actions
-				foreach (var clause in emp.OfferedTreatyClauses.Flatten())
+				foreach (var clause in emp.GivenTreatyClauses.Flatten())
 					clause.PerformAction();
 
 				// don't let stored resources actually fall below zero
@@ -1282,5 +1292,17 @@ namespace FrEee.Game.Objects.Space
 		/// TODO - rename to SharedAbilityCache once the test game is over
 		/// </summary>
 		internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> TreatySharedAbilityCache { get; private set; }
+
+		/// <summary>
+		/// Cache of treaty clauses given by empires.
+		/// </summary>
+		[DoNotSerialize]
+		internal SafeDictionary<Empire, ILookup<Empire, Clause>> GivenTreatyClauseCache { get; set; }
+
+		/// <summary>
+		/// Cache of treaty clauses received by empires.
+		/// </summary>
+		[DoNotSerialize]
+		internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; set; }
 	}
 }
