@@ -43,7 +43,7 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return default(T);
 			var dest = obj.GetType().Instantiate();
-			obj.CopyTo(dest);
+			dest.InjectFrom(new OnlySafePropertiesInjection(true), obj);
 			return (T)dest;
 		}
 
@@ -168,12 +168,12 @@ namespace FrEee.Utility.Extensions
 					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
 				});
 			}*/
-			dest.InjectFrom(new OnlySafePropertiesInjection(), src);
+			dest.InjectFrom(new OnlySafePropertiesInjection(false), src);
 		}
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			public OnlySafePropertiesInjection(IDictionary<object, object> known = null)
+			public OnlySafePropertiesInjection(bool deep, IDictionary<object, object> known = null)
 			{
 				if (known != null)
 				{
@@ -181,6 +181,8 @@ namespace FrEee.Utility.Extensions
 						knownObjects.Add(kvp);
 				}
 			}
+
+			public bool DeepCopy { get; private set; }
 
 			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
@@ -253,7 +255,7 @@ namespace FrEee.Utility.Extensions
 						if (Match(c))
 						{
 							var sv = sp.GetValue(source, null);
-							if (CanCopyFully(sp))
+							if (DeepCopy && CanCopyFully(sp))
 							{
 								if (sv == null)
 									sp.SetValue(target, null, null); // it's null, very simple
