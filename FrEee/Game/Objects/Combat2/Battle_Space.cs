@@ -711,11 +711,22 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
                 Console.WriteLine("ProxDetonation!");
 #endif
+                CombatTakeFireEvent evnt = comSek.seekertargethit;
                 if (!IsReplay)
                 {
-                    CombatTakeFireEvent evnt = comSek.seekertargethit;
+                    
                     evnt.IsHit = true;
                     evnt.Tick = battletick;
+                }
+                else if (!evnt.IsHit || evnt.Tick != battletick)
+                {
+                    Console.WriteLine("Seeker Hit Out of synch detected!");
+                    Console.WriteLine("Seeker:          " + comSek.ID);
+                    Console.WriteLine("Attacker:        " + comSek.launcher.weapon.Owner.Name);
+                    Console.WriteLine("Target:          " + comSek.weaponTarget[0]);
+                    Console.WriteLine("This Tick:       " + battletick);
+                    Console.WriteLine("Expected Tick:   " + battletick);
+                    Console.WriteLine("Expected Hit:    " + evnt.IsHit);
                 }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
@@ -890,7 +901,7 @@ namespace FrEee.Game.Objects.Combat2
         private CombatTakeFireEvent FireSeeker(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
         {
             CombatTakeFireEvent target_event = null;
-            int targettick = tick; //err.. not sure about this. this right here might be wrong. 
+            //int targettick = tick; //err.. not sure about this. this right here might be wrong. 
             //create seeker and node.
             CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
             seeker.waypointTarget = new combatWaypoint(target);
@@ -916,8 +927,8 @@ namespace FrEee.Game.Objects.Combat2
 
             if (IsReplay)
             {
-                //read the event this is really just to detect desynchs...
-                target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                //read the event this is really just to detect desynchs... checking elsewhere now. 
+                //target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
                 //target_event.BulletNode = seeker;
             }
             else
@@ -936,9 +947,9 @@ namespace FrEee.Game.Objects.Combat2
             CombatTakeFireEvent target_event = null;
 
            
-            Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target);
+            Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target); //in seconds
             //set target tick for the future.
-            int targettic = tick + (int)boltTTT;
+            int targettic = tick + (int)boltTTT * TicksPerSecond;
 
 
 
@@ -983,7 +994,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 //*write* the event
                 target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
-                int nothing = -tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
+                int psudoboltID = -tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
             }
 
             return target_event;

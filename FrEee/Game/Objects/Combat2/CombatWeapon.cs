@@ -57,7 +57,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Bolt";
 
-                boltSpeed = (Fix16)wpMaxR * (Fix16)100; 
+                boltSpeed = (Fix16)wpMaxR * (Fix16)1000; 
                 maxRange_time = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
@@ -80,10 +80,10 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Unknown";
                 maxRange_distance = (Fix16)wpMaxR * (Fix16)1000;
-                minRange = (Fix16)wpMinR * (Fix16)1000;
+                minRange = 1000 + (Fix16)wpMinR * (Fix16)100;
             }
             double wpiReloadRate = wpninfo.ReloadRate;
-            reloadRate = (Fix16)wpiReloadRate;
+            reloadRate = (Fix16)wpiReloadRate * Battle_Space.TicksPerSecond;
             nextReload = 1;
 #if DEBUG
             Console.WriteLine("Done creating CombatWeapon");
