@@ -33,7 +33,7 @@ namespace FrEee.Game.Objects.Combat2
             else
             {
                 this.Sector = location;
-                Initialize(location.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+                Initialize(location.SpaceObjects.OfType<ICombatant>().Where(o => !o.IsMemory && o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
             }
 		}
        
