@@ -63,7 +63,7 @@ namespace FrEee.Game.Objects.Combat2
             int hitpoints = skrinfo.SeekerDurability;
             Fix16 mass = hitpoints * 0.1;
             int wpnskrEvade = Mod.Current.Settings.SeekerEvasion;
-            return new Compass((Fix16)wpnskrspd * mass * (Fix16)0.1 / ((Fix16)2.5 - (Fix16)wpnskrEvade * (Fix16)0.01), false);
+            return new Compass((Fix16)wpnskrspd * mass * (Fix16)10 / ((Fix16)2.5 - (Fix16)wpnskrEvade * (Fix16)0.01), false);
         }
 
         public static Fix16 seekerTimeToTarget(CombatObject attacker, CombatObject target, SeekingWeaponInfo skrinfo)
