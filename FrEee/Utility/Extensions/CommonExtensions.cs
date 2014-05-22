@@ -168,7 +168,7 @@ namespace FrEee.Utility.Extensions
 					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
 				});
 			}*/
-			dest.InjectFrom(new OnlySafePropertiesInjection(false), src);
+			dest.InjectFrom(new OnlySafePropertiesInjection(true), src);
 		}
 
 		private class OnlySafePropertiesInjection : ConventionInjection
