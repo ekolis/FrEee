@@ -2120,7 +2120,7 @@ namespace FrEee.Utility.Extensions
 					return null; // unit is in limbo...
 			}
 			if (containers.Count() > 1)
-				return null; // probably busy copying a cargo container, we don't really care about this yet
+				throw new Exception("Unit is in multiple cargo containers?!");
 			return containers.Single();
 		}
 
