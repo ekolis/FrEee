@@ -2106,15 +2106,20 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
-			if (container != null)
-				return container;
-			if (unit is IMobileSpaceObject)
+			var containers =Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			if (!containers.Any())
 			{
-				var v = (IMobileSpaceObject)unit;
-				return v.Sector;
+				if (unit is IMobileSpaceObject)
+				{
+					var v = (IMobileSpaceObject)unit;
+					return v.Sector;
+				}
+				else
+					return null; // unit is in limbo...
 			}
-			return null; // unit is in limbo...
+			if (containers.Count() > 1)
+				return null; // probably busy copying a cargo container, we don't really care about this yet
+			return containers.Single();
 		}
 
 		public static int? ToNullableInt(this long? l)
