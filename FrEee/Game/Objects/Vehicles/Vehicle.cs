@@ -304,8 +304,7 @@ namespace FrEee.Game.Objects.Vehicles
 			this.UpdateEmpireMemories();
 		}
 
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public int Hitpoints
 		{
 			get

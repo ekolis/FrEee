@@ -182,7 +182,7 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 
-			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object,object>();
+			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
 			protected override bool Match(ConventionInfo c)
 			{
@@ -197,17 +197,30 @@ namespace FrEee.Utility.Extensions
 			/// </summary>
 			/// <param name="p"></param>
 			/// <returns></returns>
-			private bool HasDoNotCopyAttribute(PropertyInfo p)
+			private bool CanCopyFully(PropertyInfo p)
 			{
 				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-					return true;
+					return false;
 				foreach (var i in p.DeclaringType.GetInterfaces())
 				{
 					var ip = i.GetProperty(p.Name);
 					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-						return true;
+						return false;
 				}
-				return false;
+				return true;
+			}
+
+			private bool CanCopySafely(PropertyInfo p)
+			{
+				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+					return false;
+				foreach (var i in p.DeclaringType.GetInterfaces())
+				{
+					var ip = i.GetProperty(p.Name);
+					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+						return false;
+				}
+				return true;
 			}
 
 			private bool PropertyMatches(PropertyInfo p, string name)
@@ -220,8 +233,7 @@ namespace FrEee.Utility.Extensions
 				   p.Name == name // it's the right property
 					   && p.GetSetMethod(true) != null // has a getter, whether public or private
 					   && p.GetSetMethod(true) != null // has a setter, whether public or private
-					   && p.GetIndexParameters().Length == 0 // lacks index parameters
-					   && !HasDoNotCopyAttribute(p); // doesn't have "do not copy" attribute
+					   && p.GetIndexParameters().Length == 0; // lacks index parameters
 			}
 
 			protected override void Inject(object source, object target)
@@ -241,15 +253,21 @@ namespace FrEee.Utility.Extensions
 						if (Match(c))
 						{
 							var sv = sp.GetValue(source, null);
-							if (sv == null)
-								sp.SetValue(target, null, null);
-							else if (!knownObjects.ContainsKey(sv))
+							if (CanCopyFully(sp))
 							{
-								var tv = CopyObject(source, sv);
-								sp.SetValue(target, tv, null);
+								if (sv == null)
+									sp.SetValue(target, null, null); // it's null, very simple
+								else if (!knownObjects.ContainsKey(sv))
+								{
+									// copy object and use the copy
+									var tv = CopyObject(source, sv);
+									sp.SetValue(target, tv, null);
+								}
+								else
+									sp.SetValue(target, knownObjects[sv], null); // known object, don't bother copying again
 							}
-							else
-								sp.SetValue(target, knownObjects[sv], null);
+							else if (CanCopySafely(sp))
+								sp.SetValue(target, sv, null); // use original object
 						}
 					}
 				}
