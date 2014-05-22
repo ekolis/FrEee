@@ -550,7 +550,8 @@ namespace FrEee.Game.Objects.Space
 					return null;
 				if (fleets.Count() == 1)
 					return fleets.Single();
-				return null; // probably busy copying a fleet to memory sight or something
+				// return null; // probably busy copying a fleet to memory sight or something
+				throw new Exception("Fleet belongs to more than one fleet?!");
 			}
 		}
 
