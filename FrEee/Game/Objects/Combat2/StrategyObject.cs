@@ -150,13 +150,13 @@ namespace FrEee.Game.Objects.Combat2
             StrategyThisEnemys thisobjEnemys = new StrategyThisEnemys();
             StrategyLocdata enloc = new StrategyLocdata();
             StrategyVeldata envel = new StrategyVeldata();
-
+            Strategyinput_Types type = new Strategyinput_Types();
             wpnt.inputLnks[0] = enloc;
             wpnt.inputLnks[1] = envel;
 
             closest1.inputLnks[0] = thisobj;
             closest1.inputLnks[1] = thisobjEnemys;
-            //closest1.inputLnks[2] = typeof(CombatControlledObject);
+            closest1.inputLnks[2] = type;
             closest1.outputLnks.Add(enloc);
             closest1.outputLnks.Add(envel);
 
