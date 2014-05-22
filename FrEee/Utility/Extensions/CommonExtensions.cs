@@ -192,14 +192,36 @@ namespace FrEee.Utility.Extensions
 					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
 
+			/// <summary>
+			/// Checks for "do not copy" attribute, even on interface properties.
+			/// </summary>
+			/// <param name="p"></param>
+			/// <returns></returns>
+			private bool HasDoNotCopyAttribute(PropertyInfo p)
+			{
+				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+					return true;
+				foreach (var i in p.DeclaringType.GetInterfaces())
+				{
+					var ip = i.GetProperty(p.Name);
+					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+						return true;
+				}
+				return false;
+			}
+
 			private bool PropertyMatches(PropertyInfo p, string name)
 			{
+				if (p.Name == "Owner")
+				{
+
+				}
 				return
 				   p.Name == name // it's the right property
 					   && p.GetSetMethod(true) != null // has a getter, whether public or private
 					   && p.GetSetMethod(true) != null // has a setter, whether public or private
 					   && p.GetIndexParameters().Length == 0 // lacks index parameters
-					   && !p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(); // doesn't have "do not copy" attribute
+					   && !HasDoNotCopyAttribute(p); // doesn't have "do not copy" attribute
 			}
 
 			protected override void Inject(object source, object target)
