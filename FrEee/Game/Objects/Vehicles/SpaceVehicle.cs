@@ -336,7 +336,8 @@ namespace FrEee.Game.Objects.Vehicles
 					return null;
 				if (fleets.Count() == 1)
 					return fleets.Single();
-				return null; // probably busy copying a fleet to memory sight or something
+				throw new Exception("Vehicle belongs to more than one fleet?!");
+				//return null; // probably busy copying a fleet to memory sight or something
 			}
 		}
 
