@@ -1044,7 +1044,7 @@ namespace FrEee.Game.Objects.Space
 
 		private void MoveShips()
 		{
-			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null).Shuffle();
+			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
 			foreach (var v in vlist)
 			{
 				// mark system explored if not already
