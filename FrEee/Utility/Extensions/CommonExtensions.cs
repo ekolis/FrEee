@@ -350,7 +350,7 @@ namespace FrEee.Utility.Extensions
 					var tv = sv.GetType().Instantiate();
 					knownObjects.Add(sv, tv);
 					Map(sv, tv);
-					knownObjects.Remove(parent);
+					//knownObjects.Remove(parent);
 					return tv;
 				}
 			}
