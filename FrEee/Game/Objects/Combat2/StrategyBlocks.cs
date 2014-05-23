@@ -399,6 +399,33 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
+    public class StrategyFilter_HullSize : StrategyBaseBlock
+    {
+        public StrategyFilter_HullSize()
+            : base(new Type[3] { typeof(List<CombatObject>), typeof(Fix16), typeof(Fix16) }, new object[3] { null, 0, Fix16.MaxValue }, typeof(List<CombatObject>))
+        {
+            name = "Filter Hull Size";
+            ///input[0] = list of objects to filter
+            ///input[1] = Fix16 min
+            ///input[2] = Fix16 max
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj); //get inputs
+            List<CombatObject> comObjects = (List<CombatObject>)inputs[0];
+            Fix16 min = (Fix16)inputs[1];
+            Fix16 max = (Fix16)inputs[2];
+            List<CombatObject> filteredObjects = new List<CombatObject>();
+            foreach (CombatObject comobj in comObjects)
+            {
+                if (comobj.cmbt_mass > min && comobj.cmbt_mass < max)
+                    filteredObjects.Add(comobj);
+            }
+            output = filteredObjects;
+        }
+    }
+
 	public class StrategyWeaponRange : StrategyBaseBlock
 	{
 		public StrategyWeaponRange()
