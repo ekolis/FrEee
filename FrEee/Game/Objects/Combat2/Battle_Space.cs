@@ -736,7 +736,7 @@ namespace FrEee.Game.Objects.Combat2
                     //var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
                     //int damage = shot.Damage;
-                    combatDamage(battletick, target, comSek.launcher, 0, comSek.getDice());
+                    combatDamage(battletick, target, comSek.launcher, 1, comSek.getDice());
                     if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
                         target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
@@ -963,7 +963,7 @@ namespace FrEee.Game.Objects.Combat2
             if (IsReplay)
             {
                 //read the event
-                target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
+                target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];// need to check for the right event here. 
 
                 //because bullets don't need to be created during processing
                 Fix16 rThis_distance = (target_event.Location - target_event.fireOnEvent.Location).Length;
