@@ -691,7 +691,7 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 
-        private void missilefirecontrol(int battletick, CombatSeeker comSek)
+        private void missilefirecontrol(int tick, CombatSeeker comSek)
         {
             //Fix16 locdistance = Trig.distance(comSek.cmbt_loc, comSek.weaponTarget[0].cmbt_loc);
             //PointXd vectortowaypoint = comSek.cmbt_loc - comSek.waypointTarget.cmbt_loc;
@@ -715,39 +715,76 @@ namespace FrEee.Game.Objects.Combat2
                 if (!IsReplay)
                 {
                     evnt.IsHit = true;
-                    evnt.Tick = battletick; //update the tick to where the hit occurs. 
+                    evnt.Tick = tick; //update the tick to where the hit occurs. 
                 }
-                else if (!evnt.IsHit || evnt.Tick != battletick)
+                else if (!evnt.IsHit || evnt.Tick != tick)
                 {
                     Console.WriteLine("Seeker Hit Out of synch detected!");
                     Console.WriteLine("Seeker:          " + comSek.ID);
                     Console.WriteLine("Attacker:        " + comSek.launcher.weapon.Owner.Name);
                     Console.WriteLine("Target:          " + comSek.weaponTarget[0]);
-                    Console.WriteLine("This Tick:       " + battletick);
-                    Console.WriteLine("Expected Tick:   " + battletick);
+                    Console.WriteLine("This Tick:       " + tick);
+                    Console.WriteLine("Expected Tick:   " + tick);
                     Console.WriteLine("Expected Hit:    " + evnt.IsHit);
                 }
                 Component launcher = comSek.launcher.weapon;
                 CombatObject target = comSek.weaponTarget[0];
                 if (target is CombatControlledObject) //TODO handle seekers and other objects as seeker targets.
                 {
-					CombatControlledObject ccTarget = (CombatControlledObject)target;
+                    CombatControlledObject ccTarget = (CombatControlledObject)target;
                     var target_icomobj = ccTarget.WorkingObject;
                     //var shot = new Combat.Shot(launcher, target_icomobj, 0);
                     //defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
                     //int damage = shot.Damage;
-                    combatDamage(battletick, target, comSek.launcher, 1, comSek.getDice());
+                    combatDamage(tick, target, comSek.launcher, 1, comSek.getDice());
                     if (target_icomobj.MaxNormalShields < target_icomobj.NormalShields)
                         target_icomobj.NormalShields = target_icomobj.MaxNormalShields;
                     if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
                         target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
 
                 }
+                else if (target is CombatSeeker)
+                {
+                    int damage = 0;
+                    WeaponInfo w = launcher.Template.ComponentTemplate.WeaponInfo;
+                    if (launcher.Template.Mount == null)
+                        damage = w.Damage;
+                    else
+                        damage = w.Damage * launcher.Template.Mount.WeaponDamagePercent / 100; 
+
+                    Combat.DamageType damageType = w.DamageType;
+                    CombatSeeker targetsec = (CombatSeeker)target;
+                    targetsec.TakeDamage(damageType, damage, comSek.getDice());
+
+                    if (targetsec.IsDestroyed)
+                    {
+#if DEBUG
+                        Console.WriteLine(target.strID + " is destroyed!");
+#endif
+                        targetsec.Dispose();
+                        target.deathTick = tick;
+                        if (!IsReplay)
+                        {
+                            CombatDestructionEvent deathEvent = new CombatDestructionEvent(tick, target, target.cmbt_loc);
+                            ReplayLog.Events.Add(deathEvent);
+                        }
+                        foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
+                        {
+                            CombatEmpire empire = empireKVP.Value;
+                            if (empire.ownships.Contains(target))
+                                empire.ownships.Remove(target);
+                            else if (empire.hostile.Contains(target))
+                                empire.hostile.Remove(target);
+                            else if (empire.friendly.Contains(target))
+                                empire.friendly.Remove(target);
+                        }
+                    }
+                }
 
                 DeadNodes.Add(comSek);
                 CombatNodes.Remove(comSek);                
             }
-            else if (battletick > comSek.deathTick)
+            else if (tick > comSek.deathTick)
             {
 #if DEBUG
                 Console.WriteLine("Out of Juice!");
@@ -1015,9 +1052,7 @@ namespace FrEee.Game.Objects.Combat2
             { //read the replay... nothing to do if a beam. 
             }
             else
-            { //write the event.
-                
-                
+            { //write the event.                               
                 target_event = new CombatTakeFireEvent(targettick, target, target.cmbt_loc, hit);
             }
             return target_event;
