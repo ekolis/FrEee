@@ -43,6 +43,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             functItems.Add(fix16inp.name, fix16inp);
             functItems.Add(mass.name, mass);
             functItems.Add(wpns.name, wpns);
+            functItems.Add(filtrsize.name, filtrsize);
             this.listBox1.DataSource = functItems.Keys.ToList();
             
         }
