@@ -821,8 +821,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Cargo == null ? Enumerable.Empty<IUnit>() : Cargo.Units; }
 		}
 
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public override Sector Sector
 		{
 			get

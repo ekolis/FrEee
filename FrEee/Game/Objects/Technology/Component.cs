@@ -128,8 +128,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public int NormalShields
 		{
 			get
@@ -145,8 +144,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Components don't actually have shields; they just generate them for the vehicle.
 		/// </summary>
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public int PhasedShields
 		{
 			get

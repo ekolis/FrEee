@@ -109,7 +109,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Facilities do not have shields, though they may provide them to colonies.
 		/// </summary>
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int NormalShields
 		{
 			get
@@ -125,7 +125,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Facilities do not have shields, though they may provide them to colonies.
 		/// </summary>
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int PhasedShields
 		{
 			get
