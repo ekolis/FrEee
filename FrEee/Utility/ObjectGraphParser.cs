@@ -329,9 +329,23 @@ namespace FrEee.Utility
 		}
 	}
 
+	/// <summary>
+	/// Prevents an property's value from being copied when the containing object is copied.
+	/// Instead, the original value will be used.
+	/// </summary>
 	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
 	public class DoNotCopyAttribute : Attribute
 	{
+		/// <summary>
+		/// Is "safe" copying (using the original property value) allowed?
+		/// If false, even this will not be attempted, and the property will be completely ignored.
+		/// Setting to false is useful for properties whose setters throw NotSupportedException.
+		/// </summary>
+		public bool AllowSafeCopy { get; private set; }
 
+		public DoNotCopyAttribute(bool allowSafeCopy = true)
+		{
+			AllowSafeCopy = allowSafeCopy;
+		}
 	}
 }

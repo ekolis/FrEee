@@ -60,7 +60,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int Hitpoints
 		{
 			get
@@ -74,7 +74,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int NormalShields
 		{
 			get
@@ -87,7 +87,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int PhasedShields
 		{
 			get

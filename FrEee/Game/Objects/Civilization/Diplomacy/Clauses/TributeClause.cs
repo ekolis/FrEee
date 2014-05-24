@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		public override void PerformAction()
 		{
 			// check total debt
-			var totalDebt = Giver.OfferedTreatyClauses.OfType<TributeClause>().Where(c => c.Resource == Resource).Sum(c => c.Debt);
+			var totalDebt = Giver.GivenTreatyClauses.OfType<TributeClause>().Where(c => c.Resource == Resource).Sum(c => c.Debt);
 
 			// check max amount giveable
 			var maxGiveable = Giver.StoredResources[Resource];
