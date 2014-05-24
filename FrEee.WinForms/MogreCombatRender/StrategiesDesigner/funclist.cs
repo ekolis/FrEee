@@ -37,6 +37,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCStratBlock heading = new UCStratBlock(new StrategyHeading(), parent, canvasdata);
             UCStratBlock addcompass = new UCStratBlock(new StrategyAdd_Compass(), parent, canvasdata);
             UCStratBlock addanglecompass = new UCStratBlock(new StrategyAdd_angletocompass(), parent, canvasdata);
+            UCStratBlock fleetobjs = new UCStratBlock(new Strategyfleet(), parent, canvasdata);
 
             functItems.Add(ThisObj.name, ThisObj);
             functItems.Add(Closesed.name, Closesed);
@@ -54,6 +55,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             functItems.Add(heading.name, heading);
             functItems.Add(addcompass.name, addcompass);
             functItems.Add(addanglecompass.name, addanglecompass);
+            functItems.Add(fleetobjs.name, fleetobjs);
             this.listBox1.DataSource = functItems.Keys.ToList();
             
         }

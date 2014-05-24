@@ -39,6 +39,8 @@ namespace FrEee.Game.Objects.Combat2
                 strategy = new StragegyObject_Default();
             else
                 strategy = start_v.Design.Strategy.Copy();
+            SpaceVehicle sv = (SpaceVehicle)start_v;
+            //combatfleet = sv.Container.Name;
 #if DEBUG
             Console.WriteLine("Created new CombatVehicle with ID " + ID);
             Console.WriteLine("MaxAccel = " + maxfowardThrust / cmbt_mass);
@@ -67,6 +69,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		#region fields & properties
 
+        
 		/// <summary>
 		/// The vehicle's state at the start of combat.
 		/// </summary>
