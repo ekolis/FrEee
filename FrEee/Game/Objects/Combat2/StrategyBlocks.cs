@@ -417,13 +417,16 @@ namespace FrEee.Game.Objects.Combat2
 
     public class StrategyFilter_shieldhitpoints : StrategyBaseBlock
     {
+        /// <summary>
+        /// input[0] = list of objects to filter
+        /// input[1] = Fix16 min
+        /// input[2] = Fix16 max
+        /// </summary>
         public StrategyFilter_shieldhitpoints()
             : base(new Type[3] { typeof(List<CombatObject>), typeof(Fix16), typeof(Fix16) }, new object[3] { null, 0, Fix16.MaxValue }, typeof(List<CombatObject>))
         {
             name = "Filter";
-            ///input[0] = list of objects to filter
-            ///input[1] = Fix16 min
-            ///input[2] = Fix16 max
+
         }
 
         public override void calc(CombatObject comObj)
@@ -446,13 +449,16 @@ namespace FrEee.Game.Objects.Combat2
 
     public class StrategyFilter_HullSize : StrategyBaseBlock
     {
+        /// <summary>
+        ///input[0] = list of objects to filter
+        ///input[1] = Fix16 min
+        ///input[2] = Fix16 max
+        /// </summary>
         public StrategyFilter_HullSize()
             : base(new Type[3] { typeof(List<CombatObject>), typeof(Fix16), typeof(Fix16) }, new object[3] { null, 0, Fix16.MaxValue }, typeof(List<CombatObject>))
         {
             name = "Filter Hull Size";
-            ///input[0] = list of objects to filter
-            ///input[1] = Fix16 min
-            ///input[2] = Fix16 max
+
         }
 
         public override void calc(CombatObject comObj)

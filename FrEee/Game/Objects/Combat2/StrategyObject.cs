@@ -14,8 +14,8 @@ namespace FrEee.Game.Objects.Combat2
 {
     public class StrategyObject : IPromotable, IFoggable
     {
-        protected StrategyBaseBlock waypointObj { get; set; }
-        protected StrategyBaseBlock[] targetObjs { get; set; }
+        public StrategyBaseBlock waypointObj { get; protected set; }
+        public StrategyBaseBlock[] targetObjs { get; protected set; }
         public StrategyBaseBlock[] blocks { get; set; }
 
         // TODO - weapons lists can't be combat weapons for a strategy, because strategies are shared between ships, and combat weapons belong to a single ship
@@ -25,11 +25,14 @@ namespace FrEee.Game.Objects.Combat2
 
         public StrategyObject()
         { }
-        public StrategyObject(StrategyBaseBlock waypointstratObj, StrategyBaseBlock[] targetstratObjs)
+        public StrategyObject(string name, StrategyBaseBlock waypointstratObj, StrategyBaseBlock[] targetstratObjs)
         {
             this.waypointObj = waypointstratObj;
             this.targetObjs = targetstratObjs;
+            this.Name = name;
         }
+
+        public string Name { get; set; }
 
         public void renewtostart()
         {
