@@ -68,6 +68,12 @@ namespace FrEee.Game.Objects.Combat2
             StartNodes = new HashSet<CombatNode>();
 			FreshNodes = new HashSet<CombatNode>();
 			DeadNodes = new HashSet<CombatNode>();
+            CombatFleets = new Dictionary<string, CombatFleet> { };
+            foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
+            {
+                CombatFleet cfleet = new CombatFleet(fleet);
+                CombatFleets.Add(cfleet.Name, cfleet);
+            }
 
 			foreach (ICombatant obj in combatants)
 			{
@@ -97,6 +103,12 @@ namespace FrEee.Game.Objects.Combat2
                     StartCombatants.Add(obj.ID, scopy);
 					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed, obj.ID);
 					StartNodes.Add(comObj);
+                    if (scopy.Container != null)
+                    {
+                        CombatFleet comfleet = CombatFleets[scopy.Container.Name];
+                        comfleet.combatObjects.Add(comObj);
+                        comObj.combatfleet = comfleet;
+                    }
 				}
 				else if (obj is Planet)
 				{
@@ -127,12 +139,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 			}
 
-			Fleets = new List<Fleet> { };
 
-			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
-			{
-				Fleets.Add(fleet);
-			}
 			ReplayLog = new CombatReplayLog();
 
 
@@ -191,6 +198,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// The REAL combatants objects.
 		/// </summary>
 		public IDictionary<long, ICombatant> ActualCombatants { get; private set; }
+
+        /// <summary>
+        /// combat fleets
+        /// </summary>
+        public IDictionary<string, CombatFleet> CombatFleets { get; private set; }
 
 		/// <summary>
 		/// All combat nodes in this battle, including ships, fighters, seekers, projectiles, etc.
@@ -254,7 +266,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// the Fleets in this battle
 		/// </summary>
-		public ICollection<Fleet> Fleets { get; private set; }
+		//public ICollection<Fleet> Fleets { get; private set; }
 
 		public CombatReplayLog ReplayLog { get; private set; }
 

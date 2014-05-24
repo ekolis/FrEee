@@ -295,7 +295,7 @@ namespace FrEee.Game.Objects.Combat2
         {
             base.calc(comObj);
             CombatControlledObject targetObj = inputs[0] as CombatControlledObject;
-            //output = targetObj.fleet.;
+            output = targetObj.combatfleet.combatObjects;
         }
     }
 

@@ -43,6 +43,19 @@ namespace FrEee.Game.Objects.Combat2
         //todo add ComObj and check hostility etc.
 	}
 
+    public class CombatFleet
+    {
+        
+        public CombatFleet(Space.Fleet fleet)
+        {
+            Fleet = fleet;
+            Name = fleet.Name;
+            combatObjects = new List<CombatControlledObject>();
+        }
+        public string Name { get; private set; }
+        public Space.Fleet Fleet { get; set; }
+        public List<CombatControlledObject> combatObjects { get; set; }
+    }
 
     public class CombatNode
     {

@@ -23,6 +23,11 @@ namespace FrEee.Game.Objects.Combat2
 			RefreshWeapons();
 		}
 
+        /// <summary>
+        /// the fleet to which this object belongs.
+        /// </summary>
+        public CombatFleet combatfleet { get; set; }
+
 		/// <summary>
 		/// The object's state at the start of combat.
 		/// </summary>
