@@ -31,6 +31,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCStratBlock range = new UCStratBlock(new StrategyRange(), parent, canvasdata);
             UCStrat_Userinput fix16inp = new UCStrat_Userinput(new Strategyinput_fix16(), parent, canvasdata);
             UCStratBlock wpns = new UCStratBlock(new StrategyWeapons(), parent, canvasdata);
+            UCStratBlock filtrsize = new UCStratBlock(new StrategyFilter_HullSize(), parent, canvasdata);
             
             functItems.Add(ThisObj.name, ThisObj);
             functItems.Add(Closesed.name, Closesed);
