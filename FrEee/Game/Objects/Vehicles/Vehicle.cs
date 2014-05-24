@@ -124,8 +124,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool IsHostileTo(Empire emp)
 		{
-			// TODO - treaties making empires non-hostile
-			return emp != null && Owner != null && emp != Owner;
+			return Owner == null ? false : Owner.IsHostileTo(emp, StarSystem);
 		}
 
 		/// <summary>
@@ -305,8 +304,7 @@ namespace FrEee.Game.Objects.Vehicles
 			this.UpdateEmpireMemories();
 		}
 
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public int Hitpoints
 		{
 			get

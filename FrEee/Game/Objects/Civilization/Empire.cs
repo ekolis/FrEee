@@ -567,7 +567,7 @@ namespace FrEee.Game.Objects.Civilization
 				return false;
 			if (emp == this)
 				return false;
-			var alliance = OfferedTreatyClauses[emp].OfType<AllianceClause>().MaxOrDefault(c => c.AllianceLevel);
+			var alliance = GivenTreatyClauses[emp].OfType<AllianceClause>().MaxOrDefault(c => c.AllianceLevel);
 			if (alliance >= AllianceLevel.NonAggression)
 				return false;
 			if (alliance >= AllianceLevel.NeutralZone)
@@ -812,17 +812,17 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Any treaty clauses this empire is offering to other empires.
 		/// </summary>
-		public ILookup<Empire, Clause> OfferedTreatyClauses
+		public ILookup<Empire, Clause> GivenTreatyClauses
 		{
 			get
 			{
-				if (Empire.Current == null || offeredTreatyClauses == null)
-					offeredTreatyClauses = Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver);
-				return offeredTreatyClauses;
+				if (Galaxy.Current.GivenTreatyClauseCache == null)
+					Galaxy.Current.GivenTreatyClauseCache = new SafeDictionary<Empire,ILookup<Empire,Clause>>();
+				if (!Galaxy.Current.GivenTreatyClauseCache.ContainsKey(this))
+					Galaxy.Current.GivenTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver));
+				return Galaxy.Current.GivenTreatyClauseCache[this];
 			}
 		}
-
-		private ILookup<Empire, Clause> offeredTreatyClauses;
 
 		/// <summary>
 		/// Any treaty clauses this empire is receiving from other empires.
@@ -831,13 +831,13 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				if (Empire.Current == null || receivedTreatyClauses == null)
-					receivedTreatyClauses = Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver);
-				return receivedTreatyClauses;
+				if (Galaxy.Current.ReceivedTreatyClauseCache == null)
+					Galaxy.Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire,ILookup<Empire,Clause>>();
+				if (!Galaxy.Current.ReceivedTreatyClauseCache.ContainsKey(this))
+					Galaxy.Current.ReceivedTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver));
+				return Galaxy.Current.ReceivedTreatyClauseCache[this];
 			}
 		}
-
-		private ILookup<Empire, Clause> receivedTreatyClauses;
 
 		/// <summary>
 		/// Gets all the clauses in a treaty with another empire.
@@ -846,7 +846,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public IEnumerable<Clause> GetTreaty(Empire emp)
 		{
-			return OfferedTreatyClauses[emp].Union(ReceivedTreatyClauses[emp]);
+			return GivenTreatyClauses[emp].Union(ReceivedTreatyClauses[emp]);
 		}
 
 		/// <summary>

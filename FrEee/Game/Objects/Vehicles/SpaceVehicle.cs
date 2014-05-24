@@ -197,7 +197,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (emp == Owner)
 				return Visibility.Owned;
-		
+
 			// You can always scan ships you are in combat with.
 			if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
@@ -213,7 +213,7 @@ namespace FrEee.Game.Objects.Vehicles
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
 					return Visibility.Fogged;
-				else if(Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				else if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;
@@ -329,7 +329,16 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
+			get
+			{
+				var fleets = Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
+				if (!fleets.Any())
+					return null;
+				if (fleets.Count() == 1)
+					return fleets.Single();
+				throw new Exception("Vehicle belongs to more than one fleet?!");
+				//return null; // probably busy copying a fleet to memory sight or something
+			}
 		}
 
 		/// <summary>
@@ -359,8 +368,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public override Sector Sector
 		{
 			get
