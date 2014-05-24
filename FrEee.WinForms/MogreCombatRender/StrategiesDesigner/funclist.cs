@@ -32,7 +32,12 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCStrat_Userinput fix16inp = new UCStrat_Userinput(new Strategyinput_fix16(), parent, canvasdata);
             UCStratBlock wpns = new UCStratBlock(new StrategyWeapons(), parent, canvasdata);
             UCStratBlock filtrsize = new UCStratBlock(new StrategyFilter_HullSize(), parent, canvasdata);
-            
+            UCStratBlock formate = new UCStratBlock(new StrategyFormate(), parent, canvasdata);
+            UCStratBlock drift = new UCStratBlock(new StrategyVelAngle(), parent, canvasdata);
+            UCStratBlock heading = new UCStratBlock(new StrategyHeading(), parent, canvasdata);
+            UCStratBlock addcompass = new UCStratBlock(new StrategyAdd_Compass(), parent, canvasdata);
+            UCStratBlock addanglecompass = new UCStratBlock(new StrategyAdd_angletocompass(), parent, canvasdata);
+
             functItems.Add(ThisObj.name, ThisObj);
             functItems.Add(Closesed.name, Closesed);
             functItems.Add(thisobjEnemys.name, thisobjEnemys);
@@ -44,6 +49,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             functItems.Add(mass.name, mass);
             functItems.Add(wpns.name, wpns);
             functItems.Add(filtrsize.name, filtrsize);
+            functItems.Add(formate.name, formate);
+            functItems.Add(drift.name, drift);
+            functItems.Add(heading.name, heading);
+            functItems.Add(addcompass.name, addcompass);
+            functItems.Add(addanglecompass.name, addanglecompass);
             this.listBox1.DataSource = functItems.Keys.ToList();
             
         }
