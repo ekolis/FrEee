@@ -399,6 +399,35 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
+    public class StrategyFilter_shieldhitpoints : StrategyBaseBlock
+    {
+        public StrategyFilter_shieldhitpoints()
+            : base(new Type[3] { typeof(List<CombatObject>), typeof(Fix16), typeof(Fix16) }, new object[3] { null, 0, Fix16.MaxValue }, typeof(List<CombatObject>))
+        {
+            name = "Filter";
+            ///input[0] = list of objects to filter
+            ///input[1] = Fix16 min
+            ///input[2] = Fix16 max
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj); //get inputs
+            List<CombatObject> comObjects = (List<CombatObject>)inputs[0];
+            
+            Fix16 min = (Fix16)inputs[1];
+            Fix16 max = (Fix16)inputs[2];
+            List<CombatObject> filteredObjects = new List<CombatObject>();
+            foreach (CombatObject loopcomobj in comObjects)
+            {
+                Fix16 checkitem = loopcomobj.WorkingObject.ShieldHitpoints;
+                if (checkitem > min && checkitem < max)
+                    filteredObjects.Add(loopcomobj);
+            }
+            output = filteredObjects;
+        }
+    }
+
     public class StrategyFilter_HullSize : StrategyBaseBlock
     {
         public StrategyFilter_HullSize()
@@ -426,13 +455,23 @@ namespace FrEee.Game.Objects.Combat2
         }
     }
 
-	public class StrategyWeaponRange : StrategyBaseBlock
+	public class StrategyWeaponMaxRange : StrategyBaseBlock
 	{
-		public StrategyWeaponRange()
+		public StrategyWeaponMaxRange()
 			: base(new Type[1] { typeof(List<CombatWeapon>) }, null, typeof(Fix16))
 		{
 
 		}
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            Fix16 rangecurrent = 0;
+            List<CombatWeapon> weapons = inputs[0] as List<CombatWeapon>;
+            foreach (CombatWeapon wpn in weapons)
+            {
+                
+            }
+        }
 	}
 
 }
