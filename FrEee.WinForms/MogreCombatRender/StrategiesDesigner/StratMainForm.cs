@@ -89,7 +89,35 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         }
 
         private void loadstrategy(StrategyObject strategy)
-        { 
+        {
+            txtBx_Name.Text = strategy.Name;
+            List<UCStratBlock> ucblcks = new List<UCStratBlock>();
+            foreach (StrategyBaseBlock stblock in strategy.blocks)
+            {
+                UCStratBlock ctrlObj = new UCStratBlock(stblock, this, canvasdata);
+                pBx.Controls.Add(ctrlObj);
+                ucblcks.Add(ctrlObj);
+            }
+            this.waypointblock.inputLnks = strategy.waypointObj.inputLnks;
+            
+            int i = 0;
+            foreach (UCFireControlTarget target in this.firectrllist)
+            {
+                target.Weapons = strategy.weaponslists[i];
+                target.tgt.inputLnks = strategy.targetObjs[i].inputLnks;
+                if (strategy.targetObjs.Count() <= this.firectrllist.Count()) 
+                    i++;
+            }
+
+            foreach (var ucblk in ucblcks)
+            {
+                
+            }
+            foreach (var link in this.waypointblock.inputLnks)
+            {
+                //UCLinkObj lnk = new UCLinkObj(this, 
+            }
+
 
         }
 
@@ -153,11 +181,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             
             foreach (UCLinkObj linkobj in linkObjs)
             {
-                //linkobj.location(canvasdata);
-            }
-            
-            foreach (UCLinkObj linkobj in linkObjs)
-            {
                 
                 if (linkobj.linkedTo[0] != null && linkobj.CheckAlign == ContentAlignment.MiddleLeft) //don't draw lines if null, 
                     //and only draw lines from input objects(not back again, or that'd be drawing a line where we've already done one)
@@ -178,10 +201,9 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             foreach (UCFireControlTarget fc in firectrllist)
             {
                 targetblocks.Add(fc.linkTgt.strategyblock);
-                wpnlist.Add(fc.Weapons);
-                
+                wpnlist.Add(fc.Weapons);                
             }
-            StrategyObject stratobj = new StrategyObject(waypointblock, targetblocks.ToArray());
+            StrategyObject stratobj = new StrategyObject(txtBx_Name.Text, waypointblock, targetblocks.ToArray());
             stratobj.weaponslists = wpnlist;
             List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
             List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
@@ -220,6 +242,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             }
         }
 
+        private void btn_LoadStrategy_Click(object sender, EventArgs e)
+        {
+            //loadstrategy(StratForm_LoadfromDesign.
+        }
 
     }
 }
