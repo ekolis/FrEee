@@ -283,6 +283,22 @@ namespace FrEee.Game.Objects.Combat2
 		}
 	}
 
+    public class Strategyfleet : StrategyBaseBlock
+    {
+        public Strategyfleet()
+            : base(new Type[1]{typeof(CombatObject)}, new object[0], typeof(List<CombatObject>))
+        {
+            name = "Fleet Objects";
+        }
+
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            CombatControlledObject targetObj = inputs[0] as CombatControlledObject;
+            //output = targetObj.fleet.;
+        }
+    }
+
 	public class StrategyRange : StrategyBaseBlock
 	{
 		public StrategyRange()
@@ -458,7 +474,7 @@ namespace FrEee.Game.Objects.Combat2
 	public class StrategyWeaponMaxRange : StrategyBaseBlock
 	{
 		public StrategyWeaponMaxRange()
-			: base(new Type[1] { typeof(List<CombatWeapon>) }, null, typeof(Fix16))
+            : base(new Type[1] { typeof(List<CombatWeapon>) }, new object[] { null }, typeof(Fix16))
 		{
 
 		}
@@ -473,5 +489,95 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
 	}
+
+    public class StrategyFormate : StrategyBaseBlock
+    {
+        public StrategyFormate()
+            : base(new Type[3] { typeof(CombatObject), typeof(Fix16), typeof(Compass) }, new object[] { null }, typeof(PointXd))
+        {
+            name = "Formate";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            CombatObject formateObj = (CombatObject)inputs[0];
+            Fix16 range = (Fix16)inputs[1];
+            Compass angle = (Compass)inputs[2];
+            //angle.Degrees += formateObj.cmbt_head.Degrees;
+            PointXd formatePoint = Trig.sides_ab(range, angle.Radians);
+            formatePoint += formateObj.cmbt_loc;
+            output = formatePoint;
+        }
+    }
+
+    public class StrategyVelAngle : StrategyBaseBlock
+    {
+        /// <summary>
+        /// outputs an angle of the target objects velocity vector. 
+        /// </summary>
+        public StrategyVelAngle()
+            : base(new Type[1] { typeof(CombatObject) }, new object[] { null }, typeof(Compass))
+        {
+            name = "VelocityAngle";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            CombatObject targetObj = (CombatObject)inputs[0];
+            Compass angle = new Compass(Trig.angleA(targetObj.cmbt_vel));
+            output = angle;
+        }
+    }
+
+    public class StrategyHeading : StrategyBaseBlock
+    {
+        /// <summary>
+        /// outputs an angle of the target objects heading. 
+        /// </summary>
+        public StrategyHeading()
+            : base(new Type[1] { typeof(CombatObject) }, new object[] { null }, typeof(Compass))
+        {
+            name = "Heading";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            CombatObject targetObj = (CombatObject)inputs[0];
+            Compass angle = new Compass(targetObj.cmbt_head.Degrees, false);
+            output = angle;
+        }
+    }
+
+    public class StrategyAdd_Compass : StrategyBaseBlock
+    {
+        public StrategyAdd_Compass()
+            : base(new Type[2] { typeof(Compass), typeof(Compass) }, new object[] { null, null }, typeof(Compass))
+        {
+            name = "Add Compass";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            Compass c1 = (Compass)inputs[0];
+            Compass c2 = (Compass)inputs[1];
+            output = c1 + c2;
+        }
+    }
+
+    public class StrategyAdd_angletocompass : StrategyBaseBlock
+    {
+        public StrategyAdd_angletocompass()
+            : base(new Type[2] { typeof(Compass), typeof(Fix16) }, new object[] { null, null }, typeof(Compass))
+        {
+            name = "Add Angle";
+        }
+        public override void calc(CombatObject comObj)
+        {
+            base.calc(comObj);
+            Compass c1 = (Compass)inputs[0];
+            Fix16 c2 = (Fix16)inputs[1];
+            output = c1.Degrees + c2;
+        }
+    }
 
 }
