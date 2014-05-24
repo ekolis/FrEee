@@ -43,7 +43,7 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return default(T);
 			var dest = obj.GetType().Instantiate();
-			obj.CopyTo(dest);
+			dest.InjectFrom(new OnlySafePropertiesInjection(true), obj);
 			return (T)dest;
 		}
 
@@ -168,12 +168,12 @@ namespace FrEee.Utility.Extensions
 					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
 				});
 			}*/
-			dest.InjectFrom(new OnlySafePropertiesInjection(), src);
+			dest.InjectFrom(new OnlySafePropertiesInjection(true), src);
 		}
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			public OnlySafePropertiesInjection(IDictionary<object, object> known = null)
+			public OnlySafePropertiesInjection(bool deep, IDictionary<object, object> known = null)
 			{
 				if (known != null)
 				{
@@ -182,7 +182,9 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 
-			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object,object>();
+			public bool DeepCopy { get; private set; }
+
+			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
 			protected override bool Match(ConventionInfo c)
 			{
@@ -192,14 +194,48 @@ namespace FrEee.Utility.Extensions
 					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
 
+			/// <summary>
+			/// Checks for "do not copy" attribute, even on interface properties.
+			/// </summary>
+			/// <param name="p"></param>
+			/// <returns></returns>
+			private bool CanCopyFully(PropertyInfo p)
+			{
+				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+					return false;
+				foreach (var i in p.DeclaringType.GetInterfaces())
+				{
+					var ip = i.GetProperty(p.Name);
+					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+						return false;
+				}
+				return true;
+			}
+
+			private bool CanCopySafely(PropertyInfo p)
+			{
+				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+					return false;
+				foreach (var i in p.DeclaringType.GetInterfaces())
+				{
+					var ip = i.GetProperty(p.Name);
+					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+						return false;
+				}
+				return true;
+			}
+
 			private bool PropertyMatches(PropertyInfo p, string name)
 			{
+				if (p.Name == "Owner")
+				{
+
+				}
 				return
 				   p.Name == name // it's the right property
 					   && p.GetSetMethod(true) != null // has a getter, whether public or private
 					   && p.GetSetMethod(true) != null // has a setter, whether public or private
-					   && p.GetIndexParameters().Length == 0 // lacks index parameters
-					   && !p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(); // doesn't have "do not copy" attribute
+					   && p.GetIndexParameters().Length == 0; // lacks index parameters
 			}
 
 			protected override void Inject(object source, object target)
@@ -219,15 +255,21 @@ namespace FrEee.Utility.Extensions
 						if (Match(c))
 						{
 							var sv = sp.GetValue(source, null);
-							if (sv == null)
-								sp.SetValue(target, null, null);
-							else if (!knownObjects.ContainsKey(sv))
+							if (DeepCopy && CanCopyFully(sp))
 							{
-								var tv = CopyObject(source, sv);
-								sp.SetValue(target, tv, null);
+								if (sv == null)
+									sp.SetValue(target, null, null); // it's null, very simple
+								else if (!knownObjects.ContainsKey(sv))
+								{
+									// copy object and use the copy
+									var tv = CopyObject(source, sv);
+									sp.SetValue(target, tv, null);
+								}
+								else
+									sp.SetValue(target, knownObjects[sv], null); // known object, don't bother copying again
 							}
-							else
-								sp.SetValue(target, knownObjects[sv], null);
+							else if (CanCopySafely(sp))
+								sp.SetValue(target, sv, null); // use original object
 						}
 					}
 				}
@@ -310,7 +352,7 @@ namespace FrEee.Utility.Extensions
 					var tv = sv.GetType().Instantiate();
 					knownObjects.Add(sv, tv);
 					Map(sv, tv);
-					knownObjects.Remove(parent);
+					//knownObjects.Remove(parent);
 					return tv;
 				}
 			}
@@ -2066,15 +2108,20 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var container = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().SingleOrDefault(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
-			if (container != null)
-				return container;
-			if (unit is IMobileSpaceObject)
+			var containers =Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			if (!containers.Any())
 			{
-				var v = (IMobileSpaceObject)unit;
-				return v.Sector;
+				if (unit is IMobileSpaceObject)
+				{
+					var v = (IMobileSpaceObject)unit;
+					return v.Sector;
+				}
+				else
+					return null; // unit is in limbo...
 			}
-			return null; // unit is in limbo...
+			if (containers.Count() > 1)
+				throw new Exception("Unit is in multiple cargo containers?!");
+			return containers.Single();
 		}
 
 		public static int? ToNullableInt(this long? l)

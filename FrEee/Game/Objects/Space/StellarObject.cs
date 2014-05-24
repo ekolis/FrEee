@@ -196,9 +196,7 @@ namespace FrEee.Game.Objects.Space
 			get { return false; }
 		}
 
-		[DoNotSerialize]
-
-
+		[DoNotSerialize(false)]
 		public virtual Sector Sector
 		{
 			get

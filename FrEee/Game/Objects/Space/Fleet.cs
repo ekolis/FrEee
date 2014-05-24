@@ -159,7 +159,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The hitpoints of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int Hitpoints
 		{
 			get
@@ -175,7 +175,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The normal shields of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int NormalShields
 		{
 			get
@@ -191,7 +191,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The phased shields of this fleet. Cannot set this property; attempting to do so will throw a NotSupportedException.
 		/// </summary>
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int PhasedShields
 		{
 			get
@@ -543,7 +543,16 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
+			get
+			{
+				var fleets = Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
+				if (!fleets.Any())
+					return null;
+				if (fleets.Count() == 1)
+					return fleets.Single();
+				// return null; // probably busy copying a fleet to memory sight or something
+				throw new Exception("Fleet belongs to more than one fleet?!");
+			}
 		}
 
 		/// <summary>
@@ -619,8 +628,7 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
-		[DoNotSerialize]
-		
+		[DoNotSerialize(false)]
 		public Sector Sector
 		{
 			get
