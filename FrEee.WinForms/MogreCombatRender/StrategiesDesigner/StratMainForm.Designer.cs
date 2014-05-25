@@ -84,7 +84,7 @@
             this.btnAddBlock.TabIndex = 4;
             this.btnAddBlock.Text = "Add";
             this.btnAddBlock.UseVisualStyleBackColor = true;
-            this.btnAddBlock.Click += new System.EventHandler(this.button1_Click);
+            this.btnAddBlock.Click += new System.EventHandler(this.btnAddBlock_Click);
             // 
             // btn_SaveStrategy
             // 
