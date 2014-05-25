@@ -32,6 +32,9 @@ namespace FrEee.Game.Objects.Combat2
 		public SafeType outputType { get; protected set; }
 		public List<StrategyBaseBlock> outputLnks { get; set; }
 
+        public System.Drawing.Point GUIloc { get; set; }
+
+        public bool hasUI = false;
 
 		/// <summary>
 		/// 
