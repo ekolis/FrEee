@@ -27,7 +27,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         List<UCFireControlTarget> firectrllist = new List<UCFireControlTarget>();
         Dictionary<int, MountedComponentTemplate> dic_weapons = new Dictionary<int, MountedComponentTemplate>();
         List<UCLinkObj> linkObjs = new List<UCLinkObj>();
-
+        UCWaypoint wpnt;
         public StratMainForm(IDesign design)
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             canvasdata = new Canvasdata(1, pBx.Width, pBx.Height, canvasloc);
             this.design = design;
             this.Text = "Strategy for: \"" + design.Name + "\"";
-            UCWaypoint wpnt = new UCWaypoint(this, canvasdata);
+            wpnt = new UCWaypoint(this, canvasdata);
             this.waypointblock = wpnt.wpnt;
             tableLayoutPanel1.SetColumn(wpnt, 2);
             tableLayoutPanel1.SetRow(wpnt, 1);
@@ -91,12 +91,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         private void loadstrategy(StrategyObject strategy)
         {
             txtBx_Name.Text = strategy.Name;
-            List<UCStratBlock> ucblcks = new List<UCStratBlock>();
+
             foreach (StrategyBaseBlock stblock in strategy.blocks)
             {
-                UCStratBlock ctrlObj = new UCStratBlock(stblock, this, canvasdata);
-                pBx.Controls.Add(ctrlObj);
-                ucblcks.Add(ctrlObj);
+                stblock.hasUI = false;
             }
             this.waypointblock.inputLnks = strategy.waypointObj.inputLnks;
             
@@ -109,16 +107,43 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                     i++;
             }
 
-            foreach (var ucblk in ucblcks)
+            
+            for (i = 0; i < this.wpnt.inputlinks.Count(); i++)
             {
-                
-            }
-            foreach (var link in this.waypointblock.inputLnks)
-            {
-                //UCLinkObj lnk = new UCLinkObj(this, 
+                recursivelink(this.wpnt.inputlinks[i], this.waypointblock.inputLnks[i]);
             }
 
+            for (i = 0; i < this.firectrllist.Count(); i++)
+            {
+                recursivelink(this.firectrllist[i].linkTgt, strategy.targetObjs[i]);
+            }
 
+        }
+
+        private void recursivelink(UCLinkObj link, StrategyBaseBlock stratlnkblk)
+        {
+            UCStratBlock ctrlObj = new UCStratBlock(stratlnkblk, this, canvasdata);
+            pBx.Controls.Add(ctrlObj);
+            stratlnkblk.hasUI = true;
+            ctrlObj.loadUIlocs();
+            link.linkedTo[0] = ctrlObj.outlink;
+
+            if (!ctrlObj.outlink.linkedTo.Contains(link))
+            {
+                if (ctrlObj.outlink.linkedTo.Contains(null))
+                    ctrlObj.outlink.linkedTo[0] = link;
+                else
+                    ctrlObj.outlink.linkedTo.Add(link);
+            }
+            //this.waypointblock.makelink(0, lnkblk);
+            //foreach (var something in ctrlObj.
+            int i = 0;
+            foreach (StrategyBaseBlock blocklink in stratlnkblk.inputLnks)
+            {
+                if (blocklink != null && !blocklink.hasUI)
+                    recursivelink(ctrlObj.inputlinks[i], blocklink);
+                i++;
+            }
         }
 
         public List<UCLinkObj> links
@@ -153,9 +178,11 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             
             funclist functlisform = new funclist(this, canvas);
             var result = functlisform.ShowDialog();
-            UserControlBaseObj ctrlObj = functlisform.ReturnCtrlObj;
+            UCStratBlock ctrlObj = functlisform.ReturnCtrlObj;
             
             pbx.Controls.Add(ctrlObj);
+            ctrlObj.saveUIlocs();
+            
         }
 
         public void refresh()
@@ -201,7 +228,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             foreach (UCFireControlTarget fc in firectrllist)
             {
                 targetblocks.Add(fc.linkTgt.strategyblock);
-                wpnlist.Add(fc.Weapons);                
+                wpnlist.Add(fc.Weapons);
             }
             StrategyObject stratobj = new StrategyObject(txtBx_Name.Text, waypointblock, targetblocks.ToArray());
             stratobj.weaponslists = wpnlist;

@@ -13,7 +13,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
     public partial class UCStratBlock : UserControlBaseObj
     {
         public StrategyBaseBlock stratblock { get; protected set; }
-        
+        public List<UCLinkObj> inputlinks { get; set; }
+        public UCLinkObj outlink { get; set; }  
         public UCStratBlock() : base() { }
 
         public UCStratBlock(StrategyBaseBlock stratblock, StratMainForm parentForm, Canvasdata canvasdata)
@@ -21,7 +22,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         {
             this.stratblock = stratblock;
             InitializeComponent();
-
+            inputlinks = new List<UCLinkObj>();
             this.Name = stratblock.name;
             RowStyle style0 = new RowStyle(SizeType.Absolute, 20);
             this.GameTableLayoutPanel1.RowStyles[0] = style0;
@@ -45,7 +46,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             {
 
                 UCLinkObj linkinp = new UCLinkObj(parentForm, this, stratblock, true, i);
-
+                this.inputlinks.Add(linkinp);
                 linkinp.Text = linkinp.dataType.Name;//stratblock.inputtypes[i].Name;
                 linkinp.CheckAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
@@ -63,20 +64,29 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         protected void createOutputs(StratMainForm parentForm)
         {
-            UCLinkObj linkout = new UCLinkObj(parentForm, this, stratblock, false, 0);
+            this.outlink = new UCLinkObj(parentForm, this, stratblock, false, 0);
 
-            linkout.Text = linkout.dataType.Name;//stratblock.outputType.Name;
-            linkout.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            linkout.Anchor = AnchorStyles.Right;
-            this.GameTableLayoutPanel1.SetRow(linkout, 1);
-            this.GameTableLayoutPanel1.SetColumn(linkout, 2);
-            this.GameTableLayoutPanel1.SetColumnSpan(linkout, 2);
-            this.GameTableLayoutPanel1.Controls.Add(linkout);
+            outlink.Text = outlink.dataType.Name;//stratblock.outputType.Name;
+            outlink.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            outlink.Anchor = AnchorStyles.Right;
+            this.GameTableLayoutPanel1.SetRow(outlink, 1);
+            this.GameTableLayoutPanel1.SetColumn(outlink, 2);
+            this.GameTableLayoutPanel1.SetColumnSpan(outlink, 2);
+            this.GameTableLayoutPanel1.Controls.Add(outlink);
         }
 
         public void link(int myinputIndex, StrategyBaseBlock otherBlock)
         {
             this.stratblock.makelink(myinputIndex, otherBlock);
+        }
+
+        public void loadUIlocs()
+        {
+            this.Location = stratblock.GUIloc;
+        }
+        public void saveUIlocs()
+        {
+            stratblock.GUIloc = this.Location;
         }
     }
 }

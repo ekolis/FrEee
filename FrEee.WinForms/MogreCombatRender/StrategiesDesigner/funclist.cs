@@ -13,9 +13,9 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
     public partial class funclist : Form
     {
 
-        Dictionary<string, UserControlBaseObj> functItems = new Dictionary<string, UserControlBaseObj>();
+        Dictionary<string, UCStratBlock> functItems = new Dictionary<string, UCStratBlock>();
 
-        public UserControlBaseObj ReturnCtrlObj { get; set; }
+        public UCStratBlock ReturnCtrlObj { get; set; }
 
         public funclist(StratMainForm parent, Canvasdata canvasdata)
         {
