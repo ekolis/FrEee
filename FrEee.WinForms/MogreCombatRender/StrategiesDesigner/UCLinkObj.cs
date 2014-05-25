@@ -16,7 +16,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         Type datatype;
         List<UCLinkObj> linkedto = new List<UCLinkObj>();
         StratMainForm parentform;
-        UserControlBaseObj parentUC;
+        public UserControlBaseObj parentUC { get; private set; }
         public StrategyBaseBlock strategyblock { get; private set; }
         int linkdex = 0;
         bool isinput;

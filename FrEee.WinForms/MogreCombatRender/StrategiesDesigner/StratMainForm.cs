@@ -26,6 +26,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         StrategyWayPoint waypointblock = new StrategyWayPoint();
         List<UCFireControlTarget> firectrllist = new List<UCFireControlTarget>();
         Dictionary<int, MountedComponentTemplate> dic_weapons = new Dictionary<int, MountedComponentTemplate>();
+        Dictionary<StrategyBaseBlock, UCStratBlock> UCStratblocks = new Dictionary<StrategyBaseBlock, UCStratBlock>();
         List<UCLinkObj> linkObjs = new List<UCLinkObj>();
         UCWaypoint wpnt;
         public StratMainForm(IDesign design)
@@ -57,7 +58,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             //ie one group might be all missiles, the other all DF, or mixed for some reason. IF there's enough multiplex. 
 
             int mplx = design.GetAbilityValue("Multiplex Tracking").ToInt();
-            mplx = Math.Max(mplx, 2);
+            mplx = Math.Max(mplx, 1);
             
             for (int i = 1; i <= mplx; i++)
             {
@@ -94,57 +95,47 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
             foreach (StrategyBaseBlock stblock in strategy.blocks)
             {
-                stblock.hasUI = false;
+                //stblock.hasUI = false;
+                UCStratBlock ctrlObj = new UCStratBlock(stblock, this, canvasdata);
+                this.UCStratblocks.Add(stblock, ctrlObj);
+                pBx.Controls.Add(ctrlObj);
+                ctrlObj.loadUIlocs();
             }
             this.waypointblock.inputLnks = strategy.waypointObj.inputLnks;
-            
+
+
+
             int i = 0;
             foreach (UCFireControlTarget target in this.firectrllist)
             {
                 target.Weapons = strategy.weaponslists[i];
                 target.tgt.inputLnks = strategy.targetObjs[i].inputLnks;
-                if (strategy.targetObjs.Count() <= this.firectrllist.Count()) 
+                if (strategy.targetObjs.Count() <= this.firectrllist.Count())
                     i++;
             }
 
-            
-            for (i = 0; i < this.wpnt.inputlinks.Count(); i++)
+            foreach (UCLinkObj uclink in this.linkObjs)
             {
-                recursivelink(this.wpnt.inputlinks[i], this.waypointblock.inputLnks[i]);
+                //UCStratBlock UCblc = link.parentUC;
+                foreach (StrategyBaseBlock slink in uclink.strategyblock.inputLnks)
+                {
+                    if (slink != null)
+                    {
+                        UCStratBlock ctrlObj = this.UCStratblocks[slink];
+                        uclink.linkedTo[0] = ctrlObj.outlink; //connect the link input to the next object up the chain's output. 
+                        if (!ctrlObj.outlink.linkedTo.Contains(uclink)) //if the next item up the chain is not linked back
+                        {
+                            if (ctrlObj.outlink.linkedTo.Contains(null))
+                                ctrlObj.outlink.linkedTo[0] = uclink; //if it has no links at all, put it at [0]
+                            else
+                                ctrlObj.outlink.linkedTo.Add(uclink); //else add it to teh list.
+                        }
+                    }
+                }
             }
-
-            for (i = 0; i < this.firectrllist.Count(); i++)
-            {
-                recursivelink(this.firectrllist[i].linkTgt, strategy.targetObjs[i]);
-            }
-
+            refreshlines();
         }
 
-        private void recursivelink(UCLinkObj link, StrategyBaseBlock stratlnkblk)
-        {
-            UCStratBlock ctrlObj = new UCStratBlock(stratlnkblk, this, canvasdata);
-            pBx.Controls.Add(ctrlObj);
-            stratlnkblk.hasUI = true;
-            ctrlObj.loadUIlocs();
-            link.linkedTo[0] = ctrlObj.outlink;
-
-            if (!ctrlObj.outlink.linkedTo.Contains(link))
-            {
-                if (ctrlObj.outlink.linkedTo.Contains(null))
-                    ctrlObj.outlink.linkedTo[0] = link;
-                else
-                    ctrlObj.outlink.linkedTo.Add(link);
-            }
-            //this.waypointblock.makelink(0, lnkblk);
-            //foreach (var something in ctrlObj.
-            int i = 0;
-            foreach (StrategyBaseBlock blocklink in stratlnkblk.inputLnks)
-            {
-                if (blocklink != null && !blocklink.hasUI)
-                    recursivelink(ctrlObj.inputlinks[i], blocklink);
-                i++;
-            }
-        }
 
         public List<UCLinkObj> links
         {
@@ -166,7 +157,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         }
 
            
-        private void button1_Click(object sender, EventArgs e)
+        private void btnAddBlock_Click(object sender, EventArgs e)
         {
             PictureBox pbx = null;
             Canvasdata canvas = null;
@@ -181,7 +172,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             UCStratBlock ctrlObj = functlisform.ReturnCtrlObj;
             
             pbx.Controls.Add(ctrlObj);
-            ctrlObj.saveUIlocs();
+            this.UCStratblocks.Add(ctrlObj.stratblock, ctrlObj);
             
         }
 
@@ -222,7 +213,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
-            
+            foreach (UCStratBlock blk in this.UCStratblocks.Values)
+            {
+                blk.saveUIlocs();
+            }
             List<StrategyBaseBlock> targetblocks = new List<StrategyBaseBlock>();
             List<Dictionary<int, MountedComponentTemplate>> wpnlist = new List<Dictionary<int, MountedComponentTemplate>>();
             foreach (UCFireControlTarget fc in firectrllist)

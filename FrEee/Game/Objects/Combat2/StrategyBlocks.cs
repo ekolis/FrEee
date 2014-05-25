@@ -34,7 +34,6 @@ namespace FrEee.Game.Objects.Combat2
 
         public System.Drawing.Point GUIloc { get; set; }
 
-        public bool hasUI = false;
 
 		/// <summary>
 		/// 
