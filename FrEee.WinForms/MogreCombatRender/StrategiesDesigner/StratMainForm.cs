@@ -103,36 +103,59 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             }
             this.waypointblock.inputLnks = strategy.waypointObj.inputLnks;
 
-
-
-            int i = 0;
-            foreach (UCFireControlTarget target in this.firectrllist)
+            
+            for(int i = 0; i < this.firectrllist.Count(); i++)   //(UCFireControlTarget target in this.firectrllist)
             {
-                target.Weapons = strategy.weaponslists[i];
+                UCFireControlTarget target = this.firectrllist[i];
+                //target.Weapons = strategy.weaponslists[i];
                 target.tgt.inputLnks = strategy.targetObjs[i].inputLnks;
-                if (strategy.targetObjs.Count() <= this.firectrllist.Count())
-                    i++;
+                //if (strategy.targetObjs.Count() <= this.firectrllist.Count())                  
             }
 
-            foreach (UCLinkObj uclink in this.linkObjs)
+            foreach (UCStratBlock thisUCblk in this.UCStratblocks.Values)
             {
-                //UCStratBlock UCblc = link.parentUC;
-                foreach (StrategyBaseBlock slink in uclink.strategyblock.inputLnks)
+
+                for(int i = 0; i < thisUCblk.stratblock.inputLnks.Count(); i++) // (StrategyBaseBlock nextSTblck in thisUCblk.stratblock.inputLnks)
                 {
-                    if (slink != null)
+                    StrategyBaseBlock nextSTblck = thisUCblk.stratblock.inputLnks[i];
+                    if (nextSTblck != null)
                     {
-                        UCStratBlock ctrlObj = this.UCStratblocks[slink];
-                        uclink.linkedTo[0] = ctrlObj.outlink; //connect the link input to the next object up the chain's output. 
-                        if (!ctrlObj.outlink.linkedTo.Contains(uclink)) //if the next item up the chain is not linked back
+                        UCStratBlock nextUCblck = this.UCStratblocks[nextSTblck];
+                        UCLinkObj thislnk = thisUCblk.inputlinks[i];
+                        UCLinkObj nextlnk = nextUCblck.outlink;
+                        thislnk.linkedTo[0] = nextlnk;
+                        if (!nextlnk.linkedTo.Contains(thislnk)) //if the next item up the chain is not linked back
                         {
-                            if (ctrlObj.outlink.linkedTo.Contains(null))
-                                ctrlObj.outlink.linkedTo[0] = uclink; //if it has no links at all, put it at [0]
+                            if (nextlnk.linkedTo.Contains(null))
+                                nextlnk.linkedTo[0] = thislnk; //if it has no links at all, put it at [0]
                             else
-                                ctrlObj.outlink.linkedTo.Add(uclink); //else add it to teh list.
+                                nextlnk.linkedTo.Add(thislnk); //else add it to teh list.
                         }
+                        thislnk.Checked = true;
+                        nextlnk.Checked = true;
                     }
                 }
             }
+
+            //foreach (UCLinkObj uclink in this.linkObjs)
+            //{
+            //    //UCStratBlock UCblc = link.parentUC;
+            //    foreach (StrategyBaseBlock slink in uclink.strategyblock.inputLnks)
+            //    {
+            //        if (slink != null)
+            //        {
+            //            UCStratBlock ctrlObj = this.UCStratblocks[slink];
+            //            uclink.linkedTo[0] = ctrlObj.outlink; //connect the link input to the next object up the chain's output. 
+            //            if (!ctrlObj.outlink.linkedTo.Contains(uclink)) //if the next item up the chain is not linked back
+            //            {
+            //                if (ctrlObj.outlink.linkedTo.Contains(null))
+            //                    ctrlObj.outlink.linkedTo[0] = uclink; //if it has no links at all, put it at [0]
+            //                else
+            //                    ctrlObj.outlink.linkedTo.Add(uclink); //else add it to teh list.
+            //            }
+            //        }
+            //    }
+            //}
             refreshlines();
         }
 
