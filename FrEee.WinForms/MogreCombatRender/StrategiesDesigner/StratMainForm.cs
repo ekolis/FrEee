@@ -37,7 +37,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.design = design;
             this.Text = "Strategy for: \"" + design.Name + "\"";
             wpnt = new UCWaypoint(this, canvasdata);
-            this.waypointblock = wpnt.wpnt;
+            this.waypointblock = (StrategyWayPoint)wpnt.stratblock;
+            UCStratblocks.Add(wpnt.stratblock, wpnt);
             tableLayoutPanel1.SetColumn(wpnt, 2);
             tableLayoutPanel1.SetRow(wpnt, 1);
             tableLayoutPanel1.SetRowSpan(wpnt, 2);
@@ -64,7 +65,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             {
                 UCFireControlTarget ucFireCtrl = new UCFireControlTarget(this, canvasdata);
                 firectrllist.Add(ucFireCtrl);
-                
+                UCStratblocks.Add(ucFireCtrl.stratblock, ucFireCtrl);
                 //linkTgt.weapons = weapons.ToList();
                 ucFireCtrl.Text = "Target Object";
                 tableLayoutPanel1.RowCount += 2;
@@ -244,7 +245,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             List<Dictionary<int, MountedComponentTemplate>> wpnlist = new List<Dictionary<int, MountedComponentTemplate>>();
             foreach (UCFireControlTarget fc in firectrllist)
             {
-                targetblocks.Add(fc.linkTgt.strategyblock);
+                targetblocks.Add(fc.inputlinks[0].strategyblock);
                 wpnlist.Add(fc.Weapons);
             }
             StrategyObject stratobj = new StrategyObject(txtBx_Name.Text, waypointblock, targetblocks.ToArray());
