@@ -69,6 +69,8 @@ namespace FrEee.Utility
 
 		public static implicit operator T(Reference<T> r)
 		{
+			if (r == null)
+				return default(T);
 			return r.Value;
 		}
 
