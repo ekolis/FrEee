@@ -17,7 +17,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         public UCLinkObj outlink { get; set; }  
         public UCStratBlock() : base() { }
 
-        public UCStratBlock(StrategyBaseBlock stratblock, StratMainForm parentForm, Canvasdata canvasdata)
+        public UCStratBlock(StrategyBaseBlock stratblock, StratMainForm parentForm, Canvasdata canvasdata, bool hasoutput = true)
             : base(stratblock.name, parentForm, canvasdata)
         {
             this.stratblock = stratblock;
@@ -37,7 +37,8 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 this.GameTableLayoutPanel1.RowStyles.Add(style1);
                 this.Height += 24;
             }
-            createOutputs(parentForm);
+            if (hasoutput)
+                createOutputs(parentForm);
         }
 
         protected virtual void createInputs(StratMainForm parentForm)

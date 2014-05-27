@@ -12,15 +12,15 @@ using FrEee.Game.Objects.Combat2;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
-    public partial class UCFireControlTarget : UserControlBaseObj
+    public partial class UCFireControlTarget : UCStratBlock
     {
         Dictionary<int, MountedComponentTemplate> weapons;
-        public StrategyComObj tgt { get; set; }
-        public UCLinkObj linkTgt { get; set; }
+        public StrategyComObj tgt { get { return (StrategyComObj)base.stratblock; } set { base.stratblock = value; } }
+        //public UCLinkObj linkTgt { get; set; }
         public ListBox lbx_wpns = new ListBox();
 
         public UCFireControlTarget(StratMainForm ParentForm, Canvasdata canvasdata)
-            : base("FireControl", ParentForm, canvasdata)
+            : base(new StrategyComObj(), ParentForm, canvasdata, false)
         {
             InitializethisComponent();
             
@@ -29,12 +29,20 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
             lbx_wpns.AllowDrop = true;
 
-            tgt = new StrategyComObj();
+            //tgt = (StrategyComObj);
 
-            linkTgt = new UCLinkObj(ParentForm, this, tgt, true, 0);
-            linkTgt.CheckAlign = ContentAlignment.MiddleLeft;
-            linkTgt.Text = "Target Object";
-            
+
+
+            this.Dock = DockStyle.Fill;
+        }
+
+        protected override void createInputs(StratMainForm parentForm)
+        {
+            //base.createInputs(parentForm);
+            inputlinks.Add(new UCLinkObj(parentForm, this, tgt, true, 0));
+            inputlinks[0].CheckAlign = ContentAlignment.MiddleLeft;
+            inputlinks[0].Text = "Target Object";
+
             this.GameTableLayoutPanel1.RowCount = 3;
             while (GameTableLayoutPanel1.RowStyles.Count < 3)
                 GameTableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20));
@@ -49,10 +57,10 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             this.GameTableLayoutPanel1.SetColumnSpan(lbl_FunctName, 1);
 
             this.GameTableLayoutPanel1.RowCount += 1;
-            this.GameTableLayoutPanel1.SetRow(linkTgt, 1);
-            this.GameTableLayoutPanel1.SetColumn(linkTgt, 0);
-            this.GameTableLayoutPanel1.SetColumnSpan(linkTgt, 1);
-            this.GameTableLayoutPanel1.Controls.Add(linkTgt);
+            this.GameTableLayoutPanel1.SetRow(inputlinks[0], 1);
+            this.GameTableLayoutPanel1.SetColumn(inputlinks[0], 0);
+            this.GameTableLayoutPanel1.SetColumnSpan(inputlinks[0], 1);
+            this.GameTableLayoutPanel1.Controls.Add(inputlinks[0]);
             RowStyle style_linkTgt = new RowStyle(SizeType.Absolute, 24);
             this.GameTableLayoutPanel1.RowStyles[1] = style_linkTgt;
 
@@ -64,8 +72,6 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             lbx_wpns.Dock = DockStyle.Fill;
             RowStyle style_lb = new RowStyle(SizeType.Percent, 100);
             this.GameTableLayoutPanel1.RowStyles[2] = style_lb;
-
-            this.Dock = DockStyle.Fill;
         }
 
         private void InitializethisComponent()
