@@ -93,15 +93,15 @@ namespace FrEee.WinForms.Forms
 				}
 
 				// budget
-				if (emp == Empire.Current)
-					rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.UpcomingSpending);
-				else
-					// assume other empires' construction queues are running at full capacity
-					rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
+                if (emp == Empire.Current)
+                    rqdConstruction.ResourceQuantity = emp.ConstructionSpending;
+                else
+                    // assume other empires' construction queues are running at full capacity
+                    rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
 				rqdExtraction.ResourceQuantity = emp.ColonizedPlanets.Sum(p => p.GrossIncome); // TODO - remote mining and raw resource generation
 				rqdIncome.ResourceQuantity = emp.GrossIncome;
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
-				rqdNet.ResourceQuantity = emp.NetIncome;
+				rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;
 				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncome - emp.ResourceStorage);
 				rqdStored.ResourceQuantity = emp.StoredResources;
 				rqdTrade.ResourceQuantity = new ResourceQuantity(); // TODO - trade
