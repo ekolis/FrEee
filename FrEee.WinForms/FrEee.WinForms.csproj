@@ -211,12 +211,6 @@
     <Compile Include="MogreCombatRender\GfxObj.cs" />
     <Compile Include="MogreCombatRender\GfxCfg.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\Canvasdata.cs" />
-    <Compile Include="MogreCombatRender\StrategiesDesigner\StratForm_LoadfromDesign.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\StratForm_LoadfromDesign.Designer.cs">
-      <DependentUpon>StratForm_LoadfromDesign.cs</DependentUpon>
-    </Compile>
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -706,9 +700,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\VehicleDesignForm.resx">
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\StratForm_LoadfromDesign.resx">
-      <DependentUpon>StratForm_LoadfromDesign.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.resx">
       <DependentUpon>UCFireControlTarget.cs</DependentUpon>
