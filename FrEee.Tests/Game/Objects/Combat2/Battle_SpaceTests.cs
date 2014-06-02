@@ -265,9 +265,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)5));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             battle.End(tick);
-            Assert.AreEqual(
-                endHeading.Degrees,
-                testComObj.cmbt_head.Degrees);
+			AssertAngleWithinTolerance(endHeading, testComObj.cmbt_head, 0.01);
 
             battle.End(tick);
         }
@@ -377,10 +375,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             testComObj.helm();
             battle.End(1);
-            Assert.AreEqual(expectedThrustResult, testComObj.cmbt_thrust);
-            Assert.AreEqual(
-                expectedHeading.Degrees,
-                testComObj.cmbt_head.Degrees);
+            AssertPointWithinTolerance(expectedThrustResult, testComObj.cmbt_thrust, 1);
+			AssertAngleWithinTolerance(expectedHeading, testComObj.cmbt_head, 0.01);
         }
 
         [TestMethod]
@@ -492,7 +488,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             battle.SimNewtonianPhysics(testComObj); 
             battle.End(1);
-            Assert.AreEqual(expectedResult, testComObj.cmbt_loc);
+            AssertPointWithinTolerance(expectedResult, testComObj.cmbt_loc, 1);
         }
 
         [TestMethod]
@@ -518,8 +514,39 @@ namespace FrEee.Tests.Game.Objects.Combat2
                 battle.SimNewtonianPhysics(testComObj); //run * TicksPerSecond to get 1 simsecond. 
             }
             battle.End(1);
-            Assert.AreEqual(expectedResult, testComObj.cmbt_loc);
+            AssertPointWithinTolerance(expectedResult, testComObj.cmbt_loc, 1);
         }
 
+		/// <summary>
+		/// Asserts that two points are "close enough" within a certain tolerance.
+		/// </summary>
+		/// <param name="expected"></param>
+		/// <param name="actual"></param>
+		private void AssertPointWithinTolerance(PointXd expected, PointXd actual, Fix16 tolerance)
+		{
+			var dist = (actual - expected).Length;
+			Assert.IsTrue(dist <= tolerance, "distance between points must not be greater than " + tolerance + "; was " + dist);
+		}
+
+		/// <summary>
+		/// Asserts that two points are "close enough" within a certain tolerance.
+		/// </summary>
+		/// <param name="expected"></param>
+		/// <param name="actual"></param>
+		private void AssertPointWithinTolerance(Compass expectedAngle, Fix16 expectedRadius, Compass actualAngle, Fix16 actualRadius, Fix16 tolerance)
+		{
+			AssertPointWithinTolerance(expectedAngle.Point(expectedRadius), actualAngle.Point(actualRadius), tolerance);
+		}
+
+		/// <summary>
+		/// Asserts that two angles are "close enough" that points spaced at radius 1 are going to be within a certain tolerance.
+		/// </summary>
+		/// <param name="expectedAngle"></param>
+		/// <param name="actualAngle"></param>
+		/// <param name="tolerancePerRadius"></param>
+		private void AssertAngleWithinTolerance(Compass expectedAngle, Compass actualAngle, Fix16 tolerancePerRadius)
+		{
+			AssertPointWithinTolerance(expectedAngle, 1, actualAngle, 1, tolerancePerRadius);
+		}
     }
 }
