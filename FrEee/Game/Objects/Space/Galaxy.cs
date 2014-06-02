@@ -627,6 +627,13 @@ namespace FrEee.Game.Objects.Space
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 						CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
 				}
+				else
+				{
+					// memories are only visible to the empire which is seeing them!
+					// well unless we add some sort of intel project to see them or something...
+					if (!CurrentEmpire.Memory.Values.Contains(obj))
+						obj.Dispose();
+				}
 			}
 		}
 
