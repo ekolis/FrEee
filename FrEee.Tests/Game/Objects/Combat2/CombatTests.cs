@@ -181,8 +181,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             battle.Resolve();
             
-            Assert.AreNotEqual(battle.StartCombatants[1], battle.ActualCombatants[1]);
-            Assert.AreNotEqual(battle.StartCombatants[2], battle.ActualCombatants[2]);
+            Assert.AreNotEqual(battle.StartCombatants.Values.ElementAt(0), battle.ActualCombatants.Values.ElementAt(0));
+			Assert.AreNotEqual(battle.StartCombatants.Values.ElementAt(1), battle.ActualCombatants.Values.ElementAt(1));
             //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
 
             
