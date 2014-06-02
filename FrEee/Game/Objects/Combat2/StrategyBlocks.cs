@@ -404,7 +404,7 @@ namespace FrEee.Game.Objects.Combat2
     {
         public SafeType inputtype { get; set; }
         public Strategyinput_Types()
-            : base(new Type[1] { typeof(SafeType) }, new object[] { typeof(CombatControlledObject) }, typeof(SafeType))
+            : base(new Type[1] { typeof(SafeType) }, new object[] { (SafeType)typeof(CombatControlledObject) }, typeof(SafeType))
         {
             name = "Type";
             inputtype = typeof(CombatControlledObject);
