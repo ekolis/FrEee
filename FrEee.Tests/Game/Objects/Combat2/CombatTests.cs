@@ -177,12 +177,12 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             Battle_Space battle = new Battle_Space(location);
 
-            
+
+			var id0 = testships.ships[0].ID;
+			var id1 = testships.ships[1].ID;
 
             battle.Resolve();
             
-			var id0 = testships.ships[0].ID;
-			var id1 = testships.ships[1].ID;
             Assert.AreNotEqual(battle.StartCombatants[id0], battle.ActualCombatants[id0]);
 			Assert.AreNotEqual(battle.StartCombatants[id1], battle.ActualCombatants[id1]);
             //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
