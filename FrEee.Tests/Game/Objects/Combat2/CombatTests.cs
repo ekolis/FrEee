@@ -181,8 +181,10 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             battle.Resolve();
             
-            Assert.AreNotEqual(battle.StartCombatants.Values.ElementAt(0), battle.ActualCombatants.Values.ElementAt(0));
-			Assert.AreNotEqual(battle.StartCombatants.Values.ElementAt(1), battle.ActualCombatants.Values.ElementAt(1));
+			var id0 = testships.ships[0].ID;
+			var id1 = testships.ships[1].ID;
+            Assert.AreNotEqual(battle.StartCombatants[id0], battle.ActualCombatants[id0]);
+			Assert.AreNotEqual(battle.StartCombatants[id1], battle.ActualCombatants[id1]);
             //MogreFreeMain replay = new MogreFreeMain(battle); doing this crashes VS on compile.
 
             
