@@ -175,6 +175,7 @@ namespace FrEee.Utility.Extensions
 		{
 			public OnlySafePropertiesInjection(bool deep, IDictionary<object, object> known = null)
 			{
+				DeepCopy = deep;
 				if (known != null)
 				{
 					foreach (var kvp in known)
