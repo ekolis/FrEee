@@ -63,6 +63,7 @@ namespace FrEee.Modding
 				new TechnologyLoader(path),
 				new FacilityLoader(path),
 				new HullLoader(path),
+				new DamageTypeLoader(path),
 				new ComponentLoader(path),
 				new MountLoader(path),
 				new StellarAbilityLoader(path),
@@ -103,6 +104,7 @@ namespace FrEee.Modding
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
 			Hulls = new List<IHull<IVehicle>>();
+			DamageTypes = new List<DamageType>();
 			ComponentTemplates = new List<ComponentTemplate>();
 			Mounts = new List<Mount>();
 			StellarObjectSizes = new List<StellarObjectSize>();
@@ -159,6 +161,11 @@ namespace FrEee.Modding
 		/// The vehicle hulls in the mod.
 		/// </summary>
 		public ICollection<IHull<IVehicle>> Hulls { get; private set; }
+
+		/// <summary>
+		/// The damage types in the mod.
+		/// </summary>
+		public ICollection<DamageType> DamageTypes { get; private set; }
 
 		/// <summary>
 		/// The components in the mod.

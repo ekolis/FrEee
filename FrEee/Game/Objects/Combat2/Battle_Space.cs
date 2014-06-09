@@ -764,7 +764,7 @@ namespace FrEee.Game.Objects.Combat2
                     else
                         damage = w.Damage * launcher.Template.Mount.WeaponDamagePercent / 100; 
 
-                    Combat.DamageType damageType = w.DamageType;
+                    DamageType damageType = w.DamageType;
                     CombatSeeker targetsec = (CombatSeeker)target;
                     targetsec.TakeDamage(damageType, damage, comSek.getDice());
 
@@ -1174,7 +1174,7 @@ namespace FrEee.Game.Objects.Combat2
             if (target_icomobj.MaxPhasedShields < target_icomobj.PhasedShields)
                 target_icomobj.PhasedShields = target_icomobj.MaxPhasedShields;
 
-			Combat.DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
+			DamageType damageType = weapon.weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
 
 			var targetV = target.WorkingObject;
 			if (targetV.IsDestroyed)

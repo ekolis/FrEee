@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
