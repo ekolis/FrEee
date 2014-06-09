@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Technology;
+using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
@@ -11,15 +12,16 @@ using System.Text;
 namespace FrEee.Game.Objects.Combat
 {
 	/// <summary>
-	/// A weapon's fire.
+	/// A weapon's fire, or another source of damage.
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(Component weapon, ITargetable target, int range)
+		public Shot(ICombatant attacker, Component weapon, ITargetable defender, double range)
 		{
 			Weapon = weapon;
-			Target = target;
+			Defender = defender;
 			Range = range;
+			DamageLeft = FullDamage;
 		}
 
 		public Reference<Component> weapon { get; set; }
@@ -30,21 +32,28 @@ namespace FrEee.Game.Objects.Combat
 		public Reference<ITargetable> target { get; set; }
 
 		[DoNotSerialize]
-		public ITargetable Target { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
+		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.Reference(); } }
 
-		public int Range { get; set; }
+		public Reference<ICombatant> attacker { get; set; }
 
-		public int Damage
+		[DoNotSerialize]
+		public ITargetable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
+
+		public double Range { get; set; }
+
+		public int FullDamage
 		{
 			get
 			{
 				if (Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
 					return 0;
-				return Weapon.Template.WeaponDamage.Evaluate(this);
+				return Weapon.Template.WeaponDamage.Evaluate(this); // TODO - use PRNG
 			}
 		}
 
-		public IDictionary<IDamageable, int> DamageInflicted { get; private set; }
+		public int DamageLeft { get; private set; }
+
+		public IEnumerable<Hit> Hits { get; private set; }
 
 		public IDictionary<string, object> Variables
 		{
@@ -53,10 +62,28 @@ namespace FrEee.Game.Objects.Combat
 				return new Dictionary<string, object>
 				{
 					{ "weapon", Weapon}, 
-					{ "target", Target}, 
+					{ "attacker", Defender}, 
+					{ "defender", Defender}, 
 					{ "range", Range}, 
 				};
 			}
+		}
+
+		public DamageType DamageType
+		{
+			get
+			{
+				if (Weapon != null && Weapon.Template.ComponentTemplate.WeaponInfo != null)
+					return Weapon.Template.ComponentTemplate.WeaponInfo.DamageType;
+				return Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType(); // TODO - moddable damage types for storms, etc.
+			}
+		}
+
+		public int InflictDamage(IDamageable target, PRNG dice = null)
+		{
+			var hit = new Hit(this, target, DamageLeft);
+			DamageLeft = target.TakeDamage(hit, dice);
+			return DamageLeft;
 		}
 	}
 }

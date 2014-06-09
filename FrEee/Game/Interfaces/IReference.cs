@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IReference<out T> : IPromotable where T : IReferrable
+	public interface IReference<out T> : IPromotable
 	{
 		long ID { get; }
 		T Value { get; }

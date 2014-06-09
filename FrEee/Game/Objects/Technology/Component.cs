@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Technology
 			return Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// If this is a weapon, attempts to attack the target.
 		/// If not a weapon, does nothing.
 		/// </summary>
@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Technology
 				if (defender.IsDestroyed)
 					battle.LogTargetDeath(defender);
 			}
-		}
+		}*/
 
 		public System.Drawing.Image Icon
 		{
@@ -177,13 +177,20 @@ namespace FrEee.Game.Objects.Technology
 			// nothing to do
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
-			// TODO - take into account damage types
-			int realDamage;
-			realDamage = Math.Min(Hitpoints, damage);
-			Hitpoints -= realDamage;
-			return damage - realDamage;
+			int damage = hit.NominalDamage;
+			var realhit = new Hit(hit.Shot, this, damage);
+			var df = realhit.Shot.DamageType.ComponentDamage.Evaluate(realhit);
+			var dp = realhit.Shot.DamageType.ComponentPiercing.Evaluate(realhit);
+			var factoredDmg = df.PercentOfRounded(damage);
+			var piercing = dp.PercentOfRounded(damage);
+			var realdmg = Math.Min(Hitpoints, factoredDmg);
+			var nominalDamageSpent = realdmg / (df + dp);
+			Hitpoints -= realdmg;
+			if (IsDestroyed)
+				Dispose();
+			return damage - nominalDamageSpent;
 		}
 
 

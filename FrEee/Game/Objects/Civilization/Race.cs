@@ -54,7 +54,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		[DoNotSerialize]
 		public HappinessModel HappinessModel {
-			get { return Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
+			get { return Mod.Current == null ? null : Mod.Current.HappinessModels == null ? null : Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
 			set { HappinessModelName = value == null ? null : value.Name; }
 		}
 

@@ -601,7 +601,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetIcon(Seeker seeker)
+		/*public static Image GetIcon(Seeker seeker)
 		{
 			if (Mod.Current.RootPath != null)
 			{
@@ -619,7 +619,7 @@ namespace FrEee.Utility
 					GetCachedImage(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures", "Races", seeker.Owner.ShipsetPath, fx.Name)) ??
 					GetGenericImage(seeker.GetType());
 			}
-		}
+		}*/
 
 		public static Image GetCachedImage(IEnumerable<string> paths, double scale = 1d)
 		{

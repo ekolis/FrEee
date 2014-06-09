@@ -392,7 +392,7 @@ namespace FrEee.Game.Objects.Combat2
         }
 
 		public virtual int handleShieldDamage(int damage) { return damage; }
-		public virtual int handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice) { return damage; }
+		public virtual int handleComponentDamage(Hit hit, PRNG attackersdice) { return hit.NominalDamage; } // leak all damage by default
 
         public virtual void firecontrol(int tic_countr)
         {

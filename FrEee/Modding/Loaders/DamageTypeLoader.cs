@@ -13,7 +13,7 @@ namespace FrEee.Modding.Loaders
 	/// </summary>
 	public class DamageTypeLoader : DataFileLoader
 	{
-		public const string Filename = "DamageTypes.txt.txt";
+		public const string Filename = "DamageTypes.txt";
 
 		public DamageTypeLoader(string modPath)
 			: base(modPath, Filename, DataFile.Load(modPath, Filename))
@@ -36,6 +36,7 @@ namespace FrEee.Modding.Loaders
 				dt.PhasedShieldPiercing = rec.Get<int>("Phased Shield Piercing", dt) ?? 0;
 				dt.ComponentDamage = rec.Get<int>("Component Damage", dt) ?? 100;
 				dt.ComponentPiercing = rec.Get<int>("Component Piercing", dt) ?? 0;
+				dt.SeekerDamage = rec.Get<int>("Seeker Damage", dt) ?? dt.ComponentDamage;
 				dt.PopulationDamage = rec.Get<int>("Population Damage", dt) ?? 100;
 				dt.ConditionsDamage = rec.Get<int>("Conditions Damage", dt) ?? 0;
 				dt.FacilityDamage = rec.Get<int>("Facility Damage", dt) ?? 100;

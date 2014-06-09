@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace FrEee.Game.Objects.Combat
+namespace FrEee.Game.Objects.Combat.Simple
 {
 	/// <summary>
 	/// A seeking missile or torpedo.
@@ -97,7 +97,8 @@ namespace FrEee.Game.Objects.Combat
 
 		public int TakeDamage(DamageType damageType, int damage, PRNG dice = null)
 		{
-			// TODO - take into account damage types
+			damage *= damageType.SeekerDamage.Evaluate(this) / 100;
+			var pierced = damage * damageType.ComponentPiercing.Evaluate(this).
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
 			Hitpoints -= realDamage;

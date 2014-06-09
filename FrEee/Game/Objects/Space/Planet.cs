@@ -342,8 +342,10 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
+			var damage = hit.NominalDamage;
+
 			if (Colony == null)
 				return damage; // uninhabited planets can't take damage
 
@@ -356,11 +358,13 @@ namespace FrEee.Game.Objects.Space
 			foreach (var num in order)
 			{
 				if (num == 0)
-					damage = TakePopulationDamage(dmgType, damage, dice);
+					damage = TakePopulationDamage(hit, dice);
 				else if (num == 1)
-					damage = Cargo.TakeDamage(dmgType, damage, dice);
+					damage = Cargo.TakeDamage(hit, dice);
 				else if (num == 2)
-					damage = TakeFacilityDamage(dmgType, damage, dice);
+					damage = TakeFacilityDamage(hit, dice);
+				hit = new Hit(hit.Shot, this, damage);
+
 			}
 
 			// if planet was completely glassed, remove the colony
@@ -373,8 +377,11 @@ namespace FrEee.Game.Objects.Space
 			return damage;
 		}
 
-		private int TakePopulationDamage(DamageType dmgType, int damage, PRNG dice = null)
+		private int TakePopulationDamage(Hit hit, PRNG dice = null)
 		{
+			if (Colony == null)
+				return hit.NominalDamage;
+			int damage = hit.NominalDamage;
 			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
 			{
@@ -383,28 +390,35 @@ namespace FrEee.Game.Objects.Space
 				if (race == null)
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
-				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
+				// TODO - don't ceiling the popKilled, just stack it up
+				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
-				inflicted++;
+				inflicted += 1;
 			}
 			// clear population that was emptied out
-			foreach (var race in Cargo.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
-				Cargo.Population.Remove(race);
-			if (Colony != null)
-			{
-				foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
-					Colony.Population.Remove(race);
-			}
+			foreach (var race in Colony.Population.Where(kvp => kvp.Value <= 0).Select(kvp => kvp.Key).ToArray())
+				Colony.Population.Remove(race);
 			return damage - inflicted;
 		}
 
-		private int TakeFacilityDamage(DamageType dmgType, int damage, PRNG dice = null)
+		private int TakeFacilityDamage(Hit hit, PRNG dice = null)
 		{
+			if (Colony == null)
+				return hit.NominalDamage;
+			int damage = hit.NominalDamage;
 			// TODO - take into account damage types, and make sure we have facilities that are not immune to the damage type so we don't get stuck in an infinite loop
 			while (damage > 0 && Colony.Facilities.Any())
 			{
-				var facility = Colony.Facilities.ToDictionary(f => f, f => f.MaxHitpoints).PickWeighted(dice);
-				damage = facility.TakeDamage(dmgType, damage, dice);
+				var facil = Colony.Facilities.Where(f =>
+				{
+					// skip facilities that are completely pierced by this hit
+					var hit2 = new Hit(hit.Shot, f, damage);
+					return hit2.Shot.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
+				}).ToDictionary(f => f, f => f.HitChance).PickWeighted(dice);
+				if (facil == null)
+					break; // no more facilities to hit
+				var facilhit = new Hit(hit.Shot, facil, damage);
+				damage = facil.TakeDamage(facilhit, dice);
 			}
 			return damage;
 		}

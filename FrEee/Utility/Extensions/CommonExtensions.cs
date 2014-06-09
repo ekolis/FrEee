@@ -1514,7 +1514,7 @@ namespace FrEee.Utility.Extensions
 			return src.Except(new T[] { badguy });
 		}
 
-		public static Reference<T> Reference<T>(this T t) where T : IReferrable
+		public static Reference<T> Reference<T>(this T t)
 		{
 			return new Reference<T>(t);
 		}
@@ -2679,6 +2679,38 @@ namespace FrEee.Utility.Extensions
 							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
 						 };
 			return cloaks.Any() && joined.All(j => j.CloakLevel > j.SensorLevel);
+		}
+
+		/// <summary>
+		/// Converts a percentage into a ratio.
+		/// </summary>
+		/// <param name="i">The percentage, e.g. 50</param>
+		/// <returns>The ratio, e.g. 0.5</returns>
+		public static double Percent(this int i)
+		{
+			return (double)i / 100d;
+		}
+		
+		/// <summary>
+		/// Multiplies an integer by a scale factor and rounds it.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		public static int TimesAndRound(this int i, double d)
+		{
+			return (int)Math.Round(i * d);
+		}
+
+		/// <summary>
+		/// Multiplies an integer by a percentage and rounds it.
+		/// </summary>
+		/// <param name="i"></param>
+		/// <param name="d"></param>
+		/// <returns></returns>
+		public static int PercentOfRounded(this int p, int i)
+		{
+			return i.TimesAndRound(p.Percent());
 		}
 	}
 }
