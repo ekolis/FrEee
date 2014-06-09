@@ -11,6 +11,7 @@ using System.Drawing;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -87,8 +88,7 @@ namespace FrEee.Game.Objects.Orders
 					{
 						var damage = damager.GetAbilityValue("Sector - Damage").ToInt();
 						// TODO - let sector damage have special damage types?
-						// TODO - use a static damage type instance for normal damage
-						sobj.TakeDamage(new Combat.DamageType { Name = "Normal" }, damage, null);
+						sobj.TakeDamage(Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType(), damage, null);
 						sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + damage + " damage from entering " + damager + "'s sector."));
 						sobj.ReplenishShields();
 					}

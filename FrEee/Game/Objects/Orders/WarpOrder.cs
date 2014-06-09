@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.LogMessages;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -52,7 +53,7 @@ namespace FrEee.Game.Objects.Orders
 					if (WarpPoint.HasAbility("Warp Point - Turbulence"))
 					{
 						var dmg = WarpPoint.GetAbilityValue("Warp Point - Turbulence").ToInt();
-						sobj.TakeDamage(new Combat.DamageType(), dmg, null);
+						sobj.TakeDamage(Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType(), dmg, null);
 						if (sobj.IsDestroyed)
 						{
 							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " was destroyed by turbulence when traversing " + WarpPoint + "."));

@@ -1,5 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 using FrEee.Utility;
 using System;
 using System.Collections.Generic;

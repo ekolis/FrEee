@@ -266,7 +266,6 @@
     <Compile Include="Game\Objects\Civilization\Colony.cs" />
     <Compile Include="Game\Objects\Civilization\ConstructionQueue.cs" />
     <Compile Include="Game\Objects\Combat\BeamWeaponDisplayEffect.cs" />
-    <Compile Include="Game\Objects\Combat\DamageType.cs" />
     <Compile Include="Game\Objects\Combat\ProjectileWeaponDisplayEffect.cs" />
     <Compile Include="Game\Objects\Combat\SeekerWeaponDisplayEffect.cs" />
     <Compile Include="Game\Objects\Combat\WeaponDisplayEffect.cs" />
@@ -295,6 +294,7 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\RandomAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\EdgeAlignedWarpPointPlacementStrategy.cs" />
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
+    <Compile Include="Modding\DamageType.cs" />
     <Compile Include="Modding\Enumerations\RequirementType.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\FormulaContext.cs" />
@@ -303,6 +303,7 @@
     <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
     <Compile Include="Modding\Interfaces\IModObject.cs" />
     <Compile Include="Modding\Loaders\EmpireAILoader.cs" />
+    <Compile Include="Modding\Loaders\DamageTypeLoader.cs" />
     <Compile Include="Modding\Loaders\RequirementLoader.cs" />
     <Compile Include="Modding\Loaders\ScriptLoader.cs" />
     <Compile Include="Modding\Loaders\PopulationModifierLoader.cs" />
