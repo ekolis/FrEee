@@ -163,15 +163,20 @@ namespace FrEee.Game.Objects.Technology
 			// do nothing
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
-			// TODO - take into account damage types
-			int realDamage;
-			realDamage = Math.Min(Hitpoints, damage);
-			Hitpoints -= realDamage;
+			int damage = hit.NominalDamage;
+			var realhit = new Hit(hit.Shot, this, damage);
+			var df = realhit.Shot.DamageType.FacilityDamage.Evaluate(realhit);
+			var dp = realhit.Shot.DamageType.FacilityPiercing.Evaluate(realhit);
+			var factoredDmg = df.PercentOfRounded(damage);
+			var piercing = dp.PercentOfRounded(damage);
+			var realdmg = Math.Min(Hitpoints, factoredDmg);
+			var nominalDamageSpent = realdmg / (df + dp);
+			Hitpoints -= realdmg;
 			if (IsDestroyed)
 				Dispose();
-			return damage - realDamage;
+			return damage - nominalDamageSpent;
 		}
 
 		public bool IsDestroyed

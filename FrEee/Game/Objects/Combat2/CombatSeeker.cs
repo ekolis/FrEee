@@ -300,14 +300,16 @@ namespace FrEee.Game.Objects.Combat2
 			return 0;
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
 			// TODO - damage types
+			var skpct = hit.Shot.DamageType.SeekerDamage.Evaluate(hit);
+			var damage = skpct.PercentOfRounded(hit.NominalDamage);
 			if (damage > Hitpoints)
 			{
 				damage -= Hitpoints;
 				Hitpoints = 0;
-				return damage;
+				return (int)Math.Floor(damage / skpct.Percent());
 			}
 			Hitpoints -= damage;
 			return 0;
@@ -325,9 +327,9 @@ namespace FrEee.Game.Objects.Combat2
 			return damage;
 		}
 
-		public override int handleComponentDamage(int damage, DamageType damageType, PRNG attackersdice)
+		public override int handleComponentDamage(Hit hit, PRNG attackersdice)
 		{
-			return TakeDamage(damageType, damage, null);
+			return TakeDamage(hit, null); // TODO - should we be passing in null for dice here?!
 		}
 
 

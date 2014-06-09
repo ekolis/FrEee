@@ -652,7 +652,7 @@ namespace FrEee.Game.Objects.Space
 
 			Current.didLastTick = false;
 
-			Battle.Previous.Clear();
+			//Battle.Previous.Clear();
 			Current.Battles = new HashSet<Battle_Space>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 

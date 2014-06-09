@@ -28,6 +28,8 @@ namespace FrEee.Tests.Game.Objects.Technology
 
 
 Name := Generic Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
 Weapon Damage At Rng := 30 20 10
 Weapon Type := Direct Fire
 Weapon Display Type := Beam
@@ -39,12 +41,13 @@ Max Range := 5";
 			loader.DataFile = df;
 			var mod = new Mod();
 			loader.Load(mod);
-			var comp = mod.ComponentTemplates.Single();
-			Assert.AreEqual<int>(3, comp.WeaponInfo.MinRange);
-			Assert.AreEqual<int>(5, comp.WeaponInfo.MaxRange);
-			Assert.AreEqual<int>(0, comp.WeaponInfo.GetDamage(new Shot(null, null, 2)));
-			Assert.AreEqual<int>(20, comp.WeaponInfo.GetDamage(new Shot(null, null, 4)));
-			Assert.AreEqual<int>(0, comp.WeaponInfo.GetDamage(new Shot(null, null, 6)));
+			var ct = mod.ComponentTemplates.Single();
+			var comp = ct.Instantiate();
+			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);
+			Assert.AreEqual<int>(5, ct.WeaponInfo.MaxRange);
+			Assert.AreEqual<int>(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 2)));
+			Assert.AreEqual<int>(20, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 4)));
+			Assert.AreEqual<int>(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 6)));
 		}
 
 		/// <summary>
@@ -58,6 +61,8 @@ Max Range := 5";
 
 
 Name := Generic Weapon
+Tonnage Space Taken := 20
+Tonnage Structure := 20
 Weapon Damage At Rng := ==60 - range * 10
 Weapon Type := Direct Fire
 Weapon Display Type := Beam
@@ -69,12 +74,13 @@ Max Range := 5";
 			loader.DataFile = df;
 			var mod = new Mod();
 			loader.Load(mod);
-			var comp = mod.ComponentTemplates.Single();
-			Assert.AreEqual<int>(3, comp.WeaponInfo.MinRange);
-			Assert.AreEqual<int>(5, comp.WeaponInfo.MaxRange);
-			Assert.AreEqual<int>(0, comp.WeaponInfo.GetDamage(new Shot(null, null, 2)));
-			Assert.AreEqual<int>(20, comp.WeaponInfo.GetDamage(new Shot(null, null, 4)));
-			Assert.AreEqual<int>(0, comp.WeaponInfo.GetDamage(new Shot(null, null, 6)));
+			var ct = mod.ComponentTemplates.Single();
+			var comp = ct.Instantiate();
+			Assert.AreEqual<int>(3, ct.WeaponInfo.MinRange);
+			Assert.AreEqual<int>(5, ct.WeaponInfo.MaxRange);
+			Assert.AreEqual<int>(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 2)));
+			Assert.AreEqual<int>(20, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 4)));
+			Assert.AreEqual<int>(0, ct.WeaponInfo.GetDamage(new Shot(null, comp, null, 6)));
 		}
 	}
 }

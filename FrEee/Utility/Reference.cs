@@ -13,21 +13,30 @@ namespace FrEee.Utility
 {
 	/// <summary>
 	/// A reference to some shared object that can be passed around on the network as a surrogate for said object.
+	/// If the object is not an IReferrable, the object itself will be stored.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class Reference<T> : IReference<T>, IPromotable where T : IReferrable
+	public class Reference<T> : IReference<T>, IPromotable
 	{
 		public Reference(T t)
 		{
-			if (Galaxy.Current == null)
-				throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
-			else if (t == null)
-				ID = 0;
-			else if (t.ID > 0)
-				ID = t.ID;
+			if (t is IReferrable)
+			{
+				var r = (IReferrable)t;
+				if (Galaxy.Current == null)
+					throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
+				else if (t == null)
+					ID = 0;
+				else if (r.ID > 0)
+					ID = r.ID;
+				else
+					ID = Galaxy.Current.AssignID(r);
+			}
 			else
-				ID = Galaxy.Current.AssignID(t);
+			{
+				value = t;
+			}
 		}
 
 		public Reference(long id)
@@ -42,6 +51,8 @@ namespace FrEee.Utility
 
 		public long ID { get; internal set; }
 
+		private T value { get; set; }
+
 		/// <summary>
 		/// Resolves the reference.
 		/// </summary>
@@ -50,9 +61,14 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (ID <= 0 || !Galaxy.Current.referrables.ContainsKey(ID))
-					return default(T);
-				return (T)Galaxy.Current.referrables[ID];
+				if (value == null)
+				{
+					if (ID <= 0 || !Galaxy.Current.referrables.ContainsKey(ID))
+						return default(T);
+					return (T)Galaxy.Current.referrables[ID];
+				}
+				else
+					return value;
 			}
 		}
 
@@ -63,7 +79,10 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				return Galaxy.Current.referrables.ContainsKey(ID);
+				if (value == null)
+					return Galaxy.Current.referrables.ContainsKey(ID);
+				else
+					return true;
 			}
 		}
 

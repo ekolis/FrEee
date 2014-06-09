@@ -138,8 +138,8 @@ namespace FrEee.Game.Objects.Space
 				return Visibility.Owned;
 
 			// You can always scan stellar objects you are in combat with.
-			if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				return Visibility.Scanned;
+			//if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				//return Visibility.Scanned;
 			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.OfType<StellarObject>().Contains(this) || b.ActualCombatants.OfType<StellarObject>().Contains(this)) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
@@ -152,7 +152,9 @@ namespace FrEee.Game.Objects.Space
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
 					return Visibility.Fogged;
-				else if (Battle.Previous.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				//else if (Battle.Previous.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+					//return Visibility.Fogged;
+				else if (Battle_Space.Previous.Any(b => b.ActualCombatants.Values.OfType<StellarObject>().Contains(this) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;

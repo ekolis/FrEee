@@ -16,6 +16,7 @@ using System.Text;
 using NewtMath.f16;
 
 using FixMath.NET;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -766,7 +767,8 @@ namespace FrEee.Game.Objects.Combat2
 
                     DamageType damageType = w.DamageType;
                     CombatSeeker targetsec = (CombatSeeker)target;
-                    targetsec.TakeDamage(damageType, damage, comSek.getDice());
+					var shot = new Shot((ICombatant)launcher.Parent, launcher, target.WorkingObject, 0); // TODO - range of seekers targeting seekers?
+					targetsec.TakeDamage(new Hit(shot, target.WorkingObject, damage), comSek.getDice());
 
                     if (targetsec.IsDestroyed)
                     {
@@ -1180,7 +1182,8 @@ namespace FrEee.Game.Objects.Combat2
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
-			targetV.TakeDamage(damageType, damage, attackersdice);
+			var hit = new Hit(new Shot((ICombatant)(weapon.weapon.Parent), weapon.weapon, target.WorkingObject, rangeForDamageCalcs), target.WorkingObject, damage);
+			targetV.TakeDamage(hit, attackersdice);
 
 			if (targetV.IsDestroyed)
 			{

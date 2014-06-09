@@ -194,10 +194,10 @@ namespace FrEee.Tests.Game.Objects.Combat2
 			return amount;
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
 			// TODO - special damage types
-			var dmg = damage;
+			var dmg = hit.NominalDamage;
 			if (NormalShields >= dmg)
 			{
 				NormalShields -= dmg;

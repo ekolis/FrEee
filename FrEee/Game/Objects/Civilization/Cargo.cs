@@ -124,8 +124,9 @@ namespace FrEee.Game.Objects.Civilization
 			// do nothing
 		}
 
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
+			int damage = hit.NominalDamage;
 			if (Population.Any() && Units.Any())
 			{
 				// for now, have a 50% chance to hit population first and a 50% chance to hit units first
@@ -133,24 +134,24 @@ namespace FrEee.Game.Objects.Civilization
 				var coin = RandomHelper.Next(2);
 				int leftover;
 				if (coin == 0)
-					leftover = TakePopulationDamage(dmgType, damage, dice);
+					leftover = TakePopulationDamage(hit, damage, dice);
 				else
-					leftover = TakeUnitDamage(dmgType, damage, dice);
+					leftover = TakeUnitDamage(hit, damage, dice);
 				if (coin == 0)
-					return TakeUnitDamage(dmgType, leftover, dice);
+					return TakeUnitDamage(hit, leftover, dice);
 				else
-					return TakePopulationDamage(dmgType, damage, dice);
+					return TakePopulationDamage(hit, damage, dice);
 
 			}
 			else if (Population.Any())
-				return TakePopulationDamage(dmgType, damage, dice);
+				return TakePopulationDamage(hit, damage, dice);
 			else if (Units.Any())
-				return TakeUnitDamage(dmgType, damage, dice);
+				return TakeUnitDamage(hit, damage, dice);
 			else
 				return damage; // nothing to damage
 		}
 
-		private int TakePopulationDamage(DamageType dmgType, int damage, PRNG dice = null)
+		private int TakePopulationDamage(Hit hit, int damage, PRNG dice = null)
 		{
 			int inflicted = 0;
 			for (int i = 0; i < damage; i++)
@@ -160,7 +161,8 @@ namespace FrEee.Game.Objects.Civilization
 				if (race == null)
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
-				int popKilled = (int)Math.Ceiling(1d / popHPPerPerson);
+				// TODO - don't ceiling the popKilled, just stack it up
+				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
 				Population[race] -= popKilled;
 				inflicted += 1;
 			}
@@ -170,14 +172,14 @@ namespace FrEee.Game.Objects.Civilization
 			return damage - inflicted;
 		}
 
-		private int TakeUnitDamage(DamageType dmgType, int damage, PRNG dice = null)
+		private int TakeUnitDamage(Hit hit, int damage, PRNG dice = null)
 		{
 			// units with more HP are more likely to get hit first, like with leaky armor
 			var units = Units.ToDictionary(u => u, u => u.MaxHitpoints);
 			while (units.Any() && damage > 0)
 			{
 				var u = units.PickWeighted(dice);
-				damage = u.TakeDamage(dmgType, damage, dice);
+				damage = u.TakeDamage(hit, dice);
 			}
 			return damage;
 		}

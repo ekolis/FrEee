@@ -29,14 +29,14 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		/// <param name="gameForm"></param>
 		/// <param name="battle">The battle whose log we should display, or null to display the turn log.</param>
-		public LogForm(GameForm gameForm, Battle battle = null)
+		public LogForm(GameForm gameForm)
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
-			if (battle == null)
+			/*if (battle == null)
 				messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
 			else
-				messages = battle.Log;
+				messages = battle.Log;*/
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
@@ -115,12 +115,12 @@ namespace FrEee.WinForms.Forms
 						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
 						Close();
 					}
-					else if (context is Battle)
+					/*else if (context is Battle)
 					{
 						// show battle log
 						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
 						Close();
-					}
+					}*/
                     else if (context is Battle_Space)
                     {
 						// show battle results

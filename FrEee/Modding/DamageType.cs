@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,31 @@ namespace FrEee.Modding
 	/// </summary>
 	public class DamageType : IModObject
 	{
+		public DamageType()
+		{
+			Name = "Normal";
+			Description = "Default damage type.";
+			NormalShieldDamage = 100;
+			NormalShieldPiercing = 0;
+			PhasedShieldDamage = 100;
+			PhasedShieldPiercing = 0;
+			ComponentDamage = 100;
+			ComponentPiercing = 0;
+			SeekerDamage = ComponentDamage;
+			PopulationDamage = 100;
+			ConditionsDamage = 0;
+			FacilityDamage = 100;
+			FacilityPiercing = 0;
+			PlagueLevel = 0;
+			TargetPush = 0;
+			TargetTeleport = 0;
+			IncreaseReload = 0;
+			DisruptReload = 0;
+			ShipCapture = 0;
+			EmissiveArmor = 100;
+			ShieldGenerationFromDamage = 100;
+		}
+
 		/// <summary>
 		/// A unique ID to reference this damage type in a mod.
 		/// </summary>
@@ -76,8 +103,14 @@ namespace FrEee.Modding
 		public Formula<int> ComponentPiercing { get; set; }
 
 		/// <summary>
+		/// Percentage of nominal damage inflicted to seekers.
+		/// Defaults to the component damage value.
+		/// </summary>
+		public Formula<int> SeekerDamage { get; set; }
+
+		/// <summary>
 		/// Percentage of nominal damage inflicted to population.
-		/// This formula can take a "race" parameter which is the race of the population being damaged.
+		/// This formula can take a "target" parameter which is the race of the population being damaged.
 		/// </summary>
 		public Formula<int> PopulationDamage { get; set; }
 

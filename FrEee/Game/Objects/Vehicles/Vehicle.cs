@@ -138,32 +138,51 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public int TakeDamage(DamageType damageType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
+			int damage = hit.NominalDamage;
+
 			if (IsDestroyed)
 				return damage; // she canna take any more!
 
-			// TODO - worry about damage types, and make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
+			// TODO - make sure we have components that are not immune to the damage type so we don't get stuck in an infinite loop
 			int shieldDmg = 0;
+			int normalShieldPiercing = hit.Shot.DamageType.NormalShieldPiercing.Evaluate(hit);
+			int phasedShieldPiercing = hit.Shot.DamageType.PhasedShieldPiercing.Evaluate(hit);
+
+			// weighted average of shield piercing by shield type
+			int shieldPiercing = NormalShields + PhasedShields > 0 ? (normalShieldPiercing * NormalShields + phasedShieldPiercing * PhasedShields) / (NormalShields + PhasedShields) : 0;
+			double spf = shieldPiercing.Percent(); // shield piercing factor (leakiness)
+			var sdf = 1d - spf; // shield damage factor (solidness)
+			double normalBaseSDF = hit.Shot.DamageType.NormalShieldDamage.Evaluate(hit).Percent();
+			double phasedBaseSDF = hit.Shot.DamageType.PhasedShieldDamage.Evaluate(hit).Percent();
+			double normalCombinedSDF = sdf * normalBaseSDF; // accounting for both damage factor and piercing
+			double phasedCombinedSDF = sdf * phasedBaseSDF;
+
+			// how much damage pierced the shields?
+			double piercedShields = 0;
+
 			if (NormalShields > 0)
 			{
-				var dmg = Math.Min(damage, NormalShields);
+				var dmg = (int)Math.Min(damage * normalCombinedSDF, NormalShields);
+				piercedShields += damage * normalShieldPiercing.Percent();
 				NormalShields -= dmg;
-				damage -= dmg;
+				damage -= (int)Math.Ceiling(dmg / normalBaseSDF);
 				shieldDmg += dmg;
 			}
 			if (PhasedShields > 0)
 			{
-				var dmg = Math.Min(damage, PhasedShields);
+				var dmg = (int)Math.Min(damage * phasedCombinedSDF, PhasedShields);
+				piercedShields += damage * phasedShieldPiercing.Percent();
 				NormalShields -= dmg;
-				damage -= dmg;
+				damage -= (int)Math.Ceiling(dmg / phasedBaseSDF);
 				shieldDmg += dmg;
 			}
 
 			// emissive armor negates a certain amount of damage that penetrates the shields
 			// TODO - emissive should be ineffective vs. armor piercing damage
 			var emissive = this.GetAbilityValue("Emissive Armor").ToInt();
-			damage -= emissive;
+			damage -= (int)Math.Round(emissive * hit.Shot.DamageType.EmissiveArmor.Evaluate(hit).Percent());
 
 			while (damage > 0 && !IsDestroyed)
 			{
@@ -175,11 +194,19 @@ namespace FrEee.Game.Objects.Vehicles
 				var armor = comps.Where(c => c.HasAbility("Armor"));
 				var internals = comps.Where(c => !c.HasAbility("Armor"));
 				var canBeHit = armor.Any() ? armor : internals;
-				var comp = canBeHit.ToDictionary(c => c, c => c.HitChance).PickWeighted(dice);
-				damage = comp.TakeDamage(damageType, damage, dice);
+				var comp = canBeHit.Where(c =>
+					{
+						// skip components that are completely pierced by this hit
+						var hit2 = new Hit(hit.Shot, c, damage);
+						return hit2.Shot.DamageType.ComponentPiercing.Evaluate(hit2) < 100;
+					}).ToDictionary(c => c, c => c.HitChance).PickWeighted(dice);
+				if (comp == null)
+					break; // no more components to hit
+				var comphit = new Hit(hit.Shot, comp, damage);
+				damage = comp.TakeDamage(comphit, dice);
 				
 				// shield generation from damage
-				var sgfd = Math.Min(sgfdStart - damage, sgfdAbility);
+				var sgfd = hit.Shot.DamageType.ShieldGenerationFromDamage.Evaluate(hit).PercentOfRounded(Math.Min(sgfdStart - damage, sgfdAbility));
 				ReplenishShields(sgfd);
 			}
 

@@ -69,7 +69,7 @@ namespace FrEee.Game.Interfaces
 		/// <param name="damage"></param>
 		/// <param name="dice"></param>
 		/// <returns>Leftover damage.</returns>
-		int TakeDamage(DamageType dmgType, int damage, PRNG dice = null);
+		int TakeDamage(Hit hit, PRNG dice = null);
 
 		/// <summary>
 		/// Is this object destroyed?

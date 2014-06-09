@@ -199,8 +199,8 @@ namespace FrEee.Game.Objects.Vehicles
 				return Visibility.Owned;
 
 			// You can always scan ships you are in combat with.
-			if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				return Visibility.Scanned;
+			//if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				//return Visibility.Scanned;
 			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.ActualCombatants.Values.Contains(this) || b.StartCombatants.Values.Contains(this)) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
@@ -213,7 +213,9 @@ namespace FrEee.Game.Objects.Vehicles
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
 					return Visibility.Fogged;
-				else if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+				//else if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+					//return Visibility.Fogged;
+				else if (Battle_Space.Previous.Any(b => b.ActualCombatants.Values.Contains(this) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;

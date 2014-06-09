@@ -3,6 +3,7 @@ using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
@@ -239,7 +240,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Fleets cannot take damage directly, so this method will throw a NotSupportedException.
 		/// </summary>
-		public int TakeDamage(DamageType dmgType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
 			throw new NotSupportedException("Fleets cannot take damage directly. Try assigning damage to the individual ships.");
 		}
