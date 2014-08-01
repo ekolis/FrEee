@@ -567,6 +567,10 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public void Redact(Empire emp)
 		{
+			// can't see "obsoleteness" of foreign designs unless you've seen a newer iteration of the same design
+			if (CheckVisibility(emp) < Visibility.Owned && !emp.KnownDesigns.Any(d => d.BaseName == BaseName && d.Iteration > Iteration))
+				IsObsolete = false;
+
 			if (CheckVisibility(emp) < Visibility.Fogged)
 				Dispose();
 		}
