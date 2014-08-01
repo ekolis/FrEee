@@ -977,6 +977,12 @@ namespace FrEee.Game.Objects.Space
 			foreach (var facility in Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
 				facility.Hitpoints = facility.MaxHitpoints;
 
+			// repair units
+			foreach (var u in Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>())
+				u.Repair();
+			foreach (var u in Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().SelectMany(p => p.Cargo.Units)
+				u.Repair();
+
 			// resource spoilage
 			foreach (var emp in Current.Empires)
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
