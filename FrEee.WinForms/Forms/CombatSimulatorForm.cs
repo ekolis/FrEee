@@ -155,7 +155,16 @@ namespace FrEee.WinForms.Forms
 		private void btnDuplicateEmpire_Click(object sender, EventArgs e)
 		{
 			foreach (var simemp in Empires.Where(se => lstEmpires.HasItemSelected(se)).ToArray())
-				Empires.Add(new SimulatedEmpire(simemp.Empire));
+			{
+				var newse = new SimulatedEmpire(simemp.Empire);
+
+				// no duplicate empire names!
+				if (Empires.Any(se => se.Empire.Name == newse.Empire.Name))
+					newse.Empire.Name = "Empire #" + newse.Empire.ID;
+
+				Empires.Add(newse);
+
+			}
 			BindEmpireList();
 		}
 
