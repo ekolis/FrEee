@@ -14,4 +14,9 @@ namespace FrEee.Modding.Interfaces
 
 		object Value { get; }
 	}
+
+	public interface IFormula<out T> : IFormula
+	{
+		new T Value { get; }
+	}
 }

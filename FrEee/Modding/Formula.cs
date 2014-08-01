@@ -14,7 +14,7 @@ namespace FrEee.Modding
 	/// </summary>
 	/// <typeparam name="T">Return type.</typeparam>
 	[Serializable]
-	public class Formula<T> : IFormula, IComparable<T>, IComparable<Formula<T>>
+	public class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Formula<T>>
 		where T : IConvertible, IComparable
 	{
 		/// <summary>
