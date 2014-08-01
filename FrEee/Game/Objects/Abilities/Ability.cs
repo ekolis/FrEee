@@ -20,6 +20,14 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
+		public Ability(object container, AbilityRule rule, string description = "", params Formula<string>[] values)
+		{
+			Container = container;
+			Rule = rule;
+			Description = description;
+			Values = values.ToList();
+		}
+
 		/// <summary>
 		/// The ability rule which defines what ability this is.
 		/// </summary>
