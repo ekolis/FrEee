@@ -39,8 +39,8 @@ namespace FrEee.Game.Objects.Space
 			referrables = new Dictionary<long, IReferrable>();
 			VictoryConditions = new List<IVictoryCondition>();
 			AbilityCache = new SafeDictionary<IAbilityObject, IEnumerable<Ability>>();
-			SharedAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
-			TreatySharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
+			CommonAbilityCache = new SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>>();
+			SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
 			GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<Battle_Space>();
@@ -1298,26 +1298,27 @@ namespace FrEee.Game.Objects.Space
 		{
 			isAbilityCacheEnabled = false;
 			AbilityCache.Clear();
+			CommonAbilityCache.Clear();
 			SharedAbilityCache.Clear();
-			TreatySharedAbilityCache.Clear();
 		}
 
 		/// <summary>
 		/// Cache of abilities belonging to game objects.
 		/// </summary>
+		[DoNotSerialize]
 		internal SafeDictionary<IAbilityObject, IEnumerable<Ability>> AbilityCache { get; private set; }
 
 		/// <summary>
 		/// Cache of abilities belonging to common game objects that can have different abilities for each empire.
-		/// TODO - rename to CommonAbilityCache once the test game is over
 		/// </summary>
-		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
+		[DoNotSerialize]
+		internal SafeDictionary<Tuple<ICommonAbilityObject, Empire>, IEnumerable<Ability>> CommonAbilityCache { get; private set; }
 
 		/// <summary>
 		/// Cache of abilities that are shared to empires from other objects due to treaties.
-		/// TODO - rename to SharedAbilityCache once the test game is over
 		/// </summary>
-		internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> TreatySharedAbilityCache { get; private set; }
+		[DoNotSerialize]
+		internal SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>> SharedAbilityCache { get; private set; }
 
 		/// <summary>
 		/// Cache of treaty clauses given by empires.
