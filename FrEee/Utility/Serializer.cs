@@ -667,7 +667,14 @@ namespace FrEee.Utility
 			type = ObjectGraphContext.KnownTypes[typename];
 			if (type == null)
 			{
-				type = new SafeType(typename).Type;
+				try
+				{
+					type = new SafeType(typename).Type;
+				}
+				catch (Exception ex)
+				{
+					throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex);
+				}
 			}
 			if (type == null)
 				throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");

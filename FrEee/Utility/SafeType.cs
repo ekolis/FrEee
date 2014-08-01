@@ -73,7 +73,16 @@ namespace FrEee.Utility
 						if (caseInsensitive)
 							throw new NotSupportedException("Case insensitive type search is not supported.");
 						else
-							return ReferencedTypes[Tuple.Create(assembly, typeName)];
+						{
+							try
+							{
+								return ReferencedTypes[Tuple.Create(assembly, typeName)];
+							}
+							catch (KeyNotFoundException ex)
+							{
+								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?", ex);
+							}
+						}
 					});
 			}
 			set
