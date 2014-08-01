@@ -41,7 +41,10 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return Template.Abilities;
+				if (IsDestroyed)
+					return Enumerable.Empty<Ability>();
+				else
+					return Template.Abilities;
 			}
 		}
 
@@ -299,12 +302,22 @@ namespace FrEee.Game.Objects.Technology
 
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
-			get { yield break; }
+			get
+			{
+				// Need to treat the template's abilities as intrinsic because they can be switched on or off
+				// based on the damage state of the component.
+				return Abilities;
+			}
 		}
 
 		public IEnumerable<IAbilityObject> Children
 		{
-			get { yield return Template; }
+			get
+			{
+				// The mounted component template might seem like a descendant, but it can't be,
+				// because its abilities shouldn't be passed up when the component is destroyed.
+				yield break;
+			}
 		}
 
 		public IAbilityObject Parent
