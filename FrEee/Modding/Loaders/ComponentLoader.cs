@@ -158,8 +158,15 @@ namespace FrEee.Modding.Loaders
 							}
 						}
 
-						// TODO - populate damage types once we implement them
-						w.DamageType = new DamageType { Name = rec.Get<string>("Weapon Damage Type", c) };
+						var damTypeName = rec.Get<string>("Weapon Damage Type", c);
+						w.DamageType = Mod.Current.DamageTypes.FindByName(damTypeName);
+
+						if (w.DamageType == null)
+						{
+							// no valid damage type? then make it normal damage and log a warning
+							w.DamageType = DamageType.Normal;
+							Mod.Errors.Add(new DataParsingException("Unknown damage type \"" + damTypeName + "\"; setting " + c + "'s damage type to Normal.", Mod.CurrentFileName, rec));
+						}
 
 						w.ReloadRate = rec.Get<double>("Weapon Reload Rate", c);
 
