@@ -59,6 +59,9 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			engineTemplate = new ComponentTemplate();
 			engineTemplate.Name = "Gotta-Go-Fast Engine";
 			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Standard Ship Movement"), "Lets the ship go fast.", "1"));
+			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Movement Bonus"), "Lets the ship go REALLY fast.", "1"));
+			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Extra Movement Generation"), "Lets the ship go REALLY REALLY fast.", "1"));
+			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Vehicle Speed"), "Lets the ship go REALLY FREAKIN' UNGODLY LUDICROUSLY fast.", "1"));
 			engineTemplate.Durability = 10;
 
 			// initialize ship's design
@@ -79,6 +82,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 
 		/// <summary>
 		/// Ship speed should degrade as engines take damage.
+		/// Also, ships should go the proper speed when undamaged.
 		/// </summary>
 		[TestMethod]
 		public void EngineDamage()
@@ -100,7 +104,11 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		private int GetExpectedSpeed(Ship ship)
 		{
 			// add up thrust of all working engines, and divide by hull mass (engines per move, not tonnage)
-			return ship.Components.Where(c => c.Hitpoints > 0).Sum(c => c.GetAbilityValue("Standard Ship Movement").ToInt()) / ship.Hull.Mass;
+			// HACK - assumes standard ability rules!
+			return ship.Components.Where(c => c.Hitpoints > 0).Sum(c => c.GetAbilityValue("Standard Ship Movement").ToInt()) / ship.Hull.Mass
+				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Movement Bonus").ToInt())
+				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Extra Movement Generation").ToInt())
+				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Vehicle Speed").ToInt());
 		}
 	}
 }
