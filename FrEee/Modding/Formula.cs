@@ -212,6 +212,17 @@ namespace FrEee.Modding
 
 		public static Formula<string> operator +(Formula<string> f1, Formula<T> f2)
 		{
+			if (f1 == null && f2 == null)
+				return null;
+			if (f1 == null)
+			{
+				if (f2.FormulaType == FormulaType.Literal)
+					return new Formula<string>(f2.Context, f2.Text, FormulaType.Literal);
+				else
+					return new Formula<string>(f2.Context, string.Format("str({0})", f2.Text), f2.FormulaType);
+			}
+			if (f2 == null)
+				return f1.Copy(); // don't leak a reference to the original formula!
 			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
 				return f1.Value + f2.Value;
 			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
