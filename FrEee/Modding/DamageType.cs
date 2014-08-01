@@ -2,6 +2,7 @@
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,17 @@ namespace FrEee.Modding
 	/// </summary>
 	public class DamageType : IModObject
 	{
+		/// <summary>
+		/// The default "Normal" damage type.
+		/// </summary>
+		public static DamageType Normal
+		{
+			get
+			{
+				return Mod.Current.DamageTypes.FindByName("Normal") ?? new DamageType();
+			}
+		}
+
 		public DamageType()
 		{
 			Name = "Normal";
