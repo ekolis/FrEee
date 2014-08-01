@@ -69,12 +69,15 @@ namespace FrEee.Game.Objects.Orders
 					else
 					{
 						var oldlvl = sobj.Owner.ResearchedTechnologies[tech];
+						var newStuff = tech.GetExpectedResults(sobj.Owner);
 						sobj.Owner.ResearchedTechnologies[tech]++;
 						var newlvl = sobj.Owner.ResearchedTechnologies[tech];
 						var progress = sobj.Owner.ResearchProgress.SingleOrDefault(p => p.Item == tech);
 						if (progress != null)
 							progress.Value = 0;
 						sobj.Owner.Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + newlvl + " in " + tech + "!"));
+						foreach (var item in newStuff)
+							sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!"));
 					}
 					if (i == 0)
 						sobj.Owner.Log.Add(Planet.CreateLogMessage(msg));
