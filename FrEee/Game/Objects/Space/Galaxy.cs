@@ -983,6 +983,19 @@ namespace FrEee.Game.Objects.Space
 			foreach (var u in Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().SelectMany(p => p.Cargo.Units))
 				u.Repair();
 
+			// repair ships/bases
+			// TODO - repair priorities
+			foreach (var emp in Current.Empires)
+			{
+				// component repair is per sector per turn per empire, so we need to track it that way
+				var usedPts = new SafeDictionary<Sector, int>();
+				foreach (var v in Current.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base)))
+				{
+					var pts = v.Sector.GetAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
+					usedPts[v.Sector] += pts - v.Repair(pts).Value;
+				}
+			}
+
 			// resource spoilage
 			foreach (var emp in Current.Empires)
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
