@@ -83,6 +83,9 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		[TestMethod]
 		public void EngineDamage()
 		{
+			// sanity check
+			Assert.AreNotEqual(0, GetExpectedSpeed(ship));
+
 			Assert.AreEqual(GetExpectedSpeed(ship), ship.Speed);
 
 			for (var i = 0; i < numEngines; i++)
