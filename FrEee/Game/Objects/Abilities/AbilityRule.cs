@@ -121,15 +121,12 @@ namespace FrEee.Game.Objects.Abilities
 			// stack grouped abilities if needed
 			if (ValueRules.Any(r => r == AbilityValueRule.Group))
 			{
-				foreach (var group in stackedInGroups.GroupBy(kvp => kvp.Key.Group))
+				var groupLeaders = stackedInGroups.Select(g => g.Key);
+				var stacked = Stack(groupLeaders, stackingTo, true);
+				foreach (var stack in stacked)
 				{
-					var abils = group.SelectMany(kvp => kvp.Value);
-					var stacked = Stack(abils, stackingTo, true);
-					foreach (var stack in stacked)
-					{
-						foreach (var a in stack)
-							final.Add(Tuple.Create(stack.Key, a));
-					}
+					foreach (var a in stack)
+						final.Add(Tuple.Create(stack.Key, a));
 				}
 			}
 			else
