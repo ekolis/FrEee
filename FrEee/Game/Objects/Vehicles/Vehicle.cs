@@ -94,15 +94,23 @@ namespace FrEee.Game.Objects.Vehicles
 			get { yield break; }
 		}
 
-		public int Speed
+		/// <summary>
+		/// The speed of the vehicle, taking into account hull mass, thrust, and speed bonuses.
+		/// </summary>
+		public virtual int Speed
 		{
 			get
 			{
 				// no Engines Per Move rating? then no movement
 				if (Design.Hull.Mass == 0)
 					return 0;
+
+				// can't go anywhere without thrust!
 				var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
-				// TODO - make sure that Movement Bonus and Extra Movement are not in fact affected by Engines Per Move in SE4
+				if (thrust < Design.Hull.Mass)
+					return 0;
+
+				// take into account base speed plus all bonuses
 				return
 					thrust / Design.Hull.Mass
 					+ this.GetAbilityValue("Movement Bonus").ToInt()
