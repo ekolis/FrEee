@@ -80,6 +80,9 @@ namespace FrEee.Game.Objects.Orders
 					gotoSector.Place(sobj);
 					sobj.RefreshDijkstraMap();
 
+					// consume supplies
+					sobj.BurnMovementSupplies();
+
 					// is it done?
 					if (gotoSector == Destination)
 						IsComplete = true;

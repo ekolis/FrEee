@@ -494,5 +494,16 @@ namespace FrEee.Game.Objects.Vehicles
 					+ this.GetAbilityValue("Vehicle Speed").ToInt();
 			}
 		}
+
+		/// <summary>
+		/// Burns supplies required to move one sector.
+		/// If this would put the vehicle below zero supplies,
+		/// the move is still successful, but the vehicle's supplies are set to zero.
+		/// </summary>
+		public void BurnMovementSupplies()
+		{
+			SupplyRemaining -= EngineSupplyBurnRate;
+			NormalizeSupplies();
+		}
 	}
 }
