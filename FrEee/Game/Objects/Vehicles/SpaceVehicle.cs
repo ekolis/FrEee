@@ -445,5 +445,25 @@ namespace FrEee.Game.Objects.Vehicles
 		/// Resources stored on this space vehicle.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; private set; }
+
+		/// <summary>
+		/// Supply usage per sector to move.
+		/// Sum of all thrust-generating components' Supply Usage values.
+		/// This means that ships with more engines burn more supplies per sector!
+		/// </summary>
+		public int EngineSupplyBurnRate
+		{
+			get
+			{
+				return Components.Where(c =>
+					!c.IsDestroyed &&
+					(
+						c.HasAbility("Standard Ship Movement") ||
+						c.HasAbility("Movement Bonus") ||
+						c.HasAbility("Extra Movement Generation") ||
+						c.HasAbility("Vehicle Speed")
+					)).Sum(c => c.Template.SupplyUsage);
+			}
+		}
 	}
 }
