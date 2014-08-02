@@ -62,6 +62,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Movement Bonus"), "Lets the ship go REALLY fast.", "1"));
 			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Extra Movement Generation"), "Lets the ship go REALLY REALLY fast.", "1"));
 			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Vehicle Speed"), "Lets the ship go REALLY FREAKIN' UNGODLY LUDICROUSLY fast.", "1"));
+			engineTemplate.Abilities.Add(new Ability(engineTemplate, Mod.Current.AbilityRules.FindByName("Quantum Reactor"), "Infinite supplies! Wheeee!"));
+			engineTemplate.SupplyUsage = 0;
 			engineTemplate.Durability = 10;
 
 			// initialize ship's design
@@ -105,7 +107,11 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			// add up thrust of all working engines, and divide by hull mass (engines per move, not tonnage)
 			// HACK - assumes standard ability rules!
-			return ship.Components.Where(c => c.Hitpoints > 0).Sum(c => c.GetAbilityValue("Standard Ship Movement").ToInt()) / ship.Hull.Mass
+			// TODO - worry about supplies
+			var thrust = ship.Components.Where(c => c.Hitpoints > 0).Sum(c => c.GetAbilityValue("Standard Ship Movement").ToInt());
+			if (thrust < ship.Hull.Mass)
+				return 0;
+			return thrust / ship.Hull.Mass
 				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Movement Bonus").ToInt())
 				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Extra Movement Generation").ToInt())
 				+ ship.Components.Where(c => c.Hitpoints > 0).MaxOrDefault(c => c.GetAbilityValue("Vehicle Speed").ToInt());

@@ -465,5 +465,34 @@ namespace FrEee.Game.Objects.Vehicles
 					)).Sum(c => c.Template.SupplyUsage);
 			}
 		}
+
+		/// <summary>
+		/// The speed of the vehicle, taking into account hull mass, thrust, speed bonuses, and supply.
+		/// </summary>
+		public override int Speed
+		{
+			get
+			{
+				// no Engines Per Move rating? then no movement
+				if (Design.Hull.Mass == 0)
+					return 0;
+
+				// can't go anywhere without thrust!
+				var thrust = this.GetAbilityValue("Standard Ship Movement").ToInt();
+				if (thrust < Design.Hull.Mass)
+					return 0;
+
+				// gotta go slow if you don't have supplies!
+				if (!HasInfiniteSupplies && SupplyStorage < EngineSupplyBurnRate)
+					return 1;
+
+				// take into account base speed plus all bonuses
+				return
+					thrust / Design.Hull.Mass
+					+ this.GetAbilityValue("Movement Bonus").ToInt()
+					+ this.GetAbilityValue("Extra Movement Generation").ToInt()
+					+ this.GetAbilityValue("Vehicle Speed").ToInt();
+			}
+		}
 	}
 }
