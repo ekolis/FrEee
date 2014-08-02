@@ -856,7 +856,13 @@ namespace FrEee.Game.Objects.Combat2
 
                         if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
                             wpn.CanTarget(targetObject.WorkingObject) && //if we CAN target 
-                            tic_countr >= wpn.nextReload) //if the weapon is ready to fire.
+							tic_countr >= wpn.nextReload && //if the weapon is ready to fire.
+							(
+								// if the firing object has enough supplies (or is not a space vehicle, and so does not use supplies)
+								!(comObj.WorkingObject is SpaceVehicle) ||
+								((SpaceVehicle)comObj.WorkingObject).HasInfiniteSupplies ||
+								wpn.weapon.Template.SupplyUsage <= ((SpaceVehicle)comObj.WorkingObject).SupplyRemaining
+							))
                         {
                             if (wpn.isinRange(comObj, targetObject))//weaponTarget[i] should match the 
                             {
@@ -1127,6 +1133,14 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			rangeForDamageCalcs = Fix16.Max((Fix16)1, rangeForDamageCalcs); //don't be less than 1.
+
+			// consume supplies
+			if (attacker.WorkingObject is SpaceVehicle)
+			{
+				var sv = (SpaceVehicle)attacker.WorkingObject;
+				if (!sv.HasInfiniteSupplies)
+					sv.SupplyRemaining -= weapon.weapon.Template.SupplyUsage;
+			}
 
 			if (hit && !target_icomobj.IsDestroyed && weapon.weaponType != "Seeker")
 			{
