@@ -973,6 +973,7 @@ namespace FrEee.Game.Objects.Space
 			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
 				sobj.ReplenishShields();
 
+
 			// repair facilities
 			foreach (var facility in Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
 				facility.Hitpoints = facility.MaxHitpoints;
@@ -993,6 +994,23 @@ namespace FrEee.Game.Objects.Space
 				{
 					var pts = v.Sector.GetAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
 					usedPts[v.Sector] += pts - v.Repair(pts).Value;
+				}
+			}
+
+			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
+			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")))
+			{
+				var emp = sobj.Owner;
+				var sector = sobj.Sector;
+				foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == emp))
+					v.SupplyRemaining = v.SupplyStorage;
+			}
+			foreach (var emp in Current.Empires)
+			{
+				foreach (var sys in Current.StarSystemLocations.Select(l => l.Item).Where(s => s.HasAbility("Supply Generation - System", emp) || s.HasAbility("Supply Generation - System")))
+				{
+					foreach (var v in sys.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == emp))
+						v.SupplyRemaining = v.SupplyStorage;
 				}
 			}
 
