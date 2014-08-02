@@ -32,6 +32,7 @@ namespace FrEee.Game.Objects.Vehicles
 			Orders = new List<IOrder<SpaceVehicle>>();
 			constructionQueue = new ConstructionQueue(this);
 			Cargo = new Cargo();
+			StoredResources = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -42,7 +43,33 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// The amount of supply present on this vehicle.
 		/// </summary>
-		public int SupplyRemaining { get; set; }
+		[DoNotSerialize]
+		public int SupplyRemaining
+		{
+			get { return StoredResources[Resource.Supply]; }
+			set { StoredResources[Resource.Supply] = value; }
+		}
+
+		/// <summary>
+		/// Makes sure there aren't more supplies than we can store, or fewer than zero
+		/// </summary>
+		/// <returns>Leftover supplies (or a negative number if somehow we got negative supplies in this vehicle)</returns>
+		public int NormalizeSupplies()
+		{
+			if (SupplyRemaining > SupplyStorage)
+			{
+				var leftover = SupplyRemaining - SupplyStorage;
+				SupplyRemaining = SupplyStorage;
+				return leftover;
+			}
+			if (SupplyRemaining < 0)
+			{
+				var deficit = SupplyRemaining;
+				SupplyRemaining = 0;
+				return deficit;
+			}
+			return 0;
+		}
 
 		IEnumerable<IOrder> IOrderable.Orders
 		{
@@ -140,6 +167,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public virtual bool HasInfiniteSupplies
 		{
+			// TODO - what about Supply Generation (resupply depot) ability? or is it alias for QR ability?
 			get { return this.HasAbility("Quantum Reactor"); }
 		}
 
@@ -412,5 +440,10 @@ namespace FrEee.Game.Objects.Vehicles
 				return base.Parent;
 			}
 		}
+
+		/// <summary>
+		/// Resources stored on this space vehicle.
+		/// </summary>
+		public ResourceQuantity StoredResources { get; private set; }
 	}
 }

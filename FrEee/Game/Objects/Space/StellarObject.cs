@@ -24,6 +24,7 @@ namespace FrEee.Game.Objects.Space
 		public StellarObject()
 		{
 			IntrinsicAbilities = new List<Ability>();
+			StoredResources = new ResourceQuantity();
 		}
 
 		/// <summary>
@@ -261,5 +262,10 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Resources stored on this stellar object.
+		/// </summary>
+		public ResourceQuantity StoredResources { get; private set; }
 	}
 }
