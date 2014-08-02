@@ -7,6 +7,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
+using FrEee.Utility;
 
 namespace FrEee.Game.Interfaces
 {
@@ -34,7 +35,6 @@ namespace FrEee.Game.Interfaces
 
 		/// <summary>
 		/// Supply storage capacity.
-		/// TODO - make supply a resource?
 		/// </summary>
 		int SupplyStorage { get; }
 
@@ -54,5 +54,11 @@ namespace FrEee.Game.Interfaces
 		/// Space objects are idle if they have no orders (but they have speed greater than zero, and are not in a fleet) or their construction queue has a fractional ETA less than 1.
 		/// </summary>
 		bool IsIdle { get; }
+
+		/// <summary>
+		/// Resources stored on this space object.
+		/// For a ship, this could include supplies.
+		/// </summary>
+		ResourceQuantity StoredResources { get; }
 	}
 }

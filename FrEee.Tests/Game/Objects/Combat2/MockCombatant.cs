@@ -361,5 +361,10 @@ namespace FrEee.Tests.Game.Objects.Combat2
         {
             get { throw new NotImplementedException(); }
         }
+
+		/// <summary>
+		/// Resources stored on this space vehicle.
+		/// </summary>
+		public ResourceQuantity StoredResources { get; private set; }
     }
 }

@@ -760,5 +760,29 @@ namespace FrEee.Game.Objects.Space
 		public bool IsDisposed { get; set; }
 
 		public bool IsOurs { get { return Owner == Empire.Current; } }
+
+		/// <summary>
+		/// Resources stored in this fleet.
+		/// Note that modifying this value will have no effect on the individual vehicles in the fleet;
+		/// we just don't have a handy read only resource quantity type.
+		/// </summary>
+		public ResourceQuantity StoredResources
+		{
+			get
+			{
+				return Vehicles.Sum(v => v.StoredResources);
+			}
+		}
+
+		/// <summary>
+		/// The amount of supply which this fleet can store.
+		/// </summary>
+		public int SupplyCapacity
+		{
+			get
+			{
+				return this.GetAbilityValue("Supply Storage").ToInt();
+			}
+		}
 	}
 }
