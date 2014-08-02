@@ -966,5 +966,13 @@ namespace FrEee.Game.Objects.Space
 				return new Progress(cargo, MaxCargo);
 			}
 		}
+
+		/// <summary>
+		/// Planets don't have to worry about supplies.
+		/// </summary>
+		public void BurnMovementSupplies()
+		{
+			// do nothing
+		}
 	}
 }

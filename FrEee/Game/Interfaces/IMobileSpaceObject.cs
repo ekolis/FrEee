@@ -31,6 +31,11 @@ namespace FrEee.Game.Interfaces
 		IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> DijkstraMap { get; set; }
 
 		ResourceQuantity MaintenanceCost { get; }
+
+		/// <summary>
+		/// Burns the supplies necessary to move one sector.
+		/// </summary>
+		void BurnMovementSupplies();
 	}
 
 	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>

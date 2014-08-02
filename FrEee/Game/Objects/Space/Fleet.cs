@@ -784,5 +784,14 @@ namespace FrEee.Game.Objects.Space
 				return this.GetAbilityValue("Supply Storage").ToInt();
 			}
 		}
+
+		/// <summary>
+		/// Burns movement supplies for all vehicles in the fleet.
+		/// </summary>
+		public void BurnMovementSupplies()
+		{
+			foreach (var v in Vehicles)
+				v.BurnMovementSupplies();
+		}
 	}
 }
