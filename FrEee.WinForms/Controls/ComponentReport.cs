@@ -96,6 +96,10 @@ namespace FrEee.WinForms.Controls
 					{
 						ShowRow(1);
 						txtAccuracy.Text = Component.Template.WeaponAccuracy.ToString("+#;-#;0") + "%"; // show plus sign on positive numbers
+						if (weapon.DisplayEffect is BeamWeaponDisplayEffect)
+							txtWeaponType.Text += " (Beam)";
+						else if (weapon.DisplayEffect is ProjectileWeaponDisplayEffect)
+							txtWeaponType.Text += " (Projectile)";
 					}
 					else
 						HideRow(1);
