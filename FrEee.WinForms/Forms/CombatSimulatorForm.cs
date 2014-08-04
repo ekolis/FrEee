@@ -222,6 +222,7 @@ namespace FrEee.WinForms.Forms
 			var sv = new SimulatedSpaceObject((SpaceVehicle)dsn.Instantiate());
 			var v = (SpaceVehicle)sv.SpaceObject;
 			v.Owner = CurrentEmpire.Empire;
+			v.SupplyRemaining = v.SupplyStorage;
 			CurrentEmpire.SpaceObjects.Add(sv);
 			BindSpaceObjectList();
 		}
@@ -283,6 +284,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnOK_Click(object sender, EventArgs e)
 		{
+			Cursor = Cursors.WaitCursor;
             Sector location = new Sector(new StarSystem(0), new System.Drawing.Point());
             foreach(ISpaceObject ispobj in (Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject))))
             {
@@ -297,6 +299,7 @@ namespace FrEee.WinForms.Forms
 
 			// show the results
 			var form = new BattleResultsForm(battle);
+			Cursor = Cursors.Default;
 			this.ShowChildForm(form);
 		}
 
