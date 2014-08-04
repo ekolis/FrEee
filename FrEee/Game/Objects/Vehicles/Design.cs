@@ -465,7 +465,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return this.GetAbilityValue("Cargo Storage").ToInt(); }
 		}
-		
+
 		/// <summary>
 		/// A design is unlocked if its hull and all used mounts/components are unlocked.
 		/// </summary>
@@ -478,7 +478,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int Iteration { get; set; }
 
-        public Combat2.StrategyObject Strategy { get; set; }
+		public Combat2.StrategyObject Strategy { get; set; }
 
 		public void Dispose()
 		{
@@ -594,7 +594,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public IEnumerable<IAbilityObject> Children
 		{
-			get { return Components; }
+			get { return new IAbilityObject[] { Hull }.Concat(Components); }
 		}
 
 		public IAbilityObject Parent
