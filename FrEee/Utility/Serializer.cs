@@ -499,8 +499,11 @@ namespace FrEee.Utility
 							adder,
 							Expression.Convert(objParm, itemType)), collParm, objParm).Compile();
 				}
+
 				// get lambda
 				lambdaAdder = ObjectGraphContext.CollectionAdders[type];
+
+				// load items and add them
 				for (int i = 0; i < size; i++)
 				{
 					var item = Deserialize(r, itemType, context, log);
@@ -526,31 +529,46 @@ namespace FrEee.Utility
 				else
 					// HACK - Resources inherits from a dictionary type
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
-				for (int i = 0; i < size; i++)
+
+				if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType))
 				{
-					if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType))
-					{
-						var props = new PropertyInfo[]
+					var props = new PropertyInfo[]
 						{
 							itemType.GetProperty("Key"),
 							itemType.GetProperty("Value"),
 						};
-						ObjectGraphContext.KnownProperties.Add(itemType, props);
-					}
-					// TODO - figure out how to optimize this so we're not generating and throwing away lots of compiled lambdas
-					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
-					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
+					ObjectGraphContext.KnownProperties.Add(itemType, props);
+				}
+
+				var collParm = Expression.Parameter(typeof(object), "coll");
+				var keyParm = Expression.Parameter(typeof(object), "key");
+				var valParm = Expression.Parameter(typeof(object), "val");
+				var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
+				var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
+				Delegate lambdaAdder;
+				if (ObjectGraphContext.CollectionAdders[type] == null)
+				{
+					// lambda has not been created yet, so create it
+					ObjectGraphContext.CollectionAdders[type] =
+						Expression.Lambda(Expression.Call(
+							Expression.Convert(collParm, type),
+							adder,
+							Expression.Convert(keyParm, keyprop.PropertyType),
+							Expression.Convert(valParm, valprop.PropertyType)
+							), collParm, keyParm, valParm).Compile();
+				}
+
+				// get lambda
+				lambdaAdder = ObjectGraphContext.CollectionAdders[type];
+
+				// load items and add them
+				for (int i = 0; i < size; i++)
+				{
 					var key = Deserialize(r, keyprop.PropertyType, context, log);
 					var val = Deserialize(r, valprop.PropertyType, context, log);
-					Expression.Lambda(
-						Expression.Call(
-							Expression.Constant(coll),
-							adder,
-							Expression.Convert(Expression.Constant(key), keyprop.PropertyType),
-							Expression.Convert(Expression.Constant(val), valprop.PropertyType)
-						)
-					).Compile().DynamicInvoke();
+					lambdaAdder.DynamicInvoke(coll, key, val);
 				}
+
 				o = (IEnumerable)coll;
 
 				// clean up
