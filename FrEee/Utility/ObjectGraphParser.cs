@@ -211,7 +211,7 @@ namespace FrEee.Utility
 		public static SafeDictionary<PropertyInfo, Delegate> PropertySetters { get; private set; }
 
 		/// <summary>
-		/// Adder methods for collection types.
+		/// Adder methods for collection/dictionary types.
 		/// </summary>
 		public static SafeDictionary<Type, Delegate> CollectionAdders { get; private set; }
 
