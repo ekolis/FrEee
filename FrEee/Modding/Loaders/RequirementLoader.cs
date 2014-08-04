@@ -44,7 +44,7 @@ namespace FrEee.Modding.Loaders
 					if (tech == null)
 						Mod.Errors.Add(new DataParsingException("Could not find a technology named " + techname + ".", null, rec));
 					else
-						yield return new TechnologyRequirement(tech, levelFormula);
+						yield return new TechnologyRequirement(r, tech, levelFormula);
 				}
 			}
 			start = 0;
