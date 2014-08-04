@@ -487,15 +487,24 @@ namespace FrEee.Utility
 					// no generic type? probably a list of objects?
 					itemType = typeof(object);
 				}
-				var parm = Expression.Parameter(typeof(object), "obj");
-				var lambdaAdder = Expression.Lambda(Expression.Call(
-						Expression.Constant(coll),
-						adder,
-						Expression.Convert(parm, itemType)), parm).Compile();
+				var collParm = Expression.Parameter(typeof(object), "coll");
+				var objParm = Expression.Parameter(typeof(object), "obj");
+				Delegate lambdaAdder;
+				if (ObjectGraphContext.CollectionAdders[type] == null)
+				{
+					// lambda has not been created yet, so create it
+					ObjectGraphContext.CollectionAdders[type] =
+						Expression.Lambda(Expression.Call(
+							Expression.Convert(collParm, type),
+							adder,
+							Expression.Convert(objParm, itemType)), collParm, objParm).Compile();
+				}
+				// get lambda
+				lambdaAdder = ObjectGraphContext.CollectionAdders[type];
 				for (int i = 0; i < size; i++)
 				{
 					var item = Deserialize(r, itemType, context, log);
-					lambdaAdder.DynamicInvoke(item);
+					lambdaAdder.DynamicInvoke(coll, item);
 				}
 				o = (IEnumerable)coll;
 
