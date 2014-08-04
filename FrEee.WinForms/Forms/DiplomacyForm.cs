@@ -608,5 +608,10 @@ namespace FrEee.WinForms.Forms
 				}
 			}
 		}
+
+		private void DiplomacyForm_Load(object sender, EventArgs e)
+		{
+			txtMessage.Focus();
+		}
 	}
 }

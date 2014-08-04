@@ -40,19 +40,19 @@
 			this.treeTable = new System.Windows.Forms.TreeView();
 			this.lblTable = new System.Windows.Forms.Label();
 			this.chkTentative = new System.Windows.Forms.CheckBox();
+			this.pnlQuantityLevel = new System.Windows.Forms.Panel();
+			this.chkPercent = new System.Windows.Forms.CheckBox();
+			this.lblQuantityLevel = new System.Windows.Forms.Label();
+			this.txtQuantityLevel = new System.Windows.Forms.TextBox();
+			this.ddlAlliance = new System.Windows.Forms.ComboBox();
 			this.btnReturn = new FrEee.WinForms.Controls.GameButton();
 			this.btnRequest = new FrEee.WinForms.Controls.GameButton();
 			this.btnGive = new FrEee.WinForms.Controls.GameButton();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSend = new FrEee.WinForms.Controls.GameButton();
 			this.picPortrait = new FrEee.WinForms.Controls.GamePictureBox();
-			this.pnlQuantityLevel = new System.Windows.Forms.Panel();
-			this.lblQuantityLevel = new System.Windows.Forms.Label();
-			this.txtQuantityLevel = new System.Windows.Forms.TextBox();
-			this.chkPercent = new System.Windows.Forms.CheckBox();
-			this.ddlAlliance = new System.Windows.Forms.ComboBox();
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.pnlQuantityLevel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -76,6 +76,7 @@
 			this.txtInReplyTo.ReadOnly = true;
 			this.txtInReplyTo.Size = new System.Drawing.Size(636, 100);
 			this.txtInReplyTo.TabIndex = 2;
+			this.txtInReplyTo.TabStop = false;
 			// 
 			// label2
 			// 
@@ -198,6 +199,59 @@
 			this.chkTentative.Text = "Proposal is Tentative";
 			this.chkTentative.UseVisualStyleBackColor = true;
 			// 
+			// pnlQuantityLevel
+			// 
+			this.pnlQuantityLevel.Controls.Add(this.chkPercent);
+			this.pnlQuantityLevel.Controls.Add(this.lblQuantityLevel);
+			this.pnlQuantityLevel.Controls.Add(this.txtQuantityLevel);
+			this.pnlQuantityLevel.Location = new System.Drawing.Point(233, 563);
+			this.pnlQuantityLevel.Name = "pnlQuantityLevel";
+			this.pnlQuantityLevel.Size = new System.Drawing.Size(312, 25);
+			this.pnlQuantityLevel.TabIndex = 38;
+			this.pnlQuantityLevel.Visible = false;
+			// 
+			// chkPercent
+			// 
+			this.chkPercent.AutoSize = true;
+			this.chkPercent.Location = new System.Drawing.Point(222, 6);
+			this.chkPercent.Name = "chkPercent";
+			this.chkPercent.Size = new System.Drawing.Size(34, 17);
+			this.chkPercent.TabIndex = 40;
+			this.chkPercent.Text = "%";
+			this.chkPercent.UseVisualStyleBackColor = true;
+			this.chkPercent.CheckedChanged += new System.EventHandler(this.chkPercent_CheckedChanged);
+			// 
+			// lblQuantityLevel
+			// 
+			this.lblQuantityLevel.AutoSize = true;
+			this.lblQuantityLevel.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.lblQuantityLevel.Location = new System.Drawing.Point(66, 7);
+			this.lblQuantityLevel.Name = "lblQuantityLevel";
+			this.lblQuantityLevel.Size = new System.Drawing.Size(77, 13);
+			this.lblQuantityLevel.TabIndex = 39;
+			this.lblQuantityLevel.Text = "Quantity/Level";
+			// 
+			// txtQuantityLevel
+			// 
+			this.txtQuantityLevel.Location = new System.Drawing.Point(147, 3);
+			this.txtQuantityLevel.Name = "txtQuantityLevel";
+			this.txtQuantityLevel.Size = new System.Drawing.Size(67, 20);
+			this.txtQuantityLevel.TabIndex = 38;
+			this.txtQuantityLevel.TextChanged += new System.EventHandler(this.txtQuantityLevel_TextChanged);
+			// 
+			// ddlAlliance
+			// 
+			this.ddlAlliance.DisplayMember = "Name";
+			this.ddlAlliance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlAlliance.FormattingEnabled = true;
+			this.ddlAlliance.Location = new System.Drawing.Point(336, 565);
+			this.ddlAlliance.Name = "ddlAlliance";
+			this.ddlAlliance.Size = new System.Drawing.Size(121, 21);
+			this.ddlAlliance.TabIndex = 43;
+			this.ddlAlliance.ValueMember = "Value";
+			this.ddlAlliance.Visible = false;
+			this.ddlAlliance.SelectedIndexChanged += new System.EventHandler(this.ddlAlliance_SelectedIndexChanged);
+			// 
 			// btnReturn
 			// 
 			this.btnReturn.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -276,59 +330,6 @@
 			this.picPortrait.TabStop = false;
 			this.picPortrait.MouseClick += new System.Windows.Forms.MouseEventHandler(this.picPortrait_MouseClick);
 			// 
-			// pnlQuantityLevel
-			// 
-			this.pnlQuantityLevel.Controls.Add(this.chkPercent);
-			this.pnlQuantityLevel.Controls.Add(this.lblQuantityLevel);
-			this.pnlQuantityLevel.Controls.Add(this.txtQuantityLevel);
-			this.pnlQuantityLevel.Location = new System.Drawing.Point(233, 563);
-			this.pnlQuantityLevel.Name = "pnlQuantityLevel";
-			this.pnlQuantityLevel.Size = new System.Drawing.Size(312, 25);
-			this.pnlQuantityLevel.TabIndex = 38;
-			this.pnlQuantityLevel.Visible = false;
-			// 
-			// lblQuantityLevel
-			// 
-			this.lblQuantityLevel.AutoSize = true;
-			this.lblQuantityLevel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.lblQuantityLevel.Location = new System.Drawing.Point(66, 7);
-			this.lblQuantityLevel.Name = "lblQuantityLevel";
-			this.lblQuantityLevel.Size = new System.Drawing.Size(77, 13);
-			this.lblQuantityLevel.TabIndex = 39;
-			this.lblQuantityLevel.Text = "Quantity/Level";
-			// 
-			// txtQuantityLevel
-			// 
-			this.txtQuantityLevel.Location = new System.Drawing.Point(147, 3);
-			this.txtQuantityLevel.Name = "txtQuantityLevel";
-			this.txtQuantityLevel.Size = new System.Drawing.Size(67, 20);
-			this.txtQuantityLevel.TabIndex = 38;
-			this.txtQuantityLevel.TextChanged += new System.EventHandler(this.txtQuantityLevel_TextChanged);
-			// 
-			// chkPercent
-			// 
-			this.chkPercent.AutoSize = true;
-			this.chkPercent.Location = new System.Drawing.Point(222, 6);
-			this.chkPercent.Name = "chkPercent";
-			this.chkPercent.Size = new System.Drawing.Size(34, 17);
-			this.chkPercent.TabIndex = 40;
-			this.chkPercent.Text = "%";
-			this.chkPercent.UseVisualStyleBackColor = true;
-			this.chkPercent.CheckedChanged += new System.EventHandler(this.chkPercent_CheckedChanged);
-			// 
-			// ddlAlliance
-			// 
-			this.ddlAlliance.DisplayMember = "Name";
-			this.ddlAlliance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlAlliance.FormattingEnabled = true;
-			this.ddlAlliance.Location = new System.Drawing.Point(336, 565);
-			this.ddlAlliance.Name = "ddlAlliance";
-			this.ddlAlliance.Size = new System.Drawing.Size(121, 21);
-			this.ddlAlliance.TabIndex = 43;
-			this.ddlAlliance.ValueMember = "Value";
-			this.ddlAlliance.Visible = false;
-			this.ddlAlliance.SelectedIndexChanged += new System.EventHandler(this.ddlAlliance_SelectedIndexChanged);
-			// 
 			// DiplomacyForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -358,9 +359,10 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "DiplomacyForm";
 			this.Text = "Diplomacy";
-			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
+			this.Load += new System.EventHandler(this.DiplomacyForm_Load);
 			this.pnlQuantityLevel.ResumeLayout(false);
 			this.pnlQuantityLevel.PerformLayout();
+			((System.ComponentModel.ISupportInitialize)(this.picPortrait)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
