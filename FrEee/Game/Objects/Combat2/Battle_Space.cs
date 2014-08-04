@@ -198,6 +198,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The REAL combatants objects.
 		/// </summary>
+		[DoNotSerialize]
 		public IDictionary<long, ICombatant> ActualCombatants { get; private set; }
 
         /// <summary>
