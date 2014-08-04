@@ -187,6 +187,7 @@ namespace FrEee.Utility
 			KnownProperties = new SafeDictionary<Type, IEnumerable<PropertyInfo>>();
 			PropertyGetters = new SafeDictionary<PropertyInfo, Delegate>();
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
+			CollectionAdders = new SafeDictionary<Type, Delegate>();
 		}
 
 		/// <summary>
@@ -208,6 +209,11 @@ namespace FrEee.Utility
 		/// Setters for properties.
 		/// </summary>
 		public static SafeDictionary<PropertyInfo, Delegate> PropertySetters { get; private set; }
+
+		/// <summary>
+		/// Adder methods for collection types.
+		/// </summary>
+		public static SafeDictionary<Type, Delegate> CollectionAdders { get; private set; }
 
 		/// <summary>
 		/// The known objects, grouped by type. Their IDs are their indices in the lists.
