@@ -69,6 +69,8 @@ namespace FrEee.WinForms.Forms
 					var treaty = Empire.Current.GetTreaty(emp);
 					var giving = treaty.Where(c => c.Giver == Empire.Current);
 					var receiving = treaty.Where(c => c.Receiver == Empire.Current);
+					var givingTexts = giving.Select(c => c.ToString());
+					var receivingTexts = receiving.Select(c => c.ToString());
 					if (!treaty.Any())
 					{
 						txtTreaty.Text = "None";
@@ -76,18 +78,32 @@ namespace FrEee.WinForms.Forms
 					}
 					else if (!giving.Any())
 					{
-						txtTreaty.Text = "Receiving " + string.Join(", ", receiving.Select(c => c.ToString()).ToArray());
+						txtTreaty.Text = "Receiving " + string.Join(", ", receivingTexts.ToArray());
 						txtTreaty.ForeColor = Color.Green;
 					}
 					else if (!receiving.Any())
 					{
-						txtTreaty.Text = "Giving " + string.Join(", ", giving.Select(c => c.ToString()).ToArray());
+						txtTreaty.Text = "Giving " + string.Join(", ", givingTexts.ToArray());
 						txtTreaty.ForeColor = Color.LightGray;
 					}
 					else
 					{
-						// TODO - display mutual treaty elements more simply (e.g. "Mutual Cooperative Research")
-						txtTreaty.Text = "Trading " + string.Join(", ", giving.Select(c => c.ToString()).ToArray()) + " for " + string.Join(", ", receiving.Select(c => c.ToString()).ToArray());
+						var mutualTexts = givingTexts.Join(receivingTexts, s => s, s => s, (g, r) => g);
+						var givingOnlyTexts = givingTexts.Except(mutualTexts);
+						var receivingOnlyTexts = receivingTexts.Except(mutualTexts);
+						if (givingOnlyTexts.Any() && receivingTexts.Any())
+							txtTreaty.Text = "Trading " + string.Join(", ", givingOnlyTexts.ToArray()) + " for " + string.Join(", ", receivingOnlyTexts.ToArray());
+						else if (givingOnlyTexts.Any())
+							txtTreaty.Text = "Giving " + string.Join(", ", givingOnlyTexts.ToArray());
+						else if (receivingOnlyTexts.Any())
+							txtTreaty.Text = "Receiving " + string.Join(", ", receivingOnlyTexts.ToArray());
+						if (mutualTexts.Any())
+						{
+							if (givingOnlyTexts.Any() || receivingOnlyTexts.Any())
+								txtTreaty.Text = "Mutual " + string.Join(", ", mutualTexts.ToArray()) + "; " + txtTreaty.Text;
+							else
+								txtTreaty.Text = "Mutual " + string.Join(", ", mutualTexts.ToArray());
+						}
 						txtTreaty.ForeColor = Color.White;
 					}
 				}
