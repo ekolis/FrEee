@@ -778,6 +778,7 @@ namespace FrEee.Game.Objects.Civilization
 				ResearchQueue.Clear();
 				ResearchSpending.Clear();
 				Memory.Clear();
+				AINotes = null;
 
 				// TODO - show count of encountered vehicles
 				foreach (var d in KnownDesigns.Where(d => d.Owner == this))
