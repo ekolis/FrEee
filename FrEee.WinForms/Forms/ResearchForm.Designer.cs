@@ -30,12 +30,12 @@
 		{
 			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.gridQueues = new System.Windows.Forms.DataGridView();
-			this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.CurrentLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.NextLevelCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Progress = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
-			this.Spending = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
+			this.gridTechs = new System.Windows.Forms.DataGridView();
+			this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colLevel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colNextLevelCost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colProgress = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
+			this.colSpending = new FrEee.WinForms.DataGridView.DataGridViewProgressColumn();
 			this.technologyBindingSource = new System.Windows.Forms.BindingSource(this.components);
 			this.ddlGroup = new System.Windows.Forms.ComboBox();
 			this.lblPoints = new System.Windows.Forms.Label();
@@ -61,7 +61,7 @@
 			this.txtTechDiscription = new System.Windows.Forms.Label();
 			this.btnTree = new FrEee.WinForms.Controls.GameButton();
 			this.btnSave = new FrEee.WinForms.Controls.GameButton();
-			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.gridTechs)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).BeginInit();
 			this.gamePanel2.SuspendLayout();
@@ -69,23 +69,23 @@
 			this.tableLayoutPanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
-			// gridQueues
+			// gridTechs
 			// 
-			this.gridQueues.AllowUserToAddRows = false;
-			this.gridQueues.AllowUserToDeleteRows = false;
-			this.gridQueues.AllowUserToOrderColumns = true;
-			this.gridQueues.AllowUserToResizeRows = false;
-			this.gridQueues.AutoGenerateColumns = false;
-			this.gridQueues.BackgroundColor = System.Drawing.Color.Black;
-			this.gridQueues.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.gridQueues.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.nameDataGridViewTextBoxColumn,
-            this.CurrentLevel,
-            this.NextLevelCost,
-            this.Progress,
-            this.Spending});
-			this.tableLayoutPanel1.SetColumnSpan(this.gridQueues, 3);
-			this.gridQueues.DataSource = this.technologyBindingSource;
+			this.gridTechs.AllowUserToAddRows = false;
+			this.gridTechs.AllowUserToDeleteRows = false;
+			this.gridTechs.AllowUserToOrderColumns = true;
+			this.gridTechs.AllowUserToResizeRows = false;
+			this.gridTechs.AutoGenerateColumns = false;
+			this.gridTechs.BackgroundColor = System.Drawing.Color.Black;
+			this.gridTechs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridTechs.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colName,
+            this.colLevel,
+            this.colNextLevelCost,
+            this.colProgress,
+            this.colSpending});
+			this.tableLayoutPanel1.SetColumnSpan(this.gridTechs, 3);
+			this.gridTechs.DataSource = this.technologyBindingSource;
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -93,65 +93,68 @@
 			dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
 			dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.gridQueues.DefaultCellStyle = dataGridViewCellStyle1;
-			this.gridQueues.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.gridQueues.Location = new System.Drawing.Point(3, 31);
-			this.gridQueues.Name = "gridQueues";
-			this.gridQueues.ReadOnly = true;
-			this.gridQueues.RowHeadersVisible = false;
-			this.tableLayoutPanel1.SetRowSpan(this.gridQueues, 10);
-			this.gridQueues.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
-			this.gridQueues.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
-			this.gridQueues.RowTemplate.Height = 32;
-			this.gridQueues.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.gridQueues.Size = new System.Drawing.Size(494, 539);
-			this.gridQueues.TabIndex = 1;
-			this.gridQueues.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridQueues_CellMouseDoubleClick);
-			this.gridQueues.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_RowEnter);
+			this.gridTechs.DefaultCellStyle = dataGridViewCellStyle1;
+			this.gridTechs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.gridTechs.Location = new System.Drawing.Point(3, 31);
+			this.gridTechs.Name = "gridTechs";
+			this.gridTechs.ReadOnly = true;
+			this.gridTechs.RowHeadersVisible = false;
+			this.tableLayoutPanel1.SetRowSpan(this.gridTechs, 10);
+			this.gridTechs.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
+			this.gridTechs.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White;
+			this.gridTechs.RowTemplate.Height = 32;
+			this.gridTechs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+			this.gridTechs.Size = new System.Drawing.Size(494, 539);
+			this.gridTechs.TabIndex = 1;
+			this.gridTechs.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridQueues_CellMouseDoubleClick);
+			this.gridTechs.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridTechs_ColumnHeaderMouseClick);
+			this.gridTechs.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridQueues_RowEnter);
 			// 
-			// nameDataGridViewTextBoxColumn
+			// colName
 			// 
-			this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-			this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-			this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-			this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-			this.nameDataGridViewTextBoxColumn.Width = 150;
+			this.colName.DataPropertyName = "Name";
+			this.colName.HeaderText = "Name";
+			this.colName.Name = "colName";
+			this.colName.ReadOnly = true;
+			this.colName.Width = 150;
 			// 
-			// CurrentLevel
+			// colLevel
 			// 
-			this.CurrentLevel.DataPropertyName = "CurrentLevel";
-			this.CurrentLevel.HeaderText = "Level";
-			this.CurrentLevel.Name = "CurrentLevel";
-			this.CurrentLevel.ReadOnly = true;
-			this.CurrentLevel.Width = 50;
+			this.colLevel.DataPropertyName = "CurrentLevel";
+			this.colLevel.HeaderText = "Level";
+			this.colLevel.Name = "colLevel";
+			this.colLevel.ReadOnly = true;
+			this.colLevel.Width = 50;
 			// 
-			// NextLevelCost
+			// colNextLevelCost
 			// 
-			this.NextLevelCost.DataPropertyName = "NextLevelCost";
-			this.NextLevelCost.HeaderText = "Cost";
-			this.NextLevelCost.Name = "NextLevelCost";
-			this.NextLevelCost.ReadOnly = true;
-			this.NextLevelCost.Width = 75;
+			this.colNextLevelCost.DataPropertyName = "NextLevelCost";
+			this.colNextLevelCost.HeaderText = "Cost";
+			this.colNextLevelCost.Name = "colNextLevelCost";
+			this.colNextLevelCost.ReadOnly = true;
+			this.colNextLevelCost.Width = 75;
 			// 
-			// Progress
+			// colProgress
 			// 
-			this.Progress.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.Progress.DataPropertyName = "Progress";
-			this.Progress.HeaderText = "Progress";
-			this.Progress.MinimumWidth = 100;
-			this.Progress.Name = "Progress";
-			this.Progress.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Eta;
-			this.Progress.ReadOnly = true;
+			this.colProgress.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.colProgress.DataPropertyName = "Progress";
+			this.colProgress.HeaderText = "Progress";
+			this.colProgress.MinimumWidth = 100;
+			this.colProgress.Name = "colProgress";
+			this.colProgress.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Eta;
+			this.colProgress.ReadOnly = true;
+			this.colProgress.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
-			// Spending
+			// colSpending
 			// 
-			this.Spending.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.Spending.DataPropertyName = "Spending";
-			this.Spending.HeaderText = "Spending";
-			this.Spending.MinimumWidth = 100;
-			this.Spending.Name = "Spending";
-			this.Spending.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Percentage;
-			this.Spending.ReadOnly = true;
+			this.colSpending.BarColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.colSpending.DataPropertyName = "Spending";
+			this.colSpending.HeaderText = "Spending";
+			this.colSpending.MinimumWidth = 100;
+			this.colSpending.Name = "colSpending";
+			this.colSpending.ProgressDisplayMode = FrEee.WinForms.DataGridView.ProgressDisplayMode.Percentage;
+			this.colSpending.ReadOnly = true;
+			this.colSpending.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			// 
 			// technologyBindingSource
 			// 
@@ -431,7 +434,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.btnClear, 6, 8);
 			this.tableLayoutPanel1.Controls.Add(this.btnDelete, 6, 9);
 			this.tableLayoutPanel1.Controls.Add(this.btnCancel, 6, 10);
-			this.tableLayoutPanel1.Controls.Add(this.gridQueues, 0, 1);
+			this.tableLayoutPanel1.Controls.Add(this.gridTechs, 0, 1);
 			this.tableLayoutPanel1.Controls.Add(this.lblSpending, 3, 2);
 			this.tableLayoutPanel1.Controls.Add(this.txtTechDiscription, 3, 1);
 			this.tableLayoutPanel1.Controls.Add(this.lblPoints, 0, 0);
@@ -544,7 +547,9 @@
 			this.ShowInTaskbar = false;
 			this.Text = "Research";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ResearchForm_FormClosing);
-			((System.ComponentModel.ISupportInitialize)(this.gridQueues)).EndInit();
+			this.Load += new System.EventHandler(this.ResearchForm_Load);
+			this.MouseEnter += new System.EventHandler(this.ResearchForm_MouseEnter);
+			((System.ComponentModel.ISupportInitialize)(this.gridTechs)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.technologyBindingSource)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.sldSpending)).EndInit();
 			this.gamePanel2.ResumeLayout(false);
@@ -557,16 +562,11 @@
 
 		#endregion
 
-		private System.Windows.Forms.DataGridView gridQueues;
+		private System.Windows.Forms.DataGridView gridTechs;
 		private System.Windows.Forms.BindingSource technologyBindingSource;
 		private DataGridView.DataGridViewProgressColumn dataGridViewProgressColumn1;
 		private System.Windows.Forms.ComboBox ddlGroup;
 		private System.Windows.Forms.Label lblPoints;
-		private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-		private System.Windows.Forms.DataGridViewTextBoxColumn CurrentLevel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn NextLevelCost;
-		private DataGridView.DataGridViewProgressColumn Progress;
-		private DataGridView.DataGridViewProgressColumn Spending;
 		private System.Windows.Forms.Label txtTechName;
 		private System.Windows.Forms.Label lblSpending;
 		private System.Windows.Forms.TrackBar sldSpending;
@@ -588,6 +588,11 @@
         private Controls.GameButton btnSave;
         private System.Windows.Forms.Label txtTechDiscription;
 		private Controls.GameButton btnTree;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colName;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colLevel;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colNextLevelCost;
+		private DataGridView.DataGridViewProgressColumn colProgress;
+		private DataGridView.DataGridViewProgressColumn colSpending;
 
 	}
 }

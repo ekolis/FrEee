@@ -21,7 +21,7 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class ResearchForm : Form
 	{
-        
+
 		public ResearchForm()
 		{
 			InitializeComponent();
@@ -49,7 +49,8 @@ namespace FrEee.WinForms.Forms
 			// bind queue
 			BindQueue();
 
-			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
 		}
 
 		private IEnumerable<Technology> allTechs;
@@ -58,23 +59,68 @@ namespace FrEee.WinForms.Forms
 		private void BindTechGrid()
 		{
 			allTechs = Empire.Current.AvailableTechnologies.Where(t => ((dynamic)ddlGroup.SelectedItem).GroupName == "" || t.Group == ((dynamic)ddlGroup.SelectedItem).GroupName).ToArray();
-			technologyBindingSource.DataSource = allTechs.ToArray();
+			RebindTechGrid();
 		}
 
 		private void RebindTechGrid()
 		{
+			var sorted = new List<Technology>(allTechs);
+
+			// save selected tech since we're messing with the grid order
+			var selTech = curTech;
+
+			if (sortColumn == colName)
+				sorted.Sort((t1, t2) => t1.Name.CompareTo(t2.Name));
+			else if (sortColumn == colLevel)
+				sorted.Sort((t1, t2) => t1.CurrentLevel.CompareTo(t2.CurrentLevel));
+			else if (sortColumn == colNextLevelCost)
+				sorted.Sort((t1, t2) => t1.NextLevelCost.CompareTo(t2.NextLevelCost));
+			else if (sortColumn == colProgress)
+			{
+				// always show techs with no progress at the bottom
+				var defaultValue = sortDir == ListSortDirection.Ascending ? double.MaxValue : double.MinValue;
+				// sort first by ETA, then by RP required to complete but in the opposite order
+				sorted = sorted.OrderBy(t => t.Progress.RawEta ?? defaultValue).ThenBy(t => t.Progress.Value - t.Progress.Maximum).ToList();
+			}
+			else if (sortColumn == colSpending)
+				sorted.Sort((t1, t2) => t1.Spending.Value.CompareTo(t2.Spending.Value));
+
+			if (sortDir == ListSortDirection.Descending && sortColumn != null)
+				sorted.Reverse();
+
+			technologyBindingSource.DataSource = sorted;
 			technologyBindingSource.ResetBindings(false);
+
+			// reselect previously selected tech
+			curTech = selTech;
+			foreach (DataGridViewRow row in gridTechs.Rows)
+			{
+				if (row.DataBoundItem == curTech)
+				{
+					row.Selected = true;
+					gridTechs.FirstDisplayedScrollingRowIndex = row.Index;
+				}
+				else
+					row.Selected = false;
+			}
+			BindDetails();
 		}
 
 		private void ddlGroup_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			BindTechGrid();
+			gridTechs.ClearSelection();
+			curTech = null;
+			BindDetails();
 		}
 
 		private void gridQueues_RowEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			curTech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
-			BindDetails();
+			if (ready)
+			{
+				curTech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
+				BindDetails();
+			}
 		}
 
 		private void BindDetails()
@@ -82,7 +128,7 @@ namespace FrEee.WinForms.Forms
 			if (curTech == null)
 			{
 				txtTechName.Text = "(No Technology)";
-                txtTechDiscription.Text = "(No Technology)";                
+				txtTechDiscription.Text = "(No Technology)";
 				lblSpending.Text = "Spending";
 				sldSpending.Maximum = 100;
 				sldSpending.Value = 0;
@@ -93,7 +139,7 @@ namespace FrEee.WinForms.Forms
 			else
 			{
 				txtTechName.Text = curTech.Name;
-                txtTechDiscription.Text = curTech.Description; 
+				txtTechDiscription.Text = curTech.Description;
 				var spent = allTechs.Sum(t => t.Spending.Value);
 				lblSpending.Text = "Spending (" + (100 - spent) + "% unspent)";
 				sldSpending.Maximum = (int)(100 - spent + curTech.Spending.Value);
@@ -115,11 +161,11 @@ namespace FrEee.WinForms.Forms
 			RebindTechGrid();
 			BindQueue();
 			BindDetails();
-            hasChanged = true;
+			hasChanged = true;
 		}
 
 		private bool abort;
-        private bool hasChanged = false;
+		private bool hasChanged = false;
 		private Dictionary<Technology, int> oldPcts;
 		private List<Technology> oldQueue;
 
@@ -179,7 +225,7 @@ namespace FrEee.WinForms.Forms
 		}
 
 		private void BindQueue()
-		{           
+		{
 			lstQueue.Items.Clear();
 			var idx = 0;
 			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
@@ -210,7 +256,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(0, selTech);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 
@@ -223,7 +269,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Add(selTech);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 
@@ -236,7 +282,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(Math.Max(0, selIdx - 1), selTech);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 
@@ -249,7 +295,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				Empire.Current.ResearchQueue.Insert(Math.Min(Empire.Current.ResearchQueue.Count, selIdx + 1), selTech);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 
@@ -257,7 +303,7 @@ namespace FrEee.WinForms.Forms
 		{
 			Empire.Current.ResearchQueue.Clear();
 			BindQueue();
-            hasChanged = true;
+			hasChanged = true;
 		}
 
 		private void btnDelete_Click(object sender, EventArgs e)
@@ -268,7 +314,7 @@ namespace FrEee.WinForms.Forms
 				var selTech = Empire.Current.ResearchQueue[selIdx];
 				Empire.Current.ResearchQueue.RemoveAt(selIdx);
 				BindQueue();
-                hasChanged = true;
+				hasChanged = true;
 			}
 		}
 
@@ -276,7 +322,7 @@ namespace FrEee.WinForms.Forms
 		{
 			if (e.RowIndex >= 0 && e.Button == System.Windows.Forms.MouseButtons.Left)
 			{
-				var tech = (Technology)gridQueues.Rows[e.RowIndex].DataBoundItem;
+				var tech = (Technology)gridTechs.Rows[e.RowIndex].DataBoundItem;
 				TryAddTechToQueue(tech);
 			}
 		}
@@ -320,5 +366,66 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new TechTreeForm(u));
 			}
 		}
+
+		private void gridTechs_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			ListSortDirection? dir = null;
+			var col = gridTechs.Columns[e.ColumnIndex];
+			if (sortColumn == col)
+			{
+				// already sorting by this column, change sort mode
+				if (sortDir == ListSortDirection.Ascending)
+					dir = ListSortDirection.Descending;
+				else if (sortDir == ListSortDirection.Descending)
+					dir = ListSortDirection.Ascending;
+				else
+					col = null; // unsort
+			}
+			if (dir == null)
+			{
+				// default sort order for each column
+				if (col == colProgress || col == colSpending)
+					dir = ListSortDirection.Descending;
+				else
+					dir = ListSortDirection.Ascending;
+
+			}
+			foreach (DataGridViewColumn c in gridTechs.Columns)
+			{
+				if (c == col)
+				{
+					if (dir == ListSortDirection.Ascending)
+						c.HeaderCell.SortGlyphDirection = SortOrder.Ascending;
+					else if (dir == ListSortDirection.Descending)
+						c.HeaderCell.SortGlyphDirection = SortOrder.Descending;
+					else
+						c.HeaderCell.SortGlyphDirection = SortOrder.None;
+				}
+				else
+					c.HeaderCell.SortGlyphDirection = SortOrder.None;
+			}
+
+			sortDir = dir.Value;
+			sortColumn = col;
+
+			RebindTechGrid();
+		}
+
+		private ListSortDirection sortDir = ListSortDirection.Ascending;
+		private DataGridViewColumn sortColumn = null;
+
+		private void ResearchForm_Load(object sender, EventArgs e)
+		{
+			curTech = null;
+			BindTechGrid();
+			BindDetails();
+		}
+
+		private void ResearchForm_MouseEnter(object sender, EventArgs e)
+		{
+			ready = true;
+		}
+
+		private bool ready = false;
 	}
 }
