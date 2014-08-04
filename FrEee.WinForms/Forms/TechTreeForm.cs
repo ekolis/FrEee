@@ -16,7 +16,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrEee.WinForms.Controls;
-using TechReq = FrEee.Modding.TechnologyRequirement;
 
 namespace FrEee.WinForms.Forms
 {
@@ -96,9 +95,9 @@ namespace FrEee.WinForms.Forms
 							if (tech.UnlockRequirements.Count() == 1)
 							{
 								var req = tech.UnlockRequirements.Single();
-								if (req is TechReq)
+								if (req is TechnologyRequirement)
 								{
-									var tr = (TechReq)req;
+									var tr = (TechnologyRequirement)req;
 									lstUnlocks.AddItemWithImage(tech.ResearchGroup, tech.Name + " (with " + tr.Technology + " L" + tr.Level + ")", tech, tech.Icon);
 								}
 								else if (req is EmpireTraitRequirement)
@@ -120,9 +119,9 @@ namespace FrEee.WinForms.Forms
 				{
 					foreach (var req in Context.UnlockRequirements)
 					{
-						if (req is TechReq)
+						if (req is TechnologyRequirement)
 						{
-							var tr = (TechReq)req;
+							var tr = (TechnologyRequirement)req;
 							lstRequired.AddItemWithImage(tr.Technology.ResearchGroup, tr.Technology.Name + " L" + tr.Level, tr.Technology, tr.Technology.Icon);
 						}
 						else if (req is EmpireTraitRequirement)
@@ -161,7 +160,7 @@ namespace FrEee.WinForms.Forms
 						// note: this won't catch scripted unlocks!
 						var unlocks = AllItems.Select(u =>
 						{
-							var req = u.UnlockRequirements.OfType<TechReq>().Where(r => r.Technology == tech).WithMax(r => r.Level).FirstOrDefault();
+							var req = u.UnlockRequirements.OfType<TechnologyRequirement>().Where(r => r.Technology == tech).WithMax(r => r.Level).FirstOrDefault();
 							if (req != null)
 							{
 								IEnumerable<Trait> traits;
@@ -190,9 +189,9 @@ namespace FrEee.WinForms.Forms
 								else
 									suffix = " (with " + string.Join(" or ", unlock.Traits.Select(t => t.Name).ToArray());
 							}
-							else if (unlock.Others.Count() == 1 && unlock.Others.Single() is TechReq)
+							else if (unlock.Others.Count() == 1 && unlock.Others.Single() is TechnologyRequirement)
 							{
-								var other = (TechReq)unlock.Others.Single();
+								var other = (TechnologyRequirement)unlock.Others.Single();
 								if (unlock.Traits.Count() == 0)
 									suffix = " (with " + other.Technology + " L" + other.Level + ")";
 								else
