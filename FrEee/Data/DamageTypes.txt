@@ -387,7 +387,7 @@ Normal Shield Piercing := 0
 Phased Shield Damage := 100
 Phased Shield Piercing := 0
 Component Damage := ==100 if target.HasAbility("Boarding Attack") else 0
-Component Piercing := ==0 if target.HasAbility("Boarding Attack") else 0
+Component Piercing := ==0 if target.HasAbility("Boarding Attack") else 100
 Population Damage := 0
 Conditions Damage := 0
 Facility Damage := 0
@@ -408,7 +408,7 @@ Normal Shield Piercing := 0
 Phased Shield Damage := 100
 Phased Shield Piercing := 0
 Component Damage := ==100 if target.HasAbility("Boarding Defense") else 0
-Component Piercing := ==0 if target.HasAbility("Boarding Defense") else 0
+Component Piercing := ==0 if target.HasAbility("Boarding Defense") else 100
 Population Damage := 0
 Conditions Damage := 0
 Facility Damage := 0
@@ -429,7 +429,7 @@ Normal Shield Piercing := 0
 Phased Shield Damage := 100
 Phased Shield Piercing := 0
 Component Damage := ==100 if target.HasAbility("Destroy Planet") else 0
-Component Piercing := ==0 if target.HasAbility("Destroy Planet") else 0
+Component Piercing := ==0 if target.HasAbility("Destroy Planet") else 100
 Population Damage := 0
 Conditions Damage := 0
 Facility Damage := 0
