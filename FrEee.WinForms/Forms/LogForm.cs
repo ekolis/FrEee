@@ -33,10 +33,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
-			/*if (battle == null)
-				messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
-			else
-				messages = battle.Log;*/
+			messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
