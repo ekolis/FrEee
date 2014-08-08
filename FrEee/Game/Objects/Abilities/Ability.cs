@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Abilities
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(object container, AbilityRule rule, string description = "", params Formula<string>[] values)
+		public Ability(object container, AbilityRule rule, string description = null, params Formula<string>[] values)
 		{
 			Container = container;
 			Rule = rule;
@@ -70,7 +70,7 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			// get basic description
 			string result;
-			if (Description != null)
+			if (Description != null && Description.Value != null)
 				result = Description.Value;
 			else if (Rule.Description != null)
 				result = Rule.Description.Value;

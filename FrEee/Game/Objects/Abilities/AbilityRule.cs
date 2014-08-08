@@ -144,8 +144,7 @@ namespace FrEee.Game.Objects.Abilities
 			if (abilities.Count() <= 1)
 				return abilities.ToLookup(a => a, a => a);
 
-			Ability result = new Ability(stackingTo);
-			result.Rule = abilities.First().Rule;
+			var results = new SafeDictionary<Ability, Ability>(); // keys = original abilities, values = stacked abilities
 			foreach (var abil in abilities)
 			{
 				for (int i = 0; i < abil.Values.Count; i++)
@@ -156,7 +155,11 @@ namespace FrEee.Game.Objects.Abilities
 					else
 						rule = ValueRules.ElementAtOrDefault(i);
 					// TODO - don't repeatedly convert to/from strings, just do it once outside the loop
-					double? oldval = result.Values.Count > i ? (double?)result.Values[i].Value.ToDouble() : null;
+					double? oldval = null;
+					if (results[abil] != null)
+						oldval = results[abil].Values.Count > i ? (double?)results[abil].Values[i].Value.ToDouble() : null;
+					else
+						results[abil] = new Ability(stackingTo, abil.Rule);
 					double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
 					double newval = oldval ?? 0;
 					if (rule == AbilityValueRule.Add)
@@ -179,17 +182,25 @@ namespace FrEee.Game.Objects.Abilities
 					}
 					else // group or none
 						newval = incoming;
-					if (result.Values.Count > i)
-						result.Values[i] = newval.ToString(CultureInfo.InvariantCulture);
+					if (results[abil].Values.Count > i)
+						results[abil].Values[i] = newval.ToString(CultureInfo.InvariantCulture);
 					else
 					{
-						while (result.Values.Count < i)
-							result.Values.Add(null);
-						result.Values.Add(newval.ToString(CultureInfo.InvariantCulture));
+						while (results[abil].Values.Count < i)
+							results[abil].Values.Add(null);
+						results[abil].Values.Add(newval.ToString(CultureInfo.InvariantCulture));
 					}
 				}
 			}
-			return abilities.ToLookup(a => result, a => a);
+			foreach (var kvp in results)
+			{
+				if (results.Values.Where(a => a == kvp.Value).Count() == 1)
+				{
+					// ability is "stacked" alone, just use the original ability description
+					results[kvp.Key].Description = kvp.Key.Description;
+				}
+			}
+			return results.ToLookup(kvp => kvp.Value, kvp => kvp.Key);
 		}
 
 		public override string ToString()
