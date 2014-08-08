@@ -981,7 +981,7 @@ namespace FrEee.Game.Objects.Space
 			// repair units
 			foreach (var u in Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>())
 				u.Repair();
-			foreach (var u in Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().SelectMany(p => p.Cargo.Units))
+			foreach (var u in Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units))
 				u.Repair();
 
 			// repair ships/bases
