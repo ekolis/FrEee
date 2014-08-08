@@ -14,9 +14,26 @@ namespace FrEee.Utility
 	/// </summary>
 	public class ObjectGraphParser
 	{
+		/// <summary>
+		/// Delegate for when an object is encountered.
+		/// </summary>
+		/// <param name="o">The object encountered.</param>
 		public delegate void ObjectDelegate(object o);
+
+		/// <summary>
+		/// Delegate for when an array's dimensions are encountered.
+		/// </summary>
+		/// <param name="dimensions">The array dimensions.</param>
 		public delegate void ArrayDimensionsDelegate(IEnumerable<int> dimensions);
-		public delegate void PropertyDelegate(string propertyName, object o, object val);
+
+		/// <summary>
+		/// Delegate for when an object's property is encountered.
+		/// </summary>
+		/// <param name="propertyName">The name of the property.</param>
+		/// <param name="o">The object possessing the property.</param>
+		/// <param name="val">The value of the property.</param>
+		/// <returns>true to recursively parse the property value, false to skip it</returns>
+		public delegate bool PropertyDelegate(string propertyName, object o, object val);
 
 		/// <summary>
 		/// Raised when a null reference is encountered.
@@ -115,9 +132,11 @@ namespace FrEee.Utility
 
 		private void ParseProperty(string propertyName, object o, object val, ObjectGraphContext context)
 		{
+			bool recurse = true; // if no event handler, assume we are parsing recursively
 			if (Property != null)
-				Property(propertyName, o, val);
-			Parse(val, context);
+				recurse = Property(propertyName, o, val);
+			if (recurse)
+				Parse(val, context);
 		}
 
 		private void ParseColor(Color c, ObjectGraphContext context)
@@ -162,11 +181,12 @@ namespace FrEee.Utility
 			var props = ObjectGraphContext.KnownProperties[type];
 			foreach (var p in props)
 			{
-				// serialize field value
 				var val = p.GetValue(o, new object[] { });
-				if (Property != null)
-					Property(p.Name, o, val);
-				Parse(val, context);
+				bool recurse = true;
+				if (Property != null) // if no event handler, assume we are parsing recursively
+					recurse = Property(p.Name, o, val);
+				if (recurse)
+					Parse(val, context);
 			}
 		}
 	}

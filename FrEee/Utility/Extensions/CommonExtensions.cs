@@ -65,7 +65,10 @@ namespace FrEee.Utility.Extensions
 			parser.Property += (pname, o, val) =>
 				{
 					var prop = o.GetType().FindProperty(pname);
-					canCopy.Push(!prop.HasAttribute(typeof(DoNotCopyAttribute)));
+					var shouldRecurse = !prop.HasAttribute(typeof(DoNotCopyAttribute)); 
+					if (shouldRecurse)
+						canCopy.Push(shouldRecurse);
+					return shouldRecurse;
 				};
 			parser.Item += (o) =>
 				{
