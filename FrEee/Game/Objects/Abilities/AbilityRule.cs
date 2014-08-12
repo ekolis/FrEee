@@ -159,7 +159,17 @@ namespace FrEee.Game.Objects.Abilities
 					if (results[abil] != null)
 						oldval = results[abil].Values.Count > i ? (double?)results[abil].Values[i].Value.ToDouble() : null;
 					else
-						results[abil] = new Ability(stackingTo, abil.Rule);
+					{
+						var match = results.Values.Distinct().Where(a => a != null).SingleOrDefault(a => a.Rule == abil.Rule && a.Values.Select((val, idx) => rule != AbilityValueRule.Group && rule != AbilityValueRule.None || a.Values.Count >= abil.Values.Count && a.Values[idx] == abil.Values[idx]).All(b => b));
+
+						if (match != null)
+						{
+							results[abil] = match;
+							oldval = results[abil].Values.Count > i ? (double?)results[abil].Values[i].Value.ToDouble() : null;
+						}
+						else
+							results[abil] = new Ability(stackingTo, abil.Rule);
+					}
 					double incoming = abil.Values.Count > i ? abil.Values[i].Value.ToDouble() : 0;
 					double newval = oldval ?? 0;
 					if (rule == AbilityValueRule.Add)
