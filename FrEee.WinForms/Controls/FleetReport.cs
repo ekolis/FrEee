@@ -192,7 +192,6 @@ namespace FrEee.WinForms.Controls
 					txtClass.Text = primaryClass.Key.Name;
 				txtHullSize.Text = Fleet.LeafVehicles.Sum(v => v.Design.Hull.Size).Kilotons();
 				var topSpeed = Fleet.LeafVehicles.Min(v => v.Design.Speed);
-				txtMovement.Text = Fleet.Speed + " / " + topSpeed;
 				progMovement.Maximum = topSpeed;
 				progMovement.Value = Fleet.Speed;
 
