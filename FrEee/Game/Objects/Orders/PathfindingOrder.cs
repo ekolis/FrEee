@@ -205,6 +205,9 @@ namespace FrEee.Game.Objects.Orders
 					sobj.FindStarSystem().Remove(sobj);
 					gotoSector.Place(sobj);
 					sobj.RefreshDijkstraMap();
+
+					// consume supplies
+					sobj.BurnMovementSupplies();
 				}
 				else if (!LoggedPathfindingError)
 				{
