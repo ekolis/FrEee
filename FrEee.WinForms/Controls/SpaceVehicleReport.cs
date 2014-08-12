@@ -194,7 +194,7 @@ namespace FrEee.WinForms.Controls
 				progMovement.Value = vehicle.MovementRemaining;
 
 				// supplies and stuff
-				progSupplies.Maximum = vehicle.Design.SupplyStorage;
+				progSupplies.Maximum = vehicle.SupplyStorage;
 				progSupplies.Value = vehicle.SupplyRemaining;
 				// will we even use ammo/fuel?
 				progAmmunition.Visible = false;
