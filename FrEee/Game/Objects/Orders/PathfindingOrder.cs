@@ -3,6 +3,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -208,6 +209,20 @@ namespace FrEee.Game.Objects.Orders
 
 					// consume supplies
 					sobj.BurnMovementSupplies();
+
+					// resupply space vehicles
+					// either this vehicle from other space objects, or other vehicles from this one
+					// TODO - this should really be done AFTER battles...
+					if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+					{
+						foreach (var v in gotoSector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+							v.SupplyRemaining = v.SupplyStorage;
+					}
+					if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+					{
+						foreach (var v in gotoSector.StarSystem.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+							v.SupplyRemaining = v.SupplyStorage;
+					}
 				}
 				else if (!LoggedPathfindingError)
 				{
