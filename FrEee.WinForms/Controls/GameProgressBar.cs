@@ -85,9 +85,38 @@ namespace FrEee.WinForms.Controls
 
 		public string RightText { get { return rightText; } set { rightText = value; Invalidate(); } }
 
+		private ProgressDisplayType displayType = ProgressDisplayType.Percentage;
+		public ProgressDisplayType ProgressDisplayType
+		{
+			get { return displayType; }
+			set
+			{
+				displayType = value;
+				Invalidate();
+			}
+		}
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
-			var centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
+			string centerText;
+			switch (ProgressDisplayType)
+			{
+				case ProgressDisplayType.None:
+					centerText = "";
+					break;
+				case ProgressDisplayType.Percentage:
+					centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "%";
+					break;
+				case ProgressDisplayType.Numeric:
+					centerText = Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true);
+					break;
+				case ProgressDisplayType.Both:
+					centerText = Math.Round(((double)Value / (double)Maximum * 100)) + "% (" + Value.ToUnitString(true) + " / " + Maximum.ToUnitString(true) + ")";
+					break;
+				default:
+					centerText = "";
+					break;
+			}
 			base.OnPaint(e);
 			e.Graphics.Clear(BackColor);
 			if (Maximum != 0)
@@ -109,8 +138,7 @@ namespace FrEee.WinForms.Controls
 			rect.Height -= Padding.Top + Padding.Bottom;
 			e.Graphics.DrawString(LeftText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Near, LineAlignment = StringAlignment.Center });
 			e.Graphics.DrawString(RightText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Far, LineAlignment = StringAlignment.Center });
-			if (Width > 100)
-				e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
+			e.Graphics.DrawString(centerText, Font, brush, rect, new StringFormat { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center });
 		}
 
 		private Color borderColor;
@@ -126,5 +154,14 @@ namespace FrEee.WinForms.Controls
 				Invalidate();
 			}
 		}
+	}
+
+	[Flags]
+	public enum ProgressDisplayType
+	{
+		None = 0,
+		Percentage = 1,
+		Numeric = 2,
+		Both = 3,
 	}
 }
