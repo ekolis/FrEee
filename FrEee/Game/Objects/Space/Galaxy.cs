@@ -926,7 +926,6 @@ namespace FrEee.Game.Objects.Space
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
 			}
-			Current.MoveShips(); // last tick of the turn!
 
 			// validate fleets again (ships might have been destroyed)
 			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
@@ -1275,7 +1274,7 @@ namespace FrEee.Game.Objects.Space
 			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
             objs = objs.Where(obj => !obj.IsMemory);
 			if (objs.Any() && CurrentTick < 1.0)
-				NextTickSize = Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove));
+				NextTickSize = Math.Max(Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove)), 1e-15);
 			else
 				NextTickSize = double.PositiveInfinity;
 		}
