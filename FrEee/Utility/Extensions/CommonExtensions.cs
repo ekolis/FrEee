@@ -1566,6 +1566,23 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Finds the majority value of some attribute. If there is no clear majority, the first tied value is selected arbitrarily.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TCompared"></typeparam>
+		/// <param name="src"></param>
+		/// <param name="selector"></param>
+		/// <returns></returns>
+		public static TCompared Majority<T, TCompared>(this IEnumerable<T> src, Func<T, TCompared> selector)
+		{
+			var groups = src.GroupBy(x => selector(x));
+			groups = groups.WithMax(g => g.Count());
+			if (!groups.Any())
+				return default(TCompared);
+			return groups.First().Key;
+		}
+
+		/// <summary>
 		/// Is this type safe to pass from the client to the server?
 		/// Primitives, strings, points and colors are client safe.
 		/// So are types implementing IPromotable.

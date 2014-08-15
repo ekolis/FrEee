@@ -68,7 +68,9 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnColonize, "Colonize");
 			LoadButtonImage(btnSentry, "Sentry");
 			LoadButtonImage(btnConstructionQueue, "ConstructionQueue");
+			LoadButtonImage(btnRecycle, "Recycle");
 			LoadButtonImage(btnTransferCargo, "TransferCargo");
+			LoadButtonImage(btnFleetTransfer, "FleetTransfer");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
 			LoadButtonImage(btnPrevIdle, "Previous");
 			LoadButtonImage(btnNextIdle, "Next");
@@ -872,6 +874,7 @@ namespace FrEee.WinForms.Forms
 					btnSentry.Visible = value is IMobileSpaceObject;
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
+					btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
 					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
@@ -880,7 +883,7 @@ namespace FrEee.WinForms.Forms
 
 		private void GameForm_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Shift)
+			if (e.Shift && !e.Control)
 			{
 				if (e.KeyCode == Keys.D)
 					this.ShowChildForm(new DesignListForm());
@@ -901,7 +904,12 @@ namespace FrEee.WinForms.Forms
                 else if (e.KeyCode == Keys.Tab)
                     btnPrevIdle_Click(this, new EventArgs());
 			}
-			else
+			else if (e.Control && !e.Shift)
+			{
+				if (e.KeyCode == Keys.R && btnRecycle.Visible)
+					btnRecycle_Click(this, new EventArgs());
+			}
+			else if (!e.Shift && !e.Control)
 			{
 				if (e.KeyCode == Keys.M && btnMove.Visible)
 					ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
@@ -1331,6 +1339,12 @@ namespace FrEee.WinForms.Forms
 		private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Instance = null;
+		}
+
+		private void btnRecycle_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new RecycleForm(starSystemView.SelectedSector));
+			BindReport();
 		}
 	}
 }

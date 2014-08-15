@@ -56,7 +56,7 @@ namespace FrEee.WinForms.Forms
 			this.btnResupply = new FrEee.WinForms.Controls.GameButton();
 			this.btnRepair = new FrEee.WinForms.Controls.GameButton();
 			this.btnRepeatOrders = new FrEee.WinForms.Controls.GameButton();
-			this.btnScrap = new FrEee.WinForms.Controls.GameButton();
+			this.btnRecycle = new FrEee.WinForms.Controls.GameButton();
 			this.btnRename = new FrEee.WinForms.Controls.GameButton();
 			this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
 			this.btnStellarManipulation = new FrEee.WinForms.Controls.GameButton();
@@ -359,6 +359,7 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.Maximum = ((long)(500000));
 			this.progResearch.Name = "progResearch";
 			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
+			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Percentage;
 			this.progResearch.RightText = "0.2 years";
 			this.progResearch.Size = new System.Drawing.Size(411, 38);
 			this.progResearch.TabIndex = 11;
@@ -434,18 +435,19 @@ namespace FrEee.WinForms.Forms
 			this.toolTip.SetToolTip(this.btnRepeatOrders, "(P) Repeat Orders");
 			this.btnRepeatOrders.UseVisualStyleBackColor = false;
 			// 
-			// btnScrap
+			// btnRecycle
 			// 
-			this.btnScrap.BackColor = System.Drawing.Color.Black;
-			this.btnScrap.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnScrap.Location = new System.Drawing.Point(170, 48);
-			this.btnScrap.Name = "btnScrap";
-			this.btnScrap.Size = new System.Drawing.Size(36, 36);
-			this.btnScrap.TabIndex = 16;
-			this.btnScrap.TabStop = false;
-			this.btnScrap.Text = "Rcy";
-			this.toolTip.SetToolTip(this.btnScrap, "(Ctrl-R) Recycle/Scuttle");
-			this.btnScrap.UseVisualStyleBackColor = false;
+			this.btnRecycle.BackColor = System.Drawing.Color.Black;
+			this.btnRecycle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRecycle.Location = new System.Drawing.Point(170, 48);
+			this.btnRecycle.Name = "btnRecycle";
+			this.btnRecycle.Size = new System.Drawing.Size(36, 36);
+			this.btnRecycle.TabIndex = 16;
+			this.btnRecycle.TabStop = false;
+			this.btnRecycle.Text = "Rcy";
+			this.toolTip.SetToolTip(this.btnRecycle, "(Ctrl-R) Recycle/Scuttle");
+			this.btnRecycle.UseVisualStyleBackColor = false;
+			this.btnRecycle.Click += new System.EventHandler(this.btnRecycle_Click);
 			// 
 			// btnRename
 			// 
@@ -648,7 +650,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlTabs.Name = "pnlTabs";
 			this.pnlTabs.Size = new System.Drawing.Size(137, 634);
 			this.pnlTabs.TabIndex = 0;
-            this.pnlTabs.DoubleClick += new System.EventHandler(this.btnNewTab_Click);
+			this.pnlTabs.DoubleClick += new System.EventHandler(this.btnNewTab_Click);
 			// 
 			// btnNewTab
 			// 
@@ -661,7 +663,7 @@ namespace FrEee.WinForms.Forms
 			this.btnNewTab.TabStop = false;
 			this.btnNewTab.Text = "(New Tab)";
 			this.btnNewTab.UseVisualStyleBackColor = false;
-            this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
+			this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
 			// 
 			// pnlSubCommands
 			// 
@@ -676,7 +678,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Controls.Add(this.btnStellarManipulation);
 			this.pnlSubCommands.Controls.Add(this.btnToggleMinister);
 			this.pnlSubCommands.Controls.Add(this.btnRename);
-			this.pnlSubCommands.Controls.Add(this.btnScrap);
+			this.pnlSubCommands.Controls.Add(this.btnRecycle);
 			this.pnlSubCommands.Controls.Add(this.btnRepeatOrders);
 			this.pnlSubCommands.Controls.Add(this.btnNextIdle);
 			this.pnlSubCommands.Controls.Add(this.btnRepair);
@@ -961,7 +963,7 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnRepeatOrders;
 		private GameButton btnRepair;
 		private GameButton btnResupply;
-		private GameButton btnScrap;
+		private GameButton btnRecycle;
 		private GameButton btnRename;
 		private GameButton btnToggleMinister;
 		private GameButton btnStellarManipulation;
