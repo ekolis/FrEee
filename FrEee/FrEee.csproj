@@ -171,6 +171,8 @@
     <Compile Include="Game\Interfaces\IPictorialLogMessage.cs" />
     <Compile Include="Game\Interfaces\IPlanetOrder.cs" />
     <Compile Include="Game\Interfaces\IPromotable.cs" />
+    <Compile Include="Game\Interfaces\IRecyclable.cs" />
+    <Compile Include="Game\Interfaces\IRecycleBehavior.cs" />
     <Compile Include="Game\Interfaces\IReference.cs" />
     <Compile Include="Game\Interfaces\IReferenceEnumerable.cs" />
     <Compile Include="Game\Interfaces\IReferrable.cs" />
@@ -238,6 +240,9 @@
     <Compile Include="Game\Objects\LogMessages\PictorialLogMessage.cs" />
     <Compile Include="Game\Objects\Orders\ColonizeOrder.cs" />
     <Compile Include="Game\Objects\Orders\PathfindingOrder.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleBehaviors\ScrapBehavior.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleFacilityOrCargoOrder.cs" />
+    <Compile Include="Game\Objects\Orders\RecycleVehicleInSpaceOrder.cs" />
     <Compile Include="Game\Objects\Orders\UpgradeFacilityOrder.cs" />
     <Compile Include="Game\Objects\Orders\SentryOrder.cs" />
     <Compile Include="Game\Objects\Orders\EvadeOrder.cs" />

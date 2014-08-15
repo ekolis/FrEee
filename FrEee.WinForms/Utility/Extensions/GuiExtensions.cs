@@ -110,6 +110,38 @@ namespace FrEee.WinForms.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Gets a list of all nodes and child nodes, etc. recursively on a tree view.
+		/// </summary>
+		/// <param name="tv"></param>
+		/// <param name="root"></param>
+		/// <returns></returns>
+		public static IEnumerable<TreeNode> GetAllNodes(this TreeView tv)
+		{
+			foreach (TreeNode n in tv.Nodes)
+			{
+				yield return n;
+				foreach (var n2 in n.GetAllNodes())
+					yield return n2;
+			}
+		}
+
+		/// <summary>
+		/// Gets a list of all nodes and child nodes, etc. recursively on a tree node.
+		/// </summary>
+		/// <param name="tv"></param>
+		/// <param name="root"></param>
+		/// <returns></returns>
+		public static IEnumerable<TreeNode> GetAllNodes(this TreeNode tn)
+		{
+			foreach (TreeNode n in tn.Nodes)
+			{
+				yield return n;
+				foreach (var n2 in n.GetAllNodes())
+					yield return n2;
+			}
+		}
+
+		/// <summary>
 		/// Shows a form as a dialog in the center of its parent form with a wait cursor while the form loads.
 		/// </summary>
 		/// <param name="parent"></param>
