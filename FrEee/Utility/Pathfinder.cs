@@ -50,6 +50,8 @@ namespace FrEee.Utility
 					nodes.Add(node);
 					node = node.PreviousNode;
 				}
+				if (!cacheEnabled)
+					Galaxy.Current.DisableAbilityCache();
 				return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 			}
 			else
