@@ -216,6 +216,11 @@ namespace FrEee.Game.Objects.Vehicles
 			var sys = this.FindStarSystem();
 			if (sys != null)
 				sys.Remove(this);
+			if (Cargo != null)
+			{
+				foreach (var u in Cargo.Units)
+					u.Dispose();
+			}
 			base.Dispose();
 			this.UpdateEmpireMemories();
 		}

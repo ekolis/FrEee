@@ -638,7 +638,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
 		/// </summary>
-		
+
 		public IDictionary<Race, long> PopulationChangePerTurnPerRace
 		{
 			get
@@ -973,6 +973,22 @@ namespace FrEee.Game.Objects.Space
 		public void BurnMovementSupplies()
 		{
 			// do nothing
+		}
+
+		public override void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			var sys = this.FindStarSystem();
+			if (sys != null)
+				sys.Remove(this);
+			if (Cargo != null)
+			{
+				foreach (var u in Cargo.Units)
+					u.Dispose();
+			}
+			Galaxy.Current.UnassignID(this);
+			this.UpdateEmpireMemories();
 		}
 	}
 }

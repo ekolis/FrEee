@@ -45,5 +45,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return AbilityTargets.Ship; }
 		}
+
+		public override IMobileSpaceObject RecycleContainer
+		{
+			get { return this; }
+		}
 	}
 }

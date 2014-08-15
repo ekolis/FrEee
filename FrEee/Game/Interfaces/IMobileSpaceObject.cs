@@ -8,7 +8,7 @@ using System.Text;
 namespace FrEee.Game.Interfaces
 {
 	/// <summary>
-	/// An object that can move about in space.
+	/// An object that can move about in space and/or receive orders.
 	/// </summary>
 	public interface IMobileSpaceObject : ICombatSpaceObject, IOrderable, IContainable<Fleet>, IDamageable
 	{
@@ -40,6 +40,6 @@ namespace FrEee.Game.Interfaces
 
 	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
 	{
-		IList<IOrder<T>> Orders { get; }
+		new IList<IOrder<T>> Orders { get; }
 	}
 }

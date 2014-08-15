@@ -54,5 +54,10 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return AbilityTargets.Drone; }
 		}
+
+		public override IMobileSpaceObject RecycleContainer
+		{
+			get { return (this as IUnit).Container as IMobileSpaceObject; }
+		}
 	}
 }

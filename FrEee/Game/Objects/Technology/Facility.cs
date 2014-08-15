@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost
+	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -300,5 +300,29 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public void Recycle(IRecycleBehavior behavior, bool didExecute = false)
+		{
+			// TODO - need to do more stuff to recycle?
+			if (!didExecute)
+				behavior.Execute(this, true);
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public IMobileSpaceObject RecycleContainer
+		{
+			get { return Container; }
+		}
+
+
+		public ResourceQuantity ScrapValue
+		{
+			get { return Cost * Mod.Current.Settings.ScrapFacilityReturnRate / 100; }
+		}
 	}
 }

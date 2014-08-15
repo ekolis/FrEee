@@ -212,7 +212,7 @@ namespace FrEee.Game.Objects.Vehicles
 					break; // no more components to hit
 				var comphit = new Hit(hit.Shot, comp, damage);
 				damage = comp.TakeDamage(comphit, dice);
-				
+
 				// shield generation from damage
 				var sgfd = hit.Shot.DamageType.ShieldGenerationFromDamage.Evaluate(hit).PercentOfRounded(Math.Min(sgfdStart - damage, sgfdAbility));
 				ReplenishShields(sgfd);
@@ -440,7 +440,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Resource cost per turn to maintain this vehicle.
 		/// </summary>
-		
+
 		public ResourceQuantity MaintenanceCost
 		{
 			get
@@ -510,7 +510,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public virtual IAbilityObject Parent
 		{
-			get { return Owner ; }
+			get { return Owner; }
 		}
 
 		public IConstructionTemplate Template
@@ -529,5 +529,33 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Design.Hull.Size; }
 		}
 
+		public void Recycle(IRecycleBehavior behavior, bool didExecute = false)
+		{
+			// TODO - need to do more stuff to recycle?
+			if (!didExecute)
+				behavior.Execute(this, true);
+		}
+
+		public abstract IMobileSpaceObject RecycleContainer { get; }
+
+		public ResourceQuantity ScrapValue
+		{
+			get
+			{
+				double ratio;
+				if (this is Ship || this is Base)
+					ratio = Mod.Current.Settings.ScrapShipOrBaseReturnRate;
+				else
+					ratio = Mod.Current.Settings.ScrapUnitReturnRate;
+				var val = Cost * ratio / 100;
+				if (this is ICargoContainer)
+				{
+					var cc = (ICargoContainer)this;
+					if (cc.Cargo != null)
+						val += cc.Cargo.Units.Sum(u => u.ScrapValue);
+				}
+				return val;
+			}
+		}
 	}
 }
