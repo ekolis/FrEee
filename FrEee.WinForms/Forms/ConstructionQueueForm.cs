@@ -47,6 +47,7 @@ namespace FrEee.WinForms.Forms
 
 			// setup command list
 			newCommands = new List<ICommand>();
+			removedCommands = new List<ICommand>();
 
 			oldQueue = new List<IConstructionOrder>();
 			foreach (var order in ConstructionQueue.Orders)
@@ -205,6 +206,7 @@ namespace FrEee.WinForms.Forms
 		/// Commands that need to be sent to the game host if the user doesn't cancel
 		/// </summary>
 		private IList<ICommand> newCommands;
+		private IList<ICommand> removedCommands;
 
 		/// <summary>
 		/// Old queue, to be restored in case the user cancels
@@ -213,7 +215,7 @@ namespace FrEee.WinForms.Forms
 
 		private void ConstructionQueueForm_FormClosing(object sender, FormClosingEventArgs e)
 		{
-			if (newCommands.Any())
+			if (newCommands.Any() || removedCommands.Any())
 			{
 				switch (MessageBox.Show("Save changes?", "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
@@ -236,6 +238,8 @@ namespace FrEee.WinForms.Forms
 		{
 			foreach (var cmd in newCommands)
 				Galaxy.Current.CurrentEmpire.Commands.Add(cmd);
+			foreach (var cmd in removedCommands)
+				Galaxy.Current.CurrentEmpire.Commands.Remove(cmd);
 		}
 
 		private void CancelChanges()
@@ -249,6 +253,7 @@ namespace FrEee.WinForms.Forms
 		{
 			SaveCommands();
 			newCommands.Clear();
+			removedCommands.Clear();
 			DialogResult = DialogResult.OK;
 			Close();
 		}
@@ -257,6 +262,7 @@ namespace FrEee.WinForms.Forms
 		{
 			CancelChanges();
 			newCommands.Clear();
+			removedCommands.Clear();
 			DialogResult = DialogResult.Cancel;
 			Close();
 		}
@@ -511,7 +517,6 @@ namespace FrEee.WinForms.Forms
 			foreach (var order in sel)
 			{
 				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
-				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
 			}
@@ -524,7 +529,6 @@ namespace FrEee.WinForms.Forms
 			foreach (var item in sel.Select(o => new {Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o)}))
 			{
 				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
-				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
 			}
@@ -542,7 +546,6 @@ namespace FrEee.WinForms.Forms
 			foreach (var order in sel)
 			{
 				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, order, delta);
-				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
 			}
@@ -555,7 +558,6 @@ namespace FrEee.WinForms.Forms
 			foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = ConstructionQueue.Orders.Count() }))
 			{
 				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
-				Empire.Current.Commands.Add(cmd);
 				newCommands.Add(cmd);
 				cmd.Execute();
 			}
@@ -620,14 +622,23 @@ namespace FrEee.WinForms.Forms
 			{
 				// remove add-order command since the order is new this turn
 				foreach (var cmd in cmds)
-					Empire.Current.Commands.Remove(cmd);
+					removedCommands.Add(cmd);
 			}
 			else
 			{
-				// add remove-order command
-				var cmd = new RemoveOrderCommand<ConstructionQueue>(ConstructionQueue, order);
-				Empire.Current.Commands.Add(cmd);
-				newCommands.Add(cmd);
+				cmds = newCommands.OfType<AddOrderCommand<ConstructionQueue>>().Where(o => o.Order == order).ToArray();
+				if (cmds.Any())
+				{
+					// Not only new this turn, but new this instance of this form!
+					foreach (var cmd in cmds)
+						newCommands.Remove(cmd);
+				}
+				else
+				{
+					// add remove-order command
+					var cmd = new RemoveOrderCommand<ConstructionQueue>(ConstructionQueue, order);
+					newCommands.Add(cmd);
+				}
 			}
 			ConstructionQueue.Orders.Remove(order);
 			if (rebindGui)
