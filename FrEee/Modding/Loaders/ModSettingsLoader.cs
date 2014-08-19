@@ -32,6 +32,12 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
+			settings.ScrapFacilityReturnRate = rec.Get<int>("Scrap Facility Percent Returned", null) ?? 30;
+			settings.ScrapUnitReturnRate = rec.Get<int>("Scrap Unit Percent Returned", null) ?? 30;
+			settings.ScrapShipOrBaseReturnRate = rec.Get<int>("Scrap Ship Percent Returned", null) ?? 30;
+
+			// TODO - load more settings
+
 			settings.StartTradePercent = rec.Get<double>("Starting Trade Percentage", null) ?? 0;
 			settings.TradePercentPerTurn = rec.Get<double>("Trade Percentage Increase Per Turn", null) ?? 1;
 			settings.MaxTradePercent = rec.Get<double>("Maximum Trade Percentage", null) ?? 20;
