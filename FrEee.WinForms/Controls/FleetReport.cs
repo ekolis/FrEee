@@ -213,6 +213,7 @@ namespace FrEee.WinForms.Controls
 				// orders and stuff
 				txtOrder.Text = Fleet.Orders.Any() ? Fleet.Orders.First().ToString() : "None";
 				txtExperience.Text = "None"; // TODO - admiral XP
+				// TODO - show fleet to which this fleet belongs?
 
 				// maintenance
 				resMaintMin.Amount = Fleet.MaintenanceCost[Resource.Minerals];
