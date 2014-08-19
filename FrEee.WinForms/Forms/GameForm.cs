@@ -459,7 +459,11 @@ namespace FrEee.WinForms.Forms
 		private void galaxyView_StarSystemClicked(GalaxyView sender, StarSystem starSystem)
 		{
 			if (starSystem != null)
+			{
+				if (ModifierKeys.HasFlag(Keys.Control))
+					btnNewTab_Click(this, new EventArgs());
 				sender.SelectedStarSystem = starSystem;
+			}
 		}
 
 		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
