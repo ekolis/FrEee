@@ -184,5 +184,10 @@ namespace FrEee.Game.Objects.Orders
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public bool ConsumesMovement
+		{
+			get { return false; }
+		}
 	}
 }

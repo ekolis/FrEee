@@ -17,6 +17,11 @@ namespace FrEee.Game.Interfaces
 		/// Is this order done executing?
 		/// </summary>
 		bool IsComplete { get; }
+
+		/// <summary>
+		/// Does this order cost a movement point to execute?
+		/// </summary>
+		bool ConsumesMovement { get; }
 	}
 
 	/// <summary>
