@@ -248,5 +248,10 @@ namespace FrEee.Game.Objects.Orders
 				return "Unknown " + Verb + " order";
 			return Verb.Capitalize() + " " + KnownTarget;
 		}
+
+		public bool ConsumesMovement
+		{
+			get { return true; }
+		}
 	}
 }

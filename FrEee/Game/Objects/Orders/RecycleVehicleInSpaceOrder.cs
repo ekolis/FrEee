@@ -80,5 +80,10 @@ namespace FrEee.Game.Objects.Orders
 		{
 			return Behavior.Verb;
 		}
+
+		public bool ConsumesMovement
+		{
+			get { return false; }
+		}
 	}
 }

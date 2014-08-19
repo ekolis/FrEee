@@ -96,6 +96,13 @@ namespace FrEee.Game.Objects.Vehicles
 					Orders.RemoveAt(0);
 				didStuff = true;
 			}
+			while (Orders.Any() && !Orders.First().ConsumesMovement)
+			{
+				Orders.First().Execute(this);
+				if (Orders.First().IsComplete)
+					Orders.RemoveAt(0);
+				didStuff = true;
+			}
 			return didStuff;
 		}
 
