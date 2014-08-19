@@ -546,6 +546,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\Extensions\GuiExtensions.cs" />
     <Compile Include="DataGridView\GridConfig.cs" />
+    <EmbeddedResource Include="Controls\GalaxyView.resx">
+      <DependentUpon>GalaxyView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CombatSimulatorForm.resx">
       <DependentUpon>CombatSimulatorForm.cs</DependentUpon>
     </EmbeddedResource>
