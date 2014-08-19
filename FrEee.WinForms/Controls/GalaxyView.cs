@@ -77,8 +77,8 @@ namespace FrEee.WinForms.Controls
 			var drawsize = StarSystemDrawSize;
 			var avgx = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.X) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.X)) / 2f;
 			var avgy = (Galaxy.Current.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.Current.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
-			var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize + avgx);
-			var y = (int)Math.Round(((float)p.Y - Height / 2f - drawsize / 2f) / drawsize + avgy);
+			var x = (int)Math.Round(((float)p.X - Width / 2f) / drawsize + avgx);
+			var y = (int)Math.Round(((float)p.Y - Height / 2f) / drawsize + avgy);
 			var p2 = new Point(x, y);
 			var ssloc = Galaxy.Current.StarSystemLocations.FirstOrDefault(ssl => ssl.Location == p2);
 			if (ssloc == null)
@@ -162,8 +162,8 @@ namespace FrEee.WinForms.Controls
 					var x = ssl.Location.X;// - minx;
 					var y = ssl.Location.Y;// - miny;
 					//var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize);
-					var drawx = (x - avgx) * drawsize + drawsize / 2f + Width / 2f;
-					var drawy = (y - avgy) * drawsize + drawsize / 2f + Height / 2f;
+					var drawx = (x - avgx) * drawsize + Width / 2f;
+					var drawy = (y - avgy) * drawsize + Height / 2f;
 
 					// find star system
 					var sys = ssl.Item;
@@ -196,8 +196,8 @@ namespace FrEee.WinForms.Controls
 				{
 					var startPos = new PointF
 					(
-						(ssl.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
-						(ssl.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
+						(ssl.Location.X - avgx) * drawsize + Width / 2f,
+						(ssl.Location.Y - avgy) * drawsize + Height / 2f
 					);
 					foreach (var target in warpGraph.GetExits(ssl))
 					{
@@ -206,8 +206,8 @@ namespace FrEee.WinForms.Controls
 
 						var endPos = new PointF
 						(
-							(target.Location.X - avgx) * drawsize + drawsize / 2f + Width / 2f,
-							(target.Location.Y - avgy) * drawsize + drawsize / 2f + Height / 2f
+							(target.Location.X - avgx) * drawsize + Width / 2f,
+							(target.Location.Y - avgy) * drawsize + Height / 2f
 						);
 
 						// overlapping systems or same system
