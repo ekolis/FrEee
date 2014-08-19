@@ -125,18 +125,23 @@ namespace FrEee.WinForms.Forms
 			}
 
 			// bind warnings
-			lstWarnings.Items.Clear();
-			if (Design != null)
-			{
-				foreach (var w in Design.Warnings)
-					lstWarnings.Items.Add(w);
-			}
+			BindWarnings();
 
 			// show GUI
 			ddlName.Enabled = Design != null;
 			ddlRole.Enabled = Design != null;
 			ddlMount.Enabled = Design != null;
 			btnMountInfo.Enabled = Design != null;
+		}
+
+		private void BindWarnings()
+		{
+			lstWarnings.Items.Clear();
+			if (Design != null)
+			{
+				foreach (var w in Design.Warnings)
+					lstWarnings.Items.Add(w);
+			}
 		}
 
 		private void BindMountList()
@@ -374,7 +379,10 @@ namespace FrEee.WinForms.Forms
 		private void ddlRole_TextChanged(object sender, EventArgs e)
 		{
 			if (Design != null)
+			{
 				Design.Role = ddlRole.Text;
+				BindWarnings();
+			}
 		}
 
 		private void ddlName_TextChanged(object sender, EventArgs e)
@@ -383,7 +391,8 @@ namespace FrEee.WinForms.Forms
 			{
 				Design.BaseName = ddlName.Text;
 				Design.Iteration = Empire.Current.KnownDesigns.Where(d => d != Design && d.Owner == Empire.Current && d.BaseName == ddlName.Text).Count() + 1;
-				txtIteration.Text = Design.Iteration == 0 ? "" : Design.Iteration.ToRomanNumeral();
+				txtIteration.Text = Design.Iteration <= 1 ? "" : Design.Iteration.ToRomanNumeral();
+				BindWarnings();
 			}
 		}
 
