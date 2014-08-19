@@ -333,7 +333,9 @@ namespace FrEee.WinForms.Controls
 						sfAbil.Alignment = StringAlignment.Far;
 						sfAbil.LineAlignment = StringAlignment.Far;
 						var rectAbil = new RectangleF(drawx - drawsize / 2f + bigFontSize, drawy - drawsize / 2f, drawsize - bigFontSize, drawsize - bigFontSize - 1);
-						pe.Graphics.DrawString(abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil);
+						pe.Graphics.DrawString(abilText, littleFont, Brushes.Black, rectAbil, sfAbil); // drop shadow
+						rectAbil = new RectangleF(new PointF(rectAbil.X + 1, rectAbil.Y + 1), rectAbil.Size);
+						pe.Graphics.DrawString(abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil); // real text
 
 						// draw selection reticule
 						if (sector == SelectedSector)
