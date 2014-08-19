@@ -291,7 +291,7 @@ namespace FrEee.WinForms.Forms
 			lstFacilities.LargeImageList = ilFacil;
 			lstFacilities.SmallImageList = ilFacil;
 			lstFacilities.Items.Clear();
-			foreach (var facil in templates)
+			foreach (var facil in templates.OrderBy(f => f.Group).ThenBy(f => f.Name)) // TODO - roman numeral sorting
 			{
 				if (ConstructionQueue.CanConstruct(facil))
 				{
@@ -323,7 +323,7 @@ namespace FrEee.WinForms.Forms
 			lstUpgrades.Items.Clear();
 			if (ConstructionQueue.Colony != null)
 			{
-				foreach (var g in ConstructionQueue.Colony.Facilities.GroupBy(f => f.Template))
+				foreach (var g in ConstructionQueue.Colony.Facilities.GroupBy(f => f.Template).OrderBy(g => g.Key.Group).ThenBy(g => g.Key.Name)) // TODO - roman numeral sorting
 				{
 					var oldf = g.Key;
 
@@ -369,7 +369,7 @@ namespace FrEee.WinForms.Forms
 		private void BindShipListView(IEnumerable<IDesign> designs)
 		{
 			lstShips.Initialize(32, 32);
-			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)))
+			foreach (var design in designs.Where(d => ConstructionQueue.CanConstruct(d)).OrderBy(d => d.Role).ThenBy(d => d.Name).ThenBy(d => d.Iteration))
 			{
 				var eta = design.Cost.Keys.Max(res => (double)(design.Cost[res]) / (double)ConstructionQueue.Rate[res]);
 				lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString("f1"));
