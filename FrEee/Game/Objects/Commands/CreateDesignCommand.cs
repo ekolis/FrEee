@@ -29,6 +29,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
+			Design.VehiclesBuilt = 0; // in case it was tested in the simulator
 			if (Design.Warnings.Any())
 				Issuer.Log.Add(Design.CreateLogMessage("The " + Design.Name + " " + Design.VehicleTypeName + " design cannot be saved because it has warnings."));
 			Issuer.KnownDesigns.Add(Design);
