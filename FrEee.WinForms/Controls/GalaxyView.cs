@@ -20,6 +20,7 @@ namespace FrEee.WinForms.Controls
 			BackColor = Color.Black;
 			this.SizeChanged += GalaxyView_SizeChanged;
 			this.MouseDown += GalaxyView_MouseDown;
+			this.MouseMove += GalaxyView_MouseMove;
 			DoubleBuffered = true;
 		}
 
@@ -261,6 +262,15 @@ namespace FrEee.WinForms.Controls
 					warpGraph.Connect(ssl, wp.TargetStarSystemLocation);
 				}
 			}
+		}
+
+		void GalaxyView_MouseMove(object sender, MouseEventArgs e)
+		{
+			var sys = GetStarSystemAtPoint(e.Location);
+			if (sys == null)
+				toolTip.SetToolTip(this, null);
+			else if (toolTip.GetToolTip(this) != sys.Name)
+				toolTip.SetToolTip(this, sys.Name);
 		}
 	}
 }
