@@ -359,7 +359,7 @@ namespace FrEee.WinForms.Forms
 			this.progResearch.Maximum = ((long)(500000));
 			this.progResearch.Name = "progResearch";
 			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Percentage;
+			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progResearch.RightText = "0.2 years";
 			this.progResearch.Size = new System.Drawing.Size(411, 38);
 			this.progResearch.TabIndex = 11;
