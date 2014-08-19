@@ -33,7 +33,8 @@ namespace FrEee.WinForms.Forms
 
 			// bind group dropdown and tech grid
 			ddlGroup.Items.Clear();
-			ddlGroup.Items.Add(new { Text = "All", GroupName = "" });
+			ddlGroup.Items.Add(new { Text = "All" });
+			ddlGroup.Items.Add(new { Text = "In Progress" });
 			foreach (var group in Galaxy.Current.Mod.Technologies.Select(t => t.Group).Distinct())
 				ddlGroup.Items.Add(new { Text = group, GroupName = group });
 			ddlGroup.SelectedItem = ddlGroup.Items.Cast<object>().First();
@@ -58,7 +59,16 @@ namespace FrEee.WinForms.Forms
 
 		private void BindTechGrid()
 		{
-			allTechs = Empire.Current.AvailableTechnologies.Where(t => ((dynamic)ddlGroup.SelectedItem).GroupName == "" || t.Group == ((dynamic)ddlGroup.SelectedItem).GroupName).ToArray();
+			allTechs = Empire.Current.AvailableTechnologies.Where(t =>
+				{
+					dynamic item = (dynamic)ddlGroup.SelectedItem;
+					if (item.Text == "All")
+						return true; // show all techs
+					else if (item.Text == "In Progress")
+						return t.Progress.Eta != null || t.Progress.Value > 0; // show techs in progress (either started or being researched)
+					else
+						return t.Group == item.GroupName; // show techs in selected group
+				}).ToArray();
 			RebindTechGrid();
 		}
 
@@ -336,6 +346,7 @@ namespace FrEee.WinForms.Forms
 				else
 				{
 					Empire.Current.ResearchQueue.Add(tech);
+					BindTechGrid();
 					BindQueue();
 					hasChanged = true;
 				}
@@ -347,6 +358,7 @@ namespace FrEee.WinForms.Forms
 			if (lstQueue.SelectedIndex >= 0)
 			{
 				Empire.Current.ResearchQueue.RemoveAt(lstQueue.SelectedIndex);
+				BindTechGrid();
 				BindQueue();
 				hasChanged = true;
 			}
