@@ -185,6 +185,7 @@ namespace FrEee.Game.Objects.Space
 				var g = Graphics.FromImage(img);
 				var rect = new Rectangle(img.Width - 21, 1, 20, 8);
 				var pen = new Pen(Colony.Owner.Color);
+				g.FillRectangle(Brushes.Black, rect);
 				g.DrawRectangle(pen, rect);
 				var brush = new SolidBrush(Colony.Owner.Color);
 				var pop = Colony.Population.Sum(kvp => kvp.Value);
