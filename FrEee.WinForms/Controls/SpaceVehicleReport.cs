@@ -210,7 +210,7 @@ namespace FrEee.WinForms.Controls
 				// orders and stuff
 				txtOrder.Text = vehicle.Orders.Any() ? vehicle.Orders.First().ToString() : "None";
 				txtExperience.Text = "None"; // TODO - crew XP
-				txtFleet.Text = "None"; // TODO - fleets
+				txtFleet.Text = vehicle.Container == null ? "None" : vehicle.Container.Name;
 
 				// maintenance
 				resMaintMin.Amount = vehicle.MaintenanceCost[Resource.Minerals];
