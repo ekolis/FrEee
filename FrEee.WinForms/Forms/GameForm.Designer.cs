@@ -32,37 +32,6 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
-			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
-			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
-			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
-			this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
-			this.btnColonize = new FrEee.WinForms.Controls.GameButton();
-			this.btnEvade = new FrEee.WinForms.Controls.GameButton();
-			this.btnWarp = new FrEee.WinForms.Controls.GameButton();
-			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
-			this.btnMove = new FrEee.WinForms.Controls.GameButton();
-			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
-			this.btnLog = new FrEee.WinForms.Controls.GameButton();
-			this.btnQueues = new FrEee.WinForms.Controls.GameButton();
-			this.btnShips = new FrEee.WinForms.Controls.GameButton();
-			this.btnEmpires = new FrEee.WinForms.Controls.GameButton();
-			this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
-			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
-			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
-			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
-			this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
-			this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
-			this.btnResupply = new FrEee.WinForms.Controls.GameButton();
-			this.btnRepair = new FrEee.WinForms.Controls.GameButton();
-			this.btnRepeatOrders = new FrEee.WinForms.Controls.GameButton();
-			this.btnRecycle = new FrEee.WinForms.Controls.GameButton();
-			this.btnRename = new FrEee.WinForms.Controls.GameButton();
-			this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
-			this.btnStellarManipulation = new FrEee.WinForms.Controls.GameButton();
-			this.btnCloak = new FrEee.WinForms.Controls.GameButton();
-			this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
-			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlLeft = new System.Windows.Forms.Panel();
 			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
@@ -73,7 +42,37 @@ namespace FrEee.WinForms.Forms
 			this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
 			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.gameButton1 = new FrEee.WinForms.Controls.GameButton();
+			this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
+			this.btnCloak = new FrEee.WinForms.Controls.GameButton();
+			this.btnStellarManipulation = new FrEee.WinForms.Controls.GameButton();
+			this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
+			this.btnRename = new FrEee.WinForms.Controls.GameButton();
+			this.btnRecycle = new FrEee.WinForms.Controls.GameButton();
+			this.btnRepeatOrders = new FrEee.WinForms.Controls.GameButton();
+			this.btnNextIdle = new FrEee.WinForms.Controls.GameButton();
+			this.btnRepair = new FrEee.WinForms.Controls.GameButton();
+			this.btnPrevIdle = new FrEee.WinForms.Controls.GameButton();
+			this.btnResupply = new FrEee.WinForms.Controls.GameButton();
+			this.btnSentry = new FrEee.WinForms.Controls.GameButton();
+			this.btnClearOrders = new FrEee.WinForms.Controls.GameButton();
+			this.btnFleetTransfer = new FrEee.WinForms.Controls.GameButton();
+			this.btnTransferCargo = new FrEee.WinForms.Controls.GameButton();
+			this.btnConstructionQueue = new FrEee.WinForms.Controls.GameButton();
+			this.btnColonize = new FrEee.WinForms.Controls.GameButton();
+			this.btnEvade = new FrEee.WinForms.Controls.GameButton();
+			this.btnWarp = new FrEee.WinForms.Controls.GameButton();
+			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
+			this.btnMove = new FrEee.WinForms.Controls.GameButton();
 			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
+			this.btnLog = new FrEee.WinForms.Controls.GameButton();
+			this.btnQueues = new FrEee.WinForms.Controls.GameButton();
+			this.btnShips = new FrEee.WinForms.Controls.GameButton();
+			this.btnEmpires = new FrEee.WinForms.Controls.GameButton();
+			this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
+			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
+			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -85,6 +84,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -98,436 +98,6 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
-			// 
-			// btnSentry
-			// 
-			this.btnSentry.BackColor = System.Drawing.Color.Black;
-			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSentry.Location = new System.Drawing.Point(86, 48);
-			this.btnSentry.Name = "btnSentry";
-			this.btnSentry.Size = new System.Drawing.Size(36, 36);
-			this.btnSentry.TabIndex = 12;
-			this.btnSentry.TabStop = false;
-			this.btnSentry.Text = "Stry";
-			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
-			this.btnSentry.UseVisualStyleBackColor = false;
-			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
-			// 
-			// btnClearOrders
-			// 
-			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
-			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearOrders.Location = new System.Drawing.Point(422, 6);
-			this.btnClearOrders.Name = "btnClearOrders";
-			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
-			this.btnClearOrders.TabIndex = 11;
-			this.btnClearOrders.TabStop = false;
-			this.btnClearOrders.Text = "Clr";
-			this.toolTip.SetToolTip(this.btnClearOrders, "(Bksp) Clear Orders");
-			this.btnClearOrders.UseVisualStyleBackColor = false;
-			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
-			// 
-			// btnFleetTransfer
-			// 
-			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
-			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnFleetTransfer.Location = new System.Drawing.Point(212, 48);
-			this.btnFleetTransfer.Name = "btnFleetTransfer";
-			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
-			this.btnFleetTransfer.TabIndex = 10;
-			this.btnFleetTransfer.TabStop = false;
-			this.btnFleetTransfer.Text = "Flt";
-			this.toolTip.SetToolTip(this.btnFleetTransfer, "(F) Fleet Transfer");
-			this.btnFleetTransfer.UseVisualStyleBackColor = false;
-			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
-			// 
-			// btnTransferCargo
-			// 
-			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
-			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTransferCargo.Location = new System.Drawing.Point(212, 6);
-			this.btnTransferCargo.Name = "btnTransferCargo";
-			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
-			this.btnTransferCargo.TabIndex = 9;
-			this.btnTransferCargo.TabStop = false;
-			this.btnTransferCargo.Text = "TC";
-			this.toolTip.SetToolTip(this.btnTransferCargo, "(T) Transfer Cargo");
-			this.btnTransferCargo.UseVisualStyleBackColor = false;
-			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
-			// 
-			// btnConstructionQueue
-			// 
-			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
-			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnConstructionQueue.Location = new System.Drawing.Point(170, 6);
-			this.btnConstructionQueue.Name = "btnConstructionQueue";
-			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
-			this.btnConstructionQueue.TabIndex = 8;
-			this.btnConstructionQueue.TabStop = false;
-			this.btnConstructionQueue.Text = "CQ";
-			this.toolTip.SetToolTip(this.btnConstructionQueue, "(Q) Construction Queue");
-			this.btnConstructionQueue.UseVisualStyleBackColor = false;
-			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
-			// 
-			// btnColonize
-			// 
-			this.btnColonize.BackColor = System.Drawing.Color.Black;
-			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnColonize.Location = new System.Drawing.Point(47, 48);
-			this.btnColonize.Name = "btnColonize";
-			this.btnColonize.Size = new System.Drawing.Size(36, 36);
-			this.btnColonize.TabIndex = 7;
-			this.btnColonize.TabStop = false;
-			this.btnColonize.Text = "Col";
-			this.toolTip.SetToolTip(this.btnColonize, "(C) Colonize");
-			this.btnColonize.UseVisualStyleBackColor = false;
-			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
-			// 
-			// btnEvade
-			// 
-			this.btnEvade.BackColor = System.Drawing.Color.Black;
-			this.btnEvade.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEvade.Location = new System.Drawing.Point(86, 6);
-			this.btnEvade.Name = "btnEvade";
-			this.btnEvade.Size = new System.Drawing.Size(36, 36);
-			this.btnEvade.TabIndex = 6;
-			this.btnEvade.TabStop = false;
-			this.btnEvade.Text = "Ev";
-			this.toolTip.SetToolTip(this.btnEvade, "(E) Evade");
-			this.btnEvade.UseVisualStyleBackColor = false;
-			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
-			// 
-			// btnWarp
-			// 
-			this.btnWarp.BackColor = System.Drawing.Color.Black;
-			this.btnWarp.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWarp.Location = new System.Drawing.Point(7, 48);
-			this.btnWarp.Name = "btnWarp";
-			this.btnWarp.Size = new System.Drawing.Size(36, 36);
-			this.btnWarp.TabIndex = 5;
-			this.btnWarp.TabStop = false;
-			this.btnWarp.Text = "Wp";
-			this.toolTip.SetToolTip(this.btnWarp, "(W) Warp");
-			this.btnWarp.UseVisualStyleBackColor = false;
-			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
-			// 
-			// btnPursue
-			// 
-			this.btnPursue.BackColor = System.Drawing.Color.Black;
-			this.btnPursue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPursue.Location = new System.Drawing.Point(47, 6);
-			this.btnPursue.Name = "btnPursue";
-			this.btnPursue.Size = new System.Drawing.Size(36, 36);
-			this.btnPursue.TabIndex = 4;
-			this.btnPursue.TabStop = false;
-			this.btnPursue.Text = "Pur";
-			this.toolTip.SetToolTip(this.btnPursue, "(A) Attack / Pursue");
-			this.btnPursue.UseVisualStyleBackColor = false;
-			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
-			// 
-			// btnMove
-			// 
-			this.btnMove.BackColor = System.Drawing.Color.Black;
-			this.btnMove.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMove.Location = new System.Drawing.Point(7, 6);
-			this.btnMove.Name = "btnMove";
-			this.btnMove.Size = new System.Drawing.Size(36, 36);
-			this.btnMove.TabIndex = 2;
-			this.btnMove.TabStop = false;
-			this.btnMove.Text = "Mov";
-			this.toolTip.SetToolTip(this.btnMove, "(M) Move");
-			this.btnMove.UseVisualStyleBackColor = false;
-			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
-			// 
-			// btnEndTurn
-			// 
-			this.btnEndTurn.BackColor = System.Drawing.Color.Black;
-			this.btnEndTurn.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEndTurn.Location = new System.Drawing.Point(296, 6);
-			this.btnEndTurn.Name = "btnEndTurn";
-			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
-			this.btnEndTurn.TabIndex = 7;
-			this.btnEndTurn.TabStop = false;
-			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) Save Commands");
-			this.btnEndTurn.UseVisualStyleBackColor = false;
-			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
-			// 
-			// btnLog
-			// 
-			this.btnLog.BackColor = System.Drawing.Color.Black;
-			this.btnLog.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnLog.Location = new System.Drawing.Point(256, 6);
-			this.btnLog.Name = "btnLog";
-			this.btnLog.Size = new System.Drawing.Size(36, 36);
-			this.btnLog.TabIndex = 6;
-			this.btnLog.TabStop = false;
-			this.toolTip.SetToolTip(this.btnLog, "(F10 / Shift-L) Log");
-			this.btnLog.UseVisualStyleBackColor = false;
-			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
-			// 
-			// btnQueues
-			// 
-			this.btnQueues.BackColor = System.Drawing.Color.Black;
-			this.btnQueues.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnQueues.Location = new System.Drawing.Point(214, 6);
-			this.btnQueues.Name = "btnQueues";
-			this.btnQueues.Size = new System.Drawing.Size(36, 36);
-			this.btnQueues.TabIndex = 5;
-			this.btnQueues.TabStop = false;
-			this.toolTip.SetToolTip(this.btnQueues, "(F7 / Shift-Q) Construction Queues");
-			this.btnQueues.UseVisualStyleBackColor = false;
-			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
-			// 
-			// btnShips
-			// 
-			this.btnShips.BackColor = System.Drawing.Color.Black;
-			this.btnShips.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnShips.Location = new System.Drawing.Point(172, 6);
-			this.btnShips.Name = "btnShips";
-			this.btnShips.Size = new System.Drawing.Size(36, 36);
-			this.btnShips.TabIndex = 4;
-			this.btnShips.TabStop = false;
-			this.toolTip.SetToolTip(this.btnShips, "(F6 / Shift-S) Ships");
-			this.btnShips.UseVisualStyleBackColor = false;
-			this.btnShips.Click += new System.EventHandler(this.btnShips_Click);
-			// 
-			// btnEmpires
-			// 
-			this.btnEmpires.BackColor = System.Drawing.Color.Black;
-			this.btnEmpires.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEmpires.Location = new System.Drawing.Point(130, 6);
-			this.btnEmpires.Name = "btnEmpires";
-			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
-			this.btnEmpires.TabIndex = 3;
-			this.btnEmpires.TabStop = false;
-			this.toolTip.SetToolTip(this.btnEmpires, "(F9 / Shift-E) Empires");
-			this.btnEmpires.UseVisualStyleBackColor = false;
-			this.btnEmpires.Click += new System.EventHandler(this.btnEmpires_Click);
-			// 
-			// btnPlanets
-			// 
-			this.btnPlanets.BackColor = System.Drawing.Color.Black;
-			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPlanets.Location = new System.Drawing.Point(88, 6);
-			this.btnPlanets.Name = "btnPlanets";
-			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
-			this.btnPlanets.TabIndex = 0;
-			this.btnPlanets.TabStop = false;
-			this.toolTip.SetToolTip(this.btnPlanets, "(F4 / F5 / Shift-P / Shift-C) Planets/Colonies");
-			this.btnPlanets.UseVisualStyleBackColor = false;
-			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
-			// 
-			// btnDesigns
-			// 
-			this.btnDesigns.BackColor = System.Drawing.Color.Black;
-			this.btnDesigns.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDesigns.Location = new System.Drawing.Point(47, 6);
-			this.btnDesigns.Name = "btnDesigns";
-			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
-			this.btnDesigns.TabIndex = 2;
-			this.btnDesigns.TabStop = false;
-			this.toolTip.SetToolTip(this.btnDesigns, "(F3 / Shift-D) Designs");
-			this.btnDesigns.UseVisualStyleBackColor = false;
-			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
-			// 
-			// btnMenu
-			// 
-			this.btnMenu.BackColor = System.Drawing.Color.Black;
-			this.btnMenu.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMenu.Location = new System.Drawing.Point(5, 6);
-			this.btnMenu.Name = "btnMenu";
-			this.btnMenu.Size = new System.Drawing.Size(36, 36);
-			this.btnMenu.TabIndex = 1;
-			this.btnMenu.TabStop = false;
-			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
-			this.btnMenu.UseVisualStyleBackColor = false;
-			// 
-			// progResearch
-			// 
-			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progResearch.BackColor = System.Drawing.Color.Black;
-			this.progResearch.BarColor = System.Drawing.Color.Magenta;
-			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.progResearch.ForeColor = System.Drawing.Color.White;
-			this.progResearch.IncrementalProgress = ((long)(0));
-			this.progResearch.LeftText = "Ice Planet Colonization";
-			this.progResearch.Location = new System.Drawing.Point(3, -3);
-			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
-			this.progResearch.Maximum = ((long)(500000));
-			this.progResearch.Name = "progResearch";
-			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
-			this.progResearch.RightText = "0.2 years";
-			this.progResearch.Size = new System.Drawing.Size(411, 38);
-			this.progResearch.TabIndex = 11;
-			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
-			this.progResearch.Value = ((long)(350000));
-			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
-			// 
-			// btnNextIdle
-			// 
-			this.btnNextIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnNextIdle.BackColor = System.Drawing.Color.Black;
-			this.btnNextIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnNextIdle.Location = new System.Drawing.Point(422, 48);
-			this.btnNextIdle.Name = "btnNextIdle";
-			this.btnNextIdle.Size = new System.Drawing.Size(36, 36);
-			this.btnNextIdle.TabIndex = 6;
-			this.btnNextIdle.TabStop = false;
-			this.btnNextIdle.Text = "Next";
-			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
-			this.btnNextIdle.UseVisualStyleBackColor = false;
-			// 
-			// btnPrevIdle
-			// 
-			this.btnPrevIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnPrevIdle.BackColor = System.Drawing.Color.Black;
-			this.btnPrevIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPrevIdle.Location = new System.Drawing.Point(380, 48);
-			this.btnPrevIdle.Name = "btnPrevIdle";
-			this.btnPrevIdle.Size = new System.Drawing.Size(36, 36);
-			this.btnPrevIdle.TabIndex = 5;
-			this.btnPrevIdle.TabStop = false;
-			this.btnPrevIdle.Text = "Prev";
-			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
-			this.btnPrevIdle.UseVisualStyleBackColor = false;
-			// 
-			// btnResupply
-			// 
-			this.btnResupply.BackColor = System.Drawing.Color.Black;
-			this.btnResupply.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnResupply.Location = new System.Drawing.Point(128, 6);
-			this.btnResupply.Name = "btnResupply";
-			this.btnResupply.Size = new System.Drawing.Size(36, 36);
-			this.btnResupply.TabIndex = 13;
-			this.btnResupply.TabStop = false;
-			this.btnResupply.Text = "Sply";
-			this.toolTip.SetToolTip(this.btnResupply, "(S) Resupply");
-			this.btnResupply.UseVisualStyleBackColor = false;
-			// 
-			// btnRepair
-			// 
-			this.btnRepair.BackColor = System.Drawing.Color.Black;
-			this.btnRepair.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRepair.Location = new System.Drawing.Point(128, 48);
-			this.btnRepair.Name = "btnRepair";
-			this.btnRepair.Size = new System.Drawing.Size(36, 36);
-			this.btnRepair.TabIndex = 14;
-			this.btnRepair.TabStop = false;
-			this.btnRepair.Text = "Repr";
-			this.toolTip.SetToolTip(this.btnRepair, "(R) Repair");
-			this.btnRepair.UseVisualStyleBackColor = false;
-			// 
-			// btnRepeatOrders
-			// 
-			this.btnRepeatOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRepeatOrders.BackColor = System.Drawing.Color.Black;
-			this.btnRepeatOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRepeatOrders.Location = new System.Drawing.Point(380, 6);
-			this.btnRepeatOrders.Name = "btnRepeatOrders";
-			this.btnRepeatOrders.Size = new System.Drawing.Size(36, 36);
-			this.btnRepeatOrders.TabIndex = 15;
-			this.btnRepeatOrders.TabStop = false;
-			this.btnRepeatOrders.Text = "Rept";
-			this.toolTip.SetToolTip(this.btnRepeatOrders, "(P) Repeat Orders");
-			this.btnRepeatOrders.UseVisualStyleBackColor = false;
-			// 
-			// btnRecycle
-			// 
-			this.btnRecycle.BackColor = System.Drawing.Color.Black;
-			this.btnRecycle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRecycle.Location = new System.Drawing.Point(170, 48);
-			this.btnRecycle.Name = "btnRecycle";
-			this.btnRecycle.Size = new System.Drawing.Size(36, 36);
-			this.btnRecycle.TabIndex = 16;
-			this.btnRecycle.TabStop = false;
-			this.btnRecycle.Text = "Rcy";
-			this.toolTip.SetToolTip(this.btnRecycle, "(Ctrl-R) Recycle/Scuttle");
-			this.btnRecycle.UseVisualStyleBackColor = false;
-			this.btnRecycle.Click += new System.EventHandler(this.btnRecycle_Click);
-			// 
-			// btnRename
-			// 
-			this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnRename.BackColor = System.Drawing.Color.Black;
-			this.btnRename.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRename.Location = new System.Drawing.Point(338, 6);
-			this.btnRename.Name = "btnRename";
-			this.btnRename.Size = new System.Drawing.Size(36, 36);
-			this.btnRename.TabIndex = 17;
-			this.btnRename.TabStop = false;
-			this.btnRename.Text = "Nam";
-			this.toolTip.SetToolTip(this.btnRename, "(N) Rename/Notes");
-			this.btnRename.UseVisualStyleBackColor = false;
-			// 
-			// btnToggleMinister
-			// 
-			this.btnToggleMinister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnToggleMinister.BackColor = System.Drawing.Color.Black;
-			this.btnToggleMinister.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnToggleMinister.Location = new System.Drawing.Point(338, 48);
-			this.btnToggleMinister.Name = "btnToggleMinister";
-			this.btnToggleMinister.Size = new System.Drawing.Size(36, 36);
-			this.btnToggleMinister.TabIndex = 18;
-			this.btnToggleMinister.TabStop = false;
-			this.btnToggleMinister.Text = "Min";
-			this.toolTip.SetToolTip(this.btnToggleMinister, "(T) Toggle Minister Control");
-			this.btnToggleMinister.UseVisualStyleBackColor = false;
-			// 
-			// btnStellarManipulation
-			// 
-			this.btnStellarManipulation.BackColor = System.Drawing.Color.Black;
-			this.btnStellarManipulation.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnStellarManipulation.Location = new System.Drawing.Point(296, 6);
-			this.btnStellarManipulation.Name = "btnStellarManipulation";
-			this.btnStellarManipulation.Size = new System.Drawing.Size(36, 36);
-			this.btnStellarManipulation.TabIndex = 19;
-			this.btnStellarManipulation.TabStop = false;
-			this.btnStellarManipulation.Text = "SM";
-			this.toolTip.SetToolTip(this.btnStellarManipulation, "(Ctrl-M) Stellar Manipulation");
-			this.btnStellarManipulation.UseVisualStyleBackColor = false;
-			// 
-			// btnCloak
-			// 
-			this.btnCloak.BackColor = System.Drawing.Color.Black;
-			this.btnCloak.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCloak.Location = new System.Drawing.Point(254, 6);
-			this.btnCloak.Name = "btnCloak";
-			this.btnCloak.Size = new System.Drawing.Size(36, 36);
-			this.btnCloak.TabIndex = 20;
-			this.btnCloak.TabStop = false;
-			this.btnCloak.Text = "Clk";
-			this.toolTip.SetToolTip(this.btnCloak, "(Z) Cloak");
-			this.btnCloak.UseVisualStyleBackColor = false;
-			// 
-			// btnDecloak
-			// 
-			this.btnDecloak.BackColor = System.Drawing.Color.Black;
-			this.btnDecloak.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDecloak.Location = new System.Drawing.Point(254, 48);
-			this.btnDecloak.Name = "btnDecloak";
-			this.btnDecloak.Size = new System.Drawing.Size(36, 36);
-			this.btnDecloak.TabIndex = 21;
-			this.btnDecloak.TabStop = false;
-			this.btnDecloak.Text = "Dclk";
-			this.toolTip.SetToolTip(this.btnDecloak, "(X) Decloak");
-			this.btnDecloak.UseVisualStyleBackColor = false;
-			// 
-			// gameButton1
-			// 
-			this.gameButton1.BackColor = System.Drawing.Color.Black;
-			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.gameButton1.Location = new System.Drawing.Point(296, 48);
-			this.gameButton1.Name = "gameButton1";
-			this.gameButton1.Size = new System.Drawing.Size(36, 36);
-			this.gameButton1.TabIndex = 22;
-			this.gameButton1.TabStop = false;
-			this.gameButton1.Text = "ML";
-			this.toolTip.SetToolTip(this.gameButton1, "(Ctrl-L) Movement Log");
-			this.gameButton1.UseVisualStyleBackColor = false;
 			// 
 			// pnlLayout
 			// 
@@ -702,6 +272,309 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Size = new System.Drawing.Size(476, 97);
 			this.pnlSubCommands.TabIndex = 6;
 			// 
+			// gameButton1
+			// 
+			this.gameButton1.BackColor = System.Drawing.Color.Black;
+			this.gameButton1.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.gameButton1.Location = new System.Drawing.Point(296, 48);
+			this.gameButton1.Name = "gameButton1";
+			this.gameButton1.Size = new System.Drawing.Size(36, 36);
+			this.gameButton1.TabIndex = 22;
+			this.gameButton1.TabStop = false;
+			this.gameButton1.Text = "ML";
+			this.toolTip.SetToolTip(this.gameButton1, "(Ctrl-L) Movement Log");
+			this.gameButton1.UseVisualStyleBackColor = false;
+			// 
+			// btnDecloak
+			// 
+			this.btnDecloak.BackColor = System.Drawing.Color.Black;
+			this.btnDecloak.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDecloak.Location = new System.Drawing.Point(254, 48);
+			this.btnDecloak.Name = "btnDecloak";
+			this.btnDecloak.Size = new System.Drawing.Size(36, 36);
+			this.btnDecloak.TabIndex = 21;
+			this.btnDecloak.TabStop = false;
+			this.btnDecloak.Text = "Dclk";
+			this.toolTip.SetToolTip(this.btnDecloak, "(X) Decloak");
+			this.btnDecloak.UseVisualStyleBackColor = false;
+			// 
+			// btnCloak
+			// 
+			this.btnCloak.BackColor = System.Drawing.Color.Black;
+			this.btnCloak.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnCloak.Location = new System.Drawing.Point(254, 6);
+			this.btnCloak.Name = "btnCloak";
+			this.btnCloak.Size = new System.Drawing.Size(36, 36);
+			this.btnCloak.TabIndex = 20;
+			this.btnCloak.TabStop = false;
+			this.btnCloak.Text = "Clk";
+			this.toolTip.SetToolTip(this.btnCloak, "(Z) Cloak");
+			this.btnCloak.UseVisualStyleBackColor = false;
+			// 
+			// btnStellarManipulation
+			// 
+			this.btnStellarManipulation.BackColor = System.Drawing.Color.Black;
+			this.btnStellarManipulation.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnStellarManipulation.Location = new System.Drawing.Point(296, 6);
+			this.btnStellarManipulation.Name = "btnStellarManipulation";
+			this.btnStellarManipulation.Size = new System.Drawing.Size(36, 36);
+			this.btnStellarManipulation.TabIndex = 19;
+			this.btnStellarManipulation.TabStop = false;
+			this.btnStellarManipulation.Text = "SM";
+			this.toolTip.SetToolTip(this.btnStellarManipulation, "(Ctrl-M) Stellar Manipulation");
+			this.btnStellarManipulation.UseVisualStyleBackColor = false;
+			// 
+			// btnToggleMinister
+			// 
+			this.btnToggleMinister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnToggleMinister.BackColor = System.Drawing.Color.Black;
+			this.btnToggleMinister.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnToggleMinister.Location = new System.Drawing.Point(338, 48);
+			this.btnToggleMinister.Name = "btnToggleMinister";
+			this.btnToggleMinister.Size = new System.Drawing.Size(36, 36);
+			this.btnToggleMinister.TabIndex = 18;
+			this.btnToggleMinister.TabStop = false;
+			this.btnToggleMinister.Text = "Min";
+			this.toolTip.SetToolTip(this.btnToggleMinister, "(T) Toggle Minister Control");
+			this.btnToggleMinister.UseVisualStyleBackColor = false;
+			// 
+			// btnRename
+			// 
+			this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRename.BackColor = System.Drawing.Color.Black;
+			this.btnRename.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRename.Location = new System.Drawing.Point(338, 6);
+			this.btnRename.Name = "btnRename";
+			this.btnRename.Size = new System.Drawing.Size(36, 36);
+			this.btnRename.TabIndex = 17;
+			this.btnRename.TabStop = false;
+			this.btnRename.Text = "Nam";
+			this.toolTip.SetToolTip(this.btnRename, "(N) Rename/Notes");
+			this.btnRename.UseVisualStyleBackColor = false;
+			// 
+			// btnRecycle
+			// 
+			this.btnRecycle.BackColor = System.Drawing.Color.Black;
+			this.btnRecycle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRecycle.Location = new System.Drawing.Point(170, 48);
+			this.btnRecycle.Name = "btnRecycle";
+			this.btnRecycle.Size = new System.Drawing.Size(36, 36);
+			this.btnRecycle.TabIndex = 16;
+			this.btnRecycle.TabStop = false;
+			this.btnRecycle.Text = "Rcy";
+			this.toolTip.SetToolTip(this.btnRecycle, "(Ctrl-R) Recycle/Scuttle");
+			this.btnRecycle.UseVisualStyleBackColor = false;
+			this.btnRecycle.Click += new System.EventHandler(this.btnRecycle_Click);
+			// 
+			// btnRepeatOrders
+			// 
+			this.btnRepeatOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnRepeatOrders.BackColor = System.Drawing.Color.Black;
+			this.btnRepeatOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRepeatOrders.Location = new System.Drawing.Point(380, 6);
+			this.btnRepeatOrders.Name = "btnRepeatOrders";
+			this.btnRepeatOrders.Size = new System.Drawing.Size(36, 36);
+			this.btnRepeatOrders.TabIndex = 15;
+			this.btnRepeatOrders.TabStop = false;
+			this.btnRepeatOrders.Text = "Rept";
+			this.toolTip.SetToolTip(this.btnRepeatOrders, "(P) Repeat Orders");
+			this.btnRepeatOrders.UseVisualStyleBackColor = false;
+			// 
+			// btnNextIdle
+			// 
+			this.btnNextIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnNextIdle.BackColor = System.Drawing.Color.Black;
+			this.btnNextIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNextIdle.Location = new System.Drawing.Point(422, 48);
+			this.btnNextIdle.Name = "btnNextIdle";
+			this.btnNextIdle.Size = new System.Drawing.Size(36, 36);
+			this.btnNextIdle.TabIndex = 6;
+			this.btnNextIdle.TabStop = false;
+			this.btnNextIdle.Text = "Next";
+			this.toolTip.SetToolTip(this.btnNextIdle, "(Tab) Next Idle Space Object");
+			this.btnNextIdle.UseVisualStyleBackColor = false;
+			// 
+			// btnRepair
+			// 
+			this.btnRepair.BackColor = System.Drawing.Color.Black;
+			this.btnRepair.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnRepair.Location = new System.Drawing.Point(128, 48);
+			this.btnRepair.Name = "btnRepair";
+			this.btnRepair.Size = new System.Drawing.Size(36, 36);
+			this.btnRepair.TabIndex = 14;
+			this.btnRepair.TabStop = false;
+			this.btnRepair.Text = "Repr";
+			this.toolTip.SetToolTip(this.btnRepair, "(R) Repair");
+			this.btnRepair.UseVisualStyleBackColor = false;
+			// 
+			// btnPrevIdle
+			// 
+			this.btnPrevIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnPrevIdle.BackColor = System.Drawing.Color.Black;
+			this.btnPrevIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPrevIdle.Location = new System.Drawing.Point(380, 48);
+			this.btnPrevIdle.Name = "btnPrevIdle";
+			this.btnPrevIdle.Size = new System.Drawing.Size(36, 36);
+			this.btnPrevIdle.TabIndex = 5;
+			this.btnPrevIdle.TabStop = false;
+			this.btnPrevIdle.Text = "Prev";
+			this.toolTip.SetToolTip(this.btnPrevIdle, "(Shift-Tab) Previous Idle Space Object");
+			this.btnPrevIdle.UseVisualStyleBackColor = false;
+			// 
+			// btnResupply
+			// 
+			this.btnResupply.BackColor = System.Drawing.Color.Black;
+			this.btnResupply.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnResupply.Location = new System.Drawing.Point(128, 6);
+			this.btnResupply.Name = "btnResupply";
+			this.btnResupply.Size = new System.Drawing.Size(36, 36);
+			this.btnResupply.TabIndex = 13;
+			this.btnResupply.TabStop = false;
+			this.btnResupply.Text = "Sply";
+			this.toolTip.SetToolTip(this.btnResupply, "(S) Resupply");
+			this.btnResupply.UseVisualStyleBackColor = false;
+			// 
+			// btnSentry
+			// 
+			this.btnSentry.BackColor = System.Drawing.Color.Black;
+			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnSentry.Location = new System.Drawing.Point(86, 48);
+			this.btnSentry.Name = "btnSentry";
+			this.btnSentry.Size = new System.Drawing.Size(36, 36);
+			this.btnSentry.TabIndex = 12;
+			this.btnSentry.TabStop = false;
+			this.btnSentry.Text = "Stry";
+			this.toolTip.SetToolTip(this.btnSentry, "(Y) Sentry");
+			this.btnSentry.UseVisualStyleBackColor = false;
+			this.btnSentry.Click += new System.EventHandler(this.btnSentry_Click);
+			// 
+			// btnClearOrders
+			// 
+			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
+			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnClearOrders.Location = new System.Drawing.Point(422, 6);
+			this.btnClearOrders.Name = "btnClearOrders";
+			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
+			this.btnClearOrders.TabIndex = 11;
+			this.btnClearOrders.TabStop = false;
+			this.btnClearOrders.Text = "Clr";
+			this.toolTip.SetToolTip(this.btnClearOrders, "(Bksp) Clear Orders");
+			this.btnClearOrders.UseVisualStyleBackColor = false;
+			this.btnClearOrders.Click += new System.EventHandler(this.btnClearOrders_Click);
+			// 
+			// btnFleetTransfer
+			// 
+			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
+			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnFleetTransfer.Location = new System.Drawing.Point(212, 48);
+			this.btnFleetTransfer.Name = "btnFleetTransfer";
+			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
+			this.btnFleetTransfer.TabIndex = 10;
+			this.btnFleetTransfer.TabStop = false;
+			this.btnFleetTransfer.Text = "Flt";
+			this.toolTip.SetToolTip(this.btnFleetTransfer, "(F) Fleet Transfer");
+			this.btnFleetTransfer.UseVisualStyleBackColor = false;
+			this.btnFleetTransfer.Click += new System.EventHandler(this.btnFleetTransfer_Click);
+			// 
+			// btnTransferCargo
+			// 
+			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
+			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnTransferCargo.Location = new System.Drawing.Point(212, 6);
+			this.btnTransferCargo.Name = "btnTransferCargo";
+			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
+			this.btnTransferCargo.TabIndex = 9;
+			this.btnTransferCargo.TabStop = false;
+			this.btnTransferCargo.Text = "TC";
+			this.toolTip.SetToolTip(this.btnTransferCargo, "(T) Transfer Cargo");
+			this.btnTransferCargo.UseVisualStyleBackColor = false;
+			this.btnTransferCargo.Click += new System.EventHandler(this.btnTransferCargo_Click);
+			// 
+			// btnConstructionQueue
+			// 
+			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
+			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnConstructionQueue.Location = new System.Drawing.Point(170, 6);
+			this.btnConstructionQueue.Name = "btnConstructionQueue";
+			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
+			this.btnConstructionQueue.TabIndex = 8;
+			this.btnConstructionQueue.TabStop = false;
+			this.btnConstructionQueue.Text = "CQ";
+			this.toolTip.SetToolTip(this.btnConstructionQueue, "(Q) Construction Queue");
+			this.btnConstructionQueue.UseVisualStyleBackColor = false;
+			this.btnConstructionQueue.Click += new System.EventHandler(this.btnConstructionQueue_Click);
+			// 
+			// btnColonize
+			// 
+			this.btnColonize.BackColor = System.Drawing.Color.Black;
+			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnColonize.Location = new System.Drawing.Point(47, 48);
+			this.btnColonize.Name = "btnColonize";
+			this.btnColonize.Size = new System.Drawing.Size(36, 36);
+			this.btnColonize.TabIndex = 7;
+			this.btnColonize.TabStop = false;
+			this.btnColonize.Text = "Col";
+			this.toolTip.SetToolTip(this.btnColonize, "(C) Colonize");
+			this.btnColonize.UseVisualStyleBackColor = false;
+			this.btnColonize.Click += new System.EventHandler(this.btnColonize_Click);
+			// 
+			// btnEvade
+			// 
+			this.btnEvade.BackColor = System.Drawing.Color.Black;
+			this.btnEvade.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEvade.Location = new System.Drawing.Point(86, 6);
+			this.btnEvade.Name = "btnEvade";
+			this.btnEvade.Size = new System.Drawing.Size(36, 36);
+			this.btnEvade.TabIndex = 6;
+			this.btnEvade.TabStop = false;
+			this.btnEvade.Text = "Ev";
+			this.toolTip.SetToolTip(this.btnEvade, "(E) Evade");
+			this.btnEvade.UseVisualStyleBackColor = false;
+			this.btnEvade.Click += new System.EventHandler(this.btnEvade_Click);
+			// 
+			// btnWarp
+			// 
+			this.btnWarp.BackColor = System.Drawing.Color.Black;
+			this.btnWarp.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWarp.Location = new System.Drawing.Point(7, 48);
+			this.btnWarp.Name = "btnWarp";
+			this.btnWarp.Size = new System.Drawing.Size(36, 36);
+			this.btnWarp.TabIndex = 5;
+			this.btnWarp.TabStop = false;
+			this.btnWarp.Text = "Wp";
+			this.toolTip.SetToolTip(this.btnWarp, "(W) Warp");
+			this.btnWarp.UseVisualStyleBackColor = false;
+			this.btnWarp.Click += new System.EventHandler(this.btnWarp_Click);
+			// 
+			// btnPursue
+			// 
+			this.btnPursue.BackColor = System.Drawing.Color.Black;
+			this.btnPursue.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPursue.Location = new System.Drawing.Point(47, 6);
+			this.btnPursue.Name = "btnPursue";
+			this.btnPursue.Size = new System.Drawing.Size(36, 36);
+			this.btnPursue.TabIndex = 4;
+			this.btnPursue.TabStop = false;
+			this.btnPursue.Text = "Pur";
+			this.toolTip.SetToolTip(this.btnPursue, "(A) Attack / Pursue");
+			this.btnPursue.UseVisualStyleBackColor = false;
+			this.btnPursue.Click += new System.EventHandler(this.btnPursue_Click);
+			// 
+			// btnMove
+			// 
+			this.btnMove.BackColor = System.Drawing.Color.Black;
+			this.btnMove.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMove.Location = new System.Drawing.Point(7, 6);
+			this.btnMove.Name = "btnMove";
+			this.btnMove.Size = new System.Drawing.Size(36, 36);
+			this.btnMove.TabIndex = 2;
+			this.btnMove.TabStop = false;
+			this.btnMove.Text = "Mov";
+			this.toolTip.SetToolTip(this.btnMove, "(M) Move");
+			this.btnMove.UseVisualStyleBackColor = false;
+			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
+			// 
 			// pnlMainCommands
 			// 
 			this.pnlMainCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
@@ -723,6 +596,109 @@ namespace FrEee.WinForms.Forms
 			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(6);
 			this.pnlMainCommands.Size = new System.Drawing.Size(342, 50);
 			this.pnlMainCommands.TabIndex = 3;
+			// 
+			// btnEndTurn
+			// 
+			this.btnEndTurn.BackColor = System.Drawing.Color.Black;
+			this.btnEndTurn.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEndTurn.Location = new System.Drawing.Point(296, 6);
+			this.btnEndTurn.Name = "btnEndTurn";
+			this.btnEndTurn.Size = new System.Drawing.Size(36, 36);
+			this.btnEndTurn.TabIndex = 7;
+			this.btnEndTurn.TabStop = false;
+			this.toolTip.SetToolTip(this.btnEndTurn, "(F12) Save Commands");
+			this.btnEndTurn.UseVisualStyleBackColor = false;
+			this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
+			// 
+			// btnLog
+			// 
+			this.btnLog.BackColor = System.Drawing.Color.Black;
+			this.btnLog.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnLog.Location = new System.Drawing.Point(256, 6);
+			this.btnLog.Name = "btnLog";
+			this.btnLog.Size = new System.Drawing.Size(36, 36);
+			this.btnLog.TabIndex = 6;
+			this.btnLog.TabStop = false;
+			this.toolTip.SetToolTip(this.btnLog, "(F10 / Shift-L) Log");
+			this.btnLog.UseVisualStyleBackColor = false;
+			this.btnLog.Click += new System.EventHandler(this.btnLog_Click);
+			// 
+			// btnQueues
+			// 
+			this.btnQueues.BackColor = System.Drawing.Color.Black;
+			this.btnQueues.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnQueues.Location = new System.Drawing.Point(214, 6);
+			this.btnQueues.Name = "btnQueues";
+			this.btnQueues.Size = new System.Drawing.Size(36, 36);
+			this.btnQueues.TabIndex = 5;
+			this.btnQueues.TabStop = false;
+			this.toolTip.SetToolTip(this.btnQueues, "(F7 / Shift-Q) Construction Queues");
+			this.btnQueues.UseVisualStyleBackColor = false;
+			this.btnQueues.Click += new System.EventHandler(this.btnQueues_Click);
+			// 
+			// btnShips
+			// 
+			this.btnShips.BackColor = System.Drawing.Color.Black;
+			this.btnShips.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnShips.Location = new System.Drawing.Point(172, 6);
+			this.btnShips.Name = "btnShips";
+			this.btnShips.Size = new System.Drawing.Size(36, 36);
+			this.btnShips.TabIndex = 4;
+			this.btnShips.TabStop = false;
+			this.toolTip.SetToolTip(this.btnShips, "(F6 / Shift-S) Ships");
+			this.btnShips.UseVisualStyleBackColor = false;
+			this.btnShips.Click += new System.EventHandler(this.btnShips_Click);
+			// 
+			// btnEmpires
+			// 
+			this.btnEmpires.BackColor = System.Drawing.Color.Black;
+			this.btnEmpires.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEmpires.Location = new System.Drawing.Point(130, 6);
+			this.btnEmpires.Name = "btnEmpires";
+			this.btnEmpires.Size = new System.Drawing.Size(36, 36);
+			this.btnEmpires.TabIndex = 3;
+			this.btnEmpires.TabStop = false;
+			this.toolTip.SetToolTip(this.btnEmpires, "(F9 / Shift-E) Empires");
+			this.btnEmpires.UseVisualStyleBackColor = false;
+			this.btnEmpires.Click += new System.EventHandler(this.btnEmpires_Click);
+			// 
+			// btnPlanets
+			// 
+			this.btnPlanets.BackColor = System.Drawing.Color.Black;
+			this.btnPlanets.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnPlanets.Location = new System.Drawing.Point(88, 6);
+			this.btnPlanets.Name = "btnPlanets";
+			this.btnPlanets.Size = new System.Drawing.Size(36, 36);
+			this.btnPlanets.TabIndex = 0;
+			this.btnPlanets.TabStop = false;
+			this.toolTip.SetToolTip(this.btnPlanets, "(F4 / F5 / Shift-P / Shift-C) Planets/Colonies");
+			this.btnPlanets.UseVisualStyleBackColor = false;
+			this.btnPlanets.Click += new System.EventHandler(this.btnPlanets_Click);
+			// 
+			// btnDesigns
+			// 
+			this.btnDesigns.BackColor = System.Drawing.Color.Black;
+			this.btnDesigns.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnDesigns.Location = new System.Drawing.Point(47, 6);
+			this.btnDesigns.Name = "btnDesigns";
+			this.btnDesigns.Size = new System.Drawing.Size(36, 36);
+			this.btnDesigns.TabIndex = 2;
+			this.btnDesigns.TabStop = false;
+			this.toolTip.SetToolTip(this.btnDesigns, "(F3 / Shift-D) Designs");
+			this.btnDesigns.UseVisualStyleBackColor = false;
+			this.btnDesigns.Click += new System.EventHandler(this.btnDesigns_Click);
+			// 
+			// btnMenu
+			// 
+			this.btnMenu.BackColor = System.Drawing.Color.Black;
+			this.btnMenu.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnMenu.Location = new System.Drawing.Point(5, 6);
+			this.btnMenu.Name = "btnMenu";
+			this.btnMenu.Size = new System.Drawing.Size(36, 36);
+			this.btnMenu.TabIndex = 1;
+			this.btnMenu.TabStop = false;
+			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
+			this.btnMenu.UseVisualStyleBackColor = false;
 			// 
 			// pnlHeader
 			// 
@@ -878,6 +854,30 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
+			// progResearch
+			// 
+			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progResearch.BackColor = System.Drawing.Color.Black;
+			this.progResearch.BarColor = System.Drawing.Color.Magenta;
+			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.progResearch.ForeColor = System.Drawing.Color.White;
+			this.progResearch.IncrementalProgress = ((long)(0));
+			this.progResearch.LeftText = "Ice Planet Colonization";
+			this.progResearch.Location = new System.Drawing.Point(3, -3);
+			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
+			this.progResearch.Maximum = ((long)(500000));
+			this.progResearch.Name = "progResearch";
+			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
+			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
+			this.progResearch.RightText = "0.2 years";
+			this.progResearch.Size = new System.Drawing.Size(411, 38);
+			this.progResearch.TabIndex = 11;
+			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
+			this.progResearch.Value = ((long)(350000));
+			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
+			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -898,6 +898,7 @@ namespace FrEee.WinForms.Forms
 			this.Load += new System.EventHandler(this.GameForm_Load);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyDown);
 			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GameForm_KeyUp);
+			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GameForm_MouseDown);
 			this.pnlLayout.ResumeLayout(false);
 			this.pnlLeft.ResumeLayout(false);
 			this.pnlSystemMap.ResumeLayout(false);
