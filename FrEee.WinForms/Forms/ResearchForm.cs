@@ -419,6 +419,7 @@ namespace FrEee.WinForms.Forms
 			curTech = null;
 			BindTechGrid();
 			BindDetails();
+			ready = true;
 		}
 
 		private void ResearchForm_MouseEnter(object sender, EventArgs e)
