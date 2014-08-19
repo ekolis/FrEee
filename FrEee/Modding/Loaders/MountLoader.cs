@@ -42,7 +42,7 @@ namespace FrEee.Modding.Loaders
 				m.WeaponAccuracyModifier = rec.Get<int>("Weapon To Hit Modifier", m) ?? 0;
 				m.MinimumVehicleSize = rec.Get<int>("Vehicle Size Minimum", m);
 				m.MaximumVehicleSize = rec.Get<int>("Vehicle Size Maximum", m);
-				m.RequiredComponentFamily = rec.Get<string>("Component Family Requirement", m);
+				m.RequiredComponentFamily = rec.Get<string>(new string[] { "Comp Family Requirement", "Component Family Requirement", "Comp Family", "Component Family" }, m);
 				var wtstring = rec.Get<string>(new string[] { "Weapon Type Requirement", "Weapon Type" }, m);
 				if (wtstring == null)
 					m.WeaponTypes = WeaponTypes.AnyComponent;
