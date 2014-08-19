@@ -30,7 +30,19 @@ namespace FrEee.Game.Objects.Technology
 			Hitpoints = MaxHitpoints;
 		}
 
-		public Empire Owner { get; set; }
+		[DoNotSerialize]
+		public Empire Owner
+		{
+			get
+			{
+				return Container.Owner;
+			}
+			set
+			{
+				// HACK - transfer ownership of entire colony since facilities can only belong to colony owner anyway
+				Container.Colony.Owner = value;
+			}
+		}
 
 		/// <summary>
 		/// The template for this facility.
@@ -64,12 +76,14 @@ namespace FrEee.Game.Objects.Technology
 			set;
 		}
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get { return Template.Icon; }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Template.Portrait; }
 		}
@@ -225,8 +239,9 @@ namespace FrEee.Game.Objects.Technology
 				return;
 			if (Container != null)
 			{
-				Container.Colony.Facilities.Remove(this);
-				Container.Colony.UpdateEmpireMemories();
+				var col = Container.Colony;
+				col.Facilities.Remove(this);
+				col.UpdateEmpireMemories();
 			}
 		}
 
