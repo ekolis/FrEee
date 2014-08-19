@@ -39,7 +39,35 @@ namespace FrEee.WinForms.Forms
 				throw new InvalidOperationException("Only one game form allowed.");
 			InitializeComponent();
 			this.hostView = hostView;
+			SetMouseDownHandler(this, GameForm_MouseDown);
+			RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
 			Instance = this;
+		}
+
+		/// <summary>
+		/// Sets mouse down handler for a control and all its children recursively.
+		/// </summary>
+		/// <param name="ctl"></param>
+		/// <param name="h"></param>
+		private void SetMouseDownHandler(Control ctl, MouseEventHandler h)
+		{
+			ctl.MouseDown += h;
+			foreach (Control c in ctl.Controls)
+				SetMouseDownHandler(c, h);
+
+		}
+
+		/// <summary>
+		/// Removes mouse down handler for a control and all its children recursively.
+		/// </summary>
+		/// <param name="ctl"></param>
+		/// <param name="h"></param>
+		private void RemoveMouseDownHandler(Control ctl, MouseEventHandler h)
+		{
+			ctl.MouseDown -= h;
+			foreach (Control c in ctl.Controls)
+				RemoveMouseDownHandler(c, h);
+
 		}
 
 		public static GameForm Instance { get; private set; }
@@ -1345,6 +1373,11 @@ namespace FrEee.WinForms.Forms
 		{
 			this.ShowChildForm(new RecycleForm(starSystemView.SelectedSector));
 			BindReport();
+		}
+
+		void GameForm_MouseDown(object sender, MouseEventArgs e)
+		{
+			searchBox.HideResults();
 		}
 	}
 }
