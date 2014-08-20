@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
@@ -56,7 +57,8 @@ namespace FrEee.Game.Objects.Orders
 				if (Item == null)
 				{
 					Item = Template.Instantiate();
-					Item.Owner = queue.Owner;
+					if (!(Item is Facility))
+						Item.Owner = queue.Owner;
 					if (Item is SpaceVehicle)
 					{
 						// space vehicles need their supplies filled up
