@@ -1498,14 +1498,24 @@ namespace FrEee.Utility.Extensions
 		{
 			var sb = new StringBuilder();
 			int data = 0;
+			bool escaping = false;
 			do
 			{
 				data = r.Read();
-				if (data > 0 && data != (int)c)
+				if (data > 0 && data != (int)c && data != (int)'\\' && !escaping)
 				{
 					sb.Append((char)data);
 					log.Append((char)data);
 				}
+				else if (escaping)
+				{
+					sb.Append((char)data);
+					log.Append((char)data);
+					escaping = false;
+				}
+				else if (data == (int)'\\')
+					escaping = true;
+
 			} while (data > 0 && data != (int)c);
 			if (data == c)
 				log.Append(c);
