@@ -17,6 +17,7 @@ using FrEee.Utility;
 using Microsoft.Scripting.Runtime;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using Microsoft.Scripting.Interpreter;
 
 namespace FrEee.Modding
 {
@@ -270,21 +271,21 @@ namespace FrEee.Modding
 			}
 			catch (Exception ex)
 			{
-				if (ex.Data.Values.Count > 0)
-				{
-					dynamic info = ex.Data.Values.Cast<dynamic>().First();
-					var debugInfo = info[0].DebugInfo;
-					if (debugInfo != null)
+				//if (ex.Data.Values.Count > 0)
+				//{
+					var infos = ex.Data.Values.Cast<InterpretedFrameInfo[]>().First();
+					var debugInfo = infos[0].DebugInfo;
+					//if (debugInfo != null)
 					{
 						int startLine = debugInfo.StartLine;
 						int endLine = debugInfo.StartLine;
 						throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
 					}
-					else
-						throw new ScriptException(ex, "(unknown code)");
-				}
-				else
-					throw new ScriptException(ex, "(unknown code)");
+					//else
+					//	throw new ScriptException(ex, "(unknown code)");
+				//}
+				//else
+				//	throw new ScriptException(ex, "(unknown code)");
 			}
 		}
 
