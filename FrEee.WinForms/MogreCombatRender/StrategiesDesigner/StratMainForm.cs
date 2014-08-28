@@ -194,10 +194,12 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
             funclist functlisform = new funclist(this, canvas);
             var result = functlisform.ShowDialog();
             UCStratBlock ctrlObj = functlisform.ReturnCtrlObj;
-            
-            pbx.Controls.Add(ctrlObj);
-            this.UCStratblocks.Add(ctrlObj.stratblock, ctrlObj);
-            
+
+			if (ctrlObj != null)
+			{
+				pbx.Controls.Add(ctrlObj);
+				this.UCStratblocks.Add(ctrlObj.stratblock, ctrlObj);
+			}            
         }
 
         public void refresh()
