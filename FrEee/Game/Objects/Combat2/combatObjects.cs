@@ -271,7 +271,7 @@ namespace FrEee.Game.Objects.Combat2
             //Compass angletoturn = new Compass(angletoturn.Degrees / Battle_Space.TicksPerSecond, false);
             if (angletoturn.Degrees <= (Fix16)180) //turn clockwise
             {
-                if (angletoturn.Degrees > this.maxRotate.Degrees)
+                if (angletoturn.Degrees > this.maxRotate.Degrees / Battle_Space.TicksPerSecond)
                 {
                     //comObj.cmbt_face += comObj.Rotate;
                     this.cmbt_head.Degrees += this.maxRotate.Degrees / Battle_Space.TicksPerSecond;
@@ -284,7 +284,7 @@ namespace FrEee.Game.Objects.Combat2
             }
             else //turn counterclockwise
             {
-                if (((Fix16)360 - angletoturn.Degrees) > this.maxRotate.Degrees)
+				if (((Fix16)360 - angletoturn.Degrees) > this.maxRotate.Degrees / Battle_Space.TicksPerSecond)
                 {
                     //comObj.cmbt_face -= comObj.maxRotate;
                     this.cmbt_head.Degrees -= this.maxRotate.Degrees / Battle_Space.TicksPerSecond;
