@@ -94,7 +94,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             Vehicle ship = StartVehicle.Copy();
 			ship.IsMemory = true;
-			if (ship.Owner != StartVehicle.Owner)
+			if (ship.Owner != StartVehicle.Owner && ship.Owner != null)
 				ship.Owner.Dispose(); // don't need extra empires!
 			ship.Owner = StartVehicle.Owner;
 #if DEBUG
