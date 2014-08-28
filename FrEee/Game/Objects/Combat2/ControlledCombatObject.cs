@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Combat2
         protected override Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {
 #if DEBUG
-			Console.WriteLine("NAV FUNCTION FOR" + this);
+			Console.WriteLine("NAV FUNCTION FOR " + this.WorkingObject);
 #endif
 
             Compass angletoturn = new Compass();
