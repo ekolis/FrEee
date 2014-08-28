@@ -65,7 +65,7 @@ namespace FrEee.Utility.Extensions
 			parser.Property += (pname, o, val) =>
 				{
 					var prop = o.GetType().FindProperty(pname);
-					var shouldRecurse = !prop.HasAttribute(typeof(DoNotCopyAttribute)); 
+					var shouldRecurse = !prop.HasAttribute(typeof(DoNotCopyAttribute));
 					if (shouldRecurse)
 						canCopy.Push(shouldRecurse);
 					return shouldRecurse;
@@ -256,10 +256,10 @@ namespace FrEee.Utility.Extensions
 							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
 							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
 						};
-						if (Match(c))
+						if (Match(c) && CanCopyFully(sp))
 						{
 							var sv = sp.GetValue(source, null);
-							if (DeepCopy && CanCopyFully(sp))
+							if (DeepCopy)
 							{
 								if (sv == null)
 									sp.SetValue(target, null, null); // it's null, very simple
@@ -2139,7 +2139,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static ICargoContainer FindContainer(this IUnit unit)
 		{
-			var containers =Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
+			var containers = Galaxy.Current.FindSpaceObjects<ICargoTransferrer>().Where(cc => cc.Cargo != null && cc.Cargo.Units.Contains(unit));
 			if (!containers.Any())
 			{
 				if (unit is IMobileSpaceObject)
@@ -2720,7 +2720,7 @@ namespace FrEee.Utility.Extensions
 		{
 			return (double)i / 100d;
 		}
-		
+
 		/// <summary>
 		/// Multiplies an integer by a scale factor and rounds it.
 		/// </summary>

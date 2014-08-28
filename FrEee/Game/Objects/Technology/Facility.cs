@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Technology
 			Hitpoints = MaxHitpoints;
 		}
 
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public Empire Owner
 		{
 			get
