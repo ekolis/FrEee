@@ -88,6 +88,10 @@ namespace FrEee.Game.Objects.Combat2
             
             angletoturn.Degrees = angletoWaypoint.Degrees - this.cmbt_head.Degrees;
 
+			// normalize from -180 to +180, so things display nicely
+			if (angletoturn.Degrees > 180)
+				angletoturn.Degrees -= 360;
+
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
 #if DEBUG
