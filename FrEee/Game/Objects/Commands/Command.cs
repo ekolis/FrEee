@@ -44,6 +44,8 @@ namespace FrEee.Game.Objects.Commands
 				done.Add(this);
 				issuer.ReplaceClientIDs(idmap, done);
 				executor.ReplaceClientIDs(idmap, done);
+				foreach (var r in NewReferrables.OfType<IPromotable>())
+					r.ReplaceClientIDs(idmap, done);
 			}
 		}
 
