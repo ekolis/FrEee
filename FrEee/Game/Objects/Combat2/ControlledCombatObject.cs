@@ -172,16 +172,25 @@ namespace FrEee.Game.Objects.Combat2
                 {
                     if (timetowpt < timetokill_ClosingSpeed_strafe) //if time to waypoint is less than time to kill speed with strafe thrusters
                     {
+#if DEBUG
+						Console.WriteLine("***Going too fast! Slow down!***");
+#endif
                         thrustToWaypoint = false; // thrust AWAY from the waypoint! slow down!
                     }
                     else
                     {
+#if DEBUG
+						Console.WriteLine("***Going just the right speed...***");
+#endif
                         helmdo = "null" + "\r\n";
                         thrustToWaypoint = null; // driiift! iiiin! spaaaace! should use only strafe thrust to match speed
                     }
                 }
 				else
 				{
+#if DEBUG
+					Console.WriteLine("***We can go faster! Speed it up!***");
+#endif
 					// accelerate toward the target, since we still have time to slow down later
 					thrustToWaypoint = true;
 				}
