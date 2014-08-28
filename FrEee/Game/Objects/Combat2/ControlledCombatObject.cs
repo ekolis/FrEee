@@ -66,6 +66,10 @@ namespace FrEee.Game.Objects.Combat2
 
         protected override Tuple<Compass, bool?> Nav(Compass angletoWaypoint)
         {
+#if DEBUG
+			Console.WriteLine("NAV FUNCTION FOR" + this);
+#endif
+
             Compass angletoturn = new Compass();
             bool? thrustToWaypoint = true;
             
@@ -77,19 +81,51 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 timetoturn = (Fix16)0;
             //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
             combatWaypoint wpt = this.waypointTarget;
+
+#if DEBUG
+			Console.WriteLine("Waypoint is " + wpt);
+#endif
             
             angletoturn.Degrees = angletoWaypoint.Degrees - this.cmbt_head.Degrees;
+
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
+
+#if DEBUG
+			Console.WriteLine("Current location is " + cmbt_loc);
+			Console.WriteLine("Waypoint location is " + waypointTarget.cmbt_loc);
+			Console.WriteLine("So the vector to waypoint is " + vectortowaypoint);
+			Console.WriteLine("And the waypoint is " + vectortowaypoint.Length + " away.");
+
+			Console.WriteLine("Current velocity is " + cmbt_vel);
+			Console.WriteLine("Current speed is " + cmbt_vel.Length);
+			Console.WriteLine("Waypoint velocity is " + waypointTarget.cmbt_vel);
+			Console.WriteLine("So we need to change our velocity by " + (waypointTarget.cmbt_vel - cmbt_vel));
+#endif
+
             //if (comObj.lastVectortoWaypoint != null)
             //    angletoturn.Radians = Trig.angleA(vectortowaypoint - comObj.lastVectortoWaypoint);
 
             timetoturn = (angletoturn.Degrees / this.maxRotate.Degrees); // seconds
             Fix16 oneEightytime = (180 / this.maxRotate.Degrees); // seconds
+
+#if DEBUG
+			Console.WriteLine("Current heading is " + cmbt_head);
+			Console.WriteLine("Angle to waypoint is " + angletoWaypoint);
+			Console.WriteLine("So we need to turn by " + angletoturn);
+			Console.WriteLine("We can turn at " + this.maxRotate + " per second.");
+			Console.WriteLine("So we can rotate to face the target in " + timetoturn + " seconds.");
+			Console.WriteLine("And we can do a 180 in " + oneEightytime + " seconds.");
+#endif
+
             //PointXd offsetVector = comObj.waypointTarget.cmbt_vel - comObj.cmbt_vel; // O = a - b
             //PointXd combinedVelocity = comObj.cmbt_vel - comObj.waypointTarget.cmbt_vel;
             //PointXd distancePnt = comObj.waypointTarget.cmbt_loc - comObj.cmbt_loc;
             //double closingSpeed = Trig.dotProduct(combinedVelocity, distancePnt);
             Fix16 closingSpeed = NMath.closingRate(this.cmbt_loc, this.cmbt_vel, this.waypointTarget.cmbt_loc, this.waypointTarget.cmbt_vel);
+
+#if DEBUG
+			Console.WriteLine("We are approaching/departing our target at a relative speed of " + closingSpeed);
+#endif
 
             Fix16 myspeed = this.cmbt_vel.Length; //seconds
 
@@ -101,22 +137,33 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 maxStrafeAcceleration = this.maxStrafeThrust / this.cmbt_mass;
 
             Fix16 timetokill_ClosingSpeed_strafe = closingSpeed / maxStrafeAcceleration; //in seconds. 
-            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass); //in seconds. 
+            Fix16 timetokill_MySpeed = myspeed / (this.maxfowardThrust / this.cmbt_mass); //in seconds.
+
+#if DEBUG
+			Console.WriteLine("Forward/strafe accel is " + maxFowardAcceleration + "/" + maxStrafeAcceleration);
+			Console.WriteLine("Can kill closing speed in this many seconds using forward/strafe accel: " + timetokill_ClosingSpeed + "/" + timetokill_ClosingSpeed_strafe);
+			Console.WriteLine("Can come to a complete stop in " + timetokill_MySpeed + " seconds.");
+#endif
             
             Fix16 distance = vectortowaypoint.Length;
 
 
+			// TODO - should we divide by ticks per second here, so we can close in one tick?
             Fix16 nominaldistance = maxStrafeAcceleration * timetokill_ClosingSpeed_strafe; //this.maxStrafeThrust; (I think this should be acceleration, not thrust. 
+
             //Fix16 nominaltime = strafetimetokill_ClosingSpeed
             Fix16 timetowpt = distance / closingSpeed;
 #if DEBUG
-            Console.WriteLine("timetowpt: " + timetowpt);
+            Console.WriteLine("Time to waypoint (if we were in a 1D universe): " + timetowpt);
 #endif
             
             string helmdo = "";
 
             if (closingSpeed > (Fix16)0) //getting closer?
             {
+#if DEBUG
+				Console.WriteLine("***Approaching target!***");
+#endif
                 if (timetowpt <= timetokill_ClosingSpeed_strafe)  // close to the waypoint (within strafe thrust range)
                 {
                     thrustToWaypoint = null; // should attempt to match speed using strafe thrust
@@ -133,9 +180,17 @@ namespace FrEee.Game.Objects.Combat2
                         thrustToWaypoint = null; // driiift! iiiin! spaaaace! should use only strafe thrust to match speed
                     }
                 }
+				else
+				{
+					// accelerate toward the target, since we still have time to slow down later
+					thrustToWaypoint = true;
+				}
             }
             else
             {
+#if DEBUG
+				Console.WriteLine("***Not approaching target! Need to get closer!***");
+#endif
                 thrustToWaypoint = true;// getting farther away or maintaining distance, just thrust toward the target
             }
 
