@@ -164,10 +164,10 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
 				Console.WriteLine("***Approaching target!***");
 #endif
-                if (timetowpt <= timetokill_ClosingSpeed_strafe)  // close to the waypoint (within strafe thrust range)
+                /*if (timetowpt <= timetokill_ClosingSpeed_strafe)  // close to the waypoint (within strafe thrust range)
                 {
                     thrustToWaypoint = null; // should attempt to match speed using strafe thrust
-                }
+                }*/
                 if (timetowpt <= timetokill_ClosingSpeed + oneEightytime) // if/when we're going to overshoot the waypoint.
                 {
                     if (timetowpt < timetokill_ClosingSpeed_strafe) //if time to waypoint is less than time to kill speed with strafe thrusters
@@ -202,6 +202,8 @@ namespace FrEee.Game.Objects.Combat2
             }
             else if (thrustToWaypoint == null)
             {
+				// TODO - shouldn't this be using delta V between target and ship instead of target V?
+				// and shouldn't the angle be relative?
                 angletoturn.Radians = Trig.angleA(this.waypointTarget.cmbt_vel);
             }
 
