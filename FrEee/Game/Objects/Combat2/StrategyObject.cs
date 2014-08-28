@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game.Objects.Combat2
 {
+	// TODO - rename to CombatStrategy?
     public class StrategyObject : IPromotable, IFoggable
     {
         public StrategyBaseBlock waypointObj { get; protected set; }

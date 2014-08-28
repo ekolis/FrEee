@@ -13,6 +13,8 @@ using FrEee.Game.Objects.Technology;
 using FrEee.WinForms.Forms;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Commands;
 
 namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 {
@@ -191,14 +193,17 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
                 canvas = this.canvasdata;
 
             
+			// get strategy block type from user
             funclist functlisform = new funclist(this, canvas);
             var result = functlisform.ShowDialog();
             UCStratBlock ctrlObj = functlisform.ReturnCtrlObj;
 
 			if (ctrlObj != null)
 			{
+				// add strategy block
 				pbx.Controls.Add(ctrlObj);
 				this.UCStratblocks.Add(ctrlObj.stratblock, ctrlObj);
+				safeToClose = false;
 			}            
         }
 
@@ -239,31 +244,7 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
 
         private void btn_SaveStrategy_Click(object sender, EventArgs e)
         {
-            foreach (UCStratBlock blk in this.UCStratblocks.Values)
-            {
-                blk.saveUIlocs();
-            }
-            List<StrategyBaseBlock> targetblocks = new List<StrategyBaseBlock>();
-            List<Dictionary<int, MountedComponentTemplate>> wpnlist = new List<Dictionary<int, MountedComponentTemplate>>();
-            foreach (UCFireControlTarget fc in firectrllist)
-            {
-                targetblocks.Add(fc.inputlinks[0].strategyblock);
-                wpnlist.Add(fc.Weapons);
-            }
-            StrategyObject stratobj = new StrategyObject(txtBx_Name.Text, waypointblock, targetblocks.ToArray());
-            stratobj.weaponslists = wpnlist;
-            List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
-            List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
-            List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
-            blocks1 = waypointblock.getlistoflinks();
-            foreach (StrategyBaseBlock linkedblock in targetblocks)
-            {
-                blocks2 = linkedblock.getlistoflinks();
-                blocks = blocks1.Union(blocks2).ToList();
-            }
-            stratobj.blocks = blocks.ToArray();
-            
-            design.Strategy = stratobj;
+			MessageBox.Show("Sorry, saving strategies to the library is not yet implemented.");
         }
 
         private void StratMainForm_Resize(object sender, EventArgs e)
@@ -292,7 +273,77 @@ namespace FrEee.WinForms.MogreCombatRender.StrategiesDesigner
         private void btn_LoadStrategy_Click(object sender, EventArgs e)
         {
             //loadstrategy(StratForm_LoadfromDesign.
-        }
+			MessageBox.Show("Sorry, loading strategies from the library is not yet implemented.");
+		}
+
+		private void btnCancel_Click(object sender, EventArgs e)
+		{
+			safeToClose = true; // discard changes
+			Close();
+		}
+
+		private void btnOK_Click(object sender, EventArgs e)
+		{
+			Save();
+			Close();
+		}
+
+		private void StratMainForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			if (!safeToClose)
+			{
+				var result = MessageBox.Show("Save changes to " + Design + "'s strategy?", "Save?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				if (result == DialogResult.Yes)
+				{
+					Save();
+					Close();
+				}
+				else if (result == DialogResult.No)
+				{
+					safeToClose = true; // discard changes
+					Close();
+				}
+				else if (result == DialogResult.Cancel)
+				{
+					// do nothing
+				}
+			}
+		}
+
+		private void Save()
+		{
+			foreach (UCStratBlock blk in this.UCStratblocks.Values)
+			{
+				blk.saveUIlocs();
+			}
+			List<StrategyBaseBlock> targetblocks = new List<StrategyBaseBlock>();
+			List<Dictionary<int, MountedComponentTemplate>> wpnlist = new List<Dictionary<int, MountedComponentTemplate>>();
+			foreach (UCFireControlTarget fc in firectrllist)
+			{
+				targetblocks.Add(fc.inputlinks[0].strategyblock);
+				wpnlist.Add(fc.Weapons);
+			}
+			StrategyObject stratobj = new StrategyObject(txtBx_Name.Text, waypointblock, targetblocks.ToArray());
+			stratobj.weaponslists = wpnlist;
+			List<StrategyBaseBlock> blocks = new List<StrategyBaseBlock>();
+			List<StrategyBaseBlock> blocks1 = new List<StrategyBaseBlock>();
+			List<StrategyBaseBlock> blocks2 = new List<StrategyBaseBlock>();
+			blocks1 = waypointblock.getlistoflinks();
+			foreach (StrategyBaseBlock linkedblock in targetblocks)
+			{
+				blocks2 = linkedblock.getlistoflinks();
+				blocks = blocks1.Union(blocks2).ToList();
+			}
+			stratobj.blocks = blocks.ToArray();
+
+			var cmd = new EditStrategyCommand(design, stratobj);
+			cmd.Execute();
+			Empire.Current.Commands.Add(cmd);
+
+			safeToClose = true;
+		}
+		
+		bool safeToClose = true;
 
     }
 }
