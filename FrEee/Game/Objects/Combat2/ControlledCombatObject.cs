@@ -87,11 +87,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
             
             angletoturn.Degrees = angletoWaypoint.Degrees - this.cmbt_head.Degrees;
-
-			// normalize from -180 to +180, so things display nicely
-			if (angletoturn.Degrees > 180)
-				angletoturn.Degrees -= 360;
-
+			var bearingToTurn = angletoturn.Degrees <= 180 ? angletoturn.Degrees : angletoturn.Degrees - 360;
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 
 #if DEBUG
@@ -115,7 +111,7 @@ namespace FrEee.Game.Objects.Combat2
 #if DEBUG
 			Console.WriteLine("Current heading is " + cmbt_head);
 			Console.WriteLine("Angle to waypoint is " + angletoWaypoint);
-			Console.WriteLine("So we need to turn by " + angletoturn);
+			Console.WriteLine("So we need to turn by " + bearingToTurn + " degrees");
 			Console.WriteLine("We can turn at " + this.maxRotate + " per second.");
 			Console.WriteLine("So we can rotate to face the target in " + timetoturn + " seconds.");
 			Console.WriteLine("And we can do a 180 in " + oneEightytime + " seconds.");
