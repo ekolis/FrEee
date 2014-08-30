@@ -1,5 +1,7 @@
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using System;
@@ -12,15 +14,15 @@ namespace FrEee.Game.Objects.Abilities
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
 	[Serializable]
-	public class Ability : IContainable<object>
+	public class Ability : IContainable<IAbilityObject>, IReferrable
 	{
-		public Ability(object container)
+		public Ability(IAbilityObject container)
 		{
 			Container = container;
 			Values = new List<Formula<string>>();
 		}
 
-		public Ability(object container, AbilityRule rule, string description = null, params Formula<string>[] values)
+		public Ability(IAbilityObject container, AbilityRule rule, string description = null, params Formula<string>[] values)
 		{
 			Container = container;
 			Rule = rule;
@@ -84,7 +86,7 @@ namespace FrEee.Game.Objects.Abilities
 			return result;
 		}
 
-		public object Container { get; private set; }
+		public IAbilityObject Container { get; private set; }
 
 		/// <summary>
 		/// Key for ability groups.
@@ -100,6 +102,37 @@ namespace FrEee.Game.Objects.Abilities
 						yield return Values[i];
 					yield return "";
 				}
+			}
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			if (IsDisposed)
+				return;
+			if (Container is IAbilityContainer)
+				(Container as IAbilityContainer).Abilities.Remove(this);
+			Galaxy.Current.UnassignID(this);
+		}
+
+		public Empire Owner
+		{
+			get
+			{
+				if (Container is IOwnable)
+					return (Container as IOwnable).Owner;
+				return null;
 			}
 		}
 	}

@@ -47,7 +47,7 @@ namespace FrEee.Modding.Loaders
 			{
 				count++;
 				var ac = new AbilityChance();
-				ac.Ability = new Ability(rat);
+				ac.Ability = new Ability(null);
 				string temp;
 
 				if (!rec.TryFindFieldValue(new string[] { "Ability " + count + " Chance", "Ability Chance" }, out temp, ref start, null, start, true))
