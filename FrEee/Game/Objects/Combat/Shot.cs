@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Combat
 		{
 			get
 			{
-				if (Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
+				if (Weapon == null || Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
 					return 0;
 				return Weapon.Template.WeaponDamage.Evaluate(this); // TODO - use PRNG
 			}
