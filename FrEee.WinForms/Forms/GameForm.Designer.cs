@@ -32,6 +32,17 @@ namespace FrEee.WinForms.Forms
 		{
 			this.components = new System.ComponentModel.Container();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
+			this.pnlLeft = new System.Windows.Forms.Panel();
+			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
+			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
+			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
+			this.searchBox = new FrEee.WinForms.Controls.SearchBox();
+			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
+			this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
+			this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
+			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
+			this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
 			this.btnMovementLog = new FrEee.WinForms.Controls.GameButton();
 			this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
 			this.btnCloak = new FrEee.WinForms.Controls.GameButton();
@@ -54,6 +65,7 @@ namespace FrEee.WinForms.Forms
 			this.btnWarp = new FrEee.WinForms.Controls.GameButton();
 			this.btnPursue = new FrEee.WinForms.Controls.GameButton();
 			this.btnMove = new FrEee.WinForms.Controls.GameButton();
+			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
 			this.btnEndTurn = new FrEee.WinForms.Controls.GameButton();
 			this.btnLog = new FrEee.WinForms.Controls.GameButton();
 			this.btnQueues = new FrEee.WinForms.Controls.GameButton();
@@ -62,18 +74,6 @@ namespace FrEee.WinForms.Forms
 			this.btnPlanets = new FrEee.WinForms.Controls.GameButton();
 			this.btnDesigns = new FrEee.WinForms.Controls.GameButton();
 			this.btnMenu = new FrEee.WinForms.Controls.GameButton();
-			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
-			this.pnlLayout = new FrEee.WinForms.Controls.GamePanel();
-			this.pnlLeft = new System.Windows.Forms.Panel();
-			this.pnlSystemMap = new FrEee.WinForms.Controls.GamePanel();
-			this.starSystemView = new FrEee.WinForms.Controls.StarSystemView();
-			this.pnlSearch = new FrEee.WinForms.Controls.GamePanel();
-			this.searchBox = new FrEee.WinForms.Controls.SearchBox();
-			this.pnlSystemTabs = new FrEee.WinForms.Controls.GamePanel();
-			this.pnlTabs = new System.Windows.Forms.FlowLayoutPanel();
-			this.btnNewTab = new FrEee.WinForms.Controls.GameButton();
-			this.pnlSubCommands = new FrEee.WinForms.Controls.GamePanel();
-			this.pnlMainCommands = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
 			this.resInt = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resRes = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -85,7 +85,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
-			this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
+			this.progResearch = new FrEee.WinForms.Controls.GameProgressBar();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -99,6 +99,193 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.SuspendLayout();
 			this.pnlGalaxyMap.SuspendLayout();
 			this.SuspendLayout();
+			// 
+			// pnlLayout
+			// 
+			this.pnlLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlLayout.BackColor = System.Drawing.Color.Black;
+			this.pnlLayout.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.pnlLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlLayout.Controls.Add(this.pnlLeft);
+			this.pnlLayout.Controls.Add(this.pnlRight);
+			this.pnlLayout.ForeColor = System.Drawing.Color.White;
+			this.pnlLayout.Location = new System.Drawing.Point(0, 0);
+			this.pnlLayout.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlLayout.Name = "pnlLayout";
+			this.pnlLayout.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlLayout.Size = new System.Drawing.Size(1270, 779);
+			this.pnlLayout.TabIndex = 8;
+			// 
+			// pnlLeft
+			// 
+			this.pnlLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlLeft.Controls.Add(this.pnlSystemMap);
+			this.pnlLeft.Controls.Add(this.pnlSearch);
+			this.pnlLeft.Controls.Add(this.pnlSystemTabs);
+			this.pnlLeft.Controls.Add(this.pnlSubCommands);
+			this.pnlLeft.Controls.Add(this.pnlMainCommands);
+			this.pnlLeft.Controls.Add(this.pnlHeader);
+			this.pnlLeft.Location = new System.Drawing.Point(1, 0);
+			this.pnlLeft.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
+			this.pnlLeft.Name = "pnlLeft";
+			this.pnlLeft.Size = new System.Drawing.Size(857, 777);
+			this.pnlLeft.TabIndex = 6;
+			// 
+			// pnlSystemMap
+			// 
+			this.pnlSystemMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlSystemMap.BackColor = System.Drawing.Color.Black;
+			this.pnlSystemMap.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.pnlSystemMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSystemMap.Controls.Add(this.starSystemView);
+			this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
+			this.pnlSystemMap.Location = new System.Drawing.Point(145, 134);
+			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlSystemMap.Name = "pnlSystemMap";
+			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlSystemMap.Size = new System.Drawing.Size(712, 642);
+			this.pnlSystemMap.TabIndex = 9;
+			// 
+			// starSystemView
+			// 
+			this.starSystemView.BackColor = System.Drawing.Color.Black;
+			this.starSystemView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.starSystemView.DrawText = true;
+			this.starSystemView.Location = new System.Drawing.Point(3, 3);
+			this.starSystemView.Name = "starSystemView";
+			this.starSystemView.SelectedSector = null;
+			this.starSystemView.SelectedSpaceObject = null;
+			this.starSystemView.Size = new System.Drawing.Size(704, 634);
+			this.starSystemView.StarSystem = null;
+			this.starSystemView.TabIndex = 0;
+			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
+			this.starSystemView.SectorSelected += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
+			// 
+			// pnlSearch
+			// 
+			this.pnlSearch.BackColor = System.Drawing.Color.Black;
+			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSearch.Controls.Add(this.searchBox);
+			this.pnlSearch.ForeColor = System.Drawing.Color.White;
+			this.pnlSearch.Location = new System.Drawing.Point(-2, 85);
+			this.pnlSearch.Margin = new System.Windows.Forms.Padding(2);
+			this.pnlSearch.Name = "pnlSearch";
+			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlSearch.Size = new System.Drawing.Size(342, 49);
+			this.pnlSearch.TabIndex = 8;
+			// 
+			// searchBox
+			// 
+			this.searchBox.BackColor = System.Drawing.Color.Black;
+			this.searchBox.ForeColor = System.Drawing.Color.White;
+			this.searchBox.Location = new System.Drawing.Point(12, 8);
+			this.searchBox.Margin = new System.Windows.Forms.Padding(6);
+			this.searchBox.Name = "searchBox";
+			this.searchBox.ObjectsToSearch = null;
+			this.searchBox.ResultsPopupHeight = 128;
+			this.searchBox.Size = new System.Drawing.Size(320, 21);
+			this.searchBox.StarSystem = null;
+			this.searchBox.TabIndex = 0;
+			this.searchBox.TabStop = false;
+			this.searchBox.ObjectSelected += new FrEee.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
+			// 
+			// pnlSystemTabs
+			// 
+			this.pnlSystemTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+			this.pnlSystemTabs.BackColor = System.Drawing.Color.Black;
+			this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSystemTabs.Controls.Add(this.pnlTabs);
+			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
+			this.pnlSystemTabs.Location = new System.Drawing.Point(0, 134);
+			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlSystemTabs.Name = "pnlSystemTabs";
+			this.pnlSystemTabs.Padding = new System.Windows.Forms.Padding(3);
+			this.pnlSystemTabs.Size = new System.Drawing.Size(145, 642);
+			this.pnlSystemTabs.TabIndex = 7;
+			// 
+			// pnlTabs
+			// 
+			this.pnlTabs.Controls.Add(this.btnNewTab);
+			this.pnlTabs.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.pnlTabs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.pnlTabs.Location = new System.Drawing.Point(3, 3);
+			this.pnlTabs.Name = "pnlTabs";
+			this.pnlTabs.Size = new System.Drawing.Size(137, 634);
+			this.pnlTabs.TabIndex = 0;
+			this.pnlTabs.DoubleClick += new System.EventHandler(this.btnNewTab_Click);
+			// 
+			// btnNewTab
+			// 
+			this.btnNewTab.BackColor = System.Drawing.Color.Black;
+			this.btnNewTab.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnNewTab.Location = new System.Drawing.Point(3, 3);
+			this.btnNewTab.Name = "btnNewTab";
+			this.btnNewTab.Size = new System.Drawing.Size(128, 23);
+			this.btnNewTab.TabIndex = 0;
+			this.btnNewTab.TabStop = false;
+			this.btnNewTab.Text = "(New Tab)";
+			this.btnNewTab.UseVisualStyleBackColor = false;
+			this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
+			// 
+			// pnlSubCommands
+			// 
+			this.pnlSubCommands.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
+			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSubCommands.Controls.Add(this.btnWaypoint);
+			this.pnlSubCommands.Controls.Add(this.btnMovementLog);
+			this.pnlSubCommands.Controls.Add(this.btnDecloak);
+			this.pnlSubCommands.Controls.Add(this.btnCloak);
+			this.pnlSubCommands.Controls.Add(this.btnActivate);
+			this.pnlSubCommands.Controls.Add(this.btnToggleMinister);
+			this.pnlSubCommands.Controls.Add(this.btnRename);
+			this.pnlSubCommands.Controls.Add(this.btnRecycle);
+			this.pnlSubCommands.Controls.Add(this.btnRepeatOrders);
+			this.pnlSubCommands.Controls.Add(this.btnNextIdle);
+			this.pnlSubCommands.Controls.Add(this.btnRepair);
+			this.pnlSubCommands.Controls.Add(this.btnPrevIdle);
+			this.pnlSubCommands.Controls.Add(this.btnResupply);
+			this.pnlSubCommands.Controls.Add(this.btnSentry);
+			this.pnlSubCommands.Controls.Add(this.btnClearOrders);
+			this.pnlSubCommands.Controls.Add(this.btnFleetTransfer);
+			this.pnlSubCommands.Controls.Add(this.btnTransferCargo);
+			this.pnlSubCommands.Controls.Add(this.btnConstructionQueue);
+			this.pnlSubCommands.Controls.Add(this.btnColonize);
+			this.pnlSubCommands.Controls.Add(this.btnEvade);
+			this.pnlSubCommands.Controls.Add(this.btnWarp);
+			this.pnlSubCommands.Controls.Add(this.btnPursue);
+			this.pnlSubCommands.Controls.Add(this.btnMove);
+			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
+			this.pnlSubCommands.Location = new System.Drawing.Point(340, 37);
+			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlSubCommands.Name = "pnlSubCommands";
+			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
+			this.pnlSubCommands.Size = new System.Drawing.Size(517, 97);
+			this.pnlSubCommands.TabIndex = 6;
+			// 
+			// btnWaypoint
+			// 
+			this.btnWaypoint.BackColor = System.Drawing.Color.Black;
+			this.btnWaypoint.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWaypoint.Location = new System.Drawing.Point(49, 6);
+			this.btnWaypoint.Name = "btnWaypoint";
+			this.btnWaypoint.Size = new System.Drawing.Size(36, 36);
+			this.btnWaypoint.TabIndex = 23;
+			this.btnWaypoint.TabStop = false;
+			this.btnWaypoint.Text = "Way";
+			this.toolTip.SetToolTip(this.btnWaypoint, "(Ctrl-W) Move to Waypoint");
+			this.btnWaypoint.UseVisualStyleBackColor = false;
 			// 
 			// btnMovementLog
 			// 
@@ -151,6 +338,7 @@ namespace FrEee.WinForms.Forms
 			this.btnActivate.Text = "Act";
 			this.toolTip.SetToolTip(this.btnActivate, "(Ctrl-A) Activate Ability");
 			this.btnActivate.UseVisualStyleBackColor = false;
+			this.btnActivate.Click += new System.EventHandler(this.btnActivate_Click);
 			// 
 			// btnToggleMinister
 			// 
@@ -397,6 +585,28 @@ namespace FrEee.WinForms.Forms
 			this.btnMove.UseVisualStyleBackColor = false;
 			this.btnMove.Click += new System.EventHandler(this.btnMove_Click);
 			// 
+			// pnlMainCommands
+			// 
+			this.pnlMainCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
+			this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlMainCommands.Controls.Add(this.btnEndTurn);
+			this.pnlMainCommands.Controls.Add(this.btnLog);
+			this.pnlMainCommands.Controls.Add(this.btnQueues);
+			this.pnlMainCommands.Controls.Add(this.btnShips);
+			this.pnlMainCommands.Controls.Add(this.btnEmpires);
+			this.pnlMainCommands.Controls.Add(this.btnPlanets);
+			this.pnlMainCommands.Controls.Add(this.btnDesigns);
+			this.pnlMainCommands.Controls.Add(this.btnMenu);
+			this.pnlMainCommands.ForeColor = System.Drawing.Color.White;
+			this.pnlMainCommands.Location = new System.Drawing.Point(-2, 37);
+			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(0);
+			this.pnlMainCommands.Name = "pnlMainCommands";
+			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(6);
+			this.pnlMainCommands.Size = new System.Drawing.Size(342, 50);
+			this.pnlMainCommands.TabIndex = 3;
+			// 
 			// btnEndTurn
 			// 
 			this.btnEndTurn.BackColor = System.Drawing.Color.Black;
@@ -499,226 +709,6 @@ namespace FrEee.WinForms.Forms
 			this.btnMenu.TabStop = false;
 			this.toolTip.SetToolTip(this.btnMenu, "(F2) Menu");
 			this.btnMenu.UseVisualStyleBackColor = false;
-			// 
-			// progResearch
-			// 
-			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progResearch.BackColor = System.Drawing.Color.Black;
-			this.progResearch.BarColor = System.Drawing.Color.Magenta;
-			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.progResearch.ForeColor = System.Drawing.Color.White;
-			this.progResearch.IncrementalProgress = ((long)(0));
-			this.progResearch.LeftText = "Ice Planet Colonization";
-			this.progResearch.Location = new System.Drawing.Point(3, -3);
-			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
-			this.progResearch.Maximum = ((long)(500000));
-			this.progResearch.Name = "progResearch";
-			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
-			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
-			this.progResearch.RightText = "0.2 years";
-			this.progResearch.Size = new System.Drawing.Size(411, 38);
-			this.progResearch.TabIndex = 11;
-			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
-			this.progResearch.Value = ((long)(350000));
-			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
-			// 
-			// pnlLayout
-			// 
-			this.pnlLayout.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlLayout.BackColor = System.Drawing.Color.Black;
-			this.pnlLayout.BorderColor = System.Drawing.Color.CornflowerBlue;
-			this.pnlLayout.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlLayout.Controls.Add(this.pnlLeft);
-			this.pnlLayout.Controls.Add(this.pnlRight);
-			this.pnlLayout.ForeColor = System.Drawing.Color.White;
-			this.pnlLayout.Location = new System.Drawing.Point(0, 0);
-			this.pnlLayout.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlLayout.Name = "pnlLayout";
-			this.pnlLayout.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlLayout.Size = new System.Drawing.Size(1270, 779);
-			this.pnlLayout.TabIndex = 8;
-			// 
-			// pnlLeft
-			// 
-			this.pnlLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlLeft.Controls.Add(this.pnlSystemMap);
-			this.pnlLeft.Controls.Add(this.pnlSearch);
-			this.pnlLeft.Controls.Add(this.pnlSystemTabs);
-			this.pnlLeft.Controls.Add(this.pnlSubCommands);
-			this.pnlLeft.Controls.Add(this.pnlMainCommands);
-			this.pnlLeft.Controls.Add(this.pnlHeader);
-			this.pnlLeft.Location = new System.Drawing.Point(1, 0);
-			this.pnlLeft.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
-			this.pnlLeft.Name = "pnlLeft";
-			this.pnlLeft.Size = new System.Drawing.Size(857, 777);
-			this.pnlLeft.TabIndex = 6;
-			// 
-			// pnlSystemMap
-			// 
-			this.pnlSystemMap.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlSystemMap.BackColor = System.Drawing.Color.Black;
-			this.pnlSystemMap.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.pnlSystemMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSystemMap.Controls.Add(this.starSystemView);
-			this.pnlSystemMap.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemMap.Location = new System.Drawing.Point(145, 134);
-			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlSystemMap.Name = "pnlSystemMap";
-			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSystemMap.Size = new System.Drawing.Size(712, 642);
-			this.pnlSystemMap.TabIndex = 9;
-			// 
-			// starSystemView
-			// 
-			this.starSystemView.BackColor = System.Drawing.Color.Black;
-			this.starSystemView.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.starSystemView.DrawText = true;
-			this.starSystemView.Location = new System.Drawing.Point(3, 3);
-			this.starSystemView.Name = "starSystemView";
-			this.starSystemView.SelectedSector = null;
-			this.starSystemView.SelectedSpaceObject = null;
-			this.starSystemView.Size = new System.Drawing.Size(704, 634);
-			this.starSystemView.StarSystem = null;
-			this.starSystemView.TabIndex = 0;
-			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
-			this.starSystemView.SectorSelected += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorSelected);
-			// 
-			// pnlSearch
-			// 
-			this.pnlSearch.BackColor = System.Drawing.Color.Black;
-			this.pnlSearch.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.pnlSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSearch.Controls.Add(this.searchBox);
-			this.pnlSearch.ForeColor = System.Drawing.Color.White;
-			this.pnlSearch.Location = new System.Drawing.Point(-2, 85);
-			this.pnlSearch.Margin = new System.Windows.Forms.Padding(2);
-			this.pnlSearch.Name = "pnlSearch";
-			this.pnlSearch.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSearch.Size = new System.Drawing.Size(342, 49);
-			this.pnlSearch.TabIndex = 8;
-			// 
-			// searchBox
-			// 
-			this.searchBox.BackColor = System.Drawing.Color.Black;
-			this.searchBox.ForeColor = System.Drawing.Color.White;
-			this.searchBox.Location = new System.Drawing.Point(12, 8);
-			this.searchBox.Margin = new System.Windows.Forms.Padding(6);
-			this.searchBox.Name = "searchBox";
-			this.searchBox.ObjectsToSearch = null;
-			this.searchBox.ResultsPopupHeight = 128;
-			this.searchBox.Size = new System.Drawing.Size(320, 21);
-			this.searchBox.StarSystem = null;
-			this.searchBox.TabIndex = 0;
-			this.searchBox.TabStop = false;
-			this.searchBox.ObjectSelected += new FrEee.WinForms.Controls.SearchBox.ObjectSelectedDelegate(this.searchBox_ObjectSelected);
-			// 
-			// pnlSystemTabs
-			// 
-			this.pnlSystemTabs.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-			this.pnlSystemTabs.BackColor = System.Drawing.Color.Black;
-			this.pnlSystemTabs.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.pnlSystemTabs.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSystemTabs.Controls.Add(this.pnlTabs);
-			this.pnlSystemTabs.ForeColor = System.Drawing.Color.White;
-			this.pnlSystemTabs.Location = new System.Drawing.Point(0, 134);
-			this.pnlSystemTabs.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlSystemTabs.Name = "pnlSystemTabs";
-			this.pnlSystemTabs.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSystemTabs.Size = new System.Drawing.Size(145, 642);
-			this.pnlSystemTabs.TabIndex = 7;
-			// 
-			// pnlTabs
-			// 
-			this.pnlTabs.Controls.Add(this.btnNewTab);
-			this.pnlTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.pnlTabs.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-			this.pnlTabs.Location = new System.Drawing.Point(3, 3);
-			this.pnlTabs.Name = "pnlTabs";
-			this.pnlTabs.Size = new System.Drawing.Size(137, 634);
-			this.pnlTabs.TabIndex = 0;
-			this.pnlTabs.DoubleClick += new System.EventHandler(this.btnNewTab_Click);
-			// 
-			// btnNewTab
-			// 
-			this.btnNewTab.BackColor = System.Drawing.Color.Black;
-			this.btnNewTab.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnNewTab.Location = new System.Drawing.Point(3, 3);
-			this.btnNewTab.Name = "btnNewTab";
-			this.btnNewTab.Size = new System.Drawing.Size(128, 23);
-			this.btnNewTab.TabIndex = 0;
-			this.btnNewTab.TabStop = false;
-			this.btnNewTab.Text = "(New Tab)";
-			this.btnNewTab.UseVisualStyleBackColor = false;
-			this.btnNewTab.Click += new System.EventHandler(this.btnNewTab_Click);
-			// 
-			// pnlSubCommands
-			// 
-			this.pnlSubCommands.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
-			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlSubCommands.Controls.Add(this.btnWaypoint);
-			this.pnlSubCommands.Controls.Add(this.btnMovementLog);
-			this.pnlSubCommands.Controls.Add(this.btnDecloak);
-			this.pnlSubCommands.Controls.Add(this.btnCloak);
-			this.pnlSubCommands.Controls.Add(this.btnActivate);
-			this.pnlSubCommands.Controls.Add(this.btnToggleMinister);
-			this.pnlSubCommands.Controls.Add(this.btnRename);
-			this.pnlSubCommands.Controls.Add(this.btnRecycle);
-			this.pnlSubCommands.Controls.Add(this.btnRepeatOrders);
-			this.pnlSubCommands.Controls.Add(this.btnNextIdle);
-			this.pnlSubCommands.Controls.Add(this.btnRepair);
-			this.pnlSubCommands.Controls.Add(this.btnPrevIdle);
-			this.pnlSubCommands.Controls.Add(this.btnResupply);
-			this.pnlSubCommands.Controls.Add(this.btnSentry);
-			this.pnlSubCommands.Controls.Add(this.btnClearOrders);
-			this.pnlSubCommands.Controls.Add(this.btnFleetTransfer);
-			this.pnlSubCommands.Controls.Add(this.btnTransferCargo);
-			this.pnlSubCommands.Controls.Add(this.btnConstructionQueue);
-			this.pnlSubCommands.Controls.Add(this.btnColonize);
-			this.pnlSubCommands.Controls.Add(this.btnEvade);
-			this.pnlSubCommands.Controls.Add(this.btnWarp);
-			this.pnlSubCommands.Controls.Add(this.btnPursue);
-			this.pnlSubCommands.Controls.Add(this.btnMove);
-			this.pnlSubCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlSubCommands.Location = new System.Drawing.Point(340, 37);
-			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlSubCommands.Name = "pnlSubCommands";
-			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
-			this.pnlSubCommands.Size = new System.Drawing.Size(517, 97);
-			this.pnlSubCommands.TabIndex = 6;
-			// 
-			// pnlMainCommands
-			// 
-			this.pnlMainCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.pnlMainCommands.BackColor = System.Drawing.Color.Black;
-			this.pnlMainCommands.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.pnlMainCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlMainCommands.Controls.Add(this.btnEndTurn);
-			this.pnlMainCommands.Controls.Add(this.btnLog);
-			this.pnlMainCommands.Controls.Add(this.btnQueues);
-			this.pnlMainCommands.Controls.Add(this.btnShips);
-			this.pnlMainCommands.Controls.Add(this.btnEmpires);
-			this.pnlMainCommands.Controls.Add(this.btnPlanets);
-			this.pnlMainCommands.Controls.Add(this.btnDesigns);
-			this.pnlMainCommands.Controls.Add(this.btnMenu);
-			this.pnlMainCommands.ForeColor = System.Drawing.Color.White;
-			this.pnlMainCommands.Location = new System.Drawing.Point(-2, 37);
-			this.pnlMainCommands.Margin = new System.Windows.Forms.Padding(0);
-			this.pnlMainCommands.Name = "pnlMainCommands";
-			this.pnlMainCommands.Padding = new System.Windows.Forms.Padding(6);
-			this.pnlMainCommands.Size = new System.Drawing.Size(342, 50);
-			this.pnlMainCommands.TabIndex = 3;
 			// 
 			// pnlHeader
 			// 
@@ -874,18 +864,29 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
-			// btnWaypoint
+			// progResearch
 			// 
-			this.btnWaypoint.BackColor = System.Drawing.Color.Black;
-			this.btnWaypoint.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWaypoint.Location = new System.Drawing.Point(49, 6);
-			this.btnWaypoint.Name = "btnWaypoint";
-			this.btnWaypoint.Size = new System.Drawing.Size(36, 36);
-			this.btnWaypoint.TabIndex = 23;
-			this.btnWaypoint.TabStop = false;
-			this.btnWaypoint.Text = "Way";
-			this.toolTip.SetToolTip(this.btnWaypoint, "(Ctrl-W) Move to Waypoint");
-			this.btnWaypoint.UseVisualStyleBackColor = false;
+			this.progResearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.progResearch.BackColor = System.Drawing.Color.Black;
+			this.progResearch.BarColor = System.Drawing.Color.Magenta;
+			this.progResearch.BorderColor = System.Drawing.Color.CornflowerBlue;
+			this.progResearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.progResearch.ForeColor = System.Drawing.Color.White;
+			this.progResearch.IncrementalProgress = ((long)(0));
+			this.progResearch.LeftText = "Ice Planet Colonization";
+			this.progResearch.Location = new System.Drawing.Point(3, -3);
+			this.progResearch.Margin = new System.Windows.Forms.Padding(0);
+			this.progResearch.Maximum = ((long)(500000));
+			this.progResearch.Name = "progResearch";
+			this.progResearch.Padding = new System.Windows.Forms.Padding(5);
+			this.progResearch.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
+			this.progResearch.RightText = "0.2 years";
+			this.progResearch.Size = new System.Drawing.Size(411, 38);
+			this.progResearch.TabIndex = 11;
+			this.toolTip.SetToolTip(this.progResearch, "(F8 / Shift-R) Research");
+			this.progResearch.Value = ((long)(350000));
+			this.progResearch.Click += new System.EventHandler(this.progResearch_Click);
 			// 
 			// GameForm
 			// 
