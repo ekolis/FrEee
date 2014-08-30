@@ -30,4 +30,15 @@ namespace FrEee.Game.Interfaces
 		/// </summary>
 		AbilityTargets AbilityTarget { get; }
 	}
+
+	/// <summary>
+	/// Something which can have intrinsic abilities of its own that can be added and removed.
+	/// </summary>
+	public interface IAbilityContainer : IAbilityObject
+	{
+		/// <summary>
+		/// Intrinsic abilities of this object which can be added or removed.
+		/// </summary>
+		new IList<Ability> Abilities { get; }
+	}
 }

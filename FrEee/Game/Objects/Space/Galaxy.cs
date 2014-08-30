@@ -1348,5 +1348,21 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		[DoNotSerialize]
 		internal SafeDictionary<Empire, ILookup<Empire, Clause>> ReceivedTreatyClauseCache { get; set; }
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			// TODO - galaxy wide abilities?
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return StarSystemLocations.Select(l => l.Item); }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return null; }
+		}
 	}
 }

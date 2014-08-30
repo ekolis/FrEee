@@ -14,7 +14,7 @@ namespace FrEee.Modding.Loaders
 		/// Loads abilities from a record.
 		/// </summary>
 		/// <param name="rec"></param>
-		public static IEnumerable<Ability> Load(string filename, Record rec, object obj)
+		public static IEnumerable<Ability> Load(string filename, Record rec, IAbilityContainer obj)
 		{
 			int count = 0;
 			int index = -1;

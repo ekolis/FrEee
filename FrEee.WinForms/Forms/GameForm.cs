@@ -895,7 +895,7 @@ namespace FrEee.WinForms.Forms
 
 					// fleet transfer and recycle buttons are special, they can be selected even with no space object selected
 					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
-					btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
+					btnRecycle.Visible = starSystemView.SelectedSector != null && starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
 				}
 				else
 				{
@@ -1391,7 +1391,11 @@ namespace FrEee.WinForms.Forms
 
 		private void btnActivate_Click(object sender, EventArgs e)
 		{
-
+			if (SelectedSpaceObject is IMobileSpaceObject)
+			{
+				this.ShowChildForm(new ActivateAbilityForm((IMobileSpaceObject)SelectedSpaceObject));
+				BindReport();
+			}
 		}
 	}
 }

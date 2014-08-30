@@ -11,7 +11,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IHull : IModObject, IResearchable, IAbilityObject, IReferrable, IPictorial
+	public interface IHull : IModObject, IResearchable, IAbilityContainer, IReferrable, IPictorial
 	{
 		string ShortName { get; set; }
 
@@ -81,8 +81,6 @@ namespace FrEee.Game.Interfaces
 		VehicleTypes VehicleType { get; }
 
 		new string Name { get; set; }
-
-		ICollection<Ability> Abilities { get; }
 
 		/// <summary>
 		/// Can this hull use a mount?
