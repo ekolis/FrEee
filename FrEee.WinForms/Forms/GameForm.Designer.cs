@@ -35,7 +35,7 @@ namespace FrEee.WinForms.Forms
 			this.btnMovementLog = new FrEee.WinForms.Controls.GameButton();
 			this.btnDecloak = new FrEee.WinForms.Controls.GameButton();
 			this.btnCloak = new FrEee.WinForms.Controls.GameButton();
-			this.btnStellarManipulation = new FrEee.WinForms.Controls.GameButton();
+			this.btnActivate = new FrEee.WinForms.Controls.GameButton();
 			this.btnToggleMinister = new FrEee.WinForms.Controls.GameButton();
 			this.btnRename = new FrEee.WinForms.Controls.GameButton();
 			this.btnRecycle = new FrEee.WinForms.Controls.GameButton();
@@ -85,6 +85,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+			this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -103,7 +104,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnMovementLog.BackColor = System.Drawing.Color.Black;
 			this.btnMovementLog.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMovementLog.Location = new System.Drawing.Point(296, 48);
+			this.btnMovementLog.Location = new System.Drawing.Point(427, 48);
 			this.btnMovementLog.Name = "btnMovementLog";
 			this.btnMovementLog.Size = new System.Drawing.Size(36, 36);
 			this.btnMovementLog.TabIndex = 22;
@@ -116,7 +117,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnDecloak.BackColor = System.Drawing.Color.Black;
 			this.btnDecloak.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDecloak.Location = new System.Drawing.Point(254, 48);
+			this.btnDecloak.Location = new System.Drawing.Point(301, 49);
 			this.btnDecloak.Name = "btnDecloak";
 			this.btnDecloak.Size = new System.Drawing.Size(36, 36);
 			this.btnDecloak.TabIndex = 21;
@@ -129,7 +130,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnCloak.BackColor = System.Drawing.Color.Black;
 			this.btnCloak.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCloak.Location = new System.Drawing.Point(254, 6);
+			this.btnCloak.Location = new System.Drawing.Point(301, 7);
 			this.btnCloak.Name = "btnCloak";
 			this.btnCloak.Size = new System.Drawing.Size(36, 36);
 			this.btnCloak.TabIndex = 20;
@@ -138,25 +139,24 @@ namespace FrEee.WinForms.Forms
 			this.toolTip.SetToolTip(this.btnCloak, "(Z) Cloak");
 			this.btnCloak.UseVisualStyleBackColor = false;
 			// 
-			// btnStellarManipulation
+			// btnActivate
 			// 
-			this.btnStellarManipulation.BackColor = System.Drawing.Color.Black;
-			this.btnStellarManipulation.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnStellarManipulation.Location = new System.Drawing.Point(296, 6);
-			this.btnStellarManipulation.Name = "btnStellarManipulation";
-			this.btnStellarManipulation.Size = new System.Drawing.Size(36, 36);
-			this.btnStellarManipulation.TabIndex = 19;
-			this.btnStellarManipulation.TabStop = false;
-			this.btnStellarManipulation.Text = "SM";
-			this.toolTip.SetToolTip(this.btnStellarManipulation, "(Ctrl-M) Stellar Manipulation");
-			this.btnStellarManipulation.UseVisualStyleBackColor = false;
+			this.btnActivate.BackColor = System.Drawing.Color.Black;
+			this.btnActivate.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnActivate.Location = new System.Drawing.Point(343, 7);
+			this.btnActivate.Name = "btnActivate";
+			this.btnActivate.Size = new System.Drawing.Size(36, 36);
+			this.btnActivate.TabIndex = 19;
+			this.btnActivate.TabStop = false;
+			this.btnActivate.Text = "Act";
+			this.toolTip.SetToolTip(this.btnActivate, "(Ctrl-A) Activate Ability");
+			this.btnActivate.UseVisualStyleBackColor = false;
 			// 
 			// btnToggleMinister
 			// 
-			this.btnToggleMinister.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnToggleMinister.BackColor = System.Drawing.Color.Black;
 			this.btnToggleMinister.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnToggleMinister.Location = new System.Drawing.Point(338, 48);
+			this.btnToggleMinister.Location = new System.Drawing.Point(385, 49);
 			this.btnToggleMinister.Name = "btnToggleMinister";
 			this.btnToggleMinister.Size = new System.Drawing.Size(36, 36);
 			this.btnToggleMinister.TabIndex = 18;
@@ -167,10 +167,9 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnRename
 			// 
-			this.btnRename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnRename.BackColor = System.Drawing.Color.Black;
 			this.btnRename.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRename.Location = new System.Drawing.Point(338, 6);
+			this.btnRename.Location = new System.Drawing.Point(385, 7);
 			this.btnRename.Name = "btnRename";
 			this.btnRename.Size = new System.Drawing.Size(36, 36);
 			this.btnRename.TabIndex = 17;
@@ -183,7 +182,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnRecycle.BackColor = System.Drawing.Color.Black;
 			this.btnRecycle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRecycle.Location = new System.Drawing.Point(170, 48);
+			this.btnRecycle.Location = new System.Drawing.Point(217, 48);
 			this.btnRecycle.Name = "btnRecycle";
 			this.btnRecycle.Size = new System.Drawing.Size(36, 36);
 			this.btnRecycle.TabIndex = 16;
@@ -195,10 +194,9 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnRepeatOrders
 			// 
-			this.btnRepeatOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnRepeatOrders.BackColor = System.Drawing.Color.Black;
 			this.btnRepeatOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRepeatOrders.Location = new System.Drawing.Point(380, 6);
+			this.btnRepeatOrders.Location = new System.Drawing.Point(49, 48);
 			this.btnRepeatOrders.Name = "btnRepeatOrders";
 			this.btnRepeatOrders.Size = new System.Drawing.Size(36, 36);
 			this.btnRepeatOrders.TabIndex = 15;
@@ -209,10 +207,9 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnNextIdle
 			// 
-			this.btnNextIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnNextIdle.BackColor = System.Drawing.Color.Black;
 			this.btnNextIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnNextIdle.Location = new System.Drawing.Point(422, 48);
+			this.btnNextIdle.Location = new System.Drawing.Point(469, 7);
 			this.btnNextIdle.Name = "btnNextIdle";
 			this.btnNextIdle.Size = new System.Drawing.Size(36, 36);
 			this.btnNextIdle.TabIndex = 6;
@@ -225,7 +222,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnRepair.BackColor = System.Drawing.Color.Black;
 			this.btnRepair.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRepair.Location = new System.Drawing.Point(128, 48);
+			this.btnRepair.Location = new System.Drawing.Point(175, 49);
 			this.btnRepair.Name = "btnRepair";
 			this.btnRepair.Size = new System.Drawing.Size(36, 36);
 			this.btnRepair.TabIndex = 14;
@@ -236,10 +233,9 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnPrevIdle
 			// 
-			this.btnPrevIdle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnPrevIdle.BackColor = System.Drawing.Color.Black;
 			this.btnPrevIdle.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPrevIdle.Location = new System.Drawing.Point(380, 48);
+			this.btnPrevIdle.Location = new System.Drawing.Point(427, 7);
 			this.btnPrevIdle.Name = "btnPrevIdle";
 			this.btnPrevIdle.Size = new System.Drawing.Size(36, 36);
 			this.btnPrevIdle.TabIndex = 5;
@@ -252,7 +248,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnResupply.BackColor = System.Drawing.Color.Black;
 			this.btnResupply.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnResupply.Location = new System.Drawing.Point(128, 6);
+			this.btnResupply.Location = new System.Drawing.Point(175, 7);
 			this.btnResupply.Name = "btnResupply";
 			this.btnResupply.Size = new System.Drawing.Size(36, 36);
 			this.btnResupply.TabIndex = 13;
@@ -265,7 +261,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnSentry.BackColor = System.Drawing.Color.Black;
 			this.btnSentry.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnSentry.Location = new System.Drawing.Point(86, 48);
+			this.btnSentry.Location = new System.Drawing.Point(133, 49);
 			this.btnSentry.Name = "btnSentry";
 			this.btnSentry.Size = new System.Drawing.Size(36, 36);
 			this.btnSentry.TabIndex = 12;
@@ -277,10 +273,9 @@ namespace FrEee.WinForms.Forms
 			// 
 			// btnClearOrders
 			// 
-			this.btnClearOrders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnClearOrders.BackColor = System.Drawing.Color.Black;
 			this.btnClearOrders.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClearOrders.Location = new System.Drawing.Point(422, 6);
+			this.btnClearOrders.Location = new System.Drawing.Point(343, 49);
 			this.btnClearOrders.Name = "btnClearOrders";
 			this.btnClearOrders.Size = new System.Drawing.Size(36, 36);
 			this.btnClearOrders.TabIndex = 11;
@@ -294,7 +289,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnFleetTransfer.BackColor = System.Drawing.Color.Black;
 			this.btnFleetTransfer.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnFleetTransfer.Location = new System.Drawing.Point(212, 48);
+			this.btnFleetTransfer.Location = new System.Drawing.Point(259, 49);
 			this.btnFleetTransfer.Name = "btnFleetTransfer";
 			this.btnFleetTransfer.Size = new System.Drawing.Size(36, 36);
 			this.btnFleetTransfer.TabIndex = 10;
@@ -308,7 +303,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnTransferCargo.BackColor = System.Drawing.Color.Black;
 			this.btnTransferCargo.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnTransferCargo.Location = new System.Drawing.Point(212, 6);
+			this.btnTransferCargo.Location = new System.Drawing.Point(259, 7);
 			this.btnTransferCargo.Name = "btnTransferCargo";
 			this.btnTransferCargo.Size = new System.Drawing.Size(36, 36);
 			this.btnTransferCargo.TabIndex = 9;
@@ -322,7 +317,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnConstructionQueue.BackColor = System.Drawing.Color.Black;
 			this.btnConstructionQueue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnConstructionQueue.Location = new System.Drawing.Point(170, 6);
+			this.btnConstructionQueue.Location = new System.Drawing.Point(217, 7);
 			this.btnConstructionQueue.Name = "btnConstructionQueue";
 			this.btnConstructionQueue.Size = new System.Drawing.Size(36, 36);
 			this.btnConstructionQueue.TabIndex = 8;
@@ -336,7 +331,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnColonize.BackColor = System.Drawing.Color.Black;
 			this.btnColonize.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnColonize.Location = new System.Drawing.Point(47, 48);
+			this.btnColonize.Location = new System.Drawing.Point(133, 7);
 			this.btnColonize.Name = "btnColonize";
 			this.btnColonize.Size = new System.Drawing.Size(36, 36);
 			this.btnColonize.TabIndex = 7;
@@ -350,7 +345,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnEvade.BackColor = System.Drawing.Color.Black;
 			this.btnEvade.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnEvade.Location = new System.Drawing.Point(86, 6);
+			this.btnEvade.Location = new System.Drawing.Point(91, 47);
 			this.btnEvade.Name = "btnEvade";
 			this.btnEvade.Size = new System.Drawing.Size(36, 36);
 			this.btnEvade.TabIndex = 6;
@@ -378,7 +373,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.btnPursue.BackColor = System.Drawing.Color.Black;
 			this.btnPursue.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnPursue.Location = new System.Drawing.Point(47, 6);
+			this.btnPursue.Location = new System.Drawing.Point(91, 6);
 			this.btnPursue.Name = "btnPursue";
 			this.btnPursue.Size = new System.Drawing.Size(36, 36);
 			this.btnPursue.TabIndex = 4;
@@ -544,7 +539,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlLayout.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlLayout.Name = "pnlLayout";
 			this.pnlLayout.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlLayout.Size = new System.Drawing.Size(1229, 779);
+			this.pnlLayout.Size = new System.Drawing.Size(1270, 779);
 			this.pnlLayout.TabIndex = 8;
 			// 
 			// pnlLeft
@@ -561,7 +556,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlLeft.Location = new System.Drawing.Point(1, 0);
 			this.pnlLeft.Margin = new System.Windows.Forms.Padding(1, 1, 0, 1);
 			this.pnlLeft.Name = "pnlLeft";
-			this.pnlLeft.Size = new System.Drawing.Size(816, 777);
+			this.pnlLeft.Size = new System.Drawing.Size(857, 777);
 			this.pnlLeft.TabIndex = 6;
 			// 
 			// pnlSystemMap
@@ -578,7 +573,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSystemMap.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlSystemMap.Name = "pnlSystemMap";
 			this.pnlSystemMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlSystemMap.Size = new System.Drawing.Size(671, 642);
+			this.pnlSystemMap.Size = new System.Drawing.Size(712, 642);
 			this.pnlSystemMap.TabIndex = 9;
 			// 
 			// starSystemView
@@ -590,7 +585,7 @@ namespace FrEee.WinForms.Forms
 			this.starSystemView.Name = "starSystemView";
 			this.starSystemView.SelectedSector = null;
 			this.starSystemView.SelectedSpaceObject = null;
-			this.starSystemView.Size = new System.Drawing.Size(663, 634);
+			this.starSystemView.Size = new System.Drawing.Size(704, 634);
 			this.starSystemView.StarSystem = null;
 			this.starSystemView.TabIndex = 0;
 			this.starSystemView.SectorClicked += new FrEee.WinForms.Controls.StarSystemView.SectorSelectionDelegate(this.starSystemView_SectorClicked);
@@ -672,10 +667,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.BackColor = System.Drawing.Color.Black;
 			this.pnlSubCommands.BorderColor = System.Drawing.Color.RoyalBlue;
 			this.pnlSubCommands.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.pnlSubCommands.Controls.Add(this.btnWaypoint);
 			this.pnlSubCommands.Controls.Add(this.btnMovementLog);
 			this.pnlSubCommands.Controls.Add(this.btnDecloak);
 			this.pnlSubCommands.Controls.Add(this.btnCloak);
-			this.pnlSubCommands.Controls.Add(this.btnStellarManipulation);
+			this.pnlSubCommands.Controls.Add(this.btnActivate);
 			this.pnlSubCommands.Controls.Add(this.btnToggleMinister);
 			this.pnlSubCommands.Controls.Add(this.btnRename);
 			this.pnlSubCommands.Controls.Add(this.btnRecycle);
@@ -699,7 +695,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlSubCommands.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlSubCommands.Name = "pnlSubCommands";
 			this.pnlSubCommands.Padding = new System.Windows.Forms.Padding(4);
-			this.pnlSubCommands.Size = new System.Drawing.Size(476, 97);
+			this.pnlSubCommands.Size = new System.Drawing.Size(517, 97);
 			this.pnlSubCommands.TabIndex = 6;
 			// 
 			// pnlMainCommands
@@ -742,7 +738,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlHeader.Margin = new System.Windows.Forms.Padding(2);
 			this.pnlHeader.Name = "pnlHeader";
 			this.pnlHeader.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlHeader.Size = new System.Drawing.Size(818, 37);
+			this.pnlHeader.Size = new System.Drawing.Size(859, 37);
 			this.pnlHeader.TabIndex = 5;
 			// 
 			// resInt
@@ -827,7 +823,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.Controls.Add(this.pnlGalaxyMap);
 			this.pnlRight.Controls.Add(this.pnlDetailReport);
 			this.pnlRight.Controls.Add(this.progResearch);
-			this.pnlRight.Location = new System.Drawing.Point(812, 2);
+			this.pnlRight.Location = new System.Drawing.Point(853, 2);
 			this.pnlRight.Margin = new System.Windows.Forms.Padding(0, 1, 1, 1);
 			this.pnlRight.Name = "pnlRight";
 			this.pnlRight.Size = new System.Drawing.Size(414, 775);
@@ -878,12 +874,25 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
 			// 
+			// btnWaypoint
+			// 
+			this.btnWaypoint.BackColor = System.Drawing.Color.Black;
+			this.btnWaypoint.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnWaypoint.Location = new System.Drawing.Point(49, 6);
+			this.btnWaypoint.Name = "btnWaypoint";
+			this.btnWaypoint.Size = new System.Drawing.Size(36, 36);
+			this.btnWaypoint.TabIndex = 23;
+			this.btnWaypoint.TabStop = false;
+			this.btnWaypoint.Text = "Way";
+			this.toolTip.SetToolTip(this.btnWaypoint, "(Ctrl-W) Move to Waypoint");
+			this.btnWaypoint.UseVisualStyleBackColor = false;
+			// 
 			// GameForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(1229, 779);
+			this.ClientSize = new System.Drawing.Size(1270, 779);
 			this.Controls.Add(this.pnlLayout);
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -967,10 +976,11 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnRecycle;
 		private GameButton btnRename;
 		private GameButton btnToggleMinister;
-		private GameButton btnStellarManipulation;
+		private GameButton btnActivate;
 		private GameButton btnCloak;
 		private GameButton btnDecloak;
 		private GameButton btnMovementLog;
+		private GameButton btnWaypoint;
 	}
 }
 
