@@ -113,6 +113,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Forms\ActivateAbilityForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ActivateAbilityForm.Designer.cs">
+      <DependentUpon>ActivateAbilityForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\CombatSimulatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -548,6 +554,9 @@
     <Compile Include="DataGridView\GridConfig.cs" />
     <EmbeddedResource Include="Controls\GalaxyView.resx">
       <DependentUpon>GalaxyView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ActivateAbilityForm.resx">
+      <DependentUpon>ActivateAbilityForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CombatSimulatorForm.resx">
       <DependentUpon>CombatSimulatorForm.cs</DependentUpon>

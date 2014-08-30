@@ -9,6 +9,7 @@ using FrEee.Game.Objects.Space;
 using System.Drawing;
 using FrEee.Modding.Interfaces;
 using FrEee.Modding.StellarObjectLocations;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Modding.Templates
 {
@@ -16,7 +17,7 @@ namespace FrEee.Modding.Templates
 	/// A template for creating star systems.
 	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
-	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, IModObject
+	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityContainer
 	{
 		/// <summary>
 		/// Creates an empty star system template.
@@ -133,6 +134,28 @@ namespace FrEee.Modding.Templates
 		public void Dispose()
 		{
 			// nothing to do
+		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { return Abilities; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			// TODO - include stellar object templates here
+			get { yield break; }
+		}
+
+		public IAbilityObject Parent
+		{
+			// TODO - include galaxy template here?
+			get { return null; }
+		}
+
+		public AbilityTargets AbilityTarget
+		{
+			get { return AbilityTargets.StarSystem; }
 		}
 	}
 }

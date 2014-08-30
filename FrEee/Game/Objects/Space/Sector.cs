@@ -271,5 +271,20 @@ namespace FrEee.Game.Objects.Space
 		{
 			return SpaceObjects.Where(sobj => sobj.Owner == emp).OfType<IAbilityObject>();
 		}
+
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
+			get { yield break; }
+		}
+
+		public IEnumerable<IAbilityObject> Children
+		{
+			get { return SpaceObjects; }
+		}
+
+		public IAbilityObject Parent
+		{
+			get { return StarSystem; }
+		}
 	}
 }

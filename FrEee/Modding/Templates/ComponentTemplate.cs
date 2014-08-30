@@ -18,7 +18,7 @@ namespace FrEee.Modding.Templates
 	/// A template for a vehicle component.
 	/// </summary>
 	[Serializable]
-	public class ComponentTemplate : IModObject, IResearchable, IAbilityObject, ITemplate<Component>, IReferrable
+	public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IReferrable
 	{
 		public ComponentTemplate()
 		{
