@@ -300,6 +300,8 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Emergency Energy
+Alias := Emergency Propulsion
+Alias := Emergency Speed
 Targets := Component
 Description := Generates [%Amount1%] movement points when used.
 Value 1 Rule := Add
@@ -312,6 +314,7 @@ Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Open Warp Point Distance
+Alias := Open Warp Point
 Targets := SpaceVehicle, Component
 Description := Can open a warp point to a star system up to [%Amount1%] light-years away.
 Value 1 Rule := TakeHighest

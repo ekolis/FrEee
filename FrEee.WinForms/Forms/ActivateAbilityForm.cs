@@ -46,13 +46,13 @@ namespace FrEee.WinForms.Forms
 				if (sel.IsDestroyedOnUse)
 				{
 					IAbilityObject toBeDestroyed = sel.Source is IHull ? sobj : sel.Source;
-					result = MessageBox.Show("Activate this ability on " + sel.Source + "?\n" + sel.Ability + "\n" + toBeDestroyed + " will be destroyed!", "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+					result = MessageBox.Show("Activate this ability of " + sel.Source + "?\n" + sel.Ability + "\n" + toBeDestroyed + " will be destroyed!", "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				}
 				else
-					result = MessageBox.Show("Activate this ability on " + sel.Source + "?\n" + sel.Ability, "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+					result = MessageBox.Show("Activate this ability of " + sel.Source + "?\n" + sel.Ability, "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 				{
-					var order = new ActivateAbilityOrder(sel.Ability);
+					var order = new ActivateAbilityOrder(sel.Ability, null); // TODO - let the user pick a target for the ability (such as destroy planet, which planet to destroy?)
 					var cmd = new AddOrderCommand<IMobileSpaceObject>(sobj, order);
 					cmd.Execute();
 					Empire.Current.Commands.Add(cmd);
