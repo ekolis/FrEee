@@ -483,7 +483,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="abilities"></param>
 		/// <param name="stackTo">The object which should own the stacked abilities.</param>
 		/// <returns></returns>
-		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, object stackTo)
+		public static ILookup<Ability, Ability> StackToTree(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
 		{
 			var stacked = new List<Tuple<Ability, Ability>>();
 			if (abilities.Any())
@@ -503,17 +503,17 @@ namespace FrEee.Utility.Extensions
 			return stacked.ToLookup(t => t.Item1, t => t.Item2);
 		}
 
-		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, object stackTo)
+		public static IEnumerable<Ability> Stack(this IEnumerable<Ability> abilities, IAbilityObject stackTo)
 		{
 			return abilities.StackToTree(stackTo).Select(g => g.Key);
 		}
 
-		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, object stackTo)
+		public static IEnumerable<Ability> StackAbilities(this IEnumerable<IAbilityObject> objs, IAbilityObject stackTo)
 		{
 			return objs.SelectMany(obj => obj.Abilities()).Stack(stackTo);
 		}
 
-		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs, object stackTo)
+		public static ILookup<Ability, Ability> StackAbilitiesToTree(this IEnumerable<IAbilityObject> objs, IAbilityObject stackTo)
 		{
 			return objs.SelectMany(obj => obj.Abilities()).StackToTree(stackTo);
 		}
@@ -1163,7 +1163,7 @@ namespace FrEee.Utility.Extensions
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, object stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
 		{
 			var tuples = objs.Squash(o => o.Abilities()).ToArray();
 			if (includeShared)
@@ -2741,6 +2741,72 @@ namespace FrEee.Utility.Extensions
 		public static int PercentOfRounded(this int p, int i)
 		{
 			return i.TimesAndRound(p.Percent());
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Vehicle v)
+		{
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			foreach (var a in v.Hull.Abilities)
+			{
+				if (a.Rule.IsActivatable)
+					dict.Add(a, v.Hull);
+			}
+			foreach (var c in v.Components.Where(c => !c.IsDestroyed))
+			{
+				foreach (var a in c.Abilities)
+				{
+					if (a.Rule.IsActivatable)
+						dict.Add(a, c);
+				}
+			}
+			return dict;
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this Planet p)
+		{
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			if (p.Colony == null)
+				return dict;
+			foreach (var f in p.Colony.Facilities.Where(f => !f.IsDestroyed))
+			{
+				foreach (var a in f.Abilities)
+				{
+					if (a.Rule.IsActivatable)
+						dict.Add(a, f);
+				}
+			}
+			return dict;
+		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IDictionary<Ability, IAbilityObject> ActivatableAbilities(this IAbilityObject o)
+		{
+			if (o is Vehicle)
+				return ((Vehicle)o).ActivatableAbilities();
+			if (o is Planet)
+				return ((Planet)o).ActivatableAbilities();
+
+			var dict = new Dictionary<Ability, IAbilityObject>();
+			foreach (var a in o.Abilities())
+			{
+				if (a.Rule.IsActivatable)
+					dict.Add(a, o);
+			}
+			return dict;
 		}
 	}
 }

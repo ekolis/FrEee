@@ -81,7 +81,7 @@ namespace FrEee.Game.Objects.Abilities
 		/// </summary>
 		/// <param name="abilities"></param>
 		/// <returns></returns>
-		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, object stackingTo)
+		public ILookup<Ability, Ability> GroupAndStack(IEnumerable<Ability> abilities, IAbilityObject stackingTo)
 		{
 			var ours = abilities.Where(a => a.Rule == this).ToArray();
 
@@ -139,7 +139,7 @@ namespace FrEee.Game.Objects.Abilities
 
 		}
 
-		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, object stackingTo, bool groupStacking)
+		private ILookup<Ability, Ability> Stack(IEnumerable<Ability> abilities, IAbilityObject stackingTo, bool groupStacking)
 		{
 			if (abilities.Count() <= 1)
 				return abilities.ToLookup(a => a, a => a);
@@ -227,6 +227,35 @@ namespace FrEee.Game.Objects.Abilities
 		public void Dispose()
 		{
 			// nothing to do
+		}
+
+		public bool IsActivatable
+		{
+			get
+			{
+				// TODO - scriptable ability rules
+				return Matches("Emergency Resupply") ||
+					Matches("Emergency Energy") ||
+					Matches("Self-Destruct") ||
+					Matches("Open Warp Point") ||
+					Matches("Close Warp Point") ||
+					Matches("Create Planet Size") ||
+					Matches("Destroy Planet Size") ||
+					Matches("Create Star") ||
+					Matches("Destroy Star") ||
+					Matches("Create Storm") ||
+					Matches("Destroy Storm") ||
+					Matches("Create Nebulae") ||
+					Matches("Destroy Nebulae") ||
+					Matches("Create Black Hole") ||
+					Matches("Destroy Black Hole") ||
+					Matches("Create Constructed Planet - Star") ||
+					Matches("Create Constructed Planet - Planet") ||
+					Matches("Create Constructed Planet - Storm") ||
+					Matches("Create Constructed Planet - Warp Point") ||
+					Matches("Create Constructed Planet - Asteroids") ||
+					Matches("Create Constructed Planet - Space");
+			}
 		}
 	}
 }

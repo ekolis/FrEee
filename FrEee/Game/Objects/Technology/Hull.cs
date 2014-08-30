@@ -100,7 +100,7 @@ namespace FrEee.Game.Objects.Technology
 			private set;
 		}
 
-		public ICollection<Ability> Abilities { get; private set; }
+		public IList<Ability> Abilities { get; private set; }
 
 		/// <summary>
 		/// Does this hull need a component with the Ship Bridge ability?

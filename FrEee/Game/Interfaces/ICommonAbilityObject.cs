@@ -11,7 +11,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// An object that can contain different abilities for different empires.
 	/// </summary>
-	public interface ICommonAbilityObject
+	public interface ICommonAbilityObject : IAbilityObject
 	{
 		/// <summary>
 		/// Finds any child ability objects owned by an empire.
@@ -19,7 +19,5 @@ namespace FrEee.Game.Interfaces
 		/// <param name="emp"></param>
 		/// <returns></returns>
 		IEnumerable<IAbilityObject> GetContainedAbilityObjects(Empire emp);
-
-		AbilityTargets AbilityTarget { get; }
 	}
 }
