@@ -228,5 +228,34 @@ namespace FrEee.Game.Objects.Abilities
 		{
 			// nothing to do
 		}
+
+		public bool IsActivatable
+		{
+			get
+			{
+				// TODO - scriptable ability rules
+				return Matches("Emergency Resupply") ||
+					Matches("Emergency Energy") ||
+					Matches("Open Warp Point Distance") ||
+					Matches("Close Warp Point") ||
+					Matches("Create Planet Size") ||
+					Matches("Destroy Planet Size") ||
+					Matches("Create Star") ||
+					Matches("Destroy Star") ||
+					Matches("Create Storm") ||
+					Matches("Destroy Storm") ||
+					Matches("Self-Destruct") ||
+					Matches("Create Nebulae") ||
+					Matches("Destroy Nebulae") ||
+					Matches("Create Black Hole") ||
+					Matches("Destroy Black Hole") ||
+					Matches("Create Constructed Planet - Star") ||
+					Matches("Create Constructed Planet - Planet") ||
+					Matches("Create Constructed Planet - Storm") ||
+					Matches("Create Constructed Planet - Warp Point") ||
+					Matches("Create Constructed Planet - Asteroids") ||
+					Matches("Create Constructed Planet - Space");
+			}
+		}
 	}
 }

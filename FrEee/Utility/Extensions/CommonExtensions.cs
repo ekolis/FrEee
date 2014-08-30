@@ -2742,5 +2742,15 @@ namespace FrEee.Utility.Extensions
 		{
 			return i.TimesAndRound(p.Percent());
 		}
+
+		/// <summary>
+		/// Gets any abilities that can be activated.
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> ActivatableAbilities(this IAbilityObject obj)
+		{
+			return obj.Abilities().Where(a => a.Rule.IsActivatable);
+		}
 	}
 }

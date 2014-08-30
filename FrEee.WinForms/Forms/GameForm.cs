@@ -100,6 +100,7 @@ namespace FrEee.WinForms.Forms
 			LoadButtonImage(btnTransferCargo, "TransferCargo");
 			LoadButtonImage(btnFleetTransfer, "FleetTransfer");
 			LoadButtonImage(btnClearOrders, "ClearOrders");
+			LoadButtonImage(btnActivate, "Activate");
 			LoadButtonImage(btnPrevIdle, "Previous");
 			LoadButtonImage(btnNextIdle, "Next");
 
@@ -892,8 +893,9 @@ namespace FrEee.WinForms.Forms
 					foreach (GameButton btn in pnlSubCommands.Controls.Cast<Control>().Except(btnFleetTransfer))
 						btn.Visible = false;
 
-					// fleet transfer button is special, it can be selected even with no space object selected
+					// fleet transfer and recycle buttons are special, they can be selected even with no space object selected
 					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
+					btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
 				}
 				else
 				{
@@ -907,6 +909,7 @@ namespace FrEee.WinForms.Forms
 					btnConstructionQueue.Visible = value != null && value.ConstructionQueue != null;
 					btnTransferCargo.Visible = value != null && (value is ICargoContainer && ((ICargoContainer)value).CargoStorage > 0 || value.SupplyStorage > 0 || value.HasInfiniteSupplies);
 					btnRecycle.Visible = starSystemView.SelectedSector.SpaceObjects.Any(sobj => sobj.Owner == Empire.Current && (sobj is Planet || sobj.HasAbility("Space Yard")));
+					btnActivate.Visible = value.ActivatableAbilities().Any();
 					btnFleetTransfer.Visible = IsFleetTransferOperationValid;
 					btnClearOrders.Visible = value is IMobileSpaceObject || value is Planet;
 				}
@@ -940,6 +943,8 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.KeyCode == Keys.R && btnRecycle.Visible)
 					btnRecycle_Click(this, new EventArgs());
+				else if (e.KeyCode == Keys.A && btnActivate.Visible)
+					btnActivate_Click(this, new EventArgs());
 			}
 			else if (!e.Shift && !e.Control)
 			{
@@ -1382,6 +1387,11 @@ namespace FrEee.WinForms.Forms
 		void GameForm_MouseDown(object sender, MouseEventArgs e)
 		{
 			searchBox.HideResults();
+		}
+
+		private void btnActivate_Click(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
