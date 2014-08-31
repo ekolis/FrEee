@@ -184,6 +184,8 @@
     <Compile Include="Game\Interfaces\IUnlockable.cs" />
     <Compile Include="Game\Interfaces\IVehicle.cs" />
     <Compile Include="Game\Interfaces\IVictoryCondition.cs" />
+    <Compile Include="Game\Objects\Civilization\SectorWaypoint.cs" />
+    <Compile Include="Game\Objects\Civilization\SpaceObjectWaypoint.cs" />
     <Compile Include="Game\Objects\Civilization\Waypoint.cs" />
     <Compile Include="Game\Objects\AI\AI.cs" />
     <Compile Include="Game\Objects\Civilization\Aptitude.cs" />
