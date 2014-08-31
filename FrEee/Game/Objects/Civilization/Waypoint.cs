@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Civilization
 			Owner = Empire.Current;
 		}
 
-		public abstract Sector Sector { get; }
+		public abstract Sector Sector { get; protected set; }
 
 		public abstract StarSystem StarSystem { get; }
 
