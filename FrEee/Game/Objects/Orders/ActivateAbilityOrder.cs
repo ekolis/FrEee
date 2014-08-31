@@ -19,12 +19,21 @@ namespace FrEee.Game.Objects.Orders
 	/// </summary>
 	public class ActivateAbilityOrder : IOrder<IMobileSpaceObject>
 	{
-		public ActivateAbilityOrder(Ability ability, IReferrable target)
+		public ActivateAbilityOrder(IAbilityObject source, Ability ability, IReferrable target)
 		{
 			Owner = Empire.Current;
+			Source = source;
 			Ability = ability;
 			Target = target;
 		}
+
+		private Reference<IAbilityObject> source { get; set; }
+
+		/// <summary>
+		/// The source of the ability. Probably a component, facility, or hull.
+		/// </summary>
+		[DoNotSerialize]
+		public IAbilityObject Source { get { return source.Value; } set { source = value.Reference(); } }
 
 		private Reference<Ability> ability { get; set; }
 
@@ -78,11 +87,11 @@ namespace FrEee.Game.Objects.Orders
 				// TODO - stellar manipulation
 
 				// destroy component/etc. if necessary
-				if (Ability.Container.HasAbility("Destroyed On Use"))
+				if (Source.HasAbility("Destroyed On Use"))
 				{
-					if (Ability.Container is IDamageable)
-						(Ability.Container as IDamageable).Hitpoints = 0;
-					if (Ability.Container is IHull)
+					if (Source is IDamageable)
+						(Source as IDamageable).Hitpoints = 0;
+					if (Source is IHull)
 						executor.Dispose(); // hull destruction kills the whole ship!
 				}
 			}
@@ -90,12 +99,12 @@ namespace FrEee.Game.Objects.Orders
 
 		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
 		{
-			if (!executor.Abilities().Contains(Ability))
-				yield return executor.CreateLogMessage(executor + " does not possess the ability \"" + Ability + "\".");
+			if (!Source.IntrinsicAbilities.Contains(Ability))
+				yield return executor.CreateLogMessage(executor + " does not intrinsically possess the ability \"" + Ability + "\" with ID=" + Ability.ID + ".");
 			if (!Ability.Rule.IsActivatable)
 				yield return executor.CreateLogMessage("The ability \"" + Ability + "\" cannot be activated. It is a passive ability.");
-			if (Ability.Container is IDamageable && (Ability.Container as IDamageable).IsDestroyed)
-				yield return executor.CreateLogMessage(executor +" cannot activate " + Ability.Container + "'s ability because " + Ability.Container + " is destroyed.");
+			if (Source is IDamageable && (Source as IDamageable).IsDestroyed)
+				yield return executor.CreateLogMessage(executor +" cannot activate " + Source + "'s ability because " + Source + " is destroyed.");
 		}
 
 		public bool CheckCompletion(IMobileSpaceObject executor)

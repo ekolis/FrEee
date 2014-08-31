@@ -52,7 +52,7 @@ namespace FrEee.WinForms.Forms
 					result = MessageBox.Show("Activate this ability of " + sel.Source + "?\n" + sel.Ability, "Confirm Activation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 				if (result == DialogResult.Yes)
 				{
-					var order = new ActivateAbilityOrder(sel.Ability, null); // TODO - let the user pick a target for the ability (such as destroy planet, which planet to destroy?)
+					var order = new ActivateAbilityOrder(sel.Source, sel.Ability, null); // TODO - let the user pick a target for the ability (such as destroy planet, which planet to destroy?)
 					var cmd = new AddOrderCommand<IMobileSpaceObject>(sobj, order);
 					cmd.Execute();
 					Empire.Current.Commands.Add(cmd);
