@@ -11,7 +11,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A waypoint in space that can be used for navigation.
 	/// </summary>
-	public abstract class Waypoint : ILocated, IFoggable, IOwnable
+	public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed
 	{
 		protected Waypoint()
 		{
@@ -87,6 +87,13 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get;
 			private set;
+		}
+
+		public abstract string Name { get; }
+
+		public override string ToString()
+		{
+			return Name;
 		}
 	}
 }
