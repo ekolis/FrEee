@@ -63,6 +63,8 @@ namespace FrEee.Game.Objects.Civilization
 			EncounteredEmpires.Add(this);
 			IncomingMessages = new HashSet<IMessage>();
 			SentMessages = new HashSet<IMessage>();
+			Waypoints = new List<Waypoint>();
+			NumberedWaypoints = new Waypoint[10];
 		}
 
 		/// <summary>
@@ -903,5 +905,15 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return (T)Memory[obj.ID];
 		}
+
+		/// <summary>
+		/// Waypoints set by this empire.
+		/// </summary>
+		public IList<Waypoint> Waypoints { get; private set; }
+
+		/// <summary>
+		/// Numbered waypoints that are on hotkeys.
+		/// </summary>
+		public Waypoint[] NumberedWaypoints { get; private set; }
 	}
 }
