@@ -255,6 +255,7 @@
     <Compile Include="Game\Objects\Orders\TransferCargoOrder.cs" />
     <Compile Include="Game\Objects\Orders\WarpOrder.cs" />
     <Compile Include="Game\Objects\Orders\MoveOrder.cs" />
+    <Compile Include="Game\Objects\Orders\WaypointOrder.cs" />
     <Compile Include="Game\Objects\SimulatedObjectWrappers.cs" />
     <Compile Include="Game\Objects\Space\Fleet.cs" />
     <Compile Include="Game\Objects\Technology\FacilityUpgrade.cs" />

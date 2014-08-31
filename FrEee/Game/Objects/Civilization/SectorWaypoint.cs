@@ -27,5 +27,10 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Sector.StarSystem; }
 		}
+
+		public override string Name
+		{
+			get { return "Waypoint at " + Sector.Name; }
+		}
 	}
 }
