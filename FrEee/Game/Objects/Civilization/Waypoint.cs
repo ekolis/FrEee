@@ -104,11 +104,10 @@ namespace FrEee.Game.Objects.Civilization
 			Galaxy.Current.UnassignID(this);
 		}
 
-		public Empire Owner
-		{
-			get;
-			private set;
-		}
+		[DoNotSerialize]
+		public Empire Owner { get { return owner; } set { owner = value; } }
+
+		private Reference<Empire> owner { get; set; }
 
 		public abstract string Name { get; }
 
