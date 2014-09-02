@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Orders
 	public class WaypointOrder<T>
 		: IMovementOrder<T> where T : IMobileSpaceObject
 	{
-		protected WaypointOrder(Waypoint target, bool avoidEnemies)
+		public WaypointOrder(Waypoint target, bool avoidEnemies)
 		{
 			Owner = Empire.Current;
 			Target = target;

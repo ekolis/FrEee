@@ -966,6 +966,26 @@ namespace FrEee.WinForms.Forms
 					btnRecycle_Click(this, new EventArgs());
 				else if (e.KeyCode == Keys.A && btnActivate.Visible)
 					btnActivate_Click(this, new EventArgs());
+				else if (e.KeyCode == Keys.D0)
+					GoToWaypoint(0, true);
+				else if (e.KeyCode == Keys.D1)
+					GoToWaypoint(1, true);
+				else if (e.KeyCode == Keys.D2)
+					GoToWaypoint(2, true);
+				else if (e.KeyCode == Keys.D3)
+					GoToWaypoint(3, true);
+				else if (e.KeyCode == Keys.D4)
+					GoToWaypoint(4, true);
+				else if (e.KeyCode == Keys.D5)
+					GoToWaypoint(5, true);
+				else if (e.KeyCode == Keys.D6)
+					GoToWaypoint(6, true);
+				else if (e.KeyCode == Keys.D7)
+					GoToWaypoint(7, true);
+				else if (e.KeyCode == Keys.D8)
+					GoToWaypoint(8, true);
+				else if (e.KeyCode == Keys.D9)
+					GoToWaypoint(9, true);
 			}
 			else if (!e.Shift && !e.Control && !e.Alt)
 			{
@@ -992,6 +1012,26 @@ namespace FrEee.WinForms.Forms
 					ShowFleetTransferForm();
 				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
+				else if (e.KeyCode == Keys.D0)
+					GoToWaypoint(0, false);
+				else if (e.KeyCode == Keys.D1)
+					GoToWaypoint(1, false);
+				else if (e.KeyCode == Keys.D2)
+					GoToWaypoint(2, false);
+				else if (e.KeyCode == Keys.D3)
+					GoToWaypoint(3, false);
+				else if (e.KeyCode == Keys.D4)
+					GoToWaypoint(4, false);
+				else if (e.KeyCode == Keys.D5)
+					GoToWaypoint(5, false);
+				else if (e.KeyCode == Keys.D6)
+					GoToWaypoint(6, false);
+				else if (e.KeyCode == Keys.D7)
+					GoToWaypoint(7, false);
+				else if (e.KeyCode == Keys.D8)
+					GoToWaypoint(8, false);
+				else if (e.KeyCode == Keys.D9)
+					GoToWaypoint(9, false);
 			}
 			else if (!e.Shift && !e.Control && e.Alt)
 			{
@@ -1070,8 +1110,26 @@ namespace FrEee.WinForms.Forms
 			Empire.Current.Commands.Add(cmd);
 			cmd.Execute();
 
-			// refresh the map
+			// refresh the map and orders
 			starSystemView.Invalidate();
+			BindReport();
+			
+		}
+
+		private void GoToWaypoint(int waypointNumber, bool aggressive)
+		{
+			// find waypoint
+			var wp = Empire.Current.NumberedWaypoints[waypointNumber];
+			if (wp != null && SelectedSpaceObject != null && SelectedSpaceObject is IMobileSpaceObject)
+			{
+				// set an order to go there
+				var sobj = SelectedSpaceObject as IMobileSpaceObject;
+				sobj.AddOrder(new WaypointOrder<IMobileSpaceObject>(wp, !aggressive));
+
+				// refresh the map and orders
+				starSystemView.Invalidate();
+				BindReport();
+			}
 		}
 
 		/// <summary>
