@@ -26,6 +26,8 @@ namespace FrEee.Game.Interfaces
 		/// Any new (from the client) objects referred to by this command.
 		/// </summary>
 		IEnumerable<IReferrable> NewReferrables { get; }
+
+		IReferrable Executor { get; }
 	}
 
 	/// <summary>
@@ -36,6 +38,6 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The object whose queue is being manipulated.
 		/// </summary>
-		T Executor { get; set; }
+		new T Executor { get; set; }
 	}
 }
