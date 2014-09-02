@@ -1,6 +1,8 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +13,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// <summary>
 	/// A waypoint in space that can be used for navigation.
 	/// </summary>
-	public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed
+	public abstract class Waypoint : ILocated, IFoggable, IOwnable, INamed, IPromotable
 	{
 		protected Waypoint()
 		{
@@ -79,6 +81,25 @@ namespace FrEee.Game.Objects.Civilization
 				if (Owner.NumberedWaypoints[i] == this)
 					Owner.NumberedWaypoints[i] = null;
 			}
+			foreach (var sobj in Galaxy.Current.FindSpaceObjects<IMobileSpaceObject>())
+			{
+				// check if space object has orders to move to this waypoint
+				// if so, delete that order and any future orders
+				bool foundWaypoint = false;
+				foreach (var order in sobj.Orders)
+				{
+					if (order is WaypointOrder<IMobileSpaceObject>)
+					{
+						var wo = order as WaypointOrder<IMobileSpaceObject>;
+						if (wo.Target == this)
+							foundWaypoint = true;
+					}
+					if (foundWaypoint)
+						sobj.RemoveOrder(order);
+				}
+				if (foundWaypoint)
+					AlteredQueuesOnDelete++;
+			}
 			IsDisposed = true;
 			Galaxy.Current.UnassignID(this);
 		}
@@ -94,6 +115,17 @@ namespace FrEee.Game.Objects.Civilization
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		/// <summary>
+		/// Number of vehicles whose orders were altered when this waypoint was deleted.
+		/// </summary>
+		[DoNotSerialize]
+		internal int AlteredQueuesOnDelete { get; private set; }
+
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// doesn't use client objects, nothing to do here
 		}
 	}
 }
