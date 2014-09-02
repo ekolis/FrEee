@@ -1,5 +1,7 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +19,10 @@ namespace FrEee.Game.Objects.Civilization
 			SpaceObject = sobj;
 		}
 
-		public ISpaceObject SpaceObject { get; private set; }
+		[DoNotSerialize]
+		public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.Reference(); } }
+
+		private Reference<ISpaceObject> spaceObject { get; set; }
 
 		public override Sector Sector
 		{
