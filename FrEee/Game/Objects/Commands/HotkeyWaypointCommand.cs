@@ -73,7 +73,8 @@ namespace FrEee.Game.Objects.Commands
 						count++;
 				}
 
-				emp.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + "."));
+				if (count > 0)
+					emp.Log.Add(Issuer.CreateLogMessage(count + " vehicles were redirected from " + oldWaypoint + " to " + Executor + "."));
 			}
 		}
 	}
