@@ -537,7 +537,12 @@ namespace FrEee.Game.Objects.Space
 			if (CurrentEmpire != null)
 			{
 				foreach (var cmd in CurrentEmpire.Commands)
-					cmd.Execute();
+				{
+					if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
+						cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
+					else
+						cmd.Execute();
+				}
 			}
 
 			return noCmds;
@@ -840,7 +845,12 @@ namespace FrEee.Game.Objects.Space
 				foreach (var cmd in emp.Commands.Where(cmd => cmd != null))
 				{
 					if (cmd.Issuer == emp)
-						cmd.Execute();
+					{
+						if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
+							cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
+						else
+							cmd.Execute();
+					}
 					else
 					{
 						// no hacking!

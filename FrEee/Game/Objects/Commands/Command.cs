@@ -58,5 +58,11 @@ namespace FrEee.Game.Objects.Commands
 		}
 
 		public bool IsDisposed { get; set; }
+
+
+		IReferrable ICommand.Executor
+		{
+			get { return Executor; }
+		}
 	}
 }
