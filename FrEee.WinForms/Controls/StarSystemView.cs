@@ -337,11 +337,36 @@ namespace FrEee.WinForms.Controls
 						rectAbil = new RectangleF(new PointF(rectAbil.X + 1, rectAbil.Y + 1), rectAbil.Size);
 						pe.Graphics.DrawString(abilText, littleFont, new SolidBrush(Empire.Current.Color), rectAbil, sfAbil); // real text
 
+						// draw waypoint reticule
+						var sfwp = new StringFormat();
+						sfwp.Alignment = StringAlignment.Near;
+						sfwp.LineAlignment = StringAlignment.Far;
+						var box = new Rectangle((int)(drawx - drawsize / 2f), (int)(drawy - drawsize / 2f), drawsize, drawsize);
+						foreach (var wp in Empire.Current.Waypoints.Except(Empire.Current.NumberedWaypoints))
+						{
+							if (wp.Sector == sector)
+							{
+								// waypoints with no hotkey are drawn in gray
+								pe.Graphics.DrawRectangle(Pens.Gray, box);
+								pe.Graphics.DrawString(wp.Name, littleFont, Brushes.Gray, box);
+							}
+						}
+						for (int i = 0; i < Empire.Current.NumberedWaypoints.Length; i++)
+						{
+							// waypoints with a hotkey are drawn in silver
+							var wp = Empire.Current.NumberedWaypoints[i];
+							if (wp != null && wp.Sector == sector)
+							{
+								pe.Graphics.DrawRectangle(Pens.Silver, box);
+								pe.Graphics.DrawString("WP" + i + ": " + wp.Name, littleFont, Brushes.Silver, box);
+							}
+						}
+
 						// draw selection reticule
 						if (sector == SelectedSector)
 						{
-							// TOOD - cache pen asset
-							pe.Graphics.DrawRectangle(new Pen(Color.White), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
+							// TODO - cache pen asset
+							pe.Graphics.DrawRectangle(new Pen(Color.White), box);
 						}
 					}
 				}

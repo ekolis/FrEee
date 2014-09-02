@@ -918,7 +918,7 @@ namespace FrEee.WinForms.Forms
 
 		private void GameForm_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (e.Shift && !e.Control)
+			if (e.Shift && !e.Control && !e.Alt)
 			{
 				if (e.KeyCode == Keys.D)
 					this.ShowChildForm(new DesignListForm());
@@ -938,15 +938,36 @@ namespace FrEee.WinForms.Forms
                     ShowResearchForm();
                 else if (e.KeyCode == Keys.Tab)
                     btnPrevIdle_Click(this, new EventArgs());
+				// set waypoint without redirecting
+				else if(e.KeyCode == Keys.D0)
+					SetWaypoint(0, false);
+				else if (e.KeyCode == Keys.D1)
+					SetWaypoint(1, false);
+				else if (e.KeyCode == Keys.D2)
+					SetWaypoint(2, false);
+				else if (e.KeyCode == Keys.D3)
+					SetWaypoint(3, false);
+				else if (e.KeyCode == Keys.D4)
+					SetWaypoint(4, false);
+				else if (e.KeyCode == Keys.D5)
+					SetWaypoint(5, false);
+				else if (e.KeyCode == Keys.D6)
+					SetWaypoint(6, false);
+				else if (e.KeyCode == Keys.D7)
+					SetWaypoint(7, false);
+				else if (e.KeyCode == Keys.D8)
+					SetWaypoint(8, false);
+				else if (e.KeyCode == Keys.D9)
+					SetWaypoint(9, false);
 			}
-			else if (e.Control && !e.Shift)
+			else if (e.Control && !e.Shift && !e.Alt)
 			{
 				if (e.KeyCode == Keys.R && btnRecycle.Visible)
 					btnRecycle_Click(this, new EventArgs());
 				else if (e.KeyCode == Keys.A && btnActivate.Visible)
 					btnActivate_Click(this, new EventArgs());
 			}
-			else if (!e.Shift && !e.Control)
+			else if (!e.Shift && !e.Control && !e.Alt)
 			{
 				if (e.KeyCode == Keys.M && btnMove.Visible)
 					ChangeCommandMode(CommandMode.Move, SelectedSpaceObject);
@@ -971,6 +992,30 @@ namespace FrEee.WinForms.Forms
 					ShowFleetTransferForm();
 				else if (e.KeyCode == Keys.Tab)
 					btnNextIdle_Click(this, new EventArgs());
+			}
+			else if (!e.Shift && !e.Control && e.Alt)
+			{
+				// set waypoint and redirect
+				if (e.KeyCode == Keys.D0)
+					SetWaypoint(0, true);
+				else if (e.KeyCode == Keys.D1)
+					SetWaypoint(1, true);
+				else if (e.KeyCode == Keys.D2)
+					SetWaypoint(2, true);
+				else if (e.KeyCode == Keys.D3)
+					SetWaypoint(3, true);
+				else if (e.KeyCode == Keys.D4)
+					SetWaypoint(4, true);
+				else if (e.KeyCode == Keys.D5)
+					SetWaypoint(5, true);
+				else if (e.KeyCode == Keys.D6)
+					SetWaypoint(6, true);
+				else if (e.KeyCode == Keys.D7)
+					SetWaypoint(7, true);
+				else if (e.KeyCode == Keys.D8)
+					SetWaypoint(8, true);
+				else if (e.KeyCode == Keys.D9)
+					SetWaypoint(9, true);
 			}
 
 			if (e.KeyCode == Keys.F2)
@@ -1005,6 +1050,28 @@ namespace FrEee.WinForms.Forms
 		{
 			if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
 				aggressiveMode = false;
+		}
+
+		private void SetWaypoint(int waypointNumber, bool redirect)
+		{
+			// find selected space object or sector and create a waypoint
+			Waypoint waypoint = null;
+			if (SelectedSpaceObject != null)
+				waypoint = new SpaceObjectWaypoint(SelectedSpaceObject);
+			else if (starSystemView.SelectedSector != null)
+				waypoint = new SectorWaypoint(starSystemView.SelectedSector);
+
+			// set the waypoint
+			ICommand cmd;
+			cmd = new CreateWaypointCommand(waypoint);
+			Empire.Current.Commands.Add(cmd);
+			cmd.Execute();
+			cmd = new HotkeyWaypointCommand(waypoint, waypointNumber, redirect);
+			Empire.Current.Commands.Add(cmd);
+			cmd.Execute();
+
+			// refresh the map
+			starSystemView.Invalidate();
 		}
 
 		/// <summary>
