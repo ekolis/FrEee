@@ -1124,7 +1124,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// set an order to go there
 				var sobj = SelectedSpaceObject as IMobileSpaceObject;
-				sobj.AddOrder(new WaypointOrder<IMobileSpaceObject>(wp, !aggressive));
+				sobj.IssueOrder(new WaypointOrder<IMobileSpaceObject>(wp, !aggressive));
 
 				// refresh the map and orders
 				starSystemView.Invalidate();
