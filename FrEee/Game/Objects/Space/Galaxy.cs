@@ -20,6 +20,7 @@ using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
+using System.Text;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -345,13 +346,6 @@ namespace FrEee.Game.Objects.Space
 		public void Save(Stream stream)
 		{
 			AssignIDs();
-			string filename;
-			if (CurrentEmpire == null)
-				filename = Name + "_" + TurnNumber + ".gam";
-			else
-				filename = Name + "_" + TurnNumber + "_" + (Empires.IndexOf(CurrentEmpire) + 1).ToString("d4") + ".gam";
-			if (!Directory.Exists(FrEeeConstants.SaveGameDirectory))
-				Directory.CreateDirectory(FrEeeConstants.SaveGameDirectory);
 			Serializer.Serialize(this, stream);
 		}
 
@@ -399,20 +393,23 @@ namespace FrEee.Game.Objects.Space
 			// save master view
 			if (status != null)
 				status.Message = "Saving game (host)";
-			var gamname = Galaxy.Current.Save();
-			var outStream = new MemoryStream();
-			Galaxy.Current.Save(outStream);
-			var inStream = new MemoryStream(outStream.GetBuffer());
+			var gamname = Galaxy.Current.GameFileName;
+			var masterString = Galaxy.Current.SaveToString();
+			Current.SpaceObjectIDCheck("after saving master view to memory");
+			var masterBytes = Encoding.Unicode.GetBytes(masterString);
+			var masterInStream = new MemoryStream(masterBytes);
+			var masterFileStream = new FileStream(gamname, FileMode.Create);
+			masterFileStream.Write(masterBytes, 0, masterBytes.Length);
+			masterInStream.Seek(0, SeekOrigin.Begin);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
-
-			Current.SpaceObjectIDCheck("after saving master view");
+			Current.SpaceObjectIDCheck("after saving master view to disk");
 
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
-				inStream.Seek(0, SeekOrigin.Begin);
-				Load(inStream);
+				masterInStream.Seek(0, SeekOrigin.Begin);
+				Load(masterInStream);
 				if (Current.Empires[i].IsPlayerEmpire)
 				{
 					if (status != null)
@@ -430,8 +427,8 @@ namespace FrEee.Game.Objects.Space
 			// TODO - only reload master view if we really need to
 			if (status != null)
 				status.Message = "Saving game";
-			inStream.Seek(0, SeekOrigin.Begin);
-			Load(inStream);
+			masterInStream.Seek(0, SeekOrigin.Begin);
+			Load(masterInStream);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
