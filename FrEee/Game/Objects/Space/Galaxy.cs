@@ -387,8 +387,7 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can only save player galaxy views from the master galaxy view.");
 
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
-
-			Current.SpaceObjectIDCheck("before saving");
+			//Current.SpaceObjectIDCheck("before saving");
 
 			// save master view
 			if (status != null)
