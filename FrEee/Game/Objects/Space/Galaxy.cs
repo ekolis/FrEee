@@ -394,6 +394,8 @@ namespace FrEee.Game.Objects.Space
 
 			var progressPerSaveLoad = (desiredProgress - (status == null ? 0d : status.Progress)) / (Current.IsSinglePlayer ? 3 : (Current.Empires.Count + 2));
 
+			Current.SpaceObjectIDCheck("before saving");
+
 			// save master view
 			if (status != null)
 				status.Message = "Saving game (host)";
@@ -403,6 +405,8 @@ namespace FrEee.Game.Objects.Space
 			var inStream = new MemoryStream(outStream.GetBuffer());
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
+
+			Current.SpaceObjectIDCheck("after saving master view");
 
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
@@ -418,6 +422,8 @@ namespace FrEee.Game.Objects.Space
 					Current.Save();
 					if (status != null)
 						status.Progress += progressPerSaveLoad;
+
+					Current.SpaceObjectIDCheck("after saving player view for " + Current.Empires[i]);
 				}
 			}
 
@@ -427,6 +433,8 @@ namespace FrEee.Game.Objects.Space
 			Load(gamname);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
+
+			Current.SpaceObjectIDCheck("after reloading master view");
 		}
 
 		/// <summary>
@@ -1070,7 +1078,10 @@ namespace FrEee.Game.Objects.Space
 				foreach (var kvp in emp.Memory.ToArray())
 				{
 					if (kvp.Value.IsObsoleteMemory(emp))
+					{
 						emp.Memory.Remove(kvp);
+						kvp.Value.Dispose();
+					}
 				}
 			}
 
@@ -1116,7 +1127,7 @@ namespace FrEee.Game.Objects.Space
 			return missingPlrs;
 		}
 
-		private void SpaceObjectIDCheck(string when)
+		internal void SpaceObjectIDCheck(string when)
 		{
 			foreach (var sobj in FindSpaceObjects<ISpaceObject>())
 			{
