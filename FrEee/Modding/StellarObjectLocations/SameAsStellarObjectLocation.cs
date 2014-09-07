@@ -28,7 +28,7 @@ namespace FrEee.Modding.StellarObjectLocations
 		{
 			if (TargetIndex < 1 || TargetIndex > StarSystemTemplate.StellarObjectLocations.Count)
 				throw new Exception("Invalid location \"Same As " + TargetIndex + "\" specified for system with " + StarSystemTemplate.StellarObjectLocations.Count + " stellar objects.");
-			var target = StarSystemTemplate.StellarObjectLocations[TargetIndex];
+			var target = StarSystemTemplate.StellarObjectLocations[TargetIndex - 1];
 			if (target is SameAsStellarObjectLocation)
 				throw new Exception("A \"Same As\" stellar object location cannot target another \"Same As\" location.");
 			LastResult = target.LastResult;
