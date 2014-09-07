@@ -652,7 +652,7 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
 		public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
 		{
-			Current.SpaceObjectIDCheck();
+			Current.SpaceObjectIDCheck("at start of turn");
 
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
@@ -710,6 +710,8 @@ namespace FrEee.Game.Objects.Space
 				return missingPlrs;
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			Current.SpaceObjectIDCheck("after loading commands");
 
 			// clear treaty clause cache (empires might have added treaties)
 			Current.GivenTreatyClauseCache.Clear();
@@ -775,6 +777,8 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			Current.SpaceObjectIDCheck("after population reproduction");
+
 			// resource generation
 			Current.EnableAbilityCache(); // resource generation doesn't affect abilities or empire maintenance
 			if (status != null)
@@ -808,6 +812,8 @@ namespace FrEee.Game.Objects.Space
 			// TODO - remote mining and raw resource generation
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			Current.SpaceObjectIDCheck("after resource generation");
 
 			// empire stuff
 			foreach (var emp in Current.Empires)
@@ -901,6 +907,8 @@ namespace FrEee.Game.Objects.Space
 
 				if (status != null)
 					status.Progress += progressPerOperation;
+
+				Current.SpaceObjectIDCheck("after empire maintenance for " + emp);
 			}
 
 			// validate fleets
@@ -914,6 +922,8 @@ namespace FrEee.Game.Objects.Space
 				sobj.ReplenishShields();
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			Current.SpaceObjectIDCheck("after shield replenishment");
 
 			// ship movement
 			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
@@ -937,6 +947,8 @@ namespace FrEee.Game.Objects.Space
 					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
+
+				Current.SpaceObjectIDCheck("after ship movement at T=" + Current.Timestamp);
 			}
 
 			// validate fleets again (ships might have been destroyed)
@@ -950,6 +962,8 @@ namespace FrEee.Game.Objects.Space
 				q.ExecuteOrders();
 			if (status != null)
 				status.Progress += progressPerOperation;
+
+			Current.SpaceObjectIDCheck("after construction");
 
 			// TODO - more turn stuff? or do we have everything?
 
@@ -1087,6 +1101,8 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			Current.SpaceObjectIDCheck("after cleanup");
+
 			// end of turn scripts
 			if (status != null)
 				status.Message = "Executing scripts";
@@ -1094,18 +1110,18 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck();
+			Current.SpaceObjectIDCheck("at end of turn");
 
 			return missingPlrs;
 		}
 
-		private void SpaceObjectIDCheck()
+		private void SpaceObjectIDCheck(string when)
 		{
 			foreach (var sobj in FindSpaceObjects<ISpaceObject>())
 			{
 				var r = referrables[sobj.ID];
 				if (r != sobj)
-					throw new InvalidOperationException("Space object identity mismatch for ID=" + sobj.ID + " (" + sobj + " vs. " + r + ")");
+					throw new InvalidOperationException("Space object identity mismatch " + when + " for ID=" + sobj.ID + " (" + sobj + " vs. " + r + ")");
 			}
 		}
 
