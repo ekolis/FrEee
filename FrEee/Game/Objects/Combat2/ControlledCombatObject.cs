@@ -51,6 +51,8 @@ namespace FrEee.Game.Objects.Combat2
 		public override void helm()
 		{
 
+			if (waypointTarget == null)
+				return; // nothing to do
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
             Tuple<Compass, bool?> nav = Nav(angletoWaypoint);

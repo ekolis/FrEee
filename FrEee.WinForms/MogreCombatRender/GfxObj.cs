@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using FrEee.Game.Objects.Combat2;
+using Mogre;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -12,5 +13,6 @@ namespace FrEee.WinForms.MogreCombatRender
         public string IDName { get; set; }
         public GfxCfg gfxCfg { get; set; }
         public GfxEfx gfxEfct { get; set; }
+		public Sprite Sprite { get; set; }
     }
 }
