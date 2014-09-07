@@ -430,7 +430,8 @@ namespace FrEee.Game.Objects.Space
 			// TODO - only reload master view if we really need to
 			if (status != null)
 				status.Message = "Saving game";
-			Load(outStream);
+			inStream.Seek(0, SeekOrigin.Begin);
+			Load(inStream);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
