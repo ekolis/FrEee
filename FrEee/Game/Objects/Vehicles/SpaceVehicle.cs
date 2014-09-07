@@ -89,7 +89,7 @@ namespace FrEee.Game.Objects.Vehicles
 				TimeToNextMove = 0;
 			else
 				TimeToNextMove -= Galaxy.Current.NextTickSize;
-			while (TimeToNextMove <= 0 && Orders.Any())
+			while (TimeToNextMove <= 1e-15 && Orders.Any())
 			{
 				Orders.First().Execute(this);
 				if (Orders.First().IsComplete)
