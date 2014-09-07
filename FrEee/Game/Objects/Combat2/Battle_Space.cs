@@ -839,7 +839,7 @@ namespace FrEee.Game.Objects.Combat2
                     List<int> wpnindexesthistarget = ccobj.strategy.weaponslists[i].Keys.ToList();
                     List<CombatWeapon> wpnsforthistarget = new List<CombatWeapon>();
 #if DEBUG
-                    Console.WriteLine("Target: " + targetObject.strID);
+                    Console.WriteLine("Target: " + (targetObject == null ? "(none)" : targetObject.strID));
 #endif
                     foreach (int wpndex in wpnindexesthistarget)
                     {

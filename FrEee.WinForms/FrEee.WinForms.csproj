@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>FrEee.ico</ApplicationIcon>
@@ -222,6 +224,7 @@
     </Compile>
     <Compile Include="MogreCombatRender\GfxObj.cs" />
     <Compile Include="MogreCombatRender\GfxCfg.cs" />
+    <Compile Include="MogreCombatRender\SpriteManager.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\Canvasdata.cs" />
     <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.cs">
       <SubType>UserControl</SubType>

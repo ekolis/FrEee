@@ -15,6 +15,8 @@ using FrEee.WinForms.Forms;
 using NewtMath.f16;
 using FixMath.NET;
 using FrEee.Utility;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -136,6 +138,8 @@ namespace FrEee.WinForms.MogreCombatRender
 						line.Value, line.Key, section.CurrentKey);
 				}
 			}
+
+			ResourceGroupManager.Singleton.CreateResourceGroup("Sprites");
 		}
 
 		private void CreateRenderSystem()
@@ -214,6 +218,8 @@ namespace FrEee.WinForms.MogreCombatRender
 		private void CreateScene()
 		{
 			mSceneMgr = mRoot.CreateSceneManager(SceneType.ST_GENERIC);
+
+			SpriteManager.Initialize(mSceneMgr);
 
 			CreateCamera();
 			mViewport = mRenderWindow.AddViewport(mCamera);
@@ -312,6 +318,14 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
 					battle.CombatNodes.Remove(comNode);
 				}
+			}
+			try
+			{
+				SpriteManager.Shutdown();
+			}
+			catch (Exception ex)
+			{
+				Console.Error.WriteLine(ex);
 			}
 			if (mRoot != null)
 				mRoot.Dispose();
@@ -499,6 +513,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		{
 			GfxObj gfxobj = new GfxObj();
 			string filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg"; //needs to be a proper default shipset. 
+			Sprite sprite = null;
 			if (ComNode is CombatVehicle)
 			{
 				CombatVehicle cv = (CombatVehicle)ComNode;
@@ -519,32 +534,63 @@ namespace FrEee.WinForms.MogreCombatRender
 					}
 					i++;
 				}
+
+				if (!exsists)
+				{
+					/*
+					// if no model, try to find a sprite
+					var img = cv.StartVehicle.Icon;
+					sprite = LoadSprite(img, cv.strID, null);
+					filestring = null;
+					*/
+				}
+
+				// TODO - check default shipset models after checking desired shipset sprites but before checking default shipset sprites???
 			}
 			else if (ComNode is CombatPlanet)
 			{
 				// TODO - planet models
-				filestring = "Pictures\\Races\\Default\\Delta_Escort.cfg";
+				/*var cp = (CombatPlanet)ComNode;
+				var img = cp.StartPlanet.Portrait;
+				if (img != null)
+				{
+					sprite = LoadSprite(img, cp.strID, null);
+					filestring = null;
+				}*/
 			}
 			else if (ComNode is CombatSeeker)
 			{
+				// TODO - is this model missing???
 				filestring = "Pictures\\MogreCombat\\Projectiles\\Seeker.cfg";
 			}
 			else
 			{
+				// TODO - is this model missing???
 				filestring = "Pictures\\MogreCombat\\Projectiles\\Sabbot.cfg";
 			}
 
-			string jsonstring = System.IO.File.ReadAllText(filestring);
-			try
+			if (filestring != null)
 			{
-				gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(jsonstring);
+				// load model
+				string jsonstring = System.IO.File.ReadAllText(filestring);
+				try
+				{
+					gfxobj.gfxCfg = Newtonsoft.Json.JsonConvert.DeserializeObject<GfxCfg>(jsonstring);
+				}
+				catch
+				{
+					Console.Write("Deserialisation failed for obj: ");
+					Console.WriteLine(ComNode.strID);
+					Console.WriteLine("check " + filestring + " for errors");
+				}
 			}
-			catch
+
+			if (sprite != null)
 			{
-				Console.Write("Deserialisation failed for obj: ");
-				Console.WriteLine(ComNode.strID);
-				Console.WriteLine("check " + filestring + " for errors");
+				// load sprite
+				gfxobj.Sprite = sprite;
 			}
+
 			gfxobj.IDName = ComNode.strID;
 
 			if (dict_GfxObjects.ContainsKey(ComNode.strID))
@@ -559,13 +605,28 @@ namespace FrEee.WinForms.MogreCombatRender
 			GfxObj gfxobj = CreateGfxObj(comNode);
 			try
 			{
-				string meshname = gfxobj.gfxCfg.MainMesh.Name;
-
-				Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
+				/// create a scene node to represent this combat node
 				SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
-				objNode.AttachObject(objEnt);
+
+				if (gfxobj.gfxCfg != null)
+				{
+					// the model (if any)
+					string meshname = gfxobj.gfxCfg.MainMesh.Name;
+					Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
+					objNode.AttachObject(objEnt);
+				}
+
+				if (gfxobj.Sprite != null)
+				{
+					// the sprite (if any)
+					var sprite = gfxobj.Sprite;
+					SpriteManager.Add(sprite);
+					sprite.Parent = objNode;
+				}
+
 				gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj);
-				objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
+				if (gfxobj.gfxCfg != null)
+					objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
 
 
 				//Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
@@ -581,12 +642,12 @@ namespace FrEee.WinForms.MogreCombatRender
 				//objNode.AttachObject(objEnt);
 				//objNode.Scale(scale, scale, scale);
 				//objNode.Scale(10, 10, 10);
-                Console.WriteLine("OgreEntity Created: " + comNode.strID);
+				Console.WriteLine("OgreEntity Created: " + comNode.strID);
 
 			}
 			catch (Exception ex)
 			{
-                Console.WriteLine("OgreEntity creation failed for " + comNode.strID);
+				Console.WriteLine("OgreEntity creation failed for " + comNode.strID);
 				Console.Error.WriteLine(ex);
 			}
 
@@ -633,7 +694,7 @@ namespace FrEee.WinForms.MogreCombatRender
 			{
 #if DEBUG
 				Console.WriteLine("Replay Processing: ");
-                Console.WriteLine("Tick: " + battletic);
+				Console.WriteLine("Tick: " + battletic);
 #endif
 				physicsstopwatch.Restart();
 				int interpolationcount = 0;
@@ -714,11 +775,11 @@ namespace FrEee.WinForms.MogreCombatRender
 					CreateNewEntity(comNode);
 					battle.CombatNodes.Add(comNode);
 					battle.FreshNodes.Remove(comNode);
-                    renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
-                    
-                    
+					renderlocs[comNode] = battle.InterpolatePosition(comNode, physicsstopwatch.ElapsedMilliseconds / (100f / replaySpeed));
+
+
 #if DEBUG
-                    Console.WriteLine("added " + comNode.strID + " to CombatNodes from FreshNodes");
+					Console.WriteLine("added " + comNode.strID + " to CombatNodes from FreshNodes");
 #endif
 				}
 				foreach (CombatNode comNode in battle.DeadNodes.ToArray())
@@ -822,7 +883,7 @@ namespace FrEee.WinForms.MogreCombatRender
 					// - kersplosions and removal of model. 
 					string IDName = comEvent.Object.strID;
 					SceneNode node = mSceneMgr.GetSceneNode(IDName);
-                    ParticleSystem expl = mSceneMgr.CreateParticleSystem("EXP_" + IDName, "Explosion");
+					ParticleSystem expl = mSceneMgr.CreateParticleSystem("EXP_" + IDName, "Explosion");
 					//ParticleSystem expl = mSceneMgr.GetParticleSystem("Explosion");
 					node.AttachObject(expl);
 				}
@@ -946,6 +1007,45 @@ namespace FrEee.WinForms.MogreCombatRender
 				Console.WriteLine(comNode.strID);
 				Console.WriteLine(ex.GetType() + ": " + ex.Message);
 			}
+		}
+
+		/// <summary>
+		/// Loads a sprite from a .NET image
+		/// </summary>
+		/// <remarks>http://www.ogre3d.org/tikiwiki/tiki-index.php?page=Convert+a+System.Image+to+a+Mogre.Image</remarks>
+		/// <param name="image"></param>
+		private Sprite LoadSprite(System.Drawing.Image image, string id, SceneNode parent)
+		{
+			// TODO - cache sprites in case we pass in the same image each time?
+
+			Stream oStream = new MemoryStream();
+			image.Save(oStream, ImageFormat.Png);
+
+			/* Back to the start of the stream */
+			oStream.Position = 0;
+
+			/* read all the stream in a buffer */
+			BinaryReader oBinaryReader = new BinaryReader(oStream);
+			byte[] pBuffer = oBinaryReader.ReadBytes((int)oBinaryReader.BaseStream.Length);
+			oStream.Close(); /*No more needed */
+
+			Mogre.Image oMogreImage = new Mogre.Image();
+
+			unsafe
+			{
+				GCHandle handle = GCHandle.Alloc(pBuffer, GCHandleType.Pinned);
+				byte* pUnsafeByte = (byte*)handle.AddrOfPinnedObject();
+				void* pUnsafeBuffer = (void*)handle.AddrOfPinnedObject();
+
+				MemoryDataStream oMemoryStream = new MemoryDataStream(pUnsafeBuffer, (uint)pBuffer.Length);
+				DataStreamPtr oPtrDataStream = new DataStreamPtr(oMemoryStream);
+				oMogreImage = oMogreImage.Load(oPtrDataStream, "png");
+				handle.Free();
+			}
+
+			var tex = TextureManager.Singleton.LoadImage("TEXTURE_" + id, "Sprites", oMogreImage);
+			var sprite = new Sprite(parent, tex.Handle, 1);
+			return sprite;
 		}
 	}
 }

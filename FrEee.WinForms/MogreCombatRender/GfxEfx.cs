@@ -27,27 +27,30 @@ namespace FrEee.WinForms.MogreCombatRender
             
             nodesDict = new Dictionary<string,List<SceneNode>>();
 
-            foreach (KeyValuePair<string, Dictionary<string, Effect>> dict in gfxobj.gfxCfg.Effects)
-            {
-                string topkey = dict.Key;
-                Dictionary<string, Effect> topval = dict.Value;
-                List<SceneNode> nodeslist = new List<SceneNode>();
-                foreach (KeyValuePair<string, Effect> effect in topval)
-                {                   
-                    SceneNode shipNode = (SceneNode)sceneMgr.RootSceneNode.GetChild(gfxobj.IDName);
-                    SceneNode effectnode = shipNode.CreateChildSceneNode(gfxobj.IDName + topkey + effect.Key, new Vector3(effect.Value.Loc));
-                    Vector3 lookat = new Vector3(effect.Value.Dir);
-                    effectnode.LookAt(lookat, Node.TransformSpace.TS_LOCAL);
+			if (gfxobj.gfxCfg != null)
+			{
+				foreach (KeyValuePair<string, Dictionary<string, Effect>> dict in gfxobj.gfxCfg.Effects)
+				{
+					string topkey = dict.Key;
+					Dictionary<string, Effect> topval = dict.Value;
+					List<SceneNode> nodeslist = new List<SceneNode>();
+					foreach (KeyValuePair<string, Effect> effect in topval)
+					{
+						SceneNode shipNode = (SceneNode)sceneMgr.RootSceneNode.GetChild(gfxobj.IDName);
+						SceneNode effectnode = shipNode.CreateChildSceneNode(gfxobj.IDName + topkey + effect.Key, new Vector3(effect.Value.Loc));
+						Vector3 lookat = new Vector3(effect.Value.Dir);
+						effectnode.LookAt(lookat, Node.TransformSpace.TS_LOCAL);
 
-                    ParticleSystem pThrust = sceneMgr.CreateParticleSystem(gfxobj.IDName + topkey + effect.Key, effect.Value.ParticleEffect);
-                    pThrust.Emitting = false;
-                    effectnode.AttachObject(pThrust);
-                    nodeslist.Add(effectnode);
-                   
-                }
-                nodesDict.Add(topkey, nodeslist);
-                
-            }
+						ParticleSystem pThrust = sceneMgr.CreateParticleSystem(gfxobj.IDName + topkey + effect.Key, effect.Value.ParticleEffect);
+						pThrust.Emitting = false;
+						effectnode.AttachObject(pThrust);
+						nodeslist.Add(effectnode);
+
+					}
+					nodesDict.Add(topkey, nodeslist);
+
+				}
+			}
         }
 
         /// <summary>

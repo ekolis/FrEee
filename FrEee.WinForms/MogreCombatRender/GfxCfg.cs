@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json;
+using Mogre;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
