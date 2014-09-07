@@ -1121,6 +1121,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			foreach (var sobj in FindSpaceObjects<ISpaceObject>())
 			{
+				if (referrables.ContainsKey(sobj.ID))
+					AssignID(sobj);
 				var r = referrables[sobj.ID];
 				if (r != sobj)
 					throw new InvalidOperationException("Space object identity mismatch " + when + " for ID=" + sobj.ID + " (" + sobj + " vs. " + r + ")");
