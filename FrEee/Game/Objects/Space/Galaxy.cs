@@ -652,6 +652,8 @@ namespace FrEee.Game.Objects.Space
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
 		public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
 		{
+			Current.SpaceObjectIDCheck();
+
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
 
@@ -1092,7 +1094,19 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			Current.SpaceObjectIDCheck();
+
 			return missingPlrs;
+		}
+
+		private void SpaceObjectIDCheck()
+		{
+			foreach (var sobj in FindSpaceObjects<ISpaceObject>())
+			{
+				var r = referrables[sobj.ID];
+				if (r != sobj)
+					throw new InvalidOperationException("Space object identity mismatch for ID=" + sobj.ID + " (" + sobj + " vs. " + r + ")");
+			}
 		}
 
 		private void MoveShips()
