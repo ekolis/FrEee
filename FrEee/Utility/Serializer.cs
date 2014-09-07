@@ -40,6 +40,7 @@ namespace FrEee.Utility
 		{
 			var sw = new StringWriter();
 			Serialize(o, sw);
+			sw.Flush();
 			return sw.ToString();
 		}
 
