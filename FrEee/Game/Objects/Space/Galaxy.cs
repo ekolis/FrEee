@@ -343,15 +343,17 @@ namespace FrEee.Game.Objects.Space
 			parser.Parse(this);
 		}
 
-		public void Save(Stream stream)
+		public void Save(Stream stream, bool assignIDs = true)
 		{
-			AssignIDs();
+			if (assignIDs)
+				AssignIDs();
 			Serializer.Serialize(this, stream);
 		}
 
-		public string SaveToString()
+		public string SaveToString(bool assignIDs = true)
 		{
-			AssignIDs();
+			if (assignIDs)
+				AssignIDs();
 			return Serializer.SerializeToString(this);
 		}
 
@@ -392,12 +394,7 @@ namespace FrEee.Game.Objects.Space
 			// save master view
 			if (status != null)
 				status.Message = "Saving game (host)";
-			var gamname = Galaxy.Current.GameFileName;
-			var masterString = Galaxy.Current.SaveToString();
-			var masterBytes = Encoding.Unicode.GetBytes(masterString);
-			Current.SpaceObjectIDCheck("after saving master view to memory");
-			var masterFileStream = new FileStream(gamname, FileMode.Create);
-			masterFileStream.Write(masterBytes, 0, masterBytes.Length);
+			var gamname = Galaxy.Current.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 			Current.SpaceObjectIDCheck("after saving master view to disk");
@@ -405,7 +402,7 @@ namespace FrEee.Game.Objects.Space
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
 			{
-				LoadFromString(masterString);
+				Load(gamname);
 				if (Current.Empires[i].IsPlayerEmpire)
 				{
 					if (status != null)
@@ -423,7 +420,7 @@ namespace FrEee.Game.Objects.Space
 			// TODO - only reload master view if we really need to
 			if (status != null)
 				status.Message = "Saving game";
-			LoadFromString(masterString);
+			Load(gamname);
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
