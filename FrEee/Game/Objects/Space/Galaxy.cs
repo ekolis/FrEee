@@ -1021,6 +1021,14 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// get supplies from reactors, solar panels, etc.
+			foreach (var v in Current.FindSpaceObjects<SpaceVehicle>())
+			{
+				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
+				v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();
+				v.NormalizeSupplies();
+			}
+
 			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
 			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")))
 			{
