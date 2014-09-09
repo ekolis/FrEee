@@ -44,8 +44,6 @@ namespace FrEee.WinForms.Controls
 			this.txtCargo = new System.Windows.Forms.Label();
 			this.label15 = new System.Windows.Forms.Label();
 			this.label13 = new System.Windows.Forms.Label();
-			this.txtSupplyUsage = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
 			this.txtRange = new System.Windows.Forms.Label();
 			this.label22 = new System.Windows.Forms.Label();
 			this.txtSpeed = new System.Windows.Forms.Label();
@@ -90,6 +88,7 @@ namespace FrEee.WinForms.Controls
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
 			this.tabs.Size = new System.Drawing.Size(322, 501);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
+			this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 62;
 			// 
@@ -133,8 +132,6 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.Controls.Add(this.txtCargo);
 			this.pnlStats.Controls.Add(this.label15);
 			this.pnlStats.Controls.Add(this.label13);
-			this.pnlStats.Controls.Add(this.txtSupplyUsage);
-			this.pnlStats.Controls.Add(this.label14);
 			this.pnlStats.Controls.Add(this.txtRange);
 			this.pnlStats.Controls.Add(this.label22);
 			this.pnlStats.Controls.Add(this.txtSpeed);
@@ -149,13 +146,13 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.Location = new System.Drawing.Point(6, 187);
 			this.pnlStats.Name = "pnlStats";
 			this.pnlStats.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlStats.Size = new System.Drawing.Size(305, 209);
+			this.pnlStats.Size = new System.Drawing.Size(305, 191);
 			this.pnlStats.TabIndex = 71;
 			// 
 			// txtEvasion
 			// 
 			this.txtEvasion.AutoSize = true;
-			this.txtEvasion.Location = new System.Drawing.Point(100, 166);
+			this.txtEvasion.Location = new System.Drawing.Point(99, 151);
 			this.txtEvasion.Name = "txtEvasion";
 			this.txtEvasion.Size = new System.Drawing.Size(32, 15);
 			this.txtEvasion.TabIndex = 38;
@@ -165,7 +162,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label18.AutoSize = true;
 			this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label18.Location = new System.Drawing.Point(6, 165);
+			this.label18.Location = new System.Drawing.Point(5, 150);
 			this.label18.Name = "label18";
 			this.label18.Size = new System.Drawing.Size(50, 15);
 			this.label18.TabIndex = 37;
@@ -174,7 +171,7 @@ namespace FrEee.WinForms.Controls
 			// txtAccuracy
 			// 
 			this.txtAccuracy.AutoSize = true;
-			this.txtAccuracy.Location = new System.Drawing.Point(100, 150);
+			this.txtAccuracy.Location = new System.Drawing.Point(99, 135);
 			this.txtAccuracy.Name = "txtAccuracy";
 			this.txtAccuracy.Size = new System.Drawing.Size(32, 15);
 			this.txtAccuracy.TabIndex = 36;
@@ -184,7 +181,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label11.AutoSize = true;
 			this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label11.Location = new System.Drawing.Point(6, 150);
+			this.label11.Location = new System.Drawing.Point(5, 135);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(55, 15);
 			this.label11.TabIndex = 35;
@@ -193,7 +190,7 @@ namespace FrEee.WinForms.Controls
 			// txtHullHitpoints
 			// 
 			this.txtHullHitpoints.AutoSize = true;
-			this.txtHullHitpoints.Location = new System.Drawing.Point(100, 133);
+			this.txtHullHitpoints.Location = new System.Drawing.Point(99, 118);
 			this.txtHullHitpoints.Name = "txtHullHitpoints";
 			this.txtHullHitpoints.Size = new System.Drawing.Size(37, 15);
 			this.txtHullHitpoints.TabIndex = 34;
@@ -202,7 +199,7 @@ namespace FrEee.WinForms.Controls
 			// txtArmorHitpoints
 			// 
 			this.txtArmorHitpoints.AutoSize = true;
-			this.txtArmorHitpoints.Location = new System.Drawing.Point(100, 118);
+			this.txtArmorHitpoints.Location = new System.Drawing.Point(99, 103);
 			this.txtArmorHitpoints.Name = "txtArmorHitpoints";
 			this.txtArmorHitpoints.Size = new System.Drawing.Size(50, 15);
 			this.txtArmorHitpoints.TabIndex = 33;
@@ -211,7 +208,7 @@ namespace FrEee.WinForms.Controls
 			// txtShieldsHitpoints
 			// 
 			this.txtShieldsHitpoints.AutoSize = true;
-			this.txtShieldsHitpoints.Location = new System.Drawing.Point(100, 105);
+			this.txtShieldsHitpoints.Location = new System.Drawing.Point(99, 90);
 			this.txtShieldsHitpoints.Name = "txtShieldsHitpoints";
 			this.txtShieldsHitpoints.Size = new System.Drawing.Size(116, 15);
 			this.txtShieldsHitpoints.TabIndex = 32;
@@ -220,7 +217,7 @@ namespace FrEee.WinForms.Controls
 			// txtCargo
 			// 
 			this.txtCargo.AutoSize = true;
-			this.txtCargo.Location = new System.Drawing.Point(101, 179);
+			this.txtCargo.Location = new System.Drawing.Point(100, 164);
 			this.txtCargo.Name = "txtCargo";
 			this.txtCargo.Size = new System.Drawing.Size(27, 15);
 			this.txtCargo.TabIndex = 31;
@@ -230,7 +227,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label15.AutoSize = true;
 			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label15.Location = new System.Drawing.Point(6, 179);
+			this.label15.Location = new System.Drawing.Point(5, 164);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(86, 15);
 			this.label15.TabIndex = 30;
@@ -240,35 +237,16 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label13.AutoSize = true;
 			this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label13.Location = new System.Drawing.Point(6, 105);
+			this.label13.Location = new System.Drawing.Point(5, 90);
 			this.label13.Name = "label13";
 			this.label13.Size = new System.Drawing.Size(58, 15);
 			this.label13.TabIndex = 29;
 			this.label13.Text = "Durability";
 			// 
-			// txtSupplyUsage
-			// 
-			this.txtSupplyUsage.AutoSize = true;
-			this.txtSupplyUsage.Location = new System.Drawing.Point(100, 76);
-			this.txtSupplyUsage.Name = "txtSupplyUsage";
-			this.txtSupplyUsage.Size = new System.Drawing.Size(56, 15);
-			this.txtSupplyUsage.TabIndex = 28;
-			this.txtSupplyUsage.Text = "0 / sector";
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(6, 76);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(83, 15);
-			this.label14.TabIndex = 27;
-			this.label14.Text = "Supply Usage";
-			// 
 			// txtRange
 			// 
 			this.txtRange.AutoSize = true;
-			this.txtRange.Location = new System.Drawing.Point(100, 90);
+			this.txtRange.Location = new System.Drawing.Point(99, 75);
 			this.txtRange.Name = "txtRange";
 			this.txtRange.Size = new System.Drawing.Size(56, 15);
 			this.txtRange.TabIndex = 22;
@@ -278,7 +256,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.label22.AutoSize = true;
 			this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label22.Location = new System.Drawing.Point(6, 90);
+			this.label22.Location = new System.Drawing.Point(5, 75);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(44, 15);
 			this.label22.TabIndex = 21;
@@ -568,8 +546,6 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtCargo;
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label13;
-		private System.Windows.Forms.Label txtSupplyUsage;
-		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.Label txtRange;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.Label txtSpeed;

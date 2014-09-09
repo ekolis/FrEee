@@ -66,14 +66,22 @@ namespace FrEee.WinForms.Controls
 				resCostOrg.Amount = Design.Cost[Resource.Organics];
 				resCostRad.Amount = Design.Cost[Resource.Radioactives];
 				txtSpeed.Text = Design.Speed.ToString() + " sectors/turn";
-				txtSupplyStorage.Text = Design.GetAbilityValue("Supply Storage");
-				txtSupplyUsage.Text = Design.SupplyUsagePerSector.ToString();
+				var genPerTurn = Design.GetAbilityValue("Supply Generation Per Turn").ToInt();
+				var genPerStar = Design.GetAbilityValue("Solar Supply Generation").ToInt();
+				txtSupplyStorage.Text = "Cap. " + Design.SupplyStorage.ToUnitString(true) + ", " + genPerTurn.ToUnitString(true) + "/turn, " + genPerStar.ToUnitString(true) + "/star, -" + Design.SupplyUsagePerSector + "/sector";
+				var burnPerTurn = Design.SupplyUsagePerSector * Design.Speed;
+				var range = GetRange(Design.SupplyStorage, Design.Speed, Design.SupplyUsagePerSector, genPerTurn);
+				var rangeWithOneStar = GetRange(Design.SupplyStorage, Design.Speed, Design.SupplyUsagePerSector, genPerTurn + genPerStar);
 				if (Design.Speed == 0)
 					txtRange.Text = "0 sectors";
-				else if (Design.SupplyUsagePerSector == 0 || Design.HasAbility("Quantum Reactor"))
+				else if (range == null || Design.HasAbility("Quantum Reactor"))
 					txtRange.Text = "Unlimited";
+				else if (genPerStar == 0)
+					txtRange.Text = range + " sectors";
+				else if (rangeWithOneStar == null)
+					txtRange.Text = range + " sectors (unlimited w/star)";
 				else
-					txtRange.Text = (Design.GetAbilityValue("Supply Storage").ToInt() / Design.SupplyUsagePerSector) + " sectors";
+					txtRange.Text = range + " sectors (" + rangeWithOneStar + " w/star)";
 				txtShieldsHitpoints.Text = Design.ShieldHitpoints + " shields (+" + Design.ShieldRegeneration + " regen)";
 				txtArmorHitpoints.Text = Design.ArmorHitpoints + " armor";
 				txtHullHitpoints.Text = Design.HullHitpoints + " hull";
@@ -87,6 +95,15 @@ namespace FrEee.WinForms.Controls
 					txtEvasion.Text = Design.Evasion.ToString("0") + "%";
 				txtCargo.Text = Design.CargoCapacity.Kilotons();
 			}
+		}
+
+		private int? GetRange(int capacity, int speed, int usagePerSector, int generationPerTurn)
+		{
+			if (speed == 0)
+				return 0;
+			if (usagePerSector <= generationPerTurn / speed)
+				return null; // infinity
+			return capacity / (usagePerSector + (generationPerTurn / speed));
 		}
 
 		private void picPortrait_Click(object sender, System.EventArgs e)
