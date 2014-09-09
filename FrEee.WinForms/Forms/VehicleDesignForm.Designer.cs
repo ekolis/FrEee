@@ -44,8 +44,6 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnSave = new FrEee.WinForms.Controls.GameButton();
 			this.pnlStats = new FrEee.WinForms.Controls.GamePanel();
-			this.txtSupplyUsage = new System.Windows.Forms.Label();
-			this.label14 = new System.Windows.Forms.Label();
 			this.txtEvasion = new System.Windows.Forms.Label();
 			this.label18 = new System.Windows.Forms.Label();
 			this.txtAccuracy = new System.Windows.Forms.Label();
@@ -274,8 +272,6 @@
 			this.pnlStats.BackColor = System.Drawing.Color.Black;
 			this.pnlStats.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.pnlStats.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.pnlStats.Controls.Add(this.txtSupplyUsage);
-			this.pnlStats.Controls.Add(this.label14);
 			this.pnlStats.Controls.Add(this.txtEvasion);
 			this.pnlStats.Controls.Add(this.label18);
 			this.pnlStats.Controls.Add(this.txtAccuracy);
@@ -304,25 +300,6 @@
 			this.pnlStats.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlStats.Size = new System.Drawing.Size(440, 128);
 			this.pnlStats.TabIndex = 22;
-			// 
-			// txtSupplyUsage
-			// 
-			this.txtSupplyUsage.AutoSize = true;
-			this.txtSupplyUsage.Location = new System.Drawing.Point(84, 87);
-			this.txtSupplyUsage.Name = "txtSupplyUsage";
-			this.txtSupplyUsage.Size = new System.Drawing.Size(53, 13);
-			this.txtSupplyUsage.TabIndex = 28;
-			this.txtSupplyUsage.Text = "0 / sector";
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label14.Location = new System.Drawing.Point(3, 87);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(73, 13);
-			this.label14.TabIndex = 27;
-			this.label14.Text = "Supply Usage";
 			// 
 			// txtEvasion
 			// 
@@ -365,7 +342,7 @@
 			// txtRange
 			// 
 			this.txtRange.AutoSize = true;
-			this.txtRange.Location = new System.Drawing.Point(84, 101);
+			this.txtRange.Location = new System.Drawing.Point(84, 87);
 			this.txtRange.Name = "txtRange";
 			this.txtRange.Size = new System.Drawing.Size(50, 13);
 			this.txtRange.TabIndex = 22;
@@ -375,7 +352,7 @@
 			// 
 			this.label22.AutoSize = true;
 			this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label22.Location = new System.Drawing.Point(3, 101);
+			this.label22.Location = new System.Drawing.Point(3, 87);
 			this.label22.Name = "label22";
 			this.label22.Size = new System.Drawing.Size(39, 13);
 			this.label22.TabIndex = 21;
@@ -432,14 +409,14 @@
 			this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label17.Location = new System.Drawing.Point(3, 74);
 			this.label17.Name = "label17";
-			this.label17.Size = new System.Drawing.Size(79, 13);
+			this.label17.Size = new System.Drawing.Size(47, 13);
 			this.label17.TabIndex = 15;
-			this.label17.Text = "Supply Storage";
+			this.label17.Text = "Supplies";
 			// 
 			// txtCargo
 			// 
 			this.txtCargo.AutoSize = true;
-			this.txtCargo.Location = new System.Drawing.Point(254, 75);
+			this.txtCargo.Location = new System.Drawing.Point(254, 87);
 			this.txtCargo.Name = "txtCargo";
 			this.txtCargo.Size = new System.Drawing.Size(26, 13);
 			this.txtCargo.TabIndex = 14;
@@ -449,7 +426,7 @@
 			// 
 			this.label15.AutoSize = true;
 			this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label15.Location = new System.Drawing.Point(179, 75);
+			this.label15.Location = new System.Drawing.Point(179, 87);
 			this.label15.Name = "label15";
 			this.label15.Size = new System.Drawing.Size(75, 13);
 			this.label15.TabIndex = 13;
@@ -894,8 +871,6 @@
 		private Controls.GameButton btnSave;
 		private Controls.GameButton btnCancel;
 		private Controls.GameButton btnWeaponsReport;
-		private System.Windows.Forms.Label label14;
-		private System.Windows.Forms.Label txtSupplyUsage;
 		private System.Windows.Forms.CheckBox chkFilterByMount;
 		private System.Windows.Forms.Label txtIteration;
 		private Controls.GamePictureBox picPortrait;
