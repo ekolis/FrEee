@@ -33,7 +33,8 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Used for naming.
 		/// </summary>
-		public Planet MoonOf { get; set; }
+		[DoNotSerialize]
+		internal Planet MoonOf { get; set; }
 
 		/// <summary>
 		/// The PlanetSize.txt entry for this planet's size.
