@@ -238,12 +238,19 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Fleets cannot take damage directly, so this method will throw a NotSupportedException.
+		/// Assigns damage to a random ship in the fleet. If damage is left over, it leaks to the next ship.
 		/// </summary>
 		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
-			// TODO - assign fleet random damage to ship
-			throw new NotSupportedException("Fleets cannot take damage directly. Try assigning damage to the individual ships.");
+			var vs = LeafVehicles.Shuffle().ToList();
+			var dmg = hit.NominalDamage;
+			while (vs.Any() && dmg > 0)
+			{
+				var vhit = new Hit(hit.Shot, vs.First(), dmg);
+				var v = vs.First();
+				dmg = v.TakeDamage(vhit, dice);
+			}
+			return dmg;
 		}
 
 		public bool IsDestroyed
@@ -252,12 +259,14 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Fleets cannot take damage directly, so this method will throw a NotSupportedException.
+		/// Chance of hitting each ship in a fleet is equal, so this value is the number of ships in the fleet.
 		/// </summary>
 		public int HitChance
 		{
-			// TODO - assign fleet random damage to ship
-			get { throw new NotSupportedException("Fleets cannot take damage directly, so a hit chance is meaningless."); }
+			get
+			{
+				return LeafVehicles.Count();
+			}
 		}
 
 		/// <summary>
