@@ -610,7 +610,6 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Redact()
 		{
-			AssignIDs();
 			var parser = new ObjectGraphParser();
 			parser.StartObject += redactParser_StartObject;
 			parser.Parse(this);
@@ -618,6 +617,8 @@ namespace FrEee.Game.Objects.Space
 
 		void redactParser_StartObject(object o)
 		{
+			if (o is IReferrable)
+				AssignID(o as IReferrable);
 			if (o is IFoggable)
 			{
 				var obj = (IFoggable)o;
