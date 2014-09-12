@@ -249,6 +249,7 @@ namespace FrEee.Game.Objects.Space
 				var vhit = new Hit(hit.Shot, vs.First(), dmg);
 				var v = vs.First();
 				dmg = v.TakeDamage(vhit, dice);
+				vs.Remove(v);
 			}
 			return dmg;
 		}
