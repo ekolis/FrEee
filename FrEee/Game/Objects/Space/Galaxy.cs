@@ -363,9 +363,10 @@ namespace FrEee.Game.Objects.Space
 		/// and GameName_TurnNumber.gam for the host.
 		/// </summary>
 		/// <returns>The filename saved to without the folder name (which is Savegame).</returns>
-		public string Save()
+		public string Save(bool assignIDs = true)
 		{
-			AssignIDs();
+			if (assignIDs)
+				AssignIDs();
 			string filename;
 			if (CurrentEmpire == null)
 				filename = Name + "_" + TurnNumber + ".gam";
@@ -409,7 +410,7 @@ namespace FrEee.Game.Objects.Space
 						status.Message = "Saving game (player " + (i + 1) + ")";
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
-					Current.Save();
+					Current.Save(false); // already asssigned IDs in the redact phase
 					if (status != null)
 						status.Progress += progressPerSaveLoad;
 
