@@ -264,8 +264,9 @@ namespace FrEee.Game.Setup
 			foreach (var tname in ForbiddenTechnologyNames)
 				gal.Referrables.OfType<Technology>().Single(t => t.Name == tname).Dispose();
 
-			// set omniscient view flag
+			// set omniscient view and all systems seen flags
 			gal.OmniscientView = OmniscientView;
+			gal.AllSystemsExploredFromStart = AllSystemsExplored;
 
 			// set up mining models and resource stuff
 			gal.StandardMiningModel = StandardMiningModel;
