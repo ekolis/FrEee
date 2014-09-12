@@ -1157,6 +1157,9 @@ namespace FrEee.Game.Objects.Space
 				if (sys == null)
 					continue; // space object is dead, or not done being built
 
+				// replenish shields before moving (who knows, we might be out of supplies, or about to hit a minefield)
+				v.ReplenishShields();
+
 				bool didStuff = v.ExecuteOrders();
 				if (!sys.ExploredByEmpires.Contains(v.Owner))
 					sys.ExploredByEmpires.Add(v.Owner);
