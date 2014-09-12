@@ -917,5 +917,16 @@ namespace FrEee.Game.Objects.Civilization
 		/// Numbered waypoints that are on hotkeys.
 		/// </summary>
 		public Waypoint[] NumberedWaypoints { get; private set; }
+
+		/// <summary>
+		/// Should we have a sensor sweep of the entire galaxy from the very start?
+		/// </summary>
+		public bool AllSystemsExploredFromStart
+		{
+			get
+			{
+				return Galaxy.Current.AllSystemsExploredFromStart || this.HasAbility("Galaxy Seen");
+			}
+		}
 	}
 }
