@@ -255,7 +255,7 @@ namespace FrEee.Game.Objects.Space
 				var sector = new Sector(this, coords);
 
 				// shuffle up the mines so they hit in a random order
-				var mines = sector.SpaceObjects.OfType<Mine>().Where(m => m.IsHostileTo(o.Owner)).Shuffle().ToList();
+				var mines = sector.SpaceObjects.OfType<Mine>().Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
 
 				// for log messages
 				var totalDamage = 0;
