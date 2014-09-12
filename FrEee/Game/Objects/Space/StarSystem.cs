@@ -11,6 +11,8 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Templates;
 using System.Reflection;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -245,6 +247,55 @@ namespace FrEee.Game.Objects.Space
 			if (sys != null)
 				sys.Remove(sobj);
 			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
+
+			// see if we got hit by a minefield
+			if (sobj is IDamageable && sobj is IOwnable)
+			{
+				var d = (IDamageable)sobj;
+				var sector = new Sector(this, coords);
+
+				// shuffle up the mines so they hit in a random order
+				var mines = sector.SpaceObjects.OfType<Mine>().Where(m => m.IsHostileTo(o.Owner)).Shuffle().ToList();
+
+				// for log messages
+				var totalDamage = 0;
+				var minesSwept = new SafeDictionary<Empire, int>();
+				var minesDetonated = new SafeDictionary<Empire, int>();
+
+				// can we sweep any?
+				var sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
+
+				// go through the minefield!
+				while (mines.Any() && !d.IsDestroyed)
+				{
+					var mine = mines.First();
+					if (sweeping > 0)
+					{
+						// sweep a mine
+						sweeping--;
+						minesSwept[mine.Owner]++;
+					}
+					else
+					{
+						// boom!
+						foreach (var warhead in mine.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+						{
+							var shot = new Shot(mine, warhead, d, 0);
+							var damage = warhead.Template.WeaponDamage.Evaluate(shot);
+							var hit = new Hit(shot, d, damage);
+							var leftoverDamage = d.TakeDamage(hit);
+							totalDamage += damage - leftoverDamage;
+						}
+					}
+					mine.Dispose();
+					mines.Remove(mine);
+				}
+
+				// logging!
+				sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
+				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys))
+					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
+			}
 		}
 
 		public void Remove(ISpaceObject sobj)

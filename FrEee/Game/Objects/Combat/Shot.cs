@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(ICombatant attacker, Component weapon, ITargetable defender, double range)
+		public Shot(ICombatant attacker, Component weapon, IDamageable defender, double range)
 		{
 			Weapon = weapon;
 			Defender = defender;
@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Combat
 		[DoNotSerialize]
 		public Component Weapon { get { return weapon; } set { weapon = value; } }
 
-		public Reference<ITargetable> target { get; set; }
+		public Reference<IDamageable> target { get; set; }
 
 		[DoNotSerialize]
 		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.Reference(); } }
@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Combat
 		public Reference<ICombatant> attacker { get; set; }
 
 		[DoNotSerialize]
-		public ITargetable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
+		public IDamageable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
 
 		public double Range { get; set; }
 
