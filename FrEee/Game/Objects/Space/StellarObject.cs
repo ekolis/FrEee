@@ -184,11 +184,6 @@ namespace FrEee.Game.Objects.Space
 			var vis = CheckVisibility(emp);
 			if (vis < Visibility.Fogged)
 				Dispose();
-			else if (vis == Visibility.Fogged)
-			{
-				if (emp.Memory[ID] != null)
-					emp.Memory[ID].CopyToExceptID(this);
-			}
 		}
 
 		/// <summary>

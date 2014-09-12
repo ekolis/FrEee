@@ -629,7 +629,10 @@ namespace FrEee.Game.Objects.Space
 					if (vis < Visibility.Fogged)
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
+					{
 						CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
+						obj.IsMemory = false; // well it sort of is a physical object... it's just outdated data :P
+					}
 				}
 				else
 				{
