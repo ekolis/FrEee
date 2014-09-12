@@ -1171,7 +1171,7 @@ namespace FrEee.Game.Objects.Space
 							v.Owner.UpdateMemory(sobj);
 					}
 
-					// replenish shields before moving (who knows, we might be out of supplies, or about to hit a minefield)
+					// replenish shields after moving (who knows, we might be out of supplies, or about to hit a minefield)
 					v.ReplenishShields();
 				}
 
