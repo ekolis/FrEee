@@ -387,6 +387,16 @@ namespace FrEee.Game.Setup
 					}
 				}
 			}
+
+			// set up omniscient view
+			if (OmniscientView)
+			{
+				foreach (var emp in gal.Empires)
+				{
+					foreach (var sys in gal.StarSystemLocations.Select(l => l.Item))
+						sys.ExploredByEmpires.Add(emp);
+				}
+			}
 		}
 
 		// TODO - status messages for the GUI

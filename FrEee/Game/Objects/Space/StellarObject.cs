@@ -148,8 +148,10 @@ namespace FrEee.Game.Objects.Space
 			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
 			if (!seers.Any() || this.IsHiddenFrom(emp))
 			{
-				if (Galaxy.Current.OmniscientView)
+				if (Galaxy.Current.OmniscientView && StarSystem.ExploredByEmpires.Contains(emp))
 					return Visibility.Visible;
+				if (emp.AllSystemsExploredFromStart)
+					return Visibility.Fogged;
 				var known = emp.Memory[ID];
 				if (known != null && this.GetType() == known.GetType())
 					return Visibility.Fogged;

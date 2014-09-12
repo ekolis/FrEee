@@ -68,6 +68,11 @@ namespace FrEee.Game.Objects.Space
 		public bool OmniscientView { get; set; }
 
 		/// <summary>
+		/// Should players have sensor data for all systems from the get-go?
+		/// </summary>
+		public bool AllSystemsExploredFromStart { get; set; }
+
+		/// <summary>
 		/// Model to use for standard planetary mining.
 		/// </summary>
 		public MiningModel StandardMiningModel { get; set; }
