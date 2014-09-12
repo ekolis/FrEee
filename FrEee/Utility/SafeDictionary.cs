@@ -64,9 +64,6 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (key.ToString() == "Log")
-				{
-				}
 				if (ContainsKey(key))
 					return dict[key];
 				else

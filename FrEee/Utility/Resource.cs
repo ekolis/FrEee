@@ -167,14 +167,7 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			var result =IsGlobal.GetHashCode() ^ IsLocal.GetHashCode();
-			if (Name != null)
-				result ^= Name.GetHashCode();
-			if (Color != Color.Empty)
-				result ^= Color.GetHashCode();
-			if (PictureName != null)
-				result ^= PictureName.GetHashCode();
-			return result;
+			return HashCodeMasher.Mash(IsGlobal, IsLocal, Name, Color, PictureName);
 		}
 
 		public static ResourceQuantity operator *(int quantity, Resource resource)

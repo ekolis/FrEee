@@ -112,9 +112,7 @@ namespace FrEee.Game.Objects.Space
 
 		public override int GetHashCode()
 		{
-			if (starSystem == null)
-				return Coordinates.GetHashCode();
-			return starSystem.GetHashCode() ^ Coordinates.GetHashCode();
+			return HashCodeMasher.Mash(starSystem, Coordinates);
 		}
 
 		public override bool Equals(object obj)

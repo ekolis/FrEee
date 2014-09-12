@@ -2821,5 +2821,14 @@ namespace FrEee.Utility.Extensions
 			}
 			return dict;
 		}
+
+		public static bool SafeSequenceEqual<T>(this IEnumerable<T> e1, IEnumerable<T> e2)
+		{
+			if (e1.SafeEquals(null) && e2.SafeEquals(null))
+				return true;
+			if (e1.SafeEquals(null) || e2.SafeEquals(null))
+				return false;
+			return e1.SequenceEqual(e2);
+		}
 	}
 }

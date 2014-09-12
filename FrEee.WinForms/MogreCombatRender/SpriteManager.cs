@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using FrEee.Utility.Extensions;
 
 using Mogre;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -537,10 +538,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		public override int GetHashCode()
 		{
-			return this.Alpha.GetHashCode() ^
-				this.Pos.GetHashCode() ^
-				this.UV.GetHashCode() ^
-				this.TexHandle.GetHashCode();
+			return HashCodeMasher.Mash(Alpha, Pos, UV, TexHandle);
 		}
 
 		#endregion Methods

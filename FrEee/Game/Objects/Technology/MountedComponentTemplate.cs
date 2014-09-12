@@ -194,7 +194,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public override int GetHashCode()
 		{
-			return Container.GetSafeHashCode() ^ ComponentTemplate.GetSafeHashCode() ^ Mount.GetSafeHashCode();
+			return HashCodeMasher.Mash(Container, ComponentTemplate, Mount);
 		}
 
 		public override string ToString()

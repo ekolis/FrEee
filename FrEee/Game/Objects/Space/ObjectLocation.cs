@@ -1,3 +1,4 @@
+using FrEee.Utility;
 using System;
 using System.Drawing;
 
@@ -42,7 +43,7 @@ namespace FrEee.Game.Objects.Space
 
 		public override int GetHashCode()
 		{
-			return Item.GetHashCode() ^ Location.GetHashCode();
+			return HashCodeMasher.Mash(Item, Location);
 		}
 
 		public override string ToString()

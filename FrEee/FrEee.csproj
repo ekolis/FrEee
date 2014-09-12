@@ -402,6 +402,7 @@
     <Compile Include="Modding\EmpireTraitRequirement.cs" />
     <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
+    <Compile Include="Utility\HashCodeMasher.cs" />
     <Compile Include="Utility\PRNG.cs" />
     <Compile Include="Utility\NamedDictionary.cs" />
     <Compile Include="Utility\Parser.cs" />

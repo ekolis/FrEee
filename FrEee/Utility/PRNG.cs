@@ -106,7 +106,7 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			return Seed.GetHashCode() ^ Iteration.GetHashCode();
+			return HashCodeMasher.Mash(Seed, Iteration);
 		}
 
 		public override string ToString()
