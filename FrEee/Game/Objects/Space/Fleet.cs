@@ -242,6 +242,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
+			// TODO - assign fleet random damage to ship
 			throw new NotSupportedException("Fleets cannot take damage directly. Try assigning damage to the individual ships.");
 		}
 
@@ -255,6 +256,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public int HitChance
 		{
+			// TODO - assign fleet random damage to ship
 			get { throw new NotSupportedException("Fleets cannot take damage directly, so a hit chance is meaningless."); }
 		}
 

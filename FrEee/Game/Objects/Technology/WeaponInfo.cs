@@ -59,6 +59,8 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<bool> IsPointDefense { get; set; }
 
+		public bool IsWarhead { get { return WeaponType == WeaponTypes.Warhead || WeaponType == WeaponTypes.WarheadPointDefense; } }
+
 		/// <summary>
 		/// The sound file to play when this weapon fires.
 		/// </summary>
