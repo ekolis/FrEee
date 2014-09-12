@@ -66,7 +66,7 @@ namespace FrEee.WinForms.Forms
 				if (e.Value != null && (double)e.Value <= 1.0)
 					e.CellStyle.ForeColor = Color.Cyan;
 			}
-			if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
+			else if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
 			{
 				if (e.Value == null || (double)e.Value <= 1.0)
 				{
@@ -79,7 +79,8 @@ namespace FrEee.WinForms.Forms
 			{
 				e.Value = ((int)e.Value).Kilotons();
 			}
-			else if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta) ||
+
+			if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta) ||
 				e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta))
 			{
 				if (e.Value != null)
