@@ -378,12 +378,16 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return ResourceQuantity.Min(Orders.Sum(o =>
-					{
-						if (o.Item == null)
-							return o.Template.Cost;
-						return o.Template.Cost - o.Item.ConstructionProgress;
-					}), UnspentRate);
+				var spent = new ResourceQuantity();
+				foreach (var o in Orders)
+				{
+					var left = o.Template.Cost;
+					if (o.Item != null)
+						left -= o.Item.ConstructionProgress;
+					left = ResourceQuantity.Min(left, Rate - spent);
+					spent += left;
+				}
+				return spent;
 			}
 		}
 
