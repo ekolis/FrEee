@@ -1461,7 +1461,10 @@ namespace FrEee.Utility.Extensions
 			var sys = sobj.FindStarSystem();
 			if (sys == null)
 				return null;
-			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
+			if (Empire.Current == null)
+				return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
+			else
+				return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Empire.Current.Memory[l.Item.ID] == sobj).Location);
 		}
 
 		/// <summary>
@@ -1472,6 +1475,16 @@ namespace FrEee.Utility.Extensions
 		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
+			if (loc == null)
+			{
+				if (Empire.Current == null)
+					return null;
+				else
+				{
+					// search memories too
+					loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Empire.Current.Memory[s.ID] == sobj));
+				}
+			}
 			if (loc == null)
 				return null;
 			return loc.Item;
