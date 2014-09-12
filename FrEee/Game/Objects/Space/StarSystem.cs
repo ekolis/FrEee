@@ -286,6 +286,7 @@ namespace FrEee.Game.Objects.Space
 							var leftoverDamage = d.TakeDamage(hit);
 							totalDamage += damage - leftoverDamage;
 						}
+						minesDetonated[mine.Owner]++;
 					}
 					mine.Dispose();
 					mines.Remove(mine);
