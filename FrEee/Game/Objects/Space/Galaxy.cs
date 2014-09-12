@@ -1157,9 +1157,6 @@ namespace FrEee.Game.Objects.Space
 				if (sys == null)
 					continue; // space object is dead, or not done being built
 
-				// replenish shields before moving (who knows, we might be out of supplies, or about to hit a minefield)
-				v.ReplenishShields();
-
 				bool didStuff = v.ExecuteOrders();
 				if (!sys.ExploredByEmpires.Contains(v.Owner))
 					sys.ExploredByEmpires.Add(v.Owner);
@@ -1173,6 +1170,9 @@ namespace FrEee.Game.Objects.Space
 						foreach (var sobj in v.StarSystem.FindSpaceObjects<ISpaceObject>().Where(sobj => sobj != v && !sobj.IsMemory).ToArray())
 							v.Owner.UpdateMemory(sobj);
 					}
+
+					// replenish shields before moving (who knows, we might be out of supplies, or about to hit a minefield)
+					v.ReplenishShields();
 				}
 
 				// check for battles
