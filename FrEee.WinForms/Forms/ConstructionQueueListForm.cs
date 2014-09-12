@@ -61,13 +61,20 @@ namespace FrEee.WinForms.Forms
 
 		private void gridQueues_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
-			if (e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta) || e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
+			if (e.ColumnIndex == gridQueues.Columns.IndexOf(FirstItemEta))
 			{
 				if (e.Value != null && (double)e.Value <= 1.0)
-					e.CellStyle.BackColor = Color.DarkGreen;
+					e.CellStyle.ForeColor = Color.Cyan;
 			}
-
-			if (e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFree) || 
+			if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
+			{
+				if (e.Value == null || (double)e.Value <= 1.0)
+				{
+					e.CellStyle.BackColor = Color.Orange;
+					e.CellStyle.ForeColor = Color.Black;
+				}
+			}
+			else if (e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFree) || 
 				e.ColumnIndex == gridQueues.Columns.IndexOf(CargoStorageFreeInSector))
 			{
 				e.Value = ((int)e.Value).Kilotons();

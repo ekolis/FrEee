@@ -165,7 +165,21 @@ namespace FrEee.WinForms.Forms
 							totalRad.ToString("f1") + "x" :
 							(int)Math.Round(totalRad * 100) + "%",
 						Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.ToString("f1") + "(" + eta.ToString("f1") + ")", lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : firstEta <= 1.0 ? Color.FromArgb(96, 64, 0) : lstQueue.BackColor, lstQueue.Font));
+					var firstFinishesThisTurn = firstEta <= 1.0;
+					var allFinishThisTurn = eta <= 1.0;
+					Color fore = lstQueue.ForeColor, back = lstQueue.BackColor;
+					if (i == ConstructionQueue.Orders.Count - 1)
+					{
+						if (allFinishThisTurn)
+							back = Color.DarkOrange;
+						else if (firstFinishesThisTurn)
+							fore = Color.LightGreen;
+					}
+					else
+						fore = firstFinishesThisTurn ? (allFinishThisTurn ? Color.Cyan : Color.LightGreen) : lstQueue.BackColor;
+					if (back != lstQueue.BackColor)
+						fore = lstQueue.BackColor;
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
 					item.ImageIndex = i;
 					il.Images.Add(order.Template.Icon);
 					lstQueue.Items.Add(item);
@@ -186,7 +200,14 @@ namespace FrEee.WinForms.Forms
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
-					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1"), lstQueue.ForeColor, eta <= 1.0 ? Color.DarkGreen : lstQueue.BackColor, lstQueue.Font));
+					Color fore = lstQueue.ForeColor, back = lstQueue.BackColor;
+					if (i == ConstructionQueue.Orders.Count - 1)
+						back = eta <= 1.0 ? Color.DarkOrange : lstQueue.BackColor;
+					else
+						fore = eta <= 1.0 ? Color.Cyan : lstQueue.BackColor;
+					if (back != lstQueue.BackColor)
+						fore = lstQueue.BackColor;
+					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
 					item.ImageIndex = i;
 					il.Images.Add(order.Template.Icon);
 					lstQueue.Items.Add(item);
@@ -526,7 +547,7 @@ namespace FrEee.WinForms.Forms
 		private void btnTop_Click(object sender, EventArgs e)
 		{
 			var sel = SelectedOrders.ToArray();
-			foreach (var item in sel.Select(o => new {Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o)}))
+			foreach (var item in sel.Select(o => new { Order = o, OldIndex = ConstructionQueue.Orders.IndexOf(o), NewIndex = sel.IndexOf(o) }))
 			{
 				var cmd = new RearrangeOrdersCommand<ConstructionQueue>(ConstructionQueue, item.Order, item.NewIndex - item.OldIndex);
 				newCommands.Add(cmd);
@@ -589,7 +610,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var o in SelectedOrders)
 				RemoveOrder(o, false);
 			BindQueueListView();
-			
+
 		}
 
 		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
