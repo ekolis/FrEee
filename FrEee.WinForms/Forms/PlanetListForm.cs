@@ -65,7 +65,7 @@ namespace FrEee.WinForms.Forms
 			// show population and resources
 			txtPopulation.Text = Empire.Current.ColonizedPlanets.Sum(p => p.Colony.Population.Sum(kvp => kvp.Value)).ToUnitString(true);
 			var stored = Empire.Current.StoredResources;
-			var income = Empire.Current.NetIncome;
+			var income = Empire.Current.NetIncomeLessConstruction;
 			var storage = Empire.Current.ResourceStorage;
 			resMin.Amount = stored[Resource.Minerals];
 			resMin.Change = income[Resource.Minerals];

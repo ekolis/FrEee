@@ -124,6 +124,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		/// <summary>
 		/// The empire's resource income, not including maintenance costs.
+		/// TODO - should we include tributes here?
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
@@ -165,6 +166,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		/// <summary>
 		/// Gross income less maintenance.
+		/// TODO - should we include tributes here?
 		/// </summary>
 		public ResourceQuantity NetIncome
 		{

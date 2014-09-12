@@ -118,7 +118,7 @@ namespace FrEee.WinForms.Forms
 				rqdIncome.ResourceQuantity = emp.GrossIncome;
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
 				rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;
-				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncome - emp.ResourceStorage);
+				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncomeLessConstruction - emp.ResourceStorage);
 				rqdStored.ResourceQuantity = emp.StoredResources;
 				rqdTrade.ResourceQuantity = new ResourceQuantity(); // TODO - trade
 				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
