@@ -152,7 +152,7 @@ namespace FrEee.WinForms.Forms
 							var savefile = Galaxy.Current.GetGameSavePath(emp);
 							try
 							{
-								var fs = File.Open(savefile, FileMode.Open);
+								Galaxy.Load(savefile);
 							}
 							catch (IOException)
 							{
