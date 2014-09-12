@@ -473,6 +473,11 @@
 			// 
 			// spnColorBlue
 			// 
+			this.spnColorBlue.Increment = new decimal(new int[] {
+            85,
+            0,
+            0,
+            0});
 			this.spnColorBlue.Location = new System.Drawing.Point(253, 152);
 			this.spnColorBlue.Maximum = new decimal(new int[] {
             255,
@@ -488,9 +493,15 @@
             0,
             0});
 			this.spnColorBlue.ValueChanged += new System.EventHandler(this.spnColor_ValueChanged);
+			this.spnColorBlue.Leave += new System.EventHandler(this.spnColor_Leave);
 			// 
 			// spnColorGreen
 			// 
+			this.spnColorGreen.Increment = new decimal(new int[] {
+            85,
+            0,
+            0,
+            0});
 			this.spnColorGreen.Location = new System.Drawing.Point(195, 152);
 			this.spnColorGreen.Maximum = new decimal(new int[] {
             255,
@@ -506,9 +517,15 @@
             0,
             0});
 			this.spnColorGreen.ValueChanged += new System.EventHandler(this.spnColor_ValueChanged);
+			this.spnColorGreen.Leave += new System.EventHandler(this.spnColor_Leave);
 			// 
 			// spnColorRed
 			// 
+			this.spnColorRed.Increment = new decimal(new int[] {
+            85,
+            0,
+            0,
+            0});
 			this.spnColorRed.Location = new System.Drawing.Point(138, 152);
 			this.spnColorRed.Maximum = new decimal(new int[] {
             255,
@@ -524,6 +541,7 @@
             0,
             0});
 			this.spnColorRed.ValueChanged += new System.EventHandler(this.spnColor_ValueChanged);
+			this.spnColorRed.Leave += new System.EventHandler(this.spnColor_Leave);
 			// 
 			// picLeaderPortrait
 			// 
@@ -701,6 +719,7 @@
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
 			this.tabs.Size = new System.Drawing.Size(527, 675);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
+			this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 0;
 			// 
