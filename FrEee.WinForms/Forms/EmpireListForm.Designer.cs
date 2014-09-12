@@ -52,8 +52,10 @@
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.report = new FrEee.WinForms.Controls.EmpireReport();
 			this.tabBudget = new System.Windows.Forms.TabPage();
-			this.lblBudgetWarning = new System.Windows.Forms.Label();
 			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.label14 = new System.Windows.Forms.Label();
+			this.lblBudgetWarning = new System.Windows.Forms.Label();
+			this.rqdStorage = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdStored = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdNet = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.rqdTributesOut = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
@@ -103,8 +105,9 @@
 			this.tabs.SelectedIndex = 0;
 			this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.tabs.Size = new System.Drawing.Size(710, 432);
+			this.tabs.Size = new System.Drawing.Size(710, 459);
 			this.tabs.TabBackColor = System.Drawing.Color.Black;
+			this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
 			this.tabs.TabIndex = 2;
 			// 
@@ -122,7 +125,7 @@
 			this.tabDiplomacy.Location = new System.Drawing.Point(4, 29);
 			this.tabDiplomacy.Name = "tabDiplomacy";
 			this.tabDiplomacy.Padding = new System.Windows.Forms.Padding(3);
-			this.tabDiplomacy.Size = new System.Drawing.Size(702, 399);
+			this.tabDiplomacy.Size = new System.Drawing.Size(702, 426);
 			this.tabDiplomacy.TabIndex = 0;
 			this.tabDiplomacy.Text = "Diplomacy";
 			// 
@@ -257,7 +260,7 @@
 			this.tabIntel.Location = new System.Drawing.Point(4, 29);
 			this.tabIntel.Name = "tabIntel";
 			this.tabIntel.Padding = new System.Windows.Forms.Padding(3);
-			this.tabIntel.Size = new System.Drawing.Size(702, 399);
+			this.tabIntel.Size = new System.Drawing.Size(702, 426);
 			this.tabIntel.TabIndex = 3;
 			this.tabIntel.Text = "Intel";
 			// 
@@ -360,8 +363,10 @@
 			// tabBudget
 			// 
 			this.tabBudget.BackColor = System.Drawing.Color.Black;
-			this.tabBudget.Controls.Add(this.lblBudgetWarning);
 			this.tabBudget.Controls.Add(this.rqdSpoiled);
+			this.tabBudget.Controls.Add(this.label14);
+			this.tabBudget.Controls.Add(this.lblBudgetWarning);
+			this.tabBudget.Controls.Add(this.rqdStorage);
 			this.tabBudget.Controls.Add(this.rqdStored);
 			this.tabBudget.Controls.Add(this.rqdNet);
 			this.tabBudget.Controls.Add(this.rqdTributesOut);
@@ -385,30 +390,52 @@
 			this.tabBudget.Controls.Add(this.label2);
 			this.tabBudget.Location = new System.Drawing.Point(4, 29);
 			this.tabBudget.Name = "tabBudget";
-			this.tabBudget.Size = new System.Drawing.Size(702, 399);
+			this.tabBudget.Size = new System.Drawing.Size(702, 426);
 			this.tabBudget.TabIndex = 2;
 			this.tabBudget.Text = "Budget";
-			// 
-			// lblBudgetWarning
-			// 
-			this.lblBudgetWarning.AutoSize = true;
-			this.lblBudgetWarning.ForeColor = System.Drawing.Color.Red;
-			this.lblBudgetWarning.Location = new System.Drawing.Point(6, 361);
-			this.lblBudgetWarning.Name = "lblBudgetWarning";
-			this.lblBudgetWarning.Size = new System.Drawing.Size(320, 20);
-			this.lblBudgetWarning.TabIndex = 24;
-			this.lblBudgetWarning.Text = "Budget is an estimate based on known intel.";
 			// 
 			// rqdSpoiled
 			// 
 			this.rqdSpoiled.BackColor = System.Drawing.Color.Black;
 			this.rqdSpoiled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
 			this.rqdSpoiled.ForeColor = System.Drawing.Color.White;
-			this.rqdSpoiled.Location = new System.Drawing.Point(177, 330);
+			this.rqdSpoiled.Location = new System.Drawing.Point(177, 360);
 			this.rqdSpoiled.Name = "rqdSpoiled";
 			this.rqdSpoiled.ResourceQuantity = null;
 			this.rqdSpoiled.Size = new System.Drawing.Size(413, 24);
-			this.rqdSpoiled.TabIndex = 23;
+			this.rqdSpoiled.TabIndex = 26;
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label14.Location = new System.Drawing.Point(3, 360);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(127, 17);
+			this.label14.TabIndex = 25;
+			this.label14.Text = "Spoiled Resources";
+			// 
+			// lblBudgetWarning
+			// 
+			this.lblBudgetWarning.AutoSize = true;
+			this.lblBudgetWarning.ForeColor = System.Drawing.Color.Red;
+			this.lblBudgetWarning.Location = new System.Drawing.Point(17, 395);
+			this.lblBudgetWarning.Name = "lblBudgetWarning";
+			this.lblBudgetWarning.Size = new System.Drawing.Size(320, 20);
+			this.lblBudgetWarning.TabIndex = 24;
+			this.lblBudgetWarning.Text = "Budget is an estimate based on known intel.";
+			// 
+			// rqdStorage
+			// 
+			this.rqdStorage.BackColor = System.Drawing.Color.Black;
+			this.rqdStorage.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdStorage.ForeColor = System.Drawing.Color.White;
+			this.rqdStorage.Location = new System.Drawing.Point(177, 330);
+			this.rqdStorage.Name = "rqdStorage";
+			this.rqdStorage.ResourceQuantity = null;
+			this.rqdStorage.Size = new System.Drawing.Size(413, 24);
+			this.rqdStorage.TabIndex = 23;
 			// 
 			// rqdStored
 			// 
@@ -527,9 +554,9 @@
 			this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label12.Location = new System.Drawing.Point(3, 330);
 			this.label12.Name = "label12";
-			this.label12.Size = new System.Drawing.Size(127, 17);
+			this.label12.Size = new System.Drawing.Size(116, 17);
 			this.label12.TabIndex = 11;
-			this.label12.Text = "Spoiled Resources";
+			this.label12.Text = "Storage Capacity";
 			// 
 			// label11
 			// 
@@ -647,7 +674,7 @@
 			this.btnClose.BackColor = System.Drawing.Color.Black;
 			this.btnClose.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.btnClose.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnClose.Location = new System.Drawing.Point(622, 622);
+			this.btnClose.Location = new System.Drawing.Point(622, 649);
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(100, 23);
 			this.btnClose.TabIndex = 2;
@@ -689,7 +716,7 @@
 			this.btnMinisters.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnMinisters.BackColor = System.Drawing.Color.Black;
 			this.btnMinisters.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnMinisters.Location = new System.Drawing.Point(622, 12);
+			this.btnMinisters.Location = new System.Drawing.Point(622, 39);
 			this.btnMinisters.Name = "btnMinisters";
 			this.btnMinisters.Size = new System.Drawing.Size(100, 23);
 			this.btnMinisters.TabIndex = 3;
@@ -702,7 +729,7 @@
 			this.btnAvoidSystems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnAvoidSystems.BackColor = System.Drawing.Color.Black;
 			this.btnAvoidSystems.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnAvoidSystems.Location = new System.Drawing.Point(622, 41);
+			this.btnAvoidSystems.Location = new System.Drawing.Point(622, 68);
 			this.btnAvoidSystems.Name = "btnAvoidSystems";
 			this.btnAvoidSystems.Size = new System.Drawing.Size(100, 23);
 			this.btnAvoidSystems.TabIndex = 4;
@@ -715,7 +742,7 @@
 			this.btnWaypoints.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnWaypoints.BackColor = System.Drawing.Color.Black;
 			this.btnWaypoints.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnWaypoints.Location = new System.Drawing.Point(622, 70);
+			this.btnWaypoints.Location = new System.Drawing.Point(622, 97);
 			this.btnWaypoints.Name = "btnWaypoints";
 			this.btnWaypoints.Size = new System.Drawing.Size(100, 23);
 			this.btnWaypoints.TabIndex = 4;
@@ -729,7 +756,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.CancelButton = this.btnClose;
-			this.ClientSize = new System.Drawing.Size(734, 661);
+			this.ClientSize = new System.Drawing.Size(734, 688);
 			this.Controls.Add(this.btnWaypoints);
 			this.Controls.Add(this.btnAvoidSystems);
 			this.Controls.Add(this.btnMinisters);
@@ -781,7 +808,7 @@
 		private Controls.ResourceQuantityDisplay rqdTributesIn;
 		private Controls.ResourceQuantityDisplay rqdTrade;
 		private Controls.ResourceQuantityDisplay rqdExtraction;
-		private Controls.ResourceQuantityDisplay rqdSpoiled;
+		private Controls.ResourceQuantityDisplay rqdStorage;
 		private System.Windows.Forms.ListView lstMessages;
 		private System.Windows.Forms.Label label13;
 		private System.Windows.Forms.TabPage tabIntel;
@@ -805,5 +832,7 @@
 		private Controls.GameButton btnMinisters;
 		private Controls.GameButton btnAvoidSystems;
 		private Controls.GameButton btnWaypoints;
+		private Controls.ResourceQuantityDisplay rqdSpoiled;
+		private System.Windows.Forms.Label label14;
 	}
 }
