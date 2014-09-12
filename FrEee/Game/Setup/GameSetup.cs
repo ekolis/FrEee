@@ -228,6 +228,31 @@ namespace FrEee.Game.Setup
 			}
 		}
 
+		/// <summary>
+		/// Generates a random number used to pick a color from a limited palette of 63 colors.
+		/// </summary>
+		/// <returns></returns>
+		private int RandomRGB()
+		{
+			return RandomHelper.Range(0, 3) * 85;
+		}
+
+		/// <summary>
+		/// Picks a random color from a limited palette of 63 colors.
+		/// </summary>
+		/// <returns></returns>
+		private Color RandomColor()
+		{
+			int r = 0, g = 0, b = 0;
+			while (r == 0 && g == 0 && b == 0)
+			{
+				r = RandomRGB();
+				g = RandomRGB();
+				b = RandomRGB();
+			}
+			return Color.FromArgb(r, g, b);
+		}
+
 		// TODO - status messages for the GUI
 		public void PopulateGalaxy(Galaxy gal)
 		{
@@ -277,6 +302,8 @@ namespace FrEee.Game.Setup
 				gal.Empires.Add(emp);
 			}
 
+			// TODO - make sure empires don't reuse colors unless we really have to?
+
 			// create random AI empires
 			for (int i = 1; i <= RandomAIs; i++)
 			{
@@ -294,7 +321,7 @@ namespace FrEee.Game.Setup
 						NativeSurface = surface,
 					},
 					IsPlayerEmpire = false,
-					Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+					Color = RandomColor(),
 					Culture = Mod.Current.Cultures.PickRandom(),
 					AIName = "AI_Default",
 				};
@@ -322,7 +349,7 @@ namespace FrEee.Game.Setup
 					},
 					IsPlayerEmpire = false,
 					IsMinorEmpire = true,
-					Color = Color.FromArgb(RandomHelper.Next(256), RandomHelper.Next(256), RandomHelper.Next(256)),
+					Color = RandomColor(),
 					Culture = Mod.Current.Cultures.PickRandom(),
 					AIName = "AI_Default",
 				};
