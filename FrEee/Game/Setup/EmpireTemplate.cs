@@ -142,6 +142,10 @@ namespace FrEee.Game.Setup
 				yield return "You must specify an insignia for your empire.";
 			if (string.IsNullOrWhiteSpace(ShipsetName))
 				yield return "You must specify a shipset for your empire.";
+			if (Color.R < 85 && Color.G < 85 & Color.B < 85)
+				yield return "The color you specified for your empire is too dark to be visible. Please make sure that at least one of the RGB values is 85 or more.";
+			if (Color.A < 255)
+				yield return "Transparent empire colors are not allowed.";
 			if (Culture == null)
 				yield return "You must specify a culture for your empire.";
 			if (!IsPlayerEmpire && Mod.Current.EmpireAIs.FindByName(AIName) == null)

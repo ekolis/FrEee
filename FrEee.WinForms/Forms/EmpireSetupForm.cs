@@ -358,5 +358,22 @@ namespace FrEee.WinForms.Forms
 			}
 			lastDdlPicText = ddl.Text;
 		}
+
+		private void spnColor_KeyPress(object sender, KeyPressEventArgs e)
+		{
+
+		}
+
+		private void spnColorRed_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+		{
+
+		}
+
+		private void spnColor_Leave(object sender, EventArgs e)
+		{
+			// round to next 85
+			var spn = (NumericUpDown)sender;
+			spn.Value = Math.Ceiling(spn.Value / 85m) * 85m;
+		}
 	}
 }
