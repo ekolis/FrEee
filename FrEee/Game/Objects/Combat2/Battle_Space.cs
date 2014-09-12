@@ -526,6 +526,21 @@ namespace FrEee.Game.Objects.Combat2
 			foreach (var comObj in CombatObjects)
 				comObj.debuginfo = ""; //cleardebuginfo txt.
 
+			// remove shields from vehicles lacking supplies
+			foreach (var comObj in CombatObjects.OfType<CombatVehicle>())
+			{
+				var v = comObj.WorkingVehicle;
+				if (v is SpaceVehicle)
+				{
+					var sv = v as SpaceVehicle;
+					if (sv.SupplyRemaining <= 0)
+					{
+						sv.NormalShields = 0;
+						sv.PhasedShields = 0;
+					}
+				}
+			}
+
 			foreach (var comObj in CombatObjects.ToArray())
             {				
 #if DEBUG
