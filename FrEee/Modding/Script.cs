@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
 using System.IO;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
@@ -145,7 +146,7 @@ sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 				return true;
 			if (s1.IsNull() || s2.IsNull())
 				return false;
-			return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SequenceEqual(s2.ExternalScripts);
+			return s1.ModuleName == s2.ModuleName && s1.Text == s2.Text && s1.ExternalScripts.SafeSequenceEqual(s2.ExternalScripts);
 		}
 
 		public static bool operator !=(Script s1, Script s2)
@@ -165,9 +166,15 @@ sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 
 		public override int GetHashCode()
 		{
-			var hash = ModuleName.GetHashCode() ^ Text.GetHashCode();
-			foreach (var xs in ExternalScripts)
-				hash ^= xs.GetHashCode();
+			return HashCodeMasher.Mash(ModuleName, Text, HashCodeMasher.MashList(ExternalScripts));
+			var mh = ModuleName == null ? 0 : ModuleName.GetHashCode();
+			var th = Text == null ? 0 : Text.GetHashCode();
+			var hash = mh ^ th;
+			if (ExternalScripts != null)
+			{
+				foreach (var xs in ExternalScripts)
+					hash ^= xs.GetHashCode();
+			}
 			return hash;
 		}
 	}

@@ -121,13 +121,7 @@ namespace FrEee.Utility
 
 		public override int GetHashCode()
 		{
-			var hash = 0;
-			foreach (var kvp in this)
-			{
-				if (kvp.Value != 0)
-					hash ^= kvp.GetHashCode();
-			}
-			return hash;
+			return HashCodeMasher.MashList(this);
 		}
 
 		public override bool Equals(object obj)

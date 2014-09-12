@@ -110,7 +110,7 @@ namespace FrEee.WinForms.Forms
 
 			public override int GetHashCode()
 			{
-				return Empire.GetHashCode() ^ HullName.GetHashCode() ^ HullSize.GetHashCode();
+				return HashCodeMasher.Mash(Empire, HullName, HullSize);
 			}
 		}
 

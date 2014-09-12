@@ -199,6 +199,7 @@ namespace FrEee.Utility
 		public ObjectGraphContext()
 		{
 			KnownObjects = new SafeDictionary<Type, IList<object>>();
+			KnownIDs = new SafeDictionary<Type, IDictionary<object, int>>();
 		}
 
 		static ObjectGraphContext()
@@ -241,6 +242,11 @@ namespace FrEee.Utility
 		public SafeDictionary<Type, IList<object>> KnownObjects { get; private set; }
 
 		/// <summary>
+		/// The known IDs of objects.
+		/// </summary>
+		public SafeDictionary<Type, IDictionary<object, int>> KnownIDs { get; private set; }
+
+		/// <summary>
 		/// Adds an object.
 		/// </summary>
 		/// <param name="o"></param>
@@ -253,8 +259,12 @@ namespace FrEee.Utility
 			if (!KnownObjects.ContainsKey(type))
 				KnownObjects.Add(type, new List<object>());
 			KnownObjects[type].Add(o);
+			if (!KnownIDs.ContainsKey(type))
+				KnownIDs.Add(type, new SafeDictionary<object, int>());
+			var id =  KnownObjects[type].Count - 1;
+			KnownIDs[type].Add(o, id);
 			AddProperties(type);
-			return KnownObjects[type].Count - 1;
+			return id;
 		}
 
 		/// <summary>
@@ -325,8 +335,8 @@ namespace FrEee.Utility
 			if (o == null)
 				return null;
 			var type = o.GetType();
-			if (KnownObjects.ContainsKey(type) && KnownObjects[type].Contains(o, ReferenceEqualityComparer.Instance))
-				return KnownObjects[type].IndexOf(o);
+			if (KnownIDs.ContainsKey(type) && KnownIDs[type].ContainsKey(o))
+				return KnownIDs[type][o];
 			return null;
 		}
 

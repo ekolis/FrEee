@@ -524,10 +524,7 @@ namespace FrEee.Modding
 
 			public override int GetHashCode()
 			{
-				var hash = ModuleName.GetHashCode() ^ Code.GetHashCode();
-				foreach (var xs in ExternalScripts)
-					hash ^= xs.GetHashCode();
-				return hash;
+				return HashCodeMasher.Mash(ModuleName, Code, HashCodeMasher.Mash(ExternalScripts));
 			}
 		}
 	}

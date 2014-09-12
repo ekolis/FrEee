@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Enumerations;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
@@ -262,7 +263,7 @@ namespace FrEee.Modding
 
 		public override int GetHashCode()
 		{
-			return Text.GetHashCode() ^ (Context == null ? 0 : Context.GetHashCode()) ^ FormulaType.GetHashCode();
+			return HashCodeMasher.Mash(Text, Context, FormulaType);
 		}
 
 		public Formula<string> ToStringFormula()

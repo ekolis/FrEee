@@ -358,7 +358,7 @@ namespace FrEee.WinForms.Controls
 
 			public override int GetHashCode()
 			{
-				return Template.GetHashCode() ^ Hitpoints.GetHashCode();
+				return HashCodeMasher.Mash(Template, Hitpoints);
 			}
 
 			public Component SampleComponent
