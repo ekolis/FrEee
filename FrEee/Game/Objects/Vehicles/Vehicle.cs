@@ -310,7 +310,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public void ReplenishShields(int? amount = null)
+		public virtual void ReplenishShields(int? amount = null)
 		{
 			if (amount == null)
 			{
