@@ -344,13 +344,17 @@ namespace FrEee.Utility
 		{
 			string o;
 			bool foundRealSemicolon = false;
-			string s = "";
+			StringBuilder sb = new StringBuilder();
+			int quotes = 0;
 			while (!foundRealSemicolon)
 			{
-				s += r.ReadTo(';', log);
-				if (!s.EndsWith("\\") && s.Count(c => c == '"') % 2 == 0)
+				var ns = r.ReadTo(';', log);
+				quotes += ns.Count(c => c == '"');
+				sb.Append(ns);
+				if (!ns.EndsWith("\\") && quotes % 2 == 0)
 					foundRealSemicolon = true;
 			}
+			var s = sb.ToString();
 			if (s == "n")
 				o = null;
 			else
