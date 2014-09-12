@@ -521,5 +521,20 @@ namespace FrEee.Game.Objects.Vehicles
 			SupplyRemaining -= EngineSupplyBurnRate;
 			NormalizeSupplies();
 		}
+
+		/// <summary>
+		/// Replenishes shields normally, unless there are no supplies, in which case the shields are taken away.
+		/// </summary>
+		/// <param name="amount"></param>
+		public override void ReplenishShields(int? amount = null)
+		{
+			if (SupplyRemaining > 0)
+				base.ReplenishShields(amount);
+			else
+			{
+				NormalShields = 0;
+				PhasedShields = 0;
+			}
+		}
 	}
 }
