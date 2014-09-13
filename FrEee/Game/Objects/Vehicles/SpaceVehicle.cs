@@ -229,7 +229,8 @@ namespace FrEee.Game.Objects.Vehicles
 					u.Dispose();
 			}
 			base.Dispose();
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 
 		// TODO - refactor this method's code into an extension method on ISpaceObject since it's duplicated on StellarObject

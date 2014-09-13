@@ -230,7 +230,8 @@ namespace FrEee.Game.Objects.Space
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 
 		/// <summary>

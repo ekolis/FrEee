@@ -88,7 +88,8 @@ namespace FrEee.Game.Objects.Space
 			if (sys != null)
 				sys.Remove(this);
 			Galaxy.Current.UnassignID(this);
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 
 		public StellarSize StellarSize

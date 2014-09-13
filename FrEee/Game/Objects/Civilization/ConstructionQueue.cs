@@ -346,7 +346,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (IsDisposed)
 				return;
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 			Galaxy.Current.UnassignID(this);
 		}
 
