@@ -166,11 +166,12 @@ namespace FrEee.WinForms.Forms
 							(int)Math.Round(totalRad * 100) + "%",
 						Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
 					var firstFinishesThisTurn = firstEta <= 1.0;
+					var idle = eta < 1.0;
 					var allFinishThisTurn = eta <= 1.0;
 					Color fore = lstQueue.ForeColor, back = lstQueue.BackColor;
 					if (i == ConstructionQueue.Orders.Count - 1)
 					{
-						if (allFinishThisTurn)
+						if (idle)
 							back = Color.DarkOrange;
 						else if (firstFinishesThisTurn)
 							fore = Color.LightGreen;
@@ -201,10 +202,12 @@ namespace FrEee.WinForms.Forms
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(orgprogress) ? "-" : (int)Math.Round(orgprogress * 100) + "%", Resource.Organics.Color, lstQueue.BackColor, lstQueue.Font));
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(radprogress) ? "-" : (int)Math.Round(radprogress * 100) + "%", Resource.Radioactives.Color, lstQueue.BackColor, lstQueue.Font));
 					Color fore = lstQueue.ForeColor, back = lstQueue.BackColor;
+					var idle = eta < 1.0;
+					var finishesThisTurn = eta <= 1.0;
 					if (i == ConstructionQueue.Orders.Count - 1)
-						back = eta <= 1.0 ? Color.DarkOrange : lstQueue.BackColor;
+						back = idle ? Color.DarkOrange : lstQueue.BackColor;
 					else
-						fore = eta <= 1.0 ? Color.Cyan : lstQueue.BackColor;
+						fore = finishesThisTurn ? Color.Cyan : lstQueue.BackColor;
 					if (back != lstQueue.BackColor)
 						fore = lstQueue.BackColor;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
