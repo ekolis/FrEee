@@ -222,6 +222,7 @@ namespace FrEee.Game.Objects.Technology
 			get { return MaxHitpoints; }
 		}
 
+		[DoNotCopy]
 		private Reference<IVehicle> container { get; set; }
 
 		[DoNotSerialize]

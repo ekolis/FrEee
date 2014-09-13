@@ -122,9 +122,16 @@ namespace FrEee.Modding
 
 		public override string ToString()
 		{
-			if (Value is string)
-				return '"' + Value.ToString() + '"';
-			return Value.ToString();
+			try
+			{
+				if (Value is string)
+					return '"' + Value.ToString() + '"';
+				return Value.ToString();
+			}
+			catch (Exception ex)
+			{
+				return ex.Message;
+			}
 		}
 
 		public static Formula<T> operator +(Formula<T> f1, Formula<T> f2)

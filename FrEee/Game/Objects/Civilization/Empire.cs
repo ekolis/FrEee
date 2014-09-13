@@ -694,8 +694,13 @@ namespace FrEee.Game.Objects.Civilization
 				// object exists, update cache with the data
 				if (Memory[obj.ID] != null)
 				{
-					obj.CopyToExceptID(Memory[obj.ID]);
+					obj.CopyToExceptID(Memory[obj.ID], IDCopyBehavior.Regenerate);
 					Memory[obj.ID].IsMemory = true;
+
+					// HACK - why are objects getting duplicate IDs?
+					var parser = new ObjectGraphParser();
+					parser.StartObject += idFixerParser_StartObject;
+					parser.Parse(Memory[obj.ID]);
 				}
 				else
 				{
@@ -731,6 +736,16 @@ namespace FrEee.Game.Objects.Civilization
 				var oldid = obj.ID > 0 ? obj.ID : Memory.SingleOrDefault(kvp => kvp.Value == obj).Key;
 				if (oldid > 0)
 					Memory.Remove(oldid);
+			}
+		}
+
+		void idFixerParser_StartObject(object o)
+		{
+			if (o is IReferrable)
+			{
+				var r = o as IReferrable;
+				if (!r.HasValidID())
+					r.ReassignID();
 			}
 		}
 

@@ -415,11 +415,10 @@ namespace FrEee.Game.Objects.Space
 						status.Message = "Saving game (player " + (i + 1) + ")";
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
+					Current.SpaceObjectIDCheck("after creating player view for " + Current.Empires[i]);
 					Current.Save(false); // already asssigned IDs in the redact phase
 					if (status != null)
 						status.Progress += progressPerSaveLoad;
-
-					Current.SpaceObjectIDCheck("after saving player view for " + Current.Empires[i]);
 				}
 			}
 
@@ -637,7 +636,7 @@ namespace FrEee.Game.Objects.Space
 						referrables.Remove(id);
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 					{
-						CurrentEmpire.Memory[id].CopyToExceptID(obj); // memory sight!
+						CurrentEmpire.Memory[id].CopyToExceptID(obj, IDCopyBehavior.PreserveDestination); // memory sight!
 						obj.IsMemory = false; // well it sort of is a physical object... it's just outdated data :P
 					}
 				}
@@ -649,6 +648,7 @@ namespace FrEee.Game.Objects.Space
 						obj.Dispose();
 				}
 			}
+			//SpaceObjectIDCheck("when redacting " + o);
 		}
 
 		private bool didLastTick;
@@ -1148,9 +1148,16 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (!referrables.ContainsKey(sobj.ID))
 					AssignID(sobj);
-				var r = referrables[sobj.ID];
-				if (r != sobj)
-					throw new InvalidOperationException("Space object identity mismatch " + when + " for ID=" + sobj.ID + " (" + sobj + " vs. " + r + ")");
+				if (sobj.ID > 0)
+				{
+					var r = referrables[sobj.ID];
+					if (r != sobj)
+					{
+						// HACK - assume the space object that's actually in space is "real"
+						referrables[sobj.ID] = sobj;
+						Console.Error.WriteLine("Space object identity mismatch " + when + " for ID=" + sobj.ID + ". " + sobj + " is actually in space so it is replacing " + r + " in the referrables collection.");
+					}
+				}
 			}
 		}
 
@@ -1218,7 +1225,7 @@ namespace FrEee.Game.Objects.Space
 		/// Will dispose of an object that has a negative ID if it hasn't already been disposed of.
 		/// </summary>
 		/// <param name="r">The object.</param>
-		/// <param name="id">The ID, or 0 to generate a new ID.</param>
+		/// <param name="id">The ID, or 0 to generate a new ID (unless the ID is already valid).</param>
 		/// <returns>The new ID.</returns>
 		public long AssignID(IReferrable r, long id = 0)
 		{
@@ -1229,8 +1236,10 @@ namespace FrEee.Game.Objects.Space
 				return r.ID;
 			}
 
-			if (referrables.ContainsKey(r.ID) && referrables[r.ID] == r)
+			if (r.HasValidID())
 				return r.ID; // no need to reassign ID
+			else if (referrables.ContainsKey(r.ID))
+				throw new InvalidOperationException("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
 
 			var oldid = r.ID;
 			long newid = oldid <= 0 ? id : oldid;

@@ -1,3 +1,5 @@
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,7 +35,6 @@ namespace FrEee.Utility.Extensions
 	{
 		/// <summary>
 		/// Copies an object.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="obj">The object to copy.</param>
@@ -43,14 +44,13 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				return default(T);
 			var dest = obj.GetType().Instantiate();
-			dest.InjectFrom(new OnlySafePropertiesInjection(true), obj);
+			dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.PreserveSource, IDCopyBehavior.PreserveSource), obj);
 			return (T)dest;
 		}
 
 		/// <summary>
 		/// Copies an object and assigns the copy a new ID.
 		/// Subordinate objects are assigned new IDs too.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="obj"></param>
@@ -58,47 +58,11 @@ namespace FrEee.Utility.Extensions
 		public static T CopyAndAssignNewID<T>(this T obj)
 			where T : IReferrable
 		{
-			var copy = obj.Copy();
-			var parser = new ObjectGraphParser();
-			var canCopy = new Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
-			canCopy.Push(true);
-			parser.Property += (pname, o, val) =>
-				{
-					var prop = o.GetType().FindProperty(pname);
-					var shouldRecurse = !prop.HasAttribute(typeof(DoNotCopyAttribute));
-					if (shouldRecurse)
-						canCopy.Push(shouldRecurse);
-					return shouldRecurse;
-				};
-			parser.Item += (o) =>
-				{
-					// can always serialize collection items
-					canCopy.Push(true);
-				};
-			parser.StartObject += (o) =>
-				{
-					var doit = canCopy.All(b => b);
-					if (doit && o is IReferrable)
-					{
-						var r = (IReferrable)o;
-						r.ID = 0;
-						Galaxy.Current.AssignID(r);
-					}
-				};
-			parser.EndObject += (o) =>
-				{
-					canCopy.Pop();
-				};
-			parser.Null += (o) =>
-				{
-					canCopy.Pop();
-				};
-			parser.KnownObject += (o) =>
-				{
-					canCopy.Pop();
-				};
-			parser.Parse(copy);
-			return copy;
+			if (obj == null)
+				return default(T);
+			var dest = obj.GetType().Instantiate();
+			dest.InjectFrom(new OnlySafePropertiesInjection(obj, true, IDCopyBehavior.Regenerate, IDCopyBehavior.Regenerate), obj);
+			return (T)dest;
 		}
 
 		/// <summary>
@@ -148,37 +112,26 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Copies an object's data to another object.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
 		/// <param name="dest">The object to copy the source object's data to.</param>
-		public static void CopyTo(this object src, object dest)
+		public static void CopyTo(this object src, object dest, IDCopyBehavior rootBehavior = IDCopyBehavior.PreserveSource, IDCopyBehavior subordinateBehavior = IDCopyBehavior.PreserveSource)
 		{
 			if (src.GetType() != dest.GetType())
 				throw new Exception("Can only copy objects onto objects of the same type.");
-			/*var type = src.GetType();
-			if (!mappedTypes.Contains(type))
-			{
-				mappedTypes.Add(type);
-				var creator = typeof(Mapper).GetMethods().Single(m => m.Name == "CreateMap" && m.GetGenericArguments().Length == 2).MakeGenericMethod(type, type);
-				var map = creator.Invoke(null, new object[0]);
-				var ignorer = typeof(CommonExtensions).GetMethod("IgnoreReadOnlyAndNonSerializableProperties", BindingFlags.Static | BindingFlags.NonPublic).MakeGenericMethod(type);
-				map = ignorer.Invoke(null, new object[] { map });
-				var afterMap = map.GetType().GetMethods().Single(f => f.Name == "AfterMap" && f.GetGenericArguments().Length == 0);
-				var actionType = typeof(Action<,>).MakeGenericType(type, type);
-				afterMap.Invoke(map, new object[]{
-					typeof(CommonExtensions).GetMethod("CopyEnumerableProperties", BindingFlags.Static | BindingFlags.NonPublic).BuildDelegate()
-				});
-			}*/
-			dest.InjectFrom(new OnlySafePropertiesInjection(true), src);
+			dest.InjectFrom(new OnlySafePropertiesInjection(src, true, rootBehavior, subordinateBehavior), src);
 		}
 
 		private class OnlySafePropertiesInjection : ConventionInjection
 		{
-			public OnlySafePropertiesInjection(bool deep, IDictionary<object, object> known = null)
+			public OnlySafePropertiesInjection(object root, bool deep, IDCopyBehavior rootBehavior, IDCopyBehavior subordinateBehavior, IDictionary<object, object> known = null)
 			{
+				Root = root;
 				DeepCopy = deep;
+				RootBehavior = rootBehavior;
+				SubordinateBehavior = subordinateBehavior;
+
 				if (known != null)
 				{
 					foreach (var kvp in known)
@@ -186,7 +139,13 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 
+			public object Root { get; private set; }
+
 			public bool DeepCopy { get; private set; }
+
+			public IDCopyBehavior RootBehavior { get; private set; }
+
+			public IDCopyBehavior SubordinateBehavior { get; private set; }
 
 			private SafeDictionary<object, object> knownObjects = new SafeDictionary<object, object>();
 
@@ -198,43 +157,8 @@ namespace FrEee.Utility.Extensions
 					c.Target.Type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(p => PropertyMatches(p, c.TargetProp.Name));
 			}
 
-			/// <summary>
-			/// Checks for "do not copy" attribute, even on interface properties.
-			/// </summary>
-			/// <param name="p"></param>
-			/// <returns></returns>
-			private bool CanCopyFully(PropertyInfo p)
-			{
-				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-					return false;
-				foreach (var i in p.DeclaringType.GetInterfaces())
-				{
-					var ip = i.GetProperty(p.Name);
-					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
-						return false;
-				}
-				return true;
-			}
-
-			private bool CanCopySafely(PropertyInfo p)
-			{
-				if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
-					return false;
-				foreach (var i in p.DeclaringType.GetInterfaces())
-				{
-					var ip = i.GetProperty(p.Name);
-					if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
-						return false;
-				}
-				return true;
-			}
-
 			private bool PropertyMatches(PropertyInfo p, string name)
 			{
-				if (p.Name == "Owner")
-				{
-
-				}
 				return
 				   p.Name == name // it's the right property
 					   && p.GetSetMethod(true) != null // has a getter, whether public or private
@@ -258,7 +182,24 @@ namespace FrEee.Utility.Extensions
 						};
 						if (Match(c))
 						{
-							if (CanCopyFully(sp) && DeepCopy)
+							bool doit = true;
+							bool regen = false;
+							if (source is IReferrable && sp.Name == "ID")
+							{
+								// do special things for IDs
+								var behavior = source == Root ? RootBehavior : SubordinateBehavior;
+								if (behavior == IDCopyBehavior.PreserveSource)
+									doit = true;
+								else if (behavior == IDCopyBehavior.PreserveDestination)
+									doit = false;
+								else if (behavior == IDCopyBehavior.Regenerate)
+								{
+									doit = false;
+									regen = true;
+								}
+							}
+
+							if (doit && CanCopyFully(sp) && DeepCopy)
 							{
 								var sv = sp.GetValue(source, null);
 								if (sv == null)
@@ -277,6 +218,13 @@ namespace FrEee.Utility.Extensions
 								var sv = sp.GetValue(source, null);
 								sp.SetValue(target, sv, null); // use original object
 							}
+
+							if (regen)
+							{
+								// reassign ID
+								var r = target as IReferrable;
+								r.ReassignID();
+							}
 						}
 					}
 				}
@@ -291,6 +239,7 @@ namespace FrEee.Utility.Extensions
 				if (knownObjects.ContainsKey(sv))
 					return knownObjects[sv];
 				var type = sv.GetType();
+
 				if (sv.GetType().IsValueType || sv is string)
 					return sv;
 				else if (sv.GetType().IsArray)
@@ -367,18 +316,69 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Copies an object's data to another object. Skips the ID property.
-		/// TODO - verify whether AutoMapper does a deep or shallow copy (I think it's deep)
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>
 		/// <param name="src">The object to copy.</param>
 		/// <param name="dest">The object to copy the source object's data to.</param>
-		public static void CopyToExceptID(this IReferrable src, IReferrable dest)
+		public static void CopyToExceptID(this IReferrable src, IReferrable dest, IDCopyBehavior subordinateBehavior)
 		{
-			if (src.GetType() != dest.GetType())
-				throw new Exception("Can only copy objects onto objects of the same type.");
-			var id = dest.ID;
-			src.CopyTo(dest);
-			dest.ID = id;
+			src.CopyTo(dest, IDCopyBehavior.PreserveDestination, subordinateBehavior);
+		}
+
+		/// <summary>
+		/// Reassigns the ID of an object, overwriting any existing ID.
+		/// </summary>
+		/// <param name="r"></param>
+		public static void ReassignID(this IReferrable r)
+		{
+			r.ID = 0;
+			Galaxy.Current.AssignID(r);
+		}
+
+		/// <summary>
+		/// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
+		/// </summary>
+		/// <param name="obj"></param>
+		public static void ReassignAllIDs(this IReferrable obj, bool skipRoot = false)
+		{
+			var parser = new ObjectGraphParser();
+			var canCopy = new System.Collections.Generic.Stack<bool>(); // stack of bools indicating which objects in the current hierarchy path we can copy
+			canCopy.Push(true);
+			parser.Property += (pname, o, val) =>
+			{
+				var prop = o.GetType().FindProperty(pname);
+				var shouldRecurse = !prop.CanCopyFully();
+				if (shouldRecurse)
+					canCopy.Push(shouldRecurse);
+				return shouldRecurse;
+			};
+			parser.Item += (o) =>
+			{
+				// can always serialize collection items
+				canCopy.Push(true);
+			};
+			parser.StartObject += (o) =>
+			{
+				var doit = canCopy.All(b => b) && (!skipRoot || o != obj);
+				if (doit && o is IReferrable)
+				{
+					var r = (IReferrable)o;
+					r.ReassignID();
+				}
+			};
+			parser.EndObject += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.Null += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.KnownObject += (o) =>
+			{
+				canCopy.Pop();
+			};
+			parser.Parse(obj);
 		}
 
 		/*// based on http://cangencer.wordpress.com/2011/06/08/auto-ignore-non-existing-properties-with-automapper/
@@ -2609,7 +2609,7 @@ namespace FrEee.Utility.Extensions
 					{
 						var r = (IReferrable)item;
 						var r2 = (IReferrable)oldItem;
-						r.CopyToExceptID(r2);
+						r.CopyToExceptID(r2, IDCopyBehavior.PreserveSource);
 						r.Dispose();
 					}
 					else
@@ -2833,5 +2833,61 @@ namespace FrEee.Utility.Extensions
 				return false;
 			return e1.SequenceEqual(e2);
 		}
+
+		/// <summary>
+		/// Checks for "do not copy" attribute, even on interface properties.
+		/// Returns true if there is no such attribute.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
+		public static bool CanCopyFully(this PropertyInfo p)
+		{
+			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+				return false;
+			foreach (var i in p.DeclaringType.GetInterfaces())
+			{
+				var ip = i.GetProperty(p.Name);
+				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Checks for "do not copy" attribute, even on interface properties.
+		/// Returns true if there is no such attribute, or the attribute is present but the safe-copy flag is set.
+		/// Safe copying means copying a reference but not deep copying.
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
+		public static bool CanCopySafely(this PropertyInfo p)
+		{
+			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+				return false;
+			foreach (var i in p.DeclaringType.GetInterfaces())
+			{
+				var ip = i.GetProperty(p.Name);
+				if (ip != null && ip.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+					return false;
+			}
+			return true;
+		}
+
+		/// <summary>
+		/// Does this object's ID match what the galaxy says it is?
+		/// </summary>
+		/// <param name="r"></param>
+		/// <returns></returns>
+		public static bool HasValidID(this IReferrable r)
+		{
+			return Galaxy.Current.referrables.ContainsKey(r.ID) && Galaxy.Current.referrables[r.ID] == r;
+		}
+	}
+
+	public enum IDCopyBehavior
+	{
+		PreserveSource,
+		PreserveDestination,
+		Regenerate
 	}
 }
