@@ -116,7 +116,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsHostileTo(Empire emp)
 		{
-			return Owner.IsHostileTo(emp, StarSystem);
+			return Owner != null && Owner.IsHostileTo(emp, StarSystem);
 		}
 
 		public int Accuracy
@@ -475,6 +475,8 @@ namespace FrEee.Game.Objects.Space
 		public bool ExecuteOrders()
 		{
 			bool didStuff = false;
+			if (!Vehicles.Any())
+				return didStuff; // fleets with no vehicles can't do anything...
 			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
 				TimeToNextMove = 0;
 			else

@@ -187,6 +187,7 @@ namespace FrEee.Game.Objects.Civilization
 			set;
 		}
 
+		[DoNotCopy]
 		public ISpaceObject Container { get; set; }
 
 		[DoNotSerialize] public Image Icon
