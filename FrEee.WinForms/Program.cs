@@ -25,7 +25,7 @@ namespace FrEee.WinForms
 		/// 3 for crash
 		/// 4 for missing mod to load when patching
 		/// 5 for errors in mod to load when patching
-		/// 1xxx for missing PLR file for player xxx when running in "safe processing" mode
+		/// 1xx for missing PLR file for player xx when running in "safe processing" mode
 		/// </summary>
 		[STAThread]
 		static int Main(string[] args)
@@ -218,7 +218,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				if (safe && emps.Any())
 				{
 					Console.Error.WriteLine("Halting turn processing due to missing PLR file(s).");
-					return 1001 + Galaxy.Current.Empires.IndexOf(emps.First());
+					return 101 + Galaxy.Current.Empires.IndexOf(emps.First());
 				}
 				Galaxy.SaveAll();
 				Console.WriteLine("Turn processed successfully. It is now turn " + Galaxy.Current.TurnNumber + " (stardate " + Galaxy.Current.Stardate + ").");
