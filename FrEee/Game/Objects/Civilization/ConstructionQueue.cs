@@ -319,9 +319,12 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void RemoveOrder(IOrder order)
 		{
-			if (order != null && !(order is IConstructionOrder))
+			if (order == null)
+				Owner.Log.Add(Container.CreateLogMessage("Attempted to remove a null order from " + this + ". This is likely a game bug."));
+			else if (!(order is IConstructionOrder))
 				throw new Exception("Can't remove a " + order.GetType() + " from a construction queue's orders.");
-			Orders.Remove((IConstructionOrder)order);
+			else
+				Orders.Remove((IConstructionOrder)order);
 		}
 
 		public void RearrangeOrder(IOrder order, int delta)
