@@ -659,6 +659,7 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="safeMode">Stop processing if PLR files are missing?</param>
 		/// <returns>Player empires which did not submit commands and are not defeated.</returns>
 		/// <exception cref="InvalidOperationException">if the current empire is not null, or this galaxy is not the current galaxy..</exception>
+		// TODO - make non-static so we don't have to say Current. everywhere
 		public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
 		{
 			Current.SpaceObjectIDCheck("at start of turn");
@@ -667,6 +668,25 @@ namespace FrEee.Game.Objects.Space
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
 
 			Current.didLastTick = false;
+
+			double progressPerOperation;
+			if (status == null)
+				progressPerOperation = 0d;
+			else
+				progressPerOperation = (desiredProgress - status.Progress) / (9 + Current.Empires.Count);
+
+			if (status != null)
+				status.Message = "Initializing turn";
+
+			// clear treaty clause cache (empires might have added treaties)
+			Current.GivenTreatyClauseCache.Clear();
+			Current.ReceivedTreatyClauseCache.Clear();
+
+			// delete any floating space objects that are unused
+			Current.SpaceObjectCleanup();
+
+			// advance turn number
+			Current.TurnNumber++;
 
 			//Battle.Previous.Clear();
 			Current.Battles = new HashSet<Battle_Space>();
@@ -678,11 +698,9 @@ namespace FrEee.Game.Objects.Space
 			// We can enable the ability cache here because space objects aren't changing state yet.
 			Current.EnableAbilityCache();
 
-			double progressPerOperation;
-			if (status == null)
-				progressPerOperation = 0d;
-			else
-				progressPerOperation = (desiredProgress - status.Progress) / (8 + Current.Empires.Count);
+
+			if (status != null)
+				status.Progress += progressPerOperation;
 
 			// AI commands
 			if (status != null)
@@ -721,20 +739,6 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			Current.SpaceObjectIDCheck("after loading commands");
-
-			// clear treaty clause cache (empires might have added treaties)
-			Current.GivenTreatyClauseCache.Clear();
-			Current.ReceivedTreatyClauseCache.Clear();
-
-			// advance turn number
-			Current.TurnNumber++;
-
-            //debugstuff
-            var objs0 = Galaxy.Current.Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
-            int numobs1 = objs0.Count();
-            var objs1 = objs0.Where(obj => !obj.IsMemory);
-            int numobs2 = objs1.Count();
-            //end-debugstuff
 
 			// reproduction and population replacement from cargo
 			Current.DisableAbilityCache(); // population quantity can affect abilities
@@ -1130,6 +1134,9 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			// delete any floating space objects that are unused
+			Current.SpaceObjectCleanup();
+
 			Current.SpaceObjectIDCheck("at end of turn");
 
 			return missingPlrs;
@@ -1428,6 +1435,25 @@ namespace FrEee.Game.Objects.Space
 		public IAbilityObject Parent
 		{
 			get { return null; }
+		}
+
+		/// <summary>
+		/// Disposes of any space objects that aren't in space, under construction, or part of the mod definition.
+		/// </summary>
+		private void SpaceObjectCleanup()
+		{
+			foreach (var sobj in Referrables.OfType<ISpaceObject>().ToArray())
+			{
+				bool dispose = true;
+				if (sobj.Sector != null)
+					dispose = false; // save space objects that are in space
+				else if (Mod.Current.StellarObjectTemplates.Contains(sobj as StellarObject))
+					dispose = false; // save stellar objects that are part of the mod templates
+				else if (Referrables.OfType<ConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
+					dispose = false; // save constructable space objects under construction
+				if (dispose)
+					sobj.Dispose();
+			}
 		}
 	}
 }

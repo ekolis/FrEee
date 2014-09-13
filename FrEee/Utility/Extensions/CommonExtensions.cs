@@ -256,11 +256,11 @@ namespace FrEee.Utility.Extensions
 							Target = new ConventionInfo.TypeInfo { Type = tp.DeclaringType },
 							TargetProp = new ConventionInfo.PropInfo { Name = tp.Name },
 						};
-						if (Match(c) && CanCopyFully(sp))
+						if (Match(c))
 						{
-							var sv = sp.GetValue(source, null);
-							if (DeepCopy)
+							if (CanCopyFully(sp) && DeepCopy)
 							{
+								var sv = sp.GetValue(source, null);
 								if (sv == null)
 									sp.SetValue(target, null, null); // it's null, very simple
 								else if (!knownObjects.ContainsKey(sv))
@@ -273,7 +273,10 @@ namespace FrEee.Utility.Extensions
 									sp.SetValue(target, knownObjects[sv], null); // known object, don't bother copying again
 							}
 							else if (CanCopySafely(sp))
+							{
+								var sv = sp.GetValue(source, null);
 								sp.SetValue(target, sv, null); // use original object
+							}
 						}
 					}
 				}

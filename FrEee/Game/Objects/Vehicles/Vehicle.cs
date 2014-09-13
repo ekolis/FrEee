@@ -223,7 +223,8 @@ namespace FrEee.Game.Objects.Vehicles
 				Dispose();
 
 			// update memory sight
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 
 			return damage;
 		}
@@ -336,7 +337,8 @@ namespace FrEee.Game.Objects.Vehicles
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 
 		[DoNotSerialize(false)]

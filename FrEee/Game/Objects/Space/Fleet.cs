@@ -279,7 +279,8 @@ namespace FrEee.Game.Objects.Space
 				return;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 
 		public string Name

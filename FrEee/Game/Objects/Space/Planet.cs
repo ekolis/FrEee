@@ -381,7 +381,8 @@ namespace FrEee.Game.Objects.Space
 				Colony = null;
 
 			// update memory sight
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 
 			return damage;
 		}
@@ -997,7 +998,8 @@ namespace FrEee.Game.Objects.Space
 					u.Dispose();
 			}
 			Galaxy.Current.UnassignID(this);
-			this.UpdateEmpireMemories();
+			if (!IsMemory)
+				this.UpdateEmpireMemories();
 		}
 	}
 }
