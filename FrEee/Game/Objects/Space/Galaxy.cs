@@ -967,7 +967,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			if (status != null)
 				status.Message = "Constructing objects";
-			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().ToArray())
+			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).ToArray())
 				q.ExecuteOrders();
 			if (status != null)
 				status.Progress += progressPerOperation;

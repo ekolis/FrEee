@@ -455,10 +455,17 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Eta == null || Eta < 1; }
 		}
 
+		// TODO - make this a DoNotSerialize property after the game ends
 		public bool IsMemory
 		{
-			get;
-			set;
+			get
+			{
+				return Container.IsMemory;
+			}
+			set
+			{
+				Container.IsMemory = value;
+			}
 		}
 
 		public double Timestamp { get; set; }
