@@ -68,7 +68,7 @@ namespace FrEee.WinForms.Forms
 			}
 			else if (e.ColumnIndex == gridQueues.Columns.IndexOf(Eta))
 			{
-				if (e.Value == null || (double)e.Value <= 1.0)
+				if (e.Value == null || (double)e.Value < 1.0)
 				{
 					e.CellStyle.BackColor = Color.Orange;
 					e.CellStyle.ForeColor = Color.Black;
