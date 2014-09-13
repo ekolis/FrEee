@@ -40,40 +40,29 @@ namespace FrEee.Utility
 			if (!map.Any())
 				return Enumerable.Empty<Sector>(); // nowhere to go!
 
+			var nodes = new List<PathfinderNode<Sector>>();
+			PathfinderNode<Sector> node;
+
 			if (map.Keys.Any(n => n.Location == end))
 			{
 				// can reach it
-				var nodes = new List<PathfinderNode<Sector>>();
-				var node = map.Keys.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
-				while (node != null)
-				{
-					nodes.Add(node);
-					node = node.PreviousNode;
-				}
-				if (!cacheEnabled)
-					Galaxy.Current.DisableAbilityCache();
-				return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
+				node = map.Keys.Where(n => n.Location == end).OrderBy(n => n.Cost).First();
 			}
 			else
 			{
 				// can't reach it; get as close as possible
-				var reverseMap = CreateDijkstraMap(null, end, start, false, avoidDamagingSectors);
-				var target = reverseMap.Keys.Join(map.Keys, rev => rev.Location, fwd => fwd.Location, (rev, fwd) => new { Location = rev.Location, ForwardCost = fwd.Cost, ReverseCost = rev.Cost }).WithMin(n => n.ReverseCost).WithMin(n => n.ForwardCost).FirstOrDefault();
-				if (target == null)
-					return Enumerable.Empty<Sector>(); // can't go anywhere
-
-				// go to the closest point
-				var nodes = new List<PathfinderNode<Sector>>();
-				var node = map.Keys.Where(n => n.Location == target.Location).OrderBy(n => n.Cost).First();
-				while (node != null)
-				{
-					nodes.Add(node);
-					node = node.PreviousNode;
-				}
-                if (!cacheEnabled)
-                    Galaxy.Current.DisableAbilityCache();
-				return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
+				var dist = map.Keys.Min(n => n.MinimumCostRemaining);
+				node = map.Keys.First(n => n.MinimumCostRemaining == dist);
 			}
+
+			while (node != null)
+			{
+				nodes.Add(node);
+				node = node.PreviousNode;
+			}
+			if (!cacheEnabled)
+				Galaxy.Current.DisableAbilityCache();
+			return nodes.Select(n => n.Location).Where(s => s != start).Reverse();
 		}
 
 		public static IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start, Sector end, bool avoidEnemies, bool avoidDamagingSectors)
@@ -112,6 +101,7 @@ namespace FrEee.Utility
 				}
 				var node = queue[minCost].First();
 				queue[minCost].Remove(node);
+				map.Add(node, new HashSet<PathfinderNode<Sector>>());
 
 				// step 6: if node is the goal, stop after it's done - success!
 				if (node.Location == end)
