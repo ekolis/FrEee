@@ -685,9 +685,6 @@ namespace FrEee.Game.Objects.Space
 			// delete any floating space objects that are unused
 			Current.SpaceObjectCleanup();
 
-			// advance turn number
-			Current.TurnNumber++;
-
 			//Battle.Previous.Clear();
 			Current.Battles = new HashSet<Battle_Space>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
@@ -739,6 +736,9 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			Current.SpaceObjectIDCheck("after loading commands");
+
+			// advance turn number
+			Current.TurnNumber++;
 
 			// reproduction and population replacement from cargo
 			Current.DisableAbilityCache(); // population quantity can affect abilities
