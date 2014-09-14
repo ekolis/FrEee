@@ -41,14 +41,17 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public void Place(ISpaceObject sobj)
+		internal void Place(ISpaceObject sobj, bool removeFromFleet = true)
 		{
-			// remove from fleet
-			if (sobj is IMobileSpaceObject)
+			if (removeFromFleet)
 			{
-				var v = (IMobileSpaceObject)sobj;
-				if (v.Container != null)
-					v.Container.Vehicles.Remove(v);
+				// remove from fleet
+				if (sobj is IMobileSpaceObject)
+				{
+					var v = (IMobileSpaceObject)sobj;
+					if (v.Container != null)
+						v.Container.Vehicles.Remove(v);
+				}
 			}
 
 			// remove from cargo
@@ -224,9 +227,11 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
+		[DoNotSerialize(false)]
 		Sector ILocated.Sector
 		{
 			get { return this; }
+			set { throw new NotSupportedException("Cannot set the sector of a sector."); }
 		}
 
 		/// <summary>

@@ -411,7 +411,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (!Vehicles.Any())
+			if (!Vehicles.Any(v => v != null))
 				return Visibility.Unknown;
 			return Vehicles.Where(v => v != null).Max(sobj => sobj.CheckVisibility(emp));
 		}
@@ -426,11 +426,6 @@ namespace FrEee.Game.Objects.Space
 			// Can't see names of alien fleets
 			if (vis < Visibility.Owned)
 				Name = Owner + " Fleet";
-		}
-
-		Sector ILocated.Sector
-		{
-			get { return Sector; }
 		}
 
 		public StarSystem StarSystem
@@ -664,7 +659,7 @@ namespace FrEee.Game.Objects.Space
 				else
 					value.Place(this);
 				foreach (var v in Vehicles)
-					v.Sector = value;
+					value.Place(v, false); // don't remove the vehicles from the fleet!
 			}
 		}
 
