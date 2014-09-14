@@ -2889,6 +2889,12 @@ namespace FrEee.Utility.Extensions
 			foreach (var d in list.ToArray())
 				d.Dispose();
 		}
+
+		public static void SafeDispose(this IDisposable d)
+		{
+			if (d != null)
+				d.Dispose();
+		}
 	}
 
 	public enum IDCopyBehavior
