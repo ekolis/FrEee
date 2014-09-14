@@ -1250,7 +1250,12 @@ namespace FrEee.Game.Objects.Space
 			if (r.HasValidID())
 				return r.ID; // no need to reassign ID
 			else if (referrables.ContainsKey(r.ID))
-				throw new InvalidOperationException("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
+			{
+				// HACK - already exists, just log an error but don't overwrite anything
+				// we need to fix start combatants having the same IDs as the real objects...
+				Console.Error.WriteLine("The galaxy thinks that " + referrables[r.ID] + " has the ID " + r.ID + " but " + r + " claims to have that ID as well.");
+				return r.ID;
+			}
 
 			var oldid = r.ID;
 			long newid = oldid <= 0 ? id : oldid;
