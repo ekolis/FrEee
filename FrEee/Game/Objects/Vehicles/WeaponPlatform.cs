@@ -68,12 +68,6 @@ namespace FrEee.Game.Objects.Vehicles
 
 			if (visibility < Visibility.Fogged)
 				Dispose();
-			else if (visibility == Visibility.Fogged)
-			{
-				var known = emp.Memory[ID];
-				if (known != null && known.GetType() == GetType())
-					known.CopyTo(this);
-			}
 		}
 
 		public override bool IsObsoleteMemory(Empire emp)
