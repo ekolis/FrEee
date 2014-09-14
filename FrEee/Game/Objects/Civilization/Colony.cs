@@ -120,7 +120,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public bool IsObsoleteMemory(Empire emp)
 		{
-			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
+			return Container == null || Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 
 		public AbilityTargets AbilityTarget
