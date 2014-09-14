@@ -147,21 +147,6 @@ namespace FrEee.Game.Objects.Space
 		/// <param name="galaxy">The galaxy, for context.</param>
 		public void Redact(Empire emp)
 		{
-			// TODO - just scan through the entire galaxy using reflection for objects of type IFoggable? maybe do this as part of serialization so we don't actually need to reload the galaxy each time?
-			// hide space objects
-			// TODO - don't use tuples, we don't use the point value anymore...
-			var toRemove = new List<ISpaceObject>();
-			foreach (var sobj in FindSpaceObjects<ISpaceObject>().ToArray())
-			{
-				var vis = sobj.CheckVisibility(emp);
-				if (vis != Visibility.Unknown)
-					sobj.Redact(emp);
-				else
-					toRemove.Add(sobj);
-			}
-			foreach (var t in toRemove)
-				Remove(t);
-
 			// hide explored-by empires
 			foreach (var e in ExploredByEmpires.Where(e => e != emp).ToArray())
 				ExploredByEmpires.Remove(e);

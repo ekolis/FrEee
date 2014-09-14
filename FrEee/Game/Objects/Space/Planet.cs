@@ -691,13 +691,8 @@ namespace FrEee.Game.Objects.Space
 
 			MoonOf = null; // in case we allow moons to have different visibility than their parent planets
 
-			if (Colony != null)
-			{
-				if (Colony.CheckVisibility(emp) < Visibility.Visible)
-					Colony = null;
-				else
-					Colony.Redact(emp);
-			}
+			if (Colony != null && Colony.CheckVisibility(emp) < Visibility.Fogged)
+				Colony = null;
 
 			if (vis < Visibility.Owned)
 				Orders.Clear();
