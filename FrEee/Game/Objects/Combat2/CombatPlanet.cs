@@ -37,6 +37,7 @@ namespace FrEee.Game.Objects.Combat2
 			maxfowardThrust = 0;
 			maxStrafeThrust = 0;
 			maxRotate.Radians = 0;
+			strategy = new StragegyObject_Default();
 		}
 
 		#region fields & properties
