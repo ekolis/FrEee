@@ -141,7 +141,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Pictures.GetIcon(this, Owner.ShipsetPath);
+				var owner = Owner ?? Empire.Current; // for client side fleets that are empty
+				return Pictures.GetIcon(this, owner.ShipsetPath);
 			}
 		}
 
@@ -149,13 +150,14 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Pictures.GetPortrait(this, Owner.ShipsetPath);
+				var owner = Owner ?? Empire.Current; // for client side fleets that are empty
+				return Pictures.GetPortrait(this, owner.ShipsetPath);
 			}
 		}
 
 		public Empire Owner
 		{
-			get { return Vehicles.Where(v => v != null).Select(v => v.Owner).Distinct().SingleOrDefault() ?? Empire.Current; }
+			get { return Vehicles.Where(v => v != null).Select(v => v.Owner).Distinct().SingleOrDefault(); }
 		}
 
 		/// <summary>
