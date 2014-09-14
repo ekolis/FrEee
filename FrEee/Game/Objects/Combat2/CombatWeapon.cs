@@ -13,6 +13,7 @@ using FrEee.Modding;
 
 using NewtMath.f16;
 using FixMath.NET;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -99,6 +100,7 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// the actual component.
         /// </summary>
+		[DoNotAssignID]
         public Component weapon { get; private set; }
 
         /// <summary>
