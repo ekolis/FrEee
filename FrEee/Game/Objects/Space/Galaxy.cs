@@ -1478,7 +1478,7 @@ namespace FrEee.Game.Objects.Space
 	/// </summary>
 	public class DoNotAssignIDAttribute : Attribute
 	{
-		public DoNotAssignIDAttribute(bool recurse)
+		public DoNotAssignIDAttribute(bool recurse = true)
 		{
 			Recurse = recurse;
 		}

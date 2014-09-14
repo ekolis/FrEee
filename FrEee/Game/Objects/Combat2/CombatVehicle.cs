@@ -13,6 +13,7 @@ using FrEee.Modding;
 
 using NewtMath.f16;
 using FixMath.NET;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Combat2
 {
@@ -73,11 +74,14 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The vehicle's state at the start of combat.
 		/// </summary>
+		[DoNotAssignID]
+		[DoNotSerialize]
 		public Vehicle StartVehicle { get { return (Vehicle)StartCombatant; } private set { StartCombatant = value; } }
 
 		/// <summary>
 		/// The current state of the vehicle.
 		/// </summary>
+		[DoNotSerialize]
 		public Vehicle WorkingVehicle { get { return (Vehicle)WorkingObject; } private set { WorkingObject = value; } }
 
 
