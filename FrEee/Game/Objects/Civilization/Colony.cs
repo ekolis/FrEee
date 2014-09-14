@@ -67,12 +67,6 @@ namespace FrEee.Game.Objects.Civilization
 			var visibility = CheckVisibility(emp);
 			if (visibility < Visibility.Owned)
 			{
-				if (ConstructionQueue != null)
-				{
-					ConstructionQueue.Orders.Clear();
-					ConstructionQueue.UnspentRate.Clear();
-				}
-
 				// can only see space used by cargo, not actual cargo
 				Cargo.SetFakeSize();
 			}
