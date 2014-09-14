@@ -2883,6 +2883,12 @@ namespace FrEee.Utility.Extensions
 		{
 			return Galaxy.Current.referrables.ContainsKey(r.ID) && Galaxy.Current.referrables[r.ID] == r;
 		}
+
+		public static void DisposeAll(this IEnumerable<IDisposable> list)
+		{
+			foreach (var d in list.ToArray())
+				d.Dispose();
+		}
 	}
 
 	public enum IDCopyBehavior
