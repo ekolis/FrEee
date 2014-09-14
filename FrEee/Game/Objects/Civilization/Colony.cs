@@ -95,6 +95,7 @@ namespace FrEee.Game.Objects.Civilization
 				return;
 			if (Container != null)
 				Container.Colony = null;
+			ConstructionQueue.Dispose();
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
