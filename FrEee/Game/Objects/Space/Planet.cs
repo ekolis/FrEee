@@ -992,6 +992,8 @@ namespace FrEee.Game.Objects.Space
 				foreach (var u in Cargo.Units)
 					u.Dispose();
 			}
+			if (ConstructionQueue != null)
+				ConstructionQueue.Dispose();
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
