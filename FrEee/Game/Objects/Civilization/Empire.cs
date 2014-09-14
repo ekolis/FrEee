@@ -776,19 +776,22 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// TODO - espionage
 				StoredResources.Clear();
+				KnownDesigns.DisposeAll();
 				KnownDesigns.Clear();
 				Log.Clear();
 				ResearchedTechnologies.Clear();
 				AccumulatedResearch.Clear();
 				ResearchQueue.Clear();
 				ResearchSpending.Clear();
+				Memory.Values.DisposeAll();
 				Memory.Clear();
 				AINotes = null;
-
-				// TODO - show count of encountered vehicles
-				foreach (var d in KnownDesigns.Where(d => d.Owner == this))
-					d.VehiclesBuilt = 0;
 			}
+
+			// TODO - show count of encountered vehicles
+			foreach (var d in KnownDesigns.Where(d => d.Owner == this))
+				d.VehiclesBuilt = 0;
+
 			if (vis < Visibility.Fogged)
 				Dispose();
 		}
