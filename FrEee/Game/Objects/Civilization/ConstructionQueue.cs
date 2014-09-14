@@ -120,7 +120,7 @@ namespace FrEee.Game.Objects.Civilization
 				}
 				if (rate == null)
 					rate = new ResourceQuantity();
-				if (Colony == null)
+				if (Container is IVehicle)
 				{
 					// apply aptitude modifier for empire's primary race
 					rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
