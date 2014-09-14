@@ -634,7 +634,7 @@ namespace FrEee.Game.Objects.Space
 					var id = obj.ID;
 					var vis = obj.CheckVisibility(CurrentEmpire);
 					if (vis < Visibility.Fogged)
-						referrables.Remove(id);
+						obj.Dispose();
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 					{
 						CurrentEmpire.Memory[id].CopyToExceptID(obj, IDCopyBehavior.PreserveDestination); // memory sight!
@@ -1285,11 +1285,7 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 			if (r != null)
-			{
 				r.ID = -1;
-				r.IsDisposed = true;
-				r.Dispose();
-			}
 		}
 
 		/// <summary>
