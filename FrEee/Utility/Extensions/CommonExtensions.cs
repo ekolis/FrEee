@@ -360,6 +360,7 @@ namespace FrEee.Utility.Extensions
 
 		/// <summary>
 		/// Generates new IDs for this object (unless skipRoot is true) and all subordinate objects.
+		/// TODO - take into account DoNotAssignIDAttribute
 		/// </summary>
 		/// <param name="obj"></param>
 		public static void ReassignAllIDs(this IReferrable obj, bool skipRoot = false)

@@ -347,7 +347,7 @@ namespace FrEee.Game.Objects.Space
 				else
 					return true;
 			};
-			parser.EndObject += o =>
+			parser.StartObject += o =>
 			{
 				if (o is IReferrable && canAssign)
 				{
