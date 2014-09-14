@@ -1276,14 +1276,14 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 		/// <summary>
-		/// Battles are visible to anyone who has a combatant in them; otherwise they're unknown.
+		/// Battles are scanned by anyone who has a combatant in them; otherwise they're unknown.
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
 			// TODO - "share combat logs" treaties?
-			return ActualCombatants.Values.Any(c => c.Owner == emp) ? Visibility.Visible : Visibility.Unknown;
+			return StartCombatants.Values.Any(c => c.Owner == emp) ? Visibility.Scanned : Visibility.Unknown;
 		}
 
 		public void Redact(Empire emp)
