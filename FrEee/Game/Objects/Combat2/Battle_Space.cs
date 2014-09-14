@@ -177,7 +177,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
-		public Sector Sector { get; private set; }
+		public Sector Sector { get; set; }
 
 		/// <summary>
 		/// The star system in which this battle took place.

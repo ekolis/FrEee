@@ -203,8 +203,7 @@ namespace FrEee.Game.Objects.Orders
 				if (gotoSector != null)
 				{
 					// move
-					sobj.FindStarSystem().Remove(sobj);
-					gotoSector.Place(sobj);
+					sobj.Sector = gotoSector;
 					sobj.RefreshDijkstraMap();
 
 					// consume supplies

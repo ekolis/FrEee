@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Orders
 							sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " took " + dmg + " points of damage from turbulence when traversing " + WarpPoint + "."));
 					}
 
-					WarpPoint.Target.Place(sobj);
+					sobj.Sector = WarpPoint.Target;
 					sobj.RefreshDijkstraMap();
 
 					// mark system explored
