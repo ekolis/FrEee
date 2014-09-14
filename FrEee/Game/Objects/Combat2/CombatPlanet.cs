@@ -45,11 +45,14 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The planet's state at the start of combat.
 		/// </summary>
+		[DoNotAssignID]
+		[DoNotSerialize]
 		public Planet StartPlanet { get { return (Planet)StartCombatant; } private set { StartCombatant = value; } }
 
 		/// <summary>
 		/// The current state of the planet.
 		/// </summary>
+		[DoNotSerialize]
 		public Planet WorkingPlanet { get { return (Planet)WorkingObject; } private set { WorkingObject = value; } }
 
 		#endregion

@@ -1,5 +1,6 @@
 ﻿using FixMath.NET;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 using NewtMath.f16;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The object's state at the start of combat.
 		/// </summary>
+		[DoNotAssignID]
 		public ICombatant StartCombatant { get; protected set; }
 
 		/// <summary>
