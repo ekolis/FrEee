@@ -142,7 +142,7 @@ namespace FrEee.Game.Objects.Space
 			// You can always scan stellar objects you are in combat with.
 			//if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				//return Visibility.Scanned;
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.OfType<StellarObject>().Any(sobj => sobj.ID == ID)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Values.OfType<StellarObject>().Any(sobj => sobj.ID == ID)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
