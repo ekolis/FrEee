@@ -158,7 +158,7 @@ namespace FrEee.Game.Objects.Space
 					return Visibility.Fogged;
 				//else if (Battle.Previous.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 					//return Visibility.Fogged;
-				else if (Battle_Space.Previous.Any(b => b.ActualCombatants.Values.OfType<StellarObject>().Contains(this) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
+				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Values.OfType<StellarObject>().Any(sobj => sobj.ID == ID) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;
