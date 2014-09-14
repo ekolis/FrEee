@@ -484,6 +484,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
 			Mod.Current = Galaxy.Current.Mod;
+			Current.SpaceObjectIDCheck("after loading from memory");
 		}
 
 		/// <summary>

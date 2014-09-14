@@ -213,7 +213,7 @@ namespace FrEee.Utility.Extensions
 								else
 									sp.SetValue(target, knownObjects[sv], null); // known object, don't bother copying again
 							}
-							else if (CanCopySafely(sp))
+							else if (doit && CanCopySafely(sp))
 							{
 								var sv = sp.GetValue(source, null);
 								sp.SetValue(target, sv, null); // use original object

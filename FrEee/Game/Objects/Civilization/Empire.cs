@@ -769,6 +769,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Any empires that this empire has encountered.
 		/// </summary>
+		[DoNotCopy]
 		public ISet<Empire> EncounteredEmpires { get; private set; }
 
 		/// <summary>
