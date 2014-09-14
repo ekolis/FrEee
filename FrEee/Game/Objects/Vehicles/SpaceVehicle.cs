@@ -228,7 +228,7 @@ namespace FrEee.Game.Objects.Vehicles
 				foreach (var u in Cargo.Units)
 					u.Dispose();
 			}
-			constructionQueue.Dispose();
+			constructionQueue.SafeDispose();
 			base.Dispose();
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
