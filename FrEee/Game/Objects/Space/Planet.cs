@@ -378,7 +378,7 @@ namespace FrEee.Game.Objects.Space
 
 			// if planet was completely glassed, remove the colony
 			if (!Colony.Population.Any(p => p.Value > 0) && !Cargo.Units.Any() && !Cargo.Population.Any(p => p.Value > 0) && !Colony.Facilities.Any())
-				Colony = null;
+				Colony.Dispose();
 
 			// update memory sight
 			if (!IsMemory)
