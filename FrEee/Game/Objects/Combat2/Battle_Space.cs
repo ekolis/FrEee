@@ -193,6 +193,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// The combatants at the start of this battle.
 		/// </summary>
+		[DoNotAssignID(true)]
 		public IDictionary<long, ICombatant> StartCombatants { get; private set; }
 
 		/// <summary>

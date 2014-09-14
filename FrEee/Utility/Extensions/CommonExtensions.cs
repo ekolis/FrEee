@@ -111,6 +111,28 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Checks for attributes in a class or its interfaces.
+		/// </summary>
+		/// <param name="mi"></param>
+		/// <param name="attributeType"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> GetAttributes<T>(this MemberInfo mi) where T : Attribute
+		{
+			var atts = Attribute.GetCustomAttributes(mi, typeof(T));
+			foreach (var att in atts)
+				yield return (T)att;
+			foreach (var i in mi.DeclaringType.GetInterfaces())
+			{
+				var mis = i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+				foreach (var mi2 in mis)
+				{
+					foreach (var att2 in Attribute.GetCustomAttributes(mi2, typeof(T)))
+						yield return (T)att2;
+				}
+			}
+		}
+
+		/// <summary>
 		/// Copies an object's data to another object.
 		/// </summary>
 		/// <typeparam name="T">The type of object to copy.</typeparam>

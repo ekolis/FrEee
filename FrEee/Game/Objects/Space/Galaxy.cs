@@ -337,9 +337,19 @@ namespace FrEee.Game.Objects.Space
 		public void AssignIDs()
 		{
 			var parser = new ObjectGraphParser();
+			bool canAssign = true;
+			parser.Property += (pname, o, val) =>
+			{
+				var prop = o.GetType().FindProperty(pname);
+				canAssign = !prop.GetAttributes<DoNotAssignIDAttribute>().Any();
+				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
+					return false; // no recursion!
+				else
+					return true;
+			};
 			parser.EndObject += o =>
 			{
-				if (o is IReferrable)
+				if (o is IReferrable && canAssign)
 				{
 					var r = (IReferrable)o;
 					AssignID(r);
@@ -1461,5 +1471,21 @@ namespace FrEee.Game.Objects.Space
 					sobj.Dispose();
 			}
 		}
+	}
+
+	/// <summary>
+	/// Prevents IDs from being assigned to objects when calling AssignIDs.
+	/// </summary>
+	public class DoNotAssignIDAttribute : Attribute
+	{
+		public DoNotAssignIDAttribute(bool recurse)
+		{
+			Recurse = recurse;
+		}
+
+		/// <summary>
+		/// Should the "don't assign ID" rule be recursive?
+		/// </summary>
+		public bool Recurse { get; private set; }
 	}
 }
