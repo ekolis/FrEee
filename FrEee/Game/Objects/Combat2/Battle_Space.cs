@@ -948,7 +948,7 @@ namespace FrEee.Game.Objects.Combat2
             int atkr_SysComMod = Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt();
 			int tgt_SysComMod = Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt();
 		    int atkr_EmpComMod = attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
-            int tgt_EmpComMod = target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
+            int tgt_EmpComMod = target.WorkingObject.Owner == null ? 0 : target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 
             int total =
                 wpn_Accu_blankrng
