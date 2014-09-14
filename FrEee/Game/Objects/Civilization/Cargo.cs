@@ -164,6 +164,8 @@ namespace FrEee.Game.Objects.Civilization
 				// TODO - don't ceiling the popKilled, just stack it up
 				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
 				Population[race] -= popKilled;
+				if (Population[race] < 0)
+					Population[race] = 0;
 				inflicted += 1;
 			}
 			// clear population that was emptied out

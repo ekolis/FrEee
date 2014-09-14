@@ -403,6 +403,8 @@ namespace FrEee.Game.Objects.Space
 				// TODO - don't ceiling the popKilled, just stack it up
 				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
+				if (Colony.Population[race] < 0)
+					Colony.Population[race] = 0;
 				inflicted += 1;
 			}
 			// clear population that was emptied out
