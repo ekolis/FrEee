@@ -261,7 +261,7 @@ namespace FrEee.Game.Objects.Vehicles
 					return Visibility.Fogged;
 				//else if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 					//return Visibility.Fogged;
-				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Values.OfType<SpaceVehicle>().Any(v => v.ID == ID) && b.ActualCombatants.Values.Any(c => c.Owner == emp)))
+				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Values.OfType<SpaceVehicle>().Any(v => v.ID == ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;
