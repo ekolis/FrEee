@@ -227,7 +227,7 @@ namespace FrEee.Game.Objects.Space
 			get { return null; }
 		}
 
-		public void Place(ISpaceObject sobj, Point coords)
+		internal void Place(ISpaceObject sobj, Point coords)
 		{
 			var sys = sobj.FindStarSystem();
 			if (sys != null)

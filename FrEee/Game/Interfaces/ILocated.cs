@@ -11,7 +11,7 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface ILocated
 	{
-		Sector Sector { get; }
+		Sector Sector { get; set; }
 
 		StarSystem StarSystem { get; }
 	}

@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				return SpaceObject.Sector;
 			}
-			protected set
+			set
 			{
 				throw new InvalidOperationException("Cannot set the sector of a space object waypoint.");
 			}

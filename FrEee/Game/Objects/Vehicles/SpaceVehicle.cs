@@ -364,11 +364,6 @@ namespace FrEee.Game.Objects.Vehicles
 			return false;
 		}
 
-		Sector ILocated.Sector
-		{
-			get { return Sector; }
-		}
-
 		public IDictionary<Race, long> AllPopulation
 		{
 			get { return Cargo.Population; }

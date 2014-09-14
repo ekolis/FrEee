@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Civilization
 		public override Sector Sector
 		{
 			get;
-			protected set;
+			set;
 		}
 
 		public override StarSystem StarSystem

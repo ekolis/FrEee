@@ -287,9 +287,7 @@ namespace FrEee.WinForms.Forms
 			Cursor = Cursors.WaitCursor;
             Sector location = new Sector(new StarSystem(0), new System.Drawing.Point());
             foreach(ISpaceObject ispobj in (Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject))))
-            {
-                location.Place(ispobj);
-            }
+				ispobj.Sector = location;
 			// create battle with all our combatants
 			//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
             var battle = new Battle_Space(location);
