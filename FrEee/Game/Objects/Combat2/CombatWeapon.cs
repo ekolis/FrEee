@@ -51,14 +51,14 @@ namespace FrEee.Game.Objects.Combat2
             {
                 weaponType = "Beam";
 
-                maxRange_distance = (Fix16)wpMaxR * (Fix16)1000;
-                minRange = (Fix16)wpMinR * (Fix16)1000;
+                maxRange_distance = (Fix16)wpMaxR * Battle_Space.KilometersPerSquare;
+                minRange = (Fix16)wpMinR * Battle_Space.KilometersPerSquare;
             }
             else if (wpninfo.DisplayEffect.GetType() == typeof(Combat.ProjectileWeaponDisplayEffect))
             {
                 weaponType = "Bolt";
 
-                boltSpeed = (Fix16)wpMaxR * (Fix16)1000; 
+                boltSpeed = (Fix16)wpMaxR * Battle_Space.KilometersPerSquare; 
                 maxRange_time = (Fix16)1; // (maxTime for bolts) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
                 minRange = ((Fix16)wpMinR / boltSpeed); //(minTime for bolts) distance / speed = time                  
             }
@@ -80,8 +80,8 @@ namespace FrEee.Game.Objects.Combat2
             else //treat it like a beam I guess. 
             {
                 weaponType = "Unknown";
-                maxRange_distance = (Fix16)wpMaxR * (Fix16)1000;
-                minRange = 1000 + (Fix16)wpMinR * (Fix16)100;
+				maxRange_distance = (Fix16)wpMaxR * Battle_Space.KilometersPerSquare;
+				minRange = (Fix16)wpMinR * Battle_Space.KilometersPerSquare;
             }
             double wpiReloadRate = wpninfo.ReloadRate;
             reloadRate = (Fix16)wpiReloadRate * Battle_Space.TicksPerSecond;
