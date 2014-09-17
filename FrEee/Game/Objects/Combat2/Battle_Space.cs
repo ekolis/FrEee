@@ -300,7 +300,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// Number of kilometers per "combat square" in SE4 terms (for range calculations).
 		/// </summary>
-		public static readonly Fix16 KilometersPerSquare = 1000;
+		public static readonly Fix16 KilometersPerSquare = 10;
 
 		private int tOC = 0;
 		private int tempObjCounter
