@@ -721,7 +721,7 @@ namespace FrEee.Game.Objects.Combat2
 				//#endif
 				string comAI = "";
 				//CombatObject tgtObj;
-				if (Empires[ccobj.WorkingObject.Owner].hostile.Any())
+				if (ccobj.WorkingObject.Owner != null && Empires[ccobj.WorkingObject.Owner].hostile.Any())
 				{
 					/*old
 					tgtObj = Empires[ccobj.WorkingObject.Owner].hostile[0];
