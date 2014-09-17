@@ -1488,10 +1488,8 @@ namespace FrEee.Utility.Extensions
 			var sys = sobj.FindStarSystem();
 			if (sys == null)
 				return null;
-			if (Empire.Current == null)
-				return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
-			else
-				return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Empire.Current.Memory[l.Item.ID] == sobj).Location);
+			// TODO - this might be kind of slow; might want a reverse memory lookup
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Galaxy.Current.Empires.Any(e => e.Memory[l.Item.ID] == sobj)).Location);
 		}
 
 		/// <summary>
@@ -1504,13 +1502,9 @@ namespace FrEee.Utility.Extensions
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
 			if (loc == null)
 			{
-				if (Empire.Current == null)
-					return null;
-				else
-				{
-					// search memories too
-					loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Empire.Current.Memory[s.ID] == sobj));
-				}
+				// search memories too
+				// TODO - this might be kind of slow; might want a reverse memory lookup
+				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.Any(e => e.Memory[s.ID] == sobj)));
 			}
 			if (loc == null)
 				return null;
