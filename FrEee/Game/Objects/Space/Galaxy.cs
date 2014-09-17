@@ -1201,18 +1201,23 @@ namespace FrEee.Game.Objects.Space
 				}
 
 				// check for battles
-				// TODO - alliances
 				var sector = v.FindSector();
-				if (v.Owner != null && sector != null && sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null))
+				if (v.Owner != null && // unowned objects can't pick fights
+					sector != null && // can't fight nowhere
+					sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null) && // any enemies? TODO - alliances
+					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < 1d / v.Speed)) // have we fought here too recently?
 				{
 					// resolve the battle
 					var battle = new Battle_Space(sector);
 					battle.Resolve();
 					foreach (var emp in battle.Empires.Keys)
 						emp.Log.Add(battle.CreateLogMessage(battle.Name));
+					lastBattleTimestamps[sector] = Current.Timestamp;
 				}
 			}
 		}
+
+		private IDictionary<Sector, double> lastBattleTimestamps = new SafeDictionary<Sector, double>();
 
 		/// <summary>
 		/// Anything in the game that can be referenced from the client side
