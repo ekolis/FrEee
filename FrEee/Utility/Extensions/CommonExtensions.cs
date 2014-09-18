@@ -2918,13 +2918,14 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static object DefaultValue(this Type type)
+		public static object DefaultValue(this Type t)
 		{
-			if (type.IsValueType)
-			{
-				return Activator.CreateInstance(type);
-			}
-			return null;
+			return typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
+		}
+
+		private static T GetDefaultGeneric<T>()
+		{
+			return default(T);
 		}
 	}
 

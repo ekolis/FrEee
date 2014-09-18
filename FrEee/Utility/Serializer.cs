@@ -282,7 +282,7 @@ namespace FrEee.Utility
 
 			// serialize object type and field count
 			var type = o.GetType();
-			var props = ObjectGraphContext.KnownProperties[type].Where(p => p.GetValue(o, null) != p.PropertyType.DefaultValue());
+			var props = ObjectGraphContext.KnownProperties[type].Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
 			w.WriteLine("p" + props.Count() + ":");
 
 			foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
