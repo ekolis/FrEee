@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FrEee.Utility;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The container of this object.
 		/// </summary>
+		[DoNotCopy]
 		TContainer Container { get; }
 	}
 }
