@@ -40,7 +40,7 @@ namespace FrEee.Game.Objects.Combat2
             {
                 if (Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
                     return 0;
-                return Weapon.Template.WeaponDamage.Evaluate(this);
+				return Weapon.Template.GetWeaponDamage(this);
             }
         }
 

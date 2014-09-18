@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Combat
 	/// </summary>
 	public class Shot : IFormulaHost
 	{
-		public Shot(ICombatant attacker, Component weapon, IDamageable defender, double range)
+		public Shot(ICombatant attacker, Component weapon, IDamageable defender, int range)
 		{
 			Weapon = weapon;
 			Defender = defender;
@@ -39,7 +39,21 @@ namespace FrEee.Game.Objects.Combat
 		[DoNotSerialize]
 		public IDamageable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
 
-		public double Range { get; set; }
+		public int Range { get; set; }
+
+		/// <summary>
+		/// Effective range for damage purposes, due to mount range modifiers
+		/// </summary>
+		public int EffectiveRange
+		{
+			get
+			{
+				var r = Range - (Weapon.Template.Mount == null ? 0 : Weapon.Template.Mount.WeaponRangeModifier.Evaluate(Weapon));
+				if (r < 1)
+					return 1;
+				return r;
+			}
+		}
 
 		public int FullDamage
 		{
@@ -47,7 +61,7 @@ namespace FrEee.Game.Objects.Combat
 			{
 				if (Weapon == null || Range < Weapon.Template.WeaponMinRange || Range > Weapon.Template.WeaponMaxRange)
 					return 0;
-				return Weapon.Template.WeaponDamage.Evaluate(this); // TODO - use PRNG
+				return Weapon.Template.GetWeaponDamage(this); // TODO - use PRNG
 			}
 		}
 
@@ -84,6 +98,11 @@ namespace FrEee.Game.Objects.Combat
 			var hit = new Hit(this, target, DamageLeft);
 			DamageLeft = target.TakeDamage(hit, dice);
 			return DamageLeft;
+		}
+
+		public override string ToString()
+		{
+			return Attacker + "'s " + Weapon + " vs. " + Defender + " at range " + Range + " (" + DamageLeft + " damage left)";
 		}
 	}
 }
