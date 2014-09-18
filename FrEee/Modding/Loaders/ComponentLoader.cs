@@ -150,7 +150,16 @@ namespace FrEee.Modding.Loaders
 								if (firstNonzero > lastNonzero)
 									w.Damage = 0;
 								else
+								{
+									var idx = -1;
+									if (w.MinRange == 1 && rec.FindField(new string[] { "Min Range", "Minimum Range" }, ref idx) == null)
+									{
+										// used default min range of one; assign a damage value at range zero which is equal to value at range one
+										w.MinRange = 0;
+										dict.Add(0, dmg[0]);
+									}
 									w.Damage = dict.BuildMultiConditionalLessThanOrEqual(c, "range", 0);
+								}
 							}
 							catch (Exception ex)
 							{
