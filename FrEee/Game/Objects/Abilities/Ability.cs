@@ -4,6 +4,7 @@ using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +87,7 @@ namespace FrEee.Game.Objects.Abilities
 			return result;
 		}
 
+		[DoNotCopy]
 		public IAbilityObject Container { get; private set; }
 
 		/// <summary>
