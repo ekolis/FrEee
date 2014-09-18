@@ -118,6 +118,7 @@ namespace FrEee.Modding
 			return f.Value;
 		}
 
+		[DoNotCopy]
 		public object Context { get; set; }
 
 		public override string ToString()
