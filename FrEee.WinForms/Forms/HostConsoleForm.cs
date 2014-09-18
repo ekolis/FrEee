@@ -121,6 +121,8 @@ namespace FrEee.WinForms.Forms
 						status.Progress = 0.75;
 						status.Message = "Patching mod";
 						Galaxy.Current.Mod.Patch(mod);
+						Mod.Current = Galaxy.Current.Mod;
+						mod.Dispose();
 						Galaxy.SaveAll();
 						status.Progress = 1d;
 					}
