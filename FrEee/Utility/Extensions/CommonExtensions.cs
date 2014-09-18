@@ -2912,6 +2912,20 @@ namespace FrEee.Utility.Extensions
 			if (d != null)
 				d.Dispose();
 		}
+
+		/// <summary>
+		/// Programmatic equivalent of the default operator.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <returns></returns>
+		public static object DefaultValue(this Type type)
+		{
+			if (type.IsValueType)
+			{
+				return Activator.CreateInstance(type);
+			}
+			return null;
+		}
 	}
 
 	public enum IDCopyBehavior
