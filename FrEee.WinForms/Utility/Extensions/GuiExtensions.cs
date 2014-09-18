@@ -147,7 +147,7 @@ namespace FrEee.WinForms.Utility.Extensions
 		/// <param name="parent"></param>
 		public static DialogResult ShowChildForm(this Form parent, Form form)
 		{
-			parent.Cursor = Cursors.WaitCursor;
+			parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.WaitCursor));
 			if (form.StartPosition != FormStartPosition.CenterScreen)
 				form.StartPosition = FormStartPosition.CenterParent;
 			var result = form.ShowDialog();
