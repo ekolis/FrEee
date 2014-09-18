@@ -2,6 +2,8 @@
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -205,18 +207,44 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Damage inflicted by this component at range, if it is a weapon.
 		/// </summary>
-		public Formula<int> WeaponDamage
+		public int GetWeaponDamage(int range)
 		{
-			get
-			{
-				var w = ComponentTemplate.WeaponInfo;
-				if (w == null)
-					return null;
-				if (Mount == null)
-					return w.Damage;
+			var w = ComponentTemplate.WeaponInfo;
+			if (w == null)
+				return 0;
 
-				return w.Damage * Mount.WeaponDamagePercent / 100;
-			}
+			var shot = new Shot(null, null, null, range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
+			return w.Damage.Evaluate(shot) * Mount.WeaponDamagePercent / 100;
+		}
+
+		/// <summary>
+		/// Damage inflicted by this component at range, if it is a weapon.
+		/// </summary>
+		public int GetWeaponDamage(CombatShot shot)
+		{
+			var w = ComponentTemplate.WeaponInfo;
+			if (w == null)
+				return 0;
+			if (Mount == null)
+				return w.Damage;
+
+			var shot2 = new CombatShot(shot.Weapon, shot.Target, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
+			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
+		}
+
+		/// <summary>
+		/// Damage inflicted by this component at range, if it is a weapon.
+		/// </summary>
+		public int GetWeaponDamage(Shot shot)
+		{
+			var w = ComponentTemplate.WeaponInfo;
+			if (w == null)
+				return 0;
+			if (Mount == null)
+				return w.Damage;
+
+			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.EffectiveRange);
+			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
 		}
 
 		public int WeaponMinRange
@@ -228,6 +256,8 @@ namespace FrEee.Game.Objects.Technology
 					return 0;
 				if (Mount == null)
 					return w.MinRange;
+				if (w.MinRange == 0)
+					return 0; // don't create a blind spot for weapons with a min range of zero
 				return w.MinRange + Mount.WeaponRangeModifier;
 			}
 		}
@@ -283,7 +313,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public IDictionary<string, object> Variables
 		{
-			get 
+			get
 			{
 				var design = Container ?? Design.Create(Mod.Current.Hulls.FirstOrDefault(h => ComponentTemplate.VehicleTypes.HasFlag(h.VehicleType)));
 				var empire = Container == null ? Empire.Current : Container.Owner;

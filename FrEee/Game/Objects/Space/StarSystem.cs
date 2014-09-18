@@ -267,7 +267,7 @@ namespace FrEee.Game.Objects.Space
 						foreach (var warhead in mine.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
 						{
 							var shot = new Shot(mine, warhead, d, 0);
-							var damage = warhead.Template.WeaponDamage.Evaluate(shot);
+							var damage = warhead.Template.GetWeaponDamage(1);
 							var hit = new Hit(shot, d, damage);
 							var leftoverDamage = d.TakeDamage(hit);
 							totalDamage += damage - leftoverDamage;
