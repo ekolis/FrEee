@@ -260,6 +260,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					return 5;
 				Console.WriteLine("Patching mod...");
 				Galaxy.Current.Mod.Patch(mod);
+				mod.Dispose();
 				Console.WriteLine("Saving game...");
 				Galaxy.SaveAll();
 				Console.WriteLine("Done.");

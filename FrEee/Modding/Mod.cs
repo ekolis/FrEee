@@ -23,7 +23,7 @@ namespace FrEee.Modding
 	/// A set of data files containing templates for game objects.
 	/// </summary>
 	[Serializable]
-	public class Mod
+	public class Mod : IDisposable
 	{
 		/// <summary>
 		/// The currently loaded mod.
@@ -291,6 +291,40 @@ namespace FrEee.Modding
 			newMod.GameInitScript.CopyTo(GameInitScript);
 			newMod.EndTurnScript.CopyTo(EndTurnScript);
 			EmpireAIs.Patch(newMod.EmpireAIs);
+		}
+
+		public void Dispose()
+		{
+			foreach (var r in AbilityRules)
+				r.Dispose();
+			foreach (var sos in StellarObjectSizes)
+				sos.Dispose();
+			foreach (var sot in StellarObjectTemplates)
+				sot.Dispose();
+			foreach (var t in Traits)
+				t.Dispose();
+			foreach (var t in Technologies)
+				t.Dispose();
+			foreach (var f in FacilityTemplates)
+				f.Dispose();
+			foreach (var h in Hulls)
+				h.Dispose();
+			foreach (var c in ComponentTemplates)
+				c.Dispose();
+			foreach (var m in Mounts)
+				m.Dispose();
+			foreach (var sst in StarSystemTemplates)
+				sst.Dispose();
+			foreach (var gt in GalaxyTemplates)
+				gt.Dispose();
+			foreach (var h in HappinessModels)
+				h.Dispose();
+			foreach (var c in Cultures)
+				c.Dispose();
+			foreach (var ai in EmpireAIs)
+				ai.Dispose();
+			if (this == Current)
+				Current = null;
 		}
 	}
 }

@@ -154,7 +154,8 @@ namespace FrEee.Game.Objects.Technology
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			Mod.Current.FacilityTemplates.Remove(this);
+			if (Mod.Current != null)
+				Mod.Current.FacilityTemplates.Remove(this);
 		}
 
 		/// <summary>

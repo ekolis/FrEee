@@ -190,7 +190,8 @@ namespace FrEee.Modding.Templates
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			Mod.Current.ComponentTemplates.Remove(this);
+			if (Mod.Current != null)
+				Mod.Current.ComponentTemplates.Remove(this);
 		}
 
 		/// <summary>

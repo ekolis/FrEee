@@ -292,7 +292,8 @@ namespace FrEee.Game.Objects.Technology
 			if (IsDisposed)
 				return;
 			Galaxy.Current.UnassignID(this);
-			Mod.Current.Technologies.Remove(this);
+			if (Mod.Current != null)
+				Mod.Current.Technologies.Remove(this);
 		}
 
 		/// <summary>
