@@ -2627,7 +2627,7 @@ namespace FrEee.Utility.Extensions
 					{
 						var r = (IReferrable)item;
 						var r2 = (IReferrable)oldItem;
-						r.CopyToExceptID(r2, IDCopyBehavior.PreserveSource);
+						r.CopyToExceptID(r2, IDCopyBehavior.PreserveDestination);
 						r.Dispose();
 					}
 					else
