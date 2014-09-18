@@ -2631,7 +2631,7 @@ namespace FrEee.Utility.Extensions
 						r.Dispose();
 					}
 					else
-						item.CopyTo(oldItem);
+						item.CopyTo(oldItem, IDCopyBehavior.PreserveDestination);
 				}
 			}
 		}
