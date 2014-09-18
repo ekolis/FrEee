@@ -111,7 +111,7 @@ namespace FrEee.WinForms.Forms
 				var status = new Status();
 				var t = new Thread(new ThreadStart(() =>{
 					bool doOrDie = true;
-					var mod = Mod.Load(pickerForm.ModPath, true, status, 0.5);
+					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
 					if (Mod.Errors.Any())
 						doOrDie = this.ShowChildForm(new ModErrorsForm()) == DialogResult.OK;
 					if (doOrDie)
@@ -121,7 +121,6 @@ namespace FrEee.WinForms.Forms
 						status.Progress = 0.75;
 						status.Message = "Patching mod";
 						Galaxy.Current.Mod.Patch(mod);
-						Mod.Current = Galaxy.Current.Mod;
 						mod.Dispose();
 						Galaxy.SaveAll();
 						status.Progress = 1d;
