@@ -82,6 +82,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The object which owns this quantity.
 		/// </summary>
+		[DoNotCopy]
 		public object Context
 		{
 			get;
