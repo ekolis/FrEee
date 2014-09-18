@@ -151,7 +151,7 @@ namespace FrEee.WinForms.Utility.Extensions
 			if (form.StartPosition != FormStartPosition.CenterScreen)
 				form.StartPosition = FormStartPosition.CenterParent;
 			var result = form.ShowDialog();
-			parent.Cursor = Cursors.Default;
+			parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.Default));
 			return result;
 		}
 
