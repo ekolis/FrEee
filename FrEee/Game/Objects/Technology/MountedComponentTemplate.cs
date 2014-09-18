@@ -220,6 +220,21 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Damage inflicted by this component at range, if it is a weapon.
 		/// </summary>
+		public int GetWeaponDamage(IDictionary<string, object> variables)
+		{
+			var w = ComponentTemplate.WeaponInfo;
+			if (w == null)
+				return 0;
+
+			if (Mount == null)
+				return w.Damage.Evaluate(variables);
+
+			return w.Damage.Evaluate(variables) * Mount.WeaponDamagePercent / 100;
+		}
+
+		/// <summary>
+		/// Damage inflicted by this component at range, if it is a weapon.
+		/// </summary>
 		public int GetWeaponDamage(CombatShot shot)
 		{
 			var w = ComponentTemplate.WeaponInfo;
@@ -229,21 +244,6 @@ namespace FrEee.Game.Objects.Technology
 				return w.Damage;
 
 			var shot2 = new CombatShot(shot.Weapon, shot.Target, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
-		}
-
-		/// <summary>
-		/// Damage inflicted by this component at range, if it is a weapon.
-		/// </summary>
-		public int GetWeaponDamage(Shot shot)
-		{
-			var w = ComponentTemplate.WeaponInfo;
-			if (w == null)
-				return 0;
-			if (Mount == null)
-				return w.Damage;
-
-			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.EffectiveRange);
 			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
 		}
 
