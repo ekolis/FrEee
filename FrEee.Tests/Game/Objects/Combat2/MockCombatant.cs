@@ -302,6 +302,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		public Sector Sector
 		{
 			get { return null; }
+			set { throw new NotSupportedException(); }
 		}
 
 		public StarSystem StarSystem

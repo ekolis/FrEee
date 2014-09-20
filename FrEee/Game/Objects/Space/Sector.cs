@@ -41,7 +41,7 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		internal void Place(ISpaceObject sobj, bool removeFromFleet = true)
+		public void Place(ISpaceObject sobj, bool removeFromFleet = true)
 		{
 			if (removeFromFleet)
 			{
