@@ -312,7 +312,7 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles.Sum(sobj => sobj.SupplyStorage); }
 		}
 
-		[DoNotSerialize]
+		[DoNotSerialize(false)]
 		public int SupplyRemaining
 		{
 			get
