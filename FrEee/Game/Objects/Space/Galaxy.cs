@@ -936,7 +936,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// validate fleets
-			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
+			foreach (var f in Current.FindSpaceObjects<Fleet>().ToArray())
 				f.Validate();
 
 			// replenish shields
@@ -954,7 +954,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			foreach (var v in Current.Referrables.OfType<IMobileSpaceObject>().Shuffle())
+			foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Shuffle())
 				v.RefillMovement();
 			while (!Current.didLastTick)
 			{
