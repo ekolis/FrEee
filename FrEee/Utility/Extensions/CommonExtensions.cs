@@ -2901,9 +2901,9 @@ namespace FrEee.Utility.Extensions
 			return Galaxy.Current.referrables.ContainsKey(r.ID) && Galaxy.Current.referrables[r.ID] == r;
 		}
 
-		public static void DisposeAll(this IEnumerable<IDisposable> list)
+		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
 		{
-			foreach (var d in list.ToArray())
+			foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
 				d.Dispose();
 		}
 
