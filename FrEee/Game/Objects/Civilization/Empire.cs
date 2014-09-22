@@ -776,7 +776,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// TODO - espionage
 				StoredResources.Clear();
-				KnownDesigns.DisposeAll();
+				KnownDesigns.DisposeAll(d => !emp.KnownDesigns.Contains(d));
 				KnownDesigns.Clear();
 				Log.Clear();
 				ResearchedTechnologies.Clear();
