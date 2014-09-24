@@ -2938,7 +2938,8 @@ namespace FrEee.Utility.Extensions
 				return Visibility.Unknown; // it doesn't really exist...
 
 			// You can always scan space objects you are in combat with.
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Any(kvp => kvp.Key == sobj.ID)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+			// But only their state at the time they were in combat; not for the rest of the turn!
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
@@ -2952,7 +2953,7 @@ namespace FrEee.Utility.Extensions
 				var known = emp.Memory[sobj.ID];
 				if (known != null && sobj.GetType() == known.GetType())
 					return Visibility.Fogged;
-				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Any(kvp => kvp.Key == sobj.ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+				else if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.StartCombatants.Any(kvp => kvp.Key == sobj.ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;
