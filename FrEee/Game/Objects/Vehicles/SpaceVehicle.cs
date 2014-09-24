@@ -234,47 +234,9 @@ namespace FrEee.Game.Objects.Vehicles
 				this.UpdateEmpireMemories();
 		}
 
-		// TODO - refactor this method's code into an extension method on ISpaceObject since it's duplicated on StellarObject
 		public override Visibility CheckVisibility(Empire emp)
 		{
-			if (emp == Owner)
-				return Visibility.Owned;
-
-			// You can always scan ships you are in combat with.
-			//if (Battle.Current.Union(Battle.Previous).Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				//return Visibility.Scanned;
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Any(kvp => kvp.Key == ID) && b.StartCombatants.Values.Any(c => c.Owner == emp))))
-				return Visibility.Scanned;
-
-			if (this.FindStarSystem() == null)
-				return Visibility.Unknown;
-
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
-			if (!seers.Any() || this.IsHiddenFrom(emp))
-			{
-				if (Galaxy.Current.OmniscientView && StarSystem.ExploredByEmpires.Contains(emp))
-					return Visibility.Visible;
-				if (emp.AllSystemsExploredFromStart)
-					return Visibility.Fogged;
-				var known = emp.Memory[ID];
-				if (known != null && this.GetType() == known.GetType())
-					return Visibility.Fogged;
-				//else if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-					//return Visibility.Fogged;
-				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Any(kvp => kvp.Key == ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
-					return Visibility.Fogged;
-				else
-					return Visibility.Unknown;
-			}
-			if (!this.HasAbility("Scanner Jammer"))
-			{
-				var scanners = seers.Where(sobj =>
-					sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates)
-					|| sobj.HasAbility("Long Range Scanner - System"));
-				if (scanners.Any())
-					return Visibility.Scanned;
-			}
-			return Visibility.Visible;
+			return this.CheckSpaceObjectVisibility(emp);
 		}
 
 

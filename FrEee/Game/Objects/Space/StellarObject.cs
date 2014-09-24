@@ -11,6 +11,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Modding;
 
 
 namespace FrEee.Game.Objects.Space
@@ -130,48 +131,12 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public virtual bool CanWarp { get { return false; } }
 
-		// TODO - refactor this method's code into an extension method on ISpaceObject since it's duplicated on SpaceVehicle
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (this.FindStarSystem() == null)
-				return Visibility.Scanned;  // probably a mod definition
+			if ((Sector == null || StarSystem == null) && Mod.Current.StellarObjectTemplates.Contains(this))
+				return Visibility.Scanned; // can always see the mod
 
-			if (emp == Owner)
-				return Visibility.Owned;
-
-			// You can always scan stellar objects you are in combat with.
-			//if (Battle.Current.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				//return Visibility.Scanned;
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Any(kvp => kvp.Key == ID)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
-				return Visibility.Scanned;
-
-			// do we have anything that can see it?
-			var seers = this.FindStarSystem().FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp);
-			if (!seers.Any() || this.IsHiddenFrom(emp))
-			{
-				if (Galaxy.Current.OmniscientView && StarSystem.ExploredByEmpires.Contains(emp))
-					return Visibility.Visible;
-				if (emp.AllSystemsExploredFromStart)
-					return Visibility.Fogged;
-				var known = emp.Memory[ID];
-				if (known != null && this.GetType() == known.GetType())
-					return Visibility.Fogged;
-				//else if (Battle.Previous.Any(b => b.Combatants.OfType<StellarObject>().Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-					//return Visibility.Fogged;
-				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Any(kvp => kvp.Key == ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
-					return Visibility.Fogged;
-				else
-					return Visibility.Unknown;
-			}
-			if (!this.HasAbility("Scanner Jammer"))
-			{
-				var scanners = seers.Where(sobj =>
-					sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates)
-					|| sobj.HasAbility("Long Range Scanner - System"));
-				if (scanners.Any())
-					return Visibility.Scanned;
-			}
-			return Visibility.Visible;
+			return this.CheckSpaceObjectVisibility(emp);
 		}
 
 		public long ID { get; set; }
