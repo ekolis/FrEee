@@ -266,7 +266,7 @@ namespace FrEee.Game.Objects.Vehicles
 				else
 					return Visibility.Unknown;
 			}
-			if (this.HasAbility("Scanner Jammer"))
+			if (!this.HasAbility("Scanner Jammer"))
 			{
 				var scanners = seers.Where(sobj =>
 					sobj.HasAbility("Long Range Scanner") && sobj.GetAbilityValue("Long Range Scanner").ToInt() >= sobj.FindSector().Coordinates.EightWayDistance(this.FindSector().Coordinates)
