@@ -363,7 +363,7 @@ namespace FrEee.Game.Objects.Space
 			var popHP = (int)Math.Ceiling(Colony.Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationHitpoints);
 			var cargoHP = Colony.Cargo.MaxHitpoints;
 			var facilHP = Colony.Facilities.Sum(f => f.MaxHitpoints);
-			var order = new int[] { 0, 1, 2 }.Shuffle();
+			var order = new int[] { 0, 1, 2 }.Shuffle(dice);
 			foreach (var num in order)
 			{
 				if (num == 0)

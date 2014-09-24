@@ -828,9 +828,9 @@ namespace FrEee.Utility.Extensions
 		/// </summary>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src)
+		public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> src, PRNG prng = null)
 		{
-			return src.OrderBy(t => RandomHelper.Next(int.MaxValue));
+			return src.OrderBy(t => RandomHelper.Next(int.MaxValue, prng));
 		}
 
 		public static T MinOrDefault<T>(this IEnumerable<T> stuff)
