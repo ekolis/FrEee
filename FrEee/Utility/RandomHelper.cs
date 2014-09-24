@@ -19,9 +19,9 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static int Next(int upper)
+		public static int Next(int upper, PRNG prng = null)
 		{
-			return PRNG.Next(upper);
+			return (prng ?? PRNG).Next(upper);
 		}
 
 		/// <summary>
@@ -29,9 +29,9 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static long Next(long upper)
+		public static long Next(long upper, PRNG prng = null)
 		{
-			return PRNG.Next(upper);
+			return (prng ?? PRNG).Next(upper);
 		}
 
 		/// <summary>
@@ -40,9 +40,9 @@ namespace FrEee.Utility
 		/// <param name="min">The minimum.</param>
 		/// <param name="max">The maximum.</param>
 		/// <returns></returns>
-		public static int Range(int min, int max)
+		public static int Range(int min, int max, PRNG prng = null)
 		{
-			return PRNG.Range(min, max);
+			return (prng ?? PRNG).Range(min, max);
 		}
 
 		/// <summary>
@@ -51,9 +51,9 @@ namespace FrEee.Utility
 		/// <param name="min">The minimum.</param>
 		/// <param name="max">The maximum.</param>
 		/// <returns></returns>
-		public static long Range(long min, long max)
+		public static long Range(long min, long max, PRNG prng = null)
 		{
-			return PRNG.Range(min, max);
+			return (prng ?? PRNG).Range(min, max);
 		}
 
 		/// <summary>
@@ -61,9 +61,9 @@ namespace FrEee.Utility
 		/// </summary>
 		/// <param name="upper">The upper bound.</param>
 		/// <returns></returns>
-		public static double Next(double upper)
+		public static double Next(double upper, PRNG prng = null)
 		{
-			return PRNG.Next(upper);
+			return (prng ?? PRNG).Next(upper);
 		}
 	}
 }
