@@ -292,14 +292,19 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 
 			// Can't see the ship's components if it's not scanned
-			// TODO - let player see design of previously scanned ship if the ship has not been refit
+			// and can't see the design either if we haven't scanned it before
 			if (visibility < Visibility.Scanned)
 			{
-				// create fake design and clear component list
-				var d = Vehicles.Design.Create(Design.VehicleType);
-				d.Hull = Design.Hull;
-				d.Owner = Design.Owner;
-				Design = d;
+				if (Design.CheckVisibility(emp) < Visibility.Scanned)
+				{
+					// create fake design
+					var d = Vehicles.Design.Create(Design.VehicleType);
+					d.Hull = Design.Hull;
+					d.Owner = Design.Owner;
+					Design = d;
+				}
+
+				// clear component list
 				Components.Clear();
 			}
 
