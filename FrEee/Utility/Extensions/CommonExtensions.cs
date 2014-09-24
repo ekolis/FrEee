@@ -27,7 +27,8 @@ using FrEee.Modding.Interfaces;
 using FrEee.Modding.Enumerations;
 using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
-using NewtMath.f16; // TODO -remove this, just for testing
+using NewtMath.f16;
+using FrEee.Game.Objects.Combat2; // TODO -remove this, just for testing
 
 namespace FrEee.Utility.Extensions
 {
@@ -2926,6 +2927,45 @@ namespace FrEee.Utility.Extensions
 		private static T GetDefaultGeneric<T>()
 		{
 			return default(T);
+		}
+
+		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
+		{
+			if (emp == sobj.Owner)
+				return Visibility.Owned;
+
+			if (sobj.Sector == null || sobj.StarSystem == null)
+				return Visibility.Unknown; // it doesn't really exist...
+
+			// You can always scan space objects you are in combat with.
+			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Any(kvp => kvp.Key == sobj.ID)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+				return Visibility.Scanned;
+
+			// do we have anything that can see it?
+			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp);
+			if (!seers.Any() || sobj.IsHiddenFrom(emp))
+			{
+				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
+					return Visibility.Visible;
+				if (emp.AllSystemsExploredFromStart)
+					return Visibility.Fogged;
+				var known = emp.Memory[sobj.ID];
+				if (known != null && sobj.GetType() == known.GetType())
+					return Visibility.Fogged;
+				else if (Battle_Space.Previous.Any(b => b.StartCombatants.Any(kvp => kvp.Key == sobj.ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
+			if (!sobj.HasAbility("Scanner Jammer"))
+			{
+				var scanners = seers.Where(s =>
+					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.FindSector().Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
+					|| s.HasAbility("Long Range Scanner - System"));
+				if (scanners.Any())
+					return Visibility.Scanned;
+			}
+			return Visibility.Visible;
 		}
 	}
 
