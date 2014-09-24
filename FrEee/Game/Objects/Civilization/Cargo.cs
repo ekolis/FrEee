@@ -131,7 +131,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// for now, have a 50% chance to hit population first and a 50% chance to hit units first
 				// TODO - base the chance to hit population vs. units on relative HP or something?
-				var coin = RandomHelper.Next(2);
+				var coin = RandomHelper.Next(2, dice);
 				int leftover;
 				if (coin == 0)
 					leftover = TakePopulationDamage(hit, damage, dice);
