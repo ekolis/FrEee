@@ -716,14 +716,6 @@ namespace FrEee.Game.Objects.Civilization
 							((EvadeOrder<IMobileSpaceObject>)order).UpdateAlternateTarget();
 					}
 				}
-
-				// no need to duplicate vehicle designs
-				if (obj is IVehicle)
-				{
-					var copy = (IVehicle)Memory[obj.ID];
-					copy.Design.Dispose();
-					copy.Design = ((IVehicle)obj).Design;
-				}
 			}
 			else
 			{

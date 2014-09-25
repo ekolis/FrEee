@@ -359,6 +359,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
+			if (IsMemory)
+				return Visibility.Unknown; // can't see from opponents' memories!
 			var vis = Container.CheckVisibility(emp);
 			if (vis == Visibility.Owned)
 				return vis;

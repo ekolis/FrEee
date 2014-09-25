@@ -14,6 +14,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// The design of this vehicle.
 		/// </summary>
+		[DoNotCopy]
 		IDesign Design { get; set; }
 
 		/// <summary>
