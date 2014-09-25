@@ -155,8 +155,11 @@ namespace FrEee.Modding
 			if (lastGalaxy != Galaxy.Current)
 			{
 				lastGalaxy = Galaxy.Current;
-				var dict = new Dictionary<string, object>();
-				scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
+				var sval = lastGalaxy.StringValue;
+				if (sval != null)
+					scope.SetVariable("_galaxy", sval);
+				else
+					scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
 				scope.SetVariable("newGalaxy", true);
 			}
 			else if (lastGalaxy == null)
