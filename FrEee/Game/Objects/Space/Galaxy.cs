@@ -454,6 +454,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
 			Mod.Current = Galaxy.Current.Mod;
+			Current.SpaceObjectIDCheck("after loading from disk/memory");
+
 			if (Empire.Current != null)
 			{
 				// initialize IronPython galaxy on load
@@ -461,7 +463,6 @@ namespace FrEee.Game.Objects.Space
 				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
 				var turn = formula.Value;
 			}
-			Current.SpaceObjectIDCheck("after loading from disk/memory");
 		}
 
 		/// <summary>
@@ -472,7 +473,9 @@ namespace FrEee.Game.Objects.Space
 		public static void Load(string filename)
 		{
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Open);
-			Load(fs);
+			var sr = new StreamReader(fs);
+			var s = sr.ReadToEnd();
+			LoadFromString(s);
 			fs.Close();
 		}
 
@@ -506,6 +509,14 @@ namespace FrEee.Game.Objects.Space
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
 			Mod.Current = Galaxy.Current.Mod;
 			Current.SpaceObjectIDCheck("after loading from memory");
+
+			if (Empire.Current != null)
+			{
+				// initialize IronPython galaxy on load
+				Current.StringValue = serializedData;
+				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
+				var turn = formula.Value;
+			}
 		}
 
 		/// <summary>
