@@ -454,6 +454,13 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
 			Mod.Current = Galaxy.Current.Mod;
+			if (Empire.Current != null)
+			{
+				// initialize IronPython galaxy on load
+				Current.StringValue = Current.SaveToString(false);
+				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
+				var turn = formula.Value;
+			}
 			Current.SpaceObjectIDCheck("after loading from disk/memory");
 		}
 
@@ -1485,10 +1492,34 @@ namespace FrEee.Game.Objects.Space
 					sobj.Dispose();
 			}
 		}
+
+		private string stringValue;
+
+		/// <summary>
+		/// Serialized string value of the galaxy at the beginning of the turn.
+		/// Only valid client side; otherwise returns null.
+		/// </summary>
+		[DoNotSerialize]
+		internal string StringValue
+		{
+			get
+			{
+				if (Empire.Current == null)
+					return null;
+				if (stringValue == null)
+					StringValue = SaveToString(false);
+				return stringValue;
+			}
+			private set
+			{
+				stringValue = value;
+			}
+		}
 	}
 
 	/// <summary>
 	/// Prevents IDs from being assigned to objects when calling AssignIDs.
+	/// TODO - move to utility namespace?
 	/// </summary>
 	public class DoNotAssignIDAttribute : Attribute
 	{
