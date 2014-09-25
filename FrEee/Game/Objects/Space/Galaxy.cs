@@ -333,6 +333,7 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Assigns IDs to referrable objects in the galaxy.
+		/// Doesn't assign IDs to objects via DoNotAssignID properties, or to memories (or sub-objects of them).
 		/// </summary>
 		public void AssignIDs()
 		{
@@ -341,7 +342,10 @@ namespace FrEee.Game.Objects.Space
 			parser.Property += (pname, o, val) =>
 			{
 				var prop = o.GetType().FindProperty(pname);
-				canAssign = !prop.GetAttributes<DoNotAssignIDAttribute>().Any();
+				var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
+				canAssign = !prop.GetAttributes<DoNotAssignIDAttribute>().Any() && isMemory;
+				if (isMemory)
+					return false; // no recursion!
 				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
 					return false; // no recursion!
 				else
@@ -954,7 +958,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Shuffle())
+			foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>())
 				v.RefillMovement();
 			while (!Current.didLastTick)
 			{

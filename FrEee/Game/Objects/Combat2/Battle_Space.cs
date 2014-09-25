@@ -85,22 +85,6 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					SpaceVehicle scopy = (SpaceVehicle)copy;
 
-					// delete the copied design
-					scopy.Design.Dispose();
-					scopy.Design = ((SpaceVehicle)obj).Design;
-
-					// copy over the components individually so they can take damage without affecting the starting state
-					scopy.Components.Clear();
-					foreach (var comp in ((SpaceVehicle)obj).Components)
-					{
-						var ccopy = comp.Copy();
-						ccopy.Container = scopy;
-						scopy.Components.Add(ccopy);
-					}
-
-					if (scopy.Owner != obj.Owner && scopy.Owner != null)
-						scopy.Owner.Dispose(); // don't need extra empires!
-					scopy.Owner = obj.Owner;
 					StartCombatants.Add(obj.ID, scopy);
 					CombatVehicle comObj = new CombatVehicle(scopy, (SpaceVehicle)obj, battleseed, obj.ID);
 					StartNodes.Add(comObj);
@@ -115,21 +99,6 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					Planet pcopy = (Planet)copy;
 
-					// copy over the facilities individually so they can take damage without affecting the starting state
-					if (pcopy.Colony != null)
-					{
-						pcopy.Colony.Facilities.Clear();
-						foreach (var f in ((Planet)obj).Colony.Facilities)
-						{
-							var fcopy = f.Copy();
-							pcopy.Colony.Facilities.Add(fcopy);
-						}
-					}
-
-					if (pcopy.Owner != obj.Owner)
-						pcopy.Owner.Dispose(); // don't need extra empires!
-					if (pcopy.Colony != null)
-						pcopy.Colony.Owner = obj.Owner;
 					StartCombatants.Add(obj.ID, pcopy);
 					CombatPlanet comObj = new CombatPlanet(pcopy, (Planet)obj, battleseed, obj.ID);
 					StartNodes.Add(comObj);

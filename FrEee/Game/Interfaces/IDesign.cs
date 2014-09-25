@@ -126,14 +126,11 @@ namespace FrEee.Game.Interfaces
         /// </summary>
         FrEee.Game.Objects.Combat2.StrategyObject Strategy { get; set; }
 
-		IDesign Copy();
-
 		IVehicle Instantiate();
-
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable where T : IVehicle
 	{
-		new IDesign<T> Copy();
+		
 	}
 }

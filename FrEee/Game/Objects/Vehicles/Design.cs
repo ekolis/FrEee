@@ -489,31 +489,6 @@ namespace FrEee.Game.Objects.Vehicles
 				emp.KnownDesigns.Remove(this);
 		}
 
-		public Design<T> Copy()
-		{
-			var d = new Design<T>();
-			d.BaseName = BaseName;
-			d.Iteration = Iteration;
-			d.VehiclesBuilt = VehiclesBuilt;
-			d.TurnNumber = TurnNumber;
-			d.Owner = Owner;
-			d.Hull = Hull;
-			d.Role = Role;
-			foreach (var mct in Components)
-				d.Components.Add(new MountedComponentTemplate(d, mct.ComponentTemplate, mct.Mount));
-			return d;
-		}
-
-		IDesign<T> IDesign<T>.Copy()
-		{
-			return Copy();
-		}
-
-		IDesign IDesign.Copy()
-		{
-			return Copy();
-		}
-
 		public Visibility CheckVisibility(Empire emp)
 		{
 			if (Owner == emp)

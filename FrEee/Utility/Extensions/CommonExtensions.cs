@@ -191,6 +191,10 @@ namespace FrEee.Utility.Extensions
 
 			protected override void Inject(object source, object target)
 			{
+				if (source is ConstructionQueue && (source as ConstructionQueue).Name.StartsWith("Munjumb I"))
+				{
+
+				}
 				foreach (var sp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0))
 				{
 					var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
