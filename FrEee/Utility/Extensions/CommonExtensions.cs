@@ -1544,19 +1544,21 @@ namespace FrEee.Utility.Extensions
 				if (data > 0 && data != (int)c && data != (int)'\\' && !escaping)
 				{
 					sb.Append((char)data);
-					log.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
 				}
 				else if (escaping)
 				{
 					sb.Append((char)data);
-					log.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
 					escaping = false;
 				}
 				else if (data == (int)'\\')
 					escaping = true;
 
 			} while (data > 0 && data != (int)c);
-			if (data == c)
+			if (data == c && log != null)
 				log.Append(c);
 			return sb.ToString();
 		}
