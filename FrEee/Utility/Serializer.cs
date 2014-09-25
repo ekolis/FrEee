@@ -370,10 +370,11 @@ namespace FrEee.Utility
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
-				log.Append((char)fin);
+				if (log != null)
+					log.Append((char)fin);
 				fin = r.Read();
 			}
-			if (fin != 0)
+			if (fin != 0 && log != null)
 				log.Append((char)fin);
 			if (fin == 'a')
 			{
@@ -460,10 +461,11 @@ namespace FrEee.Utility
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
-				log.Append((char)fin);
+				if (log != null)
+					log.Append((char)fin);
 				fin = r.Read();
 			}
-			if (fin != 0)
+			if (fin != 0 && log != null)
 				log.Append((char)fin);
 			if (fin == 'c')
 			{
@@ -612,10 +614,11 @@ namespace FrEee.Utility
 			var fin = r.Read();
 			while (fin != 0 && char.IsWhiteSpace((char)fin))
 			{
-				log.Append((char)fin);
+				if (log != null)
+					log.Append((char)fin);
 				fin = r.Read();
 			}
-			if (fin != 0)
+			if (fin != 0 && log != null)
 				log.Append((char)fin);
 			if (fin == 'p')
 			{
@@ -685,8 +688,6 @@ namespace FrEee.Utility
 			// set up our serialization context if we haven't already
 			if (context == null)
 				context = new ObjectGraphContext();
-			if (log == null)
-				log = new StringBuilder();
 
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
@@ -774,7 +775,8 @@ namespace FrEee.Utility
 			do
 			{
 				ender = r.Read();
-				log.Append((char)ender);
+				if (log != null)
+					log.Append((char)ender);
 				if (ender == 0 || ender != ';' && !char.IsWhiteSpace((char)ender))
 					throw new SerializationException("Expected ';', got '" + (char)ender + "' at the end of " + type + ".");
 			} while (ender != ';');
