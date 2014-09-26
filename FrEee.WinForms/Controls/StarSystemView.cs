@@ -232,7 +232,7 @@ namespace FrEee.WinForms.Controls
 							var cornery = drawy - drawsize / 2;
 							if (sector.SpaceObjects.Count() > 1)
 							{
-								foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).GroupBy(sobj => sobj.Owner))
+								foreach (var g in sector.SpaceObjects.Except(sector.SpaceObjects.OfType<StellarObject>()).Where(sobj => sobj.Owner != null).GroupBy(sobj => sobj.Owner))
 								{
 									// draw empire insignia and space object count
 									var owner = g.Key;
