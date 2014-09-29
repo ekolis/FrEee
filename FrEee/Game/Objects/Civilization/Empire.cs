@@ -280,7 +280,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public void ComputeResearchProgress()
 		{
-			researchProgress = AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1)).ToArray();
+			var totalRP = NetIncome[Resource.Research] + BonusResearch;
+			researchProgress = AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1, totalRP)).ToArray();
 		}
 
 		private Progress<Tech>[] researchProgress;
@@ -288,6 +289,11 @@ namespace FrEee.Game.Objects.Civilization
 		public Progress<Tech> GetResearchProgress(Tech tech, int level)
 		{
 			var totalRP = NetIncome[Resource.Research] + BonusResearch;
+			return GetResearchProgress(tech, level, totalRP);
+		}
+
+		private Progress<Tech> GetResearchProgress(Tech tech, int level, int totalRP)
+		{
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
 			var firstQueueSpending = 0;
