@@ -782,11 +782,11 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		/// <summary>
-		/// Planets can't currently move, but they can execute orders immediately.
+		/// Planets can't currently move, but they can execute orders at the end of the turn.
 		/// </summary>
 		public double TimePerMove
 		{
-			get { return 0; }
+			get { return 1; }
 		}
 
 		public int MovementRemaining
