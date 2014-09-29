@@ -75,7 +75,7 @@ namespace FrEee.Game.Objects.Combat2
                 //Fix16 Thrust = (Fix16)wpnskrspd * mass * (Fix16)0.001;
 
                 //boltSpeed = (Fix16)wpMaxR * (Fix16)1000 * (Fix16)(Battle_Space.TickLength); // convert from kilometers per second to meters per tick
-                maxRange_time = (Fix16)wpMaxR; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
+                maxRange_time = (Fix16)wpMaxR / (Fix16)wpnskrspd; // (maxTime for Missiles) untill mod files can handle this, bolt weapons range is the distance it can go in 1 sec.
             }
             else //treat it like a beam I guess. 
             {
