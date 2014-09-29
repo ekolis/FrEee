@@ -76,7 +76,7 @@ namespace FrEee.Game.Objects.Combat2
             Fix16 mass = hitpoints * 0.1;
             int wpnskrspd = skrinfo.SeekerSpeed;
             Fix16 Thrust = calcFowardThrust(skrinfo);
-            Fix16 acceleration = Thrust * mass * -1; //*-1 because we should be accelerating towards the target, not away. 
+            Fix16 acceleration = Thrust / mass * -1; //*-1 because we should be accelerating towards the target, not away. 
             Fix16 startV = seekerClosingSpeed_base(attacker, target);
             //Fix16 endV = ???
             Fix16 baseTimetoTarget = distance_toTarget / startV;
