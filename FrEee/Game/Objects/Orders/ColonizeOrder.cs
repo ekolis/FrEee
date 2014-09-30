@@ -77,7 +77,7 @@ namespace FrEee.Game.Objects.Orders
 							progress.Value = 0;
 						sobj.Owner.Log.Add(tech.CreateLogMessage("We have advanced from level " + oldlvl + " to level " + newlvl + " in " + tech + "!"));
 						foreach (var item in newStuff)
-							sobj.Owner.Log.Add(tech.CreateLogMessage("We have unlocked a new " + tech.ResearchGroup.ToLower() + ", the " + tech + "!"));
+							sobj.Owner.Log.Add(item.CreateLogMessage("We have unlocked a new " + item.ResearchGroup.ToLower() + ", the " + item + "!"));
 					}
 					if (i == 0)
 						sobj.Owner.Log.Add(Planet.CreateLogMessage(msg));
