@@ -343,7 +343,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				var prop = o.GetType().FindProperty(pname);
 				var isMemory = val is IFoggable && (val as IFoggable).IsMemory;
-				canAssign = !prop.GetAttributes<DoNotAssignIDAttribute>().Any() && isMemory;
+				canAssign = !prop.GetAttributes<DoNotAssignIDAttribute>().Any() && !isMemory;
 				if (isMemory)
 					return false; // no recursion!
 				if (prop.GetAttributes<DoNotAssignIDAttribute>().Any(a => a.Recurse))
