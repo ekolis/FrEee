@@ -1302,6 +1302,7 @@ namespace FrEee.Game.Objects.Combat2
 			else
 			{
 				// start combatants are memories but need to be redacted anyway
+				// TODO - why are they not considered "scanned" so we can see the designs?
 				foreach (var memory in StartCombatants.Values)
 					memory.Redact(emp);
 			}
