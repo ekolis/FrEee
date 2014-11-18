@@ -2078,6 +2078,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Sector> Path(this IMobileSpaceObject sobj)
 		{
+			// TODO - cache paths and only recalculate them when the orders change
 			var last = sobj.Sector;
 			foreach (var order in sobj.Orders)
 			{
