@@ -1441,7 +1441,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnNextIdle_Click(object sender, EventArgs e)
 		{
-			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
+			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle).ToArray();
 			if (!idle.Any())
 				SelectSpaceObject(null);
 			else if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
