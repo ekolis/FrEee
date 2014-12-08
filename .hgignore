@@ -6,3 +6,5 @@ Thumbs.db
 *.csproj.user
 *.userprefs
 packages/
+*.psess
+*.vspx
