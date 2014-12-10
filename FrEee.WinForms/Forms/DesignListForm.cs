@@ -103,7 +103,7 @@ namespace FrEee.WinForms.Forms
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
-				var copy = old.Copy();
+				var copy = old.CopyAndAssignNewID();
 				copy.TurnNumber = Galaxy.Current.TurnNumber;
 				copy.Owner = Empire.Current;
 				copy.Iteration++;
