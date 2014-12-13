@@ -268,6 +268,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 				// clear component list
 				Components.Clear();
+
+				// hide amount of supplies remaining
+				SupplyRemaining = 0;
 			}
 
 			if (visibility < Visibility.Fogged)
