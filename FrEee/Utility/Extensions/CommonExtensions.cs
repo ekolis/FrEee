@@ -3007,6 +3007,50 @@ namespace FrEee.Utility.Extensions
 				return null;
 			}
 		}
+
+		/// <summary>
+		/// Finds the previous item in a list, or null if there is no previous item.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="item"></param>
+		/// <param name="wrap"></param>
+		/// <returns></returns>
+		public static T Previous<T>(this IEnumerable<T> list, T item, bool wrap = false)
+		{
+			var index = list.IndexOf(item) - 1;
+			if (index < 0)
+			{
+				if (wrap)
+					return list.Last();
+				else
+					return default(T);
+			}
+			else
+				return list.ElementAt(index);
+		}
+
+		/// <summary>
+		/// Finds the next item in a list, or null if there is no next item.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="item"></param>
+		/// <param name="wrap"></param>
+		/// <returns></returns>
+		public static T Next<T>(this IEnumerable<T> list, T item, bool wrap = false)
+		{
+			var index = list.IndexOf(item) + 1;
+			if (index >= list.Count())
+			{
+				if (wrap)
+					return list.First();
+				else
+					return default(T);
+			}
+			else
+				return list.ElementAt(index);
+		}
 	}
 
 	public enum IDCopyBehavior

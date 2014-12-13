@@ -1409,26 +1409,72 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(new ShipListForm());
 		}
 
+		private ISpaceObject prevIdle = null, curIdle = null, nextIdle = null;
+		private int curIdleIndex = -1;
+
 		private void btnPrevIdle_Click(object sender, EventArgs e)
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle);
 			if (!idle.Any())
-				SelectSpaceObject(null);
-			else if (SelectedSpaceObject == null || SelectedSpaceObject == idle.First())
-				SelectSpaceObject(idle.Last());
+			{
+				prevIdle = curIdle = nextIdle = null;
+				curIdleIndex = -1;
+			}
+			else if (curIdle == null)
+			{
+				curIdle = idle.Last();
+				prevIdle = idle.Previous(curIdle);
+				nextIdle = idle.Next(curIdle);
+				curIdleIndex = idle.Count() - 1;
+			}
+			else if (!idle.Contains(curIdle))
+			{
+				// curIdle is no longer idle, find where it was using the index
+				curIdleIndex--;
+				curIdle = idle.ElementAt(curIdleIndex);
+				prevIdle = idle.Previous(curIdle);
+				nextIdle = idle.Next(curIdle);
+			}
 			else
-				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) - 1));
+			{
+				nextIdle = curIdle;
+				curIdle = idle.Previous(curIdle);
+				prevIdle = idle.Previous(curIdle);
+				curIdleIndex = idle.IndexOf(curIdle);
+			}
+			SelectedSpaceObject = curIdle;
 		}
 
 		private void btnNextIdle_Click(object sender, EventArgs e)
 		{
 			var idle = Empire.Current.OwnedSpaceObjects.Where(sobj => sobj.IsIdle).ToArray();
 			if (!idle.Any())
-				SelectSpaceObject(null);
-			else if (SelectedSpaceObject == null || SelectedSpaceObject == idle.Last())
-				SelectSpaceObject(idle.First());
+			{
+				prevIdle = curIdle = nextIdle = null;
+				curIdleIndex = -1;
+			}
+			else if (curIdle == null)
+			{
+				curIdle = idle.First();
+				prevIdle = idle.Previous(curIdle);
+				nextIdle = idle.Next(curIdle);
+				curIdleIndex = 0;
+			}
+			else if (!idle.Contains(curIdle))
+			{
+				// curIdle is no longer idle, find where it was using the index
+				curIdle = idle.ElementAt(curIdleIndex);
+				prevIdle = idle.Previous(curIdle);
+				nextIdle = idle.Next(curIdle);
+			}
 			else
-				SelectSpaceObject(idle.ElementAt(idle.IndexOf(SelectedSpaceObject) + 1));
+			{
+				prevIdle = curIdle;
+				curIdle = idle.Next(curIdle);
+				nextIdle = idle.Next(curIdle);
+				curIdleIndex = idle.IndexOf(curIdle);
+			}
+			SelectedSpaceObject = curIdle;
 		}
 
 		private void LoadButtonImage(Button btn, string picName)
