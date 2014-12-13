@@ -761,21 +761,21 @@ namespace FrEee.WinForms.Forms
 
 		private void RemoveTab(FlowLayoutPanel tab)
 		{
-            // if currentTab is removed, select previous one. If it does not exist select next one. If does not exist or is the new tab button, create it and select it
+			// if currentTab is removed, select previous one. If it does not exist select next one. If does not exist or is the new tab button, create it and select it
 			if (currentTab == tab)
 			{
-                var nextTabIndexToSelect = pnlTabs.Controls.IndexOf(tab) - 1;
-                if (nextTabIndexToSelect < 0)
-                    nextTabIndexToSelect = 1;
+				var nextTabIndexToSelect = pnlTabs.Controls.IndexOf(tab) - 1;
+				if (nextTabIndexToSelect < 0)
+					nextTabIndexToSelect = 1;
 
-                if (nextTabIndexToSelect > pnlTabs.Controls.Count || !(pnlTabs.Controls[nextTabIndexToSelect] is FlowLayoutPanel))
-                {
-                    SelectTab(AddTab());
-                }
-                else
-                {
-                    SelectTab(pnlTabs.Controls[nextTabIndexToSelect] as FlowLayoutPanel);
-                }
+				if (nextTabIndexToSelect > pnlTabs.Controls.Count || !(pnlTabs.Controls[nextTabIndexToSelect] is FlowLayoutPanel))
+				{
+					SelectTab(AddTab());
+				}
+				else
+				{
+					SelectTab(pnlTabs.Controls[nextTabIndexToSelect] as FlowLayoutPanel);
+				}
 			}
 			pnlTabs.Controls.Remove(tab);
 		}
@@ -926,18 +926,18 @@ namespace FrEee.WinForms.Forms
 					this.ShowChildForm(new PlanetListForm());
 				else if (e.KeyCode == Keys.E)
 					this.ShowChildForm(new EmpireListForm());
-                else if (e.KeyCode == Keys.O)
-                    { } // TODO - empire status screen
-                else if (e.KeyCode == Keys.S)
-                    this.ShowChildForm(new ShipListForm());
-                else if (e.KeyCode == Keys.Q)
-                    ShowConstructionQueueListForm();
-                else if (e.KeyCode == Keys.L)
-                    this.ShowChildForm(new LogForm(this));
-                else if (e.KeyCode == Keys.R)
-                    ShowResearchForm();
-                else if (e.KeyCode == Keys.Tab)
-                    btnPrevIdle_Click(this, new EventArgs());
+				else if (e.KeyCode == Keys.O)
+					{ } // TODO - empire status screen
+				else if (e.KeyCode == Keys.S)
+					this.ShowChildForm(new ShipListForm());
+				else if (e.KeyCode == Keys.Q)
+					ShowConstructionQueueListForm();
+				else if (e.KeyCode == Keys.L)
+					this.ShowChildForm(new LogForm(this));
+				else if (e.KeyCode == Keys.R)
+					ShowResearchForm();
+				else if (e.KeyCode == Keys.Tab)
+					btnPrevIdle_Click(this, new EventArgs());
 				// set waypoint without redirecting
 				else if(e.KeyCode == Keys.D0)
 					SetWaypoint(0, false);
@@ -1305,42 +1305,23 @@ namespace FrEee.WinForms.Forms
 				if (SelectedSpaceObject is SpaceVehicle)
 				{
 					var v = (SpaceVehicle)SelectedSpaceObject;
-					foreach (var order in v.Orders)
-					{
-						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>().SingleOrDefault(c => c.Order == order);
-						if (addCmd == null)
-						{
-							// not a newly added order, so create a remove command to take it off the server
-							var remCmd = new RemoveOrderCommand<SpaceVehicle>(v, order);
-							Empire.Current.Commands.Add(remCmd);
-						}
-						else
-						{
-							// a newly added order, so just get rid of the add command
-							Empire.Current.Commands.Remove(addCmd);
-						}
-					}
-					v.Orders.Clear();
+					foreach (var order in v.Orders.ToArray())
+						v.RemoveOrderClientSide(order);
+					BindReport();
+				}
+				else if (SelectedSpaceObject is Fleet)
+				{
+					var f = (Fleet)SelectedSpaceObject;
+					foreach (var order in f.Orders.ToArray())
+						f.RemoveOrderClientSide(order);
+					f.Orders.Clear();
 					BindReport();
 				}
 				else if (SelectedSpaceObject is Planet)
 				{
 					var p = (Planet)SelectedSpaceObject;
-					foreach (var order in p.Orders)
-					{
-						var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<Planet>>().SingleOrDefault(c => c.Order == order);
-						if (addCmd == null)
-						{
-							// not a newly added order, so create a remove command to take it off the server
-							var remCmd = new RemoveOrderCommand<Planet>(p, order);
-							Empire.Current.Commands.Add(remCmd);
-						}
-						else
-						{
-							// a newly added order, so just get rid of the add command
-							Empire.Current.Commands.Remove(addCmd);
-						}
-					}
+					foreach (var order in p.Orders.ToArray())
+						p.RemoveOrderClientSide(order);
 					p.Orders.Clear();
 					BindReport();
 				}

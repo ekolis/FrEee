@@ -2975,6 +2975,38 @@ namespace FrEee.Utility.Extensions
 			}
 			return Visibility.Visible;
 		}
+
+		/// <summary>
+		/// Removes an order from some object.
+		/// If the order was just added by the player this turn, simply deletes it.
+		/// If not, also creates a RemoveOrderCommand to remove it on the server, and adds that command to the empire's commands.
+		/// Intended only for client side use.
+		/// </summary>
+		/// <typeparam name="T">The type of orderable object.</typeparam>
+		/// <param name="obj">The object from which to remove an order.</param>
+		/// <param name="order">The order to remove.</param>
+		/// <returns>The remove-order command created, if any.</returns>
+		public static RemoveOrderCommand<T> RemoveOrderClientSide<T>(this T obj, IOrder<T> order) where T : IOrderable
+		{
+			if (Empire.Current == null)
+				throw new InvalidOperationException("RemoveOrderClientSide is intended for client side use.");
+			var addCmd = Empire.Current.Commands.OfType<AddOrderCommand<T>>().SingleOrDefault(c => c.Order == order);
+			if (addCmd == null)
+			{
+				// not a newly added order, so create a remove command to take it off the server
+				var remCmd = new RemoveOrderCommand<T>(obj, order);
+				Empire.Current.Commands.Add(remCmd);
+				obj.RemoveOrder(order);
+				return remCmd;
+			}
+			else
+			{
+				// a newly added order, so just get rid of the add command
+				Empire.Current.Commands.Remove(addCmd);
+				obj.RemoveOrder(order);
+				return null;
+			}
+		}
 	}
 
 	public enum IDCopyBehavior
