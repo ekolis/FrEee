@@ -157,7 +157,7 @@ namespace FrEee.WinForms.Controls
 					foreach (var pop in CargoDelta.RacePopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
-						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4, "All") + " Population of Any Race (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Total", Pictures.GetGenericImage(typeof(Race)));
+						popNode.AddItemWithImage(CargoDelta.AnyPopulation.ToUnitString(true, 4) + " Population of Any Race (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Total", Pictures.GetGenericImage(typeof(Race)));
 					popNode.Expand();
 				}
 

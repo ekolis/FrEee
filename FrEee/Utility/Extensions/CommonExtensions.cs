@@ -1818,8 +1818,8 @@ namespace FrEee.Utility.Extensions
 				var amount = long.MaxValue;
 
 				// limit by desired amount to transfer
-				if (anyPopLeft != null)
-					amount = Math.Min(amount, anyPopLeft.Value);
+				if (!delta.AllPopulation)
+					amount = Math.Min(amount, anyPopLeft);
 				// limit by amount available
 				amount = Math.Min(amount, kvp.Value);
 				// limit by amount of free space

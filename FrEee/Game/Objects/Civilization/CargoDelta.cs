@@ -19,6 +19,7 @@ namespace FrEee.Game.Objects.Civilization
 		public CargoDelta()
 		{
 			RacePopulation = new ReferenceKeyedDictionary<Race, long?>();
+			AllPopulation = false;
 			AnyPopulation = 0L;
 			Units = new ReferenceSet<IUnit>();
 			UnitDesignTonnage = new ReferenceKeyedDictionary<IDesign<IUnit>, int?>();
@@ -27,7 +28,8 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public ReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
-		public long? AnyPopulation { get; set; }
+		public bool AllPopulation { get; set; }
+		public long AnyPopulation { get; set; }
 		public ReferenceSet<IUnit> Units { get; private set; }
 		public ReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
@@ -43,7 +45,7 @@ namespace FrEee.Game.Objects.Civilization
 				else
 					items.Add(kvp.Value.ToUnitString() + " " + kvp.Key + " Population");
 			}
-			if (AnyPopulation == null)
+			if (AllPopulation)
 				items.Add("All Population");
 			else if (AnyPopulation != 0)
 				items.Add(AnyPopulation.ToUnitString() + " Population of Any Race");
@@ -101,9 +103,9 @@ namespace FrEee.Game.Objects.Civilization
 						return null;
 					tonnage += (int)Math.Ceiling(kvp.Value.Value * Mod.Current.Settings.PopulationSize);
 				}
-				if (AnyPopulation == null)
+				if (AllPopulation)
 					return null;
-				tonnage += (int)Math.Ceiling(AnyPopulation.Value * Mod.Current.Settings.PopulationSize);
+				tonnage += (int)Math.Ceiling(AnyPopulation * Mod.Current.Settings.PopulationSize);
 				foreach (var u in Units)
 					tonnage += u.Design.Hull.Size;
 				foreach (var d in UnitDesignTonnage)
