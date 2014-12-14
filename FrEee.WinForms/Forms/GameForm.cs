@@ -312,7 +312,7 @@ namespace FrEee.WinForms.Forms
 										foreach (var pHere in planets)
 										{
 											var delta = new CargoDelta();
-											delta.AnyPopulation = null;
+											delta.AllPopulation = true;
 											var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
 											IssueSpaceObjectOrder(loadPopOrder);
 										}

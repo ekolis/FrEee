@@ -162,7 +162,18 @@ namespace FrEee.WinForms.Forms
 			{
 				case CargoList.SelectionType.Population:
 					if (clTo.SelectedRace == null)
-						clLoad.CargoDelta.AnyPopulation = Quantity;
+					{
+						if (Quantity == null)
+						{
+							clLoad.CargoDelta.AllPopulation = true;
+							clLoad.CargoDelta.AnyPopulation = 0;
+						}
+						else
+						{
+							clLoad.CargoDelta.AllPopulation = false;
+							clLoad.CargoDelta.AnyPopulation = Quantity.Value;
+						}
+					}
 					else
 						clLoad.CargoDelta.RacePopulation[clTo.SelectedRace] = Quantity;
 					break;
@@ -199,7 +210,18 @@ namespace FrEee.WinForms.Forms
 				// TODO - let user specify quantity
 				case CargoList.SelectionType.Population:
 					if (clFrom.SelectedRace == null)
-						clDrop.CargoDelta.AnyPopulation = Quantity;
+					{
+						if (Quantity == null)
+						{
+							clDrop.CargoDelta.AllPopulation = true;
+							clDrop.CargoDelta.AnyPopulation = 0;
+						}
+						else
+						{
+							clDrop.CargoDelta.AllPopulation = false;
+							clDrop.CargoDelta.AnyPopulation = Quantity.Value;
+						}
+					}
 					else
 						clDrop.CargoDelta.RacePopulation[clFrom.SelectedRace] = Quantity;
 					break;
