@@ -1081,7 +1081,25 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.Back && btnClearOrders.Visible)
 				ClearOrders();
 			else if (e.KeyCode == Keys.Escape)
-				ChangeCommandMode(CommandMode.None, null);
+			{
+				if (commandMode == CommandMode.None && starSystemView.SelectedSector != null)
+				{
+					// deselect space object
+					SelectedSpaceObject = null;
+
+					// show star system report
+					var newReport = new StarSystemReport(starSystemView.StarSystem);
+					pnlDetailReport.Controls.Add(newReport);
+					newReport.Left = newReport.Margin.Left;
+					newReport.Width = pnlDetailReport.Width - newReport.Margin.Right - newReport.Margin.Left;
+					newReport.Top = newReport.Margin.Top;
+					newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
+					newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+					
+				}
+				else
+					ChangeCommandMode(CommandMode.None, null);
+			}
 			else if (e.KeyCode == Keys.Control || e.KeyCode == Keys.ControlKey || e.KeyCode == Keys.LControlKey || e.KeyCode == Keys.RControlKey)
 				aggressiveMode = true;
 		}
