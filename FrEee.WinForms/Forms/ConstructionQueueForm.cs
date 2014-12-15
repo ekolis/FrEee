@@ -177,7 +177,7 @@ namespace FrEee.WinForms.Forms
 							fore = Color.LightGreen;
 					}
 					else
-						fore = firstFinishesThisTurn ? (allFinishThisTurn ? Color.Cyan : Color.LightGreen) : lstQueue.BackColor;
+						fore = firstFinishesThisTurn ? (allFinishThisTurn ? Color.Cyan : Color.LightGreen) : lstQueue.ForeColor;
 					if (back != lstQueue.BackColor)
 						fore = lstQueue.BackColor;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, firstEta.ToString("f1") + "(" + eta.ToString("f1") + ")", fore, back, lstQueue.Font));
