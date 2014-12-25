@@ -694,6 +694,7 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
+		// TODO - do we really need this? can't we do this in the SelectedSpaceObject setter?
 		public void SelectSpaceObject(ISpaceObject sobj)
 		{
 			if (sobj != null)
@@ -1460,7 +1461,7 @@ namespace FrEee.WinForms.Forms
 				prevIdle = idle.Previous(curIdle);
 				curIdleIndex = idle.IndexOf(curIdle);
 			}
-			SelectedSpaceObject = curIdle;
+			SelectSpaceObject(curIdle);
 		}
 
 		private void btnNextIdle_Click(object sender, EventArgs e)
@@ -1492,7 +1493,7 @@ namespace FrEee.WinForms.Forms
 				nextIdle = idle.Next(curIdle);
 				curIdleIndex = idle.IndexOf(curIdle);
 			}
-			SelectedSpaceObject = curIdle;
+			SelectSpaceObject(curIdle);
 		}
 
 		private void LoadButtonImage(Button btn, string picName)
