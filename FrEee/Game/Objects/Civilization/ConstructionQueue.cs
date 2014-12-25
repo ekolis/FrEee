@@ -369,7 +369,14 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Redact(Empire emp)
 		{
-			if (CheckVisibility(emp) < Visibility.Visible)
+			// TODO - see first order in queue if queue is scanned?
+			// need to add design being built to known designs too?
+			if (CheckVisibility(emp) < Visibility.Owned)
+			{
+				Orders.DisposeAll();
+				Orders.Clear();
+			}
+			if (CheckVisibility(emp) < Visibility.Fogged)
 				Dispose();
 		}
 
