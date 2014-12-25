@@ -53,14 +53,14 @@ namespace FrEee.Modding
 					{
 						if (what == "Minimum")
 						{
-							p.Minimum = f.IntValue(this);
+							p.Minimum = f.CreateFormula<int>(p);
 							expecting = "Maximum";
 						}
 						else if (what == "Maximum")
 						{
 							// it's OK, just set minimum to 1
 							p.Minimum = 1;
-							p.Maximum = f.IntValue(this);
+							p.Maximum = f.CreateFormula<int>(p);
 							expecting = "Name";
 							yield return p;
 							p = new MetaRecordParameter();
@@ -75,7 +75,7 @@ namespace FrEee.Modding
 					{
 						if (what == "Maximum")
 						{
-							p.Maximum = f.IntValue(this);
+							p.Maximum = f.CreateFormula<int>(p);
 							expecting = "Name";
 							yield return p;
 							p = new MetaRecordParameter();

@@ -561,7 +561,6 @@
 			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
 			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
 			this.lstUpgrades.View = System.Windows.Forms.View.Details;
-			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
 			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
 			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
 			// 
@@ -694,8 +693,6 @@
 			this.Text = "Construction Queue";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ConstructionQueueForm_FormClosing);
 			this.Load += new System.EventHandler(this.ConstructionQueueForm_Load);
-			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ConstructionQueueForm_KeyDown);
-			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.ConstructionQueueForm_KeyUp);
 			this.gamePanel2.ResumeLayout(false);
 			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel1.PerformLayout();

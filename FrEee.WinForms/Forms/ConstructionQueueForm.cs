@@ -726,29 +726,6 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void lstUpgrades_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
-		{
-
-		}
-
-		private bool shiftPressed = false, ctrlPressed = false;
-
-		private void ConstructionQueueForm_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Shift)
-				shiftPressed = true;
-			else if (e.KeyCode == Keys.Control)
-				ctrlPressed = true;
-		}
-
-		private void ConstructionQueueForm_KeyUp(object sender, KeyEventArgs e)
-		{
-			if (e.KeyCode == Keys.Shift)
-				shiftPressed = false;
-			else if (e.KeyCode == Keys.Control)
-				ctrlPressed = false;
-		}
-
 		private void chkExpanded_CheckedChanged(object sender, EventArgs e)
 		{
 			BindQueueListView(SelectedOrders.ToArray());

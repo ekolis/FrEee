@@ -297,7 +297,7 @@ namespace FrEee.Modding
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
-		/// /// <param name="variables">Read-only variables to inject into the script.</param>
+		/// <param name="readOnlyVariables">Read-only variables to inject into the script.</param>
 		public static void RunScript(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
 			var deserializers = new List<string>();

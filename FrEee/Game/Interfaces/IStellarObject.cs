@@ -42,7 +42,5 @@ namespace FrEee.Game.Interfaces
 		/// PNG files will be searched first, then BMP.
 		/// </summary>
 		string PictureName { get; set; }
-
-		void Redact(Empire emp);
 	}
 }
