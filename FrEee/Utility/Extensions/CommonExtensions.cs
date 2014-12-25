@@ -2909,6 +2909,13 @@ namespace FrEee.Utility.Extensions
 			return Galaxy.Current.referrables.ContainsKey(r.ID) && Galaxy.Current.referrables[r.ID] == r;
 		}
 
+		/// <summary>
+		/// Disposes of all objects in an enumerated list that meet a specified condition (or all items if condition is null).
+		/// Does not clear the list; if the list is a collection, you can do this yourself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="condition"></param>
 		public static void DisposeAll<T>(this IEnumerable<T> list, Func<T, bool> condition = null) where T : IDisposable
 		{
 			foreach (var d in list.Where(d => condition == null || condition(d)).ToArray())
