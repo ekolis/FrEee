@@ -26,8 +26,6 @@ namespace FrEee.Modding.Loaders
 				var sos = new StellarObjectSize();
 				mod.StellarObjectSizes.Add(sos);
 
-				int index = -1;
-
 				sos.ModID = rec.Get<string>("ID", sos);
 				sos.Name = rec.Get<string>("Name", sos);
 				sos.StellarObjectType = rec.Get<string>("Physical Type", sos);

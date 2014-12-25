@@ -65,13 +65,14 @@ namespace FrEee.Game.Objects.Commands
 			}
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
 			if (!done.Contains(this))
 			{
 				done.Add(this);
+				base.ReplaceClientIDs(idmap, done);
 				fleet.ReplaceClientIDs(idmap, done);
 			}
 		}

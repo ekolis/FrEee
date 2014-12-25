@@ -167,15 +167,6 @@ sys.modules['" + ModuleName + "'] = " + ModuleName + @";
 		public override int GetHashCode()
 		{
 			return HashCodeMasher.Mash(ModuleName, Text, HashCodeMasher.MashList(ExternalScripts));
-			var mh = ModuleName == null ? 0 : ModuleName.GetHashCode();
-			var th = Text == null ? 0 : Text.GetHashCode();
-			var hash = mh ^ th;
-			if (ExternalScripts != null)
-			{
-				foreach (var xs in ExternalScripts)
-					hash ^= xs.GetHashCode();
-			}
-			return hash;
 		}
 	}
 }

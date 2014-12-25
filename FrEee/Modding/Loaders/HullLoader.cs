@@ -76,7 +76,7 @@ namespace FrEee.Modding.Loaders
 				hull.Size = rec.Get<int>("Tonnage", hull);
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
+					hull.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(hull);
 
 				hull.Mass = rec.Get<int>("Engines Per Move", hull);
 

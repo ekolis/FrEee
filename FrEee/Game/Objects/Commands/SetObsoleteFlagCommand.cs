@@ -38,7 +38,7 @@ namespace FrEee.Game.Objects.Commands
 			Design.IsObsolete = IsObsolete;
 		}
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();

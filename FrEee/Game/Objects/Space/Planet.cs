@@ -918,18 +918,13 @@ namespace FrEee.Game.Objects.Space
 			get { return IntrinsicAbilities; }
 		}
 
-		public IEnumerable<IAbilityObject> Children
+		public override IEnumerable<IAbilityObject> Children
 		{
 			get
 			{
 				if (Colony != null)
 					yield return Colony;
 			}
-		}
-
-		public IAbilityObject Parent
-		{
-			get { return Owner; }
 		}
 
 		public Progress PopulationFill

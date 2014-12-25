@@ -43,7 +43,7 @@ namespace FrEee.Modding.Loaders
 					f.PictureName = "Facil_" + rec.Get<int>("Pic Num", f).Value.ToString("000"); // for compatibility with SE4
 
 				foreach (var costfield in rec.Fields.Where(cf => cf.Name.StartsWith("Cost ")))
-					f.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.IntValue(rec);
+					f.Cost[Resource.Find(costfield.Name.Substring("Cost ".Length))] = costfield.CreateFormula<int>(f);
 
 				foreach (var tr in RequirementLoader.LoadEmpireRequirements(rec, f, RequirementType.Unlock))
 					f.UnlockRequirements.Add(tr);

@@ -208,7 +208,7 @@ namespace FrEee.Game.Objects.Space
 			get { return IntrinsicAbilities; }
 		}
 
-		public IEnumerable<IAbilityObject> Children
+		public virtual IEnumerable<IAbilityObject> Children
 		{
 			get { yield break; }
 		}

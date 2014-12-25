@@ -38,7 +38,8 @@ namespace FrEee.Game.Interfaces
 	{
 		/// <summary>
 		/// Intrinsic abilities of this object which can be added or removed.
+		/// TODO - rename to IntrinsicAbilities after the current game is over
 		/// </summary>
-		new IList<Ability> Abilities { get; }
+		IList<Ability> Abilities { get; }
 	}
 }

@@ -28,13 +28,14 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		[DoNotSerialize]
 		public Proposal Proposal { get { return proposal; } set { proposal = value; } }
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
 			if (!done.Contains(this))
 			{
 				done.Add(this);
+				base.ReplaceClientIDs(idmap, done);
 				proposal.ReplaceClientIDs(idmap, done);
 			}
 		}

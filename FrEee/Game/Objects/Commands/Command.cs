@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public abstract void Execute();
 
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			if (done == null)
 				done = new HashSet<IPromotable>();
