@@ -18,6 +18,7 @@ namespace FrEee.Game.Objects.Combat
 	{
 		public Shot(ICombatant attacker, Component weapon, IDamageable defender, int range)
 		{
+			Attacker = attacker;
 			Weapon = weapon;
 			Defender = defender;
 			Range = range;
