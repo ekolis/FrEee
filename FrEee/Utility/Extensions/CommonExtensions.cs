@@ -3027,7 +3027,7 @@ namespace FrEee.Utility.Extensions
 			if (index < 0)
 			{
 				if (wrap)
-					return list.Last();
+					return list.LastOrDefault();
 				else
 					return default(T);
 			}
@@ -3049,7 +3049,7 @@ namespace FrEee.Utility.Extensions
 			if (index >= list.Count())
 			{
 				if (wrap)
-					return list.First();
+					return list.FirstOrDefault();
 				else
 					return default(T);
 			}
