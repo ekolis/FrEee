@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Combat2
 						c.Hitpoints = 0;
 
 					// see if that killed the target
-					if (battle.CheckForDeath(this))
+					if (battle.CheckForDeath(battle.CurrentTick, this))
 						return;
 
 					// transfer ownership

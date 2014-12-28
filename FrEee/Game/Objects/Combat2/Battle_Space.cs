@@ -503,10 +503,10 @@ namespace FrEee.Game.Objects.Combat2
 			SetUpPieces();
 		}
 
-		public void End()
+		public void End(int tick)
 		{
 			//end combat
-			ReplayLog.Events.Add(new CombatEndBattleEvent(CurrentTick));
+			ReplayLog.Events.Add(new CombatEndBattleEvent(tick));
 			Current.Remove(this);
 			Previous.Add(this);
 
@@ -522,11 +522,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="tick">The tick number</param>
 		/// <param name="cmdfreqCounter">Counter to keep track of when the ship AI can issue comamnds.</param>
 		/// <returns>True if the battle should continue; false if it should end.</returns>
-		public bool ProcessTick(ref int cmdfreqCounter)
+		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
 		{
 #if DEBUG
 			Console.WriteLine("Processing: ");
-			Console.WriteLine("Tick: " + CurrentTick.ToString());
+			Console.WriteLine("Tick: " + tick.ToString());
 #endif
 			//unleash the dogs of war!
 			foreach (var comObj in CombatObjects)
@@ -556,7 +556,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			foreach (var comObj in CombatObjects.ToArray())
-				firecontrol(comObj); //fire ready weapons.
+				firecontrol(tick, comObj); //fire ready weapons.
 
 			foreach (var comObj in CombatObjects)
 				SimNewtonianPhysics(comObj); //physicsmove objects.
@@ -565,7 +565,7 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				foreach (CombatControlledObject ccobj in ControlledCombatObjects)
 				{
-					commandAI(ccobj, CurrentTick);
+					commandAI(ccobj, tick);
 				}
 				cmdfreqCounter = 0;
 			}
@@ -609,30 +609,31 @@ namespace FrEee.Game.Objects.Combat2
 				cont = false;
 			else if (!hostiles)
 				cont = false;
-			else if (CurrentTick > maxTick)
+			else if (tick > maxTick)
 				cont = false;
 			else
 				cont = true;
 			cmdfreqCounter++;
-			CurrentTick++;
+			tick++;
+			CurrentTick = tick;
 			return cont;
 		}
+
+		public int CurrentTick { get; private set; }
 
 		public void Resolve()
 		{
 			Start();
 
 
-			int cmdFreqCounter = 0;
-			while (ProcessTick(ref cmdFreqCounter))
+			int tick = 0, cmdFreqCounter = 0;
+			while (ProcessTick(ref tick, ref cmdFreqCounter))
 			{
 				// keep on truckin'
 			}
 
-			End();
+			End(tick);
 		}
-
-		public int CurrentTick { get; private set; }
 
 
 		public PointXd SimNewtonianPhysics(CombatNode comObj)
@@ -795,7 +796,7 @@ namespace FrEee.Game.Objects.Combat2
 					DamageType damageType = w.DamageType;
 					CombatSeeker targetsec = (CombatSeeker)target;
 					var shot = new Shot((ICombatant)launcher.Parent, launcher, target.WorkingObject, 0); // TODO - range of seekers targeting seekers?
-					targetsec.TakeDamage(this, new Hit(shot, target.WorkingObject, damage), comSek.getDice());
+					targetsec.TakeDamage(new Hit(shot, target.WorkingObject, damage), comSek.getDice());
 
 					if (targetsec.IsDestroyed)
 					{
@@ -840,13 +841,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="tic_countr"></param>
 		/// <param name="comObj"></param>
-		public void firecontrol(CombatObject comObj)
+		public void firecontrol(int tic_countr, CombatObject comObj)
 		{
 
 			if (comObj is CombatSeeker)
 			{
 				//is a seeker 
-				missilefirecontrol(CurrentTick, (CombatSeeker)comObj);
+				missilefirecontrol(tic_countr, (CombatSeeker)comObj);
 			}
 			else if (comObj is CombatControlledObject)
 			{
@@ -883,7 +884,7 @@ namespace FrEee.Game.Objects.Combat2
 
 						if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
 							wpn.CanTarget(targetObject.WorkingObject) && //if we CAN target 
-							CurrentTick >= wpn.nextReload && //if the weapon is ready to fire.
+							tic_countr >= wpn.nextReload && //if the weapon is ready to fire.
 							(
 							// if the firing object has enough supplies (or is not a space vehicle, and so does not use supplies)
 								!(comObj.WorkingObject is SpaceVehicle) ||
@@ -899,9 +900,9 @@ namespace FrEee.Game.Objects.Combat2
 
 #endif
 								//first create the event for the target ship
-								CombatTakeFireEvent targets_event = FireWeapon(comObj, wpn, targetObject);
+								CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
 								//then create teh event for this ship firing on the target
-								CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(CurrentTick, comObj, comObj.cmbt_loc, wpn, targets_event);
+								CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
 
 
 								if (!IsReplay)
@@ -918,7 +919,7 @@ namespace FrEee.Game.Objects.Combat2
 				//update any events where this ship has taken fire, and set the location. 
 				if (!IsReplay)
 				{
-					foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, CurrentTick))
+					foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
 					{
 						if (comevnt.GetType() == typeof(CombatTakeFireEvent))
 						{
@@ -978,16 +979,16 @@ namespace FrEee.Game.Objects.Combat2
 		}
 
 
-		private CombatTakeFireEvent FireSeeker(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		private CombatTakeFireEvent FireSeeker(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 			CombatTakeFireEvent target_event = null;
 			SeekingWeaponInfo skrinfo = (SeekingWeaponInfo)weapon.weapon.Template.ComponentTemplate.WeaponInfo;
-			int targettick = CurrentTick + (int)CombatSeeker.seekerTimeToTarget(attacker, target, skrinfo) * TicksPerSecond;
+			int targettick = tick + (int)CombatSeeker.seekerTimeToTarget(attacker, target, skrinfo) * TicksPerSecond;
 			//create seeker and node.
 			CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
 			seeker.waypointTarget = new combatWaypoint(target);
 			seeker.weaponTarget = new List<CombatObject>() { target };
-			seeker.deathTick = CurrentTick + weapon.maxRange_time * TicksPerSecond;
+			seeker.deathTick = tick + weapon.maxRange_time * TicksPerSecond;
 			seeker.cmbt_head = new Compass(attacker.cmbt_head.Degrees, false);
 			seeker.cmbt_att = new Compass(attacker.cmbt_att.Degrees, false);
 			FreshNodes.Add(seeker);
@@ -1013,7 +1014,7 @@ namespace FrEee.Game.Objects.Combat2
 #endif
 				//read the event 
 				//target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
-				List<CombatFireOnTargetEvent> atkrevnts = ReplayLog.EventsForObjectAtTick(attacker, CurrentTick).OfType<CombatFireOnTargetEvent>().ToList<CombatFireOnTargetEvent>();
+				List<CombatFireOnTargetEvent> atkrevnts = ReplayLog.EventsForObjectAtTick(attacker, tick).OfType<CombatFireOnTargetEvent>().ToList<CombatFireOnTargetEvent>();
 				target_event = atkrevnts[0].TakeFireEvent; //need to check which in the list here is the correct event, since ships with multiple weapons will have multiple events here. 
 				//target_event.BulletNode = seeker;
 				seeker.seekertargethit = target_event; //need to link the seeker and the event. (since the seeker object does not get carried over between processing and replay, but gets re-created)
@@ -1033,14 +1034,14 @@ namespace FrEee.Game.Objects.Combat2
 			return target_event;
 		}
 
-		private CombatTakeFireEvent FireBolt(CombatObject attacker, CombatWeapon weapon, CombatObject target, bool hit)
+		private CombatTakeFireEvent FireBolt(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target, bool hit)
 		{
 			CombatTakeFireEvent target_event = null;
 
 
 			Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target); //in seconds
 			//set target tick for the future.
-			int targettic = CurrentTick + (int)boltTTT * TicksPerSecond;
+			int targettic = tick + (int)boltTTT * TicksPerSecond;
 
 
 
@@ -1078,7 +1079,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 				else
 				{
-					bullet.deathTick = CurrentTick + target_event.fireOnEvent.Weapon.maxRange;
+					bullet.deathTick = tick + target_event.fireOnEvent.Weapon.maxRange;
 				}
 			}
 			else
@@ -1091,10 +1092,10 @@ namespace FrEee.Game.Objects.Combat2
 			return target_event;
 		}
 
-		private CombatTakeFireEvent FireBeam(CombatObject attacker, CombatWeapon weapon, CombatObject target, bool hit)
+		private CombatTakeFireEvent FireBeam(int tick, CombatObject attacker, CombatWeapon weapon, CombatObject target, bool hit)
 		{
 			CombatTakeFireEvent target_event = null;
-			int targettick = CurrentTick;
+			int targettick = tick;
 			if (IsReplay)
 			{ //read the replay... nothing to do if a beam. 
 			}
@@ -1105,7 +1106,7 @@ namespace FrEee.Game.Objects.Combat2
 			return target_event;
 		}
 
-		public CombatTakeFireEvent FireWeapon(CombatObject attacker, CombatWeapon weapon, CombatObject target)
+		public CombatTakeFireEvent FireWeapon(int battletick, CombatObject attacker, CombatWeapon weapon, CombatObject target)
 		{
 #if DEBUG
 			Console.WriteLine("FireWeapon/TakeFireEvent");
@@ -1117,10 +1118,10 @@ namespace FrEee.Game.Objects.Combat2
 			Fix16 rangeForDamageCalcs = (Fix16)0;
 			Fix16 rangetotarget = NMath.distance(attacker.cmbt_loc, target.cmbt_loc);//Trig.distance(attacker.cmbt_loc, target.cmbt_loc);
 
-			int targettic = CurrentTick;
+			int targettic = battletick;
 
 			//reset the weapon nextReload.
-			weapon.nextReload = CurrentTick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
+			weapon.nextReload = battletick + (int)(weapon.reloadRate * TicksPerSecond); // TODO - round up, so weapons that fire more than 10 times per second don't fire at infinite rate
 
 			var target_icomobj = target.WorkingObject;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
@@ -1144,18 +1145,18 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (weapon.weaponType == "Seeker")
 			{
-				target_event = FireSeeker(attacker, weapon, target);
+				target_event = FireSeeker(battletick, attacker, weapon, target);
 			}
 			//for bolt calc, need again for adding to list.
 			else if (weapon.weaponType == "Bolt")
 			{
-				target_event = FireBolt(attacker, weapon, target, hit);
+				target_event = FireBolt(battletick, attacker, weapon, target, hit);
 				rangeForDamageCalcs = rangeForDamageCalcs_bolt(attacker, weapon, target);
 			}
 
 			else //not bolt, should be a beam.
 			{
-				target_event = FireBeam(attacker, weapon, target, hit);
+				target_event = FireBeam(battletick, attacker, weapon, target, hit);
 				rangeForDamageCalcs = rangetotarget / KilometersPerSquare;
 			}
 
@@ -1171,7 +1172,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (hit && !target_icomobj.IsDestroyed && weapon.weaponType != "Seeker")
 			{
-				combatDamage(CurrentTick, target, weapon, rangeForDamageCalcs, attacker.getDice());
+				combatDamage(battletick, target, weapon, rangeForDamageCalcs, attacker.getDice());
 				//var shot = new CombatShot(weapon.weapon, target_icomobj, (int)rangeForDamageCalcs);
 				////defender.TakeDamage(weapon.Template.ComponentTemplate.WeaponInfo.DamageType, shot.Damage, battle);
 				//int damage = shot.Damage;
@@ -1224,12 +1225,12 @@ namespace FrEee.Game.Objects.Combat2
 				return; //damage; // she canna take any more!
 
 			var hit = new Hit(new Shot((ICombatant)(weapon.weapon.Parent), weapon.weapon, target.WorkingObject, rangeForDamageCalcs), target.WorkingObject, damage);
-			target.TakeDamage(this, hit, attackersdice);
+			targetV.TakeDamage(hit, attackersdice);
 
-			CheckForDeath(target);
+			CheckForDeath(tick, target);
 		}
 
-		public bool CheckForDeath(CombatObject cobj)
+		public bool CheckForDeath(int tick, CombatObject cobj)
 		{
 			var obj = cobj.WorkingObject;
 			if (cobj.WorkingObject.IsDestroyed)
@@ -1238,7 +1239,7 @@ namespace FrEee.Game.Objects.Combat2
 				Console.WriteLine(cobj.strID + " is destroyed!");
 #endif
 				obj.Dispose();
-				cobj.deathTick = CurrentTick;
+				cobj.deathTick = tick;
 				if (!IsReplay)
 				{
 					CombatDestructionEvent deathEvent = new CombatDestructionEvent(CurrentTick, cobj, cobj.cmbt_loc);

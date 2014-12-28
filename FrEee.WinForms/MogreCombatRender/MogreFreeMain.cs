@@ -728,7 +728,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				{
 					//firecontrol, these get logged, but we still need to run through it
 					//so that prng.next happens, and damage is done.
-					battle.firecontrol(comObj);
+					battle.firecontrol(battletic, comObj);
 				}
 
 				foreach (var comNode in battle.CombatNodes.ToArray())
