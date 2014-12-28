@@ -191,8 +191,6 @@ namespace FrEee.Game.Objects.Technology
 			var realdmg = Math.Min(Hitpoints, factoredDmg);
 			var nominalDamageSpent = realdmg / (df + dp);
 			Hitpoints -= realdmg;
-			if (IsDestroyed)
-				Dispose();
 			return damage - nominalDamageSpent;
 		}
 
