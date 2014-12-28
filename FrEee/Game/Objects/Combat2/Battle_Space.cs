@@ -1241,7 +1241,7 @@ namespace FrEee.Game.Objects.Combat2
 				cobj.deathTick = CurrentTick;
 				if (!IsReplay)
 				{
-					CombatDestructionEvent deathEvent = new CombatDestructionEvent(CurrentTick, obj, cobj.cmbt_loc);
+					CombatDestructionEvent deathEvent = new CombatDestructionEvent(CurrentTick, cobj, cobj.cmbt_loc);
 					ReplayLog.Events.Add(deathEvent);
 				}
 				foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)

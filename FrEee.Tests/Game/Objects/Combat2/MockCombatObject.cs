@@ -16,7 +16,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
 		}
 
-		public override void TakeSpecialDamage(FrEee.Game.Objects.Combat.Hit hit, Utility.PRNG dice)
+		public override void TakeSpecialDamage(Battle_Space battle, FrEee.Game.Objects.Combat.Hit hit, Utility.PRNG dice)
 		{
 			
 		}
