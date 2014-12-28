@@ -158,6 +158,11 @@ namespace FrEee.Game.Objects.Space
 		public Empire Owner
 		{
 			get { return Vehicles.Where(v => v != null).Select(v => v.Owner).Distinct().SingleOrDefault(); }
+			set
+			{
+				foreach (var v in Vehicles)
+					v.Owner = value;
+			}
 		}
 
 		/// <summary>

@@ -15,4 +15,12 @@ namespace FrEee.Game.Interfaces
 		[DoNotCopy]
 		Empire Owner { get; }
 	}
+
+	/// <summary>
+	/// Something whose ownership can be changed.
+	/// </summary>
+	public interface ITransferrable : IOwnable
+	{
+		new Empire Owner { get; set; }
+	}
 }

@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>
-		public virtual Empire Owner { get { return null; } }
+		public virtual Empire Owner { get { return null; } set { throw new NotSupportedException("Cannot set the owner of a stellar object except a planet."); } }
 
 		public override string ToString()
 		{

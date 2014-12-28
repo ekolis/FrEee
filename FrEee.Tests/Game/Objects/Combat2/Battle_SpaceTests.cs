@@ -64,7 +64,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
             MockCombatant combatant = new MockCombatant(emp);
        
-            testComObj = new CombatObject(combatant, new PointXd(), new PointXd(), 42, "SHP");
+            testComObj = new MockCombatObject(combatant, new PointXd(), new PointXd(), 42, "SHP");
        
             spinrate = new Compass(5, false);
             testComObj.maxRotate = spinrate;
@@ -103,7 +103,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
             
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            battle.ProcessTick(ref cmdFreqCounter);
             Assert.AreEqual(
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
@@ -126,7 +126,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
 
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            battle.ProcessTick(ref cmdFreqCounter);
             Assert.AreEqual(
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
@@ -152,7 +152,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
 
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            battle.ProcessTick(ref cmdFreqCounter);
             //Assert.AreEqual(
             //    Compass.NormalizeDegrees(Fix16.Max((Fix16)360 - spinrate.Degrees, (Fix16)270)),
             //    testComObj.cmbt_head.Degrees);
@@ -181,8 +181,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
 
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
-            battle.End(tick);
+            battle.ProcessTick(ref cmdFreqCounter);
+            battle.End();
             Assert.AreEqual(
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
@@ -208,11 +208,11 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
     
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
+            battle.ProcessTick(ref cmdFreqCounter);
             //Assert.AreEqual(
             //    spinrate.Degrees,
             //    Fix16.Abs(testComObj.cmbt_head - (Fix16)180));
-            battle.End(tick);
+            battle.End();
             Assert.AreEqual(
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
@@ -238,8 +238,8 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
 
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
-            battle.End(tick);
+            battle.ProcessTick(ref cmdFreqCounter);
+            battle.End();
             Assert.AreEqual(
                 endHeading.Degrees,
                 testComObj.cmbt_head.Degrees);
@@ -263,11 +263,11 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = startHeading;
 
             testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)5));
-            battle.ProcessTick(ref tick, ref cmdFreqCounter);
-            battle.End(tick);
+            battle.ProcessTick(ref cmdFreqCounter);
+            battle.End();
 			AssertAngleWithinTolerance(endHeading, testComObj.cmbt_head, 0.01);
 
-            battle.End(tick);
+            battle.End();
         }
 
 
@@ -292,7 +292,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             
             testComObj.testThrustShip(angletoTurn, toWaypoint);
 
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectedResult, testComObj.cmbt_thrust);
 
         }
@@ -317,7 +317,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
 
             testComObj.testThrustShip(angletoTurn, toWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectedResult, testComObj.cmbt_thrust);
 
         }
@@ -342,7 +342,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
 
             testComObj.testThrustShip(angletoTurn, toWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectedResult, testComObj.cmbt_thrust);
 
         }
@@ -374,7 +374,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
 
             testComObj.helm();
-            battle.End(1);
+            battle.End();
             AssertPointWithinTolerance(expectedThrustResult, testComObj.cmbt_thrust, 1);
 			AssertAngleWithinTolerance(expectedHeading, testComObj.cmbt_head, 0.01);
         }
@@ -402,7 +402,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
@@ -430,7 +430,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_vel = new PointXd(0, 0, 0);
             testComObj.cmbt_head = new Compass(startHeading.Degrees, false);
             Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
@@ -460,7 +460,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //battle.ProcessTick(ref tick, ref cmdFreqCounter);
 
             battle.SimNewtonianPhysics(testComObj);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectedResult, testComObj.cmbt_accel);
 
         }
@@ -487,7 +487,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             //thrust is 100N mass is 100N = (f / m = a) 100/100 = 1m/s/s 
 
             battle.SimNewtonianPhysics(testComObj); 
-            battle.End(1);
+            battle.End();
             AssertPointWithinTolerance(expectedResult, testComObj.cmbt_loc, 1);
         }
 
@@ -513,7 +513,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             {
                 battle.SimNewtonianPhysics(testComObj); //run * TicksPerSecond to get 1 simsecond. 
             }
-            battle.End(1);
+            battle.End();
             AssertPointWithinTolerance(expectedResult, testComObj.cmbt_loc, 1);
         }
 
