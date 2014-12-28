@@ -24,12 +24,12 @@ namespace FrEee.Game.Objects.Combat2
 
 		public IEnumerable<CombatEvent> EventsForObject(CombatObject obj)
 		{
-			return Events.Where(e => e.Object.ID == obj.ID).OrderBy(e => e.Tick);
+			return Events.Where(e => e.Object != null && e.Object.ID == obj.ID).OrderBy(e => e.Tick);
 		}
 
 		public IEnumerable<CombatEvent> EventsForObjectAtTick(CombatObject obj, int tick)
 		{
-			return Events.Where(e => e.Object.ID == obj.ID && e.Tick == tick);
+			return Events.Where(e => e.Object != null && e.Object.ID == obj.ID && e.Tick == tick);
 		}
 
 		public IEnumerable<CombatTakeFireEvent> HitsAgainst(CombatObject obj)
