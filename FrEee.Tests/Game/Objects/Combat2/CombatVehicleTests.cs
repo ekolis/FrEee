@@ -211,7 +211,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.waypointTarget = waypoint;
 
             Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
@@ -239,7 +239,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.waypointTarget = waypoint;
 
             Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
@@ -270,7 +270,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.waypointTarget = waypoint;
 
             Tuple<Compass, bool?> nav = testComObj.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }
@@ -313,7 +313,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             battle.CombatNodes.Add(testSeeker);
 
             Tuple<Compass, bool?> nav = testSeeker.testNav(angletoWaypoint);
-            battle.End(1);
+            battle.End();
             Assert.AreEqual(expectednav.Item1.Degrees, nav.Item1.Degrees);
             Assert.AreEqual(expectednav.Item2, nav.Item2);
         }

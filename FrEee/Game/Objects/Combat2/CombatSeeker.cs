@@ -390,6 +390,21 @@ namespace FrEee.Game.Objects.Combat2
 			}
 		}
 
+		public int TakeDamage(Hit hit, PRNG dice = null)
+		{
+			// TODO - damage types
+			var skpct = hit.Shot.DamageType.SeekerDamage.Evaluate(hit);
+			var damage = skpct.PercentOfRounded(hit.NominalDamage);
+			if (damage > Hitpoints)
+			{
+				damage -= Hitpoints;
+				Hitpoints = 0;
+				return (int)Math.Floor(damage / skpct.Percent());
+			}
+			Hitpoints -= damage;
+			return 0;
+		}
+
         #endregion
 	}
 }

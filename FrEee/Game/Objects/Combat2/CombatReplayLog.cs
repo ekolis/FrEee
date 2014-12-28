@@ -116,7 +116,7 @@ namespace FrEee.Game.Objects.Combat2
     public class CombatEndBattleEvent : CombatEvent
     {
         public CombatEndBattleEvent(int tick)
-            : base(tick, new CombatObject(null, null, null, 000, "null"))
+            : base(tick, null)
         { }
     }
 }
