@@ -82,6 +82,19 @@ namespace FrEee.Game.Objects.Space
 			{
 				return Colony == null ? null : Colony.Owner;
 			}
+			set
+			{
+				if (Colony == null && value != null)
+					Colony = new Colony { Owner = value };
+				else if (Colony != null && value == null)
+				{
+					// TODO - unowned colonies?
+					Colony.Dispose();
+					Colony = null;
+				}
+				else if (Colony != null && value != null)
+					Colony.Owner = value;
+			}
 		}
 
 		/// <summary>
@@ -385,6 +398,27 @@ namespace FrEee.Game.Objects.Space
 				this.UpdateEmpireMemories();
 
 			return damage;
+		}
+
+		public void TakePopulationDamage(int popFactorsKilled, PRNG dice = null)
+		{
+			if (Colony == null)
+				return;
+			long popKilled = popFactorsKilled * Mod.Current.Settings.PopulationFactor;
+			long totalPop = Colony.Population.Sum(kvp => kvp.Value);
+			long dead = 0;
+			foreach (var race in Colony.Population.Keys)
+			{
+				long ourDead = popKilled / totalPop;
+				Colony.Population[race] -= ourDead;
+				dead += ourDead;
+			}
+			for (long i = 0; i < popKilled - dead; i++)
+			{
+				// leftover deaths get allocated randomly
+				var race = Colony.Population.PickWeighted(dice);
+				Colony.Population[race]--;
+			}
 		}
 
 		private int TakePopulationDamage(Hit hit, PRNG dice = null)

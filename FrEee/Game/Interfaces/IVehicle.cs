@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Objects.Technology;
 
 namespace FrEee.Game.Interfaces
 {
@@ -21,5 +22,7 @@ namespace FrEee.Game.Interfaces
 		/// Cost to maintain this vehicle per turn.
 		/// </summary>
 		ResourceQuantity MaintenanceCost { get; }
+
+		IList<Component> Components { get; }
 	}
 }

@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Combat2
     }
 
 
-	public class CombatObject : CombatNode
+	public abstract class CombatObject : CombatNode
 	{
 
         public CombatObject(ITargetable workingObject, PointXd position, PointXd vector, long ID, string IDprefix)
@@ -575,6 +575,27 @@ namespace FrEee.Game.Objects.Combat2
             return target_event;
         }
         */
+
+		public void TakeDamage(Battle_Space battle, Hit hit, PRNG dice)
+		{
+			// special combat damage effects
+			TakeSpecialDamage(battle, hit, dice);
+
+			// basic damage effects
+			WorkingObject.TakeDamage(hit, dice);
+		}
+
+		public abstract void TakeSpecialDamage(Battle_Space battle, Hit hit, PRNG dice);
+
+		/// <summary>
+		/// Combat objects can only push or pull smaller combat objects.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool CanPushOrPull(CombatObject other)
+		{
+			return cmbt_mass > other.cmbt_mass;
+		}
         #endregion
     }
 

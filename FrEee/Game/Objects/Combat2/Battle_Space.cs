@@ -503,10 +503,10 @@ namespace FrEee.Game.Objects.Combat2
 			SetUpPieces();
 		}
 
-		public void End(int tick)
+		public void End()
 		{
 			//end combat
-			ReplayLog.Events.Add(new CombatEndBattleEvent(tick));
+			ReplayLog.Events.Add(new CombatEndBattleEvent(CurrentTick));
 			Current.Remove(this);
 			Previous.Add(this);
 
@@ -522,11 +522,11 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="tick">The tick number</param>
 		/// <param name="cmdfreqCounter">Counter to keep track of when the ship AI can issue comamnds.</param>
 		/// <returns>True if the battle should continue; false if it should end.</returns>
-		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
+		public bool ProcessTick(ref int cmdfreqCounter)
 		{
 #if DEBUG
 			Console.WriteLine("Processing: ");
-			Console.WriteLine("Tick: " + tick.ToString());
+			Console.WriteLine("Tick: " + CurrentTick.ToString());
 #endif
 			//unleash the dogs of war!
 			foreach (var comObj in CombatObjects)
@@ -556,7 +556,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 			foreach (var comObj in CombatObjects.ToArray())
-				firecontrol(tick, comObj); //fire ready weapons.
+				firecontrol(comObj); //fire ready weapons.
 
 			foreach (var comObj in CombatObjects)
 				SimNewtonianPhysics(comObj); //physicsmove objects.
@@ -565,7 +565,7 @@ namespace FrEee.Game.Objects.Combat2
 			{
 				foreach (CombatControlledObject ccobj in ControlledCombatObjects)
 				{
-					commandAI(ccobj, tick);
+					commandAI(ccobj, CurrentTick);
 				}
 				cmdfreqCounter = 0;
 			}
@@ -609,12 +609,12 @@ namespace FrEee.Game.Objects.Combat2
 				cont = false;
 			else if (!hostiles)
 				cont = false;
-			else if (tick > maxTick)
+			else if (CurrentTick > maxTick)
 				cont = false;
 			else
 				cont = true;
 			cmdfreqCounter++;
-			tick++;
+			CurrentTick++;
 			return cont;
 		}
 
@@ -623,14 +623,16 @@ namespace FrEee.Game.Objects.Combat2
 			Start();
 
 
-			int tick = 0, cmdFreqCounter = 0;
-			while (ProcessTick(ref tick, ref cmdFreqCounter))
+			int cmdFreqCounter = 0;
+			while (ProcessTick(ref cmdFreqCounter))
 			{
 				// keep on truckin'
 			}
 
-			End(tick);
+			End();
 		}
+
+		public int CurrentTick { get; private set; }
 
 
 		public PointXd SimNewtonianPhysics(CombatNode comObj)
@@ -793,7 +795,7 @@ namespace FrEee.Game.Objects.Combat2
 					DamageType damageType = w.DamageType;
 					CombatSeeker targetsec = (CombatSeeker)target;
 					var shot = new Shot((ICombatant)launcher.Parent, launcher, target.WorkingObject, 0); // TODO - range of seekers targeting seekers?
-					targetsec.TakeDamage(new Hit(shot, target.WorkingObject, damage), comSek.getDice());
+					targetsec.TakeDamage(this, new Hit(shot, target.WorkingObject, damage), comSek.getDice());
 
 					if (targetsec.IsDestroyed)
 					{
@@ -838,13 +840,13 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		/// <param name="tic_countr"></param>
 		/// <param name="comObj"></param>
-		public void firecontrol(int tic_countr, CombatObject comObj)
+		public void firecontrol(CombatObject comObj)
 		{
 
 			if (comObj is CombatSeeker)
 			{
 				//is a seeker 
-				missilefirecontrol(tic_countr, (CombatSeeker)comObj);
+				missilefirecontrol(CurrentTick, (CombatSeeker)comObj);
 			}
 			else if (comObj is CombatControlledObject)
 			{
@@ -881,7 +883,7 @@ namespace FrEee.Game.Objects.Combat2
 
 						if (comObj.weaponTarget.Count() > 0 && //if there ARE targets
 							wpn.CanTarget(targetObject.WorkingObject) && //if we CAN target 
-							tic_countr >= wpn.nextReload && //if the weapon is ready to fire.
+							CurrentTick >= wpn.nextReload && //if the weapon is ready to fire.
 							(
 							// if the firing object has enough supplies (or is not a space vehicle, and so does not use supplies)
 								!(comObj.WorkingObject is SpaceVehicle) ||
@@ -897,9 +899,9 @@ namespace FrEee.Game.Objects.Combat2
 
 #endif
 								//first create the event for the target ship
-								CombatTakeFireEvent targets_event = FireWeapon(tic_countr, comObj, wpn, targetObject);
+								CombatTakeFireEvent targets_event = FireWeapon(CurrentTick, comObj, wpn, targetObject);
 								//then create teh event for this ship firing on the target
-								CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
+								CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(CurrentTick, comObj, comObj.cmbt_loc, wpn, targets_event);
 
 
 								if (!IsReplay)
@@ -916,7 +918,7 @@ namespace FrEee.Game.Objects.Combat2
 				//update any events where this ship has taken fire, and set the location. 
 				if (!IsReplay)
 				{
-					foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
+					foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, CurrentTick))
 					{
 						if (comevnt.GetType() == typeof(CombatTakeFireEvent))
 						{
@@ -1222,34 +1224,42 @@ namespace FrEee.Game.Objects.Combat2
 				return; //damage; // she canna take any more!
 
 			var hit = new Hit(new Shot((ICombatant)(weapon.weapon.Parent), weapon.weapon, target.WorkingObject, rangeForDamageCalcs), target.WorkingObject, damage);
-			targetV.TakeDamage(hit, attackersdice);
+			target.TakeDamage(this, hit, attackersdice);
 
-			if (targetV.IsDestroyed)
+			CheckForDeath(target);
+		}
+
+		public bool CheckForDeath(CombatObject cobj)
+		{
+			var obj = cobj.WorkingObject;
+			if (cobj.WorkingObject.IsDestroyed)
 			{
 #if DEBUG
-				Console.WriteLine(target.strID + " is destroyed!");
+				Console.WriteLine(cobj.strID + " is destroyed!");
 #endif
-				targetV.Dispose();
-				target.deathTick = tick;
+				obj.Dispose();
+				cobj.deathTick = CurrentTick;
 				if (!IsReplay)
 				{
-					CombatDestructionEvent deathEvent = new CombatDestructionEvent(tick, target, target.cmbt_loc);
+					CombatDestructionEvent deathEvent = new CombatDestructionEvent(CurrentTick, obj, cobj.cmbt_loc);
 					ReplayLog.Events.Add(deathEvent);
 				}
 				foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
 				{
 					CombatEmpire empire = empireKVP.Value;
-					if (empire.ownships.Contains(target))
-						empire.ownships.Remove(target);
-					else if (empire.hostile.Contains(target))
-						empire.hostile.Remove(target);
-					else if (empire.friendly.Contains(target))
-						empire.friendly.Remove(target);
+					if (empire.ownships.Contains(cobj))
+						empire.ownships.Remove(cobj);
+					else if (empire.hostile.Contains(cobj))
+						empire.hostile.Remove(cobj);
+					else if (empire.friendly.Contains(cobj))
+						empire.friendly.Remove(cobj);
 				}
+
+				return true;
 			}
+
+			return false;
 		}
-
-
 
 		public System.Drawing.Image Icon
 		{
@@ -1281,6 +1291,16 @@ namespace FrEee.Game.Objects.Combat2
 		public ICombatant FindActualCombatant(ICombatant c)
 		{
 			return ActualCombatants[c.ID];
+		}
+
+		public CombatObject FindCombatObject(ICombatant c)
+		{
+			foreach (var n in CombatNodes.OfType<CombatControlledObject>())
+			{
+				if (n.StartCombatant == c || n.WorkingCombatant == c)
+					return n;
+			}
+			throw new ArgumentException("Can't find combat object for " + c + ".");
 		}
 
 		/// <summary>

@@ -11,7 +11,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// Something which can be constructed at a construction queue.
 	/// </summary>
-	public interface IConstructable : INamed, IPictorial, IOwnable
+	public interface IConstructable : INamed, IPictorial, ITransferrable
 	{
 		/// <summary>
 		/// The empire which owns this item.

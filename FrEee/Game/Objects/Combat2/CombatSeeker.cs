@@ -194,10 +194,12 @@ namespace FrEee.Game.Objects.Combat2
 			get { return 1; }
 		}
 
+		[DoNotSerialize(false)]
 		public Empire Owner
 		{
 			// seeker owner is irrelevant outside of combat, and we have CombatEmpire for that
 			get { return null; }
+			set { throw new NotSupportedException("Cannot set the ownership of a combat seeker."); }
 		}
 
 		public bool IsDisposed
@@ -300,21 +302,6 @@ namespace FrEee.Game.Objects.Combat2
 			return 0;
 		}
 
-		public int TakeDamage(Hit hit, PRNG dice = null)
-		{
-			// TODO - damage types
-			var skpct = hit.Shot.DamageType.SeekerDamage.Evaluate(hit);
-			var damage = skpct.PercentOfRounded(hit.NominalDamage);
-			if (damage > Hitpoints)
-			{
-				damage -= Hitpoints;
-				Hitpoints = 0;
-				return (int)Math.Floor(damage / skpct.Percent());
-			}
-			Hitpoints -= damage;
-			return 0;
-		}
-
 		public void Dispose()
 		{
 			Hitpoints = 0;
@@ -326,12 +313,6 @@ namespace FrEee.Game.Objects.Combat2
 			// seekers don't have shields, just leak the damage
 			return damage;
 		}
-
-		public override int handleComponentDamage(Hit hit, PRNG attackersdice)
-		{
-			return TakeDamage(hit, null); // TODO - should we be passing in null for dice here?!
-		}
-
 
         /*/// <summary>
         /// was missilefirecontrol in battlespace.
@@ -376,6 +357,38 @@ namespace FrEee.Game.Objects.Combat2
             }
         }
          */
+
+		public override void TakeSpecialDamage(Battle_Space battle, Hit hit, PRNG dice)
+		{
+			// find out who hit us
+			var atkr = battle.FindCombatObject(hit.Shot.Attacker);
+
+			// find out how too
+			var dmgType = hit.Shot.DamageType;
+
+			// push/pull effects
+			if (atkr.CanPushOrPull(this))
+			{
+				var deltaV = dmgType.TargetPush.Value * hit.Shot.DamageLeft / 100;
+				var vector = atkr.cmbt_loc - this.cmbt_loc;
+				if (vector.Length == 0)
+				{
+					// pick a random direction to push/pull
+					vector = new Compass(dice.Next(360), false).Point(1);
+				}
+				vector /= vector.Length; // normalize to unit vector
+				vector *= Battle_Space.KilometersPerSquare / Battle_Space.TicksPerSecond; // scale to combat map
+				vector *= deltaV; // scale to push/pull acceleration factor
+				this.cmbt_vel += deltaV; // apply force
+			}
+
+			// teleport effects
+			{
+				var deltaPos = dmgType.TargetTeleport.Value * hit.Shot.DamageLeft / 100;
+				var vector = new Compass(dice.Next(360), false).Point(deltaPos);
+				this.cmbt_loc += deltaPos; // apply teleport
+			}
+		}
 
         #endregion
 	}
