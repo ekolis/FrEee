@@ -34,7 +34,7 @@ Value 2 Rule := Add
 
 Name := Sector - Damage
 Targets := Sector, SpaceObject, Component, Facility
-Description := Sector inflicts [%Amount1%] normal damage per turn to vehicles.
+Description := Sector inflicts [%Amount1%] damage to vehicles entering it or remaining in it at the end of a turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
@@ -223,7 +223,7 @@ Value 2 Rule := Add
 
 Name := Multiplex Tracking
 Targets := Vehicle, Component
-Description := Vehicle can fire on [%Amount1%] different targets in a combat round.
+Description := Vehicle can set up to [%Amount1%] weapon groups in its combat strategy.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
@@ -244,7 +244,7 @@ Value 2 Rule := Group
 
 Name := Mine Sweeping
 Targets := SpaceVehicle, Component
-Description := Can sweep [%Amount1%] mines per turn.
+Description := Can sweep [%Amount1%] mines per sector traversed.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
