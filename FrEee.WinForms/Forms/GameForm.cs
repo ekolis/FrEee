@@ -1442,8 +1442,8 @@ namespace FrEee.WinForms.Forms
 			else if (curIdle == null)
 			{
 				curIdle = idle.Last();
-				prevIdle = idle.Previous(curIdle);
-				nextIdle = idle.Next(curIdle);
+				prevIdle = idle.Previous(curIdle, true);
+				nextIdle = idle.Next(curIdle, true);
 				curIdleIndex = idle.Count() - 1;
 			}
 			else if (!idle.Contains(curIdle))
@@ -1451,14 +1451,14 @@ namespace FrEee.WinForms.Forms
 				// curIdle is no longer idle, find where it was using the index
 				curIdleIndex--;
 				curIdle = idle.ElementAt(curIdleIndex);
-				prevIdle = idle.Previous(curIdle);
-				nextIdle = idle.Next(curIdle);
+				prevIdle = idle.Previous(curIdle, true);
+				nextIdle = idle.Next(curIdle, true);
 			}
 			else
 			{
 				nextIdle = curIdle;
-				curIdle = idle.Previous(curIdle);
-				prevIdle = idle.Previous(curIdle);
+				curIdle = idle.Previous(curIdle, true);
+				prevIdle = idle.Previous(curIdle, true);
 				curIdleIndex = idle.IndexOf(curIdle);
 			}
 			SelectSpaceObject(curIdle);
@@ -1475,22 +1475,22 @@ namespace FrEee.WinForms.Forms
 			else if (curIdle == null)
 			{
 				curIdle = idle.First();
-				prevIdle = idle.Previous(curIdle);
-				nextIdle = idle.Next(curIdle);
+				prevIdle = idle.Previous(curIdle, true);
+				nextIdle = idle.Next(curIdle, true);
 				curIdleIndex = 0;
 			}
 			else if (!idle.Contains(curIdle))
 			{
 				// curIdle is no longer idle, find where it was using the index
 				curIdle = idle.ElementAt(curIdleIndex);
-				prevIdle = idle.Previous(curIdle);
-				nextIdle = idle.Next(curIdle);
+				prevIdle = idle.Previous(curIdle, true);
+				nextIdle = idle.Next(curIdle, true);
 			}
 			else
 			{
 				prevIdle = curIdle;
-				curIdle = idle.Next(curIdle);
-				nextIdle = idle.Next(curIdle);
+				curIdle = idle.Next(curIdle, true);
+				nextIdle = idle.Next(curIdle, true);
 				curIdleIndex = idle.IndexOf(curIdle);
 			}
 			SelectSpaceObject(curIdle);
