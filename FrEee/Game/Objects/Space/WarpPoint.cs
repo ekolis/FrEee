@@ -75,5 +75,18 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return AbilityTargets.WarpPoint; }
 		}
+
+		[DoNotSerialize(false)]
+		public override Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+			set
+			{
+				throw new NotSupportedException("Cannot set the owner of a warp point; it is always null.");
+			}
+		}
 	}
 }

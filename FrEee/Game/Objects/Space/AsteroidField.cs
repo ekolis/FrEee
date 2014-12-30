@@ -61,5 +61,18 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return AbilityTargets.AsteroidField; }
 		}
+
+		[DoNotSerialize(false)]
+		public override Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+			set
+			{
+				throw new NotSupportedException("Cannot set the owner of an asteroid field; it is always null.");
+			}
+		}
 	}
 }

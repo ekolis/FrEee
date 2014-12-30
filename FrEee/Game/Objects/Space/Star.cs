@@ -46,5 +46,18 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return AbilityTargets.Star; }
 		}
+
+		[DoNotSerialize(false)]
+		public override Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+			set
+			{
+				throw new NotSupportedException("Cannot set the owner of a star; it is always null.");
+			}
+		}
 	}
 }
