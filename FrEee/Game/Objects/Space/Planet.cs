@@ -566,7 +566,7 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Draws this planet's status icons on a picture.
-		/// If the planet has special abilities (such as ruins), a white square will be drawn.
+		/// If the planet has special abilities (such as ruins), a ruins icon will be drawn.
 		/// If the planet is uncolonized but colonizable with the current empire's technology, a colonizability circle will also be drawn:
 		/// * Green for planets that and breathable by the current empire's primary race.
 		/// * Yellow for planets that and breathable by any subjugated population.
@@ -581,7 +581,11 @@ namespace FrEee.Game.Objects.Space
 			if (IntrinsicAbilities.Any())
 			{
 				// draw ruins icon
-				g.DrawImage(Pictures.GetModImage(Path.Combine("Pictures", "UI", "Map", "ruins")), 0, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
+				var path = Path.Combine("Pictures", "UI", "Map", "ruins");
+				var img = Pictures.GetModImage(path);
+				if (img == null)
+					throw new FileNotFoundException("Could not load ruins icon: " + Path.GetFullPath(path) + ".");
+				g.DrawImage(img, 0, 0, pic.Width * sizeFactor, pic.Height * sizeFactor);
 			}
 			if (Colony == null && Empire.Current != null && Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(c => c.HasAbility(ColonizationAbilityName)).Any())
 			{

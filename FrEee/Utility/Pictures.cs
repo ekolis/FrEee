@@ -643,6 +643,10 @@ namespace FrEee.Utility
 
 			if (!fileCache.ContainsKey(path))
 			{
+				// make sure relative paths are relative to the executable, not some random working directory we might have started in (e.g. AutoPBW)
+				if (path != Path.GetFullPath(path))
+					path = Path.Combine(Path.GetFullPath(Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location)), path);
+
 				if (File.Exists(path))
 				{
 					try
