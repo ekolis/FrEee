@@ -237,7 +237,12 @@ namespace FrEee.Game.Objects.Combat2
 			: base(new Type[1] { typeof(CombatObject) }, new object[] { null }, typeof(CombatObject))
 		{
 		}
-
+		public override void calc(CombatObject comObj)
+		{
+			base.calc(comObj);
+			var cobj = (CombatObject)inputs[0];
+			output = cobj;
+		}
 	}
 
 	public class StrategyThisObj : StrategyBaseBlock
