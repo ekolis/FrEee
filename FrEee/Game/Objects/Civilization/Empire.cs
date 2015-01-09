@@ -402,6 +402,8 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			if (item == null)
 				return true;
+			if (item is IFoggable && (item as IFoggable).CheckVisibility(this) < Visibility.Fogged)
+				return false; // can't have unlocked something you haven't seen
 			// TODO - racial/unique tech should just be requirements
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities().Any(a => a.Rule != null && a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
