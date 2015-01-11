@@ -1450,7 +1450,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// curIdle is no longer idle, find where it was using the index
 				curIdleIndex--;
-				curIdle = idle.ElementAt(curIdleIndex);
+				curIdle = idle.ElementAtOrDefault(curIdleIndex);
 				prevIdle = idle.Previous(curIdle, true);
 				nextIdle = idle.Next(curIdle, true);
 			}
@@ -1482,7 +1482,7 @@ namespace FrEee.WinForms.Forms
 			else if (!idle.Contains(curIdle))
 			{
 				// curIdle is no longer idle, find where it was using the index
-				curIdle = idle.ElementAt(curIdleIndex);
+				curIdle = idle.ElementAtOrDefault(curIdleIndex);
 				prevIdle = idle.Previous(curIdle, true);
 				nextIdle = idle.Next(curIdle, true);
 			}
