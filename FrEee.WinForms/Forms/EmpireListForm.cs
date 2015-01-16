@@ -119,7 +119,18 @@ namespace FrEee.WinForms.Forms
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
 				rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;
 				rqdStorage.ResourceQuantity = emp.ResourceStorage;
-				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncomeLessConstruction - emp.ResourceStorage);
+				var spoilageOrDeficit = new ResourceQuantity();
+				var newResources = emp.StoredResources + emp.NetIncomeLessConstruction;
+				foreach (var r in Resource.All)
+				{
+					if (newResources[r] > emp.ResourceStorage[r])
+						spoilageOrDeficit[r] = newResources[r] - emp.ResourceStorage[r];
+					else if (newResources[r] < 0)
+						spoilageOrDeficit[r] = newResources[r];
+					else
+						spoilageOrDeficit[r] = 0;
+				}
+				rqdSpoiledDeficit.ResourceQuantity = spoilageOrDeficit;
 				rqdStored.ResourceQuantity = emp.StoredResources;
 				rqdTrade.ResourceQuantity = emp.TradeIncome;
 				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - show tributes
