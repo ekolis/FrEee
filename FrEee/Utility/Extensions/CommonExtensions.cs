@@ -1268,7 +1268,7 @@ namespace FrEee.Utility.Extensions
 				yield break;
 
 			// update cache if necessary
-			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
+			foreach (var clause in ownable.Owner.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 			{
 				var tuple = Tuple.Create(ownable, clause.Owner);
 				if (Empire.Current == null || !Galaxy.Current.SharedAbilityCache.ContainsKey(tuple))
@@ -1333,7 +1333,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> SharedAbilities(this ICommonAbilityObject obj, Empire empire, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			foreach (var clause in empire.ReceivedTreatyClauses.OfType<ShareAbilityClause>())
+			foreach (var clause in empire.ReceivedTreatyClauses.Flatten().OfType<ShareAbilityClause>())
 			{
 				var rule = clause.AbilityRule;
 				if (clause.AbilityRule.CanTarget(obj.AbilityTarget))
