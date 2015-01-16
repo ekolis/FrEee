@@ -123,30 +123,40 @@ namespace FrEee.Game.Objects.Civilization
 		public IList<ICommand> Commands { get; private set; }
 
 		/// <summary>
-		/// The empire's resource income, not including maintenance costs.
-		/// TODO - should we include tributes here?
-		/// Maybe not, since it's used to calculate trade income?
+		/// The empire's basic resource income from mining and the like, not including maintenance costs or trade/tributes.
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
-		public ResourceQuantity GrossIncome
+		public ResourceQuantity GrossDomesticIncome
 		{
 			get
 			{
 				// shouldn't change except at turn processing...
-				if (grossIncome == null || Empire.Current == null)
+				if (grossDomesticIncome == null || Empire.Current == null)
 				{
 					if (!ColonizedPlanets.Any())
-						grossIncome = new ResourceQuantity();
+						grossDomesticIncome = new ResourceQuantity();
 					else
-						grossIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
+						grossDomesticIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
 					// TODO - remote mining and raw resource/points generation
+
+					if (this != Empire.Current)
+					{
+						// estimate income of foreign empires based on trade income we earn from them
+						var clauses = this.GivenTreatyClauses.OfType<FreeTradeClause>().Where(c => c.Receiver == Empire.Current).GroupBy(c => c.Resource);
+						foreach (var g in clauses)
+						{
+							var resource = g.Key;
+							var clause = g.First();
+							grossDomesticIncome[resource] = (int)(clause.Amount / clause.TradePercentage * 100);
+						}
+					}
 				}
-				return grossIncome;
+				return grossDomesticIncome;
 			}
 		}
 
-		private ResourceQuantity grossIncome;
+		private ResourceQuantity grossDomesticIncome;
 
 		/// <summary>
 		/// Resources the empire spends on maintenance.
@@ -165,13 +175,34 @@ namespace FrEee.Game.Objects.Civilization
 
 		private ResourceQuantity maintenance;
 
+
+		/// <summary>
+		/// The empire's resource income from free trade treaties with other empires.
+		/// </summary>
+		/// <param name="galaxy"></param>
+		/// <returns></returns>
+		public ResourceQuantity TradeIncome
+		{
+			get
+			{
+				// shouldn't change except at turn processing...
+				if (tradeIncome == null || Empire.Current == null)
+				{
+					tradeIncome += ReceivedTreatyClauses.OfType<FreeTradeClause>().Sum(c => c.Amount * c.Resource);
+				}
+				return tradeIncome;
+			}
+		}
+
+		private ResourceQuantity tradeIncome;
+
 		/// <summary>
 		/// Gross income less maintenance.
 		/// TODO - should we include tributes here?
 		/// </summary>
 		public ResourceQuantity NetIncome
 		{
-			get { return GrossIncome - Maintenance; }
+			get { return GrossDomesticIncome - Maintenance; }
 		}
 
 		/// <summary>

@@ -25,10 +25,15 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 
 		public override void PerformAction()
 		{
-			// perform trade
-			Receiver.StoredResources[Resource] += (int)(Giver.GrossIncome[Resource] * TradePercentage / 100d);
+			// save off amount of trade so the player can see it
+			Amount = (int)(Giver.GrossDomesticIncome[Resource] * TradePercentage / 100d);
 
-			// TODO - don't let resources go over storage capacity
+			// perform trade
+			Receiver.StoredResources[Resource] += Amount;
+
+			// cap resources at max storage
+			if (Receiver.StoredResources[Resource] > Receiver.ResourceStorage[Resource])
+				Receiver.StoredResources[Resource] = Receiver.ResourceStorage[Resource];
 
 			// increase trade percentage
 			TradePercentage += Mod.Current.Settings.TradePercentPerTurn;
@@ -66,5 +71,10 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		{
 			get { return "Free Trade (" + Resource + ")"; }
 		}
+
+		/// <summary>
+		/// The amount of resources traded this turn.
+		/// </summary>
+		public int Amount { get; set; }
 	}
 }
