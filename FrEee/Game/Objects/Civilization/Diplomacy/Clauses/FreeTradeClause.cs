@@ -28,6 +28,8 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			// perform trade
 			Receiver.StoredResources[Resource] += (int)(Giver.GrossIncome[Resource] * TradePercentage / 100d);
 
+			// TODO - don't let resources go over storage capacity
+
 			// increase trade percentage
 			TradePercentage += Mod.Current.Settings.TradePercentPerTurn;
 			if (TradePercentage > Mod.Current.Settings.MaxTradePercent)

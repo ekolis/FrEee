@@ -1226,7 +1226,7 @@ namespace FrEee.Game.Objects.Space
 				var sector = v.FindSector();
 				if (v.Owner != null && // unowned objects can't pick fights
 					sector != null && // can't fight nowhere
-					sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.Owner != v.Owner && sobj.Owner != null) && // any enemies? TODO - alliances
+					sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(v.Owner) || v.IsHostileTo(sobj.Owner)) && // any enemies?
 					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < 1d / v.Speed)) // have we fought here too recently?
 				{
 					// resolve the battle

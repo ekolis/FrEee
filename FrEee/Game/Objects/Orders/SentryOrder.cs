@@ -28,7 +28,7 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(IMobileSpaceObject sobj)
 		{
 			// if hostiles in system, we are done sentrying
-			if (sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
+			if (sobj.FindStarSystem().FindSpaceObjects<ICombatSpaceObject>(s => s.IsHostileTo(sobj.Owner)).Any())
 				IsComplete = true;
 			
 			// spend time

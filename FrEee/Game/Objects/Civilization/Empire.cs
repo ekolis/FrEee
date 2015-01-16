@@ -125,6 +125,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The empire's resource income, not including maintenance costs.
 		/// TODO - should we include tributes here?
+		/// Maybe not, since it's used to calculate trade income?
 		/// </summary>
 		/// <param name="galaxy"></param>
 		/// <returns></returns>
