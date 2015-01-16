@@ -52,7 +52,7 @@
 			this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.report = new FrEee.WinForms.Controls.EmpireReport();
 			this.tabBudget = new System.Windows.Forms.TabPage();
-			this.rqdSpoiled = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
+			this.rqdSpoiledDeficit = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
 			this.label14 = new System.Windows.Forms.Label();
 			this.lblBudgetWarning = new System.Windows.Forms.Label();
 			this.rqdStorage = new FrEee.WinForms.Controls.ResourceQuantityDisplay();
@@ -363,7 +363,7 @@
 			// tabBudget
 			// 
 			this.tabBudget.BackColor = System.Drawing.Color.Black;
-			this.tabBudget.Controls.Add(this.rqdSpoiled);
+			this.tabBudget.Controls.Add(this.rqdSpoiledDeficit);
 			this.tabBudget.Controls.Add(this.label14);
 			this.tabBudget.Controls.Add(this.lblBudgetWarning);
 			this.tabBudget.Controls.Add(this.rqdStorage);
@@ -394,16 +394,16 @@
 			this.tabBudget.TabIndex = 2;
 			this.tabBudget.Text = "Budget";
 			// 
-			// rqdSpoiled
+			// rqdSpoiledDeficit
 			// 
-			this.rqdSpoiled.BackColor = System.Drawing.Color.Black;
-			this.rqdSpoiled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-			this.rqdSpoiled.ForeColor = System.Drawing.Color.White;
-			this.rqdSpoiled.Location = new System.Drawing.Point(177, 360);
-			this.rqdSpoiled.Name = "rqdSpoiled";
-			this.rqdSpoiled.ResourceQuantity = null;
-			this.rqdSpoiled.Size = new System.Drawing.Size(413, 24);
-			this.rqdSpoiled.TabIndex = 26;
+			this.rqdSpoiledDeficit.BackColor = System.Drawing.Color.Black;
+			this.rqdSpoiledDeficit.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+			this.rqdSpoiledDeficit.ForeColor = System.Drawing.Color.White;
+			this.rqdSpoiledDeficit.Location = new System.Drawing.Point(177, 360);
+			this.rqdSpoiledDeficit.Name = "rqdSpoiledDeficit";
+			this.rqdSpoiledDeficit.ResourceQuantity = null;
+			this.rqdSpoiledDeficit.Size = new System.Drawing.Size(413, 24);
+			this.rqdSpoiledDeficit.TabIndex = 26;
 			// 
 			// label14
 			// 
@@ -412,9 +412,9 @@
 			this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
 			this.label14.Location = new System.Drawing.Point(3, 360);
 			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(127, 17);
+			this.label14.Size = new System.Drawing.Size(114, 17);
 			this.label14.TabIndex = 25;
-			this.label14.Text = "Spoiled Resources";
+			this.label14.Text = "Spoilage / Deficit";
 			// 
 			// lblBudgetWarning
 			// 
@@ -832,7 +832,7 @@
 		private Controls.GameButton btnMinisters;
 		private Controls.GameButton btnAvoidSystems;
 		private Controls.GameButton btnWaypoints;
-		private Controls.ResourceQuantityDisplay rqdSpoiled;
+		private Controls.ResourceQuantityDisplay rqdSpoiledDeficit;
 		private System.Windows.Forms.Label label14;
 	}
 }
