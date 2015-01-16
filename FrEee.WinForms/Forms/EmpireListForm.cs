@@ -115,15 +115,15 @@ namespace FrEee.WinForms.Forms
                     // assume other empires' construction queues are running at full capacity
                     rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
 				rqdExtraction.ResourceQuantity = emp.ColonizedPlanets.Sum(p => p.GrossIncome); // TODO - remote mining and raw resource generation
-				rqdIncome.ResourceQuantity = emp.GrossIncome;
+				rqdIncome.ResourceQuantity = emp.GrossDomesticIncome;
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
 				rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;
 				rqdStorage.ResourceQuantity = emp.ResourceStorage;
 				rqdSpoiled.ResourceQuantity = ResourceQuantity.Max(new ResourceQuantity(), emp.StoredResources + emp.NetIncomeLessConstruction - emp.ResourceStorage);
 				rqdStored.ResourceQuantity = emp.StoredResources;
-				rqdTrade.ResourceQuantity = new ResourceQuantity(); // TODO - trade
-				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
-				rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - tributes
+				rqdTrade.ResourceQuantity = emp.TradeIncome;
+				rqdTributesIn.ResourceQuantity = new ResourceQuantity(); // TODO - show tributes
+				rqdTributesOut.ResourceQuantity = new ResourceQuantity(); // TODO - show tributes
 				rqExpenses.ResourceQuantity = rqdConstruction.ResourceQuantity + rqdMaintenance.ResourceQuantity + rqdTributesOut.ResourceQuantity;
 				lblBudgetWarning.Visible = emp != Empire.Current;
 

@@ -78,7 +78,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 			get
 			{
 				if (IsPercentage)
-					return Giver.GrossIncome[Resource] * Quantity / 100;
+					return Giver.GrossDomesticIncome[Resource] * Quantity / 100;
 				return Quantity;
 			}
 		}
