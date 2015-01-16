@@ -188,7 +188,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (tradeIncome == null || Empire.Current == null)
 				{
-					tradeIncome += ReceivedTreatyClauses.OfType<FreeTradeClause>().Sum(c => c.Amount * c.Resource);
+					tradeIncome = ReceivedTreatyClauses.OfType<FreeTradeClause>().Sum(c => c.Amount * c.Resource);
 				}
 				return tradeIncome;
 			}
