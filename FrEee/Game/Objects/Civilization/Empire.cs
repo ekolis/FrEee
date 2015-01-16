@@ -143,7 +143,7 @@ namespace FrEee.Game.Objects.Civilization
 					if (this != Empire.Current)
 					{
 						// estimate income of foreign empires based on trade income we earn from them
-						var clauses = this.GivenTreatyClauses.OfType<FreeTradeClause>().Where(c => c.Receiver == Empire.Current).GroupBy(c => c.Resource);
+						var clauses = this.GivenTreatyClauses.Flatten().OfType<FreeTradeClause>().Where(c => c.Receiver == Empire.Current).GroupBy(c => c.Resource);
 						foreach (var g in clauses)
 						{
 							var resource = g.Key;
@@ -188,7 +188,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (tradeIncome == null || Empire.Current == null)
 				{
-					tradeIncome = ReceivedTreatyClauses.OfType<FreeTradeClause>().Sum(c => c.Amount * c.Resource);
+					tradeIncome = ReceivedTreatyClauses.Flatten().OfType<FreeTradeClause>().Sum(c => c.Amount * c.Resource);
 				}
 				return tradeIncome;
 			}
