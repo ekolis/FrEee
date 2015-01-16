@@ -19,11 +19,6 @@ namespace FrEee.Game.Interfaces
 		new string Name { get; set; }
 
 		/// <summary>
-		/// Is this space object hostile to an empire?
-		/// </summary>
-		bool IsHostileTo(Empire emp);
-
-		/// <summary>
 		/// This space object's construction queue, if any.
 		/// </summary>
 		ConstructionQueue ConstructionQueue { get; }

@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Orders
 			{
 				if (KnownTarget == null)
 					return "pursue";
-				else if (AvoidEnemies && KnownTarget.Owner != null && !KnownTarget.IsHostileTo(Owner))
+				else if (AvoidEnemies && KnownTarget.Owner != null && (!(KnownTarget is ICombatant) || !(KnownTarget as ICombatant).IsHostileTo(Owner)))
 					return "escort";
 				else
 					return "pursue";
