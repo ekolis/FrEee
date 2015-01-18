@@ -362,9 +362,36 @@ namespace FrEee.WinForms.Controls
 							}
 						}
 
-						// draw selection reticule
-						if (sector == SelectedSector)
-							pe.Graphics.DrawRectangle(Pens.White, box);
+						// draw sector ownership box
+						var ownedSobjs = sector.SpaceObjects.Where(sobj => sobj.Owner != null).ToArray();
+						var largestOwned = ownedSobjs.Largest();
+						if (largestOwned != null)
+						{
+							var sectorOwner = largestOwned.Owner;
+							var ownerPen = new Pen(sectorOwner.Color);
+							ownerPen.DashPattern = new float[] { 2, 1 }; // 2 pixel dash, 1 pixel space, etc.
+							var numOwners = ownedSobjs.Select(sobj => sobj.Owner).Distinct().Count();
+							if (numOwners > 1)
+							{
+								// draw triangle for contested sectors
+								var pts = new Point[]
+							{
+								new Point(box.Left + box.Right / 2, box.Top),
+								new Point(box.Right, box.Bottom),
+								new Point(box.Left, box.Bottom),
+							};
+								pe.Graphics.DrawPolygon(ownerPen, pts);
+							}
+							else if (numOwners == 1)
+							{
+								// draw square for owned sectors
+								pe.Graphics.DrawRectangle(ownerPen, box);
+							}
+
+							// draw selection reticule
+							if (sector == SelectedSector)
+								pe.Graphics.DrawRectangle(Pens.White, box);
+						}
 					}
 				}
 
@@ -423,7 +450,7 @@ namespace FrEee.WinForms.Controls
 							var sf = new StringFormat();
 							sf.Alignment = StringAlignment.Center;
 							sf.LineAlignment = StringAlignment.Center;
-							pe.Graphics.DrawString(turns.ToString(), bigFont, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf); 
+							pe.Graphics.DrawString(turns.ToString(), bigFont, Brushes.White, curPoint.Value.X, curPoint.Value.Y, sf);
 						}
 
 						last = cur;
