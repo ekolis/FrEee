@@ -75,8 +75,11 @@ namespace FrEee.WinForms.MogreCombatRender
 				HardwareBuffer_Destroy();
 			}
 
-			sceneMan.RenderQueueStarted -= RenderQueueStarted;
-			sceneMan.RenderQueueEnded -= RenderQueueEnded;
+			if (sceneMan != null)
+			{
+				sceneMan.RenderQueueStarted -= RenderQueueStarted;
+				sceneMan.RenderQueueEnded -= RenderQueueEnded;
+			}
 		}
 
 		private static void HardwareBuffer_Create(int size)
