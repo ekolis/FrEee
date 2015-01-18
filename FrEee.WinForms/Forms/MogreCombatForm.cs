@@ -28,11 +28,15 @@ namespace FrEee.WinForms.Forms
 			set { spaceVehicleReport.Vehicle = value; }
 		}
 
+		/// <summary>
+		/// Updates the selected ship report.
+		/// </summary>
 		public void BindSelection()
 		{
 			spaceVehicleReport.Bind();
 		}
 
+		// TODO - planets and such
 		private IEnumerable<SpaceVehicle> AliveVehicles
 		{
 			//get { return Battle.WorkingCombatants.OfType<SpaceVehicle>().Where(v => !v.IsDestroyed); }
