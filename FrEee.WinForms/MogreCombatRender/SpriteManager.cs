@@ -77,10 +77,15 @@ namespace FrEee.WinForms.MogreCombatRender
 
 			if (sceneMan != null)
 			{
-				if (sceneMan.RenderQueueStarted != null)
+				try
+				{
 					sceneMan.RenderQueueStarted -= RenderQueueStarted;
-				if (sceneMan.RenderQueueEnded != null)
 					sceneMan.RenderQueueEnded -= RenderQueueEnded;
+				}
+				catch (NullReferenceException)
+				{
+					// who knows?
+				}
 			}
 		}
 
