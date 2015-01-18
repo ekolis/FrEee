@@ -547,7 +547,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 			}
 
-			foreach (var comObj in CombatObjects.ToArray())
+			foreach (var comObj in CombatObjects.Where(ccobj => !ccobj.WorkingObject.IsDestroyed).ToArray())
 			{
 #if DEBUG
 				Console.WriteLine("comObj.helm " + comObj.strID);
@@ -555,7 +555,7 @@ namespace FrEee.Game.Objects.Combat2
 				comObj.helm(); //heading and thrust
 			}
 
-			foreach (var comObj in CombatObjects.ToArray())
+			foreach (var comObj in CombatObjects.Where(o => !o.WorkingObject.IsDestroyed).ToArray())
 				firecontrol(tick, comObj); //fire ready weapons.
 
 			foreach (var comObj in CombatObjects)
@@ -563,7 +563,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			if (cmdfreqCounter >= Battle_Space.CommandFrequencyTicks)
 			{
-				foreach (CombatControlledObject ccobj in ControlledCombatObjects)
+				foreach (CombatControlledObject ccobj in ControlledCombatObjects.Where(ccobj => !ccobj.WorkingObject.IsDestroyed))
 				{
 					commandAI(ccobj, tick);
 				}
