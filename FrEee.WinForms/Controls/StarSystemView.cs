@@ -364,10 +364,7 @@ namespace FrEee.WinForms.Controls
 
 						// draw selection reticule
 						if (sector == SelectedSector)
-						{
-							// TODO - cache pen asset
-							pe.Graphics.DrawRectangle(new Pen(Color.White), box);
-						}
+							pe.Graphics.DrawRectangle(Pens.White, box);
 					}
 				}
 
