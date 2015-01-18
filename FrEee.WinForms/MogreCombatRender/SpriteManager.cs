@@ -77,8 +77,10 @@ namespace FrEee.WinForms.MogreCombatRender
 
 			if (sceneMan != null)
 			{
-				sceneMan.RenderQueueStarted -= RenderQueueStarted;
-				sceneMan.RenderQueueEnded -= RenderQueueEnded;
+				if (sceneMan.RenderQueueStarted != null)
+					sceneMan.RenderQueueStarted -= RenderQueueStarted;
+				if (sceneMan.RenderQueueEnded != null)
+					sceneMan.RenderQueueEnded -= RenderQueueEnded;
 			}
 		}
 
