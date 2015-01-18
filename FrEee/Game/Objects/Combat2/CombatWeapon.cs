@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Combat2
 				minRange = (Fix16)wpMinR * Battle_Space.KilometersPerSquare;
             }
             double wpiReloadRate = wpninfo.ReloadRate;
-            reloadRate = (Fix16)wpiReloadRate * Battle_Space.TicksPerSecond;
+            reloadRate = (Fix16)wpiReloadRate;
             nextReload = 1;
 #if DEBUG
             Console.WriteLine("Done creating CombatWeapon");
