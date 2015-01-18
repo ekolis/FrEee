@@ -754,14 +754,14 @@ namespace FrEee.WinForms.MogreCombatRender
 				foreach (var comObj in battle.CombatObjects.ToArray())
 					comObj.debuginfo = "";
 
-				foreach (var comObj in battle.CombatObjects.ToArray())
+				foreach (var comObj in battle.CombatObjects.Where(o => !o.WorkingObject.IsDestroyed).ToArray())
 				{
 #if DEBUG
 					Console.WriteLine("comObj.helm " + comObj.strID);
 #endif
 					comObj.helm(); //heading and thrust
 				}
-				foreach (var comObj in battle.CombatObjects.ToArray())
+				foreach (var comObj in battle.CombatObjects.Where(o => !o.WorkingObject.IsDestroyed).ToArray())
 				{
 					//firecontrol, these get logged, but we still need to run through it
 					//so that prng.next happens, and damage is done.
@@ -800,7 +800,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
 				{
-					foreach (var ccobj in battle.ControlledCombatObjects)
+					foreach (var ccobj in battle.ControlledCombatObjects.Where(o => !o.WorkingObject.IsDestroyed))
 					{
 						battle.commandAI(ccobj, battletic);
 					}
