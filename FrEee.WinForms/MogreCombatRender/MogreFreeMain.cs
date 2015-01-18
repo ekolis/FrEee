@@ -17,6 +17,7 @@ using FixMath.NET;
 using FrEee.Utility;
 using System.IO;
 using System.Drawing.Imaging;
+using FrEee.Modding;
 
 namespace FrEee.WinForms.MogreCombatRender
 {
@@ -597,6 +598,7 @@ namespace FrEee.WinForms.MogreCombatRender
 				dict_GfxObjects[ComNode.strID] = gfxobj;
 			else
 				dict_GfxObjects.Add(ComNode.strID, gfxobj);
+
 			return gfxobj;
 		}
 
@@ -608,25 +610,57 @@ namespace FrEee.WinForms.MogreCombatRender
 				/// create a scene node to represent this combat node
 				SceneNode objNode = mSceneMgr.RootSceneNode.CreateChildSceneNode(comNode.strID);
 
+				Entity objEnt = null;
+				Sprite sprite;
+
 				if (gfxobj.gfxCfg != null)
 				{
 					// the model (if any)
 					string meshname = gfxobj.gfxCfg.MainMesh.Name;
-					Entity objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
+					objEnt = mSceneMgr.CreateEntity(comNode.strID, meshname);
 					objNode.AttachObject(objEnt);
 				}
 
 				if (gfxobj.Sprite != null)
 				{
 					// the sprite (if any)
-					var sprite = gfxobj.Sprite;
+					sprite = gfxobj.Sprite;
 					SpriteManager.Add(sprite);
 					sprite.Parent = objNode;
 				}
 
-				gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj);
-				if (gfxobj.gfxCfg != null)
-					objNode.Scale(new Vector3(gfxobj.gfxCfg.MainMesh.Scale));
+				// scale the model/sprite to an appropriate size
+				// TODO - use scale overrides from config files?
+				float currentSize = 1;
+				if (objEnt != null)
+				{
+					var boundingBox = objEnt.BoundingBox;
+					currentSize = (float)System.Math.Max(boundingBox.Size.x, boundingBox.Size.y); // ignore Z-axis, it goes into the screen
+				}
+
+				float scale = Battle_Space.KilometersPerSquare;
+
+				if (comNode is CombatVehicle)
+				{
+					// auto scale ships, etc. based on their tonnage
+					var v = (comNode as CombatVehicle).StartVehicle;
+
+					// compute ratio of ship length to max hull length in mod, using tonnage as volume, and assume largest ship is 1km long
+					var size = (float)v.Size.Value;
+					var maxSize = (float)Mod.Current.Hulls.Max(h => h.Size);
+					var volume = size / maxSize;
+					scale *= (float)System.Math.Pow(volume, 1d / 3d); // length is cube root of volume
+
+				}
+				else if (comNode is CombatPlanet)
+				{
+					// make planets 2km across, yeah, it's silly :P
+					scale *= 2;
+				}
+
+				objNode.Scale(new Vector3(scale / currentSize));
+
+				gfxobj.gfxEfct = new GfxEfx(mSceneMgr, gfxobj, scale);
 
 
 				//Entity objEnt = mSceneMgr.CreateEntity(obj.strID, "DeltaShip.mesh");
