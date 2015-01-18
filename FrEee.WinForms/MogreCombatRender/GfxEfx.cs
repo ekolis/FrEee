@@ -22,7 +22,7 @@ namespace FrEee.WinForms.MogreCombatRender
         /// </summary>
         public Dictionary<string, List<SceneNode>> nodesDict { get; private set;}
 
-        public GfxEfx(SceneManager sceneMgr, GfxObj gfxobj)
+        public GfxEfx(SceneManager sceneMgr, GfxObj gfxobj, float thrustScale)
         {
             
             nodesDict = new Dictionary<string,List<SceneNode>>();
@@ -43,6 +43,12 @@ namespace FrEee.WinForms.MogreCombatRender
 
 						ParticleSystem pThrust = sceneMgr.CreateParticleSystem(gfxobj.IDName + topkey + effect.Key, effect.Value.ParticleEffect);
 						pThrust.Emitting = false;
+						for (ushort i = 0; i < pThrust.NumEmitters; i++)
+						{
+							var e = pThrust.GetEmitter(i);
+							e.MinParticleVelocity = thrustScale;
+							e.MaxParticleVelocity = thrustScale;
+						}
 						effectnode.AttachObject(pThrust);
 						nodeslist.Add(effectnode);
 

@@ -1,8 +1,8 @@
 particle_system Thruster_tiny
 {
 	material Smoke
-	particle_width 5
-	particle_height 5
+	particle_width .5
+	particle_height .5
 	quota 1000
 	cull_each true
 	sorted true
@@ -48,6 +48,6 @@ particle_system Thruster_tiny
 
 	affector Scaler
 	{
-		rate 500
+		rate 1.25
 	}
 }
