@@ -692,6 +692,9 @@ namespace FrEee.WinForms.MogreCombatRender
 			Console.WriteLine("starting Replay");
 			while (cont && !form.IsDisposed)// && mRoot != null && mRoot.RenderOneFrame())
 			{
+				// refresh ship report once a second
+				if (battletic % Battle_Space.TicksPerSecond == 0)
+					form.BindSelection();
 #if DEBUG
 				Console.WriteLine("Replay Processing: ");
 				Console.WriteLine("Tick: " + battletic);
@@ -811,6 +814,7 @@ namespace FrEee.WinForms.MogreCombatRender
 
 				Application.DoEvents();
 			}
+			form.BindSelection(); // at end of combat
 
 			//might as well keep rendering after the battle is over.
 			bool loopafterbattle = true;
