@@ -38,6 +38,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Amount of movement remaining for this turn.
 		/// </summary>
+		[DoNotSerialize]
 		public int MovementRemaining { get; set; }
 
 		/// <summary>
