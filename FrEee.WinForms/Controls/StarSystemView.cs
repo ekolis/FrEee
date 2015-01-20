@@ -104,6 +104,8 @@ namespace FrEee.WinForms.Controls
 			get { return starSystem; }
 			set
 			{
+				if (value != starSystem)
+					SelectedSector = null;
 				starSystem = value;
 				Invalidate();
 			}
@@ -363,15 +365,12 @@ namespace FrEee.WinForms.Controls
 						}
 
 						// draw sector ownership box
-						var ownedSobjs = sector.SpaceObjects.Where(sobj => sobj.Owner != null).ToArray();
-						var largestOwned = ownedSobjs.Largest();
-						if (largestOwned != null)
+						var sectorOwner = sector.Owner;
+						if (sectorOwner != null)
 						{
-							var sectorOwner = largestOwned.Owner;
 							var ownerPen = new Pen(sectorOwner.Color);
 							ownerPen.DashPattern = new float[] { 2, 1 }; // 2 pixel dash, 1 pixel space, etc.
-							var numOwners = ownedSobjs.Select(sobj => sobj.Owner).Distinct().Count();
-							if (numOwners > 1)
+							if (sector.IsContested)
 							{
 								// draw triangle for contested sectors
 								var pts = new Point[]
@@ -382,16 +381,16 @@ namespace FrEee.WinForms.Controls
 							};
 								pe.Graphics.DrawPolygon(ownerPen, pts);
 							}
-							else if (numOwners == 1)
+							else
 							{
 								// draw square for owned sectors
 								pe.Graphics.DrawRectangle(ownerPen, box);
 							}
-
-							// draw selection reticule
-							if (sector == SelectedSector)
-								pe.Graphics.DrawRectangle(Pens.White, box);
 						}
+
+						// draw selection reticule
+						if (sector == SelectedSector)
+							pe.Graphics.DrawRectangle(Pens.White, box);
 					}
 				}
 
@@ -466,5 +465,36 @@ namespace FrEee.WinForms.Controls
 			var drawy = y * (SectorDrawSize + SectorBorderSize) + Height / 2f + SectorBorderSize;
 			return new PointF(drawx, drawy);
 		}
+
+		private void StarSystemView_MouseMove(object sender, MouseEventArgs e)
+		{
+			var sector = GetSectorAtPoint(e.Location);
+
+			if (sector == null)
+				toolTip.SetToolTip(this, null);
+			else
+			{
+				var str = "";
+				if (SelectedSector != null)
+					str += "\n" + "Distance: " + SelectedSector.Coordinates.EightWayDistance(sector.Coordinates) + " sectors";
+				if (sector.Owner != null)
+					str += "\n" + "Owner: " + sector.Owner;
+				if (sector.IsContested)
+					str += " (contested)";
+				str = str.Trim();
+
+				if (!string.IsNullOrEmpty(str))
+				{
+					if (sector != lastHoveredSector)
+						toolTip.SetToolTip(this, str);
+				}
+				else
+					toolTip.SetToolTip(this, null); // nothing interesting to show
+			}
+
+			lastHoveredSector = sector;
+		}
+
+		private Sector lastHoveredSector = null;
 	}
 }

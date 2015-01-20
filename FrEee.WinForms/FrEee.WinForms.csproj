@@ -558,6 +558,9 @@
     <EmbeddedResource Include="Controls\GalaxyView.resx">
       <DependentUpon>GalaxyView.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\StarSystemView.resx">
+      <DependentUpon>StarSystemView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\ActivateAbilityForm.resx">
       <DependentUpon>ActivateAbilityForm.cs</DependentUpon>
     </EmbeddedResource>
