@@ -70,11 +70,14 @@ namespace FrEee.Utility
 			if (context == null)
 				context = new ObjectGraphContext();
 
+			context.objectStack.Push(o);
+
 			// deal with nulls
 			if (o == null)
 			{
 				if (Null != null)
 					Null(null);
+				context.objectStack.Pop();
 				return;
 			}
 
@@ -104,6 +107,7 @@ namespace FrEee.Utility
 					KnownObject(o);
 
 				// done
+				context.objectStack.Pop();
 				return;
 			}
 
@@ -128,6 +132,7 @@ namespace FrEee.Utility
 			// done parsing object
 			if (EndObject != null)
 				EndObject(o);
+			context.objectStack.Pop();
 		}
 
 		private void ParseProperty(string propertyName, object o, object val, ObjectGraphContext context)
@@ -159,9 +164,11 @@ namespace FrEee.Utility
 			}
 			foreach (var item in array)
 			{
+				context.propertyStack.Push("(Array Item)");
 				if (Item != null)
 					Item(item);
 				Parse(item, context);
+				context.propertyStack.Pop();
 			}
 		}
 
@@ -169,9 +176,11 @@ namespace FrEee.Utility
 		{
 			foreach (var item in list.Cast<object>().ToArray())
 			{
+				context.propertyStack.Push("(Collection Item)");
 				if (Item != null)
 					Item(item);
 				Parse(item, context);
+				context.propertyStack.Pop();
 			}
 		}
 
@@ -181,12 +190,14 @@ namespace FrEee.Utility
 			var props = ObjectGraphContext.KnownProperties[type];
 			foreach (var p in props)
 			{
+				context.propertyStack.Push(p.Name);
 				var val = p.GetValue(o, new object[] { });
 				bool recurse = true;
 				if (Property != null) // if no event handler, assume we are parsing recursively
 					recurse = Property(p.Name, o, val);
 				if (recurse)
 					Parse(val, context);
+				context.propertyStack.Pop();
 			}
 		}
 	}
@@ -200,6 +211,8 @@ namespace FrEee.Utility
 		{
 			KnownObjects = new SafeDictionary<Type, IList<object>>();
 			KnownIDs = new SafeDictionary<Type, IDictionary<object, int>>();
+			objectStack = new Stack<object>();
+			propertyStack = new Stack<string>();
 		}
 
 		static ObjectGraphContext()
@@ -210,6 +223,20 @@ namespace FrEee.Utility
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
 			CollectionAdders = new SafeDictionary<Type, Delegate>();
 		}
+
+		internal Stack<object> objectStack;
+
+		/// <summary>
+		/// Stack/path of objects to the current object being parsed.
+		/// </summary>
+		public IEnumerable<object> ObjectStack { get { return objectStack; } }
+
+		internal Stack<string> propertyStack;
+
+		/// <summary>
+		/// Stack/path of properties to the current object being parsed.
+		/// </summary>
+		public IEnumerable<string> PropertyStack { get { return propertyStack; } }
 
 		/// <summary>
 		/// Known data types.
