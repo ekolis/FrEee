@@ -470,7 +470,11 @@ namespace FrEee.WinForms.Forms
 		private void galaxyView_StarSystemSelected(GalaxyView sender, StarSystem starSystem)
 		{
 			if (starSystem != GetTabSystem(currentTab))
-				SetTabSystem(currentTab, starSystem);
+			{
+				var selTab = SetTabSystem(currentTab, starSystem);
+				if (selTab != currentTab)
+					SelectTab(selTab);
+			}
 		}
 
 		private void btnDesigns_Click(object sender, EventArgs e)
@@ -738,6 +742,13 @@ namespace FrEee.WinForms.Forms
 
 		private FlowLayoutPanel AddTab(StarSystem sys = null)
 		{
+			// check for existing tab and return that instead
+			// no need to have multiple tabs for the same system!
+			var oldTab = FindTab(sys);
+			if (oldTab != null)
+				return oldTab;
+
+			// create new tab
 			var pnlTab = new FlowLayoutPanel();
 			pnlTab.Padding = new Padding(0);
 			pnlTab.Margin = new Padding(0);
@@ -788,8 +799,14 @@ namespace FrEee.WinForms.Forms
 			return (StarSystem)tab.Controls[0].Tag;
 		}
 
-		private void SetTabSystem(FlowLayoutPanel tab, StarSystem sys)
+		private FlowLayoutPanel SetTabSystem(FlowLayoutPanel tab, StarSystem sys)
 		{
+			// check for existing tab and return that instead
+			// no need to have multiple tabs for the same system!
+			var oldTab = FindTab(sys);
+			if (oldTab != null)
+				return oldTab;
+
 			var btnTab = (GameButton)tab.Controls[0];
 			btnTab.Tag = sys;
 			if (sys == null)
@@ -798,6 +815,8 @@ namespace FrEee.WinForms.Forms
 				btnTab.Text = sys.Name;
 			if (tab == currentTab)
 				SelectTab(tab);
+
+			return tab;
 		}
 
 		private FlowLayoutPanel FindTab(StarSystem sys)
