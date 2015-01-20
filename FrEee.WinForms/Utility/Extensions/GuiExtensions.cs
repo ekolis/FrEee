@@ -150,6 +150,8 @@ namespace FrEee.WinForms.Utility.Extensions
 			parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.WaitCursor));
 			if (form.StartPosition != FormStartPosition.CenterScreen)
 				form.StartPosition = FormStartPosition.CenterParent;
+			form.KeyPreview = true;
+			form.KeyDown += escapeKeyHandler;
 			var result = form.ShowDialog();
 			parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.Default));
 			return result;
@@ -186,7 +188,23 @@ namespace FrEee.WinForms.Utility.Extensions
 				form.Height = Screen.PrimaryScreen.WorkingArea.Height;
 			form.StartPosition = FormStartPosition.CenterParent;
 			form.Controls.Add(control);
+			form.KeyPreview = true;
+			form.KeyDown += escapeKeyHandler;
 			return form;
+		}
+
+		/// <summary>
+		/// Closes a form when escape is pressed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		static void escapeKeyHandler(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Escape && sender is Control)
+			{
+				var form = (sender as Control).FindForm();
+				form.Close();
+			}
 		}
 
 		/// <summary>
