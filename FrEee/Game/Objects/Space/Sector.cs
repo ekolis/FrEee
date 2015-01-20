@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	/// A sector in a star system.
 	/// </summary>
 	[Serializable]
-	public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject
+	public class Sector : IPromotable, ICargoContainer, ICommonAbilityObject, IOwnable
 	{
 		public Sector(StarSystem starSystem, Point coordinates)
 		{
@@ -288,6 +288,25 @@ namespace FrEee.Game.Objects.Space
 		public IAbilityObject Parent
 		{
 			get { return StarSystem; }
+		}
+
+		public Empire Owner
+		{
+			get
+			{
+				var owned = SpaceObjects.Where(sobj => sobj.Owner != null);
+				if (!owned.Any())
+					return null;
+				return owned.Largest().Owner;
+			}
+		}
+
+		public bool IsContested
+		{
+			get
+			{
+				return SpaceObjects.Select(sobj => sobj.Owner).Distinct().Except((Empire)null).Count() > 1;
+			}
 		}
 	}
 }

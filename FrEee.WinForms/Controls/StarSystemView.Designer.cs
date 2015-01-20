@@ -28,9 +28,29 @@ namespace FrEee.WinForms.Controls
 		/// </summary>
 		private void InitializeComponent()
 		{
-			components = new System.ComponentModel.Container();
+			this.components = new System.ComponentModel.Container();
+			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.SuspendLayout();
+			// 
+			// toolTip
+			// 
+			this.toolTip.AutomaticDelay = 10;
+			this.toolTip.AutoPopDelay = 9999999;
+			this.toolTip.InitialDelay = 10;
+			this.toolTip.IsBalloon = true;
+			this.toolTip.ReshowDelay = 99999999;
+			this.toolTip.UseAnimation = false;
+			// 
+			// StarSystemView
+			// 
+			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.StarSystemView_MouseMove);
+			this.ResumeLayout(false);
+
 		}
 
 		#endregion
+
+		private System.Windows.Forms.ToolTip toolTip;
+
 	}
 }
