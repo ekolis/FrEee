@@ -387,6 +387,16 @@ namespace FrEee.Game.Setup
 				}
 			}
 
+			// also remove ruins from homeworlds, that's just silly :P
+			foreach (var p in gal.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
+			{
+				foreach (var abil in p.IntrinsicAbilities.ToArray())
+				{
+					if (abil.Rule.Matches("Ancient Ruins") || abil.Rule.Matches("Ancient Ruins Unique"))
+						p.IntrinsicAbilities.Remove(abil);
+				}
+			}
+
 			// set up omniscient view
 			if (OmniscientView)
 			{
