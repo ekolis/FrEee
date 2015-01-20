@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Utility
 {
@@ -113,10 +114,10 @@ namespace FrEee.Utility
 				// step 7a: remove blocked points (aka calculate cost)
 				if (avoidEnemies)
 					// avoid enemies, except at the destination
-					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner)));
+					moves = moves.Where(m => m == null || m == end || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me.Owner) > Visibility.Unknown).OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(me == null ? null : me.Owner)));
 				if (avoidDamagingSectors)
 					// don't avoid the destination, even if it is a damaging sector
-					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
+					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me.Owner) > Visibility.Unknown).Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
 
 				// step 7b: update priority queue
 				foreach (var move in moves)
