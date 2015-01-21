@@ -37,7 +37,6 @@ namespace FrEee.WinForms.Controls
 			this.toolTip.AutomaticDelay = 10;
 			this.toolTip.AutoPopDelay = 9999999;
 			this.toolTip.InitialDelay = 10;
-			this.toolTip.IsBalloon = true;
 			this.toolTip.ReshowDelay = 99999999;
 			this.toolTip.UseAnimation = false;
 			// 

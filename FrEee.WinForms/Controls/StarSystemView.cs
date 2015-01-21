@@ -473,10 +473,12 @@ namespace FrEee.WinForms.Controls
 			else
 			{
 				var str = "";
+				if (sector.SpaceObjects.Any())
+					str += "\n" + sector.SpaceObjects.Largest();
 				if (SelectedSector != null && SelectedSector.StarSystem == sector.StarSystem)
 					str += "\n" + "Distance: " + SelectedSector.Coordinates.EightWayDistance(sector.Coordinates) + " sectors";
 				if (sector.Owner != null)
-					str += "\n" + "Owner: " + sector.Owner;
+					str += "\n" + "Sector Owner: " + sector.Owner;
 				if (sector.IsContested)
 					str += " (contested)";
 				str = str.Trim();
