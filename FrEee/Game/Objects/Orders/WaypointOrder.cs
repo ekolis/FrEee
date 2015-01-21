@@ -179,7 +179,12 @@ namespace FrEee.Game.Objects.Orders
 				else if (!LoggedPathfindingError)
 				{
 					// log pathfinding error
-					PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because there is no available path or " + sobj + " is immobile.");
+					string reason;
+					if (sobj.Speed <= 0)
+						reason = sobj + " is immobile";
+					else
+						reason = "there is no available path leading toward " + Destination;
+					PathfindingError = sobj.CreateLogMessage(sobj + " could not " + Verb + " " + Target + " because " + reason + ".");
 					sobj.Owner.Log.Add(PathfindingError);
 					LoggedPathfindingError = true;
 				}
