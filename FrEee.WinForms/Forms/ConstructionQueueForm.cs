@@ -610,10 +610,34 @@ namespace FrEee.WinForms.Forms
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
+			if (SelectedOrders.Count() > 1)
+			{
+				if (SelectedOrders.Any(o => o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0)))
+				{
+					if (MessageBox.Show("One or more selected construction orders have already been started. Really remove them and lose progress?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+						RemoveSelectedOrders();
+				}
+				else
+					RemoveSelectedOrders();
+			}
+			else if (SelectedOrders.Count() == 1)
+			{
+				var o = SelectedOrders.Single();
+				if (o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0))
+				{
+					if (MessageBox.Show("Construction of " + o.Item + " has already started. Really remove this order and lose progress?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
+						RemoveSelectedOrders();
+				}
+				else
+					RemoveSelectedOrders();
+			}
+		}
+
+		private void RemoveSelectedOrders()
+		{
 			foreach (var o in SelectedOrders)
 				RemoveOrder(o, false);
 			BindQueueListView();
-
 		}
 
 		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
