@@ -104,8 +104,6 @@ namespace FrEee.WinForms.Controls
 			get { return starSystem; }
 			set
 			{
-				if (value != starSystem)
-					SelectedSector = null;
 				starSystem = value;
 				Invalidate();
 			}
@@ -475,7 +473,7 @@ namespace FrEee.WinForms.Controls
 			else
 			{
 				var str = "";
-				if (SelectedSector != null)
+				if (SelectedSector != null && SelectedSector.StarSystem == sector.StarSystem)
 					str += "\n" + "Distance: " + SelectedSector.Coordinates.EightWayDistance(sector.Coordinates) + " sectors";
 				if (sector.Owner != null)
 					str += "\n" + "Owner: " + sector.Owner;
