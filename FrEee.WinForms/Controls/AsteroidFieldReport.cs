@@ -49,6 +49,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (AsteroidField == null)
 				Visible = false;
 			else
@@ -77,6 +78,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = AsteroidField.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = AsteroidField.IntrinsicAbilities;
 			}
+			ResumeLayout();
 		}
 	}
 }

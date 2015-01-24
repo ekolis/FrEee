@@ -38,6 +38,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Storm == null)
 				Visible = false;
 			else
@@ -60,6 +61,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = Storm.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = Storm.IntrinsicAbilities;
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(Storm data)

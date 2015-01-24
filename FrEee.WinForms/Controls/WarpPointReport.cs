@@ -38,6 +38,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (WarpPoint == null)
 				Visible = false;
 			else
@@ -59,6 +60,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = WarpPoint.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = WarpPoint.IntrinsicAbilities;
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(WarpPoint data)

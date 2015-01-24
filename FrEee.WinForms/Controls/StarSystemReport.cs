@@ -40,6 +40,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (StarSystem == null)
 				Visible = false;
 			else
@@ -80,6 +81,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = StarSystem.Abilities.Union(StarSystem.Abilities(Empire.Current)).StackToTree(StarSystem);
 				abilityTreeView.IntrinsicAbilities = StarSystem.Abilities;
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(StarSystem data)

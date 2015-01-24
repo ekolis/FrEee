@@ -166,6 +166,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (vehicle == null)
 				Visible = false;
 			else
@@ -281,6 +282,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = Vehicle.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = Vehicle.IntrinsicAbilities.Concat(Vehicle.Design.Hull.Abilities).Concat(Vehicle.Components.Where(c => !c.IsDestroyed).SelectMany(c => c.Abilities));
 			}
+			ResumeLayout();
 		}
 
 		private void lstComponentsSummary_MouseDown(object sender, MouseEventArgs e)

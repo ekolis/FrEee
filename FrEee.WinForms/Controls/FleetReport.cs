@@ -166,6 +166,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Fleet == null)
 				Visible = false;
 			else
@@ -244,6 +245,7 @@ namespace FrEee.WinForms.Controls
 				abilityTreeView.Abilities = Fleet.AbilityTree();
 				abilityTreeView.IntrinsicAbilities = Fleet.IntrinsicAbilities;
 			}
+			ResumeLayout();
 		}
 
 		/// <summary>
