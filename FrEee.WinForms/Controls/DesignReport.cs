@@ -44,6 +44,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Design == null)
 				Visible = false;
 			else
@@ -95,6 +96,7 @@ namespace FrEee.WinForms.Controls
 					txtEvasion.Text = Design.Evasion.ToString("0") + "%";
 				txtCargo.Text = Design.CargoCapacity.Kilotons();
 			}
+			ResumeLayout();
 		}
 
 		private int? GetRange(int capacity, int speed, int usagePerSector, int generationPerTurn)

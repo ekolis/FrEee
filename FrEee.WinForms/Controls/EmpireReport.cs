@@ -40,6 +40,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Empire == null)
 				gameTabControl1.Visible = false;
 			else
@@ -55,6 +56,7 @@ namespace FrEee.WinForms.Controls
 				// TODO - race report
 				// TODO - known technology
 			}
+			ResumeLayout();
 		}
 	}
 }

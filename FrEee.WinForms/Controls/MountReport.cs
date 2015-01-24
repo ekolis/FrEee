@@ -53,6 +53,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Mount == null)
 				Visible = false;
 			else
@@ -175,6 +176,7 @@ namespace FrEee.WinForms.Controls
 			lstAbilities.Initialize(32, 32);
 			foreach (var kvp in abils)
 				lstAbilities.AddItemWithImage(null, kvp.Key.Item1 + " value " + kvp.Key.Item2, kvp, null, kvp.Value);
+			ResumeLayout();
 		}
 
 		private void picPortrait_Click(object sender, EventArgs e)

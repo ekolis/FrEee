@@ -64,6 +64,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Facility == null)
 				Visible = false;
 			else
@@ -81,6 +82,7 @@ namespace FrEee.WinForms.Controls
 				abilityTree.IntrinsicAbilities = Facility.Abilities;
 				abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(FacilityTemplate data)

@@ -39,6 +39,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Star == null)
 				Visible = false;
 			else
@@ -60,6 +61,7 @@ namespace FrEee.WinForms.Controls
 				foreach (var abil in Star.Abilities())
 					lstAbilities.Items.Add(abil.Description);
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(Star data)

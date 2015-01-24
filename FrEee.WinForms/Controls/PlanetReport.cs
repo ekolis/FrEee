@@ -41,6 +41,7 @@ namespace FrEee.WinForms.Controls
 
 		public void Bind()
 		{
+			SuspendLayout();
 			if (Planet == null)
 				Visible = false;
 			else
@@ -164,8 +165,8 @@ namespace FrEee.WinForms.Controls
 					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities;
 				else
 					abilityTreeView.IntrinsicAbilities = Planet.IntrinsicAbilities.Concat(Planet.Colony.Abilities());
-
 			}
+			ResumeLayout();
 		}
 
 		public void Bind(Planet data)
