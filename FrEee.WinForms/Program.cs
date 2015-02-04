@@ -30,6 +30,9 @@ namespace FrEee.WinForms
 		[STAThread]
 		static int Main(string[] args)
 		{
+			// HACK - so many things are based on the working directory...
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			try
