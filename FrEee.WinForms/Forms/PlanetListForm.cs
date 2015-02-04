@@ -15,6 +15,7 @@ using FrEee.WinForms.Properties;
 using FrEee.WinForms.Controls;
 using FrEee.WinForms.Objects;
 using System.Reflection;
+using FrEee.Game.Objects.Orders;
 
 namespace FrEee.WinForms.Forms
 {
@@ -23,11 +24,16 @@ namespace FrEee.WinForms.Forms
 		public PlanetListForm()
 		{
 			InitializeComponent();
-            try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
+			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
+			catch { }
+			grid.AppendMenuItems = contextMenu.Items.Cast<ToolStripMenuItem>().ToArray();
+			contextMenu.Items.Clear();
 			//BindTabs();
 		}
 
 		private IEnumerable<Planet> planets;
+
+		private IEnumerable<SpaceVehicle> colonizers, availableColonizers;
 
 		private void PlanetListForm_Load(object sender, EventArgs e)
 		{
@@ -54,13 +60,14 @@ namespace FrEee.WinForms.Forms
 			txtBreathableOther.Text = uncolonized.Where(p => otherAtmospheres.Contains(p.Atmosphere)).Count().ToString();
 
 			// show colony ship counts
-			var colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
+			colonizers = Galaxy.Current.FindSpaceObjects<SpaceVehicle>(v =>
 				v.Owner == Empire.Current &&
 				(
-					v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - ")) 
+					v.Abilities().Any(a => a.Rule.Name.StartsWith("Colonize Planet - "))
 				));
 			txtShips.Text = colonizers.Count().ToString();
-			txtAvailable.Text = colonizers.Where(v => v.Orders.Count == 0 && v.Speed > 0).Count().ToString();
+			availableColonizers = colonizers.Where(v => v.Orders.Count == 0 && v.Speed > 0);
+			txtAvailable.Text = availableColonizers.Count().ToString();
 
 			// show population and resources
 			txtPopulation.Text = Empire.Current.ColonizedPlanets.Sum(p => p.Colony.Population.Sum(kvp => kvp.Value)).ToUnitString(true);
@@ -78,7 +85,7 @@ namespace FrEee.WinForms.Forms
 			resStorageMin.Amount = storage[Resource.Minerals];
 			resStorageOrg.Amount = storage[Resource.Organics];
 			resStorageRad.Amount = storage[Resource.Radioactives];
-			
+
 			// show planet data
 			grid.Data = planets.ToArray();
 			grid.CreateDefaultGridConfig = ClientSettings.CreateDefaultPlanetListConfig;
@@ -127,6 +134,67 @@ namespace FrEee.WinForms.Forms
 					Close();
 				}
 			}
+		}
+
+		private void colonizeToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var p = (Planet)grid.SelectedItem;
+			if (p == null)
+			{
+				MessageBox.Show("No planet is selected to colonize.");
+				return;
+			}
+			var goodColonizers = availableColonizers.Where(c => c.HasAbility("Colonize Planet - " + p.Surface));
+			if (!goodColonizers.Any())
+			{
+				MessageBox.Show("We have no colonizers capable of landing on a " + p.Surface + " planet.");
+				return;
+			}
+			var paths = goodColonizers.Select(c => new { Colonizer = c, Path = Pathfinder.Pathfind(c, c.Sector, p.Sector, true, true, c.DijkstraMap) });
+			var goodPaths = paths.Where(path => path.Path.Last() == p.Sector);
+			if (!goodPaths.Any())
+			{
+				MessageBox.Show("We have no colonizers capable of reaching " + p + ".");
+			}
+			var shortest = paths.WithMin(path => path.Path.Count()).First();
+			var colonizer = shortest.Colonizer;
+
+			// load population
+			// prefer population of breathers of target planet's atmosphere - don't load nonbreathers races if breathers are present
+			bool foundBreathers = false;
+			var planets = colonizer.FinalSector().SpaceObjects.OfType<Planet>().Where(pl => pl.Owner == Empire.Current);
+			foreach (var pHere in planets)
+			{
+				var delta = new CargoDelta();
+				foreach (var kvp in pHere.AllPopulation)
+				{
+					if (kvp.Key.NativeAtmosphere == p.Atmosphere)
+					{
+						delta.RacePopulation[kvp.Key] = null; // load all population of this race
+						foundBreathers = true;
+					}
+				}
+				if (foundBreathers)
+				{
+					var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
+					colonizer.IssueOrder(loadPopOrder);
+				}
+			}
+			if (!foundBreathers)
+			{
+				foreach (var pHere in planets)
+				{
+					var delta = new CargoDelta();
+					delta.AllPopulation = true;
+					var loadPopOrder = new TransferCargoOrder(true, delta, pHere);
+					colonizer.IssueOrder(loadPopOrder);
+				}
+			}
+
+			// move and colonize
+			colonizer.IssueOrder(new MoveOrder<SpaceVehicle>(p.Sector, true));
+			colonizer.IssueOrder(new ColonizeOrder(p));
+
 		}
 	}
 }

@@ -23,6 +23,13 @@ namespace FrEee.WinForms.Controls
 			GridConfigs = new List<GridConfig>();
 			CurrentGridConfig = new GridConfig();
 			gridData.AutoGenerateColumns = false;
+			foreach (Control c in Controls)
+				c.MouseDown += c_MouseDown;
+		}
+
+		void c_MouseDown(object sender, MouseEventArgs e)
+		{
+			OnMouseDown(e);
 		}
 
 		/// <summary>
