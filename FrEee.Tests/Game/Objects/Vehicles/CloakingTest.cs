@@ -122,14 +122,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// If we have a cloak, and they have the same level sensor of the same type, they should be able to see us.
+		/// If we have a cloak, and they have the same level sensor of the same type, we should be hidden.
 		/// </summary>
 		[TestMethod]
 		public void SameLevelSensorCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
-			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
+			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
 		}
 
 		/// <summary>
@@ -150,9 +150,24 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		public void MismatchedSensorTypeCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Narf", 1);
-			AddCloakAbility(submarine.Hull, "Foobar", 1);
+			AddCloakAbility(submarine.Hull, "Foobar", 999);
 			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
 		}
+
+		/// <summary>
+		/// If we have high level sight obscuration from our star system, we should be hidden.
+		/// </summary>
+		[TestMethod]
+		public void HighLevelSectorSightObscuration()
+		{
+			AddSensorAbility(destroyer.Hull, "Foobar", 1);
+			AddObscurationAbility(submarine.StarSystem, 2);
+			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
+		}
+
+		// TODO - same/low level sight obscuration from star system
+
+		// TODO - sight obscuration from sector
 
 		#region helper methods
 		private void AddCloakAbility(IHull hull, string sightType, int level)
@@ -170,6 +185,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			hull.Abilities.Add(a);
 			a.Rule = Mod.Current.AbilityRules.FindByName("Sensor Level");
 			a.Values.Add(sightType);
+			a.Values.Add(level.ToString());
+		}
+
+		private void AddObscurationAbility(IAbilityContainer obj, int level)
+		{
+			var a = new Ability(obj);
+			obj.Abilities.Add(a);
+			a.Rule = Mod.Current.AbilityRules.FindByName("Sector - Sight Obscuration");
 			a.Values.Add(level.ToString());
 		}
 		#endregion
