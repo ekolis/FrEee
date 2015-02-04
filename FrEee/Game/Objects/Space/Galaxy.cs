@@ -980,6 +980,11 @@ namespace FrEee.Game.Objects.Space
 				v.RefillMovement();
 			while (!Current.didLastTick)
 			{
+				// can at least cache abilities for the duration of a tick
+				// seeing as actions within a tick are supposed to be simultaneous
+				// the order of execution is arbitrary
+				Current.EnableAbilityCache();
+
 				Current.ComputeNextTickSize();
 				// Don't let ships in fleets move separate from their fleets!
 				Current.MoveShips();
@@ -995,6 +1000,8 @@ namespace FrEee.Game.Objects.Space
 					status.Progress += progressPerOperation * Current.NextTickSize;
 
 				Current.SpaceObjectIDCheck("after ship movement at T=" + Current.Timestamp);
+
+				Current.DisableAbilityCache();
 			}
 
 			// validate fleets again (ships might have been destroyed)
