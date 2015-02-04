@@ -331,15 +331,26 @@ namespace FrEee.WinForms.Controls
 		private void gridData_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
 		{
 			if (e.RowIndex < 0 || e.ColumnIndex < 0)
+			{
+				noFilterToolStripMenuItem.Visible = false;
+				exactlyToolStripMenuItem.Visible = false;
+				differentFromToolStripMenuItem.Visible = false;
+				atLeastToolStripMenuItem.Visible = false;
+				atMostToolStripMenuItem.Visible = false;
 				return;
+			}
+			else
+			{
+				var cell = gridData.Rows[e.RowIndex].Cells[e.ColumnIndex];
+				hoverValue = cell.Value as IComparable;
+				noFilterToolStripMenuItem.Visible = cell.Value is IComparable;
+				exactlyToolStripMenuItem.Visible = cell.Value is IComparable;
+				differentFromToolStripMenuItem.Visible = cell.Value is IComparable;
+				atLeastToolStripMenuItem.Visible = cell.Value is IComparable;
+				atMostToolStripMenuItem.Visible = cell.Value is IComparable;
+				hoverColumn = e.ColumnIndex;
+			}
 
-			var cell = gridData.Rows[e.RowIndex].Cells[e.ColumnIndex];
-			hoverValue = cell.Value as IComparable;
-			noFilterToolStripMenuItem.Visible = cell.Value is IComparable;
-			exactlyToolStripMenuItem.Visible = cell.Value is IComparable;
-			atLeastToolStripMenuItem.Visible = cell.Value is IComparable;
-			atMostToolStripMenuItem.Visible = cell.Value is IComparable;
-			hoverColumn = e.ColumnIndex;
 			hoverRow = e.RowIndex;
 		}
 
