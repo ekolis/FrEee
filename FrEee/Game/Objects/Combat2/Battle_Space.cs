@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			StartCombatants = new Dictionary<long, ICombatant>();
 			ActualCombatants = combatants.ToDictionary(c => c.ID);
-			//WorkingCombatants = new HashSet<ICombatant>();
+			EndCombatants = new Dictionary<long, ICombatant>();
 			CombatNodes = new HashSet<CombatNode>();
 			StartNodes = new HashSet<CombatNode>();
 			FreshNodes = new HashSet<CombatNode>();
@@ -170,6 +170,12 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		[DoNotSerialize]
 		public IDictionary<long, ICombatant> ActualCombatants { get; private set; }
+
+		/// <summary>
+		/// The combatants at the end of this battle.
+		/// </summary>
+		[DoNotAssignID(true)]
+		public IDictionary<long, ICombatant> EndCombatants { get; private set; }
 
 		/// <summary>
 		/// combat fleets
@@ -513,6 +519,18 @@ namespace FrEee.Game.Objects.Combat2
 			// delete leftover seekers that were en route when combat ended
 			foreach (var seeker in CombatNodes.OfType<CombatSeeker>().ToArray())
 				CombatNodes.Remove(seeker);
+
+			// save state of end combatants if this isn't a replay
+			if (!IsReplay)
+			{
+				foreach (var kvp in ActualCombatants)
+				{
+					var id = kvp.Key;
+					var c = kvp.Value;
+					EndCombatants.Add(id, c.Copy());
+				}
+			}
+
 			IsReplay = true;
 		}
 
