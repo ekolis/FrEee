@@ -337,7 +337,6 @@ namespace FrEee.WinForms.Controls
 				differentFromToolStripMenuItem.Visible = false;
 				atLeastToolStripMenuItem.Visible = false;
 				atMostToolStripMenuItem.Visible = false;
-				return;
 			}
 			else
 			{
