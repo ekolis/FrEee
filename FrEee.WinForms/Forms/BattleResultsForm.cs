@@ -61,16 +61,17 @@ namespace FrEee.WinForms.Forms
 
 			// gather grid data
 			var data = new List<object>();
-			foreach (var group in Battle.StartCombatants.Values.GroupBy(c => new CombatantInfo
+			var combatants = Battle.StartCombatants.Join(Battle.EndCombatants, kvp => kvp.Key, kvp => kvp.Key, (kvpStart, kvpEnd) => new { Start = kvpStart.Value, End = kvpEnd.Value });
+			foreach (var group in combatants.GroupBy(c => new CombatantInfo
 				{
-					Empire = c.Owner,
-					HullIcon = GetHullIcon(c),
-					HullName = GetHullName(c),
-					HullSize = GetHullSize(c)
+					Empire = c.Start.Owner,
+					HullIcon = GetHullIcon(c.Start),
+					HullName = GetHullName(c.Start),
+					HullSize = GetHullSize(c.Start)
 				}))
 			{
 				var count = group.Count();
-				var hp = group.Sum(c => c.ArmorHitpoints + c.HullHitpoints);
+				var hp = group.Sum(c => c.Start.ArmorHitpoints + c.Start.HullHitpoints);
 				var item = new
 				{
 					EmpireIcon = group.Key.Empire.Icon,
@@ -80,11 +81,10 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(c => Battle.FindWorkingCombatant(c).IsDestroyed),
+					Losses = group.Count(c => c.End.IsDestroyed || c.End.Owner != c.Start.Owner), // destroyed or captured
 					Damage = hp - group.Sum(c =>
 						{
-							var ac = (ICombatant)Battle.FindWorkingCombatant(c);
-							return ac.ArmorHitpoints + ac.HullHitpoints;
+							return c.End.ArmorHitpoints + c.End.HullHitpoints;
 						})
 				};
 				data.Add(item);
