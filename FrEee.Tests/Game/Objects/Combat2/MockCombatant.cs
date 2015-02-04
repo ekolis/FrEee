@@ -302,7 +302,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		public Sector Sector
 		{
 			get { return null; }
-			set { throw new NotSupportedException(); }
+			set { }
 		}
 
 		public StarSystem StarSystem
@@ -315,52 +315,52 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
         public ConstructionQueue ConstructionQueue
         {
-            get { throw new NotImplementedException(); }
+			get { return null; }
         }
 
         public bool CanBeInFleet
         {
-            get { throw new NotImplementedException(); }
+			get { return true; }
         }
 
         public int SupplyStorage
         {
-            get { throw new NotImplementedException(); }
+			get { return 0; }
         }
 
         public bool HasInfiniteSupplies
         {
-            get { throw new NotImplementedException(); }
+			get { return true; }
         }
 
         public bool CanWarp
         {
-            get { throw new NotImplementedException(); }
+			get { return false; }
         }
 
         public bool IsIdle
         {
-            get { throw new NotImplementedException(); }
+			get { return false; }
         }
 
         public IEnumerable<Ability> IntrinsicAbilities
         {
-            get { throw new NotImplementedException(); }
+			get { yield break; }
         }
 
         public IEnumerable<IAbilityObject> Children
         {
-            get { throw new NotImplementedException(); }
+			get { yield break; }
         }
 
         public IAbilityObject Parent
         {
-            get { throw new NotImplementedException(); }
+			get { return null; }
         }
 
         public AbilityTargets AbilityTarget
         {
-            get { throw new NotImplementedException(); }
+			get { return AbilityTargets.None; }
         }
 
 		/// <summary>
