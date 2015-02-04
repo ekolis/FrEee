@@ -45,6 +45,7 @@
 			this.label17 = new System.Windows.Forms.Label();
 			this.txtConfigName = new System.Windows.Forms.TextBox();
 			this.differentFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearAllFiltersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.pnlConfigsBorder.SuspendLayout();
@@ -89,9 +90,10 @@
             this.exactlyToolStripMenuItem,
             this.differentFromToolStripMenuItem,
             this.atLeastToolStripMenuItem,
-            this.atMostToolStripMenuItem});
+            this.atMostToolStripMenuItem,
+            this.clearAllFiltersToolStripMenuItem});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(153, 136);
+			this.contextMenu.Size = new System.Drawing.Size(153, 158);
 			// 
 			// atLeastToolStripMenuItem
 			// 
@@ -226,6 +228,13 @@
 			this.differentFromToolStripMenuItem.Text = "&Different From";
 			this.differentFromToolStripMenuItem.Click += new System.EventHandler(this.differentFromToolStripMenuItem_Click);
 			// 
+			// clearAllFiltersToolStripMenuItem
+			// 
+			this.clearAllFiltersToolStripMenuItem.Name = "clearAllFiltersToolStripMenuItem";
+			this.clearAllFiltersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearAllFiltersToolStripMenuItem.Text = "&Clear All Filters";
+			this.clearAllFiltersToolStripMenuItem.Click += new System.EventHandler(this.clearAllFiltersToolStripMenuItem_Click);
+			// 
 			// GameGridView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -263,6 +272,7 @@
 		private System.Windows.Forms.ToolStripMenuItem atMostToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem noFilterToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem differentFromToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem clearAllFiltersToolStripMenuItem;
 
 	}
 }

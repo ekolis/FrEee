@@ -440,5 +440,14 @@ namespace FrEee.WinForms.Controls
 			}
 			BindGrid(false);
 		}
+
+		private void clearAllFiltersToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			foreach (var c in CurrentGridConfig.Columns)
+			{
+				c.Filter = Filter.None;
+				c.FilterValue = null;
+			}
+		}
 	}
 }
