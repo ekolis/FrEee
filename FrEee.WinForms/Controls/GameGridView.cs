@@ -332,6 +332,7 @@ namespace FrEee.WinForms.Controls
 		{
 			if (e.RowIndex < 0 || e.ColumnIndex < 0)
 			{
+				hoverValue = null;
 				noFilterToolStripMenuItem.Visible = false;
 				exactlyToolStripMenuItem.Visible = false;
 				differentFromToolStripMenuItem.Visible = false;
