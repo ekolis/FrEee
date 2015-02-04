@@ -255,14 +255,13 @@ namespace FrEee.Tests.Game.Objects.Combat2
             int tick = 0, cmdFreqCounter = 0;
 
             Compass startHeading = new Compass(0, false);
-            Compass wpCompass = new Compass(spinrate.Degrees / 2, false);
-            Compass endHeading = new Compass(wpCompass.Degrees, false);
+            Compass endHeading = new Compass(spinrate.Degrees / Battle_Space.TicksPerSecond, false);
             // test 6 ship heading 0 waypoint at half turn rate
             // ship should rotate to face waypoint
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)5));
+            testComObj.waypointTarget = new combatWaypoint(endHeading.Point((Fix16)5));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             battle.End(battle.CurrentTick);
 			AssertAngleWithinTolerance(endHeading, testComObj.cmbt_head, 0.01);
