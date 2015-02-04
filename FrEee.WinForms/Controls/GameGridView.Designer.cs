@@ -36,6 +36,8 @@
 			this.atMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.exactlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.noFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.differentFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.clearAllFiltersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
 			this.pnlConfigs = new System.Windows.Forms.FlowLayoutPanel();
 			this.pnlConfigEdit = new FrEee.WinForms.Controls.GamePanel();
@@ -44,8 +46,6 @@
 			this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
 			this.label17 = new System.Windows.Forms.Label();
 			this.txtConfigName = new System.Windows.Forms.TextBox();
-			this.differentFromToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.clearAllFiltersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
 			this.contextMenu.SuspendLayout();
 			this.pnlConfigsBorder.SuspendLayout();
@@ -76,6 +76,7 @@
 			this.gridData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.gridData.Size = new System.Drawing.Size(584, 316);
 			this.gridData.TabIndex = 31;
+			this.gridData.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_CellMouseDown);
 			this.gridData.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gridData_CellMouseEnter);
 			this.gridData.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.gridData_ColumnHeaderMouseClick);
 			this.gridData.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.gridData_DataError);
@@ -93,7 +94,7 @@
             this.atMostToolStripMenuItem,
             this.clearAllFiltersToolStripMenuItem});
 			this.contextMenu.Name = "contextMenu";
-			this.contextMenu.Size = new System.Drawing.Size(153, 158);
+			this.contextMenu.Size = new System.Drawing.Size(153, 136);
 			// 
 			// atLeastToolStripMenuItem
 			// 
@@ -122,6 +123,20 @@
 			this.noFilterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
 			this.noFilterToolStripMenuItem.Text = "&No Filter";
 			this.noFilterToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
+			// 
+			// differentFromToolStripMenuItem
+			// 
+			this.differentFromToolStripMenuItem.Name = "differentFromToolStripMenuItem";
+			this.differentFromToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.differentFromToolStripMenuItem.Text = "&Different From";
+			this.differentFromToolStripMenuItem.Click += new System.EventHandler(this.differentFromToolStripMenuItem_Click);
+			// 
+			// clearAllFiltersToolStripMenuItem
+			// 
+			this.clearAllFiltersToolStripMenuItem.Name = "clearAllFiltersToolStripMenuItem";
+			this.clearAllFiltersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.clearAllFiltersToolStripMenuItem.Text = "&Clear All Filters";
+			this.clearAllFiltersToolStripMenuItem.Click += new System.EventHandler(this.clearAllFiltersToolStripMenuItem_Click);
 			// 
 			// pnlConfigsBorder
 			// 
@@ -220,20 +235,6 @@
 			this.txtConfigName.Size = new System.Drawing.Size(100, 20);
 			this.txtConfigName.TabIndex = 25;
 			this.txtConfigName.TextChanged += new System.EventHandler(this.txtConfigName_TextChanged);
-			// 
-			// differentFromToolStripMenuItem
-			// 
-			this.differentFromToolStripMenuItem.Name = "differentFromToolStripMenuItem";
-			this.differentFromToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.differentFromToolStripMenuItem.Text = "&Different From";
-			this.differentFromToolStripMenuItem.Click += new System.EventHandler(this.differentFromToolStripMenuItem_Click);
-			// 
-			// clearAllFiltersToolStripMenuItem
-			// 
-			this.clearAllFiltersToolStripMenuItem.Name = "clearAllFiltersToolStripMenuItem";
-			this.clearAllFiltersToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-			this.clearAllFiltersToolStripMenuItem.Text = "&Clear All Filters";
-			this.clearAllFiltersToolStripMenuItem.Click += new System.EventHandler(this.clearAllFiltersToolStripMenuItem_Click);
 			// 
 			// GameGridView
 			// 

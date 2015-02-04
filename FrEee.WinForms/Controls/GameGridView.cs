@@ -486,5 +486,12 @@ namespace FrEee.WinForms.Controls
 		/// Any extra menu items which should be added to the end of the context menu.
 		/// </summary>
 		public IEnumerable<ToolStripMenuItem> AppendMenuItems { get; set; }
+
+		private void gridData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			// select moused row, even if not left button
+			gridData.ClearSelection();
+			gridData.Rows[e.RowIndex].Selected = true;
+		}
 	}
 }
