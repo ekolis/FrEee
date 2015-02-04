@@ -1543,7 +1543,7 @@ namespace FrEee.WinForms.Forms
 			return base.ProcessCmdKey(ref msg, keyData);
 		}
 
-		private void BindReport()
+		public void BindReport()
 		{
 			foreach (var report in pnlDetailReport.Controls.Cast<Control>().OfType<IBindable>())
 				report.Bind();

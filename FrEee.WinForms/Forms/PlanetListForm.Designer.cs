@@ -32,6 +32,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
@@ -74,8 +75,11 @@ namespace FrEee.WinForms.Forms
 			this.label2 = new System.Windows.Forms.Label();
 			this.label1 = new System.Windows.Forms.Label();
 			this.grid = new FrEee.WinForms.Controls.GameGridView();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.colonizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.pnlHeader.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// tableLayoutPanel1
@@ -600,6 +604,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			// grid
 			// 
+			this.grid.AppendMenuItems = null;
 			this.grid.BackColor = System.Drawing.Color.Black;
 			this.tableLayoutPanel1.SetColumnSpan(this.grid, 3);
 			this.grid.CreateDefaultGridConfig = null;
@@ -613,6 +618,7 @@ namespace FrEee.WinForms.Forms
 			this.grid.LoadGridConfigs = null;
 			this.grid.Location = new System.Drawing.Point(3, 203);
 			this.grid.Name = "grid";
+			this.grid.PrependMenuItems = null;
 			this.grid.ResetGridConfigs = null;
 			this.grid.ShowConfigs = true;
 			this.grid.Size = new System.Drawing.Size(1154, 531);
@@ -620,6 +626,20 @@ namespace FrEee.WinForms.Forms
 			this.grid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowEnter);
 			this.grid.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_RowLeave);
 			this.grid.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.grid_MouseDoubleClick);
+			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.colonizeToolStripMenuItem});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(121, 26);
+			// 
+			// colonizeToolStripMenuItem
+			// 
+			this.colonizeToolStripMenuItem.Name = "colonizeToolStripMenuItem";
+			this.colonizeToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+			this.colonizeToolStripMenuItem.Text = "&Colonize";
+			this.colonizeToolStripMenuItem.Click += new System.EventHandler(this.colonizeToolStripMenuItem_Click);
 			// 
 			// PlanetListForm
 			// 
@@ -639,6 +659,7 @@ namespace FrEee.WinForms.Forms
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.pnlHeader.ResumeLayout(false);
 			this.pnlHeader.PerformLayout();
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -687,5 +708,7 @@ namespace FrEee.WinForms.Forms
 		private System.Windows.Forms.Label txtPopulation;
 		private GalaxyView galaxyView;
 		private GameGridView grid;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem colonizeToolStripMenuItem;
 	}
 }
