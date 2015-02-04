@@ -330,6 +330,15 @@ namespace FrEee.WinForms.Controls
 
 		private void gridData_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
 		{
+			contextMenu.Items.Clear();
+			PrependMenuItems.SafeForeach(i => contextMenu.Items.Add(i));
+			contextMenu.Items.Add(noFilterToolStripMenuItem);
+			contextMenu.Items.Add(exactlyToolStripMenuItem);
+			contextMenu.Items.Add(differentFromToolStripMenuItem);
+			contextMenu.Items.Add(atLeastToolStripMenuItem);
+			contextMenu.Items.Add(atMostToolStripMenuItem);
+			AppendMenuItems.SafeForeach(i => contextMenu.Items.Add(i));
+
 			if (e.RowIndex < 0 || e.ColumnIndex < 0)
 			{
 				hoverValue = null;
@@ -460,5 +469,15 @@ namespace FrEee.WinForms.Controls
 				c.FilterValue = null;
 			}
 		}
+
+		/// <summary>
+		/// Any extra menu items which should be added to the beginning of the context menu.
+		/// </summary>
+		public IEnumerable<ToolStripMenuItem> PrependMenuItems { get; set; }
+
+		/// <summary>
+		/// Any extra menu items which should be added to the end of the context menu.
+		/// </summary>
+		public IEnumerable<ToolStripMenuItem> AppendMenuItems { get; set; }
 	}
 }
