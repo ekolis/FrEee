@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.gridData = new System.Windows.Forms.DataGridView();
 			this.pnlConfigsBorder = new FrEee.WinForms.Controls.GamePanel();
@@ -38,9 +39,15 @@
 			this.btnDeleteConfig = new FrEee.WinForms.Controls.GameButton();
 			this.label17 = new System.Windows.Forms.Label();
 			this.txtConfigName = new System.Windows.Forms.TextBox();
+			this.contextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.atLeastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.atMostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.exactlyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.noFilterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.gridData)).BeginInit();
 			this.pnlConfigsBorder.SuspendLayout();
 			this.pnlConfigEdit.SuspendLayout();
+			this.contextMenu.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// gridData
@@ -55,6 +62,7 @@
 			this.gridData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
 			this.gridData.BackgroundColor = System.Drawing.Color.Black;
 			this.gridData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+			this.gridData.ContextMenuStrip = this.contextMenu;
 			this.gridData.Location = new System.Drawing.Point(103, 43);
 			this.gridData.Name = "gridData";
 			this.gridData.ReadOnly = true;
@@ -171,6 +179,44 @@
 			this.txtConfigName.TabIndex = 25;
 			this.txtConfigName.TextChanged += new System.EventHandler(this.txtConfigName_TextChanged);
 			// 
+			// contextMenu
+			// 
+			this.contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.noFilterToolStripMenuItem,
+            this.exactlyToolStripMenuItem,
+            this.atLeastToolStripMenuItem,
+            this.atMostToolStripMenuItem});
+			this.contextMenu.Name = "contextMenu";
+			this.contextMenu.Size = new System.Drawing.Size(153, 114);
+			// 
+			// atLeastToolStripMenuItem
+			// 
+			this.atLeastToolStripMenuItem.Name = "atLeastToolStripMenuItem";
+			this.atLeastToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.atLeastToolStripMenuItem.Text = "At &Least";
+			this.atLeastToolStripMenuItem.Click += new System.EventHandler(this.atLeastToolStripMenuItem_Click);
+			// 
+			// atMostToolStripMenuItem
+			// 
+			this.atMostToolStripMenuItem.Name = "atMostToolStripMenuItem";
+			this.atMostToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.atMostToolStripMenuItem.Text = "At &Most";
+			this.atMostToolStripMenuItem.Click += new System.EventHandler(this.atMostToolStripMenuItem_Click);
+			// 
+			// exactlyToolStripMenuItem
+			// 
+			this.exactlyToolStripMenuItem.Name = "exactlyToolStripMenuItem";
+			this.exactlyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.exactlyToolStripMenuItem.Text = "&Exactly";
+			this.exactlyToolStripMenuItem.Click += new System.EventHandler(this.exactlyToolStripMenuItem_Click);
+			// 
+			// noFilterToolStripMenuItem
+			// 
+			this.noFilterToolStripMenuItem.Name = "noFilterToolStripMenuItem";
+			this.noFilterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+			this.noFilterToolStripMenuItem.Text = "&No Filter";
+			this.noFilterToolStripMenuItem.Click += new System.EventHandler(this.noFilterToolStripMenuItem_Click);
+			// 
 			// GameGridView
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -186,6 +232,7 @@
 			this.pnlConfigsBorder.ResumeLayout(false);
 			this.pnlConfigEdit.ResumeLayout(false);
 			this.pnlConfigEdit.PerformLayout();
+			this.contextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -201,6 +248,11 @@
 		private GameButton btnDeleteConfig;
 		private System.Windows.Forms.Label label17;
 		private System.Windows.Forms.TextBox txtConfigName;
+		private System.Windows.Forms.ContextMenuStrip contextMenu;
+		private System.Windows.Forms.ToolStripMenuItem exactlyToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem atLeastToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem atMostToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem noFilterToolStripMenuItem;
 
 	}
 }

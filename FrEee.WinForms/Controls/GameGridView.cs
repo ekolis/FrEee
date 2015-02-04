@@ -328,8 +328,22 @@ namespace FrEee.WinForms.Controls
 
 		private void gridData_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
 		{
-			// TODO - set up context menu to filter on cell value
+			if (e.RowIndex < 0 || e.ColumnIndex < 0)
+				return;
+
+			var cell = gridData.Rows[e.RowIndex].Cells[e.ColumnIndex];
+			hoverValue = cell.Value as IComparable;
+			noFilterToolStripMenuItem.Visible = cell.Value is IComparable;
+			exactlyToolStripMenuItem.Visible = cell.Value is IComparable;
+			atLeastToolStripMenuItem.Visible = cell.Value is IComparable;
+			atMostToolStripMenuItem.Visible = cell.Value is IComparable;
+			hoverColumn = e.ColumnIndex;
+			hoverRow = e.RowIndex;
 		}
+
+		private int hoverColumn = -1;
+		private int hoverRow = -1;
+		private IComparable hoverValue = null;
 
 		public object SelectedItem
 		{
@@ -373,6 +387,46 @@ namespace FrEee.WinForms.Controls
 		private void gridData_MouseDoubleClick(object sender, MouseEventArgs e)
 		{
 			OnMouseDoubleClick(e);
+		}
+
+		private void noFilterToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (hoverColumn >= 0)
+			{
+				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.None;
+				CurrentGridConfig.Columns[hoverColumn].FilterValue = null;
+			}
+			BindGrid(false);
+		}
+
+		private void exactlyToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (hoverColumn >= 0)
+			{
+				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.Exact;
+				CurrentGridConfig.Columns[hoverColumn].FilterValue = hoverValue;
+			}
+			BindGrid(false);
+		}
+
+		private void atLeastToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (hoverColumn >= 0)
+			{
+				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.Minimum;
+				CurrentGridConfig.Columns[hoverColumn].FilterValue = hoverValue;
+			}
+			BindGrid(false);
+		}
+
+		private void atMostToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (hoverColumn >= 0)
+			{
+				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.Maximum;
+				CurrentGridConfig.Columns[hoverColumn].FilterValue = hoverValue;
+			}
+			BindGrid(false);
 		}
 	}
 }
