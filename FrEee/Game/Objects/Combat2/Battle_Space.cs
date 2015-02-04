@@ -619,9 +619,7 @@ namespace FrEee.Game.Objects.Combat2
 			//TODO: check for alive missiles and bullets.
 			bool hostiles = ControlledCombatObjects.Any(o => !o.WorkingCombatant.IsDestroyed && ControlledCombatObjects.Any(o2 => !o2.WorkingCombatant.IsDestroyed && o.WorkingCombatant.IsHostileTo(o2.WorkingCombatant.Owner)));
 
-			var maxTick = Mod.Current.Settings.SpaceCombatTurns * TicksPerSecond;
-			if (maxTick <= 0) // in case it wasn't initialized in the mod
-				maxTick = 30 * TicksPerSecond;
+			var maxTick = (Mod.Current == null || Mod.Current.Settings.SpaceCombatTurns <= 0 ? 30 : Mod.Current.Settings.SpaceCombatTurns) * TicksPerSecond;
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
 				cont = false;
