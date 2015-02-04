@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Space
 	/// Is always square and always has an odd number of sectors across.
 	/// </summary>
 	[Serializable]
-	public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IAbilityObject
+	public class StarSystem : IReferrable, IPictorial, IFoggable, ICommonAbilityObject, IAbilityContainer
 	{
 		/// <summary>
 		/// Creates a star system.

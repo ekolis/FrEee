@@ -2737,6 +2737,7 @@ namespace FrEee.Utility.Extensions
 		public static bool IsHiddenFrom(this ISpaceObject sobj, Empire emp)
 		{
 			var sys = sobj.StarSystem;
+			var sec = sobj.Sector;
 			var sensors = sys.Abilities(emp).Where(a => a.Rule.Name == "Sensor Level");
 			var cloaks = sobj.Abilities().Where(a => a.Rule.Name == "Cloak Level");
 			var joined = from sensor in sensors
@@ -2748,7 +2749,10 @@ namespace FrEee.Utility.Extensions
 							 SensorLevel = sensor.Value2.Value.ToInt(),
 							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
 						 };
-			return cloaks.Any() && joined.All(j => j.CloakLevel > j.SensorLevel);
+			var obscurationLevel = Math.Max(sys.GetAbilityValue("Sector - Sight Obscuration").ToInt(), sys.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
+			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue("Sector - Sight Obscuration").ToInt());
+			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
+			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel >= j.SensorLevel || obscurationLevel >= j.SensorLevel);
 		}
 
 		/// <summary>
