@@ -610,32 +610,37 @@ namespace FrEee.WinForms.Forms
 
 		private void btnDelete_Click(object sender, EventArgs e)
 		{
-			if (SelectedOrders.Count() > 1)
+			RemoveOrdersConfirm(SelectedOrders);
+		}
+
+		private void RemoveOrdersConfirm(IEnumerable<IConstructionOrder> orders)
+		{
+			if (orders.Count() > 1)
 			{
-				if (SelectedOrders.Any(o => o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0)))
+				if (orders.Any(o => o.Item != null && o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0)))
 				{
 					if (MessageBox.Show("One or more selected construction orders have already been started. Really remove them and lose progress?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
-						RemoveSelectedOrders();
+						RemoveOrders(orders);
 				}
 				else
-					RemoveSelectedOrders();
+					RemoveOrders(orders);
 			}
-			else if (SelectedOrders.Count() == 1)
+			else if (orders.Count() == 1)
 			{
-				var o = SelectedOrders.Single();
-				if (o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0))
+				var o = orders.Single();
+				if (o.Item != null && o.Item.ConstructionProgress.Any(kvp => kvp.Value > 0))
 				{
 					if (MessageBox.Show("Construction of " + o.Item + " has already started. Really remove this order and lose progress?", "Confirm Delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
-						RemoveSelectedOrders();
+						RemoveOrders(orders);
 				}
 				else
-					RemoveSelectedOrders();
+					RemoveOrders(orders);
 			}
 		}
 
-		private void RemoveSelectedOrders()
+		private void RemoveOrders(IEnumerable<IConstructionOrder> orders)
 		{
-			foreach (var o in SelectedOrders)
+			foreach (var o in orders)
 				RemoveOrder(o, false);
 			BindQueueListView();
 		}
@@ -656,8 +661,10 @@ namespace FrEee.WinForms.Forms
 
 					// delete order
 					var orders = (IEnumerable<IConstructionOrder>)item.Tag;
+					var sel = new List<IConstructionOrder>();
 					for (int i = orders.Count() - 1; i >= 0 && i >= orders.Count() - amount; i--)
-						RemoveOrder(orders.ElementAt(i), false);
+						sel.Add(orders.ElementAt(i));
+					RemoveOrdersConfirm(sel);
 					BindQueueListView();
 				}
 			}
