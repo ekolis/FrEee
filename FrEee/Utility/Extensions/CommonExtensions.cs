@@ -3070,7 +3070,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (items != null && action != null)
 			{
-				foreach (var item in items)
+				foreach (var item in items.ToArray())
 					action(item);
 			}
 		}
