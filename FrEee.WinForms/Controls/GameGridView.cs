@@ -159,6 +159,8 @@ namespace FrEee.WinForms.Controls
 			{
 				if (col.Filter == Filter.Exact)
 					filteredData = filteredData.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) == 0);
+				if (col.Filter == Filter.Different)
+					filteredData = filteredData.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) != 0);
 				else if (col.Filter == Filter.Minimum)
 					filteredData = filteredData.Where(p => col.FilterValue.CompareTo(p.GetPropertyValue(col.PropertyName)) <= 0);
 				else if (col.Filter == Filter.Maximum)
@@ -424,6 +426,16 @@ namespace FrEee.WinForms.Controls
 			if (hoverColumn >= 0)
 			{
 				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.Maximum;
+				CurrentGridConfig.Columns[hoverColumn].FilterValue = hoverValue;
+			}
+			BindGrid(false);
+		}
+
+		private void differentFromToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (hoverColumn >= 0)
+			{
+				CurrentGridConfig.Columns[hoverColumn].Filter = Filter.Different;
 				CurrentGridConfig.Columns[hoverColumn].FilterValue = hoverValue;
 			}
 			BindGrid(false);

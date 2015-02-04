@@ -19,6 +19,10 @@ namespace FrEee.WinForms.DataGridView
 		/// </summary>
 		Exact,
 		/// <summary>
+		/// Filters out a specific value.
+		/// </summary>
+		Different,
+		/// <summary>
 		/// Filters out all values less than a specific value.
 		/// </summary>
 		Minimum,
