@@ -3060,6 +3060,20 @@ namespace FrEee.Utility.Extensions
 			else
 				return list.ElementAt(index);
 		}
+
+		/// <summary>
+		/// Converts an enumeration to an array, then does something to each item.
+		/// </summary>
+		/// <param name="items"></param>
+		/// <param name="action"></param>
+		public static void SafeForeach<T>(this IEnumerable<T> items, Action<T> action)
+		{
+			if (items != null && action != null)
+			{
+				foreach (var item in items)
+					action(item);
+			}
+		}
 	}
 
 	public enum IDCopyBehavior
