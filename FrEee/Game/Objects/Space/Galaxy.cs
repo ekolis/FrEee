@@ -1240,7 +1240,7 @@ namespace FrEee.Game.Objects.Space
 					var battle = new Battle_Space(sector);
 					battle.Resolve();
 					foreach (var emp in battle.Empires.Keys)
-						emp.Log.Add(battle.CreateLogMessage(battle.Name));
+						emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp)));
 					lastBattleTimestamps[sector] = Current.Timestamp;
 				}
 			}
