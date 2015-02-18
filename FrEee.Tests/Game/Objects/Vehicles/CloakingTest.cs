@@ -122,14 +122,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		}
 
 		/// <summary>
-		/// If we have a cloak, and they have the same level sensor of the same type, we should be hidden.
+		/// If we have a cloak, and they have the same level sensor of the same type, they should be able to see us.
 		/// </summary>
 		[TestMethod]
 		public void SameLevelSensorCanSee()
 		{
 			AddSensorAbility(destroyer.Hull, "Foobar", 1);
 			AddCloakAbility(submarine.Hull, "Foobar", 1);
-			Assert.IsTrue(submarine.IsHiddenFrom(seekers), "Submarine should be hidden.");
+			Assert.IsFalse(submarine.IsHiddenFrom(seekers), "Submarine should be visible.");
 		}
 
 		/// <summary>

@@ -14,7 +14,7 @@ Description := Star is unstable and emits a greater than normal quantity of sola
 
 Name := Sector - Sight Obscuration
 Targets := Sector, SpaceObject, Component, Facility
-Description := Provides level [%Amount1%] cloaking (all sensor types) for space objects in this sector.
+Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this sector.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
@@ -281,14 +281,14 @@ Description := Vehicle does not need standard command components or crew.
 
 Name := Cloak Level
 Targets := Vehicle, Planet, Component, Facility
-Description := Provides level [%Amount2%] [%Amount1%] cloaking.
+Description := Prevents [%Amount1%] sensor sweeps below level [%Amount2%] against this vehicle.
 Value 1 Rule := Group
 Value 2 Rule := TakeHighest
 Value 2 Group Rule := None
 
 Name := Sensor Level
 Targets := Vehicle, Planet, Component, Facility, StarSystem
-Description := Detects level [%Amount2%] and below [%Amount1%] cloaked space objects.
+Description := Performs a level [%Amount2%] [%Amount1%] sensor sweep to detect cloaked ships.
 Value 1 Rule := Group
 Value 2 Rule := TakeHighest
 Value 2 Group Rule := None
