@@ -2752,7 +2752,7 @@ namespace FrEee.Utility.Extensions
 			var obscurationLevel = Math.Max(sys.GetAbilityValue("Sector - Sight Obscuration").ToInt(), sys.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
 			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue("Sector - Sight Obscuration").ToInt());
 			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
-			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel >= j.SensorLevel || obscurationLevel >= j.SensorLevel);
+			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
 		}
 
 		/// <summary>
