@@ -292,15 +292,59 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
 		/// </summary>
-		/// 
 		public string Name
 		{
 			get
 			{
+				return "Battle at " + Location;
+			}
+		}
+
+		/// <summary>
+		/// The result (victory/defeat/stalemate) for a given empire.
+		/// If empire or its allies are not involved or no empire specified, just say "battle".
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public string ResultFor(Empire emp)
+		{
+			if (emp == null)
+				return "battle"; // no empire specified
+			if (!StartCombatants.Values.Any(c => c.Owner == emp || c.Owner.IsAllyOf(emp, StarSystem)))
+				return "battle"; // empire/allies not involved
+			var survivors = EndCombatants.Values.Where(c => !c.IsDestroyed);
+			var ourSurvivors = survivors.Where(c => c.Owner == emp);
+			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
+			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var enemySurvivors = survivors.Where(c => c.Owner.IsHostileTo(emp, StarSystem));
+			if (friendlySurvivors.Any() && enemySurvivors.Any())
+				return "stalemate";
+			if (friendlySurvivors.Any())
+				return "victory";
+			if (enemySurvivors.Any())
+				return "defeat";
+			return "Pyrrhic victory"; // mutual annihilation!
+		}
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public string NameFor(Empire emp)
+		{
+			return ResultFor(emp).Capitalize() + " at " + Location;
+		}
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public string Location
+		{
+			get
+			{
 				if (Sector.SpaceObjects.OfType<StellarObject>().Any())
-					return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
+					return Sector.SpaceObjects.OfType<StellarObject>().Largest().Name;
 				var coords = Sector.Coordinates;
-				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
+				return Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
 			}
 		}
 
