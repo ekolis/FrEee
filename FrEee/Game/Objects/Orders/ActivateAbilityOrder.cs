@@ -74,8 +74,17 @@ namespace FrEee.Game.Objects.Orders
 				}
 				else if (Ability.Rule.Matches("Emergency Energy"))
 				{
-					// TODO - activate emergency propulsion
-					// this might require a non-serialized "emergency speed" property on ships that factors into their speed calcs
+					if (executor is Vehicle)
+					{
+						var v = executor as Vehicle;
+						v.EmergencySpeed += Ability.Value1.Value.ToInt();
+						Owner.RecordLog(executor, executor + " has activated its emergency propulsion and has had its speed boosted to " + v.Speed + " temporarily.");
+					}
+					else
+					{
+						Owner.RecordLog(executor, executor + " cannot activate emergency propulsion because it is not a vehicle.");
+						return;
+					}
 				}
 				else if (Ability.Rule.Matches("Self-Destruct"))
 				{

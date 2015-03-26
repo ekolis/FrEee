@@ -469,7 +469,8 @@ namespace FrEee.Game.Objects.Vehicles
 					thrust / Design.Hull.Mass
 					+ this.GetAbilityValue("Movement Bonus").ToInt()
 					+ this.GetAbilityValue("Extra Movement Generation").ToInt()
-					+ this.GetAbilityValue("Vehicle Speed").ToInt();
+					+ this.GetAbilityValue("Vehicle Speed").ToInt()
+					+ EmergencySpeed;
 			}
 		}
 
