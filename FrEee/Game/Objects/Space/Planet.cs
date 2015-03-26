@@ -1053,6 +1053,7 @@ namespace FrEee.Game.Objects.Space
 				ast.Sector = Sector;
 				ast.ResourceValue = value;
 				ast.Name = name;
+				ast.UpdateEmpireMemories();
 			}
 
 			Dispose();

@@ -21,6 +21,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using System.Text;
+using FrEee.Game.Setup.WarpPointPlacementStrategies;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -1533,6 +1534,16 @@ namespace FrEee.Game.Objects.Space
 				stringValue = value;
 			}
 		}
+		
+		// TODO - replace all those duplicate properties with a reference to the game setup
+		/*
+		/// <summary>
+		/// The game setup used to create this galaxy.
+		/// </summary>
+		public GameSetup GameSetup { get; set; }
+		*/
+
+		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
 	}
 
 	/// <summary>
