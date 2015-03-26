@@ -322,12 +322,14 @@ Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Create Planet Size
+Name := Create Planet
 Targets := SpaceVehicle, Component
 Description := Can create a planet (up to size [%Amount1%]) out of an asteroid field.
 Value 1 Rule := TakeHighest
 Value 2 Rule := TakeHighest
 
 Name := Destroy Planet Size
+Name := Destroy Planet
 Targets := SpaceVehicle, Component
 Description := Can destroy a planet up to size [%Amount1%].
 Value 1 Rule := TakeHighest
@@ -880,10 +882,12 @@ Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Destroy Nebulae
+Alias := Destroy Nebula
 Targets := SpaceVehicle, Component
 Description := Can dissipate a nebula.
 
 Name := Create Nebulae
+Alias := Create Nebula
 Targets := SpaceVehicle, Component
 Description := Can destroy a star, creating a nebula in its place. This will destroy all ships in the system and turn planets into asteroids.
 
@@ -923,8 +927,12 @@ Name := Component Destroyed On Use
 Alias := Facility Destroyed On Use
 Alias := Hull Destroyed On Use
 Alias := Destroyed On Use
-Targets := Component, Facility, Vehicle
+Targets := Component, Facility, Hull
 Description := This component or facility is disabled when activated, and must be repaired to be used again. If this ability is present on a hull, the entire vehicle is destroyed permanently.
+
+Name := Space Object Destroyed On Use
+Targets := Component, Facility, Hull
+Description := This component or facility destroys the entire vehicle or planet it is contained within when activated.
 
 Name := Ancient Ruins
 Targets := Planet
@@ -977,27 +985,27 @@ Targets := Vehicle, Planet, Facility, Component
 Description := This vehicle's weapons will always hit their target.
 
 Name := Create Constructed Planet
-Alias := Create Constructed Planet - Star
+Alias := Create Constructed Planet From Star
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a star.
 
-Name := Create Constructed Planet - Planet
+Name := Create Constructed Planet From Planet
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a planet.
 
-Name := Create Constructed Planet - Storm
+Name := Create Constructed Planet From Storm
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a storm.
 
-Name := Create Constructed Planet - Warp Point
+Name := Create Constructed Planet From Warp Point
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from a warp point.
 
-Name := Create Constructed Planet - Asteroids
+Name := Create Constructed Planet From Asteroids
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] from an asteroid field.
 
-Name := Create Constructed Planet - Space
+Name := Create Constructed Planet From Space
 Targets := SpaceVehicle, Component
 Description := Can create a constructed planet of type [%Amount1%] in deep space.
 

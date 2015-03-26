@@ -1033,5 +1033,29 @@ namespace FrEee.Game.Objects.Space
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 		}
+
+		/// <summary>
+		/// Deletes this planet and spawns an asteroid field with the same name, sector, size, and value as this planet.
+		/// If there are no appropriate asteroid field templates in the mod, simply deletes the planet.
+		/// </summary>
+		public void ConvertToAsteroidField()
+		{
+			var sector = Sector;
+			var size = Size;
+			var value = ResourceValue;
+			var name = Name;
+
+			var astTemplates = Mod.Current.StellarObjectTemplates.OfType<AsteroidField>().Where(a => a.Size == size);
+			if (astTemplates.Any())
+			{
+				var astTemplate = astTemplates.PickRandom();
+				var ast = astTemplate.Instantiate();
+				ast.Sector = Sector;
+				ast.ResourceValue = value;
+				ast.Name = name;
+			}
+
+			Dispose();
+		}
 	}
 }

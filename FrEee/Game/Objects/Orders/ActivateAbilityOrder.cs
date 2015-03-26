@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Orders
 {
@@ -85,7 +86,78 @@ namespace FrEee.Game.Objects.Orders
 					sys.UpdateEmpireMemories();
 					Owner.RecordLog(executor, executor + " has successfully self-destructed.");
 				}
-				// TODO - stellar manipulation
+				else if (Ability.Rule.Matches("Open Warp Point"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Close Warp Point"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Planet"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Destroy Planet"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Star"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Destroy Star"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Storm"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Destroy Storm"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Nebula"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Destroy Nebula"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Black Hole"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Destroy Black Hole"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Star"))
+				{
+					
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Planet"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Storm"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Warp Point"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Asteroids"))
+				{
+
+				}
+				else if (Ability.Rule.Matches("Create Constructed Planet From Space"))
+				{
+
+				}
 
 				// destroy component/etc. if necessary
 				if (Source.HasAbility("Destroyed On Use"))
@@ -94,6 +166,20 @@ namespace FrEee.Game.Objects.Orders
 						(Source as IDamageable).Hitpoints = 0;
 					if (Source is IHull)
 						executor.Dispose(); // hull destruction kills the whole ship!
+				}
+
+				// destroy entire space object if necessary
+				if (Source.HasAbility("Space Object Destroyed On Use"))
+				{
+					if (executor is Planet)
+					{
+						var p = executor as Planet;
+						p.ConvertToAsteroidField();
+					}
+					else
+					{
+						executor.Dispose();
+					}
 				}
 			}
 		}
