@@ -26,7 +26,8 @@ using FrEee.Modding.Enumerations;
 using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using NewtMath.f16;
-using FrEee.Game.Objects.Combat2; // TODO -remove this, just for testing
+using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Technology; // TODO -remove this, just for testing
 
 namespace FrEee.Utility.Extensions
 {
@@ -3073,6 +3074,50 @@ namespace FrEee.Utility.Extensions
 				foreach (var item in items.ToArray())
 					action(item);
 			}
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="supplies">The supplies to consume.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this IMobileSpaceObject sobj, int supplies)
+		{
+			if (sobj.HasInfiniteSupplies)
+				return true; // no need to burn
+			else if (sobj.SupplyRemaining < supplies)
+				return false; // not enough
+			else
+			{
+				sobj.SupplyRemaining -= supplies;
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="comp">The component consuming supplies.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this Component comp)
+		{
+			if (comp.Container is IMobileSpaceObject)
+				return (comp.Container as IMobileSpaceObject).BurnSupplies(comp.Template.SupplyUsage);
+			else
+				return true; // other component containers don't use supplies
+		}
+
+		/// <summary>
+		/// Consumes supplies if possible.
+		/// </summary>
+		/// <param name="a">The ability consuming supplies.</param>
+		/// <returns>true if successful or unnecessary, otherwise false</returns>
+		public static bool BurnSupplies(this Ability a)
+		{
+			if (a.Container is Component)
+				return (a.Container as Component).BurnSupplies();
+			else
+				return true; // other ability containers don't use supplies
 		}
 	}
 

@@ -47,7 +47,7 @@ namespace FrEee.Game.Objects.Orders
 		private Reference<IReferrable> target { get; set; }
 
 		/// <summary>
-		/// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no target (creating a warp point, or activating self destruct, or whatever)
+		/// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
 		/// </summary>
 		[DoNotSerialize]
 		public IReferrable Target { get { return target.Value; } set { target = value.Reference(); } }
@@ -88,7 +88,59 @@ namespace FrEee.Game.Objects.Orders
 				}
 				else if (Ability.Rule.Matches("Open Warp Point"))
 				{
+					var fromSector = executor.Sector;
+					var fromSys = executor.StarSystem;
+					if (fromSector == null || fromSys == null)
+					{
+						Owner.RecordLog(executor, executor + " cannot open a warp point because it is not located in space.");
+						return;
+					}
+					var toSys = Target as StarSystem;
+					if (toSys == null && Target is ILocated)
+						toSys = (Target as ILocated).StarSystem;
+					if (toSys == null)
+					{
+						Owner.RecordLog(executor, executor + " cannot open a warp point because no target system is specified.");
+						return;
+					}
+					if (fromSys.Coordinates.EightWayDistance(toSys.Coordinates) > Ability.Value1.Value.ToInt())
+					{
+						Owner.RecordLog(executor, executor + " cannot open a warp point to " + toSys + " because " + toSys + " is too far away.");
+						return;
+					}
+					if (Ability.BurnSupplies())
+					{
+						// find suitable warp point templates
+						var wpt1 = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
+						var wpt2 = Mod.Current.StellarObjectTemplates.OfType<WarpPoint>().Where(wp => !wp.IsUnusual).PickRandom();
 
+						// figure out where the warp point goes, according to our game setup's warp point placement strategy
+						// only in the target system - in the source system we get a warp point at the sector where the WP opener was
+						var toSector = Galaxy.Current.WarpPointPlacementStrategy.GetWarpPointSector(fromSys.Location, toSys.Location);
+
+						// create the warp points
+						var wp1 = wpt1.Instantiate();
+						var wp2 = wpt2.Instantiate();
+
+						// configure the warp points
+						wp1.IsOneWay = false;
+						wp1.Name = "Warp Point to " + toSys;
+						wp1.Target = toSector;
+						fromSector.Place(wp1);
+						wp2.IsOneWay = false;
+						wp2.Name = "Warp Point to " + fromSys;
+						wp2.Target = fromSector;
+						toSector.Place(wp2);
+
+						// let empires know that warp points were created
+						wp1.UpdateEmpireMemories();
+						wp2.UpdateEmpireMemories();
+					}
+					else
+					{
+						Owner.RecordLog(executor, executor + " cannot open a warp point because it lacks the necessary supplies.");
+						return;
+					}
 				}
 				else if (Ability.Rule.Matches("Close Warp Point"))
 				{

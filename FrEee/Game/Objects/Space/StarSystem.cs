@@ -374,5 +374,28 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public ObjectLocation<StarSystem> Location
+		{
+			get
+			{
+				try
+				{
+					return Galaxy.Current.StarSystemLocations.Single(l => l.Item == this);
+				}
+				catch (InvalidOperationException ex)
+				{
+					throw new InvalidOperationException(this + " does not appear to be located anywhere on the galaxy map, or it has multiple locations.", ex);
+				}
+			}
+		}
+
+		public Point Coordinates
+		{
+			get
+			{
+				return Location.Location;
+			}
+		}
 	}
 }

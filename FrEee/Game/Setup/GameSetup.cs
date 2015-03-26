@@ -293,6 +293,7 @@ namespace FrEee.Game.Setup
 			gal.IsIntelligenceAllowed = IsIntelligenceAllowed;
 			gal.CanColonizeOnlyBreathable = CanColonizeOnlyBreathable;
 			gal.CanColonizeOnlyHomeworldSurface = CanColonizeOnlyHomeworldSurface;
+			gal.WarpPointPlacementStrategy = WarpPointPlacementStrategy;
 
 			// create player empires
 			foreach (var et in EmpireTemplates)
