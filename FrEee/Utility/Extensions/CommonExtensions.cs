@@ -1173,6 +1173,70 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Determines if a formula can be parsed as an integer.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool IsInt(this IFormula f)
+		{
+			return f.Value.ToString().IsInt();
+		}
+
+		/// <summary>
+		/// Determines if a string can be parsed as a double.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="cultureCode">The LCID of the culture used to parse. Defaults to 127, which represents the invariant culture.</param>
+		/// <returns></returns>
+		public static bool IsDouble(this IFormula f, int cultureCode = 127)
+		{
+			// TODO - object.ToString() doesn't seem to take a culture code...
+			return f.Value.ToString().IsDouble(cultureCode);
+		}
+
+		/// <summary>
+		/// Determines if a string can be parsed as an boolean.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool IsBool(this IFormula f)
+		{
+			return f.Value.ToString().IsBool();
+		}
+
+		/// <summary>
+		/// Parses a string as an integer. Returns 0 if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static int ToInt(this IFormula f)
+		{
+			return f.Value.ToString().ToInt();
+		}
+
+		/// <summary>
+		/// Parses a string as a double. Returns 0 if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <param name="cultureCode">The LCID of the culture used to parse. Defaults to 127, which represents the invariant culture.</param>
+		/// <returns></returns>
+		public static double ToDouble(this IFormula f, int cultureCode = 127)
+		{
+			// TODO - object.ToString() doesn't seem to take a culture code...
+			return f.Value.ToString().ToDouble(cultureCode);
+		}
+
+		/// <summary>
+		/// Parses a string as a boolean. Returns false if it could not be parsed.
+		/// </summary>
+		/// <param name="s"></param>
+		/// <returns></returns>
+		public static bool ToBool(this IFormula f)
+		{
+			return f.Value.ToString().ToBool();
+		}
+
+		/// <summary>
 		/// Gets an ability value.
 		/// If the stacking rule in the mod is DoNotStack, an arbitrary matching ability will be chosen.
 		/// If there are no values, null will be returned.
