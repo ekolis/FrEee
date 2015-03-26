@@ -69,11 +69,12 @@ namespace FrEee.Game.Objects.Orders
 					// TODO - normalize supplies on other stuff, not just space vehicles
 					if (executor is SpaceVehicle)
 						(executor as SpaceVehicle).NormalizeSupplies();
-					executor.CreateLogMessage(executor + " has activated its emergency resupply pod and now has " + executor.SupplyRemaining.ToUnitString(true) + " supplies.");
+					Owner.RecordLog(executor, executor + " has activated its emergency resupply pod and now has " + executor.SupplyRemaining.ToUnitString(true) + " supplies.");
 				}
 				else if (Ability.Rule.Matches("Emergency Energy"))
 				{
 					// TODO - activate emergency propulsion
+					// this might require a non-serialized "emergency speed" property on ships that factors into their speed calcs
 				}
 				else if (Ability.Rule.Matches("Self-Destruct"))
 				{
@@ -82,7 +83,7 @@ namespace FrEee.Game.Objects.Orders
 					var sys = executor.StarSystem;
 					executor.Dispose();
 					sys.UpdateEmpireMemories();
-					executor.CreateLogMessage(executor + " has successfully self-destructed.");
+					Owner.RecordLog(executor, executor + " has successfully self-destructed.");
 				}
 				// TODO - stellar manipulation
 

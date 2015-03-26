@@ -964,5 +964,15 @@ namespace FrEee.Game.Objects.Civilization
 				return Galaxy.Current.AllSystemsExploredFromStart || this.HasAbility("Galaxy Seen");
 			}
 		}
+
+		public void RecordLog(string text)
+		{
+			Log.Add(new GenericLogMessage(text));
+		}
+
+		public void RecordLog(IPictorial context, string text)
+		{
+			Log.Add(context.CreateLogMessage(text));
+		}
 	}
 }
