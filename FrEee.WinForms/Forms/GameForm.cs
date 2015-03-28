@@ -240,11 +240,11 @@ namespace FrEee.WinForms.Forms
 						wp = sector.SpaceObjects.OfType<WarpPoint>().Single();
 					else
 					{
-						var form = new SpaceObjectPickerForm(sector.SpaceObjects.OfType<WarpPoint>());
+						var form = new GenericPickerForm(sector.SpaceObjects.OfType<WarpPoint>());
 						form.Text = "Use which warp point?";
 						this.ShowChildForm(form);
 						if (form.DialogResult == DialogResult.OK)
-							wp = (WarpPoint)form.SelectedSpaceObject;
+							wp = (WarpPoint)form.SelectedObject;
 					}
 
 					if (wp != null)
@@ -276,11 +276,11 @@ namespace FrEee.WinForms.Forms
 								planet = suitablePlanets.Single();
 							else
 							{
-								var form = new SpaceObjectPickerForm(suitablePlanets);
+								var form = new GenericPickerForm(suitablePlanets);
 								form.Text = "Colonize which planet?";
 								this.ShowChildForm(form);
 								if (form.DialogResult == DialogResult.OK)
-									planet = (Planet)form.SelectedSpaceObject;
+									planet = (Planet)form.SelectedObject;
 							}
 
 							if (planet != null)

@@ -64,6 +64,7 @@ namespace FrEee.Game.Objects.Orders
 
 			if (!errors.Any())
 			{
+				// TODO - custom activatable abilities using scripts
 				if (Ability.Rule.Matches("Emergency Resupply"))
 				{
 					executor.SupplyRemaining += Ability.Value1.Value.ToInt();
