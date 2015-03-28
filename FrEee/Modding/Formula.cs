@@ -111,13 +111,6 @@ namespace FrEee.Modding
 			return new Formula<T>(null, obj.ToStringInvariant(), FormulaType.Literal);
 		}
 
-		public static implicit operator T(Formula<T> f)
-		{
-			if (f == null)
-				return default(T);
-			return f.Value;
-		}
-
 		[DoNotCopy]
 		public object Context { get; set; }
 
@@ -299,6 +292,34 @@ namespace FrEee.Modding
 		public int CompareTo(Formula<T> other)
 		{
 			return Value.CompareTo(other.Value);
+		}
+
+		public static implicit operator string(Formula<T> f)
+		{
+			if (f == null)
+				return null;
+			return f.Value.ToString(); // f.ToString() will put quotes
+		}
+
+		public static implicit operator int(Formula<T> f)
+		{
+			if (f == null)
+				return 0;
+			return f.ToInt()
+		}
+
+		public static implicit operator double(Formula<T> f)
+		{
+			if (f == null)
+				return 0d;
+			return f.ToDouble();
+		}
+
+		public static implicit operator bool(Formula<T> f)
+		{
+			if (f == null)
+				return false;
+			return f.ToBool();
 		}
 	}
 }
