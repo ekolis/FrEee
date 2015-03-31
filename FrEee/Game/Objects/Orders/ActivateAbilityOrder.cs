@@ -91,10 +91,8 @@ namespace FrEee.Game.Objects.Orders
 				{
 					// destroy ship/planet/whatever BOOM!
 					// TODO - make sure units with self destruct ability don't allow a ship or planet carrying them in cargo to self destruct...
-					var sys = executor.StarSystem;
-					executor.Dispose();
-					sys.UpdateEmpireMemories();
 					Owner.RecordLog(executor, executor + " has successfully self-destructed.");
+					executor.DisposeAndLog("The {0}'s {2} has apparently self-destructed.".F(Owner, executor), Owner);
 				}
 				else if (Ability.Rule.Matches("Open Warp Point"))
 				{
@@ -118,6 +116,7 @@ namespace FrEee.Game.Objects.Orders
 						Owner.RecordLog(executor, executor + " cannot open a warp point to " + toSys + " because " + toSys + " is too far away.");
 						return;
 					}
+					// TODO - limit to one warp point between any two systems?
 					if (Ability.BurnSupplies())
 					{
 						// find suitable warp point templates
@@ -143,8 +142,9 @@ namespace FrEee.Game.Objects.Orders
 						toSector.Place(wp2);
 
 						// let empires know that warp points were created
-						wp1.UpdateEmpireMemories();
-						wp2.UpdateEmpireMemories();
+						Owner.RecordLog(wp1, "{0} has opened a warp point connecting {1} to {2}.".F(executor, fromSys, toSys));
+						wp1.UpdateEmpireMemories("A new warp point to {0} has been created by the {1} in the {2} system.".F(toSys, Owner, fromSys), Owner);
+						wp2.UpdateEmpireMemories("A new warp point to {0} has appeared in the {1} system.".F(fromSys, toSys), Owner);
 					}
 					else
 					{
@@ -154,6 +154,35 @@ namespace FrEee.Game.Objects.Orders
 				}
 				else if (Ability.Rule.Matches("Close Warp Point"))
 				{
+					var wp = Target as WarpPoint;
+
+					// sanity checking, make sure we have a valid warp point to close here
+					if (wp == null)
+					{
+						Owner.RecordLog(executor, executor + " cannot close a warp point because no warp point is specified to close.");
+						return;
+					}
+					if (wp.Sector != executor.Sector)
+					{
+						Owner.RecordLog(executor, executor + " cannot close " + wp + " because " + wp + " is not in the same sector as " + executor + ".");
+						return;
+					}
+
+					// need to close warp points on the other side too
+					var otherwps = wp.Target.SpaceObjects.OfType<WarpPoint>().Where(w => w.Target == wp.Sector);
+
+					// check for supplies and close WP
+					if (Ability.BurnSupplies())
+					{
+						Owner.RecordLog(wp, "We have successfully closed the warp point connecting {0} to {1}.".F(wp.StarSystem, wp.Target.StarSystem);
+						wp.DisposeAndLog("The {0} has closed the warp point connecting {1} to {2}.", Owner);
+						foreach (var otherwp in otherwps)
+							otherwp.DisposeAndLog("The warp point connecting {0} to {1} has closed.", Owner);
+					}
+					else
+					{
+						Owner.RecordLog(executor, executor + " cannot close " + wp + " because it lacks the necessary supplies.");
+					}
 
 				}
 				else if (Ability.Rule.Matches("Create Planet"))
@@ -224,6 +253,7 @@ namespace FrEee.Game.Objects.Orders
 				// destroy component/etc. if necessary
 				if (Source.HasAbility("Destroyed On Use"))
 				{
+					// TODO - log destruction
 					if (Source is IDamageable)
 						(Source as IDamageable).Hitpoints = 0;
 					if (Source is IHull)
@@ -233,6 +263,7 @@ namespace FrEee.Game.Objects.Orders
 				// destroy entire space object if necessary
 				if (Source.HasAbility("Space Object Destroyed On Use"))
 				{
+					// TODO - log destruction
 					if (executor is Planet)
 					{
 						var p = executor as Planet;

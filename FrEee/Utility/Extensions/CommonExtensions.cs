@@ -2440,18 +2440,42 @@ namespace FrEee.Utility.Extensions
 		/// Updates the memory sight cache of any empires that can see this object.
 		/// Only makes sense on the host view, so if this is called elsewhere, nothing happens.
 		/// </summary>
-		/// <param name="obj"></param>
+		/// <param name="obj">The object whose cache to update.</param>
+		/// <param name="message">A message to display to any empire that can see this event happen.</param>
+		/// <param name="empiresToSkipMessage">Empires to which we don't need to send a message.</param>
 		/// <param name="stillExists"></param>
-		public static void UpdateEmpireMemories(this IFoggable obj)
+		public static void UpdateEmpireMemories(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
 		{
 			if (Empire.Current == null)
 			{
 				foreach (var emp in Galaxy.Current.Empires)
 				{
 					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					{
 						emp.UpdateMemory(obj);
+						if (message != null && !empiresToSkipMessage.Contains(emp))
+							emp.RecordLog(obj, message);
+					}
 				}
 			}
+		}
+
+		public static void DisposeAndLog(this IFoggable obj, string message = null, params Empire[] empiresToSkipMessage)
+		{
+
+			if (Empire.Current == null)
+			{
+				foreach (var emp in Galaxy.Current.Empires)
+				{
+					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					{
+						if (message != null && !empiresToSkipMessage.Contains(emp))
+							emp.RecordLog(obj, message);
+					}
+				}
+			}
+			obj.Dispose();
+
 		}
 
 		public static object Instantiate(this Type type, params object[] args)
