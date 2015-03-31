@@ -970,9 +970,12 @@ namespace FrEee.Game.Objects.Civilization
 			Log.Add(new GenericLogMessage(text));
 		}
 
-		public void RecordLog(IPictorial context, string text)
+		public void RecordLog(object context, string text)
 		{
-			Log.Add(context.CreateLogMessage(text));
+			if (context is IPictorial)
+				Log.Add((context as IPictorial).CreateLogMessage(text));
+			else
+				RecordLog(text);
 		}
 	}
 }
