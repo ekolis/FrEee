@@ -196,6 +196,12 @@ Description := [%Amount1%] components per turn can be repaired in this sector.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
+Name := Component Repair - System
+Targets := StarSystem, Vehicle, Planet, Component, Facility
+Description := [%Amount1%] components per turn can be repaired in this star system.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
 Name := Cargo Storage
 Targets := Vehicle, Planet, Component, Facility
 Description := Can store [%Amount1%]kT of cargo.
