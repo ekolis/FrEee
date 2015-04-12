@@ -486,7 +486,7 @@ Description           := Technology to produce resources from planets and astero
 Level Cost            := 100000
 Start Level           := 1
 Raise Level           := 2
-Maximum Level         := 5
+Maximum Level         := 3
 
 Name                  := Recycling
 Group                 := Industry
@@ -620,7 +620,7 @@ Tech Area Req         := Psychology
 Tech Level Req        := 2
 
 Name                  := Projectiles
-Group                 := Weapons - Delivery
+Group                 := Weapons
 Description           := Weapons which fire physical projectiles at their targets.
 Level Cost            := 5000
 Start Level           := 1
