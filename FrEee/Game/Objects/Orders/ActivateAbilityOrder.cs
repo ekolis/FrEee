@@ -174,7 +174,7 @@ namespace FrEee.Game.Objects.Orders
 					// check for supplies and close WP
 					if (Ability.BurnSupplies())
 					{
-						Owner.RecordLog(wp, "We have successfully closed the warp point connecting {0} to {1}.".F(wp.StarSystem, wp.Target.StarSystem);
+						Owner.RecordLog(wp, "We have successfully closed the warp point connecting {0} to {1}.".F(wp.StarSystem, wp.Target.StarSystem));
 						wp.DisposeAndLog("The {0} has closed the warp point connecting {1} to {2}.", Owner);
 						foreach (var otherwp in otherwps)
 							otherwp.DisposeAndLog("The warp point connecting {0} to {1} has closed.", Owner);
