@@ -931,13 +931,12 @@ Description := Warp points to and from this system cannot be closed.
 
 Name := Component Destroyed On Use
 Alias := Facility Destroyed On Use
-Alias := Hull Destroyed On Use
 Alias := Destroyed On Use
-Targets := Component, Facility, Hull
-Description := This component or facility is disabled when activated, and must be repaired to be used again. If this ability is present on a hull, the entire vehicle is destroyed permanently.
+Targets := Component, Facility
+Description := This component or facility is disabled when activated, and must be repaired to be used again.
 
 Name := Space Object Destroyed On Use
-Targets := Component, Facility, Hull
+Targets := Component, Facility, Vehicle
 Description := This component or facility destroys the entire vehicle or planet it is contained within when activated.
 
 Name := Ancient Ruins
