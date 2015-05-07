@@ -63,85 +63,99 @@ namespace FrEee.Utility
 		/// Raised when an item in a collection is encountered.
 		/// </summary>
 		public event ObjectDelegate Item;
-		
-		public void Parse(object o, ObjectGraphContext context = null)
+
+		public IDictionary<Type, IList<object>> Parse(object o, ObjectGraphContext context = null)
 		{
 			// set up our context if we haven't already
 			if (context == null)
 				context = new ObjectGraphContext();
 
-			context.objectStack.Push(o);
-
-			// deal with nulls
-			if (o == null)
+			// fire up the queue
+			context.ObjectQueue.Enqueue(o);
+			while (context.ObjectQueue.Any())
 			{
-				if (Null != null)
-					Null(null);
+				o = context.ObjectQueue.Dequeue();
+				context.objectStack.Push(o);
+
+				// deal with nulls
+				if (o == null)
+				{
+					if (Null != null)
+						Null(null);
+					context.objectStack.Pop();
+					continue;
+				}
+
+				context.objectStack.Push(o);
+				var type = o.GetType();
+
+				int? id = null;
+				if (!type.IsValueType && type != typeof(string))
+					id = context.GetID(o);
+
+				if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
+				{
+					// register type
+					ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
+					context.AddProperties(type);
+				}
+
+				if (!type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
+				{
+					if (id == null)
+					{
+						// add to context
+						context.Add(o);
+					}
+					else
+					{
+						if (KnownObject != null)
+							KnownObject(o);
+
+						// done
+						context.objectStack.Pop();
+						continue;
+					}
+				}
+
+				// object was found
+				if (StartObject != null)
+					StartObject(o);
+
+				// parse sub objects
+				if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type == typeof(string))
+				{
+					// nothing to do, no sub objects
+				}
+				else if (type == typeof(Color))
+					ParseColor((Color)o, context);
+				else if (typeof(Array).IsAssignableFrom(type))
+					ParseArray((Array)o, context);
+				else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any())
+					ParseCollection((IEnumerable)o, context);
+				else
+					ParseObject(o, context);
+
+				// done parsing object
+				if (EndObject != null)
+					EndObject(o);
 				context.objectStack.Pop();
-				return;
 			}
 
-			var type = o.GetType();
-
-			int? id = null;
-			if (!type.IsValueType && type != typeof(string))
-				id = context.GetID(o);
-
-			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
-			{
-				// register type
-				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
-				context.AddProperties(type);
-			}
-
-			if (id == null && !type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
-			{
-				// add to context
-				context.Add(o);
-			}
-
-			// deal with refs
-			if (id != null)
-			{
-				if (KnownObject != null)
-					KnownObject(o);
-
-				// done
-				context.objectStack.Pop();
-				return;
-			}
-
-			// object was found
-			if (StartObject != null)
-				StartObject(o);
-
-			// parse sub objects
-			if (type.IsPrimitive || typeof(Enum).IsAssignableFrom(type) || type == typeof(string))
-			{
-				// nothing to do, no sub objects
-			}
-			else if (type == typeof(Color))
-				ParseColor((Color)o, context);
-			else if (typeof(Array).IsAssignableFrom(type))
-				ParseArray((Array)o, context);
-			else if (typeof(IEnumerable).IsAssignableFrom(type) && type.GetMethods().Where(m => m.Name == "Add" && m.GetParameters().Length == 1 || m.GetParameters().Length == 2).Any())
-				ParseCollection((IEnumerable)o, context);
-			else
-				ParseObject(o, context);
-
-			// done parsing object
-			if (EndObject != null)
-				EndObject(o);
-			context.objectStack.Pop();
+			return context.KnownObjects;
 		}
 
 		private void ParseProperty(string propertyName, object o, object val, ObjectGraphContext context)
 		{
-			bool recurse = true; // if no event handler, assume we are parsing recursively
+			context.propertyStack.Push(propertyName);
+			bool recurse = true; // if no event handler, assume we are parsing recursively (really adding subproperties to queue)
 			if (Property != null)
 				recurse = Property(propertyName, o, val);
 			if (recurse)
-				Parse(val, context);
+			{
+				context.ObjectQueue.Enqueue(val);
+			}
+			context.propertyStack.Pop();
 		}
 
 		private void ParseColor(Color c, ObjectGraphContext context)
@@ -167,7 +181,7 @@ namespace FrEee.Utility
 				context.propertyStack.Push("(Array Item)");
 				if (Item != null)
 					Item(item);
-				Parse(item, context);
+				context.ObjectQueue.Enqueue(item);
 				context.propertyStack.Pop();
 			}
 		}
@@ -179,7 +193,7 @@ namespace FrEee.Utility
 				context.propertyStack.Push("(Collection Item)");
 				if (Item != null)
 					Item(item);
-				Parse(item, context);
+				context.ObjectQueue.Enqueue(item);
 				context.propertyStack.Pop();
 			}
 		}
@@ -190,14 +204,8 @@ namespace FrEee.Utility
 			var props = ObjectGraphContext.KnownProperties[type];
 			foreach (var p in props)
 			{
-				context.propertyStack.Push(p.Name);
 				var val = p.GetValue(o, new object[] { });
-				bool recurse = true;
-				if (Property != null) // if no event handler, assume we are parsing recursively
-					recurse = Property(p.Name, o, val);
-				if (recurse)
-					Parse(val, context);
-				context.propertyStack.Pop();
+				ParseProperty(p.Name, o, val, context);
 			}
 		}
 	}
@@ -213,6 +221,7 @@ namespace FrEee.Utility
 			KnownIDs = new SafeDictionary<Type, IDictionary<object, int>>();
 			objectStack = new Stack<object>();
 			propertyStack = new Stack<string>();
+			ObjectQueue = new Queue<object>();
 		}
 
 		static ObjectGraphContext()
@@ -223,6 +232,8 @@ namespace FrEee.Utility
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
 			CollectionAdders = new SafeDictionary<Type, Delegate>();
 		}
+
+		internal Queue<object> ObjectQueue { get; set; }
 
 		internal Stack<object> objectStack;
 
@@ -288,7 +299,7 @@ namespace FrEee.Utility
 			KnownObjects[type].Add(o);
 			if (!KnownIDs.ContainsKey(type))
 				KnownIDs.Add(type, new SafeDictionary<object, int>());
-			var id =  KnownObjects[type].Count - 1;
+			var id = KnownObjects[type].Count - 1;
 			KnownIDs[type].Add(o, id);
 			AddProperties(type);
 			return id;
