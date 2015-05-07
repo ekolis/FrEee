@@ -344,10 +344,10 @@ Tech Area Req         := Spaceframe Construction
 Tech Level Req        := =level
 Ability Type          := Ship Bridge
 Ability Type          := Combat To Hit Offense Plus
-Ability Val           := =level * 5
+Ability Val           := =level * 2
 Ability Val           := Bridge
 Ability Type          := Combat To Hit Defense Plus
-Ability Val           := =level * 5
+Ability Val           := =level * 2
 Ability Val           := Bridge
 Weapon Type           := None
 
@@ -357,7 +357,7 @@ Name                  := ="Cockpit {0}".F(level.ToRomanNumeral())
 Description           := The main control center of a fighter or troop.
 Pic Num               := 270
 Tonnage Space Taken   := 1
-Tonnage Structure     := =level + 2
+Tonnage Structure     := 3
 Cost Minerals         := 300
 Cost Organics         := 200
 Cost Radioactives     := 0
@@ -365,15 +365,737 @@ Vehicle Type          := Fighter, Troop
 Supply Amount Used    := 0
 Restrictions          := None
 General Group         := Vehicle Control
-Family                := Bridge
+Family                := Cockpit
 Roman Numeral         := =level
 Custom Group          := 0
 Tech Area Req         := Spaceframe Construction
 Tech Level Req        := =level
 Ability Type          := Ship Bridge
+Ability Type          := Combat To Hit Offense Plus
+Ability Val           := =level * 2
+Ability Val           := Cockpit
+Ability Type          := Combat To Hit Defense Plus
+Ability Val           := =level * 2
+Ability Val           := Cockpit
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Space Yard {0}".F(level.ToRomanNumeral())
+Description           := Construction component capable of building and repairing ships in space.
+Pic Num               := 49
+Tonnage Space Taken   := 400
+Tonnage Structure     := 800
+Cost Minerals         := 8000
+Cost Organics         := 5000
+Cost Radioactives     := 2000
+Vehicle Type          := Ship, Base
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Construction
+Family                := Space Yard
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Space Yards
+Tech Level Req        := =level
+Ability Type          := Space Yard
+Ability Val           := 1
+Ability Val           := =level * 1000
+Ability Type          := Space Yard
+Ability Val           := 2
+Ability Val           := =level * 1000
+Ability Type          := Space Yard
+Ability Val           := 3
+Ability Val           := =level * 1000
+Ability Type          := Component Repair
+Ability Val           := =3 + level
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Repair Bay {0}".F(level.ToRomanNumeral())
+Description           := Modular repair component capable of repairing most types of components without a space yard.
+Pic Num               := 103
+Tonnage Space Taken   := =70 - 10 * level
+Tonnage Structure     := =70 - 10 * level
+Cost Minerals         := 200
+Cost Organics         := 200
+Cost Radioactives     := 50
+Vehicle Type          := Ship, Base, Satellite, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Construction
+Family                := Repair Bay
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Repair
+Tech Level Req        := =level
+Ability Type          := Component Repair
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Cargo Bay {0}".F(level.ToRomanNumeral())
+Description           := Area on a starship where cargo can be housed.
+Pic Num               := 269
+Tonnage Space Taken   := 100
+Tonnage Structure     := 100
+Cost Minerals         := 1000
+Cost Organics         := 100
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Cargo
+Family                := Cargo Bay
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Cargo
+Tech Level Req        := =level
+Ability Type          := Cargo Storage
+Ability Val           := =500 + 100 * level
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Fuel Cell {0}".F(level.ToRomanNumeral())
+Description           := Stores reserve fuel for a ship.
+Pic Num               := 117
+Tonnage Space Taken   := 20
+Tonnage Structure     := 10
+Cost Minerals         := 100
+Cost Organics         := 100
+Cost Radioactives     := 100
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fuel Cell
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Cargo
+Tech Level Req        := =level
+Tech Area Req         := Resupply
+Tech Level Req        := =level
+Ability Type          := Supply Storage
+Ability Val           := =300 + 100 * level
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Fission Reactor {0}".F(level.ToRomanNumeral())
+Description           := Reactor powered by fission of heavy atoms such as uranium.
+Pic Num               := 37
+Tonnage Space Taken   := 50
+Tonnage Structure     := 100
+Cost Minerals         := 250
+Cost Organics         := 100
+Cost Radioactives     := 1000
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fission Reactor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level
+Tech Area Req         := Nuclear Fission
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 1000
+Ability Type          := Supply Generation Per Turn
+Ability Val           := =level * 50
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Fusion Reactor {0}".F(level.ToRomanNumeral())
+Description           := Reactor powered by fusion of light atoms such as hydrogen.
+Pic Num               := 62
+Tonnage Space Taken   := 40
+Tonnage Structure     := 80
+Cost Minerals         := 250
+Cost Organics         := 250
+Cost Radioactives     := 1500
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Fusion Reactor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level + 2
+Tech Area Req         := Nuclear Fusion
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 3000
+Ability Type          := Supply Generation Per Turn
+Ability Val           := =level * 100
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Hyper-Phase Reactor {0}".F(level.ToRomanNumeral())
+Description           := Reactor powered by phasing matter in and out of spacetime.
+Pic Num               := 41
+Tonnage Space Taken   := 60
+Tonnage Structure     := 120
+Cost Minerals         := 1000
+Cost Organics         := 1000
+Cost Radioactives     := 1000
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Hyper-Phase Reactor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level + 2
+Tech Area Req         := Phased Energy
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 1000
+Ability Type          := Supply Generation Per Turn
+Ability Val           := =level * 200
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Antimatter Reactor {0}".F(level.ToRomanNumeral())
+Description           := Reactor powered by matter/antimatter annihilation.
+Pic Num               := 60
+Tonnage Space Taken   := 30
+Tonnage Structure     := 60
+Cost Minerals         := 1500
+Cost Organics         := 1500
+Cost Radioactives     := 1000
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Antimatter Reactor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level + 4
+Tech Area Req         := Antimatter Annihilation
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 9000
+Ability Type          := Supply Generation Per Turn
+Ability Val           := =level * 200
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Zero Point Reactor {0}".F(level.ToRomanNumeral())
+Description           := Reactor powered by zero point energy.
+Pic Num               := 81
+Tonnage Space Taken   := 20
+Tonnage Structure     := 40
+Cost Minerals         := 1000
+Cost Organics         := 200
+Cost Radioactives     := 2000
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Zero Point Reactor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level + 4
+Tech Area Req         := Zero Point Energy
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 3000
+Ability Type          := Supply Generation Per Turn
+Ability Val           := =level * 400
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Solar Panel {0}".F(level.ToRomanNumeral())
+Description           := Energy collection device which generates power by absorbing sunlight.
+Pic Num               := 128
+Tonnage Space Taken   := 10
+Tonnage Structure     := 10
+Cost Minerals         := 100
+Cost Organics         := 100
+Cost Radioactives     := 20
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Solar Panel
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level
+Tech Area Req         := Solar Power
+Tech Level Req        := =level
+Ability Type          := Supply Storage
+Ability Val           := 100
+Ability Type          := Solar Supply Generation
+Ability Val           := =level * 20
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Psionic Amplifier {0}".F(level.ToRomanNumeral())
+Description           := Generates energy by amplifying the natural gravitational curvature of spacetime using telekinesis.
+Pic Num               := 166
+Tonnage Space Taken   := 40
+Tonnage Structure     := 40
+Cost Minerals         := 200
+Cost Organics         := 1200
+Cost Radioactives     := 400
+Vehicle Type          := Ship
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := Psionic Amplifier
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Resupply
+Tech Level Req        := =level + 4
+Tech Area Req         := Psionics
+Tech Level Req        := =level + 2
+Ability Type          := Supply Storage
+Ability Val           := 3000
+Ability Type          := Solar Supply Generation
+Ability Val           := =level * 200
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Small Thruster {0}".F(level.ToRomanNumeral())
+Description           := Generates a small amount of thrust for a vehicle. Cheap, but not very fuel efficient.
+Pic Num               := 132
+Tonnage Space Taken   := 2
+Tonnage Structure     := 3
+Cost Minerals         := 20
+Cost Organics         := 5
+Cost Radioactives     := 10
+Vehicle Type          := Fighter, Drone
+Supply Amount Used    := 2
+Restrictions          := None
+General Group         := Propulsion
+Family                := Small Thruster
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Propulsion
+Tech Level Req        := =level
+Ability Type          := Standard Ship Movement
+Ability Val           := =11 + level
+Ability Type          := Supply Storage
+Ability Val           := 20
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Medium Thruster {0}".F(level.ToRomanNumeral())
+Description           := Generates a moderate amount of thrust for a vehicle.
+Pic Num               := 8
+Tonnage Space Taken   := 10
+Tonnage Structure     := 20
+Cost Minerals         := 200
+Cost Organics         := 50
+Cost Radioactives     := 100
+Vehicle Type          := Ship, Drone
+Supply Amount Used    := 6
+Restrictions          := None
+General Group         := Propulsion
+Family                := Medium Thruster
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Propulsion
+Tech Level Req        := =level
+Ability Type          := Standard Ship Movement
+Ability Val           := =55 + 5 * level
+Ability Type          := Supply Storage
+Ability Val           := 100
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Large Thruster {0}".F(level.ToRomanNumeral())
+Description           := Generates a large amount of thrust for a vehicle. Expensive but fuel efficient.
+Pic Num               := 27
+Tonnage Space Taken   := 50
+Tonnage Structure     := 150
+Cost Minerals         := 2000
+Cost Organics         := 500
+Cost Radioactives     := 1000
+Vehicle Type          := Ship
+Supply Amount Used    := 18
+Restrictions          := None
+General Group         := Propulsion
+Family                := Large Thruster
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Propulsion
+Tech Level Req        := =level
+Ability Type          := Standard Ship Movement
+Ability Val           := =275 + 25 * level
+Ability Type          := Supply Storage
+Ability Val           := 500
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Afterburner {0}".F(level.ToRomanNumeral())
+Description           := Increases a fighter's combat speed. Does not increase strategic movement speed.
+Pic Num               := 188
+Tonnage Space Taken   := 5
+Tonnage Structure     := 5
+Cost Minerals         := 20
+Cost Organics         := 30
+Cost Radioactives     := 75
+Vehicle Type          := Fighter
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Propulsion
+Family                := Afterburner
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Propulsion
+Tech Level Req        := =level
+Ability Type          := Combat Movement
+Ability Val           := =level + 1
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Maneuvering Thruster {0}".F(level.ToRomanNumeral())
+Description           := Increases a vehicle's combat speed. Does not increase strategic movement speed.
+Pic Num               := 188
+Tonnage Space Taken   := =60 - level * 10
+Tonnage Structure     := =60 - level * 10
+Cost Minerals         := 200
+Cost Organics         := 300
+Cost Radioactives     := 750
+Vehicle Type          := Ship, Base, Drone, Satellite
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Propulsion
+Family                := Maneuvering Thruster
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Propulsion
+Tech Level Req        := =level
+Ability Type          := Combat Movement
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Structural Reinforcement {0}".F(level.ToRomanNumeral())
+Description           := Reinforcement of critical sections of the hull increases a vehicle's overall durability.
+Pic Num               := 179
+Tonnage Space Taken   := 10
+Tonnage Structure     := =50 + level * 50
+Cost Minerals         := 50
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base, Drone, Satellite
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Structural Reinforcement
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level * 2 - 1
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Light Titanium Armor {0}".F(level.ToRomanNumeral())
+Description           := Durable armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 188
+Tonnage Space Taken   := 1
+Tonnage Structure     := =5 + level
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Titanium Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level
+Tech Area Req         := Titanium
+Tech Level Req        := =level
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Titanium Armor {0}".F(level.ToRomanNumeral())
+Description           := Durable armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 188
+Tonnage Space Taken   := 10
+Tonnage Structure     := =50 + level * 10
+Cost Minerals         := 50
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship, Base, Drone, Satellite
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Titanium Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level
+Tech Area Req         := Titanium
+Tech Level Req        := =level
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Light Zortrium Armor {0}".F(level.ToRomanNumeral())
+Description           := Durable armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 28
+Tonnage Space Taken   := 1
+Tonnage Structure     := =10 + level * 2
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 5
+Vehicle Type          := Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Zortrium Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level + 2
+Tech Area Req         := Zortrium
+Tech Level Req        := =level
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Zortrium Armor {0}".F(level.ToRomanNumeral())
+Description           := Durable armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 28
+Tonnage Space Taken   := 10
+Tonnage Structure     := =100 + level * 20
+Cost Minerals         := 50
+Cost Organics         := 0
+Cost Radioactives     := 50
+Vehicle Type          := Ship, Base, Drone, Satellite
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Zortrium Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level + 2
+Tech Area Req         := Zortrium
+Tech Level Req        := =level
+Ability Type          := Armor
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Light Biomorphic Armor {0}".F(level.ToRomanNumeral())
+Description           := Living armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 195
+Tonnage Space Taken   := 1
+Tonnage Structure     := =10 + level * 2
+Cost Minerals         := 5
+Cost Organics         := 0
+Cost Radioactives     := 5
+Vehicle Type          := Fighter, Troop
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Light Biomorphic Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level + 2
+Tech Area Req         := Biomorphic Fungi
+Tech Level Req        := =level
+Ability Type          := Armor
+Ability Type          := Armor Regeneration
+Ability Val           := 1
+Weapon Type           := None
+
+Parameter Name        := level
+Parameter Maximum     := 5
+Name                  := ="Biomorphic Armor {0}".F(level.ToRomanNumeral())
+Description           := Living armor placed on the exterior of a vehicle to absorb damage.
+Pic Num               := 195
+Tonnage Space Taken   := 10
+Tonnage Structure     := =100 + level * 20
+Cost Minerals         := 50
+Cost Organics         := 0
+Cost Radioactives     := 50
+Vehicle Type          := Ship, Base, Drone, Satellite
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Defenses
+Family                := Biomorphic Armor
+Roman Numeral         := =level
+Custom Group          := 0
+Tech Area Req         := Armor
+Tech Level Req        := =level + 2
+Tech Area Req         := Biomorphic Fungi
+Tech Level Req        := =level
+Ability Type          := Armor
+Ability Type          := Armor Regeneration
+Ability Val           := 10
 Weapon Type           := None
 
 // TODO
+
+Name                  := Armor I
+Description           := Standard titanium armor used to protect a ship from physical damage.
+Pic Num               := 28
+Tonnage Space Taken   := 10
+Tonnage Structure     := 30
+Cost Minerals         := 50
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship\Base\Sat\WeapPlat\Drone
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Armor
+Family                := 10
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Armor
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability 1 Type        := Armor
+Ability 1 Descr       := Is damaged before any other components on a ship.
+Ability 1 Val 1       := 0
+Ability 1 Val 2       := 0
+Weapon Type           := None
+
+Name                  := Ion Engine I
+Description           := Standard Ion Engine for sub-light inter-system travel.
+Pic Num               := 9
+Tonnage Space Taken   := 10
+Tonnage Structure     := 20
+Cost Minerals         := 200
+Cost Organics         := 0
+Cost Radioactives     := 50
+Vehicle Type          := Ship\Base\Drone
+Supply Amount Used    := 10
+Restrictions          := None
+General Group         := Engines
+Family                := 9
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Propulsion
+Tech Level Req 1      := 1
+Number of Abilities   := 3
+Ability 1 Type        := Standard Ship Movement
+Ability 1 Descr       := Generates 1 standard movement.
+Ability 1 Val 1       := 1
+Ability 1 Val 2       := 0
+Ability 2 Type        := Supply Storage
+Ability 2 Descr       := Can store 500 units of supply.
+Ability 2 Val 1       := 500
+Ability 2 Val 2       := 0
+Ability 3 Type        := Movement Bonus
+Ability 3 Descr       := 
+Ability 3 Val 1       := 0
+Ability 3 Val 2       := 0
+Weapon Type           := None
+
+Name                  := Quantum Reactor
+Description           := Self-perpetuating energy source. Ships with this reactor will not have to resupply.
+Pic Num               := 37
+Tonnage Space Taken   := 20
+Tonnage Structure     := 20
+Cost Minerals         := 1000
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship\Base\Sat
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Supply
+Family                := 25
+Roman Numeral         := 0
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Resupply
+Tech Level Req 1      := 5
+Number of Abilities   := 1
+Ability 1 Type        := Quantum Reactor
+Ability 1 Descr       := Generates limitless fuel.
+Ability 1 Val 1       := 0
+Ability 1 Val 2       := 0
+Weapon Type           := None
+
+Name                  := Cargo Bay I
+Description           := Area on a starship where cargo can be housed.
+Pic Num               := 269
+Tonnage Space Taken   := 20
+Tonnage Structure     := 20
+Cost Minerals         := 200
+Cost Organics         := 0
+Cost Radioactives     := 0
+Vehicle Type          := Ship\Base
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Cargo
+Family                := 7
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Cargo
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability 1 Type        := Cargo Storage
+Ability 1 Descr       := Provides 150kT worth of cargo space.
+Ability 1 Val 1       := 150
+Ability 1 Val 2       := 0
+Weapon Type           := None
+
+Name                  := Repair Bay I
+Description           := Component which can repair other ships in space.
+Pic Num               := 103
+Tonnage Space Taken   := 150
+Tonnage Structure     := 150
+Cost Minerals         := 300
+Cost Organics         := 0
+Cost Radioactives     := 10
+Vehicle Type          := Ship\Base
+Supply Amount Used    := 0
+Restrictions          := None
+General Group         := Construction
+Family                := 35
+Roman Numeral         := 1
+Custom Group          := 0
+Number of Tech Req    := 1
+Tech Area Req 1       := Repair
+Tech Level Req 1      := 1
+Number of Abilities   := 1
+Ability 1 Type        := Component Repair
+Ability 1 Descr       := Can repair 3 components per turn.
+Ability 1 Val 1       := 3
+Ability 1 Val 2       := 0
+Weapon Type           := None
 
 Name                  := Bridge
 Description           := The main control center of a starship.
