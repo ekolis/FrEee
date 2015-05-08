@@ -86,7 +86,6 @@ namespace FrEee.Utility
 					continue;
 				}
 
-				context.objectStack.Push(o);
 				var type = o.GetType();
 
 				int? id = null;
