@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject
 	{
 		public Planet()
 		{
@@ -172,6 +172,24 @@ namespace FrEee.Game.Objects.Space
 		/// The planet's gross income, taking into presence presence or lack of a spaceport.
 		/// </summary>
 		public ResourceQuantity GrossIncome
+		{
+			get
+			{
+				if (Colony == null)
+					return new ResourceQuantity();
+
+				var sys = StarSystem;
+				if (sys.HasAbility("Spaceport", Owner))
+					return GrossIncomeIgnoringSpaceport;
+				else
+					return GrossIncomeIgnoringSpaceport * Colony.MerchantsRatio;
+			}
+		}
+
+		/// <summary>
+		/// Base resource generation, not taking into account value.
+		/// </summary>
+		public ResourceQuantity ResourceGeneration
 		{
 			get
 			{

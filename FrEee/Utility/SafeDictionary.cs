@@ -16,9 +16,15 @@ namespace FrEee.Utility
 	{
 		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
 
-		public SafeDictionary()
+		public SafeDictionary(bool autoInit = false)
 		{
+			AutoInit = autoInit;
 		}
+
+		/// <summary>
+		/// Should newly referenced values be initialized to new objects or left null?
+		/// </summary>
+		public bool AutoInit { get; set; }
 
 		/// <summary>
 		/// For initializing newly created values.
@@ -67,7 +73,22 @@ namespace FrEee.Utility
 				if (ContainsKey(key))
 					return dict[key];
 				else
-					return default(TValue);
+				{
+					if (AutoInit)
+					{
+						try
+						{
+							return (TValue)typeof(TValue).Instantiate(AutoInitArgs);
+						}
+						catch
+						{
+							// can't instantiate the object
+							return default(TValue);
+						}
+					}
+					else
+						return default(TValue);
+				}
 			}
 			set
 			{

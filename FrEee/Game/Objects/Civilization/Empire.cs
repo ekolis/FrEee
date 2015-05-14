@@ -122,6 +122,75 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public IList<ICommand> Commands { get; private set; }
 
+		public ResourceQuantity ColonyIncome
+		{
+			get
+			{
+				// shouldn't change except at turn processing...
+				if (colonyIncome == null || Empire.Current == null)
+				{
+					colonyIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
+				}
+
+				return colonyIncome;
+			}
+		}
+
+		private ResourceQuantity colonyIncome;
+
+		public IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> RemoteMiners
+		{
+			get
+			{
+				// shouldn't change except at turn processing...
+				if (remoteMiners == null || Empire.Current == null)
+				{
+					remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
+					foreach (var miner in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
+					{
+						// only unowned planets and asteroids can be mined
+						foreach (var sobj in miner.Sector.SpaceObjects.OfType<IMineableSpaceObject>().Unowned())
+						{
+							foreach (var resource in Resource.All)
+							{
+								var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Remote Resource Generation - " + resource));
+								if (rule != null)
+								{
+									var amount = miner.GetAbilityValue(rule.Name).ToInt();
+									var income = amount * sobj.ResourceValue[resource] / 100;
+									var sectorEmpire = Tuple.Create(miner.Sector, miner.Owner);
+
+									// only one vehicle per empire can mine a sector in any given resource
+									// but we get the one with the most mining ability :)
+									var best = remoteMiners.Keys.SingleOrDefault(k => k.Item1.Sector == miner.Sector);
+									if (best == null)
+										remoteMiners[Tuple.Create(miner, sobj)][resource] = income;
+									else if (income > remoteMiners[best][resource])
+										remoteMiners[best][resource] = income;
+								}
+							}
+						}
+					}
+				}
+				return remoteMiners;
+			}
+		}
+
+		private IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> remoteMiners = new SafeDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity>(true);
+
+		public ResourceQuantity RemoteMiningIncome
+		{
+			get
+			{
+				// shouldn't change except at turn processing...
+				if (remoteMiningIncome == null || Empire.Current == null)
+					remoteMiningIncome = RemoteMiners.Sum(kvp => kvp.Value);
+				return remoteMiningIncome;
+			}
+		}
+
+		private ResourceQuantity remoteMiningIncome;
+
 		/// <summary>
 		/// The empire's basic resource income from mining and the like, not including maintenance costs or trade/tributes.
 		/// </summary>
@@ -134,11 +203,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (grossDomesticIncome == null || Empire.Current == null)
 				{
-					if (!ColonizedPlanets.Any())
-						grossDomesticIncome = new ResourceQuantity();
-					else
-						grossDomesticIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
-					// TODO - remote mining and raw resource/points generation
+					grossDomesticIncome = ColonyIncome + RemoteMiningIncome;
 
 					if (this != Empire.Current)
 					{

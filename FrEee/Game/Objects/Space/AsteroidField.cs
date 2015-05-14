@@ -13,7 +13,7 @@ namespace FrEee.Game.Objects.Space
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
 	[Serializable]
-	public class AsteroidField : StellarObject, ITemplate<AsteroidField>
+	public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableSpaceObject
 	{
 		public AsteroidField()
 		{

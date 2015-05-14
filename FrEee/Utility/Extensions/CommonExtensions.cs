@@ -3218,6 +3218,42 @@ namespace FrEee.Utility.Extensions
 		{
 			return string.Format(format, args);
 		}
+
+		/// <summary>
+		/// Filters a list to objects belonging to a specific empire.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> BelongingTo<T>(this IEnumerable<T> list, Empire emp) where T : IOwnable
+		{
+			return list.Where(t => t.Owner == emp);
+		}
+
+		/// <summary>
+		/// Filters a list to objects that are unowned.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> Unowned<T>(this IEnumerable<T> list) where T : IOwnable
+		{
+			return list.BelongingTo(null);
+		}
+
+		/// <summary>
+		/// Filters a list to objects that are owned.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> Owned<T>(this IEnumerable<T> list) where T : IOwnable
+		{
+			return list.Where(t => t.Owner != null);
+		}
 	}
 
 	public enum IDCopyBehavior

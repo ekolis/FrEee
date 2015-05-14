@@ -61,6 +61,16 @@ namespace FrEee.Game.Objects.Abilities
 		}
 
 		/// <summary>
+		/// Does this rule's name or any of its aliases start with the specified prefix?
+		/// </summary>
+		/// <param name="prefix"></param>
+		/// <returns></returns>
+		public bool StartsWith(string prefix)
+		{
+			return Name.StartsWith(prefix) || Aliases.Any(a => a.StartsWith(prefix));
+		}
+
+		/// <summary>
 		/// A default description for abilities which do not provide their own description.
 		/// Can use, e.g. [%Amount1%] to specify the amount in the Value 1 field.
 		/// </summary>
