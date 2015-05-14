@@ -3254,6 +3254,21 @@ namespace FrEee.Utility.Extensions
 		{
 			return list.Where(t => t.Owner != null);
 		}
+
+		public static ResourceQuantity RawResourceIncome(this IAbilityObject sobj)
+		{
+			var rawResourceIncome = new ResourceQuantity();
+			foreach (var resource in Resource.All)
+			{
+				var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
+				if (rule != null)
+				{
+					var amount = sobj.GetAbilityValue(rule.Name).ToInt();
+					rawResourceIncome += resource * amount;
+				}
+			}
+			return rawResourceIncome;
+		}
 	}
 
 	public enum IDCopyBehavior

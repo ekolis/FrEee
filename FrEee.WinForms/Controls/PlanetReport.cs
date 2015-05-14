@@ -106,11 +106,13 @@ namespace FrEee.WinForms.Controls
 
 				// load income
 				var income = Planet.GrossIncome;
-				resIncomeMinerals.Amount = income[Resource.Minerals];
-				resIncomeOrganics.Amount = income[Resource.Organics];
-				resIncomeRadioactives.Amount = income[Resource.Radioactives];
-				resResearch.Amount = income[Resource.Research];
-				resIntel.Amount = income[Resource.Intelligence];
+				var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
+				var totalIncome = income + remoteMining;
+				resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
+				resIncomeOrganics.Amount = totalIncome[Resource.Organics];
+				resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
+				resResearch.Amount = totalIncome[Resource.Research];
+				resIntel.Amount = totalIncome[Resource.Intelligence];
 
 				// load construction data
 				if (Planet.Colony == null || Planet.ConstructionQueue.FirstItemEta == null)

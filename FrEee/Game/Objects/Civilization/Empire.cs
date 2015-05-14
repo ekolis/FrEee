@@ -203,17 +203,7 @@ namespace FrEee.Game.Objects.Civilization
 				{
 					rawResourceIncome = new ResourceQuantity();
 					foreach (var sobj in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
-					{
-						foreach (var resource in Resource.All)
-						{
-							var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
-							if (rule != null)
-							{
-								var amount = sobj.GetAbilityValue(rule.Name).ToInt();
-								rawResourceIncome += resource * amount;
-							}
-						}
-					}
+						rawResourceIncome += sobj.RawResourceIncome();
 				}
 				return rawResourceIncome;
 				

@@ -213,10 +213,15 @@ namespace FrEee.WinForms.Controls
 				txtExperience.Text = "None"; // TODO - crew XP
 				txtFleet.Text = vehicle.Container == null ? "None" : vehicle.Container.Name;
 
-				// maintenance
-				resMaintMin.Amount = vehicle.MaintenanceCost[Resource.Minerals];
-				resMaintOrg.Amount = vehicle.MaintenanceCost[Resource.Organics];
-				resMaintRad.Amount = vehicle.MaintenanceCost[Resource.Radioactives];
+				// income
+				// TODO - research and intel income
+				var remoteMining = vehicle.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == vehicle).Sum(kvp => kvp.Value);
+				var maintenance = vehicle.MaintenanceCost;
+				var rawResources = vehicle.RawResourceIncome();
+				var netIncome = remoteMining + rawResources - maintenance;
+				resIncomeMin.Amount = netIncome[Resource.Minerals];
+				resIncomeOrg.Amount = netIncome[Resource.Organics];
+				resIncomeRad.Amount = netIncome[Resource.Radioactives];
 
 				// construction data
 				if (Vehicle.ConstructionQueue == null || Vehicle.ConstructionQueue.FirstItemEta == null)

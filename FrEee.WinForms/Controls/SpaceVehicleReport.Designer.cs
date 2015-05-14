@@ -50,10 +50,10 @@ namespace FrEee.WinForms.Controls
 			this.txtConstructionItem = new System.Windows.Forms.Label();
 			this.lblConstructionItem = new System.Windows.Forms.Label();
 			this.txtComponentsFunctional = new System.Windows.Forms.Label();
-			this.resMaintMin = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resIncomeMin = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblComponents = new System.Windows.Forms.Label();
-			this.resMaintOrg = new FrEee.WinForms.Controls.ResourceDisplay();
-			this.resMaintRad = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resIncomeOrg = new FrEee.WinForms.Controls.ResourceDisplay();
+			this.resIncomeRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.lblMaint = new System.Windows.Forms.Label();
 			this.txtFleet = new System.Windows.Forms.Label();
 			this.lblFleet = new System.Windows.Forms.Label();
@@ -170,10 +170,10 @@ namespace FrEee.WinForms.Controls
 			this.panel1.Controls.Add(this.txtConstructionItem);
 			this.panel1.Controls.Add(this.lblConstructionItem);
 			this.panel1.Controls.Add(this.txtComponentsFunctional);
-			this.panel1.Controls.Add(this.resMaintMin);
+			this.panel1.Controls.Add(this.resIncomeMin);
 			this.panel1.Controls.Add(this.lblComponents);
-			this.panel1.Controls.Add(this.resMaintOrg);
-			this.panel1.Controls.Add(this.resMaintRad);
+			this.panel1.Controls.Add(this.resIncomeOrg);
+			this.panel1.Controls.Add(this.resIncomeRad);
 			this.panel1.Controls.Add(this.lblMaint);
 			this.panel1.Controls.Add(this.txtFleet);
 			this.panel1.Controls.Add(this.lblFleet);
@@ -198,7 +198,7 @@ namespace FrEee.WinForms.Controls
 			this.panel1.Location = new System.Drawing.Point(3, 3);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0, 0, 12, 0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(248, 643);
+			this.panel1.Size = new System.Drawing.Size(231, 643);
 			this.panel1.TabIndex = 0;
 			// 
 			// txtAge
@@ -224,7 +224,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionTime.Location = new System.Drawing.Point(121, 346);
+			this.txtConstructionTime.Location = new System.Drawing.Point(104, 346);
 			this.txtConstructionTime.Name = "txtConstructionTime";
 			this.txtConstructionTime.Size = new System.Drawing.Size(127, 15);
 			this.txtConstructionTime.TabIndex = 120;
@@ -246,7 +246,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtConstructionItem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtConstructionItem.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtConstructionItem.Location = new System.Drawing.Point(121, 331);
+			this.txtConstructionItem.Location = new System.Drawing.Point(104, 331);
 			this.txtConstructionItem.Name = "txtConstructionItem";
 			this.txtConstructionItem.Size = new System.Drawing.Size(127, 15);
 			this.txtConstructionItem.TabIndex = 118;
@@ -274,20 +274,20 @@ namespace FrEee.WinForms.Controls
 			this.txtComponentsFunctional.TabIndex = 105;
 			this.txtComponentsFunctional.Text = "11/11 functional";
 			// 
-			// resMaintMin
+			// resIncomeMin
 			// 
-			this.resMaintMin.Amount = 500;
-			this.resMaintMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.resMaintMin.BackColor = System.Drawing.Color.Black;
-			this.resMaintMin.Change = null;
-			this.resMaintMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resMaintMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resMaintMin.Location = new System.Drawing.Point(25, 361);
-			this.resMaintMin.Margin = new System.Windows.Forms.Padding(0);
-			this.resMaintMin.Name = "resMaintMin";
-			this.resMaintMin.ResourceName = "Minerals";
-			this.resMaintMin.Size = new System.Drawing.Size(68, 20);
-			this.resMaintMin.TabIndex = 116;
+			this.resIncomeMin.Amount = 500;
+			this.resIncomeMin.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resIncomeMin.BackColor = System.Drawing.Color.Black;
+			this.resIncomeMin.Change = null;
+			this.resIncomeMin.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resIncomeMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+			this.resIncomeMin.Location = new System.Drawing.Point(8, 361);
+			this.resIncomeMin.Margin = new System.Windows.Forms.Padding(0);
+			this.resIncomeMin.Name = "resIncomeMin";
+			this.resIncomeMin.ResourceName = "Minerals";
+			this.resIncomeMin.Size = new System.Drawing.Size(68, 20);
+			this.resIncomeMin.TabIndex = 116;
 			// 
 			// lblComponents
 			// 
@@ -300,35 +300,35 @@ namespace FrEee.WinForms.Controls
 			this.lblComponents.TabIndex = 101;
 			this.lblComponents.Text = "Components";
 			// 
-			// resMaintOrg
+			// resIncomeOrg
 			// 
-			this.resMaintOrg.Amount = 100;
-			this.resMaintOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.resMaintOrg.BackColor = System.Drawing.Color.Black;
-			this.resMaintOrg.Change = null;
-			this.resMaintOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resMaintOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resMaintOrg.Location = new System.Drawing.Point(100, 361);
-			this.resMaintOrg.Margin = new System.Windows.Forms.Padding(0);
-			this.resMaintOrg.Name = "resMaintOrg";
-			this.resMaintOrg.ResourceName = "Organics";
-			this.resMaintOrg.Size = new System.Drawing.Size(68, 20);
-			this.resMaintOrg.TabIndex = 115;
+			this.resIncomeOrg.Amount = 100;
+			this.resIncomeOrg.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resIncomeOrg.BackColor = System.Drawing.Color.Black;
+			this.resIncomeOrg.Change = null;
+			this.resIncomeOrg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resIncomeOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+			this.resIncomeOrg.Location = new System.Drawing.Point(83, 361);
+			this.resIncomeOrg.Margin = new System.Windows.Forms.Padding(0);
+			this.resIncomeOrg.Name = "resIncomeOrg";
+			this.resIncomeOrg.ResourceName = "Organics";
+			this.resIncomeOrg.Size = new System.Drawing.Size(68, 20);
+			this.resIncomeOrg.TabIndex = 115;
 			// 
-			// resMaintRad
+			// resIncomeRad
 			// 
-			this.resMaintRad.Amount = 200;
-			this.resMaintRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.resMaintRad.BackColor = System.Drawing.Color.Black;
-			this.resMaintRad.Change = null;
-			this.resMaintRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.resMaintRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resMaintRad.Location = new System.Drawing.Point(177, 361);
-			this.resMaintRad.Margin = new System.Windows.Forms.Padding(0);
-			this.resMaintRad.Name = "resMaintRad";
-			this.resMaintRad.ResourceName = "Radioactives";
-			this.resMaintRad.Size = new System.Drawing.Size(68, 20);
-			this.resMaintRad.TabIndex = 114;
+			this.resIncomeRad.Amount = 200;
+			this.resIncomeRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.resIncomeRad.BackColor = System.Drawing.Color.Black;
+			this.resIncomeRad.Change = null;
+			this.resIncomeRad.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.resIncomeRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.resIncomeRad.Location = new System.Drawing.Point(160, 361);
+			this.resIncomeRad.Margin = new System.Windows.Forms.Padding(0);
+			this.resIncomeRad.Name = "resIncomeRad";
+			this.resIncomeRad.ResourceName = "Radioactives";
+			this.resIncomeRad.Size = new System.Drawing.Size(68, 20);
+			this.resIncomeRad.TabIndex = 114;
 			// 
 			// lblMaint
 			// 
@@ -345,7 +345,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtFleet.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFleet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtFleet.Location = new System.Drawing.Point(118, 317);
+			this.txtFleet.Location = new System.Drawing.Point(101, 317);
 			this.txtFleet.Name = "txtFleet";
 			this.txtFleet.Size = new System.Drawing.Size(130, 15);
 			this.txtFleet.TabIndex = 112;
@@ -367,7 +367,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtExperience.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtExperience.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtExperience.Location = new System.Drawing.Point(121, 302);
+			this.txtExperience.Location = new System.Drawing.Point(104, 302);
 			this.txtExperience.Name = "txtExperience";
 			this.txtExperience.Size = new System.Drawing.Size(127, 15);
 			this.txtExperience.TabIndex = 110;
@@ -389,7 +389,7 @@ namespace FrEee.WinForms.Controls
 			// 
 			this.txtOrder.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.txtOrder.Location = new System.Drawing.Point(113, 287);
+			this.txtOrder.Location = new System.Drawing.Point(96, 287);
 			this.txtOrder.Name = "txtOrder";
 			this.txtOrder.Size = new System.Drawing.Size(135, 15);
 			this.txtOrder.TabIndex = 108;
@@ -429,7 +429,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel2.Location = new System.Drawing.Point(3, 532);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(242, 100);
+			this.gamePanel2.Size = new System.Drawing.Size(225, 100);
 			this.gamePanel2.TabIndex = 104;
 			// 
 			// lstCargoSummary
@@ -482,7 +482,7 @@ namespace FrEee.WinForms.Controls
 			this.gamePanel1.Location = new System.Drawing.Point(5, 411);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(240, 100);
+			this.gamePanel1.Size = new System.Drawing.Size(223, 100);
 			this.gamePanel1.TabIndex = 102;
 			// 
 			// lstComponentsSummary
@@ -526,7 +526,7 @@ namespace FrEee.WinForms.Controls
 			this.pnlStats.Name = "pnlStats";
 			this.pnlStats.RowCount = 1;
 			this.pnlStats.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-			this.pnlStats.Size = new System.Drawing.Size(243, 123);
+			this.pnlStats.Size = new System.Drawing.Size(226, 123);
 			this.pnlStats.TabIndex = 100;
 			// 
 			// tableLayoutPanel1
@@ -549,7 +549,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(115, 117);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(107, 117);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
 			// lblSupplies
@@ -581,7 +581,7 @@ namespace FrEee.WinForms.Controls
 			this.progSupplies.Padding = new System.Windows.Forms.Padding(5);
 			this.progSupplies.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progSupplies.RightText = "";
-			this.progSupplies.Size = new System.Drawing.Size(115, 19);
+			this.progSupplies.Size = new System.Drawing.Size(107, 19);
 			this.progSupplies.TabIndex = 18;
 			this.progSupplies.Value = ((long)(2500));
 			// 
@@ -614,7 +614,7 @@ namespace FrEee.WinForms.Controls
 			this.progAmmunition.Padding = new System.Windows.Forms.Padding(5);
 			this.progAmmunition.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progAmmunition.RightText = "";
-			this.progAmmunition.Size = new System.Drawing.Size(115, 19);
+			this.progAmmunition.Size = new System.Drawing.Size(107, 19);
 			this.progAmmunition.TabIndex = 20;
 			this.progAmmunition.Value = ((long)(100));
 			// 
@@ -647,7 +647,7 @@ namespace FrEee.WinForms.Controls
 			this.progFuel.Padding = new System.Windows.Forms.Padding(5);
 			this.progFuel.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progFuel.RightText = "";
-			this.progFuel.Size = new System.Drawing.Size(115, 19);
+			this.progFuel.Size = new System.Drawing.Size(107, 19);
 			this.progFuel.TabIndex = 22;
 			this.progFuel.Value = ((long)(1000));
 			// 
@@ -662,7 +662,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.Controls.Add(this.lblArmor, 0, 2);
 			this.tableLayoutPanel2.Controls.Add(this.lblHull, 0, 3);
 			this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.tableLayoutPanel2.Location = new System.Drawing.Point(124, 3);
+			this.tableLayoutPanel2.Location = new System.Drawing.Point(116, 3);
 			this.tableLayoutPanel2.Name = "tableLayoutPanel2";
 			this.tableLayoutPanel2.RowCount = 6;
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -675,7 +675,7 @@ namespace FrEee.WinForms.Controls
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel2.Size = new System.Drawing.Size(116, 117);
+			this.tableLayoutPanel2.Size = new System.Drawing.Size(107, 117);
 			this.tableLayoutPanel2.TabIndex = 0;
 			// 
 			// progHull
@@ -696,7 +696,7 @@ namespace FrEee.WinForms.Controls
 			this.progHull.Padding = new System.Windows.Forms.Padding(5);
 			this.progHull.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progHull.RightText = "";
-			this.progHull.Size = new System.Drawing.Size(116, 19);
+			this.progHull.Size = new System.Drawing.Size(107, 19);
 			this.progHull.TabIndex = 30;
 			this.progHull.Value = ((long)(150));
 			// 
@@ -718,7 +718,7 @@ namespace FrEee.WinForms.Controls
 			this.progArmor.Padding = new System.Windows.Forms.Padding(5);
 			this.progArmor.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progArmor.RightText = "";
-			this.progArmor.Size = new System.Drawing.Size(116, 19);
+			this.progArmor.Size = new System.Drawing.Size(107, 19);
 			this.progArmor.TabIndex = 29;
 			this.progArmor.Value = ((long)(100));
 			// 
@@ -751,7 +751,7 @@ namespace FrEee.WinForms.Controls
 			this.progShields.Padding = new System.Windows.Forms.Padding(5);
 			this.progShields.ProgressDisplayType = FrEee.WinForms.Controls.ProgressDisplayType.Numeric;
 			this.progShields.RightText = "";
-			this.progShields.Size = new System.Drawing.Size(116, 19);
+			this.progShields.Size = new System.Drawing.Size(107, 19);
 			this.progShields.TabIndex = 24;
 			this.progShields.Value = ((long)(200));
 			// 
@@ -1188,10 +1188,10 @@ namespace FrEee.WinForms.Controls
 		private System.Windows.Forms.Label txtConstructionItem;
 		private System.Windows.Forms.Label lblConstructionItem;
 		private System.Windows.Forms.Label txtComponentsFunctional;
-		private ResourceDisplay resMaintMin;
+		private ResourceDisplay resIncomeMin;
 		private System.Windows.Forms.Label lblComponents;
-		private ResourceDisplay resMaintOrg;
-		private ResourceDisplay resMaintRad;
+		private ResourceDisplay resIncomeOrg;
+		private ResourceDisplay resIncomeRad;
 		private System.Windows.Forms.Label lblMaint;
 		private System.Windows.Forms.Label txtFleet;
 		private System.Windows.Forms.Label lblFleet;
