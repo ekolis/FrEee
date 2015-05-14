@@ -192,6 +192,37 @@ namespace FrEee.Game.Objects.Civilization
 		private ResourceQuantity remoteMiningIncome;
 
 		/// <summary>
+		/// Income via raw resource generation ("Generate Points") abilities (not standard or remote mining, or standard point generation).
+		/// </summary>
+		public ResourceQuantity RawResourceIncome
+		{
+			get
+			{
+				// shouldn't change except at turn processing...
+				if (rawResourceIncome == null || Empire.Current == null)
+				{
+					rawResourceIncome = new ResourceQuantity();
+					foreach (var sobj in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
+					{
+						foreach (var resource in Resource.All)
+						{
+							var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
+							if (rule != null)
+							{
+								var amount = sobj.GetAbilityValue(rule.Name).ToInt();
+								rawResourceIncome += resource * amount;
+							}
+						}
+					}
+				}
+				return rawResourceIncome;
+				
+			}
+		}
+
+		private ResourceQuantity rawResourceIncome;
+
+		/// <summary>
 		/// The empire's basic resource income from mining and the like, not including maintenance costs or trade/tributes.
 		/// </summary>
 		/// <param name="galaxy"></param>
@@ -203,7 +234,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (grossDomesticIncome == null || Empire.Current == null)
 				{
-					grossDomesticIncome = ColonyIncome + RemoteMiningIncome;
+					grossDomesticIncome = ColonyIncome + RemoteMiningIncome + RawResourceIncome;
 
 					if (this != Empire.Current)
 					{
