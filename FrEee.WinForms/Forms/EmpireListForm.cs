@@ -114,7 +114,7 @@ namespace FrEee.WinForms.Forms
                 else
                     // assume other empires' construction queues are running at full capacity
                     rqdConstruction.ResourceQuantity = emp.ConstructionQueues.Sum(rq => rq.Rate);
-				rqdExtraction.ResourceQuantity = emp.ColonizedPlanets.Sum(p => p.GrossIncome); // TODO - remote mining and raw resource generation
+				rqdExtraction.ResourceQuantity = emp.ColonyIncome + emp.RemoteMiningIncome + emp.RawResourceIncome;
 				rqdIncome.ResourceQuantity = emp.GrossDomesticIncome;
 				rqdMaintenance.ResourceQuantity = emp.Maintenance;
 				rqdNet.ResourceQuantity = emp.NetIncomeLessConstruction;

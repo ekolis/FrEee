@@ -908,18 +908,8 @@ namespace FrEee.Game.Objects.Space
 
 
 			// resource generation 3: raw resource generation
-			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>().Owned())
-			{
-				foreach (var resource in Resource.All)
-				{
-					var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
-					if (rule != null)
-					{
-						var amount = sobj.GetAbilityValue(rule.Name).ToInt();
-						sobj.Owner.StoredResources += resource * amount;
-					}
-				}
-			}
+			foreach (var emp in Current.Empires)
+				emp.StoredResources += emp.RawResourceIncome;
 
 			if (status != null)
 				status.Progress += progressPerOperation;
