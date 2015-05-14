@@ -107,7 +107,8 @@ namespace FrEee.WinForms.Controls
 				// load income
 				var income = Planet.GrossIncome;
 				var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
-				var totalIncome = income + remoteMining;
+				var rawGen = Planet.RawResourceIncome();
+				var totalIncome = income + remoteMining + rawGen;
 				resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
 				resIncomeOrganics.Amount = totalIncome[Resource.Organics];
 				resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
