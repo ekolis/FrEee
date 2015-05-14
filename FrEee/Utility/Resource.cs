@@ -176,5 +176,10 @@ namespace FrEee.Utility
 			q.Add(resource, quantity);
 			return q;
 		}
+
+		public static ResourceQuantity operator *(Resource r, int quantity)
+		{
+			return quantity * Resource;
+		}
 	}
 }
