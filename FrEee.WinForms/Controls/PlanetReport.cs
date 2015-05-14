@@ -88,7 +88,7 @@ namespace FrEee.WinForms.Controls
 
 				txtDescription.Text = Planet.Description;
 
-				txtColonyType.Text = Planet.Owner == null ? "" : Planet.Owner.Name + " Colony"; // TODO - load colony type
+				txtColonyType.Text = Planet.Owner == null ? "Uninhabited" : Planet.Owner.Name + " Colony"; // TODO - load colony type
 				if (Planet.Owner == null)
 					txtPopulation.Text = "0";
 				else
