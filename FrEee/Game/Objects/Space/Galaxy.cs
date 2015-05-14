@@ -854,16 +854,61 @@ namespace FrEee.Game.Objects.Space
 					p.Owner.StoredResources += income;
 
 					// adjust resource value
-					foreach (var kvp in income)
+					// TODO - have a "is mineable" or "has value" property on Resource class
+					var incomeWithoutValue = new ResourceQuantity();
+					incomeWithoutValue += income[Resource.Minerals] / p.ResourceValue[Resource.Minerals] * Resource.Minerals;
+					incomeWithoutValue += income[Resource.Organics] / p.ResourceValue[Resource.Organics] * Resource.Organics;
+					incomeWithoutValue += income[Resource.Radioactives] / p.ResourceValue[Resource.Radioactives] * Resource.Radioactives;
+					incomeWithoutValue += income[Resource.Research] * Resource.Research;
+					incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
+					foreach (var kvp in incomeWithoutValue)
+					{
 						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
+					}
 				}
 			}
 			
 			// resource generation 2: remote mining
+			var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
+			foreach (var emp in Current.Empires)
+			{
+				
+				foreach (var kvp in emp.RemoteMiners)
+				{
+					// consume supplies
+					// unlike most other operations, miners that are out of supplies still function
+					// because having to resupply miners would be a pain :P
+					var miner = kvp.Key.Item1;
+					if (miner is SpaceVehicle)
+					{
+						var sv = miner as SpaceVehicle;
+						var miningComps = sv.Components.Where(c => c.Abilities().Any(a => a.Rule.StartsWith("Remote Resource Generation - ")));
+						var burn = miningComps.Sum(c => c.Template.SupplyUsage);
+						sv.SupplyRemaining -= burn;
+						sv.NormalizeSupplies();
+					}
+
+					// adjust resource value
+					foreach (var r in Resource.All)
+					{
+						var amount = kvp.Value[r];
+						var mined = kvp.Key.Item2;
+						if (amount > 0 && adjustedValue[mined][r] == 0)
+						{
+							// resource was mined here, but hasn't been adjusted yet
+							adjustedValue[mined][r] = Current.RemoteMiningModel.GetDecay(kvp.Value[r], mined.ResourceValue[r]);
+							mined.ResourceValue[r] -= adjustedValue[mined][r];
+						}
+					}
+				}
+
+				// give income
+				emp.StoredResources += emp.RemoteMiningIncome;
+			}
 
 
 			// resource generation 3: raw resource generation
-			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>(s => s.Owner != null))
+			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>().Owned())
 			{
 				foreach (var resource in Resource.All)
 				{
@@ -874,6 +919,7 @@ namespace FrEee.Game.Objects.Space
 						sobj.Owner.StoredResources += resource * amount;
 					}
 				}
+			}
 
 			if (status != null)
 				status.Progress += progressPerOperation;

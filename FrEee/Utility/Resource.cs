@@ -179,7 +179,7 @@ namespace FrEee.Utility
 
 		public static ResourceQuantity operator *(Resource r, int quantity)
 		{
-			return quantity * Resource;
+			return quantity * r;
 		}
 	}
 }

@@ -161,6 +161,7 @@
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMessage.cs" />
+    <Compile Include="Game\Interfaces\IMineableSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
