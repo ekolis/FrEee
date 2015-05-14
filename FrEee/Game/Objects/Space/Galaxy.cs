@@ -830,6 +830,8 @@ namespace FrEee.Game.Objects.Space
 			Current.EnableAbilityCache(); // resource generation doesn't affect abilities or empire maintenance
 			if (status != null)
 				status.Message = "Generating resources";
+
+			// resource generation 1: colony income
 			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Owner != null))
 			{
 				// compute income
@@ -856,7 +858,23 @@ namespace FrEee.Game.Objects.Space
 						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 				}
 			}
-			// TODO - remote mining and raw resource generation
+			
+			// resource generation 2: remote mining
+
+
+			// resource generation 3: raw resource generation
+			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>(s => s.Owner != null))
+			{
+				foreach (var resource in Resource.All)
+				{
+					var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Generate Points " + resource));
+					if (rule != null)
+					{
+						var amount = sobj.GetAbilityValue(rule.Name).ToInt();
+						sobj.Owner.StoredResources += resource * amount;
+					}
+				}
+
 			if (status != null)
 				status.Progress += progressPerOperation;
 
