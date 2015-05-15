@@ -105,15 +105,22 @@ namespace FrEee.WinForms.Controls
 				txtMood.Text = ""; // TODO - load mood
 
 				// load income
-				var income = Planet.GrossIncome;
-				var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
-				var rawGen = Planet.RawResourceIncome();
-				var totalIncome = income + remoteMining + rawGen;
-				resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
-				resIncomeOrganics.Amount = totalIncome[Resource.Organics];
-				resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
-				resResearch.Amount = totalIncome[Resource.Research];
-				resIntel.Amount = totalIncome[Resource.Intelligence];
+				if (Planet.Owner != null)
+				{
+					var income = Planet.GrossIncome;
+					var remoteMining = Planet.Owner.RemoteMiners.Where(kvp => kvp.Key.Item1 == Planet).Sum(kvp => kvp.Value); // planets doing remote mining of their moons? sure, why not?
+					var rawGen = Planet.RawResourceIncome();
+					var totalIncome = income + remoteMining + rawGen;
+					resIncomeMinerals.Amount = totalIncome[Resource.Minerals];
+					resIncomeOrganics.Amount = totalIncome[Resource.Organics];
+					resIncomeRadioactives.Amount = totalIncome[Resource.Radioactives];
+					resResearch.Amount = totalIncome[Resource.Research];
+					resIntel.Amount = totalIncome[Resource.Intelligence];
+				}
+				else
+				{
+					resIncomeMinerals.Amount = resIncomeOrganics.Amount = resIncomeRadioactives.Amount = resResearch.Amount = resIntel.Amount = 0;
+				}
 
 				// load construction data
 				if (Planet.Colony == null || Planet.ConstructionQueue.FirstItemEta == null)
