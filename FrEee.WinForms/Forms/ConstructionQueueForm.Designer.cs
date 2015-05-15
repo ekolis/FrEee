@@ -77,6 +77,15 @@
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.chkExpanded = new System.Windows.Forms.CheckBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.lblPresentLocal = new System.Windows.Forms.Label();
+			this.lblPresentSector = new System.Windows.Forms.Label();
+			this.lblPresentSystem = new System.Windows.Forms.Label();
+			this.lblPresentEmpire = new System.Windows.Forms.Label();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -198,7 +207,7 @@
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(703, 410);
+			this.btnCancel.Location = new System.Drawing.Point(703, 482);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(175, 29);
 			this.btnCancel.TabIndex = 19;
@@ -211,7 +220,7 @@
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(703, 445);
+			this.btnOK.Location = new System.Drawing.Point(703, 517);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(175, 29);
 			this.btnOK.TabIndex = 18;
@@ -293,7 +302,7 @@
 			this.gamePanel2.Location = new System.Drawing.Point(301, 86);
 			this.gamePanel2.Name = "gamePanel2";
 			this.gamePanel2.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel2.Size = new System.Drawing.Size(396, 388);
+			this.gamePanel2.Size = new System.Drawing.Size(396, 460);
 			this.gamePanel2.TabIndex = 7;
 			// 
 			// lstQueue
@@ -314,7 +323,7 @@
 			this.lstQueue.HoverSelection = true;
 			this.lstQueue.Location = new System.Drawing.Point(3, 3);
 			this.lstQueue.Name = "lstQueue";
-			this.lstQueue.Size = new System.Drawing.Size(388, 380);
+			this.lstQueue.Size = new System.Drawing.Size(388, 452);
 			this.lstQueue.TabIndex = 6;
 			this.lstQueue.TileSize = new System.Drawing.Size(32, 32);
 			this.lstQueue.UseCompatibleStateImageBehavior = false;
@@ -353,6 +362,15 @@
 			this.gamePanel1.BackColor = System.Drawing.Color.Black;
 			this.gamePanel1.BorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gamePanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.gamePanel1.Controls.Add(this.lblPresentEmpire);
+			this.gamePanel1.Controls.Add(this.lblPresentSystem);
+			this.gamePanel1.Controls.Add(this.lblPresentSector);
+			this.gamePanel1.Controls.Add(this.lblPresentLocal);
+			this.gamePanel1.Controls.Add(this.label7);
+			this.gamePanel1.Controls.Add(this.label6);
+			this.gamePanel1.Controls.Add(this.label5);
+			this.gamePanel1.Controls.Add(this.label4);
+			this.gamePanel1.Controls.Add(this.label3);
 			this.gamePanel1.Controls.Add(this.txtName);
 			this.gamePanel1.Controls.Add(this.resCostRad);
 			this.gamePanel1.Controls.Add(this.resCostOrg);
@@ -363,14 +381,14 @@
 			this.gamePanel1.Location = new System.Drawing.Point(10, 13);
 			this.gamePanel1.Name = "gamePanel1";
 			this.gamePanel1.Padding = new System.Windows.Forms.Padding(3);
-			this.gamePanel1.Size = new System.Drawing.Size(282, 461);
+			this.gamePanel1.Size = new System.Drawing.Size(282, 533);
 			this.gamePanel1.TabIndex = 6;
 			// 
 			// txtName
 			// 
 			this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.txtName.AutoSize = true;
-			this.txtName.Location = new System.Drawing.Point(3, 405);
+			this.txtName.Location = new System.Drawing.Point(4, 393);
 			this.txtName.Name = "txtName";
 			this.txtName.Size = new System.Drawing.Size(50, 13);
 			this.txtName.TabIndex = 17;
@@ -383,7 +401,7 @@
 			this.resCostRad.BackColor = System.Drawing.Color.Black;
 			this.resCostRad.Change = null;
 			this.resCostRad.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.resCostRad.Location = new System.Drawing.Point(178, 431);
+			this.resCostRad.Location = new System.Drawing.Point(179, 428);
 			this.resCostRad.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostRad.Name = "resCostRad";
 			this.resCostRad.ResourceName = "Radioactives";
@@ -397,7 +415,7 @@
 			this.resCostOrg.BackColor = System.Drawing.Color.Black;
 			this.resCostOrg.Change = null;
 			this.resCostOrg.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
-			this.resCostOrg.Location = new System.Drawing.Point(92, 431);
+			this.resCostOrg.Location = new System.Drawing.Point(93, 428);
 			this.resCostOrg.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostOrg.Name = "resCostOrg";
 			this.resCostOrg.ResourceName = "Organics";
@@ -411,7 +429,7 @@
 			this.resCostMin.BackColor = System.Drawing.Color.Black;
 			this.resCostMin.Change = null;
 			this.resCostMin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-			this.resCostMin.Location = new System.Drawing.Point(6, 431);
+			this.resCostMin.Location = new System.Drawing.Point(7, 428);
 			this.resCostMin.Margin = new System.Windows.Forms.Padding(0);
 			this.resCostMin.Name = "resCostMin";
 			this.resCostMin.ResourceName = "Minerals";
@@ -422,7 +440,7 @@
 			// 
 			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(3, 418);
+			this.label2.Location = new System.Drawing.Point(4, 415);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(31, 13);
 			this.label2.TabIndex = 13;
@@ -442,7 +460,7 @@
 			this.gameTabControl1.SelectedIndex = 0;
 			this.gameTabControl1.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.SelectedTabForeColor = System.Drawing.Color.Black;
-			this.gameTabControl1.Size = new System.Drawing.Size(274, 399);
+			this.gameTabControl1.Size = new System.Drawing.Size(274, 387);
 			this.gameTabControl1.TabBackColor = System.Drawing.Color.Black;
 			this.gameTabControl1.TabBorderColor = System.Drawing.Color.CornflowerBlue;
 			this.gameTabControl1.TabForeColor = System.Drawing.Color.CornflowerBlue;
@@ -455,7 +473,7 @@
 			this.tabPage1.Location = new System.Drawing.Point(4, 22);
 			this.tabPage1.Name = "tabPage1";
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage1.Size = new System.Drawing.Size(266, 373);
+			this.tabPage1.Size = new System.Drawing.Size(266, 361);
 			this.tabPage1.TabIndex = 0;
 			this.tabPage1.Text = "Vehicles";
 			// 
@@ -472,7 +490,7 @@
 			this.lstShips.HoverSelection = true;
 			this.lstShips.Location = new System.Drawing.Point(3, 3);
 			this.lstShips.Name = "lstShips";
-			this.lstShips.Size = new System.Drawing.Size(260, 367);
+			this.lstShips.Size = new System.Drawing.Size(260, 355);
 			this.lstShips.TabIndex = 13;
 			this.lstShips.TileSize = new System.Drawing.Size(32, 32);
 			this.lstShips.UseCompatibleStateImageBehavior = false;
@@ -655,12 +673,106 @@
 			this.chkExpanded.UseVisualStyleBackColor = true;
 			this.chkExpanded.CheckedChanged += new System.EventHandler(this.chkExpanded_CheckedChanged);
 			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(4, 457);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(56, 13);
+			this.label3.TabIndex = 18;
+			this.label3.Text = "# Present:";
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(33, 476);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(43, 13);
+			this.label4.TabIndex = 19;
+			this.label4.Text = "Locally:";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(23, 489);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(53, 13);
+			this.label5.TabIndex = 20;
+			this.label5.Text = "In Sector:";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(23, 502);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(56, 13);
+			this.label6.TabIndex = 21;
+			this.label6.Text = "In System:";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(9, 515);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(70, 13);
+			this.label7.TabIndex = 22;
+			this.label7.Text = "Empire Wide:";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// lblPresentLocal
+			// 
+			this.lblPresentLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentLocal.AutoSize = true;
+			this.lblPresentLocal.Location = new System.Drawing.Point(82, 476);
+			this.lblPresentLocal.Name = "lblPresentLocal";
+			this.lblPresentLocal.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentLocal.TabIndex = 23;
+			this.lblPresentLocal.Text = "0";
+			// 
+			// lblPresentSector
+			// 
+			this.lblPresentSector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentSector.AutoSize = true;
+			this.lblPresentSector.Location = new System.Drawing.Point(82, 489);
+			this.lblPresentSector.Name = "lblPresentSector";
+			this.lblPresentSector.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentSector.TabIndex = 24;
+			this.lblPresentSector.Text = "0";
+			// 
+			// lblPresentSystem
+			// 
+			this.lblPresentSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentSystem.AutoSize = true;
+			this.lblPresentSystem.Location = new System.Drawing.Point(82, 503);
+			this.lblPresentSystem.Name = "lblPresentSystem";
+			this.lblPresentSystem.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentSystem.TabIndex = 25;
+			this.lblPresentSystem.Text = "0";
+			// 
+			// lblPresentEmpire
+			// 
+			this.lblPresentEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentEmpire.AutoSize = true;
+			this.lblPresentEmpire.Location = new System.Drawing.Point(82, 515);
+			this.lblPresentEmpire.Name = "lblPresentEmpire";
+			this.lblPresentEmpire.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentEmpire.TabIndex = 26;
+			this.lblPresentEmpire.Text = "0";
+			// 
 			// ConstructionQueueForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(880, 486);
+			this.ClientSize = new System.Drawing.Size(880, 558);
 			this.Controls.Add(this.chkExpanded);
 			this.Controls.Add(this.txtFacilitySlotsFree);
 			this.Controls.Add(this.txtCargoStorageFree);
@@ -756,5 +868,14 @@
 		private System.Windows.Forms.ColumnHeader columnHeader4;
 		private System.Windows.Forms.ColumnHeader columnHeader5;
 		private System.Windows.Forms.CheckBox chkExpanded;
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.Label label6;
+		private System.Windows.Forms.Label label5;
+		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label label3;
+		private System.Windows.Forms.Label lblPresentEmpire;
+		private System.Windows.Forms.Label lblPresentSystem;
+		private System.Windows.Forms.Label lblPresentSector;
+		private System.Windows.Forms.Label lblPresentLocal;
 	}
 }

@@ -397,5 +397,7 @@ namespace FrEee.Game.Objects.Space
 				return Location.Location;
 			}
 		}
+
+		public IEnumerable<ISpaceObject> SpaceObjects { get { return FindSpaceObjects<ISpaceObject>(); } }
 	}
 }
