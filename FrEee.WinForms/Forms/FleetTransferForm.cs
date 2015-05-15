@@ -231,6 +231,75 @@ namespace FrEee.WinForms.Forms
 			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Tag is Fleet)
 			{
 				var fleet = (Fleet)treeFleets.SelectedNode.Tag;
+				DisbandFleet(fleet);
+			}
+		}
+
+		private void btnRemove_Click(object sender, EventArgs e)
+		{
+			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Parent != null)
+			{
+				var vehicle = (IMobileSpaceObject)treeFleets.SelectedNode.Tag;
+				RemoveFromFleet(vehicle);
+			}
+		}
+
+		private void btnAdd_Click(object sender, EventArgs e)
+		{
+			if (treeVehicles.SelectedNode != null && treeVehicles.SelectedNode.Tag is IMobileSpaceObject && treeFleets.SelectedNode != null)
+			{
+				var fleet = (Fleet)treeFleets.SelectedNode.Tag;
+				var vehicle = (IMobileSpaceObject)treeVehicles.SelectedNode.Tag;
+				AddToFleet(vehicle, fleet);
+			}
+		}
+
+		/// <summary>
+		/// Adds a vehicle or fleet to a fleet.
+		/// </summary>
+		/// <param name="vehicle"></param>
+		/// <param name="fleet"></param>
+		private void AddToFleet(IMobileSpaceObject vehicle, Fleet fleet)
+		{
+			JoinFleetCommand cmd;
+			if (!newFleets.Contains(fleet))
+			{
+				// fleet already exists, we can add to it
+				cmd = new JoinFleetCommand(vehicle, fleet);
+			}
+			else
+			{
+				// fleet is new, we need to reference it by its command
+				cmd = new JoinFleetCommand(vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
+			}
+			newCommands.Add(cmd);
+			BindVehicles();
+			BindFleets(fleet);
+			changed = true;
+		}
+
+		/// <summary>
+		/// Removes a vehicle or fleet from its fleet.
+		/// </summary>
+		/// <param name="sobj"></param>
+		private void RemoveFromFleet(IMobileSpaceObject vehicle)
+		{
+			var cmd = new LeaveFleetCommand(vehicle);
+			newCommands.Add(cmd);
+			BindVehicles();
+			BindFleets();
+			changed = true;
+		}
+
+		/// <summary>
+		/// Disbands a fleet.
+		/// </summary>
+		/// <param name="fleet"></param>
+		private void DisbandFleet(Fleet fleet)
+		{
+			// confirm
+			if (MessageBox.Show("Disband " + fleet + "?", "Confirm Disband", MessageBoxButtons.YesNo) == DialogResult.Yes)
+			{
 				if (!newFleets.Contains(fleet))
 				{
 					// create a disband command
@@ -255,41 +324,24 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-		private void btnRemove_Click(object sender, EventArgs e)
+		private void treeVehicles_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Parent != null)
-			{
-				var vehicle = (IMobileSpaceObject)treeFleets.SelectedNode.Tag;
-				var cmd = new LeaveFleetCommand(vehicle);
-				newCommands.Add(cmd);
-				BindVehicles();
-				BindFleets();
-				changed = true;
-			}
+
 		}
 
-		private void btnAdd_Click(object sender, EventArgs e)
+		private void treeFleets_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			if (treeVehicles.SelectedNode != null && treeVehicles.SelectedNode.Tag is IMobileSpaceObject && treeFleets.SelectedNode != null)
-			{
-				var fleet = (Fleet)treeFleets.SelectedNode.Tag;
-				var vehicle = (IMobileSpaceObject)treeVehicles.SelectedNode.Tag;
-				JoinFleetCommand cmd;
-				if (!newFleets.Contains(fleet))
-				{
-					// fleet already exists, we can add to it
-					cmd = new JoinFleetCommand(vehicle, fleet);
-				}
-				else
-				{
-					// fleet is new, we need to reference it by its command
-					cmd = new JoinFleetCommand(vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
-				}
-				newCommands.Add(cmd);
-				BindVehicles();
-				BindFleets(fleet);
-				changed = true;
-			}
+
+		}
+
+		private void treeVehicles_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+
+		}
+
+		private void treeFleets_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+
 		}
 	}
 }

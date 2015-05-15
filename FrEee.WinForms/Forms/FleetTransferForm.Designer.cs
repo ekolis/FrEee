@@ -84,6 +84,8 @@
 			this.treeFleets.Name = "treeFleets";
 			this.treeFleets.Size = new System.Drawing.Size(286, 507);
 			this.treeFleets.TabIndex = 19;
+			this.treeFleets.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeFleets_NodeMouseClick);
+			this.treeFleets.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeFleets_NodeMouseDoubleClick);
 			// 
 			// panel1
 			// 
@@ -185,6 +187,8 @@
 			this.treeVehicles.Name = "treeVehicles";
 			this.treeVehicles.Size = new System.Drawing.Size(286, 507);
 			this.treeVehicles.TabIndex = 18;
+			this.treeVehicles.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeVehicles_NodeMouseClick);
+			this.treeVehicles.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeVehicles_NodeMouseDoubleClick);
 			// 
 			// panel2
 			// 
