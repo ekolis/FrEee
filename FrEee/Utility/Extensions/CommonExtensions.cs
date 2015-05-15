@@ -98,6 +98,17 @@ namespace FrEee.Utility.Extensions
 		/// <param name="mi"></param>
 		/// <param name="attributeType"></param>
 		/// <returns></returns>
+		public static bool HasAttribute<T>(this MemberInfo mi)
+		{
+			return mi.HasAttribute(typeof(T));
+		}
+
+		/// <summary>
+		/// Checks for attributes in a class or its interfaces.
+		/// </summary>
+		/// <param name="mi"></param>
+		/// <param name="attributeType"></param>
+		/// <returns></returns>
 		public static bool HasAttribute(this MemberInfo mi, Type attributeType)
 		{
 			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
