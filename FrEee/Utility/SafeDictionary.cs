@@ -47,7 +47,13 @@ namespace FrEee.Utility
 
 		public ICollection<TKey> Keys
 		{
-			get { return dict.Keys; }
+			get
+			{
+				// why is this null?
+				if (dict == null)
+					dict = new Dictionary<TKey, TValue>();
+				return dict.Keys;
+			}
 		}
 
 		public bool Remove(TKey key)
@@ -63,7 +69,13 @@ namespace FrEee.Utility
 
 		public ICollection<TValue> Values
 		{
-			get { return dict.Values; }
+			get
+			{
+				// why is this null?
+				if (dict == null)
+					dict = new Dictionary<TKey, TValue>();
+				return dict.Values;
+			}
 		}
 
 		public TValue this[TKey key]
