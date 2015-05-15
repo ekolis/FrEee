@@ -158,6 +158,17 @@ namespace FrEee.WinForms.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Shows a popup form containing a single control that can be dismissed by pressing Escape.
+		/// </summary>
+		/// <param name="parent"></param>
+		/// <param name="control"></param>
+		/// <returns></returns>
+		public static DialogResult ShowPopupForm(this Form parent, Control control, string text = "")
+		{
+			return parent.ShowChildForm(control.CreatePopupForm(text));
+		}
+
+		/// <summary>
 		/// Finds the form that contains a control.
 		/// </summary>
 		/// <param name="control"></param>

@@ -15,6 +15,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Controls;
 
 namespace FrEee.WinForms.Forms
 {
@@ -36,14 +37,14 @@ namespace FrEee.WinForms.Forms
 		private List<ICommand> newCommands = new List<ICommand>();
 		private List<Fleet> newFleets = new List<Fleet>();
 
-		private void BindVehicles(IVehicle selected = null)
+		private void BindVehicles(IMobileSpaceObject selected = null)
 		{
 			var vehicles = new HashSet<IVehicle>();
 
 			// find vehicles in sector that are not fleets
 			foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>())
 				vehicles.Add(v);
-			
+
 			// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
 			foreach (var v in newCommands.OfType<LeaveFleetCommand>().Select(c => c.Executor).OfType<SpaceVehicle>())
 				vehicles.Add(v);
@@ -228,30 +229,20 @@ namespace FrEee.WinForms.Forms
 
 		private void btnDisband_Click(object sender, EventArgs e)
 		{
-			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Tag is Fleet)
-			{
-				var fleet = (Fleet)treeFleets.SelectedNode.Tag;
-				DisbandFleet(fleet);
-			}
+			DisbandFleet(SelectedFleet);
 		}
 
 		private void btnRemove_Click(object sender, EventArgs e)
 		{
-			if (treeFleets.SelectedNode != null && treeFleets.SelectedNode.Parent != null)
-			{
-				var vehicle = (IMobileSpaceObject)treeFleets.SelectedNode.Tag;
-				RemoveFromFleet(vehicle);
-			}
+			if (SelectedFleetSpaceObject is Fleet && SelectedFleetSpaceObject.Container == null)
+				DisbandFleet(SelectedFleetSpaceObject as Fleet);
+			else
+				RemoveFromFleet(SelectedFleetSpaceObject);
 		}
 
 		private void btnAdd_Click(object sender, EventArgs e)
 		{
-			if (treeVehicles.SelectedNode != null && treeVehicles.SelectedNode.Tag is IMobileSpaceObject && treeFleets.SelectedNode != null)
-			{
-				var fleet = (Fleet)treeFleets.SelectedNode.Tag;
-				var vehicle = (IMobileSpaceObject)treeVehicles.SelectedNode.Tag;
-				AddToFleet(vehicle, fleet);
-			}
+			AddToFleet(SelectedSpaceObjects, SelectedFleet);
 		}
 
 		/// <summary>
@@ -261,6 +252,25 @@ namespace FrEee.WinForms.Forms
 		/// <param name="fleet"></param>
 		private void AddToFleet(IMobileSpaceObject vehicle, Fleet fleet)
 		{
+			DoAddToFleet(vehicle, fleet);
+
+			BindVehicles();
+			BindFleets(fleet);
+			changed = true;
+		}
+	
+		/// <summary>
+		/// Adds to a fleet without refreshing the GUI.
+		/// </summary>
+		/// <param name="vehicle"></param>
+		/// <param name="fleet"></param>
+		private void DoAddToFleet(IMobileSpaceObject vehicle, Fleet fleet)
+		{
+			if (vehicle == null)
+				return;
+			if (fleet == null)
+				return;
+
 			JoinFleetCommand cmd;
 			if (!newFleets.Contains(fleet))
 			{
@@ -273,6 +283,15 @@ namespace FrEee.WinForms.Forms
 				cmd = new JoinFleetCommand(vehicle, newCommands.OfType<CreateFleetCommand>().Single(c => c.Fleet == fleet));
 			}
 			newCommands.Add(cmd);
+		}
+
+		private void AddToFleet(IEnumerable<IMobileSpaceObject> sobjs, Fleet fleet)
+		{
+			if (sobjs == null)
+				return;
+			foreach (var sobj in sobjs)
+				DoAddToFleet(sobj, fleet);
+
 			BindVehicles();
 			BindFleets(fleet);
 			changed = true;
@@ -284,9 +303,14 @@ namespace FrEee.WinForms.Forms
 		/// <param name="sobj"></param>
 		private void RemoveFromFleet(IMobileSpaceObject vehicle)
 		{
+			if (vehicle == null)
+				return;
+			if (vehicle.Container == null)
+				return;
+
 			var cmd = new LeaveFleetCommand(vehicle);
 			newCommands.Add(cmd);
-			BindVehicles();
+			BindVehicles(vehicle);
 			BindFleets();
 			changed = true;
 		}
@@ -297,6 +321,9 @@ namespace FrEee.WinForms.Forms
 		/// <param name="fleet"></param>
 		private void DisbandFleet(Fleet fleet)
 		{
+			if (fleet == null)
+				return;
+
 			// confirm
 			if (MessageBox.Show("Disband " + fleet + "?", "Confirm Disband", MessageBoxButtons.YesNo) == DialogResult.Yes)
 			{
@@ -326,21 +353,120 @@ namespace FrEee.WinForms.Forms
 
 		private void treeVehicles_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-
+			AddToFleet(FindNodeSpaceObjects(e.Node), SelectedFleet);
 		}
 
 		private void treeFleets_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
+			if (e.Node.Tag is SpaceVehicle)
+				RemoveFromFleet(e.Node.Tag as SpaceVehicle);
+			else if (e.Node.Tag is Fleet)
+			{
+				// if it's a root fleet, disband it, otherwise remove it
+				var f = e.Node.Tag as Fleet;
+				if (f.Container == null)
+					DisbandFleet(f);
+				else
+					RemoveFromFleet(f);
+			}
 
 		}
 
 		private void treeVehicles_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-
+			// show report if you right click
+			if (e.Button == MouseButtons.Right)
+			{
+				if (e.Node.Tag is SpaceVehicle)
+				{
+					var v = e.Node.Tag as SpaceVehicle;
+					this.ShowPopupForm(new SpaceVehicleReport(v), v.Name);
+				}
+				else if (e.Node.Tag is Fleet)
+				{
+					var f = e.Node.Tag as Fleet;
+					this.ShowPopupForm(new FleetReport(f), f.Name);
+				}
+				else if (e.Node.Tag is IDesign)
+				{
+					var d = e.Node.Tag as IDesign;
+					this.ShowPopupForm(new DesignReport(d), d.Name);
+				}
+			}
 		}
 
 		private void treeFleets_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
+			// show report if you right click
+			if (e.Button == MouseButtons.Right)
+			{
+				if (e.Node.Tag is SpaceVehicle)
+				{
+					var v = e.Node.Tag as SpaceVehicle;
+					this.ShowPopupForm(new SpaceVehicleReport(v), v.Name);
+				}
+				else if (e.Node.Tag is Fleet)
+				{
+					var f = e.Node.Tag as Fleet;
+					this.ShowPopupForm(new FleetReport(f), f.Name);
+				}
+				else if (e.Node.Tag is IDesign)
+				{
+					var d = e.Node.Tag as IDesign;
+					this.ShowPopupForm(new DesignReport(d), d.Name);
+				}
+			}
+		}
+
+		private Fleet SelectedFleet
+		{
+			get
+			{
+				if (treeFleets.SelectedNode == null)
+					return null;
+				else if (treeFleets.SelectedNode.Tag is Fleet)
+					return treeFleets.SelectedNode.Tag as Fleet;
+				else if (treeFleets.SelectedNode.Tag is IVehicle)
+					return treeFleets.SelectedNode.Parent.Tag as Fleet;
+				else
+					return null; // invalid node
+			}
+		}
+
+		private IMobileSpaceObject SelectedFleetSpaceObject
+		{
+			get
+			{
+				if (treeFleets.SelectedNode == null)
+					return null;
+				else if (treeFleets.SelectedNode.Tag is IMobileSpaceObject)
+					return treeFleets.SelectedNode.Tag as IMobileSpaceObject;
+				else
+					return null; // invalid node
+			}
+		}
+
+		private IEnumerable<IMobileSpaceObject> SelectedSpaceObjects
+		{
+			get
+			{
+				return FindNodeSpaceObjects(treeVehicles.SelectedNode); 
+			}
+		}
+
+		private IEnumerable<IMobileSpaceObject> FindNodeSpaceObjects(TreeNode node)
+		{
+			if (node == null)
+				yield break;
+
+			if (node.Tag is IMobileSpaceObject)
+				yield return node.Tag as IMobileSpaceObject;
+
+			foreach (TreeNode sub in node.Nodes)
+			{
+				foreach (var sobj in FindNodeSpaceObjects(sub))
+					yield return sobj;
+			}
 
 		}
 	}
