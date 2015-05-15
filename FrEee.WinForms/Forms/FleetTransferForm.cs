@@ -36,7 +36,7 @@ namespace FrEee.WinForms.Forms
 		private List<ICommand> newCommands = new List<ICommand>();
 		private List<Fleet> newFleets = new List<Fleet>();
 
-		private void BindVehicles()
+		private void BindVehicles(IVehicle selected = null)
 		{
 			var vehicles = new HashSet<IVehicle>();
 
@@ -66,7 +66,11 @@ namespace FrEee.WinForms.Forms
 					{
 						var designNode = roleNode.AddItemWithImage(designGroup.Key.Name, designGroup.Key, designGroup.Key.Icon);
 						foreach (var vehicle in designGroup)
-							designNode.AddItemWithImage(vehicle.Name, vehicle, vehicle.Icon);
+						{
+							var vehicleNode = designNode.AddItemWithImage(vehicle.Name, vehicle, vehicle.Icon);
+							if (vehicle == selected)
+								treeVehicles.SelectedNode = vehicleNode;
+						}
 					}
 				}
 				if (vtNode.Nodes.Count == 0)
@@ -77,7 +81,7 @@ namespace FrEee.WinForms.Forms
 			treeVehicles.ExpandAll();
 		}
 
-		private void BindFleets()
+		private void BindFleets(Fleet selected = null)
 		{
 			// build preliminary tree from existing fleets in sector
 			treeFleets.Initialize(32);
@@ -106,6 +110,12 @@ namespace FrEee.WinForms.Forms
 				var node = FindNode(treeFleets, cmd.Fleet);
 				CreateNode(node, cmd.Executor);
 			}
+
+			// select the selected fleet in the GUI
+			if (selected != null)
+				treeFleets.SelectedNode = FindNode(treeFleets, selected);
+			else if (treeFleets.Nodes.Count == 1)
+				treeFleets.SelectedNode = treeFleets.Nodes[0]; // only one fleet? just select it anyway
 		}
 
 		private TreeNode CreateNode(TreeView parent, IMobileSpaceObject v)
@@ -277,7 +287,7 @@ namespace FrEee.WinForms.Forms
 				}
 				newCommands.Add(cmd);
 				BindVehicles();
-				BindFleets();
+				BindFleets(fleet);
 				changed = true;
 			}
 		}
