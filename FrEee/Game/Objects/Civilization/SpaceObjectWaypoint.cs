@@ -24,6 +24,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		private Reference<ISpaceObject> spaceObject { get; set; }
 
+		[DoNotSerialize(false)]
 		public override Sector Sector
 		{
 			get
