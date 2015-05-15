@@ -63,6 +63,59 @@ namespace FrEee.WinForms.Forms
 			resCostMin.Amount = facil.Cost[Resource.Minerals];
 			resCostOrg.Amount = facil.Cost[Resource.Organics];
 			resCostRad.Amount = facil.Cost[Resource.Radioactives];
+			var p = ConstructionQueue.Container as Planet;
+			if (p != null)
+			{
+				int present, queued;
+				IEnumerable<Colony> colonies;
+
+				colonies = new Colony[] { p.Colony };
+				present = CountPresentFacilities(colonies, facil.Family);
+				queued = CountQueuedFacilities(colonies.Select(c => c.ConstructionQueue), facil.Family);
+				lblPresentLocal.Text = MakePresentQueuedString(present, queued);
+
+				colonies = p.Sector.SpaceObjects.OfType<Planet>().OwnedBy(p.Owner).Select(p2 => p2.Colony);
+				present = CountPresentFacilities(colonies, facil.Family);
+				queued = CountQueuedFacilities(colonies.Select(c => c.ConstructionQueue), facil.Family);
+				lblPresentSector.Text = MakePresentQueuedString(present, queued);
+
+				colonies = p.StarSystem.FindSpaceObjects<Planet>().OwnedBy(p.Owner).Select(p2 => p2.Colony);
+				present = CountPresentFacilities(colonies, facil.Family);
+				queued = CountQueuedFacilities(colonies.Select(c => c.ConstructionQueue), facil.Family);
+				lblPresentSystem.Text = MakePresentQueuedString(present, queued);
+
+				colonies = p.Owner.OwnedSpaceObjects.OfType<Planet>().Select(p2 => p2.Colony);
+				present = CountPresentFacilities(colonies, facil.Family);
+				queued = CountQueuedFacilities(colonies.Select(c => c.ConstructionQueue), facil.Family);
+				lblPresentEmpire.Text = MakePresentQueuedString(present, queued);
+			}
+			else
+			{
+				lblPresentLocal.Text = lblPresentSector.Text = lblPresentSystem.Text = lblPresentEmpire.Text = "-";
+			}
+		}
+
+		private int CountPresentFacilities(IEnumerable<Colony> colonies, string facilityFamily)
+		{
+			return colonies.Sum(c => c.Facilities.Where(f => f.Template.Family == facilityFamily).Count());
+		}
+
+		private int CountQueuedFacilities(IEnumerable<ConstructionQueue> queues, string facilityFamily)
+		{
+			// facility upgrades don't change the facility family so we don't need to worry about them here
+			return queues.Sum(c => c.Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Where(o => o.Template.Family == facilityFamily).Count());
+		}
+
+		private string MakePresentQueuedString(int present, int queued)
+		{
+			if (present == 0 && queued == 0)
+				return "-";
+			else if (present == 0)
+				return queued + " queued";
+			else if (queued == 0)
+				return present.ToString();
+			else
+				return "{0} (+{1} queued)".F(present, queued);
 		}
 
 		private void lstFacilities_MouseLeave(object sender, EventArgs e)
@@ -407,6 +460,42 @@ namespace FrEee.WinForms.Forms
 			resCostMin.Amount = d.Cost[Resource.Minerals];
 			resCostOrg.Amount = d.Cost[Resource.Organics];
 			resCostRad.Amount = d.Cost[Resource.Radioactives];
+
+			int present, queued;
+			IEnumerable<ISpaceObject> sobjs;
+			var emp = ConstructionQueue.Container.Owner;
+
+			sobjs = new ISpaceObject[] { ConstructionQueue.Container };
+			present = CountPresentVehicles(sobjs, d.BaseName);
+			queued = CountQueuedVehicles(sobjs, d.BaseName);
+			lblPresentLocal.Text = MakePresentQueuedString(present, queued);
+
+			sobjs = ConstructionQueue.Container.Sector.SpaceObjects.OwnedBy(emp); ;
+			present = CountPresentVehicles(sobjs, d.BaseName);
+			queued = CountQueuedVehicles(sobjs, d.BaseName);
+			lblPresentSector.Text = MakePresentQueuedString(present, queued);
+
+			sobjs = ConstructionQueue.Container.StarSystem.SpaceObjects.OwnedBy(emp);
+			present = CountPresentVehicles(sobjs, d.BaseName);
+			queued = CountQueuedVehicles(sobjs, d.BaseName);
+			lblPresentSystem.Text = MakePresentQueuedString(present, queued);
+
+			sobjs = ConstructionQueue.Owner.OwnedSpaceObjects;
+			present = CountPresentVehicles(sobjs, d.BaseName);
+			queued = CountQueuedVehicles(sobjs, d.BaseName);
+			lblPresentEmpire.Text = MakePresentQueuedString(present, queued);
+		}
+
+		private int CountPresentVehicles(IEnumerable<ISpaceObject> sobjs, string designBaseName)
+		{
+			return sobjs.OfType<IVehicle>().Union(sobjs.OfType<ICargoContainer>().SelectMany(cc => cc.AllUnits)).Where(v => v.Design.BaseName == designBaseName).Count();
+		}
+
+		private int CountQueuedVehicles(IEnumerable<ISpaceObject> sobjs, string designBaseName)
+		{
+			// TODO - what about refits to or away from this design?
+			return sobjs.Where(sobj => sobj.ConstructionQueue != null).SelectMany(sobj => sobj.ConstructionQueue.Orders).Select(o => o.Template).OfType<IDesign>().Where(d => d.BaseName == designBaseName).Count();
+
 		}
 
 		private void lstShips_MouseLeave(object sender, EventArgs e)

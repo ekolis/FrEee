@@ -3232,6 +3232,18 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Filters a list to objects belonging to a specific empire.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="list"></param>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> OwnedBy<T>(this IEnumerable<T> list, Empire emp) where T : IOwnable
+		{
+			return list.BelongingTo(emp);
+		}
+
+		/// <summary>
 		/// Filters a list to objects that are unowned.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
