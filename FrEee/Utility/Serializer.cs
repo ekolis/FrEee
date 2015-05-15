@@ -637,7 +637,7 @@ namespace FrEee.Utility
 				{
 					var pname = r.ReadTo(':', log).Trim();
 					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
-					if (prop != null && !prop.GetCustomAttributes(true).OfType<DoNotSerializeAttribute>().Any())
+					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
 						if (type.IsValueType)
 						{
