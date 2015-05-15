@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -197,6 +198,14 @@ namespace FrEee.Game.Objects.Technology
 
 		public int? Repair(int? amount = null)
 		{
+			if (this.HasAbility("Component Destroyed On Use") || this.HasAbility("Space Object Destroyed On Use"))
+			{
+				// if component is destroyed on use, it can only be repaired at a friendly colony
+				// SE4 said a friendly spaceyard, but that's still exploitable by using mobile SY ships
+				if (!Container.Sector.SpaceObjects.OfType<Planet>().Any(p => p.Owner == Owner))
+					return amount;
+			}
+
 			if (amount == null)
 			{
 				Hitpoints = MaxHitpoints;
