@@ -68,7 +68,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (visibility < Visibility.Owned)
 			{
 				// can only see space used by cargo, not actual cargo
-				Cargo.SetFakeSize();
+				Cargo.SetFakeSize(true);
 			}
 			if (visibility < Visibility.Scanned)
 			{
