@@ -114,7 +114,7 @@ namespace FrEee.Game.Objects.Combat2
             : base(position, vector, ID, IDprefix)
         {
 			WorkingObject = workingObject;
-            this.waypointTarget = new combatWaypoint();
+            this.waypointTarget = new CombatWaypoint();
             weaponTarget = new List<CombatObject>(1); //eventualy this should be something with the multiplex tracking component.
             this.cmbt_thrust = new PointXd(0, 0, 0);
             this.cmbt_accel = new PointXd(0, 0, 0);
@@ -157,7 +157,7 @@ namespace FrEee.Game.Objects.Combat2
 
         public StrategyObject strategy { get; set; }
 
-		public combatWaypoint waypointTarget;
+		public CombatWaypoint waypointTarget;
 
 		// TODO - remove this property after the end of the PBW game (it still needs to be in here for deserialization)
 		private PointXd lastVectortoWaypoint { get; set; }
@@ -223,7 +223,7 @@ namespace FrEee.Game.Objects.Combat2
 
         public virtual void helm()
         {
-            combatWaypoint wpt = this.waypointTarget;
+            CombatWaypoint wpt = this.waypointTarget;
             Compass angletoWaypoint = new Compass(this.cmbt_loc, this.waypointTarget.cmbt_loc); //relitive to me. 
 
             Tuple<Compass, bool?> nav = Nav(angletoWaypoint);
@@ -599,24 +599,24 @@ namespace FrEee.Game.Objects.Combat2
         #endregion
     }
 
-	public class combatWaypoint
+	public class CombatWaypoint
 	{
-		public combatWaypoint()
+		public CombatWaypoint()
 		{
 			this.cmbt_loc = new PointXd(0, 0, 0);
 			this.cmbt_vel = new PointXd(0, 0, 0);
 		}
-		public combatWaypoint(PointXd cmbt_loc)
+		public CombatWaypoint(PointXd cmbt_loc)
 		{
 			this.cmbt_loc = cmbt_loc;
 			this.cmbt_vel = new PointXd(0, 0, 0);
 		}
-		public combatWaypoint(PointXd cmbt_loc, PointXd cmbt_vel)
+		public CombatWaypoint(PointXd cmbt_loc, PointXd cmbt_vel)
 		{
 			this.cmbt_loc = cmbt_loc;
 			this.cmbt_vel = cmbt_vel;
 		}
-		public combatWaypoint(CombatObject tgtcomObj)
+		public CombatWaypoint(CombatObject tgtcomObj)
 		{
 			this.comObj = tgtcomObj;
 			this.cmbt_loc = tgtcomObj.cmbt_loc;

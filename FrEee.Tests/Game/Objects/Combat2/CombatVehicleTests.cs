@@ -199,7 +199,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoWaypoint = new Compass(0, false);
             PointXd waypntloc = new PointXd(0, 1000, 0);
             PointXd waypndVel = new PointXd(0, 1000, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             bool expectedToWaypoint = true;
             Compass expectedHeading = new Compass(0);
@@ -227,7 +227,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoWaypoint = new Compass(180, false);
             PointXd waypntloc = new PointXd(0, -1000, 0);
             PointXd waypndVel = new PointXd(0, 0, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             bool expectedToWaypoint = true;
             Compass expectedHeading = new Compass(180, false);
@@ -255,7 +255,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoWaypoint = new Compass(0, false);
             PointXd waypntloc = new PointXd(0, 10, 0);
             PointXd waypndVel = new PointXd(0, 0, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             bool expectedThrustToWaypoint = false;
             Compass expectedHeading = new Compass(180, false);
@@ -286,7 +286,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoWaypoint = new Compass(0, false);
             PointXd waypntloc = new PointXd(0, 0, 0);
             PointXd waypndVel = new PointXd(0, 0, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             bool expectedThrustToWaypoint = true;
             Compass expectedHeading = new Compass(0, false);

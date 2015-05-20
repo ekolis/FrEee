@@ -27,7 +27,8 @@ using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using NewtMath.f16;
 using FrEee.Game.Objects.Combat2;
-using FrEee.Game.Objects.Technology; // TODO -remove this, just for testing
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Combat2.Tactics; // TODO -remove this, just for testing
 
 namespace FrEee.Utility.Extensions
 {
@@ -3291,6 +3292,11 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 			return rawResourceIncome;
+		}
+
+		public static bool IsValid(this IErrorProne obj)
+		{
+			return !obj.Errors.Any();
 		}
 	}
 

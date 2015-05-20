@@ -71,6 +71,16 @@ namespace FrEee.Modding
 			}
 		}
 
+		object IFormula.Evaluate(IDictionary<string, object> variables)
+		{
+			return Evaluate(variables);
+		}
+
+		object IFormula.Evaluate(object host)
+		{
+			return Evaluate(host);
+		}
+
 		public T Evaluate(IDictionary<string, object> variables)
 		{
 			return ScriptEngine.EvaluateExpression<T>(Text, variables);

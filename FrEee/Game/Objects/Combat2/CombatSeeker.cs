@@ -245,7 +245,7 @@ namespace FrEee.Game.Objects.Combat2
             Compass angletoturn = new Compass();
             bool? thrustTowards = true;
      
-            combatWaypoint wpt = this.waypointTarget;
+            CombatWaypoint wpt = this.waypointTarget;
             angletoturn = new Compass(angletoWaypoint.Degrees - this.cmbt_head.Degrees, false);
             PointXd vectortowaypoint = this.cmbt_loc - this.waypointTarget.cmbt_loc;
 

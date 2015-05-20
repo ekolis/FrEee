@@ -157,6 +157,7 @@
     <Compile Include="Game\Interfaces\ICreateDesignCommand.cs" />
     <Compile Include="Game\Interfaces\IDamageable.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
+    <Compile Include="Game\Interfaces\IErrorProne.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
@@ -227,6 +228,9 @@
     <Compile Include="Game\Objects\Combat2\ControlledCombatObject.cs" />
     <Compile Include="Game\Objects\Combat2\StrategyObject.cs" />
     <Compile Include="Game\Objects\Combat2\StrategyBlocks.cs" />
+    <Compile Include="Game\Objects\Combat2\Tactics\TacticNode.cs" />
+    <Compile Include="Game\Objects\Combat2\Tactics\Tactic.cs" />
+    <Compile Include="Game\Objects\Combat2\Tactics\TacticBlock.cs" />
     <Compile Include="Game\Objects\Combat\Hit.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
     <Compile Include="Game\Objects\Commands\DeleteWaypointCommand.cs" />

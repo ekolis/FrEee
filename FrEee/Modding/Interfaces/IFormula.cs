@@ -13,10 +13,18 @@ namespace FrEee.Modding.Interfaces
 		FormulaType FormulaType { get; set; }
 
 		object Value { get; }
+
+		object Evaluate(IDictionary<string, object> variables);
+
+		object Evaluate(object host);
 	}
 
 	public interface IFormula<out T> : IFormula
 	{
 		new T Value { get; }
+
+		new T Evaluate(IDictionary<string, object> variables);
+
+		new T Evaluate(object host);
 	}
 }

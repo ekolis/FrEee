@@ -42,9 +42,9 @@ namespace FrEee.Game.Objects.Combat2
                 tgtblok.zeroize();
         }
 
-        public combatWaypoint calcWaypiont(CombatObject comObj)
+        public CombatWaypoint calcWaypiont(CombatObject comObj)
         {
-            combatWaypoint wp = (combatWaypoint)waypointObj.getNewOutput(comObj);
+            CombatWaypoint wp = (CombatWaypoint)waypointObj.getNewOutput(comObj);
             return wp;
         }
 

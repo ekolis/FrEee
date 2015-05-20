@@ -18,6 +18,7 @@ using FrEee.Game.Objects.Abilities;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat2.Tactics;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -479,6 +480,8 @@ namespace FrEee.Game.Objects.Vehicles
 		public int Iteration { get; set; }
 
 		public Combat2.StrategyObject Strategy { get; set; }
+
+		public Tactic Tactic { get; set; }
 
 		public void Dispose()
 		{
