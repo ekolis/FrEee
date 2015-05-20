@@ -84,7 +84,7 @@ namespace FrEee.Game.Objects.Combat2
             //rotate ship
             Fix16 timetoturn = (Fix16)0;
             //Compass angletoturn = new Compass(Trig.angleto(comObj.cmbt_face, comObj.waypointTarget.cmbt_loc));
-            combatWaypoint wpt = this.waypointTarget;
+            CombatWaypoint wpt = this.waypointTarget;
 
 #if DEBUG
 			Console.WriteLine("Waypoint is " + wpt);

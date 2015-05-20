@@ -1046,7 +1046,7 @@ namespace FrEee.Game.Objects.Combat2
 			int targettick = tick + (int)CombatSeeker.seekerTimeToTarget(attacker, target, skrinfo) * TicksPerSecond;
 			//create seeker and node.
 			CombatSeeker seeker = new CombatSeeker(attacker, weapon, -tempObjCounter);
-			seeker.waypointTarget = new combatWaypoint(target);
+			seeker.waypointTarget = new CombatWaypoint(target);
 			seeker.weaponTarget = new List<CombatObject>() { target };
 			seeker.deathTick = tick + weapon.maxRange_time * TicksPerSecond;
 			seeker.cmbt_head = new Compass(attacker.cmbt_head.Degrees, false);

@@ -102,7 +102,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
             
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
                 endHeading.Degrees,
@@ -125,7 +125,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             Assert.AreEqual(
                 endHeading.Degrees,
@@ -151,7 +151,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             //Assert.AreEqual(
             //    Compass.NormalizeDegrees(Fix16.Max((Fix16)360 - spinrate.Degrees, (Fix16)270)),
@@ -180,7 +180,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             battle.End(battle.CurrentTick);
             Assert.AreEqual(
@@ -207,7 +207,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
     
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             //Assert.AreEqual(
             //    spinrate.Degrees,
@@ -237,7 +237,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(wpCompass.Point((Fix16)1));
+            testComObj.waypointTarget = new CombatWaypoint(wpCompass.Point((Fix16)1));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             battle.End(battle.CurrentTick);
             Assert.AreEqual(
@@ -261,7 +261,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             testComObj.cmbt_loc = new PointXd();
             testComObj.cmbt_head = startHeading;
 
-            testComObj.waypointTarget = new combatWaypoint(endHeading.Point((Fix16)5));
+            testComObj.waypointTarget = new CombatWaypoint(endHeading.Point((Fix16)5));
             battle.ProcessTick(ref tick, ref cmdFreqCounter);
             battle.End(battle.CurrentTick);
 			AssertAngleWithinTolerance(endHeading, testComObj.cmbt_head, 0.01);
@@ -359,7 +359,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             
             PointXd waypntloc = new PointXd(0, 1000, 0);
             PointXd waypndVel = new PointXd(0, 1000, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             PointXd expectedThrustResult = new PointXd(0, 100, 0);
             Compass expectedHeading = new Compass(startHeading.Degrees);// + (spinrate.Degrees / Battle_Space.TicksPerSecond), false);
@@ -391,7 +391,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
             Compass angletoWaypoint = new Compass(0, false);
             PointXd waypntloc = new PointXd(0, 1000, 0);
             PointXd waypndVel = new PointXd(0, 1000, 0);
-            combatWaypoint waypoint = new combatWaypoint(waypntloc, waypndVel);
+            CombatWaypoint waypoint = new CombatWaypoint(waypntloc, waypndVel);
 
             bool expectedToWaypoint = true;
             Compass expectedHeading = new Compass(0);

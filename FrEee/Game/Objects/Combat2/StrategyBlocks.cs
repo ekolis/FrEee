@@ -175,14 +175,14 @@ namespace FrEee.Game.Objects.Combat2
 	public class StrategyWayPoint : StrategyBaseBlock
 	{
 		public StrategyWayPoint()
-			: base(new Type[2] { typeof(PointXd), typeof(PointXd) }, new object[] { new PointXd(), new PointXd() }, typeof(combatWaypoint))
+			: base(new Type[2] { typeof(PointXd), typeof(PointXd) }, new object[] { new PointXd(), new PointXd() }, typeof(CombatWaypoint))
 		{
 			name = "Waypoint";
 		}
 		public override void calc(CombatObject comObj)
 		{
 			base.calc(comObj);
-			output = new combatWaypoint((PointXd)inputs[0], (PointXd)inputs[1]);
+			output = new CombatWaypoint((PointXd)inputs[0], (PointXd)inputs[1]);
 		}
 	}
 
