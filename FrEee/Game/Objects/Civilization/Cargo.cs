@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (fakeSize != null)
 					return fakeSize.Value;
 
-				// TODO - moddable population size, perhaps per race?
+				// TODO - per race population size?
 				return (int)Math.Round(Population.Sum(kvp => kvp.Value) * Mod.Current.Settings.PopulationSize) + Units.Sum(u => u.Design.Hull.Size);
 			}
 		}
