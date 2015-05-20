@@ -35,12 +35,16 @@ namespace FrEee.Game.Objects.Civilization
 		private int? fakeSize { get; set; }
 
 		/// <summary>
-		/// Sets this cargo's fake size to its size and clears the actual population and units.
+		/// Sets this cargo's fake size to its size (or zero if cargo size can't be seen) and clears the actual population and units.
 		/// Used for fog of war.
 		/// </summary>
-		public void SetFakeSize()
+		public void SetFakeSize(bool canSeeCargoSize)
 		{
-			fakeSize = Size;
+			if (canSeeCargoSize && fakeSize == null)
+				fakeSize = Size;
+			else if (!canSeeCargoSize)
+				fakeSize = 0;
+				
 			Population.Clear();
 			Units.Clear();
 		}

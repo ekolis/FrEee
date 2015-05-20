@@ -250,14 +250,17 @@ namespace FrEee.Game.Objects.Vehicles
 				// can't see orders unless it's your vehicle
 				Orders.Clear();
 
-				// can only see space used by cargo, not actual cargo
-				Cargo.SetFakeSize();
+				// can only see cargo size if scanned but unowed
+				Cargo.SetFakeSize(true);
 			}
 
 			// Can't see the ship's components if it's not scanned
 			// and can't see the design either if we haven't scanned it before
 			if (visibility < Visibility.Scanned)
 			{
+				// can't see cargo at all
+				Cargo.SetFakeSize(false);
+
 				if (Design.CheckVisibility(emp) < Visibility.Scanned)
 				{
 					// create fake design
