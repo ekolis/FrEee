@@ -42,7 +42,7 @@ namespace FrEee.Game.Objects.Commands
 				Issuer.Log.Add(new GenericLogMessage(Issuer + " cannot issue commands to " + Executor + " belonging to " + Executor.Owner + "!", Galaxy.Current.TurnNumber));
 		}
 
-		private IOrder<T> order
+		private IOrder<T> NewOrder
 		{
 			get;
 			set;
@@ -52,12 +52,12 @@ namespace FrEee.Game.Objects.Commands
 		{
 			get
 			{
-				return order;
+				return NewOrder;
 			}
 			set
 			{
 				base.Order = value;
-				order = value;
+				NewOrder = value;
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				order.ReplaceClientIDs(idmap, done);
+				NewOrder.ReplaceClientIDs(idmap, done);
 			}
 		}
 
