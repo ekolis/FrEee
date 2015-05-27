@@ -872,6 +872,30 @@ namespace FrEee.Utility.Extensions
 			return stuff.Select(selector).MaxOrDefault();
 		}
 
+		/// <summary>
+		/// Computes the max of each resource in a group of resource quantities.
+		/// </summary>
+		/// <param name="qs"></param>
+		/// <returns></returns>
+		public static ResourceQuantity MaxOfAllResources(this IEnumerable<ResourceQuantity> qs)
+		{
+			var result = new ResourceQuantity();
+			foreach (var q in qs)
+			{
+				foreach (var kvp in q)
+				{
+					if (kvp.Value > result[kvp.Key])
+						result[kvp.Key] = kvp.Value;
+				}
+			}
+			return result;
+		}
+
+		public static ResourceQuantity MaxOfAllResources<T>(this IEnumerable<T> stuff, Func<T, ResourceQuantity> selector)
+		{
+			return stuff.Select(t => selector(t)).MaxOfAllResources();
+		}
+
 		public static T FindByName<T>(this IEnumerable<T> stuff, string name) where T : INamed
 		{
 			return stuff.SingleOrDefault(item => item.Name == name);
