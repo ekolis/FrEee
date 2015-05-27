@@ -13,6 +13,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 			new ForcesMode(),
 			new ColoniesMode(),
 			new ConstructionMode(),
+			new RepairMode(),
 		};
 
 		public static IEnumerable<IGalaxyViewMode> All
