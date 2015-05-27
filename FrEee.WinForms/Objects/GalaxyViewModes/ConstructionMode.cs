@@ -12,7 +12,7 @@ using FrEee.Utility.Extensions;
 namespace FrEee.WinForms.Objects.GalaxyViewModes
 {
 	/// <summary>
-	/// Displays space yards by build rate in each resource.
+	/// Displays construction queues by build rate in each resource.
 	/// </summary>
 	public class ConstructionMode : ArgbMode
 	{
