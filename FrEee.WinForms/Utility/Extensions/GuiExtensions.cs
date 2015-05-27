@@ -233,5 +233,54 @@ namespace FrEee.WinForms.Utility.Extensions
 			}
 			return control;
 		}
+
+		/// <summary>
+		/// Draws an ellipse centered on a point.
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="pen"></param>
+		/// <param name="pos"></param>
+		/// <param name="size"></param>
+		public static void DrawEllipse(this Graphics g, Pen pen, PointF pos, float size)
+		{
+			g.DrawEllipse(pen, pos.X - size / 2f, pos.Y - size / 2f, size, size);
+		}
+
+		/// <summary>
+		/// Fills an ellipse centered on a point.
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="pen"></param>
+		/// <param name="pos"></param>
+		/// <param name="size"></param>
+		public static void FillEllipse(this Graphics g, Brush brush, PointF pos, float size)
+		{
+			g.FillEllipse(brush, pos.X - size / 2f, pos.Y - size / 2f, size, size);
+		}
+
+
+		/// <summary>
+		/// Draws a pie slice centered on a point.
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="pen"></param>
+		/// <param name="pos"></param>
+		/// <param name="size"></param>
+		public static void DrawPie(this Graphics g, Pen pen, PointF pos, float size, float startAngle, float sweepAngle)
+		{
+			g.DrawPie(pen, pos.X - size / 2f, pos.Y - size / 2f, size, size, startAngle, sweepAngle);
+		}
+
+		/// <summary>
+		/// Fills a pie slice centered on a point.
+		/// </summary>
+		/// <param name="g"></param>
+		/// <param name="pen"></param>
+		/// <param name="pos"></param>
+		/// <param name="size"></param>
+		public static void FillPie(this Graphics g, Brush brush, PointF pos, float size, float startAngle, float sweepAngle)
+		{
+			g.FillPie(brush, pos.X - size / 2f, pos.Y - size / 2f, size, size, startAngle, sweepAngle);
+		}
 	}
 }
