@@ -31,6 +31,7 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode3 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.btnWaypoint = new FrEee.WinForms.Controls.GameButton();
 			this.btnMovementLog = new FrEee.WinForms.Controls.GameButton();
@@ -86,6 +87,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap = new FrEee.WinForms.Controls.GamePanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlDetailReport = new FrEee.WinForms.Controls.GamePanel();
+			this.ddlGalaxyViewMode = new System.Windows.Forms.ComboBox();
 			this.pnlLayout.SuspendLayout();
 			this.pnlLeft.SuspendLayout();
 			this.pnlSystemMap.SuspendLayout();
@@ -834,6 +836,7 @@ namespace FrEee.WinForms.Forms
 			this.pnlRight.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pnlRight.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.pnlRight.Controls.Add(this.ddlGalaxyViewMode);
 			this.pnlRight.Controls.Add(this.pnlGalaxyMap);
 			this.pnlRight.Controls.Add(this.pnlDetailReport);
 			this.pnlRight.Controls.Add(this.progResearch);
@@ -852,11 +855,11 @@ namespace FrEee.WinForms.Forms
 			this.pnlGalaxyMap.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.pnlGalaxyMap.Controls.Add(this.galaxyView);
 			this.pnlGalaxyMap.ForeColor = System.Drawing.Color.White;
-			this.pnlGalaxyMap.Location = new System.Drawing.Point(4, 495);
+			this.pnlGalaxyMap.Location = new System.Drawing.Point(4, 518);
 			this.pnlGalaxyMap.Margin = new System.Windows.Forms.Padding(0);
 			this.pnlGalaxyMap.Name = "pnlGalaxyMap";
 			this.pnlGalaxyMap.Padding = new System.Windows.Forms.Padding(3);
-			this.pnlGalaxyMap.Size = new System.Drawing.Size(411, 280);
+			this.pnlGalaxyMap.Size = new System.Drawing.Size(411, 257);
 			this.pnlGalaxyMap.TabIndex = 14;
 			// 
 			// galaxyView
@@ -864,9 +867,10 @@ namespace FrEee.WinForms.Forms
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
 			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.galaxyView.Location = new System.Drawing.Point(3, 3);
+			this.galaxyView.Mode = presenceMode3;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(403, 272);
+			this.galaxyView.Size = new System.Drawing.Size(403, 249);
 			this.galaxyView.TabIndex = 0;
 			this.galaxyView.Text = "galaxyView1";
 			this.galaxyView.StarSystemClicked += new FrEee.WinForms.Controls.GalaxyView.StarSystemSelectionDelegate(this.galaxyView_StarSystemClicked);
@@ -887,6 +891,20 @@ namespace FrEee.WinForms.Forms
 			this.pnlDetailReport.Padding = new System.Windows.Forms.Padding(3);
 			this.pnlDetailReport.Size = new System.Drawing.Size(412, 460);
 			this.pnlDetailReport.TabIndex = 12;
+			// 
+			// ddlGalaxyViewMode
+			// 
+			this.ddlGalaxyViewMode.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ddlGalaxyViewMode.DisplayMember = "Name";
+			this.ddlGalaxyViewMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlGalaxyViewMode.FormattingEnabled = true;
+			this.ddlGalaxyViewMode.Location = new System.Drawing.Point(3, 495);
+			this.ddlGalaxyViewMode.Margin = new System.Windows.Forms.Padding(0);
+			this.ddlGalaxyViewMode.Name = "ddlGalaxyViewMode";
+			this.ddlGalaxyViewMode.Size = new System.Drawing.Size(411, 23);
+			this.ddlGalaxyViewMode.TabIndex = 1;
+			this.ddlGalaxyViewMode.SelectedIndexChanged += new System.EventHandler(this.ddlGalaxyViewMode_SelectedIndexChanged);
 			// 
 			// GameForm
 			// 
@@ -982,6 +1000,7 @@ namespace FrEee.WinForms.Forms
 		private GameButton btnDecloak;
 		private GameButton btnMovementLog;
 		private GameButton btnWaypoint;
+		private System.Windows.Forms.ComboBox ddlGalaxyViewMode;
 	}
 }
 

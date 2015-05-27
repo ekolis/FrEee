@@ -184,7 +184,9 @@ namespace FrEee.WinForms.Controls
 					// find star system
 					var sys = ssl.Item;
 
-					Mode.Draw(sys, pe.Graphics, new PointF(drawx, drawy), drawsize);
+					// draw it if possible
+					if (Mode != null)
+						Mode.Draw(sys, pe.Graphics, new PointF(drawx, drawy), drawsize);
 
 					// draw selection reticule
 					if (sys == SelectedStarSystem)
@@ -192,6 +194,7 @@ namespace FrEee.WinForms.Controls
 				}
 
 				// draw warp points
+				// TODO - draw warp points using draw mode? maybe draw blockaded warp points in red?
 				if (warpGraph == null)
 					ComputeWarpPointConnectivity();
 				foreach (var ssl in warpGraph)
