@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Objects.GalaxyViewModes
 {
@@ -19,14 +20,14 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 			// do SE3-style split circles for contested systems because they are AWESOME!
 			var owners = sys.FindSpaceObjects<ISpaceObject>().Select(x => x.Owner).Distinct().Where(o => o != null);
 			if (owners.Count() == 0)
-				g.FillEllipse(Brushes.Gray, pos.X - size / 2f, pos.Y - size / 2f, size, size);
+				g.FillEllipse(Brushes.Gray, pos, size);
 			else
 			{
 				var arcSize = 360f / owners.Count();
 				int i = 0;
 				foreach (var owner in owners)
 				{
-					g.FillPie(new SolidBrush(owner.Color), pos.X - size / 2f, pos.Y - size / 2f, size, size, i * arcSize, arcSize);
+					g.FillPie(new SolidBrush(owner.Color), pos, size, i * arcSize, arcSize);
 					i++;
 				}
 			}
