@@ -6,6 +6,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
+using FrEee.WinForms.Objects.GalaxyViewModes;
 
 namespace FrEee.WinForms.Controls
 {
@@ -38,6 +39,21 @@ namespace FrEee.WinForms.Controls
 			set
 			{
 				backgroundImage = value;
+				Invalidate();
+			}
+		}
+
+		private IGalaxyViewMode mode = GalaxyViewModes.All.First();
+
+		public IGalaxyViewMode Mode
+		{
+			get
+			{
+				return mode;
+			}
+			set
+			{
+				mode = value;
 				Invalidate();
 			}
 		}
@@ -168,21 +184,7 @@ namespace FrEee.WinForms.Controls
 					// find star system
 					var sys = ssl.Item;
 
-					// draw circle for star system
-					// do SE3-style split circles for contested systems because they are AWESOME!
-					var owners = sys.FindSpaceObjects<ISpaceObject>().Select(g => g.Owner).Distinct().Where(o => o != null);
-					if (owners.Count() == 0)
-						pe.Graphics.FillEllipse(Brushes.Gray, drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize);
-					else
-					{
-						var arcSize = 360f / owners.Count();
-						int i = 0;
-						foreach (var owner in owners)
-						{
-							pe.Graphics.FillPie(new SolidBrush(owner.Color), drawx - drawsize / 2f, drawy - drawsize / 2f, drawsize, drawsize, i * arcSize, arcSize);
-							i++;
-						}
-					}
+					Mode.Draw(sys, pe.Graphics, new PointF(drawx, drawy), drawsize);
 
 					// draw selection reticule
 					if (sys == SelectedStarSystem)
@@ -202,7 +204,7 @@ namespace FrEee.WinForms.Controls
 					foreach (var target in warpGraph.GetExits(ssl))
 					{
 						if (target == null)
-							continue; // can't draw line if we don't know where warp point ends!
+							continue; // TODO - draw short line guessing where warp point might lead based on its location in the system? if in center, make something up?
 
 						var endPos = new PointF
 						(
