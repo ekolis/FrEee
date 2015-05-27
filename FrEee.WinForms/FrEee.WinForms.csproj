@@ -558,6 +558,7 @@
     </Compile>
     <Compile Include="Interfaces\IBindable.cs" />
     <Compile Include="Objects\GalaxyViewModes\ColoniesMode.cs" />
+    <Compile Include="Objects\GalaxyViewModes\RepairMode.cs" />
     <Compile Include="Objects\GalaxyViewModes\ConstructionMode.cs" />
     <Compile Include="Objects\GalaxyViewModes\GalaxyViewModes.cs" />
     <Compile Include="Objects\GalaxyViewModes\IGalaxyViewMode.cs" />
