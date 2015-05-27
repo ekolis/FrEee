@@ -11,6 +11,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 		{
 			new PresenceMode(),
 			new ForcesMode(),
+			new ColoniesMode(),
 		};
 
 		public static IEnumerable<IGalaxyViewMode> All
