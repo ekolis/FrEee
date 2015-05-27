@@ -706,7 +706,7 @@ namespace FrEee.Game.Objects.Civilization
 					return true; // assume hostility if unknown system
 				return sys.FindSpaceObjects<Planet>().Any(p => p.Owner == this);
 			}
-			return true;
+			return true; // TODO - standing orders for hostility or peace towards empires with no treaty?
 		}
 
 		/// <summary>
@@ -987,14 +987,14 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Returns true if empires are at war.
-		/// TODO - implement war status; right now this always returns false
+		/// Returns true if empires are at war in a system.
+		/// TODO - implement declared war status; right now empires with no treaty are considered to be at war
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
 		public bool IsEnemyOf(Empire other, StarSystem sys)
 		{
-			return false;
+			return this.IsHostileTo(other, sys);
 		}
 
 		/// <summary>

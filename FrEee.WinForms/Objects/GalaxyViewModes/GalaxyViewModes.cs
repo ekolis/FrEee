@@ -10,7 +10,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 		private static IGalaxyViewMode[] all = new IGalaxyViewMode[]
 		{
 			new PresenceMode(),
-
+			new ForcesMode(),
 		};
 
 		public static IEnumerable<IGalaxyViewMode> All
