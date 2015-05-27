@@ -24,6 +24,7 @@ using FrEee.WinForms.Interfaces;
 using FrEee.Game.Objects.Civilization.Diplomacy;
 using System.Reflection;
 using FrEee.WinForms.Objects;
+using FrEee.WinForms.Objects.GalaxyViewModes;
 
 namespace FrEee.WinForms.Forms
 {
@@ -41,6 +42,9 @@ namespace FrEee.WinForms.Forms
 			this.hostView = hostView;
 			SetMouseDownHandler(this, GameForm_MouseDown);
 			RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
+			foreach (var mode in GalaxyViewModes.All)
+				ddlGalaxyViewMode.Items.Add(mode);
+			ddlGalaxyViewMode.SelectedIndex = 0;
 			Instance = this;
 		}
 
@@ -1586,6 +1590,11 @@ namespace FrEee.WinForms.Forms
 				this.ShowChildForm(new ActivateAbilityForm((IMobileSpaceObject)SelectedSpaceObject));
 				BindReport();
 			}
+		}
+
+		private void ddlGalaxyViewMode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			galaxyView.Mode = ddlGalaxyViewMode.SelectedItem as IGalaxyViewMode;
 		}
 	}
 }
