@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Orders
 					// warping via any warp point that leads outside the system should be safe, so prioritize those!
 					var sys = me.FindStarSystem();
 					var paths = sys.FindSpaceObjects<WarpPoint>()
-						.Where(wp => wp.TargetStarSystemLocation.Item != sys)
+						.Where(wp => wp.TargetStarSystemLocation == null || wp.TargetStarSystemLocation.Item != sys)
 						.Select(wp => new { WarpPoint = wp, Path = Pathfinder.Pathfind(me, start, wp.FindSector(), AvoidEnemies, true, me.DijkstraMap) });
 					if (paths.Any())
 					{
