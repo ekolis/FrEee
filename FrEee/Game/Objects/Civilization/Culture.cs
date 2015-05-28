@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -50,6 +51,20 @@ namespace FrEee.Game.Objects.Civilization
 		public void Dispose()
 		{
 			// nothing to do
+		}
+
+		/// <summary>
+		/// Resource income percentages based on cultural modifiers.
+		/// </summary>
+		public ResourceQuantity IncomePercentages
+		{
+			get
+			{
+				var result = new ResourceQuantity();
+				foreach (var r in Resource.All)
+					result += (100 + r.CultureModifier(this)) * r;
+				return result;
+			}
 		}
 	}
 }

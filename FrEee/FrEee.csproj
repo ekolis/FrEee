@@ -160,6 +160,7 @@
     <Compile Include="Game\Interfaces\IErrorProne.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
     <Compile Include="Game\Interfaces\IHull.cs" />
+    <Compile Include="Game\Interfaces\IIncomeProducer.cs" />
     <Compile Include="Game\Interfaces\ILocated.cs" />
     <Compile Include="Game\Interfaces\IMessage.cs" />
     <Compile Include="Game\Interfaces\IMineableSpaceObject.cs" />

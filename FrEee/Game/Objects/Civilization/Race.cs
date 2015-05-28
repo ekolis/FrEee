@@ -97,6 +97,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Aptitudes of this race.
 		/// </summary>
+		// TODO - convert to NamedDictionary
 		public IDictionary<string, int> Aptitudes { get; private set; }
 
 		/// <summary>
@@ -197,5 +198,24 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Resource income percentages based on racial aptitudes.
+		/// </summary>
+		public ResourceQuantity IncomePercentages
+		{
+			get
+			{
+				var result = new ResourceQuantity();
+				foreach (var r in Resource.All)
+				{
+					var factor = 1d;
+					if (r.Aptitude != null)
+						factor *= Aptitudes[r.Aptitude.Name] / 100d;
+					result += (int)(100 * factor) * r;
+				}
+				return result;
+			}
+		}
 	}
 }

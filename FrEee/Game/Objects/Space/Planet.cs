@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer
 	{
 		public Planet()
 		{
@@ -112,66 +112,17 @@ namespace FrEee.Game.Objects.Space
 				if (Colony == null)
 					return new ResourceQuantity(); // no colony? no income!
 
-				var income = new ResourceQuantity();
-				var prefix = "Resource Generation - ";
-				foreach (var abil in this.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
-				{
-					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
-					int amount;
-					int.TryParse(abil.Values[0], out amount);
 
-					// do modifiers to income
-					var factor = 1d;
-					var totalpop = Colony.Population.Sum(kvp => kvp.Value);
-					factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-					Aptitude aptitude = null;
-					if (resource.Name == "Minerals")
-						aptitude = Aptitude.Mining;
-					if (resource.Name == "Organics")
-						aptitude = Aptitude.Farming;
-					if (resource.Name == "Radioactives")
-						aptitude = Aptitude.Refining;
-					if (aptitude != null && Colony.Population.Any())
-						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-					factor *= (100 + Owner.Culture.Production) / 100d;
-					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);
+				// TODO - solar resource generation (maybe even other resources than min/org/rad?)
 
-					income.Add(resource, amount);
-				}
-				prefix = "Point Generation - ";
-				foreach (var abil in this.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
-				{
-					var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
-					int amount;
-					int.TryParse(abil.Values[0], out amount);
-
-					var factor = 1d;
-					var totalpop = Colony.Population.Sum(kvp => kvp.Value);
-					factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-					Aptitude aptitude = null;
-					if (resource.Name == "Research")
-					{
-						aptitude = Aptitude.Intelligence; // yes, Intelligence aptitude increases Research...
-						factor *= (100 + Owner.Culture.Research) / 100d;
-					}
-					if (resource.Name == "Intelligence")
-					{
-						aptitude = Aptitude.Cunning;
-						factor *= (100 + Owner.Culture.Intelligence) / 100d;
-					}
-					if (aptitude != null && Colony.Population.Any())
-						factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-
-					income.Add(resource, (int)(amount * factor));
-				}
-				return income;
+				return this.StandardIncome() + this.RawResourceIncome();
 			}
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// The planet's gross income, taking into presence presence or lack of a spaceport.
 		/// </summary>
-		public ResourceQuantity GrossIncome
+		public override ResourceQuantity GrossIncome
 		{
 			get
 			{
@@ -184,7 +135,7 @@ namespace FrEee.Game.Objects.Space
 				else
 					return GrossIncomeIgnoringSpaceport * Colony.MerchantsRatio;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// Base resource generation, not taking into account value.
@@ -994,11 +945,11 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public int MineralsIncome { get { return GrossIncome[Resource.Minerals]; } }
-		public int OrganicsIncome { get { return GrossIncome[Resource.Organics]; } }
-		public int RadioactivesIncome { get { return GrossIncome[Resource.Radioactives]; } }
-		public int ResearchIncome { get { return GrossIncome[Resource.Research]; } }
-		public int IntelligenceIncome { get { return GrossIncome[Resource.Intelligence]; } }
+		public int MineralsIncome { get { return this.GrossIncome()[Resource.Minerals]; } }
+		public int OrganicsIncome { get { return this.GrossIncome()[Resource.Organics]; } }
+		public int RadioactivesIncome { get { return this.GrossIncome()[Resource.Radioactives]; } }
+		public int ResearchIncome { get { return this.GrossIncome()[Resource.Research]; } }
+		public int IntelligenceIncome { get { return this.GrossIncome()[Resource.Intelligence]; } }
 
 		public bool HasColony { get { return Colony != null; } }
 		public bool HasSpaceYard { get { return this.HasAbility("Space Yard"); } }
@@ -1075,6 +1026,26 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			Dispose();
+		}
+
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get
+			{
+				if (HasColony)
+					return Colony.StandardIncomePercentages;
+				return new ResourceQuantity();
+			}
+		}
+
+		public ResourceQuantity RemoteMiningIncomePercentages
+		{
+			get
+			{
+				if (HasColony)
+					return Colony.RemoteMiningIncomePercentages;
+				return new ResourceQuantity();
+			}
 		}
 	}
 }

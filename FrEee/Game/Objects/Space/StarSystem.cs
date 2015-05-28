@@ -114,7 +114,7 @@ namespace FrEee.Game.Objects.Space
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
 		/// <returns>The matching space objects.</returns>
-		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
 		{
 			return SpaceObjectLocations.Select(l => l.Item).OfType<T>().Where(l => criteria == null || criteria(l));
 		}
