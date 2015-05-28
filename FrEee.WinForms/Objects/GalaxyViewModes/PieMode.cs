@@ -31,7 +31,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 			{
 				// draw pie chart
 				float curAngle = 0f;
-				foreach (var t in amounts)
+				foreach (var t in amounts.OrderBy(t => t.Item2))
 				{
 					var color = t.Item1;
 					var amount = t.Item2;
