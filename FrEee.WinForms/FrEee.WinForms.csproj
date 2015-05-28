@@ -557,6 +557,7 @@
       <DependentUpon>VehicleDesignForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBindable.cs" />
+    <Compile Include="Objects\GalaxyViewModes\WarpPointsMode.cs" />
     <Compile Include="Objects\GalaxyViewModes\ColoniesMode.cs" />
     <Compile Include="Objects\GalaxyViewModes\ResearchIntelMode.cs" />
     <Compile Include="Objects\GalaxyViewModes\ResourcesMode.cs" />
