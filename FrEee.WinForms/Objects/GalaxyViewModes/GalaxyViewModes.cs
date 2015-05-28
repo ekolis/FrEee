@@ -12,10 +12,12 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 			new PresenceMode(),
 			new ForcesMode(),
 			new ColoniesMode(),
+			new ResourcesMode(),
+			new ResearchIntelMode(),
+			new UtilityMode(),
 			new ConstructionMode(),
 			new SpaceYardMode(),
 			new RepairMode(),
-			new UtilityMode(),
 		};
 
 		public static IEnumerable<IGalaxyViewMode> All

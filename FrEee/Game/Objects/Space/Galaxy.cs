@@ -838,7 +838,7 @@ namespace FrEee.Game.Objects.Space
 				if (p.Colony != null)
 				{
 					var sys = p.StarSystem;
-					var income = p.GrossIncome;
+					var income = p.GrossIncome();
 
 					// log messages
 					if (income < p.GrossIncomeIgnoringSpaceport)
@@ -1435,7 +1435,7 @@ namespace FrEee.Game.Objects.Space
 		/// <typeparam name="T">The type of space object.</typeparam>
 		/// <param name="criteria">The criteria.</param>
 		/// <returns>The matching space objects.</returns>
-		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null) where T : ISpaceObject
+		public IEnumerable<T> FindSpaceObjects<T>(Func<T, bool> criteria = null)
 		{
 			return StarSystemLocations.SelectMany(l => l.Item.FindSpaceObjects<T>(criteria));
 		}

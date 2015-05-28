@@ -566,5 +566,29 @@ namespace FrEee.Game.Objects.Vehicles
 				return val;
 			}
 		}
+
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get
+			{
+				return Owner.PrimaryRace.IncomePercentages;
+			}
+		}
+
+		public ResourceQuantity RemoteMiningIncomePercentages
+		{
+			get
+			{
+				return Owner.PrimaryRace.IncomePercentages;
+			}
+		}
+
+		/// <summary>
+		/// Vehicles have no resource value.
+		/// </summary>
+		public ResourceQuantity ResourceValue
+		{
+			get { return new ResourceQuantity(); }
+		}
 	}
 }

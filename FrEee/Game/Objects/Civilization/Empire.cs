@@ -129,7 +129,7 @@ namespace FrEee.Game.Objects.Civilization
 				// shouldn't change except at turn processing...
 				if (colonyIncome == null || Empire.Current == null)
 				{
-					colonyIncome = ColonizedPlanets.Sum(p => p.GrossIncome);
+					colonyIncome = ColonizedPlanets.Sum(p => p.GrossIncome());
 				}
 
 				return colonyIncome;
@@ -140,6 +140,7 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IDictionary<Tuple<ISpaceObject, IMineableSpaceObject>, ResourceQuantity> RemoteMiners
 		{
+			// TODO - limit each miner to mining only the best planet/asteroid in each resource, not all of them?
 			get
 			{
 				// shouldn't change except at turn processing...
@@ -153,11 +154,15 @@ namespace FrEee.Game.Objects.Civilization
 						{
 							foreach (var resource in Resource.All)
 							{
+								// TODO - remote mining of supplies/research/intel? just need abilities for them ;) well, and values...
 								var rule = Mod.Current.AbilityRules.SingleOrDefault(r => r.Matches("Remote Resource Generation - " + resource));
 								if (rule != null)
 								{
 									var amount = miner.GetAbilityValue(rule.Name).ToInt();
-									var income = amount * sobj.ResourceValue[resource] / 100;
+									int modifier = 100;
+									if (resource.Aptitude != null)
+										modifier = miner.Owner.PrimaryRace.Aptitudes[resource.Aptitude.Name];
+									var income = amount * sobj.ResourceValue[resource] * modifier / 100 / 100;
 									var sectorEmpire = Tuple.Create(miner.Sector, miner.Owner);
 
 									// only one vehicle per empire can mine a sector in any given resource
@@ -202,7 +207,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (rawResourceIncome == null || Empire.Current == null)
 				{
 					rawResourceIncome = new ResourceQuantity();
-					foreach (var sobj in Galaxy.Current.FindSpaceObjects<ISpaceObject>().BelongingTo(this))
+					foreach (var sobj in Galaxy.Current.FindSpaceObjects<IIncomeProducer>().BelongingTo(this))
 						rawResourceIncome += sobj.RawResourceIncome();
 				}
 				return rawResourceIncome;

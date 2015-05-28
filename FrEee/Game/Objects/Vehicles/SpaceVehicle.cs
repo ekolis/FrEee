@@ -502,5 +502,13 @@ namespace FrEee.Game.Objects.Vehicles
 				PhasedShields = 0;
 			}
 		}
+
+		public ResourceQuantity GrossIncome
+		{
+			get
+			{
+				return Owner.RemoteMiners.Where(m => m.Key.Item1 == this).Sum(m => m.Value) + this.RawResourceIncome();
+			}
+		}
 	}
 }

@@ -8,6 +8,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Space;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Civilization
 	/// A colony on a planet.
 	/// </summary>
 	[Serializable]
-	public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>
+	public class Colony : IOwnableAbilityObject, IFoggable, IContainable<Planet>, IIncomeProducer
 	{
 		public Colony()
 		{
@@ -160,6 +161,40 @@ namespace FrEee.Game.Objects.Civilization
 				var ratio = (double)merchants / (double)totalPop;
 				return ratio;
 			}
+		}
+
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get
+			{
+				// do modifiers to income
+				var totalpop = Population.Sum(kvp => kvp.Value);
+				var factor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+
+				var result = new ResourceQuantity();
+
+				foreach (var r in Resource.All)
+				{
+					if (r.Aptitude != null)
+						factor *= Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
+					factor *= (100 + r.CultureModifier(Owner.Culture)) / 100d;
+
+					result += (int)(100 * factor) * r;
+				}
+
+				return result;
+			}
+		}
+
+		public ResourceQuantity RemoteMiningIncomePercentages
+		{
+			get { return Owner.PrimaryRace.IncomePercentages; }
+		}
+
+
+		public ResourceQuantity ResourceValue
+		{
+			get { return Container.ResourceValue; }
 		}
 	}
 }

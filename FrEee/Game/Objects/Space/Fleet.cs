@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A collection of ships, units, etc. that move synchronously.
 	/// </summary>
-	public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable
+	public class Fleet : IMobileSpaceObject<Fleet>, ICargoTransferrer, IPromotable, IIncomeProducer
 	{
 		public Fleet()
 		{
@@ -810,6 +810,29 @@ namespace FrEee.Game.Objects.Space
 		{
 			foreach (var v in Vehicles)
 				v.BurnMovementSupplies();
+		}
+
+		public ResourceQuantity GrossIncome
+		{
+			get { return Vehicles.OfType<IIncomeProducer>().Sum(v => v.GrossIncome()); }
+		}
+
+		public ResourceQuantity StandardIncomePercentages
+		{
+			get { return Owner.PrimaryRace.IncomePercentages; }
+		}
+
+		public ResourceQuantity RemoteMiningIncomePercentages
+		{
+			get { return Owner.PrimaryRace.IncomePercentages; }
+		}
+
+		/// <summary>
+		/// Fleets have no resource value.
+		/// </summary>
+		public ResourceQuantity ResourceValue
+		{
+			get { return new ResourceQuantity(); }
 		}
 	}
 }

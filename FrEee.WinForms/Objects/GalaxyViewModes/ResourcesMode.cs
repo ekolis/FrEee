@@ -12,33 +12,31 @@ using FrEee.Utility.Extensions;
 namespace FrEee.WinForms.Objects.GalaxyViewModes
 {
 	/// <summary>
-	/// Displays construction queues by build rate in each resource.
+	/// Displays min/org/rad income.
 	/// </summary>
-	public class ConstructionMode : ArgbMode
+	public class ResourcesMode : ArgbMode
 	{
 		public override string Name
 		{
-			get { return "Construction"; }
+			get { return "Resources"; }
 		}
 
 		protected override Color GetColor(StarSystem sys)
 		{
-			var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetSY(l.Item));
+			var max = Galaxy.Current.StarSystemLocations.MaxOfAllResources(l => GetResources(l.Item));
 			foreach (var r in Resource.All)
 				if (max[r] == 0)
 					max[r] = int.MaxValue; // prevent divide by zero
-			var amt = GetSY(sys);
+			var amt = GetResources(sys);
 			var blue = 255 * amt[Resource.Minerals] / max[Resource.Minerals];
 			var green = 255 * amt[Resource.Organics] / max[Resource.Organics];
 			var red = 255 * amt[Resource.Radioactives] / max[Resource.Radioactives];
 			return Color.FromArgb(red, green, blue);
 		}
 
-		private ResourceQuantity GetSY(StarSystem sys)
+		private ResourceQuantity GetResources(StarSystem sys)
 		{
-			var qs = sys.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Select(x => x.ConstructionQueue).Where(q => q != null);
-			return qs.Sum(q => q.Rate);
+			return sys.SpaceObjects.OwnedBy(Empire.Current).OfType<IIncomeProducer>().Sum(sobj => sobj.GrossIncome());
 		}
 	}
-
 }
