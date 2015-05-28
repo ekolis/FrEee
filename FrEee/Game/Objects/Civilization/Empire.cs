@@ -683,7 +683,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool CanColonize(Planet planet)
 		{
-			return UnlockedItems.OfType<ComponentTemplate>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
+			return UnlockedItems.OfType<IAbilityObject>().Any(c => c.HasAbility(planet.ColonizationAbilityName));
 		}
 
 		/// <summary>

@@ -813,7 +813,7 @@ Targets := Vehicle, Component, Planet, Facility
 Description := Vehicle can self-destruct at will, and will do so if it is taken over by boarders.
     
 Name := Colonize Planet - Rock
-Targets := SpaceVehicle, Component
+Targets := SpaceVehicle, Component, Mount
 Description := Can colonize a rock planet. The colony ship will be destroyed upon doing so.
     
 Name := Colonize Planet - Ice
@@ -822,7 +822,7 @@ Description := Can colonize an ice planet. The colony ship will be destroyed upo
     
 Name := Colonize Planet - Gas
 Alias := Colonize Planet - Gas Giant
-Targets := SpaceVehicle, Component
+Targets := SpaceVehicle, Component, Mount
 Description := Can colonize a gas giant. The colony ship will be destroyed upon doing so.
     
 Name := Point-Defense
