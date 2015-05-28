@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		/// <summary>
 		/// The sector that ships will appear in when they go through this warp point.
-		/// TODO - make sure that players can't cheat and see through warp points!
+		/// If null, the warp point is still unexplored by the current empire.
 		/// </summary>
 		public Sector Target { get; set; }
 
@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Space
 					if (!sys.ExploredByEmpires.Contains(emp))
 					{
 						Name = "Warp Point";
-						Target.Coordinates = new System.Drawing.Point();
+						Target = null;
 					}
 				}
 			}

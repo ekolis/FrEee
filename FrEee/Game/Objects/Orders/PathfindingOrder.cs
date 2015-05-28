@@ -203,24 +203,45 @@ namespace FrEee.Game.Objects.Orders
 				if (gotoSector != null)
 				{
 					// move
-					sobj.Sector = gotoSector;
-					sobj.RefreshDijkstraMap();
-
-					// consume supplies
-					sobj.BurnMovementSupplies();
-
-					// resupply space vehicles
-					// either this vehicle from other space objects, or other vehicles from this one
-					// TODO - this should really be done AFTER battles...
-					if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+					if (gotoSector == null)
 					{
-						foreach (var v in gotoSector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
+						// try to warp through an unexplored warp point
+						var wps = sobj.Sector.SpaceObjects.OfType<WarpPoint>().Where(w => !w.TargetStarSystemLocation.Item.ExploredByEmpires.Contains(sobj.Owner));
+						var wp = wps.PickRandom();
+						if (wp != null)
+						{
+							// warp through the unexplored warp point
+							sobj.Sector = wp.Target;
+						}
+						else if (!LoggedPathfindingError)
+						{
+							// no warp points to explore and we haven't told the player yet
+							PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector));
+							sobj.Owner.Log.Add(PathfindingError);
+							LoggedPathfindingError = true;
+						}
 					}
-					if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+					else
 					{
-						foreach (var v in gotoSector.StarSystem.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
-							v.SupplyRemaining = v.SupplyStorage;
+						sobj.Sector = gotoSector;
+						sobj.RefreshDijkstraMap();
+
+						// consume supplies
+						sobj.BurnMovementSupplies();
+
+						// resupply space vehicles
+						// either this vehicle from other space objects, or other vehicles from this one
+						// TODO - this should really be done AFTER battles...
+						if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
+						{
+							foreach (var v in gotoSector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
+						if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
+						{
+							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+								v.SupplyRemaining = v.SupplyStorage;
+						}
 					}
 				}
 				else if (!LoggedPathfindingError)
