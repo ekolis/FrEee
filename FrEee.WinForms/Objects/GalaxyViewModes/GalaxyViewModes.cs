@@ -18,6 +18,7 @@ namespace FrEee.WinForms.Objects.GalaxyViewModes
 			new ConstructionMode(),
 			new SpaceYardMode(),
 			new RepairMode(),
+			new WarpPointsMode(),
 		};
 
 		public static IEnumerable<IGalaxyViewMode> All
