@@ -90,7 +90,9 @@ namespace FrEee.Utility
 					{
 						try
 						{
-							return (TValue)typeof(TValue).Instantiate(AutoInitArgs);
+							var val = (TValue)typeof(TValue).Instantiate(AutoInitArgs);
+							this[key] = val;
+							return val;
 						}
 						catch
 						{
