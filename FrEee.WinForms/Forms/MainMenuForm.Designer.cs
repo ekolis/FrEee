@@ -249,6 +249,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "FrEee";
+			this.VisibleChanged += new System.EventHandler(this.MainMenuForm_VisibleChanged);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.tblButtonPanel.ResumeLayout(false);

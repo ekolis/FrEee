@@ -23,6 +23,7 @@ using System.Reflection;
 using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Game.Enumerations;
+using FrEee.WinForms.Objects;
 
 namespace FrEee.WinForms.Forms
 {
@@ -244,5 +245,11 @@ namespace FrEee.WinForms.Forms
 		}
 
 		#endregion
+		
+		private void MainMenuForm_VisibleChanged(object sender, EventArgs e)
+		{
+			if (Visible)
+				Music.Play(MusicMode.Menu, Enum.GetValues(typeof(MusicMood)).Cast<MusicMood>().PickRandom());
+		}
 	}
 }
