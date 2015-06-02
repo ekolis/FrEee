@@ -45,6 +45,7 @@ namespace FrEee.WinForms.Forms
 			foreach (var mode in GalaxyViewModes.All)
 				ddlGalaxyViewMode.Items.Add(mode);
 			ddlGalaxyViewMode.SelectedIndex = 0;
+			Music.Play(MusicMode.Strategic, MusicMood.Peaceful); // TODO - check game state for music mood
 			Instance = this;
 		}
 
