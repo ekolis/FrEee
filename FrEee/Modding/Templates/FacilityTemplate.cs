@@ -167,6 +167,8 @@ namespace FrEee.Game.Objects.Technology
 			{
 				var ofFamily = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(ct => ct.Family == Family);
 				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
+				if (!withHighestRomanNumeral.Any())
+					return this; // this empire hasn't unlocked this thingy yet, it's highly advanced alien tech
 				return withHighestRomanNumeral.Last();
 			}
 		}
