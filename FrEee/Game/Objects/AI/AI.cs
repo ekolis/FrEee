@@ -46,7 +46,7 @@ namespace FrEee.Game.Objects.AI
 			var readOnlyVariables = new Dictionary<string, object>();
 			readOnlyVariables.Add("context", context);
 			readOnlyVariables.Add("enabledMinisters", enabledMinisters);
-			ScriptEngine.RunScript(Script, variables, readOnlyVariables);
+			ScriptEngine.RunScript<object>(Script, variables, readOnlyVariables);
 		}
 
 		public string Name

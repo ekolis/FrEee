@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The current galaxy. Shouldn't change except at loading a game, turn proecssing, or mod patching.
 		/// </summary>
-		public static Galaxy Current { get; private set; }
+		public static Galaxy Current { get; set; }
 
 		/// <summary>
 		/// Should players have an omniscient view of all explored systems?
@@ -1225,7 +1225,7 @@ namespace FrEee.Game.Objects.Space
 			// end of turn scripts
 			if (status != null)
 				status.Message = "Executing scripts";
-			ScriptEngine.RunScript(Mod.Current.EndTurnScript);
+			ScriptEngine.RunScript<object>(Mod.Current.EndTurnScript);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1417,7 +1417,7 @@ namespace FrEee.Game.Objects.Space
 			// run init script
 			if (status != null)
 				status.Message = "Executing script";
-			ScriptEngine.RunScript(Mod.Current.GameInitScript);
+			ScriptEngine.RunScript<object>(Mod.Current.GameInitScript);
 			if (status != null)
 				status.Progress = startProgress + (desiredProgress - startProgress) * 2d / 3d;
 
@@ -1598,6 +1598,13 @@ namespace FrEee.Game.Objects.Space
 		*/
 
 		public WarpPointPlacementStrategy WarpPointPlacementStrategy { get; set; }
+
+		public override string ToString()
+		{
+			if (CurrentEmpire == null)
+				return Name;
+			return CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
+		}
 	}
 
 	/// <summary>
@@ -1616,4 +1623,5 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool Recurse { get; private set; }
 	}
+
 }

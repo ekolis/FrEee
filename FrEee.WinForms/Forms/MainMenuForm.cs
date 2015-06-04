@@ -105,7 +105,7 @@ namespace FrEee.WinForms.Forms
 			if (status.Exception == null && !warnings.Any())
 			{
 				var game = new GameForm(false);
-				game.Show();
+				this.ShowChildForm(game);
 				game.FormClosed += (s, args) =>
 				{
 					game.Dispose();
@@ -154,7 +154,7 @@ namespace FrEee.WinForms.Forms
 				var form = new GameForm(false);
 				Cursor = Cursors.Default;
 				Hide();
-				form.ShowDialog();
+				this.ShowChildForm(form);
 				Show();
 			}
 		}
@@ -250,6 +250,12 @@ namespace FrEee.WinForms.Forms
 		{
 			if (Visible)
 				Music.Play(MusicMode.Menu, Enum.GetValues(typeof(MusicMood)).Cast<MusicMood>().PickRandom());
+		}
+
+		private void MainMenuForm_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.Shift && e.KeyCode == Keys.Oem3) // tilde
+				this.ShowChildForm(new DebugForm());
 		}
 	}
 }

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Forms;
 
 namespace FrEee.WinForms.Utility.Extensions
 {
@@ -152,9 +153,19 @@ namespace FrEee.WinForms.Utility.Extensions
 				form.StartPosition = FormStartPosition.CenterParent;
 			form.KeyPreview = true;
 			form.KeyDown += escapeKeyHandler;
+			form.KeyDown += childForm_KeyDown_forDebugConsole;
 			var result = form.ShowDialog();
 			parent.BeginInvoke(new Action(() => parent.Cursor = Cursors.Default));
 			return result;
+		}
+
+		internal static void childForm_KeyDown_forDebugConsole(object sender, KeyEventArgs e)
+		{
+			var f = (Form)sender;
+			if (f is DebugForm)
+				return; // no invoking the debug form from the debug form!
+			if (e.Shift && e.KeyCode == Keys.Oem3) // tilde
+				f.ShowChildForm(new DebugForm());
 		}
 
 		/// <summary>
