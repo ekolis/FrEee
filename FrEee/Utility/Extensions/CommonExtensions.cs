@@ -3416,18 +3416,6 @@ namespace FrEee.Utility.Extensions
 		{
 			return !obj.Errors.Any();
 		}
-
-		/// <summary>
-		/// Does this item have a newer available version?
-		/// </summary>
-		/// <param name="u"></param>
-		/// <returns></returns>
-		public static bool IsObsolescent<T>(this T u) where T : IUpgradeable<T>
-		{
-			if (u == null)
-				return false;
-			return !u.Equals(u.LatestVersion);
-		}
 	}
 
 	public enum IDCopyBehavior

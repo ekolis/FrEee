@@ -34,5 +34,13 @@ namespace FrEee.Game.Objects.Technology
 					return this;
 			}
 		}
+
+		public bool IsObsolescent
+		{
+			get
+			{
+				return New.IsObsolescent;
+			}
+		}
 	}
 }

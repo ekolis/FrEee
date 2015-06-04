@@ -17,6 +17,11 @@ namespace FrEee.Game.Interfaces
 		bool IsObsolete { get; }
 
 		/// <summary>
+		/// Can this item be upgraded?
+		/// </summary>
+		bool IsObsolescent { get; }
+
+		/// <summary>
 		/// The latest available version of this item.
 		/// </summary>
 		T LatestVersion { get; }

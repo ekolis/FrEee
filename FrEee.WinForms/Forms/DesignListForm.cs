@@ -68,7 +68,7 @@ namespace FrEee.WinForms.Forms
 				var x = lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
 				if (design.IsObsolete)
 					x.ForeColor = Color.Gray;
-				else if (design.IsObsolescent())
+				else if (design.IsObsolescent)
 					x.ForeColor = Color.Yellow;
 			}
 		}

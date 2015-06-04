@@ -206,7 +206,7 @@ namespace FrEee.Game.Objects.Vehicles
 		public bool IsObsolete { get; set; }
 
 		/// <summary>
-		/// Does this design have components which can be upgraded?
+		/// Does this design have components or hull which can be upgraded?
 		/// </summary>
 		/// <remarks>
 		/// Once we have upgradeable hulls and mounts, those will be checked here as well.
@@ -215,7 +215,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				return Components.Any(c => c.IsObsolete);
+				return Hull.IsObsolescent || Components.Any(c => c.IsObsolescent);
 			}
 		}
 
@@ -633,7 +633,7 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Components.Clear();
 					foreach (var mct in Components)
 					{
-						var mount = mct.Mount.LatestVersion;
+						var mount = mct.Mount == null ? null : mct.Mount.LatestVersion;
 						var ct = mct.ComponentTemplate.LatestVersion;
 						copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
 					}
