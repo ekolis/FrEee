@@ -64,7 +64,13 @@ namespace FrEee.WinForms.Forms
 			// display it!
 			lstDesigns.Initialize(32, 32);
 			foreach (var design in designs)
-				lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
+			{
+				var x = lstDesigns.AddItemWithImage(design.Role, design.Name, design, design.Icon, design.Cost.Sum(kvp => kvp.Value).ToUnitString());
+				if (design.IsObsolete)
+					x.ForeColor = Color.Gray;
+				else if (design.IsObsolescent())
+					x.ForeColor = Color.Yellow;
+			}
 		}
 
 		private void ddlVehicleType_SelectedIndexChanged(object sender, EventArgs e)
