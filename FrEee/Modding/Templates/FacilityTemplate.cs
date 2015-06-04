@@ -18,7 +18,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A template for a facility.
 	/// </summary>
 	[Serializable]
-	public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Facility>, IReferrable, IConstructionTemplate
+	public class FacilityTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Facility>, IReferrable, IConstructionTemplate, IUpgradeable<FacilityTemplate>
 	{
 		public FacilityTemplate()
 		{
@@ -230,5 +230,13 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Facility templates cannot be manually obsoleted; they are obsoleted automatically when new ones are unlocked.
+		/// </summary>
+		public bool IsObsolete
+		{
+			get { return this.IsObsolescent(); }
+		}
 	}
 }

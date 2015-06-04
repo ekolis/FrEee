@@ -15,7 +15,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle design.
 	/// </summary>
-	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable
+	public interface IDesign : INamed, IPictorial, IOwnableAbilityObject, IConstructionTemplate, IPromotable, IFoggable, IUpgradeable<IDesign>
 	{
 		/// <summary>
 		/// The base name of the design, without the iteration number.
@@ -135,7 +135,7 @@ namespace FrEee.Game.Interfaces
 		IVehicle Instantiate();
 	}
 
-	public interface IDesign<out T> : IDesign, IPictorial, IReferrable where T : IVehicle
+	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle
 	{
 		
 	}

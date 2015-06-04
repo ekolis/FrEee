@@ -16,7 +16,7 @@ namespace FrEee.Game.Objects.Technology
 	/// <summary>
 	/// A mount that can be applied to a component.
 	/// </summary>
-	public class Mount : IResearchable, IModObject
+	public class Mount : IResearchable, IModObject, IUpgradeable<Mount>
 	{
 		public Mount()
 		{
@@ -212,6 +212,24 @@ namespace FrEee.Game.Objects.Technology
 		public override string ToString()
 		{
 			return Name;
+		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public bool IsObsolete
+		{
+			get { return false; }
+		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public Mount LatestVersion
+		{
+			get { return this; }
 		}
 	}
 }

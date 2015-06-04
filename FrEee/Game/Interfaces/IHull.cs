@@ -95,7 +95,7 @@ namespace FrEee.Game.Interfaces
 	/// <summary>
 	/// A vehicle hull.
 	/// </summary>
-	public interface IHull<out T> : IHull, IReferrable where T : IVehicle
+	public interface IHull<out T> : IHull, IReferrable, IUpgradeable<IHull<T>> where T : IVehicle
 	{
 		
 	}

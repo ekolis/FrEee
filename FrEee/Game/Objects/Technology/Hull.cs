@@ -317,5 +317,22 @@ namespace FrEee.Game.Objects.Technology
 		public string ModID { get; set; }
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Hulls cannot manually be obsoleted.
+		/// </summary>
+		public bool IsObsolete
+		{
+			get { return false; }
+		}
+
+		/// <summary>
+		/// Hulls cannot currently be obsoleted.
+		/// TODO - hull family field
+		/// </summary>
+		public IHull<T> LatestVersion
+		{
+			get { return this; }
+		}
 	}
 }
