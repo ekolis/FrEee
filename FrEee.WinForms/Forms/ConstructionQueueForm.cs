@@ -385,6 +385,10 @@ namespace FrEee.WinForms.Forms
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 					ilFacil.Images.Add(facil.Icon);
 					lstFacilities.Items.Add(item);
+					if (facil.IsObsolete)
+						item.ForeColor = Color.Gray;
+					else if (facil.IsObsolescent)
+						item.ForeColor = Color.Yellow;
 					i++;
 				}
 			}
@@ -428,12 +432,17 @@ namespace FrEee.WinForms.Forms
 										name = count + "x " + oldf.Name;
 									var item = new ListViewItem(name + " to " + newf.Name, i, group);
 									item.ImageIndex = i;
-									item.Tag = new FacilityUpgrade(oldf, newf);
+									var fu = new FacilityUpgrade(oldf, newf);
+									item.Tag = fu;
 									var cost = newf.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
 									var eta = cost.Keys.Max(res => (double)(cost[res]) / (double)ConstructionQueue.Rate[res]);
 									item.SubItems.Add(new ListViewItem.ListViewSubItem(item, eta.ToString("f1")));
 									ilFacil.Images.Add(newf.Icon);
 									lstUpgrades.Items.Add(item);
+									if (fu.IsObsolete)
+										item.ForeColor = Color.Gray;
+									else if (fu.IsObsolescent)
+										item.ForeColor = Color.Yellow;
 									i++;
 								}
 							}
