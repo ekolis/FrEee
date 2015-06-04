@@ -208,88 +208,14 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Evaluates a script expression in a sandboxed environment.
 		/// Note that the return value of the script may still contain insecure code, so be careful!
-		/// Expressions will have the following modules/classes imported:
-		/// * System.Linq;
-		/// * FrEee.Utility.Extensions
-		/// * Math (from System)
-		/// * modGlobalScript
 		/// </summary>
 		/// <param name="expression">The script code to run.</param>
-		/// <param name="variables">Variables to inject into the script.</param>
+		/// <param name="readOnlyVariables">Variables to inject into the script.</param>
 		/// <returns>Any .</returns>
-		public static T EvaluateExpression<T>(string expression, IDictionary<string, object> variables = null)
+		public static T EvaluateExpression<T>(string expression, IDictionary<string, object> readOnlyVariables = null)
 		{
-			if (expression.IndexOf("\n") >= 0)
-				throw new ScriptException("Cannot evaluate a script containing newlines. Consider using CallFunction instead.");
-
-			var imports = new List<string>();
-
-
-			var deserializers = new List<string>();
-			deserializers.Add("import clr;");
-			deserializers.Add("import System;");
-			deserializers.Add("from System import Math;");
-			deserializers.Add("from System import Linq;");
-			deserializers.Add("import FrEee;");
-			deserializers.Add("from FrEee.Utility import Extensions;");
-			deserializers.Add("clr.ImportExtensions(FrEee.Utility.Extensions);");
-			if (variables != null)
-			{
-				deserializers.Add("from FrEee.Utility import Serializer;");
-				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
-				deserializers.Add("if (newGalaxy):");
-				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
-				foreach (var variable in variables.Keys)
-				{
-					if (lastVariables[variable] == null || lastVariables[variable] != variables[variable])
-					{
-						if (variables[variable] is IReferrable)
-							deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
-						else
-							deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
-					}
-				}
-			}
-
-			string code;
-			ScriptCode sc;
-			if (Mod.Current == null || Mod.Current.GlobalScript == null)
-			{
-				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression;
-				sc = new ScriptCode("expression", code);
-			}
-			else
-			{
-				imports.Add("from " + Mod.Current.GlobalScript.ModuleName + " import *;");
-				code = string.Join("\n", imports.ToArray()) + "\n" + string.Join("\n", deserializers.ToArray()) + "\n" + expression;
-				sc = new ScriptCode("expression", code, Mod.Current.GlobalScript);
-			}
-			var script = GetCodeScript(sc);
-			var compiledScript = GetCompiledScript(script);
-			UpdateScope(variables);
-			try
-			{
-				dynamic result = compiledScript.Execute(scope);
-				return (T)result;
-			}
-			catch (Exception ex)
-			{
-				//if (ex.Data.Values.Count > 0)
-				//{
-					var infos = ex.Data.Values.Cast<InterpretedFrameInfo[]>().First();
-					var debugInfo = infos[0].DebugInfo;
-					//if (debugInfo != null)
-					{
-						int startLine = debugInfo.StartLine;
-						int endLine = debugInfo.StartLine;
-						throw new ScriptException(ex, string.Join("\n", script.FullText.Split('\n').Skip(startLine - 1).Take(endLine - startLine + 1).ToArray()));
-					}
-					//else
-					//	throw new ScriptException(ex, "(unknown code)");
-				//}
-				//else
-				//	throw new ScriptException(ex, "(unknown code)");
-			}
+			var script = new Script("expression", expression);
+			return RunScript<T>(script, null, readOnlyVariables);
 		}
 
 		/// <summary>
@@ -298,40 +224,55 @@ namespace FrEee.Modding
 		/// <param name="script">The script code to run.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
 		/// <param name="readOnlyVariables">Read-only variables to inject into the script.</param>
-		public static void RunScript(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
+		public static T RunScript<T>(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
-			var deserializers = new List<string>();
-			var serializers = new List<string>();
+			var preCommands = new List<string>();
+			var postCommands = new List<string>();
+			preCommands.Add("import clr");
+			preCommands.Add("clr.AddReference('System.Core')");
+			preCommands.Add("import System");
+			preCommands.Add("clr.ImportExtensions(System.Linq)");
+			preCommands.Add("import FrEee");
+			preCommands.Add("import FrEee.Utility");
+			preCommands.Add("clr.ImportExtensions(FrEee.Utility.Extensions)");
+			preCommands.Add("from FrEee.Modding import Mod");
+			preCommands.Add("from FrEee.Game.Objects.Space import Galaxy");
+			preCommands.Add("from FrEee.Game.Objects.Civilization import Empire");
+			preCommands.Add("from FrEee.Utility import Serializer");
+			preCommands.Add("if newGalaxy:");
+			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+			preCommands.Add("Galaxy.Current = galaxy;");
 			if (variables != null)
-			{
-				deserializers.Add("from FrEee.Utility import Serializer;");
-				deserializers.Add("from FrEee.Game.Objects.Space import Galaxy;");
-				deserializers.Add("galaxy = Serializer.DeserializeFromString(_galaxy);");
+			{				
 				foreach (var variable in variables.Keys)
 				{
-					if (variables[variable] == Galaxy.Current)
-						deserializers.Add(variable + " = galaxy;");
-					else if (variables[variable] is IReferrable)
-						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+					if (variables[variable] is IReferrable)
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
-						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
-					serializers.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
+						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+					postCommands.Add("_" + variable + " = Serializer.SerializeToString(" + variable + ");");
 				}
+			}
+			if (readOnlyVariables != null)
+			{
 				foreach (var variable in readOnlyVariables.Keys)
 				{
 					if (readOnlyVariables[variable] == Galaxy.Current)
-						deserializers.Add(variable + " = galaxy;");
+						preCommands.Add(variable + " = galaxy;");
 					else if (readOnlyVariables[variable] is IReferrable)
-						deserializers.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					else
-						deserializers.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
+						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
 				}
 			}
 			var code =
-				string.Join("\n", deserializers.ToArray()) + "\n" +
+				string.Join("\n", preCommands.ToArray()) + "\n" +
 				script.Text + "\n" +
-				string.Join("\n", serializers.ToArray());
-			var sc = new ScriptCode("runner", code, script.ExternalScripts.ToArray());
+				string.Join("\n", postCommands.ToArray());
+			var external = new List<Script>(script.ExternalScripts);
+			if (Mod.Current != null)
+				external.Add(Mod.Current.GlobalScript);
+			var sc = new ScriptCode("runner", code, external.ToArray());
 			var runner = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(runner);
 			var allVariables = new Dictionary<string, object>();
@@ -346,9 +287,10 @@ namespace FrEee.Modding
 					allVariables.Add(v.Key, v.Value);
 			}
 			UpdateScope(allVariables);
+			T result;
 			try
 			{
-				compiledScript.Execute(scope);
+				result = compiledScript.Execute<T>(scope);
 				if (variables != null)
 				{
 					var newvals = RetrieveVariablesFromScope(scope, variables.Keys);
@@ -374,6 +316,7 @@ namespace FrEee.Modding
 				else
 					throw new ScriptException(ex, "(unknown code)");
 			}
+			return result;
 		}
 
 		/// <summary>

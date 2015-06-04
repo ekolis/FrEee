@@ -148,6 +148,12 @@
     <Compile Include="Forms\BattleResultsForm.Designer.cs">
       <DependentUpon>BattleResultsForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\DebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\DebugForm.Designer.cs">
+      <DependentUpon>DebugForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ModErrorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -682,6 +688,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\CultureComparisonForm.resx">
       <DependentUpon>CultureComparisonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\DebugForm.resx">
+      <DependentUpon>DebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DiplomacyForm.resx">
       <DependentUpon>DiplomacyForm.cs</DependentUpon>

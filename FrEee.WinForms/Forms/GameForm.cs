@@ -1216,7 +1216,7 @@ namespace FrEee.WinForms.Forms
 			switch (mode)
 			{
 				case CommandMode.None:
-					Text = "FrEee - " + Galaxy.Current.CurrentEmpire.Name + " - " + Galaxy.Current.CurrentEmpire.LeaderName + " - " + Galaxy.Current.Stardate;
+					Text = "FrEee - " + Galaxy.Current;
 					break;
 				case CommandMode.Move:
 					Text = "Click a sector for " + sobj + " to move to. (Ctrl-click to move aggressively)";

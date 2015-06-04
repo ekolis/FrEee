@@ -11,6 +11,7 @@ using FrEee.Utility;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using FrEee.Modding;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms
 {
@@ -297,7 +298,9 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 					MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 			}
 			var form = new GameForm(false);
+			form.KeyPreview = true;
 			form.StartPosition = FormStartPosition.CenterScreen;
+			form.KeyDown += GuiExtensions.childForm_KeyDown_forDebugConsole;
 			Application.Run(form);
 			return 0;
 		}

@@ -326,5 +326,10 @@ namespace FrEee.Modding
 			if (this == Current)
 				Current = null;
 		}
+
+		public override string ToString()
+		{
+			return RootPath;
+		}
 	}
 }

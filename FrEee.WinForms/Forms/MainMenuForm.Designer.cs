@@ -243,6 +243,7 @@
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.ForeColor = System.Drawing.Color.White;
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+			this.KeyPreview = true;
 			this.MaximizeBox = false;
 			this.MinimizeBox = false;
 			this.Name = "MainMenuForm";
@@ -250,6 +251,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "FrEee";
 			this.VisibleChanged += new System.EventHandler(this.MainMenuForm_VisibleChanged);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainMenuForm_KeyDown);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.tblButtonPanel.ResumeLayout(false);
