@@ -334,5 +334,14 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return this; }
 		}
+
+		/// <summary>
+		/// Hulls cannot currently be obsoleted.
+		/// TODO - hull family field
+		/// </summary>
+		public bool IsObsolescent
+		{
+			get { return false; }
+		}
 	}
 }

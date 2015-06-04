@@ -215,8 +215,7 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		/// <summary>
-		/// Mounts cannot currently be obsoleted.
-		/// TODO - add family and roman numeral properties to mounts
+		/// Mounts cannot currently be manually obsoleted.
 		/// </summary>
 		public bool IsObsolete
 		{
@@ -230,6 +229,15 @@ namespace FrEee.Game.Objects.Technology
 		public Mount LatestVersion
 		{
 			get { return this; }
+		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public bool IsObsolescent
+		{
+			get { return false; }
 		}
 	}
 }

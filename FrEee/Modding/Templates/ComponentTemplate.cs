@@ -276,8 +276,14 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return this.IsObsolescent();
+				return this.IsObsolescent;
 			}
+		}
+
+
+		public bool IsObsolescent
+		{
+			get { return this != LatestVersion; }
 		}
 	}
 }

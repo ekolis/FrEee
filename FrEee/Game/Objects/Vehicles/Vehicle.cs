@@ -603,11 +603,16 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				if (Design.IsObsolescent())
+				if (IsObsolescent)
 					return Design.LatestVersion.Instantiate();
 				else
 					return this;
 			}
+		}
+
+		public bool IsObsolescent
+		{
+			get { return Design.IsObsolescent; }
 		}
 	}
 }

@@ -371,11 +371,17 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				if (IsObsolete)
+				if (IsObsolescent)
 					return Template.LatestVersion.Instantiate();
 				else
 					return this;
 			}
+		}
+
+
+		public bool IsObsolescent
+		{
+			get { return Template.IsObsolescent; }
 		}
 	}
 }

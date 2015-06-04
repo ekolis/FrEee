@@ -236,7 +236,15 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public bool IsObsolete
 		{
-			get { return this.IsObsolescent(); }
+			get { return this.IsObsolescent; }
+		}
+
+		public bool IsObsolescent
+		{
+			get
+			{
+				return this != LatestVersion;
+			}
 		}
 	}
 }
