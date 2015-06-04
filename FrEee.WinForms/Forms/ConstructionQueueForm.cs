@@ -452,7 +452,7 @@ namespace FrEee.WinForms.Forms
 				var x = lstShips.AddItemWithImage(design.Role, design.Name, design, design.Icon, eta.ToString("f1"));
 				if (design.IsObsolete)
 					x.ForeColor = Color.Gray;
-				else if (design.IsObsolescent())
+				else if (design.IsObsolescent)
 					x.ForeColor = Color.Yellow;
 			}
 		}
