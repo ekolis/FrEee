@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A large immobile installation on a colony.
 	/// </summary>
 	[Serializable]
-	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable
+	public class Facility : IOwnableAbilityObject, IConstructable, IDamageable, IDisposable, IContainable<Planet>, IFormulaHost, IRecyclable, IUpgradeable<Facility>
 	{
 		public Facility(FacilityTemplate template)
 		{
@@ -338,6 +338,25 @@ namespace FrEee.Game.Objects.Technology
 		public ResourceQuantity ScrapValue
 		{
 			get { return Cost * Mod.Current.Settings.ScrapFacilityReturnRate / 100; }
+		}
+
+		public Facility LatestVersion
+		{
+			get
+			{
+				if (IsObsolete)
+					return Template.Instantiate();
+				else
+					return this;
+			}
+		}
+
+		/// <summary>
+		/// Facilities cannot be manually obsoleted; they are only obsoleted by unlocking new ones.
+		/// </summary>
+		public bool IsObsolete
+		{
+			get { return this.IsObsolescent(); }
 		}
 	}
 }

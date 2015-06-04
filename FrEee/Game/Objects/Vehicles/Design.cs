@@ -200,7 +200,24 @@ namespace FrEee.Game.Objects.Vehicles
 		/// </summary>
 		public int TurnNumber { get; set; }
 
+		/// <summary>
+		/// Has this design been marked as obsolete by the player or an AI minister?
+		/// </summary>
 		public bool IsObsolete { get; set; }
+
+		/// <summary>
+		/// Does this design have components which can be upgraded?
+		/// </summary>
+		/// <remarks>
+		/// Once we have upgradeable hulls and mounts, those will be checked here as well.
+		/// </remarks>
+		public bool IsObsolescent
+		{
+			get
+			{
+				return Components.Any(c => c.IsObsolete);
+			}
+		}
 
 		public IEnumerable<string> Warnings
 		{
@@ -595,6 +612,42 @@ namespace FrEee.Game.Objects.Vehicles
 		public IEnumerable<T> RealVehicles
 		{
 			get { return Vehicles.Where(v => !v.IsMemory); }
+		}
+
+		/// <summary>
+		/// An upgraded version of this design, or this design if it cannot be upgraded.
+		/// TODO - don't create upgraded design if it already exists, just return it?
+		/// </summary>
+		public IDesign<T> LatestVersion
+		{
+			get
+			{
+				if (IsObsolescent)
+				{
+					var copy = this.CopyAndAssignNewID();
+					copy.Hull = Hull.LatestVersion;
+					copy.TurnNumber = Galaxy.Current.TurnNumber;
+					copy.Owner = Empire.Current;
+					copy.Iteration++;
+					copy.VehiclesBuilt = 0;
+					copy.Components.Clear();
+					foreach (var mct in Components)
+					{
+						var mount = mct.Mount.LatestVersion;
+						var ct = mct.ComponentTemplate.LatestVersion;
+						copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
+					}
+					return copy;
+				}
+				else
+					return this;
+			}
+		}
+
+
+		IDesign IUpgradeable<IDesign>.LatestVersion
+		{
+			get { return LatestVersion; }
 		}
 	}
 }

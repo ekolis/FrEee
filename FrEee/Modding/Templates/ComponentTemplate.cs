@@ -18,7 +18,7 @@ namespace FrEee.Modding.Templates
 	/// A template for a vehicle component.
 	/// </summary>
 	[Serializable]
-	public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IReferrable
+	public class ComponentTemplate : IModObject, IResearchable, IAbilityContainer, ITemplate<Component>, IReferrable, IUpgradeable<ComponentTemplate>
 	{
 		public ComponentTemplate()
 		{
@@ -265,5 +265,19 @@ namespace FrEee.Modding.Templates
 		}
 
 		public bool IsDisposed { get; set; }
+
+		/// <summary>
+		/// Is this component template obsolete for the current empire?
+		/// </summary>
+		/// <remarks>
+		/// Components are obsolete if and only if they are obsolescent; they cannot currently be "marked" obsolete by the player.
+		/// </remarks>
+		public bool IsObsolete
+		{
+			get
+			{
+				return this.IsObsolescent();
+			}
+		}
 	}
 }

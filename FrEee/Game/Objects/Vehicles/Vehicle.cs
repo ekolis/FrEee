@@ -590,5 +590,24 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return new ResourceQuantity(); }
 		}
+
+		public bool IsObsolete
+		{
+			get { return Design.IsObsolete; }
+		}
+
+		/// <summary>
+		/// Creates an upgraded version of this vehicle if it can be upgraded.
+		/// </summary>
+		public IVehicle LatestVersion
+		{
+			get
+			{
+				if (Design.IsObsolescent())
+					return Design.LatestVersion.Instantiate();
+				else
+					return this;
+			}
+		}
 	}
 }

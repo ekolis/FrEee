@@ -154,18 +154,7 @@ namespace FrEee.WinForms.Forms
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
-				var copy = old.CopyAndAssignNewID();
-				copy.TurnNumber = Galaxy.Current.TurnNumber;
-				copy.Owner = Empire.Current;
-				copy.Iteration++;
-				copy.VehiclesBuilt = 0;			
-				copy.Components.Clear();
-				foreach (var mct in old.Components)
-				{
-					var mount = mct.Mount;
-					var ct = mct.ComponentTemplate.LatestVersion;
-					copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
-				}
+				var copy = old.LatestVersion;
 				var form = new VehicleDesignForm();
 				form.Design = copy;
 				this.ShowChildForm(form);

@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>
 	{
 		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 		{
@@ -346,6 +346,28 @@ namespace FrEee.Game.Objects.Technology
 		public IAbilityObject Parent
 		{
 			get { return Container; }
+		}
+
+		/// <summary>
+		/// Is this template obsolete (can be upgraded to a newer component)?
+		/// </summary>
+		public bool IsObsolete
+		{
+			get
+			{
+				return ComponentTemplate.IsObsolete || Mount != null && Mount.IsObsolete;
+			}
+		}
+
+		public MountedComponentTemplate LatestVersion
+		{
+			get
+			{
+				if (IsObsolete)
+					return new MountedComponentTemplate(Container, ComponentTemplate.LatestVersion, Mount == null ? null : Mount.LatestVersion);
+				else
+					return this;
+			}
 		}
 	}
 }

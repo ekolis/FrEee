@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Technology
 	/// TODO - should Component implement IOwnable like Facility does?
 	/// </summary>
 	[Serializable]
-	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable
+	public class Component : IAbilityObject, INamed, IPictorial, IDamageable, IContainable<IVehicle>, IFormulaHost, IReferrable, IUpgradeable<Component>
 	{
 		public Component(IVehicle container, MountedComponentTemplate template)
 		{
@@ -273,7 +273,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public int ArmorHitpoints
 		{
-			get 
+			get
 			{
 				return this.HasAbility("Armor") ? Hitpoints : 0;
 			}
@@ -354,6 +354,28 @@ namespace FrEee.Game.Objects.Technology
 		public Empire Owner
 		{
 			get { return Container == null ? null : Container.Owner; }
+		}
+
+		/// <summary>
+		/// Is this component obsolete (can be upgraded to a newer component)?
+		/// </summary>
+		public bool IsObsolete
+		{
+			get
+			{
+				return Template.IsObsolete;
+			}
+		}
+
+		public Component LatestVersion
+		{
+			get
+			{
+				if (IsObsolete)
+					return Template.LatestVersion.Instantiate();
+				else
+					return this;
+			}
 		}
 	}
 }
