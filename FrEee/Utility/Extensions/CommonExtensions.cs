@@ -114,6 +114,8 @@ namespace FrEee.Utility.Extensions
 		{
 			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
 				return true;
+			if (mi.DeclaringType == null)
+				return false;
 			foreach (var i in mi.DeclaringType.GetInterfaces())
 			{
 				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
@@ -3415,6 +3417,50 @@ namespace FrEee.Utility.Extensions
 		public static bool IsValid(this IErrorProne obj)
 		{
 			return !obj.Errors.Any();
+		}
+
+		/// <summary>
+		/// Gets all names for a property, class, etc. including custom names and the actual item name.
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		public static IEnumerable<string> GetNames(this MemberInfo m)
+		{
+			return m.GetAttributes<NameAttribute>().Select(a => a.Name).UnionSingle(m.Name);
+		}
+
+		/// <summary>
+		/// Gets the canonical name for a property, class, etc.
+		/// This is taken from the [CanonicalName] attribute if present, otherwise the name of the item itself.
+		/// </summary>
+		/// <param name="m"></param>
+		/// <returns></returns>
+		public static string GetCanonicalName(this MemberInfo m)
+		{
+			var name = m.GetAttributes<CanonicalNameAttribute>().Select(a => a.Name).SingleOrDefault();
+			if (name == null)
+				return m.Name;
+			return name;
+		}
+
+		public static IEnumerable<T> UnionSingle<T>(this IEnumerable<T> ts, T t)
+		{
+			return ts.Union(t.SingleItem());
+		}
+
+		public static IEnumerable<T> UnionSingle<T>(this T t1, T t2)
+		{
+			return t1.SingleItem().UnionSingle(t2);
+		}
+
+		public static IEnumerable<T> ConcatSingle<T>(this IEnumerable<T> ts, T t)
+		{
+			return ts.Concat(t.SingleItem());
+		}
+
+		public static IEnumerable<T> ConcatSingle<T>(this T t1, T t2)
+		{
+			return t1.SingleItem().ConcatSingle(t2);
 		}
 	}
 

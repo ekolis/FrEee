@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -27,14 +28,20 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// Take the highest value within the group. Only works properly for numeric values.
 		/// </summary>
+		[CanonicalName("Take Highest")]
+		[Name("Highest")]
 		TakeHighest,
 		/// <summary>
 		/// Take the average of the group values. Only works properly for numeric values.
 		/// </summary>
+		[CanonicalName("Take Average")]
+		[Name("Average")]
 		TakeAverage,
 		/// <summary>
 		/// Take the lowest value within the group. Only works properly for numeric values.
 		/// </summary>
+		[CanonicalName("Take Lowest")]
+		[Name("Lowest")]
 		TakeLowest
 	}
 }

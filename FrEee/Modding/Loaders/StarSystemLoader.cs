@@ -117,7 +117,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.StellarSize = (StellarSize)Enum.Parse(typeof(StellarSize), temp);
+									template.StellarSize = temp.ParseEnum<StellarSize>();
 								}
 								catch (ArgumentException ex)
 								{
@@ -189,7 +189,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.StellarSize = (Size)Enum.Parse(typeof(Size), temp);
+									template.StellarSize = temp.ParseEnum<Size>();
 								}
 								catch (ArgumentException ex)
 								{
@@ -315,7 +315,7 @@ namespace FrEee.Modding.Loaders
 							{
 								try
 								{
-									template.Size = (Size)Enum.Parse(typeof(Size), temp);
+									template.Size = temp.ParseEnum<Size>();
 								}
 								catch (ArgumentException ex)
 								{

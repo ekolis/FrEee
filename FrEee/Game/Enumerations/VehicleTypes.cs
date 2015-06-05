@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -12,29 +13,31 @@ namespace FrEee.Game.Enumerations
 	public enum VehicleTypes
 	{
 		None = 0x0,
+		[Name("Ships")]
 		Ship = 0x1,
-		Ships = Ship,
+		[Name("Bases")]
 		Base = 0x2,
-		Bases = Base,
-		Ftr = 0x4,
-		Fighter = Ftr,
-		Fighters = Fighter,
-		Sat = 0x8,
-		Satellite = Sat,
-		Satellites = Satellite,
+		[Name("Fighters")]
+		[Name("Ftr")]
+		Fighter = 0x4,
+		[Name("Satellites")]
+		[Name("Sat")]
+		Satellite = 0x8,
+		[Name("Mines")]
 		Mine = 0x10,
-		Mines = Mine,
-		Trp = 0x20,
-		Troop = Trp,
-		Troops = Troop,
+		[Name("Troops")]
+		[Name("Troop")]
+		Troop = 0x20,
+		[Name("Drones")]
 		Drone = 0x40,
-		Drones = Drone,
-		WeapPlatform = 0x80,
-		WeapPlatforms = WeapPlatform,
-		WeapPlat = WeapPlatform,
-		WeapPlats = WeapPlat,
-		WeaponPlatform = WeapPlatform,
-		WeaponPlatforms = WeaponPlatform,
+		[Name("WeapPlatform")]
+		[Name("WeapPlatforms")]
+		[Name("WeapPlat")]
+		[Name("WeapPlats")]
+		[Name("WeaponPlatforms")]
+		[CanonicalName("Weapon Platform")]
+		[Name("Weapon Platforms")]
+		WeaponPlatform = 0x80,
 		All = Ship | Base | Fighter | Satellite | Mine | Troop | Drone | WeaponPlatform,
 		Invalid = 0x1000,
 	}
