@@ -3462,6 +3462,18 @@ namespace FrEee.Utility.Extensions
 		{
 			return t1.SingleItem().ConcatSingle(t2);
 		}
+
+		/// <summary>
+		/// Raises an event, but doesn't do anything if the event handler is null.
+		/// </summary>
+		/// <typeparam name="TArgs"></typeparam>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		public static void Raise<TArgs>(this EventHandler<TArgs> evt, object sender, TArgs e) where TArgs : EventArgs
+		{
+			if (evt != null)
+				evt(sender, e);
+		}
 	}
 
 	public enum IDCopyBehavior
