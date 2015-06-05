@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -14,6 +15,7 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// Anything except technology can be traded or gifted.
 		/// </summary>
+		[CanonicalName("All But Technology")]
 		AllButTechnology = 1,
 		/// <summary>
 		/// Anything, including technology, can be traded or gifted.

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -12,22 +13,22 @@ namespace FrEee.Game.Enumerations
 	public enum WeaponTargets
 	{
 		None = 0x0,
+		[Name("Ships")]
 		Ship = 0x1,
-		Ships = Ship,
+		[Name("Bases")]
 		Base = 0x2,
-		Bases = Base,
+		[Name("Fighters")]
+		[Name("Ftr")]
 		Fighter = 0x4,
-		Fighters = Fighter,
-		Ftr = Fighter,
+		[Name("Satellites")]
+		[Name("Sat")]
 		Satellite = 0x8,
-		Satellites = Satellite,
-		Sat = Satellite,
+		[Name("Drones")]
 		Drone = 0x40,
-		Drones = Drone,
+		[Name("Planets")]
 		Planet = 0x100,
-		Planets = Planet,
+		[Name("Seekers")]
 		Seeker = 0x200,
-		Seekers = Seeker,
 		All = Ship | Base| Fighter | Satellite | Drone | Planet | Seeker,
 		Invalid = 0x400,
 	}

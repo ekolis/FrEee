@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Modding.Loaders
 {
@@ -91,7 +92,7 @@ namespace FrEee.Modding.Loaders
 							{
 								if (val == s)
 								{
-									m.VehicleTypes |= (VehicleTypes)Enum.Parse(typeof(VehicleTypes), val);
+									m.VehicleTypes |= val.ParseEnum<VehicleTypes>();
 									found = true;
 									break;
 								}

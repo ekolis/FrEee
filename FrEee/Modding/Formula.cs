@@ -53,7 +53,7 @@ namespace FrEee.Modding
 							if (typeof(T) == typeof(string))
 								cachedValue = (T)(object)Text;
 							else if (typeof(T).IsEnum)
-								cachedValue = (T)Enum.Parse(typeof(T), Text);
+								cachedValue = Text.ParseEnum<T>();
 							else
 								cachedValue = (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
 						}

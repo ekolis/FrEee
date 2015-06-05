@@ -746,7 +746,7 @@ namespace FrEee.Utility
 			{
 				// parse enums
 				var val = r.ReadTo(';', log);
-				o = Enum.Parse(type, val);
+				o = val.ParseEnum(type);
 			}
 			else if (typeof(Array).IsAssignableFrom(type))
 			{

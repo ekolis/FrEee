@@ -564,7 +564,7 @@ namespace FrEee.WinForms.Forms
 			var node = treeTable.SelectedNode;
 			if (node != null && node.Parent != null)
 			{
-				var amount = Parser.Units(txtQuantityLevel.Text);
+				var amount = txtQuantityLevel.Text.ParseUnits();
 				if (amount != null && amount > 0)
 				{
 					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;
@@ -583,7 +583,7 @@ namespace FrEee.WinForms.Forms
 			var node = treeTable.SelectedNode;
 			if (node != null && node.Parent != null)
 			{
-				var amount = Parser.Units(txtQuantityLevel.Text);
+				var amount = txtQuantityLevel.Text.ParseUnits();
 				if (amount != null && amount > 0)
 				{
 					var package = ((string)node.Parent.Text).StartsWith("We") ? givePackage : receivePackage;

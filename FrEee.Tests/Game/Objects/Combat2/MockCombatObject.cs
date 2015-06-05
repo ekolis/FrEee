@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Combat2;
+using FrEee.Utility;
 using NewtMath.f16;
 
 namespace FrEee.Tests.Game.Objects.Combat2
@@ -16,7 +17,7 @@ namespace FrEee.Tests.Game.Objects.Combat2
 
 		}
 
-		public override void TakeSpecialDamage(Battle_Space battle, FrEee.Game.Objects.Combat.Hit hit, Utility.PRNG dice)
+		public override void TakeSpecialDamage(Battle_Space battle, FrEee.Game.Objects.Combat.Hit hit, PRNG dice)
 		{
 			
 		}

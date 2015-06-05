@@ -327,7 +327,7 @@ namespace FrEee.WinForms.Forms
 			get
 			{
 				if (!chkAll.Checked)
-					return (long)Parser.Units(txtQuantity.Text);
+					return (long)txtQuantity.Text.ParseUnits();
 				return null;
 			}
 		}

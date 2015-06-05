@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
@@ -27,10 +28,14 @@ namespace FrEee.Game.Enumerations
 		Galaxy = 0x80,
 
 		// stellar objects
+		[Name("Asteroid")]
+		[Name("Asteroids")]
+		[CanonicalName("Asteroid Field")]
 		AsteroidField = 0x100,
 		Planet = 0x200,
 		Star = 0x400,
 		Storm = 0x800,
+		[CanonicalName("Warp Point")]
 		WarpPoint = 0x1000,
 
 		// vehicles
@@ -47,11 +52,15 @@ namespace FrEee.Game.Enumerations
 		Fleet = 0x200000,
 
 		// compound types
+		[CanonicalName("Stellar Object")]
 		StellarObject = AsteroidField | Planet | Star | Storm | WarpPoint,
+		[CanonicalName("Space Vehicle")]
 		SpaceVehicle = Base | Drone | Fighter | Mine | Satellite | Ship,
+		[CanonicalName("Ground Vehicle")]
 		GroundVehicle = WeaponPlatform | Troop,
 		Unit = Drone | Fighter | Mine | Satellite | Troop | WeaponPlatform,
 		Vehicle = Ship | Base | Unit,
+		[CanonicalName("Space Object")]
 		SpaceObject = StellarObject | SpaceVehicle,
 
 		// invalid
