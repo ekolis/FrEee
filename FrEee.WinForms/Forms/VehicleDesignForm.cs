@@ -453,7 +453,13 @@ namespace FrEee.WinForms.Forms
 				if (e.Button == MouseButtons.Left)
 				{
 					// remove from design
-					Design.Components.Remove(mct);
+					var qty = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						qty *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						qty *= 100;
+					for (var i = 0; i < qty; i++)
+						Design.Components.Remove(mct);
 					BindInstalledComponents();
 					BindDesignData();
 				}
@@ -484,7 +490,13 @@ namespace FrEee.WinForms.Forms
 				if (e.Button == MouseButtons.Left)
 				{
 					// add to design
-					Design.Components.Add(mct);
+					var qty = 1;
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						qty *= 10;
+					if (ModifierKeys.HasFlag(Keys.Control))
+						qty *= 100;
+					for (var i = 0; i < qty; i++)
+						Design.Components.Add(mct);
 					BindInstalledComponents();
 					BindDesignData();
 				}
