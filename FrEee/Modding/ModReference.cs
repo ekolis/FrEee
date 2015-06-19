@@ -107,7 +107,7 @@ namespace FrEee.Modding
 
 		public override int GetHashCode()
 		{
-			return ID.GetHashCode();
+			return ID == null ? 0 : ID.GetHashCode();
 		}
 
 		public override bool Equals(object obj)
