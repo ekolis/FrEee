@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Orders
 
 		IConstructionTemplate IConstructionOrder.Template { get { return template.Value; } }
 
-		private Reference<TTemplate> template { get; set; }
+		private GalaxyReference<TTemplate> template { get; set; }
 
 		/// <summary>
 		/// The item being built.
@@ -95,7 +95,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

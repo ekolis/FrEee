@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Technology
 		[DoNotSerialize]
 		public ComponentTemplate ComponentTemplate { get { return componentTemplate; } set { componentTemplate = value; } }
 
-		private Reference<ComponentTemplate> componentTemplate { get; set; }
+		private GalaxyReference<ComponentTemplate> componentTemplate { get; set; }
 
 		/// <summary>
 		/// The mount used.
@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Technology
 		[DoNotSerialize]
 		public Mount Mount { get { return mount; } set { mount = value; } }
 
-		private Reference<Mount> mount { get; set; }
+		private GalaxyReference<Mount> mount { get; set; }
 
 		/// <summary>
 		/// The name of the component, prefixed with the short name of the mount (if any).
@@ -303,13 +303,13 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 
-		private Reference<IDesign> container { get; set; }
+		private GalaxyReference<IDesign> container { get; set; }
 
 		/// <summary>
 		/// The design which contains this mounted component template.
 		/// </summary>
 		[DoNotSerialize]
-		public IDesign Container { get { return container == null ? null : container.Value; } set { container = value.Reference(); } }
+		public IDesign Container { get { return container == null ? null : container.Value; } set { container = value.ReferViaGalaxy(); } }
 
 		public IDictionary<string, object> Variables
 		{

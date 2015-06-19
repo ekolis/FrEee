@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Orders
 
 		IConstructionTemplate IConstructionOrder.Template { get { return newTemplate.Value; } }
 
-		private Reference<FacilityTemplate> newTemplate { get; set; }
+		private GalaxyReference<FacilityTemplate> newTemplate { get; set; }
 
 		/// <summary>
 		/// The template of the old facility being upgraded.
@@ -43,7 +43,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public FacilityTemplate OldTemplate { get { return oldTemplate; } set { oldTemplate = value; } }
 
-		private Reference<FacilityTemplate> oldTemplate { get; set; }
+		private GalaxyReference<FacilityTemplate> oldTemplate { get; set; }
 
 		/// <summary>
 		/// The facility being built.
@@ -105,7 +105,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Target = target;
 		}
 
-		private Reference<Empire> target { get; set; }
+		private GalaxyReference<Empire> target { get; set; }
 
 		/// <summary>
 		/// The empire that is the target of this action.

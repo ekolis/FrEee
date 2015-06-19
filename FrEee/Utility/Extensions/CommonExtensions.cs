@@ -1669,9 +1669,14 @@ namespace FrEee.Utility.Extensions
 			return src.Except(new T[] { badguy });
 		}
 
-		public static Reference<T> Reference<T>(this T t)
+		public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
 		{
-			return new Reference<T>(t);
+			return new GalaxyReference<T>(t);
+		}
+
+		public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
+		{
+			return new ModReference<T>(t);
 		}
 
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)

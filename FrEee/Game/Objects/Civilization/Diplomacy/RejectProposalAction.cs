@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Proposal = proposal;
 		}
 
-		private Reference<Proposal> proposal { get; set; }
+		private GalaxyReference<Proposal> proposal { get; set; }
 
 		/// <summary>
 		/// The proposal in question.

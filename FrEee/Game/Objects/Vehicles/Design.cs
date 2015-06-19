@@ -106,7 +106,7 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// For serialization and client safety
 		/// </summary>
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		[DoNotSerialize]
 		IHull IDesign.Hull
@@ -125,9 +125,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The hull used in this design.
 		/// </summary>
 		[DoNotSerialize]
-		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new Reference<IHull<T>>(value); } }
+		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new GalaxyReference<IHull<T>>(value); } }
 
-		private Reference<IHull<T>> hull { get; set; }
+		private GalaxyReference<IHull<T>> hull { get; set; }
 
 		/// <summary>
 		/// The components used in this design.

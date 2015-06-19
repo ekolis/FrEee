@@ -32,9 +32,9 @@ namespace FrEee.Game.Objects.Orders
 		/// The target we are pursuing.
 		/// </summary>
 		[DoNotSerialize]
-		public Waypoint Target { get { return target.Value; } set { target = value.Reference(); } }
+		public Waypoint Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-		private Reference<Waypoint> target { get; set; }
+		private GalaxyReference<Waypoint> target { get; set; }
 
 		/// <summary>
 		/// Should pathfinding avoid enemies?
@@ -79,7 +79,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public LogMessage PathfindingError { get; private set; }
 		
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

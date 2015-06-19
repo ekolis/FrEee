@@ -25,20 +25,20 @@ namespace FrEee.Game.Objects.Combat
 			DamageLeft = FullDamage;
 		}
 
-		public Reference<Component> weapon { get; set; }
+		public GalaxyReference<Component> weapon { get; set; }
 
 		[DoNotSerialize]
 		public Component Weapon { get { return weapon; } set { weapon = value; } }
 
-		public Reference<IDamageable> target { get; set; }
+		public GalaxyReference<IDamageable> target { get; set; }
 
 		[DoNotSerialize]
-		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.Reference(); } }
+		public ICombatant Attacker { get { return attacker == null ? null : attacker.Value; } set { attacker = value == null ? null : value.ReferViaGalaxy(); } }
 
-		public Reference<ICombatant> attacker { get; set; }
+		public GalaxyReference<ICombatant> attacker { get; set; }
 
 		[DoNotSerialize]
-		public IDamageable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
+		public IDamageable Defender { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.ReferViaGalaxy(); } }
 
 		public int Range { get; set; }
 

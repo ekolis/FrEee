@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Recipient = recipient;
 		}
 
-		private Reference<Empire> recipient { get; set; }
+		private GalaxyReference<Empire> recipient { get; set; }
 
 		/// <summary>
 		/// The empire that the proposal is being sent to.

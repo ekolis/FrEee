@@ -22,13 +22,13 @@ namespace FrEee.Game.Objects.Orders
 
 		public IRecycleBehavior Behavior { get; private set; }
 
-		private Reference<IRecyclable> target { get; set; }
+		private GalaxyReference<IRecyclable> target { get; set; }
 
 		/// <summary>
 		/// The facility or unit in cargo to recycle.
 		/// </summary>
 		[DoNotSerialize]
-		public IRecyclable Target { get { return target.Value; } set { target = value.Reference(); } }
+		public IRecyclable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		public void Execute(IMobileSpaceObject executor)
 		{
@@ -73,7 +73,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

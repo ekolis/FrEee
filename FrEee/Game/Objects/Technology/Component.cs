@@ -230,7 +230,7 @@ namespace FrEee.Game.Objects.Technology
 		}
 
 		[DoNotCopy]
-		private Reference<IVehicle> container { get; set; }
+		private GalaxyReference<IVehicle> container { get; set; }
 
 		[DoNotSerialize]
 		public IVehicle Container
@@ -241,7 +241,7 @@ namespace FrEee.Game.Objects.Technology
 			}
 			set
 			{
-				container = value.Reference();
+				container = value.ReferViaGalaxy();
 			}
 		}
 

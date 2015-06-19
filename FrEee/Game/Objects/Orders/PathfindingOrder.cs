@@ -32,9 +32,9 @@ namespace FrEee.Game.Objects.Orders
 		/// The target we are pursuing.
 		/// </summary>
 		[DoNotSerialize]
-		public ISpaceObject Target { get { return target.Value; } set { target = value.Reference(); } }
+		public ISpaceObject Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
-		private Reference<ISpaceObject> target { get; set; }
+		private GalaxyReference<ISpaceObject> target { get; set; }
 
 		/// <summary>
 		/// Either the target itself, or the memory of the target, if it's not visible.
@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public LogMessage PathfindingError { get; private set; }
 		
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

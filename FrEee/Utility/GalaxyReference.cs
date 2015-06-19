@@ -12,20 +12,21 @@ using FrEee.Utility.Extensions;
 namespace FrEee.Utility
 {
 	/// <summary>
-	/// A reference to some shared object that can be passed around on the network as a surrogate for said object.
+	/// A lightweight reference to some object in the current galaxy.
+	/// Can be passed around on the network as a surrogate for said object.
 	/// If the object is not an IReferrable, the object itself will be stored.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]
-	public class Reference<T> : IReference<T>, IPromotable
+	public class GalaxyReference<T> : IReference<long, T>, IPromotable
 	{
-		public Reference(T t)
+		public GalaxyReference(T t)
 		{
 			if (t is IReferrable)
 			{
 				var r = (IReferrable)t;
 				if (Galaxy.Current == null)
-					throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
+					throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
 				else if (t == null)
 					ID = 0;
 				else if (r.ID > 0)
@@ -39,10 +40,10 @@ namespace FrEee.Utility
 			}
 		}
 
-		public Reference(long id)
+		public GalaxyReference(long id)
 		{
 			if (Galaxy.Current == null)
-				throw new ReferenceException("Can't create a reference to an object without a galaxy.", 0, typeof(T));
+				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
 			else if (Galaxy.Current.referrables[id] is T)
 				ID = id;
 			else
@@ -86,16 +87,16 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static implicit operator T(Reference<T> r)
+		public static implicit operator T(GalaxyReference<T> r)
 		{
 			if (r == null)
 				return default(T);
 			return r.Value;
 		}
 
-		public static implicit operator Reference<T>(T t)
+		public static implicit operator GalaxyReference<T>(T t)
 		{
-			return new Reference<T>(t);
+			return new GalaxyReference<T>(t);
 		}
 
 		public override string ToString()
@@ -117,7 +118,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static bool operator ==(Reference<T> r1, Reference<T> r2)
+		public static bool operator ==(GalaxyReference<T> r1, GalaxyReference<T> r2)
 		{
 			if (r1.IsNull() && r2.IsNull())
 				return true;
@@ -126,7 +127,7 @@ namespace FrEee.Utility
 			return r1.ID == r2.ID;
 		}
 
-		public static bool operator !=(Reference<T> r1, Reference<T> r2)
+		public static bool operator !=(GalaxyReference<T> r1, GalaxyReference<T> r2)
 		{
 			return !(r1 == r2);
 		}
@@ -138,38 +139,9 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
-			if (obj is Reference<T>)
-				return this == (Reference<T>)obj;
+			if (obj is GalaxyReference<T>)
+				return this == (GalaxyReference<T>)obj;
 			return false;
-		}
-	}
-
-	[Serializable]
-	public class ReferenceException : Exception, ISerializable
-	{
-		protected ReferenceException(SerializationInfo info, StreamingContext ctx)
-			: base(info, ctx)
-		{
-			ID = info.GetInt64("ID");
-			Type = (Type)info.GetValue("Type", typeof(Type));
-		}
-
-		public ReferenceException(string message, long id, Type type)
-			: base(message)
-		{
-			ID = id;
-			Type = type;
-		}
-
-		public long ID { get; private set; }
-
-		public Type Type { get; private set; }
-
-		void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			base.GetObjectData(info, context);
-			info.AddValue("ID", ID);
-			info.AddValue("Type", Type);
 		}
 	}
 }

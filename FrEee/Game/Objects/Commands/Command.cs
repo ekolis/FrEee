@@ -26,12 +26,12 @@ namespace FrEee.Game.Objects.Commands
 		[DoNotSerialize]
 		public Empire Issuer { get { return issuer; } set { issuer = value; } }
 
-		private Reference<Empire> issuer { get; set; }
+		private GalaxyReference<Empire> issuer { get; set; }
 
 		[DoNotSerialize]
 		public T Executor { get { return executor; } set { executor = value; } }
 
-		protected Reference<T> executor { get; set; }
+		protected GalaxyReference<T> executor { get; set; }
 
 		public abstract void Execute();
 

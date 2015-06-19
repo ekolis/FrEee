@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public Planet Planet { get { return planet; } set { planet = value; } }
 
-		private Reference<Planet> planet { get; set; }
+		private GalaxyReference<Planet> planet { get; set; }
 
 		public void Execute(SpaceVehicle sobj)
 		{
@@ -135,7 +135,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

@@ -25,7 +25,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		/// </summary>
 		public bool IsInEffect { get; set; }
 
-		private Reference<Empire> giver { get; set; }
+		private GalaxyReference<Empire> giver { get; set; }
 
 		/// <summary>
 		/// The empire that is offering something in this clause.
@@ -33,7 +33,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 		[DoNotSerialize]
 		public Empire Giver { get { return giver; } set { giver = value; } }
 		
-		private Reference<Empire> receiver { get; set; }
+		private GalaxyReference<Empire> receiver { get; set; }
 
 		/// <summary>
 		/// The empire that is receiving a benefit from this clause.

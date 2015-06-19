@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 			Coordinates = coordinates;
 		}
 
-		private Reference<StarSystem> starSystem { get; set; }
+		private GalaxyReference<StarSystem> starSystem { get; set; }
 
 		[DoNotSerialize]
 		public StarSystem StarSystem { get { return starSystem; } set { starSystem = value; } }
