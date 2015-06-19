@@ -99,12 +99,12 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
 
-		private Reference<Empire> recipient { get; set; }
+		private GalaxyReference<Empire> recipient { get; set; }
 
 		[DoNotSerialize]
 		public Empire Recipient { get { return recipient; } set { recipient = value; } }

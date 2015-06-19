@@ -26,12 +26,12 @@ namespace FrEee.Game.Objects.Combat
 		/// </summary>
 		public Shot Shot { get; set; }
 
-		private Reference<IDamageable> target { get; set; }
+		private GalaxyReference<IDamageable> target { get; set; }
 
 		/// <summary>
 		/// The specific target of this hit.
 		/// </summary>
-		public IDamageable Target { get { return target == null ? null : target.Value; } set { target = value.Reference(); } }
+		public IDamageable Target { get { return target == null ? null : target.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// The nominal damage inflicted by this hit, not accounting for special damage types and target defenses.

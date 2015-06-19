@@ -16,11 +16,11 @@ namespace FrEee.Game.Objects.Commands
 		public ResearchCommand()
 			: base(Empire.Current)
 		{
-			spending = new SafeDictionary<Reference<Technology.Technology>, int>();
-			queue = new List<Reference<Technology.Technology>>();
+			spending = new SafeDictionary<GalaxyReference<Technology.Technology>, int>();
+			queue = new List<GalaxyReference<Technology.Technology>>();
 		}
 
-		private SafeDictionary<Reference<Technology.Technology>, int> spending { get; set; }
+		private SafeDictionary<GalaxyReference<Technology.Technology>, int> spending { get; set; }
 
 		/// <summary>
 		/// Priorities for spending, expressed as percentages of total research output.
@@ -36,7 +36,7 @@ namespace FrEee.Game.Objects.Commands
 
 		public void SetSpending(Technology.Technology tech, int spendingPct)
 		{
-			spending[tech.Reference()] = spendingPct;
+			spending[tech.ReferViaGalaxy()] = spendingPct;
 		}
 
 		public void ClearSpending()
@@ -44,7 +44,7 @@ namespace FrEee.Game.Objects.Commands
 			spending.Clear();
 		}
 
-		private List<Reference<Technology.Technology>> queue { get; set; }
+		private List<GalaxyReference<Technology.Technology>> queue { get; set; }
 
 		/// <summary>
 		/// Queue for usage of leftover points after spending priorities are taken care of.
@@ -60,12 +60,12 @@ namespace FrEee.Game.Objects.Commands
 
 		public void AddToQueue(Technology.Technology tech)
 		{
-			queue.Add(tech.Reference());
+			queue.Add(tech.ReferViaGalaxy());
 		}
 
 		public void RemoveFromQueue(Technology.Technology tech)
 		{
-			queue.Remove(tech.Reference());
+			queue.Remove(tech.ReferViaGalaxy());
 		}
 
 		public void ClearQueue()

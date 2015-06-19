@@ -28,29 +28,29 @@ namespace FrEee.Game.Objects.Orders
 			Target = target;
 		}
 
-		private Reference<IAbilityObject> source { get; set; }
+		private GalaxyReference<IAbilityObject> source { get; set; }
 
 		/// <summary>
 		/// The source of the ability. Probably a component, facility, or hull.
 		/// </summary>
 		[DoNotSerialize]
-		public IAbilityObject Source { get { return source.Value; } set { source = value.Reference(); } }
+		public IAbilityObject Source { get { return source.Value; } set { source = value.ReferViaGalaxy(); } }
 
-		private Reference<Ability> ability { get; set; }
+		private GalaxyReference<Ability> ability { get; set; }
 
 		/// <summary>
 		/// What ability to activate?
 		/// </summary>
 		[DoNotSerialize]
-		public Ability Ability { get { return ability.Value; } set { ability = value.Reference(); } }
+		public Ability Ability { get { return ability.Value; } set { ability = value.ReferViaGalaxy(); } }
 
-		private Reference<IReferrable> target { get; set; }
+		private GalaxyReference<IReferrable> target { get; set; }
 
 		/// <summary>
 		/// What are we activating the ability "against"? Like, what warp point are we destroying, or whatever? Or null if there's no relevant target
 		/// </summary>
 		[DoNotSerialize]
-		public IReferrable Target { get { return target.Value; } set { target = value.Reference(); } }
+		public IReferrable Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		public void Execute(IMobileSpaceObject executor)
 		{
@@ -324,7 +324,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

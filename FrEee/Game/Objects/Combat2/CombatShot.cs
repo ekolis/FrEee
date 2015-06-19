@@ -22,15 +22,15 @@ namespace FrEee.Game.Objects.Combat2
             Range = range;
         }
 
-        public Reference<Component> weapon { get; set; }
+        public GalaxyReference<Component> weapon { get; set; }
 
         [DoNotSerialize]
         public Component Weapon { get { return weapon; } set { weapon = value; } }
 
-        public Reference<ITargetable> target { get; set; }
+        public GalaxyReference<ITargetable> target { get; set; }
 
         [DoNotSerialize]
-        public ITargetable Target { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.Reference(); } }
+        public ITargetable Target { get { return target == null ? null : target.Value; } set { target = value == null ? null : value.ReferViaGalaxy(); } }
 
         public int Range { get; set; }
 

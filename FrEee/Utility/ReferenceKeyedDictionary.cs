@@ -14,10 +14,10 @@ namespace FrEee.Utility
 	{
 		public ReferenceKeyedDictionary()
 		{
-			dict = new SafeDictionary<Reference<TKey>, TValue>();
+			dict = new SafeDictionary<GalaxyReference<TKey>, TValue>();
 		}
 
-		private SafeDictionary<Reference<TKey>, TValue> dict { get; set; }
+		private SafeDictionary<GalaxyReference<TKey>, TValue> dict { get; set; }
 
 		public void Add(TKey key, TValue value)
 		{
@@ -63,7 +63,7 @@ namespace FrEee.Utility
 
 		public void Add(KeyValuePair<TKey, TValue> item)
 		{
-			dict.Add(new KeyValuePair<Reference<TKey>,TValue>(item.Key, item.Value));
+			dict.Add(new KeyValuePair<GalaxyReference<TKey>,TValue>(item.Key, item.Value));
 		}
 
 		public void Clear()
@@ -73,7 +73,7 @@ namespace FrEee.Utility
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
-			return dict.Contains(new KeyValuePair<Reference<TKey>, TValue>(item.Key, item.Value));
+			return dict.Contains(new KeyValuePair<GalaxyReference<TKey>, TValue>(item.Key, item.Value));
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
@@ -94,7 +94,7 @@ namespace FrEee.Utility
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
-			return dict.Remove(new KeyValuePair<Reference<TKey>, TValue>(item.Key, item.Value));
+			return dict.Remove(new KeyValuePair<GalaxyReference<TKey>, TValue>(item.Key, item.Value));
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()

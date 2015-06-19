@@ -107,7 +107,7 @@ namespace FrEee.Game.Objects.Civilization
 		[DoNotSerialize]
 		public Empire Owner { get { return owner; } set { owner = value; } }
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		public abstract string Name { get; }
 

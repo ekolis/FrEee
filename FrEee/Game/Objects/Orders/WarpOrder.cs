@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
 
-		private Reference<WarpPoint> warpPoint {get; set;}
+		private GalaxyReference<WarpPoint> warpPoint {get; set;}
 
 		public void Execute(T sobj)
 		{
@@ -105,7 +105,7 @@ namespace FrEee.Game.Objects.Orders
 			Galaxy.Current.UnassignID(this);
 		}
 
-		private Reference<Empire> owner { get; set; }
+		private GalaxyReference<Empire> owner { get; set; }
 
 		/// <summary>
 		/// The empire which issued the order.

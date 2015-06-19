@@ -331,5 +331,48 @@ namespace FrEee.Modding
 		{
 			return RootPath;
 		}
+
+		/// <summary>
+		/// All mod objects.
+		/// </summary>
+		public IEnumerable<IModObject> Objects
+		{
+			get
+			{
+				foreach (var x in AbilityRules)
+					yield return x;
+				foreach (var x in StellarObjectSizes)
+					yield return x;
+				foreach (var x in StellarObjectTemplates)
+					yield return x; 
+				foreach (var x in Traits)
+					yield return x;
+				foreach (var x in Technologies)
+					yield return x;
+				foreach (var x in FacilityTemplates)
+					yield return x;
+				foreach (var x in Hulls)
+					yield return x;
+				foreach (var x in ComponentTemplates)
+					yield return x;
+				foreach (var x in Mounts)
+					yield return x;
+				foreach (var x in StarSystemTemplates)
+					yield return x;
+				foreach (var x in GalaxyTemplates)
+					yield return x;
+				foreach (var x in HappinessModels)
+					yield return x;
+				foreach (var x in Cultures)
+					yield return x;
+				foreach (var x in EmpireAIs)
+					yield return x;
+			}
+		}
+
+		public IModObject Find(string modid)
+		{
+			return Objects.SingleOrDefault(o => o.ModID == modid);
+		}
 	}
 }

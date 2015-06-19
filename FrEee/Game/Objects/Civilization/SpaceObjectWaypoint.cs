@@ -20,9 +20,9 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		[DoNotSerialize]
-		public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.Reference(); } }
+		public ISpaceObject SpaceObject { get { return spaceObject.Value; } set { spaceObject = value.ReferViaGalaxy(); } }
 
-		private Reference<ISpaceObject> spaceObject { get; set; }
+		private GalaxyReference<ISpaceObject> spaceObject { get; set; }
 
 		[DoNotSerialize(false)]
 		public override Sector Sector

@@ -20,13 +20,13 @@ namespace FrEee.Game.Objects.Commands
 			IsObsolete = isObsolete;
 		}
 
-		private Reference<IDesign> design { get; set; }
+		private GalaxyReference<IDesign> design { get; set; }
 
 		/// <summary>
 		/// The design to set the flag on.
 		/// </summary>
 		[DoNotSerialize]
-		public IDesign Design { get { return design.Value; } set { design = value.Reference(); } }
+		public IDesign Design { get { return design.Value; } set { design = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// The flag state to set.

@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Commands
 			Order = order;
 		}
 
-		private Reference<IOrder<T>> order { get; set; }
+		private GalaxyReference<IOrder<T>> order { get; set; }
 
 		[DoNotSerialize]
 		public virtual IOrder<T> Order
@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Commands
 			}
 			set
 			{
-				order = value.Reference();
+				order = value.ReferViaGalaxy();
 			}
 		}
 

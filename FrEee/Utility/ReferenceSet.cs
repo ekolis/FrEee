@@ -22,7 +22,7 @@ namespace FrEee.Utility
 
 		public bool Add(T item)
 		{
-			var r = item.Reference();
+			var r = item.ReferViaGalaxy();
 			return set.Add(r);
 		}
 
@@ -96,7 +96,7 @@ namespace FrEee.Utility
 
 		void ICollection<T>.Add(T item)
 		{
-			set.Add(item.Reference());
+			set.Add(item.ReferViaGalaxy());
 		}
 
 		public void Clear()
@@ -126,7 +126,7 @@ namespace FrEee.Utility
 
 		public bool Remove(T item)
 		{
-			return set.Remove(item.Reference());
+			return set.Remove(item.ReferViaGalaxy());
 		}
 
 		public IEnumerator<T> GetEnumerator()

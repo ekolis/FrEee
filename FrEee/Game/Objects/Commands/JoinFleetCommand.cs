@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Commands
 			CreateFleetCommand = cmd;
 		}
 
-		private Reference<Fleet> fleet { get; set; }
+		private GalaxyReference<Fleet> fleet { get; set; }
 
 		[DoNotSerialize]
 		public Fleet Fleet

@@ -22,9 +22,9 @@ namespace FrEee.Game.Objects.Commands
 			Message = msg;
 		}
 
-		private Reference<IMessage> message { get; set; }
+		private GalaxyReference<IMessage> message { get; set; }
 
-		public IMessage Message { get { return message.Value; } set { message = value.Reference(); } }
+		public IMessage Message { get { return message.Value; } set { message = value.ReferViaGalaxy(); } }
 
 		public override void Execute()
 		{

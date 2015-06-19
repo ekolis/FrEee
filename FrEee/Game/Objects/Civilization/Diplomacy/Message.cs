@@ -48,7 +48,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			}
 		}
 
-		private Reference<Empire> owner {get; set;}
+		private GalaxyReference<Empire> owner {get; set;}
 
 		/// <summary>
 		/// The empire sending this message.
@@ -56,7 +56,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		[DoNotSerialize]
 		public Empire Owner {get { return owner;}set { owner = value;}}
 
-		private Reference<Empire> recipient {get; set;}
+		private GalaxyReference<Empire> recipient {get; set;}
 
 		/// <summary>
 		/// The empire receiving the message.
