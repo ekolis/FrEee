@@ -84,8 +84,9 @@ namespace FrEee.Modding
 				loader.Load(mod);
 				if (status != null)
 					status.Progress += progressPerFile;
+
+				mod.AssignIDs();
 			}
-			
 
 			CurrentFileName = null;
 
@@ -373,6 +374,68 @@ namespace FrEee.Modding
 		public IModObject Find(string modid)
 		{
 			return Objects.SingleOrDefault(o => o.ModID == modid);
+		}
+
+		private void AssignID(IModObject mo, ICollection<string> used)
+		{
+			if (mo.Name != null && !used.Contains(mo.Name))
+			{
+				mo.ModID = mo.Name;
+				used.Add(mo.Name);
+			}
+			else
+			{
+				// tack a number on
+				int lastnum;
+				var name = mo.Name ?? "Generic " + mo.GetType();
+				var lastword = name.LastWord();
+				if (int.TryParse(lastword, out lastnum))
+				{
+					// has a number, count from that number
+				}
+				else
+				{
+					lastnum = -1; // no number, start from 1
+				}
+				for (var num = lastnum + 1; num <= int.MaxValue; num++)
+				{
+					string exceptnum;
+					if (lastnum < 0 && num == 0)
+					{
+						exceptnum = name;
+						num = 1;
+					}
+					else if (lastnum < 0)
+						exceptnum = name;
+					else
+						exceptnum = name.Substring(0, name.Length - lastword.Length - 1);
+					var withnextnum = exceptnum + " " + num;
+					if (!used.Contains(withnextnum))
+					{
+						mo.ModID = withnextnum;
+						used.Add(withnextnum);
+						break;
+					}
+					if (num == int.MaxValue)
+						throw new Exception("Can't assign mod ID to " + name + "; there's a gazillion other mod objects with that name.");
+				}
+			}
+
+			if (mo.ModID == null)
+				throw new Exception("Failed to assign mod ID to {0}: {1}".F(mo.GetType(), mo));
+		}
+
+		/// <summary>
+		/// Assigns automatic IDs to all objects in the mod that lack IDs.
+		/// </summary>
+		public void AssignIDs()
+		{
+			var used = new HashSet<string>();
+			foreach (var mo in Objects)
+			{
+				if (mo.ModID == null)
+					AssignID(mo, used);
+			}
 		}
 	}
 }
