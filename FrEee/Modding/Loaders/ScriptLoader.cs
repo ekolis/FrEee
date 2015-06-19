@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -18,8 +19,9 @@ namespace FrEee.Modding.Loaders
 			FileName = "*.py";
 		}
 
-		public void Load(Mod mod)
+		public IEnumerable<IModObject> Load(Mod mod)
 		{
+			// TODO - should scripts be mod objects?
 			{
 				var name = "Global";
 				string filename;
@@ -50,6 +52,8 @@ namespace FrEee.Modding.Loaders
                     filename = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Mods", ModPath, "Scripts", name);
 				mod.EndTurnScript = Script.Load(filename) ?? Script.Load(stockFilename) ?? new Script(name, "");
 			}
+
+			yield break;
 		}
 
 		public string ModPath

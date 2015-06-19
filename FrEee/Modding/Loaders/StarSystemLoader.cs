@@ -13,6 +13,7 @@ using FrEee.Utility.Extensions;
 using Size = FrEee.Game.Enumerations.StellarSize;
 using FrEee.Game.Enumerations;
 using FrEee.Modding.StellarObjectLocations;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -28,7 +29,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		 public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -100,6 +101,7 @@ namespace FrEee.Modding.Loaders
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
+								yield return template.Abilities;
 								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
 							}
 						}
@@ -172,6 +174,7 @@ namespace FrEee.Modding.Loaders
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
+								yield return template.Abilities;
 								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
 							}
 						}
@@ -235,6 +238,7 @@ namespace FrEee.Modding.Loaders
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
+								yield return template.Abilities;
 								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
 							}
 						}
@@ -298,6 +302,7 @@ namespace FrEee.Modding.Loaders
 							if (template.Abilities == null)
 							{
 								template.Abilities = new RandomAbilityTemplate();
+								yield return template.Abilities;
 								Mod.Errors.Add(new DataParsingException("Could not find stellar ability type \"" + temp + "\" in StellarAbilityTypes.txt.", Mod.CurrentFileName, rec));
 							}
 						}
@@ -397,6 +402,7 @@ namespace FrEee.Modding.Loaders
 						sst.StellarObjectLocations.Add(new CircleRadiusStellarObjectLocation { Radius = radius, StellarObjectTemplate = sobjTemplate });
 					}
 				}
+				yield return sst;
 			}
 		}
 	}

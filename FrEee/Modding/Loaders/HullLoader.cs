@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -22,7 +23,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -96,6 +97,8 @@ namespace FrEee.Modding.Loaders
 				hull.MinPercentFighterBays = rec.Get<int>("Requirement Pct Fighter Bays", hull);
 				hull.MinPercentColonyModules = rec.Get<int>("Requirement Pct Colony Mods", hull);
 				hull.MinPercentCargoBays = rec.Get<int>("Requirement Pct Cargo", hull);
+
+				yield return hull;
 			}
 		}
 	}

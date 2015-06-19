@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility.Extensions;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -21,7 +22,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -106,6 +107,8 @@ namespace FrEee.Modding.Loaders
 				m.AbilityModifiers = AbilityLoader.LoadPercentagesOrModifiers(rec, "Modifier", m);
 				m.UnlockRequirements = RequirementLoader.LoadEmpireRequirements(rec, m, RequirementType.Unlock).ToList();
 				// TODO - build and use requirements
+
+				yield return m;
 			}
 		}
 	}

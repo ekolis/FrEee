@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -19,7 +20,7 @@ namespace FrEee.Modding.Loaders
 			DestinationGetter = destinationGetter;
 		}
 
-		public void Load(Mod mod)
+		public IEnumerable<IModObject> Load(Mod mod)
 		{
 			var dest = DestinationGetter(mod);
 			string filepath;
@@ -45,6 +46,8 @@ namespace FrEee.Modding.Loaders
 			}
 			else
 				throw new FileNotFoundException("Could not find data file: " + FileName + ".", FileName);
+
+			yield break;
 		}
 
 		/// <summary>

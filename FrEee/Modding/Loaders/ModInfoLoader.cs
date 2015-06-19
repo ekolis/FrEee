@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -18,7 +19,7 @@ namespace FrEee.Modding.Loaders
 			FileName = "MODINFO.TXT";
 		}
 
-		public void Load(Mod mod)
+		public IEnumerable<IModObject> Load(Mod mod)
 		{
 			if (mod.Info == null)
 				mod.Info = new ModInfo();
@@ -102,6 +103,8 @@ namespace FrEee.Modding.Loaders
 					}
 				}
 			}
+
+			yield break;
 		}
 
 		/// <summary>

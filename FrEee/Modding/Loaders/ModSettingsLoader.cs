@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -18,13 +19,13 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			var rec = DataFile.Records.FirstOrDefault();
 			if (rec == null)
 			{
 				Mod.Errors.Add(new DataParsingException("Could not load Settings.txt - no record found.", Filename));
-				return;
+				yield break;
 			}
 
 			var settings = new ModSettings();
@@ -94,6 +95,8 @@ namespace FrEee.Modding.Loaders
 			settings.ReproductionDelay = rec.Get<int>("Reproduction Check Frequency", null) ?? 1;
 
 			// TODO - load more settings
+
+			yield break;
 		}
 	}
 }
