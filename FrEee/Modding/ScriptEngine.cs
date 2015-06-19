@@ -241,7 +241,7 @@ namespace FrEee.Modding
 			preCommands.Add("from FrEee.Utility import Serializer");
 			preCommands.Add("if newGalaxy:");
 			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
-			preCommands.Add("Galaxy.Current = galaxy;");
+			preCommands.Add("\tGalaxy.Current = galaxy;");
 			if (variables != null)
 			{				
 				foreach (var variable in variables.Keys)
@@ -257,7 +257,7 @@ namespace FrEee.Modding
 			{
 				foreach (var variable in readOnlyVariables.Keys)
 				{
-					if (readOnlyVariables[variable] == Galaxy.Current)
+					if (readOnlyVariables[variable] == Galaxy.Current && Galaxy.Current != null)
 						preCommands.Add(variable + " = galaxy;");
 					else if (readOnlyVariables[variable] is IReferrable)
 						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
