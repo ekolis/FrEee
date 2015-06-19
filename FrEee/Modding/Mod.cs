@@ -84,7 +84,7 @@ namespace FrEee.Modding
 					status.Message = "Loading " + loader.FileName;
 				CurrentFileName = loader.FileName;
 				foreach (var mo in loader.Load(mod))
-					AssignID(mo, used);
+					mod.AssignID(mo, used);
 				if (status != null)
 					status.Progress += progressPerFile;
 			}
@@ -101,6 +101,8 @@ namespace FrEee.Modding
 		public Mod()
 		{
 			Errors = new List<DataParsingException>();
+
+			objects = new SafeDictionary<string, IModObject>();
 
 			Info = new ModInfo();
 			Settings = new ModSettings();
@@ -340,6 +342,8 @@ namespace FrEee.Modding
 			return RootPath;
 		}
 
+		private SafeDictionary<string, IModObject> objects { get; set; }
+
 		/// <summary>
 		/// All mod objects.
 		/// </summary>
@@ -347,45 +351,16 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				foreach (var x in AbilityRules)
-					yield return x;
-				foreach (var x in StellarObjectSizes)
-					yield return x;
-				foreach (var x in StellarAbilityTemplates)
-					yield return x;
-				foreach (var x in StellarObjectTemplates)
-					yield return x; 
-				foreach (var x in Traits)
-					yield return x;
-				foreach (var x in Technologies)
-					yield return x;
-				foreach (var x in FacilityTemplates)
-					yield return x;
-				foreach (var x in Hulls)
-					yield return x;
-				foreach (var x in ComponentTemplates)
-					yield return x;
-				foreach (var x in Mounts)
-					yield return x;
-				foreach (var x in StarSystemTemplates)
-					yield return x;
-				foreach (var x in GalaxyTemplates)
-					yield return x;
-				foreach (var x in HappinessModels)
-					yield return x;
-				foreach (var x in Cultures)
-					yield return x;
-				foreach (var x in EmpireAIs)
-					yield return x;
+				return objects.Values;
 			}
 		}
 
 		public IModObject Find(string modid)
 		{
-			return Objects.SingleOrDefault(o => o.ModID == modid);
+			return objects[modid];
 		}
 
-		private static void AssignID(IModObject mo, ICollection<string> used)
+		private void AssignID(IModObject mo, ICollection<string> used)
 		{
 			if (mo.Name != null && !used.Contains(mo.Name))
 			{
@@ -432,6 +407,8 @@ namespace FrEee.Modding
 
 			if (mo.ModID == null)
 				throw new Exception("Failed to assign mod ID to {0}: {1}".F(mo.GetType(), mo));
+
+			objects[mo.ModID] = mo;
 		}
 
 		/// <summary>
