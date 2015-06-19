@@ -47,16 +47,13 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public string NativeSurface { get; set; }
 
-		public string HappinessModelName { get; set; }
-
 		/// <summary>
 		/// The race's happiness model.
 		/// </summary>
 		[DoNotSerialize]
-		public HappinessModel HappinessModel {
-			get { return Mod.Current == null ? null : Mod.Current.HappinessModels == null ? null : Mod.Current.HappinessModels.SingleOrDefault(h => h.Name == HappinessModelName); }
-			set { HappinessModelName = value == null ? null : value.Name; }
-		}
+		public HappinessModel HappinessModel { get { return happinessModel; } set { happinessModel = value; } }
+
+		private ModReference<HappinessModel> happinessModel { get; set; }
 
 		/// <summary>
 		/// The names of the race's traits.

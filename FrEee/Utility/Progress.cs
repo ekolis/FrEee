@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Interfaces;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Utility
 {
@@ -75,7 +79,8 @@ namespace FrEee.Utility
 	/// Progress towards completing something.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class Progress<T> : Progress
+	public class Progress<TRef, T> : Progress
+		where TRef : IReference<T>
 	{
 		public Progress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)
 			: base(value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)
@@ -86,11 +91,30 @@ namespace FrEee.Utility
 		/// <summary>
 		/// The item being worked towards.
 		/// </summary>
-		public T Item { get; set; }
+		public T Item { get { return item.Value; } set { item = value.Refer<TRef, T>(); } }
+
+		private TRef item { get; set; }
 
 		public override string ToString()
 		{
 			return string.Format("{0}: {1}", Item, base.ToString());
+		}
+	}
+
+	public class GalaxyProgress<T> : Progress<GalaxyReference<T>, T>
+	{
+		public GalaxyProgress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)
+			: base(item, value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)
+		{
+		}
+	}
+
+	public class ModProgress<T> : Progress<ModReference<T>, T>
+		where T : IModObject
+	{
+		public ModProgress(T item, long value, long maximum, long incrementalProgressBeforeDelay = 0, double? delay = 0, long extraIncrementalProgressAfterDelay = 0)
+			: base(item, value, maximum, incrementalProgressBeforeDelay, delay, extraIncrementalProgressAfterDelay)
+		{
 		}
 	}
 }

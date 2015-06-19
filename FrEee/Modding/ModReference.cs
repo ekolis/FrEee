@@ -15,6 +15,8 @@ namespace FrEee.Modding
 	/// <summary>
 	/// A lightweight reference to some object in the current mod.
 	/// Can be passed around on the network as a surrogate for said object.
+	/// This class should be used when referencing a mod object from the actual game.
+	/// It is not necessary to use ModReference when referring to mod objects from other mod objects.
 	/// Only mod objects can be referenced via mod references.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
@@ -113,6 +115,18 @@ namespace FrEee.Modding
 			if (obj is ModReference<T>)
 				return this == (ModReference<T>)obj;
 			return false;
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				if (HasValue && Value is IPromotable)
+					((IPromotable)Value).ReplaceClientIDs(idmap, done);
+			}
 		}
 	}
 }

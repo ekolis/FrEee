@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Tech = FrEee.Game.Objects.Technology.Technology;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy
 {
@@ -21,27 +22,27 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 			Owner = owner;
 			Recipient = recipient;
 			TreatyClauses = new HashSet<Clause>();
-			Planets = new ReferenceSet<Planet>();
-			Vehicles = new ReferenceSet<IVehicle>();
+			Planets = new GalaxyReferenceSet<Planet>();
+			Vehicles = new GalaxyReferenceSet<IVehicle>();
 			Resources = new ResourceQuantity();
-			Technology = new ReferenceKeyedDictionary<Tech, int>();
-			StarCharts = new ReferenceSet<StarSystem>();
-			CommunicationChannels = new ReferenceSet<Empire>();
+			Technology = new ModReferenceKeyedDictionary<Tech, int>();
+			StarCharts = new GalaxyReferenceSet<StarSystem>();
+			CommunicationChannels = new GalaxyReferenceSet<Empire>();
 		}
 
 		public ISet<Clause> TreatyClauses { get; private set; }
 
-		public ReferenceSet<Planet> Planets { get; private set; }
+		public GalaxyReferenceSet<Planet> Planets { get; private set; }
 
-		public ReferenceSet<IVehicle> Vehicles { get; private set; }
+		public GalaxyReferenceSet<IVehicle> Vehicles { get; private set; }
 
 		public ResourceQuantity Resources { get; private set; }
 
-		public ReferenceKeyedDictionary<Tech, int> Technology { get; private set; }
+		public ModReferenceKeyedDictionary<Tech, int> Technology { get; private set; }
 
-		public ReferenceSet<StarSystem> StarCharts { get; private set; }
+		public GalaxyReferenceSet<StarSystem> StarCharts { get; private set; }
 
-		public ReferenceSet<Empire> CommunicationChannels { get; private set; }
+		public GalaxyReferenceSet<Empire> CommunicationChannels { get; private set; }
 
 		/// <summary>
 		/// Is this a valid package?

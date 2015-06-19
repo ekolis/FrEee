@@ -23,7 +23,10 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		public StellarObjectSize Size { get; set; }
+		[DoNotSerialize]
+		public StellarObjectSize Size { get { return size; } set { size = value; } }
+
+		private ModReference<StellarObjectSize> size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this asteroid field.

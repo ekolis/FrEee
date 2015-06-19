@@ -1679,6 +1679,11 @@ namespace FrEee.Utility.Extensions
 			return new ModReference<T>(t);
 		}
 
+		public static TRef Refer<TRef, T>(this T t) where TRef : IReference<T>
+		{
+			return (TRef)typeof(TRef).Instantiate(t);
+		}
+
 		public static PictorialLogMessage<T> CreateLogMessage<T>(this T context, string text, int? turnNumber = null)
 			where T : IPictorial
 		{
@@ -3478,6 +3483,12 @@ namespace FrEee.Utility.Extensions
 		{
 			if (evt != null)
 				evt(sender, e);
+		}
+
+		public static TValue FindByName<TKey, TValue>(this IDictionary<TKey, TValue> dict, string name)
+			where TKey : INamed
+		{
+			return dict[dict.Keys.FindByName(name)];
 		}
 	}
 

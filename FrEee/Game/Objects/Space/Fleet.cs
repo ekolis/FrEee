@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Space
 	{
 		public Fleet()
 		{
-			Vehicles = new ReferenceSet<IMobileSpaceObject>();
+			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder<Fleet>>();
 		}
 
@@ -32,7 +32,7 @@ namespace FrEee.Game.Objects.Space
 		/// The space objects in the fleet.
 		/// Fleets may contain other fleets, but may not contain themselves.
 		/// </summary>
-		public ReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
+		public GalaxyReferenceSet<IMobileSpaceObject> Vehicles { get; private set; }
 
 		/// <summary>
 		/// Remove any invalid objects from the fleet and any valid subfleets.

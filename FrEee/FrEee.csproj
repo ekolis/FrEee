@@ -319,6 +319,7 @@
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\FormulaContext.cs" />
     <Compile Include="Modding\Enumerations\FormulaType.cs" />
+    <Compile Include="Modding\ModReference.cs" />
     <Compile Include="Modding\Interfaces\IFormula.cs" />
     <Compile Include="Modding\Interfaces\IFormulaHost.cs" />
     <Compile Include="Modding\Interfaces\IModObject.cs" />
@@ -412,7 +413,6 @@
     <Compile Include="Utility\HashCodeMasher.cs" />
     <Compile Include="Utility\NameAttribute.cs" />
     <Compile Include="Utility\PRNG.cs" />
-    <Compile Include="Utility\NamedDictionary.cs" />
     <Compile Include="Utility\Extensions\Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\ClientSafeAttribute.cs" />
@@ -425,9 +425,10 @@
     <Compile Include="Utility\Progress.cs" />
     <Compile Include="Utility\ProgressDisplayMode.cs" />
     <Compile Include="Utility\RandomHelper.cs" />
-    <Compile Include="Utility\Reference.cs" />
+    <Compile Include="Utility\GalaxyReference.cs" />
     <Compile Include="Utility\MiningModel.cs" />
     <Compile Include="Utility\ReferenceKeyedDictionary.cs" />
+    <Compile Include="Utility\ReferenceList.cs" />
     <Compile Include="Utility\ReferenceSet.cs" />
     <Compile Include="Utility\Resource.cs" />
     <Compile Include="Utility\ResourceQuantity.cs" />
@@ -446,6 +447,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="FrEeeStrongName.snk" />
     <None Include="GameSetups\Quickstart.gsu">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

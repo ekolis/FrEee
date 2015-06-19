@@ -37,9 +37,12 @@ namespace FrEee.Game.Objects.Space
 		internal Planet MoonOf { get; set; }
 
 		/// <summary>
-		/// The PlanetSize.txt entry for this planet's size.
+		/// The PlanetSize.txt entry for this asteroid field's size.
 		/// </summary>
-		public StellarObjectSize Size { get; set; }
+		[DoNotSerialize]
+		public StellarObjectSize Size { get { return size; } set { size = value; } }
+
+		private ModReference<StellarObjectSize> size { get; set; }
 
 		/// <summary>
 		/// The surface composition (e.g. rock, ice, gas) of this planet.

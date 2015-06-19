@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public CargoDelta CargoDelta { get; set; }
 
-		private IReference<ICargoTransferrer> target { get; set; }
+		private GalaxyReference<ICargoTransferrer> target { get; set; }
 
 		/// <summary>
 		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.

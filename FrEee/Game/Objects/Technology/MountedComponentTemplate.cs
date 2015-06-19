@@ -37,7 +37,7 @@ namespace FrEee.Game.Objects.Technology
 		[DoNotSerialize]
 		public ComponentTemplate ComponentTemplate { get { return componentTemplate; } set { componentTemplate = value; } }
 
-		private GalaxyReference<ComponentTemplate> componentTemplate { get; set; }
+		private ModReference<ComponentTemplate> componentTemplate { get; set; }
 
 		/// <summary>
 		/// The mount used.
@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Technology
 		[DoNotSerialize]
 		public Mount Mount { get { return mount; } set { mount = value; } }
 
-		private GalaxyReference<Mount> mount { get; set; }
+		private ModReference<Mount> mount { get; set; }
 
 		/// <summary>
 		/// The name of the component, prefixed with the short name of the mount (if any).
