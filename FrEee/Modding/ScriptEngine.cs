@@ -290,7 +290,7 @@ namespace FrEee.Modding
 			T result;
 			try
 			{
-				result = compiledScript.Execute<T>(scope);
+				result = (T)compiledScript.Execute(scope);
 				if (variables != null)
 				{
 					var newvals = RetrieveVariablesFromScope(scope, variables.Keys);
