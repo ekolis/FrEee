@@ -125,9 +125,9 @@ namespace FrEee.Game.Objects.Vehicles
 		/// The hull used in this design.
 		/// </summary>
 		[DoNotSerialize]
-		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new GalaxyReference<IHull<T>>(value); } }
+		public IHull<T> Hull { get { return hull == null ? null : hull.Value; } set { hull = new ModReference<IHull<T>>(value); } }
 
-		private GalaxyReference<IHull<T>> hull { get; set; }
+		private ModReference<IHull<T>> hull { get; set; }
 
 		/// <summary>
 		/// The components used in this design.

@@ -34,7 +34,10 @@ namespace FrEee.Game.Objects.Abilities
 		/// <summary>
 		/// The ability rule which defines what ability this is.
 		/// </summary>
-		public AbilityRule Rule { get; set; }
+		[DoNotSerialize]
+		public AbilityRule Rule { get { return rule; } set { rule = value; } }
+
+		private ModReference<AbilityRule> rule { get; set; }
 
 		/// <summary>
 		/// A description of the ability's effects.

@@ -48,7 +48,10 @@ namespace FrEee.Game.Objects.Technology
 		/// The template for this facility.
 		/// Specifies the basic stats of the facility and its abilities.
 		/// </summary>
-		public FacilityTemplate Template { get; private set; }
+		[DoNotSerialize]
+		public FacilityTemplate Template { get { return template; } private set { template = value; } }
+
+		private ModReference<FacilityTemplate> template { get; set; }
 
 		IConstructionTemplate IConstructable.Template
 		{

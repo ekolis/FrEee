@@ -173,15 +173,15 @@ namespace FrEee.Game.Objects.Technology
 		/// Current empire's research progress in this technology.
 		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
-		public Progress<Technology> Progress
+		public ModProgress<Technology> Progress
 		{
 			get
 			{
 				if (Empire.Current == null)
-					return new Progress<Technology>(this, 0, LevelCost);
+					return new ModProgress<Technology>(this, 0, LevelCost);
 				var progress = Empire.Current.ResearchProgress.SingleOrDefault(p => p.Item == this);
 				if (progress == null)
-					return new Progress<Technology>(this, 0, LevelCost);
+					return new ModProgress<Technology>(this, 0, LevelCost);
 				return progress;
 			}
 		}
@@ -190,13 +190,13 @@ namespace FrEee.Game.Objects.Technology
 		/// Current empire's spending percentage on this technology.
 		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
-		public Progress<Technology> Spending
+		public ModProgress<Technology> Spending
 		{
 			get
 			{
 				if (Empire.Current == null)
-					return new Progress<Technology>(this, 0, 100);
-				return new Progress<Technology>(this, Empire.Current.ResearchSpending[this], 100);
+					return new ModProgress<Technology>(this, 0, 100);
+				return new ModProgress<Technology>(this, Empire.Current.ResearchSpending[this], 100);
 			}
 		}
 

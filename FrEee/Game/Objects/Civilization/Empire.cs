@@ -52,10 +52,10 @@ namespace FrEee.Game.Objects.Civilization
 			Commands = new List<ICommand>();
 			KnownDesigns = new HashSet<IDesign>();
 			Log = new List<LogMessage>();
-			ResearchedTechnologies = new NamedDictionary<Technology.Technology, int>();
-			AccumulatedResearch = new NamedDictionary<Tech, int>();
-			ResearchSpending = new NamedDictionary<Technology.Technology, int>();
-			ResearchQueue = new List<Technology.Technology>();
+			ResearchedTechnologies = new ModReferenceKeyedDictionary<Tech, int>();
+			AccumulatedResearch = new ModReferenceKeyedDictionary<Tech, int>();
+			ResearchSpending = new ModReferenceKeyedDictionary<Tech, int>();
+			ResearchQueue = new ModReferenceList<Technology.Technology>();
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
@@ -100,7 +100,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The AI which controls the behavior of empires of this race.
 		/// </summary>
-		public AI<Empire, Galaxy> AI { get; set; }
+		[DoNotSerialize]
+		public AI<Empire, Galaxy> AI { get { return ai; } set { ai = value; } }
+
+		private ModReference<AI<Empire, Galaxy>> ai { get; set; }
 
 		/// <summary>
 		/// The color used to represent this empire's star systems on the galaxy map.
@@ -376,7 +379,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Technologies that have been researched by this empire and the levels they have been researched to.
 		/// </summary>
-		public NamedDictionary<Technology.Technology, int> ResearchedTechnologies
+		public ModReferenceKeyedDictionary<Tech, int> ResearchedTechnologies
 		{
 			get;
 			internal set;
@@ -385,7 +388,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Progress towards completing next levels of techs.
 		/// </summary>
-		public IEnumerable<Progress<Tech>> ResearchProgress
+		public IEnumerable<ModProgress<Tech>> ResearchProgress
 		{
 			get
 			{
@@ -407,15 +410,15 @@ namespace FrEee.Game.Objects.Civilization
 			researchProgress = AvailableTechnologies.Select(t => GetResearchProgress(t, ResearchedTechnologies[t] + 1, totalRP)).ToArray();
 		}
 
-		private Progress<Tech>[] researchProgress;
+		private ModProgress<Tech>[] researchProgress;
 
-		public Progress<Tech> GetResearchProgress(Tech tech, int level)
+		public ModProgress<Tech> GetResearchProgress(Tech tech, int level)
 		{
 			var totalRP = NetIncome[Resource.Research] + BonusResearch;
 			return GetResearchProgress(tech, level, totalRP);
 		}
 
-		private Progress<Tech> GetResearchProgress(Tech tech, int level, int totalRP)
+		private ModProgress<Tech> GetResearchProgress(Tech tech, int level, int totalRP)
 		{
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
@@ -426,7 +429,7 @@ namespace FrEee.Game.Objects.Civilization
 			var laterQueueSpending = 0;
 			if (ResearchQueue.FirstOrDefault() != tech && ResearchQueue.Contains(tech))
 				laterQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - AccumulatedResearch[tech]);
-			return new Progress<Tech>(tech, AccumulatedResearch[tech], cost,
+			return new ModProgress<Tech>(tech, AccumulatedResearch[tech], cost,
 					ResearchSpending[tech] * totalRP / 100 + firstQueueSpending, GetResearchQueueDelay(tech, level), laterQueueSpending);
 		}
 
@@ -461,7 +464,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Accumulated research points.
 		/// </summary>
-		public NamedDictionary<Technology.Technology, int> AccumulatedResearch
+		public ModReferenceKeyedDictionary<Tech, int> AccumulatedResearch
 		{
 			get;
 			private set;
@@ -470,7 +473,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Research spending as a percentage of budget.
 		/// </summary>
-		public NamedDictionary<Technology.Technology, int> ResearchSpending
+		public ModReferenceKeyedDictionary<Tech, int> ResearchSpending
 		{
 			get;
 			private set;
@@ -763,7 +766,10 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The empire's culture.
 		/// </summary>
-		public Culture Culture { get; set; }
+		[DoNotSerialize]
+		public Culture Culture { get { return culture; } set { culture = value; } }
+
+		private ModReference<Culture> culture { get; set; }
 
 		/// <summary>
 		/// TODO - implement empire score

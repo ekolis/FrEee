@@ -14,7 +14,9 @@ namespace FrEee.Utility
 	/// <summary>
 	/// A lightweight reference to some object in the current galaxy.
 	/// Can be passed around on the network as a surrogate for said object.
-	/// If the object is not an IReferrable, the object itself will be stored.
+	/// This class should be used when referencing a server side object from the client.
+	/// It is not necessary to use GalaxyReference when entirely within either the client or the server.
+	/// If the object is not an IReferrable, the object itself will be stored!
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
 	[Serializable]

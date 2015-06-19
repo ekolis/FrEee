@@ -13,6 +13,7 @@ using FrEee.Modding.Templates;
 using System.Reflection;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Combat;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -83,7 +84,9 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Abilities for random warp points that appear in this system.
 		/// </summary>
-		public RandomAbilityTemplate WarpPointAbilities { get; set; }
+		[DoNotSerialize]
+		public RandomAbilityTemplate WarpPointAbilities { get { return warpPointAbilities; } set { warpPointAbilities = value; } }
+		private ModReference<RandomAbilityTemplate> warpPointAbilities { get; set; }
 
 		/// <summary>
 		/// The number of sectors across the star system.

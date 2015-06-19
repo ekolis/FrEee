@@ -18,20 +18,20 @@ namespace FrEee.Game.Objects.Civilization
 	{
 		public CargoDelta()
 		{
-			RacePopulation = new ReferenceKeyedDictionary<Race, long?>();
+			RacePopulation = new GalaxyReferenceKeyedDictionary<Race, long?>();
 			AllPopulation = false;
 			AnyPopulation = 0L;
-			Units = new ReferenceSet<IUnit>();
-			UnitDesignTonnage = new ReferenceKeyedDictionary<IDesign<IUnit>, int?>();
+			Units = new GalaxyReferenceSet<IUnit>();
+			UnitDesignTonnage = new GalaxyReferenceKeyedDictionary<IDesign<IUnit>, int?>();
 			UnitRoleTonnage = new SafeDictionary<string, int?>();
 			UnitTypeTonnage = new SafeDictionary<VehicleTypes, int?>();
 		}
 
-		public ReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
+		public GalaxyReferenceKeyedDictionary<Race, long?> RacePopulation { get; private set; }
 		public bool AllPopulation { get; set; }
 		public long AnyPopulation { get; set; }
-		public ReferenceSet<IUnit> Units { get; private set; }
-		public ReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
+		public GalaxyReferenceSet<IUnit> Units { get; private set; }
+		public GalaxyReferenceKeyedDictionary<IDesign<IUnit>, int?> UnitDesignTonnage { get; private set; }
 		public SafeDictionary<string, int?> UnitRoleTonnage { get; private set; }
 		public SafeDictionary<VehicleTypes, int?> UnitTypeTonnage { get; private set; }
 

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding;
+using Tech = FrEee.Game.Objects.Technology.Technology;
 
 namespace FrEee.Game.Objects.Commands
 {
@@ -16,62 +18,13 @@ namespace FrEee.Game.Objects.Commands
 		public ResearchCommand()
 			: base(Empire.Current)
 		{
-			spending = new SafeDictionary<GalaxyReference<Technology.Technology>, int>();
-			queue = new List<GalaxyReference<Technology.Technology>>();
+			Spending = new ModReferenceKeyedDictionary<Tech, int>();
+			Queue = new ModReferenceList<Tech>();
 		}
 
-		private SafeDictionary<GalaxyReference<Technology.Technology>, int> spending { get; set; }
+		public ModReferenceKeyedDictionary<Tech, int> Spending { get; private set; }
 
-		/// <summary>
-		/// Priorities for spending, expressed as percentages of total research output.
-		/// </summary>
-		[DoNotSerialize]
-		public IEnumerable<KeyValuePair<Technology.Technology, int>> Spending
-		{
-			get
-			{
-				return spending.Select(kvp => new KeyValuePair<Technology.Technology, int>(kvp.Key.Value, kvp.Value));
-			}
-		}
-
-		public void SetSpending(Technology.Technology tech, int spendingPct)
-		{
-			spending[tech.ReferViaGalaxy()] = spendingPct;
-		}
-
-		public void ClearSpending()
-		{
-			spending.Clear();
-		}
-
-		private List<GalaxyReference<Technology.Technology>> queue { get; set; }
-
-		/// <summary>
-		/// Queue for usage of leftover points after spending priorities are taken care of.
-		/// </summary>
-		[DoNotSerialize]
-		public IEnumerable<Technology.Technology> Queue
-		{
-			get
-			{
-				return queue.Select(t => t.Value);
-			}
-		}
-
-		public void AddToQueue(Technology.Technology tech)
-		{
-			queue.Add(tech.ReferViaGalaxy());
-		}
-
-		public void RemoveFromQueue(Technology.Technology tech)
-		{
-			queue.Remove(tech.ReferViaGalaxy());
-		}
-
-		public void ClearQueue()
-		{
-			queue.Clear();
-		}
+		public ModReferenceList<Tech> Queue { get; private set; }
 
 		public override void Execute()
 		{
@@ -81,7 +34,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				foreach (var kvp in Spending.ToArray())
 				{
-					SetSpending(kvp.Key, kvp.Value / totalSpending / 100);
+					Spending[kvp.Key] = kvp.Value / totalSpending / 100;
 				}
 			}
 
@@ -89,12 +42,12 @@ namespace FrEee.Game.Objects.Commands
 			foreach (var kvp in Spending.ToArray())
 			{
 				if (!Executor.HasUnlocked(kvp.Key))
-					SetSpending(kvp.Key, 0);
+					Spending[kvp.Key] = 0;
 			}
 			foreach (Technology.Technology tech in Queue.ToArray())
 			{
 				if (!Executor.HasUnlocked(tech))
-					RemoveFromQueue(tech);
+					Queue.Remove(tech);
 			}
 
 			// save to empire

@@ -31,7 +31,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			var cmd = new ResearchCommand();
 			cmd.Issuer = emp;
 			cmd.Executor = emp;
-			cmd.SetSpending(tech, 100);
+			cmd.Spending[tech] = 100;
 
 			// check command client safety
 			cmd.CheckForClientSafety();

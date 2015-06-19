@@ -3,30 +3,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility.Extensions;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Utility
 {
 	/// <summary>
-	/// A safe dictionary keyed with transparent refrences.
+	/// A safe dictionary keyed with transparent references.
 	/// </summary>
-	public class ReferenceKeyedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
-		where TKey : IReferrable
+	public class ReferenceKeyedDictionary<TRef, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
+		where TRef : IReference<TKey>
 	{
 		public ReferenceKeyedDictionary()
 		{
-			dict = new SafeDictionary<GalaxyReference<TKey>, TValue>();
+			dict = new SafeDictionary<TRef, TValue>();
 		}
 
-		private SafeDictionary<GalaxyReference<TKey>, TValue> dict { get; set; }
+		private static TRef MakeReference(TKey item)
+		{
+			return (TRef)typeof(TRef).Instantiate(item);
+		}
+
+		private SafeDictionary<TRef, TValue> dict { get; set; }
 
 		public void Add(TKey key, TValue value)
 		{
-			dict.Add(key, value);
+			dict.Add(MakeReference(key), value);
 		}
 
 		public bool ContainsKey(TKey key)
 		{
-			return dict.ContainsKey(key);
+			return dict.ContainsKey(MakeReference(key));
 		}
 
 		public ICollection<TKey> Keys
@@ -36,12 +44,12 @@ namespace FrEee.Utility
 
 		public bool Remove(TKey key)
 		{
-			return dict.Remove(key);
+			return dict.Remove(MakeReference(key));
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
 		{
-			return dict.TryGetValue(key, out value);
+			return dict.TryGetValue(MakeReference(key), out value);
 		}
 
 		public ICollection<TValue> Values
@@ -53,17 +61,17 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				return dict[key];
+				return dict[MakeReference(key)];
 			}
 			set
 			{
-				dict[key] = value;
+				dict[MakeReference(key)] = value;
 			}
 		}
 
 		public void Add(KeyValuePair<TKey, TValue> item)
 		{
-			dict.Add(new KeyValuePair<GalaxyReference<TKey>,TValue>(item.Key, item.Value));
+			dict.Add(MakeReference(item.Key), item.Value);
 		}
 
 		public void Clear()
@@ -73,7 +81,7 @@ namespace FrEee.Utility
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
-			return dict.Contains(new KeyValuePair<GalaxyReference<TKey>, TValue>(item.Key, item.Value));
+			return dict.Contains(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
@@ -94,7 +102,7 @@ namespace FrEee.Utility
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
-			return dict.Remove(new KeyValuePair<GalaxyReference<TKey>, TValue>(item.Key, item.Value));
+			return dict.Remove(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
@@ -115,8 +123,22 @@ namespace FrEee.Utility
 			{
 				done.Add(this);
 				foreach (var r in dict.Keys)
-					r.ReplaceClientIDs(idmap, done);
+				{
+					if (r is IPromotable)
+						(r as IPromotable).ReplaceClientIDs(idmap, done);
+				}
 			}
 		}
+	}
+	
+	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<GalaxyReference<TKey>, TKey, TValue>
+	{
+
+	}
+
+	public class ModReferenceKeyedDictionary<TKey, TValue> :  ReferenceKeyedDictionary<ModReference<TKey>, TKey, TValue>
+		where TKey : IModObject
+	{
+
 	}
 }

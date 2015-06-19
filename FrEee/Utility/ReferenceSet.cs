@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Utility
 {
@@ -11,19 +13,24 @@ namespace FrEee.Utility
 	/// A set of references.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ReferenceSet<T> : ISet<T>, IPromotable, IReferenceEnumerable where T : IReferrable
+	public class ReferenceSet<TRef, T> : ISet<T>, IPromotable, IReferenceEnumerable
+		where TRef : IReference<T>
 	{
 		public ReferenceSet()
 		{
-			set = new HashSet<IReference<T>>();
+			set = new HashSet<TRef>();
 		}
 
-		private HashSet<IReference<T>> set { get; set; }
+		private HashSet<TRef> set { get; set; }
+
+		private static TRef MakeReference(T item)
+		{
+			return (TRef)typeof(TRef).Instantiate(item);
+		}
 
 		public bool Add(T item)
 		{
-			var r = item.ReferViaGalaxy();
-			return set.Add(r);
+			return set.Add(MakeReference(item));
 		}
 
 		private ISet<T> Set { get { return new HashSet<T>(set.Select(r => r.Value)); } }
@@ -96,7 +103,7 @@ namespace FrEee.Utility
 
 		void ICollection<T>.Add(T item)
 		{
-			set.Add(item.ReferViaGalaxy());
+			set.Add(MakeReference(item));
 		}
 
 		public void Clear()
@@ -126,7 +133,7 @@ namespace FrEee.Utility
 
 		public bool Remove(T item)
 		{
-			return set.Remove(item.ReferViaGalaxy());
+			return set.Remove(MakeReference(item));
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -146,9 +153,20 @@ namespace FrEee.Utility
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				foreach (var r in set)
+				foreach (var r in set.OfType<IPromotable>())
 					r.ReplaceClientIDs(idmap, done);
 			}
 		}
+	}
+
+	public class GalaxyReferenceSet<T> : ReferenceSet<GalaxyReference<T>, T>
+	{
+
+	}
+
+	public class ModReferenceSet<T> : ReferenceSet<ModReference<T>, T>
+		where T : IModObject
+	{
+
 	}
 }

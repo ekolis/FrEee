@@ -12,11 +12,21 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	/// <typeparam name="TID"></typeparam>
 	/// <typeparam name="TValue"></typeparam>
-	public interface IReference<out TID, out TValue>
+	public interface IReference<out TValue> : IPromotable
 	{
-		TID ID { get; }
 		TValue Value { get; }
 		bool HasValue { get; }
+	}
+
+	/// <summary>
+	/// A lightweight reference to some object in some context (e.g. the current mod or galaxy).
+	/// Can be passed around on the network as a surrogate for said object.
+	/// </summary>
+	/// <typeparam name="TID"></typeparam>
+	/// <typeparam name="TValue"></typeparam>
+	public interface IReference<out TID, out TValue> : IReference<TValue>
+	{
+		TID ID { get; }
 	}
 
 	[Serializable]

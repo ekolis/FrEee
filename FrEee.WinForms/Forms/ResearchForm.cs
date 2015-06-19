@@ -215,12 +215,12 @@ namespace FrEee.WinForms.Forms
 		private void Save()
 		{
 			var cmd = new ResearchCommand();
-			cmd.ClearSpending();
+			cmd.Spending.Clear();
 			foreach (var kvp in Empire.Current.ResearchSpending)
-				cmd.SetSpending(kvp.Key, kvp.Value);
-			cmd.ClearQueue();
+				cmd.Spending[kvp.Key] = kvp.Value;
+			cmd.Queue.Clear();
 			foreach (var tech in Empire.Current.ResearchQueue)
-				cmd.AddToQueue(tech);
+				cmd.Queue.Add(tech);
 			Empire.Current.ResearchCommand = cmd;
 		}
 

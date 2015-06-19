@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
+using FrEee.Modding;
+using FrEee.Utility;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -13,8 +15,12 @@ namespace FrEee.Game.Objects.Technology
 			Old = old;
 			New = nu;
 		}
-		public FacilityTemplate Old { get; set; }
-		public FacilityTemplate New { get; set; }
+
+		[DoNotSerialize]
+		public FacilityTemplate Old { get { return old; } private set { old = value; } }
+		private ModReference<FacilityTemplate> old { get; set; }
+		public FacilityTemplate New { get { return nu; } private set { nu = value; } }
+		private ModReference<FacilityTemplate> nu { get; set; }
 
 		public bool IsObsolete
 		{
