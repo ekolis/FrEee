@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Technology;
 using FrEee.Modding.Enumerations;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -20,7 +21,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		 public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -47,6 +48,7 @@ namespace FrEee.Modding.Loaders
 				tech.UniqueTechID = rec.Get<string>("Unique Area", tech);
 				tech.CanBeRemoved = rec.Get<bool>("Can Be Removed", tech);
 
+				yield return tech;
 			}
 
 			foreach (var tech in mod.Technologies)

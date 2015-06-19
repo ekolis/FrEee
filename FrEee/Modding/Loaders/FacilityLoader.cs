@@ -6,6 +6,7 @@ using System.Text;
 using FrEee.Game.Objects.Technology;
 using FrEee.Utility;
 using FrEee.Modding.Enumerations;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -21,7 +22,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		 public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -52,6 +53,8 @@ namespace FrEee.Modding.Loaders
 
 				foreach (var abil in AbilityLoader.Load(Filename, rec, f).ToArray())
 					f.Abilities.Add(abil);
+
+				yield return f;
 			}
 		}
 	}

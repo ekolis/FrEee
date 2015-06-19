@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.AI;
 using System.Reflection;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -22,7 +23,7 @@ namespace FrEee.Modding.Loaders
 			ModPath = modPath;
 		}
 
-		public void Load(Mod mod)
+		public IEnumerable<IModObject> Load(Mod mod)
 		{
 			string empsFolder;
 			if (ModPath == null)
@@ -60,6 +61,7 @@ namespace FrEee.Modding.Loaders
 					}
 					var ai = new AI<Empire, Galaxy>(Path.GetFileName(empFolder), script, ministers);
 					mod.EmpireAIs.Add(ai);
+					yield return ai;
 				}
 			}
 		}

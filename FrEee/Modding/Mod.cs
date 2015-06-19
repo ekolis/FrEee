@@ -81,11 +81,11 @@ namespace FrEee.Modding
 				if (status != null)
 					status.Message = "Loading " + loader.FileName;
 				CurrentFileName = loader.FileName;
-				loader.Load(mod);
+				var used = new HashSet<string>();
+				foreach (var mo in loader.Load(mod))
+					AssignID(mo, used);
 				if (status != null)
 					status.Progress += progressPerFile;
-
-				mod.AssignIDs();
 			}
 
 			CurrentFileName = null;
@@ -376,7 +376,7 @@ namespace FrEee.Modding
 			return Objects.SingleOrDefault(o => o.ModID == modid);
 		}
 
-		private void AssignID(IModObject mo, ICollection<string> used)
+		private static void AssignID(IModObject mo, ICollection<string> used)
 		{
 			if (mo.Name != null && !used.Contains(mo.Name))
 			{

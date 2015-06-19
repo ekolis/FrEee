@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -17,7 +18,7 @@ namespace FrEee.Modding.Loaders
 			DataFile = df;
 		}
 
-		public abstract void Load(Mod mod);
+		public abstract IEnumerable<IModObject> Load(Mod mod);
 
 		public string ModPath { get; set; }
 

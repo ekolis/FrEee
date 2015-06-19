@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -19,7 +20,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			foreach (var rec in DataFile.Records)
 			{
@@ -38,6 +39,8 @@ namespace FrEee.Modding.Loaders
 				sos.MaxCargoDomed = rec.Get<int>("Max Cargo Spaces Domed", sos);
 				sos.IsConstructed = rec.Get<bool>("Constructed", sos);
 				sos.ConstructionAbilityID = rec.Get<string>("Special Ability ID", sos);
+
+				yield return sos;
 			}
 		}
 	}

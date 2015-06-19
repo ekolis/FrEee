@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -20,7 +21,7 @@ namespace FrEee.Modding.Loaders
 		{
 		}
 
-		public override void Load(Mod mod)
+		public override IEnumerable<IModObject> Load(Mod mod)
 		{
 			Trait t;
 			int index = -1;
@@ -53,6 +54,8 @@ namespace FrEee.Modding.Loaders
 
 				if (t.Abilities.Count == 0)
 					Mod.Errors.Add(new DataParsingException("Trait \"" + t.Name + "\" does not have any abilities.", Mod.CurrentFileName, rec));
+
+				yield return t;
 			}
 
 			// second pass for required/restricted traits

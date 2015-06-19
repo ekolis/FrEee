@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Modding.Loaders
 {
@@ -14,7 +15,8 @@ namespace FrEee.Modding.Loaders
 		/// Loads mod data.
 		/// </summary>
 		/// <param name="mod">The mod we are loading data into.</param>
-		void Load(Mod mod);
+		/// <returns>Any mod objects which need IDs generated.</returns>
+		IEnumerable<IModObject> Load(Mod mod);
 
 		string ModPath { get; set; }
 
