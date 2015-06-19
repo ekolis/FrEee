@@ -29,7 +29,7 @@ namespace FrEee.Modding
 			if (Mod.Current == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
 			else if (t == null)
-				ID = null;
+				ID = ""; // dictionaries don't like null keys
 			else if (mobj.ModID != null)
 				ID = mobj.ModID;
 			else
@@ -57,7 +57,7 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				if (ID == null)
+				if (ID == null || ID == "")
 					return default(T);
 				return (T)Mod.Current.Find(ID);
 			}
@@ -107,7 +107,7 @@ namespace FrEee.Modding
 
 		public override int GetHashCode()
 		{
-			return ID == null ? 0 : ID.GetHashCode();
+			return ID == null || ID == "" ? 0 : ID.GetHashCode();
 		}
 
 		public override bool Equals(object obj)

@@ -76,12 +76,13 @@ namespace FrEee.Modding
 
 			var progressPerFile = (desiredProgress - (status == null ? 0 : status.Progress)) / loaders.Length;
 
+			var used = new HashSet<string>();
+
 			foreach (var loader in loaders)
 			{
 				if (status != null)
 					status.Message = "Loading " + loader.FileName;
 				CurrentFileName = loader.FileName;
-				var used = new HashSet<string>();
 				foreach (var mo in loader.Load(mod))
 					AssignID(mo, used);
 				if (status != null)
@@ -89,6 +90,10 @@ namespace FrEee.Modding
 			}
 
 			CurrentFileName = null;
+
+			var dupes = mod.Objects.GroupBy(o => o.ModID).Where(g => g.Count() > 1);
+			if (dupes.Any())
+				throw new Exception("Multiple objects with mod ID {0} found ({1} total IDs with duplicates)".F(dupes.First().Key, dupes.Count()));
 
 			return mod;
 		}

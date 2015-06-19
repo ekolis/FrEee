@@ -2528,7 +2528,7 @@ namespace FrEee.Utility.Extensions
 
 		public static object Instantiate(this Type type, params object[] args)
 		{
-			if (type.GetConstructor(new Type[0]) != null)
+			if (type.GetConstructors().Where(c => c.GetParameters().Length == (args == null ? 0 : args.Length)).Any())
 				return Activator.CreateInstance(type, args);
 			else
 				return FormatterServices.GetSafeUninitializedObject(type);

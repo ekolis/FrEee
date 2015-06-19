@@ -29,7 +29,10 @@ namespace FrEee.Utility
 
 		public void Add(TKey key, TValue value)
 		{
-			dict.Add(MakeReference(key), value);
+			var r = MakeReference(key);
+			if (!r.HasValue)
+				throw new Exception("Can't make reference for " + key);
+			dict.Add(r, value);
 		}
 
 		public bool ContainsKey(TKey key)
@@ -65,13 +68,19 @@ namespace FrEee.Utility
 			}
 			set
 			{
-				dict[MakeReference(key)] = value;
+				var r = MakeReference(key);
+				if (!r.HasValue)
+					throw new Exception("Can't make reference for " + key);
+				dict[r] = value;
 			}
 		}
 
 		public void Add(KeyValuePair<TKey, TValue> item)
 		{
-			dict.Add(MakeReference(item.Key), item.Value);
+			var r = MakeReference(item.Key);
+			if (!r.HasValue)
+				throw new Exception("Can't make reference for " + item.Key);
+			dict.Add(r, item.Value);
 		}
 
 		public void Clear()
@@ -107,7 +116,13 @@ namespace FrEee.Utility
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
-			return dict.Select(kvp => new KeyValuePair<TKey, TValue>(kvp.Key.Value, kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value).GetEnumerator();
+			var objs = dict.Select(kvp => new {Key = kvp.Key, KeyValue = kvp.Key.Value, Value = kvp.Value});
+			foreach (var obj in objs)
+			{
+				if (obj.KeyValue == null)
+					throw new Exception("Key {0} is an invalid reference.".F(obj.Key));
+			}
+			return objs.Select(obj => new KeyValuePair<TKey, TValue>(obj.KeyValue, obj.Value)).GetEnumerator();
 		}
 
 		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
