@@ -3490,6 +3490,13 @@ namespace FrEee.Utility.Extensions
 		{
 			return dict[dict.Keys.FindByName(name)];
 		}
+
+		public static string LastWord(this string s)
+		{
+			if (s == null)
+				return null;
+			return s.Split(' ').LastOrDefault();
+		}
 	}
 
 	public enum IDCopyBehavior
