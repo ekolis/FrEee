@@ -58,6 +58,7 @@ namespace FrEee.Modding
 				new AbilityRuleLoader(path),
 				new ModSettingsLoader(path),
 				new StellarObjectSizeLoader(path),
+				new StellarAbilityLoader(path),
 				new StellarObjectLoader(path),
 				new TraitLoader(path),
 				new TechnologyLoader(path),
@@ -66,7 +67,6 @@ namespace FrEee.Modding
 				new DamageTypeLoader(path),
 				new ComponentLoader(path),
 				new MountLoader(path),
-				new StellarAbilityLoader(path),
 				new StarSystemLoader(path),
 				new GalaxyLoader(path),
 				new HappinessModelLoader(path),
@@ -300,6 +300,8 @@ namespace FrEee.Modding
 				r.Dispose();
 			foreach (var sos in StellarObjectSizes)
 				sos.Dispose();
+			foreach (var x in StellarAbilityTemplates)
+				x.Dispose();
 			foreach (var sot in StellarObjectTemplates)
 				sot.Dispose();
 			foreach (var t in Traits)
@@ -343,6 +345,8 @@ namespace FrEee.Modding
 				foreach (var x in AbilityRules)
 					yield return x;
 				foreach (var x in StellarObjectSizes)
+					yield return x;
+				foreach (var x in StellarAbilityTemplates)
 					yield return x;
 				foreach (var x in StellarObjectTemplates)
 					yield return x; 
