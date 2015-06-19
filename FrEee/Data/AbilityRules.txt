@@ -839,6 +839,12 @@ Description := Can launch [%Amount1%] satellites per combat round, and an unlimi
 Value 1 Rule := Add
 Value 2 Rule := Add
 
+Name := Launch Drones
+Targets := SpaceVehicle, Component
+Description := Can launch [%Amount1%] drones per combat round, and an unlimited number of drones per turn.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
 Name := Remote Resource Generation - Minerals
 Targets := SpaceVehicle, Planet, Component, Facility
 Description := Remotely mines [%Amount1%] minerals each turn from uninhabited planets and asteroids in the sector (modified by planet/asteroid value).
