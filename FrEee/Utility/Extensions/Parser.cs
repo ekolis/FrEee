@@ -62,7 +62,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var parser = typeof(Parser).GetMethods().Single(m => m.Name == "ParseEnum" && m.ContainsGenericParameters);
 			parser = parser.MakeGenericMethod(type);
-			return parser.Invoke(null, new object[] { s });
+			return parser.Invoke(null, new object[] { s.Trim() });
 		}
 
 		private static T ParseSingleEnum<T>(this string s)
