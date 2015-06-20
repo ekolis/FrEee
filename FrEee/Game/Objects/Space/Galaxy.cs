@@ -396,7 +396,7 @@ namespace FrEee.Game.Objects.Space
 				Directory.CreateDirectory(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory));
 			var fs = new FileStream(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), FrEeeConstants.SaveGameDirectory, filename), FileMode.Create);
 			Serializer.Serialize(this, fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 			return filename;
 		}
 
@@ -477,7 +477,7 @@ namespace FrEee.Game.Objects.Space
 			var sr = new StreamReader(fs);
 			var s = sr.ReadToEnd();
 			LoadFromString(s);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 		}
 
 		/// <summary>
@@ -540,7 +540,7 @@ namespace FrEee.Game.Objects.Space
 			var filename = GetEmpireCommandsSavePath(CurrentEmpire);
 			var fs = new FileStream(filename, FileMode.Create);
 			SerializeCommands(fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 
 			// save library of designs, commands, etc.
 			Library.Save();
@@ -573,7 +573,7 @@ namespace FrEee.Game.Objects.Space
 					var fs = new FileStream(plrfile, FileMode.Open);
 					var cmds = DeserializeCommands(fs);
 					LoadCommands(emp, cmds);
-					fs.Close();
+					fs.Close(); fs.Dispose();
 				}
 				else if (emp.IsPlayerEmpire)
 					noCmds.Add(emp);

@@ -244,7 +244,9 @@ namespace FrEee.WinForms.Objects
 				finally
 				{
 					if (fs != null)
-						fs.Close();
+					{
+						fs.Close(); fs.Dispose();
+					}
 				}
 
 				// initialize anything that wasn't there
@@ -266,7 +268,7 @@ namespace FrEee.WinForms.Objects
 				Directory.CreateDirectory(path);
 			var fs = new FileStream(ConfigFile, FileMode.Create);
 			Serializer.Serialize(Instance, fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 		}
 	}
 }

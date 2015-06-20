@@ -150,7 +150,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			var fs = new FileStream(filename, FileMode.Open);
 			var race = Serializer.Deserialize<Race>(fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 			return race;
 		}
 
@@ -158,7 +158,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			var fs = new FileStream(filename, FileMode.Create);
 			Serializer.Serialize(this, fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 		}
 
 		/// <summary>
