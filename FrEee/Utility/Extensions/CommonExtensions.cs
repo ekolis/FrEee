@@ -269,6 +269,8 @@ namespace FrEee.Utility.Extensions
 				}
 				if (!knownObjects.ContainsKey(source))
 					knownObjects.Add(source, target);
+				if (target is ICleanable)
+					(target as ICleanable).Clean();
 			}
 
 			private object CopyObject(object parent, object sv)

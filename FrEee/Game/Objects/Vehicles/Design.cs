@@ -679,5 +679,13 @@ namespace FrEee.Game.Objects.Vehicles
 				return Galaxy.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
 			}
 		}
+
+		public void Clean()
+		{
+			// make sure this design's components actually belong to this design!
+			foreach (var mct in Components)
+				mct.Container = this;
+
+		}
 	}
 }
