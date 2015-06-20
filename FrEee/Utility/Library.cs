@@ -76,9 +76,11 @@ namespace FrEee.Utility
 		/// Exports an object to the library.
 		/// </summary>
 		/// <param name="o"></param>
-		public static void Export(object o)
+		public static void Export(object o, bool autosave = true)
 		{
 			Items.Add(o.CopyAndAssignNewID());
+			if (autosave)
+				Save();
 		}
 
 		/// <summary>
@@ -87,7 +89,7 @@ namespace FrEee.Utility
 		/// <typeparam name="T">The type of object to delete.</typeparam>
 		/// <param name="condition">Condition to apply when selecting objects to delete.</param>
 		/// <returns>Number of objects deleted.</returns>
-		public static int Delete<T>(Func<T, bool> condition = null)
+		public static int Delete<T>(Func<T, bool> condition = null, bool autosave = true)
 		{
 			// defaults to deleting all
 			if (condition == null)
@@ -99,6 +101,10 @@ namespace FrEee.Utility
 				Items.Remove(o);
 				count++;
 			}
+
+			if (autosave)
+				Save();
+
 			return count;
 		}
 	}
