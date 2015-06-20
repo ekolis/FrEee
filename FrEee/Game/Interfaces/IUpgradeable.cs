@@ -25,5 +25,15 @@ namespace FrEee.Game.Interfaces
 		/// The latest available version of this item.
 		/// </summary>
 		T LatestVersion { get; }
+
+		/// <summary>
+		/// Any newer versions of this item.
+		/// </summary>
+		IEnumerable<T> NewerVersions { get; }
+
+		/// <summary>
+		/// Any older versions of this item.
+		/// </summary>
+		IEnumerable<T> OlderVersions { get; }
 	}
 }

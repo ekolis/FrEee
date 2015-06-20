@@ -305,7 +305,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return SpaceObjects.Select(sobj => sobj.Owner).Distinct().Except((Empire)null).Count() > 1;
+				return SpaceObjects.Select(sobj => sobj.Owner).Distinct().ExceptSingle((Empire)null).Count() > 1;
 			}
 		}
 	}

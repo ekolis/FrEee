@@ -682,7 +682,7 @@ namespace FrEee.Game.Objects.Space
 
 		public int? Size
 		{
-			get { return Vehicles.Except((IMobileSpaceObject)null).Sum(v => v.Size); }
+			get { return Vehicles.ExceptSingle((IMobileSpaceObject)null).Sum(v => v.Size); }
 		}
 
 		public bool IsMemory

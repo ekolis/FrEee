@@ -170,11 +170,8 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				var ofFamily = Empire.Current.UnlockedItems.OfType<ComponentTemplate>().Where(ct => ct.Family == Family);
-				var withHighestRomanNumeral = ofFamily.WithMax(ct => ct.RomanNumeral);
-				if (!withHighestRomanNumeral.Any())
-					return this; // this empire hasn't unlocked this thingy yet, it's highly advanced alien tech
-				return withHighestRomanNumeral.Last();
+				var withHighestRomanNumeral = NewerVersions.Where(ct => Empire.Current.HasUnlocked(ct)).WithMax(ct => ct.RomanNumeral).SingleOrDefault();
+				return withHighestRomanNumeral ?? this; // if null, it's not unlocked yet
 			}
 		}
 
@@ -286,6 +283,23 @@ namespace FrEee.Modding.Templates
 		public bool IsObsolescent
 		{
 			get { return this != LatestVersion; }
+		}
+
+
+		public IEnumerable<ComponentTemplate> NewerVersions
+		{
+			get
+			{
+				return Mod.Current.ComponentTemplates.Where(ct => ct.Family == Family && ct.RomanNumeral > RomanNumeral);
+			}
+		}
+
+		public IEnumerable<ComponentTemplate> OlderVersions
+		{
+			get
+			{
+				return Mod.Current.ComponentTemplates.Where(ct => ct.Family == Family && ct.RomanNumeral < RomanNumeral);
+			}
 		}
 	}
 }

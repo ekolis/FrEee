@@ -239,5 +239,23 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return false; }
 		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public IEnumerable<Mount> NewerVersions
+		{
+			get { yield break; }
+		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public IEnumerable<Mount> OlderVersions
+		{
+			get { yield break; }
+		}
 	}
 }

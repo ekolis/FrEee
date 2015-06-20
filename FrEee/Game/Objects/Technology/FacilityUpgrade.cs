@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -47,6 +49,17 @@ namespace FrEee.Game.Objects.Technology
 			{
 				return New.IsObsolescent;
 			}
+		}
+
+
+		public IEnumerable<FacilityUpgrade> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => u.New.UpgradesTo(New)); }
+		}
+
+		public IEnumerable<FacilityUpgrade> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
 		}
 	}
 }

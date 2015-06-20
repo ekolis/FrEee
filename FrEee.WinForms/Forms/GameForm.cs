@@ -915,7 +915,7 @@ namespace FrEee.WinForms.Forms
 				if (value == null || value.Owner != Empire.Current)
 				{
 					// can't issue commands to objects we don't own, though we can issue fleet transfer commands
-					foreach (GameButton btn in pnlSubCommands.Controls.Cast<Control>().Except(btnFleetTransfer))
+					foreach (GameButton btn in pnlSubCommands.Controls.Cast<Control>().ExceptSingle(btnFleetTransfer))
 						btn.Visible = false;
 
 					// fleet transfer and recycle buttons are special, they can be selected even with no space object selected

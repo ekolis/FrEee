@@ -1595,7 +1595,7 @@ namespace FrEee.Utility.Extensions
 			if (sys == null)
 				return null;
 			// TODO - this might be kind of slow; might want a reverse memory lookup
-			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Galaxy.Current.Empires.Except(null).Any(e => e.Memory[l.Item.ID] == sobj)).Location);
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[l.Item.ID] == sobj)).Location);
 		}
 
 		/// <summary>
@@ -1610,7 +1610,7 @@ namespace FrEee.Utility.Extensions
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
-				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.Except(null).Any(e => e.Memory[s.ID] == sobj)));
+				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
 			}
 			if (loc == null)
 				return null;
@@ -1664,7 +1664,7 @@ namespace FrEee.Utility.Extensions
 			return sb.ToString();
 		}
 
-		public static IEnumerable<T> Except<T>(this IEnumerable<T> src, T badguy)
+		public static IEnumerable<T> ExceptSingle<T>(this IEnumerable<T> src, T badguy)
 		{
 			return src.Except(new T[] { badguy });
 		}
@@ -3496,6 +3496,11 @@ namespace FrEee.Utility.Extensions
 			if (s == null)
 				return null;
 			return s.Split(' ').LastOrDefault();
+		}
+
+		public static bool UpgradesTo<T>(this T self, T other) where T : IUpgradeable<T>
+		{
+			return self.NewerVersions.Contains(other);
 		}
 	}
 

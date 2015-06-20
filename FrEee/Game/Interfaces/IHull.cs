@@ -11,7 +11,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IHull : IModObject, IResearchable, IAbilityContainer, IReferrable, IPictorial
+	public interface IHull : IModObject, IResearchable, IAbilityContainer, IReferrable, IPictorial, IUpgradeable<IHull>
 	{
 		string ShortName { get; set; }
 
@@ -97,6 +97,11 @@ namespace FrEee.Game.Interfaces
 	/// </summary>
 	public interface IHull<out T> : IHull, IReferrable, IUpgradeable<IHull<T>> where T : IVehicle
 	{
-		
+		// to deal with ambiguity between implementing IHull and IHull<T>
+		new bool IsObsolete { get; }
+		new bool IsObsolescent { get; }
+		new IHull<T> LatestVersion { get; }
+		new IEnumerable<IHull<T>> NewerVersions { get; }
+		new IEnumerable<IHull<T>> OlderVersions { get; }
 	}
 }
