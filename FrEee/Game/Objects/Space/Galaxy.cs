@@ -517,6 +517,9 @@ namespace FrEee.Game.Objects.Space
 				Current.StringValue = serializedData;
 				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
 				var turn = formula.Value;
+
+				// load library of designs, strategies, etc.
+				Library.Load();
 			}
 		}
 
@@ -538,6 +541,10 @@ namespace FrEee.Game.Objects.Space
 			var fs = new FileStream(filename, FileMode.Create);
 			SerializeCommands(fs);
 			fs.Close();
+
+			// save library of designs, commands, etc.
+			Library.Save();
+
 			return filename;
 		}
 
