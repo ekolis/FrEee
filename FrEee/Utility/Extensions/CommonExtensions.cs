@@ -114,7 +114,7 @@ namespace FrEee.Utility.Extensions
 			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
 				return true;
 			var dt = mi is Type ? mi as Type : mi.DeclaringType;
-			foreach (var i in mi.DeclaringType.GetInterfaces())
+			foreach (var i in dt.GetInterfaces())
 			{
 				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
 					return true;
