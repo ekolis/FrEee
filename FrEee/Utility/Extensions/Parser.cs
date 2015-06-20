@@ -101,7 +101,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		private static T ParseFlagsEnum<T>(this string s)
 		{
-			var spl = s.Split(',');
+			var spl = s.Split(',', '\\', '/');
 			return spl.ParseFlagsEnum<T>();
 		}
 

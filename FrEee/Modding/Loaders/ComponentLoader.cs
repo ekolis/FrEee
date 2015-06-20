@@ -209,17 +209,7 @@ namespace FrEee.Modding.Loaders
 		{
 			if (s == null)
 				return VehicleTypes.All;
-			var splitstr = s.Split(new string[] { separator }, StringSplitOptions.None).Select(sub => sub.Trim());
-			var vt = VehicleTypes.None;
-			foreach (var item in splitstr)
-			{
-				VehicleTypes subvt;
-				if (Enum.TryParse<VehicleTypes>(item, out subvt))
-					vt |= subvt;
-				else
-					Mod.Errors.Add(new DataParsingException("Can't parse \"" + item + "\" as a vehicle type.", Mod.CurrentFileName, rec));
-			}
-			return vt;
+			return s.ParseEnum<VehicleTypes>();
 		}
 
 		private static List<string> numbers = new List<string>()
@@ -231,17 +221,7 @@ namespace FrEee.Modding.Loaders
 		{
 			if (s == null)
 				return WeaponTargets.All;
-			var splitstr = s.Split(new string[] { separator }, StringSplitOptions.None).Select(sub => sub.Trim());
-			var wt = WeaponTargets.None;
-			foreach (var item in splitstr)
-			{
-				WeaponTargets subwt;
-				if (Enum.TryParse<WeaponTargets>(item, out subwt))
-					wt |= subwt;
-				else
-					Mod.Errors.Add(new DataParsingException("Can't parse \"" + item + "\" as a weapon target.", Mod.CurrentFileName, rec));
-			}
-			return wt;
+			return s.ParseEnum<WeaponTargets>();
 		}
 	}
 }

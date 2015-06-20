@@ -27,6 +27,7 @@ namespace FrEee.Game.Enumerations
 		Mine = 0x10,
 		[Name("Troops")]
 		[Name("Troop")]
+		[Name("Trp")]
 		Troop = 0x20,
 		[Name("Drones")]
 		Drone = 0x40,
