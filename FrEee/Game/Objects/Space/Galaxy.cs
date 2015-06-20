@@ -526,7 +526,7 @@ namespace FrEee.Game.Objects.Space
 					{
 						d.Owner = Empire.Current;
 						d.TurnNumber = Galaxy.Current.TurnNumber;
-						d.IsNew = true; // so we know we need to send it to the server if we try to build it
+						d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
 						Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
 					});
 			}

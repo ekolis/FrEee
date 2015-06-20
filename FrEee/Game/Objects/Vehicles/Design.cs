@@ -61,6 +61,7 @@ namespace FrEee.Game.Objects.Vehicles
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
 			}
 			d.Owner = Empire.Current;
+			d.IsNew = true;
 			return d;
 		}
 
