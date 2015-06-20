@@ -304,7 +304,9 @@ namespace FrEee.WinForms.Forms
 					Empire.Current.KnownDesigns.Add(Design);
 
 					// tell server to add design too so we can still see it next turn
-					Empire.Current.Commands.Add(Design.CreateCreationCommand());
+					// I guess we don't really need this now that designs are library based?
+					// They can just be promoted via the build command as needed, right?
+					//Empire.Current.Commands.Add(Design.CreateCreationCommand());
 				}
 
 				// save design to library (delete old design with same name first, and set owner of library design to null)
