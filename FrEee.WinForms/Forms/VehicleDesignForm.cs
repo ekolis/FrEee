@@ -309,7 +309,7 @@ namespace FrEee.WinForms.Forms
 
 				// save design to library (delete old design with same name first, and set owner of library design to null)
 				Library.Delete<IDesign>(d => d.Name == originalDesignName || d.Name == Design.Name, false); // going to be saving next, no need to autosave now
-				Library.Export(Design, d => d.Owner = null);
+				Library.Export(Design, d => { d.Owner = null; d.TurnNumber = 0; });
 
 				// done
 				DialogResult = DialogResult.OK;
