@@ -98,6 +98,8 @@ namespace FrEee.Utility
 
 		public static implicit operator GalaxyReference<T>(T t)
 		{
+			if (t == null)
+				return null;
 			return new GalaxyReference<T>(t);
 		}
 

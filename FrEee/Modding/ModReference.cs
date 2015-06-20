@@ -83,6 +83,8 @@ namespace FrEee.Modding
 
 		public static implicit operator ModReference<T>(T t)
 		{
+			if (t == null)
+				return null;
 			return new ModReference<T>(t);
 		}
 
