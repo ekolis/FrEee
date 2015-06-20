@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 
 			BindVehicleTypeList();
 			BindDesignList();
-			Empires = new HashSet<SimulatedEmpire>(Galaxy.Current.Empires.Except((Empire)null).Select(e => new SimulatedEmpire(e)));
+			Empires = new HashSet<SimulatedEmpire>(Galaxy.Current.Empires.ExceptSingle((Empire)null).Select(e => new SimulatedEmpire(e)));
 			BindEmpireList();
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }

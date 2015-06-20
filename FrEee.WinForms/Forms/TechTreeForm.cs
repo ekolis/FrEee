@@ -172,7 +172,7 @@ namespace FrEee.WinForms.Forms
 								{
 									Item = u,
 									Level = req.Level,
-									Others = u.UnlockRequirements.Except(req),
+									Others = u.UnlockRequirements.ExceptSingle(req),
 									Traits = traits,
 								};
 							}

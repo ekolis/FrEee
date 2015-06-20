@@ -369,5 +369,15 @@ namespace FrEee.Game.Objects.Technology
 				return Template.IsObsolescent;
 			}
 		}
+
+		public IEnumerable<Facility> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => Template.UpgradesTo(f.Template)); }
+		}
+
+		public IEnumerable<Facility> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => f.Template.UpgradesTo(Template)); }
+		}
 	}
 }

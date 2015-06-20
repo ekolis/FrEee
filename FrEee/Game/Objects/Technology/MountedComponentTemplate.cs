@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -374,6 +375,17 @@ namespace FrEee.Game.Objects.Technology
 		public bool IsObsolescent
 		{
 			get { return this != LatestVersion; }
+		}
+
+
+		public IEnumerable<MountedComponentTemplate> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => mct.LatestVersion == this).Distinct(); }
+		}
+
+		public IEnumerable<MountedComponentTemplate> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
 		}
 	}
 }

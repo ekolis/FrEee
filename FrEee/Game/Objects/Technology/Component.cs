@@ -383,5 +383,15 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Template.IsObsolescent; }
 		}
+
+		public IEnumerable<Component> NewerVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => Template.UpgradesTo(c.Template)); }
+		}
+
+		public IEnumerable<Component> OlderVersions
+		{
+			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
+		}
 	}
 }

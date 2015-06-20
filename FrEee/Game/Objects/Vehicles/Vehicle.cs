@@ -614,5 +614,27 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Design.IsObsolescent; }
 		}
+
+		/// <summary>
+		/// Any vehicles that use a newer version of this vehicle's design.
+		/// </summary>
+		public IEnumerable<IVehicle> NewerVersions
+		{
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => Design.UpgradesTo(v.Design));
+			}
+		}
+
+		/// <summary>
+		/// Any vehicles that use an older version of this vehicle's design.
+		/// </summary>
+		public IEnumerable<IVehicle> OlderVersions
+		{
+			get
+			{
+				return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
+			}
+		}
 	}
 }

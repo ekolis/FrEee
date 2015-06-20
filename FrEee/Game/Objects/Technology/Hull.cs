@@ -343,5 +343,39 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return false; }
 		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public IEnumerable<IHull<T>> NewerVersions
+		{
+			get { yield break; }
+		}
+
+		/// <summary>
+		/// Mounts cannot currently be obsoleted.
+		/// TODO - add family and roman numeral properties to mounts
+		/// </summary>
+		public IEnumerable<IHull<T>> OlderVersions
+		{
+			get { yield break; }
+		}
+
+
+		IHull IUpgradeable<IHull>.LatestVersion
+		{
+			get { return LatestVersion; }
+		}
+
+		IEnumerable<IHull> IUpgradeable<IHull>.NewerVersions
+		{
+			get { return NewerVersions; }
+		}
+
+		IEnumerable<IHull> IUpgradeable<IHull>.OlderVersions
+		{
+			get { return OlderVersions; }
+		}
 	}
 }

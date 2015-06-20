@@ -19,6 +19,7 @@ using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Combat2.Tactics;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -648,6 +649,35 @@ namespace FrEee.Game.Objects.Vehicles
 		IDesign IUpgradeable<IDesign>.LatestVersion
 		{
 			get { return LatestVersion; }
+		}
+
+		IEnumerable<IDesign> IUpgradeable<IDesign>.NewerVersions
+		{
+			get { return NewerVersions; }
+		}
+
+		IEnumerable<IDesign> IUpgradeable<IDesign>.OlderVersions
+		{
+			get { return OlderVersions; }
+		}
+
+
+		public IEnumerable<IDesign<T>> NewerVersions
+		{
+			get
+			{
+				// TODO - check design library?
+				return Galaxy.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration > Iteration);
+			}
+		}
+
+		public IEnumerable<IDesign<T>> OlderVersions
+		{
+			get
+			{
+				// TODO - check design library?
+				return Galaxy.Current.Referrables.OfType<IDesign<T>>().Where(d => d.Owner == Owner && d.BaseName == BaseName && d.Iteration < Iteration);
+			}
 		}
 	}
 }
