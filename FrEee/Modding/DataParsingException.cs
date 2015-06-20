@@ -23,7 +23,7 @@ namespace FrEee.Modding
 		}
 
 		public DataParsingException(string message, Exception inner, string filename, Record record = null, Field field = null)
-			: base(message)
+			: base(message, inner)
 		{
 			Filename = filename;
 			Record = record;
