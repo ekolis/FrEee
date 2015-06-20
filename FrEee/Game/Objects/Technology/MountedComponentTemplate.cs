@@ -299,18 +299,14 @@ namespace FrEee.Game.Objects.Technology
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				container.ReplaceClientIDs(idmap, done);
+				Container.ReplaceClientIDs(idmap, done);
 			}
 		}
-
-
-		private GalaxyReference<IDesign> container { get; set; }
 
 		/// <summary>
 		/// The design which contains this mounted component template.
 		/// </summary>
-		[DoNotSerialize]
-		public IDesign Container { get { return container == null ? null : container.Value; } set { container = value.ReferViaGalaxy(); } }
+		public IDesign Container { get; set; }
 
 		public IDictionary<string, object> Variables
 		{
