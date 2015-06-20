@@ -75,10 +75,16 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Exports an object to the library.
 		/// </summary>
+		/// <param name="cleaner">Anything special to do to the copied object before saving it.</param>
+		/// <param name="autosave"></param>
 		/// <param name="o"></param>
-		public static void Export(object o, bool autosave = true)
+		public static void Export<T>(T o, Action<T> cleaner = null, bool autosave = true)
 		{
-			Items.Add(o.CopyAndAssignNewID());
+			var c = o.CopyAndAssignNewID();
+			// TODO - unassign ID in galaxy? does it matter?
+			if (cleaner != null)
+				cleaner(c);
+			Items.Add(c);
 			if (autosave)
 				Save();
 		}
