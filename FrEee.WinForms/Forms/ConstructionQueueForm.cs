@@ -524,6 +524,16 @@ namespace FrEee.WinForms.Forms
 			resCostRad.Amount = 0;
 		}
 
+		/// <summary>
+		/// Are we building this thingy anywhere?
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		private bool BuildingAnywhere(IConstructionTemplate t)
+		{
+			return Galaxy.Current.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+		}
+
 		private void lstShips_MouseDown(object sender, MouseEventArgs e)
 		{
 			var item = lstShips.GetItemAt(e.X, e.Y);
@@ -538,6 +548,10 @@ namespace FrEee.WinForms.Forms
 						amount *= 10;
 					if (ModifierKeys.HasFlag(Keys.Control))
 						amount *= 100;
+
+					// is this a new design we've never built before? then tell the server about it
+					if (design.IsNew && !BuildingAnywhere(design))
+						Empire.Current.Commands.Add(design.CreateCreationCommand());
 
 					for (int i = 0; i < amount; i++)
 					{
@@ -796,6 +810,14 @@ namespace FrEee.WinForms.Forms
 					var cmd = new RemoveOrderCommand<ConstructionQueue>(ConstructionQueue, order);
 					newCommands.Add(cmd);
 				}
+			}
+			if (order.Template is IDesign)
+			{
+				var design = order.Template as IDesign;
+
+				// is this a new design we've never built before and are not building any more of? then don't tell the server so other players don't know ;)
+				if (design.IsNew && BuildingAnywhere(design))
+					Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ICreateDesignCommand>().SingleOrDefault(c => c.Design == design));
 			}
 			ConstructionQueue.Orders.Remove(order);
 			if (rebindGui)
