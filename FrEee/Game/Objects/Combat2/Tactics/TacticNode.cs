@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 	/// <summary>
 	/// An input or output node of a tactic block.
 	/// </summary>
-	public interface ITacticNode : IFoggable, IOwnable, IPromotable, IErrorProne
+	public interface ITacticNode : IErrorProne
 	{
 		/// <summary>
 		/// The value of the node.
@@ -75,57 +75,6 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 				throw new Exception("Cannot set object of type " + type + " to " + Type + ".");
 		}
 
-		public Visibility CheckVisibility(Empire emp)
-		{
-			return Block.CheckVisibility(emp);
-		}
-
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose();
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public double Timestamp
-		{
-			get;
-			set;
-		}
-
-		public bool IsObsoleteMemory(Civilization.Empire emp)
-		{
-			return false;
-		}
-
-		public long ID
-		{
-			get;
-			set;
-		}
-
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
-
-		public void Dispose()
-		{
-			// nothing to do?
-		}
-
-		public Empire Owner
-		{
-			get { return Block.Owner; }
-		}
-
-
 		public virtual IEnumerable<string> Errors
 		{
 			get
@@ -133,11 +82,6 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 				if (!Type.IsAssignableFrom(ConnectedOutput.Type))
 					yield return "Cannot connect output of type {0} to input of type {1}.".F(ConnectedOutput.Type, Type);
 			}
-		}
-
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// nothing to do
 		}
 	}
 
@@ -217,65 +161,9 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 
 		public abstract object Value { get; }
 
-		public Visibility CheckVisibility(Empire emp)
-		{
-			return Block.CheckVisibility(emp);
-		}
-
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose();
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public double Timestamp
-		{
-			get;
-			set;
-		}
-
-		public bool IsObsoleteMemory(Civilization.Empire emp)
-		{
-			return false;
-		}
-
-		public long ID
-		{
-			get;
-			set;
-		}
-
-		public bool IsDisposed
-		{
-			get;
-			set;
-		}
-
-		public void Dispose()
-		{
-			// nothing to do?
-		}
-
-		public Empire Owner
-		{
-			get { return Block.Owner; }
-		}
-
-
 		public virtual IEnumerable<string> Errors
 		{
 			get { yield break; }
-		}
-
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// nothing to do
 		}
 	}
 

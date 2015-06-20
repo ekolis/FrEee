@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 	/// </summary>
 	/// <remarks>
 	/// </remarks>
-	public abstract class TacticBlock : IFoggable, ITransferrable, IPromotable, IErrorProne
+	public abstract class TacticBlock : IErrorProne
 	{
 		protected TacticBlock(TacticBlock parent, string defaultName, string customName = null)
 		{
@@ -88,59 +88,6 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 		/// Outputs to this tactic block.
 		/// </summary>
 		public SafeDictionary<string, TacticOutput> Outputs { get; private set; }
-
-		/// <summary>
-		/// The ID of this tactic block.
-		/// </summary>
-		public long ID { get; set; }
-
-		/// <summary>
-		/// Has this block been disposed of?
-		/// </summary>
-		public bool IsDisposed { get; set; }
-
-		public void Dispose()
-		{
-			// nothing to do?
-		}
-
-		/// <summary>
-		/// The empire which owns this block.
-		/// </summary>
-		public virtual Empire Owner { get; set; }
-
-		public virtual Visibility CheckVisibility(Empire emp)
-		{
-			return Parent.CheckVisibility(emp);
-		}
-
-		public void Redact(Empire emp)
-		{
-			if (CheckVisibility(emp) < Visibility.Fogged)
-				Dispose();
-		}
-
-		public bool IsMemory
-		{
-			get;
-			set;
-		}
-
-		public double Timestamp
-		{
-			get;
-			set;
-		}
-
-		public bool IsObsoleteMemory(Empire emp)
-		{
-			return false;
-		}
-
-		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
-		{
-			// XXX - does this function even do anything?
-		}
 
 		public virtual IEnumerable<string> Errors
 		{
