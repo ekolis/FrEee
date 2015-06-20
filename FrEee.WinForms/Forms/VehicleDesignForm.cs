@@ -55,6 +55,9 @@ namespace FrEee.WinForms.Forms
 
 		private IDesign design;
 
+		// for saving to library
+		private string originalDesignName;
+
 		public IDesign Design
 		{
 			get { return design; }
@@ -223,6 +226,10 @@ namespace FrEee.WinForms.Forms
 			BindMountList();
 			BindAvailableComponents();
 			BindInstalledComponents();
+			if (Design != null)
+				originalDesignName = design.Name;
+			else
+				originalDesignName = null;
 		}
 
 		private void btnHull_Click(object sender, EventArgs e)
@@ -299,6 +306,10 @@ namespace FrEee.WinForms.Forms
 					// tell server to add design too so we can still see it next turn
 					Empire.Current.Commands.Add(Design.CreateCreationCommand());
 				}
+
+				// save design to library (delete old design with same name first)
+				Library.Delete<IDesign>(d => d.Name == originalDesignName);
+				Library.Export(Design);
 
 				// done
 				DialogResult = DialogResult.OK;
