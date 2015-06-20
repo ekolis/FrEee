@@ -210,7 +210,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public IDesign<T> CreateDesign()
 		{
-			return new Design<T> { Hull = this };
+			return new Design<T> { Hull = this, IsNew = true };
 		}
 
 		public void Dispose()
