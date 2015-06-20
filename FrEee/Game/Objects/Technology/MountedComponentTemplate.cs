@@ -383,5 +383,21 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
 		}
+
+		/// <summary>
+		/// Compares templates ignoring the containing vehicle (only compares component template and mount)
+		/// </summary>
+		public class SimpleEqualityComparer : IEqualityComparer<MountedComponentTemplate>
+		{
+			public bool Equals(MountedComponentTemplate x, MountedComponentTemplate y)
+			{
+				return x.ComponentTemplate == y.ComponentTemplate && x.Mount == y.Mount;
+			}
+
+			public int GetHashCode(MountedComponentTemplate obj)
+			{
+				return HashCodeMasher.Mash(obj.ComponentTemplate, obj.Mount);
+			}
+		}
 	}
 }
