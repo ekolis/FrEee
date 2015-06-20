@@ -419,6 +419,7 @@
     <Compile Include="Utility\ConnectivityGraph.cs" />
     <Compile Include="Utility\Extensions\CommonExtensions.cs" />
     <Compile Include="Utility\Extensions\TaskFactoryExtensions.cs" />
+    <Compile Include="Utility\Library.cs" />
     <Compile Include="Utility\ObjectGraphParser.cs" />
     <Compile Include="Utility\Pathfinder.cs" />
     <Compile Include="Utility\Pictures.cs" />

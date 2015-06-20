@@ -57,7 +57,6 @@ namespace FrEee.Utility.Extensions
 		/// <param name="obj"></param>
 		/// <returns></returns>
 		public static T CopyAndAssignNewID<T>(this T obj)
-			where T : IReferrable
 		{
 			if (obj == null)
 				return default(T);
@@ -114,8 +113,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
 				return true;
-			if (mi.DeclaringType == null)
-				return false;
+			var dt = mi is Type ? mi as Type : mi.DeclaringType;
 			foreach (var i in mi.DeclaringType.GetInterfaces())
 			{
 				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
