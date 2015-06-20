@@ -17,7 +17,7 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 	/// <remarks>
 	/// A tactic is actually a special kind of tactic block with specific inputs and outputs.
 	/// </remarks>
-	public class Tactic : TacticBlock
+	public class Tactic : TacticBlock, IPromotable, IOwnable, IReferrable, IFoggable
 	{
 		public Tactic(Empire owner)
 			: base(null, "Tactic")
@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 			WeaponGroups = new SafeDictionary<MountedComponentTemplate, int>();
 		}
 
-		public override Visibility CheckVisibility(Empire emp)
+		public Visibility CheckVisibility(Empire emp)
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
@@ -46,5 +46,60 @@ namespace FrEee.Game.Objects.Combat2.Tactics
 		/// A design will only use as many weapon groups as it has Multiplex Tracking ability (but a minimum of one group, and point defense and warhead weapons don't count against the total).
 		/// </summary>
 		public SafeDictionary<MountedComponentTemplate, int> WeaponGroups { get; private set; }
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			// nothing to do
+		}
+
+		public Empire Owner
+		{
+			get;
+			private set;
+		}
+
+		public long ID
+		{
+			get;
+			set;
+		}
+
+		public bool IsDisposed
+		{
+			get;
+			set;
+		}
+
+		public void Dispose()
+		{
+			if (!IsDisposed)
+			{
+				IsDisposed = true;
+				Galaxy.Current.UnassignID(this);
+			}
+		}
+
+		public void Redact(Empire emp)
+		{
+			if (CheckVisibility(emp) < Visibility.Fogged)
+				Dispose();
+		}
+
+		public bool IsMemory
+		{
+			get;
+			set;
+		}
+
+		public double Timestamp
+		{
+			get;
+			set;
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
 	}
 }
