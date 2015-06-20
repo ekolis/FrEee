@@ -1671,11 +1671,15 @@ namespace FrEee.Utility.Extensions
 
 		public static GalaxyReference<T> ReferViaGalaxy<T>(this T t)
 		{
+			if (t == null)
+				return null;
 			return new GalaxyReference<T>(t);
 		}
 
 		public static ModReference<T> ReferViaMod<T>(this T t) where T : IModObject
 		{
+			if (t == null)
+				return null;
 			return new ModReference<T>(t);
 		}
 
