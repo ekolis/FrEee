@@ -58,9 +58,9 @@ namespace FrEee.WinForms.Forms
 			// filter by ours/foreign (using an exclusive or)
 			designs = designs.Where(d => d.Owner == emp ^ chkForeign.Checked);
 
-			// filter by obsoleteness
+			// filter by obsoleteness/lockedness
 			if (chkHideObsolete.Checked)
-				designs = designs.Where(d => !d.IsObsolete);
+				designs = designs.Where(d => !d.IsObsolete && Empire.Current.HasUnlocked(d));
 
 			// display it!
 			lstDesigns.Initialize(32, 32);
@@ -71,6 +71,8 @@ namespace FrEee.WinForms.Forms
 					x.ForeColor = Color.Gray;
 				else if (design.IsObsolescent)
 					x.ForeColor = Color.Yellow;
+				else if (!Empire.Current.HasUnlocked(design))
+					x.ForeColor = Color.Red;
 			}
 		}
 
