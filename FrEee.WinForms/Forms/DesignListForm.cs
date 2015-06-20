@@ -14,6 +14,7 @@ using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Technology;
+using FrEee.Utility;
 
 namespace FrEee.WinForms.Forms
 {
@@ -202,7 +203,7 @@ namespace FrEee.WinForms.Forms
                 var d = (IDesign)lstDesigns.SelectedItems[0].Tag;
                 if (d.Owner != Empire.Current)
                 {
-                    MessageBox.Show("You cannot edit alien design Strategies.");
+                    MessageBox.Show("You cannot edit alien design strategies.");
                 }
                 else
                 {                   
@@ -214,5 +215,40 @@ namespace FrEee.WinForms.Forms
                 }
             }
         }
+
+		/// <summary>
+		/// Are we building this thingy anywhere?
+		/// </summary>
+		/// <param name="t"></param>
+		/// <returns></returns>
+		private bool BuildingAnywhere(IConstructionTemplate t)
+		{
+			return Galaxy.Current.FindSpaceObjects<ISpaceObject>().OwnedBy(Empire.Current).Any(o => o.ConstructionQueue != null && o.ConstructionQueue.Orders.Any(o2 => o2.Template == t));
+		}
+
+		private void btnDelete_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count == 1)
+			{
+				var design = (IDesign)lstDesigns.SelectedItems[0].Tag;
+				if (!design.IsNew || BuildingAnywhere(design))
+				{
+					MessageBox.Show("You can only delete designs that have been newly created or imported from your library.");
+				}
+				else if (MessageBox.Show("Delete " + design + " from your library?", "Delete Design", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				{
+					// design in the library is just a copy so we need to search for it
+					Library.Delete<IDesign>(d =>
+							d.BaseName == design.BaseName &&
+							d.Hull == design.Hull &&
+							d.Components.SequenceEqual(design.Components, new MountedComponentTemplate.SimpleEqualityComparer())
+						);
+					Empire.Current.KnownDesigns.Remove(design);
+					design.Dispose();
+					BindDesignList();
+					designReport.Design = null;
+				}
+			} 
+		}
 	}
 }
