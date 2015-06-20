@@ -307,9 +307,9 @@ namespace FrEee.WinForms.Forms
 					Empire.Current.Commands.Add(Design.CreateCreationCommand());
 				}
 
-				// save design to library (delete old design with same name first)
+				// save design to library (delete old design with same name first, and set owner of library design to null)
 				Library.Delete<IDesign>(d => d.Name == originalDesignName);
-				Library.Export(Design);
+				Library.Export(Design, d => d.Owner = null);
 
 				// done
 				DialogResult = DialogResult.OK;
