@@ -175,7 +175,7 @@ namespace FrEee.Game.Setup
 		{
 			var fs = new FileStream(filename, FileMode.Open);
 			var race = Serializer.Deserialize<EmpireTemplate>(fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 			return race;
 		}
 
@@ -183,7 +183,7 @@ namespace FrEee.Game.Setup
 		{
 			var fs = new FileStream(filename, FileMode.Create);
 			Serializer.Serialize(this, fs);
-			fs.Close();
+			fs.Close(); fs.Dispose();
 		}
 	}
 }

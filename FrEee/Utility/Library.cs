@@ -33,7 +33,7 @@ namespace FrEee.Utility
 			{
 				var fs = File.OpenRead("Library.dat");
 				Items = Serializer.Deserialize<ISet<object>>(fs);
-				fs.Close();
+				fs.Close(); fs.Dispose();
 			}
 			catch (IOException)
 			{
@@ -51,9 +51,9 @@ namespace FrEee.Utility
 		
 		public static void Save()
 		{
-			var fs = File.OpenWrite("Library.dat");
+			var fs = File.Create("Library.dat");
 			Serializer.Serialize(Items, fs);
-			fs.Close();			
+			fs.Close(); fs.Dispose();			
 		}
 
 		/// <summary>
