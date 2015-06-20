@@ -308,7 +308,7 @@ namespace FrEee.WinForms.Forms
 				}
 
 				// save design to library (delete old design with same name first, and set owner of library design to null)
-				Library.Delete<IDesign>(d => d.Name == originalDesignName ?? Design.Name, false); // going to be saving next, no need to autosave now
+				Library.Delete<IDesign>(d => d.Name == (originalDesignName ?? Design.Name), false); // going to be saving next, no need to autosave now
 				Library.Export(Design, d => d.Owner = null);
 
 				// done
