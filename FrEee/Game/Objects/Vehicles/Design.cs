@@ -687,5 +687,10 @@ namespace FrEee.Game.Objects.Vehicles
 				mct.Container = this;
 
 		}
+
+		/// <summary>
+		/// Is this a newly created design on the client side that needs to be sent to the server?
+		/// </summary>
+		public bool IsNew { get; set; }
 	}
 }
