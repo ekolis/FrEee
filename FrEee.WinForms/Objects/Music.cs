@@ -61,42 +61,81 @@ namespace FrEee.WinForms.Objects
 			}
 		}
 
+		private class Track
+		{
+			public Track(MusicMode mode, MusicMood mood, string path)
+			{
+				Mode = mode;
+				Mood = mood;
+				Path = path;
+			}
+
+			public MusicMode Mode { get; set; }
+			public MusicMood Mood { get; set; }
+			public string Path { get; set; }
+		}
+
+		private static IEnumerable<Track> FindTracks()
+		{
+			foreach (MusicMode mode in Enum.GetValues(typeof(MusicMode)))
+			{
+				if (mode != MusicMode.None)
+				{
+					foreach (MusicMood mood in Enum.GetValues(typeof(MusicMood)))
+					{
+						var folder = Path.Combine("Music", mode.ToString(), mood.ToString());
+						IEnumerable<string> files = Enumerable.Empty<string>();
+						try
+						{
+							files = Directory.GetFiles(folder, "*.ogg").Union(
+								Directory.GetFiles(folder, "*.mp3")).Union(
+								Directory.GetFiles(folder, "*.wav"));
+						}
+						catch
+						{
+							Console.Error.WriteLine("Cannot find music folder " + folder + ".");
+						}
+						foreach (var file in files)
+							yield return new Track(mode, mood, file);
+					}
+				}
+			}
+		}
+
 		public static void StartNewTrack()
 		{
 			// find out what to play
-			var trackname = ClientSettings.Instance.Music[Tuple.Create(CurrentMode, CurrentMood)].PickRandom();
-			if (trackname == null)
+			var tracks = FindTracks().ToArray();
+			var track = tracks.Where(t => t.Mode == CurrentMode && t.Mood == CurrentMood).PickRandom();
+			if (track == null)
 			{
 				// no music? try another mood
-				var hasMusic = ClientSettings.Instance.Music.Where(kvp => kvp.Key.Item1 == CurrentMode && kvp.Value.Any());
-				if (hasMusic.Any())
-					trackname = hasMusic.PickRandom().Value.PickRandom();
+				var others = tracks.Where(t => t.Mode == CurrentMode);
+				if (others.Any())
+					track = others.PickRandom();
 			}
-			if (trackname == null)
+			if (track == null)
 			{
 				// still no music? try another mode!
-				var hasMusic = ClientSettings.Instance.Music.Where(kvp => kvp.Value.Any());
-				if (hasMusic.Any())
-					trackname = hasMusic.PickRandom().Value.PickRandom();
+				track = tracks.PickRandom();
 			}
-			if (trackname == null)
+			if (track == null)
 			{
 				// no music at all :(
 				return;
 			}
 
 			// prepare the new track
-			var tl = trackname.ToLower();
-			var path = Path.Combine("Music", trackname);
+			var tl = track.Path.ToLower();
 			IWaveProvider p;
 			if (tl.EndsWith("ogg"))
-				p = new VorbisWaveReader(path);
+				p = new VorbisWaveReader(track.Path);
 			else if (tl.EndsWith("mp3"))
-				p = new Mp3FileReader(path);
+				p = new Mp3FileReader(track.Path);
 			else if (tl.EndsWith("wav"))
-				p = new WaveFileReader(path);
+				p = new WaveFileReader(track.Path);
 			else
-				throw new Exception("Unknown audio format for file " + path);
+				throw new Exception("Unknown audio format for file " + track.Path);
 			waveout.Stop();
 			if (CurrentMode == MusicMode.None)
 				return; // no music!
