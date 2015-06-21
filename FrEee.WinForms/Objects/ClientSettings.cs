@@ -42,11 +42,6 @@ namespace FrEee.WinForms.Objects
 		/// </summary>
 		public GridConfig CurrentShipListConfig { get; set; }
 
-		/// <summary>
-		/// Music tracks by mode/mood.
-		/// </summary>
-		public SafeDictionary<Tuple<MusicMode, MusicMood>, HashSet<string>> Music { get; private set; }
-
 		public static ClientSettings Instance { get; private set; }
 
 		public static string ConfigFile
@@ -194,7 +189,6 @@ namespace FrEee.WinForms.Objects
 
 			InitializePlanetList();
 			InitializeShipList();
-			InitializeMusic();
 		}
 
 		private static void InitializePlanetList()
@@ -215,15 +209,6 @@ namespace FrEee.WinForms.Objects
 			Instance.ShipListConfigs = new List<GridConfig>();
 			Instance.ShipListConfigs.Add(cfg);
 			Instance.ShipListConfigs.Add(CreateDefaultAlienShipListConfig());
-		}
-
-		private static void InitializeMusic()
-		{
-			// create default music config
-			Instance.Music = new SafeDictionary<Tuple<MusicMode, MusicMood>, HashSet<string>>(true);
-
-			// TODO - more music
-			Instance.Music[Tuple.Create(MusicMode.Strategic, MusicMood.Tense)].Add("space-mystery.ogg");
 		}
 
 		public static void Load()
@@ -254,8 +239,6 @@ namespace FrEee.WinForms.Objects
 					InitializePlanetList();
 				if (Instance.ShipListConfigs == null)
 					InitializeShipList();
-				if (Instance.Music == null)
-					InitializeMusic();
 			}
 			else
 				Initialize();
