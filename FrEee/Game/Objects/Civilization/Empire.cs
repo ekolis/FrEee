@@ -867,7 +867,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Arbitrary data stored by the AI to maintain state between turns.
 		/// </summary>
-		public DynamicDictionary AINotes { get; private set; }
+		public DynamicDictionary AINotes { get; internal set; }
 
 		/// <summary>
 		/// Notes set by the player on various game objects.
