@@ -1422,6 +1422,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			Current.Remove(this);
 			Previous.Remove(this);
+			Galaxy.Current.Battles.Remove(this);
 			IsDisposed = true;
 		}
 

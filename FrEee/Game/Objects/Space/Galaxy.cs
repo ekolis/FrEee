@@ -665,9 +665,18 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Redact()
 		{
+			// the galaxy data itself
+			if (Empire.Current != null)
+				ScriptNotes.Clear();
+
+			// redact sub objects
 			var parser = new ObjectGraphParser();
 			parser.StartObject += redactParser_StartObject;
 			parser.Parse(this);
+
+			// clean up redacted objects that are not IFoggable
+			foreach (var x in StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
+				StarSystemLocations.Remove(x);
 		}
 
 		void redactParser_StartObject(object o)
@@ -1621,6 +1630,11 @@ namespace FrEee.Game.Objects.Space
 				return Name;
 			return CurrentEmpire.Name + " - " + CurrentEmpire.LeaderName + " - " + Stardate;
 		}
+
+		/// <summary>
+		/// Notes that mod scripts can play with.
+		/// </summary>
+		public DynamicDictionary ScriptNotes { get; private set; }
 	}
 
 	/// <summary>
