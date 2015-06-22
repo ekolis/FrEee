@@ -59,7 +59,7 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
-			PlayerNotes = new SafeDictionary<object, string>();
+			PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable>, string>();
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
 			IncomingMessages = new HashSet<IMessage>();
@@ -872,7 +872,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Notes set by the player on various game objects.
 		/// </summary>
-		public SafeDictionary<object, string> PlayerNotes { get; private set; }
+		public SafeDictionary<GalaxyReference<IReferrable>, string> PlayerNotes { get; private set; }
 
 		public IDictionary<string, object> Variables
 		{
