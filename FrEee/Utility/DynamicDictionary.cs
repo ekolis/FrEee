@@ -11,18 +11,18 @@ namespace FrEee.Utility
 	/// A dynamic dictionary that's dynamic dictionaries all the way down.
 	/// About as close as you can get to a Perl hash in C#.
 	/// </summary>
-	public class DynamicDictionary : DynamicObject, IDictionary<string, object>
+	public class DynamicDictionary : DynamicObject, IDictionary<object, object>
 	{
 		public DynamicDictionary()
 		{
-			dict = new SafeDictionary<string, object>();
+			dict = new SafeDictionary<object, object>();
 		}
 
-		private SafeDictionary<string, object> dict { get; set; }
+		private SafeDictionary<object, object> dict { get; set; }
 
 		public override IEnumerable<string> GetDynamicMemberNames()
 		{
-			return dict.Keys;
+			return dict.Keys.OfType<string>();
 		}
 
 		public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
@@ -65,27 +65,27 @@ namespace FrEee.Utility
 			return dict.ContainsKey(prop);
 		}
 
-		public void Add(string key, object value)
+		public void Add(object key, object value)
 		{
 			dict.Add(key, value);
 		}
 
-		public bool ContainsKey(string key)
+		public bool ContainsKey(object key)
 		{
 			return dict.ContainsKey(key);
 		}
 
-		public ICollection<string> Keys
+		public ICollection<object> Keys
 		{
 			get { return dict.Keys; }
 		}
 
-		public bool Remove(string key)
+		public bool Remove(object key)
 		{
 			return dict.Remove(key);
 		}
 
-		public bool TryGetValue(string key, out object value)
+		public bool TryGetValue(object key, out object value)
 		{
 			if (!dict.ContainsKey(key))
 				dict[key] = new DynamicDictionary();
@@ -98,7 +98,7 @@ namespace FrEee.Utility
 			get { return dict.Values; }
 		}
 
-		public object this[string key]
+		public object this[object key]
 		{
 			get
 			{
@@ -112,7 +112,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public void Add(KeyValuePair<string, object> item)
+		public void Add(KeyValuePair<object, object> item)
 		{
 			dict.Add(item);
 		}
@@ -122,12 +122,12 @@ namespace FrEee.Utility
 			dict.Clear();
 		}
 
-		public bool Contains(KeyValuePair<string, object> item)
+		public bool Contains(KeyValuePair<object, object> item)
 		{
 			return dict.Contains(item);
 		}
 
-		public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+		public void CopyTo(KeyValuePair<object, object>[] array, int arrayIndex)
 		{
 			dict.CopyTo(array, arrayIndex);
 		}
@@ -142,12 +142,12 @@ namespace FrEee.Utility
 			get { return dict.IsReadOnly; }
 		}
 
-		public bool Remove(KeyValuePair<string, object> item)
+		public bool Remove(KeyValuePair<object, object> item)
 		{
 			return dict.Remove(item);
 		}
 
-		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+		public IEnumerator<KeyValuePair<object, object>> GetEnumerator()
 		{
 			return dict.GetEnumerator();
 		}
