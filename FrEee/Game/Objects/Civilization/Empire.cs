@@ -59,6 +59,7 @@ namespace FrEee.Game.Objects.Civilization
 			UniqueTechsFound = new List<string>();
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
+			PlayerNotes = new SafeDictionary<object, string>();
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
 			IncomingMessages = new HashSet<IMessage>();
@@ -866,7 +867,12 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// Arbitrary data stored by the AI to maintain state between turns.
 		/// </summary>
-		public dynamic AINotes { get; set; }
+		public DynamicDictionary AINotes { get; private set; }
+
+		/// <summary>
+		/// Notes set by the player on various game objects.
+		/// </summary>
+		public SafeDictionary<object, string> PlayerNotes { get; private set; }
 
 		public IDictionary<string, object> Variables
 		{
@@ -914,7 +920,8 @@ namespace FrEee.Game.Objects.Civilization
 				ResearchSpending.Clear();
 				Memory.Values.DisposeAll();
 				Memory.Clear();
-				AINotes = null;
+				AINotes.Clear();
+				PlayerNotes.Clear();
 			}
 
 			// TODO - show count of encountered vehicles
