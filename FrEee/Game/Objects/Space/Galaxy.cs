@@ -46,6 +46,7 @@ namespace FrEee.Game.Objects.Space
 			GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Battles = new HashSet<Battle_Space>();
+			ScriptNotes = new DynamicDictionary();
 		}
 
 		public Galaxy(Mod mod)
