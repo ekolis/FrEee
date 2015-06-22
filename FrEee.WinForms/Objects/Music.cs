@@ -17,7 +17,7 @@ namespace FrEee.WinForms.Objects
 	/// </summary>
 	public static class Music
 	{
-		private static WaveOut waveout = new WaveOut();
+		private static WaveOutEvent waveout = new WaveOutEvent();
 
 		private static FadeInOutSampleProvider curTrack, prevTrack;
 
