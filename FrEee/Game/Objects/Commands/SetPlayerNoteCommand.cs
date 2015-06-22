@@ -10,14 +10,15 @@ using FrEee.Utility.Extensions;
 namespace FrEee.Game.Objects.Commands
 {
 	/// <summary>
-	/// Clears a player note.
+	/// Sets a player note.
 	/// </summary>
-	public class ClearPlayerNoteCommand : Command<Empire>
+	public class SetPlayerNoteCommand : Command<Empire>
 	{
-		public ClearPlayerNoteCommand(IReferrable target)
+		public SetPlayerNoteCommand(IReferrable target, string note)
 			: base(Empire.Current)
 		{
 			Target = target;
+			Note = note;
 		}
 
 		[DoNotSerialize]
@@ -25,9 +26,11 @@ namespace FrEee.Game.Objects.Commands
 
 		private GalaxyReference<IReferrable> target { get; set; }
 
+		public string Note { get; set; }
+
 		public override void Execute()
 		{
-			Executor.PlayerNotes.Remove(target);
+			Executor.PlayerNotes[target] = Note;
 		}
 	}
 }

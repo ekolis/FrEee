@@ -60,6 +60,7 @@ namespace FrEee.Game.Objects.Civilization
 			Memory = new SafeDictionary<long, IFoggable>();
 			AINotes = new DynamicDictionary();
 			PlayerNotes = new SafeDictionary<GalaxyReference<IReferrable>, string>();
+			PrivateNames = new SafeDictionary<GalaxyReference<INameable>, string>();
 			EncounteredEmpires = new HashSet<Empire>();
 			EncounteredEmpires.Add(this);
 			IncomingMessages = new HashSet<IMessage>();
@@ -873,6 +874,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// Notes set by the player on various game objects.
 		/// </summary>
 		public SafeDictionary<GalaxyReference<IReferrable>, string> PlayerNotes { get; private set; }
+
+		/// <summary>
+		/// Privately visible names set by the player on various game objects.
+		/// </summary>
+		public SafeDictionary<GalaxyReference<INameable>, string> PrivateNames { get; private set; }
 
 		public IDictionary<string, object> Variables
 		{
