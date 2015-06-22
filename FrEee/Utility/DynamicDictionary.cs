@@ -11,7 +11,7 @@ namespace FrEee.Utility
 	/// A dynamic dictionary that's dynamic dictionaries all the way down.
 	/// About as close as you can get to a Perl hash in C#.
 	/// </summary>
-	public class DynamicDictionary : DynamicObject
+	public class DynamicDictionary : DynamicObject, IDictionary<string, object>
 	{
 		public DynamicDictionary()
 		{
@@ -63,6 +63,98 @@ namespace FrEee.Utility
 		public bool HasProperty(string prop)
 		{
 			return dict.ContainsKey(prop);
+		}
+
+		public void Add(string key, object value)
+		{
+			dict.Add(key, value);
+		}
+
+		public bool ContainsKey(string key)
+		{
+			return dict.ContainsKey(key);
+		}
+
+		public ICollection<string> Keys
+		{
+			get { return dict.Keys; }
+		}
+
+		public bool Remove(string key)
+		{
+			return dict.Remove(key);
+		}
+
+		public bool TryGetValue(string key, out object value)
+		{
+			if (!dict.ContainsKey(key))
+				dict[key] = new DynamicDictionary();
+			value = dict[key];
+			return true;
+		}
+
+		public ICollection<object> Values
+		{
+			get { return dict.Values; }
+		}
+
+		public object this[string key]
+		{
+			get
+			{
+				if (!dict.ContainsKey(key))
+					dict[key] = new DynamicDictionary();
+				return dict[key];
+			}
+			set
+			{
+				dict[key] = value;
+			}
+		}
+
+		public void Add(KeyValuePair<string, object> item)
+		{
+			dict.Add(item);
+		}
+
+		public void Clear()
+		{
+			dict.Clear();
+		}
+
+		public bool Contains(KeyValuePair<string, object> item)
+		{
+			return dict.Contains(item);
+		}
+
+		public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+		{
+			dict.CopyTo(array, arrayIndex);
+		}
+
+		public int Count
+		{
+			get { return dict.Count; }
+		}
+
+		public bool IsReadOnly
+		{
+			get { return dict.IsReadOnly; }
+		}
+
+		public bool Remove(KeyValuePair<string, object> item)
+		{
+			return dict.Remove(item);
+		}
+
+		public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+		{
+			return dict.GetEnumerator();
+		}
+
+		System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
 		}
 	}
 }
