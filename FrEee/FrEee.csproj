@@ -167,6 +167,7 @@
     <Compile Include="Game\Interfaces\IMineableSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMobileSpaceObject.cs" />
     <Compile Include="Game\Interfaces\IMovementOrder.cs" />
+    <Compile Include="Game\Interfaces\INameable.cs" />
     <Compile Include="Game\Interfaces\IOrderCommand.cs" />
     <Compile Include="Game\Interfaces\IOwnable.cs" />
     <Compile Include="Game\Interfaces\IOwnableAbilityObject.cs" />
@@ -236,6 +237,8 @@
     <Compile Include="Game\Objects\Combat2\Tactics\TacticBlock.cs" />
     <Compile Include="Game\Objects\Combat\Hit.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
+    <Compile Include="Game\Objects\Commands\SetPrivateNameCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetPublicNameCommand.cs" />
     <Compile Include="Game\Objects\Commands\DeleteWaypointCommand.cs" />
     <Compile Include="Game\Objects\Commands\HotkeyWaypointCommand.cs" />
     <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />
@@ -249,6 +252,9 @@
     <Compile Include="Game\Objects\Commands\SendMessageCommand.cs" />
     <Compile Include="Game\Objects\Commands\SetObsoleteFlagCommand.cs" />
     <Compile Include="Game\Objects\Commands\CreateWaypointCommand.cs" />
+    <Compile Include="Game\Objects\Commands\SetPlayerNoteCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ClearPrivateNameCommand.cs" />
+    <Compile Include="Game\Objects\Commands\ClearPlayerNoteCommand.cs" />
     <Compile Include="Game\Objects\LogMessages\GenericLogMessage.cs" />
     <Compile Include="Game\Objects\LogMessages\LogMessage.cs" />
     <Compile Include="Game\Objects\Commands\CreateDesignCommand.cs" />
