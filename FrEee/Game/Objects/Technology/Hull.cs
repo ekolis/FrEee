@@ -20,7 +20,7 @@ namespace FrEee.Game.Objects.Technology
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
 	[Serializable]
-	public class Hull<T> : IHull<T> where T : Vehicle
+	public class Hull<T> : IHull<T> where T : IVehicle
 	{
 		public Hull()
 		{
@@ -219,7 +219,10 @@ namespace FrEee.Game.Objects.Technology
 				return;
 			Galaxy.Current.UnassignID(this);
 			if (Mod.Current != null)
-				Mod.Current.Hulls.Remove(this);
+			{
+				var h = (IHull<T>)this;
+				Mod.Current.Hulls.Remove(h);
+			}
 		}
 
 		public bool CanUseMount(Mount m)

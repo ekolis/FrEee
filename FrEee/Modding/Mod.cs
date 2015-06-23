@@ -111,7 +111,7 @@ namespace FrEee.Modding
 			Traits = new List<Trait>();
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
-			Hulls = new List<IHull<IVehicle>>();
+			Hulls = new List<IHull>();
 			DamageTypes = new List<DamageType>();
 			ComponentTemplates = new List<ComponentTemplate>();
 			Mounts = new List<Mount>();
@@ -168,7 +168,7 @@ namespace FrEee.Modding
 		/// <summary>
 		/// The vehicle hulls in the mod.
 		/// </summary>
-		public ICollection<IHull<IVehicle>> Hulls { get; private set; }
+		public ICollection<IHull> Hulls { get; private set; }
 
 		/// <summary>
 		/// The damage types in the mod.

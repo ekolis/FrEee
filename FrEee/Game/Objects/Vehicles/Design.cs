@@ -65,7 +65,7 @@ namespace FrEee.Game.Objects.Vehicles
 			return d;
 		}
 
-		public static IDesign Create(IHull<IVehicle> hull)
+		public static IDesign Create(IHull hull)
 		{
 			var d = Create(hull.VehicleType);
 			d.Hull = hull;
@@ -78,7 +78,7 @@ namespace FrEee.Game.Objects.Vehicles
 	/// </summary>
 	/// <typeparam name="T">The type of vehicle.</typeparam>
 	[Serializable]
-	public class Design<T> : IDesign<T>, ITemplate<T> where T : Vehicle
+	public class Design<T> : IDesign<T>, ITemplate<T> where T : IVehicle
 	{
 		public Design()
 		{

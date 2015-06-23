@@ -50,8 +50,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		public void Setup()
 		{
 			// initialize galaxy
-			Mod.Load(null);
 			new Galaxy();
+			Mod.Current = new Mod();
 			sys = new StarSystem(0);
 			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
@@ -62,15 +62,16 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			hiders.Name = "Hiders";
 
 			// initialize ships
+			Assert.IsNotNull(Mod.Current);
 			var dsDesign = new Design<Ship>();
 			dsDesign.BaseName = "Destroyer";
-			dsDesign.Hull = new Hull<Ship>();
+			dsDesign.CreateHull();
 			dsDesign.Owner = seekers;
 			destroyer = dsDesign.Instantiate();
 			destroyer.Owner = seekers;
 			var subDesign = new Design<Ship>();
 			subDesign.BaseName = "Submarine";
-			subDesign.Hull = new Hull<Ship>();
+			subDesign.CreateHull();
 			subDesign.Owner = hiders;
 			submarine = subDesign.Instantiate();
 			submarine.Owner = hiders;
