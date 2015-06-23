@@ -1636,6 +1636,19 @@ namespace FrEee.Game.Objects.Space
 		/// Notes that mod scripts can play with.
 		/// </summary>
 		public DynamicDictionary ScriptNotes { get; private set; }
+
+		/// <summary>
+		/// Finds referrable objects in the galaxy.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="condition"></param>
+		/// <returns></returns>
+		public IEnumerable<T> Find<T>(Func<T, bool> condition = null) where T : IReferrable
+		{
+			if (condition == null)
+				condition = t => true;
+			return Referrables.OfType<T>().Where(r => condition(r));
+		}
 	}
 
 	/// <summary>
