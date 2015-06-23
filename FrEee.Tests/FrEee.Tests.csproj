@@ -95,6 +95,7 @@
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
     <Compile Include="Game\Objects\Vehicles\CloakingTest.cs" />
     <Compile Include="Game\Objects\Vehicles\DamageTest.cs" />
+    <Compile Include="TestUtilities.cs" />
     <Compile Include="Modding\FormulaTest.cs" />
     <Compile Include="Modding\Loaders\LoaderTest.cs" />
     <Compile Include="Modding\ScriptEngineTest.cs" />

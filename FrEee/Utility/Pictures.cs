@@ -328,7 +328,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static Image GetIcon(IHull<IVehicle> hull, string shipsetPath, int size = 32)
+		public static Image GetIcon(IHull hull, string shipsetPath, int size = 32)
 		{
 			// allow for practically infinite variation in hull sizes within a confined range of image sizes using a log function
 			var maxSize = (double)Mod.Current.Hulls.Max(h => h.Size);
@@ -353,7 +353,7 @@ namespace FrEee.Utility
 			return (GetCachedImage(paths) ?? GetGenericImage(hull.GetType(), scale)).Resize(size);
 		}
 
-		public static Image GetPortrait(IHull<IVehicle> hull, string shipsetPath)
+		public static Image GetPortrait(IHull hull, string shipsetPath)
 		{
 			if (shipsetPath == null)
 				return GetGenericImage(hull.GetType());
