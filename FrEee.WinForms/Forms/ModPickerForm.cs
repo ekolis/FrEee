@@ -12,7 +12,9 @@ using System.IO;
 using FrEee.Modding;
 using FrEee.Modding.Loaders;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System.Reflection;
+using System.Threading;
 
 namespace FrEee.WinForms.Forms
 {
@@ -112,6 +114,65 @@ namespace FrEee.WinForms.Forms
 				DialogResult = DialogResult.OK;
 				Close();
 			}
+		}
+
+		private void btnEdit_Click(object sender, EventArgs e)
+		{
+			LoadMod(ModPath);
+			var original = Mod.Current.Copy();
+			Func<bool> save = () =>
+			{
+				// mod is already in memory
+				return true;
+			};
+			Func<bool> cancel = () =>
+			{
+				if (MessageBox.Show("Discard work on this mod?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+				{
+					// undo
+					Mod.Current = original;
+					return true;
+				}
+				else
+					return false; // don't close the form
+			};
+			var form = new EditorForm(Mod.Current, save, cancel);
+			Hide();
+			this.ShowChildForm(form);
+			Show();
+		}
+
+		// TODO - put this in a utility class somewhere
+		private void LoadMod(string modPath)
+		{
+			var status = new Status
+			{
+				Progress = 0d,
+				Message = "Initializing",
+				Exception = null,
+			};
+			Thread t = new Thread(new ThreadStart(() =>
+			{
+				try
+				{
+					status.Message = "Loading mod";
+					Mod.Load(modPath, true, status, 1d);
+					this.Invoke(new Action(delegate()
+					{
+						if (Mod.Errors.Any())
+							this.ShowChildForm(new ModErrorsForm());
+					}));
+				}
+				catch (Exception ex)
+				{
+					status.Exception = ex;
+				}
+			}));
+			t.Name = "Mod Loading";
+
+			this.ShowChildForm(new StatusForm(t, status));
+
+			Text = "FrEee - " + Mod.Current.Info.Name;
 		}
 	}
 }

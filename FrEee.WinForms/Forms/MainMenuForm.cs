@@ -180,6 +180,7 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(new GameSetupForm());
 		}
 
+		// TODO - put this in a utility class somewhere
 		private void LoadMod(string modPath)
 		{
 			var status = new Status

@@ -45,6 +45,7 @@
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.txtFolder = new System.Windows.Forms.Label();
 			this.label7 = new System.Windows.Forms.Label();
+			this.btnEdit = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -225,7 +226,7 @@
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(394, 406);
+			this.btnCancel.Location = new System.Drawing.Point(315, 406);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 14;
@@ -255,6 +256,20 @@
 			this.label7.TabIndex = 15;
 			this.label7.Text = "Folder:";
 			// 
+			// btnEdit
+			// 
+			this.btnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnEdit.BackColor = System.Drawing.Color.Black;
+			this.btnEdit.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnEdit.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnEdit.Location = new System.Drawing.Point(394, 406);
+			this.btnEdit.Name = "btnEdit";
+			this.btnEdit.Size = new System.Drawing.Size(75, 23);
+			this.btnEdit.TabIndex = 17;
+			this.btnEdit.Text = "Edit";
+			this.btnEdit.UseVisualStyleBackColor = false;
+			this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+			// 
 			// ModPickerForm
 			// 
 			this.AcceptButton = this.btnLoad;
@@ -263,6 +278,7 @@
 			this.BackColor = System.Drawing.Color.Black;
 			this.CancelButton = this.btnCancel;
 			this.ClientSize = new System.Drawing.Size(562, 441);
+			this.Controls.Add(this.btnEdit);
 			this.Controls.Add(this.txtFolder);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.btnCancel);
@@ -308,5 +324,6 @@
 		private Controls.GameButton btnCancel;
 		private System.Windows.Forms.Label txtFolder;
 		private System.Windows.Forms.Label label7;
+		private Controls.GameButton btnEdit;
 	}
 }

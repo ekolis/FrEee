@@ -19,7 +19,7 @@ namespace FrEee.WinForms.Interfaces
 	/// <summary>
 	/// Something which can be bound to a specific type of data.
 	/// </summary>
-	public interface IBindable<T> : IBindable
+	public interface IBindable<in T> : IBindable
 	{
 		/// <summary>
 		/// Binds the control to new data.
