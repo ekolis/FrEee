@@ -339,7 +339,7 @@ namespace FrEee.Modding
 
 		public override string ToString()
 		{
-			return RootPath;
+			return RootPath ?? "<Stock>";
 		}
 
 		private SafeDictionary<string, IModObject> objects { get; set; }

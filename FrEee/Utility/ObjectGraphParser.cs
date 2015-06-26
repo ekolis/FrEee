@@ -342,6 +342,12 @@ namespace FrEee.Utility
 			}
 		}
 
+		public IEnumerable<PropertyInfo> GetProperties(Type type)
+		{
+			AddProperties(type);
+			return KnownProperties[type];
+		}
+
 		public object GetObjectProperty(object obj, PropertyInfo prop)
 		{
 			AddProperties(obj.GetType());
