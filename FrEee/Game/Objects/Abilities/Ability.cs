@@ -15,7 +15,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
 	[Serializable]
-	public class Ability : IContainable<IAbilityObject>, IReferrable
+	public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject
 	{
 		public Ability(IAbilityObject container)
 		{
@@ -139,6 +139,17 @@ namespace FrEee.Game.Objects.Abilities
 					return (Container as IOwnable).Owner;
 				return null;
 			}
+		}
+
+		public string ModID
+		{
+			get;
+			set;
+		}
+
+		public string Name
+		{
+			get { return null; } // TODO - should abilities even have names?
 		}
 	}
 }

@@ -11,6 +11,11 @@ using FrEee.WinForms.Interfaces;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Utility;
 using System.Collections;
+using FrEee.Modding.Interfaces;
+using FrEee.Game.Interfaces;
+using FrEee.Modding;
+using FrEee.WinForms.Controls;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.WinForms
 {
@@ -107,14 +112,164 @@ namespace FrEee.WinForms
 
 		private Control MakeEditor(Type objectType, object obj)
 		{
-			Control result;
+			Control ctl;
+			
+			if (TypeMatch<ModReference<IModObject>>(objectType))
+			{
+				var objs = Mod.Current.Objects.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+				objs.Insert(0, null);
+				var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
+				ctl = pnl;
+			}
+			else if (TypeMatch<GalaxyReference<IReferrable>>(objectType))
+			{
+				var objs = Galaxy.Current.Referrables.Where(r => objectType.GetGenericArguments()[0].IsAssignableFrom(r.GetType())).ToList();
+				objs.Insert(0, null);
+				var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
+				ctl = pnl;
+			}
+			else if (TypeMatch<IModObject>(objectType))
+			{
+				var objs = Mod.Current.Objects.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+				objs.Insert(0, null);
+				var pnl = MakeDropdownPanel(objs, obj, newModObjectHandler);
+				ctl = pnl;
+			}
+			else if (TypeMatch<IReferrable>(objectType))
+			{
+				var objs = Galaxy.Current.Referrables.Where(r => objectType.IsAssignableFrom(r.GetType())).ToList();
+				objs.Insert(0, null);
+				var pnl = MakeDropdownPanel(objs, obj, newReferrableHandler);
+				ctl = pnl;
+			}
+			else if (objectType.IsEnum)
+			{
+				if (objectType.HasAttribute<FlagsAttribute>())
+				{
+					var chklist = new CheckedListBox();
+					var objs = Enum.GetValues(objectType).Cast<object>().Distinct();
+					foreach (var val in objs)
+						chklist.Items.Add(val, ((int)obj & (int)val) != 0);
+					ctl = chklist;
+				}
+				else
+				{
+					var objs = Enum.GetValues(objectType);
+					var pnl = MakeDropdownPanel(objs.Cast<object>(), obj, null);
+					ctl = pnl;
+				}
+			}
+			else if (objectType.IsPrimitive || objectType == typeof(string) || TypeMatch<IFormula>(objectType))
+			{
+				// TODO - custom editors for each primitive, enum, and and formula type?
+				// but most stuff is formulas or references anyway
+				var txt = new TextBox();
+				txt.Text = obj == null ? null : obj.ToString();
+				ctl = txt;
+			}
+			else if (TypeMatch<IEnumerable<object>>(objectType))
+			{
+				var lbl = new Label();
+				lbl.Text = obj == null ? "<null>" : "{0} items".F((obj as IEnumerable<object>).Count());
+				ctl = lbl;
+			}
+			else
+			{
+				// unknown type, just tostring it
+				var lbl = new Label();
+				lbl.Text = obj == null ? "<null>" : obj.ToString();
+				ctl = lbl;
+			}
 
-			// TODO - make proper editor
-			var lbl = new Label();
-			lbl.Text = obj == null ? "<null>" : obj.ToString();
-			result = lbl;
+			return ctl;
+		}
 
-			return result;
+		private void newReferrableHandler(object sender, EventArgs e)
+		{
+
+		}
+
+		private void newModObjectHandler(object sender, EventArgs e)
+		{
+
+		}
+
+		private Panel MakeDropdownPanel<T>(IEnumerable<T> options, T selected, EventHandler newItemHandler)
+		{
+			var pnl = new Panel();
+
+			var ddl = new ComboBox();
+			ddl.DropDownStyle = ComboBoxStyle.DropDownList;
+			ddl.Dock = DockStyle.Fill;
+			pnl.Controls.Add(ddl);
+
+			if (newItemHandler != null)
+			{
+				var btn = new GameButton();
+				btn.Text = "...";
+				btn.Dock = DockStyle.Right;
+				btn.Click += newItemHandler;
+				pnl.Controls.Add(btn);
+			}
+
+			BindDropdownPanel(pnl, options, selected);
+
+			return pnl;
+		}
+
+		private void BindDropdownPanel<T>(Panel p, IEnumerable<T> options, T selected)
+		{
+			var ddl = p.Controls.OfType<ComboBox>().Single();
+			ddl.Items.Clear();
+			foreach (var option in options)
+				ddl.Items.Add(new Option<T>(option));
+			ddl.SelectedItem = selected;
+		}
+
+		private class Option<T>
+		{
+			public Option(T value)
+			{
+				Value = value;
+			}
+			T Value { get; set; }
+			public override string ToString()
+			{
+				return Value == null ? "<null>" : Value.ToString();
+			}
+		}
+
+		private T GetEditorValue<T>(Control ctl)
+		{
+			return default(T); // TODO
+		}
+
+		private T FindControl<T>(Control ctl)
+		{
+			if (ctl is T)
+				return (T)(object)ctl;
+			foreach (Control c2 in ctl.Controls)
+			{
+				if (c2 is T)
+					return (T)(object)c2;
+			}
+			foreach (Control c2 in ctl.Controls)
+			{
+				var c3 = FindControl<T>(c2);
+				if (c3 != null)
+					return c3;
+			}
+			return default(T);
+		}
+
+		private bool TypeMatch<T>(Type t)
+		{
+			return typeof(T).IsAssignableFrom(t);
+		}
+
+		private bool TypeMatch(Type tp, Type tc)
+		{
+			return tp.IsAssignableFrom(tc) || tp.IsAssignableFrom(tc.GetGenericTypeDefinition());
 		}
 	}
 }
