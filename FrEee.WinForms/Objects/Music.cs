@@ -137,6 +137,8 @@ namespace FrEee.WinForms.Objects
 			else
 				throw new Exception("Unknown audio format for file " + track.Path);
 			waveout.Stop();
+			waveout.Dispose();
+			waveout = new WaveOutEvent();
 			if (CurrentMode == MusicMode.None)
 				return; // no music!
 
