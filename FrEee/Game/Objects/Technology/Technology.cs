@@ -205,7 +205,7 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
-		public IEnumerable<IResearchable> GetExpectedResults(Empire emp)
+		public IEnumerable<IUnlockable> GetExpectedResults(Empire emp)
 		{
 			var techs = new SafeDictionary<Technology, int>();
 			foreach (var kvp in emp.ResearchedTechnologies)
@@ -218,7 +218,7 @@ namespace FrEee.Game.Objects.Technology
 		/// Current empire's expected results for researching the next level of this tech.
 		/// TODO - refactor this into an EmpireTechnology class
 		/// </summary>
-		public IEnumerable<IResearchable> ExpectedResults
+		public IEnumerable<IUnlockable> ExpectedResults
 		{
 			get
 			{
@@ -234,7 +234,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <param name="emp">The empire.</param>
 		/// <param name="levels">The technology levels to grant.</param>
 		/// <returns>Newly unlocked items.</returns>
-		public static IEnumerable<IResearchable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
+		public static IEnumerable<IUnlockable> GetUnlockedItems(Empire emp, IDictionary<Technology, int> levels)
 		{
 			// find out what the empire already knows
 			var oldItems = emp.UnlockedItems.ToArray();

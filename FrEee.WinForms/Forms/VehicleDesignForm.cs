@@ -312,6 +312,9 @@ namespace FrEee.WinForms.Forms
 				// save design to library (delete old design with same name first, and set owner of library design to null)
 				Library.Export(Design, d => { d.Owner = null; d.TurnNumber = 0; d.Iteration = 0; });
 
+				// check lockedness
+				Empire.Current.CheckUnlockStatus(Design);
+
 				// done
 				DialogResult = DialogResult.OK;
 				return true;
