@@ -14,11 +14,12 @@ namespace FrEee.Utility
 	[Serializable]
 	public class SafeDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 	{
-		private Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+		private Dictionary<TKey, TValue> dict;
 
 		public SafeDictionary(bool autoInit = false)
 		{
 			AutoInit = autoInit;
+			dict = new Dictionary<TKey, TValue>();
 		}
 
 		/// <summary>
