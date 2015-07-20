@@ -25,6 +25,8 @@ namespace FrEee.WinForms.Objects
 
 		private const int FadeDuration = 5000; // milliseconds
 
+		public static bool IsPlaying { get; private set; }
+
 		public static MusicMode CurrentMode
 		{
 			get
@@ -136,6 +138,8 @@ namespace FrEee.WinForms.Objects
 				p = new WaveFileReader(track.Path);
 			else
 				throw new Exception("Unknown audio format for file " + track.Path);
+			
+			waveout.PlaybackStopped -= waveout_PlaybackStopped;
 			waveout.Stop();
 			waveout.Dispose();
 			waveout = new WaveOutEvent();
@@ -155,6 +159,7 @@ namespace FrEee.WinForms.Objects
 				waveout.Init(new MixingSampleProvider(new ISampleProvider[] { curTrack, prevTrack }));
 			else
 				waveout.Init(curTrack);
+			IsPlaying = true;
 			waveout.Play();
 			waveout.PlaybackStopped += waveout_PlaybackStopped;
 		}
