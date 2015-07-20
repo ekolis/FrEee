@@ -27,6 +27,14 @@ namespace FrEee.Game.Objects.Technology
 			Cost = new ResourceFormula(this);
 		}
 
+		public static FacilityTemplate Unknown
+		{
+			get
+			{
+				return Mod.Current.FacilityTemplates.FindByModID("*UNKNOWN*");
+			}
+		}
+
 		/// <summary>
 		/// The name of the facility.
 		/// </summary>
