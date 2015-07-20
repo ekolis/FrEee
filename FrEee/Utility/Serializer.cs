@@ -477,7 +477,11 @@ namespace FrEee.Utility
 				context.Add(coll);
 				var adder = type.GetMethods().Single(m => m.Name == "Add" && m.GetParameters().Length == 1);
 				Type itemType;
-				if (type.GetGenericArguments().Length == 2)
+				if (typeof(DynamicDictionary).IsAssignableFrom(type))
+				{
+					itemType = typeof(KeyValuePair<object, object>);
+				}
+				else if (type.GetGenericArguments().Length == 2)
 				{
 					// HACK - assume it's a dictionary, no real way to test
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.GetGenericArguments());
@@ -492,17 +496,25 @@ namespace FrEee.Utility
 					// no generic type? probably a list of objects?
 					itemType = typeof(object);
 				}
-				var collParm = Expression.Parameter(typeof(object), "coll");
-				var objParm = Expression.Parameter(typeof(object), "obj");
+				var collParm = Expression.Parameter(type, "coll");
+				var objParm = Expression.Parameter(itemType, "obj");
 				Delegate lambdaAdder;
 				if (ObjectGraphContext.CollectionAdders[type] == null)
 				{
 					// lambda has not been created yet, so create it
-					ObjectGraphContext.CollectionAdders[type] =
-						Expression.Lambda(Expression.Call(
-							Expression.Convert(collParm, type),
-							adder,
-							Expression.Convert(objParm, itemType)), collParm, objParm).Compile();
+					try
+					{
+						ObjectGraphContext.CollectionAdders[type] =
+							Expression.Lambda(Expression.Call(
+								collParm, // the collection to add to
+								adder, // the add method to call
+								objParm), // the object to add
+								collParm, objParm).Compile();
+					}
+					catch (Exception ex)
+					{
+						throw new SerializationException("Could not create lambda to add {0} items to {1}.".F(itemType, type), ex);
+					}
 				}
 
 				// get lambda
