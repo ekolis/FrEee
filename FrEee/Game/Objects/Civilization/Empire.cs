@@ -521,12 +521,14 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public bool HasUnlocked(IResearchable item)
+		public bool HasUnlocked(IUnlockable item)
 		{
-			return item == null || UnlockedItems.Contains(item);
+			return CheckUnlockStatus(item);
+			// TODO - fix caching of unlock status
+//			return item == null || UnlockedItems.Contains(item);
 		}
 
-		public bool CheckUnlockStatus(IResearchable item)
+		public bool CheckUnlockStatus(IUnlockable item)
 		{
 			if (item == null)
 				return true;
@@ -549,7 +551,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			var oldlvl = ResearchedTechnologies[tech];
 			AccumulatedResearch[tech] += points;
-			var newStuff = new List<IResearchable>();
+			var newStuff = new List<IUnlockable>();
 			int advanced = 0;
 			while (AccumulatedResearch[tech] >= tech.GetNextLevelCost(this) && ResearchedTechnologies[tech] < tech.MaximumLevel)
 			{
@@ -594,10 +596,10 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Unlocked research items such as component and facility templates.
+		/// Unlocked items such as component and facility templates.
 		/// </summary>
 		[DoNotSerialize]
-		public IEnumerable<IResearchable> UnlockedItems
+		public IEnumerable<IUnlockable> UnlockedItems
 		{
 			get
 			{
@@ -607,11 +609,19 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		private IEnumerable<IResearchable> unlockedItems;
+		private ISet<IUnlockable> unlockedItems;
+
+		public void RefreshUnlockedItem(IUnlockable u)
+		{
+			if (CheckUnlockStatus(u))
+				unlockedItems.Add(u);
+			else
+				unlockedItems.Remove(u);
+		}
 
 		public void RefreshUnlockedItems()
 		{
-			unlockedItems = Galaxy.Current.Referrables.OfType<IResearchable>().Where(r => CheckUnlockStatus(r)).ToArray();
+			unlockedItems = new HashSet<IUnlockable>(Galaxy.Current.Referrables.OfType<IUnlockable>().Where(r => CheckUnlockStatus(r)));
 		}
 
 		/// <summary>
