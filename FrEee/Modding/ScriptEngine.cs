@@ -483,6 +483,7 @@ namespace FrEee.Modding
 		}
 
 		public ScriptException(Exception ex, string code)
+			: base(null, ex)
 		{
 			if (ex is TargetInvocationException)
 				message = "In this code:\n" + code + "\n" + ex.InnerException.Message;
