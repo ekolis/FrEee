@@ -47,6 +47,8 @@ namespace FrEee.Modding
 			var mod = new Mod();
 			mod.RootPath = path;
 
+			mod.FacilityTemplates.Add(new FacilityTemplate { Name = "Unknown", ModID = "*UNKNOWN*" }); // for redacted colonies
+
 			if (setCurrent)
 				Current = mod;
 

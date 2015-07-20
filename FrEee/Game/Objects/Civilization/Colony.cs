@@ -73,15 +73,14 @@ namespace FrEee.Game.Objects.Civilization
 			}
 			if (visibility < Visibility.Scanned)
 			{
-				var unknownFacilityTemplate = new FacilityTemplate { Name = "Unknown" };
+				var unknownFacilityTemplate = FacilityTemplate.Unknown;
 				var facilCount = Facilities.Count;
 				Facilities.Clear();
 				for (int i = 0; i < facilCount; i++)
 					Facilities.Add(new Facility(unknownFacilityTemplate));
 			}
-
-			if (visibility < Visibility.Visible)
-				throw new Exception("Calling Redact on a colony which is not visible. The colony should be set to null from the Planet object instead.");
+			if (visibility < Visibility.Fogged)
+				Dispose();
 		}
 
 		public long ID
