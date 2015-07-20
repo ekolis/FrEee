@@ -120,7 +120,8 @@ namespace FrEee.Utility
 
 		public void Clear()
 		{
-			dict.Clear();
+			if (dict != null)
+				dict.Clear();
 		}
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
