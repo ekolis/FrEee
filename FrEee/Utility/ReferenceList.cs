@@ -26,6 +26,8 @@ namespace FrEee.Utility
 
 		public int IndexOf(T item)
 		{
+			if (!list.Any(r => r.Value.Equals(item)))
+				return -1;
 			return list.Select((x, i) => new { Item = x, Index = i }).First(x => x.Item.Value.Equals(item)).Index;
 		}
 
