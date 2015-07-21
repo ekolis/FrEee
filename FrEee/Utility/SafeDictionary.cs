@@ -18,8 +18,17 @@ namespace FrEee.Utility
 
 		public SafeDictionary(bool autoInit = false)
 		{
+			InitDict();
 			AutoInit = autoInit;
-			dict = new Dictionary<TKey, TValue>();
+		}
+
+		/// <summary>
+		/// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
+		/// </summary>
+		private void InitDict()
+		{
+			if (dict == null)
+				dict = new Dictionary<TKey, TValue>();
 		}
 
 		/// <summary>
@@ -34,14 +43,13 @@ namespace FrEee.Utility
 
 		public virtual void Add(TKey key, TValue value)
 		{
+			InitDict();
 			this[key] = value;
 		}
 
 		public bool ContainsKey(TKey key)
 		{
-			// need to check for nulls when deserializing...
-			if (dict == null)
-				dict = new Dictionary<TKey, TValue>();
+			InitDict();
 
 			return dict.ContainsKey(key);
 		}
@@ -50,20 +58,20 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				// why is this null?
-				if (dict == null)
-					dict = new Dictionary<TKey, TValue>();
+				InitDict();
 				return dict.Keys;
 			}
 		}
 
 		public bool Remove(TKey key)
 		{
+			InitDict();
 			return dict.Remove(key);
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
 		{
+			InitDict();
 			value = this[key];
 			return true;
 		}
@@ -72,9 +80,7 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				// why is this null?
-				if (dict == null)
-					dict = new Dictionary<TKey, TValue>();
+				InitDict();
 				return dict.Values;
 			}
 		}
@@ -83,6 +89,7 @@ namespace FrEee.Utility
 		{
 			get
 			{
+				InitDict();
 				if (ContainsKey(key))
 					return dict[key];
 				else
@@ -107,6 +114,7 @@ namespace FrEee.Utility
 			}
 			set
 			{
+				InitDict();
 				if (ContainsKey(key))
 					dict[key] = value;
 				else
@@ -121,39 +129,41 @@ namespace FrEee.Utility
 
 		public void Clear()
 		{
-			if (dict != null)
-				dict.Clear();
+			InitDict();
+			dict.Clear();
 		}
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
+			InitDict();
 			return dict.Contains(item);
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
+			InitDict();
 			((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
 		}
 
 		public int Count
 		{
-			get { return dict.Count; }
+			get { InitDict(); return dict.Count; }
 		}
 
 		public bool IsReadOnly
 		{
-			get { return ((IDictionary<TKey, TValue>)dict).IsReadOnly; }
+			get { InitDict(); return ((IDictionary<TKey, TValue>)dict).IsReadOnly; }
 		}
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
+			InitDict();
 			return ((IDictionary<TKey, TValue>)dict).Remove(item);
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
-			if (dict == null)
-				return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
+			InitDict();
 			return dict.GetEnumerator();
 		}
 

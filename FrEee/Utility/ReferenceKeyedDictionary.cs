@@ -17,7 +17,7 @@ namespace FrEee.Utility
 	{
 		public ReferenceKeyedDictionary()
 		{
-			dict = new SafeDictionary<TRef, TValue>();
+			InitDict();
 		}
 
 		private static TRef MakeReference(TKey item)
@@ -27,8 +27,18 @@ namespace FrEee.Utility
 
 		private SafeDictionary<TRef, TValue> dict { get; set; }
 
+		/// <summary>
+		/// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
+		/// </summary>
+		private void InitDict()
+		{
+			if (dict == null)
+				dict = new SafeDictionary<TRef, TValue>();
+		}
+
 		public void Add(TKey key, TValue value)
 		{
+			InitDict();
 			var r = MakeReference(key);
 			if (!r.HasValue)
 				throw new Exception("Can't make reference for " + key);
@@ -37,37 +47,42 @@ namespace FrEee.Utility
 
 		public bool ContainsKey(TKey key)
 		{
+			InitDict();
 			return dict.ContainsKey(MakeReference(key));
 		}
 
 		public ICollection<TKey> Keys
 		{
-			get { return dict.Keys.Select(k => k.Value).ToList(); }
+			get { InitDict(); return dict.Keys.Select(k => k.Value).ToList(); }
 		}
 
 		public bool Remove(TKey key)
 		{
+			InitDict();
 			return dict.Remove(MakeReference(key));
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
 		{
+			InitDict();
 			return dict.TryGetValue(MakeReference(key), out value);
 		}
 
 		public ICollection<TValue> Values
 		{
-			get { return dict.Values; }
+			get { InitDict(); return dict.Values; }
 		}
 
 		public TValue this[TKey key]
 		{
 			get
 			{
+				InitDict();
 				return dict[MakeReference(key)];
 			}
 			set
 			{
+				InitDict();
 				var r = MakeReference(key);
 				if (!r.HasValue)
 					throw new Exception("Can't make reference for " + key);
@@ -77,6 +92,7 @@ namespace FrEee.Utility
 
 		public void Add(KeyValuePair<TKey, TValue> item)
 		{
+			InitDict();
 			var r = MakeReference(item.Key);
 			if (!r.HasValue)
 				throw new Exception("Can't make reference for " + item.Key);
@@ -85,37 +101,42 @@ namespace FrEee.Utility
 
 		public void Clear()
 		{
+			InitDict();
 			dict.Clear();
 		}
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
+			InitDict();
 			return dict.Contains(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
+			InitDict();
 			var d2 = (ICollection<KeyValuePair<TKey, TValue>>)dict.Select(kvp => new KeyValuePair<TKey, TValue>(kvp.Key.Value, kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 			d2.CopyTo(array, arrayIndex);
 		}
 
 		public int Count
 		{
-			get { return dict.Count; }
+			get { InitDict(); return dict.Count; }
 		}
 
 		public bool IsReadOnly
 		{
-			get { return dict.IsReadOnly; }
+			get { InitDict(); return dict.IsReadOnly; }
 		}
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
+			InitDict();
 			return dict.Remove(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
+			InitDict();
 			var objs = dict.Select(kvp => new {Key = kvp.Key, KeyValue = kvp.Key.Value, Value = kvp.Value});
 			foreach (var obj in objs)
 			{
@@ -132,6 +153,7 @@ namespace FrEee.Utility
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
+			InitDict();
 			if (done == null)
 				done = new HashSet<IPromotable>();
 			if (!done.Contains(this))
