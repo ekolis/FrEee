@@ -647,10 +647,15 @@ namespace FrEee.Utility
 				// deserialize the fields
 				for (int i = 0; i < count; i++)
 				{
+					if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ModReferenceKeyedDictionary<,>))
+					{
+
+					}
 					var pname = r.ReadTo(':', log).Trim();
 					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
 					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
+						// property exists and can be serialized
 						if (type.IsValueType)
 						{
 							// not sure why LINQ expressions don't work on structs...
@@ -660,8 +665,8 @@ namespace FrEee.Utility
 							context.SetObjectProperty(o, prop, Deserialize(r, prop.PropertyType, context, log));
 					}
 					else
-						r.ReadTo(';', log);
-					// if p is null, it must be data from an old version with different property names, so don't crash
+						r.ReadTo(';', log); // throw away this property, we don't need it
+					// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 
 				// clean up
