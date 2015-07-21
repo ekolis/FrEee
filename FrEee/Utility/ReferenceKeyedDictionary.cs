@@ -42,7 +42,7 @@ namespace FrEee.Utility
 
 		public ICollection<TKey> Keys
 		{
-			get { return dict.Keys.Cast<TKey>().ToList(); }
+			get { return dict.Keys.Select(k => k.Value).ToList(); }
 		}
 
 		public bool Remove(TKey key)
