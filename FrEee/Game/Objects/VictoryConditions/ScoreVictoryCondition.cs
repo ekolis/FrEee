@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.VictoryConditions
 		{
 			if (emp.IsDefeated)
 				return 0;
-			return (double)(emp.Score) / (double)Score;
+			return (double)(int)(emp.Score) / (double)(int)Score;
 		}
 
 		public string GetVictoryMessage(Empire emp)
