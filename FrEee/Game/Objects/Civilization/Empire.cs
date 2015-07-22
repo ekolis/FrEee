@@ -67,6 +67,7 @@ namespace FrEee.Game.Objects.Civilization
 			SentMessages = new HashSet<IMessage>();
 			Waypoints = new List<Waypoint>();
 			NumberedWaypoints = new Waypoint[10];
+			Scores = new SafeDictionary<int, int?>();
 		}
 
 		/// <summary>
@@ -216,7 +217,7 @@ namespace FrEee.Game.Objects.Civilization
 						rawResourceIncome += sobj.RawResourceIncome();
 				}
 				return rawResourceIncome;
-				
+
 			}
 		}
 
@@ -493,7 +494,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <summary>
 		/// The empire's research priorities for this turn.
 		/// </summary>
-		
+
 		public ResearchCommand ResearchCommand
 		{
 			get
@@ -525,7 +526,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			return CheckUnlockStatus(item);
 			// TODO - fix caching of unlock status
-//			return item == null || UnlockedItems.Contains(item);
+			//			return item == null || UnlockedItems.Contains(item);
 		}
 
 		public bool CheckUnlockStatus(IUnlockable item)
@@ -534,7 +535,7 @@ namespace FrEee.Game.Objects.Civilization
 				return true;
 			if (item is IFoggable && (item as IFoggable).CheckVisibility(this) < Visibility.Fogged)
 				return false; // can't have unlocked something you haven't seen
-			// TODO - racial/unique tech should just be requirements
+							  // TODO - racial/unique tech should just be requirements
 			if (item is Tech && ((Tech)item).IsRacial && !this.Abilities().Any(a => a.Rule != null && a.Rule.Matches("Tech Area") && a.Value1 == ((Tech)item).RacialTechID))
 				return false; // racial tech that this empire doesn't have the trait for
 			if (item is Tech && ((Tech)item).IsUnique && !this.UniqueTechsFound.Any(t => t == ((Tech)item).UniqueTechID))
@@ -784,9 +785,72 @@ namespace FrEee.Game.Objects.Civilization
 		private ModReference<Culture> culture { get; set; }
 
 		/// <summary>
-		/// TODO - implement empire score
+		/// The score of this empire over time.
+		/// If the score is supposed to be unknown to a player, it will be null.
 		/// </summary>
-		public long Score { get { return 0; } }
+		public SafeDictionary<int, int?> Scores { get; private set; }
+
+		/// <summary>
+		/// The last known score of this empire.
+		/// </summary>
+		public int? Score
+		{
+			get
+			{
+				int? s = null;
+				for (var x = Galaxy.Current.TurnNumber; x >= 0 && s != null; x--)
+				{
+					s = GetScoreAtTurn(x);
+				}
+				return s;
+			}
+		}
+
+		/// <summary>
+		/// Computes the score of this empire.
+		/// </summary>
+		/// <param name="viewer">The empire viewing this empire's score, or null for the host view. If the score isn't meant to be visible, it will be set to null.</param>
+		public int? ComputeScore(Empire viewer)
+		{
+			// can we see it?
+			// TODO - rankings too, not just scores
+			var disp = Galaxy.Current.ScoreDisplay;
+			bool showit = false;
+			if (viewer == this)
+				showit = true; // can always see your own score
+			else if (viewer.IsAllyOf(this, null) && disp.HasFlag(ScoreDisplay.AlliesOnlyNoRankings))
+				showit = true; // see allies' score if ally score flag enabled
+			else if (disp.HasFlag(ScoreDisplay.All))
+				showit = true; // see all players' score if all score flag enabled
+			if (showit == false)
+				return null; // can't see score
+
+			// OK, we can see it, now compute the score
+			// TODO - moddable score weightings
+			int score = 0;
+			score += Galaxy.Current.Referrables.OfType<IVehicle>().OwnedBy(this).Sum(v => v.Cost.Sum(kvp => kvp.Value)); // vehicle cost
+			score += ColonizedPlanets.SelectMany(p => p.Colony.Facilities).Sum(f => f.Cost.Sum(kvp => kvp.Value)); // facility cost
+			foreach (var kvp in ResearchedTechnologies)
+			{
+				// researched tech cost
+				for (var level = 1; level <= kvp.Value; level++)
+					score += kvp.Key.GetLevelCost(level);
+			}
+			// TODO - count population toward score?
+			return score;
+		}
+
+		/// <summary>
+		/// Gets the empire's score at a specific turn, or null if the score is unknown.
+		/// </summary>
+		/// <param name="turn"></param>
+		/// <returns></returns>
+		public int? GetScoreAtTurn(int turn)
+		{
+			if (!Scores.ContainsKey(turn))
+				return null;
+			return Scores[turn];
+		}
 
 		public int CompareTo(Empire other)
 		{
@@ -978,7 +1042,7 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				if (Galaxy.Current.GivenTreatyClauseCache == null)
-					Galaxy.Current.GivenTreatyClauseCache = new SafeDictionary<Empire,ILookup<Empire,Clause>>();
+					Galaxy.Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 				if (!Galaxy.Current.GivenTreatyClauseCache.ContainsKey(this))
 					Galaxy.Current.GivenTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Giver == this && c.IsInEffect).ToLookup(c => c.Receiver));
 				return Galaxy.Current.GivenTreatyClauseCache[this];
@@ -993,7 +1057,7 @@ namespace FrEee.Game.Objects.Civilization
 			get
 			{
 				if (Galaxy.Current.ReceivedTreatyClauseCache == null)
-					Galaxy.Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire,ILookup<Empire,Clause>>();
+					Galaxy.Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 				if (!Galaxy.Current.ReceivedTreatyClauseCache.ContainsKey(this))
 					Galaxy.Current.ReceivedTreatyClauseCache.Add(this, Galaxy.Current.Referrables.OfType<Clause>().Where(c => c.Receiver == this && c.IsInEffect).ToLookup(c => c.Giver));
 				return Galaxy.Current.ReceivedTreatyClauseCache[this];

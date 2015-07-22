@@ -83,6 +83,7 @@
 			this.btnMinisters = new FrEee.WinForms.Controls.GameButton();
 			this.btnAvoidSystems = new FrEee.WinForms.Controls.GameButton();
 			this.btnWaypoints = new FrEee.WinForms.Controls.GameButton();
+			this.btnScores = new FrEee.WinForms.Controls.GameButton();
 			this.tabs.SuspendLayout();
 			this.tabDiplomacy.SuspendLayout();
 			this.tabIntel.SuspendLayout();
@@ -750,6 +751,19 @@
 			this.btnWaypoints.UseVisualStyleBackColor = false;
 			this.btnWaypoints.Click += new System.EventHandler(this.btnWaypoints_Click);
 			// 
+			// btnScores
+			// 
+			this.btnScores.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnScores.BackColor = System.Drawing.Color.Black;
+			this.btnScores.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnScores.Location = new System.Drawing.Point(622, 126);
+			this.btnScores.Name = "btnScores";
+			this.btnScores.Size = new System.Drawing.Size(100, 23);
+			this.btnScores.TabIndex = 5;
+			this.btnScores.Text = "Scores";
+			this.btnScores.UseVisualStyleBackColor = false;
+			this.btnScores.Click += new System.EventHandler(this.btnScores_Click);
+			// 
 			// EmpireListForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -757,6 +771,7 @@
 			this.BackColor = System.Drawing.Color.Black;
 			this.CancelButton = this.btnClose;
 			this.ClientSize = new System.Drawing.Size(734, 688);
+			this.Controls.Add(this.btnScores);
 			this.Controls.Add(this.btnWaypoints);
 			this.Controls.Add(this.btnAvoidSystems);
 			this.Controls.Add(this.btnMinisters);
@@ -834,5 +849,6 @@
 		private Controls.GameButton btnWaypoints;
 		private Controls.ResourceQuantityDisplay rqdSpoiledDeficit;
 		private System.Windows.Forms.Label label14;
+		private Controls.GameButton btnScores;
 	}
 }

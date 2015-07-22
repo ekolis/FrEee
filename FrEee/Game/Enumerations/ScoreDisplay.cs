@@ -6,16 +6,17 @@ using FrEee.Utility;
 
 namespace FrEee.Game.Enumerations
 {
+	[Flags]
 	public enum ScoreDisplay
 	{
 		[CanonicalName("Own Only - No Rankings")]
-		OwnOnlyNoRankings,
+		OwnOnlyNoRankings = 0,
 		[CanonicalName("Own Only - Ranked")]
-		OwnOnlyRanked,
+		OwnOnlyRanked = 1,
 		[CanonicalName("Allies Only - No Rankings")]
-		AlliesOnlyNoRankings,
-		[CanonicalName("Allies Only - No Rankings")]
-		AlliesOnlyRanked,
-		All
+		AlliesOnlyNoRankings = 2,
+		[CanonicalName("Allies Only - Ranked")]
+		AlliesOnlyRanked = 3,
+		All = 7
 	}
 }
