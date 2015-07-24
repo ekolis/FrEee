@@ -137,7 +137,7 @@ namespace FrEee.Game.Interfaces
 		/// <summary>
 		/// Is this a newly created design on the client side that needs to be sent to the server?
 		/// </summary>
-		bool IsNew { get; set; }
+		bool IsNew { get; }
 	}
 
 	public interface IDesign<out T> : IDesign, IPictorial, IReferrable, IUpgradeable<IDesign<T>> where T : IVehicle

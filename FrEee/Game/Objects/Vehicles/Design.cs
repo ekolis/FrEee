@@ -61,7 +61,6 @@ namespace FrEee.Game.Objects.Vehicles
 					throw new Exception("Cannot create a design for vehicle type " + vt + ".");
 			}
 			d.Owner = Empire.Current;
-			d.IsNew = true;
 			return d;
 		}
 
@@ -632,7 +631,6 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Owner = Empire.Current;
 					copy.Iteration++;
 					copy.VehiclesBuilt = 0;
-					copy.IsNew = true;
 					copy.Components.Clear();
 					foreach (var mct in Components)
 					{
@@ -693,6 +691,12 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Is this a newly created design on the client side that needs to be sent to the server?
 		/// </summary>
-		public bool IsNew { get; set; }
+		public bool IsNew
+		{
+			get
+			{
+				return !Galaxy.Current.Referrables.Contains(this);
+			}
+		}
 	}
 }
