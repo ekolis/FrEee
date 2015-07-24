@@ -632,6 +632,7 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Owner = Empire.Current;
 					copy.Iteration++;
 					copy.VehiclesBuilt = 0;
+					copy.IsNew = true;
 					copy.Components.Clear();
 					foreach (var mct in Components)
 					{
