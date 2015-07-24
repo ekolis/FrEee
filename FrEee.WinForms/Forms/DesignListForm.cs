@@ -118,6 +118,7 @@ namespace FrEee.WinForms.Forms
 				copy.Iteration++;
 				copy.VehiclesBuilt = 0;
 				copy.Components.Clear();
+				copy.IsNew = true;
 				foreach (var mct in old.Components)
 				{
 					copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
@@ -198,25 +199,25 @@ namespace FrEee.WinForms.Forms
 			this.ShowChildForm(new CombatSimulatorForm(true));
 		}
 
-        private void btnStrategy_Click(object sender, EventArgs e)
-        {
-            if (lstDesigns.SelectedItems.Count == 1)
-            {
-                var d = (IDesign)lstDesigns.SelectedItems[0].Tag;
-                if (d.Owner != Empire.Current)
-                {
-                    MessageBox.Show("You cannot edit alien design strategies.");
-                }
-                else
-                {                   
-                        var form = new MogreCombatRender.StrategiesDesigner.StratMainForm(d);
-                        //form.Design = d;
-                        this.ShowChildForm(form);
-                        if (form.DialogResult == DialogResult.OK)
-                            BindDesignList();                  
-                }
-            }
-        }
+		private void btnStrategy_Click(object sender, EventArgs e)
+		{
+			if (lstDesigns.SelectedItems.Count == 1)
+			{
+				var d = (IDesign)lstDesigns.SelectedItems[0].Tag;
+				if (d.Owner != Empire.Current)
+				{
+					MessageBox.Show("You cannot edit alien design strategies.");
+				}
+				else
+				{                   
+						var form = new MogreCombatRender.StrategiesDesigner.StratMainForm(d);
+						//form.Design = d;
+						this.ShowChildForm(form);
+						if (form.DialogResult == DialogResult.OK)
+							BindDesignList();                  
+				}
+			}
+		}
 
 		/// <summary>
 		/// Are we building this thingy anywhere?
