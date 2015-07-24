@@ -118,7 +118,6 @@ namespace FrEee.WinForms.Forms
 				copy.Iteration++;
 				copy.VehiclesBuilt = 0;
 				copy.Components.Clear();
-				copy.IsNew = true;
 				foreach (var mct in old.Components)
 				{
 					copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
