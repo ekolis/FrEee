@@ -148,6 +148,7 @@ namespace FrEee.WinForms.Objects
 
 			// setup our track
 			wc.Volume = musicVolume;
+			wc.PadWithZeroes = false; // to allow PlaybackStopped event to fire
 			waveout.PlaybackStopped -= waveout_PlaybackStopped;
 			waveout.Stop();
 			waveout.Dispose();
@@ -169,8 +170,8 @@ namespace FrEee.WinForms.Objects
 			else
 				waveout.Init(curTrack);
 			IsPlaying = true;
-			waveout.Play();
 			waveout.PlaybackStopped += waveout_PlaybackStopped;
+			waveout.Play();
 		}
 
 		static void waveout_PlaybackStopped(object sender, StoppedEventArgs e)
