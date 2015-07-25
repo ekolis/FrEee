@@ -1064,6 +1064,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public Relations GetRelations(Empire other, StarSystem sys)
 		{
+			if (other == null)
+				return Relations.Unknown;
 			if (this == other)
 				return Relations.Self;
 			if (!EncounteredEmpires.Contains(other))
