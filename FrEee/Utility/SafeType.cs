@@ -42,7 +42,7 @@ namespace FrEee.Utility
 		private static IEnumerable<Assembly> LoadReferencedAssemblies(Assembly rootAssembly = null, ISet<Assembly> alreadyLoaded = null)
 		{
 			if (rootAssembly == null)
-				rootAssembly = Assembly.GetExecutingAssembly();
+				rootAssembly = Assembly.GetEntryAssembly();
 			if (alreadyLoaded == null)
 				alreadyLoaded = new HashSet<Assembly>();
 			alreadyLoaded.Add(rootAssembly);
