@@ -1091,6 +1091,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool IsAllyOf(Empire other, StarSystem sys)
 		{
+			if (other == null)
+				return false; // can't be allied to nobody/host
 			return GetRelations(other, sys) == Relations.Allied && other.GetRelations(this, sys) == Relations.Allied;
 		}
 
@@ -1101,6 +1103,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool IsEnemyOf(Empire other, StarSystem sys)
 		{
+			if (other == null)
+				return false; // can't be hostile to nobody/host
 			return GetRelations(other, sys) == Relations.Hostile || other.GetRelations(this, sys) == Relations.Hostile;
 		}
 
