@@ -45,7 +45,7 @@ namespace FrEee.Utility
 				alreadyLoaded = new HashSet<Assembly>();
 			if (rootAssembly == null)
 			{
-				if (Assembly.GetEntryAssembly() != null)
+				if (Assembly.GetEntryAssembly() != null) // python scripts don't have an entry assembly I guess?
 					LoadReferencedAssemblies(Assembly.GetEntryAssembly(), alreadyLoaded);
 				LoadReferencedAssemblies(Assembly.GetExecutingAssembly(), alreadyLoaded);
 			}

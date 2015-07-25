@@ -141,7 +141,13 @@ namespace FrEee.WinForms.Objects
 			else
 				throw new Exception("Unknown audio format for file " + track.Path);
 
-      wc.Volume = musicVolume;
+			// convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
+			var wf = new WaveFormat();
+			var resampler = new MediaFoundationResampler(wc, wf);
+			var sp = resampler.ToSampleProvider();
+
+			// setup our track
+			wc.Volume = musicVolume;
 			waveout.PlaybackStopped -= waveout_PlaybackStopped;
 			waveout.Stop();
 			waveout.Dispose();
@@ -153,7 +159,7 @@ namespace FrEee.WinForms.Objects
 			prevTrack = curTrack;
 			if (prevTrack != null)
 				prevTrack.BeginFadeOut(FadeDuration);
-			curTrack = new FadeInOutSampleProvider(wc.ToSampleProvider(), true);
+			curTrack = new FadeInOutSampleProvider(sp, true);
 			curTrack.BeginFadeIn(FadeDuration);
 
 			// start playing
@@ -183,10 +189,10 @@ namespace FrEee.WinForms.Objects
 			StartNewTrack();
 		}
 
-    public static void setVolume(float volume)
-    {
-      musicVolume = volume;
-    }
+		public static void setVolume(float volume)
+		{
+			musicVolume = volume;
+		}
 	}
 
 	/// <summary>
