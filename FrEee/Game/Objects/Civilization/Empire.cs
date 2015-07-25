@@ -816,7 +816,9 @@ namespace FrEee.Game.Objects.Civilization
 			// TODO - rankings too, not just scores
 			var disp = Galaxy.Current.ScoreDisplay;
 			bool showit = false;
-			if (viewer == this)
+			if (viewer == null)
+				showit = true; // host can see everyone's scores
+			else if (viewer == this)
 				showit = true; // can always see your own score
 			else if (viewer.IsAllyOf(this, null) && disp.HasFlag(ScoreDisplay.AlliesOnlyNoRankings))
 				showit = true; // see allies' score if ally score flag enabled
