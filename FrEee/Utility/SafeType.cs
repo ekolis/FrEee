@@ -36,21 +36,28 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Finds and loads all referenced assemblies from a given root assembly, recursively.
 		/// </summary>
-		/// <param name="rootAssembly">The root assembly. If not specified, Assembly.GetEntryAssembly() will be used.</param>
+		/// <param name="rootAssembly">The root assembly. If not specified, Assembly.GetEntryAssembly() and Assembly.GetExecutingAssembly() will be used.</param>
 		/// <param name="alreadyLoaded">Any already-loaded assemblies. Apparently built-in CLR assemblies are allowed to have circular references?</param>
 		/// <returns></returns>
 		private static IEnumerable<Assembly> LoadReferencedAssemblies(Assembly rootAssembly = null, ISet<Assembly> alreadyLoaded = null)
 		{
-			if (rootAssembly == null)
-				rootAssembly = Assembly.GetEntryAssembly();
 			if (alreadyLoaded == null)
 				alreadyLoaded = new HashSet<Assembly>();
-			alreadyLoaded.Add(rootAssembly);
-			foreach (var subAssemblyName in rootAssembly.GetReferencedAssemblies())
+			if (rootAssembly == null)
 			{
-				var subAssembly = Assembly.Load(subAssemblyName);
-				if (!alreadyLoaded.Contains(subAssembly))
-					LoadReferencedAssemblies(subAssembly, alreadyLoaded);
+				if (Assembly.GetEntryAssembly() != null)
+					LoadReferencedAssemblies(Assembly.GetEntryAssembly(), alreadyLoaded);
+				LoadReferencedAssemblies(Assembly.GetExecutingAssembly(), alreadyLoaded);
+			}
+			else
+			{
+				alreadyLoaded.Add(rootAssembly);
+				foreach (var subAssemblyName in rootAssembly.GetReferencedAssemblies())
+				{
+					var subAssembly = Assembly.Load(subAssemblyName);
+					if (!alreadyLoaded.Contains(subAssembly))
+						LoadReferencedAssemblies(subAssembly, alreadyLoaded);
+				}
 			}
 			return alreadyLoaded;
 		}
