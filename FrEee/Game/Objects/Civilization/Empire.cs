@@ -1077,24 +1077,52 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Returns true if empires are not the same and neither empire is hostile to the other in the star system.
+		/// Gets the relations of this empire toward another empire in a particular system.
+		/// Note that relations are not necessarily mutual!
+		/// You should use IsEnemyOf when determining if combat can take place, not this function,
+		/// because you'd want to make sure if *either* empire is hostile to the other.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <param name="sys"></param>
+		/// <returns></returns>
+		public Relations GetRelations(Empire other, StarSystem sys)
+		{
+			if (this == other)
+				return Relations.Self;
+			if (!EncounteredEmpires.Contains(other))
+				return Relations.Unknown;
+			var alliance = GivenTreatyClauses[other].OfType<AllianceClause>().MaxOrDefault(c => c.AllianceLevel);
+			if (alliance >= AllianceLevel.NonAggression)
+				return Relations.Allied;
+			if (alliance >= AllianceLevel.NeutralZone)
+			{
+				if (sys == null)
+					return Relations.Hostile; // assume hostility if unknown system
+
+				// if we own a planet, we can defend it
+				return sys.FindSpaceObjects<Planet>().Any(p => p.Owner == this) ? Relations.Hostile : Relations.Allied;
+			}
+			return Relations.Hostile; // TODO - require a declared war status of some sort, otherwise return neutral?
+		}
+
+		/// <summary>
+		/// Returns true if both empires are allied to each other in the star system.
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
 		public bool IsAllyOf(Empire other, StarSystem sys)
 		{
-			return this != other && !this.IsHostileTo(other, sys) && !other.IsHostileTo(this, sys);
+			return GetRelations(other, sys) == Relations.Allied && other.GetRelations(this, sys) == Relations.Allied;
 		}
 
 		/// <summary>
-		/// Returns true if empires are at war in a system.
-		/// TODO - implement declared war status; right now empires with no treaty are considered to be at war
+		/// Returns true if either empire is hostile to the other.
 		/// </summary>
 		/// <param name="other"></param>
 		/// <returns></returns>
 		public bool IsEnemyOf(Empire other, StarSystem sys)
 		{
-			return this.IsHostileTo(other, sys);
+			return GetRelations(other, sys) == Relations.Hostile || other.GetRelations(this, sys) == Relations.Hostile;
 		}
 
 		/// <summary>
@@ -1104,7 +1132,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool IsNeutralTo(Empire other, StarSystem sys)
 		{
-			return this != other && !this.IsAllyOf(other, sys) && !this.IsEnemyOf(other, sys);
+			return !IsAllyOf(other, sys) && !IsEnemyOf(other, sys);
 		}
 
 		public IEnumerable<IAbilityObject> Children

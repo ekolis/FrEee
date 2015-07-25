@@ -136,6 +136,7 @@
     <Compile Include="Game\Enumerations\AllowedTrades.cs" />
     <Compile Include="Game\Enumerations\EmpirePlacement.cs" />
     <Compile Include="Game\Enumerations\Mood.cs" />
+    <Compile Include="Game\Enumerations\Relations.cs" />
     <Compile Include="Game\Enumerations\ScoreDisplay.cs" />
     <Compile Include="Game\Enumerations\SharingPriority.cs" />
     <Compile Include="Game\Enumerations\StartingTechnologyLevel.cs" />
