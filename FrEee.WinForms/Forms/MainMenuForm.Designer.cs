@@ -39,6 +39,7 @@
 			this.btnQuickStart = new FrEee.WinForms.Controls.GameButton();
 			this.btnLoad = new FrEee.WinForms.Controls.GameButton();
 			this.btnResume = new FrEee.WinForms.Controls.GameButton();
+			this.btnOptions = new FrEee.WinForms.Controls.GameButton();
 			this.tableLayoutPanel1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tblButtonPanel.SuspendLayout();
@@ -59,7 +60,7 @@
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
 			this.tableLayoutPanel1.RowCount = 2;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(577, 403);
 			this.tableLayoutPanel1.TabIndex = 0;
@@ -71,7 +72,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.pictureBox1.Location = new System.Drawing.Point(3, 3);
 			this.pictureBox1.Name = "pictureBox1";
-			this.pictureBox1.Size = new System.Drawing.Size(407, 362);
+			this.pictureBox1.Size = new System.Drawing.Size(407, 390);
 			this.pictureBox1.TabIndex = 2;
 			this.pictureBox1.TabStop = false;
 			// 
@@ -90,6 +91,7 @@
 			this.tblButtonPanel.Controls.Add(this.btnQuickStart, 0, 2);
 			this.tblButtonPanel.Controls.Add(this.btnLoad, 0, 4);
 			this.tblButtonPanel.Controls.Add(this.btnResume, 0, 3);
+			this.tblButtonPanel.Controls.Add(this.btnOptions, 0, 6);
 			this.tblButtonPanel.Location = new System.Drawing.Point(416, 3);
 			this.tblButtonPanel.Name = "tblButtonPanel";
 			this.tblButtonPanel.RowCount = 9;
@@ -99,11 +101,11 @@
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
-			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 			this.tblButtonPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tblButtonPanel.Size = new System.Drawing.Size(158, 362);
+			this.tblButtonPanel.Size = new System.Drawing.Size(158, 390);
 			this.tblButtonPanel.TabIndex = 3;
 			// 
 			// btnQuit
@@ -112,12 +114,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnQuit.BackColor = System.Drawing.Color.Black;
 			this.btnQuit.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnQuit.Location = new System.Drawing.Point(5, 323);
+			this.btnQuit.Location = new System.Drawing.Point(5, 357);
 			this.btnQuit.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
 			this.btnQuit.Name = "btnQuit";
 			this.btnQuit.Padding = new System.Windows.Forms.Padding(4);
 			this.btnQuit.Size = new System.Drawing.Size(148, 35);
-			this.btnQuit.TabIndex = 7;
+			this.btnQuit.TabIndex = 8;
 			this.btnQuit.Text = "Quit";
 			this.btnQuit.UseVisualStyleBackColor = false;
 			this.btnQuit.Click += new System.EventHandler(this.btnQuit_Click);
@@ -160,12 +162,12 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCredits.BackColor = System.Drawing.Color.Black;
 			this.btnCredits.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCredits.Location = new System.Drawing.Point(5, 279);
+			this.btnCredits.Location = new System.Drawing.Point(5, 313);
 			this.btnCredits.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
 			this.btnCredits.Name = "btnCredits";
 			this.btnCredits.Padding = new System.Windows.Forms.Padding(4);
 			this.btnCredits.Size = new System.Drawing.Size(148, 35);
-			this.btnCredits.TabIndex = 6;
+			this.btnCredits.TabIndex = 7;
 			this.btnCredits.Text = "Credits";
 			this.btnCredits.UseVisualStyleBackColor = false;
 			this.btnCredits.Click += new System.EventHandler(this.btnCredits_Click);
@@ -234,6 +236,22 @@
 			this.btnResume.UseVisualStyleBackColor = false;
 			this.btnResume.Click += new System.EventHandler(this.btnResume_Click);
 			// 
+			// btnOptions
+			// 
+			this.btnOptions.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOptions.BackColor = System.Drawing.Color.Black;
+			this.btnOptions.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.btnOptions.Location = new System.Drawing.Point(5, 269);
+			this.btnOptions.Margin = new System.Windows.Forms.Padding(5, 5, 5, 4);
+			this.btnOptions.Name = "btnOptions";
+			this.btnOptions.Padding = new System.Windows.Forms.Padding(4);
+			this.btnOptions.Size = new System.Drawing.Size(148, 35);
+			this.btnOptions.TabIndex = 6;
+			this.btnOptions.Text = "Options";
+			this.btnOptions.UseVisualStyleBackColor = false;
+			this.btnOptions.Click += new System.EventHandler(this.btnOptions_Click);
+			// 
 			// MainMenuForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -250,6 +268,7 @@
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "FrEee";
+			this.Load += new System.EventHandler(this.MainMenuForm_Load);
 			this.VisibleChanged += new System.EventHandler(this.MainMenuForm_VisibleChanged);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainMenuForm_KeyDown);
 			this.tableLayoutPanel1.ResumeLayout(false);
@@ -271,6 +290,7 @@
         private Controls.GameButton btnLoad;
         private Controls.GameButton btnResume;
         private Controls.GameButton btnNew;
+        private Controls.GameButton btnOptions;
 		private Controls.GameButton btnQuickStart;
 
     }

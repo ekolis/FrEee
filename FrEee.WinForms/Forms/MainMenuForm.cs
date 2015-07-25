@@ -231,6 +231,11 @@ namespace FrEee.WinForms.Forms
 			MessageBox.Show("Sorry, playing a scenario is not yet supported.");
 		}
 
+		private void btnOptions_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new OptionsForm());
+		}
+
 		private void btnCredits_Click(object sender, EventArgs e)
 		{
 			string credits;
@@ -258,5 +263,16 @@ namespace FrEee.WinForms.Forms
 			if (e.Shift && e.KeyCode == Keys.Oem3) // tilde
 				this.ShowChildForm(new DebugForm());
 		}
+
+    private void MainMenuForm_Load(object sender, EventArgs e) {
+      try {
+        ClientSettings.Load();
+      }
+      catch (Exception) {
+        MessageBox.Show("Error loading client settings. Resetting to defaults.");
+        ClientSettings.Initialize();
+        ClientSettings.Save();
+      }
+    }
 	}
 }

@@ -131,16 +131,6 @@ namespace FrEee.WinForms.Forms
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
 
-			try
-			{
-				ClientSettings.Load();
-			}
-			catch (Exception)
-			{
-				MessageBox.Show("Error loading client settings. Resetting to defaults.");
-				ClientSettings.Initialize();
-				ClientSettings.Save();
-			}
 		}
 
 		/// <summary>
