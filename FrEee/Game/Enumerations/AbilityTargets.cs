@@ -62,6 +62,7 @@ namespace FrEee.Game.Enumerations
 		Vehicle = Ship | Base | Unit,
 		[CanonicalName("Space Object")]
 		SpaceObject = StellarObject | SpaceVehicle,
+		Part = Component | Facility,
 
 		// invalid
 		Invalid = 0x2000000,
