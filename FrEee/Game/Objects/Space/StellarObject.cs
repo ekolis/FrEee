@@ -102,7 +102,7 @@ namespace FrEee.Game.Objects.Space
 
 		public virtual bool IsHostileTo(Empire emp)
 		{
-			return Owner == null ? false : Owner.IsHostileTo(emp, StarSystem);
+			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
 		}
 
 		public virtual bool CanBeInFleet
