@@ -708,29 +708,6 @@ namespace FrEee.Game.Objects.Civilization
 		}
 
 		/// <summary>
-		/// Is this empire hostile to another empire in a particular system?
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public bool IsHostileTo(Empire emp, StarSystem sys)
-		{
-			if (emp == null)
-				return false;
-			if (emp == this)
-				return false;
-			var alliance = GivenTreatyClauses[emp].OfType<AllianceClause>().MaxOrDefault(c => c.AllianceLevel);
-			if (alliance >= AllianceLevel.NonAggression)
-				return false;
-			if (alliance >= AllianceLevel.NeutralZone)
-			{
-				if (sys == null)
-					return true; // assume hostility if unknown system
-				return sys.FindSpaceObjects<Planet>().Any(p => p.Owner == this);
-			}
-			return true; // TODO - standing orders for hostility or peace towards empires with no treaty?
-		}
-
-		/// <summary>
 		/// Intrinsic resource storage capacity of this empire (without components, facilities, etc. that provide the abilities).
 		/// </summary>
 		public ResourceQuantity IntrinsicResourceStorage { get; private set; }
