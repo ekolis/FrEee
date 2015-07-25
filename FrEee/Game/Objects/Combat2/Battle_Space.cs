@@ -316,7 +316,7 @@ namespace FrEee.Game.Objects.Combat2
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
 			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
 			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
-			var enemySurvivors = survivors.Where(c => c.Owner.IsHostileTo(emp, StarSystem));
+			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, StarSystem));
 			if (friendlySurvivors.Any() && enemySurvivors.Any())
 				return "stalemate";
 			if (friendlySurvivors.Any())

@@ -247,5 +247,10 @@ namespace FrEee.WinForms.Forms
 		{
 			MessageBox.Show("Sorry, setting waypoints is not yet implemented.");
 		}
+
+		private void btnScores_Click(object sender, EventArgs e)
+		{
+			this.ShowChildForm(new ScoresForm());
+		}
 	}
 }

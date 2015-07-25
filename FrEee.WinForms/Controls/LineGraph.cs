@@ -69,7 +69,7 @@ namespace FrEee.WinForms.Controls
 				var pen = new Pen(brush);
 				for (int i = 0; i <= maxx; i++)
 				{
-					var xpos = graphBounds.Left + graphBounds.Width / maxx * i;
+					var xpos = graphBounds.Left + graphBounds.Width / (maxx == 0 ? 1 : maxx) * i;
 					var size = g.MeasureString(i.ToString(), Font);
 					var rect = new RectangleF(xpos - size.Width / 2f, graphBounds.Bottom, size.Width, size.Height);
 					g.DrawString(i.ToString(), Font, brush, rect, sfTop);

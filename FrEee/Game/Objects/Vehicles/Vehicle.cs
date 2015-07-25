@@ -139,7 +139,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool IsHostileTo(Empire emp)
 		{
-			return Owner == null ? false : Owner.IsHostileTo(emp, StarSystem);
+			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
 		}
 
 		/// <summary>

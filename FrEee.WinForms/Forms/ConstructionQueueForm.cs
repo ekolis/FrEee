@@ -811,15 +811,19 @@ namespace FrEee.WinForms.Forms
 					newCommands.Add(cmd);
 				}
 			}
+			
+			// remove the order
+			ConstructionQueue.Orders.Remove(order);
+
 			if (order.Template is IDesign)
 			{
 				var design = order.Template as IDesign;
 
 				// is this a new design we've never built before and are not building any more of? then don't tell the server so other players don't know ;)
-				if (design.IsNew && BuildingAnywhere(design))
+				if (design.IsNew && !BuildingAnywhere(design))
 					Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ICreateDesignCommand>().SingleOrDefault(c => c.Design == design));
 			}
-			ConstructionQueue.Orders.Remove(order);
+
 			if (rebindGui)
 				BindQueueListView();
 		}

@@ -161,7 +161,7 @@ namespace FrEee.WinForms.Controls
 			}
 
 			// do filtering
-			var filteredData = Data;
+			var filteredData = Data.ExceptSingle(null);
 			foreach (var col in CurrentGridConfig.Columns)
 			{
 				if (col.Filter == Filter.Exact)

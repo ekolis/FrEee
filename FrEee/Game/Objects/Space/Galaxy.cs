@@ -642,12 +642,12 @@ namespace FrEee.Game.Objects.Space
 
 		public static string GetEmpireCommandsSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.PlayerCommandsSaveGameExtension));
 		}
 
 		public static string GetGameSavePath(string gameName, int turnNumber, int empireNumber)
 		{
-            return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", empireNumber < 1 ?
+			return Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "Savegame", empireNumber < 1 ?
 				String.Format("{0}_{1}{2}", gameName, turnNumber, FrEeeConstants.SaveGameExtension) :
 				String.Format("{0}_{1}_{2:d4}{3}", gameName, turnNumber, empireNumber, FrEeeConstants.SaveGameExtension));
 		}
@@ -666,6 +666,12 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public void Redact()
 		{
+			// save off empire scores first, before data is removed
+			foreach (var emp in Empires)
+			{
+				emp.Scores[TurnNumber] = emp.ComputeScore(Empire.Current);
+			}
+
 			// the galaxy data itself
 			if (Empire.Current != null)
 				ScriptNotes.Clear();
@@ -1218,6 +1224,12 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// update scores
+			foreach (var emp in Current.Empires)
+			{
+				emp.Scores[Current.TurnNumber] = emp.ComputeScore(null);
+			}
+
 			// check for victory/defeat
 			foreach (var vc in Current.VictoryConditions)
 			{
@@ -1478,9 +1490,9 @@ namespace FrEee.Game.Objects.Space
 
 		public void ComputeNextTickSize()
 		{
-            
+			
 			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
-            objs = objs.Where(obj => !obj.IsMemory);
+			objs = objs.Where(obj => !obj.IsMemory);
 			if (objs.Any() && CurrentTick < 1.0)
 				NextTickSize = Math.Max(Math.Min(1.0 - CurrentTick, objs.Min(v => v.TimeToNextMove)), 1e-15);
 			else
