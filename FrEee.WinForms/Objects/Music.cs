@@ -21,6 +21,8 @@ namespace FrEee.WinForms.Objects
 
 		private static FadeInOutSampleProvider curTrack, prevTrack;
 
+		private static float musicVolume = 1.0f;
+
 		private static MusicMode currentMode;
 
 		private const int FadeDuration = 5000; // milliseconds
@@ -129,16 +131,17 @@ namespace FrEee.WinForms.Objects
 
 			// prepare the new track
 			var tl = track.Path.ToLower();
-			IWaveProvider p;
+			WaveChannel32 wc = null;
 			if (tl.EndsWith("ogg"))
-				p = new VorbisWaveReader(track.Path);
+				wc = new WaveChannel32(new VorbisWaveReader(track.Path));
 			else if (tl.EndsWith("mp3"))
-				p = new Mp3FileReader(track.Path);
+				wc = new WaveChannel32(new Mp3FileReader(track.Path));
 			else if (tl.EndsWith("wav"))
-				p = new WaveFileReader(track.Path);
+				wc = new WaveChannel32(new WaveFileReader(track.Path));
 			else
 				throw new Exception("Unknown audio format for file " + track.Path);
-			
+
+      wc.Volume = musicVolume;
 			waveout.PlaybackStopped -= waveout_PlaybackStopped;
 			waveout.Stop();
 			waveout.Dispose();
@@ -150,7 +153,7 @@ namespace FrEee.WinForms.Objects
 			prevTrack = curTrack;
 			if (prevTrack != null)
 				prevTrack.BeginFadeOut(FadeDuration);
-			curTrack = new FadeInOutSampleProvider(p.ToSampleProvider(), true);
+			curTrack = new FadeInOutSampleProvider(wc.ToSampleProvider(), true);
 			curTrack.BeginFadeIn(FadeDuration);
 
 			// start playing
@@ -179,6 +182,11 @@ namespace FrEee.WinForms.Objects
 			currentMood = mood;
 			StartNewTrack();
 		}
+
+    public static void setVolume(float volume)
+    {
+      musicVolume = volume;
+    }
 	}
 
 	/// <summary>

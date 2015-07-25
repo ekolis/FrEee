@@ -172,6 +172,9 @@
     <Compile Include="Forms\MogreCombatForm.Designer.cs">
       <DependentUpon>MogreCombatForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\OptionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\RecycleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -752,6 +755,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\MainMenuForm.resx">
       <DependentUpon>MainMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\OptionsForm.resx">
+      <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\RecycleForm.resx">
       <DependentUpon>RecycleForm.cs</DependentUpon>
