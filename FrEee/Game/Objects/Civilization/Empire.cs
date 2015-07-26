@@ -1115,7 +1115,7 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public bool IsNeutralTo(Empire other, StarSystem sys)
 		{
-			return !IsAllyOf(other, sys) && !IsEnemyOf(other, sys);
+			return this != other && !IsAllyOf(other, sys) && !IsEnemyOf(other, sys);
 		}
 
 		public IEnumerable<IAbilityObject> Children
