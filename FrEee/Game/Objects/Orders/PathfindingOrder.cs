@@ -229,6 +229,10 @@ namespace FrEee.Game.Objects.Orders
 						// consume supplies
 						sobj.BurnMovementSupplies();
 
+						// are we there yet, Dad?
+						if (sobj.FindSector() == KnownTarget.FindSector())
+							IsComplete = true; // we've arrived at the target
+
 						// resupply space vehicles
 						// either this vehicle from other space objects, or other vehicles from this one
 						// TODO - this should really be done AFTER battles...
