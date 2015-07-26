@@ -186,7 +186,7 @@ namespace FrEee.WinForms.Forms
 			setup.HomeworldSize = (StellarSize)ddlHomeworldSize.SelectedItem;
 			setup.EmpirePlacement = (EmpirePlacement)(ddlEmpirePlacement.SelectedIndex);
 			setup.MaxHomeworldDispersion = (int)spnMaxDispersion.Value;
-			setup.ScoreDisplay = (ScoreDisplay)(ddlScoreDisplay.SelectedIndex);
+			setup.ScoreDisplay = Enum.GetValues(typeof(ScoreDisplay)).Cast<ScoreDisplay>().ElementAt(ddlScoreDisplay.SelectedIndex);
 			setup.EmpirePoints = (int)spnEmpirePoints.Value;
 			setup.RandomAIs = (int)spnRandomAIs.Value;
 			setup.MinorEmpires = (int)spnMinorEmpires.Value;
@@ -273,7 +273,7 @@ namespace FrEee.WinForms.Forms
 			ddlHomeworldSize.SelectedItem = setup.HomeworldSize;
 			ddlEmpirePlacement.SelectedIndex = (int)setup.EmpirePlacement;
 			spnMaxDispersion.Value = setup.MaxHomeworldDispersion;
-			ddlScoreDisplay.SelectedIndex = (int)setup.ScoreDisplay;
+			ddlScoreDisplay.SelectedIndex = (int)Enum.GetValues(typeof(ScoreDisplay)).Cast<ScoreDisplay>().IndexOf(setup.ScoreDisplay);
 			spnEmpirePoints.Value = setup.EmpirePoints;
 			spnRandomAIs.Value = setup.RandomAIs;
 			spnMinorEmpires.Value = setup.MinorEmpires;
