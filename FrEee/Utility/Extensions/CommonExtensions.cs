@@ -3506,6 +3506,24 @@ namespace FrEee.Utility.Extensions
 		{
 			return self.NewerVersions.Contains(other);
 		}
+
+		public static bool ExecuteMobileSpaceObjectOrders<T>(this T o)
+			where T : IMobileSpaceObject<T>
+		{
+			bool didStuff = false;
+			while (o.Orders.Any() && (o.TimeToNextMove <= 1e-15 || !o.Orders.First().ConsumesMovement))
+			{
+				o.Orders.First().Execute(o);
+				if (o.Orders.First().IsComplete)
+					o.Orders.RemoveAt(0);
+				didStuff = true;
+			}
+			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
+				o.TimeToNextMove = 0;
+			else
+				o.TimeToNextMove -= Galaxy.Current.NextTickSize;
+			return didStuff;
+		}
 	}
 
 	public enum IDCopyBehavior
