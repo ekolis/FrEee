@@ -477,21 +477,9 @@ namespace FrEee.Game.Objects.Space
 
 		public bool ExecuteOrders()
 		{
-			bool didStuff = false;
 			if (!Vehicles.Any())
-				return didStuff; // fleets with no vehicles can't do anything...
-			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
-				TimeToNextMove = 0;
-			else
-				TimeToNextMove -= Galaxy.Current.NextTickSize;
-			while (TimeToNextMove <= 0 && Orders.Any())
-			{
-				Orders.First().Execute(this);
-				if (Orders.First().IsComplete)
-					Orders.RemoveAt(0);
-				didStuff = true;
-			}
-			return didStuff;
+				return false; // fleets with no vehicles can't execute orders
+			return this.ExecuteMobileSpaceObjectOrders();
 		}
 
 		public Cargo Cargo

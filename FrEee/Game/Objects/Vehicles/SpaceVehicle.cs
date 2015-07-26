@@ -85,26 +85,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool ExecuteOrders()
 		{
-			bool didStuff = false;
-			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
-				TimeToNextMove = 0;
-			else
-				TimeToNextMove -= Galaxy.Current.NextTickSize;
-			while (TimeToNextMove <= 1e-15 && Orders.Any())
-			{
-				Orders.First().Execute(this);
-				if (Orders.First().IsComplete)
-					Orders.RemoveAt(0);
-				didStuff = true;
-			}
-			while (Orders.Any() && !Orders.First().ConsumesMovement)
-			{
-				Orders.First().Execute(this);
-				if (Orders.First().IsComplete)
-					Orders.RemoveAt(0);
-				didStuff = true;
-			}
-			return didStuff;
+			return this.ExecuteMobileSpaceObjectOrders();
 		}
 
 		/// <summary>

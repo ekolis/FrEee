@@ -1079,6 +1079,8 @@ namespace FrEee.Game.Objects.Space
 				if (Current.CurrentTick >= 1d)
 				{
 					Current.CurrentTick = 1d;
+					Current.NextTickSize = 0d;
+					Current.MoveShips();
 					Current.didLastTick = true;
 				}
 				foreach (var f in Current.Referrables.OfType<IFoggable>())

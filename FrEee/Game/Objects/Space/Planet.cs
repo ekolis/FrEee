@@ -268,28 +268,7 @@ namespace FrEee.Game.Objects.Space
 
 		public bool ExecuteOrders()
 		{
-			bool didStuff = false;
-			if (Galaxy.Current.NextTickSize == double.PositiveInfinity)
-				TimeToNextMove = 0;
-			else
-				TimeToNextMove -= Galaxy.Current.NextTickSize;
-			while (TimeToNextMove <= 0 && Orders.Any())
-			{
-				if (!Orders.Any())
-					break;
-				Orders.First().Execute(this);
-				if (Orders.First().IsComplete)
-					Orders.RemoveAt(0);
-				didStuff = true;
-			}
-			while (Orders.Any() && !Orders.First().ConsumesMovement)
-			{
-				Orders.First().Execute(this);
-				if (Orders.First().IsComplete)
-					Orders.RemoveAt(0);
-				didStuff = true;
-			}
-			return didStuff;
+			return this.ExecuteMobileSpaceObjectOrders();
 		}
 
 		public override ConstructionQueue ConstructionQueue
