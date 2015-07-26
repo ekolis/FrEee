@@ -195,7 +195,7 @@ namespace FrEee.Game.Objects.Orders
 			// TODO - movement logs
 			if (KnownTarget == null)
 				IsComplete = true; // target is known to be dead
-			else if (sobj.FindSector() == KnownTarget.FindSector())
+			else if (AreWeThereYet(sobj))
 				IsComplete = true; // we've arrived at the target
 			else
 			{
@@ -230,7 +230,7 @@ namespace FrEee.Game.Objects.Orders
 						sobj.BurnMovementSupplies();
 
 						// are we there yet, Dad?
-						if (sobj.FindSector() == KnownTarget.FindSector())
+						if (AreWeThereYet(sobj))
 							IsComplete = true; // we've arrived at the target
 
 						// resupply space vehicles
@@ -282,5 +282,7 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return true; }
 		}
+
+		protected abstract bool AreWeThereYet(T me);
 	}
 }

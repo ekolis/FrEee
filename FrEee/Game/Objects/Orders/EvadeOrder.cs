@@ -87,5 +87,11 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return "evade"; }
 		}
+
+		protected override bool AreWeThereYet(T me)
+		{
+			// gotta keep on running...
+			return Target == null || Target.IsDisposed;
+		}
 	}
 }
