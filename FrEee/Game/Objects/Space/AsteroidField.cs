@@ -53,7 +53,7 @@ namespace FrEee.Game.Objects.Space
 		/// <returns>A copy of the asteroid field.</returns>
 		public AsteroidField Instantiate()
 		{
-			return this.Copy();
+			return this.CopyAndAssignNewID();
 		}
 
 		public double MineralsValue { get { return ResourceValue[Resource.Minerals]; } }
