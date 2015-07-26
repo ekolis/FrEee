@@ -49,5 +49,10 @@ namespace FrEee.Game.Objects.Orders
 					return "pursue";
 			}
 		}
+
+		protected override bool AreWeThereYet(T me)
+		{
+			return me.Sector == Destination;
+		}
 	}
 }
