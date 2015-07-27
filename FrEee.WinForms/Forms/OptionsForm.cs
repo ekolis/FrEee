@@ -237,6 +237,11 @@ namespace FrEee.WinForms.Forms
           foreach (FileInfo file in files)
           {
             string temppath = Path.Combine(output, file.Name);
+            string conflict = temppath.Replace(".BMP", ".png").Replace(".bmp", ".png");
+            //if (File.Exists(conflict))
+            //{
+            //  File.Delete(conflict);
+            //}
             file.CopyTo(temppath, true);
           }
         }
@@ -250,7 +255,7 @@ namespace FrEee.WinForms.Forms
         if (!Directory.Exists(subOutput)) {
           Directory.CreateDirectory(subOutput);
         }
-        FileInfo[] files = dir.GetFiles();
+        FileInfo[] files = (new DirectoryInfo(se4root + "/Pictures/Races/" + subdir.Name)).GetFiles();
         foreach (FileInfo file in files) {
           string temppath = Path.Combine(subOutput, file.Name);
           file.CopyTo(temppath, true);
