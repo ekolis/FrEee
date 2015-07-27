@@ -1,6 +1,8 @@
 ﻿using FrEee.WinForms.Objects;
 using System.Windows.Forms;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace FrEee.WinForms.Forms
 {
@@ -14,6 +16,7 @@ namespace FrEee.WinForms.Forms
     private TrackBar sldMusic;
     private Controls.GameButton btnCancel;
     private Controls.GameButton btnSave;
+    private Controls.GameButton btnSE4;
     private TrackBar sldMaster;
   
     public OptionsForm()
@@ -32,6 +35,7 @@ namespace FrEee.WinForms.Forms
       this.sldMusic = new System.Windows.Forms.TrackBar();
       this.btnCancel = new FrEee.WinForms.Controls.GameButton();
       this.btnSave = new FrEee.WinForms.Controls.GameButton();
+      this.btnSE4 = new FrEee.WinForms.Controls.GameButton();
       ((System.ComponentModel.ISupportInitialize)(this.sldMaster)).BeginInit();
       this.groupBox1.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.sldEffects)).BeginInit();
@@ -70,7 +74,7 @@ namespace FrEee.WinForms.Forms
       this.groupBox1.ForeColor = System.Drawing.Color.CornflowerBlue;
       this.groupBox1.Location = new System.Drawing.Point(12, 12);
       this.groupBox1.Name = "groupBox1";
-      this.groupBox1.Size = new System.Drawing.Size(359, 202);
+      this.groupBox1.Size = new System.Drawing.Size(359, 176);
       this.groupBox1.TabIndex = 18;
       this.groupBox1.TabStop = false;
       this.groupBox1.Text = "Volume";
@@ -94,7 +98,7 @@ namespace FrEee.WinForms.Forms
       this.sldEffects.Maximum = 100;
       this.sldEffects.Name = "sldEffects";
       this.sldEffects.Size = new System.Drawing.Size(213, 45);
-      this.sldEffects.TabIndex = 20;
+      this.sldEffects.TabIndex = 2;
       this.sldEffects.TickFrequency = 10;
       // 
       // label1
@@ -115,7 +119,7 @@ namespace FrEee.WinForms.Forms
       this.sldMusic.Maximum = 100;
       this.sldMusic.Name = "sldMusic";
       this.sldMusic.Size = new System.Drawing.Size(213, 45);
-      this.sldMusic.TabIndex = 18;
+      this.sldMusic.TabIndex = 1;
       this.sldMusic.TickFrequency = 10;
       // 
       // btnCancel
@@ -126,7 +130,7 @@ namespace FrEee.WinForms.Forms
       this.btnCancel.Location = new System.Drawing.Point(296, 272);
       this.btnCancel.Name = "btnCancel";
       this.btnCancel.Size = new System.Drawing.Size(75, 23);
-      this.btnCancel.TabIndex = 21;
+      this.btnCancel.TabIndex = 5;
       this.btnCancel.Text = "Cancel";
       this.btnCancel.UseVisualStyleBackColor = false;
       this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -139,15 +143,28 @@ namespace FrEee.WinForms.Forms
       this.btnSave.Location = new System.Drawing.Point(215, 272);
       this.btnSave.Name = "btnSave";
       this.btnSave.Size = new System.Drawing.Size(75, 23);
-      this.btnSave.TabIndex = 20;
+      this.btnSave.TabIndex = 4;
       this.btnSave.Text = "Save";
       this.btnSave.UseVisualStyleBackColor = false;
       this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+      // 
+      // btnSE4
+      // 
+      this.btnSE4.BackColor = System.Drawing.Color.Black;
+      this.btnSE4.ForeColor = System.Drawing.Color.CornflowerBlue;
+      this.btnSE4.Location = new System.Drawing.Point(13, 195);
+      this.btnSE4.Name = "btnSE4";
+      this.btnSE4.Size = new System.Drawing.Size(104, 30);
+      this.btnSE4.TabIndex = 3;
+      this.btnSE4.Text = "Copy SE4 Assets";
+      this.btnSE4.UseVisualStyleBackColor = false;
+      this.btnSE4.Click += new System.EventHandler(this.btnSE4_Click);
       // 
       // OptionsForm
       // 
       this.BackColor = System.Drawing.Color.Black;
       this.ClientSize = new System.Drawing.Size(383, 307);
+      this.Controls.Add(this.btnSE4);
       this.Controls.Add(this.btnCancel);
       this.Controls.Add(this.btnSave);
       this.Controls.Add(this.groupBox1);
@@ -185,6 +202,80 @@ namespace FrEee.WinForms.Forms
       sldMaster.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.masterVolume));
       sldMusic.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.musicVolume));
       sldEffects.Value = Math.Max(0, Math.Min(100, ClientSettings.Instance.effectsVolume));
+    }
+
+    private void btnSE4_Click(object sender, EventArgs e) {
+      // find SE4 folder
+      FolderBrowserDialog fbd = new FolderBrowserDialog();
+      fbd.Description = "Locate SE4 root folder";
+      DialogResult result = fbd.ShowDialog(); 
+      if (result == DialogResult.Cancel) {
+        return;
+      }
+      string se4root = fbd.SelectedPath;
+
+      DirectoryInfo dir = null;
+      string output = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures");
+      // create the output pictures folder if it doesn't exist
+      if (!Directory.Exists(output)) {
+        Directory.CreateDirectory(output);
+      }
+
+      // === MOST OF THE ART IS HERE ===
+      string [] folders = { "Planets", "Components", "Facilities", "Systems" };
+      foreach (string f in folders)
+      {
+        dir = new DirectoryInfo(se4root + "/Pictures/" + f);
+        if (dir.Exists)
+        {
+          output = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures/" + f);
+          if (!Directory.Exists(output)) {
+            Directory.CreateDirectory(output);
+          }
+
+          FileInfo[] files = dir.GetFiles();
+          foreach (FileInfo file in files)
+          {
+            string temppath = Path.Combine(output, file.Name);
+            file.CopyTo(temppath, true);
+          }
+        }
+      }
+
+      // === RACES AND THEIR SHIPSETS ===
+      output = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Pictures/Races");
+      dir = new DirectoryInfo(se4root + "/Pictures/Races");
+      foreach (DirectoryInfo subdir in dir.GetDirectories()) {
+        string subOutput = Path.Combine(output, subdir.Name);
+        if (!Directory.Exists(subOutput)) {
+          Directory.CreateDirectory(subOutput);
+        }
+        FileInfo[] files = dir.GetFiles();
+        foreach (FileInfo file in files) {
+          string temppath = Path.Combine(subOutput, file.Name);
+          file.CopyTo(temppath, true);
+        }
+      }
+
+      /* // TEMPORARILY DISABLED: we need to classify all the tracks to put them in the right sub folder
+      // === MUSIC ===
+      foreach (string f in folders) {
+        dir = new DirectoryInfo(se4root + "/Music/");
+        if (dir.Exists) {
+          output = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Music");
+          if (!Directory.Exists(output)) {
+            Directory.CreateDirectory(output);
+          }
+
+          FileInfo[] files = dir.GetFiles();
+          foreach (FileInfo file in files) {
+            string temppath = Path.Combine(output, file.Name);
+            file.CopyTo(temppath, true);
+          }
+        }
+      }
+      */
+    
     }
   }
 }
