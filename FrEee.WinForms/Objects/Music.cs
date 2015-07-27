@@ -19,6 +19,10 @@ namespace FrEee.WinForms.Objects
 	{
 		private static WaveOutEvent waveout = new WaveOutEvent();
 
+		private static WaveFormat waveFormat = WaveFormat.CreateIeeeFloatWaveFormat(48000, 2);
+
+		private static MixingSampleProvider mixer = new MixingSampleProvider(waveFormat);
+
 		private static FadeInOutSampleProvider curTrack, prevTrack;
 
 		private static float musicVolume = 1.0f;
@@ -28,6 +32,13 @@ namespace FrEee.WinForms.Objects
 		private const int FadeDuration = 5000; // milliseconds
 
 		public static bool IsPlaying { get; private set; }
+
+		static Music()
+		{
+			waveout.Init(mixer);
+			waveout.PlaybackStopped += waveout_PlaybackStopped;
+			waveout.Play();
+        }
 
 		public static MusicMode CurrentMode
 		{
@@ -142,36 +153,25 @@ namespace FrEee.WinForms.Objects
 				throw new Exception("Unknown audio format for file " + track.Path);
 
 			// convert to a standard format so we can mix them (e.g. a mp3 with an ogg)
-			var wf = new WaveFormat();
-			var resampler = new MediaFoundationResampler(wc, wf);
+			var resampler = new MediaFoundationResampler(wc, waveFormat);
 			var sp = resampler.ToSampleProvider();
 
 			// setup our track
 			wc.Volume = musicVolume;
 			wc.PadWithZeroes = false; // to allow PlaybackStopped event to fire
-			waveout.PlaybackStopped -= waveout_PlaybackStopped;
-			waveout.Stop();
-			waveout.Dispose();
-			waveout = new WaveOutEvent();
 			if (CurrentMode == MusicMode.None)
 				return; // no music!
 
 			// fade between the two tracks
+			mixer.RemoveMixerInput(prevTrack);
 			prevTrack = curTrack;
 			if (prevTrack != null)
 				prevTrack.BeginFadeOut(FadeDuration);
 			curTrack = new FadeInOutSampleProvider(sp, true);
 			curTrack.BeginFadeIn(FadeDuration);
-
-			// start playing
-			// TODO - start fade of new track even before old track is done?
-			if (prevTrack != null)
-				waveout.Init(new MixingSampleProvider(new ISampleProvider[] { curTrack, prevTrack }));
-			else
-				waveout.Init(curTrack);
-			IsPlaying = true;
-			waveout.PlaybackStopped += waveout_PlaybackStopped;
+			mixer.AddMixerInput(curTrack);
 			waveout.Play();
+			IsPlaying = true;
 		}
 
 		static void waveout_PlaybackStopped(object sender, StoppedEventArgs e)
