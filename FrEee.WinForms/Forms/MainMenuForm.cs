@@ -273,6 +273,9 @@ namespace FrEee.WinForms.Forms
         ClientSettings.Initialize();
         ClientSettings.Save();
       }
+      // set the default music volume according to the settings
+      // volume values are 0-100, so scale appropriately to the 0-1 range
+      Music.setVolume(ClientSettings.Instance.masterVolume * ClientSettings.Instance.musicVolume * 1.0e-4f);
     }
 	}
 }
