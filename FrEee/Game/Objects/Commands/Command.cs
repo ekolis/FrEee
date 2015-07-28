@@ -33,6 +33,8 @@ namespace FrEee.Game.Objects.Commands
 
 		protected GalaxyReference<T> executor { get; set; }
 
+		public long ExecutorID { get { return executor.ID; } }
+
 		public abstract void Execute();
 
 		public virtual void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
