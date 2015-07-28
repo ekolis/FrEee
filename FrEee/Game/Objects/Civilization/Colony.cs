@@ -168,17 +168,18 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				// do modifiers to income
 				var totalpop = Population.Sum(kvp => kvp.Value);
-				var factor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
+				var popfactor = Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
 
 				var result = new ResourceQuantity();
 
 				foreach (var r in Resource.All)
 				{
+					var aptfactor = 1d;
 					if (r.Aptitude != null)
-						factor *= Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-					factor *= (100 + r.CultureModifier(Owner.Culture)) / 100d;
+						aptfactor = Population.Sum(kvp => (kvp.Key.Aptitudes[r.Aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
+					var cultfactor = (100 + r.CultureModifier(Owner.Culture)) / 100d;
 
-					result += (int)(100 * factor) * r;
+					result += (int)(100 * popfactor * aptfactor * cultfactor) * r;
 				}
 
 				return result;
