@@ -1445,13 +1445,18 @@ namespace FrEee.Game.Objects.Space
 			if (Mod.Current == null)
 				throw new InvalidOperationException("Cannot initialize a galaxy without a mod. Load a mod into Mod.Current first.");
 
+			var startProgress = status == null ? 0d : status.Progress;
+			var progressPerStep = (desiredProgress - startProgress) / 4d;
+
 			// create the game
 			var galtemp = gsu.GalaxyTemplate;
-
 			galtemp.GameSetup = gsu;
-			var startProgress = status == null ? 0d : status.Progress;
-			Current = galtemp.Instantiate(status, startProgress + (desiredProgress - startProgress) / 3d);
+			Current = galtemp.Instantiate(status, startProgress + progressPerStep);
+			if (status != null)
+				status.Message = "Populating galaxy";
 			gsu.PopulateGalaxy(Current);
+			if (status != null)
+				status.Progress += progressPerStep;
 
 			// set single player flag
 			Current.IsSinglePlayer = gsu.IsSinglePlayer;
@@ -1461,14 +1466,12 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Executing script";
 			ScriptEngine.RunScript<object>(Mod.Current.GameInitScript);
 			if (status != null)
-				status.Progress = startProgress + (desiredProgress - startProgress) * 2d / 3d;
+				status.Progress += progressPerStep;
 
 			// save the game
 			if (status != null)
 				status.Message = "Saving game";
 			Galaxy.SaveAll(status, desiredProgress);
-			if (status != null)
-				status.Progress = desiredProgress;
 		}
 
 		/// <summary>
