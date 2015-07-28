@@ -875,20 +875,41 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(ProjectDir)..\FrEee\Mods" "$(TargetDir)Mods\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Data" "$(TargetDir)Data\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(TargetDir)GameSetups\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Docs" "$(TargetDir)Docs\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Music" "$(TargetDir)Music\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Pictures" "$(TargetDir)Pictures\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Licenses" "$(TargetDir)Licenses\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee\Scripts" "$(TargetDir)Scripts\" /y /e /s
-xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\lib\Ogrelib\*.*" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\MogrePlugins\*.*" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Ogrecfg\*.*" "$(TargetDir)" /y
-xcopy "$(ProjectDir)..\FrEee.WinForms\MogreCombatRender\Media" "$(TargetDir)" /y /e /s
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Release\Mods\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Debug\Mods\" /y /e /s
 
-</PostBuildEvent>
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Release\Data\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Debug\Data\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Release\GameSetups\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Debug\GameSetups\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Release\Docs\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Debug\Docs\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Release\Music\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Debug\Music\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Release\Pictures\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Debug\Pictures\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Release\Licenses\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Debug\Licenses\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Release\Scripts\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Debug\Scripts\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Release\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
