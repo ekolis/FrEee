@@ -45,7 +45,6 @@ namespace FrEee.WinForms.Forms
 			foreach (var mode in GalaxyViewModes.All)
 				ddlGalaxyViewMode.Items.Add(mode);
 			ddlGalaxyViewMode.SelectedIndex = 0;
-			Music.Play(MusicMode.Strategic, MusicMood.Peaceful); // TODO - check game state for music mood
 			Instance = this;
 		}
 
@@ -131,6 +130,41 @@ namespace FrEee.WinForms.Forms
 			foreach (Control ctl in pnlLayout.Controls)
 				AssignClickHandler(ctl);
 
+		}
+
+		private MusicMood FindMusicMood()
+		{
+			var emps = Galaxy.Current.Empires.ExceptSingle(Empire.Current).ExceptSingle(null);
+			if (Empire.Current == null)
+				return MusicMood.Peaceful; // we are the host
+			else
+			{
+				var aboveUs = emps.Where(emp => emp.Score > Empire.Current.Score);
+				var atOrBelowUs = emps.Where(emp => emp.Score <= Empire.Current.Score);
+				if (aboveUs.Any())
+				{
+					// oh noes! someone has a higher score than us!
+					if (aboveUs.Any(emp => emp.IsEnemyOf(Empire.Current, null)))
+						return MusicMood.Tense; // and they hate us!
+					else if (aboveUs.All(emp => emp.IsAllyOf(Empire.Current, null)))
+						return MusicMood.Upbeat; // we have friends in high places
+					else
+						return MusicMood.Sad; // ominous...
+				}
+				else if (atOrBelowUs.Any())
+				{
+					// we are the king of the hill
+					if (atOrBelowUs.Any(emp => emp.IsEnemyOf(Empire.Current, null)))
+						return MusicMood.Upbeat; // we can kick their butts!
+					else
+						return MusicMood.Peaceful; // nothing to worry about
+				}
+				else
+				{
+					// we are alone... we are at one with the universe... ommmm...
+					return MusicMood.Peaceful;
+				}
+			}
 		}
 
 		/// <summary>
@@ -565,7 +599,7 @@ namespace FrEee.WinForms.Forms
 				todos.Add(unallocatedPct.ToString("0%") + " unallocated research");
 
 			var messages = Empire.Current.IncomingMessages.OfType<ProposalMessage>().Count(m =>
-				m.TurnNumber >= Galaxy.Current.TurnNumber - 1 && 
+				m.TurnNumber >= Galaxy.Current.TurnNumber - 1 &&
 				!Empire.Current.Commands.OfType<SendMessageCommand>().Where(c => c.Message.InReplyTo == m).Any() &&
 				!Empire.Current.Commands.OfType<DeleteMessageCommand>().Where(c => c.Message == m).Any());
 			if (messages == 1)
@@ -583,6 +617,9 @@ namespace FrEee.WinForms.Forms
 
 			// select nothing
 			SelectedSpaceObject = null;
+
+			// start music
+			Music.Play(MusicMode.Strategic, FindMusicMood());
 
 			// display empire flag
 			picEmpireFlag.Image = Galaxy.Current.CurrentEmpire.Icon;
@@ -640,7 +677,7 @@ namespace FrEee.WinForms.Forms
 				var todos = FindTodos();
 
 				var msg = !todos.Any() ? "Save your commands before quitting?" : "Save your commands before quitting? You have:\n\n" + string.Join("\n", todos.ToArray());
-				
+
 				switch (MessageBox.Show(msg, "FrEee", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1))
 				{
 					case DialogResult.Yes:
@@ -942,7 +979,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.E)
 					this.ShowChildForm(new EmpireListForm());
 				else if (e.KeyCode == Keys.O)
-					{ } // TODO - empire status screen
+				{ } // TODO - empire status screen
 				else if (e.KeyCode == Keys.S)
 					this.ShowChildForm(new ShipListForm());
 				else if (e.KeyCode == Keys.Q)
@@ -954,7 +991,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.Tab)
 					btnPrevIdle_Click(this, new EventArgs());
 				// set waypoint without redirecting
-				else if(e.KeyCode == Keys.D0)
+				else if (e.KeyCode == Keys.D0)
 					SetWaypoint(0, false);
 				else if (e.KeyCode == Keys.D1)
 					SetWaypoint(1, false);
@@ -1110,7 +1147,7 @@ namespace FrEee.WinForms.Forms
 					newReport.Top = newReport.Margin.Top;
 					newReport.Height = pnlDetailReport.Height - newReport.Margin.Bottom - newReport.Margin.Top;
 					newReport.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-					
+
 				}
 				else
 					ChangeCommandMode(CommandMode.None, null);
@@ -1146,7 +1183,7 @@ namespace FrEee.WinForms.Forms
 			// refresh the map and orders
 			starSystemView.Invalidate();
 			BindReport();
-			
+
 		}
 
 		private void GoToWaypoint(int waypointNumber, bool aggressive)
