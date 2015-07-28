@@ -277,5 +277,10 @@ namespace FrEee.WinForms.Forms
       // volume values are 0-100, so scale appropriately to the 0-1 range
       Music.setVolume(ClientSettings.Instance.masterVolume * ClientSettings.Instance.musicVolume * 1.0e-4f);
     }
+
+		private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			Application.Exit();
+		}
 	}
 }
