@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.WinForms.Objects;
 
 namespace FrEee.WinForms.Forms
 {
@@ -70,5 +71,11 @@ namespace FrEee.WinForms.Forms
         {
             txtLog.Text = txt; 
         }
+
+		private void MogreCombatForm_Load(object sender, EventArgs e)
+		{
+			// TODO - choose appropriate music mood
+			Music.Play(MusicMode.Combat, MusicMood.Tense);
+		}
 	}
 }
