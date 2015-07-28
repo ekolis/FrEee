@@ -987,7 +987,9 @@ namespace FrEee.Game.Objects.Space
 				{
 					if (cmd.Issuer == emp)
 					{
-						if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
+						if (cmd.Executor == null)
+							cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("Attempted to issue " + cmd.GetType() + " to a nonexistent object with ID=" + cmd.ExecutorID + ". This is probably a game bug."));
+						else if (cmd.Issuer != cmd.Executor.Owner && cmd.Issuer != cmd.Executor)
 							cmd.Issuer.Log.Add(cmd.Issuer.CreateLogMessage("We cannot issue commands to " + cmd.Executor + " because it does not belong to us!"));
 						else
 							cmd.Execute();

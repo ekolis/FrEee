@@ -28,6 +28,8 @@ namespace FrEee.Game.Interfaces
 		IEnumerable<IReferrable> NewReferrables { get; }
 
 		IReferrable Executor { get; }
+
+		long ExecutorID { get; }
 	}
 
 	/// <summary>
