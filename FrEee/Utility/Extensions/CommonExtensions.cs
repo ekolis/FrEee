@@ -3338,23 +3338,6 @@ namespace FrEee.Utility.Extensions
 				if (resource.HasValue)
 					amount = Galaxy.Current.StandardMiningModel.GetRate(amount, o.ResourceValue[resource], pcts[resource] / 100d);
 
-				
-				/*// do modifiers to income
-				var factor = 1d;
-				var totalpop = Colony.Population.Sum(kvp => kvp.Value);
-				factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-				Aptitude aptitude = null;
-				if (resource.Name == "Minerals")
-					aptitude = Aptitude.Mining;
-				if (resource.Name == "Organics")
-					aptitude = Aptitude.Farming;
-				if (resource.Name == "Radioactives")
-					aptitude = Aptitude.Refining;
-				if (aptitude != null && Colony.Population.Any())
-					factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);
-				factor *= (100 + Owner.Culture.Production) / 100d;
-				amount = Galaxy.Current.StandardMiningModel.GetRate(amount, ResourceValue[resource], factor);*/
-				
 				income.Add(resource, amount);
 			}
 			prefix = "Point Generation - ";
@@ -3363,24 +3346,7 @@ namespace FrEee.Utility.Extensions
 				var resource = Resource.Find(abil.Rule.Name.Substring(prefix.Length));
 				var amount = abil.Value1.ToInt() * pcts[resource] / 100;
 
-				/*var factor = 1d;
-				var totalpop = Colony.Population.Sum(kvp => kvp.Value);
-				factor *= Mod.Current.Settings.GetPopulationProductionFactor(totalpop);
-				Aptitude aptitude = null;
-				if (resource.Name == "Research")
-				{
-					aptitude = Aptitude.Intelligence; // yes, Intelligence aptitude increases Research...
-					factor *= (100 + Owner.Culture.Research) / 100d;
-				}
-				if (resource.Name == "Intelligence")
-				{
-					aptitude = Aptitude.Cunning;
-					factor *= (100 + Owner.Culture.Intelligence) / 100d;
-				}
-				if (aptitude != null && Colony.Population.Any())
-					factor *= Colony.Population.Sum(kvp => (kvp.Key.Aptitudes[aptitude.Name] / 100d) * (double)kvp.Value / (double)totalpop);*/
-
-				income.Add(resource, (int)(amount));
+				income.Add(resource, amount);
 			}
 
 			return income;
