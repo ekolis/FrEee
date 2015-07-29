@@ -1554,7 +1554,7 @@ namespace FrEee.Utility.Extensions
 			return stuff.Select(item => selector(item)).Sum();
 		}
 
-		public static IEnumerable<T> OnlyLatest<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
+		public static IEnumerable<T> OnlyLatestVersions<T>(this IEnumerable<T> stuff, Func<T, string> familySelector)
 			where T : class
 		{
 			string family = null;
@@ -1582,6 +1582,40 @@ namespace FrEee.Utility.Extensions
 			}
 			if (stuff.Any())
 				yield return stuff.Last();
+		}
+
+		public static IEnumerable<T> NewerVersions<T>(this IEnumerable<T> stuff, T me, Func<T, string> familySelector)
+			where T : class
+		{
+			bool foundme = false;
+			foreach (var t in stuff)
+			{
+				if (familySelector(t) == familySelector(me))
+				{
+					// same family
+					if (t == me)
+						foundme = true;
+					else if (foundme)
+						yield return t; // it's later
+				}
+			}
+		}
+
+		public static IEnumerable<T> OlderVersions<T>(this IEnumerable<T> stuff, T me, Func<T, string> familySelector)
+			where T : class
+		{
+			bool foundme = false;
+			foreach (var t in stuff)
+			{
+				if (familySelector(t) == familySelector(me))
+				{
+					// same family
+					if (t == me)
+						foundme = true;
+					else if (!foundme)
+						yield return t; // it's earlier
+				}
+			}
 		}
 
 		/// <summary>
