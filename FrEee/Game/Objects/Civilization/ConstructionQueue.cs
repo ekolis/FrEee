@@ -323,7 +323,7 @@ namespace FrEee.Game.Objects.Civilization
 			if (order == null)
 				Owner.Log.Add(Container.CreateLogMessage("Attempted to remove a null order from " + this + ". This is likely a game bug."));
 			else if (!(order is IConstructionOrder))
-				throw new Exception("Can't remove a " + order.GetType() + " from a construction queue's orders.");
+				return; // order can't exist here anyway
 			else
 				Orders.Remove((IConstructionOrder)order);
 		}

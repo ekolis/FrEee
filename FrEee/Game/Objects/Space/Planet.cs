@@ -496,7 +496,7 @@ namespace FrEee.Game.Objects.Space
 		public void RemoveOrder(IOrder order)
 		{
 			if (order != null && !(order is IOrder<Planet>))
-				throw new Exception("Can't remove a " + order.GetType() + " from a planet's orders.");
+				return; // order can't exist here anyway
 			Orders.Remove((IOrder<Planet>)order);
 		}
 

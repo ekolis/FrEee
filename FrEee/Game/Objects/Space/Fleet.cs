@@ -456,7 +456,7 @@ namespace FrEee.Game.Objects.Space
 		public void RemoveOrder(IOrder order)
 		{
 			if (!(order is IOrder<Fleet>))
-				throw new InvalidOperationException("Fleets can only accept orders of type IOrder<Fleet>.");
+				return; // order can't exist here anyway
 			Orders.Remove((IOrder<Fleet>)order);
 		}
 
