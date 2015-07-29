@@ -348,9 +348,9 @@ namespace FrEee.WinForms.Forms
 		{
 			if (chkOnlyLatest.Checked)
 			{
-				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family));
+				BindFacilityListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
 				BindShipListView(Empire.Current.KnownDesigns.Where(d => d.Owner == Empire.Current && d.HasBeenUnlockedBy(Empire.Current) && !d.IsObsolete));
-				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family));
+				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
 			}
 			else
 			{
@@ -871,7 +871,7 @@ namespace FrEee.WinForms.Forms
 					BindQueueListView();
 					IEnumerable<FacilityTemplate> templates;
 					if (chkOnlyLatest.Checked)
-						templates = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatest(f => f.Family);
+						templates = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family);
 					else
 						templates = Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any());
 					BindUpgradeListView(templates);

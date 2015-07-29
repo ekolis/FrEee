@@ -195,7 +195,7 @@ namespace FrEee.WinForms.Forms
 
 				// filter by only-latest
 				if (chkOnlyLatest.Checked)
-					comps = comps.OnlyLatest(comp => comp.Family);
+					comps = comps.OnlyLatestVersions(comp => comp.Family);
 
 				var complist = comps.ToList();
 				foreach (var comp in complist)

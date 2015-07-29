@@ -170,8 +170,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				var withHighestRomanNumeral = NewerVersions.Where(ct => Empire.Current.HasUnlocked(ct)).WithMax(ct => ct.RomanNumeral).SingleOrDefault();
-				return withHighestRomanNumeral ?? this; // if null, it's not unlocked yet
+				return NewerVersions.Where(t => Empire.Current.HasUnlocked(t)).LastOrDefault() ?? this;
 			}
 		}
 
@@ -290,7 +289,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return Mod.Current.ComponentTemplates.Where(ct => ct.Family == Family && ct.RomanNumeral > RomanNumeral);
+				return Mod.Current.ComponentTemplates.NewerVersions(this, ct => ct.Family);
 			}
 		}
 
@@ -298,7 +297,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return Mod.Current.ComponentTemplates.Where(ct => ct.Family == Family && ct.RomanNumeral < RomanNumeral);
+				return Mod.Current.ComponentTemplates.OlderVersions(this, ct => ct.Family);
 			}
 		}
 	}
