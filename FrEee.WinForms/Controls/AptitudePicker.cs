@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Civilization;
+using FrEee.Utility.Extensions;
 
 namespace FrEee.WinForms.Controls
 {
@@ -126,7 +127,14 @@ namespace FrEee.WinForms.Controls
 			if (Values == null)
 				Values = Aptitude.All.ToDictionary(a => a, a => 100);
 			var spn = pnl.Controls.OfType<NumericUpDown>().Single(c => c.Tag == apt);
-			spn.Value = value;
+			try
+			{
+				spn.Value = value;
+			}
+			catch (ArgumentOutOfRangeException ex)
+			{
+				throw new Exception("Unable to set {0} to {1}. It must be between {2} and {3}.".F(apt, value, spn.Minimum, spn.Maximum), ex);
+			}
 		}
 	}
 }
