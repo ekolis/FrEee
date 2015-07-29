@@ -583,7 +583,8 @@ namespace FrEee.WinForms.Forms
 			{
 				if (e.Button == MouseButtons.Right)
 				{
-					var order = (IConstructionOrder)item.Tag;
+					var orders = (IEnumerable<IConstructionOrder>)item.Tag;
+					var order = orders.First(); // all condensed orders should be for same template anyway
 					Control report = null;
 					string title = null;
 					if (order.Template is IDesign)
