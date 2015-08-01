@@ -104,7 +104,7 @@ namespace FrEee.Modding.Loaders
 				}
 			}
 
-			yield break;
+			return Enumerable.Empty<IModObject>();
 		}
 
 		/// <summary>
