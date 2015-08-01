@@ -79,15 +79,24 @@
     <CodeAnalysisRuleSet>ManagedMinimumRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper">
-      <HintPath>..\packages\AutoMapper.2.2.1\lib\net40\AutoMapper.dll</HintPath>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="FixMath">
       <HintPath>..\FrEee\Game\Objects\Combat2\lib\FixMath.dll</HintPath>
     </Reference>
-    <Reference Include="Mogre, Version=1.7.1.0, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>MogreCombatRender\lib\Mogre.dll</HintPath>
+    <Reference Include="Mogre, Version=1.7.4.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\Mogre1.7.4.1.0.6\lib\Mogre.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MogreNewt, Version=2.35.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\Mogre1.7.4.1.0.6\lib\MogreNewt.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MOIS, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
@@ -909,8 +918,18 @@ if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg
 if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Debug\" /y
 
 if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Release\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s</PostBuildEvent>
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s
+if $(ConfigurationName) == Debug (
+    if EXIST "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\Mogre.dll" (
+        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\*" "$(TargetDir))"
+    ) ELSE (
+        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
+    )
+) ELSE (
+    copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
+)</PostBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
