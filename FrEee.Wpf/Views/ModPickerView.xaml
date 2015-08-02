@@ -1,0 +1,50 @@
+﻿<local:View
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FrEee.Wpf.Views"
+             xmlns:Modding="clr-namespace:FrEee.Modding;assembly=FrEee.Core" xmlns:ViewModels="clr-namespace:FrEee.Wpf.ViewModels" x:Class="FrEee.Wpf.Views.ModPickerView"
+             mc:Ignorable="d" 
+             d:DesignHeight="383.142" d:DesignWidth="552.204"
+	x:Name="view">
+    <local:View.Resources>
+    </local:View.Resources>
+    <Grid DataContext="{Binding ViewModel, ElementName=view}">
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Margin="10,10,0,10" Width="192" ItemsSource="{Binding}" SelectedItem="{Binding Path=SelectedItem}"/>
+        <Grid x:Name="grid" Margin="207,10,10,10" VerticalAlignment="Top" Width="335" HorizontalAlignment="Right" DataContext="{Binding Path=SelectedItem}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Author:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBlock x:Name="authorTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="0" Text="{Binding Author, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Description:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
+            <TextBlock x:Name="descriptionTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="1" Text="{Binding Description, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Email:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
+            <TextBlock x:Name="emailTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="2" Text="{Binding Email, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Folder:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
+            <TextBlock x:Name="folderTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="3" Text="{Binding Folder, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Is Obsolete:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <TextBlock x:Name="isObsoleteTextBlock" Grid.Column="1" HorizontalAlignment="Left" Text="{Binding IsObsolete, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
+            <Label Content="Name:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
+            <TextBlock x:Name="nameTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="5" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Version:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
+            <TextBlock x:Name="versionTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="6" Text="{Binding Version, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+            <Label Content="Website:" Grid.Column="0" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
+            <TextBlock x:Name="websiteTextBlock" Grid.Column="1" Height="24" Margin="4,4,-228,4" Grid.Row="7" Text="{Binding Website, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center"/>
+        </Grid>
+        <Button x:Name="btnLoad" Content="Load" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="75" Click="btnLoad_Click"/>
+
+    </Grid>
+</local:View>

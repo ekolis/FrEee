@@ -62,11 +62,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ViewModels\ModPickerViewModel.cs" />
     <Compile Include="Views\MainMenuView.xaml.cs">
       <DependentUpon>MainMenuView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ModPickerView.xaml.cs">
+      <DependentUpon>ModPickerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StatusView.xaml.cs">
+      <DependentUpon>StatusView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\View.cs" />
     <Page Include="Views\MainMenuView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ModPickerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StatusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -101,6 +116,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\FrEee.Modding.ModInfo.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -120,7 +136,63 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
+      <Project>{c89729d8-9ca6-4135-8184-6da757129ef6}</Project>
+      <Name>DynamicViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FrEee\FrEee.csproj">
+      <Project>{e19a4330-ce19-45d6-bcfc-375e065ef041}</Project>
+      <Name>FrEee</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Release\Mods\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Debug\Mods\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Release\Data\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Debug\Data\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Release\GameSetups\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Debug\GameSetups\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Release\Docs\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Debug\Docs\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Release\Music\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Debug\Music\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Release\Pictures\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Debug\Pictures\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Release\Licenses\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Debug\Licenses\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Release\Scripts\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Debug\Scripts\" /y /e /s
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Debug\" /y
+
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Release\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s
+if $(ConfigurationName) == Debug (
+    if EXIST "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\Mogre.dll" (
+        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\*" "$(TargetDir))"
+    ) ELSE (
+        copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
+    )
+) ELSE (
+    copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Release\*" "$(TargetDir)"
+)</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
