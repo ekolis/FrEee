@@ -1,35 +1,34 @@
-﻿<views:View x:Class="FrEee.Wpf.Views.MainMenuView"
+﻿<local:View x:Class="FrEee.Wpf.Views.MainMenuView"
 	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-	  xmlns:local="clr-namespace:FrEee.Wpf"
-		xmlns:views="clr-namespace:FrEee.Wpf.Views"
+	xmlns:local="clr-namespace:FrEee.Wpf.Views"
 	  mc:Ignorable="d" 
 	  d:DesignHeight="400" d:DesignWidth="600"
 	  Title="FrEee">
 
 	<Grid>
-		<Image x:Name="image" Margin="0,-1,2,0" RenderTransformOrigin="-0.301,0.15" Source="/FrEee;component/Pictures/Splash.jpg">
-            <Image.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform AngleY="0.207"/>
-                    <RotateTransform/>
-                    <TranslateTransform Y="-0.409"/>
-                </TransformGroup>
-            </Image.RenderTransform>
-        </Image>
-        <UniformGrid Height="100.961" Margin="10,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="-0.375,0.51" Rows="2" Columns="4" Background="{DynamicResource FrEeeBackgroundBrush}">
-			<Button x:Name="btnMods" Content="Mods"/>
-			<Button x:Name="btnScenarios" Content="Scenarios"/>
-			<Button x:Name="btnOptions" Content="Options"/>
-			<Button x:Name="btnCredits" Content="Credits"/>
-			<Button x:Name="btnNew" Content="New"/>
-			<Button x:Name="btnQuickstart" Content="Quickstart"/>
-			<Button x:Name="btnResume" Content="Resume"/>
-			<Button x:Name="btnLoad" Content="Load"/>
+		<Image x:Name="image" Margin="0" RenderTransformOrigin="-0.301,0.15" Source="/FrEee;component/Pictures/Splash.jpg" Width="400" Height="400">
+			<Image.RenderTransform>
+				<TransformGroup>
+					<ScaleTransform/>
+					<SkewTransform AngleY="0.207"/>
+					<RotateTransform/>
+					<TranslateTransform Y="-0.409"/>
+				</TransformGroup>
+			</Image.RenderTransform>
+		</Image>
+		<UniformGrid Height="100.961" Margin="10,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="-0.375,0.51" Rows="2" Columns="4" Background="{DynamicResource FrEeeBackgroundBrush}">
+			<Button x:Name="btnMods" Content="Mods" Click="btnMods_Click"/>
+			<Button x:Name="btnScenarios" Content="Scenarios" Click="btnScenarios_Click"/>
+			<Button x:Name="btnOptions" Content="Options" Click="btnOptions_Click"/>
+			<Button x:Name="btnCredits" Content="Credits" Click="btnCredits_Click"/>
+			<Button x:Name="btnNew" Content="New" Click="btnNew_Click"/>
+			<Button x:Name="btnQuickstart" Content="Quickstart" Click="btnQuickstart_Click"/>
+			<Button x:Name="btnResume" Content="Resume" Click="btnResume_Click"/>
+			<Button x:Name="btnLoad" Content="Load" Click="btnLoad_Click"/>
 		</UniformGrid>
 
 	</Grid>
-</views:View>
+</local:View>

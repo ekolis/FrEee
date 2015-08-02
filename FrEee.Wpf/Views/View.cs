@@ -55,6 +55,19 @@ namespace FrEee.Wpf.Views
 		public static readonly DependencyProperty TitleProperty =
 			DependencyProperty.Register("Title", typeof(string), typeof(View), new PropertyMetadata("FrEee"));
 
+		public object ViewModel
+		{
+			get { return (object)GetValue(ViewModelProperty); }
+			set { SetValue(ViewModelProperty, value); }
+		}
 
+		// Using a DependencyProperty as the backing store for ViewModel.  This enables animation, styling, binding, etc...
+		public static readonly DependencyProperty ViewModelProperty =
+			DependencyProperty.Register("ViewModel", typeof(object), typeof(View), new PropertyMetadata(null));
+
+		public void Close()
+		{
+			Shell.Close();
+		}
 	}
 }

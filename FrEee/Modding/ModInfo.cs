@@ -50,5 +50,10 @@ namespace FrEee.Modding
 		/// The folder that the mod was loaded from (relative to the Mods folder), or null if it's the stock mod.
 		/// </summary>
 		public string Folder { get; set; }
+
+		public override string ToString()
+		{
+			return $"{Name} {Version}";
+		}
 	}
 }
