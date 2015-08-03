@@ -1,6 +1,9 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Input;
+using FrEee.Game.Objects.Space;
+using Microsoft.Win32;
 
 namespace FrEee.Wpf.Views
 {
@@ -66,8 +69,39 @@ namespace FrEee.Wpf.Views
 
 		private void btnLoad_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
-			// TODO - load game
-			MessageBox.Show("Sorry, the load game feature is not yet enabled.");
+			var dlg = new OpenFileDialog();
+			// TODO - let player resume turn from previously saved PLR
+			dlg.Filter = "Savegames (*.gam)|*.gam";
+			dlg.InitialDirectory = Path.Combine(Directory.GetCurrentDirectory(), "Savegame");
+			var result = dlg.ShowDialog();
+			if (result ?? false)
+				LoadGalaxyFromFile(dlg.FileName);
+		}
+
+		private void LoadGalaxyFromFile(string filename, bool? loadPlr = null)
+		{
+			Cursor = Cursors.Wait;
+			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
+			Galaxy.Load(filename);
+			if (Galaxy.Current.CurrentEmpire == null)
+			{
+				// host view, load host console
+				Cursor = Cursors.Wait;			
+				SwitchTo(new HostConsoleView());
+			}
+			else
+			{
+				// player view, load up the game
+				if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", plrfile)))
+				{
+					if (loadPlr == null)
+						loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButton.YesNo) == MessageBoxResult.Yes;
+					if (loadPlr.Value)
+						Galaxy.Current.LoadCommands();
+				}
+				Cursor = Cursors.Arrow;
+				SwitchTo(new GameView());
+			}
 		}
 	}
 }
