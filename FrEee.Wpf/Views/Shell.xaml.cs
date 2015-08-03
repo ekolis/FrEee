@@ -30,8 +30,14 @@ namespace FrEee.Wpf.Views
 
 		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			if (!View.AllowClose)
+			if (View != null && !View.AllowClose)
 				e.Cancel = true;
+		}
+
+		private void Window_Closed(object sender, System.EventArgs e)
+		{
+			if (View != null && View.CausesShutdown)
+				App.Current.Shutdown();
 		}
 	}
 }

@@ -102,5 +102,13 @@ namespace FrEee.Wpf.Views
 			Close();
 			AllowClose = c;
 		}
+
+		/// <summary>
+		/// Does this view cause the app to shut down when it is closed?
+		/// </summary>
+		public bool CausesShutdown
+		{
+			get; set;
+		} = false;
 	}
 }
