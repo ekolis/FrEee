@@ -9,7 +9,7 @@
         
     </local:View.Resources>
     <Grid>
-        <ProgressBar x:Name="bar" Background="{DynamicResource GameTranslucentBackgroundBrush}" Foreground="{DynamicResource GameTranslucentForegroundBrush}" BorderBrush="{DynamicResource GameTranslucentForegroundBrush}"/>
-        <Label x:Name="lbl" Width="400" Height="50" FontSize="{DynamicResource BigFont}" Foreground="{DynamicResource GameTranslucentBrightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
+        <ProgressBar x:Name="bar" Background="{DynamicResource GameBackgroundBrush}" Foreground="{DynamicResource GameForegroundBrush}" BorderBrush="{DynamicResource GameForegroundBrush}"/>
+        <Label x:Name="lbl" Width="400" Height="50" FontSize="{DynamicResource BigFont}" Foreground="{DynamicResource GameBrightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
     </Grid>
 </local:View>

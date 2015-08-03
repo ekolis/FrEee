@@ -19,36 +19,53 @@
             </Setter>
         </Style>
 
-        <SolidColorBrush x:Key="GameBackroundBrush" Color="#ff000000"/>
-        <SolidColorBrush x:Key="GameTranslucentBackgroundBrush" Color="#aa000000"/>
-        <SolidColorBrush x:Key="GameForegroundBrush" Color="#ff88aaff"/>
-        <SolidColorBrush x:Key="GameTranslucentForegroundBrush" Color="#aa88aaff"/>
-        <SolidColorBrush x:Key="GameBrightBrush" Color="#FFAAFFFF"/>
-        <SolidColorBrush x:Key="GameTranslucentBrightBrush" Color="#AAAAFFFF"/>
+        <SolidColorBrush x:Key="GameBackgroundBrush" Color="#aa000000"/>
+        <SolidColorBrush x:Key="GameForegroundBrush" Color="#aa88aaff"/>
+        <SolidColorBrush x:Key="GameBrightBrush" Color="#aaAAFFFF"/>
+        <SolidColorBrush x:Key="GameDimBrush" Color="#aa4488FF"/>
 
         <Style TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{DynamicResource GameFocusVisualStyle}"/>
-            <Setter Property="Background" Value="{DynamicResource GameTranslucentBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
-            <Setter Property="Foreground" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Name="border" 
+                            BorderThickness="1"
+                            Padding="4,2" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource GameDimBrush}" />
+                                <Setter Property="Foreground" Value="{DynamicResource GameBrightBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
         <Style TargetType="{x:Type Control}">
-            <Setter Property="Background" Value="{DynamicResource GameTranslucentBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
-            <Setter Property="Foreground" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
         </Style>
         <Style TargetType="{x:Type Label}">
-            <Setter Property="Background" Value="{DynamicResource GameTranslucentBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
-            <Setter Property="Foreground" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
         </Style>
         <Style TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="{DynamicResource GameTranslucentBackgroundBrush}"/>
-            <Setter Property="BorderBrush" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
-            <Setter Property="Foreground" Value="{DynamicResource GameTranslucentForegroundBrush}"/>
+            <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
         </Style>
         <System:Double x:Key="BigFont">21.333</System:Double>
     </Application.Resources>

@@ -19,7 +19,7 @@
 				</TransformGroup>
 			</Image.RenderTransform>
 		</Image>
-		<UniformGrid Height="100.961" Margin="10,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="-0.375,0.51" Rows="2" Columns="4" Background="{DynamicResource FrEeeBackgroundBrush}">
+		<UniformGrid Height="100.961" Margin="10,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="-0.375,0.51" Rows="2" Columns="4" Background="{DynamicResource GameBackgroundBrush}">
 			<Button x:Name="btnMods" Content="Mods" Click="btnMods_Click"/>
 			<Button x:Name="btnScenarios" Content="Scenarios" Click="btnScenarios_Click"/>
 			<Button x:Name="btnOptions" Content="Options" Click="btnOptions_Click"/>
