@@ -81,13 +81,13 @@ namespace FrEee.Wpf.Views
 
 		private void LoadGalaxyFromFile(string filename, bool? loadPlr = null)
 		{
-			Cursor = Cursors.Wait;
+			Mouse.OverrideCursor = Cursors.Wait;
 			var plrfile = Path.GetFileNameWithoutExtension(filename) + ".plr";
 			Galaxy.Load(filename);
 			if (Galaxy.Current.CurrentEmpire == null)
 			{
 				// host view, load host console
-				Cursor = Cursors.Wait;			
+				Mouse.OverrideCursor = null;	
 				SwitchTo(new HostConsoleView());
 			}
 			else
@@ -100,7 +100,7 @@ namespace FrEee.Wpf.Views
 					if (loadPlr.Value)
 						Galaxy.Current.LoadCommands();
 				}
-				Cursor = Cursors.Arrow;
+				Mouse.OverrideCursor = null;
 				SwitchTo(new GameView());
 			}
 		}
