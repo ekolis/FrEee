@@ -50,15 +50,17 @@ namespace FrEee.Wpf.Views
 
 		private void btnLoad_Click(object sender, System.Windows.RoutedEventArgs e)
 		{
+			var status = new Status();
+			ModInfo mi = ModInfos.SelectedItem;
 			var thread = new Thread(new ThreadStart(() =>
 			{
+				Mod.Load(mi.Folder, true, status);
 				Dispatcher.Invoke(() =>
-						{
-							Mod.Load(ModInfos.SelectedItem.Model.Folder, true, new Utility.Status());
-							Close();
-						});
+				{
+					Close();
+				});
 			}));
-			new StatusView(thread, new Status()).ShowDialog();
+			new StatusView(thread, status).ShowDialog();
 		}
 	}
 }

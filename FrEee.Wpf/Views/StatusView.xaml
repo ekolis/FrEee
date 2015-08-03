@@ -4,9 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FrEee.Wpf.Views"
-             mc:Ignorable="d">
+             mc:Ignorable="d" Loaded="View_Loaded">
+    <local:View.Resources>
+        
+    </local:View.Resources>
     <Grid>
-        <ProgressBar x:Name="bar"/>
-		<TextBlock x:Name="txt" Width="400" Height="50"/>
+        <ProgressBar x:Name="bar" Background="{DynamicResource GameTranslucentBackgroundBrush}" Foreground="{DynamicResource GameTranslucentForegroundBrush}" BorderBrush="{DynamicResource GameTranslucentForegroundBrush}"/>
+        <Label x:Name="lbl" Width="400" Height="50" FontSize="{DynamicResource BigFont}" Foreground="{DynamicResource GameTranslucentBrightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
     </Grid>
 </local:View>

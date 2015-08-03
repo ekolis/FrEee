@@ -69,5 +69,21 @@ namespace FrEee.Wpf.Views
 		{
 			Shell.Close();
 		}
+
+		/// <summary>
+		/// Allow closing of the shll containing this view?
+		/// </summary>
+		public bool AllowClose
+		{
+			get; set;
+		} = true;
+
+		public void ForceClose()
+		{
+			var c = AllowClose;
+			AllowClose = true;
+			Close();
+			AllowClose = c;
+		}
 	}
 }
