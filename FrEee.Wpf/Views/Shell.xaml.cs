@@ -28,6 +28,10 @@ namespace FrEee.Wpf.Views
 		public static readonly DependencyProperty ViewProperty =
 			DependencyProperty.Register("View", typeof(View), typeof(Shell), new PropertyMetadata(null));
 
-
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			if (!View.AllowClose)
+				e.Cancel = true;
+		}
 	}
 }

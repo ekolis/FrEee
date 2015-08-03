@@ -27,33 +27,41 @@ namespace FrEee.Wpf.Views
 			InitializeComponent();
 			this.thread = thread;
 			this.status = status;
+			this.status.Changed += Status_Changed;
 			bar.Minimum = 0d;
 			bar.Maximum = 1d;
-			timer = new Timer(UpdateStatus, status, 0, 100);
-			thread.Start();
+			AllowClose = false;
 		}
 
-		private Timer timer;
-		private Thread thread;
-		private Status status;
-
-		private void UpdateStatus(object o)
+		private void Status_Changed()
 		{
+
 			try
 			{
 				Dispatcher.Invoke(() =>
 				{
 					bar.Value = status.Progress;
-					txt.Text = status.Message;
-					if (thread.ThreadState == ThreadState.Stopped)
-						Close();
+					lbl.Content = status.Message;
+					if (status.Progress >= 1d)
+						ForceClose();
+					InvalidateVisual();
 				});
 			}
 			catch (TaskCanceledException ex)
 			{
-				timer.Dispose();
-				Close();
+				Dispatcher.Invoke(() =>
+				{
+					ForceClose();
+				});
 			}
+		}
+
+		private Thread thread;
+		private Status status;
+
+		private void View_Loaded(object sender, RoutedEventArgs e)
+		{
+			thread.Start();
 		}
 	}
 }
