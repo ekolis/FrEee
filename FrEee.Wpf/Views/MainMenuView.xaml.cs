@@ -15,6 +15,7 @@ namespace FrEee.Wpf.Views
 		public MainMenuView()
 		{
 			InitializeComponent();
+			CausesShutdown = true;
 		}
 
 		private void btnMods_Click(object sender, System.Windows.RoutedEventArgs e)
