@@ -27,7 +27,7 @@
 			<Button x:Name="btnNew" Content="New" Click="btnNew_Click"/>
 			<Button x:Name="btnQuickstart" Content="Quickstart" Click="btnQuickstart_Click"/>
 			<Button x:Name="btnResume" Content="Resume" Click="btnResume_Click"/>
-			<Button x:Name="btnLoad" Content="Load" Click="btnLoad_Click"/>
+			<Button x:Name="btnLoad" Content="Load" Click="btnLoad_Click" Height="50" VerticalAlignment="Top"/>
 		</UniformGrid>
 
 	</Grid>

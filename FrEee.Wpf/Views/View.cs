@@ -32,6 +32,23 @@ namespace FrEee.Wpf.Views
 			return new Shell(this).ShowDialog();
 		}
 
+		public void Hide()
+		{
+			if (Shell != null)
+				Shell.Hide();
+		}
+
+		/// <summary>
+		/// Hides this view, shows another view modally, when that one is done shows this one again.
+		/// </summary>
+		/// <param name="view"></param>
+		protected void SwitchTo(View view)
+		{
+			Hide();
+			view.ShowDialog();
+			Show();
+		}
+
 		/// <summary>
 		/// The shell (if any) which directly contains this view.
 		/// </summary>
