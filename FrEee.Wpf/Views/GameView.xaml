@@ -1,14 +1,12 @@
-﻿<local:View x:Class="FrEee.Wpf.Views.GameView"
+﻿<wpfvs:View x:Class="FrEee.Wpf.Views.GameView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FrEee.Wpf.Views"
+			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              mc:Ignorable="d">
-    <local:View.Resources>
-        
-    </local:View.Resources>
     <Grid>
         
     </Grid>
-</local:View>
+</wpfvs:View>

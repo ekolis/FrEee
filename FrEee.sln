@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Wpf", "FrEee.Wpf\FrEe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicViewModel", "..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj", "{C89729D8-9CA6-4135-8184-6DA757129EF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfViewShells", "..\WpfViewShells\WpfViewShells\WpfViewShells.csproj", "{2B891C6C-E99D-43BF-A019-70A0C1F04773}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -82,6 +84,18 @@ Global
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|x86.ActiveCfg = Release|Any CPU
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|x86.Build.0 = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Debug|x86.Build.0 = Debug|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|x86.ActiveCfg = Release|Any CPU
+		{2B891C6C-E99D-43BF-A019-70A0C1F04773}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

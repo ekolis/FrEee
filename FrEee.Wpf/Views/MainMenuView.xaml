@@ -1,8 +1,9 @@
-﻿<local:View x:Class="FrEee.Wpf.Views.MainMenuView"
+﻿<wpfvs:View x:Class="FrEee.Wpf.Views.MainMenuView"
             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:local="clr-namespace:FrEee.Wpf.Views"
+			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             Title="FrEee"
             Width="640"
@@ -63,4 +64,4 @@
             </StackPanel>
         </Grid>
     </Grid>
-</local:View>
+</wpfvs:View>

@@ -1,15 +1,13 @@
-﻿<local:View x:Class="FrEee.Wpf.Views.StatusView"
+﻿<wpfvs:View x:Class="FrEee.Wpf.Views.StatusView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FrEee.Wpf.Views"
+			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              mc:Ignorable="d" Loaded="View_Loaded">
-    <local:View.Resources>
-        
-    </local:View.Resources>
     <Grid>
         <ProgressBar x:Name="bar" Background="{DynamicResource GameBackgroundBrush}" Foreground="{DynamicResource GameForegroundBrush}" BorderBrush="{DynamicResource GameForegroundBrush}"/>
         <Label x:Name="lbl" Width="400" Height="50" FontSize="{DynamicResource BigFont}" Foreground="{DynamicResource GameBrightBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="Transparent"/>
     </Grid>
-</local:View>
+</wpfvs:View>
