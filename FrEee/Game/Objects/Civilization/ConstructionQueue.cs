@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Objects.Orders;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -444,7 +445,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (Colony == null)
 					return 0;
 				// TODO - storage racial trait
-				return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.Select(o => o.Template).OfType<FacilityTemplate>().Count();
+				return ((Planet)Container).MaxFacilities - Colony.Facilities.Count - Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Count();
 			}
 		}
 

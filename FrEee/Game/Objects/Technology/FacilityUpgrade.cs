@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
+using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Utility;
@@ -10,7 +13,7 @@ using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Technology
 {
-	public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>
+	public class FacilityUpgrade : IUpgradeable<FacilityUpgrade>, IPromotable, INamed
 	{
 		public FacilityUpgrade(FacilityTemplate old, FacilityTemplate nu)
 		{
@@ -20,8 +23,12 @@ namespace FrEee.Game.Objects.Technology
 
 		[DoNotSerialize]
 		public FacilityTemplate Old { get { return old; } private set { old = value; } }
+
 		private ModReference<FacilityTemplate> old { get; set; }
+
+		[DoNotSerialize]
 		public FacilityTemplate New { get { return nu; } private set { nu = value; } }
+
 		private ModReference<FacilityTemplate> nu { get; set; }
 
 		public bool IsObsolete
@@ -60,6 +67,178 @@ namespace FrEee.Game.Objects.Technology
 		public IEnumerable<FacilityUpgrade> OlderVersions
 		{
 			get { return Galaxy.Current.FindSpaceObjects<ISpaceObject>().Select(o => o.ConstructionQueue).ExceptSingle(null).SelectMany(q => q.Orders).Select(o => o.Item).OfType<FacilityUpgrade>().Where(u => New.UpgradesTo(u.New)); }
+		}
+
+		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
+		{
+			if (done == null)
+				done = new HashSet<IPromotable>();
+			if (!done.Contains(this))
+			{
+				done.Add(this);
+				old.ReplaceClientIDs(idmap, done);
+				nu.ReplaceClientIDs(idmap, done);
+			}
+		}
+
+		public ResourceQuantity Cost
+		{
+			get
+			{
+				return New.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100;
+			}
+		}
+
+		public string Name
+		{
+			get
+			{
+				return "Upgrade " + Old + " to " + New;
+			}
+		}
+
+		/*public bool RequiresColonyQueue
+		{
+			get
+			{
+				return true;
+			}
+		}
+
+		public bool RequiresSpaceYardQueue
+		{
+			get
+			{
+				return false;
+			}
+		}
+
+		public IList<Requirement<Empire>> UnlockRequirements
+		{
+			get
+			{
+				return New.UnlockRequirements;
+			}
+		}
+
+		public string ResearchGroup
+		{
+			get
+			{
+				return New.ResearchGroup;
+			}
+		}
+
+		public string Name
+		{
+			get
+			{
+				return "Upgrade to " + New;
+			}
+		}
+
+		public Image Icon
+		{
+			get
+			{
+				return New.Icon;
+			}
+		}
+
+		public Image Portrait
+		{
+			get
+			{
+				return New.Portrait;
+			}
+		}
+
+		public bool IsMemory
+		{
+			get; set;
+		}
+
+		public double Timestamp
+		{
+			get; set;
+		}
+
+		public long ID
+		{
+			get; set;
+		}
+
+		public bool IsDisposed
+		{
+			get; set;
+		}
+
+		public Empire Owner
+		{
+			get; private set;
+		}
+
+		public bool HasBeenUnlockedBy(Empire emp)
+		{
+			return New.HasBeenUnlockedBy(emp);
+		}
+
+		/// <summary>
+		/// You can only see your own facility upgrades.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public Visibility CheckVisibility(Empire emp)
+		{
+			if (emp == Owner)
+				return Visibility.Owned;
+			return Visibility.Unknown;
+		}
+
+		public void Redact(Empire emp)
+		{
+			// nothing to do, it's only visible if it's yours anyway
+		}
+
+		public bool IsObsoleteMemory(Empire emp)
+		{
+			return false;
+		}
+
+		public void Dispose()
+		{
+			// nothing to dispose of
+		}*/
+
+		public override int GetHashCode()
+		{
+			return HashCodeMasher.Mash(Old, New);
+		}
+
+		public override bool Equals(object obj)
+		{
+			var fu = obj as FacilityUpgrade;
+			if (fu == null)
+				return false;
+			return fu.Old == Old && fu.New == New;
+		}
+
+		public static bool operator ==(FacilityUpgrade x, FacilityUpgrade y)
+		{
+			return x.SafeEquals(y);
+		}
+
+		public static bool operator !=(FacilityUpgrade x, FacilityUpgrade y)
+		{
+			return !(x == y);
+		}
+
+		/// <summary>
+		/// The family of facility being upgraded.
+		/// </summary>
+		public string Family
+		{
+			get { return New.Family; }
 		}
 	}
 }

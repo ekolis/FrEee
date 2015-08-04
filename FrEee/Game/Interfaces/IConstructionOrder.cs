@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IConstructionOrder : IOrder<ConstructionQueue>
+	public interface IConstructionOrder : IOrder<ConstructionQueue>, INamed
 	{
 		/// <summary>
 		/// The template.
