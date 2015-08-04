@@ -34,7 +34,7 @@ namespace FrEee.Game.Objects.Orders
 		[DoNotSerialize]
 		public WarpPoint WarpPoint { get { return warpPoint; } set { warpPoint = value; } }
 
-		private GalaxyReference<WarpPoint> warpPoint {get; set;}
+		private GalaxyReference<WarpPoint> warpPoint { get; set; }
 
 		public void Execute(T sobj)
 		{
