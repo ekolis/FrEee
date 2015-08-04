@@ -446,7 +446,47 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Colony.Facilities.GetAbilityValue("Shield Generation", this).ToInt() + Colony.Facilities.GetAbilityValue("Planet - Shield Generation", this).ToInt();
+				var shields = MaxUnmodifiedNormalShields;
+				var modifiers = ShieldModifiers;
+				if (modifiers >= 0)
+					return shields; // positive modifiers go to phased shields
+				else
+					return Math.Max(0, shields + modifiers); // negative modifiers go to normal shields first
+			}
+		}
+
+		public int MaxUnmodifiedNormalShields
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return
+					Colony.Facilities.GetAbilityValue("Shield Generation", this).ToInt()
+					+ Colony.Facilities.GetAbilityValue("Planet - Shield Generation", this).ToInt();
+			}
+		}
+
+		public int ShieldModifiers
+		{
+			get
+			{
+				return Sector.GetAbilityValue("Shield Modifier - Sector").ToInt()
+						- Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
+						+ Sector.GetAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+						+ StarSystem.GetAbilityValue("Shield Modifier - System").ToInt()
+						+ StarSystem.GetAbilityValue(Owner, "Shield Modifier - System").ToInt()
+						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
+			}
+		}
+
+		public int MaxUnmodifiedPhasedShields
+		{
+			get
+			{
+				if (Colony == null)
+					return 0;
+				return Colony.Facilities.GetAbilityValue("Phased Shield Generation", this).ToInt();
 			}
 		}
 
@@ -456,7 +496,12 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Colony.Facilities.GetAbilityValue("Phased Shield Generation", this).ToInt();
+				var shields = MaxUnmodifiedPhasedShields;
+				var modifiers = ShieldModifiers;
+				if (modifiers >= 0)
+					return shields + modifiers; // positive modifiers go to phased shields
+				else
+					return Math.Max(0, shields + modifiers + MaxUnmodifiedNormalShields); // negative modifiers go to normal shields first
 			}
 		}
 

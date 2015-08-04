@@ -294,27 +294,60 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return new Progress(ShieldHitpoints, MaxShieldHitpoints); }
 		}
 
-		/// <summary>
-		/// The maximum shields.
-		/// </summary>
 		public int MaxNormalShields
 		{
 			get
 			{
-				var comps = Components.Where(comp => !comp.IsDestroyed);
-				return comps.GetAbilityValue("Shield Generation", this).ToInt() + comps.GetAbilityValue("Planet - Shield Generation", this).ToInt();
+				var shields = MaxUnmodifiedNormalShields;
+				var modifiers = ShieldModifiers;
+				if (modifiers >= 0)
+					return shields; // positive modifiers go to phased shields
+				else
+					return Math.Max(0, shields + modifiers); // negative modifiers go to normal shields first
 			}
 		}
 
-		/// <summary>
-		/// The maximum phased shields.
-		/// </summary>
+		public int MaxUnmodifiedNormalShields
+		{
+			get
+			{
+				return
+					this.GetAbilityValue("Shield Generation").ToInt()
+					+ this.GetAbilityValue("Planet - Shield Generation").ToInt();
+			}
+		}
+
+		public int ShieldModifiers
+		{
+			get
+			{
+				return Sector.GetAbilityValue("Shield Modifier - Sector").ToInt()
+						- Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
+						+ Sector.GetAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+						+ StarSystem.GetAbilityValue("Shield Modifier - System").ToInt()
+						+ StarSystem.GetAbilityValue(Owner, "Shield Modifier - System").ToInt()
+						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
+			}
+		}
+
+		public int MaxUnmodifiedPhasedShields
+		{
+			get
+			{
+				return this.GetAbilityValue("Phased Shield Generation").ToInt();
+			}
+		}
+
 		public int MaxPhasedShields
 		{
 			get
 			{
-				var comps = Components.Where(comp => !comp.IsDestroyed);
-				return comps.GetAbilityValue("Phased Shield Generation", this).ToInt();
+				var shields = MaxUnmodifiedPhasedShields;
+				var modifiers = ShieldModifiers;
+				if (modifiers >= 0)
+					return shields + modifiers; // positive modifiers go to phased shields
+				else
+					return Math.Max(0, shields + modifiers + MaxUnmodifiedNormalShields); // negative modifiers go to normal shields first
 			}
 		}
 
