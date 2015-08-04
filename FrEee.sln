@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Tests", "FrEee.Tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Wpf", "FrEee.Wpf\FrEee.Wpf.csproj", "{745ACEF4-405B-404F-A3FB-CDE4C6AA3CA2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicViewModel", "..\DynamicViewModel\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj", "{C89729D8-9CA6-4135-8184-6DA757129EF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicViewModel", "..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj", "{C89729D8-9CA6-4135-8184-6DA757129EF6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
