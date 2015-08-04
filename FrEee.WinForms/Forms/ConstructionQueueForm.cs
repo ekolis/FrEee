@@ -106,6 +106,16 @@ namespace FrEee.WinForms.Forms
 			return queues.Sum(c => c.Orders.OfType<ConstructionOrder<Facility, FacilityTemplate>>().Where(o => o.Template.Family == facilityFamily).Count());
 		}
 
+		private int CountUpgradeableFacilities(IEnumerable<Colony> colonies, string facilityFamily)
+		{
+			return colonies.Sum(c => c.Facilities.Where(f => f.Template.Family == facilityFamily && f.IsObsolescent).Count());
+		}
+
+		private int CountQueuedUpgrades(IEnumerable<ConstructionQueue> queues, string facilityFamily)
+		{
+			return queues.Sum(c => c.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.Upgrade.Family == facilityFamily).Count());
+		}
+
 		private string MakePresentQueuedString(int present, int queued)
 		{
 			if (present == 0 && queued == 0)
@@ -116,6 +126,20 @@ namespace FrEee.WinForms.Forms
 				return present.ToString();
 			else
 				return "{0} (+{1} queued)".F(present, queued);
+		}
+
+		private string MakeUpgradePresentQueuedString(int present, int queued)
+		{
+			if (present == 0 && queued == 0)
+				return "-";
+			else if (queued == 0)
+				return present + " upgradeable";
+			else if (present > queued)
+				return queued + " / " + present + " queued";
+			else if (present == queued)
+				return queued + " queued";
+			else // present < queued?! that can't happen for upgrades...
+				return queued + " / " + present + " queued?!";
 		}
 
 		private void lstFacilities_MouseLeave(object sender, EventArgs e)
@@ -185,7 +209,8 @@ namespace FrEee.WinForms.Forms
 			ListViewItem item;
 			foreach (var order in ConstructionQueue.Orders)
 			{
-				var duration = Math.Ceiling(order.Template.Cost.Keys.Max(res => (double)order.Cost[res] / (double)rate[res]));
+				var cost = order.Cost;
+				var duration = Math.Ceiling(cost.Keys.Max(res => (double)cost[res] / (double)rate[res]));
 				var remainingCost = order.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
 				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
 				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
@@ -200,7 +225,7 @@ namespace FrEee.WinForms.Forms
 					totalOrg += orgprogress;
 					totalRad += radprogress;
 					lstQueue.Items.RemoveAt(lstQueue.Items.Count - 1);
-					item = new ListViewItem(count + "x " + order.Template.Name);
+					item = new ListViewItem(count + "x " + order.Name);
 					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(totalMin) ? "-" :
@@ -248,7 +273,7 @@ namespace FrEee.WinForms.Forms
 					totalMin = minprogress;
 					totalOrg = orgprogress;
 					totalRad = radprogress;
-					item = new ListViewItem(order.Template.Name);
+					item = new ListViewItem(order.Name);
 					item.Tag = orders;
 					item.UseItemStyleForSubItems = false;
 					item.SubItems.Add(new ListViewItem.ListViewSubItem(item, double.IsNaN(minprogress) ? "-" : (int)Math.Round(minprogress * 100) + "%", Resource.Minerals.Color, lstQueue.BackColor, lstQueue.Font));
@@ -409,7 +434,7 @@ namespace FrEee.WinForms.Forms
 					var oldf = g.Key;
 
 					// facilites which are not yet upgraded
-					var count = g.Count() - ConstructionQueue.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.OldTemplate == oldf).Count();
+					var count = g.Count() - ConstructionQueue.Orders.OfType<UpgradeFacilityOrder>().Where(o => o.Upgrade.Old == oldf).Count();
 
 					if (count > 0)
 					{
@@ -760,6 +785,10 @@ namespace FrEee.WinForms.Forms
 			foreach (var o in orders)
 				RemoveOrder(o, false);
 			BindQueueListView();
+			if (chkOnlyLatest.Checked)
+				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
+			else
+				BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
 		}
 
 		private void lstQueue_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -826,7 +855,13 @@ namespace FrEee.WinForms.Forms
 			}
 
 			if (rebindGui)
+			{
 				BindQueueListView();
+				if (chkOnlyLatest.Checked)
+					BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()).OnlyLatestVersions(f => f.Family));
+				else
+					BindUpgradeListView(Empire.Current.UnlockedItems.OfType<FacilityTemplate>().Where(f => f.Cost.Any()));
+			}
 		}
 
 		private void btnClear_Click(object sender, EventArgs e)
@@ -843,7 +878,7 @@ namespace FrEee.WinForms.Forms
 
 		private void lstUpgrades_MouseDown(object sender, MouseEventArgs e)
 		{
-			var item = lstFacilities.GetItemAt(e.X, e.Y);
+			var item = lstUpgrades.GetItemAt(e.X, e.Y);
 			if (item != null)
 			{
 				if (e.Button == MouseButtons.Left)
@@ -859,7 +894,7 @@ namespace FrEee.WinForms.Forms
 
 					for (int i = 0; i < amount; i++)
 					{
-						var order = new UpgradeFacilityOrder(upgrade.Old, upgrade.New);
+						var order = new UpgradeFacilityOrder(upgrade);
 						ConstructionQueue.Orders.Add(order);
 						var cmd = new AddOrderCommand<ConstructionQueue>
 						(
@@ -889,6 +924,45 @@ namespace FrEee.WinForms.Forms
 		private void chkExpanded_CheckedChanged(object sender, EventArgs e)
 		{
 			BindQueueListView(SelectedOrders.ToArray());
+		}
+
+		private void lstUpgrades_ItemMouseHover(object sender, ListViewItemMouseHoverEventArgs e)
+		{
+			var fu = (FacilityUpgrade)e.Item.Tag;
+			txtName.Text = fu.Name;
+			resCostMin.Amount = fu.Cost[Resource.Minerals];
+			resCostOrg.Amount = fu.Cost[Resource.Organics];
+			resCostRad.Amount = fu.Cost[Resource.Radioactives];
+			var p = ConstructionQueue.Container as Planet;
+			if (p != null)
+			{
+				int present, queued;
+				IEnumerable<Colony> colonies;
+
+				colonies = new Colony[] { p.Colony };
+				present = CountUpgradeableFacilities(colonies, fu.Old.Family);
+				queued = CountQueuedUpgrades(colonies.Select(c => c.ConstructionQueue), fu.Family);
+				lblPresentLocal.Text = MakeUpgradePresentQueuedString(present, queued);
+
+				colonies = p.Sector.SpaceObjects.OfType<Planet>().OwnedBy(p.Owner).Select(p2 => p2.Colony);
+				present = CountUpgradeableFacilities(colonies, fu.Old.Family);
+				queued = CountQueuedUpgrades(colonies.Select(c => c.ConstructionQueue), fu.Family);
+				lblPresentSector.Text = MakeUpgradePresentQueuedString(present, queued);
+
+				colonies = p.StarSystem.FindSpaceObjects<Planet>().OwnedBy(p.Owner).Select(p2 => p2.Colony);
+				present = CountUpgradeableFacilities(colonies, fu.Old.Family);
+				queued = CountQueuedUpgrades(colonies.Select(c => c.ConstructionQueue), fu.Family);
+				lblPresentSystem.Text = MakeUpgradePresentQueuedString(present, queued);
+
+				colonies = p.Owner.OwnedSpaceObjects.OfType<Planet>().Select(p2 => p2.Colony);
+				present = CountUpgradeableFacilities(colonies, fu.Old.Family);
+				queued = CountQueuedUpgrades(colonies.Select(c => c.ConstructionQueue), fu.Family);
+				lblPresentEmpire.Text = MakeUpgradePresentQueuedString(present, queued);
+			}
+			else
+			{
+				lblPresentLocal.Text = lblPresentSector.Text = lblPresentSystem.Text = lblPresentEmpire.Text = "-";
+			}
 		}
 	}
 }
