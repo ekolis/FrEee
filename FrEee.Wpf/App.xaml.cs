@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 using FrEee.Wpf.Views;
 
 namespace FrEee.Wpf
@@ -10,7 +11,23 @@ namespace FrEee.Wpf
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			new MainMenuView().ShowDialog();
+            // Ed has his own funky way of handling windows.
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+		    var shell = new Shell(new MainMenuView())
+		    {
+                // TODO Temporary, for my amusement. Remove.
+                AllowsTransparency = true,
+                Background = Brushes.Transparent,
+		        WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                BorderBrush = null,
+                BorderThickness = new Thickness(0),
+                WindowStartupLocation = WindowStartupLocation.CenterScreen
+		    };
+
+		    MainWindow = shell;
+            shell.Show();
 		}
 	}
 }
