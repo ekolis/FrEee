@@ -172,5 +172,13 @@ namespace FrEee.Game.Objects.Orders
 		{
 			get { return false; }
 		}
+
+		public string Name
+		{
+			get
+			{
+				return Template.Name;
+			}
+		}
 	}
 }

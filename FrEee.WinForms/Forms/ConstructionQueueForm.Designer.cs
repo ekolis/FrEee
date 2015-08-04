@@ -52,6 +52,15 @@
 			this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.ETA = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
+			this.lblPresentEmpire = new System.Windows.Forms.Label();
+			this.lblPresentSystem = new System.Windows.Forms.Label();
+			this.lblPresentSector = new System.Windows.Forms.Label();
+			this.lblPresentLocal = new System.Windows.Forms.Label();
+			this.label7 = new System.Windows.Forms.Label();
+			this.label6 = new System.Windows.Forms.Label();
+			this.label5 = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.label3 = new System.Windows.Forms.Label();
 			this.txtName = new System.Windows.Forms.Label();
 			this.resCostRad = new FrEee.WinForms.Controls.ResourceDisplay();
 			this.resCostOrg = new FrEee.WinForms.Controls.ResourceDisplay();
@@ -77,15 +86,6 @@
 			this.txtCargoStorageFree = new System.Windows.Forms.Label();
 			this.txtFacilitySlotsFree = new System.Windows.Forms.Label();
 			this.chkExpanded = new System.Windows.Forms.CheckBox();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label5 = new System.Windows.Forms.Label();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label7 = new System.Windows.Forms.Label();
-			this.lblPresentLocal = new System.Windows.Forms.Label();
-			this.lblPresentSector = new System.Windows.Forms.Label();
-			this.lblPresentSystem = new System.Windows.Forms.Label();
-			this.lblPresentEmpire = new System.Windows.Forms.Label();
 			this.gamePanel2.SuspendLayout();
 			this.gamePanel1.SuspendLayout();
 			this.gameTabControl1.SuspendLayout();
@@ -384,6 +384,100 @@
 			this.gamePanel1.Size = new System.Drawing.Size(282, 533);
 			this.gamePanel1.TabIndex = 6;
 			// 
+			// lblPresentEmpire
+			// 
+			this.lblPresentEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentEmpire.AutoSize = true;
+			this.lblPresentEmpire.Location = new System.Drawing.Point(82, 515);
+			this.lblPresentEmpire.Name = "lblPresentEmpire";
+			this.lblPresentEmpire.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentEmpire.TabIndex = 26;
+			this.lblPresentEmpire.Text = "0";
+			// 
+			// lblPresentSystem
+			// 
+			this.lblPresentSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentSystem.AutoSize = true;
+			this.lblPresentSystem.Location = new System.Drawing.Point(82, 503);
+			this.lblPresentSystem.Name = "lblPresentSystem";
+			this.lblPresentSystem.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentSystem.TabIndex = 25;
+			this.lblPresentSystem.Text = "0";
+			// 
+			// lblPresentSector
+			// 
+			this.lblPresentSector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentSector.AutoSize = true;
+			this.lblPresentSector.Location = new System.Drawing.Point(82, 489);
+			this.lblPresentSector.Name = "lblPresentSector";
+			this.lblPresentSector.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentSector.TabIndex = 24;
+			this.lblPresentSector.Text = "0";
+			// 
+			// lblPresentLocal
+			// 
+			this.lblPresentLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.lblPresentLocal.AutoSize = true;
+			this.lblPresentLocal.Location = new System.Drawing.Point(82, 476);
+			this.lblPresentLocal.Name = "lblPresentLocal";
+			this.lblPresentLocal.Size = new System.Drawing.Size(13, 13);
+			this.lblPresentLocal.TabIndex = 23;
+			this.lblPresentLocal.Text = "0";
+			// 
+			// label7
+			// 
+			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label7.AutoSize = true;
+			this.label7.Location = new System.Drawing.Point(9, 515);
+			this.label7.Name = "label7";
+			this.label7.Size = new System.Drawing.Size(70, 13);
+			this.label7.TabIndex = 22;
+			this.label7.Text = "Empire Wide:";
+			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label6
+			// 
+			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label6.AutoSize = true;
+			this.label6.Location = new System.Drawing.Point(23, 502);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(56, 13);
+			this.label6.TabIndex = 21;
+			this.label6.Text = "In System:";
+			this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label5
+			// 
+			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label5.AutoSize = true;
+			this.label5.Location = new System.Drawing.Point(23, 489);
+			this.label5.Name = "label5";
+			this.label5.Size = new System.Drawing.Size(53, 13);
+			this.label5.TabIndex = 20;
+			this.label5.Text = "In Sector:";
+			this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label4
+			// 
+			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label4.AutoSize = true;
+			this.label4.Location = new System.Drawing.Point(33, 476);
+			this.label4.Name = "label4";
+			this.label4.Size = new System.Drawing.Size(43, 13);
+			this.label4.TabIndex = 19;
+			this.label4.Text = "Locally:";
+			this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// label3
+			// 
+			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(4, 457);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(56, 13);
+			this.label3.TabIndex = 18;
+			this.label3.Text = "# Present:";
+			// 
 			// txtName
 			// 
 			this.txtName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -515,7 +609,7 @@
 			this.tabPage3.Controls.Add(this.lstFacilities);
 			this.tabPage3.Location = new System.Drawing.Point(4, 22);
 			this.tabPage3.Name = "tabPage3";
-			this.tabPage3.Size = new System.Drawing.Size(266, 373);
+			this.tabPage3.Size = new System.Drawing.Size(266, 361);
 			this.tabPage3.TabIndex = 2;
 			this.tabPage3.Text = "Facilities";
 			// 
@@ -532,7 +626,7 @@
 			this.lstFacilities.HoverSelection = true;
 			this.lstFacilities.Location = new System.Drawing.Point(0, 0);
 			this.lstFacilities.Name = "lstFacilities";
-			this.lstFacilities.Size = new System.Drawing.Size(266, 373);
+			this.lstFacilities.Size = new System.Drawing.Size(266, 361);
 			this.lstFacilities.TabIndex = 7;
 			this.lstFacilities.TileSize = new System.Drawing.Size(32, 32);
 			this.lstFacilities.UseCompatibleStateImageBehavior = false;
@@ -557,7 +651,7 @@
 			this.tabPage4.Controls.Add(this.lstUpgrades);
 			this.tabPage4.Location = new System.Drawing.Point(4, 22);
 			this.tabPage4.Name = "tabPage4";
-			this.tabPage4.Size = new System.Drawing.Size(266, 373);
+			this.tabPage4.Size = new System.Drawing.Size(266, 361);
 			this.tabPage4.TabIndex = 3;
 			this.tabPage4.Text = "Upgrades";
 			// 
@@ -574,11 +668,12 @@
 			this.lstUpgrades.HoverSelection = true;
 			this.lstUpgrades.Location = new System.Drawing.Point(0, 0);
 			this.lstUpgrades.Name = "lstUpgrades";
-			this.lstUpgrades.Size = new System.Drawing.Size(266, 373);
+			this.lstUpgrades.Size = new System.Drawing.Size(266, 361);
 			this.lstUpgrades.TabIndex = 8;
 			this.lstUpgrades.TileSize = new System.Drawing.Size(32, 32);
 			this.lstUpgrades.UseCompatibleStateImageBehavior = false;
 			this.lstUpgrades.View = System.Windows.Forms.View.Details;
+			this.lstUpgrades.ItemMouseHover += new System.Windows.Forms.ListViewItemMouseHoverEventHandler(this.lstUpgrades_ItemMouseHover);
 			this.lstUpgrades.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lstUpgrades_MouseDown);
 			this.lstUpgrades.MouseLeave += new System.EventHandler(this.lstUpgrades_MouseLeave);
 			// 
@@ -672,100 +767,6 @@
 			this.chkExpanded.Text = "Expanded View";
 			this.chkExpanded.UseVisualStyleBackColor = true;
 			this.chkExpanded.CheckedChanged += new System.EventHandler(this.chkExpanded_CheckedChanged);
-			// 
-			// label3
-			// 
-			this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(4, 457);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(56, 13);
-			this.label3.TabIndex = 18;
-			this.label3.Text = "# Present:";
-			// 
-			// label4
-			// 
-			this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(33, 476);
-			this.label4.Name = "label4";
-			this.label4.Size = new System.Drawing.Size(43, 13);
-			this.label4.TabIndex = 19;
-			this.label4.Text = "Locally:";
-			this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// label5
-			// 
-			this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(23, 489);
-			this.label5.Name = "label5";
-			this.label5.Size = new System.Drawing.Size(53, 13);
-			this.label5.TabIndex = 20;
-			this.label5.Text = "In Sector:";
-			this.label5.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// label6
-			// 
-			this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label6.AutoSize = true;
-			this.label6.Location = new System.Drawing.Point(23, 502);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(56, 13);
-			this.label6.TabIndex = 21;
-			this.label6.Text = "In System:";
-			this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// label7
-			// 
-			this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(9, 515);
-			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(70, 13);
-			this.label7.TabIndex = 22;
-			this.label7.Text = "Empire Wide:";
-			this.label7.TextAlign = System.Drawing.ContentAlignment.TopRight;
-			// 
-			// lblPresentLocal
-			// 
-			this.lblPresentLocal.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lblPresentLocal.AutoSize = true;
-			this.lblPresentLocal.Location = new System.Drawing.Point(82, 476);
-			this.lblPresentLocal.Name = "lblPresentLocal";
-			this.lblPresentLocal.Size = new System.Drawing.Size(13, 13);
-			this.lblPresentLocal.TabIndex = 23;
-			this.lblPresentLocal.Text = "0";
-			// 
-			// lblPresentSector
-			// 
-			this.lblPresentSector.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lblPresentSector.AutoSize = true;
-			this.lblPresentSector.Location = new System.Drawing.Point(82, 489);
-			this.lblPresentSector.Name = "lblPresentSector";
-			this.lblPresentSector.Size = new System.Drawing.Size(13, 13);
-			this.lblPresentSector.TabIndex = 24;
-			this.lblPresentSector.Text = "0";
-			// 
-			// lblPresentSystem
-			// 
-			this.lblPresentSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lblPresentSystem.AutoSize = true;
-			this.lblPresentSystem.Location = new System.Drawing.Point(82, 503);
-			this.lblPresentSystem.Name = "lblPresentSystem";
-			this.lblPresentSystem.Size = new System.Drawing.Size(13, 13);
-			this.lblPresentSystem.TabIndex = 25;
-			this.lblPresentSystem.Text = "0";
-			// 
-			// lblPresentEmpire
-			// 
-			this.lblPresentEmpire.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.lblPresentEmpire.AutoSize = true;
-			this.lblPresentEmpire.Location = new System.Drawing.Point(82, 515);
-			this.lblPresentEmpire.Name = "lblPresentEmpire";
-			this.lblPresentEmpire.Size = new System.Drawing.Size(13, 13);
-			this.lblPresentEmpire.TabIndex = 26;
-			this.lblPresentEmpire.Text = "0";
 			// 
 			// ConstructionQueueForm
 			// 
