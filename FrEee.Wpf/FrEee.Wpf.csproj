@@ -151,7 +151,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
+    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
       <Project>{c89729d8-9ca6-4135-8184-6da757129ef6}</Project>
       <Name>DynamicViewModel</Name>
     </ProjectReference>
