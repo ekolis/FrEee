@@ -20,30 +20,18 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class UpgradeFacilityOrder : IConstructionOrder
 	{
-		public UpgradeFacilityOrder(FacilityTemplate old, FacilityTemplate nu)
+		public UpgradeFacilityOrder(FacilityUpgrade fu)
 		{
 			Owner = Empire.Current;
-			OldTemplate = old;
-			NewTemplate = nu;
+			Upgrade = fu;
 		}
 
 		/// <summary>
-		/// The template of the facility being upgraded to.
+		/// The upgrade to perform.
 		/// </summary>
-		[DoNotSerialize]
-		public FacilityTemplate NewTemplate { get { return newTemplate; } set { newTemplate = value; } }
+		public FacilityUpgrade Upgrade { get; set; }
 
-		IConstructionTemplate IConstructionOrder.Template { get { return newTemplate.Value; } }
-
-		private ModReference<FacilityTemplate> newTemplate { get; set; }
-
-		/// <summary>
-		/// The template of the old facility being upgraded.
-		/// </summary>
-		[DoNotSerialize]
-		public FacilityTemplate OldTemplate { get { return oldTemplate; } set { oldTemplate = value; } }
-
-		private ModReference<FacilityTemplate> oldTemplate { get; set; }
+		IConstructionTemplate IConstructionOrder.Template { get { return Upgrade.New; } }
 
 		/// <summary>
 		/// The facility being built.
@@ -65,7 +53,7 @@ namespace FrEee.Game.Objects.Orders
 				// create item if needed
 				if (NewFacility == null)
 				{
-					NewFacility = NewTemplate.Instantiate();
+					NewFacility = Upgrade.New.Instantiate();
 					NewFacility.Owner = queue.Owner;
 				}
 
@@ -75,7 +63,7 @@ namespace FrEee.Game.Objects.Orders
 				if (spending < queue.Owner.StoredResources)
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					queue.Container.CreateLogMessage("Construction of " + NewTemplate + " at " + queue.Container + " was delayed due to lack of resources.");
+					queue.Container.CreateLogMessage("Construction of " + Upgrade.New + " at " + queue.Container + " was delayed due to lack of resources.");
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
@@ -85,7 +73,7 @@ namespace FrEee.Game.Objects.Orders
 				if (IsComplete)
 				{
 					var planet = (Planet)queue.Container;
-					planet.Colony.Facilities.Where(f => f.Template == OldTemplate).First().Dispose();
+					planet.Colony.Facilities.Where(f => f.Template == Upgrade.Old).First().Dispose();
 					planet.Colony.Facilities.Add(NewFacility);
 				}
 			}
@@ -132,7 +120,7 @@ namespace FrEee.Game.Objects.Orders
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				newTemplate.ReplaceClientIDs(idmap, done);
+				Upgrade.ReplaceClientIDs(idmap, done);
 			}
 		}
 
@@ -141,18 +129,18 @@ namespace FrEee.Game.Objects.Orders
 		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
 		{
 			// validate that new facility is unlocked
-			if (!queue.Owner.HasUnlocked(NewTemplate))
-				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.Container + " could not be upgraded to a " + NewTemplate + " because we have not yet researched the " + NewTemplate + ".");
+			if (!queue.Owner.HasUnlocked(Upgrade.New))
+				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because we have not yet researched the " + Upgrade.New + ".");
 
 			// validate that new and old facilities are in the same family
-			if (NewTemplate.Family != OldTemplate.Family)
-				yield return OldTemplate.CreateLogMessage(OldTemplate + " on " + queue.Container + " could not be upgraded to a " + NewTemplate + " because facilities cannot be upgraded to facilities of a different family.");
+			if (Upgrade.New.Family != Upgrade.Old.Family)
+				yield return Upgrade.Old.CreateLogMessage(Upgrade.Old + " on " + queue.Container + " could not be upgraded to a " + Upgrade.New + " because facilities cannot be upgraded to facilities of a different family.");
 
 			// validate that there is a facility to upgrade
 			var planet = (Planet)queue.Container;
 			var colony = planet.Colony;
-			if (!colony.Facilities.Any(f => f.Template == OldTemplate))
-				yield return planet.CreateLogMessage("There are no " + OldTemplate + "s on " + planet + " to upgrade.");
+			if (!colony.Facilities.Any(f => f.Template == Upgrade.Old))
+				yield return planet.CreateLogMessage("There are no " + Upgrade.Old + "s on " + planet + " to upgrade.");
 		}
 
 		public bool CheckCompletion(ConstructionQueue queue)
@@ -180,7 +168,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public ResourceQuantity Cost
 		{
-			get { return NewTemplate.Cost * Mod.Current.Settings.UpgradeFacilityPercentCost / 100; }
+			get { return Upgrade.Cost; }
 		}
 
 		public bool IsDisposed { get; set; }
@@ -188,6 +176,14 @@ namespace FrEee.Game.Objects.Orders
 		public bool ConsumesMovement
 		{
 			get { return false; }
+		}
+
+		public string Name
+		{
+			get
+			{
+				return "Upgrade to " + Upgrade.New.Name;
+			}
 		}
 	}
 }

@@ -53,7 +53,7 @@ namespace FrEee.Modding
 
 		public override string ToString()
 		{
-			return $"{Name} {Version}";
+			return Name + " " + Version;
 		}
 	}
 }
