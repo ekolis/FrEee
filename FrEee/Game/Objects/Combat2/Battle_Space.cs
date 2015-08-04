@@ -660,7 +660,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			bool ships_persuing = true; // TODO - check if ships are actually pursuing
 			bool ships_inrange = true; //ships are in skipdrive interdiction range of enemy ships TODO - check if ships are in range
-			//TODO: check for alive missiles and bullets.
+									   //TODO: check for alive missiles and bullets.
 			bool hostiles = ControlledCombatObjects.Any(o => !o.WorkingCombatant.IsDestroyed && ControlledCombatObjects.Any(o2 => !o2.WorkingCombatant.IsDestroyed && o.WorkingCombatant.IsHostileTo(o2.WorkingCombatant.Owner)));
 
 			var maxTick = (Mod.Current == null || Mod.Current.Settings.SpaceCombatTurns <= 0 ? 30 : Mod.Current.Settings.SpaceCombatTurns) * TicksPerSecond;
@@ -946,7 +946,7 @@ namespace FrEee.Game.Objects.Combat2
 							wpn.CanTarget(targetObject.WorkingObject) && //if we CAN target 
 							tic_countr >= wpn.nextReload && //if the weapon is ready to fire.
 							(
-							// if the firing object has enough supplies (or is not a space vehicle, and so does not use supplies)
+								// if the firing object has enough supplies (or is not a space vehicle, and so does not use supplies)
 								!(comObj.WorkingObject is SpaceVehicle) ||
 								((SpaceVehicle)comObj.WorkingObject).HasInfiniteSupplies ||
 								wpn.weapon.Template.SupplyUsage <= ((SpaceVehicle)comObj.WorkingObject).SupplyRemaining
@@ -1013,29 +1013,12 @@ namespace FrEee.Game.Objects.Combat2
 			int wpn_AccuMod = weapon.weapon.Template.WeaponAccuracy; // weapon's intrinsic accuracy modifier
 			int atkr_AccuMod = vehicle.Accuracy;//weapon.weapon.Container.Accuracy; // firing ship's accuracy modifier
 			int tgt_EvdMod = target.WorkingObject.Evasion; // target's evasion modifier
-			int tgt_SectEvdMod = Sector.GetAbilityValue(target.WorkingObject.Owner, "Sector - Sensor Interference").ToInt(); // sector evasion modifier
-			int atkr_SectComMod = Sector.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - Sector").ToInt(); // generic combat bonuses
-			int tgt_SectComMod = Sector.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - Sector").ToInt();
-			int atkr_SysComMod = Sector.StarSystem.GetAbilityValue(attacker.WorkingObject.Owner, "Combat Modifier - System").ToInt();
-			int tgt_SysComMod = Sector.StarSystem.GetAbilityValue(target.WorkingObject.Owner, "Combat Modifier - System").ToInt();
-			int atkr_EmpComMod = attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
-			int tgt_EmpComMod = target.WorkingObject.Owner == null ? 0 : target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 
-			int total =
+			return
 				wpn_Accu_blankrng
 				+ wpn_AccuMod
 				+ atkr_AccuMod
-				- tgt_EvdMod
-				- tgt_SectEvdMod
-				+ atkr_SectComMod
-				- tgt_SectComMod
-				+ atkr_SysComMod
-				- tgt_SysComMod
-				+ atkr_EmpComMod
-				- tgt_EmpComMod;
-
-			return total;
-
+				- tgt_EvdMod;
 		}
 
 
@@ -1076,7 +1059,7 @@ namespace FrEee.Game.Objects.Combat2
 				//target_event = ReplayLog.EventsForObjectAtTick(target, targettick).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];
 				List<CombatFireOnTargetEvent> atkrevnts = ReplayLog.EventsForObjectAtTick(attacker, tick).OfType<CombatFireOnTargetEvent>().ToList<CombatFireOnTargetEvent>();
 				target_event = atkrevnts[0].TakeFireEvent; //need to check which in the list here is the correct event, since ships with multiple weapons will have multiple events here. 
-				//target_event.BulletNode = seeker;
+														   //target_event.BulletNode = seeker;
 				seeker.seekertargethit = target_event; //need to link the seeker and the event. (since the seeker object does not get carried over between processing and replay, but gets re-created)
 			}
 			else
@@ -1100,7 +1083,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
 			Fix16 boltTTT = weapon.boltTimeToTarget(attacker, target); //in seconds
-			//set target tick for the future.
+																	   //set target tick for the future.
 			int targettic = tick + (int)boltTTT * TicksPerSecond;
 
 
