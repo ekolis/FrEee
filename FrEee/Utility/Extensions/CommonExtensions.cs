@@ -29,6 +29,7 @@ using NewtMath.f16;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat2.Tactics; // TODO -remove this, just for testing
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Utility.Extensions
 {
@@ -3523,6 +3524,17 @@ namespace FrEee.Utility.Extensions
 			else
 				o.TimeToNextMove -= Galaxy.Current.NextTickSize;
 			return didStuff;
+		}
+
+		/// <summary>
+		/// Inflicts normal damage on an object out of the blue.
+		/// </summary>
+		/// <param name="d">The object which should take damage.</param>
+		/// <param name="dmg">The amount of normal damage to inflict.</param>
+		/// <returns>Leftover damage.</returns>
+		public static int TakeNormalDamage(this IDamageable d, int dmg)
+		{
+			return d.TakeDamage(new Hit(new Shot(null, null, d, 0), d, dmg));
 		}
 	}
 
