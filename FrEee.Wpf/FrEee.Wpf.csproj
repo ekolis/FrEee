@@ -79,7 +79,6 @@
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\View.cs" />
     <Page Include="Resources\ResourceDictionaries\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -108,16 +107,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Shell.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Views\Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -153,6 +144,10 @@
     <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
       <Project>{c89729d8-9ca6-4135-8184-6da757129ef6}</Project>
       <Name>DynamicViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\WpfViewShells\WpfViewShells\WpfViewShells.csproj">
+      <Project>{2b891c6c-e99d-43bf-a019-70a0c1f04773}</Project>
+      <Name>WpfViewShells</Name>
     </ProjectReference>
     <ProjectReference Include="..\FrEee\FrEee.csproj">
       <Project>{e19a4330-ce19-45d6-bcfc-375e065ef041}</Project>
