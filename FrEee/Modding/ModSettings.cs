@@ -40,6 +40,8 @@ namespace FrEee.Modding
 
 			VictoryPictures = new List<string>();
 			DefeatPictures = new List<string>();
+
+			ValueChangeFrequency = 10;
 		}
 
 		/// <summary>
@@ -429,7 +431,22 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Number of turns between population reproduction.
 		/// </summary>
-		public int ReproductionDelay { get; set; }
+		// TODO - remove DoNotSerialize from ReproductionFrequency once the PBW game is over
+		[DoNotSerialize]
+		public int ReproductionFrequency { get; set; }
+
+		// TODO - remove ReproductionDelay once the PBW game is over
+		[Obsolete("ModSettings.ReproductionDelay is deprecated. Use ReproductionFrequency instead.")]
+		public int ReproductionDelay
+		{
+			get { return ReproductionFrequency; }
+			set { ReproductionFrequency = value; }
+		}
+
+		/// <summary>
+		/// How often (in turns) should planetary value change abilities take effect?
+		/// </summary>
+		public int ValueChangeFrequency { get; set; }
 
 		/// <summary>
 		/// Can bases join fleets?

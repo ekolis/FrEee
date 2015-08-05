@@ -64,7 +64,7 @@ namespace FrEee.Modding.Loaders
 
 			// TODO - load more settings
 
-			settings.PopulationModifiers = new SortedDictionary<long,PopulationModifier>(PopulationModifierLoader.Load(rec).ToDictionary(pm => pm.PopulationAmount));
+			settings.PopulationModifiers = new SortedDictionary<long, PopulationModifier>(PopulationModifierLoader.Load(rec).ToDictionary(pm => pm.PopulationAmount));
 
 			// TODO - load more settings
 
@@ -92,7 +92,8 @@ namespace FrEee.Modding.Loaders
 			// TODO - load more settings
 
 			settings.PopulationSize = (double)(rec.Get<int>("Population Mass", null) ?? 5) / settings.PopulationFactor;
-			settings.ReproductionDelay = rec.Get<int>("Reproduction Check Frequency", null) ?? 1;
+			settings.ReproductionDelay = rec.Get<int>("Reproduction Check Frequency", null) ?? 1; // TODO - change property name to ReproductionFrequency
+			settings.ValueChangeFrequency = rec.Get<int>("Value Change Frequency", null) ?? 10;
 
 			// TODO - load more settings
 

@@ -87,61 +87,79 @@ Description := Completely replenishes the supplies of vehicles that pass through
 
 Name := Planet - Change Minerals Value
 Targets := Planet, Facility, GroundVehicle, Component
-Description := Planet minerals value is changed by [%Amount1%] per turn.
+Description := Planet minerals value is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Planet - Change Organics Value
 Targets := Planet, Facility, GroundVehicle, Component
-Description := Planet organics value is changed by [%Amount1%] per turn.
+Description := Planet organics value is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Planet - Change Radioactives Value
 Targets := Planet, Facility, GroundVehicle, Component
-Description := Planet radioactives value is changed by [%Amount1%] per turn.
+Description := Planet radioactives value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Minerals Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet minerals value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Organics Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet organics value is changed by [%Amount1%] per year.
+Value 1 Rule := Add
+Value 2 Rule := Add
+
+Name := Sector - Change Radioactives Value
+Targets := Sector, Planet, Facility, GroundVehicle, Component
+Description := Planet radioactives value is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := System - Change Minerals Value
 Targets := StarSystem, Planet, Facility, Vehicle, Component
-Description := Minerals value of all colonized planets in this system is changed by [%Amount1%] per turn.
+Description := Minerals value of all colonized planets in this system is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := System - Change Organics Value
 Targets := StarSystem, Planet, Facility, Vehicle, Component
-Description := Organics value of all colonized planets in this system is changed by [%Amount1%] per turn.
+Description := Organics value of all colonized planets in this system is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := System - Change Radioactives Value
 Targets := StarSystem, Planet, Facility, Vehicle, Component
-Description := Radioactives value of all colonized planets in this system is changed by [%Amount1%] per turn.
+Description := Radioactives value of all colonized planets in this system is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Empire - Change Minerals Value
 Targets := Empire, Planet, Facility, Vehicle, Component
-Description := Minerals value of all colonized planets is changed by [%Amount1%] per turn.
+Description := Minerals value of all colonized planets is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Empire - Change Organics Value
 Targets := Empire, Planet, Facility, Vehicle, Component
-Description := Organics value of all colonized planets is changed by [%Amount1%] per turn.
+Description := Organics value of all colonized planets is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Empire - Change Radioactives Value
 Targets := Empire, Planet, Facility, Vehicle, Component
-Description := Radioactives value of all colonized planets is changed by [%Amount1%] per turn.
+Description := Radioactives value of all colonized planets is changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Planet - Change Conditions
 Targets := Planet, Facility, GroundVehicle, Component
-Description := Planet conditions are changed by [%Amount1%] per turn.
+Description := Planet conditions are changed by [%Amount1%] per year.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
