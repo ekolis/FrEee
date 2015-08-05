@@ -17,6 +17,8 @@ namespace FrEee.Modding.Interfaces
 		object Evaluate(IDictionary<string, object> variables);
 
 		object Evaluate(object host);
+
+		Formula<string> ToStringFormula();
 	}
 
 	public interface IFormula<out T> : IFormula

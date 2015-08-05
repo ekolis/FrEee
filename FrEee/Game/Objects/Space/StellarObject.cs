@@ -70,6 +70,20 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public IList<Ability> IntrinsicAbilities { get; private set; }
 
+		// TODO - rename to IntrinsicAbilities in IAbilityContainer and remove DoNotSerialize
+		[DoNotSerialize]
+		public IList<Ability> Abilities
+		{
+			get
+			{
+				return IntrinsicAbilities;
+			}
+			set
+			{
+				IntrinsicAbilities = value;
+			}
+		}
+
 		/// <summary>
 		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
 		/// </summary>

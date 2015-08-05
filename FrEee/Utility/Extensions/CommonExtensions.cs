@@ -3599,6 +3599,18 @@ namespace FrEee.Utility.Extensions
 				value = min;
 			return value;
 		}
+
+		public static Ability AddAbility(this IAbilityContainer obj, string abilityName, params object[] vals)
+		{
+			return obj.AddAbility(Mod.Current.AbilityRules.Single(r => r.Name == abilityName || r.Aliases.Contains(abilityName)), vals);
+		}
+
+		public static Ability AddAbility(this IAbilityContainer obj, AbilityRule rule, params object[] vals)
+		{
+			var a = new Ability(obj, rule, null, vals);
+			obj.Abilities.Add(a);
+			return a;
+		}
 	}
 
 	public enum IDCopyBehavior
