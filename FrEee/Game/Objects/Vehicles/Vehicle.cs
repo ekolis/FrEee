@@ -445,9 +445,7 @@ namespace FrEee.Game.Objects.Vehicles
 					this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue("Combat Modifier - Sector").ToInt()
 					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue("Combat Modifier - System").ToInt()
 					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
@@ -461,9 +459,7 @@ namespace FrEee.Game.Objects.Vehicles
 					this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue("Combat Modifier - Sector").ToInt()
 					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue("Combat Modifier - System").ToInt()
 					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
