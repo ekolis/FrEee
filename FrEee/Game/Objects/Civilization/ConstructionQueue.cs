@@ -78,6 +78,8 @@ namespace FrEee.Game.Objects.Civilization
 			return null;
 		}
 
+		private ResourceQuantity rate;
+
 		/// <summary>
 		/// The rate at which this queue can construct.
 		/// </summary>
@@ -85,51 +87,64 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				var rate = ComputeSYAbilityRate();
-				if (Colony != null)
+				if (Empire.Current != null)
 				{
+					// try to use cache, rate can't change client side!
 					if (rate == null)
-						rate = Mod.Current.Settings.DefaultColonyConstructionRate;
-
-					// apply population modifier
-					var pop = Colony.Population.Sum(p => p.Value);
-					rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
-
-					// TODO - apply happiness modifier
-
-					var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
-
-					// apply racial trait planetary SY modifier
-					// TODO - should Planetary SY Rate apply only to planets that have space yards, or to all planetary construction queues?
-					double traitmod = 1d;
-					foreach (var ratio in ratios)
-						traitmod += (ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d) * ratio.Ratio;
-					rate *= traitmod;
-
-					// apply aptitude modifier
-					if (IsSpaceYardQueue)
-					{
-						double aptmod = 0d;
-						foreach (var ratio in ratios)
-							aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d)) * ratio.Ratio;
-						rate *= aptmod;
-
-						// apply culture modifier
-						rate *= (100d + Owner.Culture.Construction) / 100d;
-					}
-
+						rate = ComputeRate();
+					return rate;
 				}
-				if (rate == null)
-					rate = new ResourceQuantity();
-				if (Container is IVehicle)
-				{
-					// apply aptitude modifier for empire's primary race
-					rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
-				}
-
-
-				return rate;
+				else
+					return ComputeRate();
 			}
+		}
+
+		private ResourceQuantity ComputeRate()
+		{
+			var rate = ComputeSYAbilityRate();
+			if (Colony != null)
+			{
+				if (rate == null)
+					rate = Mod.Current.Settings.DefaultColonyConstructionRate;
+
+				// apply population modifier
+				var pop = Colony.Population.Sum(p => p.Value);
+				rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
+
+				// TODO - apply happiness modifier
+
+				var ratios = Colony.Population.Select(p => new { Race = p.Key, Ratio = (double)p.Value / (double)pop });
+
+				// apply racial trait planetary SY modifier
+				// TODO - should Planetary SY Rate apply only to planets that have space yards, or to all planetary construction queues?
+				double traitmod = 1d;
+				foreach (var ratio in ratios)
+					traitmod += (ratio.Race.GetAbilityValue("Planetary SY Rate").ToDouble() / 100d) * ratio.Ratio;
+				rate *= traitmod;
+
+				// apply aptitude modifier
+				if (IsSpaceYardQueue)
+				{
+					double aptmod = 0d;
+					foreach (var ratio in ratios)
+						aptmod += ((ratio.Race.Aptitudes[Aptitude.Construction.Name] / 100d)) * ratio.Ratio;
+					rate *= aptmod;
+
+					// apply culture modifier
+					rate *= (100d + Owner.Culture.Construction) / 100d;
+				}
+
+			}
+			if (rate == null)
+				rate = new ResourceQuantity();
+			if (Container is IVehicle)
+			{
+				// apply aptitude modifier for empire's primary race
+				rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
+			}
+
+
+			return rate;
 		}
 
 		public int RateMinerals { get { return Rate[Resource.Minerals]; } }
