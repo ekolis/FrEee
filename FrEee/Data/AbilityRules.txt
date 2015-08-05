@@ -13,27 +13,27 @@ Targets := Star
 Description := Star is unstable and emits a greater than normal quantity of solar flares. (No in-game effect)
 
 Name := Sector - Sight Obscuration
-Targets := Sector, SpaceObject, Component, Facility
+Targets := StarSystem, Sector, SpaceObject, Component, Facility
 Description := Sensor sweeps below level [%Amount1%] (all sensor types) are prevented against vehicles in this sector.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Sector - Sensor Interference
-Targets := Sector, SpaceObject, Component, Facility
+Targets := StarSystem, Sector, SpaceObject, Component, Facility
 Description := Weapon accuracy is reduced by [%Amount1%]% in this sector.
 Value 1 Rule := TakeHighest
 Value 1 Group Rule := Add
 Value 2 Rule := Group
 
 Name := Sector - Shield Disruption
-Targets := Sector, SpaceObject, Component, Facility
+Targets := StarSystem, Sector, SpaceObject, Component, Facility
 Description := Vehicles' maximum shield points are reduced by [%Amount1%] in this sector.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
 Name := Sector - Damage
-Targets := Sector, SpaceObject, Component, Facility
+Targets := StarSystem, Sector, SpaceObject, Component, Facility
 Description := Sector inflicts [%Amount1%] damage to vehicles entering it or remaining in it at the end of a turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
