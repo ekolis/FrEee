@@ -1359,7 +1359,20 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (sourceFilter == null)
-				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
+			{
+				var subobjs = obj.GetContainedAbilityObjects(emp);
+				Func<Ability[]> getabils = () =>
+					subobjs.SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
+				if (Galaxy.Current.IsAbilityCacheEnabled)
+				{
+					var tuple = Tuple.Create(obj, emp);
+					if (Galaxy.Current.CommonAbilityCache[tuple] == null)
+						Galaxy.Current.CommonAbilityCache[tuple] = getabils();
+					return Galaxy.Current.CommonAbilityCache[tuple];
+				}
+				else
+					return getabils();
+			}
 			else
 				return obj.GetContainedAbilityObjects(emp).Where(o => sourceFilter(o)).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget));
 		}
