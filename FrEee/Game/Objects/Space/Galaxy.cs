@@ -806,15 +806,16 @@ namespace FrEee.Game.Objects.Space
 			// advance turn number
 			Current.TurnNumber++;
 
-			// reproduction and population replacement from cargo
+			// colony maintenance
 			Current.DisableAbilityCache(); // population quantity can affect abilities
 			if (status != null)
-				status.Message = "Growing population";
-			if (Current.TurnNumber % (Mod.Current.Settings.ReproductionDelay == 0 ? 1 : Mod.Current.Settings.ReproductionDelay) == 0)
+				status.Message = "Maintaining colonies";
+			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
 			{
-				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Colony != null))
+				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.HasColony))
 				{
 					var pop = p.Colony.Population;
+					var wasFull = p.PopulationStorageFree == 0;
 					foreach (var race in pop.Keys.ToArray())
 					{
 						pop[race] += p.PopulationChangePerTurnPerRace[race];
@@ -831,6 +832,8 @@ namespace FrEee.Game.Objects.Space
 							// especially in Proportions Mod with its 1000kT/1M population!
 							pop[race] = (long)(pop[race] / ratio);
 						}
+						if (!wasFull && p.Owner != null)
+							p.Owner.RecordLog(p, "{0} has completely filled up with population. Building colonizers or transports is advised.".F(p));
 					}
 
 					// deal with population in cargo
@@ -853,10 +856,32 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
+			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
+			{
+				foreach (var p in Current.FindSpaceObjects<Planet>().Where(p => p.HasColony))
+				{
+					foreach (var r in Resource.All.Where(r => r.HasValue))
+					{
+						bool wasFull = p.ResourceValue[r] == Current.MaxPlanetValue;
+						bool wasEmpty = p.ResourceValue[r] == Current.MinPlanetValue;
+						var modifier =
+							p.GetAbilityValue("Planet - Change {0} Value".F(r.Name)).ToInt()
+							+ p.GetAbilityValue("Sector - Change {0} Value".F(r.Name)).ToInt()
+							+ p.GetAbilityValue("System - Change {0} Value".F(r.Name)).ToInt()
+							+ p.GetAbilityValue("Empire - Change {0} Value".F(r.Name)).ToInt();
+						p.ResourceValue[r] += modifier;
+						p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(Current.MinPlanetValue, Current.MaxPlanetValue);
+						if (!wasFull && p.ResourceValue[r] == Current.MaxPlanetValue && p.Owner != null)
+							p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r));
+						if (!wasEmpty && p.ResourceValue[r] == Current.MinPlanetValue && p.Owner != null)
+							p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
+					}
+				}
+			}
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after population reproduction");
+			Current.SpaceObjectIDCheck("after colony maintenance");
 
 			// resource generation
 			Current.EnableAbilityCache(); // resource generation doesn't affect abilities or empire maintenance
@@ -899,12 +924,12 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
-			
+
 			// resource generation 2: remote mining
 			var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
 			foreach (var emp in Current.Empires)
 			{
-				
+
 				foreach (var kvp in emp.RemoteMiners)
 				{
 					// consume supplies
@@ -1497,7 +1522,7 @@ namespace FrEee.Game.Objects.Space
 
 		public void ComputeNextTickSize()
 		{
-			
+
 			var objs = Referrables.OfType<IMobileSpaceObject>().Where(obj => obj.Orders.Any());
 			objs = objs.Where(obj => !obj.IsMemory);
 			if (objs.Any() && CurrentTick < 1.0)
@@ -1633,7 +1658,7 @@ namespace FrEee.Game.Objects.Space
 				stringValue = value;
 			}
 		}
-		
+
 		// TODO - replace all those duplicate properties with a reference to the game setup
 		/*
 		/// <summary>

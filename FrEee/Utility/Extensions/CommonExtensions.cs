@@ -2712,7 +2712,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// All abilities belonging to an object.
+		/// All abilities belonging to an object directly.
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
@@ -3535,6 +3535,69 @@ namespace FrEee.Utility.Extensions
 		public static int TakeNormalDamage(this IDamageable d, int dmg)
 		{
 			return d.TakeDamage(new Hit(new Shot(null, null, d, 0), d, dmg));
+		}
+
+		/// <summary>
+		/// Tests for divisibility.
+		/// </summary>
+		/// <param name="dividend"></param>
+		/// <param name="divisor"></param>
+		/// <param name="treatZeroAsOne"></param>
+		/// <returns></returns>
+		public static bool IsDivisibleBy(this int dividend, int divisor)
+		{
+			return dividend % divisor == 0;
+		}
+
+		/// <summary>
+		/// Returns a custom value if the specified value is equal to the default value for its type.
+		/// Otherwise returns the value itself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name=""></param>
+		/// <returns></returns>
+		public static T DefaultTo<T>(this T value, T def)
+		{
+			return value.Equals(default(T)) ? def : value;
+		}
+
+		/// <summary>
+		/// Limits a value to a range.
+		/// Throws an exception if min is bigger than max.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static int LimitToRange(this int value, int min, int max)
+		{
+			if (min > max)
+				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+			if (value > max)
+				value = max;
+			if (value < min)
+				value = min;
+			return value;
+		}
+
+		/// <summary>
+		/// Limits a value to a range.
+		/// Throws an exception if min is bigger than max.
+		/// </summary>
+		/// <param name="value"></param>
+		/// <param name="min"></param>
+		/// <param name="max"></param>
+		/// <returns></returns>
+		public static double LimitToRange(this double value, double min, double max)
+		{
+			if (min > max)
+				throw new ArgumentOutOfRangeException("Min is {0} and can't be larger than max which is {1}!".F(min, max));
+			if (value > max)
+				value = max;
+			if (value < min)
+				value = min;
+			return value;
 		}
 	}
 
