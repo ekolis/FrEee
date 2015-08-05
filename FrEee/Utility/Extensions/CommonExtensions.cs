@@ -1285,11 +1285,14 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index">The ability value index (usually 1 or 2).</param>
 		/// <param name="filter">A filter for the abilities. For instance, you might want to filter by the ability grouping rule's value.</param>
 		/// <returns>The ability value.</returns>
-		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 		{
 			var abils = obj.Abilities();
 			if (includeShared)
 				abils = abils.Union(obj.SharedAbilities());
+			if (includeEmpireCommon)
+				abils = abils.Union(obj.EmpireCommonAbilities());
+
 			abils = abils.Where(a => a.Rule != null && a.Rule.Matches(name) && a.Rule.CanTarget(obj.AbilityTarget) && (filter == null || filter(a)));
 			abils = abils.Stack(obj);
 			if (!abils.Any())
@@ -1297,11 +1300,13 @@ namespace FrEee.Utility.Extensions
 			return abils.First().Values[index - 1];
 		}
 
-		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, Func<Ability, bool> filter = null)
+		public static string GetAbilityValue(this IEnumerable<IAbilityObject> objs, string name, IAbilityObject stackTo, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 		{
 			var tuples = objs.Squash(o => o.Abilities()).ToArray();
 			if (includeShared)
 				tuples = tuples.Union(objs.Squash(o => o.SharedAbilities())).ToArray();
+			if (includeEmpireCommon)
+				tuples = tuples.Union(objs.Squash(o => o.EmpireCommonAbilities())).ToArray();
 			var abils = tuples.GroupBy(t => new { Rule = t.Item2.Rule, Object = t.Item1 }).Where(g => g.Key.Rule.Matches(name) && g.Key.Rule.CanTarget(g.Key.Object.AbilityTarget)).SelectMany(x => x).Select(t => t.Item2).Where(a => filter == null || filter(a)).Stack(stackTo);
 			if (!abils.Any())
 				return null;
@@ -1383,6 +1388,32 @@ namespace FrEee.Utility.Extensions
 			foreach (var keyTuple in Galaxy.Current.SharedAbilityCache.Keys.Where(k => k.Item1 == ownable && (sourceFilter == null || sourceFilter(k.Item2))))
 			{
 				foreach (var abil in Galaxy.Current.SharedAbilityCache[keyTuple])
+					yield return abil;
+			}
+		}
+
+		/// <summary>
+		/// Finds empire-common abilities inherited by an object (e.g. empire abilities of a sector in which a ship resides).
+		/// </summary>
+		/// <param name="obj"></param>
+		/// <param name="sourceFilter"></param>
+		/// <returns></returns>
+		public static IEnumerable<Ability> EmpireCommonAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			// Unowned objects cannot empire common abilities.
+			var ownable = obj as IOwnableAbilityObject;
+			if (ownable == null || ownable.Owner == null)
+				yield break;
+
+			// Where are these abilities coming from?
+			// Right now they can only come from ancestors, since sectors and star systems are the only common ability objects.
+			// TODO - Would it make sense for them to come from descendants? What kind of common ability object could be used as a descendant of an owned object?
+			var ancestors = obj.Ancestors(sourceFilter).OfType<ICommonAbilityObject>();
+
+			// What abilities do we have?
+			foreach (var ancestor in ancestors)
+			{
+				foreach (var abil in ancestor.Abilities(sourceFilter))
 					yield return abil;
 			}
 		}
@@ -2712,7 +2743,7 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
-		/// All abilities belonging to an object directly.
+		/// All abilities belonging to an object.
 		/// </summary>
 		/// <param name="obj"></param>
 		/// <returns></returns>
@@ -2796,7 +2827,6 @@ namespace FrEee.Utility.Extensions
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Appends an item to a sequence.

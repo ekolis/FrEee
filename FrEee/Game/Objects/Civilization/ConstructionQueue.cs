@@ -126,7 +126,7 @@ namespace FrEee.Game.Objects.Civilization
 					// apply aptitude modifier for empire's primary race
 					rate *= Owner.PrimaryRace.Aptitudes[Aptitude.Construction.Name] / 100d + 1d;
 				}
-				
+
 
 				return rate;
 			}
@@ -146,7 +146,7 @@ namespace FrEee.Game.Objects.Civilization
 				// TODO - moddable resources?
 				for (int i = 1; i <= 3; i++)
 				{
-					var amount = Container.GetAbilityValue("Space Yard", 2, true, a => a.Value1 == i.ToString()).ToInt();
+					var amount = Container.GetAbilityValue("Space Yard", 2, true, true, a => a.Value1 == i.ToString()).ToInt();
 					Resource res = null;
 					if (i == 1)
 						res = Resource.Minerals;
@@ -191,7 +191,8 @@ namespace FrEee.Game.Objects.Civilization
 		[DoNotCopy]
 		public ISpaceObject Container { get; set; }
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get
 			{
@@ -306,7 +307,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (!Orders.Any())
 					return 0d;
 				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
-					return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
+				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
 
