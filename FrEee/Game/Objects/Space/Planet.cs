@@ -473,8 +473,8 @@ namespace FrEee.Game.Objects.Space
 			{
 				return
 						-Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
-						+ Sector.GetAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
-						+ StarSystem.GetAbilityValue(Owner, "Shield Modifier - System").ToInt()
+						+ Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+						+ StarSystem.GetEmpireAbilityValue(Owner, "Shield Modifier - System").ToInt()
 						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
 			}
 		}
@@ -662,8 +662,8 @@ namespace FrEee.Game.Objects.Space
 					+ this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
+					+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+					+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
 		}
@@ -677,8 +677,8 @@ namespace FrEee.Game.Objects.Space
 					+ this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
+					+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+					+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
 		}
@@ -711,13 +711,13 @@ namespace FrEee.Game.Objects.Space
 				{
 					// TODO - plagued planets should not reproduce, and should lose population each turn
 					var sys = this.FindStarSystem();
-					var sysModifier = sys == null ? 0 : sys.GetAbilityValue(Owner, "Modify Reproduction - System").ToInt();
+					var sysModifier = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Modify Reproduction - System").ToInt();
 					var planetModifier = this.GetAbilityValue("Modify Reproduction - Planet").ToInt();
 					var reproduction = ((Mod.Current.Settings.Reproduction + (race.Aptitudes["Reproduction"] - 100) + sysModifier + planetModifier) * Mod.Current.Settings.ReproductionMultiplier) / 100d;
 					deltapop[race] = (long)(Colony.Population[race] * reproduction);
 
 					// TODO - allow cloning of populations over the max of a 32 bit int?
-					var sysCloning = sys == null ? 0 : sys.GetAbilityValue(Owner, "Change Population - System").ToInt();
+					var sysCloning = sys == null ? 0 : sys.GetEmpireAbilityValue(Owner, "Change Population - System").ToInt();
 					var planetCloning = this.GetAbilityValue("Change Population - Planet").ToInt();
 					deltapop[race] += (sysCloning + planetCloning) * Mod.Current.Settings.PopulationFactor / Colony.Population.Count; // split cloning across races
 				}
