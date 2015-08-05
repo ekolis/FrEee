@@ -425,5 +425,55 @@ namespace FrEee.Modding
 					AssignID(mo, used);
 			}
 		}
+
+		/// <summary>
+		/// Registers this object's ID in the object catalog.
+		/// Does not add it to the appropriate collection!
+		/// </summary>
+		/// <param name="o"></param>
+		public void Register(IModObject o)
+		{
+			if (objects[o.ModID] != null)
+				throw new Exception("Mod object with ID {o} already exists.".F(o.ModID));
+			objects[o.ModID] = o;
+		}
+
+		/// <summary>
+		/// Refreshes the object catalog.
+		/// </summary>
+		public void RefreshObjects()
+		{
+			objects.Clear();
+			foreach (var r in AbilityRules)
+				Register(r);
+			foreach (var sos in StellarObjectSizes)
+				Register(sos);
+			foreach (var x in StellarAbilityTemplates)
+				Register(x);
+			foreach (var sot in StellarObjectTemplates)
+				Register(sot);
+			foreach (var t in Traits)
+				Register(t);
+			foreach (var t in Technologies)
+				Register(t);
+			foreach (var f in FacilityTemplates)
+				Register(f);
+			foreach (var h in Hulls)
+				Register(h);
+			foreach (var c in ComponentTemplates)
+				Register(c);
+			foreach (var m in Mounts)
+				Register(m);
+			foreach (var sst in StarSystemTemplates)
+				Register(sst);
+			foreach (var gt in GalaxyTemplates)
+				Register(gt);
+			foreach (var h in HappinessModels)
+				Register(h);
+			foreach (var c in Cultures)
+				Register(c);
+			foreach (var ai in EmpireAIs)
+				Register(ai);
+		}
 	}
 }

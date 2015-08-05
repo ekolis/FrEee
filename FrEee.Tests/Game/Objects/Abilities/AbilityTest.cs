@@ -60,6 +60,12 @@ namespace FrEee.Tests.Game.Objects.Abilities
 
 			// make sure the ship picked them all up
 			Assert.AreEqual(1 + 2 + 4 + 8, ship.Accuracy);
+
+			// make sure the ship has all the abiliites inherited in
+			Assert.AreEqual(1, ship.GetAbilityValue("Combat To Hit Offense Plus").ToInt());
+			Assert.AreEqual(2, ship.GetAbilityValue("Combat Modifier - Sector").ToInt());
+			Assert.AreEqual(4, ship.GetAbilityValue("Combat Modifier - System").ToInt());
+			Assert.AreEqual(8, ship.GetAbilityValue("Combat Modifier - Empire").ToInt());
 		}
 	}
 }
