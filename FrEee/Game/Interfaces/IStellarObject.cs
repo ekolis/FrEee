@@ -10,7 +10,7 @@ using System.Text;
 
 namespace FrEee.Game.Interfaces
 {
-	public interface IStellarObject : ISpaceObject, IReferrable, IModObject
+	public interface IStellarObject : ISpaceObject, IReferrable, IModObject, IAbilityContainer
 	{
 		/// <summary>
 		/// The stellar size of this object.

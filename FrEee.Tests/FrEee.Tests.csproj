@@ -78,11 +78,14 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Game\Objects\Abilities\AbilityTest.cs" />
     <Compile Include="Game\Objects\Combat2\Battle_SpaceTests.cs" />
     <Compile Include="Game\Objects\Combat2\MockCombatant.cs" />
     <Compile Include="Game\Objects\Combat2\MockCombatObject.cs" />
@@ -104,7 +107,6 @@
     <Compile Include="Utility\Extensions\ParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\Objects\Abilities\" />
     <Folder Include="Game\Objects\AI\" />
     <Folder Include="Game\Objects\Civilization\" />
     <Folder Include="Game\Objects\Combat\" />
