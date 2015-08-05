@@ -371,9 +371,12 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield return Galaxy.Current;
+			}
 		}
 
 		public bool IsDisposed { get; set; }

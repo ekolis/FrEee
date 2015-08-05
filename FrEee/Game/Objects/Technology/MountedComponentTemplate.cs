@@ -340,9 +340,13 @@ namespace FrEee.Game.Objects.Technology
 			get { yield return ComponentTemplate; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return Container; }
+			get
+			{
+				if (Container != null)
+					yield return Container;
+			}
 		}
 
 		/// <summary>

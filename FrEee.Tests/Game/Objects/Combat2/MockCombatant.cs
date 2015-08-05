@@ -313,59 +313,63 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		public string Name { get; set; }
 
 
-        public ConstructionQueue ConstructionQueue
-        {
+		public ConstructionQueue ConstructionQueue
+		{
 			get { return null; }
-        }
+		}
 
-        public bool CanBeInFleet
-        {
+		public bool CanBeInFleet
+		{
 			get { return true; }
-        }
+		}
 
-        public int SupplyStorage
-        {
+		public int SupplyStorage
+		{
 			get { return 0; }
-        }
+		}
 
-        public bool HasInfiniteSupplies
-        {
+		public bool HasInfiniteSupplies
+		{
 			get { return true; }
-        }
+		}
 
-        public bool CanWarp
-        {
+		public bool CanWarp
+		{
 			get { return false; }
-        }
+		}
 
-        public bool IsIdle
-        {
+		public bool IsIdle
+		{
 			get { return false; }
-        }
+		}
 
-        public IEnumerable<Ability> IntrinsicAbilities
-        {
+		public IEnumerable<Ability> IntrinsicAbilities
+		{
 			get { yield break; }
-        }
+		}
 
-        public IEnumerable<IAbilityObject> Children
-        {
+		public IEnumerable<IAbilityObject> Children
+		{
 			get { yield break; }
-        }
+		}
 
-        public IAbilityObject Parent
-        {
-			get { return null; }
-        }
+		public IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Owner != null)
+					yield return Owner;
+			}
+		}
 
-        public AbilityTargets AbilityTarget
-        {
+		public AbilityTargets AbilityTarget
+		{
 			get { return AbilityTargets.None; }
-        }
+		}
 
 		/// <summary>
 		/// Resources stored on this space vehicle.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; private set; }
-    }
+	}
 }

@@ -855,7 +855,7 @@ namespace FrEee.Game.Objects.Combat2
 
 					DamageType damageType = w.DamageType;
 					CombatSeeker targetsec = (CombatSeeker)target;
-					var shot = new Shot((ICombatant)launcher.Parent, launcher, target.WorkingObject, 0); // TODO - range of seekers targeting seekers?
+					var shot = new Shot(launcher.Parents.OfType<ICombatant>().Single(), launcher, target.WorkingObject, 0); // TODO - range of seekers targeting seekers?
 					targetsec.TakeDamage(new Hit(shot, target.WorkingObject, damage), comSek.getDice());
 
 					if (targetsec.IsDestroyed)
@@ -1267,7 +1267,7 @@ namespace FrEee.Game.Objects.Combat2
 			if (targetV.IsDestroyed)
 				return; //damage; // she canna take any more!
 
-			var hit = new Hit(new Shot((ICombatant)(weapon.weapon.Parent), weapon.weapon, target.WorkingObject, rangeForDamageCalcs), target.WorkingObject, damage);
+			var hit = new Hit(new Shot(weapon.weapon.Parents.OfType<ICombatant>().Single(), weapon.weapon, target.WorkingObject, rangeForDamageCalcs), target.WorkingObject, damage);
 			targetV.TakeDamage(hit, attackersdice);
 
 			CheckForDeath(tick, target);

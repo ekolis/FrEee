@@ -312,10 +312,15 @@ namespace FrEee.Game.Objects.Technology
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return Container; }
+			get
+			{
+				if (Container != null)
+					yield return Container;
+			}
 		}
+
 
 		public bool IsDisposed { get; set; }
 

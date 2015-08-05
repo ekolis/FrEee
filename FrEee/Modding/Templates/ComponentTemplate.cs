@@ -97,7 +97,7 @@ namespace FrEee.Modding.Templates
 		/// <summary>
 		/// Amount of supply consumed when this component is "used". (What "usage" means depends on the component's abilities.)
 		/// </summary>
-		public Formula<int> SupplyUsage {get; set;}
+		public Formula<int> SupplyUsage { get; set; }
 
 		/// <summary>
 		/// The maximum number of this component family that can be installed on a vehicle, or null for no limit.
@@ -251,9 +251,12 @@ namespace FrEee.Modding.Templates
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		public string ModID

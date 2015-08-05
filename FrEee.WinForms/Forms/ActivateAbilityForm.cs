@@ -27,12 +27,12 @@ namespace FrEee.WinForms.Forms
 			this.sobj = sobj;
 
 			var abils = sobj.ActivatableAbilities().Select(kvp => new
-				{
-					Ability = kvp.Key,
-					Source = kvp.Value,
-					IsDestroyedOnUse = kvp.Value.HasAbility("Destroyed On Use"),
-					// TODO - "Space Object Destroyed On Use" ability
-				});
+			{
+				Ability = kvp.Key,
+				Source = kvp.Value,
+				IsDestroyedOnUse = kvp.Value.HasAbility("Destroyed On Use"),
+				// TODO - "Space Object Destroyed On Use" ability
+			});
 
 			gridAbilities.DataSource = abils;
 		}
@@ -65,18 +65,9 @@ namespace FrEee.WinForms.Forms
 					string targetType = "targets";
 					var abil = sel.Ability as Ability;
 					var src = sel.Source as IAbilityObject;
-					while (!(src.Parent is IMobileSpaceObject) && src != null)
-					{
-						src = src.Parent;
-					}
-					var sobj = src as IMobileSpaceObject; // space object that possesses this ability
-					if (sobj == null)
-					{
-						MessageBox.Show("This ability does not belong to a space object and this cannot be activated.");
-						return;
-					}
+
 					Func<string> customCheck = () => null; // custom check for space objects being able to do stuff
-					// TODO - move custom check functions into a utility class for use on the server side too
+														   // TODO - move custom check functions into a utility class for use on the server side too
 					if (abil.Rule.Matches("Emergency Resupply"))
 					{
 						// TODO - allow resupplying other ships nearby?
@@ -257,7 +248,7 @@ namespace FrEee.WinForms.Forms
 							return;
 						}
 					}
-					
+
 					// check custom conditions
 					var error = customCheck();
 					if (error != null)

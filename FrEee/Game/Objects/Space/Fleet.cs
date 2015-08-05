@@ -758,9 +758,18 @@ namespace FrEee.Game.Objects.Space
 			get { return Vehicles; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return Owner; }
+			get
+			{
+				if (Container != null)
+					yield return Container;
+				else
+				{
+					yield return Sector;
+					yield return Owner;
+				}
+			}
 		}
 
 		public bool IsDisposed { get; set; }

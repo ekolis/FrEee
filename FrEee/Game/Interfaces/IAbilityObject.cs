@@ -21,9 +21,9 @@ namespace FrEee.Game.Interfaces
 		IEnumerable<IAbilityObject> Children { get; }
 
 		/// <summary>
-		/// Parent object from which this object can inherit abilities.
+		/// Parent objects from which this object can inherit abilities.
 		/// </summary>
-		IAbilityObject Parent { get; }
+		IEnumerable<IAbilityObject> Parents { get; }
 
 		/// <summary>
 		/// The type of ability target that this object represents.

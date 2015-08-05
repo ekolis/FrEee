@@ -1129,9 +1129,12 @@ namespace FrEee.Game.Objects.Civilization
 			}
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		public bool IsDisposed { get; set; }

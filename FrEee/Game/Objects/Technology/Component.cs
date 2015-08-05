@@ -328,9 +328,13 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return Container; }
+			get
+			{
+				if (Container != null)
+					yield return Container;
+			}
 		}
 
 		public long ID

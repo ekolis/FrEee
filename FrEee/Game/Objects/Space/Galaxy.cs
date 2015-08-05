@@ -1612,9 +1612,12 @@ namespace FrEee.Game.Objects.Space
 			get { return StarSystemLocations.Select(l => l.Item); }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		/// <summary>

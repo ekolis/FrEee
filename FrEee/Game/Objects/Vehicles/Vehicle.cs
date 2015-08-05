@@ -561,9 +561,9 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return Components.Cast<IAbilityObject>().Append(Design.Hull); }
 		}
 
-		public virtual IAbilityObject Parent
+		public virtual IEnumerable<IAbilityObject> Parents
 		{
-			get { return Owner; }
+			get { yield return Owner; }
 		}
 
 		public IConstructionTemplate Template

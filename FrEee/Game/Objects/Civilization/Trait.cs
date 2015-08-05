@@ -77,9 +77,12 @@ namespace FrEee.Game.Objects.Civilization
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		public string ModID { get; set; }
@@ -92,7 +95,7 @@ namespace FrEee.Game.Objects.Civilization
 		public IList<Requirement<Empire>> UnlockRequirements
 		{
 			get
-			{ 
+			{
 				var list = new List<Requirement<Empire>>();
 				foreach (var t in RequiredTraits)
 					list.Add(new EmpireTraitRequirement(t, true));
