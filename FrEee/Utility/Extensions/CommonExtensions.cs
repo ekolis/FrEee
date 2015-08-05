@@ -1316,7 +1316,7 @@ namespace FrEee.Utility.Extensions
 		/// <param name="index"></param>
 		/// <param name="filter"></param>
 		/// <returns></returns>
-		public static string GetAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
+		public static string GetEmpireAbilityValue(this ICommonAbilityObject obj, Empire emp, string name, int index = 1, Func<Ability, bool> filter = null)
 		{
 			if (filter == null && Galaxy.Current.IsAbilityCacheEnabled)
 			{
@@ -2925,9 +2925,9 @@ namespace FrEee.Utility.Extensions
 							 SensorLevel = sensor.Value2.Value.ToInt(),
 							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
 						 };
-			var obscurationLevel = Math.Max(sys.GetAbilityValue("Sector - Sight Obscuration").ToInt(), sys.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
+			var obscurationLevel = Math.Max(sys.GetAbilityValue("Sector - Sight Obscuration").ToInt(), sys.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
 			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue("Sector - Sight Obscuration").ToInt());
-			obscurationLevel = Math.Max(obscurationLevel, sec.GetAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
+			obscurationLevel = Math.Max(obscurationLevel, sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration").ToInt());
 			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
 		}
 

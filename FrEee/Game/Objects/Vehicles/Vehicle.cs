@@ -323,8 +323,8 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				return
 						-Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
-						+ Sector.GetAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
-						+ StarSystem.GetAbilityValue(Owner, "Shield Modifier - System").ToInt()
+						+ Sector.GetEmpireAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
+						+ StarSystem.GetEmpireAbilityValue(Owner, "Shield Modifier - System").ToInt()
 						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
 			}
 		}
@@ -444,8 +444,8 @@ namespace FrEee.Game.Objects.Vehicles
 					this.GetAbilityValue("Combat To Hit Offense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Offense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
+					+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+					+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
 		}
@@ -458,8 +458,8 @@ namespace FrEee.Game.Objects.Vehicles
 					this.GetAbilityValue("Combat To Hit Defense Plus").ToInt()
 					- this.GetAbilityValue("Combat To Hit Defense Minus").ToInt()
 					+ (Owner == null || Owner.Culture == null ? 0 : Owner.Culture.SpaceCombat)
-					+ Sector.GetAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
-					+ StarSystem.GetAbilityValue(Owner, "Combat Modifier - System").ToInt()
+					+ Sector.GetEmpireAbilityValue(Owner, "Combat Modifier - Sector").ToInt()
+					+ StarSystem.GetEmpireAbilityValue(Owner, "Combat Modifier - System").ToInt()
 					+ Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			}
 		}
@@ -508,9 +508,9 @@ namespace FrEee.Game.Objects.Vehicles
 				{
 					pct += this.GetAbilityValue("Modified Maintenance Cost").ToInt();
 					if (Sector != null)
-						pct -= this.Sector.GetAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
+						pct -= this.Sector.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - Sector").ToInt();
 					if (StarSystem != null)
-						pct -= this.StarSystem.GetAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
+						pct -= this.StarSystem.GetEmpireAbilityValue(Owner, "Reduced Maintenance Cost - System").ToInt();
 					if (Owner != null)
 					{
 						pct -= this.Owner.GetAbilityValue("Reduced Maintenance Cost - Empire").ToInt();

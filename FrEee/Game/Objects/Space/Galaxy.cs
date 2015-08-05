@@ -1186,7 +1186,7 @@ namespace FrEee.Game.Objects.Space
 				var usedPts = new SafeDictionary<Sector, int>();
 				foreach (var v in Current.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base)))
 				{
-					var pts = v.Sector.GetAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
+					var pts = v.Sector.GetEmpireAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
 					usedPts[v.Sector] += pts - v.Repair(pts).Value;
 				}
 			}
