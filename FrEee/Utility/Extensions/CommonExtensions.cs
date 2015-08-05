@@ -515,9 +515,9 @@ namespace FrEee.Utility.Extensions
 		{
 			IEnumerable<Ability> abils;
 			if (includeShared)
-				abils = obj.Abilities(emp).Union(obj.SharedAbilities(emp));
+				abils = obj.EmpireAbilities(emp).Union(obj.SharedAbilities(emp));
 			else
-				abils = obj.Abilities(emp);
+				abils = obj.EmpireAbilities(emp);
 			return abils.Any(abil => abil.Rule != null && abil.Rule.Matches(abilityName));
 		}
 
@@ -1351,7 +1351,7 @@ namespace FrEee.Utility.Extensions
 			return result;
 		}
 
-		public static IEnumerable<Ability> Abilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
+		public static IEnumerable<Ability> EmpireAbilities(this ICommonAbilityObject obj, Empire emp, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			if (sourceFilter == null)
 				return obj.GetContainedAbilityObjects(emp).SelectMany(o => o.Abilities()).Where(a => a.Rule.CanTarget(obj.AbilityTarget)).ToArray();
@@ -1397,7 +1397,7 @@ namespace FrEee.Utility.Extensions
 					var sector = ((ILocated)obj).Sector;
 					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var abil in sector.Abilities(emp))
+						foreach (var abil in sector.EmpireAbilities(emp))
 						{
 							if (rule == abil.Rule)
 								yield return abil;
@@ -1409,7 +1409,7 @@ namespace FrEee.Utility.Extensions
 					var sys = ((ILocated)obj).StarSystem;
 					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var abil in sys.Abilities(emp))
+						foreach (var abil in sys.EmpireAbilities(emp))
 						{
 							if (rule == abil.Rule)
 								yield return abil;
@@ -1420,7 +1420,7 @@ namespace FrEee.Utility.Extensions
 				{
 					foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 					{
-						foreach (var abil in Galaxy.Current.Abilities(emp))
+						foreach (var abil in Galaxy.Current.EmpireAbilities(emp))
 						{
 							if (rule == abil.Rule)
 								yield return abil;
@@ -1447,7 +1447,7 @@ namespace FrEee.Utility.Extensions
 						var sector = ((ILocated)obj).Sector;
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in sector.Abilities(emp, sourceFilter))
+							foreach (var abil in sector.EmpireAbilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -1459,7 +1459,7 @@ namespace FrEee.Utility.Extensions
 						var sys = ((ILocated)obj).StarSystem;
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in sys.Abilities(emp, sourceFilter))
+							foreach (var abil in sys.EmpireAbilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -1470,7 +1470,7 @@ namespace FrEee.Utility.Extensions
 					{
 						foreach (var emp in Galaxy.Current.Empires.Where(emp => emp != null))
 						{
-							foreach (var abil in Galaxy.Current.Abilities(emp, sourceFilter))
+							foreach (var abil in Galaxy.Current.EmpireAbilities(emp, sourceFilter))
 							{
 								if (clause.AbilityRule == abil.Rule)
 									yield return abil;
@@ -2914,7 +2914,7 @@ namespace FrEee.Utility.Extensions
 		{
 			var sys = sobj.StarSystem;
 			var sec = sobj.Sector;
-			var sensors = sys.Abilities(emp).Where(a => a.Rule.Name == "Sensor Level");
+			var sensors = sys.EmpireAbilities(emp).Where(a => a.Rule.Name == "Sensor Level");
 			var cloaks = sobj.Abilities().Where(a => a.Rule.Name == "Cloak Level");
 			var joined = from sensor in sensors
 						 join cloak in cloaks on sensor.Value1.Value equals cloak.Value1.Value into gj

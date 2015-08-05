@@ -78,7 +78,7 @@ namespace FrEee.WinForms.Controls
 				txtBreathableOthers.Text = breathableOthersCount.ToString();
 				txtNonbreathable.Text = (uncolonizedCount - breathableUsCount - breathableOthersCount).ToString();
 
-				abilityTreeView.Abilities = StarSystem.Abilities.Union(StarSystem.Abilities(Empire.Current)).StackToTree(StarSystem);
+				abilityTreeView.Abilities = StarSystem.Abilities.Union(StarSystem.EmpireAbilities(Empire.Current)).StackToTree(StarSystem);
 				abilityTreeView.IntrinsicAbilities = StarSystem.Abilities;
 			}
 			ResumeLayout();
