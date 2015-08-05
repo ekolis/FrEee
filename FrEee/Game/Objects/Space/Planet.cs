@@ -471,10 +471,9 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Sector.GetAbilityValue("Shield Modifier - Sector").ToInt()
-						- Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
+				return
+						-Sector.GetAbilityValue("Sector - Shield Disruption").ToInt()
 						+ Sector.GetAbilityValue(Owner, "Shield Modifier - Sector").ToInt()
-						+ StarSystem.GetAbilityValue("Shield Modifier - System").ToInt()
 						+ StarSystem.GetAbilityValue(Owner, "Shield Modifier - System").ToInt()
 						+ Owner.GetAbilityValue("Shield Modifier - Empire").ToInt();
 			}
