@@ -1120,7 +1120,13 @@ namespace FrEee.Game.Objects.Civilization
 
 		public IEnumerable<IAbilityObject> Children
 		{
-			get { return OwnedSpaceObjects.Cast<IAbilityObject>().Append(PrimaryRace); }
+			get
+			{
+				foreach (var o in OwnedSpaceObjects)
+					yield return o;
+				if (PrimaryRace != null)
+					yield return PrimaryRace;
+			}
 		}
 
 		public IAbilityObject Parent
