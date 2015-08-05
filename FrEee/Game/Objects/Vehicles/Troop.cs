@@ -24,7 +24,7 @@ namespace FrEee.Game.Objects.Vehicles
 			// troops cannot be targeted in space combat
 			get { return Enumerations.WeaponTargets.Invalid; }
 		}
-	
+
 		public override void Place(ISpaceObject target)
 		{
 			if (target is ICargoContainer)
@@ -119,6 +119,17 @@ namespace FrEee.Game.Objects.Vehicles
 		public override IMobileSpaceObject RecycleContainer
 		{
 			get { return (this as IUnit).Container as IMobileSpaceObject; }
+		}
+
+		public override IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Owner != null)
+					yield return Owner;
+				if (Container != null && Container is IAbilityObject)
+					yield return (IAbilityObject)Container;
+			}
 		}
 	}
 }

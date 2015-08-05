@@ -71,12 +71,14 @@ namespace FrEee.Game.Objects.Technology
 		/// </summary>
 		public Formula<string> PictureName { get; set; }
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
 		}
@@ -224,9 +226,12 @@ namespace FrEee.Game.Objects.Technology
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		public string ModID

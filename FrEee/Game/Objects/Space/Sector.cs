@@ -285,9 +285,12 @@ namespace FrEee.Game.Objects.Space
 			get { return SpaceObjects; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return StarSystem; }
+			get
+			{
+				yield return StarSystem;
+			}
 		}
 
 		public Empire Owner

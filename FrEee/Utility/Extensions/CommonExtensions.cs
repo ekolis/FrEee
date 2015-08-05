@@ -2751,7 +2751,10 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> DescendantAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			return obj.Children.SelectMany(c => c.IntrinsicAbilities.Concat(c.DescendantAbilities(sourceFilter))).Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
+			var abils = new List<Ability>();
+			foreach (var c in obj.Descendants(sourceFilter))
+				abils.AddRange(c.IntrinsicAbilities);
+			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
 
 		/// <summary>
@@ -2762,10 +2765,38 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
-			if (obj.Parent == null)
-				return Enumerable.Empty<Ability>();
-			return obj.Parent.IntrinsicAbilities.Concat(obj.Parent.AncestorAbilities(sourceFilter)).Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
+			var abils = new List<Ability>();
+			foreach (var p in obj.Ancestors(sourceFilter))
+				abils.AddRange(p.IntrinsicAbilities);
+			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}
+
+		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			foreach (var c in obj.Children)
+			{
+				if (sourceFilter == null || sourceFilter(c))
+				{
+					yield return c;
+					foreach (var x in c.Descendants(sourceFilter))
+						yield return x;
+				}
+			}
+		}
+
+		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
+		{
+			foreach (var p in obj.Parents)
+			{
+				if (sourceFilter == null || sourceFilter(p))
+				{
+					yield return p;
+					foreach (var x in p.Ancestors(sourceFilter))
+						yield return x;
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// Appends an item to a sequence.

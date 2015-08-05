@@ -593,9 +593,12 @@ namespace FrEee.Game.Objects.Vehicles
 			get { return new IAbilityObject[] { Hull }.Concat(Components); }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return Owner; }
+			get
+			{
+				yield return Owner;
+			}
 		}
 
 		public override string ToString()

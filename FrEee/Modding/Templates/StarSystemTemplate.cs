@@ -17,7 +17,8 @@ namespace FrEee.Modding.Templates
 	/// A template for creating star systems.
 	/// Maps to a record in SystemTypes.txt.
 	/// </summary>
-	 [Serializable] public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityContainer
+	[Serializable]
+	public class StarSystemTemplate : ITemplate<StarSystem>, IModObject, IAbilityContainer
 	{
 		/// <summary>
 		/// Creates an empty star system template.
@@ -104,7 +105,7 @@ namespace FrEee.Modding.Templates
 
 				// create object
 				var sobj = loc.StellarObjectTemplate.Instantiate();
-				
+
 				// place object
 				sys.Place(sobj, pos);
 
@@ -147,10 +148,13 @@ namespace FrEee.Modding.Templates
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			// TODO - include galaxy template here?
-			get { return null; }
+			get
+			{
+				// TODO - include galaxy template here?
+				yield break;
+			}
 		}
 
 		public AbilityTargets AbilityTarget

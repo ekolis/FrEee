@@ -99,5 +99,16 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return (this as IUnit).Container as IMobileSpaceObject; }
 		}
+
+		public override IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Owner != null)
+					yield return Owner;
+				if (Container != null && Container is IAbilityObject)
+					yield return (IAbilityObject)Container;
+			}
+		}
 	}
 }

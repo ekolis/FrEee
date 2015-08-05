@@ -171,7 +171,8 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize] public Image Icon
+		[DoNotSerialize]
+		public Image Icon
 		{
 			get
 			{
@@ -181,7 +182,8 @@ namespace FrEee.Game.Objects.Technology
 			}
 		}
 
-		[DoNotSerialize] public Image Portrait
+		[DoNotSerialize]
+		public Image Portrait
 		{
 			get
 			{
@@ -312,9 +314,12 @@ namespace FrEee.Game.Objects.Technology
 			get { yield break; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				yield break;
+			}
 		}
 
 		public string ModID { get; set; }

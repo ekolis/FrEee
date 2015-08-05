@@ -132,7 +132,7 @@ namespace FrEee.Game.Objects.Civilization
 				if (!Mod.Current.StellarObjectTemplates.OfType<Planet>().Any(p => p.Atmosphere == NativeAtmosphere && p.Surface == NativeSurface && !p.Size.IsConstructed))
 					yield return NativeSurface + " / " + NativeAtmosphere + " is not a valid surface / atmosphere combination for the current mod.";
 				if (HappinessModel == null)
-					yield return "You must specify a happiness model for your race.";			
+					yield return "You must specify a happiness model for your race.";
 				foreach (var kvp in Aptitudes)
 				{
 					var apt = Aptitude.All.FindByName(kvp.Key);
@@ -189,9 +189,13 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Traits; }
 		}
 
-		public IAbilityObject Parent
+		public IEnumerable<IAbilityObject> Parents
 		{
-			get { return null; }
+			get
+			{
+				// TODO - return empire?
+				yield break;
+			}
 		}
 
 		public bool IsDisposed { get; set; }
