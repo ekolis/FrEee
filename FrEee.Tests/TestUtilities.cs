@@ -17,6 +17,7 @@ namespace FrEee.Tests
 			hull.Name = name;
 			hull.ModID = name;
 			Mod.Current.Hulls.Add(hull);
+			Mod.Current.Register(hull);
 			return hull;
 		}
 
