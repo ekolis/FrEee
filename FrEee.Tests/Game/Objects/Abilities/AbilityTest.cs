@@ -58,6 +58,9 @@ namespace FrEee.Tests.Game.Objects.Abilities
 			design.Hull.AddAbility("Combat Modifier - System", 4);
 			design.Hull.AddAbility("Combat Modifier - Empire", 8);
 
+			// make the testing a bit faster
+			Galaxy.Current.EnableAbilityCache();
+
 			// make sure the ship picked them all up
 			Assert.AreEqual(1 + 2 + 4 + 8, ship.Accuracy);
 
