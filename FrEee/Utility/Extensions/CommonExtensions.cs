@@ -1413,7 +1413,7 @@ namespace FrEee.Utility.Extensions
 			// What abilities do we have?
 			foreach (var ancestor in ancestors)
 			{
-				foreach (var abil in ancestor.Abilities(sourceFilter))
+				foreach (var abil in ancestor.EmpireAbilities(ownable.Owner, sourceFilter))
 					yield return abil;
 			}
 		}
