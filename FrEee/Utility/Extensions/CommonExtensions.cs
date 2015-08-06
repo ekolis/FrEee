@@ -2819,6 +2819,7 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<IAbilityObject> Descendants(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
+			// TODO - filter out duplicate descendants
 			foreach (var c in obj.Children)
 			{
 				if (sourceFilter == null || sourceFilter(c))
@@ -2832,6 +2833,7 @@ namespace FrEee.Utility.Extensions
 
 		public static IEnumerable<IAbilityObject> Ancestors(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
+			// TODO - filter out duplicate ancestors
 			foreach (var p in obj.Parents)
 			{
 				if (sourceFilter == null || sourceFilter(p))
