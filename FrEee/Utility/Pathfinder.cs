@@ -30,7 +30,7 @@ namespace FrEee.Utility
 			bool cacheEnabled = Galaxy.Current.IsAbilityCacheEnabled;
 			if (!cacheEnabled)
 				Galaxy.Current.EnableAbilityCache();
-            if (end == null || end.StarSystem == null || start == end)
+			if (end == null || end.StarSystem == null || start == end)
 				return Enumerable.Empty<Sector>();
 			if (me != null && me.Speed < 1)
 				return Enumerable.Empty<Sector>();
@@ -120,16 +120,23 @@ namespace FrEee.Utility
 					moves = moves.Where(m => m == end || m == null || !m.SpaceObjects.Where(sobj => sobj.CheckVisibility(me.Owner) > Visibility.Unknown).Any(sobj => sobj.GetAbilityValue("Sector - Damage").ToInt() > 0));
 
 				// step 7b: update priority queue
-				foreach (var move in moves)
+				Action<Sector> f = move =>
 				{
+					// When we lock the queue, we do so because it is being checked and modified by other threads,
+					// and we don't want them stepping on each other's toes.
+					// e.g. thread 1 is checking for the existence of an item in the queue
+					// while thread 2 is busy adding that same item!
 					if (!visited.Contains(move))
 					{
 						// didn't visit yet
 						var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node, EstimateDistance(move, end, me == null ? null : me.Owner));
-						if (!queue.ContainsKey(newnode.Cost))
-							queue.Add(newnode.Cost, new HashSet<PathfinderNode<Sector>>());
-						queue[newnode.Cost].Add(newnode);
-						if (!map.ContainsKey(node))
+						lock (queue)
+						{
+							if (!queue.ContainsKey(newnode.Cost))
+								queue.Add(newnode.Cost, new HashSet<PathfinderNode<Sector>>());
+							queue[newnode.Cost].Add(newnode);
+						}
+						if (!map.ContainsKey(node)) // don't need to lock map, we're only adding a node which should only get added once per run
 							map.Add(node, new HashSet<PathfinderNode<Sector>>());
 						map[node].Add(newnode);
 						visited.Add(move);
@@ -141,19 +148,22 @@ namespace FrEee.Utility
 						var items = moreCost.Where(n => n.Location == move && n.Cost > node.Cost + 1);
 						if (items.Any())
 						{
+							PathfinderNode<Sector> newnode;
+
 							foreach (var old in items.ToArray())
 							{
-								queue[old.Cost].Remove(old);
+								lock (queue[old.Cost]) queue[old.Cost].Remove(old);
 								map.Remove(old);
 							}
-							var newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node);
-							queue[newnode.Cost].Add(newnode);
-							if (!map.ContainsKey(node))
+							newnode = new PathfinderNode<Sector>(move, node.Cost + 1, node);
+							lock (queue[newnode.Cost]) queue[newnode.Cost].Add(newnode);
+							if (!map.ContainsKey(node))  // don't need to lock map, we're only adding a node which should only get added once per run
 								map.Add(node, new HashSet<PathfinderNode<Sector>>());
 							map[node].Add(newnode);
 						}
 					}
-				}
+				};
+				moves.RunTasks(f);
 			}
 
 			return map;
