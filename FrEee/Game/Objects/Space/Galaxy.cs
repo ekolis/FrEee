@@ -825,47 +825,13 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			foreach (var p in Current.FindSpaceObjects<Planet>(p => p.Owner != null))
-			{
-				// compute income
-				if (p.Colony != null)
-				{
-					var sys = p.StarSystem;
-					var income = p.GrossIncome();
-
-					// log messages
-					if (income < p.GrossIncomeIgnoringSpaceport)
-					{
-						var ratio = p.Colony.MerchantsRatio;
-						if (ratio == 0)
-							p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
-						else if (ratio < 1)
-							p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
-					}
-
-					// give owner his income
-					p.Owner.StoredResources += income;
-
-					// adjust resource value
-					// TODO - have a "is mineable" or "has value" property on Resource class
-					var incomeWithoutValue = new ResourceQuantity();
-					incomeWithoutValue += income[Resource.Minerals] / p.ResourceValue[Resource.Minerals] * Resource.Minerals;
-					incomeWithoutValue += income[Resource.Organics] / p.ResourceValue[Resource.Organics] * Resource.Organics;
-					incomeWithoutValue += income[Resource.Radioactives] / p.ResourceValue[Resource.Radioactives] * Resource.Radioactives;
-					incomeWithoutValue += income[Resource.Research] * Resource.Research;
-					incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
-					foreach (var kvp in incomeWithoutValue)
-					{
-						p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
-					}
-				}
-			}
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).ExceptSingle(null).RunTasks(ProcessColonyIncome);
 
 			// resource generation 2: remote mining
+			// TODO - multithread remote mining once I can figure out where adjustedValue should go
 			var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
 			foreach (var emp in Current.Empires)
 			{
-
 				foreach (var kvp in emp.RemoteMiners)
 				{
 					// consume supplies
@@ -910,6 +876,7 @@ namespace FrEee.Game.Objects.Space
 			Current.SpaceObjectIDCheck("after resource generation");
 
 			// empire stuff
+			// TODO - multithread this, we'll need to get rid of the (1 of 4) or whatever after "Maintaining empires" :(
 			foreach (var emp in Current.Empires)
 			{
 				if (status != null)
@@ -1014,8 +981,7 @@ namespace FrEee.Game.Objects.Space
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
-				sobj.ReplenishShields();
+			Current.FindSpaceObjects<ICombatSpaceObject>().RunTasks(o => o.ReplenishShields());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1062,8 +1028,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			if (status != null)
 				status.Message = "Constructing objects";
-			foreach (var q in Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).ToArray())
-				q.ExecuteOrders();
+			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).RunTasks(q => q.ExecuteOrders());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1075,6 +1040,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Cleaning up";
 
 			// deal with population in cargo again, in case colonies took damage and lost some population
+			// TODO - multithread population cargo maintenance
 			foreach (var p in Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.Colony != null))
 			{
 				var pop = p.Colony.Population;
@@ -1097,21 +1063,18 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
-			// replenish shields again, so the players see the full shield amounts in the GUI
 			Current.EnableAbilityCache(); // nothing past this point should affect abilities
-			foreach (var sobj in Current.FindSpaceObjects<ICombatSpaceObject>())
-				sobj.ReplenishShields();
+
+			// replenish shields again, so the players see the full shield amounts in the GUI
+			Current.FindSpaceObjects<ICombatSpaceObject>().RunTasks(o => o.ReplenishShields());
 
 
 			// repair facilities
-			foreach (var facility in Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities))
-				facility.Hitpoints = facility.MaxHitpoints;
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).RunTasks(f => f.Repair());
 
 			// repair units
-			foreach (var u in Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>())
-				u.Repair();
-			foreach (var u in Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units))
-				u.Repair();
+			Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>().RunTasks(u => u.Repair());
+			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).RunTasks(u => u.Repair());
 
 			// repair ships/bases
 			// TODO - repair priorities
@@ -1127,21 +1090,23 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// get supplies from reactors, solar panels, etc.
-			foreach (var v in Current.FindSpaceObjects<SpaceVehicle>())
+			Current.FindSpaceObjects<SpaceVehicle>().RunTasks(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();
 				v.NormalizeSupplies();
-			}
+			});
+
 
 			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
-			foreach (var sobj in Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")))
+			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).RunTasks(sobj =>
 			{
 				var emp = sobj.Owner;
 				var sector = sobj.Sector;
 				foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == emp))
 					v.SupplyRemaining = v.SupplyStorage;
-			}
+			});
+			// TODO - multithread this... somehow...
 			foreach (var emp in Current.Empires)
 			{
 				foreach (var sys in Current.StarSystemLocations.Select(l => l.Item).Where(s => s.HasAbility("Supply Generation - System", emp) || s.HasAbility("Supply Generation - System")))
@@ -1151,21 +1116,20 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
-			// resource spoilage
-			foreach (var emp in Current.Empires)
-				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);
+			Current.Empires.RunTasks(emp =>
+			{
+				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
+				emp.Commands.Clear(); // clear empire commands
+				emp.Scores[Current.TurnNumber] = emp.ComputeScore(null); // update score
+			});
 
-			// clear empire commands
-			foreach (var emp in Current.Empires)
-				emp.Commands.Clear();
 
 			// clear completed orders
-			foreach (var order in Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null))
-				order.IsComplete = true;
-			foreach (var order in Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).ToArray())
-				order.Dispose();
+			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).RunTasks(o => o.IsComplete = true);
+			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).RunTasks(o => o.Dispose());
 
 			// update known designs
+			// TODO - multithread this somehow
 			foreach (var emp in Current.Empires)
 			{
 				foreach (var design in Current.Referrables.OfType<IDesign>())
@@ -1176,6 +1140,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// clear obsolete sensor ghosts
+			// TODO - multithread this somehow
 			foreach (var emp in Current.Empires)
 			{
 				foreach (var kvp in emp.Memory.ToArray())
@@ -1186,12 +1151,6 @@ namespace FrEee.Game.Objects.Space
 						kvp.Value.Dispose();
 					}
 				}
-			}
-
-			// update scores
-			foreach (var emp in Current.Empires)
-			{
-				emp.Scores[Current.TurnNumber] = emp.ComputeScore(null);
 			}
 
 			// check for victory/defeat
@@ -1328,6 +1287,43 @@ namespace FrEee.Game.Objects.Space
 					p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r));
 				if (!wasEmpty && p.ResourceValue[r] == Current.MinPlanetValue && p.Owner != null)
 					p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
+			}
+		}
+
+		/// <summary>
+		/// Only public for unit tests. You should probably call ProcessTurn instead.
+		/// </summary>
+		/// <param name="p"></param>
+		public static void ProcessColonyIncome(Colony c)
+		{
+			var p = c.Container;
+			var sys = p.StarSystem;
+			var income = p.GrossIncome();
+
+			// log messages
+			if (income < p.GrossIncomeIgnoringSpaceport)
+			{
+				var ratio = p.Colony.MerchantsRatio;
+				if (ratio == 0)
+					p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
+				else if (ratio < 1)
+					p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
+			}
+
+			// give owner his income
+			lock (p.Owner.StoredResources) p.Owner.StoredResources += income;
+
+			// adjust resource value
+			// TODO - have a "is mineable" or "has value" property on Resource class
+			var incomeWithoutValue = new ResourceQuantity();
+			incomeWithoutValue += income[Resource.Minerals] / p.ResourceValue[Resource.Minerals] * Resource.Minerals;
+			incomeWithoutValue += income[Resource.Organics] / p.ResourceValue[Resource.Organics] * Resource.Organics;
+			incomeWithoutValue += income[Resource.Radioactives] / p.ResourceValue[Resource.Radioactives] * Resource.Radioactives;
+			incomeWithoutValue += income[Resource.Research] * Resource.Research;
+			incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
+			foreach (var kvp in incomeWithoutValue)
+			{
+				p.ResourceValue[kvp.Key] -= Current.StandardMiningModel.GetDecay(kvp.Value, p.ResourceValue[kvp.Key]);
 			}
 		}
 
