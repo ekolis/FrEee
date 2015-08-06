@@ -64,7 +64,10 @@ namespace FrEee.Game.Objects.AI
 
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove from mod?
+			IsDisposed = true;
 		}
+
+		public bool IsDisposed { get; private set; }
 	}
 }

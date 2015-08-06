@@ -267,5 +267,14 @@ namespace FrEee.Game.Objects.Abilities
 					Matches("Create Constructed Planet - Space");
 			}
 		}
+
+		public bool IsDisposed
+		{
+			get
+			{
+				// can't be disposed of
+				return false;
+			}
+		}
 	}
 }

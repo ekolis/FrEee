@@ -16,6 +16,7 @@ namespace FrEee.Utility
 		public ClientSideCache(Func<T> compute)
 		{
 			this.compute = compute;
+			IsDirty = true;
 		}
 
 		private Func<T> compute;
@@ -32,7 +33,7 @@ namespace FrEee.Utility
 			{
 				isServerSideCacheEnabled = value;
 				if (!isServerSideCacheEnabled)
-					isDirty = true;
+					IsDirty = true;
 			}
 		}
 
@@ -44,7 +45,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		private bool isDirty = true;
+		public bool IsDirty { get; private set; }
 
 		private T value;
 
@@ -54,12 +55,12 @@ namespace FrEee.Utility
 			{
 				if (IsCacheEnabled)
 				{
-					if (!isDirty)
+					if (!IsDirty)
 						return value;
 					else
 					{
 						value = compute();
-						isDirty = false;
+						IsDirty = false;
 						return value;
 					}
 				}

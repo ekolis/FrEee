@@ -188,6 +188,12 @@ namespace FrEee.Modding
 		/// </summary>
 		public Formula<int> ShieldGenerationFromDamage { get; set; }
 
+		public bool IsDisposed
+		{
+			// TODO - make it disposable?
+			get { return false; }
+		}
+
 		public override string ToString()
 		{
 			return Name;

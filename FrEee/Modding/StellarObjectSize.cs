@@ -99,7 +99,13 @@ namespace FrEee.Modding
 
 		public void Dispose()
 		{
-			// nothing to do
+			Mod.Current.StellarObjectSizes.Remove(this);
+			IsDisposed = true;
+		}
+
+		public bool IsDisposed
+		{
+			get; private set;
 		}
 	}
 }

@@ -119,5 +119,11 @@ namespace FrEee.Game.Objects.Civilization
 		/// TODO - trait pictures
 		/// </summary>
 		public Image Icon { get { return null; } }
+
+		public bool IsDisposed
+		{
+			// TODO - disposable traits?
+			get { return false; }
+		}
 	}
 }

@@ -84,9 +84,15 @@ namespace FrEee.Modding.Templates
 			set;
 		}
 
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
 	}
 }

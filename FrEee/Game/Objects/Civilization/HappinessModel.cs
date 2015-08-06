@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -107,7 +108,13 @@ namespace FrEee.Game.Objects.Civilization
 
 		public void Dispose()
 		{
-			// nothing to do
+			Mod.Current.HappinessModels.Remove(this);
+			IsDisposed = true;
+		}
+
+		public bool IsDisposed
+		{
+			get; private set;
 		}
 	}
 }

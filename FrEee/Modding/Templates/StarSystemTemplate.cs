@@ -132,11 +132,6 @@ namespace FrEee.Modding.Templates
 			set;
 		}
 
-		public void Dispose()
-		{
-			// nothing to do
-		}
-
 		public IEnumerable<Ability> IntrinsicAbilities
 		{
 			get { return Abilities; }
@@ -160,6 +155,17 @@ namespace FrEee.Modding.Templates
 		public AbilityTargets AbilityTarget
 		{
 			get { return AbilityTargets.StarSystem; }
+		}
+
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
+		public void Dispose()
+		{
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
 	}
 }
