@@ -51,6 +51,9 @@ namespace FrEee.Utility
 		{
 			InitDict();
 
+			if (key == null)
+				return false; // dicts can't contain null keys anyway
+
 			return dict.ContainsKey(key);
 		}
 
