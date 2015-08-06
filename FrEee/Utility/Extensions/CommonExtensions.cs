@@ -3716,18 +3716,17 @@ namespace FrEee.Utility.Extensions
 		/// <summary>
 		/// Spawns multiple tasks to return an enumeration of items.
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TOut"></typeparam>
 		/// <param name="ops"></param>
 		/// <param name="process"></param>
 		/// <returns></returns>
-		public static async Task<IEnumerable<T>> SpawnTasksAsync<T>(this IEnumerable<Func<T>> ops)
+		public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TOut>(this IEnumerable<Func<TOut>> ops)
 		{
 			// Enumerate the tasks we need to do and start them
-			var tasks = ops.Select(op => Task<T>.Factory.StartNew(op));
+			var tasks = ops.Select(op => Task<TOut>.Factory.StartNew(op));
 
 			// Wait for them to complete
 			return await Task.WhenAll(tasks);
-
 		}
 
 		/// <summary>
@@ -3740,6 +3739,54 @@ namespace FrEee.Utility.Extensions
 		public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
 		{
 			return await objs.Select(obj => new Func<TOut>(() => op(obj))).SpawnTasksAsync();
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to perform a bunch of actions.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="ops"></param>
+		/// <param name="process"></param>
+		/// <returns></returns>
+		public static async Task SpawnTasksAsync(this IEnumerable<Action> ops)
+		{
+			// Enumerate the tasks we need to do and start them
+			var tasks = ops.Select(op => Task.Factory.StartNew(op));
+
+			// Wait for them to complete
+			await Task.WhenAll(tasks);
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to perform a bunch of actions.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="objs"></param>
+		/// <param name="op"></param>
+		/// <returns></returns>
+		public static async Task SpawnTasksAsync<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
+		{
+			await objs.Select(obj => new Action(() => op(obj))).SpawnTasksAsync();
+		}
+
+		public static IEnumerable<TOut> RunTasks<TOut>(this IEnumerable<Func<TOut>> ops)
+		{
+			return ops.SpawnTasksAsync().Result;
+		}
+
+		public static IEnumerable<TOut> RunTasks<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
+		{
+			return objs.SpawnTasksAsync(op).Result;
+		}
+
+		public static void RunTasks(this IEnumerable<Action> ops)
+		{
+			ops.SpawnTasksAsync().ContinueWith(t => { throw t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
+		}
+
+		public static void RunTasks<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
+		{
+			objs.SpawnTasksAsync(op).ContinueWith(t => { throw t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
 		}
 	}
 
