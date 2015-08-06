@@ -811,73 +811,9 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Maintaining colonies";
 			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
-			{
-				foreach (var p in Current.FindSpaceObjects<Planet>(p => p.HasColony))
-				{
-					var pop = p.Colony.Population;
-					var wasFull = p.PopulationStorageFree == 0;
-					foreach (var race in pop.Keys.ToArray())
-					{
-						pop[race] += p.PopulationChangePerTurnPerRace[race];
-					}
-
-					// deal with overpopulation
-					var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
-					if (ratio > 1)
-					{
-						foreach (var race in pop.Keys.ToArray())
-						{
-							// TODO - should planetary population spill over into cargo?
-							// this might be annoying for homeworlds, as their cargo space would fill up quickly...
-							// especially in Proportions Mod with its 1000kT/1M population!
-							pop[race] = (long)(pop[race] / ratio);
-						}
-						if (!wasFull && p.Owner != null)
-							p.Owner.RecordLog(p, "{0} has completely filled up with population. Building colonizers or transports is advised.".F(p));
-					}
-
-					// deal with population in cargo
-					ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
-					if (ratio < 1)
-					{
-						var cargo = p.Cargo;
-						if (cargo != null)
-						{
-							// bring population out of cold storage
-							// do this by removing and adding the population
-							// this will work since population is removed from cargo storage first but added to population storage first
-							foreach (var kvp in cargo.Population.ToArray())
-							{
-								var amount = kvp.Value;
-								amount -= p.RemovePopulation(kvp.Key, kvp.Value);
-								p.AddPopulation(kvp.Key, kvp.Value);
-							}
-						}
-					}
-				}
-			}
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).RunTasks(ProcessPopulationGrowth);
 			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
-			{
-				foreach (var p in Current.FindSpaceObjects<Planet>().Where(p => p.HasColony))
-				{
-					foreach (var r in Resource.All.Where(r => r.HasValue))
-					{
-						bool wasFull = p.ResourceValue[r] == Current.MaxPlanetValue;
-						bool wasEmpty = p.ResourceValue[r] == Current.MinPlanetValue;
-						var modifier =
-							p.GetAbilityValue("Planet - Change {0} Value".F(r.Name)).ToInt()
-							+ p.GetAbilityValue("Sector - Change {0} Value".F(r.Name)).ToInt()
-							+ p.GetAbilityValue("System - Change {0} Value".F(r.Name)).ToInt()
-							+ p.GetAbilityValue("Empire - Change {0} Value".F(r.Name)).ToInt();
-						p.ResourceValue[r] += modifier;
-						p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(Current.MinPlanetValue, Current.MaxPlanetValue);
-						if (!wasFull && p.ResourceValue[r] == Current.MaxPlanetValue && p.Owner != null)
-							p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r));
-						if (!wasEmpty && p.ResourceValue[r] == Current.MinPlanetValue && p.Owner != null)
-							p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
-					}
-				}
-			}
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).RunTasks(ProcessResourceValueChange);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1323,7 +1259,83 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		private void MoveShips()
+		/// <summary>
+		/// Only public for unit tests. You should probably call ProcessTurn instead.
+		/// </summary>
+		/// <param name="p"></param>
+		public static void ProcessPopulationGrowth(Planet p)
+		{
+			var pop = p.Colony.Population;
+			var wasFull = p.PopulationStorageFree == 0;
+			var deltas = p.PopulationChangePerTurnPerRace;
+			foreach (var race in pop.Keys.ToArray())
+			{
+				pop[race] += deltas[race];
+			}
+
+			// deal with overpopulation
+			var ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+			if (ratio > 1)
+			{
+				foreach (var race in pop.Keys.ToArray())
+				{
+					// TODO - should planetary population spill over into cargo?
+					// this might be annoying for homeworlds, as their cargo space would fill up quickly...
+					// especially in Proportions Mod with its 1000kT/1M population!
+					pop[race] = (long)(pop[race] / ratio);
+				}
+				if (!wasFull && p.Owner != null)
+					p.Owner.RecordLog(p, "{0} has completely filled up with population. Building colonizers or transports is advised.".F(p));
+			}
+
+			// deal with population in cargo
+			ratio = (double)pop.Sum(kvp => kvp.Value) / (double)p.MaxPopulation;
+			if (ratio < 1)
+			{
+				var cargo = p.Cargo;
+				if (cargo != null)
+				{
+					// bring population out of cold storage
+					// do this by removing and adding the population
+					// this will work since population is removed from cargo storage first but added to population storage first
+					foreach (var kvp in cargo.Population.ToArray())
+					{
+						var amount = kvp.Value;
+						amount -= p.RemovePopulation(kvp.Key, kvp.Value);
+						p.AddPopulation(kvp.Key, kvp.Value);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Only public for unit tests. You should probably call ProcessTurn instead.
+		/// </summary>
+		/// <param name="p"></param>
+		public static void ProcessResourceValueChange(Planet p)
+		{
+			foreach (var r in Resource.All.Where(r => r.HasValue))
+			{
+				bool wasFull = p.ResourceValue[r] == Current.MaxPlanetValue;
+				bool wasEmpty = p.ResourceValue[r] == Current.MinPlanetValue;
+				var modifier =
+					p.GetAbilityValue("Planet - Change {0} Value".F(r.Name)).ToInt()
+					+ p.GetAbilityValue("Sector - Change {0} Value".F(r.Name)).ToInt()
+					+ p.GetAbilityValue("System - Change {0} Value".F(r.Name)).ToInt()
+					+ p.GetAbilityValue("Empire - Change {0} Value".F(r.Name)).ToInt();
+				p.ResourceValue[r] += modifier;
+				p.ResourceValue[r] = p.ResourceValue[r].LimitToRange(Current.MinPlanetValue, Current.MaxPlanetValue);
+				if (!wasFull && p.ResourceValue[r] == Current.MaxPlanetValue && p.Owner != null)
+					p.Owner.RecordLog(p, "{0}'s {1} have been completely replenished. Its value is at the absolute maximum.".F(p, r));
+				if (!wasEmpty && p.ResourceValue[r] == Current.MinPlanetValue && p.Owner != null)
+					p.Owner.RecordLog(p, "{0} has been stripped dry of {1}. Its value is at the bare minimum.".F(p, r));
+			}
+		}
+
+		/// <summary>
+		/// Only public for unit tests. You should probably call ProcessTurn instead.
+		/// </summary>
+		public void MoveShips()
 		{
 			var vlist = FindSpaceObjects<IMobileSpaceObject>().Where(sobj => sobj.Container == null && !sobj.IsMemory).Shuffle();
 			foreach (var v in vlist)
