@@ -548,7 +548,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		/// <param name="tech"></param>
 		/// <param name="points"></param>
-		public void Research(Technology.Technology tech, int points)
+		/// <returns>Number of levels completed</returns>
+		public int Research(Technology.Technology tech, int points)
 		{
 			var oldlvl = ResearchedTechnologies[tech];
 			AccumulatedResearch[tech] += points;
@@ -582,6 +583,9 @@ namespace FrEee.Game.Objects.Civilization
 			// if we advanced, recheck unlocks
 			if (advanced > 0)
 				RefreshUnlockedItems();
+
+			// tell caller how much we advanced
+			return advanced;
 		}
 
 		/// <summary>
