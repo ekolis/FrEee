@@ -76,12 +76,6 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		public void RefillMovement()
-		{
-			MovementRemaining = Speed;
-			TimeToNextMove = TimePerMove;
-		}
-
 		public int MovementRemaining { get; set; }
 
 		public int Speed
