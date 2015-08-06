@@ -1087,5 +1087,16 @@ namespace FrEee.Game.Objects.Space
 				return new ResourceQuantity();
 			}
 		}
+
+		public override IEnumerable<IAbilityObject> Parents
+		{
+			get
+			{
+				if (Sector != null)
+					yield return Sector;
+				if (Owner != null)
+					yield return Owner;
+			}
+		}
 	}
 }

@@ -227,7 +227,7 @@ namespace FrEee.Game.Objects.Space
 			get { yield break; }
 		}
 
-		public IEnumerable<IAbilityObject> Parents
+		public virtual IEnumerable<IAbilityObject> Parents
 		{
 			get
 			{
