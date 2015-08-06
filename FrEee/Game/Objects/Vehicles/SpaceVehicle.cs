@@ -224,9 +224,11 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override void Redact(Empire emp)
 		{
-			var visibility = CheckVisibility(emp);
+			base.Redact(emp);
 
-			if (visibility < Visibility.Owned)
+			var vis = CheckVisibility(emp);
+
+			if (vis < Visibility.Owned)
 			{
 				// can't see orders unless it's your vehicle
 				Orders.Clear();
@@ -235,31 +237,14 @@ namespace FrEee.Game.Objects.Vehicles
 				Cargo.SetFakeSize(true);
 			}
 
-			// Can't see the ship's components if it's not scanned
-			// and can't see the design either if we haven't scanned it before
-			if (visibility < Visibility.Scanned)
+			if (vis < Visibility.Scanned)
 			{
 				// can't see cargo at all
 				Cargo.SetFakeSize(false);
 
-				if (Design.CheckVisibility(emp) < Visibility.Scanned)
-				{
-					// create fake design
-					var d = Vehicles.Design.Create(Design.VehicleType);
-					d.Hull = Design.Hull;
-					d.Owner = Design.Owner;
-					Design = d;
-				}
-
-				// clear component list
-				Components.Clear();
-
 				// hide amount of supplies remaining
 				SupplyRemaining = 0;
 			}
-
-			if (visibility < Visibility.Fogged)
-				Dispose();
 		}
 
 		public bool IsIdle

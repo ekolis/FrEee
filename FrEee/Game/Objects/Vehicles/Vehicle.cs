@@ -472,7 +472,31 @@ namespace FrEee.Game.Objects.Vehicles
 			get;
 		}
 
-		public abstract void Redact(Empire emp);
+		public virtual void Redact(Empire emp)
+		{
+			var visibility = CheckVisibility(emp);
+
+			// Can't see the ship's components if it's not scanned
+			// and can't see the design either if we haven't scanned it before
+			if (visibility < Visibility.Scanned)
+			{
+				// TODO - hide design of vehicle that has never been scanned before, even if we know the design?
+				if (Design.CheckVisibility(emp) < Visibility.Scanned)
+				{
+					// create fake design
+					var d = Vehicles.Design.Create(Design.VehicleType);
+					d.Hull = Design.Hull;
+					d.Owner = Design.Owner;
+					Design = d;
+				}
+
+				// clear component list
+				Components.Clear();
+			}
+
+			if (visibility < Visibility.Fogged)
+				Dispose();
+		}
 
 		public bool IsMemory
 		{
