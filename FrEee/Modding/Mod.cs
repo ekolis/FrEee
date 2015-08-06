@@ -47,8 +47,6 @@ namespace FrEee.Modding
 			var mod = new Mod();
 			mod.RootPath = path;
 
-			mod.FacilityTemplates.Add(new FacilityTemplate { Name = "Unknown", ModID = "*UNKNOWN*" }); // for redacted colonies
-
 			if (setCurrent)
 				Current = mod;
 
@@ -125,6 +123,10 @@ namespace FrEee.Modding
 			HappinessModels = new List<HappinessModel>();
 			Cultures = new List<Culture>();
 			EmpireAIs = new List<AI<Empire, Galaxy>>();
+
+			// for redacted colonies
+			FacilityTemplates.Add(FacilityTemplate.Unknown);
+			Register(FacilityTemplate.Unknown);
 		}
 
 		/// <summary>
@@ -359,6 +361,10 @@ namespace FrEee.Modding
 
 		public IModObject Find(string modid)
 		{
+			// HACK - for redacted colonies in old games
+			if (modid == "*UNKNOWN*")
+				return FacilityTemplate.Unknown;
+
 			return objects[modid];
 		}
 
