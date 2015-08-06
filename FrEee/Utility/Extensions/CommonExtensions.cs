@@ -30,6 +30,8 @@ using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat2.Tactics; // TODO -remove this, just for testing
 using FrEee.Game.Objects.Combat;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace FrEee.Utility.Extensions
 {
@@ -3709,6 +3711,35 @@ namespace FrEee.Utility.Extensions
 			var a = new Ability(obj, rule, null, vals);
 			obj.Abilities.Add(a);
 			return a;
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to return an enumeration of items.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="ops"></param>
+		/// <param name="process"></param>
+		/// <returns></returns>
+		public static async Task<IEnumerable<T>> SpawnTasksAsync<T>(this IEnumerable<Func<T>> ops)
+		{
+			// Enumerate the tasks we need to do and start them
+			var tasks = ops.Select(op => Task<T>.Factory.StartNew(op));
+
+			// Wait for them to complete
+			return await Task.WhenAll(tasks);
+
+		}
+
+		/// <summary>
+		/// Spawns multiple tasks to return an enumeration of items.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="objs"></param>
+		/// <param name="op"></param>
+		/// <returns></returns>
+		public static async Task<IEnumerable<TOut>> SpawnTasksAsync<TIn, TOut>(this IEnumerable<TIn> objs, Func<TIn, TOut> op)
+		{
+			return await objs.Select(obj => new Func<TOut>(() => op(obj))).SpawnTasksAsync();
 		}
 	}
 
