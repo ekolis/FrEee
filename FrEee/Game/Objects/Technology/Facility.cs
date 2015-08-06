@@ -40,7 +40,8 @@ namespace FrEee.Game.Objects.Technology
 			set
 			{
 				// HACK - transfer ownership of entire colony since facilities can only belong to colony owner anyway
-				Container.Colony.Owner = value;
+				if (Container != null && Container.Colony != null)
+					Container.Colony.Owner = value;
 			}
 		}
 

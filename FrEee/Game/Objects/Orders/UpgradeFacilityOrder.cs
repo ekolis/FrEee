@@ -52,10 +52,7 @@ namespace FrEee.Game.Objects.Orders
 
 				// create item if needed
 				if (NewFacility == null)
-				{
 					NewFacility = Upgrade.New.Instantiate();
-					NewFacility.Owner = queue.Owner;
-				}
 
 				// apply build rate
 				var costLeft = Cost - NewFacility.ConstructionProgress;
@@ -78,7 +75,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 			}
 		}
-		
+
 		IConstructable IConstructionOrder.Item
 		{
 			get { return NewFacility; }
