@@ -302,7 +302,7 @@ namespace FrEee.Game.Objects.Civilization
 			{
 				if (!Orders.Any())
 					return null;
-				var remainingCost = Orders[0].Template.Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
+				var remainingCost = Orders[0].Cost - (Orders[0].Item == null ? new ResourceQuantity() : Orders[0].Item.ConstructionProgress);
 				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
@@ -321,7 +321,7 @@ namespace FrEee.Game.Objects.Civilization
 					return double.PositiveInfinity;
 				if (!Orders.Any())
 					return 0d;
-				var remainingCost = Orders.Select(o => o.Template.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
+				var remainingCost = Orders.Select(o => o.Cost - (o.Item == null ? new ResourceQuantity() : o.Item.ConstructionProgress)).Aggregate((r1, r2) => r1 + r2);
 				return remainingCost.Max(kvp => (double)kvp.Value / (double)Rate[kvp.Key]);
 			}
 		}
@@ -412,7 +412,7 @@ namespace FrEee.Game.Objects.Civilization
 				var spent = new ResourceQuantity();
 				foreach (var o in Orders)
 				{
-					var left = o.Template.Cost;
+					var left = o.Cost;
 					if (o.Item != null)
 						left -= o.Item.ConstructionProgress;
 					left = ResourceQuantity.Min(left, Rate - spent);

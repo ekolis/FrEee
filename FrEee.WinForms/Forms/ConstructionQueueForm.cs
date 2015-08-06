@@ -212,9 +212,9 @@ namespace FrEee.WinForms.Forms
 				var cost = order.Cost;
 				var duration = Math.Ceiling(cost.Keys.Max(res => (double)cost[res] / (double)rate[res]));
 				var remainingCost = order.Cost - (order.Item == null ? new ResourceQuantity() : order.Item.ConstructionProgress);
-				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Item.Cost[Resource.Minerals];
-				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Item.Cost[Resource.Organics];
-				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Item.Cost[Resource.Radioactives];
+				var minprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Minerals] / (double)order.Cost[Resource.Minerals];
+				var orgprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Organics] / (double)order.Cost[Resource.Organics];
+				var radprogress = order.Item == null ? 0d : (double)order.Item.ConstructionProgress[Resource.Radioactives] / (double)order.Cost[Resource.Radioactives];
 				var eta = remainingCost.Keys.Max(res => (double)(remainingCost[res] + prevCost[res]) / (double)rate[res]);
 				if (!chkExpanded.Checked && order.Template == lastTemplate)
 				{
@@ -841,7 +841,7 @@ namespace FrEee.WinForms.Forms
 					newCommands.Add(cmd);
 				}
 			}
-			
+
 			// remove the order
 			ConstructionQueue.Orders.Remove(order);
 
