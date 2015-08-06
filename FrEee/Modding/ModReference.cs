@@ -31,6 +31,8 @@ namespace FrEee.Modding
 				if (string.IsNullOrWhiteSpace(ID))
 					return default(T);
 				var obj = (T)Mod.Current.Find(ID);
+				if (obj == null)
+					return default(T);
 				if (obj.IsDisposed)
 					return default(T);
 				return obj;
