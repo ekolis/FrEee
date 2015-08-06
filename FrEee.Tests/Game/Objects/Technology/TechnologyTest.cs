@@ -112,6 +112,16 @@ namespace FrEee.Tests.Game.Objects.Technology
 			// should have no spillover in t1 and 1 point in t2
 			Assert.AreEqual(0, emp.GetResearchProgress(t1, 2).Value);
 			Assert.AreEqual(1, emp.GetResearchProgress(t2, 1).Value);
+
+			// another turn!
+			emp.BonusResearch = 100000;
+			emp.ResearchCommand = cmd;
+			Galaxy.ProcessTurn(false);
+
+			// should have level 2+ in t1 and level 1+ in t2
+			// (levels could be higher if extra RP gets randomly assigned to those techs)
+			Assert.IsTrue(2 <= emp.ResearchedTechnologies[t1], $"{t1} level should be at least 2");
+			Assert.IsTrue(1 <= emp.ResearchedTechnologies[t2], $"{t2} level should be at least 1");
 		}
 	}
 }
