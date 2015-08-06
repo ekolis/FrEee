@@ -1288,6 +1288,9 @@ namespace FrEee.Utility.Extensions
 		/// <returns>The ability value.</returns>
 		public static string GetAbilityValue(this IAbilityObject obj, string name, int index = 1, bool includeShared = true, bool includeEmpireCommon = true, Func<Ability, bool> filter = null)
 		{
+			if (obj == null)
+				return null;
+
 			var abils = obj.Abilities();
 			if (includeShared)
 				abils = abils.Union(obj.SharedAbilities());
@@ -2763,6 +2766,9 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<Ability> Abilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
+			if (obj == null)
+				return Enumerable.Empty<Ability>();
+
 			if (sourceFilter == null && Galaxy.Current.IsAbilityCacheEnabled)
 			{
 				// use the ability cache
