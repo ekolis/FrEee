@@ -534,13 +534,14 @@ namespace FrEee.Utility.Extensions
 			var stacked = new List<Tuple<Ability, Ability>>();
 			if (abilities.Any())
 			{
-				foreach (var rule in Mod.Current.AbilityRules)
+				var grouped = abilities.GroupBy(a => a.Rule);
+				foreach (var group in grouped)
 				{
-					var lookup = rule.GroupAndStack(abilities, stackTo);
-					foreach (var group in lookup)
+					var lookup = group.Key.GroupAndStack(group, stackTo);
+					foreach (var lgroup in lookup)
 					{
 						foreach (var abil in group)
-							stacked.Add(Tuple.Create(group.Key, abil));
+							stacked.Add(Tuple.Create(lgroup.Key, abil));
 					}
 				}
 			}
