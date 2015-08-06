@@ -1086,12 +1086,12 @@ namespace FrEee.Game.Objects.Space
 			Current.SpaceObjectIDCheck("after shield replenishment");
 
 			// ship movement
-			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
 			foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>())
 				v.RefillMovement();
+			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			while (!Current.didLastTick)
 			{
 				// can at least cache abilities for the duration of a tick
