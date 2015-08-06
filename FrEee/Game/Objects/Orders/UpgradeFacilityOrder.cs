@@ -142,7 +142,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public bool CheckCompletion(ConstructionQueue queue)
 		{
-			isComplete = NewFacility.ConstructionProgress >= NewFacility.Cost || GetErrors(queue).Any();
+			isComplete = NewFacility.ConstructionProgress >= Cost || GetErrors(queue).Any();
 			return IsComplete;
 		}
 
