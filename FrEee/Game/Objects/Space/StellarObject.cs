@@ -231,7 +231,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				yield return StarSystem;
+				if (Sector != null)
+					yield return Sector;
 			}
 		}
 
