@@ -15,9 +15,10 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating stars.
 	/// </summary>
-	 [Serializable] public class StarTemplate : ITemplate<Star>, IModObject
+	[Serializable]
+	public class StarTemplate : ITemplate<Star>, IModObject
 	{
-		 public string Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Abilities to assign to the star.
@@ -61,7 +62,7 @@ namespace FrEee.Modding.Templates
 			if (Brightness != null)
 				candidates = candidates.Where(s => s.Brightness == Brightness);
 			if (!candidates.Any())
-				throw new Exception("No stars in SectType.txt match the criteria:\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()) +"\n\tAge: " + (Age ?? "Any") + "\n\tColor: " + (Color ?? "Any") + "\n\tBrightness: " + (Brightness ?? "Any"));
+				throw new Exception("No stars in SectType.txt match the criteria:\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()) + "\n\tAge: " + (Age ?? "Any") + "\n\tColor: " + (Color ?? "Any") + "\n\tBrightness: " + (Brightness ?? "Any"));
 
 			var star = candidates.PickRandom().Instantiate();
 
@@ -80,7 +81,10 @@ namespace FrEee.Modding.Templates
 
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
+
+		public bool IsDisposed { get; set; }
 	}
 }

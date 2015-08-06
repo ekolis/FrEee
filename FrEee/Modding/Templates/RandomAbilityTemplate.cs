@@ -13,7 +13,8 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// Chooses a random ability, or none at all, based on a roll of a d1000.
 	/// </summary>
-	 [Serializable] public class RandomAbilityTemplate : ITemplate<Ability>, IModObject
+	[Serializable]
+	public class RandomAbilityTemplate : ITemplate<Ability>, IModObject
 	{
 		public RandomAbilityTemplate()
 		{
@@ -51,9 +52,15 @@ namespace FrEee.Modding.Templates
 			set;
 		}
 
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
 	}
 

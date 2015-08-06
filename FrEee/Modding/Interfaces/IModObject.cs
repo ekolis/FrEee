@@ -15,5 +15,7 @@ namespace FrEee.Modding.Interfaces
 		/// An ID used to represent this mod object when patching a mod.
 		/// </summary>
 		string ModID { get; set; }
+
+		bool IsDisposed { get; }
 	}
 }

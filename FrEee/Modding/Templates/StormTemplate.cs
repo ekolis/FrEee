@@ -15,9 +15,10 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating storms.
 	/// </summary>
-	 [Serializable] public class StormTemplate : ITemplate<Storm>, IModObject
+	[Serializable]
+	public class StormTemplate : ITemplate<Storm>, IModObject
 	{
-		 public string Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Abilities to assign to the storm.
@@ -35,7 +36,7 @@ namespace FrEee.Modding.Templates
 			if (Size != null)
 				candidates = candidates.Where(p => p.StellarSize == Size.Value);
 			if (!candidates.Any())
-				throw new Exception("No storms in SectType.txt of stellar size "  + Size + "!");
+				throw new Exception("No storms in SectType.txt of stellar size " + Size + "!");
 
 			var storm = candidates.PickRandom().Instantiate();
 
@@ -52,9 +53,15 @@ namespace FrEee.Modding.Templates
 			set;
 		}
 
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
 	}
 }

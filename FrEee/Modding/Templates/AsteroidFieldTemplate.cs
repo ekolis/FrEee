@@ -15,9 +15,10 @@ namespace FrEee.Modding.Templates
 	/// <summary>
 	/// A template for generating asteroid fields.
 	/// </summary>
-	 [Serializable] public class AsteroidFieldTemplate : ITemplate<AsteroidField>, IModObject
+	[Serializable]
+	public class AsteroidFieldTemplate : ITemplate<AsteroidField>, IModObject
 	{
-		 public string Name { get; set; }
+		public string Name { get; set; }
 
 		/// <summary>
 		/// Abilities to assign to the asteroid field.
@@ -50,7 +51,7 @@ namespace FrEee.Modding.Templates
 				candidates = candidates.Where(ast => ast.StellarSize == StellarSize);
 
 			if (!candidates.Any())
-				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ?  "Any" : StellarSize.ToString()));
+				throw new Exception("No asteroid fields in SectType.txt match the criteria:\n\tAtmosphere: " + (Atmosphere ?? "Any") + "\n\tSurface: " + (Surface ?? "Any") + "\n\tStellar Size: " + (StellarSize == null ? "Any" : StellarSize.ToString()));
 
 			var asteroids = candidates.PickRandom().Instantiate();
 
@@ -77,9 +78,15 @@ namespace FrEee.Modding.Templates
 			set;
 		}
 
+		public bool IsDisposed
+		{
+			get; private set;
+		}
+
 		public void Dispose()
 		{
-			// nothing to do
+			// TODO - remove it from somewhere?
+			IsDisposed = true;
 		}
 	}
 }

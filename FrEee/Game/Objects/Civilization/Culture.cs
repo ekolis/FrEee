@@ -66,5 +66,14 @@ namespace FrEee.Game.Objects.Civilization
 				return result;
 			}
 		}
+
+		public bool IsDisposed
+		{
+			get
+			{
+				// can't be disposed of
+				return false;
+			}
+		}
 	}
 }

@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Utility.Extensions;
 using FrEee.Modding.Interfaces;
+using FrEee.Utility;
 
 namespace FrEee.Modding
 {
@@ -23,7 +24,22 @@ namespace FrEee.Modding
 	[Serializable]
 	public class ModReference<T> : IReference<string, T> where T : IModObject
 	{
+		public ModReference()
+		{
+			cache = new ClientSideCache<T>(() =>
+			{
+				if (string.IsNullOrWhiteSpace(ID))
+					return default(T);
+				var obj = (T)Mod.Current.Find(ID);
+				if (obj.IsDisposed)
+					return default(T);
+				return obj;
+			})
+			{ IsServerSideCacheEnabled = true };
+		}
+
 		public ModReference(T t)
+			: this()
 		{
 			var mobj = (IModObject)t;
 			if (Mod.Current == null)
@@ -39,6 +55,7 @@ namespace FrEee.Modding
 		}
 
 		public ModReference(string id)
+			: this()
 		{
 			if (Mod.Current == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IModObject without a mod.");
@@ -50,6 +67,8 @@ namespace FrEee.Modding
 
 		public string ID { get; internal set; }
 
+		private ClientSideCache<T> cache;
+
 		/// <summary>
 		/// Resolves the reference.
 		/// </summary>
@@ -58,9 +77,10 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				if (ID == null || ID == "")
+				var val = cache.Value;
+				if (val == null)
 					return default(T);
-				return (T)Mod.Current.Find(ID);
+				return val;
 			}
 		}
 
