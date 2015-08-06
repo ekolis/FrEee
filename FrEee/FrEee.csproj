@@ -416,6 +416,7 @@
     <Compile Include="Modding\Templates\StarSystemTemplate.cs" />
     <Compile Include="Modding\Templates\StarTemplate.cs" />
     <Compile Include="Modding\EmpireTraitRequirement.cs" />
+    <Compile Include="Utility\ClientSideCache.cs" />
     <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
     <Compile Include="Utility\HashCodeMasher.cs" />
