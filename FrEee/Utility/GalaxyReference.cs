@@ -85,7 +85,7 @@ namespace FrEee.Utility
 			get
 			{
 				if (value == null)
-					return Galaxy.Current.referrables.ContainsKey(ID);
+					return ID <= 0 || Galaxy.Current.referrables.ContainsKey(ID); // nonpositive ID's are null objects
 				else
 					return true;
 			}

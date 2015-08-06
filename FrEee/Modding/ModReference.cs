@@ -91,7 +91,8 @@ namespace FrEee.Modding
 		{
 			get
 			{
-				return Value != null;
+				// blank ID's are null objects, which are perfectly cromulent
+				return string.IsNullOrWhiteSpace(ID) || Value != null;
 			}
 		}
 
