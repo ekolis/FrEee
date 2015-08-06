@@ -1025,8 +1025,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>())
-				v.RefillMovement();
+			Current.FindSpaceObjects<IMobileSpaceObject>().RunTasks(CommonExtensions.RefillMovement);
 			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			while (!Current.didLastTick)
 			{
