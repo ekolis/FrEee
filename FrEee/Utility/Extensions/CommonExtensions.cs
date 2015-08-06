@@ -3781,12 +3781,24 @@ namespace FrEee.Utility.Extensions
 
 		public static void RunTasks(this IEnumerable<Action> ops)
 		{
-			ops.SpawnTasksAsync().ContinueWith(t => { throw t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
+			// http://stackoverflow.com/a/19193473/1159763
+			// for some reason we can't just say ops.SpawnTasksAsync().Wait() as this causes a hang
+			var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
+			{
+				await ops.SpawnTasksAsync();
+			})).Unwrap();
+			runSync.Wait();
 		}
 
 		public static void RunTasks<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
 		{
-			objs.SpawnTasksAsync(op).ContinueWith(t => { throw t.Exception; }, TaskContinuationOptions.OnlyOnFaulted);
+			// http://stackoverflow.com/a/19193473/1159763
+			// for some reason we can't just say objs.SpawnTasksAsync(op).Wait() as this causes a hang
+			var runSync = Task.Factory.StartNew(new Func<Task>(async () =>
+			{
+				await objs.SpawnTasksAsync(op);
+			})).Unwrap();
+			runSync.Wait();
 		}
 	}
 
