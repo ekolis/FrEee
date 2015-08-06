@@ -20,7 +20,7 @@ namespace FrEee.Tests.Utility.Extensions
 				nums.Add(i);
 			var squares = nums.SpawnTasksAsync(i => new Square(i)).Result;
 			for (var i = 0; i <= 5; i++)
-				Assert.IsTrue(squares.Single(s => s.Number == i).SquaredNumber == i * i);
+				Assert.AreEqual(i * i, squares.Single(s => s.Number == i).SquaredNumber);
 			Assert.IsTrue(!squares.Any(s => s.Number < 0));
 			Assert.IsTrue(!squares.Any(s => s.Number > 5));
 		}
