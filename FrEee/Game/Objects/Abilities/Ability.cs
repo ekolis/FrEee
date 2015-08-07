@@ -5,6 +5,7 @@ using FrEee.Game.Objects.Space;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
 using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace FrEee.Game.Objects.Abilities
 	/// A special ability of some game object, or just a tag used by the AI or by modders.
 	/// </summary>
 	[Serializable]
-	public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject
+	public class Ability : IContainable<IAbilityObject>, IReferrable, IModObject, IDataObject
 	{
 		public Ability(IAbilityObject container)
 		{
@@ -157,6 +158,33 @@ namespace FrEee.Game.Objects.Abilities
 		public string Name
 		{
 			get { return null; } // TODO - should abilities even have names?
+		}
+
+		public virtual IDictionary<string, object> Data
+		{
+			get
+			{
+				var dict = new SafeDictionary<string, object>();
+				dict[nameof(rule)] = rule;
+				dict[nameof(Description)] = Description;
+				dict[nameof(Values)] = Values;
+				dict[nameof(Container)] = Container;
+				dict[nameof(ID)] = ID;
+				dict[nameof(IsDisposed)] = IsDisposed;
+				dict[nameof(ModID)] = ModID;
+				return dict;
+			}
+
+			set
+			{
+				rule = value[nameof(rule)].Default<ModReference<AbilityRule>>();
+				Description = value[nameof(Description)].Default<Formula<string>>();
+				Values = value[nameof(Values)].Default<IList<Formula<string>>>();
+				Container = value[nameof(Container)].Default<IAbilityObject>();
+				ID = value[nameof(ID)].Default<long>();
+				IsDisposed = value[nameof(IsDisposed)].Default<bool>();
+				ModID = value[nameof(ModID)].Default<string>();
+			}
 		}
 	}
 }

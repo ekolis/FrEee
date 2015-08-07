@@ -8,6 +8,10 @@ namespace FrEee.Utility
 {
 	/// <summary>
 	/// Something which can get data about itself and reconstitute itself from said data.
+	/// It is probably best to implement this interface only on classes and not on interfaces,
+	/// so as to avoid forcing class authors to implement this interface if they don't want to.
+	/// Derived classes... well, we can't do much about that!
+	/// (Don't forget to make the implementation of IDataObject virtual just in case!)
 	/// </summary>
 	public interface IDataObject
 	{
