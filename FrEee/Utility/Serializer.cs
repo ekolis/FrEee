@@ -277,35 +277,53 @@ namespace FrEee.Utility
 
 		private static void WriteObject(object o, TextWriter w, ObjectGraphContext context, int tabLevel)
 		{
-			var tabs = new string('\t', tabLevel);
-			var moreTabs = new string('\t', tabLevel + 1);
-
 			// serialize object type and field count
-			var type = o.GetType();
-			var props = ObjectGraphContext.KnownProperties[type].Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
-			w.WriteLine("p" + props.Count() + ":");
-
-			foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
+			if (o is IDataObject)
 			{
-				// serialize property name and value
-				try
+				// use data object code! :D
+				var type = o.GetType();
+				foreach (var kvp in (o as IDataObject).Data)
 				{
-					w.Write(moreTabs);
-					w.Write(p.Name);
-					w.Write(":\n");
-					var val = context.GetObjectProperty(o, p);
-					Serialize(val, w, p.PropertyType, context, tabLevel + 2);
+					var pname = kvp.Key;
+					var val = kvp.Value;
+					var ptype = type.GetProperty(pname).PropertyType;
+					WriteProperty(w, o, ptype, pname, val, context, tabLevel);
 				}
-				catch (Exception ex)
-				{
-					throw new SerializationException("Could not serialize property " + p.Name + " of " + o + " because the property accessor threw an exception: " + ex.Message, ex);
-				}
+			}
+			else
+			{
+				// use reflection :(
+				var type = o.GetType();
+				var props = ObjectGraphContext.KnownProperties[type].Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				w.WriteLine("p" + props.Count() + ":");
+
+				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
+					WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
 			}
 
 			// write end object
 			for (int i = 0; i < tabLevel; i++)
 				w.Write('\t');
 			w.WriteLine(";");
+		}
+
+		private static void WriteProperty(TextWriter w, object o, Type ptype, string pname, object val, ObjectGraphContext context, int tabLevel)
+		{
+			var tabs = new string('\t', tabLevel);
+			var moreTabs = new string('\t', tabLevel + 1);
+
+			// serialize property name and value
+			try
+			{
+				w.Write(moreTabs);
+				w.Write(pname);
+				w.Write(":\n");
+				Serialize(val, w, ptype, context, tabLevel + 2);
+			}
+			catch (Exception ex)
+			{
+				throw new SerializationException("Could not serialize property " + pname + " of " + o + " because the property accessor threw an exception: " + ex.Message, ex);
+			}
 		}
 
 		public static T Deserialize<T>(Stream s, ObjectGraphContext context = null)
@@ -644,29 +662,38 @@ namespace FrEee.Utility
 				if (!int.TryParse(s, out count))
 					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing field count.");
 
+				var dict = new SafeDictionary<string, object>();
+
 				// deserialize the fields
 				for (int i = 0; i < count; i++)
 				{
-					if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(ModReferenceKeyedDictionary<,>))
-					{
-
-					}
 					var pname = r.ReadTo(':', log).Trim();
 					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
 					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
-						// property exists and can be serialized
-						if (type.IsValueType)
-						{
-							// not sure why LINQ expressions don't work on structs...
-							prop.SetValue(o, Deserialize(r, prop.PropertyType, context, log), new object[0]);
-						}
-						else
-							context.SetObjectProperty(o, prop, Deserialize(r, prop.PropertyType, context, log));
+						dict[pname] = Deserialize(r, prop.PropertyType, context, log);
 					}
 					else
 						r.ReadTo(';', log); // throw away this property, we don't need it
-					// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
+											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
+				}
+
+				if (o is IDataObject)
+				{
+					// use data object code! :D
+					var dobj = (IDataObject)o;
+					dobj.Data = dict;
+				}
+				else
+				{
+					// use reflection :(
+					foreach (var kvp in dict)
+					{
+						var pname = kvp.Key;
+						var val = kvp.Value;
+						var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+						context.SetObjectProperty(o, prop, val);
+					}
 				}
 
 				// clean up
