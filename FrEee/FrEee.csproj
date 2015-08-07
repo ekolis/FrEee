@@ -137,6 +137,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utility\DataReference.cs" />
     <Compile Include="FrEeeConstants.cs" />
     <Compile Include="Game\Enumerations\AbilityTargets.cs" />
     <Compile Include="Game\Enumerations\AbilityValueRule.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="Game\Interfaces\ICleanable.cs" />
     <Compile Include="Game\Interfaces\ICreateDesignCommand.cs" />
     <Compile Include="Game\Interfaces\IDamageable.cs" />
+    <Compile Include="Utility\IData.cs" />
+    <Compile Include="Utility\IDataObject.cs" />
     <Compile Include="Game\Interfaces\IDesign.cs" />
     <Compile Include="Game\Interfaces\IErrorProne.cs" />
     <Compile Include="Game\Interfaces\IFoggable.cs" />
@@ -428,6 +431,7 @@
     <Compile Include="Utility\DynamicDictionary.cs" />
     <Compile Include="Game\Objects\Civilization\Diplomacy\Clauses\FreeTradeClause.cs" />
     <Compile Include="Utility\HashCodeMasher.cs" />
+    <Compile Include="Utility\DataScalar.cs" />
     <Compile Include="Utility\NameAttribute.cs" />
     <Compile Include="Utility\PRNG.cs" />
     <Compile Include="Utility\Extensions\Parser.cs" />
