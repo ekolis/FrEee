@@ -3668,6 +3668,21 @@ namespace FrEee.Utility.Extensions
 		}
 
 		/// <summary>
+		/// Returns a custom value if the specified value is null or the wrong type.
+		/// Otherwise returns the value itself.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value"></param>
+		/// <param name=""></param>
+		/// <returns></returns>
+		public static T Default<T>(this object value, T def = default(T), bool throwIfWrongType = false)
+		{
+			if (throwIfWrongType && !(value is T))
+				throw new InvalidCastException($"Cannot convert {value} to type {typeof(T)}.");
+			return value == null || !(value is T) ? def : (T)value;
+		}
+
+		/// <summary>
 		/// Limits a value to a range.
 		/// Throws an exception if min is bigger than max.
 		/// </summary>
