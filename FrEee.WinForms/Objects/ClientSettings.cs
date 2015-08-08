@@ -42,22 +42,23 @@ namespace FrEee.WinForms.Objects
 		/// </summary>
 		public GridConfig CurrentShipListConfig { get; set; }
 
-    /// <summary>
-    /// Volume settings.  Valid ranges are 0(off) - 100(full).
-    /// </summary>
-    public int masterVolume { get; set; }
-    public int musicVolume { get; set; }
-    public int effectsVolume { get; set; }
+		/// <summary>
+		/// Volume settings.  Valid ranges are 0(off) - 100(full).
+		/// </summary>
+		public int masterVolume { get; set; }
+		public int musicVolume { get; set; }
+		public int effectsVolume { get; set; }
 
 		public static ClientSettings Instance { get; private set; }
 
-		public static string ConfigFile
+		/// <summary>
+		/// The full path to the client settings file.
+		/// </summary>
+		public static string FilePath
 		{
 			get
 			{
-				return Path.Combine(
-					Path.GetDirectoryName(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoaming).FilePath),
-					"ClientSettings.dat");
+				return Path.Combine(ClientUtilities.ApplicationDataPath, "ClientSettings.dat");
 			}
 		}
 
@@ -220,12 +221,12 @@ namespace FrEee.WinForms.Objects
 
 		public static void Load()
 		{
-			if (File.Exists(ConfigFile))
+			if (File.Exists(FilePath))
 			{
 				FileStream fs = null;
 				try
 				{
-					fs = new FileStream(ConfigFile, FileMode.Open);
+					fs = new FileStream(FilePath, FileMode.Open);
 					Instance = Serializer.Deserialize<ClientSettings>(fs);
 				}
 				catch (Exception ex)
@@ -253,10 +254,10 @@ namespace FrEee.WinForms.Objects
 
 		public static void Save()
 		{
-			var path = Path.GetDirectoryName(ConfigFile);
+			var path = Path.GetDirectoryName(FilePath);
 			if (!Directory.Exists(path))
 				Directory.CreateDirectory(path);
-			var fs = new FileStream(ConfigFile, FileMode.Create);
+			var fs = new FileStream(FilePath, FileMode.Create);
 			Serializer.Serialize(Instance, fs);
 			fs.Close(); fs.Dispose();
 		}

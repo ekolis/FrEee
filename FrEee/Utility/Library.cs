@@ -26,12 +26,27 @@ namespace FrEee.Utility
 			Items = new HashSet<object>();
 		}
 
+		/// <summary>
+		/// The full path to the library file.
+		/// </summary>
+		public static string FilePath
+		{
+			get
+			{
+				return Path.Combine(ClientUtilities.ApplicationDataPath, "Library.dat");
+			}
+		}
+
 		public static void Load()
 		{
 			// load library from disk
-			try	
+			try
 			{
-				var fs = File.OpenRead("Library.dat");
+				// HACK - move old Library.dat that was in the app folder
+				if (File.Exists("Library.dat"))
+					File.Move("Library.dat", FilePath);
+
+				var fs = File.OpenRead(FilePath);
 				Items = Serializer.Deserialize<ISet<object>>(fs);
 				fs.Close(); fs.Dispose();
 			}
@@ -48,12 +63,15 @@ namespace FrEee.Utility
 				Items = new HashSet<object>();
 			}
 		}
-		
+
 		public static void Save()
 		{
-			var fs = File.Create("Library.dat");
+			var path = Path.GetDirectoryName(FilePath);
+			if (!Directory.Exists(path))
+				Directory.CreateDirectory(path);
+			var fs = File.Create(FilePath);
 			Serializer.Serialize(Items, fs);
-			fs.Close(); fs.Dispose();			
+			fs.Close(); fs.Dispose();
 		}
 
 		/// <summary>
