@@ -11,13 +11,21 @@ namespace FrEee.Utility
 	public class SimpleDataObject<T> : MarshalByRefObject, IDataObject
 		where T : IDataObject
 	{
-		public SimpleDataObject(T t, IDataObject root)
+		public SimpleDataObject()
+		{
+
+		}
+
+		public SimpleDataObject(T t, ObjectGraphContext ctx = null)
 		{
 			if (t != null)
 				Data = t.Data;
 			else
 				Data = new SafeDictionary<string, object>();
+			Context = ctx;
 		}
+
+		private ObjectGraphContext Context;
 
 		public SafeDictionary<string, IData<object>> SimpleData
 		{
@@ -36,7 +44,8 @@ namespace FrEee.Utility
 			set
 			{
 				SimpleData = new SafeDictionary<string, IData<object>>();
-				var context = new ObjectGraphContext();
+				if (Context == null)
+					Context = new ObjectGraphContext();
 				foreach (var pname in value.Keys)
 				{
 					var pval = value[pname];
@@ -45,7 +54,7 @@ namespace FrEee.Utility
 					else if (pval.GetType().IsScalar())
 						SimpleData[pname] = new DataScalar(pval);
 					else
-						SimpleData[pname] = (IData<object>)typeof(DataReference<>).MakeGenericType(pval.GetType()).Instantiate(context, pval);
+						SimpleData[pname] = (IData<object>)typeof(DataReference<>).MakeGenericType(pval.GetType()).Instantiate(Context, pval);
 				}
 			}
 		}
