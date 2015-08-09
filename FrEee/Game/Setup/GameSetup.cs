@@ -215,7 +215,7 @@ namespace FrEee.Game.Setup
 				if (StarSystemCount > GalaxySize.Width * GalaxySize.Height)
 					yield return "The galaxy is too small to contain " + StarSystemCount + " star systems.";
 				if (EmpirePlacement != EmpirePlacement.CanStartInSameSystem && EmpireTemplates.Count + RandomAIs + MinorEmpires > StarSystemCount)
-					yield return "There are not enough star systems to give " + (EmpireTemplates.Count + RandomAIs + MinorEmpires > StarSystemCount) + " empires and minor races each their own home system.";
+					yield return "There are not enough star systems to give " + (EmpireTemplates.Count + RandomAIs + MinorEmpires) + " empires and minor races each their own home system.";
 				if (!EmpireTemplates.Any() && RandomAIs == 0)
 					yield return "You must add at least one empire.";
 				foreach (var et in EmpireTemplates)
