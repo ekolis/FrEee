@@ -76,6 +76,14 @@ namespace FrEee.Game.Objects.Space
 						Target = null;
 					}
 				}
+				else
+				{
+					Name = "Warp Point";
+				}
+			}
+			else
+			{
+				Name = "Warp Point";
 			}
 		}
 
