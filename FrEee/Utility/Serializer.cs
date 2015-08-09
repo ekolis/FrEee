@@ -13,6 +13,7 @@ using System.Drawing;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace FrEee.Utility
 {
@@ -335,7 +336,7 @@ namespace FrEee.Utility
 
 		public static T Deserialize<T>(TextReader r, ObjectGraphContext context = null)
 		{
-			return (T)Deserialize(r, typeof(T), context);
+			return (T)Deserialize(r, typeof(T), true, context);
 		}
 
 		public static T DeserializeFromString<T>(string s)
@@ -353,7 +354,7 @@ namespace FrEee.Utility
 		public static object Deserialize(Stream s, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			var sr = new StreamReader(s);
-			var result = Deserialize(sr, desiredType, context, log);
+			var result = Deserialize(sr, desiredType, true, context, log);
 			sr.Close();
 			return result;
 		}
@@ -411,7 +412,7 @@ namespace FrEee.Utility
 					// HACK - figure out how to set min and max bounds, in case it matters (VB?)
 					var array = Array.CreateInstance(type.GetElementType(), max - min + 1);
 					for (int i = min; i <= max; i++)
-						array.SetValue(Deserialize(r, type.GetElementType(), context, log), i);
+						array.SetValue(Deserialize(r, type.GetElementType(), false, context, log), i);
 					o = array;
 				}
 				else if (boundsStrs.Length == 2)
@@ -432,7 +433,7 @@ namespace FrEee.Utility
 					for (int x = min1; x <= max1; x++)
 					{
 						for (int y = min2; y <= max2; y++)
-							array.SetValue(Deserialize(r, type.GetElementType(), context, log), x, y);
+							array.SetValue(Deserialize(r, type.GetElementType(), false, context, log), x, y);
 					}
 					o = array;
 					context.Add(o);
@@ -541,7 +542,7 @@ namespace FrEee.Utility
 				// load items and add them
 				for (int i = 0; i < size; i++)
 				{
-					var item = Deserialize(r, itemType, context, log);
+					var item = Deserialize(r, itemType, false, context, log);
 					lambdaAdder.DynamicInvoke(coll, item);
 				}
 				o = (IEnumerable)coll;
@@ -599,8 +600,8 @@ namespace FrEee.Utility
 				// load items and add them
 				for (int i = 0; i < size; i++)
 				{
-					var key = Deserialize(r, keyprop.PropertyType, context, log);
-					var val = Deserialize(r, valprop.PropertyType, context, log);
+					var key = Deserialize(r, keyprop.PropertyType, false, context, log);
+					var val = Deserialize(r, valprop.PropertyType, false, context, log);
 					lambdaAdder.DynamicInvoke(coll, key, val);
 				}
 
@@ -637,6 +638,8 @@ namespace FrEee.Utility
 			return o;
 		}
 
+		private static IList<Task> propertySetterTasks = new List<Task>();
+
 		private static object DeserializeObject(TextReader r, Type type, ObjectGraphContext context, StringBuilder log)
 		{
 			object o;
@@ -656,45 +659,49 @@ namespace FrEee.Utility
 				o = type.Instantiate();
 				context.Add(o);
 
-				// field count - need to create object and populate fields
+				// properties count - need to create object and populate properties
 				int count;
 				string s = r.ReadTo(':', log);
 				if (!int.TryParse(s, out count))
-					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing field count.");
+					throw new SerializationException("Expected integer, got \"" + s + "\" when parsing property count.");
 
 				var dict = new SafeDictionary<string, object>();
 
-				// deserialize the fields
+				// deserialize the properties
 				for (int i = 0; i < count; i++)
 				{
 					var pname = r.ReadTo(':', log).Trim();
 					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
 					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
-						dict[pname] = Deserialize(r, prop.PropertyType, context, log);
+						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
 					}
 					else
 						r.ReadTo(';', log); // throw away this property, we don't need it
 											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 
-				if (o is IDataObject)
+				propertySetterTasks.Add(Task.Factory.StartNew(() =>
 				{
-					// use data object code! :D
-					var dobj = (IDataObject)o;
-					dobj.Data = dict;
-				}
-				else
-				{
-					// use reflection :(
-					foreach (var kvp in dict)
+
+					if (o is IDataObject)
 					{
-						var pname = kvp.Key;
-						var val = kvp.Value;
-						var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
-						context.SetObjectProperty(o, prop, val);
+						// use data object code! :D
+						var dobj = (IDataObject)o;
+						dobj.Data = dict;
 					}
-				}
+					else
+					{
+						// use reflection :(
+						foreach (var kvp in dict)
+						{
+							var pname = kvp.Key;
+							var val = kvp.Value;
+							var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+							context.SetObjectProperty(o, prop, val);
+						}
+					}
+				}));
 
 				// clean up
 				ReadSemicolon(r, type, log);
@@ -727,11 +734,17 @@ namespace FrEee.Utility
 			return o;
 		}
 
-		public static object Deserialize(TextReader r, Type desiredType, ObjectGraphContext context = null, StringBuilder log = null)
+		public static object Deserialize(TextReader r, Type desiredType, bool isRoot, ObjectGraphContext context = null, StringBuilder log = null)
 		{
 			// set up our serialization context if we haven't already
 			if (context == null)
 				context = new ObjectGraphContext();
+
+			if (isRoot)
+			{
+				// clear out our tasks
+				propertySetterTasks = new List<Task>();
+			}
 
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
@@ -806,6 +819,13 @@ namespace FrEee.Utility
 			{
 				// parse objects
 				o = DeserializeObject(r, type, context, log);
+			}
+
+			if (isRoot)
+			{
+				// wait for tasks to complete
+				Action<Task> awaitTask = async t => await t;
+				propertySetterTasks.RunTasks(awaitTask);
 			}
 
 			// return our new object
