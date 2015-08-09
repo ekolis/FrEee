@@ -11,8 +11,19 @@ namespace FrEee.Game.Objects.Space
 	/// <summary>
 	/// A star. Normally found at the center of a star system.
 	/// </summary>
-	 [Serializable] public class Star : StellarObject, ITemplate<Star>
+	[Serializable]
+	public class Star : StellarObject, ITemplate<Star>, IDataObject
 	{
+		// TODO - do stars in SE4 have a size property?
+
+		public Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// The brightness of this star. (For flavor)
 		/// </summary>
@@ -30,6 +41,7 @@ namespace FrEee.Game.Objects.Space
 
 		/// <summary>
 		/// Is this a destroyed star?
+		/// TODO - make sure destroyed stars don't provide supplies or resources from solar generation
 		/// </summary>
 		public bool IsDestroyed { get; set; }
 
@@ -47,16 +59,24 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.Star; }
 		}
 
-		[DoNotSerialize(false)]
-		public override Empire Owner
+		public override SafeDictionary<string, object> Data
 		{
 			get
 			{
-				return null;
+				var dict = base.Data;
+				dict[nameof(Brightness)] = Brightness;
+				dict[nameof(Color)] = Color;
+				dict[nameof(Age)] = Age;
+				dict[nameof(IsDestroyed)] = IsDestroyed;
+				return dict;
 			}
 			set
 			{
-				throw new NotSupportedException("Cannot set the owner of a star; it is always null.");
+				base.Data = value;
+				Brightness = value[nameof(Brightness)].Default<string>();
+				Color = value[nameof(Color)].Default<string>();
+				Age = value[nameof(Age)].Default<string>();
+				IsDestroyed = value[nameof(IsDestroyed)].Default<bool>();
 			}
 		}
 	}

@@ -22,7 +22,7 @@ namespace FrEee.Game.Objects.Space
 	/// A planet. Planets can be colonized or mined.
 	/// </summary>
 	[Serializable]
-	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer
+	public class Planet : StellarObject, ITemplate<Planet>, IOrderable, ICombatSpaceObject, ICargoTransferrer, IReferrable, IMobileSpaceObject<Planet>, IMineableSpaceObject, IIncomeProducer, IDataObject, ITransferrable
 	{
 		public Planet()
 		{
@@ -79,7 +79,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The empire which has a colony on this planet, if any.
 		/// </summary>
-		public override Empire Owner
+		public Empire Owner
 		{
 			get
 			{
@@ -98,6 +98,11 @@ namespace FrEee.Game.Objects.Space
 				else if (Colony != null && value != null)
 					Colony.Owner = value;
 			}
+		}
+
+		public override bool IsHostileTo(Empire emp)
+		{
+			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
 		}
 
 		/// <summary>
@@ -697,7 +702,6 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// Expected population change for the upcoming turn due to reproduction, cloning, and plagues.
 		/// </summary>
-
 		public IDictionary<Race, long> PopulationChangePerTurnPerRace
 		{
 			get
@@ -842,6 +846,9 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
+		/// <summary>
+		/// TODO - planetary engines? but how would we do engines per move?
+		/// </summary>
 		public int Speed
 		{
 			get { return 0; }
@@ -1096,6 +1103,32 @@ namespace FrEee.Game.Objects.Space
 					yield return Sector;
 				if (Owner != null)
 					yield return Owner;
+			}
+		}
+
+		public override SafeDictionary<string, object> Data
+		{
+			get
+			{
+				var dict = base.Data;
+				dict[nameof(size)] = size;
+				dict[nameof(Surface)] = Surface;
+				dict[nameof(Atmosphere)] = Atmosphere;
+				dict[nameof(ResourceValue)] = ResourceValue;
+				dict[nameof(Colony)] = Colony;
+				dict[nameof(Orders)] = Orders;
+				return dict;
+			}
+			set
+			{
+				base.Data = value;
+				size = value[nameof(size)].Default<ModReference<StellarObjectSize>>();
+				Surface = value[nameof(Surface)].Default<string>();
+				Atmosphere = value[nameof(Atmosphere)].Default<string>();
+				ModID = value[nameof(ModID)].Default<string>();
+				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
+				Colony = value[nameof(Colony)].Default<Colony>();
+				Orders = value[nameof(Orders)].Default(new List<IOrder<Planet>>());
 			}
 		}
 	}

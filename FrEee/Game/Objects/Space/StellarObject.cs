@@ -20,12 +20,20 @@ namespace FrEee.Game.Objects.Space
 	/// A (typically) naturally occurring, large, immobile space object.
 	/// </summary>
 	[Serializable]
-	public abstract class StellarObject : IStellarObject
+	public abstract class StellarObject : IStellarObject, IAbstractDataObject
 	{
 		public StellarObject()
 		{
 			IntrinsicAbilities = new List<Ability>();
 			StoredResources = new ResourceQuantity();
+		}
+
+		Empire IOwnable.Owner
+		{
+			get
+			{
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -84,11 +92,6 @@ namespace FrEee.Game.Objects.Space
 			}
 		}
 
-		/// <summary>
-		/// Typical stellar objects aren't owned by any empire, so this return null for most types.
-		/// </summary>
-		public abstract Empire Owner { get; set; }
-
 		public override string ToString()
 		{
 			return Name;
@@ -113,10 +116,14 @@ namespace FrEee.Game.Objects.Space
 			set;
 		}
 
-
+		/// <summary>
+		/// Stellar objects don't typically have owners, so they can't usually be hostile.
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
 		public virtual bool IsHostileTo(Empire emp)
 		{
-			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
+			return false;
 		}
 
 		public virtual bool CanBeInFleet
@@ -248,5 +255,41 @@ namespace FrEee.Game.Objects.Space
 		/// Resources stored on this stellar object.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; private set; }
+
+		public virtual SafeDictionary<string, object> Data
+		{
+			get
+			{
+				var dict = new SafeDictionary<string, object>();
+				dict[nameof(Index)] = Index;
+				dict[nameof(IsUnique)] = IsUnique;
+				dict[nameof(Name)] = Name;
+				dict[nameof(Description)] = Description;
+				dict[nameof(PictureName)] = PictureName;
+				dict[nameof(IntrinsicAbilities)] = IntrinsicAbilities;
+				dict[nameof(StellarSize)] = StellarSize;
+				dict[nameof(ID)] = ID;
+				dict[nameof(IsMemory)] = IsMemory;
+				dict[nameof(Timestamp)] = Timestamp;
+				dict[nameof(ModID)] = ModID;
+				dict[nameof(StoredResources)] = StoredResources;
+				return dict;
+			}
+			set
+			{
+				Index = value[nameof(Index)].Default<int>();
+				IsUnique = value[nameof(IsUnique)].Default<bool>();
+				Name = value[nameof(Name)].Default<string>();
+				Description = value[nameof(Description)].Default<string>();
+				PictureName = value[nameof(PictureName)].Default<string>();
+				IntrinsicAbilities = value[nameof(IntrinsicAbilities)].Default(new List<Ability>());
+				StellarSize = value[nameof(StellarSize)].Default<StellarSize>();
+				ID = value[nameof(ID)].Default<long>();
+				IsMemory = value[nameof(IsMemory)].Default<bool>();
+				Timestamp = value[nameof(Timestamp)].Default<double>();
+				ModID = value[nameof(ModID)].Default<string>();
+				StoredResources = value[nameof(StoredResources)].Default(new ResourceQuantity());
+			}
+		}
 	}
 }
