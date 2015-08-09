@@ -97,7 +97,7 @@ namespace FrEee.Utility
 				{
 					// register type
 					ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
-					context.AddProperties(type);
+					ObjectGraphContext.AddProperties(type);
 				}
 
 				if (!type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
@@ -306,10 +306,10 @@ namespace FrEee.Utility
 		}
 
 		/// <summary>
-		/// Adds the fields for a type.
+		/// Adds the properties for a type.
 		/// </summary>
 		/// <param name="type"></param>
-		public void AddProperties(Type type)
+		public static void AddProperties(Type type)
 		{
 			if (!KnownProperties.ContainsKey(type))
 			{

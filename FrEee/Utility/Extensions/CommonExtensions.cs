@@ -3829,6 +3829,53 @@ namespace FrEee.Utility.Extensions
 		{
 			return t.IsPrimitive || t.IsEnum || t == typeof(string);
 		}
+
+		public static SafeDictionary<string, object> GetData(this object o, ObjectGraphContext context)
+		{
+			// serialize object type and field count
+			if (o is IDataObject)
+			{
+				// use data object code! :D
+				var dobj = (IDataObject)o;
+				return dobj.Data;
+			}
+			else if (o != null)
+			{
+				// use reflection :(
+				var dict = new SafeDictionary<string, object>();
+				if (!ObjectGraphContext.KnownProperties.ContainsKey(o.GetType()))
+					ObjectGraphContext.AddProperties(o.GetType());
+				var props = ObjectGraphContext.KnownProperties[o.GetType()].Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				foreach (var p in props)
+					dict[p.Name] = p.GetValue(o);
+				return dict;
+			}
+			else
+				return new SafeDictionary<string, object>();
+		}
+
+		public static void SetData(this object o, SafeDictionary<string, object> dict, ObjectGraphContext context)
+		{
+			if (o is IDataObject)
+			{
+				// use data object code! :D
+				var dobj = (IDataObject)o;
+				dobj.Data = dict;
+			}
+			else if (o != null)
+			{
+				// use reflection :(
+				foreach (var kvp in dict)
+				{
+					var pname = kvp.Key;
+					var val = kvp.Value;
+					var prop = ObjectGraphContext.KnownProperties[o.GetType()].SingleOrDefault(p => p.Name == pname);
+					context.SetObjectProperty(o, prop, val);
+				}
+			}
+			else
+				throw new NullReferenceException("Can't set data on a null object.");
+		}
 	}
 
 	public enum IDCopyBehavior

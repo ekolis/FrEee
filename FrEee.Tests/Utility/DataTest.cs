@@ -92,6 +92,23 @@ namespace FrEee.Tests.Utility.Extensions
 			Assert.AreEqual("Hi, I'm nobody!", nobody.SayHi());
 		}
 
+		/// <summary>
+		/// Tests simple data on an object that is not an IDataObject.
+		/// </summary>
+		[TestMethod]
+		public void AnyObjectSimpleData()
+		{
+			var timmy = new Person("Timmy", null, null);
+			var lassie = new Dog("Lassie", timmy);
+
+			var simple = new SimpleDataObject<Dog>(lassie, null);
+			Assert.AreEqual(lassie.Name, simple.Data[nameof(lassie.Name)]);
+			Assert.AreEqual(lassie.Owner, simple.Data[nameof(lassie.Owner)]);
+			var clone = simple.Value;
+			Assert.AreEqual(lassie.Name, clone.Name);
+			Assert.AreEqual(lassie.Owner, clone.Owner);
+		}
+
 		private class Person : IDataObject
 		{
 			public Person(string name, Person father, Person mother)
@@ -138,6 +155,18 @@ namespace FrEee.Tests.Utility.Extensions
 					Children = value[nameof(Children)].Default(new HashSet<Person>());
 				}
 			}
+		}
+
+		private class Dog
+		{
+			public Dog(string name, Person owner)
+			{
+				Name = Name;
+				Owner = owner;
+			}
+
+			public string Name { get; set; }
+			public Person Owner { get; private set; }
 		}
 	}
 }

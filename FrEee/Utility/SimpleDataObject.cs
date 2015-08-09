@@ -9,7 +9,6 @@ using static FrEee.Utility.Extensions.CommonExtensions;
 namespace FrEee.Utility
 {
 	public class SimpleDataObject<T> : MarshalByRefObject, IDataObject
-		where T : IDataObject
 	{
 		public SimpleDataObject()
 		{
@@ -18,11 +17,11 @@ namespace FrEee.Utility
 
 		public SimpleDataObject(T t, ObjectGraphContext ctx = null)
 		{
+			Context = ctx;
 			if (t != null)
-				Data = t.Data;
+				Data = t.GetData(Context);
 			else
 				Data = new SafeDictionary<string, object>();
-			Context = ctx;
 		}
 
 		private ObjectGraphContext Context;
@@ -64,12 +63,12 @@ namespace FrEee.Utility
 			get
 			{
 				var t = Instantiate<T>();
-				t.Data = Data;
+				t.SetData(Data, Context);
 				return t;
 			}
 			set
 			{
-				Data = value.Data;
+				Data = value.GetData(Context);
 			}
 		}
 
