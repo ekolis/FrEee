@@ -160,7 +160,7 @@ namespace FrEee.Game.Objects.Abilities
 			get { return null; } // TODO - should abilities even have names?
 		}
 
-		public virtual IDictionary<string, object> Data
+		public virtual SafeDictionary<string, object> Data
 		{
 			get
 			{
