@@ -7,11 +7,18 @@ using FrEee.Game.Interfaces;
 
 namespace FrEee.Utility
 {
-	public class DataReference<T> : IData, IReference<T>
+	public class DataReference<T> : IData<T>, IReference<T>
 	{
-		public DataReference(ObjectGraphContext ctx)
+		public DataReference(ObjectGraphContext ctx, T t = default(T))
 		{
 			Context = ctx;
+			Value = t;
+		}
+
+		public DataReference(ObjectGraphContext ctx, int id = -1)
+		{
+			Context = ctx;
+			ID = id;
 		}
 
 		private ObjectGraphContext Context;
@@ -48,11 +55,24 @@ namespace FrEee.Utility
 			{
 				return (T)Context.KnownObjects[typeof(T)][ID];
 			}
+			set
+			{
+				if (Context.GetID(value) == null)
+					Context.Add(value);
+				ID = Context.GetID(value).Value;
+			}
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			// nothing to do here, this is just used for serialization and such
 		}
+
+		public static implicit operator T(DataReference<T> reference)
+		{
+			return reference.Value;
+		}
+
+		// can't implicitly convert objects to references because we need a object graph context
 	}
 }
