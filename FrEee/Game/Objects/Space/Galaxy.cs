@@ -1200,7 +1200,7 @@ namespace FrEee.Game.Objects.Space
 
 		internal void SpaceObjectIDCheck(string when)
 		{
-			foreach (var sobj in FindSpaceObjects<ISpaceObject>())
+			foreach (var sobj in FindSpaceObjects<ISpaceObject>().ToArray())
 			{
 				if (!referrables.ContainsKey(sobj.ID))
 					AssignID(sobj);
