@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utility\ClientUtilities.cs" />
+    <Compile Include="Utility\SimpleDataObject.cs" />
     <Compile Include="Utility\DataReference.cs" />
     <Compile Include="FrEeeConstants.cs" />
     <Compile Include="Game\Enumerations\AbilityTargets.cs" />

@@ -11,14 +11,14 @@ namespace FrEee.Utility
 	/// A scalar which can be converted easily to and from a string.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class DataScalar<T> : IData
+	public class DataScalar : IData<object>
 	{
-		public DataScalar(T value = default(T))
+		public DataScalar(object value = null)
 		{
 			Value = value;
 		}
 
-		public T Value { get; set; }
+		public object Value { get; set; }
 
 		public string Data
 		{
@@ -28,7 +28,7 @@ namespace FrEee.Utility
 			}
 			set
 			{
-				Value = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+				Value = Convert.ChangeType(value, typeof(object), CultureInfo.InvariantCulture);
 			}
 		}
 	}

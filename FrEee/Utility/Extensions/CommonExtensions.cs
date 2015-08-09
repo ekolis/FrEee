@@ -2635,6 +2635,11 @@ namespace FrEee.Utility.Extensions
 				return FormatterServices.GetSafeUninitializedObject(type);
 		}
 
+		public static T Instantiate<T>(params object[] args)
+		{
+			return (T)typeof(T).Instantiate(args);
+		}
+
 		public static bool HasProperty(this ExpandoObject obj, string propertyName)
 		{
 			return obj.GetType().GetProperty(propertyName) != null;
@@ -3818,6 +3823,11 @@ namespace FrEee.Utility.Extensions
 				await objs.SpawnTasksAsync(op);
 			})).Unwrap();
 			runSync.Wait();
+		}
+
+		public static bool IsScalar(this Type t)
+		{
+			return t.IsPrimitive || t.IsEnum || t == typeof(string);
 		}
 	}
 
