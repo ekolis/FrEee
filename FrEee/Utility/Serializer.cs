@@ -69,7 +69,7 @@ namespace FrEee.Utility
 				if (!ObjectGraphContext.KnownTypes.ContainsKey(desiredType.AssemblyQualifiedName))
 				{
 					ObjectGraphContext.KnownTypes.Add(desiredType.AssemblyQualifiedName, desiredType);
-					context.AddProperties(desiredType);
+					ObjectGraphContext.AddProperties(desiredType);
 				}
 				w.Write(desiredType.AssemblyQualifiedName);
 				w.WriteLine(":n;");
@@ -86,7 +86,7 @@ namespace FrEee.Utility
 			{
 				// register type
 				ObjectGraphContext.KnownTypes.Add(type.AssemblyQualifiedName, type);
-				context.AddProperties(type);
+				ObjectGraphContext.AddProperties(type);
 			}
 
 			// write the type name
@@ -683,24 +683,7 @@ namespace FrEee.Utility
 
 				propertySetterTasks.Add(Task.Factory.StartNew(() =>
 				{
-
-					if (o is IDataObject)
-					{
-						// use data object code! :D
-						var dobj = (IDataObject)o;
-						dobj.Data = dict;
-					}
-					else
-					{
-						// use reflection :(
-						foreach (var kvp in dict)
-						{
-							var pname = kvp.Key;
-							var val = kvp.Value;
-							var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
-							context.SetObjectProperty(o, prop, val);
-						}
-					}
+					o.SetData(dict, context);
 				}));
 
 				// clean up
