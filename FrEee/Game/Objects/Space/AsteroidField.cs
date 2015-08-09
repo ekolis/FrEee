@@ -13,11 +13,19 @@ namespace FrEee.Game.Objects.Space
 	/// An asteroid field. Asteroids can be mined or converted to planets.
 	/// </summary>
 	[Serializable]
-	public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableSpaceObject
+	public class AsteroidField : StellarObject, ITemplate<AsteroidField>, IMineableSpaceObject, IDataObject
 	{
 		public AsteroidField()
 		{
 			ResourceValue = new ResourceQuantity();
+		}
+
+		public Empire Owner
+		{
+			get
+			{
+				return null;
+			}
 		}
 
 		/// <summary>
@@ -65,16 +73,27 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.AsteroidField; }
 		}
 
-		[DoNotSerialize(false)]
-		public override Empire Owner
+		public override SafeDictionary<string, object> Data
 		{
 			get
 			{
-				return null;
+				var dict = base.Data;
+				dict[nameof(size)] = size;
+				dict[nameof(Surface)] = Surface;
+				dict[nameof(Atmosphere)] = Atmosphere;
+				dict[nameof(CombatTile)] = CombatTile;
+				dict[nameof(ResourceValue)] = ResourceValue;
+				return dict;
 			}
 			set
 			{
-				throw new NotSupportedException("Cannot set the owner of an asteroid field; it is always null.");
+				base.Data = value;
+				size = value[nameof(size)].Default<ModReference<StellarObjectSize>>();
+				Surface = value[nameof(Surface)].Default<string>();
+				Atmosphere = value[nameof(Atmosphere)].Default<string>();
+				CombatTile = value[nameof(CombatTile)].Default<string>();
+				ModID = value[nameof(ModID)].Default<string>();
+				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
 			}
 		}
 	}

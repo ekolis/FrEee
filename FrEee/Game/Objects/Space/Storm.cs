@@ -11,8 +11,16 @@ namespace FrEee.Game.Objects.Space
 	/// A space storm.
 	/// </summary>
 	[Serializable]
-	public class Storm : StellarObject, ITemplate<Storm>
+	public class Storm : StellarObject, ITemplate<Storm>, IDataObject
 	{
+		public Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// Some sort of combat image? Where are these stored anyway?
 		/// </summary>
@@ -32,16 +40,18 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.Storm; }
 		}
 
-		[DoNotSerialize(false)]
-		public override Empire Owner
+		public override SafeDictionary<string, object> Data
 		{
 			get
 			{
-				return null;
+				var dict = base.Data;
+				dict[nameof(CombatTile)] = CombatTile;
+				return dict;
 			}
 			set
 			{
-				throw new NotSupportedException("Cannot set the owner of a storm; it is always null.");
+				base.Data = value;
+				CombatTile = value[nameof(CombatTile)].Default<string>();
 			}
 		}
 	}

@@ -12,8 +12,16 @@ namespace FrEee.Game.Objects.Space
 	/// A warp point connecting two sectors.
 	/// </summary>
 	[Serializable]
-	public class WarpPoint : StellarObject, ITemplate<WarpPoint>, IReferrable
+	public class WarpPoint : StellarObject, ITemplate<WarpPoint>, IReferrable, IDataObject
 	{
+		public Empire Owner
+		{
+			get
+			{
+				return null;
+			}
+		}
+
 		/// <summary>
 		/// The sector that ships will appear in when they go through this warp point.
 		/// If null, the warp point is still unexplored by the current empire.
@@ -76,16 +84,22 @@ namespace FrEee.Game.Objects.Space
 			get { return AbilityTargets.WarpPoint; }
 		}
 
-		[DoNotSerialize(false)]
-		public override Empire Owner
+		public override SafeDictionary<string, object> Data
 		{
 			get
 			{
-				return null;
+				var dict = base.Data;
+				dict[nameof(Target)] = Target;
+				dict[nameof(IsOneWay)] = IsOneWay;
+				dict[nameof(IsUnusual)] = IsUnusual;
+				return dict;
 			}
 			set
 			{
-				throw new NotSupportedException("Cannot set the owner of a warp point; it is always null.");
+				base.Data = value;
+				Target = value[nameof(Target)].Default<Sector>();
+				IsOneWay = value[nameof(IsOneWay)].Default<bool>();
+				IsUnusual = value[nameof(IsUnusual)].Default<bool>();
 			}
 		}
 	}
