@@ -243,7 +243,7 @@ namespace FrEee.Modding
 			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 			preCommands.Add("\tGalaxy.Current = galaxy;");
 			if (variables != null)
-			{				
+			{
 				foreach (var variable in variables.Keys)
 				{
 					if (variables[variable] is IReferrable)

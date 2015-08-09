@@ -201,7 +201,7 @@ namespace FrEee.Utility
 		private void ParseObject(object o, ObjectGraphContext context)
 		{
 			var type = o.GetType();
-			var props = ObjectGraphContext.KnownProperties[type];
+			var props = ObjectGraphContext.GetKnownProperties(type);
 			foreach (var p in props)
 			{
 				var val = p.GetValue(o, new object[] { });
@@ -257,7 +257,14 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Known properties for each object type.
 		/// </summary>
-		public static SafeDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; private set; }
+		private static SafeDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; set; }
+
+		public static IEnumerable<PropertyInfo> GetKnownProperties(Type t)
+		{
+			if (KnownProperties[t] == null)
+				AddProperties(t);
+			return KnownProperties[t];
+		}
 
 		/// <summary>
 		/// Getters for properties.
@@ -319,7 +326,12 @@ namespace FrEee.Utility
 				int i = 0; // how far removed in the type hierarchy?
 				while (t != null)
 				{
-					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f => !f.HasAttribute<DoNotSerializeAttribute>() && f.GetGetMethod(true) != null && f.GetSetMethod(true) != null);
+					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f =>
+						!f.HasAttribute<DoNotSerializeAttribute>()
+						&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null
+							|| type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>) // they don't have setters but we want them anyway
+							)
+						);
 					foreach (var prop in newprops.Where(prop => prop.GetIndexParameters().Length == 0))
 						props.Add(prop, i);
 					t = t.BaseType;
@@ -332,12 +344,18 @@ namespace FrEee.Utility
 				{
 					var objParm = Expression.Parameter(prop.DeclaringType);
 					var valParm = Expression.Parameter(prop.PropertyType, "val");
-					var getter = Expression.Call(objParm, prop.GetGetMethod(true));
-					var setter = Expression.Call(objParm, prop.GetSetMethod(true), valParm);
-					if (!PropertyGetters.ContainsKey(prop))
-						PropertyGetters.Add(prop, Expression.Lambda(getter, objParm).Compile());
-					if (!PropertySetters.ContainsKey(prop))
-						PropertySetters.Add(prop, Expression.Lambda(setter, objParm, valParm).Compile());
+					var getMethod = prop.GetGetMethod(true);
+					var setMethod = prop.GetSetMethod(true);
+					if (getMethod != null)
+					{
+						var getter = Expression.Call(objParm, getMethod);
+						PropertyGetters[prop] = Expression.Lambda(getter, objParm).Compile();
+					}
+					if (setMethod != null)
+					{
+						var setter = Expression.Call(objParm, setMethod, valParm);
+						PropertySetters[prop] = Expression.Lambda(setter, objParm, valParm).Compile();
+					}
 				}
 			}
 		}
