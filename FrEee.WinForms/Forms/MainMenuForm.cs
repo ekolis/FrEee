@@ -57,46 +57,50 @@ namespace FrEee.WinForms.Forms
 			string[] warnings = new string[0];
 			Thread t = new Thread(new ThreadStart(() =>
 			{
+#if RELEASE
 				try
 				{
-					bool doOrDie = true;
-					if (Mod.Current == null)
-					{
-						status.Message = "Loading mod";
-						Mod.Load(null, true, status, 0.5);
-						if (Mod.Errors.Any())
-						{
-							Action a = delegate()
-							{
-								doOrDie = this.ShowChildForm(new ModErrorsForm()) == System.Windows.Forms.DialogResult.OK;
-							};
-							this.Invoke(a);
-						}
-					}
-					if (doOrDie)
-					{
-						status.Message = "Setting up game";
-						var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
-						warnings = setup.Warnings.ToArray();
-						if (warnings.Any())
-							MessageBox.Show(warnings.First(), "Game Setup Error");
-						else
-						{
-							// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
-
-							status.Message = "Setting up galaxy";
-							Galaxy.Initialize(setup, status, 1.0);
-							var name = Galaxy.Current.Name;
-							var turn = Galaxy.Current.TurnNumber;
-							status.Message = "Loading game";
-							Galaxy.Load(name + "_" + turn + "_0001.gam");
-						}
-					}
-				}
-				catch (Exception ex)
+#endif
+				bool doOrDie = true;
+				if (Mod.Current == null)
 				{
-					status.Exception = ex;
+					status.Message = "Loading mod";
+					Mod.Load(null, true, status, 0.5);
+					if (Mod.Errors.Any())
+					{
+						Action a = delegate ()
+						{
+							doOrDie = this.ShowChildForm(new ModErrorsForm()) == System.Windows.Forms.DialogResult.OK;
+						};
+						this.Invoke(a);
+					}
 				}
+				if (doOrDie)
+				{
+					status.Message = "Setting up game";
+					var setup = GameSetup.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "GameSetups", "Quickstart.gsu"));
+					warnings = setup.Warnings.ToArray();
+					if (warnings.Any())
+						MessageBox.Show(warnings.First(), "Game Setup Error");
+					else
+					{
+						// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
+
+						status.Message = "Setting up galaxy";
+						Galaxy.Initialize(setup, status, 1.0);
+						var name = Galaxy.Current.Name;
+						var turn = Galaxy.Current.TurnNumber;
+						status.Message = "Loading game";
+						Galaxy.Load(name + "_" + turn + "_0001.gam");
+					}
+				}
+#if RELEASE
+			}
+                catch (Exception ex)
+			{
+				status.Exception = ex;
+			}
+#endif
 			}));
 			t.Name = "Game Setup";
 
@@ -107,10 +111,10 @@ namespace FrEee.WinForms.Forms
 				var game = new GameForm(false);
 				this.ShowChildForm(game);
 				game.FormClosed += (s, args) =>
-				{
-					game.Dispose();
-					Show();
-				};
+						{
+							game.Dispose();
+							Show();
+						};
 				Hide();
 			}
 		}
@@ -195,7 +199,7 @@ namespace FrEee.WinForms.Forms
 				{
 					status.Message = "Loading mod";
 					Mod.Load(modPath, true, status, 1d);
-					this.Invoke(new Action(delegate()
+					this.Invoke(new Action(delegate ()
 						{
 							if (Mod.Errors.Any())
 								this.ShowChildForm(new ModErrorsForm());
@@ -251,7 +255,7 @@ namespace FrEee.WinForms.Forms
 		}
 
 		#endregion
-		
+
 		private void MainMenuForm_VisibleChanged(object sender, EventArgs e)
 		{
 			if (Visible)
@@ -264,19 +268,22 @@ namespace FrEee.WinForms.Forms
 				this.ShowChildForm(new DebugForm());
 		}
 
-    private void MainMenuForm_Load(object sender, EventArgs e) {
-      try {
-        ClientSettings.Load();
-      }
-      catch (Exception) {
-        MessageBox.Show("Error loading client settings. Resetting to defaults.");
-        ClientSettings.Initialize();
-        ClientSettings.Save();
-      }
-      // set the default music volume according to the settings
-      // volume values are 0-100, so scale appropriately to the 0-1 range
-      Music.setVolume(ClientSettings.Instance.masterVolume * ClientSettings.Instance.musicVolume * 1.0e-4f);
-    }
+		private void MainMenuForm_Load(object sender, EventArgs e)
+		{
+			try
+			{
+				ClientSettings.Load();
+			}
+			catch (Exception)
+			{
+				MessageBox.Show("Error loading client settings. Resetting to defaults.");
+				ClientSettings.Initialize();
+				ClientSettings.Save();
+			}
+			// set the default music volume according to the settings
+			// volume values are 0-100, so scale appropriately to the 0-1 range
+			Music.setVolume(ClientSettings.Instance.masterVolume * ClientSettings.Instance.musicVolume * 1.0e-4f);
+		}
 
 		private void MainMenuForm_FormClosed(object sender, FormClosedEventArgs e)
 		{

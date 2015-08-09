@@ -60,16 +60,18 @@ namespace FrEee.WinForms.Forms
 			}
 		}
 
-    // Set the WS_EX_COMPOSITED flag on this window, enabling double buffering
-    // and making child rendering flicker-free
-    // see https://social.msdn.microsoft.com/Forums/windows/en-US/aaed00ce-4bc9-424e-8c05-c30213171c2c/flickerfree-painting?forum=winforms
-    // for details on this fix
-    protected override CreateParams CreateParams {
-      get {
-        CreateParams cp = base.CreateParams;
-        cp.ExStyle |= 0x02000000;
-        return cp;
-      }
-    }
-  }
+		// Set the WS_EX_COMPOSITED flag on this window, enabling double buffering
+		// and making child rendering flicker-free
+		// see https://social.msdn.microsoft.com/Forums/windows/en-US/aaed00ce-4bc9-424e-8c05-c30213171c2c/flickerfree-painting?forum=winforms
+		// for details on this fix
+		protected override CreateParams CreateParams
+		{
+			get
+			{
+				CreateParams cp = base.CreateParams;
+				cp.ExStyle |= 0x02000000;
+				return cp;
+			}
+		}
+	}
 }

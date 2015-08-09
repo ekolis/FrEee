@@ -243,18 +243,8 @@ namespace FrEee.Utility
 			{
 				if (isDict)
 				{
-					if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType) || !ObjectGraphContext.KnownProperties[itemType].Any())
-					{
-						var props = new PropertyInfo[]
-						{
-							itemType.GetProperty("Key"),
-							itemType.GetProperty("Value"),
-						};
-						ObjectGraphContext.KnownProperties.Add(itemType, props);
-					}
-
-					var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
-					var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
+					var keyprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Key");
+					var valprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Value");
 					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
 					Serialize(context.GetObjectProperty(item, valprop), w, valprop.PropertyType, context, tabLevel + 1);
 				}
@@ -283,21 +273,31 @@ namespace FrEee.Utility
 			{
 				// use data object code! :D
 				var type = o.GetType();
-				foreach (var kvp in (o as IDataObject).Data)
+				var data = (o as IDataObject).Data;
+				w.WriteLine("p" + data.Count + ":");
+				foreach (var kvp in data)
 				{
 					var pname = kvp.Key;
 					var val = kvp.Value;
-					var ptype = type.GetProperty(pname).PropertyType;
-					WriteProperty(w, o, ptype, pname, val, context, tabLevel);
+					var prop = ObjectGraphContext.GetKnownProperties(type).SingleOrDefault(p => p.Name == pname);
+					if (prop != null)
+					{
+						var ptype = prop.PropertyType;
+						WriteProperty(w, o, ptype, pname, val, context, tabLevel);
+					}
+					else
+					{
+						// TODO - if property doesn't exist, log a warning somewhere?
+						WriteProperty(w, o, typeof(object), pname, val, context, tabLevel);
+					}
 				}
 			}
 			else
 			{
 				// use reflection :(
 				var type = o.GetType();
-				var props = ObjectGraphContext.KnownProperties[type].Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				var props = ObjectGraphContext.GetKnownProperties(type).Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
 				w.WriteLine("p" + props.Count() + ":");
-
 				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
 					WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
 			}
@@ -566,21 +566,11 @@ namespace FrEee.Utility
 					// HACK - Resources inherits from a dictionary type
 					itemType = typeof(KeyValuePair<,>).MakeGenericType(type.BaseType.GetGenericArguments());
 
-				if (!ObjectGraphContext.KnownProperties.ContainsKey(itemType))
-				{
-					var props = new PropertyInfo[]
-						{
-							itemType.GetProperty("Key"),
-							itemType.GetProperty("Value"),
-						};
-					ObjectGraphContext.KnownProperties.Add(itemType, props);
-				}
-
 				var collParm = Expression.Parameter(typeof(object), "coll");
 				var keyParm = Expression.Parameter(typeof(object), "key");
 				var valParm = Expression.Parameter(typeof(object), "val");
-				var keyprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Key");
-				var valprop = ObjectGraphContext.KnownProperties[itemType].Single(p => p.Name == "Value");
+				var keyprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Key");
+				var valprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Value");
 				Delegate lambdaAdder;
 				if (ObjectGraphContext.CollectionAdders[type] == null)
 				{
@@ -671,7 +661,7 @@ namespace FrEee.Utility
 				for (int i = 0; i < count; i++)
 				{
 					var pname = r.ReadTo(':', log).Trim();
-					var prop = ObjectGraphContext.KnownProperties[type].SingleOrDefault(p => p.Name == pname);
+					var prop = ObjectGraphContext.GetKnownProperties(type).SingleOrDefault(p => p.Name == pname);
 					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
 						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
