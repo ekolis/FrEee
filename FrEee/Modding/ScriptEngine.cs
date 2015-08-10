@@ -302,8 +302,8 @@ namespace FrEee.Modding
 			{
 				if (ex.Data.Values.Count > 0)
 				{
-					dynamic info = ex.Data.Values.Cast<dynamic>().First();
-					var debugInfo = info[0].DebugInfo;
+					Array info = ex.Data.Values.Cast<dynamic>().First();
+					var debugInfo = info.Cast<dynamic>().FirstOrDefault(o => o.DebugInfo != null)?.DebugInfo;
 					if (debugInfo != null)
 					{
 						int startLine = debugInfo.StartLine;
