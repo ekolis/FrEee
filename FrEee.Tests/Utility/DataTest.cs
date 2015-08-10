@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace FrEee.Tests.Utility.Extensions
 {
 	/// <summary>
-	/// Tests extension methods.
+	/// Tests data operations.
 	/// </summary>
 	[TestClass]
 	public class DataTest
