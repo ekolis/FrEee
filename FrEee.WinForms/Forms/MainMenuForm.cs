@@ -195,20 +195,24 @@ namespace FrEee.WinForms.Forms
 			};
 			Thread t = new Thread(new ThreadStart(() =>
 			{
+#if RELEASE
 				try
 				{
-					status.Message = "Loading mod";
-					Mod.Load(modPath, true, status, 1d);
-					this.Invoke(new Action(delegate ()
-						{
-							if (Mod.Errors.Any())
-								this.ShowChildForm(new ModErrorsForm());
-						}));
-				}
+#endif
+				status.Message = "Loading mod";
+				Mod.Load(modPath, true, status, 1d);
+				this.Invoke(new Action(delegate ()
+					{
+						if (Mod.Errors.Any())
+							this.ShowChildForm(new ModErrorsForm());
+					}));
+#if RELEASE
+			}
 				catch (Exception ex)
 				{
 					status.Exception = ex;
 				}
+#endif
 			}));
 			t.Name = "Mod Loading";
 

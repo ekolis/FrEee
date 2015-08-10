@@ -111,6 +111,7 @@
     <Compile Include="Utility\DataTest.cs" />
     <Compile Include="Utility\Extensions\CommonExtensionsTest.cs" />
     <Compile Include="Utility\Extensions\ParserTest.cs" />
+    <Compile Include="Utility\SerializerTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Objects\AI\" />

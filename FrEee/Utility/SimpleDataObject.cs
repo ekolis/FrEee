@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using static FrEee.Utility.Extensions.CommonExtensions;
 
 namespace FrEee.Utility
@@ -12,49 +13,63 @@ namespace FrEee.Utility
 	/// <summary>
 	/// A data object which breaks objects down into scalars and references.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public class SimpleDataObject<T> : MarshalByRefObject, ISimpleDataObject
+	public class SimpleDataObject : MarshalByRefObject, ISimpleDataObject
 	{
 		public SimpleDataObject()
 		{
-
+			Context = new ObjectGraphContext();
+			Type = typeof(object);
 		}
 
-		public SimpleDataObject(T t, ObjectGraphContext ctx = null)
+		public SimpleDataObject(object o, ObjectGraphContext ctx = null)
 		{
-			Context = ctx;
-			if (t != null)
-				Data = t.GetData(Context);
+			Context = ctx ?? new ObjectGraphContext();
+			if (o != null)
+			{
+				Type = o.GetType();
+				if (Context.GetID(o) == null)
+					ID = Context.Add(o);
+			}
 			else
+			{
+				Type = null;
 				Data = new SafeDictionary<string, object>();
+				ID = -1;
+			}
 		}
 
-		public SimpleDataObject(SafeDictionary<string, IData<object>> simpleData, ObjectGraphContext ctx = null)
+		public SimpleDataObject(SafeDictionary<string, IData> simpleData, ObjectGraphContext ctx = null)
 		{
 			SimpleData = simpleData;
-			Context = ctx;
+			Context = ctx ?? new ObjectGraphContext();
 		}
 
-		private ObjectGraphContext Context;
+		public SafeType Type { get; private set; }
 
-		public SafeDictionary<string, IData<object>> SimpleData
+		[JsonIgnore]
+		public ObjectGraphContext Context { get; set; }
+
+		public SafeDictionary<string, IData> SimpleData
 		{
 			get; set;
 		}
 
+		[JsonIgnore]
 		public SafeDictionary<string, object> Data
 		{
 			get
 			{
 				var dict = new SafeDictionary<string, object>();
-				foreach (var pname in SimpleData.Keys.ExceptSingle("$type"))
+				foreach (var pname in SimpleData.Keys.ExceptSingle("!type").ExceptSingle("!id"))
 					dict[pname] = SimpleData[pname]?.Value;
 				return dict;
 			}
 			set
 			{
-				SimpleData = new SafeDictionary<string, IData<object>>();
-				SimpleData["$type"] = new DataScalar(new SafeType(typeof(T)).Name);
+				var id = ID; // save it off so we don't forget
+				SimpleData = new SafeDictionary<string, IData>();
+				ID = id; // restore it
+				SimpleData["!type"] = new DataScalar<string>(new SafeType(Type).Name);
 				if (Context == null)
 					Context = new ObjectGraphContext();
 				foreach (var pname in value.Keys)
@@ -63,20 +78,34 @@ namespace FrEee.Utility
 					if (pval == null)
 						SimpleData[pname] = null;
 					else if (pval.GetType().IsScalar())
-						SimpleData[pname] = new DataScalar(pval);
+						SimpleData[pname] = DataScalar.Create(pval);
 					else
-						SimpleData[pname] = (IData<object>)typeof(DataReference<>).MakeGenericType(pval.GetType()).Instantiate(Context, pval);
+						SimpleData[pname] = (IData)typeof(DataReference<>).MakeGenericType(pval.GetType()).Instantiate(Context, pval);
 				}
 			}
 		}
 
-		public T Value
+		private object value;
+
+		[JsonIgnore]
+		public object Value
 		{
 			get
 			{
-				var t = Instantiate<T>();
-				t.SetData(Data, Context);
-				return t;
+				if (value == null)
+				{
+					var kos = Context.KnownObjects[Type];
+					if (kos != null && kos.Count > ID)
+						value = kos[ID];
+					else
+					{
+						var t = Type.Type.Instantiate();
+						Context.Add(t);
+						value = t;
+					}
+				}
+				return value;
+
 			}
 			set
 			{
@@ -84,29 +113,72 @@ namespace FrEee.Utility
 			}
 		}
 
-		public static implicit operator T(SimpleDataObject<T> d)
+		public void InitializeValue(ObjectGraphContext ctx = null)
 		{
-			return d.Value;
+			if (Context.GetID(Value) == null)
+				Context.Add(Value);
+			Value.SetData(Data, ctx ?? Context);
+		}
+
+		public void InitializeData(ObjectGraphContext ctx = null)
+		{
+			Data = Value.GetData(ctx ?? Context);
+		}
+
+		object ISimpleDataObject.Value
+		{
+			get { return Value; }
+		}
+
+		[JsonIgnore]
+		public int ID
+		{
+			get
+			{
+				if (SimpleData == null)
+					return 0;
+				return (int?)SimpleData["!id"]?.Value ?? 0;
+			}
+			private set
+			{
+				if (SimpleData == null)
+					SimpleData = new SafeDictionary<string, IData>();
+				SimpleData["!id"] = new DataScalar<int>(value);
+			}
+		}
+
+		public static ISimpleDataObject Load(SafeDictionary<string, IData> simpleData, ObjectGraphContext ctx = null)
+		{
+			if (simpleData == null)
+				return null;
+			var t = new SafeType(simpleData["!type"].Value as string).Type;
+			return new SimpleDataObject(simpleData, ctx);
+		}
+
+		public static ISimpleDataObject Create(object o, ObjectGraphContext ctx = null)
+		{
+			if (o == null)
+				return null;
+			var t = o.GetType();
+			return new SimpleDataObject(o, ctx);
 		}
 	}
 
 	public interface ISimpleDataObject : IDataObject
 	{
-		SafeDictionary<string, IData<object>> SimpleData
+		int ID { get; }
+
+		SafeDictionary<string, IData> SimpleData
 		{
 			get; set;
 		}
-	}
 
-	/// <summary>
-	/// Loads simple data objects from dictionaries and such.
-	/// </summary>
-	public static class SimpleDataObject
-	{
-		public static ISimpleDataObject Load(SafeDictionary<string, IData<object>> simpleData, ObjectGraphContext ctx = null)
-		{
-			var t = new SafeType(simpleData["$type"].Value as string).Type;
-			return (ISimpleDataObject)typeof(SimpleDataObject<>).MakeGenericType(t).Instantiate(simpleData, ctx);
-		}
+		object Value { get; }
+
+		ObjectGraphContext Context { get; set; }
+
+		void InitializeValue(ObjectGraphContext ctx = null);
+
+		void InitializeData(ObjectGraphContext ctx = null);
 	}
 }

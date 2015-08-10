@@ -14,6 +14,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Space;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace FrEee.Utility
 {
@@ -22,46 +23,84 @@ namespace FrEee.Utility
 	/// </summary>
 	public static class Serializer
 	{
+		private const bool EnableJsonSerializer = false;
+
 		public static void Serialize(object o, TextWriter w)
 		{
-			LegacySerializer.Serialize(o, w);
+			var s = SerializeToString(o);
+			w.Write(s);
+			w.Flush();
 		}
 
 		public static void Serialize(object o, Stream s)
 		{
 			var sw = new StreamWriter(s);
-			LegacySerializer.Serialize(o, sw);
+			Serialize(o, sw);
 			sw.Flush();
 		}
 
 		public static string SerializeToString(object o)
 		{
-			var sw = new StringWriter();
-			Serialize(o, sw);
-			sw.Flush();
-			return sw.ToString();
+			if (EnableJsonSerializer)
+			{
+				var js = new JsonSerializer();
+				return js.SerializeToString(o);
+			}
+			else
+			{
+				var sw = new StringWriter();
+				LegacySerializer.Serialize(o, sw, typeof(object));
+				return sw.ToString();
+			}
 		}
 
-		public static T Deserialize<T>(Stream s)
+		public static T Deserialize<T>(Stream str)
 		{
-			return LegacySerializer.Deserialize<T>(s);
+			return (T)Deserialize(str);
 		}
 
-		public static object Deserialize(Stream s)
+		public static object Deserialize(Stream str)
 		{
-			return LegacySerializer.Deserialize<object>(s);
+			try
+			{
+				var sr = new StreamReader(str);
+				var s = sr.ReadToEnd();
+				return DeserializeFromString(s);
+			}
+			catch (JsonException ex)
+			{
+				Console.Error.WriteLine("Could not deserialize using JSON serializer. Attempting to use legacy serializer. Error dump follows:");
+				Console.Error.WriteLine(ex);
+				try
+				{
+					return LegacySerializer.Deserialize<object>(str);
+				}
+				catch (SerializationException ex2)
+				{
+					Console.Error.WriteLine("Could not deserialize using legacy serializer. Error dump follows:");
+					Console.Error.WriteLine(ex2);
+				}
+				throw new Exception("Unable to deserialize. Please check stderr.txt for details.");
+			}
 		}
 
 		public static T DeserializeFromString<T>(string s)
 		{
-			var sr = new StringReader(s);
-			return LegacySerializer.Deserialize<T>(sr);
+			return (T)DeserializeFromString(s);
 		}
 
 		public static object DeserializeFromString(string s)
 		{
-			var sr = new StringReader(s);
-			return LegacySerializer.Deserialize<object>(sr);
+			if (EnableJsonSerializer)
+			{
+				var js = new JsonSerializer();
+				return js.DeserializeFromString(s);
+			}
+			else
+			{
+				var sr = new StringReader(s);
+				return LegacySerializer.Deserialize<object>(sr);
+			}
 		}
 	}
 

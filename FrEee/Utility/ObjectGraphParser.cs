@@ -380,11 +380,20 @@ namespace FrEee.Utility
 		{
 			if (obj is Type)
 				throw new InvalidOperationException("Cannot set properties on an object of type System.Type.");
+			if (obj == null)
+				throw new ArgumentNullException(nameof(obj), "Can't set properties on a null object.");
 			// lambda expressions don't seem to work on structs
-			if (obj.GetType().IsValueType)
-				prop.SetValue(obj, val, new object[] { });
-			else
-				PropertySetters[prop].DynamicInvoke(obj, val);
+			try
+			{
+				if (obj.GetType().IsValueType)
+					prop.SetValue(obj, val, new object[] { });
+				else
+					PropertySetters[prop].DynamicInvoke(obj, val);
+			}
+			catch (NullReferenceException ex)
+			{
+				throw new InvalidOperationException($"Could not set property {prop} on object {obj} of type {obj.GetType()}. Does the type actually have this property?", ex);
+			}
 		}
 
 		/// <summary>

@@ -16,7 +16,13 @@ namespace FrEee.Utility
 	{
 		private Dictionary<TKey, TValue> dict;
 
-		public SafeDictionary(bool autoInit = false)
+		public SafeDictionary()
+			: this(false)
+		{
+
+		}
+
+		public SafeDictionary(bool autoInit)
 		{
 			InitDict();
 			AutoInit = autoInit;

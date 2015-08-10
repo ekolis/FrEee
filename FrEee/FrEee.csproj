@@ -118,6 +118,10 @@
     <Reference Include="NewtMath">
       <HintPath>Game\Objects\Combat2\lib\NewtMath.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>Game\Objects\Combat2\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -138,6 +142,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Utility\ClientUtilities.cs" />
+    <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
     <Compile Include="Utility\SimpleDataObject.cs" />
     <Compile Include="Utility\DataReference.cs" />
