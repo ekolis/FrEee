@@ -17,6 +17,14 @@ namespace FrEee.Tests.Utility.Extensions
 	[TestClass]
 	public class DataTest
 	{
+		[ClassInitialize]
+		public static void ClassInit(TestContext ctx)
+		{
+			// silly unit tests can't find their own assembly
+			SafeType.ForceLoadType(typeof(DataTest));
+			SafeType.ForceLoadType(typeof(Person));
+		}
+
 		[TestInitialize]
 		public void TestInit()
 		{
@@ -49,10 +57,11 @@ namespace FrEee.Tests.Utility.Extensions
 		[TestMethod]
 		public void SimpleData()
 		{
-			var simple = new SimpleDataObject<Person>(barack, null);
+			var simple = new SimpleDataObject(barack, null);
+			simple.InitializeData();
 			Assert.AreEqual(barack.Name, simple.Data[nameof(barack.Name)]);
 			Assert.AreEqual(barack.Children, simple.Data[nameof(barack.Children)]);
-			var clone = simple.Value;
+			var clone = (Person)simple.Value;
 			Assert.AreEqual(barack.Name, clone.Name);
 			Assert.AreEqual(barack.Children, clone.Children); // well, the DNA test would say they're the clone's as well ;)
 		}
@@ -82,10 +91,10 @@ namespace FrEee.Tests.Utility.Extensions
 			var sandbox = AppDomain.CreateDomain("Test", null, adSetup, permissions, AppDomain.CurrentDomain.GetAssemblies().Select(a => a.Evidence.GetHostEvidence<StrongName>()).Where(sn => sn != null).ToArray());
 
 			// can we send Barack over?
-			sandbox.SetData("data", new SimpleDataObject<Person>(barack));
+			sandbox.SetData("data", new SimpleDataObject(barack));
 
 			// can we make a new person (well, person data) over there and poke him?
-			var data = (SimpleDataObject<Person>)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject<Person>)).FullName, typeof(SimpleDataObject<Person>).FullName);
+			var data = (SimpleDataObject)sandbox.CreateInstanceAndUnwrap(Assembly.GetAssembly(typeof(SimpleDataObject)).FullName, typeof(SimpleDataObject).FullName);
 			var nobody = new Person(null, null, null);
 			data.Data = nobody.Data;
 			nobody.Data = data.Data;
@@ -101,10 +110,11 @@ namespace FrEee.Tests.Utility.Extensions
 			var timmy = new Person("Timmy", null, null);
 			var lassie = new Dog("Lassie", timmy);
 
-			var simple = new SimpleDataObject<Dog>(lassie, null);
+			var simple = new SimpleDataObject(lassie, null);
+			simple.InitializeData();
 			Assert.AreEqual(lassie.Name, simple.Data[nameof(lassie.Name)]);
 			Assert.AreEqual(lassie.Owner, simple.Data[nameof(lassie.Owner)]);
-			var clone = simple.Value;
+			var clone = (Dog)simple.Value;
 			Assert.AreEqual(lassie.Name, clone.Name);
 			Assert.AreEqual(lassie.Owner, clone.Owner);
 		}

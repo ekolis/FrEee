@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace FrEee.Utility
 {
@@ -31,6 +32,16 @@ namespace FrEee.Utility
 				foreach (var t in a.GetTypes())
 					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
 			}
+		}
+
+		public static void ForceLoadType(Type t)
+		{
+			var an = t.Assembly.GetName().Name;
+			if (!ReferencedAssemblies.ContainsKey(an))
+				ReferencedAssemblies.Add(an, t.Assembly);
+			var tuple = Tuple.Create(t.Assembly, t.FullName);
+			if (!ReferencedTypes.ContainsKey(tuple))
+				ReferencedTypes.Add(tuple, t);
 		}
 
 		/// <summary>
@@ -69,6 +80,7 @@ namespace FrEee.Utility
 		public string Name { get; set; }
 
 		[DoNotSerialize]
+		[JsonIgnore]
 		public Type Type
 		{
 			get
