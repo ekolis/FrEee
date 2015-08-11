@@ -3874,7 +3874,7 @@ namespace FrEee.Utility.Extensions
 					{
 						try
 						{
-							context.SetObjectProperty(o, prop, Convert.ChangeType(val, prop.PropertyType));
+							context.SetObjectProperty(o, prop, val);
 						}
 						catch (NullReferenceException ex)
 						{
