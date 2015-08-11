@@ -114,16 +114,23 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool HasAttribute(this MemberInfo mi, Type attributeType)
 		{
-			if (Attribute.GetCustomAttributes(mi, attributeType).Any())
+			if (attributeCache[mi] == null)
+				attributeCache[mi] = Attribute.GetCustomAttributes(mi);
+			if (attributeCache[mi].Where(a => attributeType.IsAssignableFrom(a.GetType())).Any())
 				return true;
 			var dt = mi is Type ? mi as Type : mi.DeclaringType;
-			foreach (var i in dt.GetInterfaces())
+			if (interfaceCache[dt] == null)
+				interfaceCache[dt] = dt.GetInterfaces();
+			foreach (var i in interfaceCache[dt])
 			{
 				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
 					return true;
 			}
 			return false;
 		}
+
+		private static SafeDictionary<MemberInfo, IEnumerable<Attribute>> attributeCache = new SafeDictionary<MemberInfo, IEnumerable<Attribute>>();
+		private static SafeDictionary<Type, IEnumerable<Type>> interfaceCache = new SafeDictionary<Type, IEnumerable<Type>>();
 
 		/// <summary>
 		/// Checks for attributes in a class or its interfaces.
@@ -133,16 +140,18 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static IEnumerable<T> GetAttributes<T>(this MemberInfo mi) where T : Attribute
 		{
-			var atts = Attribute.GetCustomAttributes(mi, typeof(T));
+			if (attributeCache[mi] == null)
+				attributeCache[mi] = Attribute.GetCustomAttributes(mi);
+			var atts = attributeCache[mi].OfType<T>();
 			foreach (var att in atts)
-				yield return (T)att;
+				yield return att;
 			foreach (var i in mi.DeclaringType.GetInterfaces())
 			{
 				var mis = i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 				foreach (var mi2 in mis)
 				{
-					foreach (var att2 in Attribute.GetCustomAttributes(mi2, typeof(T)))
-						yield return (T)att2;
+					foreach (var att2 in mi2.GetAttributes<T>())
+						yield return att2;
 				}
 			}
 		}
