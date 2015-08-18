@@ -66,7 +66,7 @@ namespace FrEee.Game.Interfaces
 		/// Is this design obsolete?
 		/// Note that foreign designs will never be obsoleted, since you don't know when their owner obsoleted them.
 		/// </summary>
-		bool IsObsolete { get; set; }
+		new bool IsObsolete { get; set; }
 
 		/// <summary>
 		/// Warnings that need to be resolved before the design can be saved.

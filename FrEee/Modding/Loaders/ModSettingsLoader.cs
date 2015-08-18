@@ -92,7 +92,7 @@ namespace FrEee.Modding.Loaders
 			// TODO - load more settings
 
 			settings.PopulationSize = (double)(rec.Get<int>("Population Mass", null) ?? 5) / settings.PopulationFactor;
-			settings.ReproductionDelay = rec.Get<int>("Reproduction Check Frequency", null) ?? 1; // TODO - change property name to ReproductionFrequency
+			settings.ReproductionFrequency = rec.Get<int>("Reproduction Check Frequency", null) ?? 1; // TODO - change property name to ReproductionFrequency
 			settings.ValueChangeFrequency = rec.Get<int>("Value Change Frequency", null) ?? 10;
 
 			// TODO - load more settings

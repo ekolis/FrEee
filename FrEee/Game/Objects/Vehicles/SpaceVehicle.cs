@@ -378,7 +378,7 @@ namespace FrEee.Game.Objects.Vehicles
 			return StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 
-		public IEnumerable<IAbilityObject> Parents
+		public override IEnumerable<IAbilityObject> Parents
 		{
 			get
 			{

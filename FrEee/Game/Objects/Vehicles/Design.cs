@@ -19,7 +19,6 @@ using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Combat2.Tactics;
-using FrEee.Utility.Extensions;
 
 namespace FrEee.Game.Objects.Vehicles
 {
