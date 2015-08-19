@@ -1187,5 +1187,12 @@ namespace FrEee.Game.Objects.Civilization
 			else
 				RecordLog(text);
 		}
+
+		public bool HasExplored(StarSystem starSystem)
+		{
+			if (starSystem == null)
+				return false;
+			return starSystem.ExploredByEmpires.Contains(this);
+		}
 	}
 }

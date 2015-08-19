@@ -185,8 +185,8 @@ namespace FrEee.Utility
 				sublightDistance = start.Coordinates.EightWayDistance(end.Coordinates);
 
 			// different system? find nearest warp point in each system, and assume they are connected to each other ("warp nexus")
-			var wps1 = FindNearestWarpPointSectorInSystem(start);
-			var wps2 = FindNearestWarpPointSectorInSystem(end);
+			var wps1 = FindNearestWarpPointSectorInSystem(start, emp);
+			var wps2 = FindNearestWarpPointSectorInSystem(end, emp);
 			if (wps1 != null && wps2 != null)
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
 
@@ -201,10 +201,14 @@ namespace FrEee.Utility
 			return Math.Min(sublightDistance, ftlDistance);
 		}
 
-		public static Sector FindNearestWarpPointSectorInSystem(Sector sector)
+		public static Sector FindNearestWarpPointSectorInSystem(Sector sector, Empire emp)
 		{
+			if (sector == null)
+				return null;
 			if (sector.StarSystem == null)
 				return null; // no guarantee that the warp point to the unexplored system is two-way!
+			if (!emp.HasExplored(sector.StarSystem))
+				return null; // no cheating!
 			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
 		}
 
