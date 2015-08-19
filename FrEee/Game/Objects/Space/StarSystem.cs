@@ -250,6 +250,7 @@ namespace FrEee.Game.Objects.Space
 				var totalDamage = 0;
 				var minesSwept = new SafeDictionary<Empire, int>();
 				var minesDetonated = new SafeDictionary<Empire, int>();
+				var minesAttacking = new SafeDictionary<Empire, int>();
 
 				// can we sweep any?
 				var sweeping = sobj.GetAbilityValue("Mine Sweeping").ToInt();
@@ -266,26 +267,36 @@ namespace FrEee.Game.Objects.Space
 					}
 					else
 					{
-						// boom!
-						foreach (var warhead in mine.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+						// bang/boom!
+						bool detonate = false;
+						foreach (var weapon in mine.Weapons)
 						{
-							var shot = new Shot(mine, warhead, d, 0);
-							var damage = warhead.Template.GetWeaponDamage(1);
+							var shot = new Shot(mine, weapon, d, 0);
+							var damage = weapon.Template.GetWeaponDamage(1);
 							var hit = new Hit(shot, d, damage);
 							var leftoverDamage = d.TakeDamage(hit);
 							totalDamage += damage - leftoverDamage;
+							if (weapon.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+								detonate = true; // warheads go boom, other weapons don't
 						}
-						minesDetonated[mine.Owner]++;
+						if (detonate)
+						{
+							minesDetonated[mine.Owner]++;
+							mine.Dispose();
+						}
+						else
+							minesAttacking[mine.Owner]++;
 					}
-					mine.Dispose();
+
+					// each mine can only activate or be swept once
 					mines.Remove(mine);
 				}
 
 				// logging!
-				if (minesDetonated.Any() || minesSwept.Any())
+				if (minesDetonated.Any() || minesSwept.Any() || minesAttacking.Any())
 					sobj.Owner.Log.Add(sobj.CreateLogMessage(sobj + " encountered a mine field at " + sector + " and took " + totalDamage + " points of damage, sweeping " + minesSwept.Sum(kvp => kvp.Value) + " mines."));
-				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys))
-					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
+				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
+					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
 			}
 		}
 
