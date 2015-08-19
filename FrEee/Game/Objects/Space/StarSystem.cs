@@ -264,6 +264,7 @@ namespace FrEee.Game.Objects.Space
 						// sweep a mine
 						sweeping--;
 						minesSwept[mine.Owner]++;
+						mine.Dispose();
 					}
 					else
 					{
