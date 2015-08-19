@@ -13,6 +13,7 @@ namespace FrEee.Utility
 	/// A resource in the game.
 	/// </summary>
 	[Serializable]
+	[DoNotCopy]
 	public class Resource : INamed, IPictorial
 	{
 		static Resource()
@@ -31,16 +32,16 @@ namespace FrEee.Utility
 		private static IEnumerable<Resource> all;
 
 		public static readonly Resource Minerals = new Resource
-			{
-				Name = "Minerals",
-				Color = Color.FromArgb(128, 128, 255),
-				IsGlobal = true,
-				IsLocal = false,
-				HasValue = true,
-				PictureName = "Resource1",
-				Aptitude = Aptitude.Mining,
-				CultureModifier = c => c.Production,
-			};
+		{
+			Name = "Minerals",
+			Color = Color.FromArgb(128, 128, 255),
+			IsGlobal = true,
+			IsLocal = false,
+			HasValue = true,
+			PictureName = "Resource1",
+			Aptitude = Aptitude.Mining,
+			CultureModifier = c => c.Production,
+		};
 
 		public static readonly Resource Organics = new Resource
 		{
@@ -101,7 +102,7 @@ namespace FrEee.Utility
 			Aptitude = null, // TODO - supply aptitude?
 			CultureModifier = c => 0, // TODO - supply culture modifier?
 		};
-		
+
 		/// <summary>
 		/// All resources in the game.
 		/// TODO - moddable resources?

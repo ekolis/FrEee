@@ -32,6 +32,7 @@ using FrEee.Game.Objects.Combat2.Tactics; // TODO -remove this, just for testing
 using FrEee.Game.Objects.Combat;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 
 namespace FrEee.Utility.Extensions
 {
@@ -214,10 +215,8 @@ namespace FrEee.Utility.Extensions
 
 			protected override void Inject(object source, object target)
 			{
-				if (source is ConstructionQueue && (source as ConstructionQueue).Name.StartsWith("Munjumb I"))
-				{
-
-				}
+				if (!knownObjects.ContainsKey(source))
+					knownObjects.Add(source, target);
 				foreach (var sp in source.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetGetMethod(true) != null && p.GetIndexParameters().Count() == 0))
 				{
 					var tp = target.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(p => p.GetSetMethod(true) != null && p.GetIndexParameters().Count() == 0 && p.Name == sp.Name).SingleOrDefault();
@@ -249,9 +248,11 @@ namespace FrEee.Utility.Extensions
 								}
 							}
 
+							object sv = null;
+
 							if (doit && CanCopyFully(sp) && DeepCopy)
 							{
-								var sv = sp.GetValue(source, null);
+								sv = sp.GetValue(source, null);
 								if (sv == null)
 									sp.SetValue(target, null, null); // it's null, very simple
 								else if (!knownObjects.ContainsKey(sv))
@@ -265,8 +266,17 @@ namespace FrEee.Utility.Extensions
 							}
 							else if (doit && CanCopySafely(sp))
 							{
-								var sv = sp.GetValue(source, null);
-								sp.SetValue(target, sv, null); // use original object
+								sv = sp.GetValue(source, null);
+								if (knownObjects.ContainsKey(sv))
+								{
+									sp.SetValue(target, knownObjects[sv]); // use known copy
+								}
+								else
+								{
+									sp.SetValue(target, sv, null); // use original object
+									if (sv != null)
+										Debug.WriteLine($"{sv} ({sp.Name} of {source}) is unknown, using original object");
+								}
 							}
 
 							if (regen)
@@ -279,8 +289,6 @@ namespace FrEee.Utility.Extensions
 						}
 					}
 				}
-				if (!knownObjects.ContainsKey(source))
-					knownObjects.Add(source, target);
 				if (target is ICleanable)
 					(target as ICleanable).Clean();
 			}
@@ -359,7 +367,8 @@ namespace FrEee.Utility.Extensions
 				{
 					// do sub object mapping
 					var tv = sv.GetType().Instantiate();
-					knownObjects.Add(sv, tv);
+					if (!knownObjects.ContainsKey(sv))
+						knownObjects.Add(sv, tv);
 					Map(sv, tv);
 					//knownObjects.Remove(parent);
 					return tv;
@@ -2924,15 +2933,9 @@ namespace FrEee.Utility.Extensions
 				else
 				{
 					// patch item and delete the patch
-					if (item is IReferrable)
-					{
-						var r = (IReferrable)item;
-						var r2 = (IReferrable)oldItem;
-						r.CopyToExceptID(r2, IDCopyBehavior.PreserveDestination);
-						r.Dispose();
-					}
-					else
-						item.CopyTo(oldItem, IDCopyBehavior.PreserveDestination);
+					item.CopyTo(oldItem, IDCopyBehavior.PreserveDestination, IDCopyBehavior.PreserveDestination);
+					if (item is IDisposable)
+						(item as IDisposable).Dispose();
 				}
 			}
 		}
@@ -3165,7 +3168,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool CanCopyFully(this PropertyInfo p)
 		{
-			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any())
+			if (p.HasAttribute<DoNotCopyAttribute>() || p.PropertyType.HasAttribute<DoNotCopyAttribute>())
 				return false;
 			foreach (var i in p.DeclaringType.GetInterfaces())
 			{
@@ -3185,7 +3188,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static bool CanCopySafely(this PropertyInfo p)
 		{
-			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Any(a => !a.AllowSafeCopy))
+			if (p.GetCustomAttributes(true).OfType<DoNotCopyAttribute>().Union(p.PropertyType.GetCustomAttributes(true).OfType<DoNotCopyAttribute>()).Any(a => !a.AllowSafeCopy))
 				return false;
 			foreach (var i in p.DeclaringType.GetInterfaces())
 			{
