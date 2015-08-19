@@ -437,10 +437,10 @@ namespace FrEee.Utility
 	}
 
 	/// <summary>
-	/// Prevents an property's value from being copied when the containing object is copied.
-	/// Instead, the original value will be used.
+	/// Prevents an property or class's value from being copied when the containing object is copied.
+	/// Instead, the original value will be used, or the known copy if the value has already been copied.
 	/// </summary>
-	[AttributeUsage(AttributeTargets.Property, Inherited = true, AllowMultiple = false)]
+	[AttributeUsage(AttributeTargets.Property | AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface, Inherited = true, AllowMultiple = false)]
 	public class DoNotCopyAttribute : Attribute
 	{
 		/// <summary>

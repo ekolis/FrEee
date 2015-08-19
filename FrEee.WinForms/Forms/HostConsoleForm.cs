@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FrEee.WinForms.Forms
 {
@@ -109,8 +110,10 @@ namespace FrEee.WinForms.Forms
 			if (result == DialogResult.OK)
 			{
 				var status = new Status();
-				var t = new Thread(new ThreadStart(() =>{
+				var t = new Thread(new ThreadStart(() =>
+				{
 					bool doOrDie = true;
+					this.Invoke(new Action(() => { Cursor = Cursors.WaitCursor; }));
 					var mod = Mod.Load(pickerForm.ModPath, false, status, 0.5);
 					if (Mod.Errors.Any())
 						doOrDie = this.ShowChildForm(new ModErrorsForm()) == DialogResult.OK;
@@ -118,18 +121,17 @@ namespace FrEee.WinForms.Forms
 					{
 						status.Message = "Backing up GAM file";
 						File.Copy(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Savegame", Galaxy.Current.GameFileName), Path.Combine("Savegame", Galaxy.Current.GameFileName + ".bak"), true);
-						status.Progress = 0.75;
+						// TODO - back up player GAM files too
 						status.Message = "Patching mod";
-						Galaxy.Current.Mod.Patch(mod);
-						mod.Dispose();
-						Galaxy.SaveAll();
-						status.Progress = 1d;
+						Galaxy.Current.Mod = mod;
+						Galaxy.SaveAll(status);
 					}
 					else
 					{
 						status.Message = "Aborting";
 						status.Progress = 1d;
 					}
+					this.Invoke(new Action(() => { Cursor = Cursors.Default; }));
 				}));
 				this.ShowChildForm(new StatusForm(t, status));
 			}

@@ -278,6 +278,7 @@ namespace FrEee.Modding
 		/// Patches a mod with data from a new mod.
 		/// </summary>
 		/// <param name="newMod">The new mod.</param>
+		[Obsolete("Mod.Patch is deprecated and does not work properly. Just set the Mod property of Galaxy instead.")]
 		public void Patch(Mod newMod)
 		{
 			newMod.Info.CopyTo(Info);

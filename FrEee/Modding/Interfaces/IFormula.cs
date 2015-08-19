@@ -3,9 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Utility;
 
 namespace FrEee.Modding.Interfaces
 {
+	[DoNotCopy]
 	public interface IFormula : IComparable
 	{
 		string Text { get; set; }
@@ -13,6 +15,8 @@ namespace FrEee.Modding.Interfaces
 		FormulaType FormulaType { get; set; }
 
 		object Value { get; }
+
+		object Context { get; set; }
 
 		object Evaluate(IDictionary<string, object> variables);
 
