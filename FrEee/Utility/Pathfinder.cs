@@ -185,8 +185,8 @@ namespace FrEee.Utility
 				sublightDistance = start.Coordinates.EightWayDistance(end.Coordinates);
 
 			// different system? find nearest warp point in each system, and assume they are connected to each other ("warp nexus")
-			var wps1 = FindNearestWarpPointSectorInSystem(start, emp);
-			var wps2 = FindNearestWarpPointSectorInSystem(end, emp);
+			var wps1 = FindNearestWarpPointSectorInSystem(start, emp, false);
+			var wps2 = FindNearestWarpPointSectorInSystem(end, emp, true);
 			if (wps1 != null && wps2 != null)
 				ftlDistance = start.Coordinates.EightWayDistance(wps1.Coordinates) + end.Coordinates.EightWayDistance(wps2.Coordinates) + 1;
 
@@ -201,7 +201,7 @@ namespace FrEee.Utility
 			return Math.Min(sublightDistance, ftlDistance);
 		}
 
-		public static Sector FindNearestWarpPointSectorInSystem(Sector sector, Empire emp)
+		public static Sector FindNearestWarpPointSectorInSystem(Sector sector, Empire emp, bool findWarpIn)
 		{
 			if (sector == null)
 				return null;
@@ -209,7 +209,11 @@ namespace FrEee.Utility
 				return null; // no guarantee that the warp point to the unexplored system is two-way!
 			if (!emp.HasExplored(sector.StarSystem))
 				return null; // no cheating!
-			return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+			if (findWarpIn) // find a warp point leading into the system
+				return Galaxy.Current.FindSpaceObjects<WarpPoint>().Where(wp => wp.Target != null && wp.Target.StarSystem == sector.StarSystem && wp.CheckVisibility(emp) >= Visibility.Fogged).Select(wp => wp.Target).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+			else // find a warp point leading out of the system
+				return sector.StarSystem.FindSpaceObjects<WarpPoint>().Select(wp => new Sector(sector.StarSystem, wp.FindCoordinates())).WithMin(s => sector.Coordinates.EightWayDistance(s.Coordinates)).FirstOrDefault();
+
 		}
 
 		public static IEnumerable<Sector> GetPossibleMoves(Sector s, bool canWarp, Empire emp)
