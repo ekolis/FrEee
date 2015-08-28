@@ -104,10 +104,5 @@ namespace FrEee.Wpf.Views
 				SwitchTo(new GameView());
 			}
 		}
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-    }
+	}
 }

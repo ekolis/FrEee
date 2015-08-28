@@ -39,8 +39,7 @@
     <StartupObject>FrEee.Wpf.App</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
+    <ApplicationIcon>Pictures\FrEee.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -99,14 +98,6 @@
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Resources\ResourceDictionaries\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Resources\ResourceDictionaries\CommonStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,7 +152,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
+    <Resource Include="Pictures\FrEee.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\Splash.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
       <Project>{c89729d8-9ca6-4135-8184-6da757129ef6}</Project>
       <Name>DynamicViewModel</Name>
     </ProjectReference>
@@ -173,30 +174,6 @@
       <Project>{e19a4330-ce19-45d6-bcfc-375e065ef041}</Project>
       <Name>FrEee</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\FrEee.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Splash.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Hover_Left.png" />
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Hover_Middle.png" />
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Hover_Right.png" />
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Inactive_Left.png" />
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Inactive_Middle.png" />
-    <Resource Include="Resources\Images\Buttons\Standard\StandardButton_Inactive_Right.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Backgrounds\FrEee.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\Backgrounds\MainMenu.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
