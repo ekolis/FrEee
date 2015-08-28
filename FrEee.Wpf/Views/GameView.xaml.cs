@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using FrEee.Utility;
+using FrEee.Wpf.ViewModels;
+using DynamicViewModel;
 
 namespace FrEee.Wpf.Views
 {
@@ -25,6 +27,19 @@ namespace FrEee.Wpf.Views
 		public GameView()
 		{
 			InitializeComponent();
+			Galaxy = new GalaxyViewModel();
+		}
+
+		public GalaxyViewModel Galaxy
+		{
+			get
+			{
+				return (GalaxyViewModel)ViewModel;
+			}
+			set
+			{
+				ViewModel = value;
+			}
 		}
 	}
 }
