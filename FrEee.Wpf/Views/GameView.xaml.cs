@@ -26,8 +26,8 @@ namespace FrEee.Wpf.Views
 	{
 		public GameView()
 		{
-			InitializeComponent();
 			Galaxy = new GalaxyViewModel();
+			InitializeComponent();
 		}
 
 		public GalaxyViewModel Galaxy

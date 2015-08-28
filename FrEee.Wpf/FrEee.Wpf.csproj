@@ -87,6 +87,9 @@
     <Compile Include="ViewModels\EmpireViewModel.cs" />
     <Compile Include="ViewModels\GalaxyViewModel.cs" />
     <Compile Include="ViewModels\ModPickerViewModel.cs" />
+    <Compile Include="ViewModels\ResourceQuantityViewModel.cs" />
+    <Compile Include="ViewModels\ResourceViewModel.cs" />
+    <Compile Include="ViewModels\SingleResourceQuantityViewModel.cs" />
     <Compile Include="Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,9 @@
     </Compile>
     <Compile Include="Views\HostConsoleView.xaml.cs">
       <DependentUpon>HostConsoleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResourceQuantityView.xaml.cs">
+      <DependentUpon>ResourceQuantityView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
@@ -117,6 +123,10 @@
     <Page Include="Views\HostConsoleView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ResourceQuantityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\StatusView.xaml">
       <SubType>Designer</SubType>

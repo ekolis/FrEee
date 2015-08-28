@@ -45,5 +45,7 @@ namespace FrEee.Wpf.ViewModels
 				}
 			}
 		}
+
+		public ResourceQuantityViewModel StoredResources { get { return new ResourceQuantityViewModel(Model.StoredResources); } }
 	}
 }
