@@ -25,7 +25,7 @@
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal">
                 <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="60"/>
-				<local:ResourceQuantityView ViewModel="{Binding Path=CurrentEmpire.StoredResources}" Grid.Row="0" Grid.Column="1"/>
+				<local:ResourceProgressView ViewModel="{Binding Path=CurrentEmpire.ResourceProgress}" Grid.Row="0" Grid.Column="1"/>
             </StackPanel>
         </Border>
 

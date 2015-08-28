@@ -46,6 +46,12 @@ namespace FrEee.Wpf.ViewModels
 			}
 		}
 
-		public ResourceQuantityViewModel StoredResources { get { return new ResourceQuantityViewModel(Model.StoredResources); } }
+		public ResourceProgressViewModel ResourceProgress
+		{
+			get
+			{
+				return new ResourceProgressViewModel(new FrEee.Utility.ResourceProgress(Model.StoredResources, Model.ResourceStorage, Model.NetIncomeLessConstruction));
+			}
+		}
 	}
 }

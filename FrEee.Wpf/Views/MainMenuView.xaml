@@ -21,14 +21,14 @@
 			</Image.RenderTransform>
 		</Image>
 		<UniformGrid Height="100.961" Margin="10,0,10,10" VerticalAlignment="Bottom" RenderTransformOrigin="-0.375,0.51" Rows="2" Columns="4" Background="{DynamicResource GameBackgroundBrush}">
-			<Button x:Name="btnMods" Content="Mods" Click="btnMods_Click"/>
-			<Button x:Name="btnScenarios" Content="Scenarios" Click="btnScenarios_Click"/>
-			<Button x:Name="btnOptions" Content="Options" Click="btnOptions_Click"/>
-			<Button x:Name="btnCredits" Content="Credits" Click="btnCredits_Click"/>
-			<Button x:Name="btnNew" Content="New" Click="btnNew_Click"/>
-			<Button x:Name="btnQuickstart" Content="Quickstart" Click="btnQuickstart_Click"/>
-			<Button x:Name="btnResume" Content="Resume" Click="btnResume_Click"/>
-			<Button x:Name="btnLoad" Content="Load" Click="btnLoad_Click" Height="50" VerticalAlignment="Top"/>
+			<Button x:Name="btnMods" Content="Mods" Click="btnMods_Click" ToolTip="Play or edit a mod."/>
+			<Button x:Name="btnScenarios" Content="Scenarios" Click="btnScenarios_Click" ToolTip="Play or edit a scenario."/>
+			<Button x:Name="btnOptions" Content="Options" Click="btnOptions_Click" ToolTip="Configure game options such as music volume."/>
+			<Button x:Name="btnCredits" Content="Credits" Click="btnCredits_Click" ToolTip="Find out who created this game."/>
+			<Button x:Name="btnNew" Content="New" Click="btnNew_Click" ToolTip="Start a new single player or multiplayer game with a fully customizable game setup."/>
+			<Button x:Name="btnQuickstart" Content="Quickstart" Click="btnQuickstart_Click" ToolTip="Start a new single player game with the default settings."/>
+			<Button x:Name="btnResume" Content="Resume" Click="btnResume_Click" ToolTip="Resume the last game you left off."/>
+			<Button x:Name="btnLoad" Content="Load" Click="btnLoad_Click" Height="50" VerticalAlignment="Top" ToolTip="Load a saved game."/>
 		</UniformGrid>
 
 	</Grid>
