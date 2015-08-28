@@ -71,7 +71,10 @@ namespace FrEee.Utility
 
 		public override string ToString()
 		{
-			return string.Format("{0} / {1} ({2:+#;-#;0} per turn, {3:+#;-#;0} more per turn after {4} turns)", Value, Maximum, IncrementalProgressBeforeDelay, ExtraIncrementalProgressAfterDelay, Delay);
+			if (ExtraIncrementalProgressAfterDelay != 0)
+				return string.Format("{0} / {1} ({2:+#;-#;0} per turn, {3:+#;-#;0} more per turn after {4} turns)", Value, Maximum, IncrementalProgressBeforeDelay, ExtraIncrementalProgressAfterDelay, Delay);
+			else
+				return string.Format("{0} / {1} ({2:+#;-#;0} per turn", Value, Maximum, IncrementalProgressBeforeDelay);
 		}
 	}
 

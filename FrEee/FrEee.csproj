@@ -152,6 +152,7 @@
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
+    <Compile Include="Utility\ResourceProgress.cs" />
     <Compile Include="Utility\SimpleDataObject.cs" />
     <Compile Include="Utility\DataReference.cs" />
     <Compile Include="FrEeeConstants.cs" />
