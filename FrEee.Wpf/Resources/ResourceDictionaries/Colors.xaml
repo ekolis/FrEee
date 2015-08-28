@@ -1,6 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <SolidColorBrush x:Key="GameBackgroundBrush" Color="#aa000000" />
-    <SolidColorBrush x:Key="GameForegroundBrush" Color="#aa88aaff" />
-    <SolidColorBrush x:Key="GameBrightBrush" Color="#aaAAFFFF" />
-    <SolidColorBrush x:Key="GameDimBrush" Color="#aa4488FF" />
-</ResourceDictionary>
