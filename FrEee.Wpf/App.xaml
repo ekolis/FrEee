@@ -61,11 +61,20 @@
             <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
         </Style>
         <Style TargetType="{x:Type Label}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
+        </Style>
+        <Style TargetType="{x:Type ListBox}">
             <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>
         </Style>
-        <Style TargetType="{x:Type ListBox}">
+        <Style TargetType="{x:Type ListView}">
             <Setter Property="Background" Value="{DynamicResource GameBackgroundBrush}"/>
             <Setter Property="BorderBrush" Value="{DynamicResource GameForegroundBrush}"/>
             <Setter Property="Foreground" Value="{DynamicResource GameForegroundBrush}"/>

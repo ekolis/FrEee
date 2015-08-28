@@ -633,7 +633,7 @@ namespace FrEee.Wpf.Utility
 				{
 					try
 					{
-						ImageSource img = new BitmapImage(new Uri(path, UriKind.Relative));
+						ImageSource img = new BitmapImage(new Uri(path, UriKind.RelativeOrAbsolute));
 						if (Path.GetExtension(path).ToLower() == ".bmp")
 						{
 							// make black pixels transparent if it's a bmp

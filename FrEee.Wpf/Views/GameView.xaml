@@ -15,25 +15,24 @@
             <ColumnDefinition Width="400"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
-		
-		<!--Flag and Resources-->
+
+        <!--Flag and Resources-->
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal">
-                <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="32"/>
-                 <!-- TODO - show resources -->
-                <Label>min/org/rad/res/int</Label>
-			</StackPanel>
+                <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="60"/>
+				<local:ResourceQuantityView ViewModel="{Binding Path=CurrentEmpire.StoredResources}" Grid.Row="0" Grid.Column="1"/>
+            </StackPanel>
         </Border>
 
         <!-- Research Progress -->
         <Border Grid.Column="3" Grid.Row="0">
-			<!-- TODO - fancy progress bar that displays research progress and cost -->
-			<ProgressBar />
+            <!-- TODO - fancy progress bar that displays research progress and cost -->
+            <ProgressBar />
         </Border>
 
         <!-- Global Commands & Search -->
@@ -79,7 +78,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-					<RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!-- TODO - map mode picker -->
                 <ComboBox Grid.Row="0"/>
