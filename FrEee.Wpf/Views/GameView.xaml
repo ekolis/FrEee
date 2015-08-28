@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:FrEee.Wpf.Views"
 			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
-             mc:Ignorable="d">
-    <Grid>
+             mc:Ignorable="d"
+			x:Name="view">
+    <Grid DataContext="{Binding ViewModel, ElementName=view}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="Auto"/>
@@ -22,9 +23,10 @@
 		
 		<!--Flag and Resources-->
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
-			<StackPanel Orientation="Horizontal">
-				<!-- TODO - show flag and resources -->
-				<Label>Flag/Min/Org/Rad/Res/Int</Label>
+            <StackPanel Orientation="Horizontal">
+                <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="32"/>
+                 <!-- TODO - show resources -->
+                <Label>min/org/rad/res/int</Label>
 			</StackPanel>
         </Border>
 

@@ -64,6 +64,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -82,6 +83,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utility\Pictures.cs" />
+    <Compile Include="ViewModels\EmpireViewModel.cs" />
+    <Compile Include="ViewModels\GalaxyViewModel.cs" />
     <Compile Include="ViewModels\ModPickerViewModel.cs" />
     <Compile Include="Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
@@ -162,7 +166,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
+    <ProjectReference Include="..\..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj">
       <Project>{c89729d8-9ca6-4135-8184-6da757129ef6}</Project>
       <Name>DynamicViewModel</Name>
     </ProjectReference>
