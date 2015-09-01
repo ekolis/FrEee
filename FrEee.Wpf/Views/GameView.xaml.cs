@@ -26,15 +26,15 @@ namespace FrEee.Wpf.Views
 	{
 		public GameView()
 		{
-			Galaxy = new GalaxyViewModel();
+			Galaxy = new GameViewModel(Game.Objects.Space.Galaxy.Current);
 			InitializeComponent();
 		}
 
-		public GalaxyViewModel Galaxy
+		public GameViewModel Galaxy
 		{
 			get
 			{
-				return (GalaxyViewModel)ViewModel;
+				return (GameViewModel)ViewModel;
 			}
 			set
 			{

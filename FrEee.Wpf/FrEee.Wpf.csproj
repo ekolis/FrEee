@@ -83,15 +83,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\Pictures.cs" />
     <Compile Include="ViewModels\EmpireViewModel.cs" />
-    <Compile Include="ViewModels\GalaxyViewModel.cs" />
+    <Compile Include="ViewModels\GalaxyMapViewModel.cs" />
+    <Compile Include="ViewModels\GameViewModel.cs" />
     <Compile Include="ViewModels\ModPickerViewModel.cs" />
     <Compile Include="ViewModels\ResourceProgressViewModel.cs" />
     <Compile Include="ViewModels\ResourceQuantityViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceProgressViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceQuantityViewModel.cs" />
+    <Compile Include="Views\GalaxyMapView.xaml.cs">
+      <DependentUpon>GalaxyMapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GalaxyMapViewRenderer.cs" />
     <Compile Include="Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -113,6 +119,10 @@
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\GalaxyMapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GameView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
