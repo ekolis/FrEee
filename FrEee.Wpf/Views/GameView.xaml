@@ -82,8 +82,7 @@
                 </Grid.RowDefinitions>
                 <!-- TODO - map mode picker -->
                 <ComboBox Grid.Row="0"/>
-                <!-- TODO - galaxy map -->
-                <Label Grid.Row="1">Galaxy Map</Label>
+                <local:GalaxyMapView Grid.Row="1" ViewModel="{Binding Path=Map}"/>
             </Grid>
         </Border>
     </Grid>

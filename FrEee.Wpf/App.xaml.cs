@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.IO;
+using System.Reflection;
+using System.Windows;
 using FrEee.Wpf.Views;
 using WpfViewShells;
 
@@ -12,6 +14,22 @@ namespace FrEee.Wpf
 		protected override void OnStartup(StartupEventArgs e)
 		{
 			new MainMenuView().ShowDialog();
+		}
+
+		public string RootDirectory
+		{
+			get
+			{
+				return Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+			}
+		}
+
+		public static new App Current
+		{
+			get
+			{
+				return (App)Application.Current;
+			}
 		}
 	}
 }
