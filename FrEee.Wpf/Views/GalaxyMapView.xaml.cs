@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,13 +33,13 @@ namespace FrEee.Wpf.Views
 		/// <summary>
 		/// The size at which each star system will be drawn, in pixels.
 		/// </summary>
-		public int StarSystemDrawSize
+		public double StarSystemDrawSize
 		{
 			get
 			{
 				if (Galaxy == null)
 					return 0;
-				return (int)Math.Min((float)Width / (float)Galaxy.UsedWidth, (float)Height / Galaxy.UsedHeight);
+				return (Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight));
 			}
 		}
 
@@ -51,23 +52,23 @@ namespace FrEee.Wpf.Views
 				// draw background image
 				if (Galaxy.BackgroundImage != null)
 				{
-					var desiredAspect = Width / Height;
+					var desiredAspect = ActualWidth / ActualHeight;
 					if (Galaxy.Width > 0 && Galaxy.Height > 0)
 					{
 						var actualAspect = Galaxy.Width / Galaxy.Height;
 						double x, y, w, h;
 						if (actualAspect > desiredAspect)
 						{
-							x = -(int)(Width / actualAspect / 2) + Width / 2;
-							w = (int)(Width / actualAspect);
-							h = Height;
+							x = -(int)(ActualWidth / actualAspect / 2) + ActualWidth / 2;
+							w = (int)(ActualWidth / actualAspect);
+							h = ActualHeight;
 							y = 0;
 						}
 						else
 						{
-							y = -(int)(Height * actualAspect / 2) + Height / 2;
-							h = (int)(Height * actualAspect);
-							w = Width;
+							y = -(int)(ActualHeight * actualAspect / 2) + Height / 2;
+							h = (int)(ActualHeight * actualAspect);
+							w = ActualWidth;
 							x = 0;
 						}
 						dc.DrawImage(Galaxy.BackgroundImage, new Rect(x, y, w, h));
@@ -80,27 +81,51 @@ namespace FrEee.Wpf.Views
 				// draw star systems
 				if (Galaxy.StarSystemLocations.Any())
 				{
-					var avgx = (Galaxy.StarSystemLocations.Min(l => l.Location.X) + Galaxy.StarSystemLocations.Max(l => l.Location.X)) / 2f;
-					var avgy = (Galaxy.StarSystemLocations.Min(l => l.Location.Y) + Galaxy.StarSystemLocations.Max(l => l.Location.Y)) / 2f;
+					var minx = Galaxy.StarSystemLocations.Min(l => l.Location.X);
+					var maxx = Galaxy.StarSystemLocations.Max(l => l.Location.X);
+					var miny = Galaxy.StarSystemLocations.Min(l => l.Location.Y);
+					var maxy = Galaxy.StarSystemLocations.Max(l => l.Location.Y);
+					var avgx = (minx + maxx) / 2d;
+					var avgy = (miny + maxy) / 2d;
+
+					Debug.WriteLine($"drawsize: {drawsize}");
+					Debug.WriteLine($"frame size: {ActualWidth}:{ActualHeight}");
+					Debug.WriteLine($"galaxy bounds: {minx}:{miny} to {maxx}:{maxy}");
+					Debug.WriteLine($"avg pos: {avgx}:{avgy} which is at {0 * drawsize + ActualWidth / 2f}:{0 * drawsize + ActualHeight / 2f}");
+
+					if (Galaxy.IsGridEnabled)
+					{
+						for (var x = minx; x <= maxx; x++)
+						{
+							for (var y = miny; y <= maxy; y++)
+							{
+								dc.DrawRectangle(null, new Pen(App.Current.Resources["GameTransparentBrush"] as Brush, 1), new Rect(
+									(x - 0.5) * drawsize + ActualWidth / 2f,
+									(y - 0.5) * drawsize + ActualHeight / 2f,
+									drawsize, drawsize));
+							}
+						}
+					}
+
 					foreach (var ssl in Galaxy.StarSystemLocations)
 					{
 						// where will we draw the star system?
 						var x = ssl.Location.X;// - minx;
 						var y = ssl.Location.Y;// - miny;
 											   //var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize);
-						var drawx = (x - avgx) * drawsize + Width / 2f;
-						var drawy = (y - avgy) * drawsize + Height / 2f;
+						var drawx = (x - avgx) * drawsize + ActualWidth / 2f;
+						var drawy = (y - avgy) * drawsize + ActualHeight / 2f;
 
 						// find star system
 						var sys = ssl.Item;
 
 						// draw it if possible
-						if (Renderer != null)
-							Renderer.Render(sys, dc, new Point(drawx, drawy), drawsize);
+						if (Galaxy.Renderer != null)
+							Galaxy.Renderer.Render(sys, dc, new Point(drawx, drawy), drawsize / 2d);
 
 						// draw selection reticule
 						if (sys == Galaxy.SelectedStarSystem)
-							dc.DrawRectangle(null, whitePen, new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
+							dc.DrawRectangle(null, new Pen(App.Current.Resources["GameBrightBrush"] as Brush, 1), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
 					}
 
 					// draw warp points
@@ -171,15 +196,5 @@ namespace FrEee.Wpf.Views
 				DataContext = value;
 			}
 		}
-
-		public IGalaxyMapViewRenderer Renderer
-		{
-			get { return (IGalaxyMapViewRenderer)GetValue(RendererProperty); }
-			set { SetValue(RendererProperty, value); }
-		}
-
-		// Using a DependencyProperty as the backing store for Renderer.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty RendererProperty =
-			DependencyProperty.Register("Renderer", typeof(IGalaxyMapViewRenderer), typeof(GalaxyMapView), new PropertyMetadata(Gmvrs.All.FirstOrDefault()));
 	}
 }
