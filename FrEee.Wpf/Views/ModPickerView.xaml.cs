@@ -40,11 +40,11 @@ namespace FrEee.Wpf.Views
 		{
 			get
 			{
-				return (ModPickerViewModel)ViewModel;
+				return (ModPickerViewModel)DataContext;
 			}
 			set
 			{
-				ViewModel = value;
+				DataContext = value;
 			}
 		}
 

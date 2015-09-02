@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace FrEee.Wpf.Utility
 {
@@ -19,6 +20,11 @@ namespace FrEee.Wpf.Utility
 		public static double AngleTo(this Point p, Point target)
 		{
 			return Math.Atan2(target.Y - p.Y, target.X - p.X) * 180d / Math.PI;
+		}
+
+		public static Color ToWpfColor(this System.Drawing.Color c)
+		{
+			return Color.FromArgb(c.A, c.R, c.G, c.B);
 		}
 	}
 }

@@ -8,20 +8,30 @@ using FrEee.Utility;
 
 namespace FrEee.Wpf.ViewModels
 {
-	public class ResourceQuantityViewModel : DynamicViewModel<ResourceQuantity>
+	public class ResourceQuantityViewModel
 	{
-		public ResourceQuantityViewModel(ResourceQuantity x = null)
-			: base(typeof(ResourceQuantity), x)
+		public ResourceQuantityViewModel()
+			: this(null)
 		{
+
+		}
+
+		public ResourceQuantityViewModel(ResourceQuantity x)
+		{
+			Model = x;
 		}
 
 		public IEnumerable<SingleResourceQuantityViewModel> Quantities
 		{
 			get
 			{
+				if (Model == null)
+					yield break;
 				foreach (var kvp in Model)
 					yield return new SingleResourceQuantityViewModel(Tuple.Create(kvp.Key, kvp.Value));
 			}
 		}
+
+		private ResourceQuantity Model { get; set; }
 	}
 }

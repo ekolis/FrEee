@@ -3,11 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+				 xmlns:vms="clr-namespace:FrEee.Wpf.ViewModels"
              xmlns:viewshells="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
 			x:Name="view">
-    <ListView ItemsSource="{Binding ViewModel.Quantities, ElementName=view}" BorderThickness="0" Margin="0" Padding="0" SelectionChanged="ListView_SelectionChanged">
+
+    <viewshells:View.DataContext>
+        <vms:ResourceProgressViewModel/>
+    </viewshells:View.DataContext>
+    <ListView ItemsSource="{Binding Path=Quantities}" BorderThickness="0" Margin="0" Padding="0" SelectionChanged="ListView_SelectionChanged">
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
                 <Setter Property="Focusable" Value="false"/>

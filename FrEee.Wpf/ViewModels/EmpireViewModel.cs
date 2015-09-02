@@ -6,19 +6,25 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
-using DynamicViewModel;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding;
 using static FrEee.Wpf.Utility.Pictures;
 
 namespace FrEee.Wpf.ViewModels
 {
-	public class EmpireViewModel : DynamicViewModel<Empire>
+	public class EmpireViewModel
 	{
-		public EmpireViewModel(Empire e = null)
-			: base(typeof(Empire), e)
+		public EmpireViewModel()
 		{
+
 		}
+
+		public EmpireViewModel(Empire e)
+		{
+			Model = e;
+		}
+
+		private Empire Model;
 
 		public ImageSource Insignia
 		{

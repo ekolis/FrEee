@@ -1,10 +1,11 @@
-﻿<viewshells:View x:Class="FrEee.Wpf.Views.GalaxyMapView"
+﻿<viewshells:View x:Class="FrEee.Wpf.ViewModels.TempView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewshells="clr-namespace:WpfViewShells;assembly=WpfViewShells"
+				 xmlns:shapes="clr-namespace:FrEee.Wpf.Views.Shapes"
              mc:Ignorable="d" 
-             Width="400" Height="300">
-
+             d:DesignHeight="300" d:DesignWidth="300">
+   <shapes:PieSlice Center="0,0" DeltaDegrees="360" Radius="100" Fill="{DynamicResource GameBrightBrightBrush}" Stroke="{DynamicResource GameDimBrush}"/>
 </viewshells:View>
