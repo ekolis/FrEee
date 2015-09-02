@@ -11,6 +11,7 @@ using System.Windows.Media;
 using FrEee.Game.Objects.Space;
 using FrEee.Utility;
 using FrEee.Wpf.Utility;
+using FrEee.Wpf.Views.GalaxyMapViewRenderers;
 using static FrEee.Wpf.Utility.Pictures;
 
 namespace FrEee.Wpf.ViewModels
@@ -30,6 +31,8 @@ namespace FrEee.Wpf.ViewModels
 		{
 			Galaxy = galaxy;
 			ComputeWarpPointConnectivity();
+			Renderer = GalaxyMapViewRenderers.All.FirstOrDefault();
+			IsGridEnabled = true;
 		}
 
 		#region Model
@@ -77,6 +80,30 @@ namespace FrEee.Wpf.ViewModels
 		}
 
 		public ConnectivityGraph<ObjectLocation<StarSystem>> WarpGraph { get; private set; }
+
+		private bool _IsGridEnabled;
+
+		public bool IsGridEnabled
+		{
+			get { return _IsGridEnabled; }
+			set
+			{
+				_IsGridEnabled = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsGridEnabled)));
+			}
+		}
+
+		private IGalaxyMapViewRenderer _Renderer;
+
+		public IGalaxyMapViewRenderer Renderer
+		{
+			get { return _Renderer; }
+			set
+			{
+				_Renderer = value;
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Renderer)));
+			}
+		}
 		#endregion
 
 		#region Methods
