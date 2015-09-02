@@ -41,8 +41,6 @@ namespace FrEee.Wpf.Views.GalaxyMapViewRenderers
 					var penBrush = new SolidColorBrush(color);
 					var drawing = new GeometryDrawing(brush, new Pen(brush, 1), new PieSlice
 					{
-						Center = p,
-						Radius = radius,
 						StartDegrees = curAngle,
 						DeltaDegrees = arc,
                     }.RenderedGeometry);
