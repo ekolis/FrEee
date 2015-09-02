@@ -3,11 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FrEee.Wpf.Views"
+             xmlns:vms="clr-namespace:FrEee.Wpf.ViewModels"
+			xmlns:views="clr-namespace:FrEee.Wpf.Views"
 			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              mc:Ignorable="d"
 			x:Name="view">
-    <Grid DataContext="{Binding ViewModel, ElementName=view}">
+    <wpfvs:View.DataContext>
+        <vms:GameViewModel/>
+    </wpfvs:View.DataContext>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="Auto"/>
@@ -25,7 +29,7 @@
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal">
                 <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="60"/>
-				<local:ResourceProgressView ViewModel="{Binding Path=CurrentEmpire.ResourceProgress}" Grid.Row="0" Grid.Column="1"/>
+				<views:ResourceProgressView ViewModel="{Binding Path=CurrentEmpire.ResourceProgress}" Grid.Row="0" Grid.Column="1"/>
             </StackPanel>
         </Border>
 
@@ -82,7 +86,7 @@
                 </Grid.RowDefinitions>
                 <!-- TODO - map mode picker -->
                 <ComboBox Grid.Row="0"/>
-                <local:GalaxyMapView Grid.Row="1" ViewModel="{Binding Path=Map}"/>
+                <views:GalaxyMapView Grid.Row="1" ViewModel="{Binding Path=Map}"/>
             </Grid>
         </Border>
     </Grid>
