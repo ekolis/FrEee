@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using FrEee.Wpf.Utility;
 
 namespace FrEee.Wpf.Views.Shapes
 {
@@ -15,29 +16,6 @@ namespace FrEee.Wpf.Views.Shapes
 	/// </summary>
 	public class PieSlice : Shape
 	{
-		public Point Center
-		{
-			get { return (Point)GetValue(CenterProperty); }
-			set { SetValue(CenterProperty, value); }
-		}
-
-		// Using a DependencyProperty as the backing store for Center.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty CenterProperty =
-			DependencyProperty.Register("Center", typeof(Point), typeof(PieSlice), new PropertyMetadata(new Point()));
-
-
-
-		[TypeConverter(typeof(LengthConverter))]
-		public double Radius
-		{
-			get { return (double)GetValue(RadiusProperty); }
-			set { SetValue(RadiusProperty, value); }
-		}
-
-		// Using a DependencyProperty as the backing store for Radius.  This enables animation, styling, binding, etc...
-		public static readonly DependencyProperty RadiusProperty =
-			DependencyProperty.Register("Radius", typeof(double), typeof(PieSlice), new PropertyMetadata(10d));
-
 		public double StartDegrees
 		{
 			get { return (double)GetValue(StartDegreesProperty); }
@@ -64,7 +42,7 @@ namespace FrEee.Wpf.Views.Shapes
 			{
 				// Create a StreamGeometry for describing the shape
 				StreamGeometry geometry = new StreamGeometry();
-				geometry.FillRule = FillRule.EvenOdd;
+				//geometry.FillRule = FillRule.EvenOdd;
 
 				using (StreamGeometryContext context = geometry.Open())
 				{
@@ -80,17 +58,24 @@ namespace FrEee.Wpf.Views.Shapes
 
 		private void InternalDraw(StreamGeometryContext context)
 		{
-			var center = new Point();
+			var center = new Point(ActualWidth / 2d, ActualHeight / 2d);
 			var rad1 = Deg2Rad(StartDegrees);
 			var drad = Deg2Rad(DeltaDegrees);
 			var rad2 = rad1 + drad;
-			var p1 = new Point(Math.Cos(rad1), -Math.Sin(rad1));
-			var p2 = new Point(Math.Cos(rad2), -Math.Sin(rad2));
+			var p1 = new Point((Math.Cos(rad1) + 1) * ActualWidth / 2d, -(Math.Sin(rad1) - 1) * ActualHeight / 2d);
+			var p2 = new Point((Math.Cos(rad2) + 1) * ActualWidth / 2d, -(Math.Sin(rad2) - 1) * ActualHeight / 2d);
 
 			context.BeginFigure(center, true, true);
-			context.LineTo(p1, true, true);
-			context.ArcTo(p2, new Size(Radius, Radius), drad, DeltaDegrees > 180, SweepDirection.Counterclockwise, true, true);
-			context.Close();
+			if (DeltaDegrees >= 360)
+			{
+				context.DrawGeometry(new EllipseGeometry(new Rect(0, 0, ActualWidth, ActualHeight)));
+			}
+			else if (DeltaDegrees >= 0)
+			{
+				context.LineTo(p1, true, true);
+				context.ArcTo(p2, new Size(ActualWidth / 2d, ActualHeight / 2d), drad, DeltaDegrees > 180, SweepDirection.Counterclockwise, true, true);
+				context.Close();
+			}
 		}
 
 		private double Deg2Rad(double degrees)
