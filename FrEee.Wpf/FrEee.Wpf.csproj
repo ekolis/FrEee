@@ -94,10 +94,16 @@
     <Compile Include="ViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceProgressViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceQuantityViewModel.cs" />
+    <Compile Include="ViewModels\TempView.xaml.cs">
+      <DependentUpon>TempView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GalaxyMapView.xaml.cs">
       <DependentUpon>GalaxyMapView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GalaxyMapViewRenderer.cs" />
+    <Compile Include="Views\GalaxyMapViewRenderers\GalaxyMapViewRenderers.cs" />
+    <Compile Include="Views\GalaxyMapViewRenderers\IGalaxyMapViewRenderer.cs" />
+    <Compile Include="Views\GalaxyMapViewRenderers\PieRenderer.cs" />
+    <Compile Include="Views\GalaxyMapViewRenderers\PresenceRenderer.cs" />
     <Compile Include="Views\GameView.xaml.cs">
       <DependentUpon>GameView.xaml</DependentUpon>
     </Compile>
@@ -116,9 +122,14 @@
     <Compile Include="Views\ResourceQuantityView.xaml.cs">
       <DependentUpon>ResourceQuantityView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shapes\PieSlice.cs" />
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
+    <Page Include="ViewModels\TempView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GalaxyMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

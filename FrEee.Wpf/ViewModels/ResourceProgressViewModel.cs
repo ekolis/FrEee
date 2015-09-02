@@ -8,20 +8,30 @@ using FrEee.Utility;
 
 namespace FrEee.Wpf.ViewModels
 {
-	public class ResourceProgressViewModel : DynamicViewModel<ResourceProgress>
+	public class ResourceProgressViewModel
 	{
-		public ResourceProgressViewModel(ResourceProgress x = null)
-			: base(typeof(ResourceProgress), x)
+		public ResourceProgressViewModel()
+			: this(null)
 		{
+
+		}
+
+		public ResourceProgressViewModel(ResourceProgress x)
+		{
+			Model = x;
 		}
 
 		public IEnumerable<SingleResourceProgressViewModel> Quantities
 		{
 			get
 			{
+				if (Model == null)
+					yield break;
 				foreach (var kvp in Model)
 					yield return new SingleResourceProgressViewModel(Tuple.Create(kvp.Key, kvp.Value));
 			}
 		}
+
+		private ResourceProgress Model { get; set; }
 	}
 }

@@ -46,11 +46,11 @@ namespace FrEee.Wpf.Views
 		{
 			get
 			{
-				return (ResourceProgressViewModel)ViewModel;
+				return (ResourceProgressViewModel)DataContext;
 			}
 			set
 			{
-				ViewModel = value;
+				DataContext = value;
 			}
 		}
 

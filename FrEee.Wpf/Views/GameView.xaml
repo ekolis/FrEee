@@ -29,7 +29,7 @@
         <Border Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal">
                 <Image Source="{Binding Path=CurrentEmpire.Insignia}" Width="60"/>
-				<views:ResourceProgressView ViewModel="{Binding Path=CurrentEmpire.ResourceProgress}" Grid.Row="0" Grid.Column="1"/>
+				<views:ResourceProgressView DataContext="{Binding Path=CurrentEmpire.ResourceProgress}" Grid.Row="0" Grid.Column="1"/>
             </StackPanel>
         </Border>
 
@@ -86,7 +86,7 @@
                 </Grid.RowDefinitions>
                 <!-- TODO - map mode picker -->
                 <ComboBox Grid.Row="0"/>
-                <views:GalaxyMapView Grid.Row="1" ViewModel="{Binding Path=Map}"/>
+                <views:GalaxyMapView Grid.Row="1" DataContext="{Binding Path=Map}"/>
             </Grid>
         </Border>
     </Grid>

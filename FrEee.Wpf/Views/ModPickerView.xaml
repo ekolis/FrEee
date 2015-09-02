@@ -3,13 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:FrEee.Wpf.Views"
+             xmlns:views="clr-namespace:FrEee.Wpf.Views"
+			xmlns:vms="clr-namespace:FrEee.Wpf.ViewModels"
 			xmlns:wpfvs="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              xmlns:Modding="clr-namespace:FrEee.Modding;assembly=FrEee.Core" xmlns:ViewModels="clr-namespace:FrEee.Wpf.ViewModels" x:Class="FrEee.Wpf.Views.ModPickerView"
              mc:Ignorable="d" 
              d:DesignHeight="383.142" d:DesignWidth="552.204"
 	x:Name="view">
-    <Grid DataContext="{Binding ViewModel, ElementName=view}">
+    <Grid>
         <ListBox x:Name="listBox" HorizontalAlignment="Left" Margin="10,10,0,10" Width="192" ItemsSource="{Binding}" SelectedItem="{Binding Path=SelectedItem}"/>
         <Grid x:Name="grid" Margin="207,10,10,10" VerticalAlignment="Top" Width="335" HorizontalAlignment="Right" DataContext="{Binding Path=SelectedItem}">
             <Grid.ColumnDefinitions>
