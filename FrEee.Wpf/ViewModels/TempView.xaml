@@ -7,5 +7,5 @@
 				 xmlns:shapes="clr-namespace:FrEee.Wpf.Views.Shapes"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-   <shapes:PieSlice DeltaDegrees="360" Fill="Red" Stroke="Blue" Margin="100,100,106,152"/>
+   <shapes:PieSlice DeltaDegrees="225" Fill="Red" Stroke="Blue" Margin="100,100,106,110"/>
 </viewshells:View>
