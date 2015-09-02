@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace FrEee.Wpf.Views
 			InitializeComponent();
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// The size at which each star system will be drawn, in pixels.
 		/// </summary>
 		public double StarSystemDrawSize
@@ -41,7 +42,7 @@ namespace FrEee.Wpf.Views
 					return 0;
 				return (Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight));
 			}
-		}
+		}*/
 
 		protected override void OnRender(DrawingContext dc)
 		{
@@ -53,7 +54,7 @@ namespace FrEee.Wpf.Views
 				if (Galaxy.BackgroundImage != null)
 				{
 					var desiredAspect = ActualWidth / ActualHeight;
-					if (Galaxy.Width > 0 && Galaxy.Height > 0)
+					if (Galaxy.UsedWidth > 0 && Galaxy.UsedHeight > 0)
 					{
 						var actualAspect = Galaxy.Width / Galaxy.Height;
 						double x, y, w, h;
@@ -66,7 +67,7 @@ namespace FrEee.Wpf.Views
 						}
 						else
 						{
-							y = -(int)(ActualHeight * actualAspect / 2) + Height / 2;
+							y = -(int)(ActualHeight * actualAspect / 2) + ActualHeight / 2;
 							h = (int)(ActualHeight * actualAspect);
 							w = ActualWidth;
 							x = 0;
@@ -75,7 +76,6 @@ namespace FrEee.Wpf.Views
 					}
 				}
 
-				var drawsize = StarSystemDrawSize;
 				var whitePen = new Pen(Brushes.White, 1);
 
 				// draw star systems
@@ -88,10 +88,17 @@ namespace FrEee.Wpf.Views
 					var avgx = (minx + maxx) / 2d;
 					var avgy = (miny + maxy) / 2d;
 
+					var drawsize = Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight);
+
 					Debug.WriteLine($"drawsize: {drawsize}");
 					Debug.WriteLine($"frame size: {ActualWidth}:{ActualHeight}");
 					Debug.WriteLine($"galaxy bounds: {minx}:{miny} to {maxx}:{maxy}");
 					Debug.WriteLine($"avg pos: {avgx}:{avgy} which is at {0 * drawsize + ActualWidth / 2f}:{0 * drawsize + ActualHeight / 2f}");
+
+					var usedWidth = (maxx - minx + 1) * drawsize;
+					var usedHeight = (maxy - miny + 1) * drawsize;
+					var xpadding = (ActualWidth - usedWidth) / 2d;
+					var ypadding = (ActualHeight - usedHeight) / 2d;
 
 					if (Galaxy.IsGridEnabled)
 					{
@@ -100,9 +107,13 @@ namespace FrEee.Wpf.Views
 							for (var y = miny; y <= maxy; y++)
 							{
 								dc.DrawRectangle(null, new Pen(App.Current.Resources["GameTransparentBrush"] as Brush, 1), new Rect(
-									(x - 0.5) * drawsize + ActualWidth / 2f,
-									(y - 0.5) * drawsize + ActualHeight / 2f,
+									(x - 0.5 - avgx) * drawsize + usedWidth / 2f + xpadding,
+									(y - 0.5 - avgy) * drawsize + usedHeight / 2f + ypadding,
 									drawsize, drawsize));
+#if DEBUG
+								if (x == 0 || y == 0)
+									dc.DrawText(new FormattedText($"{x}:{y}", CultureInfo.CurrentCulture, CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight, new Typeface("Sans Serif"), 10, App.Current.Resources["GameBrightBrightBrush"] as Brush), new Point((x - 0.5 - avgx) * drawsize + usedWidth / 2f + xpadding, (y - 0.5 - avgy) * drawsize + usedHeight / 2f + ypadding));
+#endif
 							}
 						}
 					}
