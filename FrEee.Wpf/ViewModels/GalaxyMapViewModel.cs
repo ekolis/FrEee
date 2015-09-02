@@ -17,6 +17,15 @@ namespace FrEee.Wpf.ViewModels
 {
 	public class GalaxyMapViewModel : INotifyPropertyChanged
 	{
+		/// <summary>
+		/// For XAML design time binding.
+		/// </summary>
+		public GalaxyMapViewModel()
+			: this(null)
+		{
+
+		}
+
 		public GalaxyMapViewModel(Galaxy galaxy)
 		{
 			Galaxy = galaxy;
@@ -30,7 +39,12 @@ namespace FrEee.Wpf.ViewModels
 		#region Properties
 		public IEnumerable<ObjectLocation<StarSystem>> StarSystemLocations
 		{
-			get { return Galaxy.StarSystemLocations; }
+			get
+			{
+				if (Galaxy == null)
+					return Enumerable.Empty<ObjectLocation<StarSystem>>();
+				return Galaxy.StarSystemLocations;
+			}
 		}
 
 		public ImageSource BackgroundImage
@@ -42,13 +56,13 @@ namespace FrEee.Wpf.ViewModels
 			}
 		}
 
-		public int Width { get { return Galaxy.Width; } }
+		public int Width { get { return Galaxy?.Width ?? 0; } }
 
-		public int Height { get { return Galaxy.Height; } }
+		public int Height { get { return Galaxy?.Height ?? 0; } }
 
-		public int UsedWidth { get { return Galaxy.UsedWidth; } }
+		public int UsedWidth { get { return Galaxy?.UsedWidth ?? 0; } }
 
-		public int UsedHeight { get { return Galaxy.UsedHeight; } }
+		public int UsedHeight { get { return Galaxy?.UsedHeight ?? 0; } }
 
 		private StarSystem _SelectedStarSystem;
 
@@ -68,16 +82,22 @@ namespace FrEee.Wpf.ViewModels
 		#region Methods
 		public void ComputeWarpPointConnectivity()
 		{
-			WarpGraph= new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.Current.StarSystemLocations);
-
-			foreach (var ssl in WarpGraph)
+			if (Galaxy == null)
+				WarpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>();
+			else
 			{
-				foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
-				{
-					if (wp.TargetStarSystemLocation == null)
-						continue; // can't make connection if we don't know where warp point ends!
 
-					WarpGraph.Connect(ssl, wp.TargetStarSystemLocation);
+				WarpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.StarSystemLocations);
+
+				foreach (var ssl in WarpGraph)
+				{
+					foreach (var wp in ssl.Item.FindSpaceObjects<WarpPoint>())
+					{
+						if (wp.TargetStarSystemLocation == null)
+							continue; // can't make connection if we don't know where warp point ends!
+
+						WarpGraph.Connect(ssl, wp.TargetStarSystemLocation);
+					}
 				}
 			}
 		}
@@ -86,6 +106,8 @@ namespace FrEee.Wpf.ViewModels
 		#region Sub View Models
 		#endregion
 
+		#region Events
 		public event PropertyChangedEventHandler PropertyChanged;
+		#endregion
 	}
 }

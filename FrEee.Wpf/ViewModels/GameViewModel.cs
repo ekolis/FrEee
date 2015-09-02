@@ -10,6 +10,15 @@ namespace FrEee.Wpf.ViewModels
 {
 	public class GameViewModel
 	{
+		/// <summary>
+		/// For XAML design time binding.
+		/// </summary>
+		public GameViewModel()
+			: this(null)
+		{
+
+		}
+
 		public GameViewModel(Galaxy galaxy)
 		{
 			Galaxy = galaxy;
