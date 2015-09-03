@@ -278,7 +278,7 @@ namespace FrEee.Modding
 			if (!(obj is Formula<T>))
 				return false;
 			var f = (Formula<T>)obj;
-			return Text == f.Text && Context == f.Context && FormulaType == f.FormulaType;
+			return FormulaType == f.FormulaType && Text == f.Text && Context == f.Context;
 		}
 
 		public override int GetHashCode()
