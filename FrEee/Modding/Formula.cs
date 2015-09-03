@@ -83,6 +83,8 @@ namespace FrEee.Modding
 
 		public T Evaluate(IDictionary<string, object> variables)
 		{
+			if (FormulaType == FormulaType.Literal)
+				return Value;
 			return ScriptEngine.EvaluateExpression<T>(Text, variables);
 		}
 
