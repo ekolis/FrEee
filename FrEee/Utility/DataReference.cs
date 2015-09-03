@@ -80,8 +80,7 @@ namespace FrEee.Utility
 			set
 			{
 				if (Context.GetID(value) == null)
-					Context.Add(value);
-				ID = Context.GetID(value).Value; // need to get ID again since it's changed, don't "optimize" this!
+					ID = Context.Add(value);
 			}
 		}
 
