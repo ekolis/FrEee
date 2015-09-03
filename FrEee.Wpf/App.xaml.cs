@@ -13,7 +13,7 @@ namespace FrEee.Wpf
 	{
 		protected override void OnStartup(StartupEventArgs e)
 		{
-			new MainMenuView().ShowDialog();
+			new MainMenuView().ShowDialog(WindowStartupLocation.CenterScreen);
 		}
 
 		public string RootDirectory
