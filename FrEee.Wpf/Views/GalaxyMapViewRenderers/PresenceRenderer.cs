@@ -27,8 +27,8 @@ namespace FrEee.Wpf.Views.GalaxyMapViewRenderers
 
 		protected override byte GetAlpha(StarSystem sys)
 		{
-			// draw all systems at full opacity
-			return 255;
+			// draw all systems at mostly full opacity
+			return 192;
 		}
 
 		protected override IEnumerable<Tuple<Color, double>> GetAmounts(StarSystem sys)
