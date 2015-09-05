@@ -219,15 +219,8 @@ namespace FrEee.Wpf.Views
 			}
 		}
 
-		/// <summary>
-		/// When a star system is clicked select it.
-		/// When empty space is clicked, deselect any selected star system.
-		/// </summary>
-		/// <param name="e"></param>
-		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+		private Point TransformViewPointToGalaxyPoint(Point p)
 		{
-			base.OnMouseLeftButtonDown(e);
-
 			var minx = Galaxy.StarSystemLocations.Min(l => l.Location.X);
 			var maxx = Galaxy.StarSystemLocations.Max(l => l.Location.X);
 			var miny = Galaxy.StarSystemLocations.Min(l => l.Location.Y);
@@ -242,11 +235,51 @@ namespace FrEee.Wpf.Views
 			var xpadding = (ActualWidth - usedWidth) / 2d;
 			var ypadding = (ActualHeight - usedHeight) / 2d;
 
-			var p = e.GetPosition(this);
 			var x = (int)Math.Round((p.X - xpadding - usedWidth / 2f) / drawsize + avgx);
 			var y = (int)Math.Round((p.Y - ypadding - usedHeight / 2f) / drawsize + avgy);
 
-			Galaxy.SelectedStarSystem = Galaxy.StarSystemLocations.SingleOrDefault(l => l.Location.X == x && l.Location.Y == y)?.Item;
-        }
+			return new Point(x, y);
+		}
+
+		private void View_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			// select clicked star system (or none if empty space selected)
+			var p = e.GetPosition(this);
+			var gp = TransformViewPointToGalaxyPoint(p);
+			Galaxy.SelectedStarSystem = Galaxy.StarSystemLocations.SingleOrDefault(l => l.Location.X == Math.Round(gp.X) && l.Location.Y == Math.Round(gp.Y))?.Item;
+		}
+
+		private void View_MouseMove(object sender, MouseEventArgs e)
+		{
+			// set tooltip to name of hovered system
+			var p = e.GetPosition(this);
+			var gp = TransformViewPointToGalaxyPoint(p);
+			try
+			{
+				var sys = Galaxy.StarSystemLocations.SingleOrDefault(l => l.Location.X == Math.Round(gp.X) && l.Location.Y == Math.Round(gp.Y))?.Item;
+				if (sys != null)
+				{
+					var tt = (ToolTip)ToolTip;
+					if (tt != null)
+						tt.IsOpen = false;
+					// TODO - how to dispose of it?
+					tt = new ToolTip();
+					tt.IsOpen = true;
+					tt.Content = sys.Name;
+					ToolTip = tt;
+				}
+				else if (ToolTip != null)
+				{
+					var tt = (ToolTip)ToolTip;
+					tt.IsOpen = false;
+					// TODO - how to dispose of it?
+					ToolTip = null;
+				}
+			}
+			catch (InvalidOperationException ex)
+			{
+				Console.Error.WriteLine($"Multiple star systems found at coordinates {Math.Round(gp.X)}, {Math.Round(gp.Y)}");
+			}
+		}
 	}
 }
