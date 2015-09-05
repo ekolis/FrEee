@@ -27,7 +27,7 @@ namespace FrEee.Wpf.Views.GalaxyMapViewRenderers
 			if (amountHere == 0)
 			{
 				// nothing, draw a gray outline with a faint fill
-				var grayTransparent = Color.FromArgb(128, Colors.Gray.R, Colors.Gray.G, Colors.Gray.B);
+				var grayTransparent = Color.FromArgb(GetAlpha(sys), Colors.Gray.R, Colors.Gray.G, Colors.Gray.B);
 				dc.DrawEllipse(new SolidColorBrush(grayTransparent), new Pen(Brushes.Gray, 1), p, radius, radius);
 			}
 			else
