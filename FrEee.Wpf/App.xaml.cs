@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Media;
 using FrEee.Wpf.Views;
 using WpfViewShells;
 
@@ -30,6 +31,14 @@ namespace FrEee.Wpf
 			{
 				return (App)Application.Current;
 			}
+		}
+
+		public Brush BrightBrightBrush
+		{
+			get
+			{
+				return Resources["GameBrightBrightBrush"] as Brush;
+            }
 		}
 	}
 }

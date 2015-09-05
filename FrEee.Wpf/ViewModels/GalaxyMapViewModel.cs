@@ -79,7 +79,18 @@ namespace FrEee.Wpf.ViewModels
 			}
 		}
 
-		public ConnectivityGraph<ObjectLocation<StarSystem>> WarpGraph { get; private set; }
+		private ConnectivityGraph<ObjectLocation<StarSystem>> warpGraph;
+
+		public ConnectivityGraph<ObjectLocation<StarSystem>> WarpGraph
+		{
+			get
+			{
+				if (warpGraph == null)
+					ComputeWarpPointConnectivity();
+				return warpGraph;
+			}
+			private set { warpGraph = value; }
+		}
 
 		private bool _IsGridEnabled;
 
@@ -113,7 +124,6 @@ namespace FrEee.Wpf.ViewModels
 				WarpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>();
 			else
 			{
-
 				WarpGraph = new ConnectivityGraph<ObjectLocation<StarSystem>>(Galaxy.StarSystemLocations);
 
 				foreach (var ssl in WarpGraph)

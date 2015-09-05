@@ -147,7 +147,7 @@ namespace FrEee.Wpf.Views
 
 						// draw selection reticule
 						if (sys == Galaxy.SelectedStarSystem)
-							dc.DrawRectangle(null, new Pen(App.Current.Resources["GameBrightBrightBrush"] as Brush, 2), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
+							dc.DrawRectangle(null, new Pen(App.Current.BrightBrightBrush, 2), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
 					}
 
 					// draw warp points
@@ -156,8 +156,8 @@ namespace FrEee.Wpf.Views
 					{
 						var startPos = new Point
 						(
-							(ssl.Location.X - avgx) * drawsize + Width / 2f,
-							(ssl.Location.Y - avgy) * drawsize + Height / 2f
+							(ssl.Location.X - avgx) * drawsize + ActualWidth / 2f,
+							(ssl.Location.Y - avgy) * drawsize + ActualHeight / 2f
 						);
 						foreach (var target in Galaxy.WarpGraph.GetExits(ssl))
 						{
@@ -166,8 +166,8 @@ namespace FrEee.Wpf.Views
 
 							var endPos = new Point
 							(
-								(target.Location.X - avgx) * drawsize + Width / 2f,
-								(target.Location.Y - avgy) * drawsize + Height / 2f
+								(target.Location.X - avgx) * drawsize + ActualWidth / 2f,
+								(target.Location.Y - avgy) * drawsize + ActualHeight / 2f
 							);
 
 							// overlapping systems or same system
@@ -184,7 +184,7 @@ namespace FrEee.Wpf.Views
 							var realEndPos = new Point(endPos.X - ndx, endPos.Y - ndy);
 
 							// draw line
-							dc.DrawLine(new Pen(Brushes.Gray, 1), realStartPos, realEndPos);
+							dc.DrawLine(new Pen(App.Current.BrightBrightBrush, 1), realStartPos, realEndPos);
 
 							if (!Galaxy.WarpGraph.GetExits(target).Contains(ssl))
 							{
