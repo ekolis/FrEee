@@ -31,6 +31,17 @@ namespace FrEee.Wpf.Views
 			InitializeComponent();
 		}
 
+		private void View_Loaded(object sender, RoutedEventArgs e)
+		{
+			if (Galaxy != null)
+				Galaxy.PropertyChanged += Galaxy_PropertyChanged;
+		}
+
+		private void Galaxy_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			InvalidateVisual();
+		}
+
 		/*/// <summary>
 		/// The size at which each star system will be drawn, in pixels.
 		/// </summary>
@@ -90,10 +101,10 @@ namespace FrEee.Wpf.Views
 
 					var drawsize = Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight);
 
-					Debug.WriteLine($"drawsize: {drawsize}");
+					/*Debug.WriteLine($"drawsize: {drawsize}");
 					Debug.WriteLine($"frame size: {ActualWidth}:{ActualHeight}");
 					Debug.WriteLine($"galaxy bounds: {minx}:{miny} to {maxx}:{maxy}");
-					Debug.WriteLine($"avg pos: {avgx}:{avgy} which is at {0 * drawsize + ActualWidth / 2f}:{0 * drawsize + ActualHeight / 2f}");
+					Debug.WriteLine($"avg pos: {avgx}:{avgy} which is at {0 * drawsize + ActualWidth / 2f}:{0 * drawsize + ActualHeight / 2f}");*/
 
 					var usedWidth = (maxx - minx + 1) * drawsize;
 					var usedHeight = (maxy - miny + 1) * drawsize;
@@ -110,10 +121,10 @@ namespace FrEee.Wpf.Views
 									(x - 0.5 - avgx) * drawsize + usedWidth / 2f + xpadding,
 									(y - 0.5 - avgy) * drawsize + usedHeight / 2f + ypadding,
 									drawsize, drawsize));
-#if DEBUG
+/*#if DEBUG
 								if (x == 0 || y == 0)
 									dc.DrawText(new FormattedText($"{x}:{y}", CultureInfo.CurrentCulture, CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight, new Typeface("Sans Serif"), 10, App.Current.Resources["GameBrightBrightBrush"] as Brush), new Point((x - 0.5 - avgx) * drawsize + usedWidth / 2f + xpadding, (y - 0.5 - avgy) * drawsize + usedHeight / 2f + ypadding));
-#endif
+#endif*/
 							}
 						}
 					}
@@ -136,7 +147,7 @@ namespace FrEee.Wpf.Views
 
 						// draw selection reticule
 						if (sys == Galaxy.SelectedStarSystem)
-							dc.DrawRectangle(null, new Pen(App.Current.Resources["GameBrightBrush"] as Brush, 1), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
+							dc.DrawRectangle(null, new Pen(App.Current.Resources["GameBrightBrightBrush"] as Brush, 2), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
 					}
 
 					// draw warp points
@@ -200,12 +211,42 @@ namespace FrEee.Wpf.Views
 		{
 			get
 			{
-				return (GalaxyMapViewModel)DataContext;
+				return DataContext as GalaxyMapViewModel;
 			}
 			set
 			{
 				DataContext = value;
 			}
 		}
+
+		/// <summary>
+		/// When a star system is clicked select it.
+		/// When empty space is clicked, deselect any selected star system.
+		/// </summary>
+		/// <param name="e"></param>
+		protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+		{
+			base.OnMouseLeftButtonDown(e);
+
+			var minx = Galaxy.StarSystemLocations.Min(l => l.Location.X);
+			var maxx = Galaxy.StarSystemLocations.Max(l => l.Location.X);
+			var miny = Galaxy.StarSystemLocations.Min(l => l.Location.Y);
+			var maxy = Galaxy.StarSystemLocations.Max(l => l.Location.Y);
+			var avgx = (minx + maxx) / 2d;
+			var avgy = (miny + maxy) / 2d;
+
+			var drawsize = Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight);
+
+			var usedWidth = (maxx - minx + 1) * drawsize;
+			var usedHeight = (maxy - miny + 1) * drawsize;
+			var xpadding = (ActualWidth - usedWidth) / 2d;
+			var ypadding = (ActualHeight - usedHeight) / 2d;
+
+			var p = e.GetPosition(this);
+			var x = (int)Math.Round((p.X - xpadding - usedWidth / 2f) / drawsize + avgx);
+			var y = (int)Math.Round((p.Y - ypadding - usedHeight / 2f) / drawsize + avgy);
+
+			Galaxy.SelectedStarSystem = Galaxy.StarSystemLocations.SingleOrDefault(l => l.Location.X == x && l.Location.Y == y)?.Item;
+        }
 	}
 }
