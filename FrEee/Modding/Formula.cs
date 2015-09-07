@@ -11,65 +11,41 @@ using FrEee.Utility;
 namespace FrEee.Modding
 {
 	/// <summary>
-	/// A script formula.
+	/// A formula used in the game's data files.
 	/// </summary>
-	/// <typeparam name="T">Return type.</typeparam>
+	/// <typeparam name="T">Return type of the formula.</typeparam>
 	[Serializable]
-	public class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Formula<T>>
+	public abstract class Formula<T> : IFormula<T>, IComparable<T>, IComparable<Formula<T>>
 		where T : IConvertible, IComparable
 	{
 		/// <summary>
 		/// For serialization.
 		/// </summary>
-		private Formula()
+		protected Formula()
 		{
+			value = new Lazy<T>(ComputeValue);
 		}
 
-		public Formula(object context, string text, FormulaType fType)
+		public Formula(string text)
+			: this()
 		{
-			Context = context;
 			Text = text;
-			FormulaType = fType;
 		}
+
+		public abstract bool IsLiteral { get; }
+
+		public abstract bool IsDynamic { get; }
+
+		protected Lazy<T> value;
+
+		protected abstract T ComputeValue();
 
 		/// <summary>
 		/// The formula text.
 		/// </summary>
 		public string Text { get; set; }
 
-		public FormulaType FormulaType { get; set; }
-
-		public T Value
-		{
-			get
-			{
-				if (FormulaType == FormulaType.Literal || FormulaType == FormulaType.Static)
-				{
-					// literal and static formulas can be cached
-					if (!hasCache)
-					{
-						if (FormulaType == FormulaType.Literal)
-						{
-							if (typeof(T) == typeof(string))
-								cachedValue = (T)(object)Text;
-							else if (typeof(T).IsEnum)
-								cachedValue = Text.ParseEnum<T>();
-							else
-								cachedValue = (T)Convert.ChangeType(Text, typeof(T), CultureInfo.InvariantCulture);
-						}
-						else
-							cachedValue = Evaluate(Context);
-						hasCache = true;
-					}
-					return cachedValue;
-				}
-				else
-				{
-					// dynamic formula must be executed each time
-					return Evaluate(Context);
-				}
-			}
-		}
+		public abstract T Value { get; }
 
 		object IFormula.Evaluate(IDictionary<string, object> variables)
 		{
@@ -81,47 +57,11 @@ namespace FrEee.Modding
 			return Evaluate(host);
 		}
 
-		public T Evaluate(IDictionary<string, object> variables)
-		{
-			if (FormulaType == FormulaType.Literal)
-				return Value;
-			return ScriptEngine.EvaluateExpression<T>(Text, variables);
-		}
+		public abstract T Evaluate(IDictionary<string, object> variables);
 
-		public T Evaluate(object host)
-		{
-			if (FormulaType == FormulaType.Literal)
-				return Value;
-			var variables = new Dictionary<string, object>();
-			variables.Add("self", Context);
-			variables.Add("host", host);
-			if (host is IFormulaHost)
-			{
-				foreach (var kvp in ((IFormulaHost)host).Variables)
-					variables.Add(kvp.Key, kvp.Value);
-			}
-			return Evaluate(variables);
-		}
-
-		private T cachedValue;
-		private bool hasCache = false;
+		public abstract T Evaluate(object host);
 
 		object IFormula.Value { get { return Value; } }
-
-		/// <summary>
-		/// Compiles the formula into a literal formula.
-		/// </summary>
-		/// <param name="variables"></param>
-		/// <returns></returns>
-		public Formula<T> Compile()
-		{
-			return new Formula<T>(Context, Value.ToStringInvariant(), FormulaType.Literal);
-		}
-
-		public static implicit operator Formula<T>(T obj)
-		{
-			return new Formula<T>(null, obj.ToStringInvariant(), FormulaType.Literal);
-		}
 
 		public static implicit operator T(Formula<T> f)
 		{
@@ -130,8 +70,10 @@ namespace FrEee.Modding
 			return f.Value;
 		}
 
-		[DoNotCopy]
-		public object Context { get; set; }
+		public static implicit operator Formula<T>(T t)
+		{
+			return new LiteralFormula<T>(t.ToStringInvariant());
+		}
 
 		public override string ToString()
 		{
@@ -152,83 +94,86 @@ namespace FrEee.Modding
 			string combined = "({0}) + ({1})";
 			if (typeof(T) == typeof(string))
 			{
-				if (f1.FormulaType == FormulaType.Literal)
+				if (f1.IsLiteral)
 					combined = combined.Replace("({0})", "\"{0}\"");
-				if (f2.FormulaType == FormulaType.Literal)
+				if (f2.IsLiteral)
 					combined = combined.Replace("({1})", "\"{1}\"");
 			}
-			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format(combined, f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
-			if (result.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			if (f1.IsLiteral && f2.IsLiteral)
+				return new ComputedFormula<T>(string.Format(combined, f1.Text, f2.Text), null, false);
+			else
+				return new ComputedFormula<T>(string.Format(combined, f1.Text, f2.Text), f1.Context ?? f2.Context, f1.IsDynamic || f2.IsDynamic);
 		}
 
 		public static Formula<T> operator -(Formula<T> f1, Formula<T> f2)
 		{
-			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) - ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
-			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"({f1.Text}) - ({f2.Text})";
+			if (f1.IsLiteral && f2.IsLiteral)
+				return new ComputedFormula<T>(text, null, false);
+			else
+				return new ComputedFormula<T>(text, f1.Context ?? f2.Context, f1.IsDynamic || f2.IsDynamic);
 		}
 
 		public static Formula<T> operator *(Formula<T> f1, Formula<T> f2)
 		{
-			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) * ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
-			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"({f1.Text}) * ({f2.Text})";
+			if (f1.IsLiteral && f2.IsLiteral)
+				return new ComputedFormula<T>(text, null, false);
+			else
+				return new ComputedFormula<T>(text, f1.Context ?? f2.Context, f1.IsDynamic || f2.IsDynamic);
 		}
 
 		public static Formula<T> operator /(Formula<T> f1, Formula<T> f2)
 		{
-			var result = new Formula<T>(f1.Context ?? f2.Context, string.Format("({0}) / ({1})", f1.Text, f2.Text), f1.FormulaType == FormulaType.Literal ? FormulaType.Static : f1.FormulaType);
-			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"({f1.Text}) / ({f2.Text})";
+			if (f1.IsLiteral && f2.IsLiteral)
+				return new ComputedFormula<T>(text, null, false);
+			else
+				return new ComputedFormula<T>(text, f1.Context ?? f2.Context, f1.IsDynamic || f2.IsDynamic);
 		}
 
 		public static Formula<T> operator -(Formula<T> f)
 		{
-			var result = new Formula<T>(f.Context, string.Format("-({0})", f.Text), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
-			if (f.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"-({f.Text})";
+			if (f.IsLiteral)
+				return new ComputedFormula<T>(text, null, false);
+			else
+				return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
 		}
 
 		public static Formula<T> operator +(Formula<T> f, double scalar)
 		{
-			Formula<T> result;
-			if (typeof(T) == typeof(string) && f.FormulaType == FormulaType.Literal)
-				result = new Formula<T>(f.Context, string.Format("(\"{0}\") + str({1})", f.Text, scalar.ToStringInvariant()), FormulaType.Static).Compile();
+			if (typeof(T) == typeof(string))
+			{
+				var text = (string)(object)f.Value + scalar.ToStringInvariant();
+				if (f.IsLiteral)
+					return new LiteralFormula<T>(text);
+				else
+					return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
+			}
 			else
-				result = new Formula<T>(f.Context, string.Format("({0}) + ({1})", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
-			if (f.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			{
+				var text = $"{f.Value} + {scalar}";
+				return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
+			}
 		}
 
 		public static Formula<T> operator -(Formula<T> f, double scalar)
 		{
-			var result = new Formula<T>(f.Context, string.Format("({0}) - {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
-			if (f.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"{f.Value} - {scalar}";
+			return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
 		}
 
 		public static Formula<T> operator *(Formula<T> f, double scalar)
 		{
-			var result = new Formula<T>(f.Context, string.Format("({0}) * {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
-			if (f.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"{f.Value} * {scalar}";
+			return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
 		}
 
 		public static Formula<T> operator /(Formula<T> f, double scalar)
 		{
-			var result = new Formula<T>(f.Context, string.Format("({0}) / {1}", f.Text, scalar.ToStringInvariant()), f.FormulaType == FormulaType.Literal ? FormulaType.Static : f.FormulaType);
-			if (f.FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
+			var text = $"{f.Value} / {scalar}";
+			return new ComputedFormula<T>(text, f.Context, f.IsDynamic);
 		}
 
 		public static Formula<string> operator +(Formula<string> f1, Formula<T> f2)
@@ -237,62 +182,31 @@ namespace FrEee.Modding
 				return null;
 			if (f1 == null)
 			{
-				if (f2.FormulaType == FormulaType.Literal)
-					return new Formula<string>(f2.Context, f2.Text, FormulaType.Literal);
+				if (f2.IsLiteral)
+					return new LiteralFormula<string>(f2.Text);
 				else
-					return new Formula<string>(f2.Context, string.Format("str({0})", f2.Text), f2.FormulaType);
+					return new ComputedFormula<string>(string.Format("str({0})", f2.Text), f2.Context, f2.IsDynamic);
 			}
 			if (f2 == null)
 				return f1.Copy(); // don't leak a reference to the original formula!
-			if (f1.FormulaType == FormulaType.Literal && f2.FormulaType == FormulaType.Literal)
+			if (f1.IsLiteral && f2.IsLiteral)
 				return f1.Value + f2.Value;
-			if (f1.FormulaType == FormulaType.Dynamic || f2.FormulaType == FormulaType.Dynamic)
+			if (f1.IsDynamic || f2.IsDynamic)
 			{
-				if (f1.FormulaType == FormulaType.Literal)
-					return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), FormulaType.Dynamic);
+				if (f1.IsLiteral)
+					return new ComputedFormula<string>(string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), f1.Context, true);
 				else
-					return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Dynamic);
+					return new ComputedFormula<string>(string.Format("({0}) + str({1})", f1.Text, f2.Text), f1.Context, true);
 			}
-			if (f1.FormulaType == FormulaType.Literal)
-				return new Formula<string>(f1.Context, string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), FormulaType.Static);
+			if (f1.IsLiteral)
+				return new ComputedFormula<string>(string.Format("(\"{0}\") + str({1})", f1.Value, f2.Text), f1.Context, false);
 			else
-				return new Formula<string>(f1.Context, string.Format("({0}) + str({1})", f1.Text, f2.Text), FormulaType.Static);
+				return new ComputedFormula<string>(string.Format("({0}) + str({1})", f1.Text, f2.Text), f1.Context, false);
 		}
 
-		public static bool operator ==(Formula<T> f1, Formula<T> f2)
-		{
-			if (f1.IsNull() && f2.IsNull())
-				return true;
-			if (f1.IsNull() || f2.IsNull())
-				return false;
-			return f1.Value.SafeEquals(f2.Value);
-		}
+		public abstract Formula<string> ToStringFormula(CultureInfo c = null);
 
-		public static bool operator !=(Formula<T> f1, Formula<T> f2)
-		{
-			return !(f1 == f2);
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (!(obj is Formula<T>))
-				return false;
-			var f = (Formula<T>)obj;
-			return FormulaType == f.FormulaType && Text == f.Text && Context == f.Context;
-		}
-
-		public override int GetHashCode()
-		{
-			return HashCodeMasher.Mash(Text, Context, FormulaType);
-		}
-
-		public Formula<string> ToStringFormula()
-		{
-			var result = new Formula<string>(Context, "str(" + Text + ")", FormulaType == FormulaType.Literal ? FormulaType.Static : FormulaType);
-			if (FormulaType == FormulaType.Literal)
-				return result.Compile();
-			return result;
-		}
+		public abstract object Context { get; }
 
 		public int CompareTo(object obj)
 		{
@@ -303,10 +217,9 @@ namespace FrEee.Modding
 
 		public int CompareTo(T other)
 		{
-			if (other is Formula<T>)
-				return Value.CompareTo(((Formula<T>)other).Value);
 			return Value.CompareTo(other);
 		}
+
 
 		public int CompareTo(Formula<T> other)
 		{

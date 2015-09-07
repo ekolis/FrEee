@@ -2699,7 +2699,7 @@ namespace FrEee.Utility.Extensions
 			foreach (var kvp in sorted)
 				formula = formula.Replace("***", kvp.Value.ToStringInvariant() + " if " + variableName + " <= " + kvp.Key + " else (***)");
 			formula = formula.Replace("***", defaultValue.ToStringInvariant());
-			return new Formula<TValue>(context, formula, FormulaType.Dynamic);
+			return new ComputedFormula<TValue>(formula, context, true);
 		}
 
 		/// <summary>

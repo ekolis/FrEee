@@ -462,7 +462,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				// initialize IronPython galaxy on load
 				Current.StringValue = Current.SaveToString(false);
-				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
+				var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 				var turn = formula.Value;
 			}
 		}
@@ -516,7 +516,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				// initialize IronPython galaxy on load
 				Current.StringValue = serializedData;
-				var formula = new Formula<int>(null, "Galaxy.Current.TurnNumber", Modding.Enumerations.FormulaType.Dynamic);
+				var formula = new ComputedFormula<int>("Galaxy.Current.TurnNumber", null, true);
 				var turn = formula.Value;
 
 				// load library of designs, strategies, etc.
