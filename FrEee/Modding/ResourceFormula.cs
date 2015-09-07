@@ -9,6 +9,7 @@ using System.Text;
 
 namespace FrEee.Modding
 {
+	// TODO - split ResourceFormula into LiteralResourceFormula and ComputedResourceFormula?
 	public class ResourceFormula : SafeDictionary<Resource, Formula<int>>
 	{
 		/// <summary>

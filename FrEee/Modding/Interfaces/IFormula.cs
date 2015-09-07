@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FrEee.Utility;
+using System.Globalization;
 
 namespace FrEee.Modding.Interfaces
 {
@@ -12,17 +13,19 @@ namespace FrEee.Modding.Interfaces
 	{
 		string Text { get; set; }
 
-		FormulaType FormulaType { get; set; }
-
 		object Value { get; }
 
-		object Context { get; set; }
+		object Context { get; }
 
 		object Evaluate(IDictionary<string, object> variables);
 
 		object Evaluate(object host);
 
-		Formula<string> ToStringFormula();
+		Formula<string> ToStringFormula(CultureInfo c = null);
+
+		bool IsLiteral { get; }
+
+		bool IsDynamic { get; }
 	}
 
 	public interface IFormula<out T> : IFormula

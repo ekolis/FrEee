@@ -149,6 +149,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modding\ComputedFormula.cs" />
+    <Compile Include="Modding\Formula.cs" />
+    <Compile Include="Modding\LiteralFormula.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
@@ -352,7 +355,6 @@
     <Compile Include="Game\Setup\WarpPointPlacementStrategies\WarpPointPlacementStrategy.cs" />
     <Compile Include="Modding\DamageType.cs" />
     <Compile Include="Modding\Enumerations\RequirementType.cs" />
-    <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\FormulaContext.cs" />
     <Compile Include="Modding\Enumerations\FormulaType.cs" />
     <Compile Include="Modding\ModReference.cs" />

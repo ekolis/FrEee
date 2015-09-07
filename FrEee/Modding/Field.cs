@@ -47,10 +47,10 @@ namespace FrEee.Modding
 		{
 			var txt = Value.TrimStart('=');
 			if (Value.StartsWith("=="))
-				return new Formula<T>(context, txt, FormulaType.Dynamic);
+				return new ComputedFormula<T>(txt, context, true); // dynamic
 			else if (Value.StartsWith("="))
-				return new Formula<T>(context, txt, FormulaType.Static);
-			return new Formula<T>(context, txt, FormulaType.Literal);
+				return new ComputedFormula<T>(txt, context, false); // static
+			return new LiteralFormula<T>(txt);
 		}
 
 		public override string ToString()

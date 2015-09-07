@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Abilities
 				if (val is IFormula)
 					Values.Add((val as IFormula).ToStringFormula());
 				else
-					Values.Add(new Formula<string>(container, val.ToString(), Modding.Enumerations.FormulaType.Literal));
+					Values.Add(new LiteralFormula<string>(val.ToString()));
 			}
 		}
 

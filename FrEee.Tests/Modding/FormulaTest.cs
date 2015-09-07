@@ -70,12 +70,12 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 			Mod.Current = new Mod();
 			var armor = new ComponentTemplate();
 			armor.Size = 10;
-			armor.Durability = new Formula<int>(armor, "self.Size * 3", FormulaType.Dynamic);
+			armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
 			Mod.Current.ComponentTemplates.Add(armor);
 			Galaxy.Current.AssignID(armor);
 			var mount = new Mount();
 			mount.DurabilityPercent = 200;
-			mount.SizePercent = new Formula<int>(mount, "design.Hull.Size", FormulaType.Dynamic);
+			mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
 			Mod.Current.Mounts.Add(mount);
 			Galaxy.Current.AssignID(mount);
 			var hull = new Hull<Ship>();

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FrEee.Modding.Interfaces;
 
 namespace FrEee.Game.Objects.Technology
 {
