@@ -662,7 +662,7 @@ namespace FrEee.Wpf.Utility
 
 		public static ImageSource GetModImageSource(string path)
 		{
-			if (Mod.Current.RootPath == null)
+			if (Mod.Current == null || Mod.Current.RootPath == null)
 				return GetCachedImageSource(path);
 			return GetCachedImageSource(new string[]
 			{

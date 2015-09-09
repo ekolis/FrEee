@@ -117,7 +117,7 @@ namespace FrEee.Wpf.Views
 						{
 							for (var y = miny; y <= maxy; y++)
 							{
-								dc.DrawRectangle(null, new Pen(App.Current.Resources["GameTransparentBrush"] as Brush, 1), new Rect(
+								dc.DrawRectangle(null, new Pen(Application.Current.Resources["GameTransparentBrush"] as Brush, 1), new Rect(
 									(x - 0.5 - avgx) * drawsize + usedWidth / 2f + xpadding,
 									(y - 0.5 - avgy) * drawsize + usedHeight / 2f + ypadding,
 									drawsize, drawsize));
@@ -147,7 +147,7 @@ namespace FrEee.Wpf.Views
 
 						// draw selection reticule
 						if (sys == Galaxy.SelectedStarSystem)
-							dc.DrawRectangle(null, new Pen(App.Current.BrightBrightBrush, 2), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
+							dc.DrawRectangle(null, new Pen(App.BrightBrightBrush, 2), new Rect(drawx - drawsize / 2f - 1, drawy - drawsize / 2f - 1, drawsize + 2, drawsize + 2));
 					}
 
 					// draw warp points
@@ -184,7 +184,7 @@ namespace FrEee.Wpf.Views
 							var realEndPos = new Point(endPos.X - ndx, endPos.Y - ndy);
 
 							// draw line
-							dc.DrawLine(new Pen(App.Current.BrightBrightBrush, 1), realStartPos, realEndPos);
+							dc.DrawLine(new Pen(App.BrightBrightBrush, 1), realStartPos, realEndPos);
 
 							if (!Galaxy.WarpGraph.GetExits(target).Contains(ssl))
 							{
