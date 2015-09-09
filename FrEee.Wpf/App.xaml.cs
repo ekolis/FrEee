@@ -17,7 +17,7 @@ namespace FrEee.Wpf
 			new MainMenuView().ShowDialog(WindowStartupLocation.CenterScreen);
 		}
 
-		public string RootDirectory
+		public static string RootDirectory
 		{
 			get
 			{
@@ -25,19 +25,11 @@ namespace FrEee.Wpf
 			}
 		}
 
-		public static new App Current
+		public static Brush BrightBrightBrush
 		{
 			get
 			{
-				return (App)Application.Current;
-			}
-		}
-
-		public Brush BrightBrightBrush
-		{
-			get
-			{
-				return Resources["GameBrightBrightBrush"] as Brush;
+				return Application.Current.Resources["GameBrightBrightBrush"] as Brush;
             }
 		}
 	}

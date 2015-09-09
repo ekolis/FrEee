@@ -55,7 +55,7 @@ namespace FrEee.Wpf.ViewModels
 			get
 			{
 				// TODO - galaxy view background image can depend on galaxy template?
-				return GetModImageSource(Path.Combine(App.Current.RootDirectory, "Pictures", "UI", "Map", "quadrant"));
+				return GetModImageSource(Path.Combine(App.RootDirectory, "Pictures", "UI", "Map", "quadrant"));
 			}
 		}
 
