@@ -196,9 +196,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				if (StarSystem == null)
-					return null;
-				return StarSystem.Icon;
+				return SpaceObjects.Largest()?.Icon ?? StarSystem?.Icon;
 			}
 		}
 
@@ -206,9 +204,23 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				if (StarSystem == null)
-					return null;
-				return StarSystem.Portrait;
+				return SpaceObjects.Largest()?.Portrait ?? StarSystem?.Portrait;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.PortraitPaths ?? StarSystem?.PortraitPaths;
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return SpaceObjects.Largest()?.IconPaths ?? StarSystem?.IconPaths;
 			}
 		}
 

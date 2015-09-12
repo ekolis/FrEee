@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -384,6 +385,43 @@ namespace FrEee.Game.Objects.Technology
 		IEnumerable<IHull> IUpgradeable<IHull>.OlderVersions
 		{
 			get { return OlderVersions; }
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return GetPaths("Portrait");
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return GetPaths("Mini");
+			}
+		}
+
+		private IEnumerable<string> GetPaths(string pathtype)
+		{
+			var paths = new List<string>();
+
+			var shipsetPath = "Default";
+			if (Empire.Current != null)
+				shipsetPath = Empire.Current.ShipsetPath;
+
+			foreach (var s in PictureNames)
+			{
+				if (Mod.Current?.RootPath != null)
+				{
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+				}
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+			}
+			return paths;
 		}
 	}
 }

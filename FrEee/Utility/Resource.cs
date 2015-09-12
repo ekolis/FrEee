@@ -6,6 +6,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using FrEee.Game.Objects.Civilization;
+using System.IO;
+using System.Reflection;
 
 namespace FrEee.Utility
 {
@@ -154,6 +156,22 @@ namespace FrEee.Utility
 		public Image Icon
 		{
 			get { return Pictures.GetIcon(this); }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				yield return Path.Combine("UI", "Resources", PictureName);
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return IconPaths;
+			}
 		}
 
 		/// <summary>

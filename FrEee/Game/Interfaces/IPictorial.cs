@@ -20,5 +20,15 @@ namespace FrEee.Game.Interfaces
 		/// A large picture.
 		/// </summary>
 		Image Portrait { get; }
+
+		/// <summary>
+		/// Paths with fallbacks to the icon, relative to the Pictures folder.
+		/// </summary>
+		IEnumerable<string> IconPaths { get; }
+
+		/// <summary>
+		/// Paths with fallbacks to the portrait, relative to the Pictures folder.
+		/// </summary>
+		IEnumerable<string> PortraitPaths { get; }
 	}
 }

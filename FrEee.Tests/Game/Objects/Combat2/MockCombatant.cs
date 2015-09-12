@@ -371,5 +371,21 @@ namespace FrEee.Tests.Game.Objects.Combat2
 		/// Resources stored on this space vehicle.
 		/// </summary>
 		public ResourceQuantity StoredResources { get; private set; }
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				yield break;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				yield break;
+			}
+		}
 	}
 }

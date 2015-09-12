@@ -126,5 +126,9 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		public IMessage InReplyTo { get; set; }
 
 		public bool IsDisposed { get; set; }
+
+		public abstract IEnumerable<string> IconPaths { get; }
+
+		public abstract IEnumerable<string> PortraitPaths { get; }
 	}
 }

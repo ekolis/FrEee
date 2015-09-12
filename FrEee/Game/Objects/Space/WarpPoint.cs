@@ -5,6 +5,7 @@ using FrEee.Game.Interfaces;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Civilization;
+using System.Collections.Generic;
 
 namespace FrEee.Game.Objects.Space
 {

@@ -12,7 +12,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Modding;
-
+using System.IO;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -71,6 +71,24 @@ namespace FrEee.Game.Objects.Space
 		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return PortraitPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				if (Mod.Current.RootPath != null)
+					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Planets", PictureName);
+				yield return Path.Combine("Pictures", "Planets", PictureName);
+			}
 		}
 
 		/// <summary>

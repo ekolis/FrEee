@@ -276,6 +276,21 @@ namespace FrEee.Game.Objects.Technology
 			get { return Resource.Research.Icon; }
 		}
 
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Resource.Research.IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Resource.Research.PortraitPaths;
+			}
+		}
 
 		public string ResearchGroup
 		{

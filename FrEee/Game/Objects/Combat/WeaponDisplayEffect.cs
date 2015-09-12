@@ -73,6 +73,24 @@ namespace FrEee.Game.Objects.Combat
 			get { return Icon; }
 		}
 
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				yield return Path.Combine("Races", "Default", Name);
+				yield return Path.Combine("Races", "Default", "Default" + "_" + Name);
+				yield return Path.Combine("Combat", Name);
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return IconPaths;
+			}
+		}
+
 		public Image GetIcon(string shipset)
 		{
 			// see if we have a positive number to use a sprite sheet

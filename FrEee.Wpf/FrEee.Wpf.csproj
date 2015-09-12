@@ -83,6 +83,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Rendering\IRenderer.cs" />
+    <Compile Include="Rendering\Renderer.cs" />
+    <Compile Include="Rendering\Renderers.cs" />
+    <Compile Include="Rendering\VehicleRenderer.cs" />
+    <Compile Include="Rendering\StellarObjectRenderer.cs" />
     <Compile Include="Utility\Extensions.cs" />
     <Compile Include="Utility\Pictures.cs" />
     <Compile Include="ViewModels\EmpireViewModel.cs" />
@@ -92,8 +97,11 @@
     <Compile Include="ViewModels\ResourceProgressViewModel.cs" />
     <Compile Include="ViewModels\ResourceQuantityViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModel.cs" />
+    <Compile Include="ViewModels\SpaceObjectViewModel.cs" />
+    <Compile Include="ViewModels\SectorViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceProgressViewModel.cs" />
     <Compile Include="ViewModels\SingleResourceQuantityViewModel.cs" />
+    <Compile Include="ViewModels\StarSystemMapViewModel.cs" />
     <Compile Include="ViewModels\TempView.xaml.cs">
       <DependentUpon>TempView.xaml</DependentUpon>
     </Compile>
@@ -122,7 +130,13 @@
     <Compile Include="Views\ResourceQuantityView.xaml.cs">
       <DependentUpon>ResourceQuantityView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SectorView.xaml.cs">
+      <DependentUpon>SectorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shapes\PieSlice.cs" />
+    <Compile Include="Views\StarSystemMapView.xaml.cs">
+      <DependentUpon>StarSystemMapView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\StatusView.xaml.cs">
       <DependentUpon>StatusView.xaml</DependentUpon>
     </Compile>
@@ -155,6 +169,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ResourceQuantityView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StarSystemMapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

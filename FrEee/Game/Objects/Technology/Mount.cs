@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace FrEee.Game.Objects.Technology
 {
@@ -155,6 +156,24 @@ namespace FrEee.Game.Objects.Technology
 		public System.Drawing.Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return PortraitPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				if (Mod.Current?.RootPath != null)
+					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Mounts", PictureName);
+				yield return Path.Combine("Pictures", "Mounts", PictureName);
+			}
 		}
 
 		public void Dispose()

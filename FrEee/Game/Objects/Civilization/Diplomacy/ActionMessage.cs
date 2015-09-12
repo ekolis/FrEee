@@ -24,6 +24,22 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 		/// </summary>
 		public Action Action { get; set; }
 
+		public override IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Owner.IconPaths;
+			}
+		}
+
+		public override IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Owner.PortraitPaths;
+			}
+		}
+
 		public override void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
 		{
 			Action.ReplaceClientIDs(idmap);

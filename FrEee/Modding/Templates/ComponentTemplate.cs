@@ -11,6 +11,7 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding.Interfaces;
+using System.IO;
 
 namespace FrEee.Modding.Templates
 {
@@ -301,6 +302,24 @@ namespace FrEee.Modding.Templates
 			get
 			{
 				return Mod.Current.ComponentTemplates.OlderVersions(this, ct => ct.Family);
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				if (Mod.Current.RootPath != null)
+					yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Components", PictureName);
+				yield return Path.Combine("Pictures", "Components", PictureName);
 			}
 		}
 	}

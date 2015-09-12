@@ -1315,6 +1315,22 @@ namespace FrEee.Game.Objects.Combat2
 			get { return StartCombatants.Values.OfType<ISpaceObject>().Largest().Portrait; }
 		}
 
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return StartCombatants.Values.OfType<ISpaceObject>().Largest().IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return StartCombatants.Values.OfType<ISpaceObject>().Largest().PortraitPaths;
+			}
+		}
+
 		public ICombatant FindStartCombatant(ICombatant c)
 		{
 			return StartCombatants[c.ID];

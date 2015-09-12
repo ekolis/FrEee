@@ -19,6 +19,8 @@ using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
 using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Combat2.Tactics;
+using System.IO;
+using System.Reflection;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -699,6 +701,44 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				return !Galaxy.Current.Referrables.Contains(this);
 			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return GetPaths("Portrait");
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return GetPaths("Mini");
+			}
+		}
+
+		private IEnumerable<string> GetPaths(string pathtype)
+		{
+			var shipsetPath = Owner.ShipsetPath;
+			if (shipsetPath == null)
+				shipsetPath = "Default";
+			if (!Hull.PictureNames.Any())
+				return Enumerable.Empty<string>();
+			var paths = new List<string>();
+
+			foreach (var s in Hull.PictureNames)
+			{
+				if (Mod.Current.RootPath != null)
+				{
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, pathtype + "_" + s));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+				}
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, pathtype + "_" + s));
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + pathtype + "_" + s)); // for SE4 shipset compatibility
+			}
+			return paths;
 		}
 	}
 }

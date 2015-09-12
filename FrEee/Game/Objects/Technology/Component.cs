@@ -397,5 +397,21 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Where(c => c.Template.UpgradesTo(Template)); }
 		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Template.IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Template.PortraitPaths;
+			}
+		}
 	}
 }

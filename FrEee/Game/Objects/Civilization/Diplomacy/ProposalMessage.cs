@@ -35,5 +35,21 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy
 				Proposal.ReplaceClientIDs(idmap, done);
 			}
 		}
+
+		public override IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Proposal.Owner.IconPaths;
+			}
+		}
+
+		public override IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Proposal.Owner.PortraitPaths;
+			}
+		}
 	}
 }
