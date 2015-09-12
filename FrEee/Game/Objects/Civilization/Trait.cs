@@ -120,6 +120,22 @@ namespace FrEee.Game.Objects.Civilization
 		/// </summary>
 		public Image Icon { get { return null; } }
 
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				yield break;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				yield break;
+			}
+		}
+
 		public bool IsDisposed
 		{
 			// TODO - disposable traits?

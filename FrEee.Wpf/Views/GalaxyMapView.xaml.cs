@@ -42,19 +42,6 @@ namespace FrEee.Wpf.Views
 			InvalidateVisual();
 		}
 
-		/*/// <summary>
-		/// The size at which each star system will be drawn, in pixels.
-		/// </summary>
-		public double StarSystemDrawSize
-		{
-			get
-			{
-				if (Galaxy == null)
-					return 0;
-				return (Math.Min(ActualWidth / Galaxy.UsedWidth, ActualHeight / Galaxy.UsedHeight));
-			}
-		}*/
-
 		protected override void OnRender(DrawingContext dc)
 		{
 			base.OnRender(dc);

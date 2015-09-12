@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Technology
 	/// A combination of component template and mount.
 	/// </summary>
 	[Serializable]
-	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>
+	public class MountedComponentTemplate : ITemplate<Component>, INamed, IAbilityObject, IPromotable, IContainable<IDesign>, IFormulaHost, IUpgradeable<MountedComponentTemplate>, IPictorial
 	{
 		public MountedComponentTemplate(IDesign container, ComponentTemplate ct, Mount mount = null)
 		{
@@ -386,6 +386,22 @@ namespace FrEee.Game.Objects.Technology
 		public IEnumerable<MountedComponentTemplate> OlderVersions
 		{
 			get { return Galaxy.Current.FindSpaceObjects<IVehicle>().SelectMany(v => v.Components).Select(c => c.Template).Where(mct => LatestVersion == mct).Distinct(); }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return ComponentTemplate.IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return ComponentTemplate.PortraitPaths;
+			}
 		}
 
 		/// <summary>

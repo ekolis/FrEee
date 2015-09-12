@@ -385,5 +385,21 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get { return Galaxy.Current.FindSpaceObjects<Planet>().Where(p => p.HasColony).SelectMany(p => p.Colony.Facilities).Where(f => f.Template.UpgradesTo(Template)); }
 		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Template.IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Template.PortraitPaths;
+			}
+		}
 	}
 }

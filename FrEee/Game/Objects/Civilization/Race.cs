@@ -12,6 +12,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace FrEee.Game.Objects.Civilization
 {
@@ -89,6 +90,39 @@ namespace FrEee.Game.Objects.Civilization
 		public Image Portrait
 		{
 			get { return Pictures.GetPortrait(this); }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				foreach (var x in GetImagePaths(PopulationIconName, "Pop_Portrait"))
+					yield return x;
+
+				// fall back on leader portrait if icon not found
+				foreach (var x in GetImagePaths(PopulationIconName, "Race_Portrait"))
+					yield return x;
+
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return IconPaths;
+			}
+		}
+
+		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
+		{
+			if (Mod.Current?.RootPath != null)
+			{
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
+			}
+			yield return Path.Combine("Pictures", "Races", imagename, imagetype);
+			yield return Path.Combine("Pictures", "Races", imagename, Name + "_" + imagetype);
 		}
 
 		/// <summary>

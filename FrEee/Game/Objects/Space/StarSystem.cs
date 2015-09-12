@@ -56,6 +56,22 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public string BackgroundImagePath { get; set; }
 
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				yield return Path.Combine("Systems", BackgroundImagePath);
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return PortraitPaths;
+			}
+		}
+
 		public Image BackgroundImage
 		{
 			get

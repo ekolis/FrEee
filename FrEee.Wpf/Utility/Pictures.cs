@@ -664,7 +664,7 @@ namespace FrEee.Wpf.Utility
 		{
 			if (Mod.Current == null || Mod.Current.RootPath == null)
 				return GetCachedImageSource(path);
-			return GetCachedImageSource(new string[]
+            return GetCachedImageSource(new string[]
 			{
 				Path.Combine("Mods", Mod.Current.RootPath, path),
 				path
@@ -682,6 +682,11 @@ namespace FrEee.Wpf.Utility
 				allpaths.Add(p);
 			}
 			return GetCachedImageSource(allpaths);
+		}
+
+		public static ImageSource GetModImageSource(IEnumerable<string> paths)
+		{
+			return GetModImageSource(paths.ToArray());
 		}
 
 		/// <summary>

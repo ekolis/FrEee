@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -147,6 +148,48 @@ namespace FrEee.Game.Objects.Space
 				var owner = Owner ?? Empire.Current; // for client side fleets that are empty
 				return Pictures.GetPortrait(this, owner.ShipsetPath);
 			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return GetImagePaths("Mini");
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return GetImagePaths("Portrait");
+			}
+		}
+
+		private IEnumerable<string> GetImagePaths(string imagetype)
+		{
+			var shipsetPath = Owner?.ShipsetPath ?? Empire.Current?.ShipsetPath;
+
+			if (shipsetPath == null)
+				yield break;
+
+			string imageName = "Fleet";
+			if (LeafVehicles.All(v => v is Fighter))
+				imageName = "FighterGroup";
+			else if (LeafVehicles.All(v => v is Satellite))
+				imageName = "SatelliteGroup";
+			else if (LeafVehicles.All(v => v is Drone))
+				imageName = "DroneGroup";
+			else if (LeafVehicles.All(v => v is Mine))
+				imageName = "MineGroup";
+
+			if (Mod.Current.RootPath != null)
+			{
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
+			}
+			yield return Path.Combine("Pictures", "Races", shipsetPath, imagetype + "_" + imageName);
+			yield return Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + imagetype + "_" + imageName);
 		}
 
 		[DoNotSerialize]

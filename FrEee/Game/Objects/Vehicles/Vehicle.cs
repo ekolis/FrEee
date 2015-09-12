@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.IO;
+using System.Reflection;
 
 namespace FrEee.Game.Objects.Vehicles
 {
@@ -81,6 +83,16 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get { return Design.Portrait; }
 		}
+
+		/*public IEnumerable<string> IconPaths
+		{
+			get { return Design.IconPaths; }
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get { return Design.PortraitPaths; }
+		}*/
 
 		public abstract void Place(ISpaceObject target);
 
@@ -705,6 +717,22 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				return Galaxy.Current.FindSpaceObjects<IVehicle>().Where(v => v.Design.UpgradesTo(Design));
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Design.PortraitPaths;
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Design.IconPaths;
 			}
 		}
 	}

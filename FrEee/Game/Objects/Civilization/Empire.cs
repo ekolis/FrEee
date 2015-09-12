@@ -653,6 +653,43 @@ namespace FrEee.Game.Objects.Civilization
 			get { return Pictures.GetPortrait(this); }
 		}
 
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				foreach (var x in GetImagePaths(InsigniaName, "Insignia"))
+					yield return x;
+
+				// fall back on leader portrait
+				foreach (var x in GetImagePaths(LeaderPortraitName, "Race_Portrait"))
+					yield return x;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				foreach (var x in GetImagePaths(LeaderPortraitName, "Race_Portrait"))
+					yield return x;
+
+				// fall back on population icon
+				foreach (var x in PrimaryRace.IconPaths)
+					yield return x;
+			}
+		}
+
+		private IEnumerable<string> GetImagePaths(string imagename, string imagetype)
+		{
+			if (Mod.Current?.RootPath != null)
+			{
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, imagetype);
+				yield return Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", imagename, Name + "_" + imagetype);
+			}
+			yield return Path.Combine("Pictures", "Races", imagename, imagetype);
+			yield return Path.Combine("Pictures", "Races", imagename, Name + "_" + imagetype);
+		}
+
 		/// <summary>
 		/// Issues an order to an object.
 		/// </summary>
