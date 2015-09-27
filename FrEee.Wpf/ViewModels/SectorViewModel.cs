@@ -34,7 +34,7 @@ namespace FrEee.Wpf.ViewModels
 					return Enumerable.Empty<SpaceObjectViewModel>();
 				return Sector.SpaceObjects.Select(sobj => new SpaceObjectViewModel(sobj));
 			});
-			largestSpaceObject = new Lazy<SpaceObjectViewModel>(() => new SpaceObjectViewModel(Sector.SpaceObjects.Largest()));
+			largestSpaceObject = new Lazy<SpaceObjectViewModel>(() => new SpaceObjectViewModel(Sector?.SpaceObjects.Largest()));
 		}
 		#endregion
 
