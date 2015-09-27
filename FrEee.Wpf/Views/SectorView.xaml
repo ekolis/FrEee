@@ -12,7 +12,7 @@
         <vms:SectorViewModel/>
     </viewshells:View.DataContext>
     <Grid>
-        <Image Source="{Binding Path=LargestSpaceObject.Icon}"/>
-		<TextBlock Text="{Binding Path=LargestSpaceObject.Name}"/>
+        <Image Source="{Binding Path=LargestSpaceObject.Icon, FallbackValue={x:Null}}"/>
+        <TextBlock Text="{Binding Path=LargestSpaceObject.Name, FallbackValue={x:Null}}"/>
     </Grid>
 </viewshells:View>

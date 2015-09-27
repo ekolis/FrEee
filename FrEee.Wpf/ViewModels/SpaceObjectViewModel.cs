@@ -38,7 +38,7 @@ namespace FrEee.Wpf.ViewModels
 		#endregion
 
 		#region Properties
-		public string Name { get { return SpaceObject.Name; } }
+		public string Name { get { return SpaceObject?.Name; } }
 
 		public ImageSource Icon
 		{
