@@ -61,6 +61,26 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -243,41 +263,41 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Release\Mods\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\Debug\Mods\" /y /e /s
+    <PostBuildEvent>if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\$(PlatformName)\Release\Mods\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Mods" "$(ProjectDir)bin\$(PlatformName)\Debug\Mods\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Release\Data\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\Debug\Data\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\$(PlatformName)\Release\Data\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Data" "$(ProjectDir)bin\$(PlatformName)\Debug\Data\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Release\GameSetups\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\Debug\GameSetups\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\$(PlatformName)\Release\GameSetups\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\GameSetups" "$(ProjectDir)bin\$(PlatformName)\Debug\GameSetups\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Release\Docs\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\Debug\Docs\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\$(PlatformName)\Release\Docs\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Docs" "$(ProjectDir)bin\$(PlatformName)\Debug\Docs\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Release\Music\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\Debug\Music\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\$(PlatformName)\Release\Music\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Music" "$(ProjectDir)bin\$(PlatformName)\Debug\Music\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Release\Pictures\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\Debug\Pictures\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\$(PlatformName)\Release\Pictures\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Pictures" "$(ProjectDir)bin\$(PlatformName)\Debug\Pictures\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Release\Licenses\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\Debug\Licenses\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\$(PlatformName)\Release\Licenses\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Licenses" "$(ProjectDir)bin\$(PlatformName)\Debug\Licenses\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Release\Scripts\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\Debug\Scripts\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\$(PlatformName)\Release\Scripts\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)..\FrEee\Scripts" "$(ProjectDir)bin\$(PlatformName)\Debug\Scripts\" /y /e /s
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\Debug\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\$(PlatformName)\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\lib\Ogrelib\*.*" "$(ProjectDir)bin\$(PlatformName)\Debug\" /y
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins*.*" "$(ProjectDir)bin\Debug\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins\*.*" "$(ProjectDir)bin\$(PlatformName)\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\MogrePlugins*.*" "$(ProjectDir)bin\$(PlatformName)\Debug\" /y
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Release\" /y
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\Debug\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\$(PlatformName)\Release\" /y
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Ogrecfg\*.*" "$(ProjectDir)bin\$(PlatformName)\Debug\" /y
 
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Release\" /y /e /s
-if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\Debug\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\$(PlatformName)\Release\" /y /e /s
+if $(ConfigurationName) == Release xcopy "$(ProjectDir)MogreCombatRender\Media" "$(ProjectDir)bin\$(PlatformName)\Debug\" /y /e /s
 if $(ConfigurationName) == Debug (
     if EXIST "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\Mogre.dll" (
         copy "$(SolutionDir)\packages\Mogre1.7.4.1.0.6\tools\Mogre.Dependencies.Debug\*" "$(TargetDir))"
