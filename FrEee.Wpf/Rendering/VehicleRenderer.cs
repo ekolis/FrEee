@@ -32,7 +32,7 @@ namespace FrEee.Wpf.Rendering
 				ctx.Close();
 				dc.DrawGeometry(new SolidColorBrush(o.Owner.Color.ToWpfColor()), null, geometry);
 				dc.Close();
-				var bmp = new RenderTargetBitmap(512, 512, 96, 96, PixelFormats.Default);
+				var bmp = new RenderTargetBitmap((int)size.Width, (int)size.Height, 96, 96, PixelFormats.Default);
 				bmp.Render(dv);
 				return bmp;
 			}
