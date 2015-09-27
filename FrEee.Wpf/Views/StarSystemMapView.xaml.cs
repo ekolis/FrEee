@@ -57,6 +57,8 @@ namespace FrEee.Wpf.Views
 			if (DataContext is StarSystem)
 				DataContext = new StarSystemMapViewModel((StarSystem)DataContext);
 
+			grid.Children.Clear();
+
 			if (StarSystem == null)
 			{
 				grid.Columns = 0;
