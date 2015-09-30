@@ -10,8 +10,9 @@ using System.Text;
 namespace FrEee.Modding
 {
 	// TODO - split ResourceFormula into LiteralResourceFormula and ComputedResourceFormula?
+	// TODO - equals method and IEquatable<ResourceFormula>
 	public class ResourceFormula : SafeDictionary<Resource, Formula<int>>
-	{
+	{ 
 		/// <summary>
 		/// For serialization
 		/// </summary>
