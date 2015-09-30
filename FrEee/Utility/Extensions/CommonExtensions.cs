@@ -1757,12 +1757,8 @@ namespace FrEee.Utility.Extensions
 			do
 			{
 				data = r.Read();
-				if (data > 0 && data != (int)c && data != (int)'\\' && !escaping)
-				{
-					sb.Append((char)data);
-					if (log != null)
-						log.Append((char)data);
-				}
+				if (data <= 0)
+					break; // end of stream
 				else if (escaping)
 				{
 					// in an escape sequence
