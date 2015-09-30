@@ -1765,15 +1765,24 @@ namespace FrEee.Utility.Extensions
 				}
 				else if (escaping)
 				{
+					// in an escape sequence
 					sb.Append((char)data);
 					if (log != null)
 						log.Append((char)data);
 					escaping = false;
 				}
-				else if (data == (int)'\\')
-					escaping = true;
-
-			} while (data > 0 && data != (int)c);
+				else if (data == c)
+					break; // found match
+				else if (data == '\\')
+					escaping = true; // begin escape sequence
+				else
+				{
+					// regular data
+					sb.Append((char)data);
+					if (log != null)
+						log.Append((char)data);
+				}
+			} while (true);
 			if (data == c && log != null)
 				log.Append(c);
 			return sb.ToString();
