@@ -14,7 +14,7 @@ namespace FrEee.Modding
 	/// A formula which is computed via a script.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class ComputedFormula<T> : Formula<T>
+	public class ComputedFormula<T> : Formula<T>, IEquatable<ComputedFormula<T>>
 		where T : IConvertible, IComparable
 	{
 		/// <summary>
@@ -152,12 +152,17 @@ namespace FrEee.Modding
 			if (!(obj is ComputedFormula<T>))
 				return false;
 			var f = (ComputedFormula<T>)obj;
-			return IsDynamic == f.IsDynamic && Text == f.Text && Context == f.Context;
+			return Equals(f);
 		}
 
 		public override int GetHashCode()
 		{
 			return HashCodeMasher.Mash(IsDynamic, Text, Context);
+		}
+
+		public bool Equals(ComputedFormula<T> other)
+		{
+			return IsDynamic == other.IsDynamic && Text == other.Text && Context == other.Context;
 		}
 	}
 }

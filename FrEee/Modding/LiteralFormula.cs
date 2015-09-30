@@ -15,7 +15,7 @@ namespace FrEee.Modding
 	/// A simple formula which is just a literal value. Does not require a script.
 	/// </summary>
 	/// <typeparam name="T"></typeparam>
-	public class LiteralFormula<T> : Formula<T>
+	public class LiteralFormula<T> : Formula<T>, IEquatable<LiteralFormula<T>>
 		where T : IConvertible, IComparable
 	{
 		/// <summary>
@@ -121,12 +121,17 @@ namespace FrEee.Modding
 			if (!(obj is LiteralFormula<T>))
 				return false;
 			var f = (LiteralFormula<T>)obj;
-			return Text == f.Text;
+			return Equals(f);
 		}
 
 		public override int GetHashCode()
 		{
 			return HashCodeMasher.Mash(Text);
+		}
+
+		public bool Equals(LiteralFormula<T> other)
+		{
+			return Text == other.Text;
 		}
 	}
 }
