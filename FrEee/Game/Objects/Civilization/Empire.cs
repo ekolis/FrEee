@@ -448,7 +448,7 @@ namespace FrEee.Game.Objects.Civilization
 			var totalRP = NetIncome[Resource.Research];
 			var pctSpending = AvailableTechnologies.Sum(t => ResearchSpending[t]);
 			var queueSpending = 100 - pctSpending;
-			var foundLevels = new Dictionary<Tech, int>(ResearchedTechnologies);
+			var foundLevels = new SafeDictionary<Tech, int>(ResearchedTechnologies);
 			int costBefore = 0;
 			foreach (var queuedTech in ResearchQueue)
 			{

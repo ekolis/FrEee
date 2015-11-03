@@ -28,6 +28,13 @@ namespace FrEee.Utility
 			AutoInit = autoInit;
 		}
 
+		public SafeDictionary(IDictionary<TKey, TValue> tocopy, bool autoInit = false)
+			: this(autoInit)
+		{
+			foreach (var kvp in tocopy)
+				Add(kvp);
+		}
+
 		/// <summary>
 		/// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
 		/// </summary>
