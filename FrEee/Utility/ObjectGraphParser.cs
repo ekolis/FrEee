@@ -202,7 +202,7 @@ namespace FrEee.Utility
 		{
 			var type = o.GetType();
 			var props = ObjectGraphContext.GetKnownProperties(type);
-			foreach (var p in props)
+			foreach (var p in props.Values)
 			{
 				var val = p.GetValue(o, new object[] { });
 				ParseProperty(p.Name, o, val, context);
@@ -227,7 +227,7 @@ namespace FrEee.Utility
 		static ObjectGraphContext()
 		{
 			KnownTypes = new SafeDictionary<string, Type>();
-			KnownProperties = new SafeDictionary<Type, IEnumerable<PropertyInfo>>();
+			KnownProperties = new SafeDictionary<Type, IDictionary<string, PropertyInfo>>();
 			PropertyGetters = new SafeDictionary<PropertyInfo, Delegate>();
 			PropertySetters = new SafeDictionary<PropertyInfo, Delegate>();
 			CollectionAdders = new SafeDictionary<Type, Delegate>();
@@ -257,9 +257,9 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Known properties for each object type.
 		/// </summary>
-		private static SafeDictionary<Type, IEnumerable<PropertyInfo>> KnownProperties { get; set; }
+		private static SafeDictionary<Type, IDictionary<string, PropertyInfo>> KnownProperties { get; set; }
 
-		public static IEnumerable<PropertyInfo> GetKnownProperties(Type t)
+		public static IDictionary<string, PropertyInfo> GetKnownProperties(Type t)
 		{
 			if (KnownProperties[t] == null)
 				AddProperties(t);
@@ -339,7 +339,7 @@ namespace FrEee.Utility
 				}
 				// Mono seems to place inherited properties on the derived type too so we need a consistent ordering
 				var props2 = props.Distinct().GroupBy(p => p.Key.Name).Select(g => g.Single(p2 => p2.Value == g.Max(p3 => p3.Value))).Select(kvp => kvp.Key).OrderBy(p => p.Name);
-				KnownProperties.Add(type, props2.ToArray());
+				KnownProperties.Add(type, props2.ToDictionary(p => p.Name));
 				foreach (var prop in props2)
 				{
 					var objParm = Expression.Parameter(prop.DeclaringType);
@@ -360,7 +360,7 @@ namespace FrEee.Utility
 			}
 		}
 
-		public IEnumerable<PropertyInfo> GetProperties(Type type)
+		public IDictionary<string, PropertyInfo> GetProperties(Type type)
 		{
 			AddProperties(type);
 			return KnownProperties[type];

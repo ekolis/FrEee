@@ -48,7 +48,7 @@ namespace FrEee.Wpf.ViewModels
 		{
 			get
 			{
-				return new EmpireViewModel(Galaxy.CurrentEmpire);
+				return new EmpireViewModel(Galaxy?.CurrentEmpire);
 			}
 		}
 		#endregion

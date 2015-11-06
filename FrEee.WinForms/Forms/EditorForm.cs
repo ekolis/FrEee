@@ -75,7 +75,7 @@ namespace FrEee.WinForms.Forms
 					var ctx = new ObjectGraphContext();
 					var props = ctx.GetProperties(obj.GetType());
 					foreach (var prop in props)
-						yield return new KeyValuePair<string, object>(prop.Name, prop.GetValue(obj, null));
+						yield return new KeyValuePair<string, object>(prop.Key, prop.Value.GetValue(obj, null));
 				}
 			}	
 		}

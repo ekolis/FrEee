@@ -96,7 +96,7 @@ namespace FrEee.WinForms
 					var ctx = new ObjectGraphContext();
 					var props = ctx.GetProperties(Data.GetType());
 					int row = 0;
-					foreach (var prop in props)
+					foreach (var prop in props.Values)
 					{
 						table.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 						var lbl = new Label();
