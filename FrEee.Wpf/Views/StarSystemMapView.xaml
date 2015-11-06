@@ -6,7 +6,8 @@
              xmlns:viewshells="clr-namespace:WpfViewShells;assembly=WpfViewShells"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Viewbox Stretch="Uniform"> <!-- make it square!-->
-		<UniformGrid x:Name="grid" DataContextChanged="grid_DataContextChanged" Width="300" Height="300"/>
+    <Viewbox Stretch="Uniform">
+        <!-- make it square!-->
+        <Canvas x:Name="canvas" DataContextChanged="canvas_DataContextChanged" Width="300" Height="300"/>
     </Viewbox>
 </viewshells:View>

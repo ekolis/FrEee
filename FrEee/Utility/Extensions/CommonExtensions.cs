@@ -3860,7 +3860,7 @@ namespace FrEee.Utility.Extensions
 			{
 				// use reflection :(
 				var dict = new SafeDictionary<string, object>();
-				var props = ObjectGraphContext.GetKnownProperties(o.GetType()).Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				var props = ObjectGraphContext.GetKnownProperties(o.GetType()).Values.Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
 				foreach (var p in props)
 					dict[p.Name] = p.GetValue(o);
 				return dict;
@@ -3886,7 +3886,7 @@ namespace FrEee.Utility.Extensions
 				{
 					var pname = kvp.Key;
 					var val = kvp.Value;
-					var prop = ObjectGraphContext.GetKnownProperties(o.GetType()).SingleOrDefault(p => p.Name == pname);
+					var prop = ObjectGraphContext.GetKnownProperties(o.GetType())[pname];
 					if (prop != null)
 					{
 						try

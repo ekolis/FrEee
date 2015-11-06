@@ -232,8 +232,8 @@ namespace FrEee.Utility
 			{
 				if (isDict)
 				{
-					var keyprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Key");
-					var valprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Value");
+					var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
+					var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
 					Serialize(context.GetObjectProperty(item, keyprop), w, keyprop.PropertyType, context, tabLevel + 1);
 					Serialize(context.GetObjectProperty(item, valprop), w, valprop.PropertyType, context, tabLevel + 1);
 				}
@@ -268,7 +268,7 @@ namespace FrEee.Utility
 				{
 					var pname = kvp.Key;
 					var val = kvp.Value;
-					var prop = ObjectGraphContext.GetKnownProperties(type).SingleOrDefault(p => p.Name == pname);
+					var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
 					if (prop != null)
 					{
 						var ptype = prop.PropertyType;
@@ -285,7 +285,7 @@ namespace FrEee.Utility
 			{
 				// use reflection :(
 				var type = o.GetType();
-				var props = ObjectGraphContext.GetKnownProperties(type).Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
+				var props = ObjectGraphContext.GetKnownProperties(type).Values.Where(p => !p.GetValue(o, null).SafeEquals(p.PropertyType.DefaultValue()));
 				w.WriteLine("p" + props.Count() + ":");
 				foreach (var p in props.OrderBy(p => GetSerializationPriority(p)))
 					WriteProperty(w, o, p.PropertyType, p.Name, context.GetObjectProperty(o, p), context, tabLevel);
@@ -534,8 +534,8 @@ namespace FrEee.Utility
 				var collParm = Expression.Parameter(typeof(object), "coll");
 				var keyParm = Expression.Parameter(typeof(object), "key");
 				var valParm = Expression.Parameter(typeof(object), "val");
-				var keyprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Key");
-				var valprop = ObjectGraphContext.GetKnownProperties(itemType).Single(p => p.Name == "Value");
+				var keyprop = ObjectGraphContext.GetKnownProperties(itemType)["Key"];
+				var valprop = ObjectGraphContext.GetKnownProperties(itemType)["Value"];
 				Delegate lambdaAdder;
 				if (ObjectGraphContext.CollectionAdders[type] == null)
 				{
@@ -626,7 +626,7 @@ namespace FrEee.Utility
 				for (int i = 0; i < count; i++)
 				{
 					var pname = r.ReadTo(':', log).Trim();
-					var prop = ObjectGraphContext.GetKnownProperties(type).SingleOrDefault(p => p.Name == pname);
+					var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
 					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
 					{
 						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);

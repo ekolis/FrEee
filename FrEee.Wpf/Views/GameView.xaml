@@ -74,7 +74,7 @@
         <!-- System Map -->
         <Border Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2">
             <!-- TODO - system map -->
-            <views:StarSystemMapView DataContext="{Binding ElementName=galaxyMap, Path=Galaxy.SelectedStarSystem}"/>
+            <views:StarSystemMapView DataContext="{Binding Path=Map.SelectedStarSystem}"/>
         </Border>
 
         <!-- Galaxy Map -->

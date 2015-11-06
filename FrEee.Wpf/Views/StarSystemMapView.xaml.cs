@@ -51,25 +51,40 @@ namespace FrEee.Wpf.Views
 			}
 		}
 
-		private void grid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+		private void canvas_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
 			// convert model to view model
 			if (DataContext is StarSystem)
 				DataContext = new StarSystemMapViewModel((StarSystem)DataContext);
 
-			grid.Children.Clear();
+			canvas.Children.Clear();
 
-			if (StarSystem == null)
+			if (StarSystem != null)
 			{
-				grid.Columns = 0;
-				grid.Rows = 0;
-			}
-			else
-			{
-				grid.Columns = StarSystem.Diameter;
-				grid.Rows = StarSystem.Diameter;
-				foreach (var sector in StarSystem.Sectors.OrderBy(s => s.Y).ThenBy(s => s.X))
-					grid.Children.Add(new SectorView { Sector = sector });
+				var w = canvas.ActualWidth / StarSystem.Diameter;
+				var h = canvas.ActualHeight / StarSystem.Diameter;
+
+				// TODO - place background
+
+				foreach (var sector in StarSystem.Sectors)
+				{
+					// place sector view
+					var sectorView = new SectorView { Sector = sector, Width = w, Height = h };
+					canvas.Children.Add(sectorView);
+					Canvas.SetLeft(sectorView, (sector.X + StarSystem.Radius) * w);
+					Canvas.SetTop(sectorView, (sector.Y + StarSystem.Radius) * h);
+					Canvas.SetZIndex(sectorView, 0);
+
+					// place label
+					if (sector.SpaceObjects.Any())
+					{
+						var label = new Label { Content = sector.LargestSpaceObject.Name, VerticalAlignment= VerticalAlignment.Bottom, HorizontalAlignment = HorizontalAlignment.Center, Height=12, FontSize=10};
+						canvas.Children.Add(label);
+						Canvas.SetLeft(label, (sector.X + StarSystem.Radius) * w - label.ActualWidth / 2);
+						Canvas.SetTop(label, (sector.Y + StarSystem.Radius) * h);
+						Canvas.SetZIndex(label, 1);
+					}
+				}
 			}
 		}
 	}
