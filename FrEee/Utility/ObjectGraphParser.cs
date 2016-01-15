@@ -426,7 +426,7 @@ namespace FrEee.Utility
 
 			public new bool Equals(object x, object y)
 			{
-				return object.ReferenceEquals(x, y);
+				return ReferenceEquals(x, y);
 			}
 
 			public int GetHashCode(object obj)

@@ -53,6 +53,7 @@ namespace FrEee.Game.Objects.Space
 
 		public override bool Equals(object obj)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (obj is ObjectLocation<T>)
 				return this == (ObjectLocation<T>)obj;
 			return false;

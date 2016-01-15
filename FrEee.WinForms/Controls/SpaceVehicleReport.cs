@@ -355,12 +355,10 @@ namespace FrEee.WinForms.Controls
 
 			public override bool Equals(object obj)
 			{
-				if (obj is ComponentGroup)
-				{
-					var g = (ComponentGroup)obj;
-					return this == g;
-				}
-				return false;
+				var x = obj as ComponentGroup;
+				if (x == null)
+					return false;
+				return this == x;
 			}
 
 			public override int GetHashCode()

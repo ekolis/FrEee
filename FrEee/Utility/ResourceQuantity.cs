@@ -126,7 +126,7 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
-			return object.ReferenceEquals(this, obj);
+			return ReferenceEquals(this, obj);
 		}
 
 		public static bool operator >=(ResourceQuantity r1, ResourceQuantity r2)

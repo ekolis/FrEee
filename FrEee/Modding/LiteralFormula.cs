@@ -118,10 +118,10 @@ namespace FrEee.Modding
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is LiteralFormula<T>))
+			var x = obj as LiteralFormula<T>;
+			if (x == null)
 				return false;
-			var f = (LiteralFormula<T>)obj;
-			return Equals(f);
+			return Equals(x);
 		}
 
 		public override int GetHashCode()

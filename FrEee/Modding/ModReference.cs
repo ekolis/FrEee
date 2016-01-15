@@ -138,6 +138,7 @@ namespace FrEee.Modding
 
 		public override bool Equals(object obj)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (obj is ModReference<T>)
 				return this == (ModReference<T>)obj;
 			return false;

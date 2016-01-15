@@ -506,18 +506,15 @@ namespace FrEee.WinForms.MogreCombatRender
 
 		public override bool Equals(object obj)
 		{
-			if (obj is Sprite)
-			{
-				return this.Equals((Sprite)obj); // use Equals method below
-			}
-			else
-			{
+			var x = obj as Sprite;
+			if (x == null)
 				return false;
-			}
+			return Equals(x);
 		}
 
 		public bool Equals(Sprite other)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (this.SafeEquals(null) && other.SafeEquals(null))
 				return true;
 			if (this.SafeEquals(null) || other.SafeEquals(null))

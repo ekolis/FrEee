@@ -120,6 +120,7 @@ namespace FrEee.Game.Objects.Space
 
 		public override bool Equals(object obj)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (obj is Sector)
 				return this == (Sector)obj;
 			return false;
