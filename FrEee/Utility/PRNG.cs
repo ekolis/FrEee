@@ -99,7 +99,8 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
- 			if (obj is PRNG)
+			// TODO - upgrade equals to use "as" operator
+			if (obj is PRNG)
 				return this == (PRNG)obj;
 			return false;
 		}

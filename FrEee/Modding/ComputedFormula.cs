@@ -149,10 +149,10 @@ namespace FrEee.Modding
 
 		public override bool Equals(object obj)
 		{
-			if (!(obj is ComputedFormula<T>))
+			var x = obj as ComputedFormula<T>;
+			if (x == null)
 				return false;
-			var f = (ComputedFormula<T>)obj;
-			return Equals(f);
+			return Equals(x);
 		}
 
 		public override int GetHashCode()

@@ -102,9 +102,9 @@ namespace FrEee.WinForms.Forms
 
 			public override bool Equals(object obj)
 			{
-				if (!(obj is CombatantInfo))
+				var ci = obj as CombatantInfo;
+				if (ci == null)
 					return false;
-				var ci = (CombatantInfo)obj;
 				return Empire == ci.Empire && HullName == ci.HullName && HullSize == ci.HullSize;
 			}
 

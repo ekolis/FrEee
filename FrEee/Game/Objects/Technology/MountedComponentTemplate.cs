@@ -190,6 +190,7 @@ namespace FrEee.Game.Objects.Technology
 
 		public override bool Equals(object obj)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (obj is MountedComponentTemplate)
 				return this == (MountedComponentTemplate)obj;
 			return false;

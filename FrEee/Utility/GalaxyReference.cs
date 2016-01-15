@@ -145,6 +145,7 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
+			// TODO - upgrade equals to use "as" operator
 			if (obj is GalaxyReference<T>)
 				return this == (GalaxyReference<T>)obj;
 			return false;
