@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfViewShells", "..\WpfView
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicViewModel", "..\DynamicViewModel\DynamicViewModel\DynamicViewModel.csproj", "{C89729D8-9CA6-4135-8184-6DA757129EF6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrEee.Performance", "FrEee.Performance\FrEee.Performance.csproj", "{3B34B7FC-0301-42AC-9F40-F90F993A2E75}"
+EndProject
 Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
@@ -99,6 +101,18 @@ Global
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|x64.Build.0 = Release|x64
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|x86.ActiveCfg = Release|x86
 		{C89729D8-9CA6-4135-8184-6DA757129EF6}.Release|x86.Build.0 = Release|x86
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|x64.Build.0 = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Debug|x86.Build.0 = Debug|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|x64.ActiveCfg = Release|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|x64.Build.0 = Release|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B34B7FC-0301-42AC-9F40-F90F993A2E75}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

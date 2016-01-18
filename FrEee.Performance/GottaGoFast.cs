@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrEee.Utility;
 
-namespace FrEee.Tests.Performance
+namespace FrEee.Performance
 {
 	/// <summary>
 	/// Runs code repeatedly to see how fast it is.
@@ -53,7 +53,7 @@ namespace FrEee.Tests.Performance
 				}
 				else
 				{
-					sb.AppendLine($"#{rank}: {entry.Key} at {entry.Value} ({(int)(entry.Value.TotalMilliseconds / best.Value.TotalMilliseconds * 100)}% of best)");
+					sb.AppendLine($"#{rank}: {entry.Key} at {entry.Value} ({Math.Round(entry.Value.TotalMilliseconds / best.Value.TotalMilliseconds, 2)}x of best)");
 				}
 				rank++;
 			}
