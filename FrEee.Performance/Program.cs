@@ -10,6 +10,7 @@ namespace FrEee.Performance
 	{
 		static void Main(string[] args)
 		{
+			Console.WriteLine("Which implementation of Equals is faster?");
 			PrintReport(EqualsPerf.WhichEqualsIsFaster());
 			Console.WriteLine("Press any key to exit...");
 			Console.ReadKey();
