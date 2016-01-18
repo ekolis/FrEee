@@ -7,22 +7,19 @@ using System.Security.Permissions;
 using System.Security.Policy;
 using FrEee.Utility;
 using FrEee.Utility.Extensions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace FrEee.Tests.Performance
+namespace FrEee.Performance
 {
 	/// <summary>
-	/// 
+	/// Tests performance of various implementations of <see cref="object.Equals(object)"/>.
 	/// </summary>
-	[TestClass]
-	public class EqualsTest
+	public static class EqualsPerf
 	{
 		/// <summary>
 		/// Whiches the equals is faster.
 		/// No, not really... just determines which of the two implementations of Equals is faster.
 		/// </summary>
-		[TestMethod]
-		public void WhichEqualsIsFaster()
+		public static SafeDictionary<string, TimeSpan> WhichEqualsIsFaster()
 		{
 			var dict = new SafeDictionary<string, Action>();
 			var t1 = new TypeCheckAndCast(1);
@@ -31,8 +28,7 @@ namespace FrEee.Tests.Performance
 			var a2 = new AsOperator(1);
 			dict["Type-check and cast"] = () => { t1.Equals(t1); t1.Equals(t2); t1.Equals(a1); };
 			dict["As operator and null-check"] = () => { a1.Equals(a1); a1.Equals(a2); a1.Equals(t1); };
-			var data = GottaGoFast.Run(dict);
-			Assert.Inconclusive(GottaGoFast.CreateReport(data));
+			return GottaGoFast.Run(dict);
 		}
 
 		private abstract class BaseClass
