@@ -72,7 +72,7 @@ Normal Shield Piercing := 0
 Phased Shield Damage := 100
 Phased Shield Piercing := 0
 Component Damage := ==100 if target.HasAbility("Movement Standard") else 0
-Component Piercing := ==0 if target.HasAbility("Movement Standard") else 0
+Component Piercing := ==0 if target.HasAbility("Movement Standard") else 100
 Population Damage := 0
 Conditions Damage := 0
 Facility Damage := 0
