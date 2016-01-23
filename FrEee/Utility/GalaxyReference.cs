@@ -22,7 +22,24 @@ namespace FrEee.Utility
 	[Serializable]
 	public class GalaxyReference<T> : IReference<long, T>, IPromotable
 	{
+		public GalaxyReference()
+		{
+			cache = new ClientSideCache<T>(() =>
+			{
+				if (ID <= 0)
+					return value;
+				var obj = (T)Galaxy.Current.GetReferrable(ID);
+				if (obj == null)
+					return default(T);
+				if (obj is IReferrable && (obj as IReferrable).IsDisposed)
+					return default(T);
+				return obj;
+			}
+			);
+		}
+
 		public GalaxyReference(T t)
+			: this()
 		{
 			if (t is IReferrable)
 			{
@@ -45,6 +62,7 @@ namespace FrEee.Utility
 		}
 
 		public GalaxyReference(long id)
+			: this()
 		{
 			if (Galaxy.Current == null)
 				throw new ReferenceException<int, T>("Can't create a reference to an IReferrable without a galaxy.");
@@ -56,6 +74,8 @@ namespace FrEee.Utility
 
 		public long ID { get; internal set; }
 
+		private ClientSideCache<T> cache;
+
 		private T value { get; set; }
 
 		/// <summary>
@@ -66,14 +86,7 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				if (value == null)
-				{
-					if (ID <= 0 || !Galaxy.Current.referrables.ContainsKey(ID))
-						return default(T);
-					return (T)Galaxy.Current.referrables[ID];
-				}
-				else
-					return value;
+				return cache.Value;
 			}
 		}
 
