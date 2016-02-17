@@ -238,7 +238,7 @@ namespace FrEee.WinForms.Forms
 		{
 			lstQueue.Items.Clear();
 			var idx = 0;
-			var levels = new Dictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
+			var levels = new SafeDictionary<Technology, int>(Empire.Current.ResearchedTechnologies);
 			Empire.Current.ComputeResearchProgress();
 			foreach (var tech in Empire.Current.ResearchQueue)
 			{
