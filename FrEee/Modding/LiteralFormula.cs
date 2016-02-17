@@ -119,7 +119,7 @@ namespace FrEee.Modding
 		public override bool Equals(object obj)
 		{
 			var x = obj as LiteralFormula<T>;
-			if (x == null)
+			if (ReferenceEquals(x, null))
 				return false;
 			return Equals(x);
 		}
