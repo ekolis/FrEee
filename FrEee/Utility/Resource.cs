@@ -213,10 +213,10 @@ namespace FrEee.Utility
 
 		public override bool Equals(object obj)
 		{
-			// TODO - upgrade equals to use "as" operator
-			if (obj is Resource)
-				return this == (Resource)obj;
-			return false;
+			var r = obj as Resource;
+			if (ReferenceEquals(r, null))
+				return false;
+			return this == r;
 		}
 
 		public override int GetHashCode()
