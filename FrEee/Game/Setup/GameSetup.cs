@@ -429,7 +429,7 @@ namespace FrEee.Game.Setup
 						emp.ResearchedTechnologies[tech] = tech.StartLevel;
 						break;
 					case StartingTechnologyLevel.Medium:
-						emp.ResearchedTechnologies[tech] = tech.RaiseLevel;
+						emp.ResearchedTechnologies[tech] = Math.Max(tech.StartLevel, tech.RaiseLevel);
 						break;
 					case StartingTechnologyLevel.High:
 						emp.ResearchedTechnologies[tech] = tech.MaximumLevel;
