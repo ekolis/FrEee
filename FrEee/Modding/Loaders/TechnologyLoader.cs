@@ -43,7 +43,7 @@ namespace FrEee.Modding.Loaders
 				tech.MaximumLevel = rec.Get<int>("Maximum Level", tech);
 				tech.LevelCost = rec.Get<int>("Level Cost", tech);
 				tech.StartLevel = rec.Get<int>("Start Level", tech);
-				tech.RaiseLevel = rec.Get<int>("Raise Level Level", tech);
+				tech.RaiseLevel = rec.Get<int>("Raise Level", tech);
 				tech.RacialTechID = rec.Get<string>("Racial Area", tech);
 				tech.UniqueTechID = rec.Get<string>("Unique Area", tech);
 				tech.CanBeRemoved = rec.Get<bool>("Can Be Removed", tech);
