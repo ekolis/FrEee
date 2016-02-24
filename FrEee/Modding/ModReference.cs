@@ -138,10 +138,10 @@ namespace FrEee.Modding
 
 		public override bool Equals(object obj)
 		{
-			// TODO - upgrade equals to use "as" operator
-			if (obj is ModReference<T>)
-				return this == (ModReference<T>)obj;
-			return false;
+			var mref = obj as ModReference<T>;
+			if (mref.IsNull())
+				return false;
+			return ID == mref.ID;
 		}
 
 		public void ReplaceClientIDs(IDictionary<long, long> idmap, ISet<IPromotable> done = null)
