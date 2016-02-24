@@ -1025,7 +1025,7 @@ namespace FrEee.Game.Objects.Civilization
 			}
 
 			// TODO - show count of encountered vehicles
-			foreach (var d in KnownDesigns.Where(d => d.Owner == this))
+			foreach (var d in KnownDesigns.Where(d => d.Owner != emp))
 				d.VehiclesBuilt = 0;
 
 			if (vis < Visibility.Fogged)
