@@ -427,12 +427,13 @@ namespace FrEee.Game.Objects.Civilization
 			var queueSpending = 100 - pctSpending;
 			var firstQueueSpending = 0;
 			var cost = tech.GetLevelCost(level);
+			var acc = AccumulatedResearch[tech];
 			if (ResearchQueue.FirstOrDefault() == tech)
-				firstQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - AccumulatedResearch[tech]);
+				firstQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - acc);
 			var laterQueueSpending = 0;
 			if (ResearchQueue.FirstOrDefault() != tech && ResearchQueue.Contains(tech))
-				laterQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - AccumulatedResearch[tech]);
-			return new ModProgress<Tech>(tech, AccumulatedResearch[tech], cost,
+				laterQueueSpending = Math.Min(queueSpending * totalRP / 100, cost - acc);
+			return new ModProgress<Tech>(tech, acc, cost,
 					ResearchSpending[tech] * totalRP / 100 + firstQueueSpending, GetResearchQueueDelay(tech, level), laterQueueSpending);
 		}
 
