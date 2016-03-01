@@ -67,7 +67,7 @@ namespace FrEee.Modding
 				throw new Exception("Object with ID " + id + " is not a " + typeof(T) + ".");
 		}
 
-		public string ID { get; internal set; }
+		public string ID { get; private set; }
 
 		private ClientSideCache<T> cache;
 
@@ -117,20 +117,6 @@ namespace FrEee.Modding
 			return "Mod ID=" + ID + ", Value=" + Value;
 		}
 
-		public static bool operator ==(ModReference<T> r1, ModReference<T> r2)
-		{
-			if (r1.IsNull() && r2.IsNull())
-				return true;
-			if (r1.IsNull() || r2.IsNull())
-				return false;
-			return r1.ID == r2.ID;
-		}
-
-		public static bool operator !=(ModReference<T> r1, ModReference<T> r2)
-		{
-			return !(r1 == r2);
-		}
-
 		public override int GetHashCode()
 		{
 			return ID == null || ID == "" ? 0 : ID.GetHashCode();
@@ -139,7 +125,7 @@ namespace FrEee.Modding
 		public override bool Equals(object obj)
 		{
 			var mref = obj as ModReference<T>;
-			if (mref.IsNull())
+			if (mref == null)
 				return false;
 			return ID == mref.ID;
 		}

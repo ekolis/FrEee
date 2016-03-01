@@ -3917,6 +3917,24 @@ namespace FrEee.Utility.Extensions
 			else
 				throw new NullReferenceException("Can't set data on a null object.");
 		}
+
+		/// <summary>
+		/// Slower implementation of ContainsKey for dictionaries, for use in Equals/GetHashCode debugging
+		/// </summary>
+		/// <typeparam name="TKey">The type of the key.</typeparam>
+		/// <typeparam name="TValue">The type of the value.</typeparam>
+		/// <param name="dict">The dictionary.</param>
+		/// <param name="key">The key.</param>
+		/// <returns></returns>
+		public static bool TestContainsKey<TKey, TValue>(this IDictionary<TKey, TValue> dict, TKey key)
+		{
+			var hash = EqualityComparer<TKey>.Default.GetHashCode(key);
+			return dict.Any(
+				kvp => hash == EqualityComparer<TKey>.Default.GetHashCode(kvp.Key)
+
+					&& EqualityComparer<TKey>.Default.Equals(kvp.Key, key)
+			);
+		}
 	}
 
 	public enum IDCopyBehavior
