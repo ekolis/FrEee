@@ -6,13 +6,14 @@ using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.Utility
 {
 	/// <summary>
 	/// A safe dictionary keyed with transparent references.
 	/// </summary>
-	public class ReferenceKeyedDictionary<TRef, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
+	public abstract class ReferenceKeyedDictionary<TID, TRef, TKey, TValue> : IDictionary<TKey, TValue>, IPromotable, IReferenceEnumerable
 		where TRef : IReference<TKey>
 	{
 		public ReferenceKeyedDictionary()
@@ -20,12 +21,11 @@ namespace FrEee.Utility
 			InitDict();
 		}
 
-		private static TRef MakeReference(TKey item)
-		{
-			return (TRef)typeof(TRef).Instantiate(item);
-		}
+		protected abstract TID ExtractID(TKey key);
 
-		private SafeDictionary<TRef, TValue> dict { get; set; }
+		protected abstract TKey LookUp(TID id);
+
+		private SafeDictionary<TID, TValue> dict { get; set; }
 
 		/// <summary>
 		/// Somehow we can't guarantee that dict will be initialized on freshly instantiated objects otherwise...
@@ -33,39 +33,37 @@ namespace FrEee.Utility
 		private void InitDict()
 		{
 			if (dict == null)
-				dict = new SafeDictionary<TRef, TValue>();
+				dict = new SafeDictionary<TID, TValue>();
 		}
 
 		public void Add(TKey key, TValue value)
 		{
 			InitDict();
-			var r = MakeReference(key);
-			if (!r.HasValue)
-				throw new Exception("Can't make reference for " + key);
-			dict.Add(r, value);
+			var id = ExtractID(key);
+			dict.Add(id, value);
 		}
 
 		public bool ContainsKey(TKey key)
 		{
 			InitDict();
-			return dict.ContainsKey(MakeReference(key));
+			return dict.ContainsKey(ExtractID(key));
 		}
 
 		public ICollection<TKey> Keys
 		{
-			get { InitDict(); return dict.Keys.Select(k => k.Value).ToList(); }
+			get { InitDict(); return dict.Keys.Select(k => LookUp(k)).ToList(); }
 		}
 
 		public bool Remove(TKey key)
 		{
 			InitDict();
-			return dict.Remove(MakeReference(key));
+			return dict.Remove(ExtractID(key));
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
 		{
 			InitDict();
-			return dict.TryGetValue(MakeReference(key), out value);
+			return dict.TryGetValue(ExtractID(key), out value);
 		}
 
 		public ICollection<TValue> Values
@@ -78,25 +76,21 @@ namespace FrEee.Utility
 			get
 			{
 				InitDict();
-				return dict[MakeReference(key)];
+				return dict[ExtractID(key)];
 			}
 			set
 			{
 				InitDict();
-				var r = MakeReference(key);
-				if (!r.HasValue)
-					throw new Exception("Can't make reference for " + key);
-				dict[r] = value;
+				var id = ExtractID(key);
+				dict[id] = value;
 			}
 		}
 
 		public void Add(KeyValuePair<TKey, TValue> item)
 		{
 			InitDict();
-			var r = MakeReference(item.Key);
-			if (!r.HasValue)
-				throw new Exception("Can't make reference for " + item.Key);
-			dict.Add(r, item.Value);
+			var id = ExtractID(item.Key);
+			dict.Add(id, item.Value);
 		}
 
 		public void Clear()
@@ -108,13 +102,13 @@ namespace FrEee.Utility
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
 			InitDict();
-			return dict.Contains(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
+			return dict.Contains(new KeyValuePair<TID, TValue>(ExtractID(item.Key), item.Value));
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
 			InitDict();
-			var d2 = (ICollection<KeyValuePair<TKey, TValue>>)dict.Select(kvp => new KeyValuePair<TKey, TValue>(kvp.Key.Value, kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+			var d2 = (ICollection<KeyValuePair<TKey, TValue>>)dict.Select(kvp => new KeyValuePair<TKey, TValue>(LookUp(kvp.Key), kvp.Value)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 			d2.CopyTo(array, arrayIndex);
 		}
 
@@ -131,13 +125,13 @@ namespace FrEee.Utility
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
 			InitDict();
-			return dict.Remove(new KeyValuePair<TRef, TValue>(MakeReference(item.Key), item.Value));
+			return dict.Remove(ExtractID(item.Key));
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
 			InitDict();
-			var objs = dict.Select(kvp => new {Key = kvp.Key, KeyValue = kvp.Key.Value, Value = kvp.Value});
+			var objs = dict.Select(kvp => new {Key = kvp.Key, KeyValue = LookUp(kvp.Key), Value = kvp.Value});
 			foreach (var obj in objs)
 			{
 				if (obj.KeyValue == null)
@@ -167,15 +161,40 @@ namespace FrEee.Utility
 			}
 		}
 	}
-	
-	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<GalaxyReference<TKey>, TKey, TValue>
-	{
 
+	public class GalaxyReferenceKeyedDictionary<TKey, TValue> : ReferenceKeyedDictionary<long, GalaxyReference<TKey>, TKey, TValue>
+		where TKey : IReferrable
+	{
+		protected override long ExtractID(TKey key)
+		{
+			return key.ID;
+		}
+
+		protected override TKey LookUp(long id)
+		{
+			if (!dict.ContainsKey(id))
+				dict[id] = (TKey)Galaxy.Current.GetReferrable(id);
+			return dict[id];
+		}
+
+		private SafeDictionary<long, TKey> dict = new SafeDictionary<long, TKey>();
 	}
 
-	public class ModReferenceKeyedDictionary<TKey, TValue> :  ReferenceKeyedDictionary<ModReference<TKey>, TKey, TValue>
+	public class ModReferenceKeyedDictionary<TKey, TValue> :  ReferenceKeyedDictionary<string, ModReference<TKey>, TKey, TValue>
 		where TKey : IModObject
 	{
+		protected override string ExtractID(TKey key)
+		{
+			return key.ModID;
+		}
 
+		protected override TKey LookUp(string id)
+		{
+			if (!dict.ContainsKey(id))
+				dict[id] = (TKey)Mod.Current.Find(id);
+			return dict[id];
+		}
+
+		private SafeDictionary<string, TKey> dict = new SafeDictionary<string, TKey>();
 	}
 }
