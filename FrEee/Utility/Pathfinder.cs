@@ -163,7 +163,7 @@ namespace FrEee.Utility
 						}
 					}
 				};
-				moves.RunTasks(f);
+				moves.SafeForeach(f);
 			}
 
 			return map;

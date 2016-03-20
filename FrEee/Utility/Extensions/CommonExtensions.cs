@@ -3820,7 +3820,7 @@ namespace FrEee.Utility.Extensions
 			return objs.SpawnTasksAsync(op).Result;
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// XXX don't use this function, it seems to skip some of the tasks
 		/// </summary>
 		/// <param name="ops">The ops.</param>
@@ -3850,7 +3850,7 @@ namespace FrEee.Utility.Extensions
 				await objs.SpawnTasksAsync(op);
 			})).Unwrap();
 			runSync.Wait();
-		}
+		}*/
 
 		public static bool IsScalar(this Type t)
 		{
