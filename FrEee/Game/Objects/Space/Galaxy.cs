@@ -811,9 +811,9 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Maintaining colonies";
 			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
-				Current.FindSpaceObjects<Planet>(p => p.HasColony).RunTasks(ProcessPopulationGrowth);
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessPopulationGrowth);
 			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ValueChangeFrequency.DefaultTo(1)))
-				Current.FindSpaceObjects<Planet>(p => p.HasColony).RunTasks(ProcessResourceValueChange);
+				Current.FindSpaceObjects<Planet>(p => p.HasColony).SafeForeach(ProcessResourceValueChange);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -825,7 +825,7 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).ExceptSingle(null).RunTasks(ProcessColonyIncome);
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
 
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
@@ -981,7 +981,7 @@ namespace FrEee.Game.Objects.Space
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
-			Current.FindSpaceObjects<ICombatSpaceObject>().RunTasks(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -991,7 +991,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Moving ships";
 			Current.CurrentTick = 0;
-			Current.FindSpaceObjects<IMobileSpaceObject>().RunTasks(CommonExtensions.RefillMovement);
+			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(CommonExtensions.RefillMovement);
 			Current.DisableAbilityCache(); // ships moving about and fighting can affect abilities!
 			while (!Current.didLastTick)
 			{
@@ -1028,7 +1028,7 @@ namespace FrEee.Game.Objects.Space
 			// construction queues
 			if (status != null)
 				status.Message = "Constructing objects";
-			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).RunTasks(q => q.ExecuteOrders());
+			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).SafeForeach(q => q.ExecuteOrders());
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1066,15 +1066,15 @@ namespace FrEee.Game.Objects.Space
 			Current.EnableAbilityCache(); // nothing past this point should affect abilities
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
-			Current.FindSpaceObjects<ICombatSpaceObject>().RunTasks(o => o.ReplenishShields());
+			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());
 
 
 			// repair facilities
-			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).RunTasks(f => f.Repair());
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
 
 			// repair units
-			Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>().RunTasks(u => u.Repair());
-			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).RunTasks(u => u.Repair());
+			Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>().SafeForeach(u => u.Repair());
+			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
 
 			// repair ships/bases
 			// TODO - repair priorities
@@ -1090,7 +1090,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// get supplies from reactors, solar panels, etc.
-			Current.FindSpaceObjects<SpaceVehicle>().RunTasks(v =>
+			Current.FindSpaceObjects<SpaceVehicle>().SafeForeach(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();
@@ -1099,7 +1099,7 @@ namespace FrEee.Game.Objects.Space
 
 
 			// resupply space vehicles one last time (after weapons fire and repair which could affect supply remaining/storage)
-			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).RunTasks(sobj =>
+			Current.FindSpaceObjects<ISpaceObject>().Where(s => s.HasAbility("Supply Generation")).SafeForeach(sobj =>
 			{
 				var emp = sobj.Owner;
 				var sector = sobj.Sector;
@@ -1116,7 +1116,7 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
-			Current.Empires.RunTasks(emp =>
+			Current.Empires.SafeForeach(emp =>
 			{
 				emp.StoredResources = ResourceQuantity.Min(emp.StoredResources, emp.ResourceStorage);// resource spoilage
 				emp.Commands.Clear(); // clear empire commands
@@ -1125,8 +1125,8 @@ namespace FrEee.Game.Objects.Space
 
 
 			// clear completed orders
-			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).RunTasks(o => o.IsComplete = true);
-			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).RunTasks(o => o.Dispose());
+			Current.Referrables.OfType<IPathfindingOrder>().Where(o => o.KnownTarget == null).SafeForeach(o => o.IsComplete = true);
+			Current.Referrables.OfType<IOrder>().Where(o => o.IsComplete).SafeForeach(o => o.Dispose());
 
 			// update known designs
 			// TODO - multithread this somehow

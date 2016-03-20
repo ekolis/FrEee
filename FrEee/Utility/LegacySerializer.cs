@@ -772,12 +772,12 @@ namespace FrEee.Utility
 				o = DeserializeObject(r, type, context, log);
 			}
 
-			if (isRoot)
+			/*if (isRoot)
 			{
 				// wait for tasks to complete
 				Action<Task> awaitTask = async t => await t;
 				propertySetterTasks.RunTasks(awaitTask);
-			}
+			}*/
 
 			// return our new object
 			return o;
