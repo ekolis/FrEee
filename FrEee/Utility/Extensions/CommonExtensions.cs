@@ -3820,6 +3820,10 @@ namespace FrEee.Utility.Extensions
 			return objs.SpawnTasksAsync(op).Result;
 		}
 
+		/// <summary>
+		/// XXX don't use this function, it seems to skip some of the tasks
+		/// </summary>
+		/// <param name="ops">The ops.</param>
 		public static void RunTasks(this IEnumerable<Action> ops)
 		{
 			// http://stackoverflow.com/a/19193473/1159763
@@ -3831,6 +3835,12 @@ namespace FrEee.Utility.Extensions
 			runSync.Wait();
 		}
 
+		/// <summary>
+		/// XXX don't use this function, it seems to skip some of the tasks
+		/// </summary>
+		/// <typeparam name="TIn">The type of the in.</typeparam>
+		/// <param name="objs">The objs.</param>
+		/// <param name="op">The op.</param>
 		public static void RunTasks<TIn>(this IEnumerable<TIn> objs, Action<TIn> op)
 		{
 			// http://stackoverflow.com/a/19193473/1159763
