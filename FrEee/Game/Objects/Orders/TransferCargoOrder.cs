@@ -93,7 +93,7 @@ namespace FrEee.Game.Objects.Orders
 			if (!done.Contains(this))
 			{
 				done.Add(this);
-				target.ReplaceClientIDs(idmap, done);
+				target?.ReplaceClientIDs(idmap, done);
 				owner.ReplaceClientIDs(idmap, done);
 			}
 		}
