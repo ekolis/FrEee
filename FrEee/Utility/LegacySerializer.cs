@@ -636,10 +636,10 @@ namespace FrEee.Utility
 											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 
-				propertySetterTasks.Add(Task.Factory.StartNew(() =>
-				{
+				//propertySetterTasks.Add(Task.Factory.StartNew(() =>
+				//{
 					o.SetData(dict, context);
-				}));
+				//}));
 
 				// clean up
 				ReadSemicolon(r, type, log);
