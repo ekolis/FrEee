@@ -345,6 +345,10 @@ namespace FrEee.WinForms.Controls
 
 			public static bool operator ==(ComponentGroup g1, ComponentGroup g2)
 			{
+				if (g1.IsNull() && g2.IsNull())
+					return true;
+				if (g1.IsNull() || g2.IsNull())
+					return false;
 				return g1.Template == g2.Template && g1.Hitpoints == g2.Hitpoints;
 			}
 
