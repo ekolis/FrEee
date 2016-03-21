@@ -874,8 +874,11 @@ namespace FrEee.Game.Objects.Space
 		public void SpendTime(double timeElapsed)
 		{
 			TimeToNextMove += timeElapsed;
-			foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
-				u.SpendTime(timeElapsed);
+			if (Cargo != null)
+			{
+				foreach (var u in Cargo.Units.OfType<IMobileSpaceObject>())
+					u.SpendTime(timeElapsed);
+			}
 		}
 
 		[DoNotSerialize]
