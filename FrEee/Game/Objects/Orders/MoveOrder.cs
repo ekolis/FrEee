@@ -121,7 +121,7 @@ namespace FrEee.Game.Objects.Orders
 					else
 						reason = "there is no available path leading toward " + Destination;
 					PathfindingError = sobj.CreateLogMessage(sobj + " could not move to " + Destination + " because " + reason + ".");
-					sobj.Owner.Log.Add(PathfindingError);
+					sobj.Owner?.Log.Add(PathfindingError);
 					LoggedPathfindingError = true;
 				}
 			}
