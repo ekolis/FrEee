@@ -623,17 +623,25 @@ namespace FrEee.Utility
 				var dict = new SafeDictionary<string, object>();
 
 				// deserialize the properties
+				var props = ObjectGraphContext.GetKnownProperties(type);
 				for (int i = 0; i < count; i++)
 				{
 					var pname = r.ReadTo(':', log).Trim();
-					var prop = ObjectGraphContext.GetKnownProperties(type)[pname];
-					if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
+					if (props.ContainsKey(pname))
 					{
-						dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
+						var prop = props[pname];
+						if (prop != null && !prop.HasAttribute<DoNotSerializeAttribute>())
+						{
+							if (prop.Name == "Sector" && type == typeof(Game.Objects.Civilization.SpaceObjectWaypoint))
+							{
+
+							}
+							dict[pname] = Deserialize(r, prop.PropertyType, false, context, log);
+						}
+						else
+							r.ReadTo(';', log); // throw away this property, we don't need it
+												// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 					}
-					else
-						r.ReadTo(';', log); // throw away this property, we don't need it
-											// if p is null or has do not serialize attribute, it must be data from an old version with different property names, so don't crash
 				}
 
 				//propertySetterTasks.Add(Task.Factory.StartNew(() =>

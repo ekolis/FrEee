@@ -328,6 +328,7 @@ namespace FrEee.Utility
 				{
 					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f =>
 						!f.HasAttribute<DoNotSerializeAttribute>()
+						&& (!type.GetProperty(f.Name)?.HasAttribute<DoNotSerializeAttribute>() ?? true) // inherited class DoNotSerialize overrides base lack of it
 						&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null
 							|| type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>) // they don't have setters but we want them anyway
 							)
