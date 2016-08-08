@@ -40,6 +40,13 @@ namespace FrEee.Game.Objects.Civilization
 		public bool IsColonyQueue { get { return Colony != null; } }
 
 		/// <summary>
+		/// Has construction been delayed this turn due to lack of resources etc?
+		/// For avoiding spamming log messages for every item in the queue.
+		/// </summary>
+		[DoNotSerialize]
+		public bool IsConstructionDelayed { get; set; }
+
+		/// <summary>
 		/// The colony (if any) associated with this queue.
 		/// </summary>
 		public Colony Colony
