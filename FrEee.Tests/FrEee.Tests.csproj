@@ -118,6 +118,7 @@
     <Compile Include="Game\Objects\Combat2\CombatStrategyTests.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
+    <Compile Include="Game\Objects\Vehicles\ResupplyTest.cs" />
     <Compile Include="Game\Objects\Vehicles\CloakingTest.cs" />
     <Compile Include="Game\Objects\Vehicles\DamageTest.cs" />
     <Compile Include="TestUtilities.cs" />
