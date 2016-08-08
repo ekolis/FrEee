@@ -208,6 +208,6 @@ namespace FrEee.Utility
 		/// <summary>
 		/// Is this quantity all zeroes?
 		/// </summary>
-		public bool IsEmpty { get { return this.All(kvp => kvp.Value == 0; } }
+		public bool IsEmpty { get { return this.All(kvp => kvp.Value == 0); } }
 	}
 }
