@@ -73,7 +73,16 @@ namespace FrEee.Game.Objects.Orders
 				if (!(spending <= queue.Owner.StoredResources))
 				{
 					spending = ResourceQuantity.Min(spending, queue.Owner.StoredResources);
-					Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was delayed due to lack of resources."));
+					if (spending.IsEmpty)
+					{
+						if (!queue.IsConstructionDelayed) // don't spam messages!
+							Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was paused due to lack of resources."));
+					}
+					else
+					{
+						Owner.Log.Add(queue.Container.CreateLogMessage("Construction of " + Template + " at " + queue.Container + " was slowed due to lack of resources."));
+					}
+					queue.IsConstructionDelayed = true;
 				}
 				queue.Owner.StoredResources -= spending;
 				queue.UnspentRate -= spending;
