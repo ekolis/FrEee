@@ -85,8 +85,8 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			ship1.SupplyRemaining = supplyPerComp;
 			ship2.SupplyRemaining = supplyPerComp;
 			fleet.ShareSupplies();
-			AreEqual(supplyPerComp / 4 , ship1.SupplyRemaining);
-			AreEqual(supplyPerComp * 3 / 4, ship2.SupplyRemaining);
+			AreEqual(supplyPerComp * 2 / 4 , ship1.SupplyRemaining);
+			AreEqual(supplyPerComp * 6 / 4, ship2.SupplyRemaining);
 		}
 
 		// TODO - test quantum reactors
