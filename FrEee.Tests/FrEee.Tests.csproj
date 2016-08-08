@@ -116,6 +116,7 @@
     <Compile Include="Game\Objects\Combat2\CombatTests.cs" />
     <Compile Include="Game\Objects\Combat2\CombatVehicleTests.cs" />
     <Compile Include="Game\Objects\Combat2\CombatStrategyTests.cs" />
+    <Compile Include="Game\Objects\Orders\ConstructionTest.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
     <Compile Include="Game\Objects\Vehicles\ResupplyTest.cs" />
@@ -138,7 +139,6 @@
     <Folder Include="Game\Objects\Combat\" />
     <Folder Include="Game\Objects\Commands\" />
     <Folder Include="Game\Objects\LogMessages\" />
-    <Folder Include="Game\Objects\Orders\" />
     <Folder Include="Game\Objects\Space\" />
     <Folder Include="Game\Setup\" />
     <Folder Include="Modding\Templates\" />
