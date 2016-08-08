@@ -138,7 +138,7 @@ namespace FrEee.Game.Objects.Civilization
 					rate *= aptmod;
 
 					// apply culture modifier
-					rate *= (100d + Owner.Culture.Construction) / 100d;
+					rate *= (100d + (Owner?.Culture?.Construction ?? 0)) / 100d;
 				}
 
 			}
