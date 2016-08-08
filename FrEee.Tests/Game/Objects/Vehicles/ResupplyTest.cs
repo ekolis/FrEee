@@ -51,12 +51,14 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			Assert.IsNotNull(Mod.Current);
 			var dsn1 = new Design<Ship>();
 			dsn1.BaseName = "Shippy McShipface";
+			dsn1.CreateHull();
 			dsn1.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn1.Owner = empire;
 			ship1 = dsn1.Instantiate();
 			ship1.Owner = empire;
 			var dsn2 = new Design<Ship>();
 			dsn2.BaseName = "Shippy McShipface Mk2";
+			dsn2.CreateHull();
 			dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
 			dsn2.Components.Add(new MountedComponentTemplate(dsn1, storageComp));
