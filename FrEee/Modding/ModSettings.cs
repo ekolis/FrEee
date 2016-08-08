@@ -218,6 +218,8 @@ namespace FrEee.Modding
 
 		public double GetPopulationConstructionFactor(long population)
 		{
+			if (population == 0)
+				return 0;
 			double result = 1d;
 			foreach (var pm in PopulationModifiers.OrderBy(pm => pm.Key))
 			{

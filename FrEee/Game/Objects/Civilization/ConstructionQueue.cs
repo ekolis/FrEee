@@ -116,6 +116,8 @@ namespace FrEee.Game.Objects.Civilization
 
 				// apply population modifier
 				var pop = Colony.Population.Sum(p => p.Value);
+				if (pop == 0)
+					return new ResourceQuantity();
 				rate *= Mod.Current.Settings.GetPopulationConstructionFactor(pop);
 
 				// TODO - apply happiness modifier
