@@ -25,6 +25,16 @@ namespace FrEee.Game.Objects.Abilities
 		}
 
 		/// <summary>
+		/// Finds an ability rule in the current mod.
+		/// </summary>
+		/// <param name="nameOrAlias">The name or alias.</param>
+		/// <returns>The ability rule, or null if none matches.</returns>
+		public static AbilityRule Find(string nameOrAlias)
+		{
+			return Mod.Current.AbilityRules.Where(r => r.Matches(nameOrAlias)).SingleOrDefault();
+		}
+
+		/// <summary>
 		/// The name of the ability to which this rule applies.
 		/// </summary>
 		public string Name { get; set; }
