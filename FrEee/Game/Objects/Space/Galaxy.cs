@@ -974,9 +974,12 @@ namespace FrEee.Game.Objects.Space
 				Current.SpaceObjectIDCheck("after empire maintenance for " + emp);
 			}
 
-			// validate fleets
+			// validate fleets and share supplies
 			foreach (var f in Current.FindSpaceObjects<Fleet>().ToArray())
+			{
 				f.Validate();
+				f.ShareSupplies();
+			}
 
 			// replenish shields
 			if (status != null)
@@ -1021,9 +1024,12 @@ namespace FrEee.Game.Objects.Space
 				Current.DisableAbilityCache();
 			}
 
-			// validate fleets again (ships might have been destroyed)
+			// validate fleets again (ships might have been destroyed, consumed supplies, etc...)
 			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
+			{
 				f.Validate();
+				f.ShareSupplies();
+			}
 
 			// construction queues
 			if (status != null)
