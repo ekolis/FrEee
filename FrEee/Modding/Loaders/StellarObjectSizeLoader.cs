@@ -32,10 +32,10 @@ namespace FrEee.Modding.Loaders
 				sos.StellarObjectType = rec.Get<string>("Physical Type", sos);
 				sos.StellarSize = rec.Get<StellarSize>("Stellar Size", sos);
 				sos.MaxFacilities = rec.Get<int>("Max Facilities", sos);
-				sos.MaxPopulation = rec.Get<long>("Max Population", sos) * mod.Settings.PopulationFactor;
+				sos.MaxPopulation = rec.Get<long>("Max Population", sos).Value * mod.Settings.PopulationFactor;
 				sos.MaxCargo = rec.Get<int>("Max Cargo Spaces", sos);
 				sos.MaxFacilitiesDomed = rec.Get<int>("Max Facilities Domed", sos);
-				sos.MaxPopulationDomed = rec.Get<long>("Max Population Domed", sos) * mod.Settings.PopulationFactor;
+				sos.MaxPopulationDomed = rec.Get<long>("Max Population Domed", sos).Value * mod.Settings.PopulationFactor;
 				sos.MaxCargoDomed = rec.Get<int>("Max Cargo Spaces Domed", sos);
 				sos.IsConstructed = rec.Get<bool>("Constructed", sos);
 				sos.ConstructionAbilityID = rec.Get<string>("Special Ability ID", sos);
