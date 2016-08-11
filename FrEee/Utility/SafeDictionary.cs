@@ -106,15 +106,16 @@ namespace FrEee.Utility
 			get
 			{
 				InitDict();
-				if (ContainsKey(key))
-					return dict[key];
+				TValue val;
+				if (dict.TryGetValue(key, out val))
+					return val;
 				else
 				{
 					if (AutoInit)
 					{
 						try
 						{
-							var val = (TValue)typeof(TValue).Instantiate(AutoInitArgs);
+							val = (TValue)typeof(TValue).Instantiate(AutoInitArgs);
 							this[key] = val;
 							return val;
 						}
