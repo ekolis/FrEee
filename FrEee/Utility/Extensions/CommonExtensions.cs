@@ -124,7 +124,9 @@ namespace FrEee.Utility.Extensions
 				interfaceCache[dt] = dt.GetInterfaces();
 			foreach (var i in interfaceCache[dt])
 			{
-				if (i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Any(mi2 => mi2.HasAttribute(attributeType)))
+				if (memberCache[i] == null)
+					memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray();
+				if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType)))
 					return true;
 			}
 			return false;
@@ -132,6 +134,7 @@ namespace FrEee.Utility.Extensions
 
 		private static SafeDictionary<MemberInfo, IEnumerable<Attribute>> attributeCache = new SafeDictionary<MemberInfo, IEnumerable<Attribute>>();
 		private static SafeDictionary<Type, IEnumerable<Type>> interfaceCache = new SafeDictionary<Type, IEnumerable<Type>>();
+		private static SafeDictionary<Type, IEnumerable<MemberInfo>> memberCache = new SafeDictionary<Type, IEnumerable<MemberInfo>>();
 
 		/// <summary>
 		/// Checks for attributes in a class or its interfaces.
