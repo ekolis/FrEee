@@ -80,7 +80,7 @@ namespace FrEee.Modding
 
 		public override T Evaluate(IDictionary<string, object> variables)
 		{
-			return ScriptEngine.EvaluateExpression<T>(Text, variables);
+			return ScriptEngine.EvaluateExpression<T>(Text, IsDynamic, variables);
 		}
 		
 		public override T Evaluate(object host)
