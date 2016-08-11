@@ -22,10 +22,10 @@ namespace FrEee.Game.Objects.Orders
 	[Serializable]
 	public class MoveOrder : IMovementOrder
 	{
-		public MoveOrder(Sector IMobileSpaceObject, bool avoidEnemies)
+		public MoveOrder(Sector destination, bool avoidEnemies)
 		{
 			Owner = Empire.Current;
-			IMobileSpaceObject = IMobileSpaceObject;
+			Destination = destination;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
