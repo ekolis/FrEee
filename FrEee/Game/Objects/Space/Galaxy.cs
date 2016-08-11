@@ -1193,7 +1193,7 @@ namespace FrEee.Game.Objects.Space
 			// end of turn scripts
 			if (status != null)
 				status.Message = "Executing scripts";
-			ScriptEngine.RunScript<object>(Mod.Current.EndTurnScript);
+			ScriptEngine.RunScript<object>(Mod.Current.EndTurnScript, true);
 			if (status != null)
 				status.Progress += progressPerOperation;
 
@@ -1503,7 +1503,7 @@ namespace FrEee.Game.Objects.Space
 			// run init script
 			if (status != null)
 				status.Message = "Executing script";
-			ScriptEngine.RunScript<object>(Mod.Current.GameInitScript);
+			ScriptEngine.RunScript<object>(Mod.Current.GameInitScript, true);
 			if (status != null)
 				status.Progress += progressPerStep;
 
