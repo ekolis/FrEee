@@ -887,14 +887,15 @@ namespace FrEee.Game.Objects.Space
 				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>())
 					emp.StoredResources -= v.MaintenanceCost;
 
-				// if not enough funds, lose ships/bases
-				// TODO - if mods allow unit/facility maintenance, lose those too?
+				// if not enough funds, lose ships/bases (weighted by maintenance cost)
+				// TODO - if mods allow ground-unit/facility maintenance, lose those too?
+				// TODO - destroy space units in cargo as well if they pay maintenance?
 				// TODO - check if SE4 "saves up" deficits between turns to destroy ships slower than one per turn
 				var deficit = -emp.StoredResources.Values.Where(r => r < 0).Sum();
 				var lostShips = deficit / Mod.Current.Settings.MaintenanceDeficitToDestroyOneShip;
 				for (int i = 0; i < lostShips; i++)
 				{
-					var ship = emp.OwnedSpaceObjects.OfType<SpaceVehicle>().PickRandom();
+					var ship = emp.OwnedSpaceObjects.OfType<SpaceVehicle>().PickWeighted(x => x.MaintenanceCost.Sum(y => y.Value));
 					if (ship != null)
 					{
 						emp.Log.Add(ship.CreateLogMessage(ship + " fell into disrepair and was scuttled due to lack of funding for maintenance."));
