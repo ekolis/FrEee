@@ -944,10 +944,10 @@ namespace FrEee.Game.Objects.Civilization
 				{
 					foreach (var order in this.OwnedSpaceObjects.OfType<IMobileSpaceObject>().SelectMany(sobj => sobj.Orders))
 					{
-						if (order is PursueOrder<IMobileSpaceObject>)
-							((PursueOrder<IMobileSpaceObject>)order).UpdateAlternateTarget();
-						if (order is EvadeOrder<IMobileSpaceObject>)
-							((EvadeOrder<IMobileSpaceObject>)order).UpdateAlternateTarget();
+						if (order is PursueOrder)
+							((PursueOrder)order).UpdateAlternateTarget();
+						if (order is EvadeOrder)
+							((EvadeOrder)order).UpdateAlternateTarget();
 					}
 				}
 			}

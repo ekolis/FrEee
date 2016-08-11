@@ -2370,9 +2370,9 @@ namespace FrEee.Utility.Extensions
 			foreach (var order in sobj.Orders)
 			{
 				var last = start;
-				if (order is IMovementOrder<SpaceVehicle>)
+				if (order is IMovementOrder)
 				{
-					var o = (IMovementOrder<SpaceVehicle>)order;
+					var o = (IMovementOrder)order;
 					foreach (var kvp in o.CreateDijkstraMap(sobj, last))
 					{
 						kvp.Key.Cost += minCost;

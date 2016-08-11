@@ -16,9 +16,9 @@ namespace FrEee.Game.Objects.Orders
 	/// <summary>
 	/// An order to pathfind relative to a target.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public abstract class PathfindingOrder<T>
-		: IMovementOrder<T>, IPathfindingOrder where T : IMobileSpaceObject
+	/// <typeparam name="IMobileSpaceObject"></typeparam>
+	public abstract class PathfindingOrder
+		: IPathfindingOrder
 	{
 		protected PathfindingOrder(ISpaceObject target, bool avoidEnemies)
 		{
@@ -167,17 +167,17 @@ namespace FrEee.Game.Objects.Orders
 			get { return KnownTarget.FindSector(); }
 		}
 
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(T me, Sector start)
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
 
-		public bool CheckCompletion(T v)
+		public bool CheckCompletion(IMobileSpaceObject v)
 		{
 			return IsComplete;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(T v)
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
 		{
 			if (PathfindingError != null)
 				yield return PathfindingError;
@@ -190,7 +190,7 @@ namespace FrEee.Game.Objects.Orders
 		/// </summary>
 		public abstract string Verb { get; }
 
-		public void Execute(T sobj)
+		public void Execute(IMobileSpaceObject sobj)
 		{
 			// TODO - movement logs
 			if (KnownTarget == null)
@@ -215,7 +215,7 @@ namespace FrEee.Game.Objects.Orders
 						}
 						else if (!LoggedPathfindingError)
 						{
-							// no warp points to explore and we haven't told the player yet
+							// no warp points to explore and we haven'IMobileSpaceObject told the player yet
 							PathfindingError = sobj.CreateLogMessage("{0} found no unexplored warp points at {1} to enter.".F(sobj, sobj.Sector));
 							sobj.Owner.Log.Add(PathfindingError);
 							LoggedPathfindingError = true;
@@ -266,11 +266,6 @@ namespace FrEee.Game.Objects.Orders
 			sobj.SpendTime(sobj.TimePerMove);
 		}
 
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
-		}
-
 		public override string ToString()
 		{
 			if (KnownTarget == null)
@@ -283,6 +278,6 @@ namespace FrEee.Game.Objects.Orders
 			get { return true; }
 		}
 
-		protected abstract bool AreWeThereYet(T me);
+		protected abstract bool AreWeThereYet(IMobileSpaceObject me);
 	}
 }

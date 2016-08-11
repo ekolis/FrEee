@@ -197,7 +197,7 @@ namespace FrEee.WinForms.Forms
 				{
 					// move ship to sector clicked
 					var v = (IMobileSpaceObject)SelectedSpaceObject;
-					var order = new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode);
+					var order = new MoveOrder(sector, !aggressiveMode);
 					v.AddOrder(order);
 					BindReport();
 					var cmd = new AddOrderCommand<IMobileSpaceObject>(v, order);
@@ -225,7 +225,7 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// pursue
-						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(target, !aggressiveMode));
+						IssueSpaceObjectOrder(new PursueOrder(target, !aggressiveMode));
 						starSystemView.Invalidate(); // show move lines
 						BindReport();
 						starSystemView.Invalidate(); // show move lines
@@ -252,7 +252,7 @@ namespace FrEee.WinForms.Forms
 					if (target != null)
 					{
 						// evade
-						IssueSpaceObjectOrder(new EvadeOrder<IMobileSpaceObject>(target, !aggressiveMode));
+						IssueSpaceObjectOrder(new EvadeOrder(target, !aggressiveMode));
 						starSystemView.Invalidate(); // show move lines
 						BindReport();
 						starSystemView.Invalidate(); // show move lines
@@ -278,8 +278,8 @@ namespace FrEee.WinForms.Forms
 
 					if (wp != null)
 					{
-						IssueSpaceObjectOrder(new PursueOrder<IMobileSpaceObject>(wp, !aggressiveMode));
-						IssueSpaceObjectOrder(new WarpOrder<IMobileSpaceObject>(wp));
+						IssueSpaceObjectOrder(new PursueOrder(wp, !aggressiveMode));
+						IssueSpaceObjectOrder(new WarpOrder(wp));
 						BindReport();
 						starSystemView.Invalidate(); // show move lines
 						ChangeCommandMode(CommandMode.None, null);
@@ -347,7 +347,7 @@ namespace FrEee.WinForms.Forms
 										}
 									}
 								}
-								IssueSpaceObjectOrder(new MoveOrder<IMobileSpaceObject>(sector, !aggressiveMode));
+								IssueSpaceObjectOrder(new MoveOrder(sector, !aggressiveMode));
 								IssueSpaceObjectOrder(new ColonizeOrder(planet));
 								BindReport();
 								ChangeCommandMode(CommandMode.None, null);
@@ -1194,7 +1194,7 @@ namespace FrEee.WinForms.Forms
 			{
 				// set an order to go there
 				var sobj = SelectedSpaceObject as IMobileSpaceObject;
-				sobj.IssueOrder(new WaypointOrder<IMobileSpaceObject>(wp, !aggressive));
+				sobj.IssueOrder(new WaypointOrder(wp, !aggressive));
 
 				// refresh the map and orders
 				starSystemView.Invalidate();

@@ -20,13 +20,12 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to move a mobile space object to a new location.
 	/// </summary>
 	[Serializable]
-	public class MoveOrder<T> : IMovementOrder<T>
-		where T : IMobileSpaceObject, IReferrable
+	public class MoveOrder : IMovementOrder
 	{
-		public MoveOrder(Sector destination, bool avoidEnemies)
+		public MoveOrder(Sector IMobileSpaceObject, bool avoidEnemies)
 		{
 			Owner = Empire.Current;
-			Destination = destination;
+			IMobileSpaceObject = IMobileSpaceObject;
 			AvoidEnemies = avoidEnemies;
 			// TODO - add flag for "avoid damaging sectors"? but how to specify in UI?
 		}
@@ -62,7 +61,7 @@ namespace FrEee.Game.Objects.Orders
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
 
-		public void Execute(T sobj)
+		public void Execute(IMobileSpaceObject sobj)
 		{
 			// TODO - movement logs
 			if (sobj.FindSector() == Destination)
@@ -193,12 +192,12 @@ namespace FrEee.Game.Objects.Orders
 
 		public long ID { get; set; }
 
-		public bool CheckCompletion(T v)
+		public bool CheckCompletion(IMobileSpaceObject v)
 		{
 			return IsComplete;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(T v)
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
 		{
 			if (PathfindingError != null)
 				yield return PathfindingError;

@@ -19,8 +19,7 @@ namespace FrEee.Game.Objects.Orders
 	/// The direction will be chosen at random
 	/// </summary>
 	[Serializable]
-	public class EvadeOrder<T> : PathfindingOrder<T>
-		where T : IMobileSpaceObject
+	public class EvadeOrder : PathfindingOrder
 	{
 
 		public EvadeOrder(ISpaceObject target, bool avoidEnemies)
@@ -88,7 +87,7 @@ namespace FrEee.Game.Objects.Orders
 			get { return "evade"; }
 		}
 
-		protected override bool AreWeThereYet(T me)
+		protected override bool AreWeThereYet(IMobileSpaceObject me)
 		{
 			// gotta keep on running...
 			return Target == null || Target.IsDisposed;

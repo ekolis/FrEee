@@ -16,9 +16,8 @@ namespace FrEee.Game.Objects.Orders
 	/// <summary>
 	/// An order to move to a waypoint.
 	/// </summary>
-	/// <typeparam name="T"></typeparam>
-	public class WaypointOrder<T>
-		: IMovementOrder<T> where T : IMobileSpaceObject
+	/// <typeparam name="IMobileSpaceObject"></typeparam>
+	public class WaypointOrder : IMovementOrder
 	{
 		public WaypointOrder(Waypoint target, bool avoidEnemies)
 		{
@@ -111,17 +110,17 @@ namespace FrEee.Game.Objects.Orders
 			get { return Target.Sector; }
 		}
 
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(T me, Sector start)
+		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
 		{
 			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
 
-		public bool CheckCompletion(T v)
+		public bool CheckCompletion(IMobileSpaceObject v)
 		{
 			return IsComplete;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(T v)
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject v)
 		{
 			if (PathfindingError != null)
 				yield return PathfindingError;
@@ -143,11 +142,11 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		public void Execute(T sobj)
+		public void Execute(IMobileSpaceObject sobj)
 		{
 			// TODO - movement logs
 			if (Target == null)
-				IsComplete = true; // target waypoint doesn't exist anymore
+				IsComplete = true; // target waypoint doesn'IMobileSpaceObject exist anymore
 			else if (sobj.FindSector() == Target.Sector)
 				IsComplete = true; // we've arrived at the target
 			else
@@ -192,11 +191,6 @@ namespace FrEee.Game.Objects.Orders
 
 			// spend time
 			sobj.SpendTime(sobj.TimePerMove);
-		}
-
-		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
-		{
-			return Pathfinder.CreateDijkstraMap(me, start, Destination, AvoidEnemies, true);
 		}
 
 		public override string ToString()

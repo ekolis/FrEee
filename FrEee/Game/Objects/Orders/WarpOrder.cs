@@ -17,10 +17,10 @@ namespace FrEee.Game.Objects.Orders
 {
 	/// <summary>
 	/// An order to warp a mobile space object via a warp point.
+	/// TODO - make this also pursue the warp point first
 	/// </summary>
 	[Serializable]
-	public class WarpOrder<T> : IMovementOrder<T>
-		where T : IMobileSpaceObject, IReferrable
+	public class WarpOrder : IOrder<IMobileSpaceObject>
 	{
 		public WarpOrder(WarpPoint warpPoint)
 		{
@@ -36,7 +36,7 @@ namespace FrEee.Game.Objects.Orders
 
 		private GalaxyReference<WarpPoint> warpPoint { get; set; }
 
-		public void Execute(T sobj)
+		public void Execute(IMobileSpaceObject sobj)
 		{
 			var errors = GetErrors(sobj);
 			foreach (var error in errors)
@@ -76,7 +76,7 @@ namespace FrEee.Game.Objects.Orders
 				}
 				else
 				{
-					// can't warp here, maybe the GUI should have issued a move order?
+					// can'IMobileSpaceObject warp here, maybe the GUI should have issued a move order?
 					((ISpaceObject)sobj).Owner.Log.Add(sobj.CreateLogMessage(sobj + " cannot warp via " + WarpPoint + " because it is not currently located at the warp point."));
 				}
 			}
@@ -154,14 +154,14 @@ namespace FrEee.Game.Objects.Orders
 			private set;
 		}
 
-		public bool CheckCompletion(T v)
+		public bool CheckCompletion(IMobileSpaceObject v)
 		{
 			return IsComplete;
 		}
 
-		public IEnumerable<LogMessage> GetErrors(T executor)
+		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor)
 		{
-			// this order doesn't error
+			// this order doesn'IMobileSpaceObject error
 			yield break;
 		}
 

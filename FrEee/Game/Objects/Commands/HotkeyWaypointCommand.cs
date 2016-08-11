@@ -59,9 +59,9 @@ namespace FrEee.Game.Objects.Commands
 					// if so, change that order's waypoint to this one
 					foreach (var order in sobj.Orders)
 					{
-						if (order is WaypointOrder<IMobileSpaceObject>)
+						if (order is WaypointOrder)
 						{
-							var wo = order as WaypointOrder<IMobileSpaceObject>;
+							var wo = order as WaypointOrder;
 							if (wo.Target == oldWaypoint)
 							{
 								wo.Target = Executor;
