@@ -862,6 +862,21 @@ namespace FrEee.Utility.Extensions
 			return default(T); // nothing to pick...
 		}
 
+		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, int> weighter, PRNG prng = null)
+		{
+			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
+		}
+
+		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, long> weighter, PRNG prng = null)
+		{
+			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
+		}
+
+		public static T PickWeighted<T>(this IEnumerable<T> src, Func<T, double> weighter, PRNG prng = null)
+		{
+			return src.ToDictionary(x => x, x => weighter(x)).PickWeighted(prng);
+		}
+
 		/// <summary>
 		/// Orders elements randomly.
 		/// </summary>
