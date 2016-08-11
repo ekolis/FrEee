@@ -1598,6 +1598,7 @@ namespace FrEee.WinForms.Forms
 		private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Instance = null;
+			Application.Exit();
 		}
 
 		private void btnRecycle_Click(object sender, EventArgs e)
