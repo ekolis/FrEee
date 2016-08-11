@@ -16,14 +16,14 @@ namespace FrEee.Tests.Modding
 			var variables = new Dictionary<string, object>();
 			variables.Add("x", 6);
 			variables.Add("y", 7);
-			Assert.AreEqual(42, ScriptEngine.EvaluateExpression<int>(expr, variables));
+			Assert.AreEqual(42, ScriptEngine.EvaluateExpression<int>(expr, false, variables));
 		}
 
 		[TestMethod]
 		public void CallFunction()
 		{
 			var script = new Script("test", "def square(x):\n\treturn x ** 2;");
-			Assert.AreEqual(64, ScriptEngine.CallFunction<int>(script, "square", 8));
+			Assert.AreEqual(64, ScriptEngine.CallFunction<int>(script, "square", false, 8));
 		}
 	}
 }
