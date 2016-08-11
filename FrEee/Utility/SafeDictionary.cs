@@ -56,16 +56,16 @@ namespace FrEee.Utility
 
 		public virtual void Add(TKey key, TValue value)
 		{
-			InitDict();
 			this[key] = value;
 		}
 
 		public bool ContainsKey(TKey key)
 		{
-			InitDict();
-
 			if (key == null)
 				return false; // dicts can't contain null keys anyway
+
+			if (dict == null)
+				return false; // obviously empty, no need to InitDict
 
 			return dict.ContainsKey(key);
 		}
@@ -74,21 +74,25 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				InitDict();
+				if (dict == null)
+					return new List<TKey>();
 				return dict.Keys;
 			}
 		}
 
 		public bool Remove(TKey key)
 		{
-			InitDict();
+			if (dict == null)
+				return false;
 			return dict.Remove(key);
 		}
 
 		public bool TryGetValue(TKey key, out TValue value)
 		{
-			InitDict();
-			value = this[key];
+			if (dict == null)
+				value = default(TValue);
+			else
+				value = this[key];
 			return true;
 		}
 
@@ -96,7 +100,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				InitDict();
+				if (dict == null)
+					return new List<TValue>();
 				return dict.Values;
 			}
 		}
@@ -105,7 +110,8 @@ namespace FrEee.Utility
 		{
 			get
 			{
-				InitDict();
+				if (dict == null)
+					return default(TValue);
 				TValue val;
 				if (dict.TryGetValue(key, out val))
 					return val;
@@ -146,41 +152,52 @@ namespace FrEee.Utility
 
 		public void Clear()
 		{
-			InitDict();
-			dict.Clear();
+			if (dict != null)
+				dict.Clear();
 		}
 
 		public bool Contains(KeyValuePair<TKey, TValue> item)
 		{
-			InitDict();
+			if (dict == null)
+				return false;
 			return dict.Contains(item);
 		}
 
 		public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
 		{
-			InitDict();
-			((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
+			if (dict != null)
+				((IDictionary<TKey, TValue>)dict).CopyTo(array, arrayIndex);
 		}
 
 		public int Count
 		{
-			get { InitDict(); return dict.Count; }
+			get
+			{
+				if (dict == null)
+					return 0;
+				return dict.Count;
+			}
 		}
 
 		public bool IsReadOnly
 		{
-			get { InitDict(); return ((IDictionary<TKey, TValue>)dict).IsReadOnly; }
+			get
+			{
+				return false;
+			}
 		}
 
 		public bool Remove(KeyValuePair<TKey, TValue> item)
 		{
-			InitDict();
+			if (dict == null)
+				return false;
 			return ((IDictionary<TKey, TValue>)dict).Remove(item);
 		}
 
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
-			InitDict();
+			if (dict == null)
+				return Enumerable.Empty<KeyValuePair<TKey, TValue>>().GetEnumerator();
 			return dict.GetEnumerator();
 		}
 
