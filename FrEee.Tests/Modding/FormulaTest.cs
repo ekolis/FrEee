@@ -69,19 +69,24 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
             Empire emp = new Empire();
 			Mod.Current = new Mod();
 			var armor = new ComponentTemplate();
+			armor.Name = "Armor";
 			armor.Size = 10;
 			armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
 			Mod.Current.ComponentTemplates.Add(armor);
 			Galaxy.Current.AssignID(armor);
 			var mount = new Mount();
+			mount.ModID = mount.Name = "Scale Mount";
 			mount.DurabilityPercent = 200;
 			mount.SizePercent = new ComputedFormula<int>("design.Hull.Size", mount, true);
 			Mod.Current.Mounts.Add(mount);
 			Galaxy.Current.AssignID(mount);
 			var hull = new Hull<Ship>();
+			hull.ModID = hull.Name = "Generic Hull";
 			hull.Size = 150;
 			Mod.Current.Hulls.Add(hull);
 			Galaxy.Current.AssignID(hull);
+			Mod.Current.RefreshObjects();
+
 			var design = new Design<Ship>();
 			Galaxy.Current.AssignID(design);
 			var mct = new MountedComponentTemplate(design, armor, mount);
