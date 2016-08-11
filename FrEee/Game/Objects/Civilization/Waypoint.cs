@@ -88,9 +88,9 @@ namespace FrEee.Game.Objects.Civilization
 				bool foundWaypoint = false;
 				foreach (var order in sobj.Orders)
 				{
-					if (order is WaypointOrder<IMobileSpaceObject>)
+					if (order is WaypointOrder)
 					{
-						var wo = order as WaypointOrder<IMobileSpaceObject>;
+						var wo = order as WaypointOrder;
 						if (wo.Target == this)
 							foundWaypoint = true;
 					}

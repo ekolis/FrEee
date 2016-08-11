@@ -192,7 +192,7 @@ namespace FrEee.WinForms.Forms
 			}
 
 			// move and colonize
-			colonizer.IssueOrder(new MoveOrder<SpaceVehicle>(p.Sector, true));
+			colonizer.IssueOrder(new MoveOrder(p.Sector, true));
 			colonizer.IssueOrder(new ColonizeOrder(p));
 
 		}

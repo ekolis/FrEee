@@ -18,8 +18,7 @@ namespace FrEee.Game.Objects.Orders
 	/// An order to move a mobile space object toward another space object.
 	/// </summary>
 	[Serializable]
-	public class PursueOrder<T> : PathfindingOrder<T>
-		where T : IMobileSpaceObject
+	public class PursueOrder : PathfindingOrder
 	{
 		public PursueOrder(ISpaceObject target, bool avoidEnemies)
 			: base(target, avoidEnemies)
@@ -50,7 +49,7 @@ namespace FrEee.Game.Objects.Orders
 			}
 		}
 
-		protected override bool AreWeThereYet(T me)
+		protected override bool AreWeThereYet(IMobileSpaceObject me)
 		{
 			return me.Sector == Destination;
 		}
