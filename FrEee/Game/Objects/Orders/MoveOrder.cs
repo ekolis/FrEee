@@ -100,6 +100,8 @@ namespace FrEee.Game.Objects.Orders
 						IsComplete = true;
 
 					// apply damage from damaging sectors
+					// TODO - apply damage from damaging systems too
+					// TODO - move this out into the Place method so it applies to all movement-type orders and newly constructed vehicles
 					foreach (var damager in gotoSector.SpaceObjects.Where(dsobj => dsobj.HasAbility("Sector - Damage")))
 					{
 						var damage = damager.GetAbilityValue("Sector - Damage").ToInt();
