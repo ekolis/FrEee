@@ -14,6 +14,7 @@ using Size = FrEee.Game.Enumerations.StellarSize;
 using FrEee.Game.Enumerations;
 using FrEee.Modding.StellarObjectLocations;
 using FrEee.Modding.Interfaces;
+using FrEee.Game.Objects.Abilities;
 
 namespace FrEee.Modding.Loaders
 {
@@ -402,6 +403,14 @@ namespace FrEee.Modding.Loaders
 						sst.StellarObjectLocations.Add(new CircleRadiusStellarObjectLocation { Radius = radius, StellarObjectTemplate = sobjTemplate });
 					}
 				}
+
+				// replace sight obscuration and other abilities that really should belong to sectors but Aaron reused for star systems
+				// so we don't get them using the same ability and systems inheriting abilities from storms etc. thus affecting the entire system!
+				sst.Abilities.Where(a => a.Rule.Matches("Sector - Sight Obscuration")).SafeForeach(a => a.Rule = AbilityRule.Find("System - Sight Obscuration"));
+				sst.Abilities.Where(a => a.Rule.Matches("Sector - Sensor Interference")).SafeForeach(a => a.Rule = AbilityRule.Find("System - Sensor Interference"));
+				sst.Abilities.Where(a => a.Rule.Matches("Sector - Shield Disruption")).SafeForeach(a => a.Rule = AbilityRule.Find("System - Shield Disruption"));
+				sst.Abilities.Where(a => a.Rule.Matches("Sector - Damage")).SafeForeach(a => a.Rule = AbilityRule.Find("System - Damage"));
+
 				yield return sst;
 			}
 		}
