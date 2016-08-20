@@ -127,10 +127,17 @@ namespace FrEee.WinForms.Forms
 			copy.Owner = Empire.Current;
 			copy.Iteration++;
 			copy.VehiclesBuilt = 0;
+
+			// use real component templates and mounts from mod, not copies!
 			copy.Components.Clear();
 			foreach (var mct in old.Components)
 			{
-				copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
+				// reuse templates so components appear "condensed" on vehicle designer
+				var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == mct.ComponentTemplate && x.Mount == mct.Mount);
+				if (same == null)
+					copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
+				else
+					copy.Components.Add(same);
 			}
 
 			return copy;
