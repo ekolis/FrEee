@@ -111,23 +111,29 @@ namespace FrEee.WinForms.Forms
 		{
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
-				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
-				var copy = old.CopyAndAssignNewID();
-				copy.TurnNumber = Galaxy.Current.TurnNumber;
-				copy.Owner = Empire.Current;
-				copy.Iteration++;
-				copy.VehiclesBuilt = 0;
-				copy.Components.Clear();
-				foreach (var mct in old.Components)
-				{
-					copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
-				}
+				IDesign copy = CopyDesign((IDesign)lstDesigns.SelectedItems[0].Tag);
 				var form = new VehicleDesignForm();
 				form.Design = copy;
 				this.ShowChildForm(form);
 				if (form.DialogResult == DialogResult.OK)
 					BindDesignList();
 			}
+		}
+
+		private IDesign CopyDesign(IDesign old)
+		{
+			var copy = old.CopyAndAssignNewID();
+			copy.TurnNumber = Galaxy.Current.TurnNumber;
+			copy.Owner = Empire.Current;
+			copy.Iteration++;
+			copy.VehiclesBuilt = 0;
+			copy.Components.Clear();
+			foreach (var mct in old.Components)
+			{
+				copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
+			}
+
+			return copy;
 		}
 
 		private void btnEdit_Click(object sender, EventArgs e)
@@ -163,7 +169,7 @@ namespace FrEee.WinForms.Forms
 			if (lstDesigns.SelectedItems.Count == 1)
 			{
 				var old = (IDesign)lstDesigns.SelectedItems[0].Tag;
-				var copy = old.LatestVersion;
+				var copy = old.IsObsolescent ? old.LatestVersion : CopyDesign(old); // make sure to copy design even if it has no upgradeable parts
 				var form = new VehicleDesignForm();
 				form.Design = copy;
 				this.ShowChildForm(form);
