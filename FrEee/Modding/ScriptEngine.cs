@@ -96,10 +96,9 @@ namespace FrEee.Modding
 		/// <summary>
 		/// Creates a script scope containing user defined variables.
 		/// </summary>
-		/// <param name="useGalaxy">Do we need a galaxy context? Not for static formulas.</param>
 		/// <param name="variables">The variables to set, or null to set no variables.</param>
 		/// <returns></returns>
-		public static void UpdateScope(bool useGalaxy, IDictionary<string, object> variables)
+		public static void UpdateScope(IDictionary<string, object> variables)
 		{
 			if (variables == null)
 				variables = new Dictionary<string, object>();
@@ -153,26 +152,23 @@ namespace FrEee.Modding
 					lastVariables.Remove(variable);
 				}
 			}
-			if (useGalaxy)
+			if (lastGalaxy != Galaxy.Current)
 			{
-				if (lastGalaxy != Galaxy.Current)
-				{
-					lastGalaxy = Galaxy.Current;
-					var sval = lastGalaxy.StringValue;
-					if (sval != null)
-						scope.SetVariable("_galaxy", sval);
-					else
-						scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
-					scope.SetVariable("newGalaxy", true);
-				}
-				else if (lastGalaxy == null)
-				{
-					scope.SetVariable("_galaxy", typeof(Galaxy).AssemblyQualifiedName + ":n;");
-					scope.SetVariable("newGalaxy", false);
-				}
+				lastGalaxy = Galaxy.Current;
+				var sval = lastGalaxy.StringValue;
+				if (sval != null)
+					scope.SetVariable("_galaxy", sval);
 				else
-					scope.SetVariable("newGalaxy", false);
+					scope.SetVariable("_galaxy", Serializer.SerializeToString(lastGalaxy));
+				scope.SetVariable("newGalaxy", true);
 			}
+			else if (lastGalaxy == null)
+			{
+				scope.SetVariable("_galaxy", typeof(Galaxy).AssemblyQualifiedName + ":n;");
+				scope.SetVariable("newGalaxy", false);
+			}
+			else
+				scope.SetVariable("newGalaxy", false);
 		}
 
 		/// <summary>
@@ -214,7 +210,7 @@ namespace FrEee.Modding
 		/// Note that the return value of the script may still contain insecure code, so be careful!
 		/// </summary>
 		/// <param name="expression">The script code to run.</param>
-		/// <param name="useGalaxy">Do we need a galaxy context? Not for static formulas.</param>
+		/// <param name="useGalaxy">Do we need a galaxy context? Really only need it for dynamic formulas.</param>
 		/// <param name="readOnlyVariables">Variables to inject into the script.</param>
 		/// <returns>Any .</returns>
 		public static T EvaluateExpression<T>(string expression, bool useGalaxy, IDictionary<string, object> readOnlyVariables = null)
@@ -227,7 +223,7 @@ namespace FrEee.Modding
 		/// Runs a script in a sandboxed environment.
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
-		/// <param name="useGalaxy">Do we need a galaxy context? Not for static formulas.</param>
+		/// <param name="useGalaxy">Do we need a galaxy context? Really only need it for dynamic formulas.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
 		/// <param name="readOnlyVariables">Read-only variables to inject into the script.</param>
 		public static T RunScript<T>(Script script, bool useGalaxy, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
@@ -307,7 +303,7 @@ namespace FrEee.Modding
 				foreach (var v in readOnlyVariables)
 					allVariables.Add(v.Key, v.Value);
 			}
-			UpdateScope(useGalaxy, allVariables);
+			UpdateScope(allVariables);
 			T result;
 			try
 			{
@@ -348,7 +344,7 @@ namespace FrEee.Modding
 		/// <param name="function">The name of the function.</param>
 		/// <param name="args">Arguments to pass to the function.</param>
 		/// <returns>The return value.</returns>
-		public static T CallFunction<T>(Script script, string function, bool useGalaxy, params object[] args)
+		public static T CallFunction<T>(Script script, string function, params object[] args)
 		{
 			var deserializers = new List<string>();
 			if (args != null)
@@ -371,7 +367,7 @@ namespace FrEee.Modding
 			var sc = new ScriptCode("functionCall", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var functionCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(functionCall);
-			UpdateScope(useGalaxy, variables);
+			UpdateScope(variables);
 			try
 			{
 				return compiledScript.Execute<T>(scope);
@@ -404,7 +400,7 @@ namespace FrEee.Modding
 		/// <param name="function">The name of the function.</param>
 		/// <param name="args">Arguments to pass to the function.</param>
 		/// <returns>The return value.</returns>
-		public static void CallSubroutine(Script script, string function, bool useGalaxy, params object[] args)
+		public static void CallSubroutine(Script script, string function, params object[] args)
 		{
 			var deserializers = new List<string>();
 			if (args != null)
@@ -427,7 +423,7 @@ namespace FrEee.Modding
 			var sc = new ScriptCode("runner", code, new Script[] { script }.Concat(script.ExternalScripts).ToArray());
 			var subCall = GetCodeScript(sc);
 			var compiledScript = GetCompiledScript(subCall);
-			UpdateScope(useGalaxy, variables);
+			UpdateScope(variables);
 			try
 			{
 				compiledScript.Execute(scope);
