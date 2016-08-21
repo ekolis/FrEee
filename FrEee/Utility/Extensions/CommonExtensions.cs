@@ -113,21 +113,24 @@ namespace FrEee.Utility.Extensions
 		/// <param name="mi"></param>
 		/// <param name="attributeType"></param>
 		/// <returns></returns>
-		public static bool HasAttribute(this MemberInfo mi, Type attributeType)
+		public static bool HasAttribute(this MemberInfo mi, Type attributeType, bool checkInterfaces = true)
 		{
 			if (attributeCache[mi] == null)
 				attributeCache[mi] = Attribute.GetCustomAttributes(mi);
 			if (attributeCache[mi].Where(a => attributeType.IsAssignableFrom(a.GetType())).Any())
 				return true;
 			var dt = mi is Type ? mi as Type : mi.DeclaringType;
-			if (interfaceCache[dt] == null)
-				interfaceCache[dt] = dt.GetInterfaces();
-			foreach (var i in interfaceCache[dt])
+			if (checkInterfaces)
 			{
-				if (memberCache[i] == null)
-					memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray();
-				if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType)))
-					return true;
+				if (interfaceCache[dt] == null)
+					interfaceCache[dt] = dt.GetInterfaces();
+				foreach (var i in interfaceCache[dt])
+				{
+					if (memberCache[i] == null)
+						memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray();
+					if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType, false))) // no need to check interfaces of interfaces, they're already listed by GetInterfaces
+						return true;
+				}
 			}
 			return false;
 		}
