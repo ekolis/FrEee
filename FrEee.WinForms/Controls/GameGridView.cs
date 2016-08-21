@@ -489,9 +489,12 @@ namespace FrEee.WinForms.Controls
 
 		private void gridData_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			// select moused row, even if not left button
-			gridData.ClearSelection();
-			gridData.Rows[e.RowIndex].Selected = true;
+			if (e.RowIndex >= 0) // don't allow selection of header row, it crashes and makes no sense anyway
+			{
+				// select moused row, even if not left button
+				gridData.ClearSelection();
+				gridData.Rows[e.RowIndex].Selected = true;
+			}
 		}
 	}
 }
