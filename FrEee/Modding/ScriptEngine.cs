@@ -350,11 +350,8 @@ namespace FrEee.Modding
 			if (args != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
-				if (useGalaxy)
-				{
-					deserializers.Add("if (newGalaxy):");
-					deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
-				}
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
@@ -406,11 +403,8 @@ namespace FrEee.Modding
 			if (args != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
-				if (useGalaxy)
-				{
-					deserializers.Add("if (newGalaxy):");
-					deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
-				}
+				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
 				// TODO - serializers so the objects can be modified by the script
