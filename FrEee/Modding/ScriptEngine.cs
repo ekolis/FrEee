@@ -210,23 +210,21 @@ namespace FrEee.Modding
 		/// Note that the return value of the script may still contain insecure code, so be careful!
 		/// </summary>
 		/// <param name="expression">The script code to run.</param>
-		/// <param name="useGalaxy">Do we need a galaxy context? Really only need it for dynamic formulas.</param>
 		/// <param name="readOnlyVariables">Variables to inject into the script.</param>
 		/// <returns>Any .</returns>
-		public static T EvaluateExpression<T>(string expression, bool useGalaxy, IDictionary<string, object> readOnlyVariables = null)
+		public static T EvaluateExpression<T>(string expression, IDictionary<string, object> readOnlyVariables = null)
 		{
 			var script = new Script("expression", expression);
-			return RunScript<T>(script, useGalaxy, null, readOnlyVariables);
+			return RunScript<T>(script, null, readOnlyVariables);
 		}
 
 		/// <summary>
 		/// Runs a script in a sandboxed environment.
 		/// </summary>
 		/// <param name="script">The script code to run.</param>
-		/// <param name="useGalaxy">Do we need a galaxy context? Really only need it for dynamic formulas.</param>
 		/// <param name="variables">Read/write variables to inject into the script.</param>
 		/// <param name="readOnlyVariables">Read-only variables to inject into the script.</param>
-		public static T RunScript<T>(Script script, bool useGalaxy, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
+		public static T RunScript<T>(Script script, IDictionary<string, object> variables = null, IDictionary<string, object> readOnlyVariables = null)
 		{
 			var preCommands = new List<string>();
 			var postCommands = new List<string>();
@@ -241,20 +239,15 @@ namespace FrEee.Modding
 			preCommands.Add("from FrEee.Game.Objects.Space import Galaxy");
 			preCommands.Add("from FrEee.Game.Objects.Civilization import Empire");
 			preCommands.Add("from FrEee.Utility import Serializer");
-			if (useGalaxy)
-			{
-				preCommands.Add("if newGalaxy:");
-				preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
-				preCommands.Add("\tGalaxy.Current = galaxy;");
-			}
+			preCommands.Add("if newGalaxy:");
+			preCommands.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
+			preCommands.Add("\tGalaxy.Current = galaxy;");
 			if (variables != null)
 			{
 				foreach (var variable in variables.Keys)
 				{
 					if (variables[variable] is IReferrable)
 					{
-						if (!useGalaxy)
-							throw new ScriptException($"Cannot retrive referrable variable {variable} in script without a galaxy context.");
 						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					}
 					else
@@ -268,14 +261,10 @@ namespace FrEee.Modding
 				{
 					if (readOnlyVariables[variable] == Galaxy.Current && Galaxy.Current != null)
 					{
-						if (!useGalaxy)
-							throw new ScriptException($"Cannot retrive referrable variable {variable} in script without a galaxy context.");
 						preCommands.Add(variable + " = galaxy;");
 					}
 					else if (readOnlyVariables[variable] is IReferrable)
 					{
-						if (!useGalaxy)
-							throw new ScriptException($"Cannot retrive referrable variable {variable} in script without a galaxy context.");
 						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
 					}
 					else
