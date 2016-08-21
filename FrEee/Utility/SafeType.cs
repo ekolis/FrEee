@@ -37,15 +37,11 @@ namespace FrEee.Utility
 			}*/
 		}
 
-		/*public static void ForceLoadType(Type t)
+		public static void ForceLoadType(Type t)
 		{
-			var an = t.Assembly.GetName().Name;
-			if (!ReferencedAssemblies.ContainsKey(an))
-				ReferencedAssemblies.Add(an, t.Assembly);
-			var tuple = Tuple.Create(t.Assembly, t.FullName);
-			if (!ReferencedTypes.ContainsKey(tuple))
-				ReferencedTypes.Add(tuple, t);
-		}*/
+			RegisterAssembly(t.Assembly);
+			FindType(t.Assembly, t.AssemblyQualifiedName);
+		}
 
 		private static void RegisterAssembly(Assembly a)
 		{
