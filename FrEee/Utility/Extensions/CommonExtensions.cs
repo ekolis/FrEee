@@ -3262,13 +3262,17 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static object DefaultValue(this Type t)
 		{
-			return typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
+			if (defaultValueCache[t] == null)
+				defaultValueCache[t] = typeof(CommonExtensions).GetMethod("GetDefaultGeneric", BindingFlags.NonPublic | BindingFlags.Static).MakeGenericMethod(t).Invoke(null, null);
+			return defaultValueCache[t];
 		}
 
 		private static T GetDefaultGeneric<T>()
 		{
 			return default(T);
 		}
+
+		private static SafeDictionary<Type, object> defaultValueCache = new SafeDictionary<Type, object>();
 
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
