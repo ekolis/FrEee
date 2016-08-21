@@ -25,16 +25,19 @@ namespace FrEee.Utility
 		#region private static initializers
 		static SafeType()
 		{
-			ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
+			RegisterAssembly(Assembly.GetEntryAssembly());
+			RegisterAssembly(Assembly.GetExecutingAssembly());
+
+			/*ReferencedAssemblies = LoadReferencedAssemblies().ToDictionary(a => a.GetName().Name);
 			ReferencedTypes = new Dictionary<Tuple<Assembly, string>, Type>();
 			foreach (var a in ReferencedAssemblies.Values)
 			{
 				foreach (var t in a.GetTypes())
 					ReferencedTypes.Add(Tuple.Create(a, t.FullName), t);
-			}
+			}*/
 		}
 
-		public static void ForceLoadType(Type t)
+		/*public static void ForceLoadType(Type t)
 		{
 			var an = t.Assembly.GetName().Name;
 			if (!ReferencedAssemblies.ContainsKey(an))
@@ -42,9 +45,90 @@ namespace FrEee.Utility
 			var tuple = Tuple.Create(t.Assembly, t.FullName);
 			if (!ReferencedTypes.ContainsKey(tuple))
 				ReferencedTypes.Add(tuple, t);
+		}*/
+
+		private static void RegisterAssembly(Assembly a)
+		{
+			if (a != null)
+				ReferencedAssemblies[a.GetName().Name] = a;
 		}
 
-		/// <summary>
+		private static Assembly FindAssembly(string n)
+		{
+			foreach (var kvp in ReferencedAssemblies)
+			{
+				if (kvp.Value.FullName == n)
+					return kvp.Value;
+			}
+
+			// no such assembly? find any referenced assemblies and keep on searching
+			try
+			{
+				return FindMoreAssemblies(a => a.FullName == n, a => a);
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException("Could not find assembly named " + n + ".", ex);
+			}
+		}
+
+		private static T FindMoreAssemblies<T>(Func<Assembly, bool> foundit, Func<Assembly, T> resultor)
+		{
+			bool more = false;
+			do
+			{
+				foreach (var kvp in ReferencedAssemblies.ToArray())
+				{
+					if (LoadReferencedAssemblies(kvp.Value))
+						more = true;
+					foreach (var kvp2 in ReferencedAssemblies)
+					{
+						if (foundit(kvp2.Value))
+							return resultor(kvp2.Value);
+					}
+				}
+			} while (more);
+
+			throw new Exception("No assemblies matched the criteria.");
+		}
+
+		private static Type FindType(string name)
+		{
+			try
+			{
+				return FindMoreAssemblies(a => FindType(a, name) != null, a => FindType(a, name));
+			}
+			catch (Exception ex)
+			{
+				throw new ArgumentException($"Could not find type named {name}.");
+			}
+		}
+
+		private static Type FindType(Assembly a, string name)
+		{
+			if (!ReferencedTypes[a].Any())
+			{
+				foreach (var t in a.GetTypes())
+					ReferencedTypes[a][t.FullName] = t;
+			}
+			var type = ReferencedTypes[a][name];
+			return type;
+		}
+
+		private static bool LoadReferencedAssemblies(Assembly a)
+		{
+			bool more = false;
+			foreach (var n2 in a.GetReferencedAssemblies().Select(a2 => a2.FullName).Except(ReferencedAssemblies.Values.Select(x => x.FullName)))
+			{
+				more = true; // discovered assemblies
+				var a2 = Assembly.Load(n2);
+				RegisterAssembly(a2);
+				FindAssembly(n2);
+			}
+			return more;
+		}
+
+		/*/// <summary>
 		/// Finds and loads all referenced assemblies from a given root assembly, recursively.
 		/// </summary>
 		/// <param name="rootAssembly">The root assembly. If not specified, Assembly.GetEntryAssembly() and Assembly.GetExecutingAssembly() will be used.</param>
@@ -71,11 +155,11 @@ namespace FrEee.Utility
 				}
 			}
 			return alreadyLoaded;
-		}
+		}*/
 		#endregion
 
-		private static IDictionary<string, Assembly> ReferencedAssemblies { get; set; }
-		private static IDictionary<Tuple<Assembly, string>, Type> ReferencedTypes { get; set; }
+		private static SafeDictionary<string, Assembly> ReferencedAssemblies { get; set; } = new SafeDictionary<string, Assembly>();
+		private static SafeDictionary<Assembly, SafeDictionary<string, Type>> ReferencedTypes { get; set; } = new SafeDictionary<Assembly, SafeDictionary<string, Type>>(true);
 
 		public string Name { get; set; }
 
@@ -86,21 +170,17 @@ namespace FrEee.Utility
 			get
 			{
 				return Type.GetType(Name,
-					assemblyName => ReferencedAssemblies[assemblyName.Name],
+					assemblyName => FindAssembly(assemblyName.FullName),
 					(assembly, typeName, caseInsensitive) =>
 					{
 						if (caseInsensitive)
 							throw new NotSupportedException("Case insensitive type search is not supported.");
 						else
 						{
-							try
-							{
-								return ReferencedTypes[Tuple.Create(assembly, typeName)];
-							}
-							catch (KeyNotFoundException ex)
-							{
-								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?", ex);
-							}
+							var t = FindType(typeName);
+							if (t == null)
+								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?");
+							return t;
 						}
 					});
 			}
