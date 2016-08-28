@@ -40,7 +40,7 @@ namespace FrEee.Utility
 
 			// type checking!
 			if (o is Type)
-				throw new SerializationException("Cannot seerialize objects of type System.Type.");
+				throw new SerializationException("Cannot serialize objects of type System.Type.");
 			if (o != null && !desiredType.IsAssignableFrom(o.GetType()))
 				throw new SerializationException("Attempting to serialize " + o.GetType() + " as " + desiredType + ".");
 
