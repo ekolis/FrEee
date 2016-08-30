@@ -1046,11 +1046,12 @@ namespace FrEee.Game.Objects.Space
 				foreach (var u in Cargo.Units)
 					u.Dispose();
 			}
-			if (ConstructionQueue != null)
-				ConstructionQueue.Dispose();
+			if (Colony != null)
+				Colony.Dispose();
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
+			IsDisposed = true;
 		}
 
 		/// <summary>
