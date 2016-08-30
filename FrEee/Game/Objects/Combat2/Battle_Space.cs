@@ -312,7 +312,7 @@ namespace FrEee.Game.Objects.Combat2
 				return "battle"; // no empire specified
 			if (!StartCombatants.Values.Any(c => c.Owner == emp || c.Owner.IsAllyOf(emp, StarSystem)))
 				return "battle"; // empire/allies not involved
-			var survivors = EndCombatants.Values.Where(c => !c.IsDestroyed);
+			var survivors = EndCombatants.Values.Where(c => !c.IsDestroyed && c.Owner != null); // glassed planets aren't destroyed but they do have null owners
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
 			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
 			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
