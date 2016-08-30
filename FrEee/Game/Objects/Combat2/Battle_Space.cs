@@ -1008,7 +1008,7 @@ namespace FrEee.Game.Objects.Combat2
 			//    + attacker.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt()
 			//    - target.WorkingObject.Owner.GetAbilityValue("Combat Modifier - Empire").ToInt();
 			//// TODO - moddable min/max hit chances with per-weapon overrides
-			Vehicle vehicle = (Vehicle)attacker.WorkingObject;
+			var vehicle = (IMobileSpaceObject)attacker.WorkingObject;
 			int wpn_Accu_blankrng = Mod.Current.Settings.WeaponAccuracyPointBlank;
 			int wpn_AccuMod = weapon.weapon.Template.WeaponAccuracy; // weapon's intrinsic accuracy modifier
 			int atkr_AccuMod = vehicle.Accuracy;//weapon.weapon.Container.Accuracy; // firing ship's accuracy modifier
@@ -1168,7 +1168,7 @@ namespace FrEee.Game.Objects.Combat2
 
 			var target_icomobj = target.WorkingObject;
 			//Vehicle defenderV = (Vehicle)target_icomobj;
-			Vehicle attkVeh = (Vehicle)attacker.WorkingObject;
+			var attkVeh = (IMobileSpaceObject)attacker.WorkingObject;
 			if (!weapon.CanTarget(target_icomobj))
 				return null;
 			int tohit = this.to_hit(Sector, attacker, weapon, target);
