@@ -99,6 +99,7 @@ namespace FrEee.Game.Objects.Civilization
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
+			IsDisposed = true;
 		}
 
 		public Planet Container
