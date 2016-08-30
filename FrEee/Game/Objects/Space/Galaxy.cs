@@ -982,6 +982,15 @@ namespace FrEee.Game.Objects.Space
 				f.ShareSupplies();
 			}
 
+			// construction queues
+			if (status != null)
+				status.Message = "Constructing objects";
+			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).SafeForeach(q => q.ExecuteOrders());
+			if (status != null)
+				status.Progress += progressPerOperation;
+
+			Current.SpaceObjectIDCheck("after construction");
+
 			// replenish shields
 			if (status != null)
 				status.Message = "Replenishing shields";
@@ -1031,15 +1040,6 @@ namespace FrEee.Game.Objects.Space
 				f.Validate();
 				f.ShareSupplies();
 			}
-
-			// construction queues
-			if (status != null)
-				status.Message = "Constructing objects";
-			Current.Referrables.OfType<ConstructionQueue>().Where(q => !q.IsMemory).SafeForeach(q => q.ExecuteOrders());
-			if (status != null)
-				status.Progress += progressPerOperation;
-
-			Current.SpaceObjectIDCheck("after construction");
 
 			// TODO - more turn stuff? or do we have everything?
 
