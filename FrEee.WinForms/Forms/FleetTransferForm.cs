@@ -190,12 +190,14 @@ namespace FrEee.WinForms.Forms
 			foreach (var cmd in newCommands)
 				cmd.Execute();
 			changed = false;
+			DialogResult = DialogResult.OK;
 		}
 
 		private void Reset()
 		{
 			foreach (var fleet in newFleets)
 				fleet.Dispose();
+			DialogResult = DialogResult.Cancel;
 		}
 
 		private bool abort = false;
