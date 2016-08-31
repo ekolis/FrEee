@@ -805,7 +805,8 @@ namespace FrEee.Game.Objects.Space
 				{
 					if (Sector != null)
 						yield return Sector;
-					yield return Owner;
+					if (Owner != null)
+						yield return Owner;
 				}
 			}
 		}
