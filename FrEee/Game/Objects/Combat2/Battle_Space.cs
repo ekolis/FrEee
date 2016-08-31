@@ -571,7 +571,9 @@ namespace FrEee.Game.Objects.Combat2
 				{
 					var id = kvp.Key;
 					var c = kvp.Value;
-					EndCombatants.Add(id, c.Copy());
+					var c2 = c.CopyAndAssignNewID();
+					c2.IsMemory = true;
+					EndCombatants.Add(id, c2);
 				}
 			}
 
