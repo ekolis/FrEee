@@ -27,6 +27,7 @@ namespace FrEee.Utility
 		/// When retreived, pulls in any data needed to reconstitute this object.
 		/// When set, reconstitutes the object from the data being assigned.
 		/// </summary>
+		[DoNotCopy(false)]
 		SafeDictionary<string, object> Data { get; set; }
 	}
 }
