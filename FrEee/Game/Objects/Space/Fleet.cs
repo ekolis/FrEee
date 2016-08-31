@@ -685,7 +685,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (value == null)
 				{
-					if (Sector == null)
+					if (Sector != null)
 						Sector.Remove(this);
 				}
 				else
