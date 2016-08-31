@@ -1336,8 +1336,8 @@ namespace FrEee.WinForms.Forms
 			if (IsFleetTransferOperationValid)
 			{
 				var form = new FleetTransferForm(starSystemView.SelectedSector);
-				this.ShowChildForm(form);
-				BindReport();
+				if (this.ShowChildForm(form) == DialogResult.OK)
+					starSystemView.SelectedSector = starSystemView.SelectedSector; // reselect sector since we *probably* don't want to see what was selected before (might be a ship in a fleet now)
 				starSystemView.Invalidate();
 			}
 		}
