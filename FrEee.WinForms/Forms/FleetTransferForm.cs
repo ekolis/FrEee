@@ -185,10 +185,18 @@ namespace FrEee.WinForms.Forms
 
 		private void Save()
 		{
+			// save commands to plr-file in memory
 			foreach (var cmd in newCommands)
 				Empire.Current.Commands.Add(cmd);
+
+			// execute commands immediately so they take effect on client
 			foreach (var cmd in newCommands)
 				cmd.Execute();
+
+			// delete any empty fleets
+			foreach (var f in sector.SpaceObjects.OfType<Fleet>().Where(f => !f.Vehicles.Any()).ToArray())
+				f.Dispose();
+
 			changed = false;
 			DialogResult = DialogResult.OK;
 		}

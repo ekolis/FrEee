@@ -325,6 +325,7 @@ namespace FrEee.Game.Objects.Space
 				return;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
+			Sector = null;
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
 		}
