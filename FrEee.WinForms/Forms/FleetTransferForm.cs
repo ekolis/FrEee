@@ -189,6 +189,7 @@ namespace FrEee.WinForms.Forms
 				Empire.Current.Commands.Add(cmd);
 			foreach (var cmd in newCommands)
 				cmd.Execute();
+			changed = false;
 		}
 
 		private void Reset()
