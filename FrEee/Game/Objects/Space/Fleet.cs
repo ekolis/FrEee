@@ -27,6 +27,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			Vehicles = new GalaxyReferenceSet<IMobileSpaceObject>();
 			Orders = new List<IOrder<Fleet>>();
+			Timestamp = Galaxy.Current?.Timestamp ?? 0;
 		}
 
 		/// <summary>
