@@ -340,10 +340,17 @@ namespace FrEee.Game.Objects.Civilization
 		public void AddOrder(IOrder order)
 		{
 			if (order == null)
-				throw new Exception("Can't add a null order to a construction queue's orders.");
-			if (!(order is IConstructionOrder))
-				throw new Exception("Can't add a " + order.GetType() + " to a construction queue's orders.");
-			Orders.Add((IConstructionOrder)order);
+				Owner.Log.Append(Container.CreateLogMessage($"Can't add a null order to {this}. Probably a bug..."));
+			else if (!(order is IConstructionOrder))
+				Owner.Log.Append(Container.CreateLogMessage($"Can't add a {order.GetType()} to {this}. Probably a bug..."));
+			else
+			{
+				var co = (IConstructionOrder)order;
+				if (co.Template == null)
+					Owner.Log.Append(Container.CreateLogMessage($"Can't add an order with no template to {this}. Probably a bug..."));
+				else
+					Orders.Add(co);
+			}
 		}
 
 		public void RemoveOrder(IOrder order)
