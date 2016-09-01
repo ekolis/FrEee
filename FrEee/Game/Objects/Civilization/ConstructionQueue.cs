@@ -76,6 +76,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public string GetReasonForBeingUnableToConstruct(IConstructionTemplate item)
 		{
+			if (item == null)
+				return "Construction template does not exist.";
 			if (!item.HasBeenUnlockedBy(Owner))
 				return Owner + " has not yet unlocked " + item + ".";
 			if (!IsSpaceYardQueue && item.RequiresSpaceYardQueue)
