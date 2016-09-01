@@ -140,6 +140,10 @@ namespace FrEee.Game.Objects.Orders
 
 		public IEnumerable<LogMessage> GetErrors(ConstructionQueue queue)
 		{
+			// do we have a valid template?
+			if (Template == null)
+				yield return Owner.CreateLogMessage($"{queue.Container} cannot build a nonexistent template; skipping it. Probably a bug...");
+
 			// validate that what's being built is unlocked
 			if (!queue.Owner.HasUnlocked(Template))
 				yield return Template.CreateLogMessage(Template + " cannot be built at " + queue.Container + " because we have not yet researched it.");
@@ -172,7 +176,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public ResourceQuantity Cost
 		{
-			get { return Template.Cost; }
+			get { return Template?.Cost ?? new ResourceQuantity(); }
 		}
 
 		public bool IsDisposed { get; set; }
