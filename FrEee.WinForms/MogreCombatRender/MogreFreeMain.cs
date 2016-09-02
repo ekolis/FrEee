@@ -58,7 +58,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		public MogreFreeMain(Battle_Space battle)
 		{
 			this.battle = battle;
-			battle.IsReplay = true;
+			//battle.IsReplay = true;
 
 
 			try
@@ -795,8 +795,8 @@ namespace FrEee.WinForms.MogreCombatRender
 				}
 
 				//readlogs, create and dispose of bullets.
-				foreach (var comObj in battle.CombatObjects.ToArray())
-					readlogs(comObj, battletic, renderlocs);
+				/*foreach (var comObj in battle.CombatObjects.ToArray())
+					readlogs(comObj, battletic, renderlocs);*/
 
 				if (cmdfreq_countr >= Battle_Space.CommandFrequencyTicks)
 				{
@@ -837,10 +837,10 @@ namespace FrEee.WinForms.MogreCombatRender
 #endif
 				}
 
-				if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
-					cont = false;
-				else
-					cont = true;
+				//if (battle.ReplayLog.EventsForTick(battletic).OfType<CombatEndBattleEvent>().Any())
+					//cont = false;
+				//else
+					//cont = true;
 
 				do_txt();
 				cmdfreq_countr++;
@@ -866,7 +866,7 @@ namespace FrEee.WinForms.MogreCombatRender
 		}
 
 
-		private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, PointXd> renderlocs)
+		/*private void readlogs(CombatObject comObj, int battletic, SafeDictionary<CombatNode, PointXd> renderlocs)
 		{
 			var ourLogs = battle.ReplayLog.EventsForObjectAtTick(comObj, battletic);
 			foreach (var comEvent in ourLogs)
@@ -939,7 +939,7 @@ namespace FrEee.WinForms.MogreCombatRender
 					}
 				}
 			}
-		}
+		}*/
 
 		private void disposeObj(CombatNode comNode, SafeDictionary<CombatNode, PointXd> renderlocs)
 		{
