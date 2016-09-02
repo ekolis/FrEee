@@ -235,7 +235,10 @@ namespace FrEee.Game.Objects.Combat2
             return boltTimetoTarget;
         }
 
-
-    }
+		public override string ToString()
+		{
+			return weapon.ToString();
+		}
+	}
 
 }

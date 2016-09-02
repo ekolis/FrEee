@@ -19,7 +19,7 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			//StartCombatant = working; wtf?
             StartCombatant = start;
-            WorkingCombatant = working;
+			WorkingCombatant = working;
 			newDice(battleseed);
 			RefreshWeapons();
 		}
@@ -235,7 +235,12 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		protected abstract void RefreshWeapons();
 
-        /*/// <summary>
+		public override string ToString()
+		{
+			return Work.Name;
+		}
+
+		/*/// <summary>
         /// attempt to move firecontrol to the combatObject
         /// </summary>
         /// <param name="tic_countr"></param>
