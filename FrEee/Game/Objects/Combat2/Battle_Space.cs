@@ -588,9 +588,9 @@ namespace FrEee.Game.Objects.Combat2
 		/// <returns>True if the battle should continue; false if it should end.</returns>
 		public bool ProcessTick(ref int tick, ref int cmdfreqCounter)
 		{
+			var maxTick = (Mod.Current == null || Mod.Current.Settings.SpaceCombatTurns <= 0 ? 30 : Mod.Current.Settings.SpaceCombatTurns) * TicksPerSecond;
 #if DEBUG
-			Console.WriteLine("Processing: ");
-			Console.WriteLine("Tick: " + tick.ToString());
+			Console.WriteLine($"***PROCESSING COMBAT TICK: {tick} of {maxTick}");
 #endif
 			//unleash the dogs of war!
 			foreach (var comObj in CombatObjects)
@@ -665,14 +665,22 @@ namespace FrEee.Game.Objects.Combat2
 									   //TODO: check for alive missiles and bullets.
 			bool hostiles = ControlledCombatObjects.Any(o => !o.WorkingCombatant.IsDestroyed && ControlledCombatObjects.Any(o2 => !o2.WorkingCombatant.IsDestroyed && o.WorkingCombatant.IsHostileTo(o2.WorkingCombatant.Owner)));
 
-			var maxTick = (Mod.Current == null || Mod.Current.Settings.SpaceCombatTurns <= 0 ? 30 : Mod.Current.Settings.SpaceCombatTurns) * TicksPerSecond;
 			bool cont;
 			if (!ships_persuing && !ships_inrange)
+			{
 				cont = false;
+				Console.WriteLine("***COMBAT END - ships are no longer pursuing each other or in weapons range");
+			}
 			else if (!hostiles)
+			{
+				Console.WriteLine("***COMBAT END - no hostiles remain");
 				cont = false;
+			}
 			else if (tick > maxTick)
+			{
+				Console.WriteLine("***COMBAT END - time expired");
 				cont = false;
+			}
 			else
 				cont = true;
 			cmdfreqCounter++;
@@ -905,7 +913,8 @@ namespace FrEee.Game.Objects.Combat2
 		/// <param name="comObj"></param>
 		public void firecontrol(int tic_countr, CombatObject comObj)
 		{
-
+			if (comObj.strategy != null)
+				comObj.strategy.Zeroize();
 			if (comObj is CombatSeeker)
 			{
 				//is a seeker 

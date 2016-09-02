@@ -141,6 +141,16 @@ namespace FrEee.Game.Objects.Combat2
             // TODO - should strategies ever be obsolete memories?
             return false;
         }
+
+		/// <summary>
+		/// Zeroizes all blocks in this strategy.
+		/// </summary>
+		public void Zeroize()
+		{
+			// TODO - only zeroize root blocks? or leaf blocks? how does this work? I know it's recursive somehow...
+			foreach (var block in blocks)
+				block.zeroize();
+		}
     }
 
     public class StragegyObject_Default : StrategyObject
