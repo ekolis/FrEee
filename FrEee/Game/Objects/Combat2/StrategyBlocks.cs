@@ -129,6 +129,9 @@ namespace FrEee.Game.Objects.Combat2
 			return this.output;
 		}
 
+		/// <summary>
+		/// Resets all in
+		/// </summary>
 		public void zeroize()
 		{
 			if (inputLnks != null)
