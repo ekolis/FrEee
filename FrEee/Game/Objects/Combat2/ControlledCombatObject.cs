@@ -237,7 +237,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		public override string ToString()
 		{
-			return Work.Name;
+			return WorkingCombatant.Name;
 		}
 
 		/*/// <summary>
