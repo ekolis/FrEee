@@ -110,7 +110,7 @@ namespace FrEee.Game.Objects.Combat2
 			}
 
 
-			ReplayLog = new CombatReplayLog();
+			//ReplayLog = new CombatReplayLog();
 
 
 		}
@@ -125,6 +125,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// <summary>
 		/// whether or not this is a processing(false) or a replay(true)
 		/// </summary>
+		[Obsolete("Battle replays are now complete reenactments; this flag is unnecessary.")]
 		public bool IsReplay { get; set; }
 
 		/// <summary>
@@ -246,6 +247,7 @@ namespace FrEee.Game.Objects.Combat2
 		/// </summary>
 		//public ICollection<Fleet> Fleets { get; private set; }
 
+		[Obsolete("Battle replays are now complete reenactments; this log is not populated anymore.")]
 		public CombatReplayLog ReplayLog { get; private set; }
 
 		public Sector sectoratStart { get; private set; }
@@ -392,7 +394,7 @@ namespace FrEee.Game.Objects.Combat2
 			CombatNodes = StartNodes;
 		}
 
-		private void ReplaySetup()
+		/*private void ReplaySetup()
 		{
 #if DEBUG
 			Console.WriteLine("Beginning Replay Setup");
@@ -428,7 +430,7 @@ namespace FrEee.Game.Objects.Combat2
 			Console.WriteLine("Done");
 #endif
 			CombatNodes = StartNodes;
-		}
+		}*/
 
 		private bool AnyWeaponsInRange
 		{
@@ -461,10 +463,10 @@ namespace FrEee.Game.Objects.Combat2
 			tOC = 0; //reset temp object counter.
 
 
-			if (!IsReplay)
+			//if (!IsReplay)
 				FirstSetup();
-			else
-				ReplaySetup();
+			//else
+//				ReplaySetup();
 
 			//setup the game peice locations
 
@@ -556,7 +558,7 @@ namespace FrEee.Game.Objects.Combat2
 		public void End(int tick)
 		{
 			//end combat
-			ReplayLog.Events.Add(new CombatEndBattleEvent(tick));
+			//ReplayLog.Events.Add(new CombatEndBattleEvent(tick));
 			Current.Remove(this);
 			Previous.Add(this);
 
@@ -565,7 +567,7 @@ namespace FrEee.Game.Objects.Combat2
 				CombatNodes.Remove(seeker);
 
 			// save state of end combatants if this isn't a replay
-			if (!IsReplay)
+			//if (!IsReplay)
 			{
 				foreach (var kvp in ActualCombatants)
 				{
@@ -577,7 +579,7 @@ namespace FrEee.Game.Objects.Combat2
 				}
 			}
 
-			IsReplay = true;
+			//IsReplay = true;
 		}
 
 		/// <summary>
@@ -782,7 +784,7 @@ namespace FrEee.Game.Objects.Combat2
 					Console.WriteLine(ccobj.WorkingCombatant.Name + " Has no hostile Targets");
 #endif
 				}
-				if (IsReplay && battletick < 1000)
+				/*if (IsReplay && battletick < 1000)
 				{
 					List<CombatEvent> evnts = ReplayLog.EventsForObjectAtTick(ccobj, battletick).ToList<CombatEvent>();
 					var locevnts = evnts.OfType<CombatLocationEvent>().Where(e => e.Object == ccobj && e.Tick == battletick);
@@ -793,10 +795,10 @@ namespace FrEee.Game.Objects.Combat2
 						comAI += "Not matched \r\n";
 				}
 				else if (!IsReplay && battletick < 1000)
-				{
+				{*/
 					CombatLocationEvent locevnt = new CombatLocationEvent(battletick, ccobj, ccobj.cmbt_loc);
-					ReplayLog.Events.Add(locevnt);
-				}
+					//ReplayLog.Events.Add(locevnt);
+				//}
 
 				ccobj.debuginfo += comAI;
 			}
@@ -823,12 +825,12 @@ namespace FrEee.Game.Objects.Combat2
 				Console.WriteLine("ProxDetonation!");
 #endif
 				CombatTakeFireEvent evnt = comSek.seekertargethit;
-				if (!IsReplay)
+				//if (!IsReplay)
 				{
 					evnt.IsHit = true;
 					evnt.Tick = tick; //update the tick to where the hit occurs. 
 				}
-				else if (!evnt.IsHit || evnt.Tick != tick)
+				/*else if (!evnt.IsHit || evnt.Tick != tick)
 				{
 					Console.WriteLine("Seeker Hit Out of synch detected!");
 					Console.WriteLine("Seeker:          " + comSek.ID);
@@ -837,7 +839,7 @@ namespace FrEee.Game.Objects.Combat2
 					Console.WriteLine("This Tick:       " + tick);
 					Console.WriteLine("Expected Tick:   " + tick);
 					Console.WriteLine("Expected Hit:    " + evnt.IsHit);
-				}
+				}*/
 				Component launcher = comSek.launcher.weapon;
 				CombatObject target = comSek.weaponTarget[0];
 				if (target is CombatControlledObject) //TODO handle seekers and other objects as seeker targets.
@@ -875,11 +877,11 @@ namespace FrEee.Game.Objects.Combat2
 #endif
 						targetsec.Dispose();
 						target.deathTick = tick;
-						if (!IsReplay)
-						{
+						//if (!IsReplay)
+						//{
 							CombatDestructionEvent deathEvent = new CombatDestructionEvent(tick, target, target.cmbt_loc);
-							ReplayLog.Events.Add(deathEvent);
-						}
+							//ReplayLog.Events.Add(deathEvent);
+						//}
 						foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
 						{
 							CombatEmpire empire = empireKVP.Value;
@@ -976,11 +978,11 @@ namespace FrEee.Game.Objects.Combat2
 								CombatFireOnTargetEvent attack_event = new CombatFireOnTargetEvent(tic_countr, comObj, comObj.cmbt_loc, wpn, targets_event);
 
 
-								if (!IsReplay)
+								//if (!IsReplay)
 								{
 									targets_event.fireOnEvent = attack_event;
-									ReplayLog.Events.Add(targets_event);
-									ReplayLog.Events.Add(attack_event);
+									//ReplayLog.Events.Add(targets_event);
+									//ReplayLog.Events.Add(attack_event);
 								}
 
 							}
@@ -988,7 +990,7 @@ namespace FrEee.Game.Objects.Combat2
 					}
 				}
 				//update any events where this ship has taken fire, and set the location. 
-				if (!IsReplay)
+				/*(if (!IsReplay)
 				{
 					foreach (CombatEvent comevnt in ReplayLog.EventsForObjectAtTick(comObj, tic_countr))
 					{
@@ -998,7 +1000,7 @@ namespace FrEee.Game.Objects.Combat2
 							takefire.setLocation(comObj.cmbt_loc);
 						}
 					}
-				}
+				}*/
 			}
 		}
 
@@ -1061,7 +1063,7 @@ namespace FrEee.Game.Objects.Combat2
 					emp.hostile.Add(seeker);
 			}
 
-			if (IsReplay)
+			/*if (IsReplay)
 			{
 #if DEBUG
 				Console.WriteLine("Tick: " + targettick);
@@ -1074,7 +1076,7 @@ namespace FrEee.Game.Objects.Combat2
 				seeker.seekertargethit = target_event; //need to link the seeker and the event. (since the seeker object does not get carried over between processing and replay, but gets re-created)
 			}
 			else
-			{
+			{*/
 #if DEBUG
 				Console.WriteLine("Tick: " + targettick);
 #endif
@@ -1083,7 +1085,7 @@ namespace FrEee.Game.Objects.Combat2
 				target_event = new CombatTakeFireEvent(targettick, target, target.cmbt_loc, false); //false since we don't know if it's going to hit yet.
 				target_event.BulletNode = seeker;
 				seeker.seekertargethit = target_event; //seeker stores a link to the event so we can flag the event has having hit the ship later.
-			}
+			//}
 
 			return target_event;
 		}
@@ -1099,7 +1101,7 @@ namespace FrEee.Game.Objects.Combat2
 
 
 
-			if (IsReplay)
+			/*if (IsReplay)
 			{
 				//read the event
 				target_event = ReplayLog.EventsForObjectAtTick(target, targettic).OfType<CombatTakeFireEvent>().ToList<CombatTakeFireEvent>()[0];// need to check for the right event here. 
@@ -1137,11 +1139,11 @@ namespace FrEee.Game.Objects.Combat2
 				}
 			}
 			else
-			{
+			{*/
 				//*write* the event
 				target_event = new CombatTakeFireEvent(targettic, target, target.cmbt_loc, hit);
 				int psudoboltID = -tempObjCounter; //increase it just so processing has the same number of tempObjects created as replay will. 
-			}
+			//}
 
 			return target_event;
 		}
@@ -1150,10 +1152,10 @@ namespace FrEee.Game.Objects.Combat2
 		{
 			CombatTakeFireEvent target_event = null;
 			int targettick = tick;
-			if (IsReplay)
+			/*if (IsReplay)
 			{ //read the replay... nothing to do if a beam. 
 			}
-			else
+			else*/
 			{ //write the event.                               
 				target_event = new CombatTakeFireEvent(targettick, target, target.cmbt_loc, hit);
 			}
@@ -1294,10 +1296,10 @@ namespace FrEee.Game.Objects.Combat2
 #endif
 				obj.Dispose();
 				cobj.deathTick = tick;
-				if (!IsReplay)
+				//if (!IsReplay)
 				{
 					CombatDestructionEvent deathEvent = new CombatDestructionEvent(CurrentTick, cobj, cobj.cmbt_loc);
-					ReplayLog.Events.Add(deathEvent);
+//					ReplayLog.Events.Add(deathEvent);
 				}
 				foreach (KeyValuePair<Empire, CombatEmpire> empireKVP in Empires)
 				{
