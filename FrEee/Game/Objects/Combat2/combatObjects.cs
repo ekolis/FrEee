@@ -40,7 +40,9 @@ namespace FrEee.Game.Objects.Combat2
             neutral.Remove(comObj);
             hostile.Remove(comObj);
         }
-        //todo add ComObj and check hostility etc.
+		//todo add ComObj and check hostility etc.
+
+		// TODO - add ToString() once we have the empire's name
 	}
 
     public class CombatFleet
@@ -55,7 +57,12 @@ namespace FrEee.Game.Objects.Combat2
         public string Name { get; private set; }
         public Space.Fleet Fleet { get; set; }
         public List<CombatControlledObject> combatObjects { get; set; }
-    }
+
+		public override string ToString()
+		{
+			return Name;
+		}
+	}
 
     public class CombatNode
     {
@@ -104,7 +111,12 @@ namespace FrEee.Game.Objects.Combat2
         }
 
         public int deathTick { get; set; }
-    }
+
+		public override string ToString()
+		{
+			return strID;
+		}
+	}
 
 
 	public class CombatObject : CombatNode
@@ -178,15 +190,15 @@ namespace FrEee.Game.Objects.Combat2
         /// <summary>
         /// how far this object can rotate each second.
         /// </summary>
-        public Compass maxRotate { get; set; } 
-
-        
-
-        #endregion
+        public Compass maxRotate { get; set; }
 
 
-        #region methods & functions
-        public PRNG getDice()
+
+		#endregion
+
+
+		#region methods & functions
+		public PRNG getDice()
 		{
 
 			return shipDice;
