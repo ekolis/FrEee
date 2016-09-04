@@ -33,7 +33,8 @@ namespace FrEee.Game.Objects.Combat2
 				throw new ArgumentNullException("location", "Battles require a sector location.");
 			else
 			{
-				this.Sector = location;
+				Sector = location;
+				Timestamp = Galaxy.Current?.Timestamp ?? 0;
 				Initialize(location.SpaceObjects.OfType<ICombatant>().Where(o => !o.IsMemory && o.Owner != null).Union(location.SpaceObjects.OfType<Fleet>().Where(f => !f.IsMemory).SelectMany(f => f.Combatants)));
 			}
 		}
@@ -52,10 +53,7 @@ namespace FrEee.Game.Objects.Combat2
 
 		private void Initialize(IEnumerable<ICombatant> combatants)
 		{
-
-			double stardate = Galaxy.Current.Timestamp;
-			int starday = (int)(Galaxy.Current.CurrentTick * 10);
-
+			double stardate = Timestamp;
 			int moduloID = (int)(Sector.StarSystem.ID % 100000);
 			this.battleseed = (int)(moduloID / stardate * 10);
 
