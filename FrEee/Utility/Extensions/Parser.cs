@@ -77,7 +77,7 @@ namespace FrEee.Utility.Extensions
 				enumMemberCache[typeof(T)] = GetEnumValues<T>();
 			var dict = enumMemberCache[typeof(T)];
 			var mems = dict.Keys;
-			var matches = mems.Where(m => m.GetNames().Contains(s));
+			var matches = mems.Where(m => m.GetNames().Contains(s)).ToArray();
 			MemberInfo match;
 			if (matches.Count() == 1)
 				match = matches.Single();
