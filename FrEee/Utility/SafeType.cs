@@ -88,15 +88,36 @@ namespace FrEee.Utility
 			throw new Exception("No assemblies matched the criteria.");
 		}
 
+		private static T FindMoreAssemblies<T>(Func<Assembly, T> picker)
+		{
+			bool more = false;
+			do
+			{
+				foreach (var kvp in ReferencedAssemblies.ToArray())
+				{
+					if (LoadReferencedAssemblies(kvp.Value))
+						more = true;
+					foreach (var kvp2 in ReferencedAssemblies)
+					{
+						var result = picker(kvp2.Value);
+						if (result != null)
+							return result;
+					}
+				}
+			} while (more);
+
+			throw new Exception("No assemblies matched the criteria.");
+		}
+
 		private static Type FindType(string name)
 		{
 			try
 			{
-				return FindMoreAssemblies(a => FindType(a, name) != null, a => FindType(a, name));
+				return FindMoreAssemblies(a => FindType(a, name));
 			}
 			catch (Exception ex)
 			{
-				throw new ArgumentException($"Could not find type named {name}.");
+				throw new ArgumentException($"Could not find type named {name}.", ex);
 			}
 		}
 
