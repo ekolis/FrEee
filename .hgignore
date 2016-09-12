@@ -11,3 +11,4 @@ packages/
 *.vsp
 *.vsps
 *.dmp
+*.diagsession
