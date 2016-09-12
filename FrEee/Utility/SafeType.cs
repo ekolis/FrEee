@@ -60,7 +60,7 @@ namespace FrEee.Utility
 			// no such assembly? find any referenced assemblies and keep on searching
 			try
 			{
-				return FindMoreAssemblies(a => a.FullName == n, a => a);
+				return FindMoreAssemblies(a => a, a => a.FullName == n);
 			}
 			catch (Exception ex)
 			{
@@ -68,40 +68,32 @@ namespace FrEee.Utility
 			}
 		}
 
-		private static T FindMoreAssemblies<T>(Func<Assembly, bool> foundit, Func<Assembly, T> resultor)
+		private static T FindMoreAssemblies<T>(Func<Assembly, T> resultor, Func<Assembly, bool> foundit = null)
 		{
 			bool more = false;
+			var done = new List<string>(); // full names of scanned assemblies
 			do
 			{
-				foreach (var kvp in ReferencedAssemblies.ToArray())
+				foreach (var a in ReferencedAssemblies.Values.Where(x => !done.Contains(x.FullName)).ToArray())
 				{
-					if (LoadReferencedAssemblies(kvp.Value))
+					if (LoadReferencedAssemblies(a))
 						more = true;
-					foreach (var kvp2 in ReferencedAssemblies)
+					foreach (var a2 in ReferencedAssemblies.Values)
 					{
-						if (foundit(kvp2.Value))
-							return resultor(kvp2.Value);
-					}
-				}
-			} while (more);
-
-			throw new Exception("No assemblies matched the criteria.");
-		}
-
-		private static T FindMoreAssemblies<T>(Func<Assembly, T> picker)
-		{
-			bool more = false;
-			do
-			{
-				foreach (var kvp in ReferencedAssemblies.ToArray())
-				{
-					if (LoadReferencedAssemblies(kvp.Value))
-						more = true;
-					foreach (var kvp2 in ReferencedAssemblies)
-					{
-						var result = picker(kvp2.Value);
-						if (result != null)
-							return result;
+						if (foundit != null)
+						{
+							// use foundit condition
+							if (foundit(a2))
+								return resultor(a2);
+						}
+						else
+						{
+							// use result being not null as the condition
+							var result = resultor(a2);
+							if (result != null)
+								return result;
+						}
+						done.Add(a2.FullName);
 					}
 				}
 			} while (more);
