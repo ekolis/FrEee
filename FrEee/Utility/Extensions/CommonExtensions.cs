@@ -127,7 +127,7 @@ namespace FrEee.Utility.Extensions
 				foreach (var i in interfaceCache[dt])
 				{
 					if (memberCache[i] == null)
-						memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray();
+						memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
 					if (memberCache[i].Any(m => m.Name == mi.Name && m.MemberType == mi.MemberType && m.HasAttribute(attributeType, false))) // no need to check interfaces of interfaces, they're already listed by GetInterfaces
 						return true;
 				}
@@ -152,10 +152,14 @@ namespace FrEee.Utility.Extensions
 			var atts = attributeCache[mi].OfType<T>();
 			foreach (var att in atts)
 				yield return att;
-			foreach (var i in mi.DeclaringType.GetInterfaces())
+			if (interfaceCache[mi.DeclaringType] == null)
+				interfaceCache[mi.DeclaringType] = mi.DeclaringType.GetInterfaces();
+			foreach (var i in interfaceCache[mi.DeclaringType])
 			{
-				var mis = i.GetMember(mi.Name, mi.MemberType, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-				foreach (var mi2 in mis)
+				if (memberCache[i] == null)
+					memberCache[i] = i.GetMembers(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).ToArray(); // TODO - refactor into method
+				var mi2 = memberCache[i].SingleOrDefault(x => x.MemberType == mi.MemberType && x.Name == mi.Name);
+				if (mi2 != null)
 				{
 					foreach (var att2 in mi2.GetAttributes<T>())
 						yield return att2;
