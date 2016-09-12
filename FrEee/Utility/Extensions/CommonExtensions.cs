@@ -3607,6 +3607,7 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static string GetCanonicalName(this MemberInfo m)
 		{
+			// TODO - use most derived class's attribute?
 			var name = m.GetAttributes<CanonicalNameAttribute>().Select(a => a.Name).SingleOrDefault();
 			if (name == null)
 				return m.Name;
