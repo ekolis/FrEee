@@ -103,6 +103,15 @@ namespace FrEee.Utility
 
 		private static Type FindType(string name)
 		{
+			// do we already know about it?
+			foreach (var a in ReferencedAssemblies.Values)
+			{
+				var t = FindType(a, name);
+				if (t != null)
+					return t;
+			}
+
+			// scan for new assemblies containing the type
 			try
 			{
 				return FindMoreAssemblies(a => FindType(a, name));
