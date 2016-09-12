@@ -60,9 +60,16 @@ namespace FrEee.Utility.Extensions
 		/// <returns></returns>
 		public static object ParseEnum(this string s, Type type)
 		{
-			var parser = enumParser.MakeGenericMethod(type);
-			return parser.Invoke(null, new object[] { s.Trim() });
+			var v = enumValues[type][s];
+			if (v == null)
+			{
+				var parser = enumParser.MakeGenericMethod(type);
+				v = enumValues[type][s] = parser.Invoke(null, new object[] { s.Trim() });
+			}
+			return v;	
 		}
+
+		private static SafeDictionary<Type, SafeDictionary<string, object>> enumValues = new SafeDictionary<Type, SafeDictionary<string, object>>(true);
 
 		private static readonly MethodInfo enumParser = typeof(Parser).GetMethods().Single(m => m.Name == "ParseEnum" && m.ContainsGenericParameters);
 
