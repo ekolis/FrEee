@@ -327,13 +327,17 @@ namespace FrEee.Utility
 				while (t != null)
 				{
 					var newprops = t.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(f =>
-						!f.HasAttribute<DoNotSerializeAttribute>()
-						&& (!type.GetProperty(f.Name)?.HasAttribute<DoNotSerializeAttribute>() ?? true) // inherited class DoNotSerialize overrides base lack of it
-						&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null
-							|| type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>) // they don't have setters but we want them anyway
-							)
-						);
-					foreach (var prop in newprops.Where(prop => prop.GetIndexParameters().Length == 0))
+						type.IsGenericType && type.GetGenericTypeDefinition() == typeof(KeyValuePair<,>)
+						||
+						(
+							// hopefully put "quicker to check" and "easier to fail" conditions up top
+							f.GetIndexParameters().Length == 0 // we don't support indexed properties
+							&& (f.GetGetMethod(true) != null && f.GetSetMethod(true) != null)
+							&& !f.HasAttribute<DoNotSerializeAttribute>()
+							&& (!type.GetProperty(f.Name)?.HasAttribute<DoNotSerializeAttribute>() ?? true) // inherited class DoNotSerialize overrides base lack of it so we need to check the derived type
+						)
+					);
+					foreach (var prop in newprops)
 						props.Add(prop, i);
 					t = t.BaseType;
 					i++;
