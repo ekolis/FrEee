@@ -116,7 +116,7 @@ namespace FrEee.Utility.Extensions
 		public static bool HasAttribute(this MemberInfo mi, Type attributeType, bool checkInterfaces = true)
 		{
 			if (attributeCache[mi] == null)
-				attributeCache[mi] = Attribute.GetCustomAttributes(mi);
+				attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
 			if (attributeCache[mi].Where(a => attributeType.IsAssignableFrom(a.GetType())).Any())
 				return true;
 			var dt = mi is Type ? mi as Type : mi.DeclaringType;
@@ -148,7 +148,7 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<T> GetAttributes<T>(this MemberInfo mi) where T : Attribute
 		{
 			if (attributeCache[mi] == null)
-				attributeCache[mi] = Attribute.GetCustomAttributes(mi);
+				attributeCache[mi] = Attribute.GetCustomAttributes(mi).ToArray();
 			var atts = attributeCache[mi].OfType<T>();
 			foreach (var att in atts)
 				yield return att;
