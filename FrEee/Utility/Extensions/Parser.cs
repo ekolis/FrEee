@@ -73,7 +73,9 @@ namespace FrEee.Utility.Extensions
 			if (!typeof(T).IsEnum)
 				throw new InvalidCastException("{0} is not an enum type.".F(typeof(T)));
 
-			var dict = GetEnumValues<T>();
+			if (enumMemberCache[typeof(T)] == null)
+				enumMemberCache[typeof(T)] = GetEnumValues<T>();
+			var dict = enumMemberCache[typeof(T)];
 			var mems = dict.Keys;
 			var matches = mems.Where(m => m.GetNames().Contains(s));
 			MemberInfo match;
@@ -91,8 +93,10 @@ namespace FrEee.Utility.Extensions
 					throw new ArgumentException("{0} is an ambiguous match for {1}.".F(s, typeof(T)));
 
 			}
-			return dict[match];
+			return (T)dict[match];
 		}
+
+		private static SafeDictionary<Type, IDictionary<MemberInfo, object>> enumMemberCache = new SafeDictionary<Type, IDictionary<MemberInfo, object>>();
 
 		/// <summary>
 		/// Parses a string as a flags enum.
@@ -134,11 +138,11 @@ namespace FrEee.Utility.Extensions
 			return (T)(object)result;
 		}
 
-		private static IDictionary<MemberInfo, T> GetEnumValues<T>()
+		private static IDictionary<MemberInfo, object> GetEnumValues<T>()
 		{
 			var names = Enum.GetNames(typeof(T));
 			var mems = names.SelectMany(n => typeof(T).GetMember(n));
-			var dict = new Dictionary<MemberInfo, T>();
+			var dict = new Dictionary<MemberInfo, object>();
 			foreach (var mem in mems)
 				dict.Add(mem, (T)Enum.Parse(typeof(T), mem.Name));
 			return dict;
