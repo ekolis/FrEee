@@ -195,7 +195,7 @@ namespace FrEee.Utility
 							throw new NotSupportedException("Case insensitive type search is not supported.");
 						else
 						{
-							var t = FindType(typeName);
+							var t = FindType(assembly, typeName);
 							if (t == null)
 								throw new InvalidOperationException("Type '" + typeName + "' in assembly '" + assembly.FullName + "' was not found. Perhaps this SafeType is referring to an incompatible version of the assembly?");
 							return t;
