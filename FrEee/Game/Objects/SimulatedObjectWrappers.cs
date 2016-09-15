@@ -6,7 +6,6 @@ using System.Text;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Utility.Extensions;

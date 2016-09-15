@@ -17,8 +17,7 @@ using FrEee.Game.Objects.Combat;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.WinForms.Controls;
-
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.WinForms.Forms
 {
@@ -29,11 +28,11 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		/// <param name="gameForm"></param>
 		/// <param name="battle">The battle whose log we should display, or null to display the turn log.</param>
-		public LogForm(GameForm gameForm)
+		public LogForm(GameForm gameForm, IList<LogMessage> log)
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
-			messages = Empire.Current.Log.OrderByDescending(message => message.TurnNumber);
+			messages = log;
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
@@ -112,16 +111,10 @@ namespace FrEee.WinForms.Forms
 						gameForm.ShowVehicleDesignForm(new VehicleDesignForm());
 						Close();
 					}
-					/*else if (context is Battle)
-					{
-						// show battle log
-						gameForm.ShowLogForm(new LogForm(gameForm, (Battle)context));
-						Close();
-					}*/
-                    else if (context is Battle_Space)
+                    else if (context is Battle)
                     {
 						// show battle results
-						var form = new BattleResultsForm((Battle_Space)context);
+						var form = new BattleResultsForm((Battle)context);
 						this.ShowChildForm(form);
                     }
                     else if (context is IMessage)

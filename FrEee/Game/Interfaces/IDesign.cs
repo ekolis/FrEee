@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using FrEee.Game.Objects.Combat2.Tactics;
 
 namespace FrEee.Game.Interfaces
 {
@@ -121,16 +120,6 @@ namespace FrEee.Game.Interfaces
 		int CargoStorage { get; }
 
 		int Iteration { get; set; }
-
-        /// <summary>
-        /// The Strategy this design uses in combat. 
-        /// </summary>
-        FrEee.Game.Objects.Combat2.StrategyObject Strategy { get; set; }
-
-		/// <summary>
-		/// The tactic this design uses in combat.
-		/// </summary>
-		Tactic Tactic { get; set; }
 
 		IVehicle Instantiate();
 

@@ -26,9 +26,7 @@ using FrEee.Modding.Enumerations;
 using System.Text.RegularExpressions;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using NewtMath.f16;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Technology;
-using FrEee.Game.Objects.Combat2.Tactics; // TODO -remove this, just for testing
 using FrEee.Game.Objects.Combat;
 using System.Threading.Tasks;
 using System.Threading;
@@ -791,11 +789,11 @@ namespace FrEee.Utility.Extensions
 		/// <typeparam name="T"></typeparam>
 		/// <param name="src"></param>
 		/// <returns></returns>
-		public static T PickRandom<T>(this IEnumerable<T> src)
+		public static T PickRandom<T>(this IEnumerable<T> src, PRNG prng = null)
 		{
 			if (!src.Any())
 				return default(T);
-			return src.ElementAt(RandomHelper.Next(src.Count()));
+			return src.ElementAt(RandomHelper.Next(src.Count(), prng));
 		}
 
 		/// <summary>
@@ -3290,7 +3288,8 @@ namespace FrEee.Utility.Extensions
 
 			// You can always scan space objects you are in combat with.
 			// But only their state at the time they were in combat; not for the rest of the turn!
-			if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => (b.StartCombatants.Values.OfType<ISpaceObject>().Contains(sobj)) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+			// TODO - what about glassed planets, they have no owner...
+			if (Galaxy.Current.Battles.Any(b => (b.Combatants.OfType<ISpaceObject>().Contains(sobj)) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
@@ -3304,7 +3303,7 @@ namespace FrEee.Utility.Extensions
 				var known = emp.Memory[sobj.ID];
 				if (known != null && sobj.GetType() == known.GetType())
 					return Visibility.Fogged;
-				else if (Battle_Space.Current.Union(Battle_Space.Previous).Any(b => b.StartCombatants.Any(kvp => kvp.Key == sobj.ID) && b.StartCombatants.Values.Any(c => c.Owner == emp)))
+				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;

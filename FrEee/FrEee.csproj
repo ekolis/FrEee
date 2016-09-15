@@ -149,6 +149,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Objects\Combat\Simple\Battle.cs" />
+    <Compile Include="Game\Objects\Combat\Simple\Seeker.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\LiteralFormula.cs" />
@@ -253,20 +255,6 @@
     <Compile Include="Game\Objects\Civilization\HappinessModel.cs" />
     <Compile Include="Game\Objects\Civilization\Race.cs" />
     <Compile Include="Game\Objects\Civilization\Trait.cs" />
-    <Compile Include="Game\Objects\Combat2\Battle_Space.cs" />
-    <Compile Include="Game\Objects\Combat2\combatObjects.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatReplayLog.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatSeeker.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatPlanet.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatShot.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatVehicle.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatWeapon.cs" />
-    <Compile Include="Game\Objects\Combat2\ControlledCombatObject.cs" />
-    <Compile Include="Game\Objects\Combat2\StrategyObject.cs" />
-    <Compile Include="Game\Objects\Combat2\StrategyBlocks.cs" />
-    <Compile Include="Game\Objects\Combat2\Tactics\TacticNode.cs" />
-    <Compile Include="Game\Objects\Combat2\Tactics\Tactic.cs" />
-    <Compile Include="Game\Objects\Combat2\Tactics\TacticBlock.cs" />
     <Compile Include="Game\Objects\Combat\Hit.cs" />
     <Compile Include="Game\Objects\Combat\Shot.cs" />
     <Compile Include="Game\Objects\Commands\SetPrivateNameCommand.cs" />
@@ -274,7 +262,6 @@
     <Compile Include="Game\Objects\Commands\DeleteWaypointCommand.cs" />
     <Compile Include="Game\Objects\Commands\HotkeyWaypointCommand.cs" />
     <Compile Include="Game\Objects\Commands\DeleteMessageCommand.cs" />
-    <Compile Include="Game\Objects\Commands\EditStrategyCommand.cs" />
     <Compile Include="Game\Objects\Commands\LeaveFleetCommand.cs" />
     <Compile Include="Game\Objects\Commands\DisbandFleetCommand.cs" />
     <Compile Include="Game\Objects\Commands\CreateFleetCommand.cs" />
@@ -509,7 +496,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

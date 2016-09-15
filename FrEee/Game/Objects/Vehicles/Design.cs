@@ -17,8 +17,6 @@ using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Abilities;
 using Tech = FrEee.Game.Objects.Technology.Technology;
 using FrEee.Modding;
-using FrEee.Game.Objects.Combat2;
-using FrEee.Game.Objects.Combat2.Tactics;
 using System.IO;
 using System.Reflection;
 
@@ -498,9 +496,9 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public int Iteration { get; set; }
 
-		public Combat2.StrategyObject Strategy { get; set; }
+		/*public Combat2.StrategyObject Strategy { get; set; }
 
-		public Tactic Tactic { get; set; }
+		public Tactic Tactic { get; set; }*/
 
 		public void Dispose()
 		{
@@ -518,8 +516,8 @@ namespace FrEee.Game.Objects.Vehicles
 			// do we already know the design? or did we engage in combat with it this turn?
 			// TODO - "battle manager" so we're not tied to a specific combat implementation
 			else if (emp.KnownDesigns.Contains(this) || Galaxy.Current.Battles.Any(b =>
-				b.StartCombatants.Values.Any(c => c.Owner == emp) &&
-				b.StartCombatants.Values.OfType<IVehicle>().Any(v => v.Design == this)))
+				b.Combatants.Any(c => c.Owner == emp) &&
+				b.Combatants.OfType<IVehicle>().Any(v => v.Design == this)))
 				return Visibility.Scanned;
 			return Visibility.Unknown;
 		}

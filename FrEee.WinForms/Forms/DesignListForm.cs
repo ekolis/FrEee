@@ -213,7 +213,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnStrategy_Click(object sender, EventArgs e)
 		{
-			if (lstDesigns.SelectedItems.Count == 1)
+			/*if (lstDesigns.SelectedItems.Count == 1)
 			{
 				var d = (IDesign)lstDesigns.SelectedItems[0].Tag;
 				if (d.Owner != Empire.Current)
@@ -228,7 +228,7 @@ namespace FrEee.WinForms.Forms
 						if (form.DialogResult == DialogResult.OK)
 							BindDesignList();                  
 				}
-			}
+			}*/
 		}
 
 		/// <summary>

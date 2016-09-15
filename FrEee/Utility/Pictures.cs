@@ -15,6 +15,7 @@ using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.Utility
 {
@@ -107,6 +108,7 @@ namespace FrEee.Utility
 			genericPictures.Add(typeof(IHull), img);
 			genericPictures.Add(typeof(IDesign), img);
 			genericPictures.Add(typeof(IVehicle), img);
+			genericPictures.Add(typeof(Seeker), img);
 
 			// fleet
 			img = new Bitmap(128, 128);
@@ -128,8 +130,14 @@ namespace FrEee.Utility
 			g.FillPolygon(Brushes.Gray, pts);
 			genericPictures.Add(typeof(Fleet), img);
 
-			// TODO - mount, race, empire generic pics
+			// TODO - mount, race, empire, seeker generic pics
 		}
+
+		public static Image GetGenericImage<T>(double scale = 1.0)
+		{
+			return GetGenericImage(typeof(T), scale);
+		}
+
 
 		/// <summary>
 		/// Gets the icon image for a stellar object.

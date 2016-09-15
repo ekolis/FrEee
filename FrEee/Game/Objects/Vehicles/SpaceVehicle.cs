@@ -4,7 +4,6 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Orders;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Technology;

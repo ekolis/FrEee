@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 
 namespace FrEee.Game.Objects.Combat.Simple
 {
@@ -18,12 +19,12 @@ namespace FrEee.Game.Objects.Combat.Simple
 	/// </summary>
 	public class Seeker : ICombatant
 	{
-		public Seeker(Battle battle, Empire owner, Component launcher, ICombatant target)
+		public Seeker(Battle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
 		{
 			Battle = battle;
 			Owner = owner;
 			if (launcher.Template.ComponentTemplate.WeaponInfo is SeekingWeaponInfo)
-				Launcher = launcher;
+				LaunchingComponent = launcher;
 			else
 				throw new Exception(launcher + " cannot launch seekers.");
 			Name = Owner.Name + " " + launcher.Name;
@@ -45,9 +46,14 @@ namespace FrEee.Game.Objects.Combat.Simple
 		public string Name { get; private set; }
 
 		/// <summary>
+		/// The combatant which launched the seeker.
+		/// </summary>
+		public ICombatant LaunchingCombatant { get; private set; }
+
+		/// <summary>
 		/// The owner of the seeker.
 		/// </summary>
-		public Empire Owner { get; private set; }
+		public Empire Owner { get; set; }
 
 		/// <summary>
 		/// The target of the seeker.
@@ -57,18 +63,18 @@ namespace FrEee.Game.Objects.Combat.Simple
 		/// <summary>
 		/// The component which launched this seeker.
 		/// </summary>
-		public Component Launcher { get; private set; }
+		public Component LaunchingComponent { get; private set; }
 
 		public SeekingWeaponInfo WeaponInfo
 		{
-			get { return (SeekingWeaponInfo)Launcher.Template.ComponentTemplate.WeaponInfo; }
+			get { return (SeekingWeaponInfo)LaunchingComponent.Template.ComponentTemplate.WeaponInfo; }
 		}
 
 		public Formula<int> Damage
 		{
 			get
 			{
-				return Launcher.Template.WeaponDamage;
+				return LaunchingComponent.Template.GetWeaponDamage(1); // TODO - seekers that do different damage based on some sort of abstracted "range"
 			}
 		}
 
@@ -79,7 +85,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 
 		public bool CanTarget(ITargetable target)
 		{
-			return target != null && Launcher.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
+			return target != null && LaunchingComponent.Template.ComponentTemplate.WeaponInfo.Targets.HasFlag(target.WeaponTargetType);
 		}
 
 		public WeaponTargets WeaponTargetType
@@ -95,10 +101,11 @@ namespace FrEee.Game.Objects.Combat.Simple
 			get { return Enumerable.Empty<Component>(); }
 		}
 
-		public int TakeDamage(DamageType damageType, int damage, PRNG dice = null)
+		public int TakeDamage(Hit hit, PRNG dice = null)
 		{
-			damage *= damageType.SeekerDamage.Evaluate(this) / 100;
-			var pierced = damage * damageType.ComponentPiercing.Evaluate(this).
+			var damage = hit.Shot.DamageLeft;
+			damage *= hit.Shot.DamageType.SeekerDamage.Evaluate(this) / 100;
+			var pierced = damage * hit.Shot.DamageType.ComponentPiercing.Evaluate(this);
 			int realDamage;
 			realDamage = Math.Min(Hitpoints, damage);
 			Hitpoints -= realDamage;
@@ -161,15 +168,40 @@ namespace FrEee.Game.Objects.Combat.Simple
 
 		public System.Drawing.Image Icon
 		{
-			get { return Pictures.GetIcon(this); }
+			get { return Portrait; }
 		}
 
-		/// <summary>
-		/// Just use the icon.
-		/// </summary>
 		public System.Drawing.Image Portrait
 		{
-			get { return Pictures.GetIcon(this); }
+			// TODO - custom seeker images per shipset
+			get { return Pictures.GetGenericImage<Seeker>(1.0); }
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				var paths = new List<string>();
+
+				var shipsetPath = Owner.ShipsetPath;
+
+				if (Mod.Current?.RootPath != null)
+				{
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, "Seeker"));
+					paths.Add(Path.Combine("Mods", Mod.Current.RootPath, "Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
+				}
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, "Seeker"));
+				paths.Add(Path.Combine("Pictures", "Races", shipsetPath, shipsetPath + "_" + "Seeker"));
+				return paths;
+			}
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return PortraitPaths;
+			}
 		}
 
 		public override string ToString()
@@ -210,7 +242,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 
 		public bool IsHostileTo(Empire emp)
 		{
-			return Owner == null ? false : Owner.IsHostileTo(emp, StarSystem);
+			return Owner == null ? false : Owner.IsEnemyOf(emp, StarSystem);
 		}
 
 		/// <summary>
@@ -274,10 +306,12 @@ namespace FrEee.Game.Objects.Combat.Simple
 		{
 			return Timestamp < Galaxy.Current.Timestamp - 1;
 		}
-		
+
+		[DoNotSerialize(false)]
 		public Sector Sector
 		{
 			get { return Battle.Sector; }
+			set { throw new NotSupportedException("Cannot set the sector of a seeker once it's been initialized."); }
 		}
 
 		public StarSystem StarSystem

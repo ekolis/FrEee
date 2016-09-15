@@ -1,7 +1,6 @@
 ﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects;
@@ -9,7 +8,6 @@ using FrEee.Game.Objects;
 using FrEee.Modding;
 using FrEee.Utility.Extensions;
 using FrEee.WinForms.Forms;
-using FrEee.WinForms.MogreCombatRender;
 using FrEee.WinForms.Utility.Extensions;
 using System;
 using System.Collections.Generic;
@@ -19,6 +17,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.WinForms.Forms
 {
@@ -290,7 +289,7 @@ namespace FrEee.WinForms.Forms
 				ispobj.Sector = location;
 			// create battle with all our combatants
 			//var battle = new Battle_Space(Empires.SelectMany(se => se.SpaceObjects.Select(ss => ss.SpaceObject)));
-            var battle = new Battle_Space(location);
+            var battle = new Battle(location);
 			
 			// simulate the battle
 			battle.Resolve();
