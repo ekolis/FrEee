@@ -18,10 +18,10 @@ using FrEee.Game.Setup;
 using FrEee.Game.Enumerations;
 using FrEee.Game.Objects.VictoryConditions;
 using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using System.Text;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Space
 			SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
 			GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-			Battles = new HashSet<Battle_Space>();
+			Battles = new HashSet<Battle>();
 			ScriptNotes = new DynamicDictionary();
 		}
 
@@ -296,7 +296,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The battles which have taken place this turn.
 		/// </summary>
-		public ICollection<Battle_Space> Battles { get; private set; }
+		public ICollection<Battle> Battles { get; private set; }
 
 		#endregion
 
@@ -754,7 +754,7 @@ namespace FrEee.Game.Objects.Space
 			Current.SpaceObjectCleanup();
 
 			//Battle.Previous.Clear();
-			Current.Battles = new HashSet<Battle_Space>();
+			Current.Battles = new HashSet<Battle>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 
 			Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
@@ -1375,9 +1375,10 @@ namespace FrEee.Game.Objects.Space
 					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < 1d / v.Speed)) // have we fought here too recently?
 				{
 					// resolve the battle
-					var battle = new Battle_Space(sector);
+					var battle = new Battle(sector);
 					battle.Resolve();
-					foreach (var emp in battle.Empires.Keys)
+					Battles.Add(battle);
+					foreach (var emp in battle.Empires)
 						emp.Log.Add(battle.CreateLogMessage(battle.NameFor(emp)));
 					lastBattleTimestamps[sector] = Current.Timestamp;
 				}

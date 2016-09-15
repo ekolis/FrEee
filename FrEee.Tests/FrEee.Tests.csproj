@@ -108,14 +108,6 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Game\Objects\Abilities\AbilityTest.cs" />
-    <Compile Include="Game\Objects\Combat2\Battle_SpaceTests.cs" />
-    <Compile Include="Game\Objects\Combat2\MockCombatant.cs" />
-    <Compile Include="Game\Objects\Combat2\MockCombatObject.cs" />
-    <Compile Include="Game\Objects\Combat2\Point3dTests.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatTestObject.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatTests.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatVehicleTests.cs" />
-    <Compile Include="Game\Objects\Combat2\CombatStrategyTests.cs" />
     <Compile Include="Game\Objects\Orders\ConstructionTest.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />

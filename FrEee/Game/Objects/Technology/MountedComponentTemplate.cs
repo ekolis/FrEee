@@ -3,7 +3,6 @@ using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Game.Objects.Vehicles;
 using FrEee.Modding;
 using FrEee.Modding.Interfaces;
@@ -237,7 +236,7 @@ namespace FrEee.Game.Objects.Technology
 		/// <summary>
 		/// Damage inflicted by this component at range, if it is a weapon.
 		/// </summary>
-		public int GetWeaponDamage(CombatShot shot)
+		public int GetWeaponDamage(Shot shot)
 		{
 			var w = ComponentTemplate.WeaponInfo;
 			if (w == null)
@@ -245,7 +244,7 @@ namespace FrEee.Game.Objects.Technology
 			if (Mount == null)
 				return w.Damage;
 
-			var shot2 = new CombatShot(shot.Weapon, shot.Target, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
+			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
 			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
 		}
 

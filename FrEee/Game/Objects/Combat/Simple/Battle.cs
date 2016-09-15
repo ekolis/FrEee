@@ -25,6 +25,10 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Log = new List<LogMessage>();
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)));
+
+			double stardate = Galaxy.Current.Timestamp;
+			int moduloID = (int)(Sector.StarSystem.ID % 100000);
+			Dice = new PRNG((int)(moduloID / stardate * 10));
 		}
 
 		static Battle()
@@ -32,6 +36,8 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Current = new HashSet<Battle>();
 			Previous = new HashSet<Battle>();
 		}
+
+		public PRNG Dice { get; set; }
 
 		/// <summary>
 		/// Any battles that are currently ongoing.
@@ -47,7 +53,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 		/// <summary>
 		/// The sector in which this battle took place.
 		/// </summary>
-		public Sector Sector { get; private set; }
+		public Sector Sector { get; set; }
 
 		/// <summary>
 		/// The star system in which this battle took place.
@@ -102,8 +108,11 @@ namespace FrEee.Game.Objects.Combat.Simple
 					{
 						seekers.Remove(seeker);
 						Log.Add(seeker.CreateLogMessage(seeker + " detonates!"));
-						var shot = new Shot(seeker.Launcher, seeker.Target, 1);
-						seeker.Target.TakeDamage(seeker.WeaponInfo.DamageType, seeker.WeaponInfo.GetDamage(shot), null);
+						var minrng = seeker.LaunchingComponent.Template.WeaponMinRange;
+						var maxrng = seeker.LaunchingComponent.Template.WeaponMinRange;
+						var range = Dice.Next(maxrng - minrng) + minrng; // just pick a random valid range
+						var shot = new Shot(seeker.LaunchingCombatant, seeker.LaunchingComponent, seeker.Target, range);
+						seeker.Target.TakeDamage(new Hit(shot, seeker.Target, seeker.Damage.Evaluate(shot)));
 					}
 					else
 						Log.Add(seeker.CreateLogMessage(seeker + " moves closer to " + seeker.Target + " (" + seekers[seeker] + " rounds to detonation)"));
@@ -133,7 +142,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 					foreach (var unit in unitsToLaunch)
 						Combatants.Add(unit);
 				}
-				foreach (var attacker in Combatants.Shuffle().Where(sobj => sobj.Weapons.Any()).ToArray())
+				foreach (var attacker in Combatants.Shuffle(Dice).Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
 					if (attacker.IsDestroyed)
 						continue;
@@ -141,7 +150,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj) && !sobj.IsDestroyed);
 					if (!defenders.Any())
 						continue; // no one to shoot at
-					var defender = defenders.PickRandom();
+					var defender = defenders.PickRandom(Dice);
 
 					LogSalvo(attacker, defender);
 					foreach (var weapon in attacker.Weapons.Where(w => w.CanTarget(defender)))
@@ -154,14 +163,18 @@ namespace FrEee.Game.Objects.Combat.Simple
 							{
 								// launch a seeker
 								var swinfo = (SeekingWeaponInfo)winfo;
-								var seeker = new Seeker(this, attacker.Owner, weapon, defender);
+								var seeker = new Seeker(this, attacker.Owner, attacker, weapon, defender);
 								seekers.Add(seeker, 20 / swinfo.SeekerSpeed);
 								LogLaunch(seeker);
 							}
 							else
 							{
 								// direct fire
-								weapon.Attack(defender, 1, this); // TODO - range
+								var minrng = weapon.Template.WeaponMinRange;
+								var maxrng = weapon.Template.WeaponMinRange;
+								var range = Dice.Next(maxrng - minrng) + minrng; // just pick a random valid range
+								var shot = new Shot(attacker, weapon, defender, range);
+								defender.TakeDamage(new Hit(shot, defender, weapon.Template.GetWeaponDamage(range)));
 							}
 							// TODO - mounts that affect reload rate?
 							reloads[weapon] += weapon.Template.ComponentTemplate.WeaponInfo.ReloadRate;
@@ -243,6 +256,56 @@ namespace FrEee.Game.Objects.Combat.Simple
 		public System.Drawing.Image Portrait
 		{
 			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Combatants.OfType<ISpaceObject>().Largest().IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Combatants.OfType<ISpaceObject>().Largest().PortraitPaths;
+			}
+		}
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public string NameFor(Empire emp)
+		{
+			return ResultFor(emp).Capitalize() + " at " + Sector;
+		}
+
+		/// <summary>
+		/// The result (victory/defeat/stalemate) for a given empire.
+		/// If empire or its allies are not involved or no empire specified, just say "battle".
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public string ResultFor(Empire emp)
+		{
+			if (emp == null)
+				return "battle"; // no empire specified
+			if (!Combatants.Any(c => c.Owner == emp || c.Owner.IsAllyOf(emp, StarSystem)))
+				return "battle"; // empire/allies not involved
+			var survivors = Combatants.Where(c => !c.IsDestroyed && c.Owner != null); // glassed planets aren't destroyed but they do have null owners
+			var ourSurvivors = survivors.Where(c => c.Owner == emp);
+			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
+			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, StarSystem));
+			if (friendlySurvivors.Any() && enemySurvivors.Any())
+				return "stalemate";
+			if (friendlySurvivors.Any())
+				return "victory";
+			if (enemySurvivors.Any())
+				return "defeat";
+			return "Pyrrhic victory"; // mutual annihilation!
 		}
 	}
 }

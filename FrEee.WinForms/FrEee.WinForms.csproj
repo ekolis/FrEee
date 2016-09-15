@@ -203,12 +203,6 @@
     <Compile Include="Forms\ModErrorsForm.Designer.cs">
       <DependentUpon>ModErrorsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MogreCombatForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\MogreCombatForm.Designer.cs">
-      <DependentUpon>MogreCombatForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -242,9 +236,6 @@
     <Compile Include="GamePropertyGrid.Designer.cs">
       <DependentUpon>GamePropertyGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="MogreCombatRender\CamaraMan.cs" />
-    <Compile Include="MogreCombatRender\GfxEfx.cs" />
-    <Compile Include="MogreCombatRender\MogreFreeMain.cs" />
     <Compile Include="Controls\StarSystemReport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -301,59 +292,6 @@
     <Compile Include="Forms\ShipListForm.Designer.cs">
       <DependentUpon>ShipListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MogreCombatRender\GfxObj.cs" />
-    <Compile Include="MogreCombatRender\GfxCfg.cs" />
-    <Compile Include="MogreCombatRender\SpriteManager.cs" />
-    <Compile Include="MogreCombatRender\StrategiesDesigner\Canvasdata.cs" />
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.Designer.cs">
-      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.Designer.cs">
-      <DependentUpon>UCLinkObj.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.Designer.cs">
-      <DependentUpon>UCStratBlock.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCStrat_Userinput.Designer.cs">
-      <DependentUpon>UCStrat_Userinput.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UCWaypoint.Designer.cs">
-      <DependentUpon>UCWaypoint.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.Designer.cs">
-      <DependentUpon>UserControlBaseObj.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\funclist.Designer.cs">
-      <DependentUpon>funclist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MogreCombatRender\StrategiesDesigner\StratMainForm.Designer.cs">
-      <DependentUpon>StratMainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MogreCombatRender\TranslateMogrePhys.cs" />
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -769,9 +707,6 @@
     <EmbeddedResource Include="Forms\ModErrorsForm.resx">
       <DependentUpon>ModErrorsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\MogreCombatForm.resx">
-      <DependentUpon>MogreCombatForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Forms\HostConsoleForm.resx">
       <DependentUpon>HostConsoleForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -841,24 +776,6 @@
     <EmbeddedResource Include="GamePropertyGrid.resx">
       <DependentUpon>GamePropertyGrid.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCFireControlTarget.resx">
-      <DependentUpon>UCFireControlTarget.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCLinkObj.resx">
-      <DependentUpon>UCLinkObj.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UCStratBlock.resx">
-      <DependentUpon>UCStratBlock.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\UserControlBaseObj.resx">
-      <DependentUpon>UserControlBaseObj.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\funclist.resx">
-      <DependentUpon>funclist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MogreCombatRender\StrategiesDesigner\StratMainForm.resx">
-      <DependentUpon>StratMainForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -907,9 +824,7 @@
     <None Include="Resources\check_ethernet_clear.bmp" />
     <None Include="Resources\check_ethernet_checked.bmp" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MogreCombatRender\Media\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>

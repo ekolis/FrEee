@@ -1,10 +1,8 @@
 ﻿using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Civilization;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Utility;
 using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Interfaces;
-using FrEee.WinForms.MogreCombatRender;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,12 +11,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using FrEee.Game.Objects.Combat.Simple;
+using FrEee.WinForms.Utility.Extensions;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class BattleResultsForm : Form, IBindable<Battle_Space>
+	public partial class BattleResultsForm : Form, IBindable<Battle>
 	{
-		public BattleResultsForm(Battle_Space battle)
+		public BattleResultsForm(Battle battle)
 		{
 			InitializeComponent();
 
@@ -32,9 +32,9 @@ namespace FrEee.WinForms.Forms
 		/// The battle we are displaying results for.
 		/// TODO - create an IBattle interface so we can have pluggable combat systems
 		/// </summary>
-		public Battle_Space Battle { get; private set; }
+		public Battle Battle { get; private set; }
 
-		public void Bind(Battle_Space data)
+		public void Bind(Battle data)
 		{
 			Battle = data;
 			Bind();
@@ -61,17 +61,17 @@ namespace FrEee.WinForms.Forms
 
 			// gather grid data
 			var data = new List<object>();
-			var combatants = Battle.StartCombatants.Join(Battle.EndCombatants, kvp => kvp.Key, kvp => kvp.Key, (kvpStart, kvpEnd) => new { Start = kvpStart.Value, End = kvpEnd.Value });
+			var combatants = Battle.Combatants;
 			foreach (var group in combatants.GroupBy(c => new CombatantInfo
 				{
-					Empire = c.Start.Owner,
-					HullIcon = GetHullIcon(c.Start),
-					HullName = GetHullName(c.Start),
-					HullSize = GetHullSize(c.Start)
+					Empire = c.Owner,
+					HullIcon = GetHullIcon(c),
+					HullName = GetHullName(c),
+					HullSize = GetHullSize(c)
 				}))
 			{
 				var count = group.Count();
-				var hp = group.Sum(c => c.Start.ArmorHitpoints + c.Start.HullHitpoints);
+				var hp = group.Sum(c => c.ArmorHitpoints + c.HullHitpoints);
 				var item = new
 				{
 					EmpireIcon = group.Key.Empire.Icon,
@@ -81,10 +81,10 @@ namespace FrEee.WinForms.Forms
 					HullSize = group.Key.HullSize,
 					StartCount = count,
 					StartHP = hp,
-					Losses = group.Count(c => c.End.IsDestroyed || c.End.Owner != c.Start.Owner), // destroyed or captured
+					Losses = group.Count(c => c.IsDestroyed || c.Owner != c.Owner), // destroyed or captured
 					Damage = hp - group.Sum(c =>
 						{
-							return c.End.ArmorHitpoints + c.End.HullHitpoints;
+							return c.ArmorHitpoints + c.HullHitpoints;
 						})
 				};
 				data.Add(item);
@@ -160,7 +160,8 @@ namespace FrEee.WinForms.Forms
 
 		private void btnReplay_Click(object sender, EventArgs e)
 		{
-			MogreFreeMain replay = new MogreFreeMain(Battle);
+			var battleLogForm = new LogForm(GameForm.Instance, Battle.Log);
+			this.ShowChildForm(battleLogForm);
 		}
 	}
 }

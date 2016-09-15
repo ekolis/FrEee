@@ -5,7 +5,7 @@ using System.Text;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.LogMessages;
 using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat2;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 {
@@ -21,7 +21,7 @@ namespace FrEee.Game.Objects.Civilization.Diplomacy.Clauses
 
 		public override void PerformAction()
 		{
-			foreach (var msg in Giver.Log.OfType<PictorialLogMessage<Battle_Space>>())
+			foreach (var msg in Giver.Log.OfType<PictorialLogMessage<Battle>>())
 				Receiver.Log.Add(msg.Copy());
 		}
 

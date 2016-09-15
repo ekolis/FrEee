@@ -10,7 +10,6 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Technology;
 using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Combat2;
 using FrEee.Modding;
 using System.IO;
 

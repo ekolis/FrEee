@@ -119,7 +119,7 @@ namespace FrEee.WinForms.Forms
 			// show empire log if there's anything new there
 			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
 			{
-				var form = new LogForm(this);
+				var form = new LogForm(this, Empire.Current.Log);
 				form.StartPosition = FormStartPosition.CenterScreen;
 				this.ShowChildForm(form);
 			}
@@ -535,7 +535,7 @@ namespace FrEee.WinForms.Forms
 
 					// show empire log if there's anything new there
 					if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
-						this.ShowChildForm(new LogForm(this));
+						this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 				}
 				else if (result == DialogResult.No)
 					SaveCommands(false);
@@ -766,7 +766,7 @@ namespace FrEee.WinForms.Forms
 
 		private void btnLog_Click(object sender, EventArgs e)
 		{
-			this.ShowChildForm(new LogForm(this));
+			this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 		}
 
 		#region Star System Tabs
@@ -985,7 +985,7 @@ namespace FrEee.WinForms.Forms
 				else if (e.KeyCode == Keys.Q)
 					ShowConstructionQueueListForm();
 				else if (e.KeyCode == Keys.L)
-					this.ShowChildForm(new LogForm(this));
+					this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 				else if (e.KeyCode == Keys.R)
 					ShowResearchForm();
 				else if (e.KeyCode == Keys.Tab)
@@ -1125,7 +1125,7 @@ namespace FrEee.WinForms.Forms
 			else if (e.KeyCode == Keys.F7)
 				ShowConstructionQueueListForm();
 			else if (e.KeyCode == Keys.F10)
-				this.ShowChildForm(new LogForm(this));
+				this.ShowChildForm(new LogForm(this, Empire.Current.Log));
 			else if (e.KeyCode == Keys.F12)
 				btnEndTurn_Click(btnEndTurn, new EventArgs());
 			else if (e.KeyCode == Keys.F8)
@@ -1453,7 +1453,7 @@ namespace FrEee.WinForms.Forms
 		public void ShowLogForm(LogForm f = null)
 		{
 			if (f == null)
-				f = new LogForm(this);
+				f = new LogForm(this, Empire.Current.Log);
 			this.ShowChildForm(f);
 		}
 
