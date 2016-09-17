@@ -128,7 +128,7 @@
   <ItemGroup>
     <Folder Include="Game\Objects\AI\" />
     <Folder Include="Game\Objects\Civilization\" />
-    <Folder Include="Game\Objects\Combat\" />
+    <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Game\Objects\Commands\" />
     <Folder Include="Game\Objects\LogMessages\" />
     <Folder Include="Game\Objects\Space\" />
