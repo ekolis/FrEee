@@ -693,12 +693,11 @@ namespace FrEee.Game.Objects.Vehicles
 		/// <summary>
 		/// Is this a newly created design on the client side that needs to be sent to the server?
 		/// </summary>
+		[DoNotSerialize]
 		public bool IsNew
 		{
-			get
-			{
-				return !Galaxy.Current.Referrables.Contains(this);
-			}
+			get;
+			set;
 		}
 
 		public IEnumerable<string> PortraitPaths

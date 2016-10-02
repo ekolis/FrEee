@@ -525,6 +525,7 @@ namespace FrEee.Game.Objects.Space
 				// import designs
 				Library.Import<IDesign>().Where(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Name == d.Name)).SafeForeach(d =>
 					{
+						d.IsNew = true;
 						d.Owner = Empire.Current;
 						d.TurnNumber = Galaxy.Current.TurnNumber;
 						d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
