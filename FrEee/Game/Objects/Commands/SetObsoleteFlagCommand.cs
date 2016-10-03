@@ -61,7 +61,10 @@ namespace FrEee.Game.Objects.Commands
 			{
 				done.Add(this);
 				base.ReplaceClientIDs(idmap, done);
-				design.ReplaceClientIDs(idmap, done);
+				if (design != null)
+					design.ReplaceClientIDs(idmap, done);
+				if (NewDesign != null)
+					NewDesign.ReplaceClientIDs(idmap, done);
 			}
 		}
 
