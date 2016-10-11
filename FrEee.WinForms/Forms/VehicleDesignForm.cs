@@ -300,13 +300,17 @@ namespace FrEee.WinForms.Forms
 				// TODO - let player edit old designs only if they have never been added to a queue (like in SE4)?
 				if (!Empire.Current.KnownDesigns.Contains(Design))
 				{
+					// mark design as new
+					Design.IsNew = true;
+
 					// add design here
 					Empire.Current.KnownDesigns.Add(Design);
+				}
 
-					// tell server to add design too so we can still see it next turn
-					// I guess we don't really need this now that designs are library based?
-					// They can just be promoted via the build command as needed, right?
-					//Empire.Current.Commands.Add(Design.CreateCreationCommand());
+				if (Design.IsNew)
+				{
+					// tell server to add design too so it can be built and seen by other players
+					Empire.Current.Commands.Add(Design.CreateCreationCommand());
 				}
 
 				// save design to library (delete old design with same name first, and set owner of library design to null)

@@ -623,7 +623,14 @@ namespace FrEee.Game.Objects.Space
 				{
 					var clientid = r.ID;
 					var serverid = AssignID(r);
-					idmap.Add(clientid, serverid);
+					if (idmap.ContainsKey(clientid))
+					{
+						if (idmap[clientid] != serverid)
+							throw new InvalidOperationException($"Adding {r} with ID {serverid} to client ID {clientid} for {emp} when that client ID is already mapped to server ID {idmap[clientid]}.");
+						// else do nothing
+					}
+					else
+						idmap.Add(clientid, serverid);
 				}
 
 			}
