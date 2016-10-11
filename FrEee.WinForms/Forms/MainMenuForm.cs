@@ -24,6 +24,7 @@ using FrEee.Game.Setup;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
 using FrEee.Game.Enumerations;
 using FrEee.WinForms.Objects;
+using FrEee.Game.Interfaces;
 
 namespace FrEee.WinForms.Forms
 {
@@ -154,6 +155,16 @@ namespace FrEee.WinForms.Forms
 						loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
 					if (loadPlr.Value)
 						Galaxy.Current.LoadCommands();
+
+					// import designs
+					Library.Import<IDesign>().Where(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Name == d.Name)).SafeForeach(d =>
+					{
+						d.IsNew = true;
+						d.Owner = Empire.Current;
+						d.TurnNumber = Galaxy.Current.TurnNumber;
+						d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
+						Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
+					});
 				}
 				var form = new GameForm(false);
 				Cursor = Cursors.Default;

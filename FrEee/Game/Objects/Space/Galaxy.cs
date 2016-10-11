@@ -521,16 +521,6 @@ namespace FrEee.Game.Objects.Space
 
 				// load library of designs, strategies, etc.
 				Library.Load();
-
-				// import designs
-				Library.Import<IDesign>().Where(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Name == d.Name)).SafeForeach(d =>
-					{
-						d.IsNew = true;
-						d.Owner = Empire.Current;
-						d.TurnNumber = Galaxy.Current.TurnNumber;
-						d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
-						Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
-					});
 			}
 		}
 
