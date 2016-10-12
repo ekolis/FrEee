@@ -32,7 +32,7 @@ namespace FrEee.WinForms.Forms
 		{
 			InitializeComponent();
 			this.gameForm = gameForm;
-			messages = log;
+			messages = log.OrderByDescending(m => m.TurnNumber).ToArray();
 
 			try {this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon);} catch {}
 
