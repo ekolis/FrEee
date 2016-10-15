@@ -215,7 +215,7 @@ namespace FrEee.Game.Objects.Technology
 				return 0;
 
 			var shot = new Shot(null, null, null, range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot) * Mount.WeaponDamagePercent / 100;
+			return w.Damage.Evaluate(shot) * (Mount?.WeaponDamagePercent ?? 100) / 100;
 		}
 
 		/// <summary>
@@ -245,7 +245,7 @@ namespace FrEee.Game.Objects.Technology
 				return w.Damage;
 
 			var shot2 = new Shot(shot.Attacker, shot.Weapon, shot.Defender, shot.Range - (Mount == null ? 0 : Mount.WeaponRangeModifier.Evaluate(this)));
-			return w.Damage.Evaluate(shot2) * Mount.WeaponDamagePercent / 100;
+			return w.Damage.Evaluate(shot2) * (Mount?.WeaponDamagePercent ?? 100) / 100;
 		}
 
 		public int WeaponMinRange
