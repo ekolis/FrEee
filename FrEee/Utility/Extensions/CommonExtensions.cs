@@ -2123,8 +2123,10 @@ namespace FrEee.Utility.Extensions
 					var unit = src.AllUnits.FirstOrDefault(u => u.Design == kvp.Key);
 					if (unit == null && kvp.Value != null)
 					{
+						// if it's not a "transfer all" order, we can log the lack of available units
 						if (kvp.Value != null)
 							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
 						break;
 					}
 					if (dest.CargoStorageFree() < kvp.Key.Hull.Size)
@@ -2154,8 +2156,10 @@ namespace FrEee.Utility.Extensions
 				{
 					if (!available.Any())
 					{
+						// if it's not a "transfer all" order, we can log the lack of available units
 						if (kvp.Value != null)
 							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
 						break;
 					}
 					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
@@ -2180,7 +2184,10 @@ namespace FrEee.Utility.Extensions
 				{
 					if (!available.Any())
 					{
-						LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+						// if it's not a "transfer all" order, we can log the lack of available units
+						if (kvp.Value != null)
+							LogUnitTransferFailed(kvp.Key, src, dest, transferred, kvp.Value.Value, emp);
+
 						break;
 					}
 					var unit = available.FirstOrDefault(u => u.Design.Hull.Size <= dest.CargoStorageFree() && kvp.Value == null || u.Design.Hull.Size <= kvp.Value - transferred);
