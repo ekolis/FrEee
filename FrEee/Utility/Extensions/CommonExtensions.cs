@@ -291,7 +291,8 @@ namespace FrEee.Utility.Extensions
 							{
 								// reassign ID
 								var r = target as IReferrable;
-								r.ReassignID();
+								if (r.HasValidID())
+									r.ReassignID();
 							}
 						}
 					}
