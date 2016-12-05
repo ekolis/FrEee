@@ -34,6 +34,8 @@ namespace FrEee.WinForms
 			// HACK - so many things are based on the working directory...
 			Directory.SetCurrentDirectory(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location));
 
+            GlobalStuff.Default.Initialize();
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			try

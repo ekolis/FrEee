@@ -46,6 +46,8 @@ namespace FrEee.WinForms.Forms
 				ddlGalaxyViewMode.Items.Add(mode);
 			ddlGalaxyViewMode.SelectedIndex = 0;
 			Instance = this;
+
+            GlobalStuff.Default.GameForm = this;      
 		}
 
 		/// <summary>
