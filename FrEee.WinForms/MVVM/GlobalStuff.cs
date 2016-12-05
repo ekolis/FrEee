@@ -21,7 +21,7 @@ namespace FrEee.WinForms.Forms
         /// <summary>
         /// View model for the log form/window (the one that shows up after every move).
         /// </summary>
-        public GameLogViewModel GameLogViewModel { get; set; }
+        public GameLogViewModel GameLogViewModel { get; set; } = new GameLogViewModel();
 
         /// <summary>
         /// This is a (hopefully) temporary hack. We need global references to make WinForms/WPF duality work.

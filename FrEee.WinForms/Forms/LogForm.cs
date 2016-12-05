@@ -34,8 +34,8 @@ namespace FrEee.WinForms.Forms
             ShowInTaskbar = !gameForm.HasLogBeenShown;
 
             // Creating the data objects that are used by both WinForms and WPF log representations.
-            GlobalStuff.Default.GameLogViewModel = new GameLogViewModel();
             GlobalStuff.Default.LogForm = this;
+            GlobalStuff.Default.GameLogViewModel.Messages.Clear();
             foreach (var message in messages)
             {
                 GlobalStuff.Default.GameLogViewModel.Messages.Add(message);
