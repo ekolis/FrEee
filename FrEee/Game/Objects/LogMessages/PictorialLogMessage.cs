@@ -39,24 +39,5 @@ namespace FrEee.Game.Objects.LogMessages
         {
             get { return Context.Portrait; }
         }
-
-        public ImageSource PictureAsImageSource
-        {
-            get
-            {
-                using (MemoryStream memory = new MemoryStream())
-                {
-                    Picture.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                    memory.Position = 0;
-                    BitmapImage bitmapimage = new BitmapImage();
-                    bitmapimage.BeginInit();
-                    bitmapimage.StreamSource = memory;
-                    bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapimage.EndInit();
-
-                    return bitmapimage;
-                }
-            }
-        }
     }
 }

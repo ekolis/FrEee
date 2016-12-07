@@ -17,11 +17,12 @@
             </Style>
             <!-- Normally, I declare converters in App.xaml file, so they are created once and available globally in every XAML control. -->
             <local:TurnNumberToDateConverter x:Key="TurnNumberToDateConverter"></local:TurnNumberToDateConverter>
+            <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter"></local:BitmapToImageSourceConverter>
         </Grid.Resources>
         <DataGrid ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" AutoGenerateColumns="False" RowBackground="Black" RowStyle="{StaticResource BlackRowStyle}" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Resources>
                 <DataTemplate x:Key="PictureColumn">
-                    <Image Source="{Binding PictureAsImageSource}" DataContext="{Binding}" Width="32" Height="32"></Image>
+                    <Image Source="{Binding Path=Picture,Converter={StaticResource BitmapToImageSourceConverter}}" DataContext="{Binding}" Width="32" Height="32"></Image>
                 </DataTemplate>
             </DataGrid.Resources>
             <DataGrid.Columns>
