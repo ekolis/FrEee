@@ -15,19 +15,18 @@
                     <Setter Property="Background" Value="Black"></Setter>
                 </Style.Setters>
             </Style>
+            <local:TurnNumberToDateConverter x:Key="TurnNumberToDateConverter"></local:TurnNumberToDateConverter>
         </Grid.Resources>
         <DataGrid ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" AutoGenerateColumns="False" RowBackground="Black" RowStyle="{StaticResource BlackRowStyle}" MouseDoubleClick="DataGrid_MouseDoubleClick">
             <DataGrid.Resources>
                 <DataTemplate x:Key="PictureColumn">
                     <Image Source="{Binding PictureAsImageSource}" DataContext="{Binding}" Width="32" Height="32"></Image>
                 </DataTemplate>
-
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTemplateColumn CellTemplate="{StaticResource PictureColumn}" Header="Image"></DataGridTemplateColumn>
-                <DataGridTextColumn Header="Turn" Binding="{Binding TurnNumber}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Turn" Binding="{Binding Path=TurnNumber,Converter={StaticResource TurnNumberToDateConverter}}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Message" Binding="{Binding Text}"></DataGridTextColumn>
-
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
