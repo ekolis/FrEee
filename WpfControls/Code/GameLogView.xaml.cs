@@ -32,24 +32,4 @@ namespace FrEee.Wpf
             MessageBus.Default.Notify("LogMessageDoubleClicked", this, new NotificationEventArgs());
         }
     }
-
-    [ValueConversion(typeof(int), typeof(string))]
-    public class TurnNumberToDateConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            if (value is int)
-            {
-                return (2400 + (int)value).ToString("F1");
-            }
-            else
-            {
-                return "?wrong turn?";
-            }
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
-    }
 }

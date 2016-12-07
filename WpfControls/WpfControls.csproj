@@ -67,6 +67,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Code\TurnNumberToDateConverter.cs" />
     <Compile Include="Code\GameLogView.xaml.cs">
       <DependentUpon>GameLogView.xaml</DependentUpon>
     </Compile>
