@@ -15,6 +15,7 @@
                     <Setter Property="Background" Value="Black"></Setter>
                 </Style.Setters>
             </Style>
+            <!-- Normally, I declare converters in App.xaml file, so they are created once and available globally in every XAML control. -->
             <local:TurnNumberToDateConverter x:Key="TurnNumberToDateConverter"></local:TurnNumberToDateConverter>
         </Grid.Resources>
         <DataGrid ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" AutoGenerateColumns="False" RowBackground="Black" RowStyle="{StaticResource BlackRowStyle}" MouseDoubleClick="DataGrid_MouseDoubleClick">
