@@ -499,12 +499,6 @@
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WpfControls\WpfControls.csproj">
-      <Project>{8b28253d-f993-47f8-a3f9-c5b9e471795c}</Project>
-      <Name>WpfControls</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
