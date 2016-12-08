@@ -1,0 +1,53 @@
+﻿<UserControl x:Class="FrEee.Wpf.GameLogView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:FrEee.Wpf"
+             mc:Ignorable="d" x:Name="GlobalControl"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.Resources>
+            <!-- Normally, I declare converters in App.xaml file, so they are created once and available globally in every XAML control. -->
+            <local:TurnNumberToDateConverter x:Key="TurnNumberToDateConverter"></local:TurnNumberToDateConverter>
+            <local:BitmapToImageSourceConverter x:Key="BitmapToImageSourceConverter"></local:BitmapToImageSourceConverter>
+            <local:FunnyLogEntryFreshnessConverter x:Key="FunnyLogEntryFreshnessConverter"></local:FunnyLogEntryFreshnessConverter>
+            
+            <Style x:Key="BlackRowStyle" TargetType="{x:Type DataGridRow}">
+                <Style.Setters>
+                    <Setter Property="Foreground" Value="Gray"></Setter>
+                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                    <Setter Property="Background" Value="Black"></Setter>
+                </Style.Setters>
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=TurnNumber,Converter={StaticResource FunnyLogEntryFreshnessConverter}}" Value="True">
+                        <DataTrigger.Setters>
+                            <Setter Property="Foreground" Value="White"></Setter>
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+            
+        </Grid.Resources>
+        <DataGrid ItemsSource="{Binding Messages}" SelectedItem="{Binding SelectedMessage}" IsReadOnly="True" AutoGenerateColumns="False" RowBackground="Black" RowStyle="{StaticResource BlackRowStyle}" MouseDoubleClick="DataGrid_MouseDoubleClick">
+            <DataGrid.Resources>
+                <DataTemplate x:Key="PictureAndDateColumn">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=Picture,Converter={StaticResource BitmapToImageSourceConverter}}" DataContext="{Binding}" Width="32" Height="32" VerticalAlignment="Center"></Image>
+                        <TextBlock Text="{Binding Path=TurnNumber,Converter={StaticResource TurnNumberToDateConverter}}" VerticalAlignment="Center" Margin="5,0"></TextBlock>
+                    </StackPanel>
+                </DataTemplate>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn CellTemplate="{StaticResource PictureAndDateColumn}" Header="Date"></DataGridTemplateColumn>
+                <DataGridTextColumn Header="Message" Binding="{Binding Text}">
+                    <DataGridTextColumn.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        </Style>
+                    </DataGridTextColumn.CellStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

@@ -313,8 +313,14 @@
     <Compile Include="Forms\ShipListForm.Designer.cs">
       <DependentUpon>ShipListForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\BitmapToImageSourceConverter.cs" />
+    <Compile Include="MVVM\GameLogView.xaml.cs">
+      <DependentUpon>GameLogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\GameLogViewModel.cs" />
     <Compile Include="MVVM\GlobalStuff.cs" />
+    <Compile Include="MVVM\FunnyLogEntryFreshnessConverter.cs" />
+    <Compile Include="MVVM\TurnNumberToDateConverter.cs" />
     <Compile Include="Objects\ClientSettings.cs" />
     <Compile Include="Controls\AbilityTreeView.cs">
       <SubType>UserControl</SubType>
@@ -836,10 +842,6 @@
       <Project>{E19A4330-CE19-45D6-BCFC-375E065EF041}</Project>
       <Name>FrEee</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WpfControls\WpfControls.csproj">
-      <Project>{8B28253D-F993-47F8-A3F9-C5B9E471795C}</Project>
-      <Name>WpfControls</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Splash.jpg">
@@ -865,6 +867,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="WpfStuff\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="MVVM\GameLogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
