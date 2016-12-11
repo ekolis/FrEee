@@ -12,6 +12,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
 using FrEee.Modding.Templates;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.Tests.Game.Objects.Space
 {
@@ -113,12 +114,20 @@ namespace FrEee.Tests.Game.Objects.Space
 			// make sure a memory is created when the vehicle is seen
 			submarine.UpdateEmpireMemories();
 			var mem = (Ship)seekers.Memory[submarine.ID];
+			AreEqual(Visibility.Visible, submarine.CheckVisibility(seekers), "Ship is not visible to empire in same star system.");
 			IsNotNull(mem, "Memory was not created for visible ship.");
 			IsNotNull(mem.StarSystem, "Memory was not placed in a star system for visible ship.");
+
+			// make sure the original vehicle is invisible when it moves
 			HideSubmarine();
+			AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
 
 			// make sure the memory was not updated when the sub was moved
 			AreEqual(here, mem.StarSystem, "Memory of ship was updated even though it is no longer visible.");
+
+			// make sure the memory is visible to the correct empire
+			AreEqual(Visibility.Fogged, mem.CheckVisibility(seekers), "Memory is not fogged.");
+			AreEqual(Visibility.Unknown, mem.CheckVisibility(hiders), "Other empire's memory is not hidden from empire owning vehicle.");
 		}
 
 		// TODO - create test for fogged ship reappearing
