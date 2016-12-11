@@ -4003,7 +4003,7 @@ namespace FrEee.Utility.Extensions
 		{
 			if (!f.IsMemory)
 				return null;
-			return Galaxy.Current.Empires.Single(x => x.Memory.Values.Contains(f));
+			return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
 		}
 
 		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
