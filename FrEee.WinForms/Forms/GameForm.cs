@@ -34,12 +34,13 @@ namespace FrEee.WinForms.Forms
 		/// Creates a game form.
 		/// </summary>
 		/// <param name="hostView">Is this the host viewing a player's view? If so, we shouldn't attempt to process the turn after he clicks End Turn, even if the game is single player.</param>
-		public GameForm(bool hostView)
+		public GameForm(bool hostView, bool quitOnClose)
 		{
 			if (Instance != null)
 				throw new InvalidOperationException("Only one game form allowed.");
 			InitializeComponent();
 			this.hostView = hostView;
+			QuitOnClose = quitOnClose;
 			SetMouseDownHandler(this, GameForm_MouseDown);
 			RemoveMouseDownHandler(searchBox, GameForm_MouseDown);
 			foreach (var mode in GalaxyViewModes.All)
@@ -1598,7 +1599,8 @@ namespace FrEee.WinForms.Forms
 		private void GameForm_FormClosed(object sender, FormClosedEventArgs e)
 		{
 			Instance = null;
-			Application.Exit();
+			if (QuitOnClose)
+				Application.Exit();
 		}
 
 		private void btnRecycle_Click(object sender, EventArgs e)
@@ -1625,5 +1627,13 @@ namespace FrEee.WinForms.Forms
 		{
 			galaxyView.Mode = ddlGalaxyViewMode.SelectedItem as IGalaxyViewMode;
 		}
+
+		/// <summary>
+		/// Should 
+		/// </summary>
+		/// <value>
+		///   <c>true</c> if [quit on close]; otherwise, <c>false</c>.
+		/// </value>
+		public bool QuitOnClose { get; set; }
 	}
 }

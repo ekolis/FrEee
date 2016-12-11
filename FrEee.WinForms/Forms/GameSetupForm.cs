@@ -119,7 +119,7 @@ namespace FrEee.WinForms.Forms
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_0001.gam");
 					Hide();
-					MainMenuForm.GetInstance().ShowChildForm(new GameForm(false));
+					MainMenuForm.GetInstance().ShowChildForm(new GameForm(false, true));
 				}
 				else
 				{

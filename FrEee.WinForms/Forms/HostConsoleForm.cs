@@ -171,7 +171,7 @@ namespace FrEee.WinForms.Forms
 							Galaxy.Current.Redact();
 						}
 					}
-					var form = new GameForm(true);
+					var form = new GameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);
 					Show();

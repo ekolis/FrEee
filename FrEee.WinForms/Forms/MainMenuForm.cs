@@ -109,7 +109,7 @@ namespace FrEee.WinForms.Forms
 
 			if (status.Exception == null && !warnings.Any())
 			{
-				var game = new GameForm(false);
+				var game = new GameForm(false, true);
 				this.ShowChildForm(game);
 				game.FormClosed += (s, args) =>
 						{
@@ -166,7 +166,7 @@ namespace FrEee.WinForms.Forms
 						Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
 					});
 				}
-				var form = new GameForm(false);
+				var form = new GameForm(false, true);
 				Cursor = Cursors.Default;
 				Hide();
 				this.ShowChildForm(form);
