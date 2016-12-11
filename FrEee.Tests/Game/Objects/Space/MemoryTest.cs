@@ -110,12 +110,13 @@ namespace FrEee.Tests.Game.Objects.Space
 		[TestMethod]
 		public void CreatingMemory()
 		{
+			// make sure a memory is created when the vehicle is seen
 			submarine.UpdateEmpireMemories();
+			var mem = (Ship)seekers.Memory[submarine.ID];
+			IsNotNull(mem.StarSystem, "Memory was not created for visible ship.");
 			HideSubmarine();
 
 			// make sure the memory was not updated when the sub was moved
-			var mem = (Ship)seekers.Memory[submarine.ID];
-			IsNotNull(mem.StarSystem, "Memory was not created for visible ship.");
 			AreEqual(here, mem.StarSystem, "Memory of ship was updated even though it is no longer visible.");
 		}
 
