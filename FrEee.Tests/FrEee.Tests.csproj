@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="Game\Objects\Abilities\AbilityTest.cs" />
     <Compile Include="Game\Objects\Orders\ConstructionTest.cs" />
+    <Compile Include="Game\Objects\Space\MemoryTest.cs" />
     <Compile Include="Game\Objects\Technology\TechnologyTest.cs" />
     <Compile Include="Game\Objects\Technology\WeaponInfoTest.cs" />
     <Compile Include="Game\Objects\Vehicles\ResupplyTest.cs" />
@@ -131,7 +132,6 @@
     <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Game\Objects\Commands\" />
     <Folder Include="Game\Objects\LogMessages\" />
-    <Folder Include="Game\Objects\Space\" />
     <Folder Include="Game\Setup\" />
     <Folder Include="Modding\Templates\" />
   </ItemGroup>
