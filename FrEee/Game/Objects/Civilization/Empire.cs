@@ -939,6 +939,14 @@ namespace FrEee.Game.Objects.Civilization
 					Memory[obj.ID] = memory;
 				}
 
+				// if it's a space object we need to set its sector
+				if (obj is ISpaceObject)
+				{
+					var sobj = (ISpaceObject)obj;
+					var mem = (ISpaceObject)Memory[obj.ID];
+					mem.Sector = sobj.Sector;
+				}			
+
 				// update pursue/evade orders' alternate targets if object is fleet
 				if (obj is Fleet)
 				{

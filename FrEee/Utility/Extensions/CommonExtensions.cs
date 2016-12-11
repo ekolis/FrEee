@@ -1733,7 +1733,7 @@ namespace FrEee.Utility.Extensions
 			if (sys == null)
 				return null;
 			// TODO - this might be kind of slow; might want a reverse memory lookup
-			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[l.Item.ID] == sobj)).Location);
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
 		}
 
 		/// <summary>
@@ -1744,12 +1744,12 @@ namespace FrEee.Utility.Extensions
 		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
-			if (loc == null)
+			/*if (loc == null)
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
 				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
-			}
+			}*/
 			if (loc == null)
 				return null;
 			return loc.Item;
