@@ -61,8 +61,8 @@ namespace FrEee.Tests.Game.Objects.Space
 			Mod.Current = new Mod();
 
 			// initialize star systems
-			here = new StarSystem(0);
-			there = new StarSystem(0);
+			here = new StarSystem(0) { Name = "Here" };
+			there = new StarSystem(0) { Name = "There" };
 			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(here, new Point()));
 			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(there, new Point(1, 1)));
 
