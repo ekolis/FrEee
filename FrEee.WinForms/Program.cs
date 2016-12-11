@@ -296,7 +296,7 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 				else
 					MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 			}
-			var form = new GameForm(false);
+			var form = new GameForm(false, true);
 			form.KeyPreview = true;
 			form.StartPosition = FormStartPosition.CenterScreen;
 			form.KeyDown += GuiExtensions.childForm_KeyDown_forDebugConsole;
