@@ -4005,6 +4005,11 @@ namespace FrEee.Utility.Extensions
 				return null;
 			return Galaxy.Current.Empires.Single(x => x.Memory.Values.Contains(f));
 		}
+
+		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
+		{
+			return (T)emp.Memory[f.ID];
+		}
 	}
 
 	public enum IDCopyBehavior
