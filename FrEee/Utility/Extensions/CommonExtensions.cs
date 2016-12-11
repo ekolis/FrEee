@@ -3288,6 +3288,14 @@ namespace FrEee.Utility.Extensions
 
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
+			if (sobj.IsMemory)
+			{
+				if (sobj.MemoryOwner() == emp)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
+
 			if (emp == sobj.Owner)
 				return Visibility.Owned;
 
@@ -3984,6 +3992,18 @@ namespace FrEee.Utility.Extensions
 
 					&& EqualityComparer<TKey>.Default.Equals(kvp.Key, key)
 			);
+		}
+
+		/// <summary>
+		/// Who does a memory belong to?
+		/// </summary>
+		/// <param name="f">The memory.</param>
+		/// <returns>Empire to which the memory belongs (null if not memory).</returns>
+		public static Empire MemoryOwner(this IFoggable f)
+		{
+			if (!f.IsMemory)
+				return null;
+			return Galaxy.Current.Empires.Single(x => x.Memory.Values.Contains(f));
 		}
 	}
 
