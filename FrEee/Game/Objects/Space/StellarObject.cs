@@ -188,7 +188,7 @@ namespace FrEee.Game.Objects.Space
 		public virtual void Redact(Empire emp)
 		{
 			var vis = CheckVisibility(emp);
-			if (vis < Visibility.Fogged)
+			if (vis < Visibility.Fogged || vis < Visibility.Visible && !IsMemory)
 				Dispose();
 		}
 
