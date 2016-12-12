@@ -1037,6 +1037,17 @@ namespace FrEee.Game.Objects.Civilization
 			foreach (var d in KnownDesigns.Where(d => d.Owner != emp))
 				d.VehiclesBuilt = 0;
 
+			// eliminate memories of objects that are actually visible
+			foreach (var kvp in Memory.ToArray())
+			{
+				var original = (IFoggable)Galaxy.Current.GetReferrable(kvp.Key);
+				if (original != null && original.CheckVisibility(emp) >= Visibility.Visible)
+				{
+					kvp.Value.Dispose();
+					Memory.Remove(kvp);
+				}
+			}
+
 			if (vis < Visibility.Fogged)
 				Dispose();
 		}
