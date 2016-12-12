@@ -1024,7 +1024,7 @@ namespace FrEee.Game.Objects.Space
 					Current.MoveShips();
 					Current.didLastTick = true;
 				}
-				foreach (var f in Current.Referrables.OfType<IFoggable>())
+				foreach (var f in Current.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
 					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
