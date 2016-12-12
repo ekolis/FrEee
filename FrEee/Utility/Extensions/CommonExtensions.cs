@@ -3309,7 +3309,7 @@ namespace FrEee.Utility.Extensions
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
-			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp);
+			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
 				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
