@@ -684,6 +684,13 @@ namespace FrEee.Game.Objects.Space
 			// clean up redacted objects that are not IFoggable
 			foreach (var x in StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
 				StarSystemLocations.Remove(x);
+
+			// delete memories since they've been copied to "physical" objects already
+			foreach (var kvp in Empire.Current.Memory.ToArray())
+			{
+				kvp.Value.Dispose();
+				Empire.Current.Memory.Remove(kvp);
+			}
 		}
 
 		void redactParser_StartObject(object o)
