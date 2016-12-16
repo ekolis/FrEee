@@ -657,12 +657,17 @@ namespace FrEee.Game.Objects.Vehicles
 					copy.Owner = Empire.Current;
 					copy.Iteration++;
 					copy.VehiclesBuilt = 0;
+
+					// use real component templates and mounts from mod, not copies!
 					copy.Components.Clear();
 					foreach (var mct in Components)
 					{
-						var mount = mct.Mount == null ? null : mct.Mount.LatestVersion;
-						var ct = mct.ComponentTemplate.LatestVersion;
-						copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
+						// reuse templates so components appear "condensed" on vehicle designer
+						var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == mct.ComponentTemplate && x.Mount == mct.Mount);
+						if (same == null)
+							copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
+						else
+							copy.Components.Add(same);
 					}
 					return copy;
 				}
