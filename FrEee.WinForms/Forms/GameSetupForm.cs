@@ -22,6 +22,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.WinForms.Forms
 {
@@ -87,6 +88,8 @@ namespace FrEee.WinForms.Forms
 				Message = "Initializing",
 				Exception = null,
 			};
+
+			// TODO - why are we loading the galaxy twice?
 			Thread t = new Thread(new ThreadStart(() =>
 			{
 				try
@@ -118,6 +121,7 @@ namespace FrEee.WinForms.Forms
 					var turn = Galaxy.Current.TurnNumber;
 					status.Message = "Loading game";
 					Galaxy.Load(name + "_" + turn + "_0001.gam");
+					Design.ImportFromLibrary();
 					Hide();
 					MainMenuForm.GetInstance().ShowChildForm(new GameForm(false, true));
 				}
