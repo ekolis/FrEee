@@ -951,7 +951,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					// first tech in queue
 					var tech = Queue.First();
-					var toSpend = Math.Min(leftovers, tech.GetNextLevelCost(emp));
+					var toSpend = Math.Min(leftovers, tech.GetNextLevelCost(emp) - emp.AccumulatedResearch[tech]);
 					emp.Research(tech, toSpend);
 					leftovers -= toSpend;
 				}
