@@ -84,6 +84,7 @@ namespace FrEee.Tests.Game.Objects.Technology
 			t1.LevelCost = 5000; // in case the mod changes
 			var t2 = mod.Technologies.FindByName("Smaller Weapons");
 			t2.LevelCost = 5000; // in case the mod changes
+			emp.AccumulatedResearch[t1] = 1000; // make sure to test spillover properly
 
 			// reset tech levels
 			emp.ResearchedTechnologies[t1] = 0;
@@ -109,9 +110,9 @@ namespace FrEee.Tests.Game.Objects.Technology
 			Assert.AreEqual(1, emp.ResearchedTechnologies[t1]);
 			Assert.AreEqual(0, emp.ResearchedTechnologies[t2]);
 
-			// should have no spillover in t1 and 1 point in t2
+			// should have no spillover in t1 and 1001 points in t2
 			Assert.AreEqual(0, emp.GetResearchProgress(t1, 2).Value);
-			Assert.AreEqual(1, emp.GetResearchProgress(t2, 1).Value);
+			Assert.AreEqual(1001, emp.GetResearchProgress(t2, 1).Value);
 
 			// another turn!
 			emp.BonusResearch = 100000;
