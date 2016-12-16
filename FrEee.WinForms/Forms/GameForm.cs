@@ -718,6 +718,7 @@ namespace FrEee.WinForms.Forms
 						status.Message = "Loading game";
 						Galaxy.Load(Galaxy.Current.Name, Galaxy.Current.TurnNumber, plrnum);
 						status.Progress = 1.00;
+						// no need to reload designs from library, they're already loaded
 					}));
 					this.ShowChildForm(new StatusForm(t, status));
 					SetUpGui();

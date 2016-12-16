@@ -15,6 +15,7 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
+using FrEee.Game.Objects.Vehicles;
 
 namespace FrEee.WinForms.Forms
 {
@@ -171,6 +172,7 @@ namespace FrEee.WinForms.Forms
 							Galaxy.Current.Redact();
 						}
 					}
+					Design.ImportFromLibrary();
 					var form = new GameForm(true, false);
 					Hide();
 					this.ShowChildForm(form);

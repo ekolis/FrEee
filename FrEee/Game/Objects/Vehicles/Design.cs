@@ -69,6 +69,30 @@ namespace FrEee.Game.Objects.Vehicles
 			d.Hull = hull;
 			return d;
 		}
+
+		/// <summary>
+		/// Imports designs from the library into the game that aren't already in the game.
+		/// Requires a current empire. Should only be called client side.
+		/// </summary>
+		/// <returns>Copied designs imported.</returns>
+		public static IEnumerable<IDesign> ImportFromLibrary()
+		{
+			if (Empire.Current == null)
+				throw new InvalidOperationException("Can't import designs without a current empire.");
+
+			var designs = Library.Import<IDesign>().Where(d => !Empire.Current.KnownDesigns.Any(d2 => d2.Name == d.Name)).ToArray();
+
+			designs.SafeForeach(d =>
+			{
+				d.IsNew = true;
+				d.Owner = Empire.Current;
+				d.TurnNumber = Galaxy.Current.TurnNumber;
+				d.Iteration = Empire.Current.KnownDesigns.OwnedBy(Empire.Current).Where(x => x.Name == d.Name).MaxOrDefault(x => x.Iteration) + 1; // auto assign nex available iteration
+				Empire.Current.KnownDesigns.Add(d); // only client side, don't need to worry about other players spying :)
+			});
+
+			return designs;
+		}
 	}
 
 	/// <summary>
