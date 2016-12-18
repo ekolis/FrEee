@@ -22,12 +22,18 @@ namespace FrEee.WinForms.Forms
 	public partial class EmpireSetupForm : Form
 	{
 		public EmpireSetupForm()
+
 		{
 			InitializeComponent();
 			BindChoices();
 
 			try { this.Icon = new Icon(FrEee.WinForms.Properties.Resources.FrEeeIcon); }
 			catch { }
+
+            var vm = new EmpireSetupViewModel();
+            var view = new EmpireSetupView();
+            view.DataContext = vm;
+            wpfHost.Child = view;
 		}
 
 		/// <summary>
