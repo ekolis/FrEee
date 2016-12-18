@@ -11,97 +11,87 @@ using FrEee.Game.Objects.Technology;
 using FrEee.Utility.Extensions;
 using FrEee.Utility;
 using FrEee.Modding;
+using FrEee.WinForms.Forms;
 
-namespace FrEee.WinForms.Controls
-{
-	public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade>
-	{
-		public FacilityReport()
-		{
-			InitializeComponent();
-		}
+namespace FrEee.WinForms.Controls {
+    public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade> {
+        public FacilityReport() {
+            InitializeComponent();
 
-		private bool isUpgrading = false;
+            GlobalStuff.Default.DefaultFacilityReportViewModel.Facility.Template.Name = "Bybis raugintas";
+            wpfHost.Child = new FacilityReportView();
 
-		public FacilityReport(Facility f)
-		{
-			InitializeComponent();
-			Bind(f);
-		}
+        }
 
-		public FacilityReport(FacilityTemplate ft)
-		{
-			InitializeComponent();
-			Bind(ft);
-		}
+        private bool isUpgrading = false;
 
-		public FacilityReport(FacilityUpgrade fu)
-		{
-			InitializeComponent();
-			Bind(fu);
-		}
+        public FacilityReport(Facility f) : this() {
+            Bind(f);
+        }
 
-		private Facility facility;
+        public FacilityReport(FacilityTemplate ft) : this() {
+            Bind(ft);
+        }
 
-		public Facility Facility
-		{
-			get
-			{
-				return facility;
-			}
-			set
-			{
-				facility = value;
-				Bind();
-			}
-		}
+        public FacilityReport(FacilityUpgrade fu) : this() {
+            Bind(fu);
+        }
 
-		public void Bind(Facility data)
-		{
-			isUpgrading = false;
-			Facility = data;
-		}
+        private Facility facility;
 
-		public void Bind()
-		{
-			SuspendLayout();
-			if (Facility == null)
-				Visible = false;
-			else
-			{
-				Visible = true;
-				picPortrait.Image = Facility.Portrait;
-				txtName.Text = Facility.Name;
-				txtDescription.Text = Facility.Template.Description;
-				double ratio = 1d;
-				if (isUpgrading)
-					ratio = (double)Mod.Current.Settings.UpgradeFacilityPercentCost / 100d;
-				resMin.Amount = (int)(Facility.Template.Cost[Resource.Minerals] * ratio);
-				resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
-				resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);
-				abilityTree.IntrinsicAbilities = Facility.Abilities;
-				abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
-			}
-			ResumeLayout();
-		}
+        public Facility Facility
+        {
+            get
+            {
+                return facility;
+            }
+            set
+            {
+                facility = value;
+                Bind();
+            }
+        }
 
-		public void Bind(FacilityTemplate data)
-		{
-			isUpgrading = false;
-			Bind(new Facility(data));
-		}
+        public void Bind(Facility data) {
+            isUpgrading = false;
+            Facility = data;
+        }
 
-		public void Bind(FacilityUpgrade data)
-		{
-			isUpgrading = true;
-			Bind(data.New);
-			txtName.Text = "Upgrade to " + txtName.Text;
-		}
+        public void Bind() {
+            SuspendLayout();
+            if (Facility == null)
+                Visible = false;
+            else {
+                Visible = true;
+                picPortrait.Image = Facility.Portrait;
+                txtName.Text = Facility.Name;
+                txtDescription.Text = Facility.Template.Description;
+                double ratio = 1d;
+                if (isUpgrading)
+                    ratio = (double)Mod.Current.Settings.UpgradeFacilityPercentCost / 100d;
+                resMin.Amount = (int)(Facility.Template.Cost[Resource.Minerals] * ratio);
+                resOrg.Amount = (int)(Facility.Template.Cost[Resource.Organics] * ratio);
+                resRad.Amount = (int)(Facility.Template.Cost[Resource.Radioactives] * ratio);
+                abilityTree.IntrinsicAbilities = Facility.Abilities;
+                abilityTree.Abilities = Facility.Abilities.StackToTree(Facility);
+            }
+            ResumeLayout();
+        }
 
-		private void picPortrait_Click(object sender, EventArgs e)
-		{
-			if (Facility != null)
-				picPortrait.ShowFullSize(Facility.Name);
-		}
-	}
+        public void Bind(FacilityTemplate data) {
+            isUpgrading = false;
+            Bind(new Facility(data));
+        }
+
+        public void Bind(FacilityUpgrade data) {
+            isUpgrading = true;
+            Bind(data.New);
+            txtName.Text = "Upgrade to " + txtName.Text;
+        }
+
+        private void picPortrait_Click(object sender, EventArgs e) {
+            if (Facility != null)
+                picPortrait.ShowFullSize(Facility.Name);
+        }
+    }
 }
