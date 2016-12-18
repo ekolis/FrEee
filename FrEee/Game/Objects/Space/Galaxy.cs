@@ -684,6 +684,13 @@ namespace FrEee.Game.Objects.Space
 			// clean up redacted objects that are not IFoggable
 			foreach (var x in StarSystemLocations.Where(x => x.Item.IsDisposed).ToArray())
 				StarSystemLocations.Remove(x);
+
+			// delete memories since they've been copied to "physical" objects already
+			foreach (var kvp in Empire.Current.Memory.ToArray())
+			{
+				kvp.Value.Dispose();
+				Empire.Current.Memory.Remove(kvp);
+			}
 		}
 
 		void redactParser_StartObject(object o)
@@ -944,7 +951,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					// first tech in queue
 					var tech = Queue.First();
-					var toSpend = Math.Min(leftovers, tech.GetNextLevelCost(emp));
+					var toSpend = Math.Min(leftovers, tech.GetNextLevelCost(emp) - emp.AccumulatedResearch[tech]);
 					emp.Research(tech, toSpend);
 					leftovers -= toSpend;
 				}
@@ -1024,7 +1031,7 @@ namespace FrEee.Game.Objects.Space
 					Current.MoveShips();
 					Current.didLastTick = true;
 				}
-				foreach (var f in Current.Referrables.OfType<IFoggable>())
+				foreach (var f in Current.Referrables.OfType<IFoggable>().Where(f => !f.IsMemory))
 					f.Timestamp = Current.Timestamp;
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;

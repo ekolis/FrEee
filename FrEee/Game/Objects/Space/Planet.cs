@@ -909,11 +909,11 @@ namespace FrEee.Game.Objects.Space
 			set
 			{
 				base.Sector = value;
-				if (Cargo != null)
+				/*if (Cargo != null)
 				{
-					foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
+					foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>().ToArray())
 						v.Sector = value;
-				}
+				}*/
 			}
 		}
 

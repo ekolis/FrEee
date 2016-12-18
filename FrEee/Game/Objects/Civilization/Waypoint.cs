@@ -86,7 +86,7 @@ namespace FrEee.Game.Objects.Civilization
 				// check if space object has orders to move to this waypoint
 				// if so, delete that order and any future orders
 				bool foundWaypoint = false;
-				foreach (var order in sobj.Orders)
+				foreach (var order in sobj.Orders.ToArray())
 				{
 					if (order is WaypointOrder)
 					{

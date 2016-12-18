@@ -360,8 +360,8 @@ namespace FrEee.Game.Objects.Vehicles
 				}
 				else
 					value.Place(this);
-				foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>())
-					v.Sector = value;
+				/*	foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>().ToArray())
+					v.Sector = value;*/
 			}
 		}
 
