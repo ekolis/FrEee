@@ -1733,7 +1733,7 @@ namespace FrEee.Utility.Extensions
 			if (sys == null)
 				return null;
 			// TODO - this might be kind of slow; might want a reverse memory lookup
-			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj || Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[l.Item.ID] == sobj)).Location);
+			return new Sector(sys, sys.SpaceObjectLocations.Single(l => l.Item == sobj).Location);
 		}
 
 		/// <summary>
@@ -1744,12 +1744,12 @@ namespace FrEee.Utility.Extensions
 		public static StarSystem FindStarSystem(this ISpaceObject sobj)
 		{
 			var loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.Contains(sobj));
-			if (loc == null)
+			/*if (loc == null)
 			{
 				// search memories too
 				// TODO - this might be kind of slow; might want a reverse memory lookup
 				loc = Galaxy.Current.StarSystemLocations.SingleOrDefault(l => l.Item.FindSpaceObjects<ISpaceObject>().Any(s => Galaxy.Current.Empires.ExceptSingle(null).Any(e => e.Memory[s.ID] == sobj)));
-			}
+			}*/
 			if (loc == null)
 				return null;
 			return loc.Item;
@@ -3288,6 +3288,14 @@ namespace FrEee.Utility.Extensions
 
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
+			if (sobj.IsMemory)
+			{
+				if (sobj.MemoryOwner() == emp)
+					return Visibility.Fogged;
+				else
+					return Visibility.Unknown;
+			}
+
 			if (emp == sobj.Owner)
 				return Visibility.Owned;
 
@@ -3301,7 +3309,7 @@ namespace FrEee.Utility.Extensions
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
-			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp);
+			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
 				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
@@ -3984,6 +3992,23 @@ namespace FrEee.Utility.Extensions
 
 					&& EqualityComparer<TKey>.Default.Equals(kvp.Key, key)
 			);
+		}
+
+		/// <summary>
+		/// Who does a memory belong to?
+		/// </summary>
+		/// <param name="f">The memory.</param>
+		/// <returns>Empire to which the memory belongs (null if not memory).</returns>
+		public static Empire MemoryOwner(this IFoggable f)
+		{
+			if (!f.IsMemory)
+				return null;
+			return Galaxy.Current.Empires.ExceptSingle(null).SingleOrDefault(x => x.Memory.Values.Contains(f));
+		}
+
+		public static T FindMemory<T>(this T f, Empire emp) where T : IFoggable
+		{
+			return (T)emp.Memory[f.ID];
 		}
 	}
 

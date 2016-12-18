@@ -509,7 +509,7 @@ namespace FrEee.Game.Objects.Vehicles
 				Components.Clear();
 			}
 
-			if (visibility < Visibility.Fogged)
+			if (visibility < Visibility.Fogged || visibility < Visibility.Visible && !IsMemory)
 				Dispose();
 		}
 

@@ -939,6 +939,14 @@ namespace FrEee.Game.Objects.Civilization
 					Memory[obj.ID] = memory;
 				}
 
+				// if it's a space object we need to set its sector
+				if (obj is ISpaceObject)
+				{
+					var sobj = (ISpaceObject)obj;
+					var mem = (ISpaceObject)Memory[obj.ID];
+					mem.Sector = sobj.Sector;
+				}			
+
 				// update pursue/evade orders' alternate targets if object is fleet
 				if (obj is Fleet)
 				{
@@ -1028,6 +1036,17 @@ namespace FrEee.Game.Objects.Civilization
 			// TODO - show count of encountered vehicles
 			foreach (var d in KnownDesigns.Where(d => d.Owner != emp))
 				d.VehiclesBuilt = 0;
+
+			// eliminate memories of objects that are actually visible
+			foreach (var kvp in Memory.ToArray())
+			{
+				var original = (IFoggable)Galaxy.Current.GetReferrable(kvp.Key);
+				if (original != null && original.CheckVisibility(emp) >= Visibility.Visible)
+				{
+					kvp.Value.Dispose();
+					Memory.Remove(kvp);
+				}
+			}
 
 			if (vis < Visibility.Fogged)
 				Dispose();
