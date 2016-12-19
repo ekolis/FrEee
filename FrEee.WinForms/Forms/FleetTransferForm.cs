@@ -42,7 +42,7 @@ namespace FrEee.WinForms.Forms
 			var vehicles = new HashSet<IVehicle>();
 
 			// find vehicles in sector that are not fleets
-			foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>())
+			foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>().OwnedBy(Empire.Current))
 				vehicles.Add(v);
 
 			// add vehicles that are being removed from fleets (but not fleets themselves, those go in the fleets tree)
@@ -86,7 +86,7 @@ namespace FrEee.WinForms.Forms
 		{
 			// build preliminary tree from existing fleets in sector
 			treeFleets.Initialize(32);
-			foreach (var f in sector.SpaceObjects.OfType<Fleet>())
+			foreach (var f in sector.SpaceObjects.OfType<Fleet>().OwnedBy(Empire.Current))
 				CreateNode(treeFleets, f);
 
 			// create any new fleets
