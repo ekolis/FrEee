@@ -663,9 +663,11 @@ namespace FrEee.Game.Objects.Vehicles
 					foreach (var mct in Components)
 					{
 						// reuse templates so components appear "condensed" on vehicle designer
-						var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == mct.ComponentTemplate && x.Mount == mct.Mount);
+						var mount = mct.Mount == null ? null : mct.Mount.LatestVersion;
+						var ct = mct.ComponentTemplate.LatestVersion;
+						var same = copy.Components.FirstOrDefault(x => x.ComponentTemplate == ct && x.Mount == mount);
 						if (same == null)
-							copy.Components.Add(new MountedComponentTemplate(copy, mct.ComponentTemplate, mct.Mount));
+							copy.Components.Add(new MountedComponentTemplate(copy, ct, mount));
 						else
 							copy.Components.Add(same);
 					}
