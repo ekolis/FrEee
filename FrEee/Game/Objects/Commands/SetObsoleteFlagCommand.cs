@@ -30,7 +30,7 @@ namespace FrEee.Game.Objects.Commands
 		/// The design to set the flag on if it's already knwon by the server.
 		/// </summary>
 		[DoNotSerialize]
-		public IDesign Design { get { return design.Value; } set { design = value.ReferViaGalaxy(); } }
+		public IDesign Design { get { return design?.Value; } set { design = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// The design to set the flag on if it's only in the library and not in the game or it's a brand new design.
