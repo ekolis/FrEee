@@ -293,11 +293,13 @@ FrEee --restart gamename_turnnumber_playernumber.gam: play a turn, restarting fr
 						MessageBox.Show("An error occurred while loading your commands. You will need to restart your turn from the beginning.");
 						Galaxy.Load(Galaxy.Current.GameFileName); // in case some commands got loaded
 					}
-					Design.ImportFromLibrary();
 				}
 				else
 					MessageBox.Show(plrfile + " does not exist. You will need to start your turn from the beginning.");
 			}
+
+			Design.ImportFromLibrary();
+
 			var form = new GameForm(false, true);
 			form.KeyPreview = true;
 			form.StartPosition = FormStartPosition.CenterScreen;
