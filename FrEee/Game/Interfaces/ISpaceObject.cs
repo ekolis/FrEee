@@ -55,5 +55,14 @@ namespace FrEee.Game.Interfaces
 		/// For a ship, this could include supplies.
 		/// </summary>
 		ResourceQuantity StoredResources { get; }
+
+		/// <summary>
+		/// Is this space object affeced by sight obscuration abilities?
+		/// This does not affect cloaking abilities, only sector/system obscuration.
+		/// </summary>
+		/// <value>
+		/// <c>true</c> if this instance can be obscured; otherwise, <c>false</c>.
+		/// </value>
+		bool CanBeObscured { get; }
 	}
 }

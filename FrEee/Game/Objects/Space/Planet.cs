@@ -1135,5 +1135,7 @@ namespace FrEee.Game.Objects.Space
 				Orders = value[nameof(Orders)].Default(new List<IOrder<Planet>>());
 			}
 		}
+
+		public override bool CanBeObscured => true;
 	}
 }

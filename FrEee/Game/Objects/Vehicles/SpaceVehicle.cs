@@ -480,5 +480,7 @@ namespace FrEee.Game.Objects.Vehicles
 				return Owner.RemoteMiners.Where(m => m.Key.Item1 == this).Sum(m => m.Value) + this.RawResourceIncome();
 			}
 		}
+
+		public bool CanBeObscured => true;
 	}
 }
