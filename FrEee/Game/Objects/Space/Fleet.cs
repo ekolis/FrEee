@@ -872,5 +872,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get { return new ResourceQuantity(); }
 		}
+
+		public bool CanBeObscured => true;
 	}
 }

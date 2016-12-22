@@ -3082,13 +3082,18 @@ namespace FrEee.Utility.Extensions
 							 SensorLevel = sensor.Value2.Value.ToInt(),
 							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
 						 };
-			var obscurationLevel = new[]
+
+			int obscurationLevel = 0;
+			if (sobj.CanBeObscured)
 			{
-				sys.GetAbilityValue("System - Sight Obscuration"),
-				sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration"),
-				sec.GetAbilityValue("Sector - Sight Obscuration"),
-				sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
-			}.Max(a => a.ToInt());
+				obscurationLevel = new[]
+				{
+					sys.GetAbilityValue("System - Sight Obscuration"),
+					sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration"),
+					sec.GetAbilityValue("Sector - Sight Obscuration"),
+					sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
+				}.Max(a => a.ToInt());
+			}
 			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
 		}
 
