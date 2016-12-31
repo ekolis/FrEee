@@ -93,7 +93,15 @@ namespace FrEee.Game.Objects.Abilities
 
 			// replace [%Amount1%] and such
 			for (int i = 1; i <= Rule.ValueRules.Count && i <= Values.Count; i++)
+			{
+				result = result.Replace("[%Amount" + i + "]", Values[i - 1]);
 				result = result.Replace("[%Amount" + i + "%]", Values[i - 1]);
+			}
+			if (Rule.Matches("Shield Generation") || Rule.Matches("Phased Shield Generation") || Rule.Matches("Planet - Shield Generation"))
+			{
+				result = result.Replace("[%ShieldPointsGenerated]", Values[0]);
+				result = result.Replace("[%ShieldPointsGenerated%]", Values[0]);
+			}
 
 			return result;
 		}
