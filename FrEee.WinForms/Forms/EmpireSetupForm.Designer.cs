@@ -79,6 +79,7 @@
             this.tabTraits = new System.Windows.Forms.TabPage();
             this.raceTraitPicker = new FrEee.WinForms.Controls.TraitPicker();
             this.tabs = new FrEee.WinForms.Controls.GameTabControl();
+            this.tabWpf = new System.Windows.Forms.TabPage();
             this.wpfHost = new System.Windows.Forms.Integration.ElementHost();
             this.tabGeneral.SuspendLayout();
             this.gamePanel1.SuspendLayout();
@@ -93,6 +94,7 @@
             this.tabAptitudes.SuspendLayout();
             this.tabTraits.SuspendLayout();
             this.tabs.SuspendLayout();
+            this.tabWpf.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtPointsAvailable
@@ -101,7 +103,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtPointsAvailable.Location = new System.Drawing.Point(183, 690);
             this.txtPointsAvailable.Name = "txtPointsAvailable";
-            this.txtPointsAvailable.Size = new System.Drawing.Size(172, 17);
+            this.txtPointsAvailable.Size = new System.Drawing.Size(610, 17);
             this.txtPointsAvailable.TabIndex = 5;
             this.txtPointsAvailable.Text = "Points Available: 0 / 0";
             this.txtPointsAvailable.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -137,7 +139,7 @@
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.BackColor = System.Drawing.Color.Black;
             this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnCancel.Location = new System.Drawing.Point(362, 687);
+            this.btnCancel.Location = new System.Drawing.Point(800, 687);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(80, 22);
             this.btnCancel.TabIndex = 3;
@@ -150,7 +152,7 @@
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.BackColor = System.Drawing.Color.Black;
             this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.btnOK.Location = new System.Drawing.Point(448, 687);
+            this.btnOK.Location = new System.Drawing.Point(886, 687);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(80, 22);
             this.btnOK.TabIndex = 4;
@@ -193,7 +195,7 @@
             this.tabGeneral.Location = new System.Drawing.Point(4, 29);
             this.tabGeneral.Name = "tabGeneral";
             this.tabGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGeneral.Size = new System.Drawing.Size(519, 642);
+            this.tabGeneral.Size = new System.Drawing.Size(957, 642);
             this.tabGeneral.TabIndex = 0;
             this.tabGeneral.Text = "General";
             // 
@@ -662,7 +664,7 @@
             this.tabAptitudes.Location = new System.Drawing.Point(4, 29);
             this.tabAptitudes.Name = "tabAptitudes";
             this.tabAptitudes.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAptitudes.Size = new System.Drawing.Size(519, 642);
+            this.tabAptitudes.Size = new System.Drawing.Size(957, 642);
             this.tabAptitudes.TabIndex = 4;
             this.tabAptitudes.Text = "Aptitudes";
             // 
@@ -674,7 +676,7 @@
             this.aptitudePicker.Location = new System.Drawing.Point(3, 3);
             this.aptitudePicker.Margin = new System.Windows.Forms.Padding(4);
             this.aptitudePicker.Name = "aptitudePicker";
-            this.aptitudePicker.Size = new System.Drawing.Size(513, 636);
+            this.aptitudePicker.Size = new System.Drawing.Size(951, 636);
             this.aptitudePicker.TabIndex = 0;
             this.aptitudePicker.Values = null;
             this.aptitudePicker.AptitudeValueChanged += new FrEee.WinForms.Controls.AptitudePicker.AptitudeValueChangedDelegate(this.aptitudePicker_AptitudeValueChanged);
@@ -682,22 +684,22 @@
             // tabTraits
             // 
             this.tabTraits.BackColor = System.Drawing.Color.Black;
-            this.tabTraits.Controls.Add(this.wpfHost);
             this.tabTraits.Controls.Add(this.raceTraitPicker);
             this.tabTraits.Location = new System.Drawing.Point(4, 29);
             this.tabTraits.Name = "tabTraits";
-            this.tabTraits.Size = new System.Drawing.Size(519, 642);
+            this.tabTraits.Size = new System.Drawing.Size(957, 642);
             this.tabTraits.TabIndex = 5;
             this.tabTraits.Text = "Traits";
             // 
             // raceTraitPicker
             // 
             this.raceTraitPicker.BackColor = System.Drawing.Color.Black;
+            this.raceTraitPicker.Dock = System.Windows.Forms.DockStyle.Fill;
             this.raceTraitPicker.ForeColor = System.Drawing.Color.White;
             this.raceTraitPicker.Location = new System.Drawing.Point(0, 0);
             this.raceTraitPicker.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.raceTraitPicker.Name = "raceTraitPicker";
-            this.raceTraitPicker.Size = new System.Drawing.Size(519, 324);
+            this.raceTraitPicker.Size = new System.Drawing.Size(957, 642);
             this.raceTraitPicker.TabIndex = 0;
             this.raceTraitPicker.Traits = null;
             this.raceTraitPicker.TraitToggled += new FrEee.WinForms.Controls.TraitPicker.TraitToggledDelegate(this.raceTraitPicker_TraitToggled);
@@ -710,6 +712,7 @@
             this.tabs.Controls.Add(this.tabGeneral);
             this.tabs.Controls.Add(this.tabTraits);
             this.tabs.Controls.Add(this.tabAptitudes);
+            this.tabs.Controls.Add(this.tabWpf);
             this.tabs.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabs.Location = new System.Drawing.Point(10, 9);
@@ -718,18 +721,29 @@
             this.tabs.SelectedIndex = 0;
             this.tabs.SelectedTabBackColor = System.Drawing.Color.CornflowerBlue;
             this.tabs.SelectedTabForeColor = System.Drawing.Color.Black;
-            this.tabs.Size = new System.Drawing.Size(527, 675);
+            this.tabs.Size = new System.Drawing.Size(965, 675);
             this.tabs.TabBackColor = System.Drawing.Color.Black;
             this.tabs.TabBorderColor = System.Drawing.Color.CornflowerBlue;
             this.tabs.TabForeColor = System.Drawing.Color.CornflowerBlue;
             this.tabs.TabIndex = 0;
             // 
+            // tabWpf
+            // 
+            this.tabWpf.Controls.Add(this.wpfHost);
+            this.tabWpf.Location = new System.Drawing.Point(4, 29);
+            this.tabWpf.Name = "tabWpf";
+            this.tabWpf.Size = new System.Drawing.Size(957, 642);
+            this.tabWpf.TabIndex = 6;
+            this.tabWpf.Text = "tabWpf";
+            this.tabWpf.UseVisualStyleBackColor = true;
+            // 
             // wpfHost
             // 
-            this.wpfHost.Location = new System.Drawing.Point(-2, 407);
+            this.wpfHost.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.wpfHost.Location = new System.Drawing.Point(0, 0);
             this.wpfHost.Name = "wpfHost";
-            this.wpfHost.Size = new System.Drawing.Size(518, 235);
-            this.wpfHost.TabIndex = 1;
+            this.wpfHost.Size = new System.Drawing.Size(957, 642);
+            this.wpfHost.TabIndex = 2;
             this.wpfHost.Text = "elementHost1";
             this.wpfHost.Child = null;
             // 
@@ -738,7 +752,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(546, 722);
+            this.ClientSize = new System.Drawing.Size(984, 722);
             this.Controls.Add(this.txtPointsAvailable);
             this.Controls.Add(this.btnSaveRace);
             this.Controls.Add(this.btnLoadRace);
@@ -764,6 +778,7 @@
             this.tabAptitudes.ResumeLayout(false);
             this.tabTraits.ResumeLayout(false);
             this.tabs.ResumeLayout(false);
+            this.tabWpf.ResumeLayout(false);
             this.ResumeLayout(false);
 
 		}
@@ -821,6 +836,7 @@
 		private System.Windows.Forms.TextBox txtLeaderName;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tabWpf;
         private System.Windows.Forms.Integration.ElementHost wpfHost;
     }
 }
