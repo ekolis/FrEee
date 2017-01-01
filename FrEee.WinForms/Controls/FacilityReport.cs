@@ -13,27 +13,29 @@ using FrEee.Utility;
 using FrEee.Modding;
 using FrEee.WinForms.Forms;
 
-namespace FrEee.WinForms.Controls {
-    public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade> {
-        public FacilityReport() {
+namespace FrEee.WinForms.Controls
+{
+    public partial class FacilityReport : UserControl, IBindable<Facility>, IBindable<FacilityTemplate>, IBindable<FacilityUpgrade>
+    {
+        public FacilityReport()
+        {
             InitializeComponent();
-
-            GlobalStuff.Default.DefaultFacilityReportViewModel.Facility.Template.Name = "Bybis raugintas";
-            wpfHost.Child = new FacilityReportView();
-
         }
 
         private bool isUpgrading = false;
 
-        public FacilityReport(Facility f) : this() {
+        public FacilityReport(Facility f) : this()
+        {
             Bind(f);
         }
 
-        public FacilityReport(FacilityTemplate ft) : this() {
+        public FacilityReport(FacilityTemplate ft) : this()
+        {
             Bind(ft);
         }
 
-        public FacilityReport(FacilityUpgrade fu) : this() {
+        public FacilityReport(FacilityUpgrade fu) : this()
+        {
             Bind(fu);
         }
 
@@ -52,16 +54,19 @@ namespace FrEee.WinForms.Controls {
             }
         }
 
-        public void Bind(Facility data) {
+        public void Bind(Facility data)
+        {
             isUpgrading = false;
             Facility = data;
         }
 
-        public void Bind() {
+        public void Bind()
+        {
             SuspendLayout();
             if (Facility == null)
                 Visible = false;
-            else {
+            else
+            {
                 Visible = true;
                 picPortrait.Image = Facility.Portrait;
                 txtName.Text = Facility.Name;
@@ -78,18 +83,21 @@ namespace FrEee.WinForms.Controls {
             ResumeLayout();
         }
 
-        public void Bind(FacilityTemplate data) {
+        public void Bind(FacilityTemplate data)
+        {
             isUpgrading = false;
             Bind(new Facility(data));
         }
 
-        public void Bind(FacilityUpgrade data) {
+        public void Bind(FacilityUpgrade data)
+        {
             isUpgrading = true;
             Bind(data.New);
             txtName.Text = "Upgrade to " + txtName.Text;
         }
 
-        private void picPortrait_Click(object sender, EventArgs e) {
+        private void picPortrait_Click(object sender, EventArgs e)
+        {
             if (Facility != null)
                 picPortrait.ShowFullSize(Facility.Name);
         }

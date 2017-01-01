@@ -117,6 +117,10 @@
     <Reference Include="FixMath">
       <HintPath>..\FrEee\Game\Objects\Combat2\lib\FixMath.dll</HintPath>
     </Reference>
+    <Reference Include="MahApps.Metro, Version=1.4.0.42, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
+      <HintPath>..\packages\MahApps.Metro.1.4.0\lib\net45\MahApps.Metro.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\SimpleMvvmToolkit.5.5.1.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
       <Private>True</Private>
@@ -166,7 +170,7 @@
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\SimpleMvvmToolkit.5.5.1.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\MahApps.Metro.1.4.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xaml" />
@@ -314,18 +318,11 @@
       <DependentUpon>ShipListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MVVM\BitmapToImageSourceConverter.cs" />
-    <Compile Include="MVVM\ComponentReport\ComponentReportView.xaml.cs">
-      <DependentUpon>ComponentReportView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\ComponentReport\ComponentReportViewModel.cs" />
+    <Compile Include="MVVM\ValueSelectorBox.cs" />
     <Compile Include="MVVM\EmpireSetup\EmpireSetupView.xaml.cs">
       <DependentUpon>EmpireSetupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\EmpireSetup\EmpireSetupViewModel.cs" />
-    <Compile Include="MVVM\FacilityReport\FacilityReportView.xaml.cs">
-      <DependentUpon>FacilityReportView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MVVM\FacilityReport\FacilityReportViewModel.cs" />
     <Compile Include="MVVM\GameLogView.xaml.cs">
       <DependentUpon>GameLogView.xaml</DependentUpon>
     </Compile>
@@ -881,15 +878,7 @@
     <Folder Include="WpfStuff\" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="MVVM\ComponentReport\ComponentReportView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MVVM\EmpireSetup\EmpireSetupView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MVVM\FacilityReport\FacilityReportView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -897,6 +886,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Resource Include="MVVM\UserControl1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

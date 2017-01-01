@@ -96,9 +96,9 @@ namespace FrEee.WinForms
 			{
 				return DisplaySyntax();
 			}
-		}
+       }
 
-		private static int DisplaySyntax()
+        private static int DisplaySyntax()
 		{
 			MessageBox.Show(
 @"Syntax:
