@@ -192,7 +192,7 @@ namespace FrEee.WinForms.Forms
 				foreach (IDesign d in lstDesigns.SelectedItems.Cast<ListViewItem>().Select(item => item.Tag))
 				{
 					d.IsObsolete = !d.IsObsolete;
-					foreach (var cmd in Empire.Current.Commands.OfType<SetObsoleteFlagCommand>().Where(cmd => cmd.Design == d && cmd.IsObsolete != d.IsObsolete).ToArray())
+					foreach (var cmd in Empire.Current.Commands.OfType<SetObsoleteFlagCommand>().Where(cmd => (cmd.Design ?? cmd.NewDesign) == d && cmd.IsObsolete != d.IsObsolete).ToArray())
 						Empire.Current.Commands.Remove(cmd);
 					if (!Empire.Current.Commands.OfType<SetObsoleteFlagCommand>().Where(cmd => cmd.Design == d && cmd.IsObsolete == d.IsObsolete).Any())
 						Empire.Current.Commands.Add(new SetObsoleteFlagCommand(d, d.IsObsolete));

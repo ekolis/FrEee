@@ -79,5 +79,7 @@ namespace FrEee.Game.Objects.Space
 				IsDestroyed = value[nameof(IsDestroyed)].Default<bool>();
 			}
 		}
+
+		public override bool CanBeObscured => false;
 	}
 }

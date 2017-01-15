@@ -96,5 +96,7 @@ namespace FrEee.Game.Objects.Space
 				ResourceValue = value[nameof(ResourceValue)].Default(new ResourceQuantity());
 			}
 		}
+
+		public override bool CanBeObscured => true;
 	}
 }

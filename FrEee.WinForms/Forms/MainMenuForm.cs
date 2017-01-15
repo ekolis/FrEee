@@ -156,10 +156,12 @@ namespace FrEee.WinForms.Forms
 						loadPlr = MessageBox.Show("Player commands file exists for this turn. Resume turn from where you left off?", "Resume Turn", MessageBoxButtons.YesNo) == DialogResult.Yes;
 					if (loadPlr.Value)
 						Galaxy.Current.LoadCommands();
-
-					// load library designs
-					Design.ImportFromLibrary();
 				}
+
+				// load library designs
+				Design.ImportFromLibrary();
+
+				// display game view
 				var form = new GameForm(false, true);
 				Cursor = Cursors.Default;
 				Hide();

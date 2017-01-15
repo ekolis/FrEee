@@ -308,5 +308,7 @@ namespace FrEee.Game.Objects.Space
 				StoredResources = value[nameof(StoredResources)].Default(new ResourceQuantity());
 			}
 		}
+
+		public abstract bool CanBeObscured { get; }
 	}
 }
