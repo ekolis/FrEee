@@ -54,5 +54,7 @@ namespace FrEee.Game.Objects.Space
 				CombatTile = value[nameof(CombatTile)].Default<string>();
 			}
 		}
+
+		public override bool CanBeObscured => false;
 	}
 }

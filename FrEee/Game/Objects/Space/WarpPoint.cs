@@ -111,5 +111,7 @@ namespace FrEee.Game.Objects.Space
 				IsUnusual = value[nameof(IsUnusual)].Default<bool>();
 			}
 		}
+
+		public override bool CanBeObscured => false;
 	}
 }

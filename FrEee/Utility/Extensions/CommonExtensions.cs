@@ -3082,13 +3082,18 @@ namespace FrEee.Utility.Extensions
 							 SensorLevel = sensor.Value2.Value.ToInt(),
 							 CloakLevel = subcloak == null ? 0 : subcloak.Value2.Value.ToInt(),
 						 };
-			var obscurationLevel = new[]
+
+			int obscurationLevel = 0;
+			if (sobj.CanBeObscured)
 			{
-				sys.GetAbilityValue("System - Sight Obscuration"),
-				sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration"),
-				sec.GetAbilityValue("Sector - Sight Obscuration"),
-				sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
-			}.Max(a => a.ToInt());
+				obscurationLevel = new[]
+				{
+					sys.GetAbilityValue("System - Sight Obscuration"),
+					sys.GetEmpireAbilityValue(sobj.Owner, "System - Sight Obscuration"),
+					sec.GetAbilityValue("Sector - Sight Obscuration"),
+					sec.GetEmpireAbilityValue(sobj.Owner, "Sector - Sight Obscuration"),
+				}.Max(a => a.ToInt());
+			}
 			return (cloaks.Any() || obscurationLevel > 0) && joined.All(j => j.CloakLevel > j.SensorLevel || obscurationLevel > j.SensorLevel);
 		}
 
@@ -3288,19 +3293,25 @@ namespace FrEee.Utility.Extensions
 
 		internal static Visibility CheckSpaceObjectVisibility(this ISpaceObject sobj, Empire emp)
 		{
+			bool hasMemory = false;
 			if (sobj.IsMemory)
 			{
-				if (sobj.MemoryOwner() == emp)
+				var mowner = sobj.MemoryOwner();
+				if (mowner == emp || mowner == null)
 					return Visibility.Fogged;
 				else
-					return Visibility.Unknown;
+					return Visibility.Unknown; // can't see other players' memories
+			}
+			else
+			{
+				var mem = sobj.FindMemory(emp);
+				if (mem != null)
+					hasMemory = true;
 			}
 
 			if (emp == sobj.Owner)
 				return Visibility.Owned;
-
-			if (sobj.Sector == null || sobj.StarSystem == null)
-				return Visibility.Unknown; // it doesn't really exist...
+	
 
 			// You can always scan space objects you are in combat with.
 			// But only their state at the time they were in combat; not for the rest of the turn!
@@ -3309,7 +3320,10 @@ namespace FrEee.Utility.Extensions
 				return Visibility.Scanned;
 
 			// do we have anything that can see it?
-			var seers = sobj.FindStarSystem().FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
+			var sys = sobj.FindStarSystem();
+			if (sys == null)
+				return Visibility.Unknown;
+			var seers = sys.FindSpaceObjects<ISpaceObject>(s => s.Owner == emp && !s.IsMemory);
 			if (!seers.Any() || sobj.IsHiddenFrom(emp))
 			{
 				if (Galaxy.Current.OmniscientView && sobj.StarSystem.ExploredByEmpires.Contains(emp))
@@ -3320,6 +3334,8 @@ namespace FrEee.Utility.Extensions
 				if (known != null && sobj.GetType() == known.GetType())
 					return Visibility.Fogged;
 				else if (Galaxy.Current.Battles.Any(b => b.Combatants.Any(c => c.ID == sobj.ID) && b.Combatants.Any(c => c.Owner == emp)))
+					return Visibility.Fogged;
+				else if (hasMemory)
 					return Visibility.Fogged;
 				else
 					return Visibility.Unknown;

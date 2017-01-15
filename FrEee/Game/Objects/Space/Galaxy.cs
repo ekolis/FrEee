@@ -702,7 +702,6 @@ namespace FrEee.Game.Objects.Space
 				var obj = (IFoggable)o;
 				if (!obj.IsMemory)
 				{
-					obj.Redact(Empire.Current);
 					var id = obj.ID;
 					var vis = obj.CheckVisibility(CurrentEmpire);
 					if (vis < Visibility.Fogged)
@@ -710,8 +709,9 @@ namespace FrEee.Game.Objects.Space
 					if (vis == Visibility.Fogged && CurrentEmpire.Memory.ContainsKey(id))
 					{
 						CurrentEmpire.Memory[id].CopyToExceptID(obj, IDCopyBehavior.PreserveDestination); // memory sight!
-						obj.IsMemory = false; // well it sort of is a physical object... it's just outdated data :P
+						obj.IsMemory = true;
 					}
+					obj.Redact(Empire.Current);
 				}
 				else
 				{

@@ -131,6 +131,23 @@ namespace FrEee.Tests.Game.Objects.Space
 			AreEqual(Visibility.Unknown, mem.CheckVisibility(hiders), "Other empire's memory is not hidden from empire owning vehicle.");
 		}
 
+		[TestMethod]
+		public void NotDisappearingMemory()
+		{
+			// create memory of vehicle
+			submarine.UpdateEmpireMemories();
+
+			// move it away
+			HideSubmarine();
+
+			// redact things for the empire
+			Galaxy.Current.CurrentEmpire = seekers;
+			Galaxy.Current.Redact();
+
+			// make sure it's still visible as a memory
+			AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
+		}
+
 		// TODO - create test for fogged ship reappearing
 	}
 }
