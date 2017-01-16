@@ -1212,6 +1212,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public T Recall<T>(T obj) where T : IFoggable
 		{
+			if (obj.IsMemory)
+				return obj;
 			return (T)Memory[obj.ID];
 		}
 
