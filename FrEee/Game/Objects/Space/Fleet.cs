@@ -380,7 +380,7 @@ namespace FrEee.Game.Objects.Space
 				{
 					var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
 					sobj2.SupplyRemaining += 1;
-					roundingError += 1;
+					roundingError -= 1;
 				}
 			}
 		}
