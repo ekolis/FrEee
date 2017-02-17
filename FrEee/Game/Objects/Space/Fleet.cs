@@ -371,7 +371,9 @@ namespace FrEee.Game.Objects.Space
 				int spent = 0;
 
 				// sharing supplies should not affect abilities
-				Galaxy.Current.EnableAbilityCache(); 
+				bool wasCacheDisabled = !Galaxy.Current.IsAbilityCacheEnabled;
+				if (wasCacheDisabled)
+					Galaxy.Current.EnableAbilityCache(); 
 
 				foreach (var sobj in Vehicles)
 				{
@@ -387,7 +389,8 @@ namespace FrEee.Game.Objects.Space
 					roundingError -= 1;
 				}
 
-				Galaxy.Current.DisableAbilityCache();
+				if (wasCacheDisabled)
+					Galaxy.Current.DisableAbilityCache();
 			}
 		}
 
