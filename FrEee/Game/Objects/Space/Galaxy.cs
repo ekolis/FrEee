@@ -751,6 +751,11 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Initializing turn";
 
+			// We can enable the ability cache here because space objects aren't changing state yet in any way where order of operations is relevant.
+			// For instance, all construction is supposed to take place simultaneously, so there's no reason to allow one construction order to affect other objects' abilities.
+			// Plus this speeds up turn processing immensely!
+			Current.EnableAbilityCache();
+
 			// clear treaty clause cache (empires might have added treaties)
 			Current.GivenTreatyClauseCache.Clear();
 			Current.ReceivedTreatyClauseCache.Clear();
@@ -764,9 +769,6 @@ namespace FrEee.Game.Objects.Space
 
 			Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			Current.ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-
-			// We can enable the ability cache here because space objects aren't changing state yet.
-			Current.EnableAbilityCache();
 
 
 			if (status != null)
@@ -814,7 +816,6 @@ namespace FrEee.Game.Objects.Space
 			Current.TurnNumber++;
 
 			// colony maintenance
-			Current.DisableAbilityCache(); // population quantity can affect abilities
 			if (status != null)
 				status.Message = "Maintaining colonies";
 			if (Current.TurnNumber.IsDivisibleBy(Mod.Current.Settings.ReproductionFrequency.DefaultTo(1)))
@@ -827,7 +828,6 @@ namespace FrEee.Game.Objects.Space
 			Current.SpaceObjectIDCheck("after colony maintenance");
 
 			// resource generation
-			Current.EnableAbilityCache(); // resource generation doesn't affect abilities or empire maintenance
 			if (status != null)
 				status.Message = "Generating resources";
 
@@ -1041,6 +1041,8 @@ namespace FrEee.Game.Objects.Space
 				Current.DisableAbilityCache();
 			}
 
+			Current.EnableAbilityCache();
+
 			// validate fleets again (ships might have been destroyed, consumed supplies, etc...)
 			foreach (var f in Current.Referrables.OfType<Fleet>().ToArray())
 			{
@@ -1076,8 +1078,6 @@ namespace FrEee.Game.Objects.Space
 					}
 				}
 			}
-
-			Current.EnableAbilityCache(); // nothing past this point should affect abilities
 
 			// replenish shields again, so the players see the full shield amounts in the GUI
 			Current.FindSpaceObjects<ICombatSpaceObject>().SafeForeach(o => o.ReplenishShields());

@@ -913,6 +913,10 @@ namespace FrEee.Game.Objects.Civilization
 			if (obj.Owner == this)
 				return; // don't need to update empire's memory of its own objects!
 
+			// double check visibility of object, fogged/invisible objects should not get memories created/updated!
+			if (obj.CheckVisibility(this) < Visibility.Visible)
+				return;
+
 			// encounter empire if not yet encountered
 			if (obj.Owner != null && !EncounteredEmpires.Contains(obj.Owner))
 			{
@@ -929,15 +933,15 @@ namespace FrEee.Game.Objects.Civilization
 				if (Memory[obj.ID] != null)
 				{
 					obj.CopyToExceptID(Memory[obj.ID], IDCopyBehavior.Regenerate);
-					Memory[obj.ID].IsMemory = true;
 				}
 				else
 				{
 					var memory = obj.CopyAndAssignNewID();
-					memory.IsMemory = true;
 					memory.Timestamp = Galaxy.Current.TurnNumber + Galaxy.Current.CurrentTick;
 					Memory[obj.ID] = memory;
 				}
+
+				Memory[obj.ID].IsMemory = true;
 
 				// if it's a space object we need to set its sector
 				if (obj is ISpaceObject)
@@ -947,7 +951,7 @@ namespace FrEee.Game.Objects.Civilization
 					mem.Sector = sobj.Sector;
 				}			
 
-				// update pursue/evade orders' alternate targets if object is fleet
+				// update pursue/evade orders' alternate targets and set memory flag on ships if object is fleet
 				if (obj is Fleet)
 				{
 					foreach (var order in this.OwnedSpaceObjects.OfType<IMobileSpaceObject>().SelectMany(sobj => sobj.Orders))
@@ -956,6 +960,13 @@ namespace FrEee.Game.Objects.Civilization
 							((PursueOrder)order).UpdateAlternateTarget();
 						if (order is EvadeOrder)
 							((EvadeOrder)order).UpdateAlternateTarget();
+					}
+
+					foreach (var v in ((Fleet)obj).LeafVehicles)
+					{
+						v.IsMemory = true;
+						Memory[v.ID] = v;
+						v.ReassignID();
 					}
 				}
 			}
@@ -1208,6 +1219,8 @@ namespace FrEee.Game.Objects.Civilization
 		/// <returns></returns>
 		public T Recall<T>(T obj) where T : IFoggable
 		{
+			if (obj.IsMemory)
+				return obj;
 			return (T)Memory[obj.ID];
 		}
 
