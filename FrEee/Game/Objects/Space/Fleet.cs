@@ -369,6 +369,12 @@ namespace FrEee.Game.Objects.Space
 				var available = SupplyRemaining;
 				var storage = SupplyStorage;
 				int spent = 0;
+
+				// sharing supplies should not affect abilities
+				bool wasCacheDisabled = !Galaxy.Current.IsAbilityCacheEnabled;
+				if (wasCacheDisabled)
+					Galaxy.Current.EnableAbilityCache(); 
+
 				foreach (var sobj in Vehicles)
 				{
 					var amount = (int)Math.Floor((double)sobj.SupplyStorage / (double)storage * available);
@@ -380,8 +386,11 @@ namespace FrEee.Game.Objects.Space
 				{
 					var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
 					sobj2.SupplyRemaining += 1;
-					roundingError += 1;
+					roundingError -= 1;
 				}
+
+				if (wasCacheDisabled)
+					Galaxy.Current.DisableAbilityCache();
 			}
 		}
 

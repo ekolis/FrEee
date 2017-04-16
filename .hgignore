@@ -13,3 +13,4 @@ packages/
 *.dmp
 *.diagsession
 *.etl
+*.orig

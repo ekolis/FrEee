@@ -37,7 +37,13 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (StarSystem == null)
 					return Enumerable.Empty<ISpaceObject>();
-				return StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null).ToList();
+				var result = StarSystem.SpaceObjectLocations.Where(l => l.Location == Coordinates).Select(l => l.Item).Where(sobj => !(sobj is IContainable<Fleet>) || ((IContainable<Fleet>)sobj).Container == null);
+
+				// on the server we don't want to count memories as physical space objects
+				if (Empire.Current == null)
+					result = result.Where(x => !x.IsMemory);
+
+				return result.ToArray();
 			}
 		}
 

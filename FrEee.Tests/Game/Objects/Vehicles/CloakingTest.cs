@@ -10,6 +10,7 @@ using FrEee.Utility.Extensions;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Interfaces;
 using FrEee.Modding;
+using FrEee.Modding.Loaders;
 
 namespace FrEee.Tests.Game.Objects.Vehicles
 {
@@ -51,7 +52,7 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 		{
 			// initialize galaxy
 			new Galaxy();
-			Mod.Current = new Mod();
+			Mod.Load(null);
 			sys = new StarSystem(0);
 			Galaxy.Current.StarSystemLocations.Add(new ObjectLocation<StarSystem>(sys, new Point()));
 
@@ -64,13 +65,13 @@ namespace FrEee.Tests.Game.Objects.Vehicles
 			// initialize ships
 			Assert.IsNotNull(Mod.Current);
 			var dsDesign = new Design<Ship>();
-			dsDesign.BaseName = "Destroyer";
+			dsDesign.BaseName = "TestDestroyer";
 			dsDesign.CreateHull();
 			dsDesign.Owner = seekers;
 			destroyer = dsDesign.Instantiate();
 			destroyer.Owner = seekers;
 			var subDesign = new Design<Ship>();
-			subDesign.BaseName = "Submarine";
+			subDesign.BaseName = "TestSubmarine";
 			subDesign.CreateHull();
 			subDesign.Owner = hiders;
 			submarine = subDesign.Instantiate();

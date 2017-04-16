@@ -214,7 +214,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp).Any())
+			if (FindSpaceObjects<ISpaceObject>(sobj => sobj.Owner == emp && !sobj.IsMemory).Any())
 				return Visibility.Visible;
 			else if (emp.ExploredStarSystems.Contains(this))
 				return Visibility.Fogged;

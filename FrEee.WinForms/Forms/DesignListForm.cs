@@ -58,9 +58,9 @@ namespace FrEee.WinForms.Forms
 			// filter by ours/foreign (using an exclusive or)
 			designs = designs.Where(d => d.Owner == emp ^ chkForeign.Checked);
 
-			// filter by obsoleteness/lockedness
+			// filter by obsoleteness/lockedness (don't filter alien designs)
 			if (chkHideObsolete.Checked)
-				designs = designs.Where(d => !d.IsObsolete && Empire.Current.HasUnlocked(d));
+				designs = designs.Where(d => d.Owner != Empire.Current || !d.IsObsolete && Empire.Current.HasUnlocked(d));
 
 			// display it!
 			lstDesigns.Initialize(32, 32);

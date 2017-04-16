@@ -232,6 +232,7 @@ namespace FrEee.WinForms.Forms
 
 			var cmd = new CreateFleetCommand(fleet, sector);
 			newCommands.Add(cmd);
+			newFleets.Add(fleet);
 
 			BindFleets(fleet);
 

@@ -93,6 +93,8 @@ namespace FrEee.Game.Objects.Orders
 
 		public override string ToString()
 		{
+			if (WarpPoint == null)
+				return "Invalid Warp Order";
 			return "Warp via " + WarpPoint.Name + " in " + WarpPoint.FindStarSystem();
 		}
 
