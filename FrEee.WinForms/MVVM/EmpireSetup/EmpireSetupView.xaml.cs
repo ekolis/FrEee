@@ -12,13 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro;
 
-namespace FrEee.WinForms {
+namespace FrEee.WinForms
+{
     /// <summary>
     /// Interaction logic for ComponentReportView.xaml
     /// </summary>
-    public partial class EmpireSetupView : UserControl {
-        public EmpireSetupView() {
+    public partial class EmpireSetupView : UserControl
+    {
+        public EmpireSetupView()
+        {
             InitializeComponent();
         }
     }
