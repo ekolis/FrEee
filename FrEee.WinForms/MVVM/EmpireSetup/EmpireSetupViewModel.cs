@@ -66,6 +66,52 @@ namespace FrEee.WinForms.Forms
             }
         }
 
+        public class RaceAptitude : ViewModelBase<RaceAptitude>
+        {
+
+
+            private Aptitude _aptitude;
+            public Aptitude Aptitude
+            {
+                get { return _aptitude; }
+                set
+                {
+                    if (_aptitude == value) return;
+
+                    _aptitude = value;
+                    NotifyPropertyChanged(m => m.Aptitude);
+                }
+            }
+
+            private int _value;
+            public int Value
+            {
+                get { return _value; }
+                set
+                {
+                    if (_value == value) return;
+
+                    _value = value;
+                    NotifyPropertyChanged(m => m.Value);
+                    NotifyPropertyChanged(m => Cost);
+                }
+            }
+
+
+            private int _cost;
+            public int Cost
+            {
+                get { return _aptitude.GetCost(_value); }
+
+            }
+
+            public RaceAptitude(Aptitude aptitude, int value = 100)
+            {
+                Aptitude = aptitude;
+                Value = value;
+            }
+        }
+
         /// <summary>
         /// A copy of the original empire template, in case the user cancels.
         /// </summary>
@@ -92,6 +138,11 @@ namespace FrEee.WinForms.Forms
             foreach (var trait in Mod.Current.Traits)
             {
                 EmpireTraits.Add(new SelectableTrait(trait));
+            }
+
+            foreach (var aptitude in Aptitude.All)
+            {
+                if (RaceAptitudes.FirstOrDefault(a => a.Aptitude.AbilityName == aptitude.AbilityName) == null) RaceAptitudes.Add(new RaceAptitude(aptitude));
             }
 
             AvailableShipsets.Clear();
@@ -182,6 +233,20 @@ namespace FrEee.WinForms.Forms
 
                 _empireTraits = value;
                 NotifyPropertyChanged(m => m.EmpireTraits);
+            }
+        }
+
+
+        private ObservableCollection<RaceAptitude> _raceAptitudes = new ObservableCollection<RaceAptitude>();
+        public ObservableCollection<RaceAptitude> RaceAptitudes
+        {
+            get { return _raceAptitudes; }
+            set
+            {
+                if (_raceAptitudes == value) return;
+
+                _raceAptitudes = value;
+                NotifyPropertyChanged(m => m.RaceAptitudes);
             }
         }
 
