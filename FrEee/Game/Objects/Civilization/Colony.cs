@@ -200,5 +200,10 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get { return Container.ResourceValue; }
 		}
+
+		[DoNotSerialize(false)]
+		public Sector Sector { get => Container.Sector; set => throw new NotSupportedException("Can't set the sector of a colony."); }
+
+		public StarSystem StarSystem => Container.StarSystem;
 	}
 }

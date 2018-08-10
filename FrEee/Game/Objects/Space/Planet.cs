@@ -1137,5 +1137,14 @@ namespace FrEee.Game.Objects.Space
 		}
 
 		public override bool CanBeObscured => true;
+
+		public double MerchantsRatio
+		{
+			get
+			{
+				var totalpop = AllPopulation.Sum(x => x.Value);
+				return AllPopulation.Sum(x => (double)x.Value / (double)totalpop * (x.Key.HasAbility("No Spaceports") ? 1d : 0d));
+			}
+		}
 	}
 }

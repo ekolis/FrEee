@@ -3553,6 +3553,9 @@ namespace FrEee.Utility.Extensions
 		public static ResourceQuantity StandardIncome(this IIncomeProducer o)
 		{
 			var income = new ResourceQuantity();
+			var ratio = 1.0;
+			if (!o.StarSystem.HasAbility(o.Owner, "Spaceport"))
+				ratio = o.MerchantsRatio;
 			var prefix = "Resource Generation - ";
 			var pcts = o.StandardIncomePercentages;
 			foreach (var abil in o.Abilities().Where(abil => abil.Rule.Name.StartsWith(prefix)))
@@ -3574,7 +3577,7 @@ namespace FrEee.Utility.Extensions
 				income.Add(resource, amount);
 			}
 
-			return income;
+			return income * ratio;
 		}
 
 		/// <summary>
