@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return Container.Owner;
+				return Container?.Owner;
 			}
 			set
 			{
