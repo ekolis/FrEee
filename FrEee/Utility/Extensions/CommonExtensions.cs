@@ -2893,7 +2893,7 @@ namespace FrEee.Utility.Extensions
 		public static IEnumerable<Ability> AncestorAbilities(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			var abils = new List<Ability>();
-			foreach (var p in obj.Ancestors(sourceFilter))
+			foreach (var p in obj.Ancestors(sourceFilter).ExceptSingle(null))
 				abils.AddRange(p.IntrinsicAbilities);
 			return abils.Where(a => a.Rule == null || a.Rule.CanTarget(obj.AbilityTarget));
 		}

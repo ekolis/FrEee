@@ -344,7 +344,7 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		[DoNotSerialize(false)]
+		[DoNotSerialize]
 		public override Sector Sector
 		{
 			get
