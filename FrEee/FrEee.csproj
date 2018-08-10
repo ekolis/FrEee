@@ -154,6 +154,7 @@
     <Compile Include="Modding\ComputedFormula.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\LiteralFormula.cs" />
+    <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />

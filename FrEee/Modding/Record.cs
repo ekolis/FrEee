@@ -116,14 +116,14 @@ namespace FrEee.Modding
 			}
 		}
 
-		public Formula<T> Get<T>(string fieldName, object context, bool allowNulls = true)
+		public Formula<T> Get<T>(string fieldName, object context = null, bool allowNulls = true)
 			where T : IConvertible, IComparable
 		{
 			int index = 0;
 			return Get<T>(fieldName, context, ref index, allowNulls);
 		}
 
-		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context, bool allowNulls = true)
+		public Formula<T> Get<T>(IEnumerable<string> fieldNames, object context = null, bool allowNulls = true)
 			where T : IConvertible, IComparable
 		{
 			int index = 0;

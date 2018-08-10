@@ -54,6 +54,7 @@ namespace FrEee.Modding
 			{
 				new ModInfoLoader(path),
 				new TextLoader(path, "SystemNames.txt", m => m.StarSystemNames),
+				new DesignRoleLoader(path),
 				new ScriptLoader(path),
 				new AbilityRuleLoader(path),
 				new ModSettingsLoader(path),
@@ -108,6 +109,7 @@ namespace FrEee.Modding
 			Settings = new ModSettings();
 			AbilityRules = new List<AbilityRule>();
 			StarSystemNames = new List<string>();
+			DesignRoles = new List<string>();
 			Traits = new List<Trait>();
 			Technologies = new List<Technology>();
 			FacilityTemplates = new List<FacilityTemplate>();
@@ -153,6 +155,11 @@ namespace FrEee.Modding
 		/// Names to use for star systems.
 		/// </summary>
 		public ICollection<string> StarSystemNames { get; private set; }
+
+		/// <summary>
+		/// Role names to use for vehicle designs.
+		/// </summary>
+		public ICollection<string> DesignRoles { get; private set; }
 
 		/// <summary>
 		/// Planet and asteroid field sizes.
