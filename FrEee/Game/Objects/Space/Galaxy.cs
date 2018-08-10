@@ -1330,9 +1330,12 @@ namespace FrEee.Game.Objects.Space
 			// adjust resource value
 			// TODO - have a "is mineable" or "has value" property on Resource class
 			var incomeWithoutValue = new ResourceQuantity();
-			incomeWithoutValue += income[Resource.Minerals] / p.ResourceValue[Resource.Minerals] * Resource.Minerals;
-			incomeWithoutValue += income[Resource.Organics] / p.ResourceValue[Resource.Organics] * Resource.Organics;
-			incomeWithoutValue += income[Resource.Radioactives] / p.ResourceValue[Resource.Radioactives] * Resource.Radioactives;
+			if (p.ResourceValue[Resource.Minerals] != 0)
+				incomeWithoutValue += income[Resource.Minerals] / p.ResourceValue[Resource.Minerals] * Resource.Minerals;
+			if (p.ResourceValue[Resource.Organics] != 0)
+				incomeWithoutValue += income[Resource.Organics] / p.ResourceValue[Resource.Organics] * Resource.Organics;
+			if (p.ResourceValue[Resource.Radioactives] != 0)
+				incomeWithoutValue += income[Resource.Radioactives] / p.ResourceValue[Resource.Radioactives] * Resource.Radioactives;
 			incomeWithoutValue += income[Resource.Research] * Resource.Research;
 			incomeWithoutValue += income[Resource.Intelligence] * Resource.Research;
 			foreach (var kvp in incomeWithoutValue)
