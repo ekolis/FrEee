@@ -83,7 +83,10 @@ namespace FrEee.WinForms.Forms
 			btnHull.Text = Design == null || Design.Hull == null ? "(choose)" : Design.Hull.Name;
 
 			// bind role
-			// TODO - populate role dropdown from design types text file and other existing designs' roles
+			ddlRole.Items.Clear();
+			// TODO - add option to alphabetically sort design roles?
+			foreach (var role in Mod.Current.DesignRoles.Union(Empire.Current.KnownDesigns.Where(x => x.Owner == Empire.Current).Select(x => x.Role)))
+				ddlRole.Items.Add(role);
 			ddlRole.Text = Design == null ? null : Design.Role;
 
 			// bind name
