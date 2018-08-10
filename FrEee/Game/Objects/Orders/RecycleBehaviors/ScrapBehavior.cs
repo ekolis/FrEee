@@ -22,8 +22,11 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 			if (!target.IsDisposed)
 			{
 				var val = target.ScrapValue;
-				target.Owner.StoredResources += val;
-				target.Owner.Log.Add(target.CreateLogMessage("We have scrapped " + target + " and reclaimed " + val + "."));
+				if (target.Owner != null) // if not, it's already scrapped?
+				{
+					target.Owner.StoredResources += val;
+					target.Owner.Log.Add(target.CreateLogMessage("We have scrapped " + target + " and reclaimed " + val + "."));
+				}
 				target.Dispose();
 
 				if (!didRecycle)
