@@ -740,5 +740,7 @@ namespace FrEee.Game.Objects.Vehicles
 				return Design.IconPaths;
 			}
 		}
+
+		public double MerchantsRatio => Owner.HasAbility("No Spaceports") ? 1.0 : 0.0;
 	}
 }
