@@ -53,7 +53,7 @@ namespace FrEee.Modding.Loaders
 			settings.MaintenanceDeficitToDestroyOneShip = rec.Get<int>("Maintenance Cost Amt Per Dead", null) ?? 20000;
 			settings.ShipBaseMaintenanceRate = rec.Get<int>("Empire Ship And Base Percent Maint Cost", null) ?? rec.Get<int>("Empire Starting Percent Maint Cost", null);
 			settings.UnitMaintenanceRate = rec.Get<int>("Empire Unit Percent Maint Cost", null) ?? 0;
-			settings.UnitMaintenanceRate = rec.Get<int>("Empire Facility Percent Maint Cost", null) ?? 0;
+			settings.FacilityMaintenanceRate = rec.Get<int>("Empire Facility Percent Maint Cost", null) ?? 0;
 			settings.Reproduction = rec.Get<int>("Empire Starting Percent Reproduction", null) ?? 10;
 			settings.ReproductionMultiplier = rec.Get<double>("Reproduction Multiplier", null) ?? 0.1;
 
