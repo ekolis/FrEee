@@ -25,6 +25,7 @@ using FrEee.Game.Objects.Civilization.Diplomacy;
 using System.Reflection;
 using FrEee.WinForms.Objects;
 using FrEee.WinForms.Objects.GalaxyViewModes;
+using FrEee.Game.Enumerations;
 
 namespace FrEee.WinForms.Forms
 {
@@ -572,7 +573,19 @@ namespace FrEee.WinForms.Forms
 			else if (fleets > 1)
 				todos.Add(fleets + " idle fleets");
 
-			var queues = Empire.Current.ConstructionQueues.Where(q => q.Eta == null || q.Eta < 1d).Count();
+			var queues = Empire.Current.ConstructionQueues.Where(q =>
+			{
+				bool idle = false;
+				// queues are idle if they don't have a full turn of build orders queued
+				if (q.Eta == null || q.Eta < 1d)
+				{
+					idle = true;
+					// however they are not idle if they are not space yards and there's not enough facility/cargo space to build more facilities/units
+					if (!q.IsSpaceYardQueue && q.FacilitySlotsFree == 0 && q.CargoStorageFreeInSector < Empire.Current.UnlockedItems.OfType<IHull>().Where(x => x.VehicleType != VehicleTypes.Ship && x.VehicleType != VehicleTypes.Base).Min(x => x.Size))
+						idle = false;
+				}
+				return idle;
+			}).Count();
 			if (queues == 1)
 				todos.Add("1 idle construction queue");
 			else if (queues > 1)
