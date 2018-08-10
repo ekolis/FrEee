@@ -597,7 +597,12 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public IEnumerable<IAbilityObject> Children
 		{
-			get { return Components.Cast<IAbilityObject>().Append(Design.Hull); }
+			get
+			{
+				if (Design == null)
+					return Components;
+				return Components.Cast<IAbilityObject>().Append(Design.Hull);
+			}
 		}
 
 		public virtual IEnumerable<IAbilityObject> Parents

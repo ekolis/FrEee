@@ -75,6 +75,9 @@ namespace FrEee.Tests.Game.Objects.Space
 			Galaxy.Current.Empires.Add(seekers);
 			Galaxy.Current.Empires.Add(hiders);
 
+			//. initialize exploration
+			here.ExploredByEmpires.Add(seekers);
+
 			// initialize ships
 			Assert.IsNotNull(Mod.Current);
 			var dsDesign = new Design<Ship>();
@@ -146,6 +149,7 @@ namespace FrEee.Tests.Game.Objects.Space
 
 			// make sure it's still visible as a memory
 			AreEqual(Visibility.Fogged, submarine.CheckVisibility(seekers), "Ship is not fogged after it's left the star system.");
+			AreEqual(here.GetSector(0,0), submarine.Sector, $"Ship should be appearing in its last known location {here.GetSector(0,0)} but it's actually appearing at {submarine.Sector}.");
 		}
 
 		// TODO - create test for fogged ship reappearing

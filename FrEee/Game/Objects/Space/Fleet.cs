@@ -684,7 +684,7 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
-		[DoNotSerialize(false)]
+		[DoNotSerialize]
 		public Sector Sector
 		{
 			get
