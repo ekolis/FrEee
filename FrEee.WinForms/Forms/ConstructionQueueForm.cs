@@ -852,7 +852,11 @@ namespace FrEee.WinForms.Forms
 
 				// is this a new design we've never built before and are not building any more of? then don't tell the server so other players don't know ;)
 				if (design.IsNew && !BuildingAnywhere(design))
-					Empire.Current.Commands.Remove(Empire.Current.Commands.OfType<ICreateDesignCommand>().SingleOrDefault(c => c.Design == design));
+				{
+					// HACK - why can there be multiple commands to create the same design?
+					foreach (var cmd in Empire.Current.Commands.OfType<ICreateDesignCommand>().Where(c => c.Design == design).ToArray())
+						Empire.Current.Commands.Remove(cmd);
+				}
 			}
 
 			if (rebindGui)
