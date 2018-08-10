@@ -10,6 +10,7 @@ namespace FrEee.Game.Interfaces
 {
 	/// <summary>
 	/// An order issued by a player to an object to do something.
+	/// Orders are distinguished from commands by being queued, rather than instantaneous.
 	/// </summary>
 	public interface IOrder : IReferrable, IPromotable
 	{

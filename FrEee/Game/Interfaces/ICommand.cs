@@ -9,6 +9,7 @@ namespace FrEee.Game.Interfaces
 {
 	/// <summary>
 	/// A command to some object.
+	/// Commands are distinguished from orders by being instantaneous, rather than queued.
 	/// </summary>
 	public interface ICommand : IPromotable
 	{
