@@ -14,3 +14,4 @@ packages/
 *.diagsession
 *.etl
 *.orig
+.vs
