@@ -891,7 +891,7 @@ namespace FrEee.Game.Objects.Space
 
 				// pay maintenance on on ships/bases
 				// TODO - allow mod to specify maintenance on units/facilities too?
-				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>())
+				foreach (var v in emp.OwnedSpaceObjects.OfType<SpaceVehicle>().Where(x => !x.IsMemory))
 					emp.StoredResources -= v.MaintenanceCost;
 
 				// if not enough funds, lose ships/bases (weighted by maintenance cost)
