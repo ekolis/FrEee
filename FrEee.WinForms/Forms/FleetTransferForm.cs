@@ -346,7 +346,8 @@ namespace FrEee.WinForms.Forms
 			var cmd = new LeaveFleetCommand(vehicle);
 			newCommands.Add(cmd);
 			BindVehicles(vehicle);
-			BindFleets();
+			var node = treeFleets.GetAllNodes().Single(x => x.Tag == vehicle);
+			node.Remove();
 			changed = true;
 		}
 
