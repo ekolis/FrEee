@@ -69,7 +69,7 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
             Empire emp = new Empire();
 			Mod.Current = new Mod();
 			var armor = new ComponentTemplate();
-			armor.Name = "Armor";
+			armor.Name = armor.ModID = "Armor";
 			armor.Size = 10;
 			armor.Durability = new ComputedFormula<int>("self.Size * 3", armor, true);
 			Mod.Current.ComponentTemplates.Add(armor);

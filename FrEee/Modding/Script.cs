@@ -77,7 +77,7 @@ namespace FrEee.Modding
 			get
 			{
 				var result = new List<Script>();
-				foreach (var script in ExternalScripts)
+				foreach (var script in ExternalScripts.ExceptSingle(null)) // HACK - why do we have null scripts?
 				{
 					// don't include the same script twice!
 					if (!result.Contains(script))
