@@ -1321,7 +1321,7 @@ namespace FrEee.Game.Objects.Space
 				if (ratio == 0)
 					p.Owner.Log.Add(p.CreateLogMessage(p + " earned no income due to lack of a spaceport."));
 				else if (ratio < 1)
-					p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio / 100) + "% of normal income due to lack of a spaceport."));
+					p.Owner.Log.Add(p.CreateLogMessage(p + " earned only " + Math.Floor(ratio * 100) + "% of normal income due to lack of a spaceport."));
 			}
 
 			// give owner his income
