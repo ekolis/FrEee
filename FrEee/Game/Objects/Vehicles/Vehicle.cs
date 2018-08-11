@@ -502,7 +502,7 @@ namespace FrEee.Game.Objects.Vehicles
 					Design = d;
 
 					// set name of ship so we can't guess what design it is
-					Name = Hull.Name;
+					Name = (Owner?.Name ?? "Unowned") + " " + Hull.Name;
 				}
 
 				// clear component list
