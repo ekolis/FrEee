@@ -90,7 +90,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 		public void Resolve()
 		{
 			// update memories
-			foreach (var sobj in StarSystem.SpaceObjects.ToArray())
+			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
 				sobj.UpdateEmpireMemories();
 
 			Current.Add(this);
