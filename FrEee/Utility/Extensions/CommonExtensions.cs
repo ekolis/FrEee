@@ -2905,9 +2905,9 @@ namespace FrEee.Utility.Extensions
 			if (obj == null)
 				yield break;
 			// TODO - filter out duplicate descendants
-			foreach (var c in obj.Children.ExceptSingle(null))
+			foreach (var c in obj.Children)
 			{
-				if (sourceFilter == null || sourceFilter(c))
+				if (c != null && sourceFilter == null || sourceFilter(c))
 				{
 					yield return c;
 					foreach (var x in c.Descendants(sourceFilter))
@@ -2923,7 +2923,7 @@ namespace FrEee.Utility.Extensions
 			// TODO - filter out duplicate ancestors
 			foreach (var p in obj.Parents.ExceptSingle(null))
 			{
-				if (sourceFilter == null || sourceFilter(p))
+				if (p != null && sourceFilter == null || sourceFilter(p))
 				{
 					yield return p;
 					foreach (var x in p.Ancestors(sourceFilter))
