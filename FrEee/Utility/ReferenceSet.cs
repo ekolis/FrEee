@@ -25,6 +25,8 @@ namespace FrEee.Utility
 
 		private static TRef MakeReference(T item)
 		{
+			if (item == null)
+				return (TRef)typeof(TRef).Instantiate();
 			return (TRef)typeof(TRef).Instantiate(item);
 		}
 
