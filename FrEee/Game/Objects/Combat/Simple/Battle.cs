@@ -89,6 +89,10 @@ namespace FrEee.Game.Objects.Combat.Simple
 		/// </summary>
 		public void Resolve()
 		{
+			// update memories
+			foreach (var sobj in StarSystem.SpaceObjects.ToArray())
+				sobj.UpdateEmpireMemories();
+
 			Current.Add(this);
 			var reloads = new SafeDictionary<Component, double>();
 			var seekers = new Dictionary<Seeker, int>();
@@ -196,6 +200,10 @@ namespace FrEee.Game.Objects.Combat.Simple
 				fleet.Validate();
 			Current.Remove(this);
 			Previous.Add(this);
+
+			// update memories
+			foreach (var sobj in StarSystem.SpaceObjects.ToArray())
+				sobj.UpdateEmpireMemories();
 		}
 
 		public IList<LogMessage> Log { get; private set; }
