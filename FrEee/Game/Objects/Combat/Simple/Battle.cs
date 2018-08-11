@@ -293,7 +293,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 		{
 			if (emp == null)
 				return "battle"; // no empire specified
-			if (!Combatants.Any(c => c.Owner == emp || c.Owner.IsAllyOf(emp, StarSystem)))
+			if (!Combatants.Any(c => c.Owner == emp || (c.Owner?.IsAllyOf(emp, StarSystem) ?? false))) // TODO - determine prior owner of glassed planets
 				return "battle"; // empire/allies not involved
 			var survivors = Combatants.Where(c => !c.IsDestroyed && c.Owner != null); // glassed planets aren't destroyed but they do have null owners
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
