@@ -111,11 +111,11 @@ namespace FrEee.Game.Objects.Combat.Simple
 					if (seekers[seeker] <= 0)
 					{
 						seekers.Remove(seeker);
-						Log.Add(seeker.CreateLogMessage(seeker + " detonates!"));
 						var minrng = seeker.LaunchingComponent.Template.WeaponMinRange;
 						var maxrng = seeker.LaunchingComponent.Template.WeaponMinRange;
 						var range = Dice.Next(maxrng - minrng) + minrng; // just pick a random valid range
 						var shot = new Shot(seeker.LaunchingCombatant, seeker.LaunchingComponent, seeker.Target, range);
+						Log.Add(seeker.CreateLogMessage(seeker + " detonates! " + seeker.Target + " takes " + shot.FullDamage + " damage."));
 						seeker.Target.TakeDamage(new Hit(shot, seeker.Target, seeker.Damage.Evaluate(shot)));
 					}
 					else
@@ -157,7 +157,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom(Dice);
 
-					LogSalvo(attacker, defender);
+					int dmg = 0;
 					foreach (var weapon in attacker.Weapons.Where(w => w.CanTarget(defender)))
 					{
 						while (reloads[weapon] <= 0)
@@ -179,6 +179,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 								var maxrng = weapon.Template.WeaponMinRange;
 								var range = Dice.Next(maxrng - minrng) + minrng; // just pick a random valid range
 								var shot = new Shot(attacker, weapon, defender, range);
+								dmg += shot.FullDamage;
 								defender.TakeDamage(new Hit(shot, defender, weapon.Template.GetWeaponDamage(range)));
 							}
 							// TODO - mounts that affect reload rate?
@@ -188,6 +189,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 						// reload
 						reloads[weapon] -= 1;
 					}
+					LogSalvo(attacker, defender, dmg);
 				}
 			}
 
@@ -215,9 +217,9 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Log.Add(new GenericLogMessage("Begin round " + i + "!"));
 		}
 
-		public void LogSalvo(ICombatant attacker, ICombatant defender)
+		public void LogSalvo(ICombatant attacker, ICombatant defender, int damage)
 		{
-			Log.Add(new PictorialLogMessage<ICombatant>(attacker + " attacks " + defender + "!", attacker));
+			Log.Add(new PictorialLogMessage<ICombatant>(attacker + " attacks " + defender + " for " + damage + " damage!", attacker));
 		}
 
 		public void LogShot(Component weapon, bool hit)
