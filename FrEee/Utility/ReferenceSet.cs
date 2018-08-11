@@ -135,7 +135,10 @@ namespace FrEee.Utility
 
 		public bool Remove(T item)
 		{
-			return set.Remove(MakeReference(item));
+			if (item == null)
+				return set.RemoveWhere(x => !x.HasValue) > 0; // TODO - remvoe only one null?
+			else
+				return set.Remove(MakeReference(item));
 		}
 
 		public IEnumerator<T> GetEnumerator()
