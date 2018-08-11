@@ -269,7 +269,9 @@ namespace FrEee.Game.Objects.Civilization
 						order.Execute(this);
 						if (order.CheckCompletion(this))
 						{
-							order.Item.Place(Container);
+							// upgrade facility orders place their own facilities
+							if (!(order is UpgradeFacilityOrder))
+								order.Item.Place(Container);
 							Orders.Remove(order);
 							builtThisTurn.Add(order.Item);
 						}

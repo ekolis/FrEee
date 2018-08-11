@@ -67,7 +67,7 @@ namespace FrEee.Game.Objects.Orders
 				NewFacility.ConstructionProgress += spending;
 
 				// if we're done, delete the old facility and replace it with this one
-				if (IsComplete)
+				if (CheckCompletion(queue))
 				{
 					var planet = (Planet)queue.Container;
 					planet.Colony.Facilities.Where(f => f.Template == Upgrade.Old).First().Dispose();
