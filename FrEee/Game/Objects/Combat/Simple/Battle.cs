@@ -125,7 +125,8 @@ namespace FrEee.Game.Objects.Combat.Simple
 					{
 						// planets can launch infinite units per turn
 						var p = (Planet)launcher;
-						unitsToLaunch.AddRange(p.Cargo.Units.OfType<SpaceVehicle>());
+						if (p.Cargo != null && p.Cargo.Units != null)
+							unitsToLaunch.AddRange(p.Cargo.Units.OfType<SpaceVehicle>());
 					}
 					else if (launcher is ICargoTransferrer)
 					{
