@@ -399,7 +399,7 @@ namespace FrEee.Game.Objects.Space
 		/// </summary>
 		public bool HasInfiniteSupplies
 		{
-			get { return Vehicles.Any(sobj => sobj.HasInfiniteSupplies); }
+			get { return Vehicles.ExceptSingle(null).Any(sobj => sobj.HasInfiniteSupplies); }
 		}
 
 		/// <summary>
