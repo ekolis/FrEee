@@ -962,7 +962,7 @@ namespace FrEee.Game.Objects.Civilization
 							((EvadeOrder)order).UpdateAlternateTarget();
 					}
 
-					foreach (var v in ((Fleet)obj).LeafVehicles)
+					foreach (var v in ((Fleet)Memory[obj.ID]).LeafVehicles) // TODO - go through subfleets too
 					{
 						v.IsMemory = true;
 						Memory[v.ID] = v;
