@@ -70,7 +70,7 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.tableLayoutPanel1.Size = new System.Drawing.Size(784, 561);
+			this.tableLayoutPanel1.Size = new System.Drawing.Size(982, 561);
 			this.tableLayoutPanel1.TabIndex = 0;
 			// 
 			// treeFleets
@@ -80,9 +80,9 @@
 			this.treeFleets.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.treeFleets.ForeColor = System.Drawing.Color.White;
 			this.treeFleets.HideSelection = false;
-			this.treeFleets.Location = new System.Drawing.Point(495, 27);
+			this.treeFleets.Location = new System.Drawing.Point(594, 27);
 			this.treeFleets.Name = "treeFleets";
-			this.treeFleets.Size = new System.Drawing.Size(286, 507);
+			this.treeFleets.Size = new System.Drawing.Size(385, 507);
 			this.treeFleets.TabIndex = 19;
 			this.treeFleets.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeFleets_NodeMouseClick);
 			this.treeFleets.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeFleets_NodeMouseDoubleClick);
@@ -93,10 +93,10 @@
 			this.panel1.Controls.Add(this.btnCancel);
 			this.panel1.Controls.Add(this.btnOK);
 			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(492, 537);
+			this.panel1.Location = new System.Drawing.Point(591, 537);
 			this.panel1.Margin = new System.Windows.Forms.Padding(0);
 			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(292, 24);
+			this.panel1.Size = new System.Drawing.Size(391, 24);
 			this.panel1.TabIndex = 17;
 			// 
 			// lblQuantityUnit
@@ -114,7 +114,7 @@
 			this.btnCancel.BackColor = System.Drawing.Color.Black;
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.btnCancel.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCancel.Location = new System.Drawing.Point(83, 3);
+			this.btnCancel.Location = new System.Drawing.Point(182, 3);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 18);
 			this.btnCancel.TabIndex = 1;
@@ -128,7 +128,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.BackColor = System.Drawing.Color.Black;
 			this.btnOK.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnOK.Location = new System.Drawing.Point(189, 3);
+			this.btnOK.Location = new System.Drawing.Point(288, 3);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(100, 18);
 			this.btnOK.TabIndex = 0;
@@ -142,7 +142,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnAdd.BackColor = System.Drawing.Color.Black;
 			this.btnAdd.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnAdd.Location = new System.Drawing.Point(395, 27);
+			this.btnAdd.Location = new System.Drawing.Point(494, 27);
 			this.btnAdd.Name = "btnAdd";
 			this.btnAdd.Size = new System.Drawing.Size(94, 507);
 			this.btnAdd.TabIndex = 16;
@@ -156,7 +156,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnRemove.BackColor = System.Drawing.Color.Black;
 			this.btnRemove.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnRemove.Location = new System.Drawing.Point(295, 27);
+			this.btnRemove.Location = new System.Drawing.Point(394, 27);
 			this.btnRemove.Name = "btnRemove";
 			this.btnRemove.Size = new System.Drawing.Size(94, 507);
 			this.btnRemove.TabIndex = 15;
@@ -185,7 +185,7 @@
 			this.treeVehicles.HideSelection = false;
 			this.treeVehicles.Location = new System.Drawing.Point(3, 27);
 			this.treeVehicles.Name = "treeVehicles";
-			this.treeVehicles.Size = new System.Drawing.Size(286, 507);
+			this.treeVehicles.Size = new System.Drawing.Size(385, 507);
 			this.treeVehicles.TabIndex = 18;
 			this.treeVehicles.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeVehicles_NodeMouseClick);
 			this.treeVehicles.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeVehicles_NodeMouseDoubleClick);
@@ -197,10 +197,10 @@
 			this.panel2.Controls.Add(this.btnCreate);
 			this.panel2.Controls.Add(this.label2);
 			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(492, 0);
+			this.panel2.Location = new System.Drawing.Point(591, 0);
 			this.panel2.Margin = new System.Windows.Forms.Padding(0);
 			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(292, 24);
+			this.panel2.Size = new System.Drawing.Size(391, 24);
 			this.panel2.TabIndex = 20;
 			// 
 			// txtFleetName
@@ -210,7 +210,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.txtFleetName.Location = new System.Drawing.Point(59, 3);
 			this.txtFleetName.Name = "txtFleetName";
-			this.txtFleetName.Size = new System.Drawing.Size(100, 20);
+			this.txtFleetName.Size = new System.Drawing.Size(199, 20);
 			this.txtFleetName.TabIndex = 7;
 			this.txtFleetName.Text = "Unnamed Fleet";
 			// 
@@ -220,7 +220,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnDisband.BackColor = System.Drawing.Color.Black;
 			this.btnDisband.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnDisband.Location = new System.Drawing.Point(230, 3);
+			this.btnDisband.Location = new System.Drawing.Point(329, 3);
 			this.btnDisband.Name = "btnDisband";
 			this.btnDisband.Size = new System.Drawing.Size(59, 18);
 			this.btnDisband.TabIndex = 6;
@@ -234,7 +234,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCreate.BackColor = System.Drawing.Color.Black;
 			this.btnCreate.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.btnCreate.Location = new System.Drawing.Point(165, 3);
+			this.btnCreate.Location = new System.Drawing.Point(264, 3);
 			this.btnCreate.Name = "btnCreate";
 			this.btnCreate.Size = new System.Drawing.Size(59, 18);
 			this.btnCreate.TabIndex = 3;
@@ -262,7 +262,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(784, 561);
+			this.ClientSize = new System.Drawing.Size(982, 561);
 			this.Controls.Add(this.tableLayoutPanel1);
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "FleetTransferForm";

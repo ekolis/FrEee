@@ -119,7 +119,7 @@ namespace FrEee.WinForms.Controls
 					Empire.Current.Commands.Remove(addCmd);
 					addCmd.Execute(); // show change locally
 				}
-				
+
 				Bind();
 
 				if (OrdersChanged != null)
@@ -214,7 +214,7 @@ namespace FrEee.WinForms.Controls
 				// orders and stuff
 				txtOrder.Text = Fleet.Orders.Any() ? Fleet.Orders.First().ToString() : "None";
 				txtExperience.Text = "None"; // TODO - admiral XP
-				// TODO - show fleet to which this fleet belongs?
+											 // TODO - show fleet to which this fleet belongs?
 
 				// maintenance
 				resMaintMin.Amount = Fleet.MaintenanceCost[Resource.Minerals];
@@ -230,7 +230,7 @@ namespace FrEee.WinForms.Controls
 
 				// cargo space free
 				txtCargoSpaceFree.Text = string.Format("{0} / {1} free", (Fleet.CargoStorage - (Fleet.Cargo == null ? 0 : Fleet.Cargo.Size)).Kilotons(), Fleet.CargoStorage.Kilotons());
-				
+
 				// orders detail
 				lstOrdersDetail.Items.Clear();
 				foreach (var o in Fleet.Orders)
@@ -256,10 +256,28 @@ namespace FrEee.WinForms.Controls
 		private void BuildVehicleTreeNode(object tree, IMobileSpaceObject sobj)
 		{
 			TreeNode node;
+			string CalculateSupplyStatus(int remaining, int storage)
+			{
+				if (remaining == 0)
+					return "Supplies Empty";
+				if (remaining < storage * 0.5)
+					return "Low Supplies";
+				return "";
+			}
+			string CalculateStatus(IMobileSpaceObject sobj2)
+			{
+				var s = "Speed " + sobj2.Speed;
+				var sup = CalculateSupplyStatus(sobj2.SupplyRemaining, sobj2.SupplyStorage);
+				if (sup == null)
+					return s;
+				else
+					return $"{s}, {sup}";
+			}
+			var namestr = $"{sobj.Name}: {CalculateStatus(sobj)}";
 			if (tree is TreeView)
-				node = ((TreeView)tree).AddItemWithImage(sobj.Name, sobj, sobj.Icon);
+				node = ((TreeView)tree).AddItemWithImage(namestr, sobj, sobj.Icon);
 			else if (tree is TreeNode)
-				node = ((TreeView)tree).AddItemWithImage(sobj.Name, sobj, sobj.Icon);
+				node = ((TreeView)tree).AddItemWithImage(namestr, sobj, sobj.Icon);
 			else
 				throw new ArgumentException("Tree for BuildVehicleTreeNode must be a TreeView or TreeNode.", "tree");
 			if (sobj is Fleet)

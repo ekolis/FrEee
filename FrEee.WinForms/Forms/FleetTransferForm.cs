@@ -68,7 +68,11 @@ namespace FrEee.WinForms.Forms
 						var designNode = roleNode.AddItemWithImage(designGroup.Key.Name, designGroup.Key, designGroup.Key.Icon);
 						foreach (var vehicle in designGroup)
 						{
-							var vehicleNode = designNode.AddItemWithImage(vehicle.Name, vehicle, vehicle.Icon);
+							TreeNode vehicleNode;
+							if (vehicle is IMobileSpaceObject sobj) // yay pattern matching! :D
+								vehicleNode = designNode.AddItemWithImage(vehicle.Name + ": " + CalculateStatus(sobj), vehicle, vehicle.Icon);
+							else
+								vehicleNode = designNode.AddItemWithImage(vehicle.Name, vehicle, vehicle.Icon);
 							if (vehicle == selected)
 								treeVehicles.SelectedNode = vehicleNode;
 						}
@@ -80,6 +84,24 @@ namespace FrEee.WinForms.Forms
 
 			// expand the treeeee!
 			treeVehicles.ExpandAll();
+		}
+
+		string CalculateSupplyStatus(int remaining, int storage)
+		{
+			if (remaining == 0)
+				return "Supplies Empty";
+			if (remaining < storage * 0.5)
+				return "Low Supplies";
+			return "";
+		}
+		string CalculateStatus(IMobileSpaceObject sobj2)
+		{
+			var s = "Speed " + sobj2.Speed;
+			var sup = CalculateSupplyStatus(sobj2.SupplyRemaining, sobj2.SupplyStorage);
+			if (sup == null)
+				return s;
+			else
+				return $"{s}, {sup}";
 		}
 
 		private void BindFleets(Fleet selected = null)
@@ -132,7 +154,8 @@ namespace FrEee.WinForms.Forms
 
 		private TreeNode CreateNode(TreeNode parent, IMobileSpaceObject v)
 		{
-			var node = parent.AddItemWithImage(v.Name, v, v.Icon);
+			TreeNode node;
+			node = parent.AddItemWithImage(v.Name + ": " + CalculateStatus(v), v, v.Icon);
 			if (v is Fleet)
 			{
 				foreach (var sub in ((Fleet)v).Vehicles)
@@ -270,7 +293,7 @@ namespace FrEee.WinForms.Forms
 			BindFleets(fleet);
 			changed = true;
 		}
-	
+
 		/// <summary>
 		/// Adds to a fleet without refreshing the GUI.
 		/// </summary>
@@ -462,7 +485,7 @@ namespace FrEee.WinForms.Forms
 		{
 			get
 			{
-				return FindNodeSpaceObjects(treeVehicles.SelectedNode); 
+				return FindNodeSpaceObjects(treeVehicles.SelectedNode);
 			}
 		}
 
