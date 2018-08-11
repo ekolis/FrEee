@@ -78,8 +78,11 @@ namespace FrEee.Utility
 				ObjectGraphContext.AddProperties(type);
 			}
 
-			// write the type name
-			w.WriteLine(type.AssemblyQualifiedName + ":");
+			// write the type name if it's not the same as the desired type
+			if (type == desiredType)
+				w.WriteLine(":");
+			else
+				w.WriteLine(type.AssemblyQualifiedName + ":");
 
 			if (id == null && !type.IsValueType && type != typeof(string) && !typeof(Array).IsAssignableFrom(type))
 			{
@@ -646,7 +649,7 @@ namespace FrEee.Utility
 
 				//propertySetterTasks.Add(Task.Factory.StartNew(() =>
 				//{
-					o.SetData(dict, context);
+				o.SetData(dict, context);
 				//}));
 
 				// clean up
@@ -708,20 +711,25 @@ namespace FrEee.Utility
 			// find data type
 			var typename = r.ReadTo(':', log).Trim();
 			Type type;
-			type = ObjectGraphContext.KnownTypes[typename];
-			if (type == null)
+			if (string.IsNullOrWhiteSpace(typename))
+				type = desiredType;
+			else
 			{
-				try
+				type = ObjectGraphContext.KnownTypes[typename];
+				if (type == null)
 				{
-					type = new SafeType(typename).Type;
+					try
+					{
+						type = new SafeType(typename).Type;
+					}
+					catch (Exception ex)
+					{
+						throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex);
+					}
 				}
-				catch (Exception ex)
-				{
-					throw new SerializationException("Unknown data type '" + typename + "'. Perhaps this data was serialized with an incompatible version of the application?", ex);
-				}
+				if (type == null)
+					throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");
 			}
-			if (type == null)
-				throw new SerializationException("Unable to determine object type from type string \"" + typename + "\"");
 
 			if (!ObjectGraphContext.KnownTypes.ContainsKey(type.AssemblyQualifiedName))
 			{
