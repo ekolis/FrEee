@@ -202,7 +202,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Previous.Add(this);
 
 			// update memories
-			foreach (var sobj in StarSystem.SpaceObjects.ToArray())
+			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
 				sobj.UpdateEmpireMemories();
 		}
 

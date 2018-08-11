@@ -31,6 +31,7 @@ using FrEee.Game.Objects.Combat;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Diagnostics;
+using FrEee.Game.Objects.Combat.Simple;
 
 namespace FrEee.Utility.Extensions
 {
@@ -2652,7 +2653,8 @@ namespace FrEee.Utility.Extensions
 			{
 				foreach (var emp in Galaxy.Current.Empires)
 				{
-					if (obj.CheckVisibility(emp) >= Visibility.Visible)
+					var sys = (obj as ILocated)?.StarSystem;
+					if (obj.CheckVisibility(emp) >= Visibility.Visible || sys != null && Battle.Previous.Any(x => x.StarSystem == sys))
 					{
 						emp.UpdateMemory(obj);
 						if (message != null && !empiresToSkipMessage.Contains(emp))

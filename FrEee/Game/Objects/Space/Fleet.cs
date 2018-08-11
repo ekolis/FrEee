@@ -362,7 +362,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			get
 			{
-				return Vehicles.Sum(sobj => sobj.SupplyRemaining);
+				return Vehicles.Sum(sobj => sobj?.SupplyRemaining ?? 0);
 			}
 			set
 			{

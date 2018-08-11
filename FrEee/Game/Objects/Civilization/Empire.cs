@@ -913,10 +913,6 @@ namespace FrEee.Game.Objects.Civilization
 			if (obj.Owner == this)
 				return; // don't need to update empire's memory of its own objects!
 
-			// double check visibility of object, fogged/invisible objects should not get memories created/updated!
-			if (obj.CheckVisibility(this) < Visibility.Visible)
-				return;
-
 			// encounter empire if not yet encountered
 			if (obj.Owner != null && !EncounteredEmpires.Contains(obj.Owner))
 			{
