@@ -191,13 +191,15 @@ namespace FrEee.Game.Objects.Combat.Simple
 				}
 			}
 
+			// validate fleets since some ships might have died
+			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
+				fleet.Validate();
+
 			// replenish combatants' shields
 			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatant>())
 				combatant.ReplenishShields();
-
-			// validate fleets
-			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
-				fleet.Validate();
+			
+			// mark battle complete
 			Current.Remove(this);
 			Previous.Add(this);
 
