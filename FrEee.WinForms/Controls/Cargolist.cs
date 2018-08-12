@@ -86,18 +86,21 @@ namespace FrEee.WinForms.Controls
 		public void Bind()
 		{
 			tree.Initialize(32);
+			var unitTypes = new List<VehicleTypes> { VehicleTypes.Drone, VehicleTypes.Fighter, VehicleTypes.Mine, VehicleTypes.Satellite, VehicleTypes.Troop, VehicleTypes.WeaponPlatform };
 			if (CargoContainer != null)
 			{
 				var cargo = CargoContainer.Cargo;
 				var used = cargo.Size;
 				var total = CargoContainer.CargoStorage;
 				var free = used - total;
+				var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
+				foreach (var vt in unitTypes)
+					typesNode.AddItemWithImage($"All {vt}s", vt.ToString(), Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vt));
 				if (CargoContainer.AllUnits.Any())
 				{
-					var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var ug in CargoContainer.AllUnits.GroupBy(u => u.Design.VehicleType))
 					{
-						var typeNode = typesNode.AddItemWithImage(ug.Count() + "x " + ug.Key.ToSpacedString(), ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
+						var typeNode = tree.GetAllNodes().First(x => x.Tag.ToString() == ug.Key.ToString());
 						foreach (var ug2 in ug.GroupBy(u => u.Design))
 						{
 							var designNode = typeNode.AddItemWithImage(ug.Count() + "x \"" + ug2.Key.Name + "\" " + ug2.Key.VehicleTypeName + " (" + ug2.Key.Hull.Size.Kilotons() + " each)", ug.Key, ug.First().Icon);
@@ -111,9 +114,9 @@ namespace FrEee.WinForms.Controls
 						rolesNode.AddItemWithImage(ug.Count() + "x " + ug.Key, ug.Key, ug.First().Icon);
 					rolesNode.Expand();
 				}
+				var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 				if (CargoContainer.AllPopulation.Any())
 				{
-					var popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoContainer.AllPopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true) + " " + pop.Key + " Population", pop.Key, pop.Key.Icon);
 					popNode.Expand();
@@ -123,13 +126,10 @@ namespace FrEee.WinForms.Controls
 			}
 			else if (CargoDelta != null)
 			{
-				if (CargoDelta.UnitTypeTonnage.Any())
-				{
-					var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
-					foreach (var ug in CargoDelta.UnitTypeTonnage)
-						typesNode.AddItemWithImage(ug.Value.Kilotons("All") + " " + ug.Key.ToSpacedString() + "s", ug.Key, Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, ug.Key));
-					typesNode.Expand();
-				}
+				var typesNode = tree.AddItemWithImage("Units - Types", "Types", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
+				foreach (var vt in unitTypes)
+					typesNode.AddItemWithImage($"All {vt}s", vt.ToString(), Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath, vt));
+				typesNode.Expand();
 				if (CargoDelta.UnitRoleTonnage.Any())
 				{
 					var rolesNode = tree.AddItemWithImage("Units - Roles", "Roles", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
@@ -151,9 +151,10 @@ namespace FrEee.WinForms.Controls
 						unitsNode.AddItemWithImage(u.Name, u, u.Icon);
 					// don't expand the units node, there's probably tons of stuff there!
 				}
+				var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
+
 				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
 				{
-					var popNode = tree.AddItemWithImage("Population", "Population", Pictures.GetVehicleTypeImage(Empire.Current.ShipsetPath));
 					foreach (var pop in CargoDelta.RacePopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
