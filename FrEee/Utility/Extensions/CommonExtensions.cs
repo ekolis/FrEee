@@ -1381,7 +1381,7 @@ namespace FrEee.Utility.Extensions
 				if (cached != null)
 				{
 					if (cached.Any())
-						return cached.First().Values[index - 1];
+						return cached.Where(x => x.Rule.Matches(name)).Stack(obj).FirstOrDefault()?.Values[index - 1];
 					else
 						return null;
 				}
