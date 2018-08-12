@@ -751,6 +751,21 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Message = "Initializing turn";
 
+			foreach (var e in Current.Empires)
+			{
+				foreach (var m in e.Log)
+				{
+					if (m is PictorialLogMessage<Battle> bm)
+					{
+						// purge old battle logs to save space in the savegame
+						if (bm.Context.Timestamp < Current.Timestamp)
+						{
+							bm.Context.Log.Clear();
+						}
+					}
+				}
+			}
+
 			// We can enable the ability cache here because space objects aren't changing state yet in any way where order of operations is relevant.
 			// For instance, all construction is supposed to take place simultaneously, so there's no reason to allow one construction order to affect other objects' abilities.
 			// Plus this speeds up turn processing immensely!
