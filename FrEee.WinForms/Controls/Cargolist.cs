@@ -194,7 +194,7 @@ namespace FrEee.WinForms.Controls
 				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
 				{
 					if (popNode == null)
-						popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+						popNode = tree.AddItemWithImage("All Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					foreach (var pop in CargoDelta.RacePopulation)
 						popNode.AddItemWithImage(pop.Value.ToUnitString(true, 4, "All") + " " + pop.Key + " Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", pop.Key, pop.Key.Icon);
 					if (CargoDelta.AnyPopulation != 0)
