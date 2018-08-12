@@ -1087,7 +1087,7 @@ namespace FrEee.Game.Objects.Space
 			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
 
 			// repair units
-			Current.FindSpaceObjects<SpaceVehicle>().OfType<IUnit>().SafeForeach(u => u.Repair());
+			Current.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair());
 			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
 
 			// repair ships/bases
@@ -1096,7 +1096,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				// component repair is per sector per turn per empire, so we need to track it that way
 				var usedPts = new SafeDictionary<Sector, int>();
-				foreach (var v in Current.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base)))
+				foreach (var v in Current.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp && v.Sector != null && (v is Ship || v is Base || v is Fleet)))
 				{
 					var pts = v.Sector.GetEmpireAbilityValue(emp, "Component Repair").ToInt() - usedPts[v.Sector];
 					usedPts[v.Sector] += pts - v.Repair(pts).Value;
