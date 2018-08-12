@@ -1463,9 +1463,6 @@ namespace FrEee.Game.Objects.Space
 			var oldid = r.ID;
 			long newid = oldid <= 0 ? id : oldid;
 
-			if (Referrables.LongCount() == long.MaxValue)
-				throw new Exception("No more IDs are available to assign for objects.");
-
 			while (newid <= 0 || referrables.ContainsKey(newid))
 			{
 				newid = RandomHelper.Range(1L, long.MaxValue);
