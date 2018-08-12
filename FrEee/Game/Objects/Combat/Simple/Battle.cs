@@ -29,6 +29,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 			double stardate = Galaxy.Current.Timestamp;
 			int moduloID = (int)(Sector.StarSystem.ID % 100000);
 			Dice = new PRNG((int)(moduloID / stardate * 10));
+			Timestamp = stardate;
 		}
 
 		static Battle()
@@ -286,6 +287,8 @@ namespace FrEee.Game.Objects.Combat.Simple
 				return Combatants.OfType<ISpaceObject>().Largest().PortraitPaths;
 			}
 		}
+
+		public double Timestamp { get; private set; }
 
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
