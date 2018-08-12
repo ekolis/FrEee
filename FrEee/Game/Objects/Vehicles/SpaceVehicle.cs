@@ -50,27 +50,6 @@ namespace FrEee.Game.Objects.Vehicles
 			set { StoredResources[Resource.Supply] = value; }
 		}
 
-		/// <summary>
-		/// Makes sure there aren't more supplies than we can store, or fewer than zero
-		/// </summary>
-		/// <returns>Leftover supplies (or a negative number if somehow we got negative supplies in this vehicle)</returns>
-		public int NormalizeSupplies()
-		{
-			if (SupplyRemaining > SupplyStorage)
-			{
-				var leftover = SupplyRemaining - SupplyStorage;
-				SupplyRemaining = SupplyStorage;
-				return leftover;
-			}
-			if (SupplyRemaining < 0)
-			{
-				var deficit = SupplyRemaining;
-				SupplyRemaining = 0;
-				return deficit;
-			}
-			return 0;
-		}
-
 		IEnumerable<IOrder> IOrderable.Orders
 		{
 			get { return Orders; }
@@ -455,7 +434,7 @@ namespace FrEee.Game.Objects.Vehicles
 		public void BurnMovementSupplies()
 		{
 			SupplyRemaining -= EngineSupplyBurnRate;
-			NormalizeSupplies();
+			this.NormalizeSupplies();
 		}
 
 		/// <summary>
