@@ -1125,7 +1125,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var sys in Current.StarSystemLocations.Select(l => l.Item).Where(s => s.HasAbility("Supply Generation - System", emp) || s.HasAbility("Supply Generation - System")))
 				{
-					foreach (var v in sys.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == emp))
+					foreach (var v in sys.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == emp))
 						v.SupplyRemaining = v.SupplyStorage;
 				}
 			}
