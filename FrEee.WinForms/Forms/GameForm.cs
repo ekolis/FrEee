@@ -118,6 +118,19 @@ namespace FrEee.WinForms.Forms
 
 			Enabled = true;
 
+			if (Galaxy.Current.IsWinner)
+			{
+				var form = new GameOverForm(true);
+				form.StartPosition = FormStartPosition.CenterScreen;
+				this.ShowChildForm(form);
+			}
+			if (Galaxy.Current.IsLoser)
+			{
+				var form = new GameOverForm(false);
+				form.StartPosition = FormStartPosition.CenterScreen;
+				this.ShowChildForm(form);
+			}
+
 			// show empire log if there's anything new there
 			if (Empire.Current.Log.Any(m => m.TurnNumber == Galaxy.Current.TurnNumber))
 			{
