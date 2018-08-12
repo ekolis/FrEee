@@ -1117,7 +1117,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				var emp = sobj.Owner;
 				var sector = sobj.Sector;
-				foreach (var v in sector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == emp))
+				foreach (var v in sector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == emp))
 					v.SupplyRemaining = v.SupplyStorage;
 			});
 			// TODO - multithread this... somehow...
