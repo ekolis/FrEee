@@ -1179,6 +1179,7 @@ namespace FrEee.Game.Objects.Space
 						{
 							// empire won!
 							emp.Log.Add(emp.CreateLogMessage(vc.GetVictoryMessage(emp)));
+							Current.IsWinner = true;
 						}
 					}
 					if (winners.Any())
@@ -1187,6 +1188,7 @@ namespace FrEee.Game.Objects.Space
 						{
 							// empire lost
 							emp.Log.Add(emp.CreateLogMessage(vc.GetDefeatMessage(emp, winners)));
+							Current.IsLoser = true;
 						}
 					}
 				}
@@ -1218,6 +1220,10 @@ namespace FrEee.Game.Objects.Space
 
 			return missingPlrs;
 		}
+
+		public bool IsWinner { get; private set; }
+
+		public bool IsLoser { get; private set; }
 
 		internal void SpaceObjectIDCheck(string when)
 		{

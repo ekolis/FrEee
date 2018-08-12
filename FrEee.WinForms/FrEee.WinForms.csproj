@@ -197,6 +197,12 @@
     <Compile Include="Forms\EditorForm.Designer.cs">
       <DependentUpon>EditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\GameOverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GameOverForm.Designer.cs">
+      <DependentUpon>GameOverForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\ModErrorsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -703,6 +709,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\FleetTransferForm.resx">
       <DependentUpon>FleetTransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GameOverForm.resx">
+      <DependentUpon>GameOverForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ModErrorsForm.resx">
       <DependentUpon>ModErrorsForm.cs</DependentUpon>

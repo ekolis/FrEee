@@ -17,7 +17,9 @@ namespace FrEee.Game.Objects.VictoryConditions
 		{
 			if (emp.IsDefeated)
 				return 0;
-			return (double)Galaxy.Current.Empires.Where(e => e.IsDefeated).Count() / (double)Galaxy.Current.Empires.Count;
+			if (Galaxy.Current.Empires.Count == 1)
+				return 1;
+			return (double)Galaxy.Current.Empires.Where(e => e.IsDefeated).Count() / ((double)Galaxy.Current.Empires.Count - 1);
 		}
 
 		public string GetVictoryMessage(Empire emp)
