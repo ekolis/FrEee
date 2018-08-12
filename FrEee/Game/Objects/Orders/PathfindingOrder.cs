@@ -238,12 +238,12 @@ namespace FrEee.Game.Objects.Orders
 						// TODO - this should really be done AFTER battles...
 						if (gotoSector.HasAbility("Supply Generation", sobj.Owner))
 						{
-							foreach (var v in gotoSector.SpaceObjects.OfType<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+							foreach (var v in gotoSector.SpaceObjects.OfType<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
 								v.SupplyRemaining = v.SupplyStorage;
 						}
 						if (gotoSector.StarSystem.HasAbility("Supply Generation - System", sobj.Owner) || gotoSector.StarSystem.HasAbility("Supply Generation - System"))
 						{
-							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<SpaceVehicle>().Where(v => v.Owner == sobj.Owner))
+							foreach (var v in gotoSector.StarSystem.FindSpaceObjects<IMobileSpaceObject>().Where(v => v.Owner == sobj.Owner))
 								v.SupplyRemaining = v.SupplyStorage;
 						}
 					}

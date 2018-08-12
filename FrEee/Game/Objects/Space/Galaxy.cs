@@ -1104,7 +1104,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// get supplies from reactors, solar panels, etc.
-			Current.FindSpaceObjects<SpaceVehicle>().SafeForeach(v =>
+			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
 			{
 				v.SupplyRemaining += v.GetAbilityValue("Supply Generation Per Turn").ToInt();
 				v.SupplyRemaining += v.GetAbilityValue("Solar Supply Generation").ToInt() * v.StarSystem.FindSpaceObjects<Star>().Count();

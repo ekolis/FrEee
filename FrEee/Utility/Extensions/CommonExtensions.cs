@@ -4031,6 +4031,27 @@ namespace FrEee.Utility.Extensions
 		{
 			return (T)emp.Memory[f.ID];
 		}
+
+		/// <summary>
+		/// Makes sure there aren't more supplies than we can store, or fewer than zero
+		/// </summary>
+		/// <returns>Leftover supplies (or a negative number if somehow we got negative supplies in this vehicle)</returns>
+		public static int NormalizeSupplies(this IMobileSpaceObject sobj)
+		{
+			if (sobj.SupplyRemaining > sobj.SupplyStorage)
+			{
+				var leftover = sobj.SupplyRemaining - sobj.SupplyStorage;
+				sobj.SupplyRemaining = sobj.SupplyStorage;
+				return leftover;
+			}
+			if (sobj.SupplyRemaining < 0)
+			{
+				var deficit = sobj.SupplyRemaining;
+				sobj.SupplyRemaining = 0;
+				return deficit;
+			}
+			return 0;
+		}
 	}
 
 	public enum IDCopyBehavior
