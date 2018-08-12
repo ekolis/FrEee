@@ -190,7 +190,7 @@ namespace FrEee.Game.Objects.Technology
 			var factoredDmg = df.PercentOfRounded(damage);
 			var piercing = dp.PercentOfRounded(damage);
 			var realdmg = Math.Min(Hitpoints, factoredDmg);
-			var nominalDamageSpent = realdmg / (df + dp);
+			var nominalDamageSpent = (int)(realdmg / ((df + dp) / 100d));
 			Hitpoints -= realdmg;
 			if (IsDestroyed)
 				Dispose();
