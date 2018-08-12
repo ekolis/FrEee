@@ -426,7 +426,7 @@ namespace FrEee.Game.Objects.Vehicles
 			{
 				// repair most-damaged components first
 				// TODO - other repair priorities
-				foreach (var comp in Components.OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
+				foreach (var comp in Components.Where(x => x.Hitpoints < x.MaxHitpoints).OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
 				{
 					if (amount <= 0)
 						break;
