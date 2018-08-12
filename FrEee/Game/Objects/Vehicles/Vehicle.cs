@@ -424,10 +424,15 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 			else
 			{
-				// repair most-damage components first
+				// repair most-damaged components first
 				// TODO - other repair priorities
 				foreach (var comp in Components.OrderBy(c => (double)c.Hitpoints / (double)c.MaxHitpoints))
-					amount = comp.Repair(amount);
+				{
+					if (amount <= 0)
+						break;
+					comp.Repair();
+					amount--;
+				}
 			}
 			return amount;
 		}
