@@ -390,6 +390,8 @@ namespace FrEee.Game.Objects.Vehicles
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
+			if (this is IUnit u)
+				u.Container?.RemoveUnit(u);
 		}
 
 		[DoNotSerialize(false)]

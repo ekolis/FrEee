@@ -181,11 +181,12 @@ namespace FrEee.Game.Objects.Civilization
 		private int TakeUnitDamage(Hit hit, int damage, PRNG dice = null)
 		{
 			// units with more HP are more likely to get hit first, like with leaky armor
-			var units = Units.ToDictionary(u => u, u => u.MaxHitpoints);
+			var units = Units.Where(u => !u.IsDestroyed).ToDictionary(u => u, u => u.MaxHitpoints);
 			while (units.Any() && damage > 0)
 			{
 				var u = units.PickWeighted(dice);
 				damage = u.TakeDamage(hit, dice);
+				units = units.Where(x => !x.Key.IsDestroyed).ToDictionary(x => x.Key, x => x.Value);
 			}
 			return damage;
 		}

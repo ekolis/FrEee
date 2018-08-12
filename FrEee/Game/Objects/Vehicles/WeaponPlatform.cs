@@ -72,7 +72,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override StarSystem StarSystem
 		{
-			get { return Container.StarSystem; }
+			get { return Container?.StarSystem; }
 		}
 
 		public override IMobileSpaceObject RecycleContainer
