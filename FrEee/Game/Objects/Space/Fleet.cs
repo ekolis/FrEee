@@ -366,7 +366,7 @@ namespace FrEee.Game.Objects.Space
 			}
 			set
 			{
-				var available = SupplyRemaining;
+				var available = value;
 				var storage = SupplyStorage;
 				int spent = 0;
 
