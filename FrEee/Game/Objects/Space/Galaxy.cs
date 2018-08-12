@@ -1103,6 +1103,10 @@ namespace FrEee.Game.Objects.Space
 				}
 			}
 
+			// repairs affect abilities
+			Current.DisableAbilityCache(); 
+			Current.EnableAbilityCache();
+
 			// get supplies from reactors, solar panels, etc.
 			Current.FindSpaceObjects<IMobileSpaceObject>().SafeForeach(v =>
 			{
