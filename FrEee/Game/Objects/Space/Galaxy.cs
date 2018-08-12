@@ -1084,16 +1084,11 @@ namespace FrEee.Game.Objects.Space
 
 
 			// repair facilities
-			// TODO - make facility repair percentage moddable
-			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair(
-				(int)Math.Ceiling(f.MaxHitpoints * 0.05)));
+			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).Where(c => c != null).SelectMany(c => c.Facilities).SafeForeach(f => f.Repair());
 
 			// repair units
-			// TODO - make unit repair percentage moddable
-			Current.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair(
-				(int)Math.Ceiling(u.Components.Count * 0.05)));
-			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair(
-				(int)Math.Ceiling(u.Components.Count * 0.05)));
+			Current.FindSpaceObjects<IMobileSpaceObject>().OfType<IUnit>().SafeForeach(u => u.Repair());
+			Current.FindSpaceObjects<ISpaceObject>().OfType<ICargoContainer>().Where(p => p.Cargo != null).SelectMany(p => p.Cargo.Units).SafeForeach(u => u.Repair());
 
 			// repair ships/bases
 			// TODO - repair priorities
