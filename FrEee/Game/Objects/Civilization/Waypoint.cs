@@ -26,12 +26,13 @@ namespace FrEee.Game.Objects.Civilization
 
 		/// <summary>
 		/// Only the waypoint's owner can see it.
+		/// If the sector is null, it's invisible too.
 		/// </summary>
 		/// <param name="emp"></param>
 		/// <returns></returns>
 		public Visibility CheckVisibility(Empire emp)
 		{
-			if (emp == Owner)
+			if (emp == Owner && Sector != null)
 				return Visibility.Owned;
 			return Visibility.Unknown;
 		}

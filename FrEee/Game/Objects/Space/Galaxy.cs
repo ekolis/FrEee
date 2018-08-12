@@ -1195,6 +1195,13 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
+			// dispose of invalid waypoints e.g. space object got destroyed
+			foreach (var w in Current.Referrables.OfType<Waypoint>())
+			{
+				if (w.Sector == null)
+					w.Dispose();
+			}
+
 			Current.SpaceObjectIDCheck("after cleanup");
 
 			// end of turn scripts

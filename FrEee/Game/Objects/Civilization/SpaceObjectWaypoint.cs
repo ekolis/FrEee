@@ -29,7 +29,7 @@ namespace FrEee.Game.Objects.Civilization
 		{
 			get
 			{
-				return SpaceObject.Sector;
+				return SpaceObject?.Sector;
 			}
 			set
 			{
