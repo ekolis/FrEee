@@ -105,6 +105,7 @@
 			this.clDrop.ForeColor = System.Drawing.Color.White;
 			this.clDrop.Location = new System.Drawing.Point(607, 295);
 			this.clDrop.Name = "clDrop";
+			this.clDrop.ShowAllUnitsAndPopulationAlways = false;
 			this.clDrop.Size = new System.Drawing.Size(398, 238);
 			this.clDrop.TabIndex = 10;
 			this.clDrop.Click += new System.EventHandler(this.clFrom_Click);
@@ -121,6 +122,7 @@
 			this.clLoad.ForeColor = System.Drawing.Color.White;
 			this.clLoad.Location = new System.Drawing.Point(3, 295);
 			this.clLoad.Name = "clLoad";
+			this.clLoad.ShowAllUnitsAndPopulationAlways = false;
 			this.clLoad.Size = new System.Drawing.Size(398, 238);
 			this.clLoad.TabIndex = 9;
 			this.clLoad.Click += new System.EventHandler(this.clFrom_Click);
@@ -137,6 +139,7 @@
 			this.clTo.ForeColor = System.Drawing.Color.White;
 			this.clTo.Location = new System.Drawing.Point(607, 51);
 			this.clTo.Name = "clTo";
+			this.clTo.ShowAllUnitsAndPopulationAlways = true;
 			this.clTo.Size = new System.Drawing.Size(398, 238);
 			this.clTo.TabIndex = 7;
 			this.clTo.Click += new System.EventHandler(this.clFrom_Click);
@@ -200,6 +203,7 @@
 			this.clFrom.ForeColor = System.Drawing.Color.White;
 			this.clFrom.Location = new System.Drawing.Point(3, 51);
 			this.clFrom.Name = "clFrom";
+			this.clFrom.ShowAllUnitsAndPopulationAlways = true;
 			this.clFrom.Size = new System.Drawing.Size(398, 238);
 			this.clFrom.TabIndex = 6;
 			this.clFrom.Click += new System.EventHandler(this.clFrom_Click);
