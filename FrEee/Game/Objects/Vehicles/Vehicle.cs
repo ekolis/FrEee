@@ -387,6 +387,7 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			if (IsDisposed)
 				return;
+			IsDisposed = true;
 			Galaxy.Current.UnassignID(this);
 			if (!IsMemory)
 				this.UpdateEmpireMemories();
