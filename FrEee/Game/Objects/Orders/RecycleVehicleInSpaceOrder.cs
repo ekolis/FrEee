@@ -23,7 +23,7 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(SpaceVehicle executor)
 		{
 			var errors = GetErrors(executor);
-			if (errors.Any())
+			if (errors.Any() && Owner != null)
 			{
 				foreach (var e in errors)
 					Owner.Log.Add(e);
