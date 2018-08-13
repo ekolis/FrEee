@@ -50,6 +50,19 @@ namespace FrEee.Modding
 				return new ComputedFormula<T>(txt, context, true); // dynamic
 			else if (Value.StartsWith("="))
 				return new ComputedFormula<T>(txt, context, false); // static
+																	// TODO - take into account quotes when seeing if we have string interpolation?
+			else if (Value.Contains("{") && Value.Substring(Value.IndexOf("{")).Contains("}"))
+			{
+				// string interpolation formula
+				var isDynamic = Value.Contains("{{") && Value.Substring(Value.IndexOf("{{")).Contains("}}");
+				var replacedText = txt;
+				replacedText = "'" + replacedText + "'"; // make it a string
+				replacedText = replacedText.Replace("{{", "' + str(");
+				replacedText = replacedText.Replace("}}", ") + '");
+				replacedText = replacedText.Replace("{", "' + str(");
+				replacedText = replacedText.Replace("}", ") + '");
+				return new ComputedFormula<T>(replacedText, context, isDynamic);
+			}
 			return new LiteralFormula<T>(txt);
 		}
 
@@ -209,3 +222,4 @@ namespace FrEee.Modding
 		}
 	}
 }
+
