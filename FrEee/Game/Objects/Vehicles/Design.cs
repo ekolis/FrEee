@@ -285,7 +285,8 @@ namespace FrEee.Game.Objects.Vehicles
 					{
 						var limit = limited.Min(comp => comp.MaxPerVehicle.Value);
 						var name = g.First(comp => comp.MaxPerVehicle == limit).Name;
-						yield return "The " + name + " family of components is limited to " + limit + " per vehicle.";
+						if (limit < g.Count())
+							yield return "The " + name + " family of components is limited to " + limit + " per vehicle.";
 					}
 				}
 				if (SpaceFree < 0)
