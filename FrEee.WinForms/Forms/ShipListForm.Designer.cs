@@ -32,6 +32,7 @@ namespace FrEee.WinForms.Forms
 		/// </summary>
 		private void InitializeComponent()
 		{
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
@@ -83,8 +84,10 @@ namespace FrEee.WinForms.Forms
 			// galaxyView
 			// 
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.galaxyView.Location = new System.Drawing.Point(253, 3);
+			this.galaxyView.Mode = presenceMode1;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
 			this.galaxyView.Size = new System.Drawing.Size(904, 194);
@@ -354,6 +357,7 @@ namespace FrEee.WinForms.Forms
 			// 
 			// grid
 			// 
+			this.grid.AppendMenuItems = null;
 			this.grid.BackColor = System.Drawing.Color.Black;
 			this.tableLayoutPanel1.SetColumnSpan(this.grid, 3);
 			this.grid.CreateDefaultGridConfig = null;
@@ -367,6 +371,7 @@ namespace FrEee.WinForms.Forms
 			this.grid.LoadGridConfigs = null;
 			this.grid.Location = new System.Drawing.Point(3, 203);
 			this.grid.Name = "grid";
+			this.grid.PrependMenuItems = null;
 			this.grid.ResetGridConfigs = null;
 			this.grid.ShowConfigs = true;
 			this.grid.Size = new System.Drawing.Size(1154, 531);

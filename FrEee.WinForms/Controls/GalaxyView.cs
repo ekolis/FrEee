@@ -147,19 +147,54 @@ namespace FrEee.WinForms.Controls
 				var desiredAspect = (double)Width / (double)Height;
 				var actualAspect = (double)BackgroundImage.Width / (double)BackgroundImage.Height;
 				int x, y, w, h;
-				if (actualAspect > desiredAspect)
+				switch (BackgroundImageLayout)
 				{
-					x = -(int)(Width / actualAspect / 2) + Width / 2;
-					w = (int)(Width / actualAspect);
-					h = Height;
-					y = 0;
-				}
-				else
-				{
-					y = -(int)(Height * actualAspect / 2) + Height / 2;
-					h = (int)(Height * actualAspect);
-					w = Width;
-					x = 0;
+					case ImageLayout.Stretch:
+						if (actualAspect > desiredAspect)
+						{
+							x = -(int)(Width / actualAspect / 2) + Width / 2;
+							w = (int)(Width / actualAspect);
+							h = Height;
+							y = 0;
+						}
+						else
+						{
+							y = -(int)(Height * actualAspect / 2) + Height / 2;
+							h = (int)(Height * actualAspect);
+							w = Width;
+							x = 0;
+						}
+						break;
+					case ImageLayout.Zoom:
+						if (actualAspect > desiredAspect)
+						{
+							w = Width;
+							h = (int)(Height * desiredAspect / actualAspect); ;
+						}
+						else
+						{
+							w = (int)(Width * actualAspect / desiredAspect);
+							h = Height;
+						}
+						x = (Width - w) / 2;
+						y = (Height - h) / 2;
+						break;
+					default: // TODO - more image layouts
+						if (actualAspect > desiredAspect)
+						{
+							x = -(int)(Width / actualAspect / 2) + Width / 2;
+							w = (int)(Width / actualAspect);
+							h = Height;
+							y = 0;
+						}
+						else
+						{
+							y = -(int)(Height * actualAspect / 2) + Height / 2;
+							h = (int)(Height * actualAspect);
+							w = Width;
+							x = 0;
+						}
+						break;
 				}
 				pe.Graphics.DrawImage(backgroundImage, x, y, w, h);
 			}
@@ -177,7 +212,7 @@ namespace FrEee.WinForms.Controls
 					// where will we draw the star system?
 					var x = ssl.Location.X;// - minx;
 					var y = ssl.Location.Y;// - miny;
-					//var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize);
+										   //var x = (int)Math.Round(((float)p.X - Width / 2f - drawsize / 2f) / drawsize);
 					var drawx = (x - avgx) * drawsize + Width / 2f;
 					var drawy = (y - avgy) * drawsize + Height / 2f;
 
