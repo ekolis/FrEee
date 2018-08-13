@@ -36,6 +36,8 @@ namespace FrEee.Game.Objects.Orders.RecycleBehaviors
 
 		public IEnumerable<LogMessage> GetErrors(IMobileSpaceObject executor, IRecyclable target)
 		{
+			if (target.IsDisposed)
+				yield return target.CreateLogMessage($"{target} cannot be scrapped because it is already destroyed.");
 			if (target.RecycleContainer != executor)
 				yield return target.CreateLogMessage(target + " cannot be scrapped by " + executor + " because " + target + " does not belong to " + executor + ".");
 			if ((target is Ship || target is Base) && !executor.Sector.SpaceObjects.Any(sobj => sobj.Owner == executor.Owner && sobj.HasAbility("Space Yard")))

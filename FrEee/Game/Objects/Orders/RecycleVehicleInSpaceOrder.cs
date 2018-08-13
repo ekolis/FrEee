@@ -22,6 +22,14 @@ namespace FrEee.Game.Objects.Orders
 
 		public void Execute(SpaceVehicle executor)
 		{
+			var errors = GetErrors(executor);
+			if (errors.Any())
+			{
+				foreach (var e in errors)
+					Owner.Log.Add(e);
+				return;
+			}
+
 			Behavior.Execute(executor);
 			IsComplete = true;
 		}
