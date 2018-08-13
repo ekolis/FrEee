@@ -98,5 +98,45 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 			Assert.AreEqual(mct.Durability, 60); // 30 * 200%
 			Assert.AreEqual(15, mct.Size); // 10 * 150%
 		}
+
+		/// <summary>
+		/// Tests string interpolation static formulas.
+		/// </summary>
+		[TestMethod]
+		public void StringInterpolationStatic()
+		{
+			var field = new Field("Test := Test Case {42 + 69}");
+			var formula = field.CreateFormula<string>(null);
+			Assert.AreEqual($"Test Case {42 + 69}", formula.Value);
+			Assert.IsFalse(formula.IsDynamic);
+			Assert.IsFalse(formula.IsLiteral);
+		}
+
+		/// <summary>
+		/// Tests string interpolation dynamic formulas.
+		/// </summary>
+		[TestMethod]
+		public void StringInterpolationDynamic()
+		{
+			var field = new Field("Test := Test Case {{42 + 69}}");
+			var formula = field.CreateFormula<string>(null);
+			Assert.AreEqual($"Test Case {42 + 69}", formula.Value);
+			Assert.IsTrue(formula.IsDynamic);
+			Assert.IsFalse(formula.IsLiteral);
+		}
+
+		/// <summary>
+		/// Tests string interpolation mixed formulas.
+		/// Mixed formulas should be treated as dynamic.
+		/// </summary>
+		[TestMethod]
+		public void StringInterpolationMixed()
+		{
+			var field = new Field("Test := Test Case {42} {{69}}");
+			var formula = field.CreateFormula<string>(null);
+			Assert.AreEqual($"Test Case {42} {69}", formula.Value);
+			Assert.IsTrue(formula.IsDynamic);
+			Assert.IsFalse(formula.IsLiteral);
+		}
 	}
 }
