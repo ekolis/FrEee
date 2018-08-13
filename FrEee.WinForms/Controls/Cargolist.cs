@@ -186,9 +186,9 @@ namespace FrEee.WinForms.Controls
 					// don't expand the units node, there's probably tons of stuff there!
 				}
 				TreeNode popNode = null;
-				if (ShowAllUnitsAndPopulationAlways)
+				if (ShowAllUnitsAndPopulationAlways || CargoDelta.AllPopulation)
 				{
-					popNode = tree.AddItemWithImage(CargoContainer.AllPopulation.Sum(kvp => kvp.Value).ToUnitString(true) + " Total Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
+					popNode = tree.AddItemWithImage("All Population (" + ((long)(Mod.Current.Settings.PopulationSize * Mod.Current.Settings.PopulationFactor)).Kilotons() + " per " + Mod.Current.Settings.PopulationFactor.ToUnitString(true) + ")", "Population", Empire.Current.PrimaryRace.Icon);
 					popNode.Expand();
 				}
 				if (CargoDelta.RacePopulation.Any() || CargoDelta.AnyPopulation != 0)
