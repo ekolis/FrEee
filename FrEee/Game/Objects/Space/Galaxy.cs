@@ -419,7 +419,7 @@ namespace FrEee.Game.Objects.Space
 			var gamname = Galaxy.Current.Save();
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
-			Current.SpaceObjectIDCheck("after saving master view to disk");
+			//Current.SpaceObjectIDCheck("after saving master view to disk");
 
 			// save player views
 			for (int i = 0; i < Current.Empires.Count; i++)
@@ -431,7 +431,7 @@ namespace FrEee.Game.Objects.Space
 						status.Message = "Saving game (player " + (i + 1) + ")";
 					Current.CurrentEmpire = Current.Empires[i];
 					Current.Redact();
-					Current.SpaceObjectIDCheck("after creating player view for " + Current.Empires[i]);
+					//Current.SpaceObjectIDCheck("after creating player view for " + Current.Empires[i]);
 					Current.Save(false); // already asssigned IDs in the redact phase
 					if (status != null)
 						status.Progress += progressPerSaveLoad;
@@ -445,7 +445,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerSaveLoad;
 
-			Current.SpaceObjectIDCheck("after reloading master view");
+			//Current.SpaceObjectIDCheck("after reloading master view");
 		}
 
 		/// <summary>
@@ -456,7 +456,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.Deserialize<Galaxy>(stream);
 			Mod.Current = Galaxy.Current.Mod;
-			Current.SpaceObjectIDCheck("after loading from disk/memory");
+			//Current.SpaceObjectIDCheck("after loading from disk/memory");
 
 			if (Empire.Current != null)
 			{
@@ -510,7 +510,7 @@ namespace FrEee.Game.Objects.Space
 		{
 			Galaxy.Current = Serializer.DeserializeFromString<Galaxy>(serializedData);
 			Mod.Current = Galaxy.Current.Mod;
-			Current.SpaceObjectIDCheck("after loading from memory");
+			//Current.SpaceObjectIDCheck("after loading from memory");
 
 			if (Empire.Current != null)
 			{
@@ -735,7 +735,7 @@ namespace FrEee.Game.Objects.Space
 		// TODO - make non-static so we don't have to say Current. everywhere
 		public static IEnumerable<Empire> ProcessTurn(bool safeMode, Status status = null, double desiredProgress = 1d)
 		{
-			Current.SpaceObjectIDCheck("at start of turn");
+			//Current.SpaceObjectIDCheck("at start of turn");
 
 			if (Empire.Current != null)
 				throw new InvalidOperationException("Can't process the turn if there is a current empire. Load the game host's view of the galaxy instead.");
@@ -753,7 +753,7 @@ namespace FrEee.Game.Objects.Space
 
 			foreach (var e in Current.Empires)
 			{
-				foreach (var m in e.Log)
+				foreach (var m in e.Log.ToArray())
 				{
 					if (m is PictorialLogMessage<Battle> bm)
 					{
@@ -762,6 +762,11 @@ namespace FrEee.Game.Objects.Space
 						{
 							bm.Context.Log.Clear();
 						}
+					}
+					if (m.TurnNumber < Current.TurnNumber - 10)
+					{
+						// purge *really* old empire logs too
+						e.Log.Remove(m);
 					}
 				}
 			}
@@ -776,7 +781,7 @@ namespace FrEee.Game.Objects.Space
 			Current.ReceivedTreatyClauseCache.Clear();
 
 			// delete any floating space objects that are unused
-			Current.SpaceObjectCleanup();
+			//Current.SpaceObjectCleanup();
 
 			//Battle.Previous.Clear();
 			Current.Battles = new HashSet<Battle>();
@@ -825,7 +830,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after loading commands");
+			//Current.SpaceObjectIDCheck("after loading commands");
 
 			// advance turn number
 			Current.TurnNumber++;
@@ -840,7 +845,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after colony maintenance");
+			//Current.SpaceObjectIDCheck("after colony maintenance");
 
 			// resource generation
 			if (status != null)
@@ -895,7 +900,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after resource generation");
+			//Current.SpaceObjectIDCheck("after resource generation");
 
 			// empire stuff
 			// TODO - multithread this, we'll need to get rid of the (1 of 4) or whatever after "Maintaining empires" :(
@@ -994,7 +999,7 @@ namespace FrEee.Game.Objects.Space
 				if (status != null)
 					status.Progress += progressPerOperation;
 
-				Current.SpaceObjectIDCheck("after empire maintenance for " + emp);
+				//Current.SpaceObjectIDCheck("after empire maintenance for " + emp);
 			}
 
 			// validate fleets and share supplies
@@ -1011,7 +1016,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after construction");
+			//Current.SpaceObjectIDCheck("after construction");
 
 			// replenish shields
 			if (status != null)
@@ -1020,7 +1025,7 @@ namespace FrEee.Game.Objects.Space
 			if (status != null)
 				status.Progress += progressPerOperation;
 
-			Current.SpaceObjectIDCheck("after shield replenishment");
+			//Current.SpaceObjectIDCheck("after shield replenishment");
 
 			// ship movement
 			if (status != null)
@@ -1051,7 +1056,7 @@ namespace FrEee.Game.Objects.Space
 				if (status != null && Current.NextTickSize != double.PositiveInfinity)
 					status.Progress += progressPerOperation * Current.NextTickSize;
 
-				Current.SpaceObjectIDCheck("after ship movement at T=" + Current.Timestamp);
+				//Current.SpaceObjectIDCheck("after ship movement at T=" + Current.Timestamp);
 
 				Current.DisableAbilityCache();
 			}
@@ -1223,7 +1228,7 @@ namespace FrEee.Game.Objects.Space
 					w.Dispose();
 			}
 
-			Current.SpaceObjectIDCheck("after cleanup");
+			//Current.SpaceObjectIDCheck("after cleanup");
 
 			// end of turn scripts
 			if (status != null)
@@ -1233,9 +1238,9 @@ namespace FrEee.Game.Objects.Space
 				status.Progress += progressPerOperation;
 
 			// delete any floating space objects that are unused
-			Current.SpaceObjectCleanup();
+			//Current.SpaceObjectCleanup();
 
-			Current.SpaceObjectIDCheck("at end of turn");
+			//Current.SpaceObjectIDCheck("at end of turn");
 
 			return missingPlrs;
 		}
@@ -1684,6 +1689,8 @@ namespace FrEee.Game.Objects.Space
 				bool dispose = true;
 				if (sobj.Sector != null)
 					dispose = false; // save space objects that are in space
+				else if (this is IUnit u && u.FindContainer() != null) // save units that are in cargo
+					dispose = false;
 				else if (Mod.Current.StellarObjectTemplates.Contains(sobj as StellarObject))
 					dispose = false; // save stellar objects that are part of the mod templates
 				else if (Referrables.OfType<ConstructionQueue>().Any(q => q.Orders.Any(o => o.Item == sobj as IConstructable)))
