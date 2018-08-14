@@ -316,7 +316,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Cargo == null)
 					return Enumerable.Empty<Component>();
-				return Cargo.Units.OfType<WeaponPlatform>().SelectMany(wp => wp.Weapons);
+				return Cargo.Units.OfType<WeaponPlatform>().SelectMany(wp => wp.Weapons).Where(x => !x.IsDestroyed);
 			}
 		}
 
