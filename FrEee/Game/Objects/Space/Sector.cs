@@ -64,7 +64,7 @@ namespace FrEee.Game.Objects.Space
 			if (sobj is IUnit)
 			{
 				var u = (IUnit)sobj;
-				u.Container.RemoveUnit(u);
+				u.Container?.RemoveUnit(u);
 			}
 
 			// place in space if it's actually in space
