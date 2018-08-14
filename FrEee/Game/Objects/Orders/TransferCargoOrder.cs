@@ -35,7 +35,7 @@ namespace FrEee.Game.Objects.Orders
 		/// The cargo transferrer to which the cargo will be transferred, or null to launch/recover to/from space.
 		/// </summary>
 		[DoNotSerialize]
-		public ICargoTransferrer Target { get { return target.Value; } set { target = value.ReferViaGalaxy(); } }
+		public ICargoTransferrer Target { get { return target?.Value; } set { target = value.ReferViaGalaxy(); } }
 
 		/// <summary>
 		/// True if this is a load order, false if it is a drop order.
