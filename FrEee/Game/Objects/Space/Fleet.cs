@@ -373,20 +373,28 @@ namespace FrEee.Game.Objects.Space
 				// sharing supplies should not affect abilities
 				bool wasCacheDisabled = !Galaxy.Current.IsAbilityCacheEnabled;
 				if (wasCacheDisabled)
-					Galaxy.Current.EnableAbilityCache(); 
+					Galaxy.Current.EnableAbilityCache();
 
 				foreach (var sobj in Vehicles)
 				{
+					if (storage == 0)
+					{
+						sobj.SupplyRemaining = 0;
+						continue;
+					}
 					var amount = (int)Math.Floor((double)sobj.SupplyStorage / (double)storage * available);
 					sobj.SupplyRemaining = amount;
 					spent += amount;
 				}
 				var roundingError = available - spent;
-				while (roundingError > 0)
+				if (storage > 0)
 				{
-					var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
-					sobj2.SupplyRemaining += 1;
-					roundingError -= 1;
+					while (roundingError > 0)
+					{
+						var sobj2 = Vehicles.WithMin(sobj => (double)sobj.SupplyRemaining / (double)sobj.SupplyStorage).PickRandom();
+						sobj2.SupplyRemaining += 1;
+						roundingError -= 1;
+					}
 				}
 
 				if (wasCacheDisabled)
