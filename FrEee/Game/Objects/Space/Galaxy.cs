@@ -847,8 +847,8 @@ namespace FrEee.Game.Objects.Space
 				status.Message = "Generating resources";
 
 			// resource generation 1: colony income
-			Current.FindSpaceObjects<Planet>().Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
-
+			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
+			
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
 			var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
