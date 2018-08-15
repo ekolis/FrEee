@@ -1394,6 +1394,9 @@ namespace FrEee.Game.Objects.Space
 				if (sys == null)
 					continue; // space object is dead, or not done being built
 
+				if (CurrentTick == 0d && !v.Orders.OfType<IMovementOrder>().Any())
+					v.DealWithMines();
+
 				bool didStuff = v.ExecuteOrders();
 				if (!sys.ExploredByEmpires.Contains(v.Owner))
 					sys.ExploredByEmpires.Add(v.Owner);
