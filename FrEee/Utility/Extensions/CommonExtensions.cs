@@ -2654,7 +2654,7 @@ namespace FrEee.Utility.Extensions
 				foreach (var emp in Galaxy.Current.Empires)
 				{
 					var sys = (obj as ILocated)?.StarSystem;
-					if (obj.CheckVisibility(emp) >= Visibility.Visible || sys != null && Battle.Previous.Any(x => x.StarSystem == sys))
+					if (obj.CheckVisibility(emp) >= Visibility.Visible)
 					{
 						emp.UpdateMemory(obj);
 						if (message != null && !empiresToSkipMessage.Contains(emp))
