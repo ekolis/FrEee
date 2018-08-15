@@ -726,6 +726,10 @@ namespace FrEee.Game.Objects.Civilization
 			Galaxy.Current.UnassignID(this);
 			if (Galaxy.Current.Empires.Contains(this))
 				Galaxy.Current.Empires[Galaxy.Current.Empires.IndexOf(this)] = null;
+			foreach (var x in OwnedSpaceObjects.OfType<SpaceVehicle>().ToArray())
+				x.Dispose();
+			foreach (var x in ColonizedPlanets.ToArray())
+				x.Colony.Dispose();
 		}
 
 		/// <summary>

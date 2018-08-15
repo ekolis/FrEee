@@ -29,53 +29,53 @@
 		private void InitializeComponent()
 		{
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.panel6 = new System.Windows.Forms.Panel();
-			this.panel5 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.chkHideObsolete = new System.Windows.Forms.CheckBox();
-			this.chkForeign = new System.Windows.Forms.CheckBox();
-			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.label1 = new System.Windows.Forms.Label();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.lblQuantityUnit = new System.Windows.Forms.Label();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.panel4 = new System.Windows.Forms.Panel();
 			this.gamePanel6 = new FrEee.WinForms.Controls.GamePanel();
 			this.designReport = new FrEee.WinForms.Controls.DesignReport();
+			this.panel6 = new System.Windows.Forms.Panel();
 			this.btnRemoveCargo = new FrEee.WinForms.Controls.GameButton();
 			this.btnAddUnit = new FrEee.WinForms.Controls.GameButton();
 			this.btnDuplicateCargo = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel5 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstCargo = new System.Windows.Forms.ListView();
+			this.panel5 = new System.Windows.Forms.Panel();
 			this.btnRemoveSpaceObject = new FrEee.WinForms.Controls.GameButton();
 			this.btnAddPlanet = new FrEee.WinForms.Controls.GameButton();
 			this.btnAddVehicle = new FrEee.WinForms.Controls.GameButton();
 			this.btnDuplicateSpaceObject = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel4 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstSpaceObjects = new System.Windows.Forms.ListView();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.chkHideObsolete = new System.Windows.Forms.CheckBox();
+			this.chkForeign = new System.Windows.Forms.CheckBox();
+			this.ddlVehicleType = new System.Windows.Forms.ComboBox();
 			this.gamePanel1 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstDesigns = new System.Windows.Forms.ListView();
 			this.colDesign = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.colTotalCost = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+			this.label2 = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.lblQuantityUnit = new System.Windows.Forms.Label();
 			this.btnCancel = new FrEee.WinForms.Controls.GameButton();
 			this.btnOK = new FrEee.WinForms.Controls.GameButton();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.panel4 = new System.Windows.Forms.Panel();
 			this.btnDuplicateEmpire = new FrEee.WinForms.Controls.GameButton();
 			this.btnRemoveEmpire = new FrEee.WinForms.Controls.GameButton();
 			this.gamePanel3 = new FrEee.WinForms.Controls.GamePanel();
 			this.lstEmpires = new System.Windows.Forms.ListView();
 			this.gamePanel2 = new FrEee.WinForms.Controls.GamePanel();
 			this.tableLayoutPanel1.SuspendLayout();
+			this.gamePanel6.SuspendLayout();
 			this.panel6.SuspendLayout();
+			this.gamePanel5.SuspendLayout();
 			this.panel5.SuspendLayout();
+			this.gamePanel4.SuspendLayout();
 			this.panel2.SuspendLayout();
+			this.gamePanel1.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
 			this.panel4.SuspendLayout();
-			this.gamePanel6.SuspendLayout();
-			this.gamePanel5.SuspendLayout();
-			this.gamePanel4.SuspendLayout();
-			this.gamePanel1.SuspendLayout();
 			this.gamePanel3.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -106,147 +106,6 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(1098, 654);
 			this.tableLayoutPanel1.TabIndex = 1;
 			// 
-			// panel6
-			// 
-			this.panel6.Controls.Add(this.btnRemoveCargo);
-			this.panel6.Controls.Add(this.btnAddUnit);
-			this.panel6.Controls.Add(this.btnDuplicateCargo);
-			this.panel6.Controls.Add(this.gamePanel5);
-			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel6.Location = new System.Drawing.Point(714, 431);
-			this.panel6.Name = "panel6";
-			this.panel6.Size = new System.Drawing.Size(381, 196);
-			this.panel6.TabIndex = 22;
-			// 
-			// panel5
-			// 
-			this.panel5.Controls.Add(this.btnRemoveSpaceObject);
-			this.panel5.Controls.Add(this.btnAddPlanet);
-			this.panel5.Controls.Add(this.btnAddVehicle);
-			this.panel5.Controls.Add(this.btnDuplicateSpaceObject);
-			this.panel5.Controls.Add(this.gamePanel4);
-			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel5.Location = new System.Drawing.Point(714, 229);
-			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(381, 196);
-			this.panel5.TabIndex = 21;
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.chkHideObsolete);
-			this.panel2.Controls.Add(this.chkForeign);
-			this.panel2.Controls.Add(this.ddlVehicleType);
-			this.panel2.Controls.Add(this.gamePanel1);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(3, 27);
-			this.panel2.Name = "panel2";
-			this.tableLayoutPanel1.SetRowSpan(this.panel2, 3);
-			this.panel2.Size = new System.Drawing.Size(380, 600);
-			this.panel2.TabIndex = 18;
-			// 
-			// chkHideObsolete
-			// 
-			this.chkHideObsolete.AutoSize = true;
-			this.chkHideObsolete.Checked = true;
-			this.chkHideObsolete.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkHideObsolete.Location = new System.Drawing.Point(3, 30);
-			this.chkHideObsolete.Name = "chkHideObsolete";
-			this.chkHideObsolete.Size = new System.Drawing.Size(93, 17);
-			this.chkHideObsolete.TabIndex = 8;
-			this.chkHideObsolete.Text = "Hide Obsolete";
-			this.chkHideObsolete.UseVisualStyleBackColor = true;
-			this.chkHideObsolete.CheckedChanged += new System.EventHandler(this.chkHideObsolete_CheckedChanged);
-			// 
-			// chkForeign
-			// 
-			this.chkForeign.AutoSize = true;
-			this.chkForeign.Location = new System.Drawing.Point(96, 30);
-			this.chkForeign.Name = "chkForeign";
-			this.chkForeign.Size = new System.Drawing.Size(102, 17);
-			this.chkForeign.TabIndex = 7;
-			this.chkForeign.Text = "Foreign Designs";
-			this.chkForeign.UseVisualStyleBackColor = true;
-			this.chkForeign.CheckedChanged += new System.EventHandler(this.chkForeign_CheckedChanged);
-			// 
-			// ddlVehicleType
-			// 
-			this.ddlVehicleType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ddlVehicleType.DisplayMember = "Name";
-			this.ddlVehicleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.ddlVehicleType.FormattingEnabled = true;
-			this.ddlVehicleType.Location = new System.Drawing.Point(3, 3);
-			this.ddlVehicleType.Name = "ddlVehicleType";
-			this.ddlVehicleType.Size = new System.Drawing.Size(377, 21);
-			this.ddlVehicleType.TabIndex = 6;
-			this.ddlVehicleType.ValueMember = "VehicleTypes";
-			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
-			// 
-			// label2
-			// 
-			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label2.AutoSize = true;
-			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label2.Location = new System.Drawing.Point(714, 8);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(155, 16);
-			this.label2.TabIndex = 3;
-			this.label2.Text = "Empires/Vehicles/Cargo";
-			// 
-			// label1
-			// 
-			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.label1.AutoSize = true;
-			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-			this.label1.Location = new System.Drawing.Point(3, 8);
-			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(118, 16);
-			this.label1.TabIndex = 2;
-			this.label1.Text = "Available Designs";
-			// 
-			// panel1
-			// 
-			this.panel1.Controls.Add(this.lblQuantityUnit);
-			this.panel1.Controls.Add(this.btnCancel);
-			this.panel1.Controls.Add(this.btnOK);
-			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel1.Location = new System.Drawing.Point(711, 630);
-			this.panel1.Margin = new System.Windows.Forms.Padding(0);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(387, 24);
-			this.panel1.TabIndex = 11;
-			// 
-			// lblQuantityUnit
-			// 
-			this.lblQuantityUnit.AutoSize = true;
-			this.lblQuantityUnit.Location = new System.Drawing.Point(3, 6);
-			this.lblQuantityUnit.Name = "lblQuantityUnit";
-			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
-			this.lblQuantityUnit.TabIndex = 2;
-			// 
-			// panel3
-			// 
-			this.panel3.Controls.Add(this.panel4);
-			this.panel3.Controls.Add(this.gamePanel2);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel3.Location = new System.Drawing.Point(714, 27);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(381, 196);
-			this.panel3.TabIndex = 20;
-			// 
-			// panel4
-			// 
-			this.panel4.Controls.Add(this.btnDuplicateEmpire);
-			this.panel4.Controls.Add(this.btnRemoveEmpire);
-			this.panel4.Controls.Add(this.gamePanel3);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(0, 0);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(381, 196);
-			this.panel4.TabIndex = 23;
-			// 
 			// gamePanel6
 			// 
 			this.gamePanel6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -275,6 +134,18 @@
 			this.designReport.Name = "designReport";
 			this.designReport.Size = new System.Drawing.Size(317, 414);
 			this.designReport.TabIndex = 1;
+			// 
+			// panel6
+			// 
+			this.panel6.Controls.Add(this.btnRemoveCargo);
+			this.panel6.Controls.Add(this.btnAddUnit);
+			this.panel6.Controls.Add(this.btnDuplicateCargo);
+			this.panel6.Controls.Add(this.gamePanel5);
+			this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel6.Location = new System.Drawing.Point(714, 431);
+			this.panel6.Name = "panel6";
+			this.panel6.Size = new System.Drawing.Size(381, 196);
+			this.panel6.TabIndex = 22;
 			// 
 			// btnRemoveCargo
 			// 
@@ -345,6 +216,19 @@
 			this.lstCargo.TabIndex = 0;
 			this.lstCargo.UseCompatibleStateImageBehavior = false;
 			this.lstCargo.View = System.Windows.Forms.View.List;
+			// 
+			// panel5
+			// 
+			this.panel5.Controls.Add(this.btnRemoveSpaceObject);
+			this.panel5.Controls.Add(this.btnAddPlanet);
+			this.panel5.Controls.Add(this.btnAddVehicle);
+			this.panel5.Controls.Add(this.btnDuplicateSpaceObject);
+			this.panel5.Controls.Add(this.gamePanel4);
+			this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel5.Location = new System.Drawing.Point(714, 229);
+			this.panel5.Name = "panel5";
+			this.panel5.Size = new System.Drawing.Size(381, 196);
+			this.panel5.TabIndex = 21;
 			// 
 			// btnRemoveSpaceObject
 			// 
@@ -430,6 +314,57 @@
 			this.lstSpaceObjects.View = System.Windows.Forms.View.List;
 			this.lstSpaceObjects.SelectedIndexChanged += new System.EventHandler(this.lstSpaceObjects_SelectedIndexChanged);
 			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.chkHideObsolete);
+			this.panel2.Controls.Add(this.chkForeign);
+			this.panel2.Controls.Add(this.ddlVehicleType);
+			this.panel2.Controls.Add(this.gamePanel1);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel2.Location = new System.Drawing.Point(3, 27);
+			this.panel2.Name = "panel2";
+			this.tableLayoutPanel1.SetRowSpan(this.panel2, 3);
+			this.panel2.Size = new System.Drawing.Size(380, 600);
+			this.panel2.TabIndex = 18;
+			// 
+			// chkHideObsolete
+			// 
+			this.chkHideObsolete.AutoSize = true;
+			this.chkHideObsolete.Checked = true;
+			this.chkHideObsolete.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkHideObsolete.Location = new System.Drawing.Point(3, 30);
+			this.chkHideObsolete.Name = "chkHideObsolete";
+			this.chkHideObsolete.Size = new System.Drawing.Size(93, 17);
+			this.chkHideObsolete.TabIndex = 8;
+			this.chkHideObsolete.Text = "Hide Obsolete";
+			this.chkHideObsolete.UseVisualStyleBackColor = true;
+			this.chkHideObsolete.CheckedChanged += new System.EventHandler(this.chkHideObsolete_CheckedChanged);
+			// 
+			// chkForeign
+			// 
+			this.chkForeign.AutoSize = true;
+			this.chkForeign.Location = new System.Drawing.Point(96, 30);
+			this.chkForeign.Name = "chkForeign";
+			this.chkForeign.Size = new System.Drawing.Size(102, 17);
+			this.chkForeign.TabIndex = 7;
+			this.chkForeign.Text = "Foreign Designs";
+			this.chkForeign.UseVisualStyleBackColor = true;
+			this.chkForeign.CheckedChanged += new System.EventHandler(this.chkForeign_CheckedChanged);
+			// 
+			// ddlVehicleType
+			// 
+			this.ddlVehicleType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ddlVehicleType.DisplayMember = "Name";
+			this.ddlVehicleType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.ddlVehicleType.FormattingEnabled = true;
+			this.ddlVehicleType.Location = new System.Drawing.Point(3, 3);
+			this.ddlVehicleType.Name = "ddlVehicleType";
+			this.ddlVehicleType.Size = new System.Drawing.Size(377, 21);
+			this.ddlVehicleType.TabIndex = 6;
+			this.ddlVehicleType.ValueMember = "VehicleTypes";
+			this.ddlVehicleType.SelectedIndexChanged += new System.EventHandler(this.ddlVehicleType_SelectedIndexChanged);
+			// 
 			// gamePanel1
 			// 
 			this.gamePanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -474,6 +409,50 @@
 			this.colTotalCost.Text = "Cost";
 			this.colTotalCost.Width = 50;
 			// 
+			// label2
+			// 
+			this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label2.AutoSize = true;
+			this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label2.Location = new System.Drawing.Point(714, 8);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(155, 16);
+			this.label2.TabIndex = 3;
+			this.label2.Text = "Empires/Vehicles/Cargo";
+			// 
+			// label1
+			// 
+			this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.label1.AutoSize = true;
+			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
+			this.label1.Location = new System.Drawing.Point(3, 8);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(118, 16);
+			this.label1.TabIndex = 2;
+			this.label1.Text = "Available Designs";
+			// 
+			// panel1
+			// 
+			this.panel1.Controls.Add(this.lblQuantityUnit);
+			this.panel1.Controls.Add(this.btnCancel);
+			this.panel1.Controls.Add(this.btnOK);
+			this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel1.Location = new System.Drawing.Point(711, 630);
+			this.panel1.Margin = new System.Windows.Forms.Padding(0);
+			this.panel1.Name = "panel1";
+			this.panel1.Size = new System.Drawing.Size(387, 24);
+			this.panel1.TabIndex = 11;
+			// 
+			// lblQuantityUnit
+			// 
+			this.lblQuantityUnit.AutoSize = true;
+			this.lblQuantityUnit.Location = new System.Drawing.Point(3, 6);
+			this.lblQuantityUnit.Name = "lblQuantityUnit";
+			this.lblQuantityUnit.Size = new System.Drawing.Size(0, 13);
+			this.lblQuantityUnit.TabIndex = 2;
+			// 
 			// btnCancel
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -502,6 +481,27 @@
 			this.btnOK.Text = "OK";
 			this.btnOK.UseVisualStyleBackColor = false;
 			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.panel4);
+			this.panel3.Controls.Add(this.gamePanel2);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel3.Location = new System.Drawing.Point(714, 27);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(381, 196);
+			this.panel3.TabIndex = 20;
+			// 
+			// panel4
+			// 
+			this.panel4.Controls.Add(this.btnDuplicateEmpire);
+			this.panel4.Controls.Add(this.btnRemoveEmpire);
+			this.panel4.Controls.Add(this.gamePanel3);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(0, 0);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(381, 196);
+			this.panel4.TabIndex = 23;
 			// 
 			// btnDuplicateEmpire
 			// 
@@ -585,20 +585,21 @@
 			this.ForeColor = System.Drawing.Color.White;
 			this.Name = "CombatSimulatorForm";
 			this.Text = "Combat Simulator";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CombatSimulatorForm_FormClosed);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
+			this.gamePanel6.ResumeLayout(false);
 			this.panel6.ResumeLayout(false);
+			this.gamePanel5.ResumeLayout(false);
 			this.panel5.ResumeLayout(false);
+			this.gamePanel4.ResumeLayout(false);
 			this.panel2.ResumeLayout(false);
 			this.panel2.PerformLayout();
+			this.gamePanel1.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel3.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
-			this.gamePanel6.ResumeLayout(false);
-			this.gamePanel5.ResumeLayout(false);
-			this.gamePanel4.ResumeLayout(false);
-			this.gamePanel1.ResumeLayout(false);
 			this.gamePanel3.ResumeLayout(false);
 			this.ResumeLayout(false);
 
