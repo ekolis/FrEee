@@ -245,9 +245,20 @@ namespace FrEee.WinForms.Forms
 				levels[tech]++; // so we can research the same tech multiple times with the appropriate cost for each level
 				var eta = Empire.Current.GetResearchProgress(tech, levels[tech]).Eta;
 				if (eta == null)
-					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
+				{
+					if (tech.MaximumLevel == 1 && levels[tech] == 1)
+						lstQueue.Items.Add(tech.Name + " (never)");
+					else
+						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (never)");
+
+				}
 				else
-					lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
+				{
+					if (tech.MaximumLevel == 1 && levels[tech] == 1)
+						lstQueue.Items.Add(tech.Name + " (" + eta + " turns)");
+					else
+						lstQueue.Items.Add(tech.Name + " L" + levels[tech] + " (" + eta + " turns)");
+				}
 				idx++;
 			}
 		}
