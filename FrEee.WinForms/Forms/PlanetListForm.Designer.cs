@@ -33,6 +33,7 @@ namespace FrEee.WinForms.Forms
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
+			FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode presenceMode1 = new FrEee.WinForms.Objects.GalaxyViewModes.PresenceMode();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.galaxyView = new FrEee.WinForms.Controls.GalaxyView();
 			this.pnlHeader = new FrEee.WinForms.Controls.GamePanel();
@@ -106,8 +107,10 @@ namespace FrEee.WinForms.Forms
 			// galaxyView
 			// 
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
+			this.galaxyView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
 			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.galaxyView.Location = new System.Drawing.Point(403, 3);
+			this.galaxyView.Mode = presenceMode1;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
 			this.galaxyView.Size = new System.Drawing.Size(754, 194);
