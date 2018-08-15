@@ -893,5 +893,7 @@ namespace FrEee.Game.Objects.Space
 		public bool CanBeObscured => true;
 
 		public double MerchantsRatio => Owner.HasAbility("No Spaceports") ? 1.0 : 0.0;
+
+		public bool IsAlive => Vehicles.Any(x => x.IsAlive);
 	}
 }

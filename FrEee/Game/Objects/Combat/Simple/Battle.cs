@@ -150,10 +150,10 @@ namespace FrEee.Game.Objects.Combat.Simple
 				}
 				foreach (var attacker in Combatants.Shuffle(Dice).Where(sobj => sobj.Weapons.Any()).ToArray())
 				{
-					if (attacker.IsDestroyed)
+					if (!attacker.IsAlive)
 						continue;
 
-					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj) && !sobj.IsDestroyed);
+					var defenders = Combatants.Where(sobj => attacker.CanTarget(sobj) && sobj.IsAlive);
 					if (!defenders.Any())
 						continue; // no one to shoot at
 					var defender = defenders.PickRandom(Dice);
@@ -310,7 +310,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 				return "battle"; // no empire specified
 			if (!Combatants.Any(c => c.Owner == emp || (c.Owner?.IsAllyOf(emp, StarSystem) ?? false))) // TODO - determine prior owner of glassed planets
 				return "battle"; // empire/allies not involved
-			var survivors = Combatants.Where(c => !c.IsDestroyed && c.Owner != null); // glassed planets aren't destroyed but they do have null owners
+			var survivors = Combatants.Where(c => c.IsAlive);
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
 			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
 			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
