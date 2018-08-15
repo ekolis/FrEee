@@ -112,7 +112,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Current.Add(this);
 			var reloads = new SafeDictionary<Component, double>();
 			var seekers = new Dictionary<Seeker, int>();
-			
+
 			// let all combatants scan each other
 			foreach (var c in Combatants)
 				c.UpdateEmpireMemories();
@@ -216,14 +216,19 @@ namespace FrEee.Game.Objects.Combat.Simple
 			// replenish combatants' shields
 			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatant>())
 				combatant.ReplenishShields();
-			
+
 			// mark battle complete
 			Current.Remove(this);
 			Previous.Add(this);
 
 			// update memories
-			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
-				sobj.UpdateEmpireMemories();
+			foreach (var sobj in Combatants.OfType<ISpaceObject>().Where(x => !x.IsMemory).ToArray())
+			{
+				foreach (var emp in Empires)
+				{
+					emp.UpdateMemory(sobj); ;
+				}
+			}
 		}
 
 		public IList<LogMessage> Log { get; private set; }
