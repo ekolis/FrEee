@@ -57,10 +57,23 @@ namespace FrEee.WinForms.Forms
 					{
 						// facilities
 						var fnode = ftnode.AddItemWithImage(f.Name, f, f.Icon);
-						// TODO - show orders to scrap/etc. facilities
+						var orders = Empire.Current.Commands.OfType<AddOrderCommand<Planet>>()
+							.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == p && o.Target == f)
+							.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
+						if (orders.Any())
+						{
+							fnode.Text += $" ({string.Join(", ", orders)})";
+							var n = fnode.Parent;
+							while (n != null)
+							{
+								if (!n.Text.EndsWith("*"))
+									n.Text += " *";
+								n = n.Parent;
+							}
+						}
 					}
 				}
-				
+
 				// cargo of planets
 				BindUnitsIn(p, pnode);
 			}
@@ -69,7 +82,20 @@ namespace FrEee.WinForms.Forms
 				// our space vehicles
 				var vnode = treeVehicles.AddItemWithImage(v.Name, v, v.Icon);
 				BindUnitsIn(v, vnode);
-				// TODO - show orders to scrap/etc. space vehicles
+				var orders = Empire.Current.Commands.OfType<AddOrderCommand<SpaceVehicle>>()
+					.Where(x => x.Order is RecycleVehicleInSpaceOrder && x.Executor == v)
+					.Select(x => ((RecycleVehicleInSpaceOrder)x.Order).Behavior.Verb);
+				if (orders.Any())
+				{
+					vnode.Text += $" ({string.Join(", ", orders)})";
+					var n = vnode.Parent;
+					while (n != null)
+					{
+						if (!n.Text.EndsWith("*"))
+							n.Text += " *";
+						n = n.Parent;
+					}
+				}
 			}
 		}
 
@@ -91,8 +117,21 @@ namespace FrEee.WinForms.Forms
 					foreach (var u in ud)
 					{
 						// units
-						udnode.AddItemWithImage(u.Name, u, u.Icon);
-						// TODO - show orders to scrap/etc. units
+						var unode = udnode.AddItemWithImage(u.Name, u, u.Icon);
+						var orders = Empire.Current.Commands.OfType<AddOrderCommand<IMobileSpaceObject>>()
+							.Where(x => x.Order is RecycleFacilityOrCargoOrder o && x.Executor == cc && o.Target == u)
+							.Select(x => ((RecycleFacilityOrCargoOrder)x.Order).Behavior.Verb);
+						if (orders.Any())
+						{
+							unode.Text += $" ({string.Join(", ", orders)})";
+							var n = unode.Parent;
+							while (n != null)
+							{
+								if (!n.Text.EndsWith("*"))
+									n.Text += " *";
+								n = n.Parent;
+							}
+						}
 					}
 				}
 			}
@@ -111,6 +150,7 @@ namespace FrEee.WinForms.Forms
 				AddCommand(new AddOrderCommand<SpaceVehicle>(v, new RecycleVehicleInSpaceOrder(new ScrapBehavior())));
 			foreach (var u in SelectedUnitsInCargo)
 				AddCommand(new AddOrderCommand<IMobileSpaceObject>((IMobileSpaceObject)u.Container, new RecycleFacilityOrCargoOrder(new ScrapBehavior(), u)));
+			Bind();
 		}
 
 		private void btnMothball_Click(object sender, EventArgs e)
@@ -216,7 +256,7 @@ namespace FrEee.WinForms.Forms
 			if (!doneCleanup && newCommands.Any())
 			{
 				// TODO - summarize changes in dialog in more detail
-				var choice = MessageBox.Show("Save changes? " + newCommands + " orders were issued.", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+				var choice = MessageBox.Show("Save changes? " + newCommands.Count + " orders were issued.", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
 				if (choice == DialogResult.Yes)
 				{
 					// save any changes
@@ -242,6 +282,26 @@ namespace FrEee.WinForms.Forms
 		{
 			newCommands.Add(cmd);
 			Empire.Current.Commands.Add(cmd);
+		}
+
+		// https://stackoverflow.com/questions/5740585/how-to-automatically-select-or-deselect-the-all-child-nodes-whenever-its-parent
+		private void CheckTreeViewNode(TreeNode node, Boolean isChecked)
+		{
+			foreach (TreeNode item in node.Nodes)
+			{
+				item.Checked = isChecked;
+
+				if (item.Nodes.Count > 0)
+				{
+					this.CheckTreeViewNode(item, isChecked);
+				}
+			}
+		}
+
+		private void treeVehicles_AfterCheck(object sender, TreeViewEventArgs e)
+		{
+			// recursively check/uncheck descendant nodes
+			CheckTreeViewNode(e.Node, e.Node.Checked);
 		}
 	}
 }
