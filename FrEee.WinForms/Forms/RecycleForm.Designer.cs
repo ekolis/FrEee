@@ -53,6 +53,7 @@
 			this.treeVehicles.Name = "treeVehicles";
 			this.treeVehicles.Size = new System.Drawing.Size(523, 491);
 			this.treeVehicles.TabIndex = 19;
+			this.treeVehicles.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeVehicles_AfterCheck);
 			// 
 			// label1
 			// 
