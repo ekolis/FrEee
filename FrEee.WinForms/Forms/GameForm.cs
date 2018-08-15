@@ -1442,7 +1442,10 @@ namespace FrEee.WinForms.Forms
 				var tech = techs.Where(t => t.Progress.Eta == minEta).First();
 
 				progResearch.Progress = tech.Progress;
-				progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
+				if (tech.MaximumLevel == 1)
+					progResearch.LeftText = tech.Name;
+				else
+					progResearch.LeftText = tech.Name + " L" + (tech.CurrentLevel + 1);
 				if (tech.Progress.Eta == null)
 					progResearch.RightText = "Never";
 				else
