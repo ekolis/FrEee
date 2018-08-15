@@ -324,9 +324,11 @@ namespace FrEee.WinForms.Forms
 				{
 					case DialogResult.Yes:
 						SaveCommands();
+						DialogResult = DialogResult.OK;
 						break;
 					case DialogResult.No:
 						CancelChanges();
+						DialogResult = DialogResult.Cancel;
 						break;
 					case DialogResult.Cancel:
 						e.Cancel = true;
