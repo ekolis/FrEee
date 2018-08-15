@@ -108,12 +108,12 @@ namespace FrEee.WinForms.Forms
 			// 
 			this.galaxyView.BackColor = System.Drawing.Color.Black;
 			this.galaxyView.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.galaxyView.Dock = System.Windows.Forms.DockStyle.Left;
 			this.galaxyView.Location = new System.Drawing.Point(403, 3);
 			this.galaxyView.Mode = presenceMode1;
 			this.galaxyView.Name = "galaxyView";
 			this.galaxyView.SelectedStarSystem = null;
-			this.galaxyView.Size = new System.Drawing.Size(754, 194);
+			this.galaxyView.Size = new System.Drawing.Size(226, 194);
 			this.galaxyView.TabIndex = 22;
 			this.galaxyView.Text = "galaxyView1";
 			// 
