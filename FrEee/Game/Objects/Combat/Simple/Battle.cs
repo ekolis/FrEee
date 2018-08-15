@@ -25,6 +25,11 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Log = new List<LogMessage>();
 			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
 			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
+			foreach (var c in Combatants)
+			{
+				OriginalHitpoints[c] = c.ArmorHitpoints + c.HullHitpoints;
+				OriginalOwners[c] = c.Owner;
+			}
 
 			double stardate = Galaxy.Current.Timestamp;
 			int moduloID = (int)(Sector.StarSystem.ID % 100000);
@@ -37,6 +42,16 @@ namespace FrEee.Game.Objects.Combat.Simple
 			Current = new HashSet<Battle>();
 			Previous = new HashSet<Battle>();
 		}
+
+		/// <summary>
+		/// Who originally owned each combatant?
+		/// </summary>
+		public SafeDictionary<ICombatant, Empire> OriginalOwners { get; private set; } = new SafeDictionary<ICombatant, Empire>();
+
+		/// <summary>
+		/// Starting HP of all combatants.
+		/// </summary>
+		public SafeDictionary<ICombatant, int> OriginalHitpoints { get; private set; } = new SafeDictionary<ICombatant, int>();
 
 		public PRNG Dice { get; set; }
 
@@ -308,7 +323,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 		{
 			if (emp == null)
 				return "battle"; // no empire specified
-			if (!Combatants.Any(c => c.Owner == emp || (c.Owner?.IsAllyOf(emp, StarSystem) ?? false))) // TODO - determine prior owner of glassed planets
+			if (!Combatants.Any(c => c.Owner == emp || (OriginalOwners[c]?.IsAllyOf(emp, StarSystem) ?? false)))
 				return "battle"; // empire/allies not involved
 			var survivors = Combatants.Where(c => c.IsAlive);
 			var ourSurvivors = survivors.Where(c => c.Owner == emp);
