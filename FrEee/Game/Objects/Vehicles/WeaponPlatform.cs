@@ -52,6 +52,8 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public override bool IsObsoleteMemory(Empire emp)
 		{
+			if (Container == null)
+				return this.MemoryOwner() == emp && Timestamp < Galaxy.Current.Timestamp - 1;
 			return Container.StarSystem.CheckVisibility(emp) >= Visibility.Visible && Timestamp < Galaxy.Current.Timestamp - 1;
 		}
 
