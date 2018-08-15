@@ -307,5 +307,10 @@ namespace FrEee.WinForms.Forms
 				btnAddVehicle_Click(sender, new EventArgs()); // click the add vehicle button
 		}
 
+		private void CombatSimulatorForm_FormClosed(object sender, FormClosedEventArgs e)
+		{
+			foreach (var se in Empires)
+				se.Empire.Dispose();
+		}
 	}
 }
