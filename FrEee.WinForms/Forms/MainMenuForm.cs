@@ -86,7 +86,20 @@ namespace FrEee.WinForms.Forms
 						MessageBox.Show(warnings.First(), "Game Setup Error");
 					else
 					{
-						// TODO - let player pick his empire even with quickstart, replacing the player 1 empire?
+						var dlg = new OpenFileDialog();
+						dlg.InitialDirectory = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "Empires");
+						dlg.Filter = "Empires (*.emp)|*.emp";
+						var result = dlg.ShowDialog();
+						if (result == DialogResult.OK)
+						{
+							// replace existing first player with selected empire
+							var et = EmpireTemplate.Load(dlg.FileName);
+							setup.EmpireTemplates.RemoveAt(0);
+							setup.EmpireTemplates.Insert(0, et);
+
+							// set race trait points to however many were spent
+							setup.EmpirePoints = et.PointsSpent;
+						}
 
 						status.Message = "Setting up galaxy";
 						Galaxy.Initialize(setup, status, 1.0);
@@ -105,6 +118,7 @@ namespace FrEee.WinForms.Forms
 #endif
 			}));
 			t.Name = "Game Setup";
+			t.SetApartmentState(ApartmentState.STA);
 
 			this.ShowChildForm(new StatusForm(t, status));
 
