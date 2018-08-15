@@ -354,5 +354,7 @@ namespace FrEee.Game.Objects.Combat.Simple
 		}
 
 		public bool IsDisposed { get; set; }
+
+		public bool IsAlive => !IsDestroyed;
 	}
 }

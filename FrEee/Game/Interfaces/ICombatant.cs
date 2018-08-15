@@ -33,5 +33,10 @@ namespace FrEee.Game.Interfaces
 		/// Accuracy rating of this combatant.
 		/// </summary>
 		int Accuracy { get; }
+
+		/// <summary>
+		/// Is this combatant still alive or is it destroyed/glassed?
+		/// </summary>
+		bool IsAlive { get; }
     }
 }

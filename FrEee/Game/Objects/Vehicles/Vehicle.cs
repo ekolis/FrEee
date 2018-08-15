@@ -750,5 +750,7 @@ namespace FrEee.Game.Objects.Vehicles
 		}
 
 		public double MerchantsRatio => Owner.HasAbility("No Spaceports") ? 1.0 : 0.0;
+
+		public bool IsAlive => !IsDestroyed;
 	}
 }

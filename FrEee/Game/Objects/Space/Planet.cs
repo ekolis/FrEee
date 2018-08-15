@@ -299,6 +299,8 @@ namespace FrEee.Game.Objects.Space
 
 		public bool CanTarget(ITargetable target)
 		{
+			if (Cargo == null)
+				return false;
 			return Cargo.Units.OfType<WeaponPlatform>().Any(wp => wp.CanTarget(target));
 		}
 
@@ -1146,5 +1148,7 @@ namespace FrEee.Game.Objects.Space
 				return AllPopulation.Sum(x => (double)x.Value / (double)totalpop * (x.Key.HasAbility("No Spaceports") ? 1d : 0d));
 			}
 		}
+
+		public bool IsAlive => Colony != null;
 	}
 }
