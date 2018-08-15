@@ -261,6 +261,7 @@ namespace FrEee.WinForms.Forms
 				{
 					Design.Hull = form.Hull;
 					BindDesignData();
+					BindMountList();
 				}
 				else
 				{
