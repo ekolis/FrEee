@@ -692,24 +692,35 @@ namespace FrEee.Game.Objects.Space
 			return Name;
 		}
 
-		[DoNotSerialize]
+		private Sector sector;
+
 		public Sector Sector
 		{
 			get
 			{
-				return this.FindSector();
+				if (sector == null)
+					sector = this.FindSector();
+				return sector;
 			}
 			set
 			{
+				var oldsector = sector;
+				sector = value;
 				if (value == null)
 				{
-					if (Sector != null)
-						Sector.Remove(this);
+					if (oldsector != null)
+						oldsector.Remove(this);
 				}
 				else
-					value.Place(this);
-				foreach (var v in Vehicles)
-					value.Place(v, false); // don't remove the vehicles from the fleet!
+				{
+					if (oldsector != value)
+						value.Place(this);
+				}
+				if (value != null)
+				{
+					foreach (var v in Vehicles)
+						value.Place(v, false); // don't remove the vehicles from the fleet!
+				}
 			}
 		}
 

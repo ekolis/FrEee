@@ -286,7 +286,9 @@ namespace FrEee.Game.Objects.Vehicles
 		{
 			get
 			{
-				var fleets = Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
+				if (StarSystem == null)
+					return null;
+				var fleets = StarSystem.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
 				if (!fleets.Any())
 					return null;
 				if (fleets.Count() == 1)
@@ -323,24 +325,30 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		[DoNotSerialize]
+		private Sector sector;
+
 		public override Sector Sector
 		{
 			get
 			{
-				return this.FindSector();
+				if (sector == null)
+					sector = this.FindSector();
+				return sector;
 			}
 			set
 			{
+				var oldsector = sector;
+				sector = value;
 				if (value == null)
 				{
-					if (Sector != null)
-						Sector.Remove(this);
+					if (oldsector != null)
+						oldsector.Remove(this);
 				}
 				else
-					value.Place(this);
-				/*	foreach (var v in Cargo.Units.OfType<IMobileSpaceObject>().ToArray())
-					v.Sector = value;*/
+				{
+					if (oldsector != value)
+						value.Place(this);
+				}
 			}
 		}
 

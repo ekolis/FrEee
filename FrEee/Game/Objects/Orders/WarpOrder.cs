@@ -44,8 +44,8 @@ namespace FrEee.Game.Objects.Orders
 
 			if (!errors.Any())
 			{
-				var here = sobj.FindSector();
-				if (here == WarpPoint.FindSector())
+				var here = sobj.Sector;
+				if (here == WarpPoint.Sector)
 				{
 					// warp now!!!
 					here.Remove(sobj);

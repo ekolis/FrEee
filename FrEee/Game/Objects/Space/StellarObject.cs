@@ -200,28 +200,36 @@ namespace FrEee.Game.Objects.Space
 			get { return false; }
 		}
 
-		[DoNotSerialize]
+		private Sector sector;
+
 		public virtual Sector Sector
 		{
 			get
 			{
-				return this.FindSector();
+				if (sector == null)
+					sector = this.FindSector();
+				return sector;
 			}
 			set
 			{
+				var oldsector = sector;
+				sector = value;
 				if (value == null)
 				{
-					if (Sector != null)
-						Sector.Remove(this);
+					if (oldsector != null)
+						oldsector.Remove(this);
 				}
 				else
-					value.Place(this);
+				{
+					if (oldsector != value)
+						value.Place(this);
+				}
 			}
 		}
 
 		public StarSystem StarSystem
 		{
-			get { return this.FindStarSystem(); }
+			get { return Sector.StarSystem; }
 		}
 
 		public bool IsMemory

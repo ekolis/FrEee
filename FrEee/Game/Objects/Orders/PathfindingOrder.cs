@@ -164,7 +164,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public Sector Destination
 		{
-			get { return KnownTarget.FindSector(); }
+			get { return KnownTarget.Sector; }
 		}
 
 		public IDictionary<PathfinderNode<Sector>, ISet<PathfinderNode<Sector>>> CreateDijkstraMap(IMobileSpaceObject me, Sector start)
@@ -199,7 +199,7 @@ namespace FrEee.Game.Objects.Orders
 				IsComplete = true; // we've arrived at the target
 			else
 			{
-				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
 				if (gotoSector != null)
 				{
 					// move

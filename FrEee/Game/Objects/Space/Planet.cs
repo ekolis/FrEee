@@ -892,7 +892,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get { return Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
+			get { return StarSystem.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this)).SingleOrDefault(); }
 		}
 
 
