@@ -4059,6 +4059,8 @@ namespace FrEee.Utility.Extensions
 			{
 				var d = (IDamageable)sobj;
 				var sector = sobj.Sector;
+				if (sector == null)
+					return;
 
 				// shuffle up the mines so they hit in a random order
 				var mines = sector.SpaceObjects.OfType<Mine>().Union(sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.LeafVehicles.OfType<Mine>())).Where(m => m.IsHostileTo(sobj.Owner)).Shuffle().ToList();
