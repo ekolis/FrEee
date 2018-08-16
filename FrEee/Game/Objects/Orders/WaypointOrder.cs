@@ -146,12 +146,12 @@ namespace FrEee.Game.Objects.Orders
 		{
 			// TODO - movement logs
 			if (Target == null)
-				IsComplete = true; // target waypoint doesn'IMobileSpaceObject exist anymore
-			else if (sobj.FindSector() == Target.Sector)
+				IsComplete = true; // target waypoint doesn't exist anymore
+			else if (sobj.Sector == Target.Sector)
 				IsComplete = true; // we've arrived at the target
 			else
 			{
-				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
 				if (gotoSector != null)
 				{
 					// move

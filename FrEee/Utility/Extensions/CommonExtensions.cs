@@ -2429,7 +2429,7 @@ namespace FrEee.Utility.Extensions
 					return;
 				}
 			}
-			foreach (var container in target.FindSector().SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
+			foreach (var container in target.Sector.SpaceObjects.OfType<ICargoTransferrer>().Where(cc => cc.Owner == unit.Owner))
 			{
 				var cargo = container.Cargo;
 				if (cargo.Size + unit.Design.Hull.Size <= container.CargoStorage)
@@ -3345,7 +3345,7 @@ namespace FrEee.Utility.Extensions
 			if (!sobj.HasAbility("Scanner Jammer"))
 			{
 				var scanners = seers.Where(s =>
-					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.FindSector().Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
+					s.HasAbility("Long Range Scanner") && s.GetAbilityValue("Long Range Scanner").ToInt() >= s.Sector.Coordinates.EightWayDistance(sobj.FindSector().Coordinates)
 					|| s.HasAbility("Long Range Scanner - System"));
 				if (scanners.Any())
 					return Visibility.Scanned;

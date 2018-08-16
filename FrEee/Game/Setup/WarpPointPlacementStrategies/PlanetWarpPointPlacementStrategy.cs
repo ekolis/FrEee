@@ -32,7 +32,7 @@ namespace FrEee.Game.Setup.WarpPointPlacementStrategies
 			if (planets.Any())
 			{
 				var planet = planets.PickRandom();
-				return planet.FindSector();
+				return planet.Sector;
 			}
 			else
 				return RandomWarpPointPlacementStrategy.Instance.GetWarpPointSector(here, there);

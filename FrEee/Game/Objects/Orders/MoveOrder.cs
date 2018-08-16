@@ -64,14 +64,14 @@ namespace FrEee.Game.Objects.Orders
 		public void Execute(IMobileSpaceObject sobj)
 		{
 			// TODO - movement logs
-			if (sobj.FindSector() == Destination)
+			if (sobj.Sector == Destination)
 			{
 				IsComplete = true;
 				return;
 			}
 			else
 			{
-				var gotoSector = Pathfind(sobj, sobj.FindSector()).FirstOrDefault();
+				var gotoSector = Pathfind(sobj, sobj.Sector).FirstOrDefault();
 				if (gotoSector != null)
 				{
 					// move

@@ -123,7 +123,7 @@ namespace FrEee.Game.Objects.Orders
 
 		public IEnumerable<LogMessage> GetErrors(ICargoTransferrer executor)
 		{
-			if (Target != null && executor.FindSector() != Target.Sector)
+			if (Target != null && executor.Sector != Target.Sector)
 				yield return executor.CreateLogMessage(executor + " cannot transfer cargo to " + Target + " because they are not in the same sector.");
 		}
 

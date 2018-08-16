@@ -250,7 +250,13 @@ namespace FrEee.Game.Objects.Space
 		{
 			var sys = sobj.FindStarSystem();
 			if (sys != null)
+			{
 				sys.Remove(sobj);
+				sobj.Sector = null;
+			}
+			else
+				sobj.Sector = new Sector(this, coords);
+
 			SpaceObjectLocations.Add(new ObjectLocation<ISpaceObject>(sobj, coords));
 
 			// see if we got hit by a minefield

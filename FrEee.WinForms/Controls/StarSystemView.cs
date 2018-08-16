@@ -396,7 +396,7 @@ namespace FrEee.WinForms.Controls
 				{
 					// draw path lines
 					var sobj = (IMobileSpaceObject)SelectedSpaceObject;
-					Sector last = SelectedSpaceObject.FindSector();
+					Sector last = SelectedSpaceObject.Sector;
 					PointF? lastPoint = null;
 					if (last.StarSystem == StarSystem)
 					{

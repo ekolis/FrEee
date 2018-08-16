@@ -949,7 +949,7 @@ namespace FrEee.WinForms.Forms
 					if (starSystemView.StarSystem != sys)
 						starSystemView.StarSystem = galaxyView.SelectedStarSystem;
 
-					var sector = value.FindSector();
+					var sector = value.Sector;
 					if (starSystemView.SelectedSector != sector)
 						starSystemView.SelectedSector = sector;
 				}
@@ -1352,7 +1352,7 @@ namespace FrEee.WinForms.Forms
 						lastSector = SelectedSpaceObject.Sector;
 				}
 				else
-					lastSector = SelectedSpaceObject.FindSector();
+					lastSector = SelectedSpaceObject.Sector;
 				var form = new CargoTransferForm((ICargoTransferrer)SelectedSpaceObject, lastSector);
 				this.ShowChildForm(form);
 				BindReport();
