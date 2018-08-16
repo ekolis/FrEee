@@ -64,6 +64,7 @@ namespace FrEee.Game.Objects.Commands
 
 				// add to new fleet
 				Fleet.Vehicles.Add(Executor);
+				Executor.Container = Fleet;
 			}
 		}
 

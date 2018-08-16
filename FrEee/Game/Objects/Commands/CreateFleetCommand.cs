@@ -24,6 +24,8 @@ namespace FrEee.Game.Objects.Commands
 
 		public override void Execute()
 		{
+			foreach (var v in Fleet.Vehicles)
+				v.Container = null;
 			Fleet.Vehicles.Clear(); // no cheating by spawning new vehicles!
 			Fleet.Sector = Sector;
 		}

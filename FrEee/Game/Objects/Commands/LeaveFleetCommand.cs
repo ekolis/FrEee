@@ -29,6 +29,7 @@ namespace FrEee.Game.Objects.Commands
 			{
 				// remove from fleet
 				Executor.Container.Vehicles.Remove(Executor);
+				Executor.Container = null;
 			}
 		}
 	}
