@@ -284,18 +284,7 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public Fleet Container
 		{
-			get
-			{
-				if (StarSystem == null)
-					return null;
-				var fleets = StarSystem.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
-				if (!fleets.Any())
-					return null;
-				if (fleets.Count() == 1)
-					return fleets.Single();
-				throw new Exception("Vehicle belongs to more than one fleet?!");
-				//return null; // probably busy copying a fleet to memory sight or something
-			}
+			get; set;
 		}
 
 		/// <summary>

@@ -1,5 +1,4 @@
-﻿
-using FrEee.Game.Enumerations;
+﻿using FrEee.Game.Enumerations;
 using FrEee.Game.Interfaces;
 using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization;
@@ -12,9 +11,9 @@ using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.IO;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -323,6 +322,8 @@ namespace FrEee.Game.Objects.Space
 		{
 			if (IsDisposed)
 				return;
+			foreach (var v in Vehicles)
+				v.Container = null;
 			Vehicles.Clear();
 			Galaxy.Current.UnassignID(this);
 			Sector = null;
@@ -607,16 +608,7 @@ namespace FrEee.Game.Objects.Space
 
 		public Fleet Container
 		{
-			get
-			{
-				var fleets = Galaxy.Current.FindSpaceObjects<Fleet>(f => f.Vehicles.Contains(this));
-				if (!fleets.Any())
-					return null;
-				if (fleets.Count() == 1)
-					return fleets.Single();
-				// return null; // probably busy copying a fleet to memory sight or something
-				throw new Exception("Fleet belongs to more than one fleet?!");
-			}
+			get; set;
 		}
 
 		/// <summary>

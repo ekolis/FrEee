@@ -36,6 +36,8 @@ namespace FrEee.Game.Interfaces
 		/// Burns the supplies necessary to move one sector.
 		/// </summary>
 		void BurnMovementSupplies();
+
+		new Fleet Container { get; set; }
 	}
 
 	public interface IMobileSpaceObject<T> : IMobileSpaceObject where T : IMobileSpaceObject<T>
