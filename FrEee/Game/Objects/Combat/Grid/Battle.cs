@@ -349,7 +349,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 					var range = locations[c].DistanceToEightWay(locations[x]);
 					return range >= w.Template.WeaponMinRange && range <= w.Template.WeaponMaxRange;
 				}).FirstOrDefault(x => multiplex[c].Contains(x) || multiplex[c].Count < c.MaxTargets);
-				multiplex[c].Add(target);
+				if (target != null)
+					multiplex[c].Add(target);
 			}
 
 			if (target == null)
