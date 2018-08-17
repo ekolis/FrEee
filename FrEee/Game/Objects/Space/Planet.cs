@@ -1151,6 +1151,6 @@ namespace FrEee.Game.Objects.Space
 
 		public bool IsAlive => Colony != null;
 
-		public int MaxTargets => 0;
+		public int MaxTargets => int.MaxValue;
 	}
 }

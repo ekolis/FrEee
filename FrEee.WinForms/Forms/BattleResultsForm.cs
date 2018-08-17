@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using FrEee.Game.Objects.Combat.Simple;
 using FrEee.WinForms.Utility.Extensions;
 using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Space;
 
 namespace FrEee.WinForms.Forms
 {
@@ -143,11 +144,15 @@ namespace FrEee.WinForms.Forms
 		/// <param name="obj"></param>
 		private static int GetHullSize(IOwnable obj)
 		{
-			if (obj is IVehicle)
-				return ((IVehicle)obj).Design.Hull.Size;
-			if (obj is IDesign)
-				return ((IDesign)obj).Hull.Size;
-			return int.MaxValue;
+			if (obj is IVehicle v)
+				return v.Design.Hull.Size;
+			if (obj is IDesign d)
+				return d.Hull.Size;
+			if (obj is Seeker s)
+				return s.MaxHitpoints;
+			if (obj is Planet p)
+				return p.Size.MaxCargo;
+			return 42;
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
