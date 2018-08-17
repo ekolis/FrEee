@@ -359,7 +359,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 
 			while (reloads[w] <= 0)
 			{
-				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense
+				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense)
 				{
 					var seeker = new Seeker(this, w.Owner, c, w, target);
 					Combatants.Add(seeker);
