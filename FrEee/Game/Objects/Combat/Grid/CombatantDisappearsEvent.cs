@@ -15,10 +15,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Combatant = combatant;
 		}
 
-		public ICombatant Combatant { get; }
+		public ICombatant Combatant { get; set; }
 
-		public IntVector2 StartPosition { get; }
+		public IntVector2 StartPosition { get; set; }
 
-		public IntVector2 EndPosition { get; }
+		public IntVector2 EndPosition { get; set; }
 	}
 }

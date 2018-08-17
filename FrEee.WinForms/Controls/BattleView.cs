@@ -86,6 +86,11 @@ namespace FrEee.WinForms.Controls
 			var littleFontSize = Math.Max(SectorDrawSize / 8, 1);
 			var littleFont = new Font("Sans Serif", littleFontSize);
 
+
+			pe.Graphics.DrawRectangle(Pens.White, 0, 0,
+				(Battle.LowerRight[round].X - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize,
+				(Battle.LowerRight[round].Y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize);
+
 			if (Battle != null)
 			{
 				// draw combat sectors
@@ -101,7 +106,7 @@ namespace FrEee.WinForms.Controls
 						var pos = new IntVector2(x, y);
 
 						// draw image, owner flag, and name of largest space object (if any)
-						var here = Battle.Combatants.Where(q => q.IsAlive && locations.Any(w => w.Key == q));
+						var here = Battle.Combatants.Where(q => q.IsAlive && locations.Any(w => w.Key == q && w.Value == pos));
 						if (here.Any())
 						{
 							Image pic;
@@ -128,7 +133,7 @@ namespace FrEee.WinForms.Controls
 								pe.Graphics.FillEllipse(new SolidBrush(here.OfType<Seeker>().First().Owner.Color), drawx - drawsize / 4f, drawy - drawsize / 4f, drawsize / 2f, drawsize / 2f);
 							}
 
-							// TODO - draw owner flag
+							// TODO - draw owner flag & objet name?
 						}
 
 
@@ -181,8 +186,8 @@ namespace FrEee.WinForms.Controls
 
 		private PointF GetDrawPoint(int x, int y)
 		{
-			var drawx = x * (SectorDrawSize + SectorBorderSize) + Width / 2f + SectorBorderSize;
-			var drawy = y * (SectorDrawSize + SectorBorderSize) + Height / 2f + SectorBorderSize;
+			var drawx = (x - Battle.UpperLeft[round].X) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
+			var drawy = (y - Battle.UpperLeft[round].Y) * (SectorDrawSize + SectorBorderSize) + SectorBorderSize;
 			return new PointF(drawx, drawy);
 		}
 
@@ -190,12 +195,15 @@ namespace FrEee.WinForms.Controls
 
 		private void timer1_Tick(object sender, EventArgs e)
 		{
+			if (Battle == null)
+				return;
 			if (combatPhase)
 			{
 				round++;
 				if (round >= Mod.Current.Settings.SpaceCombatTurns)
 					round = 0;
 				UpdateData();
+				combatPhase = false;
 			}
 			else
 				combatPhase = true;
@@ -208,7 +216,7 @@ namespace FrEee.WinForms.Controls
 				return;
 			pewpews.Clear();
 			booms.Clear();
-			foreach (var e in Battle.Events)
+			foreach (var e in Battle.Events[round])
 			{
 				switch (e)
 				{
