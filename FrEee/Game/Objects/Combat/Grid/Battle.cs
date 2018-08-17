@@ -330,6 +330,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// warheads only work at range zero and are unaffected by multiplex tracking limits
 				target = Combatants.Where(x =>
 				{
+					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
+						return false;
 					if (!w.CanTarget(x))
 						return false;
 					var range = locations[c].DistanceToEightWay(locations[x]);
@@ -340,6 +342,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			{
 				target = Combatants.Where(x =>
 				{
+					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
+						return false;
 					if (!w.CanTarget(x))
 						return false;
 					var range = locations[c].DistanceToEightWay(locations[x]);
@@ -352,30 +356,42 @@ namespace FrEee.Game.Objects.Combat.Grid
 				return;
 
 			// fire!
+
 			while (reloads[w] <= 0)
 			{
-				// fire
-				int dmg = 0;
-				var winfo = w.Template.ComponentTemplate.WeaponInfo;
-				var minrng = w.Template.WeaponMinRange;
-				var maxrng = w.Template.WeaponMinRange;
-				var range = locations[c].DistanceToEightWay(locations[target]);
-				var shot = new Shot(c, w, target, range);
-				dmg += shot.FullDamage;
-				if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+				if (w.Template.ComponentTemplate.WeaponType == WeaponTypes.Seeking || w.Template.ComponentTemplate.WeaponType == WeaponTypes.SeekingPointDefense
 				{
-					// warheads have a damage modifer
-					target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
-					// warheads damage the firing ship too
-					c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
-					// warheads destroy themselves on activation
-					w.Hitpoints = 0;
+					var seeker = new Seeker(this, w.Owner, c, w, target);
+					Combatants.Add(seeker);
+					locations[seeker] = new IntVector2(locations[c]);
+					Events.Last().Add(new CombatantAppearsEvent(seeker, locations[seeker]));
 				}
 				else
-					target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
+				{
+					// fire
+					int dmg = 0;
+					var winfo = w.Template.ComponentTemplate.WeaponInfo;
+					var minrng = w.Template.WeaponMinRange;
+					var maxrng = w.Template.WeaponMinRange;
+					var range = locations[c].DistanceToEightWay(locations[target]);
+					var shot = new Shot(c, w, target, range);
+					dmg += shot.FullDamage;
+					if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+					{
+						// warheads have a damage modifer
+						target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
+						// warheads damage the firing ship too
+						c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
+						// warheads destroy themselves on activation
+						w.Hitpoints = 0;
+					}
+					else
+						target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
+				}
+				// TODO - mounts that affect reload rate?
+				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
 			}
-			// TODO - mounts that affect reload rate?
-			reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
+			
 			if (target.IsDestroyed)
 			{
 				locations.Remove(target);
