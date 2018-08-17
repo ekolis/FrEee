@@ -152,17 +152,28 @@ namespace FrEee.Game.Objects.Combat.Grid
 					}
 				}
 
-				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x is Seeker ? 1 : 0).ThenBy(x => x.Speed).ThenShuffle(Dice).ToArray();
 
-				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves)
+				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves) - but seekers go last so they get a chance to hit
 				foreach (var c in turnorder)
 				{
 					if (c is Seeker s)
 					{
+						if (locations[s] == null)
+							continue; // HACK - seeker is destroyed but still showing up in turn order
+						if (locations[s.Target] == null)
+						{
+							s.Hitpoints = 0; // seekers self destruct when their target is destroyed
+							Events.Last().Add(new CombatantDisappearsEvent(s));
+							continue;
+						}
 						s.DistanceTraveled += Math.Min(s.Speed, locations[s].DistanceToEightWay(locations[s.Target]));
 						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], s.Speed);
 						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
-							Combatants.Remove(s);
+						{
+							s.Hitpoints = 0;
+							Events.Last().Add(new CombatantDisappearsEvent(s));
+						}
 					}
 					else
 					{
@@ -313,6 +324,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 				var range = s.DistanceTraveled;
 				var shot = new Shot(s.LaunchingCombatant, s.LaunchingComponent, s.Target, range);
 				s.Target.TakeDamage(new Hit(shot, s.Target, s.Damage.Evaluate(shot)));
+				s.Hitpoints = 0;
+				Events.Last().Add(new CombatantDisappearsEvent(s));
 				if (s.Target.IsDestroyed)
 				{
 					locations.Remove(s.Target);
@@ -331,6 +344,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// warheads only work at range zero and are unaffected by multiplex tracking limits
 				target = Combatants.Where(x =>
 				{
+					if (!x.IsAlive)
+						return false;
 					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
 						return false;
 					if (!w.CanTarget(x))
@@ -343,6 +358,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 			{
 				target = Combatants.Where(x =>
 				{
+					if (!x.IsAlive)
+						return false;
 					if (!x.Owner.IsEnemyOf(w.Owner, StarSystem))
 						return false;
 					if (!w.CanTarget(x))
@@ -393,7 +410,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				// TODO - mounts that affect reload rate?
 				reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
 			}
-			
+
 			if (target.IsDestroyed)
 			{
 				locations.Remove(target);
