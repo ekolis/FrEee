@@ -2941,18 +2941,6 @@ namespace FrEee.Utility.Extensions
 			}
 		}
 
-		/// <summary>
-		/// Appends an item to a sequence.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="sequence"></param>
-		/// <param name="item"></param>
-		/// <returns></returns>
-		public static IEnumerable<T> Append<T>(this IEnumerable<T> sequence, T item)
-		{
-			return sequence.Concat(new T[] { item });
-		}
-
 		public static ILookup<Ability, Ability> AbilityTree(this IAbilityObject obj, Func<IAbilityObject, bool> sourceFilter = null)
 		{
 			return obj.UnstackedAbilities(sourceFilter).StackToTree(obj);

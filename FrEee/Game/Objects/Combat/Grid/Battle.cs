@@ -10,6 +10,7 @@ using FrEee.Utility;
 using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using static System.Math;
@@ -85,6 +86,10 @@ namespace FrEee.Game.Objects.Combat.Grid
 		/// </summary>
 		public ISet<ICombatant> Combatants { get; private set; }
 
+		public IList<IntVector2> UpperLeft { get; private set; } = new List<IntVector2>();
+
+		public IList<IntVector2> LowerRight { get; private set; } = new List<IntVector2>();
+
 		/// <summary>
 		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
 		/// </summary>
@@ -126,12 +131,26 @@ namespace FrEee.Game.Objects.Combat.Grid
 				locations.Add(combs[i], new IntVector2((int)x, (int)y));
 			}
 
+			Events = new List<IList<IBattleEvent>>();
+
+			UpdateBounds(0, locations.Values);
+
 			// let all combatants scan each other
 			foreach (var c in Combatants)
 				c.UpdateEmpireMemories();
 
 			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
 			{
+				Events.Add(new List<IBattleEvent>());
+				if (i == 0)
+				{
+					// first round, all combatants appear
+					foreach (var c in Combatants)
+					{
+						Events.Last().Add(new CombatantAppearsEvent(c, locations[c]));
+					}
+				}
+
 				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
 
 				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves)
@@ -154,6 +173,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
 						}
 
+						var oldpos = locations[c];
 						if (!targetiness.Any())
 						{
 							// evade enemies
@@ -175,20 +195,26 @@ namespace FrEee.Game.Objects.Combat.Grid
 								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.Speed);
 							}
 						}
+						Events.Last().Add(new CombatantMovesEvent(c, oldpos, locations[c]));
 					}
 				}
+
+				UpdateBounds(i, locations.Values);
 
 				// phase 2: combatants launch units
 				foreach (var c in turnorder)
 				{
 					// find launchable units
-					var unitsToLaunch = new List<SpaceVehicle>();
+					var unitsToLaunch = new List<(ICombatant, SpaceVehicle)>();
 					if (c is Planet)
 					{
 						// planets can launch infinite units per turn
 						var p = (Planet)c;
 						if (p.Cargo != null && p.Cargo.Units != null)
-							unitsToLaunch.AddRange(p.Cargo.Units.OfType<SpaceVehicle>());
+						{
+							foreach (var u in p.Cargo.Units.OfType<SpaceVehicle>())
+								unitsToLaunch.Add((p, u));
+						}
 					}
 					else if (c is ICargoTransferrer)
 					{
@@ -197,13 +223,18 @@ namespace FrEee.Game.Objects.Combat.Grid
 						foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
 						{
 							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString() + "s").ToInt();
-							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate));
+							foreach (var u in ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate))
+								unitsToLaunch.Add((c, u));
 						}
 					}
 
 					// launch them temporarily for combat
-					foreach (var unit in unitsToLaunch)
-						Combatants.Add(unit);
+					foreach (var info in unitsToLaunch)
+					{
+						Combatants.Add(info.Item2);
+						locations[info.Item2] = new IntVector2(locations[info.Item1]);
+						Events.Last().Add(new CombatantAppearsEvent(c, locations[c]));
+					}
 				}
 
 				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
@@ -248,6 +279,8 @@ namespace FrEee.Game.Objects.Combat.Grid
 					foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
 						TryFireWeapon(c, w, reloads, locations, multiplex);
 				}
+
+				UpdateBounds(i, locations.Values);
 			}
 
 			// validate fleets since some ships might have died
@@ -276,10 +309,14 @@ namespace FrEee.Game.Objects.Combat.Grid
 		{
 			if (locations[s] == locations[s.Target])
 			{
-				Combatants.Remove(s);
 				var range = s.DistanceTraveled;
 				var shot = new Shot(s.LaunchingCombatant, s.LaunchingComponent, s.Target, range);
 				s.Target.TakeDamage(new Hit(shot, s.Target, s.Damage.Evaluate(shot)));
+				if (s.Target.IsDestroyed)
+				{
+					locations.Remove(s.Target);
+					Events.Last().Add(new CombatantDisappearsEvent(s.Target));
+				}
 			}
 		}
 
@@ -336,6 +373,11 @@ namespace FrEee.Game.Objects.Combat.Grid
 			}
 			// TODO - mounts that affect reload rate?
 			reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
+			if (target.IsDestroyed)
+			{
+				locations.Remove(target);
+				Events.Last().Add(new CombatantDisappearsEvent(target));
+			}
 		}
 
 		public IList<LogMessage> Log { get; private set; }
@@ -367,5 +409,27 @@ namespace FrEee.Game.Objects.Combat.Grid
 		}
 
 		public double Timestamp { get; private set; }
+
+		private void UpdateBounds(int round, IEnumerable<IntVector2> positions)
+		{
+			while (UpperLeft.Count() <= round)
+				UpperLeft.Add(new IntVector2());
+			while (LowerRight.Count() <= round)
+				LowerRight.Add(new IntVector2());
+			UpperLeft[round].X = positions.MinOrDefault(q => q.X);
+			LowerRight[round].X = positions.MaxOrDefault(q => q.X);
+			UpperLeft[round].Y = positions.MinOrDefault(q => q.Y);
+			LowerRight[round].Y = positions.MaxOrDefault(q => q.Y);
+		}
+
+		public int GetDiameter(int round)
+		{
+			return UpperLeft[round].DistanceToEightWay(LowerRight[round]);
+		}
+
+		public List<IList<IBattleEvent>> Events
+		{
+			get; private set;
+		}
 	}
 }
