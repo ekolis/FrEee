@@ -124,11 +124,12 @@ namespace FrEee.Game.Objects.Combat.Grid
 								 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
 			var radius = sideLength / (2 * Sin(PI / Empires.Count()));
 			var combs = Combatants.ToArray();
-			for (var i = 0; i < combs.Length; i++)
+			for (var i = 0; i < Empires.Count(); i++)
 			{
-				var x = radius * Cos(PI / combs.Length * (1 + 2 * i));
-				var y = radius * Sin(PI / combs.Length * (1 + 2 * i));
-				locations.Add(combs[i], new IntVector2((int)x, (int)y));
+				var x = radius * Cos(PI / Empires.Count() * (1 + 2 * i));
+				var y = radius * Sin(PI / Empires.Count() * (1 + 2 * i));
+				foreach (var comb in Combatants.Where(q => q.Owner == Empires.ElementAt(i)))
+					locations.Add(comb, new IntVector2((int)x, (int)y));
 			}
 
 			Events = new List<IList<IBattleEvent>>();
