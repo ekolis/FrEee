@@ -21,7 +21,7 @@ using FrEee.Game.Objects.Abilities;
 using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using System.Text;
 using FrEee.Game.Setup.WarpPointPlacementStrategies;
-using FrEee.Game.Objects.Combat.Simple;
+using FrEee.Game.Objects.Combat.Grid;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -45,7 +45,7 @@ namespace FrEee.Game.Objects.Space
 			SharedAbilityCache = new SafeDictionary<Tuple<IOwnableAbilityObject, Empire>, IEnumerable<Ability>>();
 			GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
 			ReceivedTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();
-			Battles = new HashSet<Battle>();
+			Battles = new HashSet<IBattle>();
 			ScriptNotes = new DynamicDictionary();
 		}
 
@@ -296,7 +296,7 @@ namespace FrEee.Game.Objects.Space
 		/// <summary>
 		/// The battles which have taken place this turn.
 		/// </summary>
-		public ICollection<Battle> Battles { get; private set; }
+		public ICollection<IBattle> Battles { get; private set; }
 
 		#endregion
 
@@ -755,7 +755,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				foreach (var m in e.Log.ToArray())
 				{
-					if (m is PictorialLogMessage<Battle> bm)
+					if (m is PictorialLogMessage<IBattle> bm)
 					{
 						// purge old battle logs to save space in the savegame
 						if (bm.Context.Timestamp < Current.Timestamp)
@@ -784,7 +784,7 @@ namespace FrEee.Game.Objects.Space
 			//Current.SpaceObjectCleanup();
 
 			//Battle.Previous.Clear();
-			Current.Battles = new HashSet<Battle>();
+			Current.Battles = new HashSet<IBattle>();
 			ScriptEngine.ClearScope(); // no caching galaxy between turns!
 
 			Current.GivenTreatyClauseCache = new SafeDictionary<Empire, ILookup<Empire, Clause>>();

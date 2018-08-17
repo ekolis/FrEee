@@ -12,14 +12,14 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace FrEee.Game.Objects.Combat.Simple
+namespace FrEee.Game.Objects.Combat
 {
 	/// <summary>
 	/// A seeking missile or torpedo.
 	/// </summary>
 	public class Seeker : ICombatant
 	{
-		public Seeker(Battle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
+		public Seeker(IBattle battle, Empire owner, ICombatant attacker, Component launcher, ICombatant target)
 		{
 			Battle = battle;
 			Owner = owner;
@@ -33,12 +33,13 @@ namespace FrEee.Game.Objects.Combat.Simple
 			else
 				throw new Exception(launcher + " cannot target a " + target.WeaponTargetType + ".");
 			Hitpoints = WeaponInfo.SeekerDurability; // TODO - can mounts affect seeker durability?
+			Speed = WeaponInfo.SeekerSpeed;
 		}
 
 		/// <summary>
 		/// The battle in which this seeker was fired.
 		/// </summary>
-		public Battle Battle { get; set; }
+		public IBattle Battle { get; set; }
 
 		/// <summary>
 		/// The name of the seeker.
@@ -274,10 +275,8 @@ namespace FrEee.Game.Objects.Combat.Simple
 		{
 			if (Owner == emp)
 				return Visibility.Owned;
-			if (Battle.Current.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
+			if (Galaxy.Current.Battles.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
 				return Visibility.Scanned;
-			if (Battle.Previous.Any(b => b.Combatants.Contains(this) && b.Combatants.Any(c => c.Owner == emp)))
-				return Visibility.Fogged;
 			return Visibility.Unknown;
 		}
 
@@ -356,5 +355,11 @@ namespace FrEee.Game.Objects.Combat.Simple
 		public bool IsDisposed { get; set; }
 
 		public bool IsAlive => !IsDestroyed;
+
+		public int Speed { get; set; }
+
+		public int DistanceTraveled { get; set; }
+
+		public int MaxTargets => 0;
 	}
 }

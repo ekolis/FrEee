@@ -5,20 +5,18 @@ using FrEee.WinForms.DataGridView;
 using FrEee.WinForms.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FrEee.Game.Objects.Combat.Simple;
 using FrEee.WinForms.Utility.Extensions;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.WinForms.Forms
 {
-	public partial class BattleResultsForm : Form, IBindable<Battle>
+	public partial class BattleResultsForm : Form, IBindable<IBattle>
 	{
-		public BattleResultsForm(Battle battle)
+		public BattleResultsForm(IBattle battle)
 		{
 			InitializeComponent();
 
@@ -30,11 +28,10 @@ namespace FrEee.WinForms.Forms
 
 		/// <summary>
 		/// The battle we are displaying results for.
-		/// TODO - create an IBattle interface so we can have pluggable combat systems
 		/// </summary>
-		public Battle Battle { get; private set; }
+		public IBattle Battle { get; private set; }
 
-		public void Bind(Battle data)
+		public void Bind(IBattle data)
 		{
 			Battle = data;
 			Bind();

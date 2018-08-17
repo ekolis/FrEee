@@ -896,6 +896,15 @@ namespace FrEee.Utility.Extensions
 			return src.OrderBy(t => RandomHelper.Next(int.MaxValue, prng));
 		}
 
+		/// <summary>
+		/// Orders elements randomly after another OrderBy or ThenBy clause.
+		/// </summary>
+		/// <param name="src"></param>
+		/// <returns></returns>
+		public static IEnumerable<T> ThenShuffle<T>(this IOrderedEnumerable<T> src, PRNG prng = null)
+		{
+			return src.ThenBy(t => RandomHelper.Next(int.MaxValue, prng));
+		}
 		public static T MinOrDefault<T>(this IEnumerable<T> stuff)
 		{
 			if (!stuff.Any())
@@ -4118,6 +4127,45 @@ namespace FrEee.Utility.Extensions
 				foreach (var emp in minesSwept.Keys.Union(minesDetonated.Keys).Union(minesAttacking.Keys))
 					emp.Log.Add(sobj.CreateLogMessage(sobj + " encountered our mine field at " + sector + ". " + minesDetonated[emp] + " of our mines detonated, " + minesAttacking[emp] + " others fired weapons, and " + minesSwept[emp] + " were swept. " + sector.SpaceObjects.OfType<Mine>().Where(m => m.Owner == emp).Count() + " mines remain in the sector."));
 			}
+		}
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public static string NameFor(this IBattle b, Empire emp)
+		{
+			return b.ResultFor(emp).Capitalize() + " at " + b.Sector;
+		}
+
+		/// <summary>
+		/// The result (victory/defeat/stalemate) for a given empire.
+		/// If empire or its allies are not involved or no empire specified, just say "battle".
+		/// </summary>
+		/// <param name="emp"></param>
+		/// <returns></returns>
+		public static string ResultFor(this IBattle b, Empire emp)
+		{
+			if (emp == null)
+				return "battle"; // no empire specified
+			if (!b.Combatants.Any(c => c.Owner == emp || (b.OriginalOwners[c]?.IsAllyOf(emp, b.StarSystem) ?? false)))
+				return "battle"; // empire/allies not involved
+			var survivors = b.Combatants.Where(c => c.IsAlive);
+			var ourSurvivors = survivors.Where(c => c.Owner == emp);
+			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, b.StarSystem));
+			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
+			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, b.StarSystem));
+			if (friendlySurvivors.Any() && enemySurvivors.Any())
+				return "stalemate";
+			if (friendlySurvivors.Any())
+				return "victory";
+			if (enemySurvivors.Any())
+				return "defeat";
+			return "Pyrrhic victory"; // mutual annihilation!
+		}
+
+		public static Point ToPoint(this Vector2<int> v)
+		{
+			return new Point(v.X, v.Y);
 		}
 	}
 
