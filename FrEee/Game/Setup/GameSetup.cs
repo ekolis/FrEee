@@ -584,6 +584,10 @@ namespace FrEee.Game.Setup
 				if (!sys.ExploredByEmpires.Contains(emp) && sys.FindSpaceObjects<Planet>().Any(planet => planet.Owner == emp))
 					sys.ExploredByEmpires.Add(emp);
 			}
+
+			// in case two empires started in the same system
+			foreach (var x in gal.FindSpaceObjects<ISpaceObject>().Owned())
+				x.UpdateEmpireMemories();
 		}
 
 		/// <summary>

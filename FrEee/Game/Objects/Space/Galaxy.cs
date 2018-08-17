@@ -1228,6 +1228,9 @@ namespace FrEee.Game.Objects.Space
 					w.Dispose();
 			}
 
+			foreach (var x in Current.FindSpaceObjects<ISpaceObject>().Owned().ToArray())
+				x.UpdateEmpireMemories();
+
 			//Current.SpaceObjectIDCheck("after cleanup");
 
 			// end of turn scripts
