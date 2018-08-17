@@ -348,6 +348,9 @@ namespace FrEee.Game.Objects.Combat.Grid
 				multiplex[c].Add(target);
 			}
 
+			if (target == null)
+				return;
+
 			// fire!
 			while (reloads[w] <= 0)
 			{
