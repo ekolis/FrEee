@@ -1,27 +1,27 @@
+using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Abilities;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
+using FrEee.Game.Objects.Combat;
+using FrEee.Game.Objects.Combat.Grid;
+using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Orders;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Game.Objects.VictoryConditions;
+using FrEee.Game.Setup;
+using FrEee.Game.Setup.WarpPointPlacementStrategies;
+using FrEee.Modding;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using FrEee.Game.Interfaces;
-using FrEee.Game.Objects.Civilization;
-using FrEee.Utility.Extensions;
-using System.Threading.Tasks;
-using FrEee.Modding;
-using System.Drawing;
-using FrEee.Utility;
-using FrEee.Game.Objects.LogMessages;
-using FrEee.Game.Objects.Vehicles;
 using System.Reflection;
-using FrEee.Game.Objects.Combat;
-using FrEee.Game.Objects.Orders;
-using FrEee.Game.Setup;
-using FrEee.Game.Enumerations;
-using FrEee.Game.Objects.VictoryConditions;
-using FrEee.Game.Objects.Abilities;
-using FrEee.Game.Objects.Civilization.Diplomacy.Clauses;
 using System.Text;
-using FrEee.Game.Setup.WarpPointPlacementStrategies;
-using FrEee.Game.Objects.Combat.Grid;
+using System.Threading.Tasks;
 
 namespace FrEee.Game.Objects.Space
 {
@@ -853,7 +853,7 @@ namespace FrEee.Game.Objects.Space
 
 			// resource generation 1: colony income
 			Current.FindSpaceObjects<Planet>().Where(x => !x.IsMemory).Select(p => p.Colony).ExceptSingle(null).SafeForeach(ProcessColonyIncome);
-			
+
 			// resource generation 2: remote mining
 			// TODO - multithread remote mining once I can figure out where adjustedValue should go
 			var adjustedValue = new SafeDictionary<IMineableSpaceObject, ResourceQuantity>(true);
@@ -1124,7 +1124,7 @@ namespace FrEee.Game.Objects.Space
 			}
 
 			// repairs affect abilities
-			Current.DisableAbilityCache(); 
+			Current.DisableAbilityCache();
 			Current.EnableAbilityCache();
 
 			// get supplies from reactors, solar panels, etc.
@@ -1423,7 +1423,7 @@ namespace FrEee.Game.Objects.Space
 				if (v.Owner != null && // unowned objects can't pick fights
 					sector != null && // can't fight nowhere
 					sector.SpaceObjects.OfType<ICombatant>().Any(sobj => sobj.IsHostileTo(v.Owner) || v.IsHostileTo(sobj.Owner)) && // any enemies?
-					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < 1d / v.Speed)) // have we fought here too recently?
+					(!lastBattleTimestamps.ContainsKey(sector) || lastBattleTimestamps[sector] < Timestamp - (v.Speed == 0 ? 1d : 1d / v.Speed))) // have we fought here too recently?
 				{
 					// resolve the battle
 					var battle = new Battle(sector);
