@@ -33,7 +33,7 @@ namespace FrEee.WinForms.Forms
 
 		public void Bind()
 		{
-			
+			battleView1.Battle = Battle;
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
