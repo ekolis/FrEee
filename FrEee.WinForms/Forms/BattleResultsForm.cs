@@ -157,8 +157,14 @@ namespace FrEee.WinForms.Forms
 
 		private void btnReplay_Click(object sender, EventArgs e)
 		{
-			var battleLogForm = new LogForm(GameForm.Instance, Battle.Log);
-			this.ShowChildForm(battleLogForm);
+			Form form;
+			if (Battle is FrEee.Game.Objects.Combat.Simple.Battle b)
+				form = new LogForm(GameForm.Instance, b.Log);
+			else if (Battle is FrEee.Game.Objects.Combat.Grid.Battle b2)
+				form = new BattleReplayForm(b2);
+			else
+				throw new Exception($"Unknown battle type {Battle.GetType()}!");
+			this.ShowChildForm(form);
 		}
 	}
 }

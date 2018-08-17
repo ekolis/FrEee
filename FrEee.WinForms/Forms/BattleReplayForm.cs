@@ -17,9 +17,10 @@ namespace FrEee.WinForms.Forms
 {
 	public partial class BattleReplayForm : Form, IBindable<Battle>
 	{
-		public BattleReplayForm(bool victory)
+		public BattleReplayForm(Battle b)
 		{
 			InitializeComponent();
+			Bind(b);
 		}
 
 		public Battle Battle { get; private set; }
