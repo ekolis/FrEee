@@ -38,5 +38,15 @@ namespace FrEee.Game.Interfaces
 		/// Is this combatant still alive or is it destroyed/glassed?
 		/// </summary>
 		bool IsAlive { get; }
+
+		/// <summary>
+		/// How fast can this combatant move in combat?
+		/// </summary>
+		int Speed { get; }
+
+		/// <summary>
+		/// How many targets can this combatant fire on per round (excluding point defense weapons or warheads)?
+		/// </summary>
+		int MaxTargets { get; }
     }
 }

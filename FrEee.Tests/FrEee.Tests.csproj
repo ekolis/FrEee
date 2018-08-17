@@ -126,10 +126,12 @@
     <Compile Include="Utility\Extensions\CommonExtensionsTest.cs" />
     <Compile Include="Utility\Extensions\ParserTest.cs" />
     <Compile Include="Utility\SerializerTest.cs" />
+    <Compile Include="Utility\VectorTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Game\Objects\AI\" />
     <Folder Include="Game\Objects\Civilization\" />
+    <Folder Include="Game\Objects\Combat\Grid\" />
     <Folder Include="Game\Objects\Combat\Simple\" />
     <Folder Include="Game\Objects\Commands\" />
     <Folder Include="Game\Objects\LogMessages\" />

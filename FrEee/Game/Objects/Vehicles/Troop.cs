@@ -105,5 +105,7 @@ namespace FrEee.Game.Objects.Vehicles
 					yield return (IAbilityObject)Container;
 			}
 		}
+
+		public int MaxTargets => int.MaxValue;
 	}
 }

@@ -1,0 +1,371 @@
+﻿using FrEee.Game.Enumerations;
+using FrEee.Game.Interfaces;
+using FrEee.Game.Objects.Civilization;
+using FrEee.Game.Objects.LogMessages;
+using FrEee.Game.Objects.Space;
+using FrEee.Game.Objects.Technology;
+using FrEee.Game.Objects.Vehicles;
+using FrEee.Modding;
+using FrEee.Utility;
+using FrEee.Utility.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using static System.Math;
+
+namespace FrEee.Game.Objects.Combat.Grid
+{
+	public class Battle : IBattle
+	{
+		public Battle(Sector location)
+		{
+			Sector = location ?? throw new Exception("Battles require a sector location.");
+			Log = new List<LogMessage>();
+			Empires = Sector.SpaceObjects.OfType<ICombatSpaceObject>().Select(sobj => sobj.Owner).Where(emp => emp != null).Distinct().ToArray();
+			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
+			foreach (var c in Combatants)
+			{
+				OriginalHitpoints[c] = c.ArmorHitpoints + c.HullHitpoints;
+				OriginalOwners[c] = c.Owner;
+			}
+
+			double stardate = Galaxy.Current.Timestamp;
+			int moduloID = (int)(Sector.StarSystem.ID % 100000);
+			Dice = new PRNG((int)(moduloID / stardate * 10));
+			Timestamp = stardate;
+		}
+
+		static Battle()
+		{
+			Current = new HashSet<Battle>();
+			Previous = new HashSet<Battle>();
+		}
+
+		/// <summary>
+		/// Who originally owned each combatant?
+		/// </summary>
+		public SafeDictionary<ICombatant, Empire> OriginalOwners { get; private set; } = new SafeDictionary<ICombatant, Empire>();
+
+		/// <summary>
+		/// Starting HP of all combatants.
+		/// </summary>
+		public SafeDictionary<ICombatant, int> OriginalHitpoints { get; private set; } = new SafeDictionary<ICombatant, int>();
+
+		public PRNG Dice { get; set; }
+
+		/// <summary>
+		/// Any battles that are currently ongoing.
+		/// This is a collection so we can multithread battle resolution if so desired.
+		/// </summary>
+		public static ICollection<Battle> Current { get; private set; }
+
+		/// <summary>
+		/// Any battles that have completed this turn.
+		/// </summary>
+		public static ICollection<Battle> Previous { get; private set; }
+
+		/// <summary>
+		/// The sector in which this battle took place.
+		/// </summary>
+		public Sector Sector { get; set; }
+
+		/// <summary>
+		/// The star system in which this battle took place.
+		/// </summary>
+		public StarSystem StarSystem { get { return Sector.StarSystem; } }
+
+		/// <summary>
+		/// The empires engagaed in battle.
+		/// </summary>
+		public IEnumerable<Empire> Empires { get; private set; }
+
+		/// <summary>
+		/// The combatants in this battle.
+		/// </summary>
+		public ISet<ICombatant> Combatants { get; private set; }
+
+		/// <summary>
+		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
+		/// </summary>
+		public string Name
+		{
+			get
+			{
+				if (Sector.SpaceObjects.OfType<StellarObject>().Any())
+					return "Battle at " + Sector.SpaceObjects.OfType<StellarObject>().Largest();
+				var coords = Sector.Coordinates;
+				return "Battle at " + Sector.StarSystem + " sector (" + coords.X + ", " + coords.Y + ")";
+			}
+		}
+
+		/// <summary>
+		/// Resolves the battle.
+		/// </summary>
+		public void Resolve()
+		{
+			// update memories
+			foreach (var sobj in StarSystem.SpaceObjects.Where(x => !x.IsMemory).ToArray())
+				sobj.UpdateEmpireMemories();
+
+			Current.Add(this);
+
+			var reloads = new SafeDictionary<Component, double>();
+			var locations = new SafeDictionary<ICombatant, IntVector2>();
+			var multiplex = new SafeDictionary<ICombatant, HashSet<ICombatant>>(true);
+
+			// place all combatants at the points of a regular polygon
+			var sideLength = 21; // make sure no one can shoot each other at the start
+								 // https://stackoverflow.com/questions/32169875/calculating-the-coordinates-of-a-regular-polygon-given-its-center-and-its-side-l
+			var radius = sideLength / (2 * Sin(PI / Empires.Count()));
+			var combs = Combatants.ToArray();
+			for (var i = 0; i < combs.Length; i++)
+			{
+				var x = radius * Cos(PI / combs.Length * (1 + 2 * i));
+				var y = radius * Sin(PI / combs.Length * (1 + 2 * i));
+				locations.Add(combs[i], new IntVector2((int)x, (int)y));
+			}
+
+			// let all combatants scan each other
+			foreach (var c in Combatants)
+				c.UpdateEmpireMemories();
+
+			for (int i = 0; i < Mod.Current.Settings.SpaceCombatTurns; i++)
+			{
+				var turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 1: combatants move starting with the slowest (so the faster ships get to react to their moves)
+				foreach (var c in turnorder)
+				{
+					if (c is Seeker s)
+					{
+						s.DistanceTraveled += Math.Min(s.Speed, locations[s].DistanceToEightWay(locations[s.Target]));
+						locations[s] = IntVector2.InterpolateEightWay(locations[s], locations[s.Target], s.Speed);
+						if (s.DistanceTraveled > s.WeaponInfo.MaxRange)
+							Combatants.Remove(s);
+					}
+					else
+					{
+						// TODO - both pursue target and evade scary enemies at the same time using heatmap
+						// find out how good each target is
+						var targetiness = new SafeDictionary<ICombatant, double>();
+						foreach (var target in Combatants.Where(x => c.IsHostileTo(x.Owner) && c.CanTarget(x)))
+						{
+							targetiness[target] = 1d / (locations[target] - locations[c]).LengthEightWay;
+						}
+
+						if (!targetiness.Any())
+						{
+							// evade enemies
+							var heatmap = new HeatMap();
+							foreach (var e in Combatants.Where(x => x.IsHostileTo(c.Owner) && x.CanTarget(c)))
+							{
+								var threat = e.Speed + e.Weapons.Where(w => w.CanTarget(c)).Max(w => w.Template.WeaponMaxRange);
+								heatmap.AddLinearGradientEightWay(locations[e], threat, threat, -1);
+							}
+							locations[c] = heatmap.FindMin(locations[c], c.Speed);
+						}
+						else
+						{
+							// move as close as possible to the best target
+							ICombatant bestTarget = targetiness.WithMax(x => x.Value).First().Key;
+							if (bestTarget != null)
+							{
+								var targetPos = locations[bestTarget];
+								locations[c] = IntVector2.InterpolateEightWay(locations[c], targetPos, c.Speed);
+							}
+						}
+					}
+				}
+
+				// phase 2: combatants launch units
+				foreach (var c in turnorder)
+				{
+					// find launchable units
+					var unitsToLaunch = new List<SpaceVehicle>();
+					if (c is Planet)
+					{
+						// planets can launch infinite units per turn
+						var p = (Planet)c;
+						if (p.Cargo != null && p.Cargo.Units != null)
+							unitsToLaunch.AddRange(p.Cargo.Units.OfType<SpaceVehicle>());
+					}
+					else if (c is ICargoTransferrer)
+					{
+						// ships, etc. can launch units based on abilities
+						var ct = (ICargoTransferrer)c;
+						foreach (var vt in Enum.GetValues(typeof(VehicleTypes)).Cast<VehicleTypes>().Distinct())
+						{
+							var rate = ct.GetAbilityValue("Launch/Recover " + vt.ToSpacedString() + "s").ToInt();
+							unitsToLaunch.AddRange(ct.Cargo.Units.Where(u => u.Design.VehicleType == vt).OfType<SpaceVehicle>().Take(rate));
+						}
+					}
+
+					// launch them temporarily for combat
+					foreach (var unit in unitsToLaunch)
+						Combatants.Add(unit);
+				}
+
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 3: combatants fire point defense weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
+				foreach (var c in turnorder.Reverse())
+				{
+					foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsPointDefense && !w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+						TryFireWeapon(c, w, reloads, locations, multiplex);
+				}
+
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 4: combatants defense seekers detonate
+				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => s.WeaponInfo.IsPointDefense))
+				{
+					CheckSeekerDetonation(s, locations);
+				}
+
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 5: ships fire non-PD weapons starting with the fastest (so the faster ships get to inflict damage first and possibly KO enemies preventing them from firing back)
+				foreach (var c in turnorder.Reverse())
+				{
+					foreach (var w in c.Weapons.Where(w => !w.Template.ComponentTemplate.WeaponInfo.IsPointDefense && !w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+						TryFireWeapon(c, w, reloads, locations, multiplex);
+				}
+
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 6: non-PD seekers detonate
+				foreach (var s in turnorder.Reverse().OfType<Seeker>().Where(s => !s.WeaponInfo.IsPointDefense))
+				{
+					CheckSeekerDetonation(s, locations);
+				}
+
+				turnorder = Combatants.Where(x => x.IsAlive).OrderBy(x => x.Speed).ThenShuffle(Dice).ToArray();
+
+				// phase 7: ramming! only activates if ship has no other weapons
+				foreach (var c in turnorder.Reverse())
+				{
+					foreach (var w in c.Weapons.Where(w => w.Template.ComponentTemplate.WeaponInfo.IsWarhead))
+						TryFireWeapon(c, w, reloads, locations, multiplex);
+				}
+			}
+
+			// validate fleets since some ships might have died
+			foreach (var fleet in Sector.SpaceObjects.OfType<Fleet>())
+				fleet.Validate();
+
+			// replenish combatants' shields
+			foreach (var combatant in Sector.SpaceObjects.OfType<ICombatant>())
+				combatant.ReplenishShields();
+
+			// mark battle complete
+			Current.Remove(this);
+			Previous.Add(this);
+
+			// update memories
+			foreach (var sobj in Combatants.OfType<ISpaceObject>().Where(x => !x.IsMemory).ToArray())
+			{
+				foreach (var emp in Empires)
+				{
+					emp.UpdateMemory(sobj); ;
+				}
+			}
+		}
+
+		private void CheckSeekerDetonation(Seeker s, SafeDictionary<ICombatant, IntVector2> locations)
+		{
+			if (locations[s] == locations[s.Target])
+			{
+				Combatants.Remove(s);
+				var range = s.DistanceTraveled;
+				var shot = new Shot(s.LaunchingCombatant, s.LaunchingComponent, s.Target, range);
+				s.Target.TakeDamage(new Hit(shot, s.Target, s.Damage.Evaluate(shot)));
+			}
+		}
+
+		private void TryFireWeapon(ICombatant c, Component w, SafeDictionary<Component, double> reloads, SafeDictionary<ICombatant, IntVector2> locations, SafeDictionary<ICombatant, HashSet<ICombatant>> multiplex)
+		{
+			// find suitable targets in range
+
+			ICombatant target;
+			if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+			{
+				// warheads only work at range zero and are unaffected by multiplex tracking limits
+				target = Combatants.Where(x =>
+				{
+					if (!w.CanTarget(x))
+						return false;
+					var range = locations[c].DistanceToEightWay(locations[x]);
+					return range == 0;
+				}).FirstOrDefault();
+			}
+			else
+			{
+				target = Combatants.Where(x =>
+				{
+					if (!w.CanTarget(x))
+						return false;
+					var range = locations[c].DistanceToEightWay(locations[x]);
+					return range >= w.Template.WeaponMinRange && range <= w.Template.WeaponMaxRange;
+				}).FirstOrDefault(x => multiplex[c].Contains(x) || multiplex[c].Count < c.MaxTargets);
+				multiplex[c].Add(target);
+			}
+
+			// fire!
+			while (reloads[w] <= 0)
+			{
+				// fire
+				int dmg = 0;
+				var winfo = w.Template.ComponentTemplate.WeaponInfo;
+				var minrng = w.Template.WeaponMinRange;
+				var maxrng = w.Template.WeaponMinRange;
+				var range = locations[c].DistanceToEightWay(locations[target]);
+				var shot = new Shot(c, w, target, range);
+				dmg += shot.FullDamage;
+				if (w.Template.ComponentTemplate.WeaponInfo.IsWarhead)
+				{
+					// warheads have a damage modifer
+					target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingSourceHitpointsDamagePercent / 100));
+					// warheads damage the firing ship too
+					c.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range) * Mod.Current.Settings.RammingTargetHitpointsDamagePercent / 100));
+					// warheads destroy themselves on activation
+					w.Hitpoints = 0;
+				}
+				else
+					target.TakeDamage(new Hit(shot, target, w.Template.GetWeaponDamage(range)));
+			}
+			// TODO - mounts that affect reload rate?
+			reloads[w] += w.Template.ComponentTemplate.WeaponInfo.ReloadRate;
+		}
+
+		public IList<LogMessage> Log { get; private set; }
+
+		public System.Drawing.Image Icon
+		{
+			get { return Combatants.OfType<ISpaceObject>().Largest().Icon; }
+		}
+
+		public System.Drawing.Image Portrait
+		{
+			get { return Combatants.OfType<ISpaceObject>().Largest().Portrait; }
+		}
+
+		public IEnumerable<string> IconPaths
+		{
+			get
+			{
+				return Combatants.OfType<ISpaceObject>().Largest().IconPaths;
+			}
+		}
+
+		public IEnumerable<string> PortraitPaths
+		{
+			get
+			{
+				return Combatants.OfType<ISpaceObject>().Largest().PortraitPaths;
+			}
+		}
+
+		public double Timestamp { get; private set; }
+	}
+}

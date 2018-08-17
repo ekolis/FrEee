@@ -898,5 +898,10 @@ namespace FrEee.Game.Objects.Space
 		public double MerchantsRatio => Owner.HasAbility("No Spaceports") ? 1.0 : 0.0;
 
 		public bool IsAlive => Vehicles.Any(x => x.IsAlive);
+
+		/// <summary>
+		/// Fleets can't fire on enemies directly; the contained ships do.
+		/// </summary>
+		public int MaxTargets => 0;
 	}
 }

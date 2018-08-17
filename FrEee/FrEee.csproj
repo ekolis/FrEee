@@ -149,13 +149,17 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\Objects\Combat\Grid\Battle.cs" />
     <Compile Include="Game\Objects\Combat\Simple\Battle.cs" />
-    <Compile Include="Game\Objects\Combat\Simple\Seeker.cs" />
+    <Compile Include="Game\Objects\Combat\IBattle.cs" />
+    <Compile Include="Game\Objects\Combat\Seeker.cs" />
     <Compile Include="Modding\ComputedFormula.cs" />
     <Compile Include="Modding\Formula.cs" />
     <Compile Include="Modding\LiteralFormula.cs" />
     <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
+    <Compile Include="Utility\HeatMap.cs" />
+    <Compile Include="Utility\IntVector2.cs" />
     <Compile Include="Utility\JsonSerializer.cs" />
     <Compile Include="Utility\LegacySerializer.cs" />
     <Compile Include="Utility\ResourceProgress.cs" />
@@ -466,6 +470,7 @@
     <Compile Include="Utility\SequenceEqualityComparer.cs" />
     <Compile Include="Utility\Serializer.cs" />
     <Compile Include="Utility\Status.cs" />
+    <Compile Include="Utility\Vector2.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

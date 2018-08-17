@@ -15,7 +15,7 @@ using System.Text;
 
 namespace FrEee.Game.Objects.Combat.Simple
 {
-	public class Battle : INamed, IPictorial, ILocated
+	public class Battle : IBattle
 	{
 		public Battle(Sector location)
 		{
@@ -309,39 +309,5 @@ namespace FrEee.Game.Objects.Combat.Simple
 		}
 
 		public double Timestamp { get; private set; }
-
-		/// <summary>
-		/// Battles are named after any stellar objects in their sector; failing that, they are named after the star system and sector coordinates.
-		/// </summary>
-		public string NameFor(Empire emp)
-		{
-			return ResultFor(emp).Capitalize() + " at " + Sector;
-		}
-
-		/// <summary>
-		/// The result (victory/defeat/stalemate) for a given empire.
-		/// If empire or its allies are not involved or no empire specified, just say "battle".
-		/// </summary>
-		/// <param name="emp"></param>
-		/// <returns></returns>
-		public string ResultFor(Empire emp)
-		{
-			if (emp == null)
-				return "battle"; // no empire specified
-			if (!Combatants.Any(c => c.Owner == emp || (OriginalOwners[c]?.IsAllyOf(emp, StarSystem) ?? false)))
-				return "battle"; // empire/allies not involved
-			var survivors = Combatants.Where(c => c.IsAlive);
-			var ourSurvivors = survivors.Where(c => c.Owner == emp);
-			var allySurvivors = survivors.Where(c => c.Owner.IsAllyOf(emp, StarSystem));
-			var friendlySurvivors = ourSurvivors.Union(allySurvivors);
-			var enemySurvivors = survivors.Where(c => c.Owner.IsEnemyOf(emp, StarSystem));
-			if (friendlySurvivors.Any() && enemySurvivors.Any())
-				return "stalemate";
-			if (friendlySurvivors.Any())
-				return "victory";
-			if (enemySurvivors.Any())
-				return "defeat";
-			return "Pyrrhic victory"; // mutual annihilation!
-		}
 	}
 }
