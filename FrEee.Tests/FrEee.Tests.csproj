@@ -148,6 +148,17 @@
     <Content Include="Mods\DynamicFormulaWithParameters\Data\Components.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Mods\Include Mod\LandVehicleSizes\VehicleSizeTroops.txt" />
+    <Content Include="Mods\Include Mod\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeCarriers.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeColonyShips.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeCombatShips.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeFighters.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeMines.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeSatelites.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeStations.txt" />
+    <Content Include="Mods\Include Mod\SpaceVehicleSizes\VehicleSizeTransports.txt" />
+    <Content Include="Mods\Include Mod\VehicleSize.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
