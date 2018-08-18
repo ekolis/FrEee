@@ -68,8 +68,35 @@ namespace FrEee.Modding
 			// skip 2 lines
 			curLine += 2;
 
-			// start reading records
-			var recLines = new List<string>();
+            List<DataFile> includeDataFiles = new List<DataFile>();
+            while (lines[curLine].StartsWith("#include") ||
+                string.IsNullOrEmpty(lines[curLine]))
+            {
+                if (string.IsNullOrEmpty(lines[curLine]))
+                {
+                    ++curLine;
+                    continue;
+                }
+
+                string line = lines[curLine];
+                int firstPQ = line.IndexOf('"') + 1;
+                int lastPQ = line.LastIndexOf('"') - 1;
+                string includePath = line.Substring(firstPQ, (lastPQ - firstPQ) + 1);
+                if (Path.IsPathRooted(includePath) == false)
+                {
+                    includePath = Path.Combine(Directory.GetCurrentDirectory(), includePath);
+                }
+                string filename = Path.GetFileName(includePath);
+                if (string.IsNullOrEmpty(filename))
+                    throw new FileNotFoundException($"#include path \"{includePath}\" at line {curLine} does not contain filename");
+                string modpath = Path.GetDirectoryName(includePath);
+                includeDataFiles.Add(Load(modpath, filename));
+
+                ++curLine;
+            }
+
+            // start reading records
+            var recLines = new List<string>();
 			for (; curLine < lines.Length; curLine++)
 			{
 				if (string.IsNullOrWhiteSpace(lines[curLine]))
@@ -94,7 +121,20 @@ namespace FrEee.Modding
 
 			// deal with degenerate records
 			MetaRecords = MetaRecords.Where(rec => rec.Fields.Count > 0).ToList();
-		}
+
+            List<MetaRecord> compiledRecords = new List<MetaRecord>();
+            foreach (var includeDataFile in includeDataFiles)
+            {
+                foreach (var record in includeDataFile.MetaRecords)
+                {
+                    compiledRecords.Add(record);
+                }
+            }
+
+            compiledRecords.AddRange(MetaRecords);
+
+            MetaRecords = compiledRecords;
+        }
 
 		/// <summary>
 		/// The meta records in this data file.
