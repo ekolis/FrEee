@@ -264,8 +264,8 @@ Component Damage := 0
 Component Piercing := 100
 Population Damage := 0
 Conditions Damage := 0
-Facility Damage := ==100 if target.HasAbility("Resupply") else 0
-Facility Piercing := ==0 if target.HasAbility("Resupply") else 100
+Facility Damage := ==100 if target.HasAbility("Supply Generation") else 0
+Facility Piercing := ==0 if target.HasAbility("Supply Generation") else 100
 Plague Level := 0
 Target Push := 0
 Target Teleport := 0
