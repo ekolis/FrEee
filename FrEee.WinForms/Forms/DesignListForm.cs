@@ -56,7 +56,7 @@ namespace FrEee.WinForms.Forms
 			designs = designs.Where(d => vehicleTypeFilter.HasFlag(d.VehicleType));
 
 			// filter by ours/foreign (using an exclusive or)
-			designs = designs.Where(d => d.Owner == emp ^ chkForeign.Checked);
+			designs = designs.Where(d => d.Owner == emp ^ chkForeign.Checked && !d.Warnings.Any());
 
 			// filter by obsoleteness/lockedness (don't filter alien designs)
 			if (chkHideObsolete.Checked)
