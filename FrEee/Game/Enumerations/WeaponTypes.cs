@@ -51,7 +51,7 @@ namespace FrEee.Game.Enumerations
 		/// <summary>
 		/// Explodes when ramming an enemy or when being rammed.
 		/// </summary>
-		[CanonicalName("Warhead")]
+		[CanonicalName("Warhead Point Defense")]
 		[Name("Warhead Point-Defense")]
 		WarheadPointDefense = 0x40,
 		/// <summary>
