@@ -1,0 +1,214 @@
+=======================================================================================
+VEHICLE SIZE DATA FILE
+=======================================================================================
+
+Bitmap Name:
+  This is a bitmap name for the picture which represents this vehicle.
+  This is usually the same as the name but with no spaces. This name
+  is used as the very last section of the full bitmap name.
+  A Vehicle Bitmap is normally named 
+  [Empire Name]_[Portrait/Mini]_[Bitmap Name].bmp
+  The Empire Name is your empire name.
+  Portrait or Mini is the type of the picture. Portrait are 128x128 and
+  in an isometric view. Mini are the top-down 36x36 tiles used in space.
+  
+
+Vehicle Type:
+  Ship, Base, Fighter, Satellite, Mine, Troop, Weapon Platform, Drone
+
+All Units: 
+  May not carry cargo (unless a drone).
+  May be stored in ships or on planets.
+  May be transferred between ships or planets as cargo.
+
+Fighter:
+  Stored in Fighter Bays or on a planet. 
+  Can be launched into space and moves/refuels just like a ship.
+  Can be recovered by a ship with Fighter Bays or a planet.
+  They can be self-destructed or fired upon.
+  Moves like a ship.
+  May or may not have the ability to warp through warp points.
+  Once fuel is exhausted, it is destroyed. 
+  Completely under player control.
+
+Satellite:
+  Stored in Cargo Bays or on a planet.
+  Can be deposited in space by a ship or planet.
+  Can be recovered by a ship or planet. 
+  They can be self-destructed (under player control) or fired upon.
+  Cannot move.
+  Must be refueled by outside means.
+  Once fuel is exhausted, it goes dormant like a ship.
+  May or may not be under Player control (depends on components).
+  If not under player control, will fire on any ships in the same sector.
+
+Mine:
+  Stored in Mine Storage or on a planet.
+  Can be deposited in space by a ship or planet.
+  Cannot be recovered. 
+  They can be self-destructed (under player control) or fired upon.
+  Cannot move.
+  Minimal fuel required. Even if fuel exhausted, non-fuel using comps still function.
+  Requires some type of explosive\warhead component.
+  Attempts to detonate when objects enter the sector. 
+  May or may not be under Player control (depends on components).
+  Depending on components - may be triggered by any ship, ships without certain comp, enemy ships, etc.
+    
+Troop:
+  Stored in Troop Quarters or on a planet.
+  Cannot be deposited in space.
+  Can be dropped on enemy planets to begin ground combat.
+  Cannot move.
+  May or may not be under Player control (Monster Troops will fight all comers once dropped).
+
+Weapon Platform:
+  Stored in Cargo Bays or on a planet.
+  Cannot be deposited in space.
+  Cannot move.
+  Always under Player control.
+  Serve only as a container for weapons which fire from a planet into space (or for ground combat).
+
+Drone:
+  Stored in Cargo Bays or on a planet. 
+  Can be launched into space from a ship or planet.
+  Cannot be recovered. 
+  They can be self-destructed (under player control) or fired upon.
+  Moves like a ship.
+  May or may not have the ability to warp through warp points.
+  Once fuel is exhausted, it is destroyed. 
+  May or may not be under Player control (depends on components).
+
+
+[The following items are only used for Units (Fighter, Satellite, Mine, Troop, Weapon Platform, Drone)]
+
+Launched from Ship:
+  This unit can be launched into space by a ship. Only applies to units that can 
+  actually be launched.
+
+Launched from Planet:
+  This unit can be launched into space from a planet. Only applies to units that can 
+  actually be launched.
+
+
+=======================================================================================
+*BEGIN*
+=======================================================================================
+
+#include "Mods\LandVehicleSizes\VehicleSizeTroops.txt"
+#include "Mods\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt"
+
+#include "Mods\SpaceVehicleSizes\VehicleSizeCarriers.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeColonyShips.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeCombatShips.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeFghters.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeMines.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeSatelites.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeStations.txt"
+#include "Mods\SpaceVehicleSizes\VehicleSizeTransports.txt"
+
+Name                          := Small Drone
+Short Name                    := Small Drone
+Description                   := 
+Code                          := RS
+Primary Bitmap Name           := Drone
+Alternate Bitmap Name         := Drone
+Vehicle Type                  := Drone
+Tonnage                       := 100
+Cost Minerals                 := 120
+Cost Organics                 := 0
+Cost Radioactives             := 30
+Engines Per Move              := 1
+Number of Tech Req            := 1
+Tech Area Req 1               := Drones
+Tech Level Req 1              := 1
+Number of Abilities           := 2
+Ability 1 Type                := Extra Movement Generation
+Ability 1 Descr               := Small size and special materials increases speed of drone by 1.
+Ability 1 Val 1               := 1
+Ability 1 Val 2               := 999
+Ability 2 Type                := Combat To Hit Defense Plus
+Ability 2 Descr               := Small size makes drone 50% harder to hit in combat.
+Ability 2 Val 1               := 50
+Ability 2 Val 2               := 0
+Requirement Must Have Bridge  := True
+Requirement Can Have Aux Con  := False
+Requirement Min Life Support  := 0
+Requirement Min Crew Quarters := 0
+Requirement Uses Engines      := True
+Requirement Max Engines       := 6
+Requirement Pct Fighter Bays  := 0
+Requirement Pct Colony Mods   := 0
+Requirement Pct Cargo         := 0
+
+Name                          := Medium Drone
+Short Name                    := Medium Drone
+Description                   := 
+Code                          := RM
+Primary Bitmap Name           := Drone
+Alternate Bitmap Name         := Drone
+Vehicle Type                  := Drone
+Tonnage                       := 140
+Cost Minerals                 := 160
+Cost Organics                 := 0
+Cost Radioactives             := 40
+Engines Per Move              := 1
+Number of Tech Req            := 1
+Tech Area Req 1               := Drones
+Tech Level Req 1              := 2
+Number of Abilities           := 2
+Ability 1 Type                := Extra Movement Generation
+Ability 1 Descr               := Small size and special materials increases speed of drone by 2.
+Ability 1 Val 1               := 2
+Ability 1 Val 2               := 999
+Ability 2 Type                := Combat To Hit Defense Plus
+Ability 2 Descr               := Small size makes drone 50% harder to hit in combat.
+Ability 2 Val 1               := 50
+Ability 2 Val 2               := 0
+Requirement Must Have Bridge  := True
+Requirement Can Have Aux Con  := False
+Requirement Min Life Support  := 0
+Requirement Min Crew Quarters := 0
+Requirement Uses Engines      := True
+Requirement Max Engines       := 6
+Requirement Pct Fighter Bays  := 0
+Requirement Pct Colony Mods   := 0
+Requirement Pct Cargo         := 0
+
+Name                          := Large Drone
+Short Name                    := Large Drone
+Description                   := 
+Code                          := RL
+Primary Bitmap Name           := Drone
+Alternate Bitmap Name         := Drone
+Vehicle Type                  := Drone
+Tonnage                       := 180
+Cost Minerals                 := 200
+Cost Organics                 := 0
+Cost Radioactives             := 50
+Engines Per Move              := 1
+Number of Tech Req            := 1
+Tech Area Req 1               := Drones
+Tech Level Req 1              := 3
+Number of Abilities           := 2
+Ability 1 Type                := Extra Movement Generation
+Ability 1 Descr               := Small size and special materials increases speed of drone by 3.
+Ability 1 Val 1               := 3
+Ability 1 Val 2               := 999
+Ability 2 Type                := Combat To Hit Defense Plus
+Ability 2 Descr               := Small size makes drone 50% harder to hit in combat.
+Ability 2 Val 1               := 50
+Ability 2 Val 2               := 0
+Requirement Must Have Bridge  := True
+Requirement Can Have Aux Con  := False
+Requirement Min Life Support  := 0
+Requirement Min Crew Quarters := 0
+Requirement Uses Engines      := True
+Requirement Max Engines       := 6
+Requirement Pct Fighter Bays  := 0
+Requirement Pct Colony Mods   := 0
+Requirement Pct Cargo         := 0
+
+=======================================================================================
+*END*
+=======================================================================================
+

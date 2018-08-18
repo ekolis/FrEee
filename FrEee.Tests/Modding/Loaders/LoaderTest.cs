@@ -19,5 +19,12 @@ namespace FrEee.Tests.Modding.Loaders
 			Mod.Load(null);
 			Assert.AreEqual(0, Mod.Errors.Count);
 		}
-	}
+
+        [TestMethod]
+        public void LoadIncludeModWithoutErrors()
+        {
+            Mod.Load("Include Mod");
+            Assert.AreEqual(0, Mod.Errors.Count);
+        }
+    }
 }
