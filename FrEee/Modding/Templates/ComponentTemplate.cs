@@ -315,7 +315,7 @@ namespace FrEee.Modding.Templates
 		{
 			get
 			{
-				return IconPaths;
+				return PortraitPaths;
 			}
 		}
 

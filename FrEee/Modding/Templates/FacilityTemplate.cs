@@ -82,7 +82,7 @@ namespace FrEee.Game.Objects.Technology
 		{
 			get
 			{
-				return IconPaths;
+				return PortraitPaths;
 			}
 		}
 
