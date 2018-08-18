@@ -1,0 +1,10 @@
+﻿*BEGIN*
+
+Parameter Name := level
+Parameter Maximum := 5
+Name := Laser {level}
+Pic Num := 1
+Tonnage Size := 10
+Tonnage Structure := 10
+Weapon Type := Direct Fire
+Damage := ==level - range + 1

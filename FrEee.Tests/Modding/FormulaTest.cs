@@ -9,6 +9,7 @@ using FrEee.Game.Objects.Vehicles;
 using FrEee.Game.Objects.Space;
 using FrEee.Game.Objects.Civilization;
 using FrEee.Modding.Enumerations;
+using FrEee.Game.Objects.Combat;
 
 namespace FrEee.Tests.Modding
 {
@@ -137,6 +138,20 @@ Name := ='Nuclear Missile ' + warhead.ToRomanNumeral() + ' S' + speed.ToString()
 			Assert.AreEqual($"Test Case {42} {69}", formula.Value);
 			Assert.IsTrue(formula.IsDynamic);
 			Assert.IsFalse(formula.IsLiteral);
+		}
+
+		/// <summary>
+		/// Tests dynamic formulas.
+		/// </summary>
+		[TestMethod]
+		public void DynamicFormulaWithParameters()
+		{
+			TestUtilities.SetEntryAssembly();
+			var gal = new Galaxy();
+			Empire emp = new Empire();
+			Mod.Current = Mod.Load("DynamicFormulaWithParameters");
+			var ct = Mod.Current.ComponentTemplates.First();
+			Assert.AreEqual(1, ct.WeaponInfo.GetDamage(new Shot(null, new Component(null, new MountedComponentTemplate(null, ct, null)), null, 1)));
 		}
 	}
 }
