@@ -248,7 +248,8 @@ namespace FrEee.Modding
 				{
 					if (variables[variable] is IReferrable)
 					{
-						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						preCommands.Add("if 'galaxy' in vars():");
+						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
 					}
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
@@ -265,7 +266,8 @@ namespace FrEee.Modding
 					}
 					else if (readOnlyVariables[variable] is IReferrable)
 					{
-						preCommands.Add(variable + " = galaxy.GetReferrable(_" + variable + ");");
+						preCommands.Add("if 'galaxy' in vars():");
+						preCommands.Add("\t" + variable + " = galaxy.GetReferrable(_" + variable + ");");
 					}
 					else
 						preCommands.Add(variable + " = Serializer.DeserializeFromString(_" + variable + ");");
@@ -339,7 +341,7 @@ namespace FrEee.Modding
 			if (args != null)
 			{
 				deserializers.Add("from FrEee.Utility import Serializer;");
-				deserializers.Add("if (newGalaxy):");
+				deserializers.Add("if (newGalaxy and not galaxy is None):");
 				deserializers.Add("\tgalaxy = Serializer.DeserializeFromString(_galaxy);");
 				for (int i = 0; i < args.Length; i++)
 					deserializers.Add("arg" + i + " = Serializer.DeserializeFromString(_arg" + i + ");");
