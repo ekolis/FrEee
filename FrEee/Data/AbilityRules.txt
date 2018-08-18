@@ -879,7 +879,7 @@ Description := Component is damaged before other components on a vehicle.
   
 Name := Launch/Recover Satellites
 Targets := SpaceVehicle, Component
-Description := Can launch [%Amount1%] satellites per combat round, and an unlimited number of fighters per turn.
+Description := Can launch [%Amount1%] satellites per combat round, and an unlimited number of satellites per turn.
 Value 1 Rule := Add
 Value 2 Rule := Add
 
