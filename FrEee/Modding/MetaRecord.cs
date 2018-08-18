@@ -123,6 +123,25 @@ namespace FrEee.Modding
 							// static formula field
 							rec.Fields.Add(CreateStaticFormulaField(f, permutation));
 						}
+						else if (f.Value.Contains("{") && f.Value.Substring(f.Value.IndexOf("{")).Contains("}"))
+						{
+							// string interpolation formula
+							var isDynamic = f.Value.Contains("{{") && f.Value.Substring(f.Value.IndexOf("{{")).Contains("}}");
+							var replacedText = f.Value;
+							if (isDynamic)
+								replacedText = "=='" + replacedText + "'"; // make it a string
+							else
+								replacedText = "='" + replacedText + "'"; // make it a string
+							replacedText = replacedText.Replace("{{", "' + str(");
+							replacedText = replacedText.Replace("}}", ") + '");
+							replacedText = replacedText.Replace("{", "' + str(");
+							replacedText = replacedText.Replace("}", ") + '");
+							f.Value = replacedText;
+							if (isDynamic)
+								throw new NotImplementedException("Dynamic inline formulas are not yet supported.");
+							else
+								rec.Fields.Add(CreateStaticFormulaField(f, permutation));
+						}
 						else
 						{
 							// plain old field
