@@ -138,8 +138,8 @@ namespace FrEee.Game.Objects.Technology
 			get
 			{
 				if (Mount == null)
-					return ComponentTemplate.Size.Evaluate(this);
-				return ComponentTemplate.Size.Evaluate(this) * Mount.SizePercent.Evaluate(this) / 100;
+					return ComponentTemplate?.Size.Evaluate(this) ?? 0;
+				return (ComponentTemplate?.Size.Evaluate(this) ?? 0) * (Mount?.SizePercent.Evaluate(this) ?? 100) / 100;
 			}
 		}
 

@@ -255,7 +255,7 @@ namespace FrEee.Game.Objects.Vehicles
 					yield return "You must select a hull for your design.";
 				if (!Owner.HasUnlocked(Hull))
 					yield return "You have not unlocked the " + Hull + ".";
-				var comps = Components.Select(comp => comp.ComponentTemplate);
+				var comps = Components.Select(comp => comp.ComponentTemplate).ExceptSingle(null);
 				if (Hull.NeedsBridge && (!comps.Any(comp => comp.HasAbility("Ship Bridge")) && !comps.Any(comp => comp.HasAbility("Master Computer"))))
 					yield return "This hull requires a bridge or master computer.";
 				if (comps.Count(comp => comp.HasAbility("Ship Bridge")) > 1)
@@ -310,9 +310,11 @@ namespace FrEee.Game.Objects.Vehicles
 				}
 				foreach (var mct in Components.GroupBy(mct => mct).Select(g => g.Key))
 				{
-					if (!mct.ComponentTemplate.CanUseMount(mct.Mount))
+					if (!mct?.ComponentTemplate?.CanUseMount(mct.Mount) ?? true)
 						yield return "The " + mct.ComponentTemplate + " cannot use the " + mct.Mount + ".";
 				}
+				if (Components.Any(q => q.ComponentTemplate == null || q.Mount == null))
+					yield return "This design uses components or mounts not present in this mod.";
 			}
 		}
 
@@ -334,7 +336,7 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var hullsize = Hull == null ? 0 : Hull.Size;
-				return hullsize - Components.Sum(comp => comp.Size);
+				return hullsize - Components.Sum(comp => comp?.Size ?? 0);
 			}
 		}
 
@@ -564,12 +566,20 @@ namespace FrEee.Game.Objects.Vehicles
 			get
 			{
 				var list = new List<Requirement<Empire>>();
-				foreach (var req in Hull.UnlockRequirements)
-					list.Add(req);
-				foreach (var req in Components.SelectMany(c => c.ComponentTemplate.UnlockRequirements))
-					list.Add(req);
-				foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<Requirement<Empire>>() : c.Mount.UnlockRequirements))
-					list.Add(req);
+				try
+				{ 				
+					foreach (var req in Hull.UnlockRequirements)
+						list.Add(req);
+					foreach (var req in Components.SelectMany(c => c.ComponentTemplate.UnlockRequirements))
+						list.Add(req);
+					foreach (var req in Components.SelectMany(c => c.Mount == null ? Enumerable.Empty<Requirement<Empire>>() : c.Mount.UnlockRequirements))
+						list.Add(req);
+				}
+				catch (Exception ex)
+				{
+					// design from a different mod?
+					list.Add(new ScriptRequirement<Empire>(new LiteralFormula<bool>("false"), "Invalid design for this mod."));
+				}
 				return list;
 			}
 		}
