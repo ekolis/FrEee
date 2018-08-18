@@ -376,7 +376,7 @@ namespace FrEee.Modding
 			return objects[modid];
 		}
 
-		private void AssignID(IModObject mo, ICollection<string> used)
+		public void AssignID(IModObject mo, ICollection<string> used)
 		{
 			if (mo.Name != null && !used.Contains(mo.Name))
 			{
@@ -447,8 +447,10 @@ namespace FrEee.Modding
 		/// <param name="o"></param>
 		public void Register(IModObject o)
 		{
+			if (objects[o.ModID] == o)
+				return; // already registered
 			if (objects[o.ModID] != null)
-				throw new Exception("Mod object with ID {o} already exists.".F(o.ModID));
+				throw new Exception($"Mod object with ID {o.ModID} already exists.");
 			objects[o.ModID] = o;
 		}
 
