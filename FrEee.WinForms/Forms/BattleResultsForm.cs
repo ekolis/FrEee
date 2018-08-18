@@ -80,10 +80,7 @@ namespace FrEee.WinForms.Forms
 					StartCount = count,
 					StartHP = hp,
 					Losses = group.Count(c => c.IsDestroyed || Battle.OriginalOwners[c] != c.Owner), // destroyed or captured
-					Damage = hp - group.Sum(c =>
-						{
-							return c.ArmorHitpoints + c.HullHitpoints;
-						})
+					Damage = hp - group.Sum(c => c.Hitpoints),
 				};
 				data.Add(item);
 			}

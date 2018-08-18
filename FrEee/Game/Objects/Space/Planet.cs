@@ -393,7 +393,7 @@ namespace FrEee.Game.Objects.Space
 					break; // no more population
 				double popHPPerPerson = Mod.Current.Settings.PopulationHitpoints;
 				// TODO - don't ceiling the popKilled, just stack it up
-				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / popHPPerPerson);
+				int popKilled = (int)Math.Ceiling(hit.Shot.DamageType.PopulationDamage.Evaluate(hit.Shot) / 100 / popHPPerPerson);
 				Colony.Population[race] -= popKilled;
 				if (Colony.Population[race] < 0)
 					Colony.Population[race] = 0;
@@ -613,7 +613,7 @@ namespace FrEee.Game.Objects.Space
 			{
 				if (Colony == null)
 					return 0;
-				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints);
+				return Cargo.Hitpoints + Colony.Facilities.Sum(f => f.Hitpoints) + (int)AllPopulation.Sum(kvp => kvp.Value * Mod.Current.Settings.PopulationHitpoints);
 			}
 			set
 			{
