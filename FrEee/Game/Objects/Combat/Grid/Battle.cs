@@ -27,7 +27,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 			Combatants = new HashSet<ICombatant>(Sector.SpaceObjects.OfType<ICombatant>().Where(o => o.Owner != null).Union(Sector.SpaceObjects.OfType<Fleet>().SelectMany(f => f.Combatants)).Where(o => !(o is Fleet)));
 			foreach (var c in Combatants)
 			{
-				OriginalHitpoints[c] = c.ArmorHitpoints + c.HullHitpoints;
+				OriginalHitpoints[c] = c.Hitpoints;
 				OriginalOwners[c] = c.Owner;
 			}
 
@@ -388,6 +388,7 @@ namespace FrEee.Game.Objects.Combat.Grid
 				else
 				{
 					// fire
+					Events.Last().Add(new WeaponFiresEvent(c, locations[c], target, locations[target]));
 					int dmg = 0;
 					var winfo = w.Template.ComponentTemplate.WeaponInfo;
 					var minrng = w.Template.WeaponMinRange;
