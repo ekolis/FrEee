@@ -753,6 +753,6 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool IsAlive => !IsDestroyed;
 
-		public int MaxTargets => int.MaxValue;
+		public abstract int MaxTargets { get; }
 	}
 }
