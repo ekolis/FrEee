@@ -106,6 +106,6 @@ namespace FrEee.Game.Objects.Vehicles
 			}
 		}
 
-		public int MaxTargets => int.MaxValue;
+		public override int MaxTargets => int.MaxValue;
 	}
 }

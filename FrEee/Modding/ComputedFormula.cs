@@ -111,23 +111,6 @@ namespace FrEee.Modding
 			return new ComputedFormula<string>("str(" + Text + ")", Context, IsDynamic);
 		}
 
-		public int CompareTo(object obj)
-		{
-			if (obj is IFormula)
-				return Value.CompareTo(((IFormula)obj).Value);
-			return Value.CompareTo(obj);
-		}
-
-		public int CompareTo(T other)
-		{
-			return Value.CompareTo(other);
-		}
-
-		public int CompareTo(Formula<T> other)
-		{
-			return Value.CompareTo(other.Value);
-		}
-
 		public static implicit operator T(ComputedFormula<T> f)
 		{
 			return f.Value;

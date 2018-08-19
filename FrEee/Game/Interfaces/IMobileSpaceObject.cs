@@ -15,7 +15,6 @@ namespace FrEee.Game.Interfaces
 		double TimeToNextMove { get; set; }
 		double TimePerMove { get; }
 		int MovementRemaining { get; set; }
-		int Speed { get; }
 		int SupplyRemaining { get; set; }
 		void SpendTime(double timeElapsed);
 		new Sector Sector { get; set; }

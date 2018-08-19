@@ -459,6 +459,6 @@ namespace FrEee.Game.Objects.Vehicles
 
 		public bool CanBeObscured => true;
 
-		public int MaxTargets => Math.Max(1, this.GetAbilityValue("Multiplex Tracking").ToInt());
+		public override int MaxTargets => Math.Max(1, this.GetAbilityValue("Multiplex Tracking").ToInt());
 	}
 }
