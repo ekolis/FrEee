@@ -149,6 +149,7 @@
     <Compile Include="Utility\Extensions\ChecksExtensions.cs" />
     <Compile Include="Utility\Extensions\ComparisonExtensions.cs" />
     <Compile Include="Utility\Extensions\ConversionExtensions.cs" />
+    <Compile Include="Utility\Extensions\EnumerableExtensions.cs" />
     <Compile Include="Utility\Extensions\StringHandlingExtensions.cs" />
     <Compile Include="Utility\Extensions\UnitHandlingExtensions.cs" />
     <Compile Include="Utility\HeatMap.cs" />
