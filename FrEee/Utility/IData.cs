@@ -1,4 +1,6 @@
-﻿namespace FrEee.Utility
+﻿using Newtonsoft.Json;
+
+namespace FrEee.Utility
 {
     /// <summary>
     /// Either a data object, or a scalar.

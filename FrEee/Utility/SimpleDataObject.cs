@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using static FrEee.Utility.Extensions.CommonExtensions;
 
 namespace FrEee.Utility
