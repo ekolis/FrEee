@@ -146,6 +146,8 @@
     <Compile Include="Modding\LiteralFormula.cs" />
     <Compile Include="Modding\Loaders\DesignRoleLoader.cs" />
     <Compile Include="Utility\ClientUtilities.cs" />
+    <Compile Include="Utility\Extensions\ComparisonExtensions.cs" />
+    <Compile Include="Utility\Extensions\ConversionExtensions.cs" />
     <Compile Include="Utility\Extensions\StringHandlingExtensions.cs" />
     <Compile Include="Utility\HeatMap.cs" />
     <Compile Include="Utility\IntVector2.cs" />
