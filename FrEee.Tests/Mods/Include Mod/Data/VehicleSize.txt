@@ -94,17 +94,17 @@ Launched from Planet:
 *BEGIN*
 =======================================================================================
 
-#include "Mods\LandVehicleSizes\VehicleSizeTroops.txt"
-#include "Mods\LandVehicleSizes\VehicleSizeWeaponPlatforms.txt"
+#include "LandVehicleSizes\VehicleSizeTroops.txt"
+#include "LandVehicleSizes\VehicleSizeWeaponPlatforms.txt"
 
-#include "Mods\SpaceVehicleSizes\VehicleSizeCarriers.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeColonyShips.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeCombatShips.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeFghters.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeMines.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeSatelites.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeStations.txt"
-#include "Mods\SpaceVehicleSizes\VehicleSizeTransports.txt"
+#include "SpaceVehicleSizes\VehicleSizeCarriers.txt"
+#include "SpaceVehicleSizes\VehicleSizeColonyShips.txt"
+#include "SpaceVehicleSizes\VehicleSizeCombatShips.txt"
+#include "SpaceVehicleSizes\VehicleSizeFighters.txt"
+#include "SpaceVehicleSizes\TestingNestedPaths\VehicleSizeMines.txt"
+#include "SpaceVehicleSizes\VehicleSizeSatelites.txt"
+#include "SpaceVehicleSizes\VehicleSizeStations.txt"
+#include "SpaceVehicleSizes\VehicleSizeTransports.txt"
 
 Name                          := Small Drone
 Short Name                    := Small Drone
